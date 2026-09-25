@@ -1,5 +1,6 @@
 import type { SelectV2Workspace } from "@superset/db/schema";
 import { buildHostRoutingKey } from "@superset/shared/host-routing";
+import { visibleWorkspaceTags } from "@superset/shared/workspace-tags";
 import type {
 	HostConnectionState,
 	WorkspaceSnapshotPayload,
@@ -17,7 +18,7 @@ export type HostShapedWorkspace = Omit<
 > & {
 	/** Null for project-less "session" workspaces. */
 	projectId: string | null;
-	type: "main" | "worktree" | "session";
+	type: "local" | "worktree" | "session";
 	/**
 	 * Normalized, sorted tag set. Optional because a row served by an older
 	 * host — or restored from a pre-tags IndexedDB snapshot — carries the
@@ -180,12 +181,27 @@ export async function loadHostWorkspacesSnapshot(
 ): Promise<HostWorkspaceRow[] | undefined> {
 	if (!organizationId) return undefined;
 	try {
-		return await idbGet<HostWorkspaceRow[]>(
+		const rows = await idbGet<HostWorkspaceRow[]>(
 			snapshotKey(organizationId, machineId),
 		);
+		return rows?.map(normalizeServedWorkspaceRow);
 	} catch {
 		return undefined;
 	}
+}
+
+/**
+ * Hosts before the local-workspace model served the checkout row as
+ * `type: "main"`; a snapshot saved from one, or a remote host still on that
+ * version, is read as the local workspace it always was.
+ */
+export function normalizeServedWorkspaceRow<
+	Row extends { type: HostShapedWorkspace["type"] | "main" },
+>(row: Row): Row & { type: HostShapedWorkspace["type"] } {
+	if (row.type !== "main") {
+		return row as Row & { type: HostShapedWorkspace["type"] };
+	}
+	return { ...row, type: "local" };
 }
 
 export function saveHostWorkspacesSnapshot(
@@ -216,6 +232,10 @@ export function isEventBusReopen(
 /**
  * Apply a workspace:changed event to a host's cached list. Created/updated
  * upsert from the event's snapshot payload; deleted removes the row.
+ *
+ * The host broadcasts one snapshot to every client, so it carries every
+ * user's tags with their creators; `viewerUserId` keeps this client's own,
+ * matching what `workspace.list` already served it.
  */
 export function applyWorkspaceChangedEvent(
 	rows: HostWorkspaceRow[] | undefined,
@@ -225,6 +245,8 @@ export function applyWorkspaceChangedEvent(
 	},
 	host: { organizationId: string; machineId: string },
 	workspaceId: string,
+	/** Null while the session is unresolved — not "no identity". */
+	viewerUserId: string | null,
 ): HostWorkspaceRow[] | undefined {
 	if (event.eventType === "deleted") {
 		if (!rows) return rows;
@@ -241,12 +263,20 @@ export function applyWorkspaceChangedEvent(
 		hostId: host.machineId,
 		name: snapshot.name,
 		branch: snapshot.branch,
-		type: snapshot.type,
+		type: normalizeServedWorkspaceRow(snapshot).type,
 		createdByUserId: snapshot.createdByUserId,
 		taskId: snapshot.taskId,
 		// Runtime-optional despite the payload type: an older host's events
 		// carry no tags — keep the row's last known set rather than wiping it.
-		tags: snapshot.tags ?? existing?.tags,
+		// A host that predates tag creators sends only the union and can't
+		// tell whose is whose; show it as before rather than nothing.
+		tags: snapshot.tagAssignments
+			? viewerUserId === null
+				? // The session hasn't resolved yet: nobody's tags are ours to
+					// show (or persist), so keep what the row already had.
+					(existing?.tags ?? [])
+				: visibleWorkspaceTags(snapshot.tagAssignments, viewerUserId)
+			: (snapshot.tags ?? existing?.tags),
 		createdAt: new Date(snapshot.createdAt),
 		updatedAt: new Date(snapshot.updatedAt),
 		// Same runtime-optionality as tags: an older host's events omit it, so

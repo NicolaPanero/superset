@@ -2,6 +2,7 @@ import type { WorkspaceState } from "@superset/panes";
 import { buildHostRoutingKey } from "@superset/shared/host-routing";
 import { useLiveQuery } from "@tanstack/react-db";
 import { useEffectEvent, useMemo } from "react";
+import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -16,13 +17,16 @@ import {
 	HostNotificationSubscriber,
 	type HostNotificationWorkspaceState,
 } from "./components/HostNotificationSubscriber";
+import { getNotificationWorkspaceName } from "./lib/getNotificationWorkspaceName";
 import { markV2AgentLifecycleTargetSeen } from "./lib/lifecycleEvents";
 
 interface WorkspaceHostRow {
 	workspaceId: string;
 	organizationId: string;
 	hostId: string;
+	type: "local" | "worktree" | "session";
 	name: string;
+	projectName?: string;
 	branch: string;
 }
 
@@ -58,6 +62,7 @@ type ElectronNotificationEvent =
  */
 export function V2NotificationController() {
 	const collections = useCollections();
+	const { projects } = useHostProjects();
 	const { machineId, activeHostUrl } = useLocalHostService();
 	const relayUrl = useRelayUrl();
 	const visibleWorkspaceIds = useVisibleSidebarWorkspaceIds();
@@ -68,10 +73,14 @@ export function V2NotificationController() {
 				workspaceId: workspace.id,
 				organizationId: workspace.organizationId,
 				hostId: workspace.hostId,
+				type: workspace.type,
 				name: workspace.name,
+				projectName: projects.find(
+					(project) => project.id === workspace.projectId,
+				)?.name,
 				branch: workspace.branch,
 			})),
-		[hostWorkspaces],
+		[hostWorkspaces, projects],
 	);
 	const { data: allLocalWorkspaceRows = [] } = useLiveQuery(
 		(q) =>
@@ -193,7 +202,7 @@ function getNotificationWorkspaceStatesById({
 		]),
 	);
 
-	const statesById = new Map(
+	const statesById = new Map<string, HostNotificationWorkspaceState>(
 		localWorkspaceRows.map((row) => [
 			row.workspaceId,
 			{
@@ -207,8 +216,8 @@ function getNotificationWorkspaceStatesById({
 	for (const workspace of workspaceHosts) {
 		statesById.set(workspace.workspaceId, {
 			workspaceId: workspace.workspaceId,
-			workspaceName:
-				workspace.name.trim() || workspace.branch.trim() || "Workspace",
+			workspaceName: getNotificationWorkspaceName(workspace),
+			projectName: workspace.projectName,
 			paneLayout: paneLayoutsByWorkspaceId.get(workspace.workspaceId) ?? null,
 		});
 	}

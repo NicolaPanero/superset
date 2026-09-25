@@ -7,8 +7,10 @@ import type { PromptInputMessage } from "@/components/ai-elements/prompt-input";
 import type { CloudWorkspaceRow } from "@/hooks/useCloudWorkspaces";
 import { getCloudWorkspacesQueryKey } from "@/hooks/useCloudWorkspaces";
 import { useSession } from "@/lib/auth/client";
+import { errorCopy, transportFailureKind } from "@/lib/errors";
 import { posthog } from "@/lib/posthog";
 import { apiClient } from "@/lib/trpc/client";
+import { useAppReviewStore } from "@/screens/(authenticated)/stores/appReviewStore";
 
 interface CreateCloudWorkspaceArgs {
 	/** Null means the repo's default branch, resolved by the branch query. */
@@ -17,7 +19,12 @@ interface CreateCloudWorkspaceArgs {
 	environmentId: string | null;
 	/** Built-in agent to launch with the message as its prompt; null for none. */
 	agent: string | null;
+	/** Null launches the agent's own default. Ignored without an agent. */
+	model: string | null;
+	effort: string | null;
 	message: PromptInputMessage;
+	/** Already-uploaded cloud ids; the sandbox pulls the bytes once it is up. */
+	attachmentFileIds: string[];
 }
 
 /**
@@ -37,7 +44,10 @@ export function useCreateCloudWorkspace() {
 			branch,
 			environmentId,
 			agent,
+			model,
+			effort,
 			message,
+			attachmentFileIds,
 		}: CreateCloudWorkspaceArgs) => {
 			if (!organizationId) throw new Error("No active organization");
 			if (!environmentId) {
@@ -45,13 +55,8 @@ export function useCreateCloudWorkspace() {
 					"Add an environment in Settings before creating a cloud workspace",
 				);
 			}
-			if (message.attachments.length > 0) {
-				// Attachments today are written to a host, and this workspace's
-				// host doesn't exist yet — blob-backed attachments are the fix.
-				throw new Error(
-					"Attachments are not supported for cloud workspaces yet",
-				);
-			}
+			// Only with something to say: an empty prompt leaves it idle.
+			const launchAgent = agent && message.text.trim() ? agent : undefined;
 			return apiClient.cloudWorkspace.create.mutate({
 				organizationId,
 				environmentId,
@@ -59,11 +64,19 @@ export function useCreateCloudWorkspace() {
 				// Omitted when unresolved: the server falls back to the repo's
 				// actual default branch, which the client must not guess.
 				branch: branch ?? undefined,
-				// Only with something to say: an empty prompt leaves it idle.
-				agent: agent && message.text.trim() ? agent : undefined,
+				agent: launchAgent,
+				model: launchAgent ? (model ?? undefined) : undefined,
+				effort: launchAgent ? (effort ?? undefined) : undefined,
+				// Only with an agent to hand them to.
+				...(launchAgent && attachmentFileIds.length > 0
+					? { attachmentFileIds }
+					: {}),
 			});
 		},
-		onSuccess: (row: CloudWorkspaceRow, { branch, agent, message }) => {
+		onSuccess: (
+			row: CloudWorkspaceRow,
+			{ branch, agent, model, effort, message },
+		) => {
 			// The API emits `workspace_created`; this is only the client asking.
 			posthog.capture("workspace_create_requested", {
 				workspace_id: row.id,
@@ -72,7 +85,10 @@ export function useCreateCloudWorkspace() {
 				source: "mobile_composer",
 				base_branch: branch,
 				agent: agent && message.text.trim() ? agent : null,
+				model,
+				effort,
 			});
+			useAppReviewStore.getState().recordWorkspaceCreated();
 			// Seed the list before navigating: the workspace screen decides
 			// between "provisioning" and "not found" off this cache, and even
 			// one refetch round trip is long enough to flash the wrong one.
@@ -89,6 +105,8 @@ export function useCreateCloudWorkspace() {
 				host_kind: "cloud",
 				source: "mobile_composer",
 				base_branch: branch,
+				// Stable English, never the display copy below.
+				failure_kind: transportFailureKind(error) ?? "server",
 			});
 			Alert.alert(
 				i18n._(
@@ -96,7 +114,7 @@ export function useCreateCloudWorkspace() {
 						message: "Could not create cloud workspace",
 					}),
 				),
-				error instanceof Error ? error.message : String(error),
+				errorCopy(error),
 			);
 		},
 	});

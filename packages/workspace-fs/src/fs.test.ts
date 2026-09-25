@@ -107,6 +107,33 @@ describe("readFile", () => {
 		expect(result.exceededLimit).toEqual(false);
 	});
 
+	it("reads nothing from an empty file or an offset at the end", async () => {
+		const rootPath = await createTempRoot();
+		const emptyPath = path.join(rootPath, "empty.txt");
+		await fs.writeFile(emptyPath, "");
+		const shortPath = path.join(rootPath, "short.txt");
+		await fs.writeFile(shortPath, "abc");
+
+		const empty = await readFile({
+			rootPath,
+			absolutePath: emptyPath,
+			encoding: "utf-8",
+		});
+		const atEnd = await readFile({
+			rootPath,
+			absolutePath: shortPath,
+			offset: 3,
+		});
+
+		expect(empty.kind).toEqual("text");
+		expect(empty.content).toEqual("");
+		expect(empty.byteLength).toEqual(0);
+		expect(empty.exceededLimit).toEqual(false);
+		expect(atEnd.kind).toEqual("bytes");
+		expect(atEnd.byteLength).toEqual(0);
+		expect(atEnd.exceededLimit).toEqual(false);
+	});
+
 	it("reads files outside the workspace root", async () => {
 		const rootPath = await createTempRoot();
 		const outsideRoot = await createTempRoot();
@@ -283,6 +310,64 @@ describe("writeFile", () => {
 
 		expect(successes).toHaveLength(1);
 		expect(conflicts).toHaveLength(1);
+	});
+
+	it("writes through a symlinked file instead of replacing the link", async () => {
+		const rootPath = await createTempRoot();
+		const realPath = path.join(rootPath, "real", "CLAUDE.md");
+		await fs.mkdir(path.dirname(realPath));
+		await fs.writeFile(realPath, "before");
+		const absolutePath = path.join(rootPath, "CLAUDE.md");
+		await fs.symlink(realPath, absolutePath);
+
+		const result = await writeFile({
+			rootPath,
+			absolutePath,
+			content: "after",
+		});
+
+		expect(result.ok).toEqual(true);
+		expect((await fs.lstat(absolutePath)).isSymbolicLink()).toEqual(true);
+		expect(await fs.readFile(realPath, "utf-8")).toEqual("after");
+		expect((await fs.readdir(rootPath)).sort()).toEqual(["CLAUDE.md", "real"]);
+	});
+
+	it("matches a read revision when writing through a symlink", async () => {
+		const rootPath = await createTempRoot();
+		const realPath = path.join(rootPath, "real.txt");
+		await fs.writeFile(realPath, "before");
+		const absolutePath = path.join(rootPath, "link.txt");
+		await fs.symlink(realPath, absolutePath);
+
+		const readResult = await readFile({
+			rootPath,
+			absolutePath,
+			encoding: "utf-8",
+		});
+		const result = await writeFile({
+			rootPath,
+			absolutePath,
+			content: "after",
+			precondition: { ifMatch: readResult.revision },
+		});
+
+		expect(result.ok).toEqual(true);
+		expect((await fs.lstat(absolutePath)).isSymbolicLink()).toEqual(true);
+		expect(await fs.readFile(realPath, "utf-8")).toEqual("after");
+	});
+
+	it("still refuses a symlink that escapes the workspace root", async () => {
+		const rootPath = await createTempRoot();
+		const outsideRoot = await createTempRoot();
+		const outsidePath = path.join(outsideRoot, "secret.txt");
+		await fs.writeFile(outsidePath, "secret");
+		const absolutePath = path.join(rootPath, "link.txt");
+		await fs.symlink(outsidePath, absolutePath);
+
+		await expect(
+			writeFile({ rootPath, absolutePath, content: "leaked" }),
+		).rejects.toThrow("outside workspace root");
+		expect(await fs.readFile(outsidePath, "utf-8")).toEqual("secret");
 	});
 
 	it("writes Uint8Array content", async () => {

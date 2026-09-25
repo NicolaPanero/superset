@@ -11,13 +11,14 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	LuCheck,
 	LuCircle,
 	LuCircleCheck,
 	LuCopy,
 	LuEllipsis,
+	LuExternalLink,
 	LuEye,
 	LuEyeOff,
 	LuPlus,
@@ -27,12 +28,16 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
 import type {
 	UsageAccount,
 	UsageQuotaWindow,
-} from "../../hooks/useHostUsageQuota";
-import { useHostUsageQuota } from "../../hooks/useHostUsageQuota";
+} from "renderer/hooks/host-service/useHostUsageQuota";
+import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
+import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
+import {
+	formatResetIn,
+	formatResetLabel,
+} from "renderer/utils/usage/formatResetIn";
 import { useRemoveUsageAccount } from "../../hooks/useRemoveUsageAccount";
 import { useRestartAgentSessions } from "../../hooks/useRestartAgentSessions";
 import { useSetDefaultUsageAccount } from "../../hooks/useSetDefaultUsageAccount";
@@ -43,7 +48,7 @@ import { AddAccountDialog } from "./components/AddAccountDialog";
 import { RemoveAccountDialog } from "./components/RemoveAccountDialog";
 import type { RestartSessionsPrompt } from "./components/RestartSessionsDialog";
 import { RestartSessionsDialog } from "./components/RestartSessionsDialog";
-import { formatResetIn, formatResetLabel } from "./utils/formatResetIn";
+import { API_BILLING_LINKS } from "./utils/apiBilling";
 import { switchSignInCommand } from "./utils/switchSignInCommand";
 import type { ManagedAgent, QuotaAgent } from "./utils/visibleQuotaAgents";
 import { isManagedAgent, visibleQuotaAgents } from "./utils/visibleQuotaAgents";
@@ -53,6 +58,17 @@ const AGENT_LABELS: Record<QuotaAgent, string> = {
 	codex: "Codex",
 	grok: "Grok",
 	agy: "Antigravity",
+	opencode: "OpenCode",
+};
+
+/** Re-auth command for agents whose logins Superset only reads. */
+const READ_ONLY_LOGIN_COMMANDS: Record<
+	Exclude<QuotaAgent, ManagedAgent>,
+	string
+> = {
+	grok: "grok login",
+	agy: "agy",
+	opencode: "opencode auth login",
 };
 
 function meterColor(usedPercent: number): string {
@@ -141,13 +157,9 @@ function AccountCard({
 	const { copyToClipboard, copied } = useCopyToClipboard();
 	const expiredCommand =
 		account.status === "token_expired"
-			? account.agent === "grok"
-				? "grok login"
-				: account.agent === "agy"
-					? "agy"
-					: switchSignInCommand(
-							account as UsageAccount & { agent: ManagedAgent },
-						)
+			? isManagedAgent(account.agent)
+				? switchSignInCommand(account as UsageAccount & { agent: ManagedAgent })
+				: READ_ONLY_LOGIN_COMMANDS[account.agent]
 			: null;
 	return (
 		<div
@@ -198,7 +210,12 @@ function AccountCard({
 						{account.plan}
 					</span>
 				)}
-				{account.status !== "ok" && (
+				{account.credentialKind === "api_key" && (
+					<span className="rounded bg-muted px-1 text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
+						<Trans>API</Trans>
+					</span>
+				)}
+				{account.status !== "ok" && account.status !== "token_stale" && (
 					<span className="rounded bg-amber-500/15 px-1 text-[9px] font-medium uppercase tracking-wide text-amber-500">
 						{account.status === "token_expired" ? (
 							<Trans>Sign-in expired</Trans>
@@ -240,11 +257,38 @@ function AccountCard({
 					</DropdownMenu>
 				)}
 			</div>
-			{account.status === "ok" ? (
+			{account.credentialKind === "api_key" ? (
+				// Pay-per-token billing has no quota windows; point at the
+				// provider's own usage page instead.
+				<div className="mt-1.5 flex items-center gap-2 text-[11px] text-muted-foreground">
+					<span className="truncate">
+						<Trans>Billed per token.</Trans>
+					</span>
+					{isManagedAgent(account.agent) && (
+						<a
+							href={API_BILLING_LINKS[account.agent].usage}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="ml-auto inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap hover:text-foreground hover:underline"
+						>
+							<Trans>View usage</Trans>
+							<LuExternalLink className="size-2.5" />
+						</a>
+					)}
+				</div>
+			) : account.status === "ok" ? (
 				<div className="mt-2 flex flex-col gap-1.5">
 					{account.windows.map((window) => (
 						<QuotaWindowRow key={window.id} window={window} />
 					))}
+				</div>
+			) : account.status === "token_stale" ? (
+				<div className="mt-1.5 text-[11px] text-muted-foreground">
+					{account.agent === "opencode" ? (
+						<Trans>Refreshes when OpenCode next runs.</Trans>
+					) : (
+						<Trans>Refreshes when Claude Code next runs.</Trans>
+					)}
 				</div>
 			) : expiredCommand !== null ? (
 				<div className="mt-1.5 flex flex-wrap items-center gap-x-1 gap-y-1 text-[11px] text-muted-foreground">
@@ -321,7 +365,17 @@ function AccountCard({
 	);
 }
 
-export function UsageView({ hostUrl }: { hostUrl: string | null }) {
+export function UsageView({
+	hostUrl,
+	focusedAccountKey,
+	focusedAgent,
+}: {
+	hostUrl: string | null;
+	focusedAccountKey?: string;
+	focusedAgent?: string;
+}) {
+	const focusRef = useRef<HTMLDivElement>(null);
+	const focusedOnce = useRef<string | null>(null);
 	const { t } = useLingui();
 	const quotaQuery = useHostUsageQuota(hostUrl);
 	const setDefault = useSetDefaultUsageAccount(hostUrl);
@@ -341,6 +395,18 @@ export function UsageView({ hostUrl }: { hostUrl: string | null }) {
 		useRestartAgentSessions(hostUrl);
 
 	const accounts = quotaQuery.data ?? [];
+	useEffect(() => {
+		const key = `${hostUrl}:${focusedAgent}:${focusedAccountKey}`;
+		if (
+			accounts.length > 0 &&
+			focusedOnce.current !== key &&
+			focusRef.current
+		) {
+			focusRef.current.scrollIntoView({ block: "center" });
+			focusRef.current.focus({ preventScroll: true });
+			focusedOnce.current = key;
+		}
+	}, [hostUrl, focusedAgent, focusedAccountKey, accounts]);
 	const isBusy = quotaQuery.isFetching || isRefreshing;
 
 	const showMadeDefaultToast = (
@@ -444,6 +510,7 @@ export function UsageView({ hostUrl }: { hostUrl: string | null }) {
 		setDialogAgent(account.agent);
 		setSwitchTarget({
 			agent: account.agent,
+			credentialKind: account.credentialKind,
 			selection: account.selection,
 			label:
 				account.selection === null
@@ -492,48 +559,63 @@ export function UsageView({ hostUrl }: { hostUrl: string | null }) {
 				</Button>
 			</div>
 
-			{quotaQuery.isPending ? (
-				<div className="py-4 text-center text-xs text-muted-foreground">
-					<Trans>Reading subscription usage…</Trans>
-				</div>
-			) : (
-				visibleQuotaAgents(accounts).map((agent) => {
-					const agentAccounts = accounts.filter(
-						(account) => account.agent === agent,
-					);
-					const icon = getPresetIcon(agent, isDark);
-					return (
-						<section key={agent} className="flex flex-col gap-1.5">
-							<div className="flex items-center gap-1.5">
-								{icon && <img src={icon} alt="" className="size-3.5" />}
-								<span className="text-xs font-medium">
-									{AGENT_LABELS[agent]}
-								</span>
-								{isManagedAgent(agent) && (
-									<Button
-										variant="ghost"
-										size="sm"
-										className="ml-auto h-5 gap-1 px-1.5 text-[10px] text-muted-foreground"
-										disabled={!hostUrl}
-										onClick={() => openAddAgentAccount(agent)}
-									>
-										<LuPlus className="size-3" />
-										<Trans>Add account</Trans>
-									</Button>
-								)}
+			{/* Sections render before the first quota read lands so Add account is
+			    reachable straight away; each shows its own placeholder meanwhile. */}
+			{visibleQuotaAgents(accounts).map((agent) => {
+				const agentAccounts = accounts.filter(
+					(account) => account.agent === agent,
+				);
+				const icon = getPresetIcon(agent, isDark);
+				return (
+					<section key={agent} className="flex flex-col gap-1.5">
+						<div className="flex items-center gap-1.5">
+							{icon && <img src={icon} alt="" className="size-3.5" />}
+							<span className="text-xs font-medium">{AGENT_LABELS[agent]}</span>
+							{isManagedAgent(agent) && (
+								<Button
+									variant="ghost"
+									size="sm"
+									className="ml-auto h-5 gap-1 px-1.5 text-[10px] text-muted-foreground"
+									disabled={!hostUrl}
+									onClick={() => openAddAgentAccount(agent)}
+								>
+									<LuPlus className="size-3" />
+									<Trans>Add account</Trans>
+								</Button>
+							)}
+						</div>
+						{quotaQuery.isPending ? (
+							<div className="flex items-center gap-1.5 rounded-lg border border-dashed px-3 py-2 text-[11px] text-muted-foreground">
+								<LuRefreshCw className="size-3 animate-spin" />
+								<Trans>Reading usage…</Trans>
 							</div>
-							{agentAccounts.length === 0 ? (
-								<div className="rounded-lg border border-dashed px-3 py-2 text-[11px] text-muted-foreground">
-									<Trans>
-										No {AGENT_LABELS[agent]} logins on this host — sign in and
-										usage appears here.
-									</Trans>
-								</div>
-							) : (
-								<div className="grid gap-2 md:grid-cols-2">
-									{agentAccounts.map((account) => (
+						) : agentAccounts.length === 0 ? (
+							<div className="rounded-lg border border-dashed px-3 py-2 text-[11px] text-muted-foreground">
+								<Trans>
+									No {AGENT_LABELS[agent]} logins on this host — sign in and
+									usage appears here.
+								</Trans>
+							</div>
+						) : (
+							<div className="grid gap-2 md:grid-cols-2">
+								{agentAccounts.map((account) => (
+									<div
+										key={account.accountKey}
+										ref={
+											account.accountKey === focusedAccountKey &&
+											(!focusedAgent || account.agent === focusedAgent)
+												? focusRef
+												: undefined
+										}
+										tabIndex={-1}
+										className={cn(
+											"rounded-lg outline-none",
+											account.accountKey === focusedAccountKey &&
+												(!focusedAgent || account.agent === focusedAgent) &&
+												"ring-2 ring-ring ring-offset-2 ring-offset-background",
+										)}
+									>
 										<AccountCard
-											key={account.accountKey}
 											account={account}
 											onMakeDefault={
 												isManagedAgent(account.agent)
@@ -557,13 +639,13 @@ export function UsageView({ hostUrl }: { hostUrl: string | null }) {
 											}
 											hideEmails={hideEmails}
 										/>
-									))}
-								</div>
-							)}
-						</section>
-					);
-				})
-			)}
+									</div>
+								))}
+							</div>
+						)}
+					</section>
+				);
+			})}
 
 			<RemoveAccountDialog
 				account={removeTarget}

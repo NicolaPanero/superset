@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test } from "bun:test";
 
-import { table } from "./output";
+import { formatOutput, table } from "./output";
 
 const URL = "http://localhost:3000/page/schema-history-superset-7njjhq";
 const ROWS = [{ title: "Schema history", url: URL }];
@@ -26,16 +26,27 @@ afterEach(() => setTTY(originalIsTTY));
 describe("table", () => {
 	test("truncates a cell wider than its cap", () => {
 		setTTY(false);
+		const out = table(
+			[{ title: "Schema history for every published page and version" }],
+			["title"],
+			undefined,
+			[30],
+		);
+		expect(out).toContain("Schema history for every publ…");
+	});
+
+	test("prints a URL in full however narrow its column", () => {
+		setTTY(false);
 		const out = table(ROWS, COLUMNS, undefined, CAPS);
-		expect(out).toContain(`${URL.slice(0, 49)}…`);
+		expect(out).toContain(URL);
+		expect(out).not.toContain("…");
 		expect(out).not.toContain("\x1b]8;;");
 	});
 
-	test("links the whole URL even when the visible text is truncated", () => {
+	test("links the URL it prints", () => {
 		setTTY(true);
 		const out = table(ROWS, COLUMNS, undefined, CAPS);
-		expect(out).toContain(`\x1b]8;;${URL}\x07`);
-		expect(out).toContain(`${URL.slice(0, 49)}…\x1b]8;;\x07`);
+		expect(out).toContain(`\x1b]8;;${URL}\x07${URL}\x1b]8;;\x07`);
 	});
 
 	test("keeps padding outside the link so it stops at the URL", () => {
@@ -59,9 +70,67 @@ describe("table", () => {
 		expect(widths[0]).toEqual(widths[1]!);
 	});
 
+	test("lines the next column up behind a URL wider than its cap", () => {
+		setTTY(false);
+		const lines = table(
+			[
+				{ url: URL, id: "4a436fc7" },
+				{ url: "http://a.dev", id: "860b82f8" },
+			],
+			["url", "id"],
+			["URL", "ID"],
+			[20, 10],
+		).split("\n");
+		const starts = ["ID", "4a436fc7", "860b82f8"].map((cell, i) =>
+			lines[i]?.indexOf(cell),
+		);
+		expect(new Set(starts).size).toBe(1);
+	});
+
 	test("leaves non-URL cells alone", () => {
 		setTTY(true);
 		const out = table([{ id: "not a url" }], ["id"], ["ID"], [30]);
 		expect(out).not.toContain("\x1b]8;;");
+	});
+});
+
+describe("formatOutput --quiet", () => {
+	test("lists the ids inside a paginated envelope", () => {
+		const out = formatOutput(
+			{ data: { items: [{ id: "a" }, { id: "b" }], nextCursor: "tok" } },
+			undefined,
+			{ json: false, quiet: true },
+		);
+		expect(out).toBe("a\nb");
+	});
+
+	test("still lists the ids of a bare array", () => {
+		const out = formatOutput([{ id: "a" }, { id: "b" }], undefined, {
+			json: false,
+			quiet: true,
+		});
+		expect(out).toBe("a\nb");
+	});
+
+	test("leaves an object that merely has items alone", () => {
+		const out = formatOutput({ items: [{ id: "a" }] }, undefined, {
+			json: false,
+			quiet: true,
+		});
+		expect(out).toBe(JSON.stringify({ items: [{ id: "a" }] }));
+	});
+});
+
+describe("formatOutput --json", () => {
+	test("hands the cursor to the caller alongside the rows", () => {
+		const out = formatOutput(
+			{ data: { items: [{ id: "a" }], nextCursor: "tok" } },
+			undefined,
+			{ json: true, quiet: false },
+		);
+		expect(JSON.parse(out)).toEqual({
+			items: [{ id: "a" }],
+			nextCursor: "tok",
+		});
 	});
 });

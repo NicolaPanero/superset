@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
+import { memo } from "react";
 import { CgLaptop } from "react-icons/cg";
 import { LuGitBranch, LuMonitor } from "react-icons/lu";
 import { V2WorkspaceContextMenu } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/components/V2WorkspaceContextMenu";
@@ -17,7 +18,9 @@ interface V2WorkspacesBoardCardProps {
 	workspace: AccessibleV2Workspace;
 }
 
-export function V2WorkspacesBoardCard({
+// Memoized for the same reason as V2WorkspaceRow: board-wide filter changes
+// must not re-render every card.
+export const V2WorkspacesBoardCard = memo(function V2WorkspacesBoardCard({
 	workspace,
 }: V2WorkspacesBoardCardProps) {
 	// Archived tombstones have no worktree or terminals left — no navigation
@@ -32,7 +35,7 @@ export function V2WorkspacesBoardCard({
 			)}
 		</V2WorkspaceContextMenu>
 	);
-}
+});
 
 /** 181909 → "181.9k" — keeps outlier churn from blowing out the pill. */
 function formatCount(count: number): string {
@@ -56,7 +59,7 @@ function BoardCardBody({
 	const { t } = useLingui();
 	const isArchived = workspace.archivedAt != null;
 	const isDone = isArchived || workspace.pr?.state === "merged";
-	const isMainWorkspace = workspace.type === "main";
+	const isLocalWorkspace = workspace.type === "local";
 	// Same rule as the list row: the branch line only earns its slot when it
 	// says something the title doesn't.
 	const showBranch =
@@ -98,20 +101,20 @@ function BoardCardBody({
 				<span className="min-w-0 truncate">
 					{workspace.projectName ?? <Trans>Session</Trans>}
 				</span>
-				{isMainWorkspace ? (
+				{isLocalWorkspace ? (
 					<Tooltip delayDuration={300}>
 						<TooltipTrigger asChild>
 							<span className="flex shrink-0 items-center">
 								<CgLaptop
 									className="size-3.5"
 									aria-label={t({
-										message: "Main workspace",
+										message: "Local workspace",
 									})}
 								/>
 							</span>
 						</TooltipTrigger>
 						<TooltipContent side="top">
-							<Trans>Main workspace</Trans>
+							<Trans>Local workspace</Trans>
 						</TooltipContent>
 					</Tooltip>
 				) : null}

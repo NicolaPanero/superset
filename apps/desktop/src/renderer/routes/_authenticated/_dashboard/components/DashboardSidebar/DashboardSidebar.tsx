@@ -18,23 +18,32 @@ import {
 	useStarNagCard,
 } from "renderer/components/SidebarCardSlot";
 import { UpdatesPill } from "renderer/components/UpdatesPill";
+import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import { OrganizationDropdown } from "renderer/routes/_authenticated/_dashboard/components/TopBar/components/OrganizationDropdown";
 import { useDashboardSidebarState } from "renderer/routes/_authenticated/hooks/useDashboardSidebarState";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
+import { useV2NotificationStore } from "renderer/stores/v2-notifications";
 import { DashboardSidebarBulkActions } from "./components/DashboardSidebarBulkActions";
 import { DashboardSidebarBulkDeleteMount } from "./components/DashboardSidebarBulkDeleteMount";
 import { DashboardSidebarCloudSection } from "./components/DashboardSidebarCloudSection";
+import { DashboardSidebarGithubNotice } from "./components/DashboardSidebarGithubNotice";
 import { DashboardSidebarHeader } from "./components/DashboardSidebarHeader";
+import { DashboardSidebarHiddenProjects } from "./components/DashboardSidebarHiddenProjects";
 import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarHoverCardOverlay";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
 import { DashboardSidebarSessionsSection } from "./components/DashboardSidebarSessionsSection";
 import { DashboardSidebarWorkspacesHeader } from "./components/DashboardSidebarWorkspacesHeader";
+import { useGettingStartedCard } from "./components/GettingStartedCard";
 import { useV2SetupScriptCard } from "./components/V2SetupScriptCard";
+import {
+	getBlockedDragProps,
+	useBlockedDragNotice,
+} from "./hooks/useBlockedDragNotice";
 import { useDashboardSidebarData } from "./hooks/useDashboardSidebarData";
 import { useDashboardSidebarShortcuts } from "./hooks/useDashboardSidebarShortcuts";
 import { useMigrateLegacySidebarFolders } from "./hooks/useMigrateLegacySidebarFolders";
@@ -61,6 +70,7 @@ interface DashboardSidebarProps {
 interface SortableProjectWrapperProps {
 	project: DashboardSidebarProject;
 	isCollapsed: boolean;
+	isDragDisabled: boolean;
 	workspaceShortcutLabels: Map<string, string>;
 	onWorkspaceHover: (workspaceId: string) => void | Promise<void>;
 	onToggleCollapse: (projectId: string) => void;
@@ -69,10 +79,12 @@ interface SortableProjectWrapperProps {
 const SortableProjectWrapper = memo(function SortableProjectWrapper({
 	project,
 	isCollapsed,
+	isDragDisabled,
 	workspaceShortcutLabels,
 	onWorkspaceHover,
 	onToggleCollapse,
 }: SortableProjectWrapperProps) {
+	const { activeType } = useDashboardSidebarDnd();
 	const {
 		attributes,
 		listeners,
@@ -80,8 +92,7 @@ const SortableProjectWrapper = memo(function SortableProjectWrapper({
 		transform,
 		transition,
 		isDragging,
-	} = useSortable({ id: project.id });
-	const { activeType } = useDashboardSidebarDnd();
+	} = useSortable({ id: project.id, disabled: isDragDisabled });
 	const isDraggingProject = activeType === "project";
 
 	// useSortable re-renders this wrapper on every pointer move of any drag in
@@ -120,6 +131,7 @@ const SortableProjectWrapper = memo(function SortableProjectWrapper({
 				transition,
 				opacity: isDragging ? 0.5 : undefined,
 			}}
+			{...getBlockedDragProps(isDragDisabled)}
 		>
 			{section}
 		</div>
@@ -132,9 +144,11 @@ export function DashboardSidebar({
 	const { t } = useLingui();
 	const {
 		groups,
+		hiddenProjects,
 		pinnedWorkspaces,
 		sessionWorkspaces,
 		sessionChildren,
+		githubStatus,
 		refreshWorkspacePullRequest,
 		toggleProjectCollapsed,
 	} = useDashboardSidebarData();
@@ -142,8 +156,13 @@ export function DashboardSidebar({
 		deleteSection,
 		reorderProjects,
 		renameSection,
+		setProjectHidden,
 		toggleSectionCollapsed,
 	} = useDashboardSidebarState();
+	const showHiddenProject = useCallback(
+		(projectId: string) => setProjectHidden(projectId, false),
+		[setProjectHidden],
+	);
 	// Converts legacy uuid-keyed folders to tag-backed folders in the
 	// background; retries whenever the workspace cache changes.
 	useMigrateLegacySidebarFolders();
@@ -200,7 +219,16 @@ export function DashboardSidebar({
 	);
 	const trimmedFilterQuery = projectFilterQuery.trim();
 	const isFilterActive = trimmedFilterQuery !== "";
-	const isDragDisabled = sortMode !== "manual" || isFilterActive;
+	// The sort modes only reorder rows inside a project, so the project list
+	// is still the manual order and stays draggable; only a filter, which
+	// hides projects outright, makes a project drop unsafe to commit.
+	const isProjectDragDisabled = isFilterActive;
+	const isChildDragDisabled = sortMode !== "manual" || isFilterActive;
+	useBlockedDragNotice({
+		reason: isFilterActive ? "filter" : sortMode !== "manual" ? "sort" : null,
+		onSwitchToManualOrder: () => setSidebarProjectSortMode("manual"),
+		onClearFilter: () => setProjectFilterQuery(""),
+	});
 
 	// Sorted but unfiltered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
@@ -209,7 +237,7 @@ export function DashboardSidebar({
 		sortedGroups,
 		sessionWorkspaces,
 		sessionChildren,
-		{ revealCollapsed: !isFilterActive },
+		{ revealCollapsed: !isFilterActive, pinnedWorkspaces },
 	);
 	// Scoped to what the filter actually shows — select-all and range-select
 	// must not reach rows the filter is hiding.
@@ -245,6 +273,20 @@ export function DashboardSidebar({
 	// the status provider fans out bindings queries and event subscriptions for
 	// these once, instead of per row. Deliberately unfiltered so subscriptions
 	// don't churn per keystroke.
+	const { workspaces: cloudWorkspaces } = useCloudWorkspaces();
+	const pruneWorkspaceSeen = useV2NotificationStore(
+		(state) => state.pruneWorkspaceSeen,
+	);
+	useEffect(() => {
+		if (!cloudWorkspaces) return;
+		const live = new Set(cloudWorkspaces.map((cloud) => cloud.id));
+		for (const id of Object.keys(
+			useV2NotificationStore.getState().workspaceSeenAt,
+		)) {
+			if (!live.has(id)) pruneWorkspaceSeen(id);
+		}
+	}, [cloudWorkspaces, pruneWorkspaceSeen]);
+
 	const statusWorkspaces = useMemo<SidebarStatusWorkspaceRef[]>(() => {
 		const byId = new Map<string, SidebarStatusWorkspaceRef>();
 		for (const workspace of pinnedWorkspaces) {
@@ -258,8 +300,16 @@ export function DashboardSidebar({
 				byId.set(workspace.id, { id: workspace.id, hostId: workspace.hostId });
 			}
 		}
+		for (const cloud of cloudWorkspaces ?? []) {
+			byId.set(cloud.id, {
+				id: cloud.id,
+				hostId: cloud.id,
+				reportedStatus: cloud.agentStatus ?? null,
+				reportedAt: cloud.agentStatusAt?.getTime() ?? null,
+			});
+		}
 		return [...byId.values()];
-	}, [pinnedWorkspaces, sessionWorkspaces, orderedGroups]);
+	}, [pinnedWorkspaces, sessionWorkspaces, orderedGroups, cloudWorkspaces]);
 
 	const activeV2Project = useMemo(() => {
 		if (!activeV2WorkspaceId) return null;
@@ -297,6 +347,7 @@ export function DashboardSidebar({
 		projectId: activeV2Project?.id ?? null,
 		projectName: activeV2Project?.name ?? null,
 	});
+	const gettingStartedCard = useGettingStartedCard();
 	const starNagCard = useStarNagCard({ isCollapsed });
 	const hiringCard = useHiringCard({ surface: "v2" });
 
@@ -330,7 +381,8 @@ export function DashboardSidebar({
 								isSidebarCollapsed={isCollapsed}
 								workspaceShortcutLabels={workspaceShortcutLabels}
 								onReorderProjects={handleReorderProjects}
-								isDragDisabled={isDragDisabled}
+								isProjectDragDisabled={isProjectDragDisabled}
+								isChildDragDisabled={isChildDragDisabled}
 							>
 								<div className="flex h-full flex-col border-r border-border bg-sidebar dark:bg-muted/35">
 									<DashboardSidebarHeader isCollapsed={isCollapsed} />
@@ -371,6 +423,9 @@ export function DashboardSidebar({
 												</DashboardSidebarBulkActions>
 											</div>
 										)}
+										{!isCollapsed && !workspacesListCollapsed && (
+											<DashboardSidebarGithubNotice status={githubStatus} />
+										)}
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<SortableContext
 												items={displayedProjectIds}
@@ -381,12 +436,19 @@ export function DashboardSidebar({
 														key={project.id}
 														project={project}
 														isCollapsed={isCollapsed}
+														isDragDisabled={isProjectDragDisabled}
 														workspaceShortcutLabels={workspaceShortcutLabels}
 														onWorkspaceHover={refreshWorkspacePullRequest}
 														onToggleCollapse={toggleProjectCollapsed}
 													/>
 												))}
 											</SortableContext>
+										)}
+										{!isCollapsed && !workspacesListCollapsed && (
+											<DashboardSidebarHiddenProjects
+												projects={hiddenProjects}
+												onShow={showHiddenProject}
+											/>
 										)}
 										{!isCollapsed &&
 											isFilterActive &&
@@ -403,6 +465,7 @@ export function DashboardSidebar({
 										entries={[
 											paymentFailedCard,
 											setupScriptCard,
+											gettingStartedCard,
 											starNagCard,
 											hiringCard,
 										]}

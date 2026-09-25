@@ -1,4 +1,4 @@
-import type { CommandConfig } from "./command";
+import type { Audience, CommandConfig } from "./command";
 import { CLIError } from "./errors";
 import {
 	type CommandNode,
@@ -16,6 +16,7 @@ import {
 	buildTree,
 	type CliCommand,
 	type CliGroup,
+	filterByAudience,
 	routeCommand,
 } from "./router";
 
@@ -31,6 +32,8 @@ export interface RunOptions {
 	tree: CommandTree;
 	globals?: Record<string, GenericBuilderInternals>;
 	help?: HelpBranding;
+	audiences?: Audience[];
+	sandbox?: boolean;
 }
 
 let activeRun: RunOptions | undefined;
@@ -106,13 +109,27 @@ export function formatError(
 	if (error instanceof Error) {
 		const trpcError = error as Error & {
 			code?: string;
-			data?: { code?: string };
+			data?: { code?: string; requiredPlan?: string | null };
+			meta?: { response?: { status?: number } };
+			cause?: { status?: number };
 		};
 		const code = trpcError.data?.code ?? trpcError.code;
-		if (code === "UNAUTHORIZED") {
+		const httpStatus =
+			trpcError.meta?.response?.status ?? trpcError.cause?.status;
+		if (code === "UNAUTHORIZED" || (!code && httpStatus === 401)) {
 			return {
 				message: "Session expired",
 				hint: `Run: ${cliName} auth login`,
+			};
+		}
+		// A plan gate: the server sets data.requiredPlan on every such refusal
+		// (planRequiredError in @superset/trpc), so no matching on message text.
+		const requiredPlan = trpcError.data?.requiredPlan;
+		if (requiredPlan) {
+			const tier = requiredPlan === "enterprise" ? "Enterprise" : "Pro";
+			return {
+				message: error.message,
+				hint: `Needs the ${tier} plan. Upgrade at https://superset.sh/pricing, or in the app under Settings → Billing.`,
 			};
 		}
 		if (code === "NOT_FOUND") {
@@ -252,7 +269,13 @@ async function execute(
 	const { name, version } = opts;
 	const { middleware } = loaded;
 	const globalConfigs = processGlobals(opts.globals);
-	const { root, commandMap } = buildTree(loaded.groups, loaded.commands);
+	const visible = filterByAudience(
+		loaded.groups,
+		loaded.commands,
+		opts.audiences ?? ["public"],
+		opts.sandbox ?? false,
+	);
+	const { root, commandMap } = buildTree(visible.groups, visible.commands);
 
 	// EXPERIMENT: bare invocation on a TTY opens the interactive help browser
 	// instead of dumping static help. Agents/CI keep the static output.

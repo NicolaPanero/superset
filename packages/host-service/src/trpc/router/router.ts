@@ -2,7 +2,6 @@ import { router } from "../index";
 import { agentToolingRouter } from "./agent-tooling";
 import { agentsRouter } from "./agents";
 import { attachmentsRouter } from "./attachments";
-import { authRouter } from "./auth";
 import { browserRouter } from "./browser/browser";
 import { configRouter } from "./config";
 import { filesystemRouter } from "./filesystem";
@@ -16,7 +15,9 @@ import { pageWatchRouter } from "./page-watch";
 import { portsRouter } from "./ports";
 import { projectRouter } from "./project";
 import { pullRequestsRouter } from "./pull-requests";
+import { sandboxRouter } from "./sandbox";
 import { settingsRouter } from "./settings";
+import { systemRouter } from "./system";
 import { tagFoldersRouter } from "./tag-folders";
 import { terminalRouter } from "./terminal";
 import { terminalAgentsRouter } from "./terminal-agents";
@@ -30,7 +31,6 @@ export const appRouter = router({
 	agents: agentsRouter,
 	agentTooling: agentToolingRouter,
 	attachments: attachmentsRouter,
-	auth: authRouter,
 	browser: browserRouter,
 	health: healthRouter,
 	host: hostRouter,
@@ -45,7 +45,9 @@ export const appRouter = router({
 	tagFolders: tagFoldersRouter,
 	pageWatch: pageWatchRouter,
 	ports: portsRouter,
+	sandbox: sandboxRouter,
 	settings: settingsRouter,
+	system: systemRouter,
 	terminal: terminalRouter,
 	terminalAgents: terminalAgentsRouter,
 	usage: usageRouter,

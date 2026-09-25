@@ -197,7 +197,10 @@ describe("a GitHub row filtering by person", () => {
  */
 describe("a GitHub row whose integration is not connected", () => {
 	const disconnected = () =>
-		row(config("pull_request.opened"), { requiresConnection: true });
+		row(config("pull_request.opened"), {
+			requiresConnection: true,
+			onConnect: () => {},
+		});
 
 	// With no connection there is nothing to populate the pickers, so a
 	// sentence full of empty ones would only ask for choices nobody can make.
@@ -313,6 +316,18 @@ describe("the wording of a GitHub row", () => {
 			}),
 		);
 		expect(sentence).toBe("Review requested from Anyone in superset by Anyone");
+	});
+
+	// A release has no branch and no labels, so its sentence is only the event
+	// and where — the scopes githubCommon carries go unrendered rather than
+	// offering the reviewer filters that can never match.
+	test("a release names only the repository", async () => {
+		const { sentence } = await row(
+			config("release.published", {
+				repositories: { mode: "list", ids: ["10"] },
+			}),
+		);
+		expect(sentence).toBe("Release published in superset");
 	});
 });
 

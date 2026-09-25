@@ -2,15 +2,17 @@ import { describe, expect, test } from "bun:test";
 import type { TRPCError } from "@trpc/server";
 import type { GitCredentialProvider } from "../../../../runtime/git/types";
 import {
+	isGithubAuthError,
+	isGithubNotFoundError,
+	isGithubRateLimitError,
+} from "../../../../runtime/pull-requests/utils/github-errors";
+import {
 	buildSearchQuery,
 	chunkProjectRepos,
 	collectChunkResults,
 	GITHUB_SEARCH_QUERY_MAX_LENGTH,
 	githubRateLimitError,
 	githubRequestError,
-	isGithubAuthError,
-	isGithubNotFoundError,
-	isGithubRateLimitError,
 	mergeByUpdatedAtDesc,
 	type ProjectRepo,
 	projectIdForSearchItem,
@@ -310,6 +312,20 @@ describe("githubRequestError", () => {
 			credentials,
 		) as TRPCError;
 		expect(error.code).toBe("TOO_MANY_REQUESTS");
+	});
+
+	test("an Octokit request that never reached GitHub is unavailable, not a 500", () => {
+		const socketError = Object.assign(
+			new Error("connect EHOSTUNREACH 140.82.121.6:443"),
+			{ code: "EHOSTUNREACH" },
+		);
+		const fetchError = new TypeError("fetch failed", { cause: socketError });
+		const requestError = Object.assign(new Error(socketError.message), {
+			status: 500,
+			cause: fetchError,
+		});
+		const error = githubRequestError(requestError, credentials) as TRPCError;
+		expect(error.code).toBe("SERVICE_UNAVAILABLE");
 	});
 
 	test("anything else passes through untouched", () => {

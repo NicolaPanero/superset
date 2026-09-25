@@ -21,8 +21,10 @@ import {
 	VscLoading,
 	VscRepoPush,
 } from "react-icons/vsc";
-import { usePullRequestsSplitViewStore } from "renderer/routes/_authenticated/_dashboard/pull-requests/stores/pullRequestsSplitViewStore";
+import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
+import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
+import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 import { useWorkspaceGitStatus } from "../../../../providers/WorkspaceGitStatusProvider";
 import type { BranchSyncStatus } from "../../utils/getPRFlowState";
 
@@ -44,7 +46,7 @@ interface ShipControlProps {
  * first when the branch is unpublished or ahead), then Push. Compact mode
  * (diff stats own the face) folds the same actions into the chevron menu.
  *
- * Session workspaces (null projectId) can't create PRs — the PR route and
+ * Session workspaces can't create PRs — the PR route and
  * repo resolution are project-scoped — so they only ever see Commit/Push.
  */
 export function ShipControl({
@@ -57,8 +59,7 @@ export function ShipControl({
 	const navigate = useNavigate();
 	const { workspace } = useWorkspace();
 	const status = useWorkspaceGitStatus();
-	const projectId = workspace.projectId;
-	const canCreatePr = projectId != null;
+	const canCreatePr = workspace.type !== "session";
 
 	const needsCommit = sync.hasUncommitted;
 	const needsPush = !sync.hasUpstream || sync.pushCount > 0;
@@ -253,15 +254,20 @@ export function ShipControl({
 						label: t({
 							message: "Open",
 						}),
+						// The toast outlives this page: the user may have switched
+						// workspaces by the time they click. A workspace-scoped intent
+						// plus navigation lands the pane in the right store either way.
 						onClick: () => {
-							if (projectId == null) return;
-							// Same pair the PR badge's own click performs.
-							usePullRequestsSplitViewStore.getState().expandDetail();
-							void navigate({
-								to: "/pull-requests/$prNumber",
-								params: { prNumber: String(created.number) },
-								search: { project: projectId },
+							const ref = pullRequestRefFromUrl(created.url);
+							if (!ref) {
+								window.open(created.url, "_blank");
+								return;
+							}
+							usePullRequestPaneIntent.getState().request({
+								workspaceId,
+								...ref,
 							});
+							void navigateToV2Workspace(workspaceId, navigate);
 						},
 					},
 				},

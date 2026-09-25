@@ -4,6 +4,7 @@
 // the credential provider) and crosses as plain data.
 
 import {
+	getGitAuthorName,
 	type ResolvedGitInfo,
 	readGitIdentity,
 } from "../../runtime/git/identity.ts";
@@ -16,6 +17,11 @@ import type { ChangedFile } from "../../trpc/router/git/types.ts";
 import type { BaseRefFetchTarget } from "../../trpc/router/git/utils/base-ref-freshness.ts";
 import { buildDiffPatch } from "../../trpc/router/git/utils/diff-patch.ts";
 import {
+	type DiffSide,
+	diffSideObjectSpec,
+	readDiffSideBlob,
+} from "../../trpc/router/git/utils/diff-side-blob.ts";
+import {
 	type DiffCategory,
 	getChangedFilesForDiff,
 	getDefaultBranchName,
@@ -25,6 +31,8 @@ import {
 } from "../../trpc/router/git/utils/git-helpers.ts";
 import type { GitStatusSnapshotComputation } from "../../trpc/router/git/utils/git-status.ts";
 import { getGitStatusSnapshot } from "../../trpc/router/git/utils/git-status.ts";
+import type { GitStatusPartial } from "../../trpc/router/git/utils/git-status-partial/index.ts";
+import { getGitStatusPartial } from "../../trpc/router/git/utils/git-status-partial/index.ts";
 import {
 	normalizeWorktreePath,
 	parseWorktreeList,
@@ -48,6 +56,17 @@ export const gitStatusSnapshotTask = defineWorkerTask<
 	handler: async ({ worktreePath, baseBranch, gitEnv }) => {
 		const git = createUserSimpleGit(worktreePath).env(gitEnv);
 		return getGitStatusSnapshot({ git, worktreePath, baseBranch });
+	},
+});
+
+export const gitStatusPartialTask = defineWorkerTask<
+	{ worktreePath: string; paths: string[]; gitEnv: GitTaskEnv },
+	GitStatusPartial
+>({
+	type: "git/getStatusPartial",
+	handler: async ({ worktreePath, paths, gitEnv }) => {
+		const git = createUserSimpleGit(worktreePath).env(gitEnv);
+		return getGitStatusPartial({ git, worktreePath, paths });
 	},
 });
 
@@ -175,13 +194,70 @@ export const gitDiffPatchTask = defineWorkerTask<
 			commitHash,
 			fromHash,
 		});
-		const patch = await buildDiffPatch(git, {
+		const patch = await buildDiffPatch({
+			cwd: worktreePath,
+			env: gitEnv,
 			category,
 			refs,
 			paths,
 			untrackedPaths,
 		});
 		return { patch };
+	},
+});
+
+export type DiffSideBlobResult =
+	| { kind: "missing" }
+	| {
+			kind: "bytes";
+			/** base64; null when the blob is over the cap */
+			content: string | null;
+			byteLength: number;
+			exceededLimit: boolean;
+	  };
+
+export const gitDiffSideBlobTask = defineWorkerTask<
+	{
+		worktreePath: string;
+		category: DiffCategory;
+		side: DiffSide;
+		path: string;
+		maxBytes: number;
+		baseBranch?: string;
+		commitHash?: string;
+		fromHash?: string;
+		gitEnv: GitTaskEnv;
+	},
+	DiffSideBlobResult
+>({
+	type: "git/readDiffSideBlob",
+	handler: async ({
+		worktreePath,
+		category,
+		side,
+		path,
+		maxBytes,
+		baseBranch,
+		commitHash,
+		fromHash,
+		gitEnv,
+	}) => {
+		const git = createUserSimpleGit(worktreePath).env(gitEnv);
+		const refs = await resolveDiffCategoryRefs(git, category, {
+			baseBranch,
+			commitHash,
+			fromHash,
+		});
+		const spec = diffSideObjectSpec(category, side, path, refs);
+		if (!spec) return { kind: "missing" };
+		const blob = await readDiffSideBlob(git, spec, maxBytes);
+		if (blob.kind === "missing") return { kind: "missing" };
+		return {
+			kind: "bytes",
+			content: blob.content?.toString("base64") ?? null,
+			byteLength: blob.byteLength,
+			exceededLimit: blob.exceededLimit,
+		};
 	},
 });
 
@@ -202,6 +278,23 @@ export const gitIdentityTask = defineWorkerTask<
 >({
 	type: "git/readGitIdentity",
 	handler: ({ shellEnv }) => readGitIdentity(shellEnv),
+});
+
+/**
+ * Repository-scoped `user.name`, unlike `gitIdentityTask` (which reads the
+ * home-directory/global identity). A repo can locally override `user.name`,
+ * so branch-prefix resolution must read the same repo `create` binds its
+ * on-loop client to — reading the global identity instead would let the
+ * "author" prefix disagree between the branch `create` makes and the one an
+ * AI/derived rename or live preview later proposes for it.
+ */
+export const gitAuthorNameTask = defineWorkerTask<
+	{ worktreePath: string },
+	string | null
+>({
+	type: "git/readAuthorName",
+	handler: ({ worktreePath }) =>
+		getGitAuthorName(createUserSimpleGit(worktreePath)),
 });
 
 // Delete-preview + destroy-preflight state for workspace cleanup.
@@ -307,6 +400,26 @@ export const gitDeleteBranchTask = defineWorkerTask<
 		if (listed.trim().length === 0) return { deleted: false };
 		await git.raw(["branch", "-D", branch]);
 		return { deleted: true };
+	},
+});
+
+export const gitStagePathsTask = defineWorkerTask<
+	{
+		worktreePath: string;
+		paths: string[];
+		action: "stage" | "unstage";
+		gitEnv: GitTaskEnv;
+	},
+	{ success: true }
+>({
+	type: "git/stagePaths",
+	handler: async ({ worktreePath, paths, action, gitEnv }) => {
+		const git = createUserSimpleGit(worktreePath).env(gitEnv);
+		// Paths come from status output, not from a pathspec the user typed;
+		// without this, a name like `:(glob)**` would match the whole tree.
+		const command = action === "stage" ? ["add", "-A"] : ["reset", "HEAD"];
+		await git.raw(["--literal-pathspecs", ...command, "--", ...paths]);
+		return { success: true };
 	},
 });
 
@@ -444,15 +557,19 @@ export const gitPrHeadBaseTask = defineWorkerTask<
 
 export const gitTasks = [
 	gitStatusSnapshotTask,
+	gitStatusPartialTask,
 	gitFetchBaseRefTask,
 	gitCommitFilesTask,
 	gitDiffBulkTask,
 	gitDiffPatchTask,
+	gitDiffSideBlobTask,
 	gitWorkspaceRefsTask,
 	gitIdentityTask,
+	gitAuthorNameTask,
 	gitWorktreeStateTask,
 	gitWorktreeRemoveTask,
 	gitDeleteBranchTask,
+	gitStagePathsTask,
 	gitCommitTask,
 	gitPushTask,
 	gitPrHeadBaseTask,

@@ -1,14 +1,15 @@
 import { boolean, CLIError, positional, string } from "@superset/cli-framework";
-import { getHostId } from "@superset/shared/host-info";
+import { resolveWorkspaceHost } from "../../../lib/cloud-workspaces";
 import { command } from "../../../lib/command";
-import { resolveHostFilter, resolveHostTarget } from "../../../lib/host-target";
+import { resolveHostTarget } from "../../../lib/host-target";
 
 export default command({
-	description: "Delete workspaces by ID on a host (default: this machine)",
+	description:
+		"Delete workspaces by ID: cloud workspaces by default if your account has them (tearing down the sandbox stops its billing), else on this machine; --local or --host picks a host",
 	args: [positional("ids").required().variadic().desc("Workspace IDs")],
 	options: {
 		host: string().desc("Host the workspaces live on"),
-		local: boolean().desc("Target this machine (the default)"),
+		local: boolean().desc("The workspaces are on this machine"),
 	},
 	run: async ({ ctx, args, options }) => {
 		const ids = args.ids as string[];
@@ -17,11 +18,35 @@ export default command({
 			throw new CLIError("No active organization", "Run: superset auth login");
 		}
 
-		const hostId =
-			resolveHostFilter({
-				host: options.host ?? undefined,
-				local: options.local ?? undefined,
-			}) ?? getHostId();
+		const hostId = await resolveWorkspaceHost(
+			{ host: options.host, local: options.local },
+			ctx.api,
+			organizationId,
+		);
+		if (!hostId) {
+			const deleted: string[] = [];
+			const missing: string[] = [];
+			for (const id of ids) {
+				const result = await ctx.api.cloudWorkspace.delete.mutate({ id });
+				(result.deleted ? deleted : missing).push(id);
+			}
+			if (missing.length > 0) {
+				const alsoDeleted =
+					deleted.length > 0 ? ` (deleted: ${deleted.join(", ")})` : "";
+				throw new CLIError(
+					`No cloud workspace in this organization: ${missing.join(", ")}${alsoDeleted}`,
+					"Pass --local or --host <id> if it lives on a machine",
+				);
+			}
+			return {
+				data: { deleted },
+				message:
+					deleted.length === 1
+						? `Deleted cloud workspace ${deleted[0]}`
+						: `Deleted ${deleted.length} cloud workspaces`,
+			};
+		}
+
 		const target = await resolveHostTarget({
 			requestedHostId: hostId,
 			organizationId,

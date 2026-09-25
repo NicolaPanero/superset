@@ -64,6 +64,10 @@ function rowToBinding(row: BindingRow): TerminalAgentBinding {
  */
 const DEATH_GASP_DETACH_WINDOW_MS = 30_000;
 
+/** The root db handle or an open transaction, so a caller that also writes
+ * the terminal row can stamp the binding inside that same transaction. */
+export type BindingDb = Pick<HostDb, "select" | "update">;
+
 /**
  * Mark a binding's agent session as ended without deleting the row, so its
  * `agentSessionId` survives for resume. "terminal-exited" is sticky: a
@@ -73,7 +77,7 @@ const DEATH_GASP_DETACH_WINDOW_MS = 30_000;
  * the workspaceId when a row was updated.
  */
 export function markTerminalAgentBindingEnded(
-	db: HostDb,
+	db: BindingDb,
 	terminalId: string,
 	reason: TerminalAgentEndReason,
 	endedAt: number = Date.now(),
@@ -90,13 +94,20 @@ export function markTerminalAgentBindingEnded(
 	if (!row) return undefined;
 
 	if (row.endedAt !== null) {
+		// Two upgrades may rewrite an ended row's reason (never its `endedAt`):
+		// a detach inside the death-gasp window was the agent's goodbye as its
+		// pty died, and a dispose after "terminal-exited" is the user killing a
+		// session auto-resume would otherwise bring back. "resumed" and an
+		// older "detached" are final.
 		const isDeathGaspDetach =
 			reason === "terminal-exited" &&
 			row.endReason === "detached" &&
 			endedAt - row.endedAt <= DEATH_GASP_DETACH_WINDOW_MS;
-		if (!isDeathGaspDetach) return undefined;
+		const isDisposeOfResumable =
+			reason === "disposed" && row.endReason === "terminal-exited";
+		if (!isDeathGaspDetach && !isDisposeOfResumable) return undefined;
 		db.update(terminalAgentBindings)
-			.set({ endReason: "terminal-exited" })
+			.set({ endReason: reason })
 			.where(eq(terminalAgentBindings.terminalId, terminalId))
 			.run();
 		return { workspaceId: row.workspaceId };
@@ -169,6 +180,30 @@ function resumeCandidatePredicate(workspaceId: string, terminalId: string) {
 	);
 }
 
+/**
+ * Every ended binding that can still be resumed, newest first, across every
+ * workspace. Powers the sandbox boot-recovery sweep — see
+ * {@link listWorkspaceResumeCandidateBindings} for the workspace-scoped,
+ * CLI-facing bulk-resume counterpart.
+ */
+export function listResumeCandidateBindings(
+	db: HostDb,
+): TerminalAgentBinding[] {
+	return db
+		.select(bindingColumns)
+		.from(terminalAgentBindings)
+		.where(
+			and(
+				isNotNull(terminalAgentBindings.endedAt),
+				eq(terminalAgentBindings.endReason, "terminal-exited"),
+				isNotNull(terminalAgentBindings.agentSessionId),
+			),
+		)
+		.orderBy(desc(terminalAgentBindings.endedAt))
+		.all()
+		.map(rowToBinding);
+}
+
 /** The ended binding a dead terminal can be resumed from, if any. */
 export function findResumeCandidateBinding(
 	db: HostDb,
@@ -186,9 +221,10 @@ export function findResumeCandidateBinding(
 /**
  * Every resumable dead session in a workspace — the fleet-wide counterpart to
  * `findResumeCandidateBinding`, for a bulk "resume everything" sweep instead
- * of a per-terminal check.
+ * of a per-terminal check. Distinct from the unscoped
+ * {@link listResumeCandidateBindings}, which powers sandbox boot recovery.
  */
-export function listResumeCandidateBindings(
+export function listWorkspaceResumeCandidateBindings(
 	db: HostDb,
 	workspaceId: string,
 ): TerminalAgentBinding[] {
@@ -198,6 +234,65 @@ export function listResumeCandidateBindings(
 		.where(workspaceResumeCandidatePredicate(workspaceId))
 		.all();
 	return rows.map(rowToBinding);
+}
+
+/**
+ * Record where a consumed candidate's session was relaunched, so a pane
+ * that was not mounted for the "resumed" lifecycle event can still find
+ * it. Written by the resume path once the launch has a terminal id.
+ */
+export function markResumeCandidateResumedInto(
+	db: HostDb,
+	terminalId: string,
+	resumedIntoTerminalId: string,
+): void {
+	db.update(terminalAgentBindings)
+		.set({ resumedIntoTerminalId })
+		.where(eq(terminalAgentBindings.terminalId, terminalId))
+		.run();
+}
+
+const MAX_RESUME_HOPS = 16;
+
+/**
+ * The terminal now hosting the session that was resumed out of
+ * `terminalId`, following a chain of resumes to its end. Undefined when the
+ * binding was never consumed by a resume.
+ */
+export function findResumedSuccessorTerminalId(
+	db: HostDb,
+	workspaceId: string,
+	terminalId: string,
+): string | undefined {
+	let current = terminalId;
+	for (let hop = 0; hop < MAX_RESUME_HOPS; hop++) {
+		const next = db
+			.select({ next: terminalAgentBindings.resumedIntoTerminalId })
+			.from(terminalAgentBindings)
+			.where(
+				and(
+					eq(terminalAgentBindings.terminalId, current),
+					eq(terminalAgentBindings.workspaceId, workspaceId),
+					eq(terminalAgentBindings.endReason, "resumed"),
+				),
+			)
+			.get()?.next;
+		if (!next) break;
+		current = next;
+	}
+	return current === terminalId ? undefined : current;
+}
+
+export function getTerminalAgentBinding(
+	db: HostDb,
+	terminalId: string,
+): TerminalAgentBinding | undefined {
+	const row = db
+		.select(bindingColumns)
+		.from(terminalAgentBindings)
+		.where(eq(terminalAgentBindings.terminalId, terminalId))
+		.get();
+	return row ? rowToBinding(row) : undefined;
 }
 
 /**
@@ -318,6 +413,7 @@ export class SqliteTerminalAgentBindingPersistence
 			.where(
 				and(
 					ne(terminalSessions.status, "disposed"),
+					isNull(terminalSessions.disposeRequestedAt),
 					isNull(terminalAgentBindings.endedAt),
 				),
 			)
@@ -326,13 +422,6 @@ export class SqliteTerminalAgentBindingPersistence
 		return rows.map(rowToBinding);
 	}
 
-	/**
-	 * Bindings whose terminal session is still `active` and workspace-owned.
-	 * Liveness comes from `terminal_sessions.status` — the source already
-	 * maintained by pty onExit, the dispose routes, and the reaper's orphan
-	 * healing — so a dead terminal's agent is unrepresentable in reads no
-	 * matter how the terminal died (kill -9, crash, host downtime).
-	 */
 	listLiveByWorkspace(
 		workspaceId: string,
 		filter?: TerminalAgentBindingListFilter,
@@ -348,6 +437,7 @@ export class SqliteTerminalAgentBindingPersistence
 				and(
 					eq(terminalAgentBindings.workspaceId, workspaceId),
 					eq(terminalSessions.status, "active"),
+					isNull(terminalSessions.disposeRequestedAt),
 					isNotNull(terminalSessions.originWorkspaceId),
 					isNull(terminalAgentBindings.endedAt),
 					...(filter?.agentId
@@ -374,6 +464,7 @@ export class SqliteTerminalAgentBindingPersistence
 			.where(
 				and(
 					eq(terminalSessions.status, "active"),
+					isNull(terminalSessions.disposeRequestedAt),
 					isNotNull(terminalSessions.originWorkspaceId),
 					isNull(terminalAgentBindings.endedAt),
 				),
@@ -400,6 +491,7 @@ export class SqliteTerminalAgentBindingPersistence
 					eq(terminalAgentBindings.workspaceId, workspaceId),
 					eq(terminalAgentBindings.agentId, agentId),
 					eq(terminalSessions.status, "active"),
+					isNull(terminalSessions.disposeRequestedAt),
 					isNotNull(terminalSessions.originWorkspaceId),
 					isNull(terminalAgentBindings.endedAt),
 					...(definitionId

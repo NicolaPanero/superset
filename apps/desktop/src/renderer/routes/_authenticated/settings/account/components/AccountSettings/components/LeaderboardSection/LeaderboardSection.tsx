@@ -18,6 +18,7 @@ import { useLeaderboardOptIn } from "renderer/routes/_authenticated/hooks/useLea
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
+import { ProfileFields } from "./components/ProfileFields";
 
 export function LeaderboardSection() {
 	const { t } = useLingui();
@@ -79,6 +80,8 @@ export function LeaderboardSection() {
 				/>
 			</div>
 
+			{optedIn && handle && <ProfileFields handle={handle} />}
+
 			<LeaderboardJoinDialog
 				open={joinOpen}
 				onOpenChange={setJoinOpen}
@@ -101,7 +104,7 @@ export function LeaderboardSection() {
 							<Trans>
 								Everything you've published is deleted, not hidden. You can
 								rejoin later and it will rebuild from the transcripts still on
-								this machine — only your past ranking is lost.
+								this machine.
 							</Trans>
 						</AlertDialogDescription>
 					</AlertDialogHeader>

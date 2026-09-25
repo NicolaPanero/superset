@@ -11,6 +11,14 @@ getting unstuck when App Review rejects or stalls it.
   Keep it on the `1.x` line; bump the **patch** number for routine releases and
   the minor for visible feature drops. Large version jumps (1.x to 2.0) and long
   gaps between submissions both draw extra scrutiny from App Review.
+- Bump the patch version in both files as soon as a version is submitted for
+  review. App Store Connect refuses uploads to a version once it is approved,
+  and every native merge to `main` uploads a build, so a stale version fails
+  the upload job in `deploy.yml` from the first merge after approval (build 41
+  on 2026-09-18). Expo's guidance is the same: bump when the production build
+  is submitted. `fingerprint.config.js` keeps versions out of the runtime
+  fingerprint, so a bump neither forces a native build nor cuts installed
+  builds off from updates.
 - Build numbers auto-increment on EAS (`appVersionSource: "remote"` plus
   `autoIncrement: true` in the `production` profile). Never set them by hand.
 - Submit often. A small diff against the last approved build is the cheapest
@@ -21,9 +29,11 @@ getting unstuck when App Review rejects or stalls it.
 
 Authenticate once per machine: `eas login` (or `EXPO_TOKEN` in CI, with
 `--non-interactive`). Submissions use the App Store Connect API key stored in
-EAS credentials, so no Apple password is needed locally. Keep the demo-account
-credentials in your secret store (1Password) and export them into the shell
-for the metadata push rather than typing them into the command.
+EAS credentials, so no Apple password is needed locally. The demo-account
+credentials live in 1Password; copy them into `APP_REVIEW_EMAIL` and
+`APP_REVIEW_PASSWORD` in the main checkout's root `.env`, which
+`store.config.js` loads. Without them the push blanks the sign-in App Review
+uses.
 
 ```bash
 cd apps/mobile
@@ -39,10 +49,12 @@ eas submit --platform ios --profile production --latest
 #    build. APP_REVIEW_VIDEO_URL is optional but worth it: a two-minute screen
 #    recording of sign-in and the main flows is the single most effective
 #    thing in the notes.
-eas metadata:push   # with APP_REVIEW_EMAIL / APP_REVIEW_PASSWORD / APP_REVIEW_VIDEO_URL exported
+eas metadata:push   # from the main checkout; APP_REVIEW_EMAIL / APP_REVIEW_PASSWORD come from the root .env
 
 # 4. In App Store Connect, attach the processed build to the version and
 #    press "Submit for Review".
+
+# 5. Bump the patch version on main (see Versioning).
 ```
 
 Before pressing submit, run the pre-flight below. Most first-submission
@@ -71,6 +83,68 @@ rejections in this category are one of these.
       session; keep it that way in both behavior and wording.
 - [ ] Screenshots and description match the build (no features that are behind
       a flag or not in this build).
+
+## Shipping an update
+
+JS-only changes reach installed builds over the air; anything that changes the
+native layer needs a build. The `fingerprint` job in `.eas/workflows/` decides
+which. Every publish is signed with `UPDATES_SIGNING_KEY` (an EAS file secret)
+against `certs/certificate.pem`, and builds carrying that certificate reject
+unsigned updates — so every publish and every rollback needs the key.
+
+Channels: `preview` for internal builds, `production` for the store build.
+`e2e-test` deliberately has none.
+
+| Change | Lane |
+|---|---|
+| JS merged to main | `deploy.yml` publishes to `preview` |
+| Native merged to main | `deploy.yml` builds and uploads to App Store Connect; App Review stays manual |
+| JS on a pull request | `pr-preview.yml` publishes to a branch named after the git branch and comments a QR code, when a development build matches the fingerprint |
+| Native on a pull request | Add the `mobile-build` label; `build-pr.yml` builds a development client |
+
+### Production
+
+Never automatic. Dispatch `update-production.yml`, approve it in the run, and it
+publishes to everyone on the production channel. No staged rollout: a small
+team with few users learns more from a fast rollback than a slow ramp.
+
+```bash
+# Back out. Republishes the previous update to everyone, including users who
+# already took the bad one.
+eas update:rollback --private-key-path ~/.superset/keys/mobile-updates/private-key.pem
+```
+
+An update that migrates persisted state is not rollback-safe; fix forward.
+
+The private key lives in 1Password and nowhere in this repository. EAS holds a
+copy it will never show you, so 1Password is the only backup.
+
+Publish only from EAS, never `eas update` from a laptop: the workflows hold the
+signing key and the Sentry token, and production goes through an approval. A
+build accepts an update only when the update's runtime version equals the
+fingerprint computed when the binary was built, and an outdated eas-cli
+computes a different one — `cli.version` in `eas.json` sets the floor. The
+rollback commands above are safe: they republish existing update groups on the
+server and compute nothing.
+
+Signed publishing needs the EAS Production plan or above; on a lower plan the
+publish is rejected at its final step, after the bundle has already uploaded.
+
+A build carries the certificate only when `MOBILE_SIGNED_UPDATES=1` is in its
+EAS environment, which is `preview` and `production`. Development builds and
+anything built on a laptop have no certificate, so `expo start` serves them
+without the key; a build that embeds the certificate would refuse Metro until
+`--private-key-path` is passed. `app.config.ts` refuses to build a preview or
+production binary without the variable, so deleting it breaks the build
+instead of shipping an unsigned store app.
+
+### Retiring old builds
+
+`GET /api/mobile/version` (`apps/api/src/app/api/mobile/version/route.ts`)
+carries `MINIMUM_MOBILE_VERSION`; a build below it shows a full-screen
+"Update Required" with an App Store button and nothing else. Raise it only
+once the replacement build is live in the store, or that build is bricked.
+The check fails open: no answer from the server, no gate.
 
 ## When the build is rejected
 

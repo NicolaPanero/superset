@@ -1,10 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
+import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { cn } from "@superset/ui/utils";
 import { Link, useMatchRoute } from "@tanstack/react-router";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useMemo } from "react";
 import {
+	HiOutlineAdjustmentsHorizontal,
 	HiOutlineBeaker,
 	HiOutlineBell,
 	HiOutlineBuildingOffice2,
@@ -14,6 +17,7 @@ import {
 	HiOutlineCpuChip,
 	HiOutlineCreditCard,
 	HiOutlineCube,
+	HiOutlineDevicePhoneMobile,
 	HiOutlineFolder,
 	HiOutlineGlobeAlt,
 	HiOutlineKey,
@@ -22,11 +26,11 @@ import {
 	HiOutlinePaintBrush,
 	HiOutlinePuzzlePiece,
 	HiOutlineShieldCheck,
-	HiOutlineSparkles,
 	HiOutlineUser,
 	HiOutlineUserGroup,
 } from "react-icons/hi2";
-import { LuBrain, LuGitBranch, LuKeyboard } from "react-icons/lu";
+import { LuGitBranch, LuKeyboard, LuKeyRound, LuLink } from "react-icons/lu";
+import { useHostsNeedingUpdateCount } from "renderer/hooks/host-version/useHostsNeedingUpdate";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import type { SettingsSection } from "renderer/stores/settings-state";
@@ -38,7 +42,9 @@ interface GeneralSettingsProps {
 }
 
 type SettingsRoute =
+	| "/settings/mobile"
 	| "/settings/account"
+	| "/settings/connections"
 	| "/settings/organization"
 	| "/settings/teams"
 	| "/settings/appearance"
@@ -51,7 +57,7 @@ type SettingsRoute =
 	| "/settings/agents"
 	| "/settings/terminal"
 	| "/settings/links"
-	| "/settings/models"
+	| "/settings/agent-accounts"
 	| "/settings/experimental"
 	| "/settings/integrations"
 	| "/settings/billing"
@@ -92,6 +98,14 @@ const SECTION_GROUPS: SectionGroup[] = [
 				icon: <HiOutlineUser className="h-4 w-4" />,
 			},
 			{
+				id: "/settings/connections",
+				section: "connections",
+				label: msg({
+					message: "Connections",
+				}),
+				icon: <LuLink className="h-4 w-4" />,
+			},
+			{
 				id: "/settings/appearance",
 				section: "appearance",
 				label: msg({
@@ -116,6 +130,12 @@ const SECTION_GROUPS: SectionGroup[] = [
 				icon: <HiOutlineChartBar className="h-4 w-4" />,
 				fullWidth: true,
 			},
+			{
+				id: "/settings/mobile",
+				section: "mobile",
+				label: msg({ message: "Mobile" }),
+				icon: <HiOutlineDevicePhoneMobile className="h-4 w-4" />,
+			},
 		],
 	},
 	{
@@ -129,7 +149,7 @@ const SECTION_GROUPS: SectionGroup[] = [
 				label: msg({
 					message: "General",
 				}),
-				icon: <HiOutlineSparkles className="h-4 w-4" />,
+				icon: <HiOutlineAdjustmentsHorizontal className="h-4 w-4" />,
 			},
 			{
 				id: "/settings/keyboard",
@@ -151,7 +171,7 @@ const SECTION_GROUPS: SectionGroup[] = [
 				id: "/settings/agents",
 				section: "agents",
 				label: msg({
-					message: "Agents",
+					message: "Agent commands",
 				}),
 				icon: <HiOutlineCpuChip className="h-4 w-4" />,
 				fullWidth: true,
@@ -180,13 +200,28 @@ const SECTION_GROUPS: SectionGroup[] = [
 				}),
 				icon: <HiOutlineGlobeAlt className="h-4 w-4" />,
 			},
+		],
+	},
+	{
+		label: msg({
+			message: "Cloud",
+		}),
+		items: [
 			{
-				id: "/settings/models",
-				section: "models",
+				id: "/settings/environments",
+				section: "environments",
 				label: msg({
-					message: "Models",
+					message: "Environments",
 				}),
-				icon: <LuBrain className="h-4 w-4" />,
+				icon: <HiOutlineCube className="h-4 w-4" />,
+			},
+			{
+				id: "/settings/agent-accounts",
+				section: "agentAccounts",
+				label: msg({
+					message: "Agents",
+				}),
+				icon: <LuKeyRound className="h-4 w-4" />,
 			},
 		],
 	},
@@ -228,14 +263,6 @@ const SECTION_GROUPS: SectionGroup[] = [
 				}),
 				icon: <HiOutlineComputerDesktop className="h-4 w-4" />,
 				fullWidth: true,
-			},
-			{
-				id: "/settings/environments",
-				section: "environments",
-				label: msg({
-					message: "Environments",
-				}),
-				icon: <HiOutlineCube className="h-4 w-4" />,
 			},
 			{
 				id: "/settings/integrations",
@@ -309,13 +336,18 @@ export const FULL_WIDTH_SECTION_PATHS: readonly string[] =
 	);
 
 export function GeneralSettings({ matchCounts }: GeneralSettingsProps) {
+	const mobileEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_LAUNCH);
 	const matchRoute = useMatchRoute();
+	const hostsNeedingUpdate = useHostsNeedingUpdateCount();
 	const { data: platform } = electronTrpc.window.getPlatform.useQuery();
 	const isMac = platform === "darwin";
 	const isV2CloudEnabled = useIsV2CloudEnabled();
+	const cloudWorkspacesEnabled =
+		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
 	const allowedSections = useMemo(
-		() => getAllowedSectionsForVariant(isV2CloudEnabled),
-		[isV2CloudEnabled],
+		() =>
+			getAllowedSectionsForVariant(isV2CloudEnabled, cloudWorkspacesEnabled),
+		[isV2CloudEnabled, cloudWorkspacesEnabled],
 	);
 
 	return (
@@ -323,7 +355,9 @@ export function GeneralSettings({ matchCounts }: GeneralSettingsProps) {
 			{SECTION_GROUPS.map((group, groupIndex) => {
 				const platformItems = group.items.filter(
 					(item) =>
-						(!item.macOnly || isMac) && allowedSections.has(item.section),
+						(!item.macOnly || isMac) &&
+						(item.section !== "mobile" || mobileEnabled === true) &&
+						allowedSections.has(item.section),
 				);
 				const filteredItems = matchCounts
 					? platformItems.filter((item) => (matchCounts[item.section] ?? 0) > 0)
@@ -360,6 +394,26 @@ export function GeneralSettings({ matchCounts }: GeneralSettingsProps) {
 												{count}
 											</span>
 										)}
+										{!matchCounts &&
+											section.section === "hosts" &&
+											hostsNeedingUpdate > 0 && (
+												<span
+													className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-amber-700 ring-1 ring-inset ring-amber-500/35 dark:text-amber-300"
+													title={i18n._({
+														...msg({
+															message:
+																"{count} hosts run an older host service than this app",
+														}),
+														values: { count: hostsNeedingUpdate },
+													})}
+												>
+													<span
+														aria-hidden="true"
+														className="size-1.5 rounded-full bg-amber-500"
+													/>
+													{hostsNeedingUpdate}
+												</span>
+											)}
 									</Link>
 								);
 							})}

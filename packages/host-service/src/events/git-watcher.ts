@@ -2,7 +2,7 @@ import { execFile } from "node:child_process";
 import { existsSync, type FSWatcher, watch } from "node:fs";
 import { promisify } from "node:util";
 import type { FsWatchEvent } from "@superset/workspace-fs/host";
-import { isNull } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import type { HostDb } from "../db/index.ts";
 import { workspaces } from "../db/schema.ts";
 import type { WorkspaceFilesystemManager } from "../runtime/filesystem/index.ts";
@@ -149,11 +149,13 @@ export function filterGitIgnoredEvents(
 	const isIgnored = (absolutePath: string | undefined): boolean => {
 		if (!absolutePath || !absolutePath.startsWith(worktreePrefix)) return false;
 		const relative = absolutePath.slice(worktreePrefix.length);
+		// Git never descends into a wholly-ignored directory, so a .gitignore
+		// inside one (every npm package ships one) cannot change the rules.
+		if (isUnderIgnoredDir(relative, ignoredDirs)) return true;
 		if (relative === ".gitignore" || relative.endsWith("/.gitignore")) {
 			sawGitignoreChange = true;
-			return false;
 		}
-		return isUnderIgnoredDir(relative, ignoredDirs);
+		return false;
 	};
 
 	for (const event of events) {
@@ -179,11 +181,23 @@ export interface GitChangedEvent {
 
 export type GitChangedListener = (event: GitChangedEvent) => void;
 
+export type GitWatchStateListener = (
+	workspaceId: string,
+	watched: boolean,
+) => void;
+
 interface PendingBatch {
 	/** Any `.git/*` event seen during this debounce window. */
 	hasGitDir: boolean;
 	/** Worktree-relative paths, or null once the batch requires broad refresh. */
 	paths: Set<string> | null;
+	/**
+	 * Hard flush deadline armed with the batch. The short window is trailing
+	 * (each event resets it), so a steady stream — a rebase writing `.git/`
+	 * every 200ms into a batch that already went broad — could otherwise
+	 * defer the flush indefinitely.
+	 */
+	deadline: ReturnType<typeof setTimeout>;
 }
 
 interface WatchedWorkspace {
@@ -208,12 +222,19 @@ interface IgnoredDirsState {
 }
 
 /**
- * Watches git state for all workspaces in the host-service DB and emits a
- * coalesced `changed` signal when anything that could affect `git status`
- * output happens. Auto-discovers new workspaces and drops removed ones every
- * 30s.
+ * Watches git state for workspaces someone is actually interested in — not
+ * every workspace in the host-service DB (see #6729). Membership is
+ * refcounted via `watchWorkspace`/`unwatchWorkspace`: a workspace is watched
+ * exactly while its interest count is positive, driven by client `git:watch`
+ * subscriptions (routed through `EventBus`) or an internal host-service
+ * caller. A 30s sweep cleans up watchers for workspaces that got archived or
+ * deleted, and retries attaching for any still-interested workspace that
+ * failed to attach earlier (worktree not ready yet) — both proportional to
+ * the interested set, not the full workspace table.
  *
- * Two sources feed into the same debounced emit per workspace:
+ * Emits a coalesced `changed` signal when anything that could affect `git
+ * status` output happens. Two sources feed into the same debounced emit per
+ * workspace:
  *
  * 1. `.git/` directory (via `node:fs.watch`) — catches commits, staging,
  *    branch switches, fetches, including from an external terminal. Paths that
@@ -222,11 +243,9 @@ interface IgnoredDirsState {
  *    the wider `GIT_DIR_DEBOUNCE_MS` window.
  * 2. Worktree root (via `@superset/workspace-fs` watcher manager) — catches
  *    working-tree file edits that change `git status` output. The underlying
- *    watcher honors `DEFAULT_IGNORE_PATTERNS`, which excludes `.git/`,
- *    `node_modules/`, `dist/`, etc. — exactly the paths that don't affect
- *    `git status`, so we don't waste refetches on them. Events that survive
- *    the static list but sit inside a *gitignored* dir (repo-specific build
- *    output the list can't know about, or a dir created after the native
+ *    watcher excludes `.git/` and fully gitignored directories, but keeps
+ *    tracked files under build/vendor directories observable. Events inside
+ *    a gitignored dir (including a dir created after the native
  *    watcher attached) are dropped by `filterGitIgnoredEvents` against a
  *    per-workspace set from `listGitIgnoredDirs`, refreshed after each emit
  *    and failed open whenever a `.gitignore` changes. Subscription is
@@ -241,6 +260,8 @@ export class GitWatcher {
 	private readonly filesystem: WorkspaceFilesystemManager;
 	private readonly listeners = new Set<GitChangedListener>();
 	private readonly watched = new Map<string, WatchedWorkspace>();
+	/** Refcount of active interest per workspace; watched iff count > 0. */
+	private readonly interest = new Map<string, number>();
 	private readonly debounceTimers = new Map<
 		string,
 		ReturnType<typeof setTimeout>
@@ -249,10 +270,16 @@ export class GitWatcher {
 	private readonly ignoredDirs = new Map<string, IgnoredDirsState>();
 	private rescanTimer: ReturnType<typeof setInterval> | null = null;
 	private closed = false;
+	private readonly onWatchStateChange: GitWatchStateListener;
 
-	constructor(db: HostDb, filesystem: WorkspaceFilesystemManager) {
+	constructor(
+		db: HostDb,
+		filesystem: WorkspaceFilesystemManager,
+		onWatchStateChange: GitWatchStateListener = () => {},
+	) {
 		this.db = db;
 		this.filesystem = filesystem;
+		this.onWatchStateChange = onWatchStateChange;
 	}
 
 	start(): void {
@@ -270,23 +297,100 @@ export class GitWatcher {
 		};
 	}
 
+	/**
+	 * Register interest in a workspace's git state. The first caller for a
+	 * workspace triggers attaching real watchers (a DB lookup + `.git/` +
+	 * worktree-root watch); subsequent callers just bump the refcount.
+	 */
+	watchWorkspace(workspaceId: string): void {
+		if (this.closed) return;
+		const count = this.interest.get(workspaceId) ?? 0;
+		this.interest.set(workspaceId, count + 1);
+		if (count === 0 && !this.watched.has(workspaceId)) {
+			void this.attachFromDb(workspaceId);
+		}
+	}
+
+	/**
+	 * Release interest in a workspace. Tears down its watchers once the
+	 * refcount reaches zero.
+	 */
+	unwatchWorkspace(workspaceId: string): void {
+		const count = this.interest.get(workspaceId) ?? 0;
+		if (count <= 1) {
+			this.interest.delete(workspaceId);
+			this.stopWatching(workspaceId);
+		} else {
+			this.interest.set(workspaceId, count - 1);
+		}
+	}
+
+	private notifyWatchState(workspaceId: string, watched: boolean): void {
+		try {
+			this.onWatchStateChange(workspaceId, watched);
+		} catch (error) {
+			console.error("[git-watcher] watch-state listener threw — contained", {
+				workspaceId,
+				watched,
+				error,
+			});
+		}
+	}
+
+	private async attachFromDb(workspaceId: string): Promise<void> {
+		if (this.closed) return;
+		let row: { worktreePath: string } | undefined;
+		try {
+			row = this.db
+				.select({ worktreePath: workspaces.worktreePath })
+				.from(workspaces)
+				.where(
+					and(eq(workspaces.id, workspaceId), isNull(workspaces.archivedAt)),
+				)
+				.get();
+		} catch (error) {
+			console.error("[git-watcher] attach lookup failed", {
+				workspaceId,
+				error,
+			});
+			return;
+		}
+		// Not found / archived: nothing to attach right now. If the row appears
+		// later (e.g. `watchWorkspace` raced workspace creation), the 30s sweep
+		// retries any still-interested workspace that never attached.
+		if (!row) return;
+		await this.attachWatcher(workspaceId, row.worktreePath);
+	}
+
+	private stopWatching(workspaceId: string): void {
+		const entry = this.watched.get(workspaceId);
+		if (entry) {
+			entry.watcher.close();
+			entry.disposeWorktreeWatch();
+			this.watched.delete(workspaceId);
+			this.notifyWatchState(workspaceId, false);
+		}
+		this.ignoredDirs.delete(workspaceId);
+		this.discardBatch(workspaceId);
+	}
+
 	close(): void {
 		this.closed = true;
 		if (this.rescanTimer) {
 			clearInterval(this.rescanTimer);
 			this.rescanTimer = null;
 		}
-		for (const timer of this.debounceTimers.values()) {
-			clearTimeout(timer);
+		for (const workspaceId of [...this.pendingBatches.keys()]) {
+			this.discardBatch(workspaceId);
 		}
-		this.debounceTimers.clear();
-		this.pendingBatches.clear();
 		for (const entry of this.watched.values()) {
 			entry.watcher.close();
 			entry.disposeWorktreeWatch();
+			this.notifyWatchState(entry.workspaceId, false);
 		}
 		this.watched.clear();
 		this.ignoredDirs.clear();
+		this.interest.clear();
 	}
 
 	private getOrCreateIgnoredDirsState(workspaceId: string): IgnoredDirsState {
@@ -313,6 +417,14 @@ export class GitWatcher {
 		worktreePath: string,
 		force = false,
 	): void {
+		// The async continuations below must only act for the watcher that
+		// started them: unwatchWorkspace() (or unwatch-then-rewatch) mid-refresh
+		// would otherwise re-create ignore state and, on a swap, schedule a
+		// git:changed for a workspace nobody watches any more.
+		const entry = this.watched.get(workspaceId);
+		if (!entry) return;
+		const stillCurrent = () =>
+			!this.closed && this.watched.get(workspaceId) === entry;
 		const state = this.getOrCreateIgnoredDirsState(workspaceId);
 		if (state.refreshing) return;
 		if (
@@ -325,7 +437,7 @@ export class GitWatcher {
 		state.rulesChanged = false;
 		void listGitIgnoredDirs(worktreePath)
 			.then(async (dirs) => {
-				if (this.closed) return;
+				if (!stillCurrent()) return;
 				state.dirs = new Set(dirs);
 				state.lastRefreshAt = Date.now();
 				if (rulesChanged) {
@@ -344,7 +456,7 @@ export class GitWatcher {
 							});
 							return false;
 						});
-					if (this.closed) return;
+					if (!stillCurrent()) return;
 					if (swapped) this.markGitDirDirty(workspaceId);
 				}
 			})
@@ -360,7 +472,7 @@ export class GitWatcher {
 				// switch rewriting .gitignore twice): the listing we just stored
 				// is stale and the emit that flagged it was swallowed by the
 				// `refreshing` guard — run once more.
-				if (state.rulesChanged && !this.closed) {
+				if (state.rulesChanged && stillCurrent()) {
 					this.refreshIgnoredDirs(workspaceId, worktreePath, true);
 				}
 			});
@@ -369,10 +481,65 @@ export class GitWatcher {
 	private getOrCreateBatch(workspaceId: string): PendingBatch {
 		let batch = this.pendingBatches.get(workspaceId);
 		if (!batch) {
-			batch = { hasGitDir: false, paths: new Set() };
+			batch = {
+				hasGitDir: false,
+				paths: new Set(),
+				deadline: setTimeout(
+					() => this.flushBatch(workspaceId),
+					GIT_DIR_DEBOUNCE_MS,
+				),
+			};
 			this.pendingBatches.set(workspaceId, batch);
 		}
 		return batch;
+	}
+
+	private discardBatch(workspaceId: string): void {
+		const timer = this.debounceTimers.get(workspaceId);
+		if (timer) {
+			clearTimeout(timer);
+			this.debounceTimers.delete(workspaceId);
+		}
+		const batch = this.pendingBatches.get(workspaceId);
+		if (batch) {
+			clearTimeout(batch.deadline);
+			this.pendingBatches.delete(workspaceId);
+		}
+	}
+
+	private flushBatch(workspaceId: string): void {
+		const batch = this.pendingBatches.get(workspaceId);
+		this.discardBatch(workspaceId);
+		if (!batch) return;
+		const event = this.toChangedEvent(workspaceId, batch);
+		for (const listener of this.listeners) {
+			// Isolate per-listener throws so one bad subscriber can't skip
+			// siblings. Other escapes fall through to the process-level net.
+			try {
+				listener(event);
+			} catch (error) {
+				console.error("[git-watcher:listener] threw — contained", {
+					error,
+				});
+			}
+		}
+		// Anything that emits may also have changed what git ignores (a
+		// build dir appearing, a .gitignore edit) — re-derive the filter
+		// set so the follow-up churn stops emitting.
+		const watchedEntry = this.watched.get(workspaceId);
+		if (watchedEntry) {
+			this.refreshIgnoredDirs(workspaceId, watchedEntry.worktreePath);
+		}
+	}
+
+	private toChangedEvent(
+		workspaceId: string,
+		batch: PendingBatch,
+	): GitChangedEvent {
+		if (batch.hasGitDir || batch.paths === null || batch.paths.size === 0) {
+			return { workspaceId };
+		}
+		return { workspaceId, paths: [...batch.paths] };
 	}
 
 	/**
@@ -393,11 +560,13 @@ export class GitWatcher {
 	}
 
 	private markGitDirDirty(workspaceId: string): void {
+		if (this.closed) return;
 		this.getOrCreateBatch(workspaceId).hasGitDir = true;
 		this.scheduleFlush(workspaceId);
 	}
 
 	private addWorktreePaths(workspaceId: string, paths: Iterable<string>): void {
+		if (this.closed) return;
 		const batch = this.getOrCreateBatch(workspaceId);
 		if (batch.paths) {
 			for (const path of paths) {
@@ -412,7 +581,14 @@ export class GitWatcher {
 		this.scheduleFlush(workspaceId);
 	}
 
+	private markWorktreeBroad(workspaceId: string): void {
+		if (this.closed) return;
+		this.getOrCreateBatch(workspaceId).paths = null;
+		this.scheduleFlush(workspaceId);
+	}
+
 	private scheduleFlush(workspaceId: string): void {
+		if (this.closed) return;
 		const existing = this.debounceTimers.get(workspaceId);
 		const batch = this.getOrCreateBatch(workspaceId);
 		// `.git/`-only batches use the wide window, leading-anchored: the first
@@ -426,37 +602,21 @@ export class GitWatcher {
 		const delay = gitDirOnly ? GIT_DIR_DEBOUNCE_MS : DEBOUNCE_MS;
 		this.debounceTimers.set(
 			workspaceId,
-			setTimeout(() => {
-				this.debounceTimers.delete(workspaceId);
-				const batch = this.pendingBatches.get(workspaceId);
-				this.pendingBatches.delete(workspaceId);
-				if (!batch) return;
-				const event: GitChangedEvent =
-					batch.hasGitDir || batch.paths === null || batch.paths.size === 0
-						? { workspaceId }
-						: { workspaceId, paths: [...batch.paths] };
-				for (const listener of this.listeners) {
-					// Isolate per-listener throws so one bad subscriber can't skip
-					// siblings. Other escapes fall through to the process-level net.
-					try {
-						listener(event);
-					} catch (error) {
-						console.error("[git-watcher:listener] threw — contained", {
-							error,
-						});
-					}
-				}
-				// Anything that emits may also have changed what git ignores (a
-				// build dir appearing, a .gitignore edit) — re-derive the filter
-				// set so the follow-up churn stops emitting.
-				const watchedEntry = this.watched.get(workspaceId);
-				if (watchedEntry) {
-					this.refreshIgnoredDirs(workspaceId, watchedEntry.worktreePath);
-				}
-			}, delay),
+			setTimeout(() => this.flushBatch(workspaceId), delay),
 		);
 	}
 
+	/**
+	 * Cleanup + retry sweep — NOT a re-registration pass. Drops watchers (and
+	 * interest) for workspaces that got archived or deleted, and retries
+	 * attaching for any workspace someone is still interested in but that
+	 * never attached (worktree wasn't ready, transient git-dir lookup
+	 * failure). Both loops are bounded by the interested set, not the total
+	 * non-archived workspace count — see #6729. (The `select` below still
+	 * scans every non-archived row every 30s to detect archival/deletion —
+	 * one indexed, synchronous SQLite query, not the expensive part: no
+	 * subprocess spawns or live fs.watch handles come from it directly.)
+	 */
 	private async rescan(): Promise<void> {
 		if (this.closed) return;
 
@@ -474,26 +634,45 @@ export class GitWatcher {
 			return;
 		}
 
-		const currentIds = new Set(rows.map((r) => r.id));
+		const existingIds = new Set(rows.map((r) => r.id));
+		const worktreePathById = new Map(rows.map((r) => [r.id, r.worktreePath]));
 
-		// Remove watchers for workspaces that no longer exist
-		for (const [id, entry] of this.watched) {
-			if (!currentIds.has(id)) {
-				entry.watcher.close();
-				entry.disposeWorktreeWatch();
-				this.watched.delete(id);
-				this.ignoredDirs.delete(id);
-			}
+		// Remove watchers for workspaces that no longer exist (archived or
+		// deleted). Routed through stopWatching() (not inlined) so a pending
+		// debounce timer/batch for the removed workspace can't fire a stale
+		// git:changed later — it also clears those, this loop used to leave
+		// them dangling.
+		//
+		// Deliberately does NOT touch `interest` here. A workspace can be
+		// transiently absent from this scan without any client ever losing
+		// interest in it (e.g. archived-then-restored via the tombstone
+		// delete flow) — a client that already sent one `git:watch` has no
+		// reason to send it again, and won't unless it remounts or the
+		// socket reconnects. Deleting `interest` for a merely-transient gap
+		// would desync GitWatcher's bookkeeping from what the client (and
+		// its socket's `gitSubscriptions`) still believes is watched, with
+		// nothing left to ever resync it — the retry loop below only walks
+		// `interest.keys()`, so a wrongly-cleared entry can never come back
+		// on its own. `interest` is owned exclusively by
+		// watchWorkspace()/unwatchWorkspace(); a stale entry for a
+		// workspace gone for good costs one Map entry (bounded by the
+		// per-client `git:watch` cap in event-bus.ts) until the holding
+		// client unwatches or its socket closes — self-healing, unlike a
+		// leaked live watcher.
+		for (const id of [...this.watched.keys()]) {
+			if (!existingIds.has(id)) this.stopWatching(id);
 		}
 
-		// Add watchers for new workspaces
-		for (const row of rows) {
-			if (this.watched.has(row.id)) continue;
-			await this.watchWorkspace(row.id, row.worktreePath);
+		// Retry attaching for still-interested workspaces that never attached.
+		for (const id of this.interest.keys()) {
+			if (this.watched.has(id)) continue;
+			const worktreePath = worktreePathById.get(id);
+			if (!worktreePath) continue;
+			await this.attachWatcher(id, worktreePath);
 		}
 	}
 
-	private async watchWorkspace(
+	private async attachWatcher(
 		workspaceId: string,
 		worktreePath: string,
 	): Promise<void> {
@@ -502,6 +681,8 @@ export class GitWatcher {
 		// Deleted-out-from-under worktree: skip the exec attempt; the 30s
 		// rescan re-probes and picks the workspace up when the dir returns.
 		if (!existsSync(worktreePath)) return;
+
+		if (this.filesystem.isWatchAttachBackingOff(worktreePath)) return;
 
 		let gitDir: string;
 		try {
@@ -528,6 +709,14 @@ export class GitWatcher {
 		const disposeWorktreeWatch = this.startWorktreeWatch(
 			workspaceId,
 			worktreePath,
+			() => {
+				if (
+					this.watched.get(workspaceId)?.disposeWorktreeWatch !==
+					disposeWorktreeWatch
+				)
+					return;
+				this.stopWatching(workspaceId);
+			},
 		);
 
 		let watcher: FSWatcher;
@@ -542,11 +731,30 @@ export class GitWatcher {
 		}
 
 		watcher.on("error", () => {
-			// Watcher died — clean up so rescan can re-add
-			disposeWorktreeWatch();
-			this.watched.delete(workspaceId);
+			// Watcher died — clean up so rescan can re-add. Identity-checked: an
+			// error queued on a watcher that unwatch→rewatch already replaced
+			// must not evict the live entry (its resources were released by
+			// stopWatching; closing again is harmless).
 			watcher.close();
+			if (this.watched.get(workspaceId)?.watcher !== watcher) return;
+			this.stopWatching(workspaceId);
 		});
+
+		// Recheck interest: watchWorkspace()/unwatchWorkspace() can flip the
+		// refcount to zero while the DB lookup + `git rev-parse` subprocess
+		// above were in flight (fast tab close, effect re-run). Committing to
+		// `watched` anyway would leak a live watcher forever — nothing but
+		// archival/deletion would ever tear it down, reintroducing #6729 one
+		// race at a time. Don't commit what's no longer wanted.
+		if (
+			this.closed ||
+			this.watched.has(workspaceId) ||
+			!this.interest.has(workspaceId)
+		) {
+			disposeWorktreeWatch();
+			watcher.close();
+			return;
+		}
 
 		this.watched.set(workspaceId, {
 			workspaceId,
@@ -555,7 +763,16 @@ export class GitWatcher {
 			watcher,
 			disposeWorktreeWatch,
 		});
+		this.notifyWatchState(workspaceId, true);
 		this.refreshIgnoredDirs(workspaceId, worktreePath, true);
+
+		// A change can land in the gap between watchWorkspace() and this line
+		// (the DB lookup + `git rev-parse` above are async) and go unobserved —
+		// fs.watch only reports events from here forward. One coalesced
+		// catch-up emit closes that window; consumers already treat every
+		// git:changed as "re-check status", so a possibly-redundant emit costs
+		// one extra read, not incorrect state.
+		this.markGitDirDirty(workspaceId);
 	}
 
 	/**
@@ -568,6 +785,7 @@ export class GitWatcher {
 	private startWorktreeWatch(
 		workspaceId: string,
 		worktreePath: string,
+		onFailure: () => void = () => {},
 	): () => void {
 		let disposed = false;
 		let iterator: AsyncIterator<{ events: FsWatchEvent[] }> | null = null;
@@ -583,14 +801,39 @@ export class GitWatcher {
 				workspaceId,
 				error,
 			});
-			return () => {};
+			// Attach publishes its entry synchronously after this returns. Defer
+			// teardown so even a synchronous subscription failure drops it.
+			queueMicrotask(() => {
+				if (!disposed) onFailure();
+			});
+			return () => {
+				disposed = true;
+			};
 		}
 
 		void (async () => {
 			try {
 				while (!disposed && iterator) {
 					const next = await iterator.next();
-					if (disposed || next.done) return;
+					if (disposed) return;
+					if (next.done) {
+						onFailure();
+						return;
+					}
+
+					// The kernel dropped events (overflow) or the root was
+					// recreated: per-path events are incomplete, refresh in full.
+					if (
+						next.value.events.some(
+							(event) =>
+								event.kind === "overflow" ||
+								event.absolutePath === worktreePath ||
+								event.absolutePath === `${worktreePath}/`,
+						)
+					) {
+						this.markWorktreeBroad(workspaceId);
+						continue;
+					}
 
 					const ignoredState = this.getOrCreateIgnoredDirsState(workspaceId);
 					const filtered = filterGitIgnoredEvents(
@@ -604,6 +847,10 @@ export class GitWatcher {
 						// refresh check the native prune for staleness.
 						ignoredState.dirs = new Set();
 						ignoredState.rulesChanged = true;
+						// The edit can ignore or un-ignore any number of files
+						// outside the batch, so no scoped re-read can be correct.
+						this.markWorktreeBroad(workspaceId);
+						continue;
 					}
 					// Entirely gitignored churn (a build writing into .next):
 					// no flush at all — this is the whole point of the filter.
@@ -632,6 +879,7 @@ export class GitWatcher {
 						workspaceId,
 						error,
 					});
+					onFailure();
 				}
 			}
 		})();

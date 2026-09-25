@@ -1,3 +1,4 @@
+import type { ActiveAgentStatus } from "@superset/shared/agent-status";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import {
 	createContext,
@@ -41,6 +42,8 @@ export interface SidebarWorkspaceStatusEntry {
 	statuses: ReadonlyMap<string, PaneStatus>;
 	/** Populated only for the active workspace — the only row that shows it. */
 	diffStats: DiffStats | null;
+	/** When the host reported `status`, for mark-seen; null when derived from bindings. */
+	reportedAt: number | null;
 }
 
 const EMPTY_ENTRY: SidebarWorkspaceStatusEntry = {
@@ -49,6 +52,7 @@ const EMPTY_ENTRY: SidebarWorkspaceStatusEntry = {
 	bindings: new Map(),
 	statuses: new Map(),
 	diffStats: null,
+	reportedAt: null,
 };
 
 /**
@@ -115,6 +119,10 @@ const StatusStoreContext = createContext<SidebarWorkspaceStatusStore | null>(
 export interface SidebarStatusWorkspaceRef {
 	id: string;
 	hostId: string;
+	/** Null means idle or never reported. */
+	reportedStatus?: ActiveAgentStatus | null;
+	/** The reporting host's clock, epoch ms. */
+	reportedAt?: number | null;
 }
 
 interface WorkspaceStatusTarget {
@@ -140,6 +148,7 @@ function entriesEqual(
 	return (
 		left.status === right.status &&
 		left.isUnread === right.isUnread &&
+		left.reportedAt === right.reportedAt &&
 		(left.diffStats === right.diffStats ||
 			(left.diffStats !== null &&
 				right.diffStats !== null &&
@@ -171,6 +180,26 @@ export function DashboardSidebarWorkspaceStatusProvider({
 	const [store] = useState(() => new SidebarWorkspaceStatusStore());
 	const queryClient = useQueryClient();
 	const { cache: hostWorkspacesCache } = useHostWorkspaces();
+	// Off the fingerprinted targets: a change here must not re-run the subscriptions.
+	const reportedByWorkspaceId = useMemo(
+		() =>
+			new Map(
+				workspaces.map(
+					(workspace) =>
+						[
+							workspace.id,
+							{
+								status: workspace.reportedStatus ?? null,
+								at: workspace.reportedAt ?? null,
+							},
+						] as const,
+				),
+			),
+		[workspaces],
+	);
+	const workspaceSeenAt = useV2NotificationStore(
+		(state) => state.workspaceSeenAt,
+	);
 
 	const computedTargets = useMemo<WorkspaceStatusTarget[]>(
 		() =>
@@ -217,15 +246,31 @@ export function DashboardSidebarWorkspaceStatusProvider({
 			// staleTime lets focus/remount refetches self-heal any staleness
 			// from events missed while the WS was down (host restart, sleep).
 			staleTime: 30_000,
+			// Subagent rows expire host-side on read (a lost stop hook); keep
+			// reading while any are shown so an expired child does not linger
+			// until an unrelated lifecycle event.
+			refetchInterval: (query: { state: { data?: TerminalAgentBinding[] } }) =>
+				query.state.data?.some((binding) => binding.subagents?.length)
+					? 60_000
+					: false,
 		})),
 		combine: (results) => results.map((result) => result.data),
 	});
 
-	// One lifecycle/git subscription pass for the whole sidebar (the per-row
-	// hooks used to register these per workspace, several times over). The
-	// git:changed invalidation keeps diff-stats caches fresh for rows that
-	// aren't currently displaying them (staleTime is Infinity there, so a
-	// missed invalidation would freeze counts on the next activation).
+	// One lifecycle subscription pass for the whole sidebar (the per-row
+	// hooks used to register these per workspace, several times over).
+	// Listeners are renderer-side only: registering one costs the host
+	// nothing, unlike a git watch.
+	//
+	// Deliberately no git:changed listener and no watchGit here. GitWatcher
+	// only watches a workspace while someone holds interest (#6729), and a
+	// sidebar row is not that someone: only the active row renders diff
+	// stats, and its live updates come from useDiffStats's own subscription
+	// below. Holding a watch for every listed row kept most of a heavy
+	// user's workspace population under a live .git watch (recursive fs
+	// watch + git fan-out on every change) for as long as the dashboard was
+	// open. Inactive rows' cached counts are refreshed on activation
+	// instead (see the effect after this one).
 	useEffect(() => {
 		const cleanups: Array<() => void> = [];
 		const retainedHostUrls = new Set<string>();
@@ -248,18 +293,28 @@ export function DashboardSidebarWorkspaceStatusProvider({
 			cleanups.push(
 				bus.on("terminal:lifecycle", workspaceId, invalidateBindings),
 			);
-			cleanups.push(
-				bus.on("git:changed", workspaceId, () => {
-					void queryClient.invalidateQueries({
-						queryKey: getDiffStatsQueryKey(hostUrl, workspaceId),
-					});
-				}),
-			);
 		}
+
 		return () => {
 			for (const cleanup of cleanups) cleanup();
 		};
 	}, [targets, queryClient]);
+
+	// A row that was not being watched may hold diff stats cached from its
+	// last activation (staleTime is Infinity, so they never refetch on their
+	// own). Mark them stale when the row becomes active so the count shown
+	// reflects what happened while nobody was watching. A row with nothing
+	// cached is fetching for the first time anyway; invalidating it too would
+	// only restart that fetch.
+	const activeHostUrl =
+		targets.find((target) => target.workspaceId === activeWorkspaceId)
+			?.hostUrl ?? null;
+	useEffect(() => {
+		if (!activeWorkspaceId || !activeHostUrl) return;
+		const queryKey = getDiffStatsQueryKey(activeHostUrl, activeWorkspaceId);
+		if (queryClient.getQueryState(queryKey)?.status !== "success") return;
+		void queryClient.invalidateQueries({ queryKey });
+	}, [activeWorkspaceId, activeHostUrl, queryClient]);
 
 	// Only the active row renders diff stats, so one query serves the sidebar.
 	const activeDiffStats = useDiffStats(activeWorkspaceId ?? "", {
@@ -300,16 +355,32 @@ export function DashboardSidebarWorkspaceStatusProvider({
 					break;
 				}
 			}
+			const report =
+				target.hostUrl === null
+					? reportedByWorkspaceId.get(target.workspaceId)
+					: undefined;
+			const reported =
+				report?.status === "review" &&
+				report.at !== null &&
+				(workspaceSeenAt[target.workspaceId] ?? 0) >= report.at
+					? null
+					: (report?.status ?? null);
 			const candidate: SidebarWorkspaceStatusEntry = {
 				status: getHighestPriorityStatus([
 					hasManualUnread ? "review" : undefined,
+					reported ?? undefined,
 					...statuses.values(),
 				]),
-				isUnread: hasManualUnread || hasAttentionTerminal,
+				isUnread:
+					hasManualUnread ||
+					hasAttentionTerminal ||
+					reported === "review" ||
+					reported === "failed",
 				bindings,
 				statuses,
 				diffStats:
 					target.workspaceId === activeWorkspaceId ? activeDiffStats : null,
+				reportedAt: report?.at ?? null,
 			};
 			const previousEntry = previous.get(target.workspaceId);
 			next.set(
@@ -328,6 +399,8 @@ export function DashboardSidebarWorkspaceStatusProvider({
 		terminalSeenAt,
 		activeWorkspaceId,
 		activeDiffStats,
+		reportedByWorkspaceId,
+		workspaceSeenAt,
 	]);
 
 	store.replaceEntries(entries);
@@ -381,10 +454,17 @@ export function useMarkSidebarWorkspaceTerminalsSeen(
 	const markTerminalSeen = useV2NotificationStore(
 		(state) => state.markTerminalSeen,
 	);
+	const markWorkspaceSeen = useV2NotificationStore(
+		(state) => state.markWorkspaceSeen,
+	);
 	return useCallback(() => {
 		// Host-clock only: "seen through the binding's last event".
-		for (const binding of store.get(workspaceId).bindings.values()) {
+		const entry = store.get(workspaceId);
+		for (const binding of entry.bindings.values()) {
 			markTerminalSeen(binding.terminalId, binding.lastEventAt);
 		}
-	}, [store, workspaceId, markTerminalSeen]);
+		if (entry.reportedAt !== null) {
+			markWorkspaceSeen(workspaceId, entry.reportedAt);
+		}
+	}, [store, workspaceId, markTerminalSeen, markWorkspaceSeen]);
 }

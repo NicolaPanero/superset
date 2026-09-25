@@ -1,15 +1,16 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { i18n } from "@superset/i18n";
+import { getI18nInstance } from "@superset/i18n/server";
 import type { Metadata } from "next";
 import { localeUrl, localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
-import { getBlogPosts } from "@/lib/blog";
+import { getBlogPost, getListedBlogPosts } from "@/lib/blog";
 import { BlogCard } from "./components/BlogCard";
 import { GridCross } from "./components/GridCross";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const lang = await initServerI18n();
+	const i18n = getI18nInstance(lang);
 	const title = i18n._(
 		msg({
 			message: "Blog",
@@ -35,13 +36,13 @@ export async function generateMetadata(): Promise<Metadata> {
 			title: `${title} | Superset`,
 			description: description,
 			url: localeUrl(lang, "/blog"),
-			images: ["/opengraph-image"],
+			images: ["/og-image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: `${title} | Superset`,
 			description: description,
-			images: ["/opengraph-image"],
+			images: ["/og-image.png"],
 		},
 	};
 }
@@ -49,7 +50,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogPage() {
 	await initServerI18n();
 
-	const posts = getBlogPosts();
+	const posts = getListedBlogPosts();
+	const guides = [
+		"change-ui-with-your-coding-agent",
+		"send-pr-feedback-to-your-agent",
+		"review-agent-work-with-pages",
+		"parallel-coding-agents-guide",
+		"scheduled-agent-maintenance",
+	].flatMap((slug) => {
+		const post = getBlogPost(slug);
+		return post ? [post] : [];
+	});
 
 	return (
 		<main className="relative min-h-screen">
@@ -86,6 +97,23 @@ export default async function BlogPage() {
 					<GridCross className="bottom-0 right-0" />
 				</div>
 			</header>
+
+			<section
+				aria-labelledby="guides-heading"
+				className="relative max-w-3xl mx-auto px-6 pt-12"
+			>
+				<h2
+					id="guides-heading"
+					className="text-2xl font-medium tracking-tight text-foreground mb-6"
+				>
+					<Trans>Guides</Trans>
+				</h2>
+				<div className="flex flex-col gap-4">
+					{guides.map((post) => (
+						<BlogCard key={post.url} post={post} headingLevel="h3" />
+					))}
+				</div>
+			</section>
 
 			{/* Posts section */}
 			<div className="relative max-w-3xl mx-auto px-6 py-12">

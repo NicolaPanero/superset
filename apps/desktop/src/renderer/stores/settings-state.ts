@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 export type SettingsSection =
+	| "mobile"
 	| "account"
 	| "organization"
 	| "teams"
@@ -15,7 +16,6 @@ export type SettingsSection =
 	| "agents"
 	| "terminal"
 	| "links"
-	| "models"
 	| "experimental"
 	| "integrations"
 	| "billing"
@@ -24,7 +24,9 @@ export type SettingsSection =
 	| "security"
 	| "project"
 	| "hosts"
-	| "environments";
+	| "environments"
+	| "agentAccounts"
+	| "connections";
 
 interface SettingsState {
 	activeSection: SettingsSection;

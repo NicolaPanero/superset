@@ -1,6 +1,7 @@
 import type { WorkspaceStore } from "@superset/panes";
 import { useCallback } from "react";
 import type { V2UserPreferencesApi } from "renderer/hooks/useV2UserPreferences";
+import type { PullRequestRef } from "renderer/lib/github/pullRequestRef";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import type { V2TerminalPresetRow } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal";
@@ -21,6 +22,7 @@ import {
 	openChangesPaneInStore,
 } from "../../utils/openChangesPaneInStore";
 import { openPagePaneInStore } from "../../utils/openPagePaneInStore";
+import { openPullRequestPaneInStore } from "../../utils/openPullRequestPaneInStore";
 import {
 	getWorkspaceSidebarTab,
 	setWorkspaceSidebarTab,
@@ -34,6 +36,7 @@ export function useWorkspacePaneOpeners({
 	newTabPresets,
 	executePreset,
 	setRightSidebarOpen,
+	pageOpenAction,
 }: {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	launcher: TerminalLauncher;
@@ -43,6 +46,7 @@ export function useWorkspacePaneOpeners({
 		options?: { target?: "new-tab" | "active-tab" },
 	) => void | Promise<void>;
 	setRightSidebarOpen: V2UserPreferencesApi["setRightSidebarOpen"];
+	pageOpenAction: V2UserPreferencesApi["preferences"]["pageOpenAction"];
 }): {
 	openDiffPane: (
 		filePath: string,
@@ -59,6 +63,8 @@ export function useWorkspacePaneOpeners({
 	toggleChangesPane: () => void;
 	openCommentPane: (comment: CommentPaneData) => void;
 	openPagePane: (page: PagePaneData) => void;
+	/** Focus or open the pane showing the workspace's linked PR summary. */
+	openPullRequestPane: (ref: PullRequestRef) => void;
 } {
 	const openDiffPane = useCallback(
 		(
@@ -235,7 +241,18 @@ export function useWorkspacePaneOpeners({
 
 	const openPagePane = useCallback(
 		(page: PagePaneData) => {
-			openPagePaneInStore(store, page);
+			openPagePaneInStore(
+				store,
+				page,
+				pageOpenAction === "newTab" ? "tab" : "split",
+			);
+		},
+		[store, pageOpenAction],
+	);
+
+	const openPullRequestPane = useCallback(
+		(ref: PullRequestRef) => {
+			openPullRequestPaneInStore(store, ref);
 		},
 		[store],
 	);
@@ -249,5 +266,6 @@ export function useWorkspacePaneOpeners({
 		toggleChangesPane,
 		openCommentPane,
 		openPagePane,
+		openPullRequestPane,
 	};
 }

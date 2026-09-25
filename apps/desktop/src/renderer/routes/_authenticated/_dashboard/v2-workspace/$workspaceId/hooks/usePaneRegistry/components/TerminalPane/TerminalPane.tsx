@@ -1,11 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
 import type { RendererContext } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
+import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
 import "@xterm/xterm/css/xterm.css";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import {
 	useCallback,
 	useEffect,
@@ -15,29 +14,30 @@ import {
 	useSyncExternalStore,
 } from "react";
 import { env } from "renderer/env.renderer";
+import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
+import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useHotkey } from "renderer/hotkeys";
 import {
 	actionLabel,
 	type FolderClickPolicy,
 	folderIntentLabel,
+	type LinkAction,
 	LinkHoverHint,
 	useTerminalFilePolicy,
 	useTerminalFolderPolicy,
 	useTerminalUrlPolicy,
 } from "renderer/lib/clickPolicy";
+import { parseSupersetPageUrl } from "renderer/lib/parseSupersetPageUrl";
 import {
 	type ConnectionState,
 	terminalRuntimeRegistry,
 } from "renderer/lib/terminal/terminal-runtime-registry";
-import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { useOpenInExternalEditor } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useOpenInExternalEditor";
 import { useRevealInFinder } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useRevealInFinder";
 import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
-import { openPagePaneInStore } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/utils/openPagePaneInStore";
-import { openUrlInV2Workspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/utils/openUrlInV2Workspace";
 import { useWorkspaceWsUrl } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceTrpcProvider/WorkspaceTrpcProvider";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
@@ -46,13 +46,19 @@ import { TerminalSearch } from "renderer/screens/main/components/WorkspaceView/C
 import { useTheme } from "renderer/stores/theme";
 import { resolveTerminalThemeType } from "renderer/stores/theme/utils";
 import { isWithinWorkspacePath } from "shared/absolute-paths";
+import { useLinkClickHint } from "../../hooks/useLinkClickHint";
+import {
+	runFileLinkAction,
+	runFolderLinkAction,
+	runUrlLinkAction,
+	type TerminalLinkActionDeps,
+} from "../../utils/runTerminalLinkAction";
 import { TerminalAgentAutoResume } from "./components/TerminalAgentAutoResume";
 import { TerminalCopiedIndicator } from "./components/TerminalCopiedIndicator";
 import { TerminalRichInput } from "./components/TerminalRichInput";
+import { terminalContextMenuLinkStore } from "./contextMenuLinkStore";
 import { useCopyOnSelect } from "./hooks/useCopyOnSelect";
-import { useLinkClickHint } from "./hooks/useLinkClickHint";
 import { type HoveredLink, useLinkHoverState } from "./hooks/useLinkHoverState";
-import { useTerminalAppearance } from "./hooks/useTerminalAppearance";
 import { useTerminalInterruptClear } from "./hooks/useTerminalInterruptClear";
 import {
 	terminalRichInputOpenStore,
@@ -60,12 +66,11 @@ import {
 } from "./richInputOpenStore";
 import { PasteUploadLimitError, uploadPastedFiles } from "./uploadPastedFiles";
 import { shellEscapePaths } from "./utils";
-import { parseSupersetPageUrl } from "./utils/parseSupersetPageUrl";
 
 interface TerminalPaneProps {
 	ctx: RendererContext<PaneViewerData>;
 	workspaceId: string;
-	onOpenFile: (path: string, openInNewTab?: boolean) => void;
+	onOpenFile: OpenFile;
 	onRevealPath: (path: string, options?: { isDirectory?: boolean }) => void;
 }
 
@@ -79,9 +84,10 @@ export function TerminalPane({
 	const filePolicy = useTerminalFilePolicy();
 	const urlPolicy = useTerminalUrlPolicy();
 	const folderPolicy = useTerminalFolderPolicy();
-	const isPagesEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.PAGES) ?? false;
+	const { preferences } = useV2UserPreferences();
 	const {
 		hoveredLink,
+		liveHoveredLinkRef,
 		onHover: onLinkHover,
 		onLeave: onLinkLeave,
 	} = useLinkHoverState();
@@ -99,6 +105,25 @@ export function TerminalPane({
 	const { terminalId } = paneData;
 	const terminalInstanceId = ctx.pane.id;
 	const containerRef = useRef<HTMLDivElement | null>(null);
+	// Link actions are fired from event handlers (xterm clicks, context-menu
+	// selections) that outlive the render they were registered in, so the deps
+	// are read through a ref.
+	const linkActionDepsRef = useRef<TerminalLinkActionDeps>({
+		store: ctx.store,
+		onOpenFile,
+		onRevealPath,
+		openInExternalEditor,
+		revealInFinder,
+		worktreePath,
+	});
+	linkActionDepsRef.current = {
+		store: ctx.store,
+		onOpenFile,
+		onRevealPath,
+		openInExternalEditor,
+		revealInFinder,
+		worktreePath,
+	};
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
 	// Open/closed is tracked per terminalId in a shared store so the header
 	// button and the ⌘I hotkey toggle the same overlay, and the state survives
@@ -294,13 +319,11 @@ export function TerminalPane({
 							return;
 						}
 						event.preventDefault();
-						if (intent === "external") {
-							openInExternalEditor(link.resolvedPath);
-						} else if (intent === "finder") {
-							revealInFinder(link.resolvedPath, { isDirectory: true });
-						} else {
-							onRevealPath(link.resolvedPath, { isDirectory: true });
-						}
+						runFolderLinkAction(
+							linkActionDepsRef.current,
+							link.resolvedPath,
+							intent,
+						);
 						return;
 					}
 
@@ -310,42 +333,30 @@ export function TerminalPane({
 						return;
 					}
 					event.preventDefault();
-					if (action === "external") {
-						openInExternalEditor(link.resolvedPath, {
-							line: link.row,
-							column: link.col,
-						});
-					} else if (action === "newTab") {
-						onOpenFile(link.resolvedPath, true);
-					} else {
-						onOpenFile(link.resolvedPath);
-					}
+					runFileLinkAction(
+						linkActionDepsRef.current,
+						{ path: link.resolvedPath, row: link.row, col: link.col },
+						action,
+					);
 				},
 				onUrlClick: (event, url) => {
+					const pageSlug = parseSupersetPageUrl(url, env.NEXT_PUBLIC_WEB_URL);
+					if (pageSlug) {
+						event.preventDefault();
+						runUrlLinkAction(
+							linkActionDepsRef.current,
+							url,
+							preferences.pageOpenAction,
+						);
+						return;
+					}
 					const action = urlPolicy.getAction(event);
 					if (action === null) {
 						showHint(event.clientX, event.clientY);
 						return;
 					}
 					event.preventDefault();
-					if (action === "external") {
-						electronTrpcClient.external.openUrl.mutate(url).catch((error) => {
-							console.error("[v2 Terminal] Failed to open URL:", url, error);
-						});
-						return;
-					}
-					const pageSlug = isPagesEnabled
-						? parseSupersetPageUrl(url, env.NEXT_PUBLIC_WEB_URL)
-						: null;
-					if (pageSlug) {
-						openPagePaneInStore(ctx.store, { slug: pageSlug });
-						return;
-					}
-					openUrlInV2Workspace({
-						store: ctx.store,
-						target: action === "newTab" ? "new-tab" : "current-tab",
-						url,
-					});
+					runUrlLinkAction(linkActionDepsRef.current, url, action);
 				},
 				onLinkHover,
 				onLinkLeave,
@@ -356,19 +367,34 @@ export function TerminalPane({
 		terminalId,
 		terminalInstanceId,
 		workspaceId,
-		ctx.store,
-		onOpenFile,
-		onRevealPath,
-		openInExternalEditor,
-		revealInFinder,
 		onLinkHover,
 		onLinkLeave,
 		showHint,
 		filePolicy,
 		urlPolicy,
 		folderPolicy,
-		isPagesEnabled,
+		preferences.pageOpenAction,
 	]);
+
+	// Publish what a right-click landed on so the pane context menu (built in
+	// usePaneRegistry, outside this component) can offer "Open in". Capture
+	// phase runs before Radix opens the menu, while the pointer is still over
+	// the link, and a right-click on blank terminal records null.
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+		const onContextMenu = () => {
+			terminalContextMenuLinkStore.record(terminalInstanceId, {
+				link: liveHoveredLinkRef.current?.info ?? null,
+				deps: linkActionDepsRef.current,
+			});
+		};
+		container.addEventListener("contextmenu", onContextMenu, true);
+		return () => {
+			container.removeEventListener("contextmenu", onContextMenu, true);
+			terminalContextMenuLinkStore.clear(terminalInstanceId);
+		};
+	}, [terminalInstanceId, liveHoveredLinkRef]);
 
 	// --- Remote image paste ---
 	// The default paste path forwards Ctrl+V and lets the TUI read the OS
@@ -639,6 +665,7 @@ export function TerminalPane({
 					urlPolicy,
 					folderPolicy,
 					worktreePath,
+					preferences.pageOpenAction,
 				)}
 				hoverPosition={hoveredLink}
 				clickHint={hint}
@@ -658,6 +685,7 @@ function resolveHoverLabel(
 	urlPolicy: ReturnType<typeof useTerminalUrlPolicy>,
 	folderPolicy: FolderClickPolicy,
 	worktreePath: string | undefined,
+	pageOpenAction: LinkAction,
 ): string | null {
 	if (!hovered) return null;
 	const event = {
@@ -666,7 +694,11 @@ function resolveHoverLabel(
 		shiftKey: hovered.shift,
 	};
 	if (hovered.info.kind === "url") {
-		const action = urlPolicy.getAction(event);
+		const pageSlug = parseSupersetPageUrl(
+			hovered.info.url,
+			env.NEXT_PUBLIC_WEB_URL,
+		);
+		const action = pageSlug ? pageOpenAction : urlPolicy.getAction(event);
 		return action ? actionLabel(action, "url") : null;
 	}
 	if (hovered.info.isDirectory) {

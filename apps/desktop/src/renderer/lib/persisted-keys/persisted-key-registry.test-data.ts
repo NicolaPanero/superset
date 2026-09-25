@@ -6,6 +6,7 @@
 export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	readonly [file: string, keys: readonly string[]]
 > = [
+	["src/renderer/stores/getting-started/store.ts", ["pro-getting-started-v1"]],
 	[
 		"src/renderer/routes/_authenticated/providers/CollectionsProvider/collections.ts",
 		[
@@ -53,6 +54,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		["v2-pane-scroll-state-v1"],
 	],
 	[
+		"src/renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore/v2WorkspacesFilterStore.ts",
+		["v2-workspaces-view"],
+	],
+	[
 		"src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatV3Pane/components/Composer/Composer.tsx",
 		["chat-v3-draft:*"],
 	],
@@ -82,10 +87,6 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		"src/renderer/stores/sidebar-sections-collapse.ts",
 		["sidebar-workspaces-collapse"],
 	],
-	[
-		"src/renderer/stores/last-active-v2-workspace.ts",
-		["last-active-v2-workspace"],
-	],
 	["src/renderer/stores/v2-local-override.ts", ["v2-local-override-v2"]],
 	[
 		"src/renderer/stores/v2-workspace-create-defaults.ts",
@@ -102,10 +103,6 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	[
 		"src/renderer/stores/terminal-close-confirm/store.ts",
 		["terminal-close-confirm-v1"],
-	],
-	[
-		"src/renderer/stores/automation-failures/store.ts",
-		["automation-failures-v1"],
 	],
 	[
 		"src/renderer/stores/app-version-history/store.ts",
@@ -154,7 +151,6 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		"src/renderer/routes/_authenticated/components/LeaderboardAutoPublish/hooks/useLeaderboardAutoPublish/autoPublishState.ts",
 		["leaderboard-auto-publish-v2"],
 	],
-	["src/renderer/lib/leaderboard/askedState.ts", ["leaderboard-asked-v1"]],
 	[
 		"src/renderer/hooks/useAgentModelPreference/useAgentModelPreference.ts",
 		["lastSelectedV2WorkspaceCreateModelByPreset"],

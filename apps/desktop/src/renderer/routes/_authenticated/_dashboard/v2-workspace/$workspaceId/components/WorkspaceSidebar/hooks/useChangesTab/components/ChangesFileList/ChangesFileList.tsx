@@ -18,6 +18,8 @@ export interface FoldSignal {
 
 interface ChangesFileListProps {
 	files: ChangesetFile[];
+	/** True while a toolbar search query is active — flips the empty copy. */
+	isFiltered?: boolean;
 	workspaceId: string;
 	isLoading?: boolean;
 	viewMode: ChangesViewMode;
@@ -58,6 +60,7 @@ const GROUP_TITLES: Record<GroupKey, MessageDescriptor> = {
 
 export const ChangesFileList = memo(function ChangesFileList({
 	files,
+	isFiltered,
 	workspaceId,
 	isLoading,
 	viewMode,
@@ -93,7 +96,11 @@ export const ChangesFileList = memo(function ChangesFileList({
 	if (files.length === 0) {
 		return (
 			<div className="px-3 py-6 text-center text-sm text-muted-foreground">
-				<Trans>No changes</Trans>
+				{isFiltered ? (
+					<Trans>No files match your search</Trans>
+				) : (
+					<Trans>No changes</Trans>
+				)}
 			</div>
 		);
 	}
@@ -114,8 +121,14 @@ export const ChangesFileList = memo(function ChangesFileList({
 						sectionKey={key}
 						title={i18n._(GROUP_TITLES[key])}
 						count={groupFiles.length}
-						additions={groupFiles.reduce((sum, f) => sum + f.additions, 0)}
-						deletions={groupFiles.reduce((sum, f) => sum + f.deletions, 0)}
+						additions={groupFiles.reduce(
+							(sum, f) => sum + (f.additions ?? 0),
+							0,
+						)}
+						deletions={groupFiles.reduce(
+							(sum, f) => sum + (f.deletions ?? 0),
+							0,
+						)}
 						stagingActions={
 							hasStagingActions
 								? { kind: key as "unstaged" | "staged", workspaceId }

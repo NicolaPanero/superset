@@ -1,3 +1,4 @@
+import { pageCommentIntentEnum } from "@superset/db/schema";
 import { z } from "zod";
 
 export const OFFERED_ANCHOR_KINDS = ["element", "page"] as const;
@@ -23,6 +24,17 @@ export const listPageCommentsSchema = z.object({
 	activatedOnly: z.boolean().optional(),
 });
 
+/**
+ * Every thread in the organization, for a caller that would otherwise ask
+ * page by page. `workspaceId` narrows to the pages published from one
+ * workspace, matching `page.list`.
+ */
+export const listOrganizationPageCommentsSchema = z.object({
+	workspaceId: z.string().uuid().optional(),
+	activatedOnly: z.boolean().optional(),
+	unresolvedOnly: z.boolean().optional(),
+});
+
 export const createPageCommentThreadSchema = z
 	.object({
 		pageId: z.string().uuid(),
@@ -31,6 +43,7 @@ export const createPageCommentThreadSchema = z
 		anchor: elementAnchorSchema.nullable().default(null),
 		anchorText: z.string().max(500).nullable().default(null),
 		body: z.string().min(1).max(10_000),
+		intent: pageCommentIntentEnum.nullish(),
 	})
 	.refine(
 		(input) => (input.anchorKind === "page") === (input.anchor === null),

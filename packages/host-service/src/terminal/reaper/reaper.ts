@@ -1,8 +1,13 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, isNotNull } from "drizzle-orm";
 import type { HostDb } from "../../db/index.ts";
-import { terminalSessions } from "../../db/schema.ts";
+import { terminalAgentBindings, terminalSessions } from "../../db/schema.ts";
 import { portManager } from "../../ports/port-manager.ts";
+import { markTerminalAgentBindingEnded } from "../../terminal-agents/persistence.ts";
 import { getDaemonClient } from "../daemon-client-singleton.ts";
+import {
+	MissingTerminalObservations,
+	terminalLifecycleState,
+} from "../lifecycle/lifecycle.ts";
 import { disposeSessionAndWait, isLiveTerminalSession } from "../terminal.ts";
 
 interface ReapResult {
@@ -40,16 +45,7 @@ interface TerminalRow {
  */
 export const STALE_ACTIVE_GRACE_MS = 60_000;
 
-/**
- * The inverse of the orphan reap: rows stuck `active` whose session the
- * daemon no longer owns (daemon crash, kill, reboot). Left alone they haunt
- * every "live sessions" read forever — e.g. the diff comment composer keeps
- * offering an agent whose pty is gone. Only called once `daemon.list()` has
- * answered, so the alive set is authoritative; the `isLive` guard keeps a
- * renderer-attached in-memory session from being marked on a racy list.
- * Pure so the policy is unit testable.
- */
-export function planStaleActiveRows({
+export function planMissingTerminalSessions({
 	aliveIds,
 	rowsById,
 	isLive,
@@ -61,8 +57,8 @@ export function planStaleActiveRows({
 	isLive: (terminalId: string) => boolean;
 	now: number;
 	graceMs?: number;
-}): { exited: string[]; disposed: string[] } {
-	const exited: string[] = [];
+}): { recoverable: string[]; disposed: string[] } {
+	const recoverable: string[] = [];
 	const disposed: string[] = [];
 	for (const [id, row] of rowsById) {
 		if (row.status !== "active") continue;
@@ -74,9 +70,9 @@ export function planStaleActiveRows({
 		// and one the user explicitly killed must not come back as a resume
 		// candidate.
 		if (row.disposeRequestedAt != null) disposed.push(id);
-		else exited.push(id);
+		else recoverable.push(id);
 	}
-	return { exited, disposed };
+	return { recoverable, disposed };
 }
 
 /**
@@ -86,12 +82,7 @@ export function planStaleActiveRows({
  * disposed), so retry it regardless of workspace liveness.
  */
 export function shouldReapRow(row: TerminalRow): boolean {
-	return (
-		row.status === "disposed" ||
-		row.status === "exited" ||
-		!row.originWorkspaceId ||
-		row.disposeRequestedAt != null
-	);
+	return terminalLifecycleState(row) !== "active" || !row.originWorkspaceId;
 }
 
 export interface PortScanSyncPlan {
@@ -110,7 +101,9 @@ export interface PortScanSyncPlan {
  * terminal — e.g. sessions the daemon kept alive across a host-service restart.
  * v1 desktop did this in its startup reconcile; v2 previously only registered
  * terminals a renderer had explicitly opened, so ports were detected less
- * completely.
+ * completely. A session the scanner already watches is skipped, so a pass
+ * with no new sessions plans nothing and the "registered N" log stays quiet
+ * instead of repeating every reap tick.
  *
  * Unregister every currently-watched terminal the daemon no longer reports and
  * that no live in-memory session owns. Sessions adopted here never get the
@@ -131,13 +124,15 @@ export function planPortScanSync({
 	isLive: (terminalId: string) => boolean;
 }): PortScanSyncPlan {
 	const aliveIds = new Set(liveSessions.map((session) => session.id));
+	const registeredIds = new Set(registeredTerminalIds);
 
 	const register: PortScanSyncPlan["register"] = [];
 	for (const session of liveSessions) {
+		if (registeredIds.has(session.id)) continue;
 		if (isLive(session.id)) continue;
 		const row = rowById.get(session.id);
 		if (!row?.originWorkspaceId) continue;
-		if (row.status !== "active") continue;
+		if (terminalLifecycleState(row) !== "active") continue;
 		register.push({
 			terminalId: session.id,
 			workspaceId: row.originWorkspaceId,
@@ -169,43 +164,75 @@ function loadTerminalRowsById(db: HostDb): Map<string, TerminalRow> {
 	return new Map(rows.map((row) => [row.id, row]));
 }
 
-/** Flip daemon-lost `active` rows to `exited` so live-session reads (agent
- * bindings, resume candidates) stop offering ptys that no longer exist. */
-function markStaleActiveRows(
+export function reconcileMissingTerminalSessions(
 	db: HostDb,
 	liveSessions: { id: string }[],
 	rowById: Map<string, TerminalRow>,
+	confirmedMissingIds?: ReadonlySet<string>,
 ): number {
 	const rowsById =
 		rowById.size > 0 || liveSessions.length > 0
 			? rowById
 			: loadTerminalRowsById(db);
-	const stale = planStaleActiveRows({
+	const stale = planMissingTerminalSessions({
 		aliveIds: new Set(liveSessions.map((session) => session.id)),
 		rowsById,
 		isLive: isLiveTerminalSession,
 		now: Date.now(),
 	});
-	const total = stale.exited.length + stale.disposed.length;
-	if (total === 0) return 0;
-	for (const [ids, status] of [
-		[stale.exited, "exited"],
-		[stale.disposed, "disposed"],
-	] as const) {
-		if (ids.length === 0) continue;
-		db.update(terminalSessions)
-			.set({ status, endedAt: Date.now() })
-			.where(
-				and(
-					inArray(terminalSessions.id, ids),
-					eq(terminalSessions.status, "active"),
-				),
+	if (confirmedMissingIds)
+		stale.recoverable = stale.recoverable.filter((id) =>
+			confirmedMissingIds.has(id),
+		);
+	if (stale.recoverable.length + stale.disposed.length === 0) return 0;
+	const endedAt = Date.now();
+
+	const { recoverable, disposed } = db.transaction((tx) => {
+		let recoverable = 0;
+		for (const id of stale.recoverable) {
+			const current = tx.query.terminalSessions
+				.findFirst({ where: eq(terminalSessions.id, id) })
+				.sync();
+			if (
+				terminalLifecycleState(current) !== "active" ||
+				current?.createdAt !== rowsById.get(id)?.createdAt ||
+				isLiveTerminalSession(id)
 			)
-			.run();
+				continue;
+			markTerminalAgentBindingEnded(tx, id, "terminal-exited", endedAt);
+			recoverable += 1;
+		}
+		const disposed =
+			stale.disposed.length === 0
+				? []
+				: tx
+						.update(terminalSessions)
+						.set({ status: "disposed", endedAt })
+						.where(
+							and(
+								inArray(terminalSessions.id, stale.disposed),
+								eq(terminalSessions.status, "active"),
+								isNotNull(terminalSessions.disposeRequestedAt),
+							),
+						)
+						.returning({ id: terminalSessions.id })
+						.all();
+		for (const { id } of disposed) {
+			const binding = tx.query.terminalAgentBindings
+				.findFirst({ where: eq(terminalAgentBindings.terminalId, id) })
+				.sync();
+			if (binding && binding.endedAt == null)
+				markTerminalAgentBindingEnded(tx, id, "disposed", endedAt);
+		}
+		return { recoverable, disposed: disposed.length };
+	});
+
+	const total = recoverable + disposed;
+	if (total > 0) {
+		console.log(
+			`[host-service] terminal reaper: reconciled ${total} daemon-lost session(s) (${recoverable} recoverable, ${disposed} disposed)`,
+		);
 	}
-	console.log(
-		`[host-service] terminal reaper: marked ${total} daemon-lost session(s) ended (${stale.exited.length} exited, ${stale.disposed.length} disposed)`,
-	);
 	return total;
 }
 
@@ -241,10 +268,7 @@ function applyPortScanSync(
 async function runPortScanSync(db: HostDb) {
 	const daemon = await getDaemonClient();
 	const liveSessions = (await daemon.list()).filter((session) => session.alive);
-	const rowById =
-		liveSessions.length > 0
-			? loadTerminalRowsById(db)
-			: new Map<string, TerminalRow>();
+	const rowById = loadTerminalRowsById(db);
 	applyPortScanSync(liveSessions, rowById);
 	return { liveSessions, rowById };
 }
@@ -274,18 +298,40 @@ function syncPortScans(db: HostDb): ReturnType<typeof runPortScanSync> {
 async function reapOrphanedSessions(
 	db: HostDb,
 	rowlessPendingSecondPass: Set<string>,
+	missingObservations: MissingTerminalObservations,
+	observeMissing: boolean,
 ): Promise<ReapResult> {
 	// Sync the port scanner before the empty-list short-circuit below so an idle
 	// daemon still drops stale scans.
 	const { liveSessions, rowById } = await syncPortScans(db);
 
-	// The daemon answered (syncPortScans would have thrown otherwise), so its
-	// list is authoritative: reconcile rows stuck `active` for sessions it no
-	// longer owns. Best-effort — a failure here must not block the orphan reap.
-	try {
-		markStaleActiveRows(db, liveSessions, rowById);
-	} catch (err) {
-		console.warn("[host-service] stale-session sweep failed:", err);
+	if (observeMissing) {
+		const plan = planMissingTerminalSessions({
+			aliveIds: new Set(liveSessions.map((session) => session.id)),
+			rowsById: rowById,
+			isLive: isLiveTerminalSession,
+			now: Date.now(),
+		});
+		const candidates = new Map(
+			plan.recoverable.flatMap((id) => {
+				const row = rowById.get(id);
+				return row ? [[id, row] as const] : [];
+			}),
+		);
+		try {
+			reconcileMissingTerminalSessions(
+				db,
+				liveSessions,
+				rowById,
+				missingObservations.confirm(candidates),
+			);
+		} catch (err) {
+			missingObservations.reset();
+			console.warn(
+				"[host-service] missing-session reconciliation failed:",
+				err,
+			);
+		}
 	}
 
 	if (liveSessions.length === 0) {
@@ -337,11 +383,17 @@ async function reapOrphanedSessions(
 
 export function startTerminalReaper(db: HostDb): () => void {
 	const rowlessPendingSecondPass = new Set<string>();
+	const missingObservations = new MissingTerminalObservations();
 	let running = false;
-	const run = () => {
+	const run = (observeMissing = true) => {
 		if (running) return;
 		running = true;
-		void reapOrphanedSessions(db, rowlessPendingSecondPass)
+		void reapOrphanedSessions(
+			db,
+			rowlessPendingSecondPass,
+			missingObservations,
+			observeMissing,
+		)
 			.then((result) => {
 				if (result.reaped > 0 || result.failed > 0) {
 					console.log(
@@ -350,13 +402,14 @@ export function startTerminalReaper(db: HostDb): () => void {
 				}
 			})
 			.catch((err) => {
+				missingObservations.reset();
 				console.warn("[host-service] terminal reaper failed:", err);
 			})
 			.finally(() => {
 				running = false;
 			});
 	};
-	run();
+	run(false);
 	const interval = setInterval(run, REAP_INTERVAL_MS);
 	interval.unref();
 

@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { StoreApi } from "zustand/vanilla";
 import type { CreatePaneInput, WorkspaceStore } from "../core/store";
 import type { Pane, Tab } from "../types";
@@ -18,6 +18,12 @@ export interface ContextMenuActionConfig<TData> {
 	shortcut?: string;
 	onSelect?: (context: RendererContext<TData>) => void;
 	disabled?: boolean | ((context: RendererContext<TData>) => boolean);
+	/**
+	 * Omit the entry entirely. Evaluated when the menu opens, not when the
+	 * action list is built, so an entry can depend on state that changes
+	 * between opens (e.g. whether the right-click landed on a terminal link).
+	 */
+	hidden?: boolean | ((context: RendererContext<TData>) => boolean);
 	variant?: "destructive";
 	type?: "item" | "separator";
 	children?:
@@ -51,9 +57,7 @@ export interface RendererContext<TData> {
 		) => void;
 	};
 
-	components: {
-		PaneHeaderActions: ComponentType;
-	};
+	headerActions: ReactNode;
 }
 
 export interface PaneTitleSource {
@@ -76,7 +80,8 @@ export interface PaneDefinition<TData> {
 	renderToolbar?(context: RendererContext<TData>): ReactNode;
 	onHeaderClick?(context: RendererContext<TData>): void;
 	onBeforeClose?(pane: Pane<TData>): boolean | Promise<boolean>;
-	onAfterClose?(pane: Pane<TData>): void;
+	onAfterClose?(pane: Pane<TData>, closedPanes: readonly Pane<TData>[]): void;
+	onAfterRemove?(pane: Pane<TData>): void;
 	paneActions?:
 		| PaneActionConfig<TData>[]
 		| ((

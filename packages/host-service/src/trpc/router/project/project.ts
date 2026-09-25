@@ -22,7 +22,10 @@ import {
 	getAllTagFolderSettings,
 	upsertTagFolderSetting,
 } from "../../../tag-folders";
-import { emitLocalWorkspaceDeleted } from "../../../workspaces/local-workspace-store";
+import {
+	emitLocalWorkspaceDeleted,
+	updateLocalWorkspace,
+} from "../../../workspaces/local-workspace-store";
 import { machineOnlyProcedure, protectedProcedure, router } from "../../index";
 import {
 	normalizeSparseCheckoutPaths,
@@ -36,8 +39,9 @@ import {
 	createFromImportLocal,
 	createFromTemplate,
 } from "./handlers";
-import { ensureMainWorkspace } from "./utils/ensure-main-workspace";
+import { listLiveLocalWorkspaces } from "./utils/create-local-workspace";
 import { getGitHubRemotes } from "./utils/git-remote";
+import { listGitHubRepositories } from "./utils/github-repositories";
 import { persistLocalProject } from "./utils/persist-project";
 import {
 	cloneRepoInto,
@@ -69,9 +73,16 @@ export interface FindByPathCandidate {
 }
 
 export const projectRouter = router({
+	listGitHubRepositories: machineOnlyProcedure.query(() =>
+		listGitHubRepositories(),
+	),
+
 	list: protectedProcedure.query(({ ctx }) => {
 		const tagSettingsByProject = new Map<string, TagSettingSnapshot[]>();
-		for (const { scope, ...setting } of getAllTagFolderSettings(ctx.db)) {
+		for (const { scope, ...setting } of getAllTagFolderSettings(
+			ctx.db,
+			ctx.userId,
+		)) {
 			const settings = tagSettingsByProject.get(scope) ?? [];
 			settings.push(setting);
 			tagSettingsByProject.set(scope, settings);
@@ -143,7 +154,7 @@ export const projectRouter = router({
 				});
 			}
 			const settings = upsertTagFolderSetting(
-				{ db: ctx.db, eventBus: ctx.eventBus },
+				{ db: ctx.db, eventBus: ctx.eventBus, userId: ctx.userId },
 				input.projectId,
 				input.tag,
 				{
@@ -177,7 +188,7 @@ export const projectRouter = router({
 				});
 			}
 			const settings = deleteTagFolderSetting(
-				{ db: ctx.db, eventBus: ctx.eventBus },
+				{ db: ctx.db, eventBus: ctx.eventBus, userId: ctx.userId },
 				input.projectId,
 				input.tag,
 			);
@@ -720,14 +731,8 @@ export const projectRouter = router({
 						rejectIfRepoint(
 							resolvePath(input.mode.parentDir, basename(existing.repoPath)),
 						);
-						const mainWorkspace = await ensureMainWorkspace(
-							ctx,
-							input.projectId,
-							existing.repoPath,
-						);
 						return {
 							repoPath: existing.repoPath,
-							mainWorkspaceId: mainWorkspace?.id ?? null,
 						};
 					}
 					if (!origin.repoCloneUrl) {
@@ -752,14 +757,8 @@ export const projectRouter = router({
 					persistLocalProject(ctx, input.projectId, resolved, {
 						name: origin.name,
 					});
-					const mainWorkspace = await ensureMainWorkspace(
-						ctx,
-						input.projectId,
-						resolved.repoPath,
-					);
 					return {
 						repoPath: resolved.repoPath,
-						mainWorkspaceId: mainWorkspace?.id ?? null,
 					};
 				}
 				case "import": {
@@ -800,28 +799,23 @@ export const projectRouter = router({
 
 					rejectIfRepoint(resolved.repoPath);
 					if (existing && existing.repoPath === resolved.repoPath) {
-						const mainWorkspace = await ensureMainWorkspace(
-							ctx,
-							input.projectId,
-							existing.repoPath,
-						);
 						return {
 							repoPath: existing.repoPath,
-							mainWorkspaceId: mainWorkspace?.id ?? null,
 						};
 					}
 
 					persistLocalProject(ctx, input.projectId, resolved, {
 						name: origin.name,
 					});
-					const mainWorkspace = await ensureMainWorkspace(
-						ctx,
-						input.projectId,
-						resolved.repoPath,
-					);
+					// Local workspaces are the checkout; when it moves, so do they.
+					for (const row of listLiveLocalWorkspaces(ctx, input.projectId)) {
+						if (row.worktreePath === resolved.repoPath) continue;
+						updateLocalWorkspace(ctx, row.id, {
+							worktreePath: resolved.repoPath,
+						});
+					}
 					return {
 						repoPath: resolved.repoPath,
-						mainWorkspaceId: mainWorkspace?.id ?? null,
 					};
 				}
 			}
@@ -834,8 +828,9 @@ export const projectRouter = router({
 	 *   1. Ownership check: an id this host doesn't serve is a no-op —
 	 *      never a legacy cloud delete.
 	 *
-	 *   2. Best-effort `git worktree remove` for each non-main local
-	 *      workspace so subsequent worktree commands aren't confused.
+	 *   2. Best-effort `git worktree remove` for each worktree workspace so
+	 *      subsequent worktree commands aren't confused. Local workspaces
+	 *      live on the repo itself and have nothing to remove.
 	 *
 	 *   3. Local DB rows (workspaces + project). A failure here surfaces as
 	 *      an error — the local table is what the UI lists from, so a
@@ -867,7 +862,8 @@ export const projectRouter = router({
 				.filter((ws) => ws.archivedAt == null || existsSync(ws.worktreePath));
 
 			for (const ws of localWorkspaces) {
-				if (ws.worktreePath === localProject.repoPath) continue;
+				if (ws.type === "local" || ws.worktreePath === localProject.repoPath)
+					continue;
 				try {
 					const git = await ctx.git(localProject.repoPath);
 					await git.raw(["worktree", "remove", ws.worktreePath]);

@@ -65,6 +65,33 @@ export function createApplicationMenu() {
 						BrowserWindow.getFocusedWindow()?.close();
 					},
 				},
+				// macOS keeps these in the application menu, which only it has.
+				...(process.platform === "darwin"
+					? []
+					: ([
+							{ type: "separator" },
+							{
+								label: i18n._(msg({ message: "Settings..." })),
+								accelerator: openSettingsAccelerator,
+								click: () => {
+									menuEmitter.emit("open-settings");
+								},
+							},
+							{
+								label: i18n._(msg({ message: "Check for Updates..." })),
+								click: () => {
+									checkForUpdatesInteractive();
+								},
+							},
+							{ type: "separator" },
+							{ role: "quit" },
+							{
+								label: i18n._(msg({ message: "Quit Superset Completely" })),
+								click: () => {
+									void confirmAndQuitCompletely();
+								},
+							},
+						] satisfies Electron.MenuItemConstructorOptions[])),
 			],
 		},
 		{
@@ -104,9 +131,13 @@ export function createApplicationMenu() {
 				},
 				{ role: "toggleDevTools" },
 				{ type: "separator" },
-				{ role: "resetZoom" },
-				{ role: "zoomIn" },
-				{ role: "zoomOut" },
+				// Display-only accelerators: the renderer owns ZOOM_IN/ZOOM_OUT/
+				// ZOOM_RESET so a focused terminal zooms its font and a focused
+				// browser pane zooms its page. Registering them here would fire
+				// the role (page zoom) before the renderer ever sees the key.
+				{ role: "resetZoom", registerAccelerator: false },
+				{ role: "zoomIn", registerAccelerator: false },
+				{ role: "zoomOut", registerAccelerator: false },
 				{ type: "separator" },
 				{
 					label: i18n._(

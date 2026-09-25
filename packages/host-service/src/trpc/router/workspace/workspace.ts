@@ -67,9 +67,12 @@ export const workspaceRouter = router({
 						project.name || basename(project.repoPath),
 					]),
 			);
+			// Tags are the caller's own: on a shared host each user files the
+			// same workspaces into their own folders.
 			const tagsByWorkspaceId = getWorkspaceTagsByWorkspaceId(
 				ctx.db,
 				rows.map((row) => row.id),
+				ctx.userId,
 			);
 			return rows.map((row) => ({
 				...toCloudShape(row, ctx.organizationId),
@@ -115,13 +118,6 @@ export const workspaceRouter = router({
 					message: "Workspace not found",
 				});
 			}
-			if (input.name !== undefined && current.type === "main") {
-				throw new TRPCError({
-					code: "BAD_REQUEST",
-					message:
-						'The local workspace cannot be renamed — it always displays as "local".',
-				});
-			}
 			const patch: {
 				name?: string;
 				branch?: string;
@@ -135,11 +131,11 @@ export const workspaceRouter = router({
 			if (Object.keys(patch).length === 0) {
 				return {
 					...toCloudShape(current, ctx.organizationId),
-					tags: getWorkspaceTags(ctx.db, current.id),
+					tags: getWorkspaceTags(ctx.db, current.id, ctx.userId),
 				};
 			}
 			const updated = updateLocalWorkspace(
-				{ db: ctx.db, eventBus: ctx.eventBus },
+				{ db: ctx.db, eventBus: ctx.eventBus, userId: ctx.userId },
 				input.id,
 				patch,
 			);
@@ -162,7 +158,7 @@ export const workspaceRouter = router({
 			}
 			return {
 				...toCloudShape(updated, ctx.organizationId),
-				tags: getWorkspaceTags(ctx.db, updated.id),
+				tags: getWorkspaceTags(ctx.db, updated.id, ctx.userId),
 			};
 		}),
 

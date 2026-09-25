@@ -1,5 +1,12 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+	lstatSync,
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	symlinkSync,
+	writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -71,7 +78,32 @@ describe("theme state", () => {
 			},
 		});
 		const ids = listThemeChoices(readThemeState()).map((choice) => choice.id);
-		expect(ids).toEqual(["system", "dark", "light", "monokai", "dracula"]);
+		expect(ids).toEqual([
+			"system",
+			"dark",
+			"light",
+			"monokai",
+			"catppuccin-latte",
+			"solarized-light",
+			"vellum",
+			"dracula",
+		]);
+	});
+
+	test("a custom theme that a built-in now owns is listed once", () => {
+		writeAppState({
+			themeState: {
+				activeThemeId: "dark",
+				customThemes: [
+					{ id: "vellum", name: "Vellum", type: "light" },
+					{ id: "dracula", name: "Dracula", type: "dark" },
+				],
+			},
+		});
+		const choices = listThemeChoices(readThemeState());
+		expect(choices.filter((choice) => choice.id === "vellum")).toEqual([
+			{ id: "vellum", name: "Vellum", type: "light", source: "built-in" },
+		]);
 	});
 
 	test("requireThemeId validates ids and gates the system pseudo-theme", () => {
@@ -176,6 +208,22 @@ describe("custom themes", () => {
 		expect(exportTheme("dark").isBuiltIn).toBeUndefined();
 		expect(exportTheme("mine").name).toBe("Mine");
 		expect(() => exportTheme("nope")).toThrow(/Unknown theme/);
+	});
+
+	test("writes through a symlinked app-state.json", async () => {
+		const dotfiles = mkdtempSync(join(tmpdir(), "superset-appstate-dotfiles-"));
+		const real = join(dotfiles, "superset-app-state.json");
+		writeFileSync(real, JSON.stringify({ themeState: {} }));
+		const statePath = join(homeDir, "app-state.json");
+		rmSync(statePath, { force: true });
+		symlinkSync(real, statePath);
+
+		await writeThemeState({ activeThemeId: "dark" });
+
+		expect(lstatSync(statePath).isSymbolicLink()).toBe(true);
+		expect(
+			JSON.parse(readFileSync(real, "utf-8")).themeState.activeThemeId,
+		).toBe("dark");
 	});
 
 	test("remove deletes the theme and falls back active/system references", async () => {
