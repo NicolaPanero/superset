@@ -406,6 +406,7 @@ export const automationRouter = {
 					id: automationTriggers.id,
 					kind: automationTriggers.kind,
 					config: automationTriggers.config,
+					connectionId: automationTriggers.connectionId,
 					nextRunAt: automationTriggers.nextRunAt,
 					secretPrefix: automationTriggers.secretPrefix,
 					secretRotatedAt: automationTriggers.secretRotatedAt,

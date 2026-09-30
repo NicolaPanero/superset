@@ -12,8 +12,11 @@ const NEWEST_FIRST = [desc(connections.updatedAt), desc(connections.id)];
  * Two live connections match one lookup, so there is no single account to run
  * under. Picking the newest would silently bind tool calls to whichever was
  * touched last — behaviour people would come to rely on before anyone noticed
- * it was arbitrary. Callers surface this as a conflict the user resolves by
- * disconnecting one.
+ * it was arbitrary.
+ *
+ * Holding two accounts is supported: a trigger names which one its events come
+ * from, and the MCP endpoint takes `?connection=<id>`. What is not supported is
+ * a caller that names neither, which is what this reports.
  */
 export class AmbiguousConnectionError extends Error {
 	constructor(
@@ -21,7 +24,7 @@ export class AmbiguousConnectionError extends Error {
 		readonly connectionIds: string[],
 	) {
 		super(
-			`More than one ${connector} connection matches; disconnect the one you do not want.`,
+			`More than one ${connector} account is connected; name one with ?connection=<id>.`,
 		);
 		this.name = "AmbiguousConnectionError";
 	}

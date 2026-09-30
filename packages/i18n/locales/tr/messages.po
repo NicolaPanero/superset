@@ -99,6 +99,10 @@ msgstr "(çıktı yok)"
 msgid "(so far)"
 msgstr "(şimdiye kadar)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# hesap bağlı} other {# hesap bağlı}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# etkin port — ayrıntıları gizle} other {# etkin port — ayrıntıları gizle}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic bu API anahtarını reddetti."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic bu token'ı reddetti."
 
+msgid "any account"
+msgstr "herhangi bir hesap"
+
+msgid "Any account"
+msgstr "Herhangi bir hesap"
+
 msgid "Any channel"
 msgstr "Tüm kanallar"
 
@@ -3966,6 +3976,9 @@ msgstr "Bir Google hesabı bağlayın. Posta kutusu salt okunurdur ve tetikleyic
 
 msgid "Connect a microphone to use dictation"
 msgstr "Sesle yazmak için bir mikrofon bağlayın"
+
+msgid "Connect another account"
+msgstr "Başka bir hesap bağla"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Herhangi bir AI ajanını Superset'e bağlayın."
@@ -7997,6 +8010,10 @@ msgstr "Ajan yönergelerini iyileştir"
 msgid "Improved diff viewer"
 msgstr "Geliştirilmiş fark görüntüleyici"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "şu hesapta:"
+
 msgid "in a new session"
 msgstr "yeni bir oturumda"
 
@@ -9057,6 +9074,12 @@ msgstr "Kötü amaçlı yazılım veya kimlik avı"
 
 msgid "Manage"
 msgstr "Yönet"
+
+msgid "Manage accounts"
+msgstr "Hesapları yönet"
+
+msgid "Manage accounts…"
+msgstr "Hesapları yönet…"
 
 msgid "Manage billing"
 msgstr "Faturalandırmayı yönet"
@@ -16688,6 +16711,9 @@ msgstr "Bilinmiyor"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Bilinmiyor"
+
+msgid "Unknown account"
+msgstr "Bilinmeyen hesap"
 
 msgid "Unknown author"
 msgstr "Bilinmeyen yazar"

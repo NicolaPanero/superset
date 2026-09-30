@@ -22,9 +22,21 @@ import { verifyOrgMembership } from "./utils";
  * with `needsReauth`, because a trigger built on one will not fire until the
  * user reconnects, and "not connected" would send them to the wrong button.
  */
+export interface ProviderAccount {
+	id: string;
+	/** Who and where, as the connector reported them; null when it gave neither. */
+	label: string | null;
+}
+
 export interface ProviderConnection {
 	connected: boolean;
 	needsReauth: boolean;
+	/**
+	 * Every live account this caller holds on the connector, so a trigger can be
+	 * pinned to one of them. One entry is the ordinary case and the editor shows
+	 * no picker for it; two is what the picker exists for.
+	 */
+	accounts: ProviderAccount[];
 }
 
 export const connectionStatusProcedure = protectedProcedure
@@ -43,9 +55,12 @@ export const connectionStatusProcedure = protectedProcedure
 						),
 					),
 					columns: {
+						id: true,
 						connector: true,
 						connectedByUserId: true,
 						disconnectedAt: true,
+						externalAccountLabel: true,
+						externalUserLabel: true,
 					},
 				}),
 				db.query.githubInstallations.findFirst({
@@ -62,15 +77,31 @@ export const connectionStatusProcedure = protectedProcedure
 				)
 					continue;
 				const needsReauth = row.disconnectedAt !== null;
+				let entry = connected[row.connector];
+				if (!entry) {
+					entry = { connected: false, needsReauth: false, accounts: [] };
+					connected[row.connector] = entry;
+				}
+				// Every live account is listed, even when an expired sibling set the
+				// connector's own state: the picker offers what can be pinned.
+				if (!needsReauth) {
+					entry.accounts.push({
+						id: row.id,
+						label: row.externalUserLabel ?? row.externalAccountLabel,
+					});
+				}
 				// A live row wins over an expired one for the same connector.
-				if (connected[row.connector]?.connected && needsReauth) continue;
-				connected[row.connector] = { connected: !needsReauth, needsReauth };
+				if (entry.connected && needsReauth) continue;
+				entry.connected = !needsReauth;
+				entry.needsReauth = needsReauth;
 			}
 
 			// A suspended installation still has a row, and delivers nothing.
 			connected.github = {
 				connected: installation !== undefined && !installation.suspended,
 				needsReauth: false,
+				// An installation is not a connection row, so there is nothing to pin.
+				accounts: [],
 			};
 
 			return connected;

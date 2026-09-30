@@ -84,6 +84,7 @@ export function AutomationBody({
 			continueAgentSession: automation.continueAgentSession,
 			triggers: automation.triggers.map((trigger) => ({
 				id: trigger.id,
+				connectionId: trigger.connectionId,
 				config: trigger.config as DraftTrigger["config"],
 			})),
 		}),

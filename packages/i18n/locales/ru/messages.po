@@ -99,6 +99,10 @@ msgstr "(нет вывода)"
 msgid "(so far)"
 msgstr "(пока)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# аккаунт подключён} few {# аккаунта подключено} many {# аккаунтов подключено} other {# аккаунта подключено}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# активный порт — скрыть детали} few {# активных порта — скрыть детали} many {# активных портов — скрыть детали} other {# активных портов — скрыть детали}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic отклонил этот ключ API."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic отклонил этот токен."
 
+msgid "any account"
+msgstr "любой аккаунт"
+
+msgid "Any account"
+msgstr "Любой аккаунт"
+
 msgid "Any channel"
 msgstr "Любой канал"
 
@@ -3966,6 +3976,9 @@ msgstr "Подключите аккаунт Google. Его почтовый ящ
 
 msgid "Connect a microphone to use dictation"
 msgstr "Подключите микрофон, чтобы использовать диктовку"
+
+msgid "Connect another account"
+msgstr "Подключить ещё аккаунт"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Подключите любого AI-агента к Superset."
@@ -7997,6 +8010,10 @@ msgstr "Улучшить инструкции для агентов"
 msgid "Improved diff viewer"
 msgstr "Улучшенный просмотр diff"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "в"
+
 msgid "in a new session"
 msgstr "в новой сессии"
 
@@ -9057,6 +9074,12 @@ msgstr "Вредоносное ПО или фишинг"
 
 msgid "Manage"
 msgstr "Управлять"
+
+msgid "Manage accounts"
+msgstr "Управление аккаунтами"
+
+msgid "Manage accounts…"
+msgstr "Управление аккаунтами…"
 
 msgid "Manage billing"
 msgstr "Управление оплатой"
@@ -16688,6 +16711,9 @@ msgstr "Неизвестно"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Неизвестно"
+
+msgid "Unknown account"
+msgstr "Неизвестный аккаунт"
 
 msgid "Unknown author"
 msgstr "Неизвестный автор"

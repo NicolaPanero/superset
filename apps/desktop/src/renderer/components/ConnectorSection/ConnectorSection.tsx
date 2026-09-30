@@ -11,7 +11,13 @@ import {
 	SelectValue,
 } from "@superset/ui/select";
 import { useState } from "react";
-import { LuCheck, LuExternalLink, LuKeyRound, LuUnplug } from "react-icons/lu";
+import {
+	LuCheck,
+	LuExternalLink,
+	LuKeyRound,
+	LuPlus,
+	LuUnplug,
+} from "react-icons/lu";
 import { useConnector } from "./hooks/useConnector";
 
 interface ConnectorSectionProps {
@@ -28,7 +34,7 @@ export function ConnectorSection({
 	const { t } = useLingui();
 	const {
 		connector,
-		connection,
+		connections,
 		isPending,
 		connectApiKey,
 		disconnect,
@@ -39,6 +45,7 @@ export function ConnectorSection({
 	const [selected, setSelected] = useState<string | null>(null);
 	const [values, setValues] = useState<Record<string, string>>({});
 	const [error, setError] = useState<string | null>(null);
+	const [addingAccount, setAddingAccount] = useState(false);
 
 	if (isPending || !connector) {
 		return (
@@ -48,27 +55,55 @@ export function ConnectorSection({
 		);
 	}
 
-	if (connection) {
-		const who = connection.externalUserLabel;
-		const where = connection.externalAccountLabel;
+	const connected = connections.length > 0 && (
+		<div className="space-y-2">
+			{connections.map((connection) => {
+				const who = connection.externalUserLabel;
+				const where = connection.externalAccountLabel;
+				return (
+					<div key={connection.id} className="flex items-center gap-3">
+						<Badge variant="default" className="gap-1">
+							<LuCheck className="size-3" />
+							<Trans>Connected</Trans>
+						</Badge>
+						<span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">
+							{who && where ? `${who} · ${where}` : (who ?? where ?? "")}
+						</span>
+						<Button
+							variant="ghost"
+							size="sm"
+							disabled={disconnect.isPending}
+							onClick={() => disconnect.mutate({ connectionId: connection.id })}
+						>
+							<LuUnplug className="mr-1.5 size-3.5" />
+							<Trans>Disconnect</Trans>
+						</Button>
+					</div>
+				);
+			})}
+		</div>
+	);
+
+	// An org-scoped connector is the organization's one account; a second would
+	// have nothing to distinguish it and the unique index refuses it anyway.
+	if (connections.length > 0 && !addingAccount) {
 		return (
-			<div className="flex items-center gap-3">
-				<Badge variant="default" className="gap-1">
-					<LuCheck className="size-3" />
-					<Trans>Connected</Trans>
-				</Badge>
-				<span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">
-					{who && where ? `${who} · ${where}` : (who ?? where ?? "")}
-				</span>
-				<Button
-					variant="ghost"
-					size="sm"
-					disabled={disconnect.isPending}
-					onClick={() => disconnect.mutate({ connectionId: connection.id })}
-				>
-					<LuUnplug className="mr-1.5 size-3.5" />
-					<Trans>Disconnect</Trans>
-				</Button>
+			<div className="space-y-3">
+				{connected}
+				{connector.scope === "user" && (
+					<Button
+						variant="outline"
+						size="sm"
+						className="w-full"
+						onClick={() => {
+							setError(null);
+							setAddingAccount(true);
+						}}
+					>
+						<LuPlus className="mr-1.5 size-3.5" />
+						<Trans>Connect another account</Trans>
+					</Button>
+				)}
 			</div>
 		);
 	}
@@ -80,6 +115,8 @@ export function ConnectorSection({
 
 	return (
 		<div className="space-y-4">
+			{connected}
+
 			{connector.methods.length > 1 && (
 				<Select
 					value={method.type}
@@ -152,6 +189,17 @@ export function ConnectorSection({
 			)}
 
 			{error && <p className="text-sm text-destructive">{error}</p>}
+
+			{addingAccount && (
+				<Button
+					variant="ghost"
+					size="sm"
+					className="w-full"
+					onClick={() => setAddingAccount(false)}
+				>
+					<Trans>Cancel</Trans>
+				</Button>
+			)}
 		</div>
 	);
 }

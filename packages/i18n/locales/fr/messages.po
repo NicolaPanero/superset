@@ -99,6 +99,10 @@ msgstr "(aucune sortie)"
 msgid "(so far)"
 msgstr "(jusqu'ici)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# compte connecté} other {# comptes connectés}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# port actif — masquer les détails} other {# ports actifs — masquer les détails}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic a rejeté cette clé API."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic a rejeté ce jeton."
 
+msgid "any account"
+msgstr "n'importe quel compte"
+
+msgid "Any account"
+msgstr "N'importe quel compte"
+
 msgid "Any channel"
 msgstr "Tout canal"
 
@@ -3966,6 +3976,9 @@ msgstr "Connectez un compte Google. Sa boîte mail est en lecture seule, et les 
 
 msgid "Connect a microphone to use dictation"
 msgstr "Connectez un microphone pour utiliser la dictée"
+
+msgid "Connect another account"
+msgstr "Connecter un autre compte"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Connectez n'importe quel agent IA à Superset."
@@ -7997,6 +8010,10 @@ msgstr "Améliorer les instructions de l'agent"
 msgid "Improved diff viewer"
 msgstr "Visualiseur de diff amélioré"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "dans"
+
 msgid "in a new session"
 msgstr "dans une nouvelle session"
 
@@ -9057,6 +9074,12 @@ msgstr "Logiciel malveillant ou hameçonnage"
 
 msgid "Manage"
 msgstr "Gérer"
+
+msgid "Manage accounts"
+msgstr "Gérer les comptes"
+
+msgid "Manage accounts…"
+msgstr "Gérer les comptes…"
 
 msgid "Manage billing"
 msgstr "Gérer la facturation"
@@ -16688,6 +16711,9 @@ msgstr "Inconnue"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Inconnu"
+
+msgid "Unknown account"
+msgstr "Compte inconnu"
 
 msgid "Unknown author"
 msgstr "Auteur inconnu"

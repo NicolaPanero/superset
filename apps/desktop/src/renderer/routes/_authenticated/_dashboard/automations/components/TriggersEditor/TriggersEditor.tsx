@@ -68,6 +68,7 @@ export function TriggersEditor({
 	const {
 		connected,
 		needsReauth,
+		accounts,
 		isPending: connectionsPending,
 	} = useProviderConnections(organizationId);
 	const [connecting, setConnecting] = useState<string | null>(null);
@@ -83,6 +84,11 @@ export function TriggersEditor({
 	const expiredConnection = (config: DraftTrigger["config"]) => {
 		const required = connectorFor(providerFor(config));
 		return required !== null && Boolean(needsReauth[required]);
+	};
+
+	const connectorAccounts = (config: DraftTrigger["config"]) => {
+		const required = connectorFor(providerFor(config));
+		return required === null ? [] : (accounts[required] ?? []);
 	};
 
 	const runtimeWarnings = useMemo(
@@ -139,6 +145,7 @@ export function TriggersEditor({
 						}
 						requiresConnection={missingConnection(trigger.config)}
 						needsReauth={expiredConnection(trigger.config)}
+						accounts={connectorAccounts(trigger.config)}
 						disabled={readOnly}
 					/>
 				))}

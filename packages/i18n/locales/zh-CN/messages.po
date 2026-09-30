@@ -99,6 +99,10 @@ msgstr "（无输出）"
 msgid "(so far)"
 msgstr "（截至目前）"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {已连接 # 个账号}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {#个活动端口 — 隐藏详情} other {#个活动端口 — 隐藏详情}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic拒绝了此API密钥。"
 msgid "Anthropic rejected this token."
 msgstr "Anthropic拒绝了此令牌。"
 
+msgid "any account"
+msgstr "任意账号"
+
+msgid "Any account"
+msgstr "任意账号"
+
 msgid "Any channel"
 msgstr "任意频道"
 
@@ -3966,6 +3976,9 @@ msgstr "连接一个 Google 账号。其邮箱为只读，触发器以连接者�
 
 msgid "Connect a microphone to use dictation"
 msgstr "请连接麦克风以使用语音输入"
+
+msgid "Connect another account"
+msgstr "连接其他账号"
 
 msgid "Connect any AI agent to Superset."
 msgstr "把任意AI智能体接入Superset。"
@@ -7997,6 +8010,10 @@ msgstr "改进智能体说明"
 msgid "Improved diff viewer"
 msgstr "更好的差异查看器"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "账号："
+
 msgid "in a new session"
 msgstr "在新会话中"
 
@@ -9057,6 +9074,12 @@ msgstr "恶意软件或钓鱼"
 
 msgid "Manage"
 msgstr "管理"
+
+msgid "Manage accounts"
+msgstr "管理账号"
+
+msgid "Manage accounts…"
+msgstr "管理账号…"
 
 msgid "Manage billing"
 msgstr "管理账单"
@@ -16688,6 +16711,9 @@ msgstr "未知"
 msgctxt "person"
 msgid "Unknown"
 msgstr "未知"
+
+msgid "Unknown account"
+msgstr "未知账号"
 
 msgid "Unknown author"
 msgstr "未知作者"

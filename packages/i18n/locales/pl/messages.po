@@ -99,6 +99,10 @@ msgstr "(brak wyniku)"
 msgid "(so far)"
 msgstr "(do tej pory)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# połączone konto} few {# połączone konta} many {# połączonych kont} other {# połączonego konta}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# aktywny port — ukryj szczegóły} few {# aktywne porty — ukryj szczegóły} many {# aktywnych portów — ukryj szczegóły} other {# aktywnego portu — ukryj szczegóły}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic odrzucił ten klucz API."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic odrzucił ten token."
 
+msgid "any account"
+msgstr "dowolne konto"
+
+msgid "Any account"
+msgstr "Dowolne konto"
+
 msgid "Any channel"
 msgstr "Dowolny kanał"
 
@@ -3966,6 +3976,9 @@ msgstr "Połącz konto Google. Jego skrzynka jest tylko do odczytu, a wyzwalacze
 
 msgid "Connect a microphone to use dictation"
 msgstr "Podłącz mikrofon, aby korzystać z dyktowania"
+
+msgid "Connect another account"
+msgstr "Połącz kolejne konto"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Podłącz dowolnego agenta AI do Superset."
@@ -7997,6 +8010,10 @@ msgstr "Popraw instrukcje dla agentów"
 msgid "Improved diff viewer"
 msgstr "Ulepszona przeglądarka różnic"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "w"
+
 msgid "in a new session"
 msgstr "w nowej sesji"
 
@@ -9057,6 +9074,12 @@ msgstr "Złośliwe oprogramowanie lub phishing"
 
 msgid "Manage"
 msgstr "Zarządzaj"
+
+msgid "Manage accounts"
+msgstr "Zarządzaj kontami"
+
+msgid "Manage accounts…"
+msgstr "Zarządzaj kontami…"
 
 msgid "Manage billing"
 msgstr "Zarządzaj rozliczeniami"
@@ -16688,6 +16711,9 @@ msgstr "Nieznana"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Nieznany"
+
+msgid "Unknown account"
+msgstr "Nieznane konto"
 
 msgid "Unknown author"
 msgstr "Nieznany autor"

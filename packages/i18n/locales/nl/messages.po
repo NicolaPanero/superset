@@ -99,6 +99,10 @@ msgstr "(geen uitvoer)"
 msgid "(so far)"
 msgstr "(tot nu toe)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# account verbonden} other {# accounts verbonden}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# actieve poort — details verbergen} other {# actieve poorten — details verbergen}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic heeft deze API-sleutel geweigerd."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic heeft dit token geweigerd."
 
+msgid "any account"
+msgstr "elk account"
+
+msgid "Any account"
+msgstr "Elk account"
+
 msgid "Any channel"
 msgstr "Elk kanaal"
 
@@ -3966,6 +3976,9 @@ msgstr "Koppel een Google-account. De mailbox is alleen-lezen en triggers worden
 
 msgid "Connect a microphone to use dictation"
 msgstr "Sluit een microfoon aan om te dicteren"
+
+msgid "Connect another account"
+msgstr "Nog een account verbinden"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Verbind elke AI-agent met Superset."
@@ -7997,6 +8010,10 @@ msgstr "De agentinstructies verbeteren"
 msgid "Improved diff viewer"
 msgstr "Verbeterde diff-viewer"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "in"
+
 msgid "in a new session"
 msgstr "in een nieuwe sessie"
 
@@ -9057,6 +9074,12 @@ msgstr "Malware of phishing"
 
 msgid "Manage"
 msgstr "Beheren"
+
+msgid "Manage accounts"
+msgstr "Accounts beheren"
+
+msgid "Manage accounts…"
+msgstr "Accounts beheren…"
 
 msgid "Manage billing"
 msgstr "Facturering beheren"
@@ -16688,6 +16711,9 @@ msgstr "Onbekend"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Onbekend"
+
+msgid "Unknown account"
+msgstr "Onbekend account"
 
 msgid "Unknown author"
 msgstr "Onbekende auteur"

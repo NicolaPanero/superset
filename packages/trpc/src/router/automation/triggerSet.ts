@@ -117,7 +117,7 @@ export async function saveTriggerSet(
 
 			const [row] = await tx
 				.update(automationTriggers)
-				.set({ config, nextRunAt })
+				.set({ config, nextRunAt, connectionId: trigger.connectionId ?? null })
 				.where(eq(automationTriggers.id, previous.id))
 				.returning({ id: automationTriggers.id });
 			if (row) saved.push(row.id);
@@ -131,6 +131,7 @@ export async function saveTriggerSet(
 				organizationId: params.organizationId,
 				kind: config.kind,
 				config,
+				connectionId: trigger.connectionId ?? null,
 				nextRunAt: nextRunAtFor(trigger.config),
 			})
 			.returning({ id: automationTriggers.id });

@@ -15,6 +15,10 @@ import {
 } from "../../router/plugins/crypto";
 import type { ConnectorIdentity, ConnectorTokens } from "./index";
 import { userConnection } from "./lookup";
+import {
+	liveConnectionIds,
+	pinTriggersToExistingAccount,
+} from "./trigger-pins";
 
 export type ConnectionConflict = { ownerEmail: string | null };
 
@@ -82,6 +86,13 @@ export async function upsertConnection(input: {
 					targetWhere: sql`${connections.ownerKind} = 'user'`,
 				};
 
+	// Read before the write: afterwards there is no way to tell a second account
+	// from a reconnect of the only one, and only the former should move pins.
+	const previousConnectionIds =
+		ownerKind === "user"
+			? await liveConnectionIds(organizationId, slug, userId)
+			: [];
+
 	const accessToken = await encryptSecret(tokens.accessToken);
 	const refreshToken = await encryptOptional(tokens.refreshToken);
 	const config = await encryptStored(tokens.stored);
@@ -130,6 +141,17 @@ export async function upsertConnection(input: {
 		.returning({ id: connections.id });
 
 	if (!row) return { conflict: { ownerEmail: null } };
+
+	if (ownerKind === "user") {
+		await pinTriggersToExistingAccount({
+			organizationId,
+			connector: slug,
+			userId,
+			previousConnectionIds,
+			connectionId: row.id,
+		});
+	}
+
 	return { connectionId: row.id };
 }
 

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import { TRIGGER_KIND_CONNECTOR } from "@superset/shared/automation-triggers";
 import { labelText } from "./eventLabel";
-import { TRIGGER_PROVIDERS } from "./index";
+import { connectorFor, TRIGGER_PROVIDERS } from "./index";
 import type { TriggerMenuEntry } from "./types";
 
 /**
@@ -62,5 +63,27 @@ describe("the Add Trigger menu", () => {
 	test("no two providers claim the same kind", () => {
 		const kinds = TRIGGER_PROVIDERS.map((provider) => provider.kind);
 		expect(new Set(kinds).size).toBe(kinds.length);
+	});
+});
+
+/**
+ * `TRIGGER_KIND_CONNECTOR` is the server's copy of this mapping: the connect
+ * path reads it to pin existing triggers, and this registry drives the editor.
+ * They have to agree — a kind the server thinks carries no account would have
+ * its picker offered and its pin ignored.
+ */
+describe("the kind-to-connector map", () => {
+	test("agrees with the one the server pins from", () => {
+		const fromRegistry = Object.fromEntries(
+			TRIGGER_PROVIDERS.map((provider) => [
+				provider.kind,
+				// GitHub connects as an installation, not a connection row, so the
+				// server maps it to null even though the editor names a connector.
+				provider.kind === "github" ? null : connectorFor(provider),
+			]),
+		);
+		for (const [kind, connector] of Object.entries(fromRegistry)) {
+			expect(TRIGGER_KIND_CONNECTOR[kind]).toBe(connector);
+		}
 	});
 });

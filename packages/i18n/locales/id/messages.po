@@ -99,6 +99,10 @@ msgstr "(tidak ada keluaran)"
 msgid "(so far)"
 msgstr "(sejauh ini)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {# akun terhubung}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# port aktif — sembunyikan detail} other {# port aktif — sembunyikan detail}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic menolak kunci API ini."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic menolak token ini."
 
+msgid "any account"
+msgstr "akun apa pun"
+
+msgid "Any account"
+msgstr "Akun apa pun"
+
 msgid "Any channel"
 msgstr "Channel mana pun"
 
@@ -3966,6 +3976,9 @@ msgstr "Hubungkan akun Google. Kotak suratnya hanya-baca, dan pemicu berjalan un
 
 msgid "Connect a microphone to use dictation"
 msgstr "Hubungkan mikrofon untuk memakai dikte"
+
+msgid "Connect another account"
+msgstr "Hubungkan akun lain"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Hubungkan agen AI mana pun ke Superset."
@@ -7997,6 +8010,10 @@ msgstr "Perbaiki instruksi agen"
 msgid "Improved diff viewer"
 msgstr "Penampil diff yang lebih baik"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "di"
+
 msgid "in a new session"
 msgstr "dalam sesi baru"
 
@@ -9057,6 +9074,12 @@ msgstr "Malware atau phishing"
 
 msgid "Manage"
 msgstr "Kelola"
+
+msgid "Manage accounts"
+msgstr "Kelola akun"
+
+msgid "Manage accounts…"
+msgstr "Kelola akun…"
 
 msgid "Manage billing"
 msgstr "Kelola penagihan"
@@ -16688,6 +16711,9 @@ msgstr "Tidak diketahui"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Tidak diketahui"
+
+msgid "Unknown account"
+msgstr "Akun tidak dikenal"
 
 msgid "Unknown author"
 msgstr "Penulis tidak dikenal"

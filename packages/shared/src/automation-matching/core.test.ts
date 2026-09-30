@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { TextFilter, TriggerScope } from "../automation-triggers";
 import {
+	accountAllows,
 	configHasMeScope,
 	resolveMeScopes,
 	scopeAllows,
@@ -109,5 +110,36 @@ describe("scope matching fails closed on an unresolved me", () => {
 
 	test("scopeAllowsAny rejects", () => {
 		expect(scopeAllowsAny({ mode: "me" }, ["gh-42"])).toBe(false);
+	});
+});
+
+/**
+ * Which account's events reach a trigger. A wrong answer here is the same class
+ * of failure as resolving "me" to the wrong id: an automation built on someone's
+ * work mailbox running on their personal one, unattended.
+ */
+describe("accountAllows", () => {
+	test("an unpinned trigger takes any account", () => {
+		expect(accountAllows(null, "work")).toBe(true);
+		expect(accountAllows(undefined, "work")).toBe(true);
+	});
+
+	test("a pinned trigger takes its own account", () => {
+		expect(accountAllows("work", "work")).toBe(true);
+	});
+
+	test("a pinned trigger refuses a sibling account", () => {
+		expect(accountAllows("work", "personal")).toBe(false);
+	});
+
+	// The dangerous reading would be "no connection means unrestricted": a
+	// GitHub or raw-webhook event would then fire every pinned trigger.
+	test("a pinned trigger refuses an event with no connection", () => {
+		expect(accountAllows("work", null)).toBe(false);
+		expect(accountAllows("work", undefined)).toBe(false);
+	});
+
+	test("an unpinned trigger still takes an event with no connection", () => {
+		expect(accountAllows(null, null)).toBe(true);
 	});
 });

@@ -99,6 +99,10 @@ msgstr "(sem saída)"
 msgid "(so far)"
 msgstr "(até agora)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# conta conectada} other {# contas conectadas}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# porta ativa — ocultar detalhes} other {# portas ativas — ocultar detalhes}}"
@@ -2132,6 +2136,12 @@ msgstr "A Anthropic recusou esta chave de API."
 msgid "Anthropic rejected this token."
 msgstr "A Anthropic recusou este token."
 
+msgid "any account"
+msgstr "qualquer conta"
+
+msgid "Any account"
+msgstr "Qualquer conta"
+
 msgid "Any channel"
 msgstr "Qualquer canal"
 
@@ -3966,6 +3976,9 @@ msgstr "Conecte uma conta do Google. A caixa de e-mail é somente leitura e os g
 
 msgid "Connect a microphone to use dictation"
 msgstr "Conecte um microfone para usar o ditado"
+
+msgid "Connect another account"
+msgstr "Conectar outra conta"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Conecte qualquer agente de IA ao Superset."
@@ -7997,6 +8010,10 @@ msgstr "Melhorar as instruções do agente"
 msgid "Improved diff viewer"
 msgstr "Visualizador de diff melhorado"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "em"
+
 msgid "in a new session"
 msgstr "em uma nova sessão"
 
@@ -9057,6 +9074,12 @@ msgstr "Malware ou phishing"
 
 msgid "Manage"
 msgstr "Gerenciar"
+
+msgid "Manage accounts"
+msgstr "Gerenciar contas"
+
+msgid "Manage accounts…"
+msgstr "Gerenciar contas…"
 
 msgid "Manage billing"
 msgstr "Gerenciar faturamento"
@@ -16688,6 +16711,9 @@ msgstr "Desconhecida"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Desconhecido"
+
+msgid "Unknown account"
+msgstr "Conta desconhecida"
 
 msgid "Unknown author"
 msgstr "Autor desconhecido"

@@ -99,6 +99,10 @@ msgstr "(không có đầu ra)"
 msgid "(so far)"
 msgstr "(đến nay)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {# tài khoản đã kết nối}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# cổng đang hoạt động — ẩn chi tiết} other {# cổng đang hoạt động — ẩn chi tiết}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic đã từ chối khóa API này."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic đã từ chối token này."
 
+msgid "any account"
+msgstr "bất kỳ tài khoản nào"
+
+msgid "Any account"
+msgstr "Bất kỳ tài khoản nào"
+
 msgid "Any channel"
 msgstr "Kênh bất kỳ"
 
@@ -3966,6 +3976,9 @@ msgstr "Kết nối tài khoản Google. Hộp thư chỉ ở chế độ đọc
 
 msgid "Connect a microphone to use dictation"
 msgstr "Kết nối micro để dùng đọc chính tả"
+
+msgid "Connect another account"
+msgstr "Kết nối tài khoản khác"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Kết nối mọi agent AI với Superset."
@@ -7997,6 +8010,10 @@ msgstr "Cải thiện hướng dẫn cho agent"
 msgid "Improved diff viewer"
 msgstr "Khung xem diff cải tiến"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "trong"
+
 msgid "in a new session"
 msgstr "trong phiên mới"
 
@@ -9057,6 +9074,12 @@ msgstr "Phần mềm độc hại hoặc lừa đảo"
 
 msgid "Manage"
 msgstr "Quản lý"
+
+msgid "Manage accounts"
+msgstr "Quản lý tài khoản"
+
+msgid "Manage accounts…"
+msgstr "Quản lý tài khoản…"
 
 msgid "Manage billing"
 msgstr "Quản lý thanh toán"
@@ -16688,6 +16711,9 @@ msgstr "Không rõ"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Không rõ"
+
+msgid "Unknown account"
+msgstr "Tài khoản không xác định"
 
 msgid "Unknown author"
 msgstr "Tác giả không xác định"

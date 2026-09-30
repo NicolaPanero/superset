@@ -1,5 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import { useLingui as useTranslation } from "@lingui/react";
+import { Trans } from "@lingui/react/macro";
 import type {
 	DraftTrigger,
 	TriggerProblem,
@@ -10,7 +11,9 @@ import { LuTrash2 } from "react-icons/lu";
 import { connectorFor, type ProviderOptions, providerFor } from "../providers";
 import { triggerEventLabel } from "../providers/eventLabel";
 import type { OptionGroupState } from "../providers/types";
+import type { ProviderAccount } from "../providers/useProviderConnections";
 import { CHIP_INVALID } from "./chipStyles";
+import { AccountChip } from "./components/AccountChip";
 
 interface TriggerSentenceProps {
 	trigger: DraftTrigger;
@@ -33,6 +36,8 @@ interface TriggerSentenceProps {
 	requiresConnection?: boolean;
 	/** The connector was connected and its refresh failed; offer Reconnect. */
 	needsReauth?: boolean;
+	/** Live accounts on this row's connector, for the account chip. */
+	accounts?: ProviderAccount[];
 	disabled?: boolean;
 }
 
@@ -54,6 +59,7 @@ export function TriggerSentence({
 	nextRun,
 	requiresConnection,
 	needsReauth,
+	accounts,
 	disabled,
 	onConnect,
 }: TriggerSentenceProps) {
@@ -68,6 +74,11 @@ export function TriggerSentence({
 	const invalid = new Set((problems ?? []).map((p) => p.field));
 
 	const connector = connectorFor(provider);
+
+	// A pin already set keeps the chip even when the account it names is gone, so
+	// a trigger that is firing on nothing says so instead of looking unrestricted.
+	const accountChoice =
+		(accounts ?? []).length > 1 || Boolean(trigger.connectionId);
 
 	// Always the first element of the right-hand cluster, so whatever follows
 	// it — nothing, or a Connect button — is what sits against the row's right
@@ -131,6 +142,28 @@ export function TriggerSentence({
 					disabled,
 					nextRun,
 				})
+			)}
+
+			{/* After the provider's own words, not inside them: the account qualifies
+			    the whole sentence, and putting it in nine renderSentence bodies would
+			    give one question nine places to be worded differently. */}
+			{!requiresConnection && accountChoice && (
+				<>
+					<span className="text-[13px] text-muted-foreground">
+						<Trans context="joins a trigger to the connected account its events come from">
+							in
+						</Trans>
+					</span>
+					<AccountChip
+						accounts={accounts ?? []}
+						value={trigger.connectionId}
+						onChange={(connectionId) => onChange({ ...trigger, connectionId })}
+						onManage={
+							connector && onConnect ? () => onConnect(connector) : undefined
+						}
+						disabled={disabled}
+					/>
+				</>
 			)}
 
 			{!requiresConnection && removeButton}

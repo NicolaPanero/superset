@@ -99,6 +99,10 @@ msgstr "（出力なし）"
 msgid "(so far)"
 msgstr "（現時点）"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {# 個のアカウントが接続されています}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {#個のアクティブなポート — 詳細を隠す} other {#個のアクティブなポート — 詳細を隠す}}"
@@ -2132,6 +2136,12 @@ msgstr "AnthropicがこのAPIキーを拒否しました。"
 msgid "Anthropic rejected this token."
 msgstr "Anthropicがこのトークンを拒否しました。"
 
+msgid "any account"
+msgstr "すべてのアカウント"
+
+msgid "Any account"
+msgstr "すべてのアカウント"
+
 msgid "Any channel"
 msgstr "すべてのチャンネル"
 
@@ -3966,6 +3976,9 @@ msgstr "Google アカウントを接続します。メールボックスは読�
 
 msgid "Connect a microphone to use dictation"
 msgstr "音声入力を使うにはマイクを接続してください"
+
+msgid "Connect another account"
+msgstr "別のアカウントを接続"
 
 msgid "Connect any AI agent to Superset."
 msgstr "どのAIエージェントでもSupersetに接続。"
@@ -7997,6 +8010,10 @@ msgstr "エージェント向け指示を改善"
 msgid "Improved diff viewer"
 msgstr "差分ビューアの改善"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "アカウント:"
+
 msgid "in a new session"
 msgstr "新しいセッションで"
 
@@ -9057,6 +9074,12 @@ msgstr "マルウェアまたはフィッシング"
 
 msgid "Manage"
 msgstr "管理"
+
+msgid "Manage accounts"
+msgstr "アカウントを管理"
+
+msgid "Manage accounts…"
+msgstr "アカウントを管理…"
 
 msgid "Manage billing"
 msgstr "請求を管理"
@@ -16688,6 +16711,9 @@ msgstr "不明"
 msgctxt "person"
 msgid "Unknown"
 msgstr "不明"
+
+msgid "Unknown account"
+msgstr "不明なアカウント"
 
 msgid "Unknown author"
 msgstr "不明な作成者"

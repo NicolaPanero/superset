@@ -4,6 +4,9 @@ import { cloudTrpc } from "renderer/lib/cloud-trpc";
 
 const POLL_MS = 5_000;
 
+/** A stable empty array, so a pending query does not re-render every consumer. */
+const EMPTY: never[] = [];
+
 export function useConnector(
 	slug: string,
 	explicitOrganizationId?: string | null,
@@ -34,13 +37,20 @@ export function useConnector(
 		},
 	);
 
-	const connection = status.data?.find((row) => row.connector === slug) ?? null;
+	// Every account on this connector, not the first one found: a person may hold
+	// a work and a personal account, and picking one of them here would make the
+	// other unreachable — including its Disconnect button.
+	const connections =
+		status.data?.filter((row) => row.connector === slug) ?? EMPTY;
+	const connection = connections[0] ?? null;
 
-	const wasConnected = useRef(Boolean(connection));
+	// The count, not "is there one": connecting a second account is also a
+	// connect, and the dialog that opened for it has to close too.
+	const previousCount = useRef(connections.length);
 	useEffect(() => {
-		if (connection && !wasConnected.current) onConnected?.();
-		wasConnected.current = Boolean(connection);
-	}, [connection, onConnected]);
+		if (connections.length > previousCount.current) onConnected?.();
+		previousCount.current = connections.length;
+	}, [connections.length, onConnected]);
 
 	const invalidate = () =>
 		utils.connectors.status.invalidate({ organizationId });
@@ -77,6 +87,7 @@ export function useConnector(
 	return {
 		connector: connector.data ?? null,
 		connection,
+		connections,
 		organizationId,
 		isPending:
 			connector.isPending ||

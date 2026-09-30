@@ -99,6 +99,10 @@ msgstr "(žádný výstup)"
 msgid "(so far)"
 msgstr "(zatím)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# připojený účet} few {# připojené účty} many {# připojených účtů} other {# připojených účtů}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# aktivní port — skrýt podrobnosti} few {# aktivní porty — skrýt podrobnosti} many {# aktivního portu — skrýt podrobnosti} other {# aktivních portů — skrýt podrobnosti}}"
@@ -2132,6 +2136,12 @@ msgstr "Anthropic tento API klíč odmítl."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic tento token odmítl."
 
+msgid "any account"
+msgstr "libovolný účet"
+
+msgid "Any account"
+msgstr "Libovolný účet"
+
 msgid "Any channel"
 msgstr "Jakýkoli kanál"
 
@@ -3966,6 +3976,9 @@ msgstr "Připojte účet Google. Jeho schránka je pouze pro čtení a spouště
 
 msgid "Connect a microphone to use dictation"
 msgstr "Pro diktování připojte mikrofon"
+
+msgid "Connect another account"
+msgstr "Připojit další účet"
 
 msgid "Connect any AI agent to Superset."
 msgstr "Připojte k Superset libovolného AI agenta."
@@ -7997,6 +8010,10 @@ msgstr "Vylepšit instrukce pro agenty"
 msgid "Improved diff viewer"
 msgstr "Vylepšený prohlížeč rozdílů"
 
+msgctxt "joins a trigger to the connected account its events come from"
+msgid "in"
+msgstr "v"
+
 msgid "in a new session"
 msgstr "v nové relaci"
 
@@ -9057,6 +9074,12 @@ msgstr "Malware nebo phishing"
 
 msgid "Manage"
 msgstr "Spravovat"
+
+msgid "Manage accounts"
+msgstr "Správa účtů"
+
+msgid "Manage accounts…"
+msgstr "Správa účtů…"
 
 msgid "Manage billing"
 msgstr "Spravovat fakturaci"
@@ -16688,6 +16711,9 @@ msgstr "Neznámá"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Neznámá"
+
+msgid "Unknown account"
+msgstr "Neznámý účet"
 
 msgid "Unknown author"
 msgstr "Neznámý autor"
