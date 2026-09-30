@@ -12,6 +12,7 @@ import type { usePaneRecovery } from "../../hooks/usePaneRecovery";
 import { PaneRecoveryMenu } from "./components/PaneRecoveryMenu";
 
 interface AddTabMenuProps {
+	onRestored: () => void;
 	recovery: ReturnType<typeof usePaneRecovery>;
 	onAddTerminal: () => void;
 	onAddChatV3?: (() => void) | undefined;
@@ -23,6 +24,7 @@ interface AddTabMenuProps {
 }
 
 export function AddTabMenu({
+	onRestored,
 	recovery,
 	onAddTerminal,
 	onAddChatV3,
@@ -73,7 +75,7 @@ export function AddTabMenu({
 				</DropdownMenuItem>
 			)}
 			<DropdownMenuSeparator />
-			<PaneRecoveryMenu recovery={recovery} />
+			<PaneRecoveryMenu recovery={recovery} onRestored={onRestored} />
 			<DropdownMenuSeparator />
 			<DropdownMenuCheckboxItem
 				checked={showPresetsBar}

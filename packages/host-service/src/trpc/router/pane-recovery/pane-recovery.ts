@@ -30,7 +30,10 @@ import {
 	disposeSessionAndWait,
 	getPendingTerminalWorkspaceId,
 } from "../../../terminal/terminal.ts";
-import { findResumedSuccessorTerminalId } from "../../../terminal-agents/persistence";
+import {
+	findResumedSuccessorTerminalId,
+	getTerminalAgentBinding,
+} from "../../../terminal-agents/persistence";
 import { markTerminalAgentBindingEnded } from "../../../terminal-agents/persistence.ts";
 import { protectedProcedure, router } from "../../index.ts";
 import {
@@ -154,7 +157,17 @@ export const paneRecoveryRouter = router({
 												: {}),
 										};
 						const snapshot = snapshots.get(item.id);
-						if (snapshot) descriptor.snapshot = JSON.stringify(snapshot);
+						if (snapshot) {
+							descriptor.snapshot = JSON.stringify(snapshot);
+							if (snapshot.cwd) descriptor.cwd = snapshot.cwd;
+						}
+						if (item.pane.kind === "terminal") {
+							const binding = getTerminalAgentBinding(
+								ctx.db,
+								item.pane.terminalId,
+							);
+							if (binding) descriptor.agentId = binding.agentId;
+						}
 						if (item.titleOverride)
 							descriptor.titleOverride = item.titleOverride;
 						const now = Date.now();

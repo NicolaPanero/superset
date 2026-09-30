@@ -434,8 +434,9 @@ function V2WorkspaceContent() {
 									/>
 								) : null
 							}
-							renderAddTabMenu={() => (
+							renderAddTabMenu={(closeMenu) => (
 								<AddTabMenu
+									onRestored={closeMenu}
 									recovery={recovery}
 									onAddTerminal={addTerminalTab}
 									onAddChatV3={isChatV3Enabled ? addChatV3Tab : undefined}

@@ -3,7 +3,7 @@ import type { Pane, PaneRegistry, WorkspaceStore } from "@superset/panes";
 import type { TerminalRecoverySnapshot } from "@superset/shared/terminal-recovery";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { terminalRuntimeRegistry } from "renderer/lib/terminal/terminal-runtime-registry";
 import type { StoreApi } from "zustand";
 import type {
@@ -27,11 +27,18 @@ export function usePaneRecovery(
 	);
 	const prepared = useRef(new Map<string, string>());
 	const restoring = useRef(false);
+	const [restoringId, setRestoringId] = useState<string | null>(null);
+	const [restoreError, setRestoreError] = useState<{
+		id: string;
+		message: string;
+	} | null>(null);
 	const committed = useRef(new Set<string>());
 	const restore = useCallback(
 		async (id: string) => {
-			if (restoring.current) return;
+			if (restoring.current) return false;
 			restoring.current = true;
+			setRestoringId(id);
+			setRestoreError(null);
 			try {
 				const result = await restoreMutation.mutateAsync({
 					workspaceId,
@@ -70,9 +77,12 @@ export function usePaneRecovery(
 					await acknowledge.mutateAsync({ workspaceId, id });
 				await utils.paneRecovery.list.invalidate({ workspaceId });
 				await utils.terminal.list.invalidate({ workspaceId });
+				return true;
 			} catch (error) {
-				toast.error(errorMessage(error));
+				setRestoreError({ id, message: errorMessage(error) });
+				return false;
 			} finally {
+				setRestoringId(null);
 				restoring.current = false;
 			}
 		},
@@ -251,7 +261,9 @@ export function usePaneRecovery(
 			restore,
 			history: history.data ?? [],
 			isLoading: history.isLoading,
-			isRestoring: restoreMutation.isPending,
+			isRestoring: restoringId !== null,
+			restoringId,
+			restoreError,
 		}),
 		[
 			prepare,
@@ -260,7 +272,8 @@ export function usePaneRecovery(
 			restore,
 			history.data,
 			history.isLoading,
-			restoreMutation.isPending,
+			restoringId,
+			restoreError,
 		],
 	);
 }
