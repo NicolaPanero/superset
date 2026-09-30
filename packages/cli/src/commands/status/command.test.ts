@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, mock, test } from "bun:test";
 import { type ChildProcess, spawn } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { CliContext } from "../../lib/command";
@@ -14,6 +14,19 @@ process.env.SUPERSET_HOME_DIR = tempHome;
 const { writeManifest } = await import("../../lib/host/manifest");
 const statusCommand = (await import("./command")).default;
 
+const fakeHostBinDir = mkdtempSync(join(tmpdir(), "superset-cli-fake-host-"));
+const fakeHostBinPath = join(fakeHostBinDir, "superset-host");
+writeFileSync(fakeHostBinPath, "#!/bin/sh\nsleep 30\n");
+chmodSync(fakeHostBinPath, 0o755);
+
+// Spawns the script above rather than overriding argv0 on an unrelated
+// binary — `ps`'s rendering of an overridden argv0 isn't portable across
+// kernels/ps implementations, but the path a process was actually exec'd
+// from always is.
+function spawnFakeHostProcess(): ChildProcess {
+	return spawn(fakeHostBinPath, [], { stdio: "ignore" });
+}
+
 afterAll(() => {
 	if (originalSupersetHomeDir === undefined) {
 		delete process.env.SUPERSET_HOME_DIR;
@@ -21,6 +34,7 @@ afterAll(() => {
 		process.env.SUPERSET_HOME_DIR = originalSupersetHomeDir;
 	}
 	rmSync(tempHome, { recursive: true, force: true });
+	rmSync(fakeHostBinDir, { recursive: true, force: true });
 });
 
 const ORG = { id: "org-1", slug: "org-1", name: "Palette" };
@@ -97,14 +111,11 @@ describe("superset status manifest liveness", () => {
 	});
 
 	test("reports a running host when the pid matches the host binary (unchanged behavior)", async () => {
-		// Fakes a live host-service by overriding argv0 so `ps` reports its
-		// command as "superset-host" — enough for the identity check without
-		// spinning up the real service. Its actual health endpoint isn't
-		// listening, which only affects the `healthy` flag, not `running`.
-		const fakeHost: ChildProcess = spawn("sleep", ["30"], {
-			argv0: "superset-host",
-			stdio: "ignore",
-		});
+		// Fakes a live host-service by spawning a script literally named
+		// "superset-host" — enough for the identity check without spinning up
+		// the real service. Its actual health endpoint isn't listening, which
+		// only affects the `healthy` flag, not `running`.
+		const fakeHost = spawnFakeHostProcess();
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		try {
 			writeManifest({

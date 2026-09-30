@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, test } from "bun:test";
-import { type ChildProcess, spawn } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { spawn } from "node:child_process";
+import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { CliContext } from "../../lib/command";
@@ -19,6 +19,19 @@ delete process.env.SUPERSET_ORGANIZATION_ID;
 const { readManifest, writeManifest } = await import("../../lib/host/manifest");
 const startCommand = (await import("./command")).default;
 
+const fakeHostBinDir = mkdtempSync(join(tmpdir(), "superset-cli-fake-host-"));
+const fakeHostBinPath = join(fakeHostBinDir, "superset-host");
+writeFileSync(fakeHostBinPath, "#!/bin/sh\nsleep 30\n");
+chmodSync(fakeHostBinPath, 0o755);
+
+// Spawns the script above rather than overriding argv0 on an unrelated
+// binary — `ps`'s rendering of an overridden argv0 isn't portable across
+// kernels/ps implementations, but the path a process was actually exec'd
+// from always is.
+function spawnFakeHostProcess() {
+	return spawn(fakeHostBinPath, [], { stdio: "ignore" });
+}
+
 afterAll(() => {
 	if (originalSupersetHomeDir === undefined) {
 		delete process.env.SUPERSET_HOME_DIR;
@@ -31,6 +44,7 @@ afterAll(() => {
 		process.env.SUPERSET_ORGANIZATION_ID = originalSupersetOrganizationId;
 	}
 	rmSync(tempHome, { recursive: true, force: true });
+	rmSync(fakeHostBinDir, { recursive: true, force: true });
 });
 
 const ORG = { id: "org-1", slug: "org-1", name: "Palette" };
@@ -64,10 +78,7 @@ function run(): Promise<Result> {
 
 describe("superset start manifest liveness", () => {
 	test("already running: a manifest whose pid runs the host binary short-circuits without spawning", async () => {
-		const fakeHost: ChildProcess = spawn("sleep", ["30"], {
-			argv0: "superset-host",
-			stdio: "ignore",
-		});
+		const fakeHost = spawnFakeHostProcess();
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		try {
 			writeManifest({
