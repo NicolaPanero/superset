@@ -28,7 +28,11 @@ export function ConnectConnectorDialog({
 }: ConnectConnectorDialogProps) {
 	return (
 		<Dialog open={Boolean(slug)} onOpenChange={onOpenChange}>
-			<DialogContent className="w-full overflow-hidden sm:max-w-lg">
+			{/* The panel is a grid whose single track sizes to max-content, so one
+			    long account label widens it past its own max-width and everything
+			    in it overflows. minmax(0,1fr) lets the track shrink, which is what
+			    makes the labels truncate instead. */}
+			<DialogContent className="grid-cols-[minmax(0,1fr)] sm:max-w-lg">
 				{slug && (
 					<DialogBody
 						slug={slug}

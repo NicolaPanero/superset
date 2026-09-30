@@ -90,7 +90,7 @@ export function ConnectorSection({
 
 	if (connections.length > 0 && !addingAccount) {
 		return (
-			<div className="space-y-3">
+			<div className="w-full min-w-0 space-y-3">
 				{connected}
 				{connector.scope === "user" && (
 					<Button
@@ -116,7 +116,7 @@ export function ConnectorSection({
 	if (!method) return null;
 
 	return (
-		<div className="space-y-4">
+		<div className="w-full min-w-0 space-y-4">
 			{connected}
 
 			{connector.methods.length > 1 && (
