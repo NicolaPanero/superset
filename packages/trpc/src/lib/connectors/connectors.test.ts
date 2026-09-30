@@ -286,7 +286,7 @@ describe("probeIdentity", () => {
 		expect(identity.user).toEqual({ id: "user_01", label: "Harshith" });
 	});
 
-	test("circleback_mcp reads the user behind the token, labelled by workspace", async () => {
+	test("circleback_mcp reads the user behind the token", async () => {
 		const calls: { url: string; method: string; auth: string | null }[] = [];
 		globalThis.fetch = (async (url: string, init: RequestInit) => {
 			calls.push({
@@ -298,7 +298,6 @@ describe("probeIdentity", () => {
 				JSON.stringify({
 					id: 42,
 					email: "h@tegon.ai",
-					workspaces: [{ id: 7, name: "Tegon" }],
 				}),
 				{ status: 200, headers: { "Content-Type": "application/json" } },
 			);
@@ -317,8 +316,24 @@ describe("probeIdentity", () => {
 				auth: "Bearer cb-test",
 			},
 		]);
-		expect(identity.account).toEqual({ id: "42", label: "Tegon" });
+		expect(identity.account).toEqual({ id: "42", label: "h@tegon.ai" });
 		expect(identity.user).toEqual({ id: "42", label: "h@tegon.ai" });
+	});
+
+	test("a url probe reports the status of a non-JSON error body", async () => {
+		globalThis.fetch = (async () =>
+			new Response("<html>Bad gateway</html>", {
+				status: 502,
+				headers: { "Content-Type": "text/html" },
+			})) as typeof fetch;
+
+		await expect(
+			probeIdentity(
+				"circleback_mcp",
+				connectorMethod(requireConnector("circleback_mcp")),
+				"cb-test",
+			),
+		).rejects.toThrow(/502 <html>Bad gateway/);
 	});
 
 	test("a url-less probe without a token response fails loudly", async () => {

@@ -485,7 +485,7 @@
 						},
 						"account": {
 							"id": "$.id",
-							"label": "$.workspaces[0].name"
+							"label": "$.email"
 						},
 						"user": {
 							"id": "$.id",
