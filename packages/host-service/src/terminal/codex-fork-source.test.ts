@@ -46,7 +46,7 @@ test("resolves actual identity and home, deduplicating descriptors", async () =>
 test("refuses ambiguous concurrent CLI sessions", async () => {
 	expect(
 		await resolveCodexRolloutFiles([rollout(first).path, rollout(second).path]),
-	).toBeNull();
+	).toEqual({ ambiguous: true });
 });
 test("ignores subagents and mismatched metadata", async () => {
 	const file = rollout(first);
@@ -159,4 +159,25 @@ test("retains hook-based forking when process inspection is unavailable", () => 
 			discovered: null,
 		}),
 	).toBe("/original/account");
+});
+
+test("rejects ambiguous rollouts despite a matching saved binding", async () => {
+	const file = rollout(first);
+	const discovered = await resolveCodexRolloutFiles([
+		file.path,
+		rollout(second).path,
+	]);
+	expect(
+		verifiedCodexForkHome({
+			requestedSessionId: first,
+			boundSessionId: first,
+			sessionHome: file.home,
+			discovered,
+		}),
+	).toBeNull();
+});
+test("treats the same session in different homes as ambiguous", async () => {
+	expect(
+		await resolveCodexRolloutFiles([rollout(first).path, rollout(first).path]),
+	).toEqual({ ambiguous: true });
 });

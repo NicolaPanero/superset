@@ -16,12 +16,15 @@ export interface CodexForkSource {
 	home: string;
 }
 
+export type CodexForkDiscovery = CodexForkSource | { ambiguous: true } | null;
+
 export function verifiedCodexForkHome(input: {
 	requestedSessionId: string;
 	boundSessionId?: string;
 	sessionHome?: string;
-	discovered: CodexForkSource | null;
+	discovered: CodexForkDiscovery;
 }): string | null {
+	if (input.discovered && "ambiguous" in input.discovered) return null;
 	const sessionId = input.discovered?.sessionId ?? input.boundSessionId;
 	return sessionId === input.requestedSessionId
 		? (input.sessionHome ?? null)
@@ -30,7 +33,7 @@ export function verifiedCodexForkHome(input: {
 
 export async function resolveCodexRolloutFiles(
 	paths: string[],
-): Promise<CodexForkSource | null> {
+): Promise<CodexForkDiscovery> {
 	const sources = new Map<string, CodexForkSource>();
 	for (const path of new Set(paths)) {
 		const match = rolloutPattern.exec(path);
@@ -66,12 +69,13 @@ export async function resolveCodexRolloutFiles(
 			await file.close();
 		}
 	}
+	if (sources.size > 1) return { ambiguous: true };
 	return sources.size === 1 ? ([...sources.values()][0] ?? null) : null;
 }
 
 export async function discoverCodexForkSource(
 	shellPid: number,
-): Promise<CodexForkSource | null> {
+): Promise<CodexForkDiscovery> {
 	try {
 		const table = await readProcessTableAsync();
 		if (!table) return null;

@@ -390,7 +390,9 @@ export const terminalAgentsRouter = router({
 			const pid = getTerminalProcessId(input.terminalId, input.workspaceId);
 			if (!pid) return null;
 			const source = await discoverCodexForkSource(pid);
-			return source ? { sessionId: source.sessionId } : null;
+			return source && "sessionId" in source
+				? { sessionId: source.sessionId }
+				: null;
 		}),
 	list: protectedProcedure.query(({ ctx }) => {
 		return ctx.terminalAgentStore.list();
