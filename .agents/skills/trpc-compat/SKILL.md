@@ -58,14 +58,14 @@ Calls from web and from builds older than the `x-superset-client` header are not
 | You want to | Do this | Example |
 | --- | --- | --- |
 | Change an output shape | New procedure; old one keeps its shape | `page.list` + `page.listPaginated` (#7756) |
-| Add an input | New optional field, default in the handler | |
+| Add an input | New optional field, default in the handler (safe: old clients do not send it) | |
 | Accept a new input shape | Accept both, convert server-side | `rrule` + `triggers` in `automation/schema.ts` |
 | Rename a procedure | New name; old name stays as a `@deprecated` alias | `task.all` → `task.list` in `task/task.ts` |
 | Drop an input | Keep accepting it and ignore it | `branch` in `task/schema.ts` |
 | Drop an output field | Keep sending it until removal is allowed | the plugins catalog field that #7317 removed crashed old desktops |
 | Drop or rename a DB column | Pick the procedure's output columns first, keep the old field | `db.query.*.find*` without `columns` returns every column |
 | Make an input stricter | Only on a new input or procedure | `publishPageSchema` is `.strict()` from the start, so a newer CLI fails loudly on an older server |
-| Change an error code, default, or sort order | New procedure or new optional input | desktop branches on `NOT_FOUND` and `CONFLICT` |
+| Change an error code, default, or sort order | New procedure, or a new optional input that opts in (absent keeps the old behavior) | desktop branches on `NOT_FOUND` and `CONFLICT` |
 | Call a new procedure from a client | Merge the API first, then the client after the API is live | #7317's API deploy stalled two days behind migration 0119 |
 
 To check the API is live, the latest `Deploy Production` run after your API merge must have

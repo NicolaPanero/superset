@@ -10,7 +10,8 @@ enough.**
 
 ## Rules
 
-1. **Never change the input or output of a procedure that released clients call.** Add a new
+1. **Never make a breaking change to a procedure that released clients call.** Only additive
+   changes are safe: a new optional input field, a new output field. For anything else, add a new
    procedure. This is the fix in `router/page/page.ts` (#7756):
    ```ts
    list: protectedProcedure.input(legacyListPagesSchema).query(/* still Page[] */),
