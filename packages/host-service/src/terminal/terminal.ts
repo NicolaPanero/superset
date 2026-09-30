@@ -36,7 +36,7 @@ import {
 	scanForTerminalTitle,
 	type TerminalTitleScanState,
 } from "@superset/shared/terminal-title-scanner";
-import { and, eq, inArray, isNull, ne } from "drizzle-orm";
+import { and, eq, gt, inArray, isNull, ne } from "drizzle-orm";
 import type { Hono } from "hono";
 import { getSupervisor } from "../daemon/index.ts";
 import { isProcessAlive, readPtyDaemonManifest } from "../daemon/manifest.ts";
@@ -3622,7 +3622,12 @@ export function registerWorkspaceTerminalRoute({
 						where: and(
 							eq(closedPanes.restoredTerminalId, terminalId),
 							eq(closedPanes.workspaceId, session.workspaceId),
+							gt(closedPanes.expiresAt, Date.now()),
 						),
+						orderBy: (table, { desc, sql }) => [
+							sql`${table.restoredAt} is null desc`,
+							desc(table.closedAt),
+						],
 					})
 					.sync();
 				if (recovery && recovery.expiresAt > Date.now()) {

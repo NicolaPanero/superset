@@ -48,8 +48,16 @@ function AddTabButton<_TData>({
 }) {
 	const [open, setOpen] = useState(false);
 	const restoredFocus = useRef(false);
+	const openRef = useRef(false);
+	const handleOpenChange = (nextOpen: boolean) => {
+		openRef.current = nextOpen;
+		restoredFocus.current = false;
+		setOpen(nextOpen);
+	};
 	const closeMenu = () => {
+		if (!openRef.current) return;
 		restoredFocus.current = true;
+		openRef.current = false;
 		setOpen(false);
 	};
 	const button = (
@@ -65,7 +73,7 @@ function AddTabButton<_TData>({
 
 	if (renderAddTabMenu) {
 		return (
-			<DropdownMenu open={open} onOpenChange={setOpen}>
+			<DropdownMenu open={open} onOpenChange={handleOpenChange}>
 				<DropdownMenuTrigger asChild>{button}</DropdownMenuTrigger>
 				<DropdownMenuContent
 					onCloseAutoFocus={(event) => {

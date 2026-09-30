@@ -996,6 +996,26 @@ test("closing one of several panes preserves the shared terminal", async () => {
 	assert.equal(restored.entry.descriptor.terminalId, terminalId);
 	assert.equal(restored.entry.freshShell, false);
 });
+test("repeated shared-terminal recovery acknowledges each new archive", async () => {
+	const terminalId = await recoveryTerminal();
+	const caller = recoveryCaller();
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const entry = closeEntry(terminalId);
+		await caller.close({
+			workspaceId,
+			entries: [{ ...entry, pane: { ...entry.pane, terminate: false } }],
+		});
+		await caller.restore({ workspaceId, id: entry.id });
+		const messages = await recoveryAttach(terminalId);
+		assert.equal(
+			messages.find((message) => message.type === "recovery")?.id,
+			entry.id,
+		);
+		assert.ok(
+			!(await caller.list({ workspaceId })).some((row) => row.id === entry.id),
+		);
+	}
+});
 test("shared-view recovery cannot resurrect a subsequently killed terminal", async () => {
 	const terminalId = await recoveryTerminal(),
 		entry = closeEntry(terminalId),

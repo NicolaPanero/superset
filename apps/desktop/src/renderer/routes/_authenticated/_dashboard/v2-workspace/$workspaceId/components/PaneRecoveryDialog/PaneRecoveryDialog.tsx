@@ -32,15 +32,27 @@ export function PaneRecoveryDialog({
 	const { t } = useLingui();
 	const isDark = useIsDarkTheme();
 	const restored = useRef(false);
+	const openCycle = useRef(0);
+	const isOpen = useRef(recovery.historyOpen);
+	isOpen.current = recovery.historyOpen;
 	return (
-		<Dialog open={recovery.historyOpen} onOpenChange={recovery.setHistoryOpen}>
+		<Dialog
+			modal
+			open={recovery.historyOpen}
+			onOpenChange={(open) => {
+				openCycle.current += 1;
+				restored.current = false;
+				isOpen.current = open;
+				recovery.setHistoryOpen(open);
+			}}
+		>
 			<DialogContent
 				className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-md"
 				onCloseAutoFocus={(event) => {
-					if (restored.current) {
-						event.preventDefault();
-						restored.current = false;
-					}
+					event.preventDefault();
+					if (restored.current) recovery.focusRestoredTerminal();
+					else recovery.historyTriggerRef.current?.focus();
+					restored.current = false;
 				}}
 			>
 				<DialogHeader className="shrink-0 px-4 pb-3 pt-4 pr-10 text-left">
@@ -125,8 +137,13 @@ export function PaneRecoveryDialog({
 										key={item.id}
 										disabled={recovery.isRestoring}
 										onSelect={() => {
+											const cycle = openCycle.current;
 											void recovery.restore(item.id).then((success) => {
-												if (success) {
+												if (
+													success &&
+													isOpen.current &&
+													cycle === openCycle.current
+												) {
 													restored.current = true;
 													recovery.setHistoryOpen(false);
 												}

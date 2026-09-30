@@ -76,7 +76,14 @@ export function AddTabMenu({
 			<DropdownMenuSeparator />
 			<DropdownMenuItem
 				className="gap-2"
-				onSelect={() => {
+				onSelect={(event) => {
+					const menu = (event.currentTarget as HTMLElement).closest(
+						'[role="menu"]',
+					);
+					const triggerId = menu?.getAttribute("aria-labelledby");
+					recovery.historyTriggerRef.current = triggerId
+						? document.getElementById(triggerId)
+						: null;
 					recovery.setHistoryOpen(true);
 					onCloseMenu();
 				}}

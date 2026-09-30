@@ -303,7 +303,7 @@ describe("snapshot behind an alt screen", () => {
 	});
 });
 
-test("cold snapshot round-trips more than 1000 lines, Unicode, colors and the alternate screen", () => {
+test("cold snapshot respects the existing history limit and round-trips Unicode, colors and the alternate screen", () => {
 	const original = createModeTracker(100, 30);
 	const restored = createModeTracker(100, 30);
 	try {
@@ -323,7 +323,9 @@ test("cold snapshot round-trips more than 1000 lines, Unicode, colors and the al
 		const snapshot = original.recoverySnapshot();
 		expect(snapshot.cols).toBe(100);
 		expect(snapshot.rows).toBe(30);
-		expect(snapshot.ansi).toContain("history-0");
+		expect(snapshot.ansi).not.toContain("history-0 ");
+		expect(snapshot.ansi).not.toContain("history-1900 ");
+		expect(snapshot.ansi).toContain("history-2000 café 東京");
 		expect(snapshot.ansi).toContain("history-2999");
 		expect(snapshot.ansi).toContain("Claude conversation ORCHID-4829");
 		restored.feed(enc.encode(snapshot.ansi));

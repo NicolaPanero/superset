@@ -18,9 +18,13 @@ export function usePaneRecovery(
 	workspaceId: string,
 ) {
 	const utils = workspaceTrpc.useUtils();
-	const close = workspaceTrpc.paneRecovery.close.useMutation();
-	const restoreMutation = workspaceTrpc.paneRecovery.restore.useMutation();
-	const acknowledge = workspaceTrpc.paneRecovery.acknowledge.useMutation();
+	const { mutateAsync: closeAsync } =
+		workspaceTrpc.paneRecovery.close.useMutation();
+	const { mutateAsync: restoreAsync } =
+		workspaceTrpc.paneRecovery.restore.useMutation();
+	const { mutateAsync: acknowledgeAsync } =
+		workspaceTrpc.paneRecovery.acknowledge.useMutation();
+	const historyTriggerRef = useRef<HTMLElement | null>(null);
 	const [historyOpen, setHistoryOpen] = useState(false);
 	const history = workspaceTrpc.paneRecovery.list.useQuery(
 		{ workspaceId },
@@ -28,6 +32,17 @@ export function usePaneRecovery(
 	);
 	const prepared = useRef(new Map<string, string>());
 	const restoring = useRef(false);
+	const restoredTerminal = useRef<{
+		terminalId: string;
+		paneId: string;
+	} | null>(null);
+	const focusRestoredTerminal = useCallback(() => {
+		const target = restoredTerminal.current;
+		if (target)
+			terminalRuntimeRegistry
+				.getTerminal(target.terminalId, target.paneId)
+				?.focus();
+	}, []);
 	const [restoringId, setRestoringId] = useState<string | null>(null);
 	const [restoreError, setRestoreError] = useState<{
 		id: string;
@@ -41,7 +56,7 @@ export function usePaneRecovery(
 			setRestoringId(id);
 			setRestoreError(null);
 			try {
-				const result = await restoreMutation.mutateAsync({
+				const result = await restoreAsync({
 					workspaceId,
 					id,
 				});
@@ -75,9 +90,13 @@ export function usePaneRecovery(
 					});
 				}
 				if (row.kind !== "terminal")
-					await acknowledge.mutateAsync({ workspaceId, id });
+					await acknowledgeAsync({ workspaceId, id });
 				await utils.paneRecovery.list.invalidate({ workspaceId });
 				await utils.terminal.list.invalidate({ workspaceId });
+				restoredTerminal.current =
+					row.kind === "terminal"
+						? { terminalId: row.descriptor.terminalId, paneId }
+						: null;
 				return true;
 			} catch (error) {
 				setRestoreError({ id, message: errorMessage(error) });
@@ -87,7 +106,7 @@ export function usePaneRecovery(
 				restoring.current = false;
 			}
 		},
-		[workspaceId, store, restoreMutation, acknowledge, utils],
+		[workspaceId, store, restoreAsync, acknowledgeAsync, utils],
 	);
 	const prepare = useCallback(
 		async (panes: readonly Pane<PaneViewerData>[]) => {
@@ -174,7 +193,7 @@ export function usePaneRecovery(
 			});
 			if (!entries.length) return true;
 			try {
-				await close.mutateAsync({ workspaceId, entries });
+				await closeAsync({ workspaceId, entries });
 				for (const item of entries) {
 					committed.current.add(item.paneId);
 				}
@@ -185,7 +204,7 @@ export function usePaneRecovery(
 				return false;
 			}
 		},
-		[store, workspaceId, close, utils],
+		[store, workspaceId, closeAsync, utils],
 	);
 	const afterClose = useCallback(
 		(pane: Pane<PaneViewerData>) => {
@@ -245,12 +264,13 @@ export function usePaneRecovery(
 							data: { terminalId },
 						},
 					];
-			if (!(await prepare(panes))) return;
+			if (!(await prepare(panes))) return false;
 			for (const location of locations)
 				store
 					.getState()
 					.closePane({ tabId: location.tabId, paneId: location.pane.id });
 			if (!locations.length) afterClose(panes[0]);
+			return true;
 		},
 		[store, prepare, afterClose],
 	);
@@ -260,7 +280,9 @@ export function usePaneRecovery(
 			wrapRegistry,
 			removeSession,
 			restore,
+			focusRestoredTerminal,
 			historyOpen,
+			historyTriggerRef,
 			setHistoryOpen,
 			historyError: history.error,
 			refetchHistory: history.refetch,
@@ -275,6 +297,7 @@ export function usePaneRecovery(
 			wrapRegistry,
 			removeSession,
 			restore,
+			focusRestoredTerminal,
 			historyOpen,
 			history.error,
 			history.refetch,

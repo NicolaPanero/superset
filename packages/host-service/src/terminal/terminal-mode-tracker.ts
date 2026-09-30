@@ -65,7 +65,7 @@ export function createModeTracker(
 		// Retains recent scrollback so `snapshot()` can serve line-mode history,
 		// not just the visible screen. Irrelevant to alt-screen TUIs (no
 		// scrollback), but cheap insurance for plain shell output.
-		scrollback: 5000,
+		scrollback: 1000,
 		allowProposedApi: true,
 	});
 	const serializeAddon = new HeadlessSerializeAddon();
