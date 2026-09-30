@@ -918,6 +918,9 @@ msgstr "{months}ay"
 msgid "{months}mo ago"
 msgstr "{months}ay önce"
 
+msgid "{name} accounts"
+msgstr "{name} hesapları"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} yerleşiktir ve kaldırılamaz"
@@ -1585,6 +1588,9 @@ msgstr "ajan ekleme"
 
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Bulut çalışma alanı oluşturmadan önce Ayarlar'da bir ortam ekleyin"
+
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "Başka bir hesap bağla ya da artık kullanmadığın birini kaldır."
 
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Herhangi bir makineyi host olarak ekleyin. Dizüstünüz uykuya geçtiğinde çalışma alanları çalışmaya devam eder ve nerede olursanız olun durumu kontrol edebilirsiniz."
@@ -5654,6 +5660,10 @@ msgstr "Atıldı — bir daha sorulmayacak"
 msgid "Disconnect"
 msgstr "Bağlantıyı kes"
 
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "{0} bağlantısını kes"
+
 msgid "Disconnect {credential}?"
 msgstr "{credential} bağlantısı kesilsin mi?"
 
@@ -8018,10 +8028,6 @@ msgstr "Ajan yönergelerini iyileştir"
 
 msgid "Improved diff viewer"
 msgstr "Geliştirilmiş fark görüntüleyici"
-
-msgctxt "joins a trigger to the connected account its events come from"
-msgid "in"
-msgstr "şu hesapta:"
 
 msgid "in a new session"
 msgstr "yeni bir oturumda"
@@ -17019,6 +17025,10 @@ msgstr "Superset’i mobilde kullanın"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Pro ile Superset’i telefonunuzda kullanın."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "{0} eklentisini şunun için kullan: "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Paralel kodlama ajanları çalıştırmaya başlamak için masaüstü uygulamasını kullanın."

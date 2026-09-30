@@ -918,6 +918,9 @@ msgstr "{months}か月"
 msgid "{months}mo ago"
 msgstr "{months}か月前"
 
+msgid "{name} accounts"
+msgstr "{name} のアカウント"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} は組み込みのため削除できません"
@@ -1585,6 +1588,9 @@ msgstr "エージェントを追加する"
 
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "クラウドワークスペースを作成する前に、設定で環境を追加してください"
+
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "別のアカウントを接続するか、使わなくなったものを解除します。"
 
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "どんなマシンでもホストとして追加できます。ノートPCがスリープしてもワークスペースは動き続け、どこからでも様子を確認できます。"
@@ -5654,6 +5660,10 @@ msgstr "破棄しました — 今後は確認しません"
 msgid "Disconnect"
 msgstr "切断"
 
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "{0} を切断"
+
 msgid "Disconnect {credential}?"
 msgstr "{credential}の接続を解除しますか？"
 
@@ -8018,10 +8028,6 @@ msgstr "エージェント向け指示を改善"
 
 msgid "Improved diff viewer"
 msgstr "差分ビューアの改善"
-
-msgctxt "joins a trigger to the connected account its events come from"
-msgid "in"
-msgstr "アカウント:"
 
 msgid "in a new session"
 msgstr "新しいセッションで"
@@ -17019,6 +17025,10 @@ msgstr "モバイルでSupersetを使う"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Pro でスマートフォンから Superset を使えます。"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "{0} プラグインを使って "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "デスクトップアプリで並列コーディングエージェントの実行を始めましょう。"

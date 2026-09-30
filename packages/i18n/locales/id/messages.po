@@ -918,6 +918,9 @@ msgstr "{months}bln"
 msgid "{months}mo ago"
 msgstr "{months}bln lalu"
 
+msgid "{name} accounts"
+msgstr "Akun {name}"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} bawaan dan tidak dapat dihapus"
@@ -1585,6 +1588,9 @@ msgstr "menambah agen"
 
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Tambahkan environment di Pengaturan sebelum membuat workspace cloud"
+
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "Hubungkan akun lain, atau putuskan yang tidak lagi kamu pakai."
 
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Tambahkan mesin apa pun sebagai host. Workspace tetap berjalan saat laptop Anda tidur, dan Anda bisa memeriksanya dari mana pun."
@@ -5654,6 +5660,10 @@ msgstr "Dibuang — tidak akan ditanya lagi"
 msgid "Disconnect"
 msgstr "Putuskan"
 
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "Putuskan {0}"
+
 msgid "Disconnect {credential}?"
 msgstr "Putuskan {credential}?"
 
@@ -8018,10 +8028,6 @@ msgstr "Perbaiki instruksi agen"
 
 msgid "Improved diff viewer"
 msgstr "Penampil diff yang lebih baik"
-
-msgctxt "joins a trigger to the connected account its events come from"
-msgid "in"
-msgstr "di"
 
 msgid "in a new session"
 msgstr "dalam sesi baru"
@@ -17019,6 +17025,10 @@ msgstr "Gunakan Superset di ponsel"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Gunakan Superset di ponsel dengan Pro."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "Gunakan plugin {0} untuk "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Pakai aplikasi desktop untuk mulai menjalankan agen coding paralel."

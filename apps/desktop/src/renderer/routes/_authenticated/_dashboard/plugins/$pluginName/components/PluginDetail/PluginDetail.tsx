@@ -29,6 +29,7 @@ import { PluginIcon } from "renderer/routes/_authenticated/_dashboard/plugins/co
 import { SkillIcon } from "renderer/routes/_authenticated/_dashboard/plugins/components/SkillIcon";
 import type { CatalogPlugin } from "renderer/routes/_authenticated/_dashboard/plugins/hooks/usePluginCatalog";
 import { usePluginMutations } from "renderer/routes/_authenticated/_dashboard/plugins/hooks/usePluginMutations";
+import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import { ConnectedAccounts } from "./components/ConnectedAccounts";
 import { InfoRow } from "./components/InfoRow";
 import { SectionHeader } from "./components/SectionHeader";
@@ -42,6 +43,17 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 
 	const [isConnectOpen, setIsConnectOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+
+	// Seeded before the navigation, not after: the draft store is only reset on
+	// close, so the create surface mounts with this already in the composer.
+	const tryNow = useCallback(() => {
+		useNewWorkspaceDraftStore.getState().updateDraft({
+			prompt: t({
+				message: `Use the ${plugin.interface.displayName} plugin to `,
+			}),
+		});
+		openNewWorkspace();
+	}, [openNewWorkspace, plugin.interface.displayName, t]);
 
 	const copyLink = useCallback(() => {
 		void navigator.clipboard.writeText(
@@ -155,8 +167,8 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 								<Trans>Install plugin</Trans>
 							</Button>
 						)}
-						{plugin.installed && plugin.enabled && (
-							<Button size="sm" onClick={() => openNewWorkspace()}>
+						{plugin.installed && (
+							<Button size="sm" onClick={tryNow}>
 								<LuSparkles className="size-4" />
 								<Trans>Try now</Trans>
 							</Button>
@@ -184,7 +196,7 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 
 					<section className="mt-10">
 						<SectionHeader label={<Trans>Connected accounts</Trans>} />
-						<div className="pt-1">
+						<div className="pt-4">
 							<ConnectedAccounts
 								slug={plugin.connector}
 								onConnect={() => setIsConnectOpen(true)}

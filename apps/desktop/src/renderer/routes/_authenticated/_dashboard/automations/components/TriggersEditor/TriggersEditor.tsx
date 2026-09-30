@@ -61,8 +61,14 @@ export function TriggersEditor({
 }: TriggersEditorProps) {
 	const { _: translate } = useTranslation();
 
+	// A new trigger starts on one account rather than all of them. Unpinned
+	// means every connection on the connector, which for an org-wide provider
+	// includes a teammate's — wider than the picker, which lists only yours.
 	const add = (config: DraftTrigger["config"]) =>
-		onEdit([...drafts, { config }]);
+		onEdit([
+			...drafts,
+			{ config, connectionId: connectorAccounts(config)[0]?.id ?? null },
+		]);
 
 	const { plan } = useCurrentPlan();
 	const {

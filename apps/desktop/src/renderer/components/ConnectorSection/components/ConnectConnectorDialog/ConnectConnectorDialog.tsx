@@ -28,7 +28,7 @@ export function ConnectConnectorDialog({
 }: ConnectConnectorDialogProps) {
 	return (
 		<Dialog open={Boolean(slug)} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-md">
+			<DialogContent className="w-full overflow-hidden sm:max-w-lg">
 				{slug && (
 					<DialogBody
 						slug={slug}
@@ -58,8 +58,12 @@ function DialogBody({
 }) {
 	const { t } = useLingui();
 	const supersetIcon = usePresetIcon("superset");
-	const { connector } = useConnector(slug, organizationId);
+	const { connector, connections } = useConnector(slug, organizationId);
 	const name = connector?.displayName ?? slug;
+	// Already connected means this is a manage view. The trust copy answers
+	// "should I grant this?", which was decided the first time; repeating it
+	// above a list of live accounts buries the thing the person came for.
+	const managing = connections.length > 0;
 
 	return (
 		<>
@@ -81,10 +85,16 @@ function DialogBody({
 					{icon}
 				</div>
 				<DialogTitle className="text-xl">
-					{t({ message: `Connect ${name}` })}
+					{managing
+						? t({ message: `${name} accounts` })
+						: t({ message: `Connect ${name}` })}
 				</DialogTitle>
 				<DialogDescription>
-					{author ? (
+					{managing ? (
+						<Trans>
+							Add another account, or disconnect one you no longer use.
+						</Trans>
+					) : author ? (
 						t({ message: `Developed by ${author}` })
 					) : (
 						<Trans>Authorize Superset to act on your behalf.</Trans>
@@ -92,32 +102,34 @@ function DialogBody({
 				</DialogDescription>
 			</DialogHeader>
 
-			<div className="divide-y divide-border/40 rounded-xl border border-border/60">
-				<TrustItem
-					title={<Trans>You control the access</Trans>}
-					body={
-						<Trans>
-							Superset only receives the permissions this connector asks for.
-							Disconnect at any time to revoke them.
-						</Trans>
-					}
-				/>
-				<TrustItem
-					title={<Trans>Credentials stay on the server</Trans>}
-					body={
-						<Trans>
-							Tokens are held by Superset and attached to requests there. They
-							are never written into your local agent config.
-						</Trans>
-					}
-				/>
-				<TrustItem
-					title={<Trans>Connectors carry risk</Trans>}
-					body={t({
-						message: `Connecting lets your agents read and act in ${name} on your behalf. Review what you are granting before you continue.`,
-					})}
-				/>
-			</div>
+			{!managing && (
+				<div className="divide-y divide-border/40 rounded-xl border border-border/60">
+					<TrustItem
+						title={<Trans>You control the access</Trans>}
+						body={
+							<Trans>
+								Superset only receives the permissions this connector asks for.
+								Disconnect at any time to revoke them.
+							</Trans>
+						}
+					/>
+					<TrustItem
+						title={<Trans>Credentials stay on the server</Trans>}
+						body={
+							<Trans>
+								Tokens are held by Superset and attached to requests there. They
+								are never written into your local agent config.
+							</Trans>
+						}
+					/>
+					<TrustItem
+						title={<Trans>Connectors carry risk</Trans>}
+						body={t({
+							message: `Connecting lets your agents read and act in ${name} on your behalf. Review what you are granting before you continue.`,
+						})}
+					/>
+				</div>
+			)}
 
 			<ConnectorSection
 				slug={slug}

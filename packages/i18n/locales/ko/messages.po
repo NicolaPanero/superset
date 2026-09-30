@@ -918,6 +918,9 @@ msgstr "{months}개월"
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
 
+msgid "{name} accounts"
+msgstr "{name} 계정"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
@@ -1585,6 +1588,9 @@ msgstr "에이전트를 추가할"
 
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "클라우드 워크스페이스를 만들기 전에 설정에서 환경을 추가하세요"
+
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "다른 계정을 연결하거나 더 이상 쓰지 않는 계정을 해제하세요."
 
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "어떤 머신이든 호스트로 추가하세요. 노트북이 잠자기에 들어가도 워크스페이스는 계속 돌고, 어디서든 확인할 수 있습니다."
@@ -5654,6 +5660,10 @@ msgstr "버렸습니다 — 다시 묻지 않습니다"
 msgid "Disconnect"
 msgstr "연결 해제"
 
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "{0} 연결 해제"
+
 msgid "Disconnect {credential}?"
 msgstr "{credential} 연결을 해제할까요?"
 
@@ -8018,10 +8028,6 @@ msgstr "에이전트 지침 개선하기"
 
 msgid "Improved diff viewer"
 msgstr "차이 뷰어 개선"
-
-msgctxt "joins a trigger to the connected account its events come from"
-msgid "in"
-msgstr "계정:"
 
 msgid "in a new session"
 msgstr "새 세션에서"
@@ -17019,6 +17025,10 @@ msgstr "모바일에서 Superset 사용하기"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Pro로 휴대폰에서 Superset을 사용하세요."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "{0} 플러그인으로 "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "데스크톱 앱에서 병렬 코딩 에이전트를 실행하세요."

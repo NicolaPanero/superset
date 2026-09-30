@@ -56,13 +56,16 @@ export function ConnectorSection({
 	}
 
 	const connected = connections.length > 0 && (
-		<div className="space-y-2">
+		<div className="w-full min-w-0 divide-y divide-border/40 rounded-lg border border-border/60">
 			{connections.map((connection) => {
 				const who = connection.externalUserLabel;
 				const where = connection.externalAccountLabel;
 				return (
-					<div key={connection.id} className="flex items-center gap-3">
-						<Badge variant="default" className="gap-1">
+					<div
+						key={connection.id}
+						className="flex w-full min-w-0 items-center gap-2 px-3 py-2"
+					>
+						<Badge variant="secondary" className="shrink-0 gap-1">
 							<LuCheck className="size-3" />
 							<Trans>Connected</Trans>
 						</Badge>
@@ -72,11 +75,12 @@ export function ConnectorSection({
 						<Button
 							variant="ghost"
 							size="sm"
+							className="shrink-0"
 							disabled={disconnect.isPending}
+							aria-label={t({ message: `Disconnect ${who ?? where ?? ""}` })}
 							onClick={() => disconnect.mutate({ connectionId: connection.id })}
 						>
-							<LuUnplug className="mr-1.5 size-3.5" />
-							<Trans>Disconnect</Trans>
+							<LuUnplug className="size-3.5" />
 						</Button>
 					</div>
 				);

@@ -1,6 +1,5 @@
 import { msg } from "@lingui/core/macro";
 import { useLingui as useTranslation } from "@lingui/react";
-import { Trans } from "@lingui/react/macro";
 import type {
 	DraftTrigger,
 	TriggerProblem,
@@ -102,6 +101,18 @@ export function TriggerSentence({
 			    than the row's own 8px inset on purpose: the brand glyphs do not
 			    fill their 16px box, so a gap that measures even reads tight. */}
 			<Icon className="mr-1.5 size-4 shrink-0 text-muted-foreground" />
+			{!requiresConnection && accountChoice && (
+				<AccountChip
+					accounts={accounts ?? []}
+					value={trigger.connectionId}
+					onChange={(connectionId) => onChange({ ...trigger, connectionId })}
+					onManage={
+						connector && onConnect ? () => onConnect(connector) : undefined
+					}
+					disabled={disabled}
+				/>
+			)}
+
 			{requiresConnection ? (
 				<>
 					<span className="text-[13px]">
@@ -140,24 +151,6 @@ export function TriggerSentence({
 				})
 			)}
 
-			{!requiresConnection && accountChoice && (
-				<>
-					<span className="text-[13px] text-muted-foreground">
-						<Trans context="joins a trigger to the connected account its events come from">
-							in
-						</Trans>
-					</span>
-					<AccountChip
-						accounts={accounts ?? []}
-						value={trigger.connectionId}
-						onChange={(connectionId) => onChange({ ...trigger, connectionId })}
-						onManage={
-							connector && onConnect ? () => onConnect(connector) : undefined
-						}
-						disabled={disabled}
-					/>
-				</>
-			)}
 			{!requiresConnection && removeButton}
 		</div>
 	);

@@ -918,6 +918,9 @@ msgstr "{months} мес."
 msgid "{months}mo ago"
 msgstr "{months} мес. назад"
 
+msgid "{name} accounts"
+msgstr "Аккаунты {name}"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} встроен и не может быть удалён"
@@ -1585,6 +1588,9 @@ msgstr "добавить агента"
 
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Добавьте окружение в Настройках, прежде чем создавать облачную рабочую область"
+
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "Подключите ещё аккаунт или отключите тот, которым больше не пользуетесь."
 
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Добавьте любую машину как хост. Рабочие области продолжают работать, когда ноутбук спит, а вы можете заглянуть откуда угодно."
@@ -5654,6 +5660,10 @@ msgstr "Изменения отменены — больше не спросим
 msgid "Disconnect"
 msgstr "Отключить"
 
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "Отключить {0}"
+
 msgid "Disconnect {credential}?"
 msgstr "Отключить {credential}?"
 
@@ -8018,10 +8028,6 @@ msgstr "Улучшить инструкции для агентов"
 
 msgid "Improved diff viewer"
 msgstr "Улучшенный просмотр diff"
-
-msgctxt "joins a trigger to the connected account its events come from"
-msgid "in"
-msgstr "в"
 
 msgid "in a new session"
 msgstr "в новой сессии"
@@ -17019,6 +17025,10 @@ msgstr "Используйте Superset на телефоне"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Используйте Superset на телефоне с Pro."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "Используй плагин {0}, чтобы "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Используйте десктопное приложение, чтобы запускать параллельных кодовых агентов."
