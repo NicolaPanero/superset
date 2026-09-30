@@ -94,9 +94,6 @@ export function PaneRecoveryMenu({
 												{directory}
 											</span>
 										)}
-										<span className="block text-xs text-muted-foreground">
-											{formatCompactRelativeTime(item.closedAt)}
-										</span>
 										{error && (
 											<span
 												role="alert"
@@ -121,7 +118,7 @@ export function PaneRecoveryMenu({
 										) : error ? (
 											<Trans>Retry</Trans>
 										) : (
-											<Trans>Restore</Trans>
+											formatCompactRelativeTime(item.closedAt)
 										)}
 									</span>
 								</DropdownMenuItem>
