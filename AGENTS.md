@@ -200,6 +200,8 @@ in the commit message and the PR.
   and missing one fails silently.
 - `docs/deploy-workflows.md`: read before writing or testing a deploy workflow step. `run:` has
   no `pipefail` by default, and production secrets exist only in GitHub.
+- `packages/trpc/AGENTS.md`: read before changing any tRPC procedure. Older desktop, mobile, and
+  CLI builds still call it, so changes must be additive.
 - `apps/desktop/AGENTS.md`: desktop specifics (notices, persisted renderer state).
 - `apps/mobile/AGENTS.md`: mobile structure and iOS-only scope.
 - `docs/cloud-sandbox-mismatches.md`: where cloud workspace sandboxes don't fit assumptions the
