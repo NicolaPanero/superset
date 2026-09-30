@@ -2,7 +2,7 @@
 name: follow-up-from-granola
 description: Turn a meeting into work — read its Granola notes, extract the commitments that belong to this user, and carry each one out or draft it (a code change, a ticket, a reply) with a trace back to the note. Use when the user says "do the follow-ups from", "implement what we agreed", "make tickets from", or points at a meeting after a sync, planning session, or customer call.
 argument-hint: the meeting (title, date, or ID) to act on, and optionally which kind of follow-up
-allowed-tools: mcp__granola__list_meetings, mcp__granola__get_meetings, mcp__granola__get_meeting_transcript, mcp__granola__query_granola_meetings
+allowed-tools: mcp__granola__*
 ---
 
 # Turn the meeting into work

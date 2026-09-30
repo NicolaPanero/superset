@@ -2,7 +2,7 @@
 name: find-in-granola
 description: Answer "what did we say, decide, or promise" from Granola meeting notes — narrow to the meetings that can hold the answer, read the notes before the transcript, and cite the meeting behind every claim. Use when the user asks what happened in a meeting, what a customer or teammate said, what was decided or promised, or refers to a call, sync, standup, or demo.
 argument-hint: the meeting, person, topic, or question to look up
-allowed-tools: mcp__granola__get_account_info, mcp__granola__list_meeting_folders, mcp__granola__list_meetings, mcp__granola__get_meetings, mcp__granola__get_meeting_transcript, mcp__granola__query_granola_meetings
+allowed-tools: mcp__granola__*
 ---
 
 # Find what was actually said
