@@ -27,10 +27,13 @@ wanted, the most recent records what they got.
 
 ## 3. Find the open loops on both sides
 
-`SearchActionItems` with status PENDING for the user, and again per attendee
-profile for what they owe. An open item from the last call is the first thing
-the other side will ask about. `SearchEmails` fills the gap between meetings
-when a thread continued in writing.
+The meetings you just read already carry their action items, each with a
+status and an assignee. Take the open ones from there first, yours and theirs.
+Reach for `SearchActionItems` (status PENDING, by assignee profile) only for
+what those meetings cannot show: a standalone item, or one from a call you did
+not read. An open item from the last call is the first thing the other side
+will ask about. `SearchEmails` fills the gap between meetings when a thread
+continued in writing.
 
 ## 4. Write the brief in that order
 
@@ -39,7 +42,8 @@ when a thread continued in writing.
 3. Open on our side, open on theirs, with the meeting each came from.
 4. Unresolved questions the user should be ready for.
 
-Keep it to a screen. Every line links to the meeting or event it came from.
+Keep it to a screen. Every line links to the meeting, event, or email thread
+it came from.
 
 ## Anti-patterns
 

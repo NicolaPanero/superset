@@ -31,10 +31,12 @@ verbatim. Quote the line; never present a paraphrase as a quote.
 
 ## 3. Separate decided from discussed
 
-Action items and "agreed" lines are decisions. A topic in the notes with no
-owner and no outcome was discussed, not decided; say so. Two meetings that
-disagree are a finding to report, not something to reconcile silently — the
-later one is not automatically right.
+An "agreed" line is a decision. An action item is a recorded follow-up, not
+proof that anyone agreed to what it follows from; call it a decision only when
+the notes or transcript show the agreement. A topic in the notes with no owner
+and no outcome was discussed, not decided; say so. Two meetings that disagree
+are a finding to report, not something to reconcile silently — the later one
+is not automatically right.
 
 ## 4. Cite the meeting
 
