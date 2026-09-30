@@ -2290,6 +2290,9 @@ msgstr "Zatwierdzony"
 msgid "Approved review"
 msgstr "Przegląd zatwierdzony"
 
+msgid "Apps"
+msgstr "Aplikacje"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Połącz konto Google. Jego skrzynka jest tylko do odczytu, a wyzwalacze
 msgid "Connect a microphone to use dictation"
 msgstr "Podłącz mikrofon, aby korzystać z dyktowania"
 
+msgid "Connect an account"
+msgstr "Połącz konto"
+
 msgid "Connect another account"
 msgstr "Połącz kolejne konto"
 
@@ -4048,6 +4054,9 @@ msgstr "Połączono"
 
 msgid "Connected {label}"
 msgstr "Połączono {label}"
+
+msgid "Connected accounts"
+msgstr "Połączone konta"
 
 msgid "Connected as"
 msgstr "Połączono jako"
@@ -9075,6 +9084,9 @@ msgstr "Złośliwe oprogramowanie lub phishing"
 msgid "Manage"
 msgstr "Zarządzaj"
 
+msgid "Manage {label}"
+msgstr "Zarządzaj {label}"
+
 msgid "Manage accounts"
 msgstr "Zarządzaj kontami"
 
@@ -9464,6 +9476,10 @@ msgstr "Miesiące od sierpnia 2026"
 
 msgid "More"
 msgstr "Więcej"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Więcej akcji {0}"
 
 msgid "More {kindLower} themes"
 msgstr "Więcej motywów {kindLower}"

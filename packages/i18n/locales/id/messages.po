@@ -2290,6 +2290,9 @@ msgstr "Disetujui"
 msgid "Approved review"
 msgstr "Review disetujui"
 
+msgid "Apps"
+msgstr "Aplikasi"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Hubungkan akun Google. Kotak suratnya hanya-baca, dan pemicu berjalan un
 msgid "Connect a microphone to use dictation"
 msgstr "Hubungkan mikrofon untuk memakai dikte"
 
+msgid "Connect an account"
+msgstr "Hubungkan akun"
+
 msgid "Connect another account"
 msgstr "Hubungkan akun lain"
 
@@ -4048,6 +4054,9 @@ msgstr "Terhubung"
 
 msgid "Connected {label}"
 msgstr "{label} terhubung"
+
+msgid "Connected accounts"
+msgstr "Akun terhubung"
 
 msgid "Connected as"
 msgstr "Terhubung sebagai"
@@ -9075,6 +9084,9 @@ msgstr "Malware atau phishing"
 msgid "Manage"
 msgstr "Kelola"
 
+msgid "Manage {label}"
+msgstr "Kelola {label}"
+
 msgid "Manage accounts"
 msgstr "Kelola akun"
 
@@ -9464,6 +9476,10 @@ msgstr "Bulan sejak Agustus 2026"
 
 msgid "More"
 msgstr "Lainnya"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Tindakan {0} lainnya"
 
 msgid "More {kindLower} themes"
 msgstr "Tema {kindLower} lainnya"

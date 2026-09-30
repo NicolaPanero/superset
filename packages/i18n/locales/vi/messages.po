@@ -2290,6 +2290,9 @@ msgstr "Đã duyệt"
 msgid "Approved review"
 msgstr "Review đã duyệt"
 
+msgid "Apps"
+msgstr "Ứng dụng"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Kết nối tài khoản Google. Hộp thư chỉ ở chế độ đọc
 msgid "Connect a microphone to use dictation"
 msgstr "Kết nối micro để dùng đọc chính tả"
 
+msgid "Connect an account"
+msgstr "Kết nối tài khoản"
+
 msgid "Connect another account"
 msgstr "Kết nối tài khoản khác"
 
@@ -4048,6 +4054,9 @@ msgstr "Đã kết nối"
 
 msgid "Connected {label}"
 msgstr "Đã kết nối {label}"
+
+msgid "Connected accounts"
+msgstr "Tài khoản đã kết nối"
 
 msgid "Connected as"
 msgstr "Đã kết nối với tư cách"
@@ -9075,6 +9084,9 @@ msgstr "Phần mềm độc hại hoặc lừa đảo"
 msgid "Manage"
 msgstr "Quản lý"
 
+msgid "Manage {label}"
+msgstr "Quản lý {label}"
+
 msgid "Manage accounts"
 msgstr "Quản lý tài khoản"
 
@@ -9464,6 +9476,10 @@ msgstr "Số tháng kể từ tháng 8 năm 2026"
 
 msgid "More"
 msgstr "Thêm"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Thao tác khác của {0}"
 
 msgid "More {kindLower} themes"
 msgstr "Thêm chủ đề {kindLower}"

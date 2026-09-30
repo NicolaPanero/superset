@@ -2290,6 +2290,9 @@ msgstr "승인됨"
 msgid "Approved review"
 msgstr "승인된 리뷰"
 
+msgid "Apps"
+msgstr "앱"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Google 계정을 연결하세요. 메일함은 읽기 전용이며 트�
 msgid "Connect a microphone to use dictation"
 msgstr "받아쓰기를 사용하려면 마이크를 연결하세요"
 
+msgid "Connect an account"
+msgstr "계정 연결"
+
 msgid "Connect another account"
 msgstr "다른 계정 연결"
 
@@ -4048,6 +4054,9 @@ msgstr "연결됨"
 
 msgid "Connected {label}"
 msgstr "{label} 연결됨"
+
+msgid "Connected accounts"
+msgstr "연결된 계정"
 
 msgid "Connected as"
 msgstr "연결 계정"
@@ -9075,6 +9084,9 @@ msgstr "악성코드 또는 피싱"
 msgid "Manage"
 msgstr "관리"
 
+msgid "Manage {label}"
+msgstr "{label} 관리"
+
 msgid "Manage accounts"
 msgstr "계정 관리"
 
@@ -9464,6 +9476,10 @@ msgstr "2026년 8월 이후 개월 수"
 
 msgid "More"
 msgstr "더 보기"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "{0} 추가 작업"
 
 msgid "More {kindLower} themes"
 msgstr "{kindLower} 테마 더 보기"

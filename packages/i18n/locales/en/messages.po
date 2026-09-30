@@ -2290,6 +2290,9 @@ msgstr "Approved"
 msgid "Approved review"
 msgstr "Approved review"
 
+msgid "Apps"
+msgstr "Apps"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Connect a Google account. Its mailbox is read-only, and triggers run for
 msgid "Connect a microphone to use dictation"
 msgstr "Connect a microphone to use dictation"
 
+msgid "Connect an account"
+msgstr "Connect an account"
+
 msgid "Connect another account"
 msgstr "Connect another account"
 
@@ -4048,6 +4054,9 @@ msgstr "Connected"
 
 msgid "Connected {label}"
 msgstr "Connected {label}"
+
+msgid "Connected accounts"
+msgstr "Connected accounts"
 
 msgid "Connected as"
 msgstr "Connected as"
@@ -9075,6 +9084,9 @@ msgstr "Malware or phishing"
 msgid "Manage"
 msgstr "Manage"
 
+msgid "Manage {label}"
+msgstr "Manage {label}"
+
 msgid "Manage accounts"
 msgstr "Manage accounts"
 
@@ -9464,6 +9476,10 @@ msgstr "Months from August 2026"
 
 msgid "More"
 msgstr "More"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "More {0} actions"
 
 msgid "More {kindLower} themes"
 msgstr "More {kindLower} themes"

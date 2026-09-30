@@ -2290,6 +2290,9 @@ msgstr "Genehmigt"
 msgid "Approved review"
 msgstr "Genehmigtes Review"
 
+msgid "Apps"
+msgstr "Apps"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Verbinde ein Google-Konto. Sein Postfach ist schreibgeschützt, und Trig
 msgid "Connect a microphone to use dictation"
 msgstr "Schließe ein Mikrofon an, um zu diktieren"
 
+msgid "Connect an account"
+msgstr "Konto verbinden"
+
 msgid "Connect another account"
 msgstr "Weiteres Konto verbinden"
 
@@ -4048,6 +4054,9 @@ msgstr "Verbunden"
 
 msgid "Connected {label}"
 msgstr "{label} verbunden"
+
+msgid "Connected accounts"
+msgstr "Verbundene Konten"
 
 msgid "Connected as"
 msgstr "Verbunden als"
@@ -9075,6 +9084,9 @@ msgstr "Schadsoftware oder Phishing"
 msgid "Manage"
 msgstr "Verwalten"
 
+msgid "Manage {label}"
+msgstr "{label} verwalten"
+
 msgid "Manage accounts"
 msgstr "Konten verwalten"
 
@@ -9464,6 +9476,10 @@ msgstr "Monate seit August 2026"
 
 msgid "More"
 msgstr "Mehr"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Weitere {0}-Aktionen"
 
 msgid "More {kindLower} themes"
 msgstr "Weitere {kindLower}e Themes"

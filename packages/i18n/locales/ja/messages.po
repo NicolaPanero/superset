@@ -2290,6 +2290,9 @@ msgstr "承認"
 msgid "Approved review"
 msgstr "承認済みレビュー"
 
+msgid "Apps"
+msgstr "アプリ"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Google アカウントを接続します。メールボックスは読�
 msgid "Connect a microphone to use dictation"
 msgstr "音声入力を使うにはマイクを接続してください"
 
+msgid "Connect an account"
+msgstr "アカウントを接続"
+
 msgid "Connect another account"
 msgstr "別のアカウントを接続"
 
@@ -4048,6 +4054,9 @@ msgstr "接続済み"
 
 msgid "Connected {label}"
 msgstr "{label} に接続しました"
+
+msgid "Connected accounts"
+msgstr "接続済みアカウント"
 
 msgid "Connected as"
 msgstr "接続アカウント"
@@ -9075,6 +9084,9 @@ msgstr "マルウェアまたはフィッシング"
 msgid "Manage"
 msgstr "管理"
 
+msgid "Manage {label}"
+msgstr "{label} を管理"
+
 msgid "Manage accounts"
 msgstr "アカウントを管理"
 
@@ -9464,6 +9476,10 @@ msgstr "2026年8月からの月数"
 
 msgid "More"
 msgstr "その他"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "{0} のその他の操作"
 
 msgid "More {kindLower} themes"
 msgstr "他の{kindLower}テーマ"

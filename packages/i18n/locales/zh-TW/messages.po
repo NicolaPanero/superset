@@ -2290,6 +2290,9 @@ msgstr "已批准"
 msgid "Approved review"
 msgstr "審查已批准"
 
+msgid "Apps"
+msgstr "應用程式"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "連結一個 Google 帳號。其信箱為唯讀，觸發器以連結者�
 msgid "Connect a microphone to use dictation"
 msgstr "請連線麥克風以使用語音輸入"
 
+msgid "Connect an account"
+msgstr "連接帳號"
+
 msgid "Connect another account"
 msgstr "連接其他帳號"
 
@@ -4048,6 +4054,9 @@ msgstr "已連線"
 
 msgid "Connected {label}"
 msgstr "已連線 {label}"
+
+msgid "Connected accounts"
+msgstr "已連接帳號"
 
 msgid "Connected as"
 msgstr "已連線為"
@@ -9075,6 +9084,9 @@ msgstr "惡意軟體或釣魚"
 msgid "Manage"
 msgstr "管理"
 
+msgid "Manage {label}"
+msgstr "管理 {label}"
+
 msgid "Manage accounts"
 msgstr "管理帳號"
 
@@ -9464,6 +9476,10 @@ msgstr "自 2026 年 8 月起的月數"
 
 msgid "More"
 msgstr "更多"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "{0} 的更多操作"
 
 msgid "More {kindLower} themes"
 msgstr "更多{kindLower}主題"

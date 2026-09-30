@@ -2290,6 +2290,9 @@ msgstr "Approuvée"
 msgid "Approved review"
 msgstr "Revue approuvée"
 
+msgid "Apps"
+msgstr "Applications"
+
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
 
@@ -3977,6 +3980,9 @@ msgstr "Connectez un compte Google. Sa boîte mail est en lecture seule, et les 
 msgid "Connect a microphone to use dictation"
 msgstr "Connectez un microphone pour utiliser la dictée"
 
+msgid "Connect an account"
+msgstr "Connecter un compte"
+
 msgid "Connect another account"
 msgstr "Connecter un autre compte"
 
@@ -4048,6 +4054,9 @@ msgstr "Connecté"
 
 msgid "Connected {label}"
 msgstr "{label} connecté"
+
+msgid "Connected accounts"
+msgstr "Comptes connectés"
 
 msgid "Connected as"
 msgstr "Connecté en tant que"
@@ -9075,6 +9084,9 @@ msgstr "Logiciel malveillant ou hameçonnage"
 msgid "Manage"
 msgstr "Gérer"
 
+msgid "Manage {label}"
+msgstr "Gérer {label}"
+
 msgid "Manage accounts"
 msgstr "Gérer les comptes"
 
@@ -9464,6 +9476,10 @@ msgstr "Mois depuis août 2026"
 
 msgid "More"
 msgstr "Plus"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Plus d'actions {0}"
 
 msgid "More {kindLower} themes"
 msgstr "Plus de thèmes {kindLower}"
