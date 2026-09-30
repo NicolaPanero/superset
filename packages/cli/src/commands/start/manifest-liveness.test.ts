@@ -1,6 +1,5 @@
 import { afterAll, describe, expect, test } from "bun:test";
-import { spawn } from "node:child_process";
-import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { CliContext } from "../../lib/command";
@@ -19,19 +18,6 @@ delete process.env.SUPERSET_ORGANIZATION_ID;
 const { readManifest, writeManifest } = await import("../../lib/host/manifest");
 const startCommand = (await import("./command")).default;
 
-const fakeHostBinDir = mkdtempSync(join(tmpdir(), "superset-cli-fake-host-"));
-const fakeHostBinPath = join(fakeHostBinDir, "superset-host");
-writeFileSync(fakeHostBinPath, "#!/bin/sh\nsleep 30\n");
-chmodSync(fakeHostBinPath, 0o755);
-
-// Spawns the script above rather than overriding argv0 on an unrelated
-// binary — `ps`'s rendering of an overridden argv0 isn't portable across
-// kernels/ps implementations, but the path a process was actually exec'd
-// from always is.
-function spawnFakeHostProcess() {
-	return spawn(fakeHostBinPath, [], { stdio: "ignore" });
-}
-
 afterAll(() => {
 	if (originalSupersetHomeDir === undefined) {
 		delete process.env.SUPERSET_HOME_DIR;
@@ -44,7 +30,6 @@ afterAll(() => {
 		process.env.SUPERSET_ORGANIZATION_ID = originalSupersetOrganizationId;
 	}
 	rmSync(tempHome, { recursive: true, force: true });
-	rmSync(fakeHostBinDir, { recursive: true, force: true });
 });
 
 const ORG = { id: "org-1", slug: "org-1", name: "Palette" };
@@ -77,27 +62,12 @@ function run(): Promise<Result> {
 }
 
 describe("superset start manifest liveness", () => {
-	test("already running: a manifest whose pid runs the host binary short-circuits without spawning", async () => {
-		const fakeHost = spawnFakeHostProcess();
-		await new Promise((resolve) => setTimeout(resolve, 100));
-		try {
-			writeManifest({
-				pid: fakeHost.pid as number,
-				endpoint: "http://127.0.0.1:19994",
-				authToken: "secret",
-				startedAt: Date.now(),
-				organizationId: ORG.id,
-			});
-
-			const result = await run();
-			expect(result.message).toContain("already running");
-			expect(result.data).toMatchObject({ pid: fakeHost.pid });
-			// The stale manifest wasn't touched — this was a genuine short-circuit.
-			expect(readManifest(ORG.id)?.pid).toBe(fakeHost.pid as number);
-		} finally {
-			fakeHost.kill();
-		}
-	});
+	// "Already running" for a manifest whose pid genuinely runs the host
+	// binary (live pid, command matches) is covered at the unit level in
+	// lib/host/manifest-liveness.test.ts, with the identity check
+	// dependency-injected instead of relying on a real spawned process and
+	// `ps` — matching a genuine `superset-host` process portably from a test
+	// fixture isn't reliable across environments.
 
 	test("stale manifest with a dead pid is cleaned up and a fresh start is attempted", async () => {
 		writeManifest({
