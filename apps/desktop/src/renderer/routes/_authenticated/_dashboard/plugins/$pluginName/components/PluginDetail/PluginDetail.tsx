@@ -11,7 +11,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	LuArrowLeft,
 	LuArrowUp,
-	LuCopy,
 	LuEllipsis,
 	LuExternalLink,
 	LuPlus,
@@ -23,7 +22,6 @@ import {
 	ConnectConnectorDialog,
 	ConnectorRow,
 } from "renderer/components/ConnectorSection";
-import { env } from "renderer/env.renderer";
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
 import { PluginIcon } from "renderer/routes/_authenticated/_dashboard/plugins/components/PluginIcon";
 import { SkillIcon } from "renderer/routes/_authenticated/_dashboard/plugins/components/SkillIcon";
@@ -42,7 +40,6 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 	const openNewWorkspace = useOpenNewWorkspace();
 
 	const [isConnectOpen, setIsConnectOpen] = useState(false);
-	const [copied, setCopied] = useState(false);
 
 	// Seeded before the navigation, not after: the draft store is only reset on
 	// close, so the create surface mounts with this already in the composer.
@@ -54,15 +51,6 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 		});
 		openNewWorkspace();
 	}, [openNewWorkspace, plugin.interface.displayName, t]);
-
-	const copyLink = useCallback(() => {
-		void navigator.clipboard.writeText(
-			`${env.NEXT_PUBLIC_WEB_URL}/plugins/${encodeURIComponent(plugin.name)}`,
-		);
-		setCopied(true);
-		const timer = setTimeout(() => setCopied(false), 2000);
-		return () => clearTimeout(timer);
-	}, [plugin.name]);
 
 	const wasInstalled = useRef(plugin.installed);
 	const needsConnection = Boolean(
@@ -151,11 +139,6 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 								</DropdownMenuContent>
 							</DropdownMenu>
 						)}
-
-						<Button variant="secondary" size="sm" onClick={copyLink}>
-							<LuCopy className="size-4" />
-							{copied ? <Trans>Copied</Trans> : <Trans>Copy link</Trans>}
-						</Button>
 
 						{!plugin.installed && (
 							<Button
