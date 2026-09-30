@@ -8,12 +8,14 @@ import {
 	LuArrowUp,
 	LuExternalLink,
 	LuPlus,
+	LuSparkles,
 	LuTrash2,
 } from "react-icons/lu";
 import {
 	ConnectConnectorDialog,
 	ConnectorRow,
 } from "renderer/components/ConnectorSection";
+import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
 import { PluginIcon } from "renderer/routes/_authenticated/_dashboard/plugins/components/PluginIcon";
 import { SkillIcon } from "renderer/routes/_authenticated/_dashboard/plugins/components/SkillIcon";
 import type { CatalogPlugin } from "renderer/routes/_authenticated/_dashboard/plugins/hooks/usePluginCatalog";
@@ -26,6 +28,7 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 	const navigate = useNavigate();
 	const { install, uninstall, setEnabled, update, isBusy } =
 		usePluginMutations();
+	const openNewWorkspace = useOpenNewWorkspace();
 
 	const [isConnectOpen, setIsConnectOpen] = useState(false);
 	const wasInstalled = useRef(plugin.installed);
@@ -100,6 +103,12 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 							>
 								<LuTrash2 className="size-4" />
 								<Trans>Remove</Trans>
+							</Button>
+						)}
+						{plugin.installed && plugin.enabled && (
+							<Button size="sm" onClick={() => openNewWorkspace()}>
+								<LuSparkles className="size-4" />
+								<Trans>Try now</Trans>
 							</Button>
 						)}
 						{plugin.installed && (
