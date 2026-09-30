@@ -19,6 +19,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import simpleGit, { type SimpleGit } from "simple-git";
 import {
+	adoptLocalRepo,
 	cloneRepoInto,
 	cloneTemplateInto,
 	initEmptyRepo,
@@ -205,9 +206,11 @@ describe("resolveLocalRepo", () => {
 
 	// Regression: `git worktree add ... HEAD` fails outright against a
 	// zero-commit repo ("fatal: not a valid object name: 'HEAD'") because
-	// HEAD is unborn — see resolve-start-point.ts. A project adopted from
-	// such a repo must not be left in that state.
-	test("without ensureCommit, leaves a zero-commit repo's HEAD unborn", async () => {
+	// HEAD is unborn — see resolve-start-point.ts. resolveLocalRepo is
+	// read-only (it also backs the "detect import candidates" preview
+	// query), so it must never fix this up itself — that's adoptLocalRepo's
+	// job, below.
+	test("is read-only: leaves a zero-commit repo's HEAD unborn", async () => {
 		const repo = join(workRoot, "unborn-default");
 		await initRepoAt(repo);
 
@@ -223,12 +226,16 @@ describe("resolveLocalRepo", () => {
 		}
 		expect(rejected).toBe(true);
 	});
+});
 
-	test("ensureCommit seeds an initial commit when HEAD is unborn", async () => {
+// ── adoptLocalRepo ──────────────────────────────────────────────────
+
+describe("adoptLocalRepo", () => {
+	test("seeds an initial commit when HEAD is unborn", async () => {
 		const repo = join(workRoot, "unborn-ensured");
 		await initRepoAt(repo);
 
-		const resolved = await resolveLocalRepo(repo, { ensureCommit: true });
+		const resolved = await adoptLocalRepo(repo);
 
 		expect(eqRealpath(resolved.repoPath, repo)).toBe(true);
 		const head = (
@@ -237,13 +244,13 @@ describe("resolveLocalRepo", () => {
 		expect(head).toMatch(/^[0-9a-f]{40}$/);
 	});
 
-	test("ensureCommit is a no-op when the repo already has commits", async () => {
+	test("is a no-op when the repo already has commits", async () => {
 		const repo = join(workRoot, "already-committed");
 		const git = await initRepoAt(repo);
 		await seedCommit(git);
 		const before = (await git.raw(["rev-parse", "HEAD"])).trim();
 
-		await resolveLocalRepo(repo, { ensureCommit: true });
+		await adoptLocalRepo(repo);
 
 		const after = (await git.raw(["rev-parse", "HEAD"])).trim();
 		expect(after).toBe(before);

@@ -236,26 +236,9 @@ async function revParseGitRoot(path: string): Promise<string> {
 	return root;
 }
 
-/**
- * Validates that a path is a git working tree and returns the canonical git
- * root plus its primary GitHub remote when one exists. Local-only repos are
- * valid v2 projects; they simply have no cloud clone URL or GitHub metadata.
- *
- * `ensureCommit` seeds an `--allow-empty` initial commit when the repo's
- * `HEAD` is unborn (see `ensureNotUnborn`). Default off because this
- * function also backs the read-only "detect import candidates" query, which
- * must not write into a repo the user hasn't confirmed adopting yet — pass
- * it only from paths that are actually adopting/creating the project.
- */
-export async function resolveLocalRepo(
-	repoPath: string,
-	options?: { ensureCommit?: boolean },
-): Promise<ResolvedRepo> {
-	validateDirectoryPath(repoPath, "Path");
-	const gitRoot = await revParseGitRoot(repoPath);
-	if (options?.ensureCommit) {
-		await ensureNotUnborn(gitRoot);
-	}
+/** Shared by `resolveLocalRepo` and `adoptLocalRepo` once each has settled
+ * what `gitRoot` is (and, for the latter, made sure it has a commit). */
+async function resolveRemotesFor(gitRoot: string): Promise<ResolvedRepo> {
 	const remotes = await getGitHubRemotes(createUserSimpleGit(gitRoot));
 	const originParsed = remotes.get("origin");
 	if (originParsed) {
@@ -265,6 +248,42 @@ export async function resolveLocalRepo(
 	if (!first) return { repoPath: gitRoot, remoteName: null, parsed: null };
 	const [firstName, firstParsed] = first;
 	return { repoPath: gitRoot, remoteName: firstName, parsed: firstParsed };
+}
+
+/**
+ * Validates that a path is a git working tree and returns the canonical git
+ * root plus its primary GitHub remote when one exists. Local-only repos are
+ * valid v2 projects; they simply have no cloud clone URL or GitHub metadata.
+ *
+ * Read-only — never writes to the repo. This is the function the "detect
+ * import candidates" preview query uses, before the user has confirmed
+ * adopting anything. A path that's actually adopting/creating a project
+ * wants `adoptLocalRepo` instead, so it doesn't leave an unborn `HEAD`
+ * behind; don't reach for this one there just because the signature is
+ * simpler.
+ */
+export async function resolveLocalRepo(
+	repoPath: string,
+): Promise<ResolvedRepo> {
+	validateDirectoryPath(repoPath, "Path");
+	const gitRoot = await revParseGitRoot(repoPath);
+	return resolveRemotesFor(gitRoot);
+}
+
+/**
+ * Like `resolveLocalRepo`, but for a path that is ADOPTING `repoPath` as a
+ * project (import, clone-fallback, in-place init of an already-existing
+ * repo) rather than merely previewing it. Runs `ensureNotUnborn` first, so
+ * a repo that's a valid git work tree but has zero commits gets the same
+ * `--allow-empty` scaffold commit a brand new repo does — otherwise its
+ * `HEAD` stays unborn and every later `git worktree add` against it fails
+ * outright. Never call this from a read-only/preview path.
+ */
+export async function adoptLocalRepo(repoPath: string): Promise<ResolvedRepo> {
+	validateDirectoryPath(repoPath, "Path");
+	const gitRoot = await revParseGitRoot(repoPath);
+	await ensureNotUnborn(gitRoot);
+	return resolveRemotesFor(gitRoot);
 }
 
 /**
@@ -291,7 +310,7 @@ export async function initLocalRepoInPlace(
 
 	const existingRoot = await tryRevParseGitRoot(repoPath);
 	if (existingRoot) {
-		return resolveLocalRepo(existingRoot, { ensureCommit: true });
+		return adoptLocalRepo(existingRoot);
 	}
 
 	await gitInitMainBranch(repoPath);
@@ -479,7 +498,7 @@ export async function cloneRepoInto(
 		if (expectedSlug) {
 			return await resolveMatchingSlug(targetPath, expectedSlug);
 		}
-		return await resolveLocalRepo(targetPath, { ensureCommit: true });
+		return await adoptLocalRepo(targetPath);
 	} catch (err) {
 		await rollbackTargetDir(targetPath);
 		throw err;
