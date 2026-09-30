@@ -2,7 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { SUPERSET_MANAGED_BINARIES } from "./agent-setup-targets";
 import { ARTIFACT_GUARD_SCRIPT_NAME } from "./artifact-guard-hook";
-import { getTemplatePath } from "./config";
 import { NOTIFY_SCRIPT_NAME } from "./notify-hook";
 import { getBinDir } from "./paths";
 
@@ -209,14 +208,7 @@ export interface BuildWrapperScriptOptions {
  * Harnesses with working native SessionStart hooks fire too; the host upsert
  * makes the duplicate harmless and lets them attach the real session id.
  */
-function buildLaunchReportBlock(agentId: string): string {
-	const resumeSession =
-		agentId === "codex"
-			? fs.readFileSync(
-					getTemplatePath("codex-resume-session.template.sh"),
-					"utf-8",
-				)
-			: "";
+function buildLaunchReportBlock(): string {
 	return `_superset_skip_launch_report=""
 for _superset_arg in "$@"; do
   # Tokens past \`--\` are prompt text, never flags.
@@ -230,12 +222,11 @@ for _superset_arg in "$@"; do
 done
 if [ -z "$_superset_skip_launch_report" ] && [ -n "$SUPERSET_TERMINAL_ID" ] \\
   && [ -n "$SUPERSET_HOME_DIR" ] && [ -x "$SUPERSET_HOME_DIR/${MANAGED_NOTIFY_RELATIVE_PATH}" ]; then
-  _superset_launch_payload='{"hook_event_name":"SessionStart"}'
-${resumeSession}  _superset_launch_pid=$$
+  _superset_launch_pid=$$
   (
     sleep 2
     kill -0 "$_superset_launch_pid" 2>/dev/null || exit 0
-    exec "$SUPERSET_HOME_DIR/${MANAGED_NOTIFY_RELATIVE_PATH}" "$_superset_launch_payload"
+    exec "$SUPERSET_HOME_DIR/${MANAGED_NOTIFY_RELATIVE_PATH}" '{"hook_event_name":"SessionStart"}'
   ) >/dev/null 2>&1 </dev/null &
 fi
 
@@ -253,7 +244,7 @@ export function buildWrapperScript(
 export SUPERSET_AGENT_ID="${options.agentId}"
 export SUPERSET_AGENT_LAUNCH_ID="$$-$(date +%s)"
 
-${buildLaunchReportBlock(options.agentId)}fi
+${buildLaunchReportBlock()}fi
 
 `
 		: "";

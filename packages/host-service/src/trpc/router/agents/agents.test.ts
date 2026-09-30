@@ -293,9 +293,41 @@ describe("buildTerminalAgentLaunch", () => {
 			.run();
 	}
 
-	it("rejects a stale Claude fork after its terminal resumes another session", async () => {
+	it.each([
+		{
+			agentId: "claude",
+			sessionId: "current-session",
+			requestedId: "stale-session",
+			reason: "stale Claude session",
+		},
+		{
+			agentId: "codex",
+			sessionId: "current-session",
+			requestedId: "stale-session",
+			reason: "stale Codex session",
+		},
+		{
+			agentId: "codex",
+			sessionId: undefined,
+			requestedId: "requested-session",
+			reason: "missing recorded Codex session",
+		},
+		{
+			agentId: "codex",
+			sessionId: "current-session",
+			requestedId: "current-session",
+			reason: "missing source home",
+		},
+	] as const)("rejects a fork with $reason", async ({
+		agentId,
+		sessionId,
+		requestedId,
+	}) => {
 		const db = createTestDb();
 		seedConfig(db);
+		db.update(schema.hostAgentConfigs)
+			.set({ presetId: agentId, command: agentId })
+			.run();
 		db.insert(schema.workspaces)
 			.values({
 				id: "ws-1",
@@ -308,8 +340,8 @@ describe("buildTerminalAgentLaunch", () => {
 		terminalAgentStore.recordEvent({
 			terminalId: "source",
 			workspaceId: "ws-1",
-			agentId: "claude",
-			agentSessionId: "current-session",
+			agentId,
+			agentSessionId: sessionId,
 			eventType: "SessionStart",
 			occurredAt: 1,
 		});
@@ -319,10 +351,10 @@ describe("buildTerminalAgentLaunch", () => {
 		await expect(
 			runAgentInWorkspace(ctx, {
 				workspaceId: "ws-1",
-				agent: "claude",
+				agent: agentId,
 				prompt: "",
 				forkSourceTerminalId: "source",
-				forkSessionId: "stale-session",
+				forkSessionId: requestedId,
 			}),
 		).rejects.toMatchObject({ code: "CONFLICT" });
 	});

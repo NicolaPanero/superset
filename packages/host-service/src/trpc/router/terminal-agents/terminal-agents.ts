@@ -7,12 +7,10 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import type { HostDb } from "../../../db";
 import type { EventBus } from "../../../events";
-import { discoverCodexForkSource } from "../../../terminal/codex-fork-source";
 import { reconcileMissingTerminalSessions } from "../../../terminal/reaper/reaper";
 import {
 	createTerminalSessionInternal,
 	disposeSessionAndWait,
-	getTerminalProcessId,
 } from "../../../terminal/terminal";
 import type {
 	TerminalAgentBinding,
@@ -378,22 +376,6 @@ const GET_OR_CREATE_TIMEOUT_MS = 10_000;
 const MAX_AGENT_TRANSCRIPT_CHARS = 400_000;
 
 export const terminalAgentsRouter = router({
-	codexForkSource: protectedProcedure
-		.input(z.object({ workspaceId: z.string(), terminalId: z.string() }))
-		.query(async ({ ctx, input }) => {
-			const binding = ctx.terminalAgentStore.get(input.terminalId);
-			if (
-				binding?.agentId !== "codex" ||
-				binding.workspaceId !== input.workspaceId
-			)
-				return null;
-			const pid = getTerminalProcessId(input.terminalId, input.workspaceId);
-			if (!pid) return null;
-			const source = await discoverCodexForkSource(pid);
-			return source && "sessionId" in source
-				? { sessionId: source.sessionId }
-				: null;
-		}),
 	list: protectedProcedure.query(({ ctx }) => {
 		return ctx.terminalAgentStore.list();
 	}),

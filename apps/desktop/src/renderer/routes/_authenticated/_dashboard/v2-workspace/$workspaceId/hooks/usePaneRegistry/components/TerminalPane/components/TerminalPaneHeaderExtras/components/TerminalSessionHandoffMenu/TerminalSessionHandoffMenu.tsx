@@ -79,18 +79,7 @@ export function TerminalSessionHandoffMenu({
 			(config) => config.id === sourceId || config.presetId === sourceId,
 		);
 	}, [binding?.agentId, binding?.definitionId, configs]);
-	const forkSource = workspaceTrpc.terminalAgents.codexForkSource.useQuery(
-		{ workspaceId, terminalId },
-		{
-			enabled: binding?.agentId === "codex" && (menuOpen || action === "fork"),
-			refetchInterval: 3000,
-			staleTime: 0,
-		},
-	);
-	const forkSessionId =
-		binding?.agentId === "codex"
-			? (forkSource.data?.sessionId ?? binding?.agentSessionId)
-			: binding?.agentSessionId;
+	const forkSessionId = binding?.agentSessionId;
 	const selectedConfig = configs.find((config) => config.id === targetConfigId);
 	// `forkArgs` is absent when the host service predates it, so an older
 	// remote host degrades to "cannot fork" instead of throwing in render.

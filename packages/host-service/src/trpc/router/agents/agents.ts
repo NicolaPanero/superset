@@ -28,12 +28,7 @@ import { z } from "zod";
 import type { HostDb } from "../../../db";
 import { workspaces } from "../../../db/schema";
 import {
-	discoverCodexForkSource,
-	verifiedCodexForkHome,
-} from "../../../terminal/codex-fork-source";
-import {
 	createTerminalSessionInternal,
-	getTerminalProcessId,
 	sendAgentMessage,
 } from "../../../terminal/terminal";
 import type { TerminalAgentStore } from "../../../terminal-agents";
@@ -512,8 +507,7 @@ async function runTerminalAgent(
 			!input.forkSessionId ||
 			binding?.workspaceId !== input.workspaceId ||
 			sourceConfig?.id !== config?.id ||
-			(binding?.agentId !== "codex" &&
-				binding?.agentSessionId !== input.forkSessionId)
+			binding?.agentSessionId !== input.forkSessionId
 		) {
 			throw new TRPCError({
 				code: "CONFLICT",
@@ -522,18 +516,7 @@ async function runTerminalAgent(
 			});
 		}
 		if (binding.agentId === "codex") {
-			const pid = getTerminalProcessId(
-				input.forkSourceTerminalId,
-				input.workspaceId,
-			);
-			const discovered = pid ? await discoverCodexForkSource(pid) : null;
-			const home = binding.sessionHome ?? binding.account?.directory;
-			const sourceHome = verifiedCodexForkHome({
-				requestedSessionId: input.forkSessionId,
-				boundSessionId: binding.agentSessionId,
-				sessionHome: home,
-				discovered,
-			});
+			const sourceHome = binding.sessionHome ?? binding.account?.directory;
 			if (!sourceHome) {
 				throw new TRPCError({
 					code: "CONFLICT",
