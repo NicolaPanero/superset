@@ -63,6 +63,17 @@ Calls from web and from builds older than the `x-superset-client` header are not
 | Rename a procedure | New name; old name stays as a `@deprecated` alias | `task.all` → `task.list` in `task/task.ts` |
 | Drop an input | Keep accepting it and ignore it | `branch` in `task/schema.ts` |
 | Drop an output field | Keep sending it until removal is allowed | the plugins catalog field that #7317 removed crashed old desktops |
+| Drop or rename a DB column | Pick the procedure's output columns first, keep the old field | `db.query.*.find*` without `columns` returns every column |
+| Make an input stricter | Only on a new input or procedure | `publishPageSchema` is `.strict()` from the start, so a newer CLI fails loudly on an older server |
+| Change an error code, default, or sort order | New procedure or new optional input | desktop branches on `NOT_FOUND` and `CONFLICT` |
+| Call a new procedure from a client | Merge the API first, then the client after the API is live | #7317's API deploy stalled two days behind migration 0119 |
+
+To check the API is live, the latest `Deploy Production` run after your API merge must have
+passed: `gh run list --workflow deploy-production.yml --branch main --limit 5`.
+
+In client code, expect the unknown: guard new optional fields, handle enum values the client has
+not seen, and keep a failing widget from taking its parent view down with it. #7726 crashed the
+whole workspace view from one menu.
 
 Keep the schema migration in its own PR. #7726 had a migration inside it, so the bad API change
 could not be reverted.
@@ -91,7 +102,12 @@ as `d1aee0922f` did for `device.heartbeat`.
 
 - [ ] Step 1 run for every procedure whose input or output changed, with the result in the PR
 - [ ] No existing input field is new-required, renamed, retyped, or more strictly validated
-- [ ] No existing output field is removed, renamed, retyped, wrapped, or newly nullable
+- [ ] No existing output field is removed, renamed, retyped, wrapped, or newly nullable,
+      including through a DB column change on a `find*` without `columns`
+- [ ] No change to an existing error code, default limit, sort order, or meaning of `null`
+- [ ] No change to a procedure's type (query, mutation, subscription), the link, or the transformer
+- [ ] No new required header or stricter auth on an existing procedure
+- [ ] Client code that needs a new procedure merges after the API is live in production
 - [ ] Every new input field is optional with a server-side default
 - [ ] A replaced procedure is kept as a `@deprecated` alias
 - [ ] No schema migration in the same PR as the contract change

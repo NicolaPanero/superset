@@ -7,4 +7,5 @@ a host as old as `MIN_HOST_SERVICE_VERSION` (`packages/shared/src/host-version.t
 - Follow the rules in `packages/trpc/AGENTS.md` and `.agents/skills/trpc-compat/SKILL.md`.
   Changes must be additive.
 - A client that calls a new procedure must handle a host that does not have it, or the change
-  must raise `MIN_HOST_SERVICE_VERSION` with a note in that file on why.
+  must raise `MIN_HOST_SERVICE_VERSION` with a note in that file on why. #6658 changed the
+  client transport without raising it, and desktop 1.24.0 got a 405 on every query to older hosts.
