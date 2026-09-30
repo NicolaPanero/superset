@@ -6646,9 +6646,6 @@ msgstr "Falha ao remover o membro"
 msgid "Failed to remove PR link: {0}"
 msgstr "Falha ao remover o vínculo do PR: {0}"
 
-msgid "Failed to remove terminal"
-msgstr "Falha ao remover o terminal"
-
 msgid "Failed to rename"
 msgstr "Falha ao renomear"
 
@@ -10189,6 +10186,9 @@ msgstr "Nenhuma configuração de agente pública ainda. Esta rota já está pro
 msgid "No pull requests found."
 msgstr "Nenhum pull request encontrado."
 
+msgid "No recently deleted panes"
+msgstr "Nenhum painel excluído recentemente"
+
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Nenhum repositório encontrado. Confirme se o seu GitHub App tem acesso aos repositórios."
 
@@ -12623,9 +12623,6 @@ msgstr "Remove este agente apenas deste dispositivo."
 
 msgid "Removing member..."
 msgstr "Removendo o membro..."
-
-msgid "Removing terminal..."
-msgstr "Removendo o terminal..."
 
 msgid "Removing…"
 msgstr "Removendo…"
@@ -15501,9 +15498,6 @@ msgstr "ID do terminal"
 
 msgid "Terminal input"
 msgstr "Entrada do terminal"
-
-msgid "Terminal removed"
-msgstr "Terminal removido"
 
 msgid "Terminal scripts"
 msgstr "Scripts de terminal"

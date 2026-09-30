@@ -2,7 +2,11 @@ import {
 	TerminalModes,
 	type TerminalModesSnapshot,
 } from "@superset/pty-daemon/terminal-modes";
-import { HeadlessTerminal } from "./headless-xterm.ts";
+import {
+	captureTerminalRecoverySnapshot,
+	type TerminalRecoverySnapshot,
+} from "@superset/shared/terminal-recovery";
+import { HeadlessSerializeAddon, HeadlessTerminal } from "./headless-xterm.ts";
 
 export interface ModeTracker {
 	feed(bytes: Uint8Array): void;
@@ -14,6 +18,7 @@ export interface ModeTracker {
 	/** Current cursor position on the mirrored screen, 0-based viewport coords. */
 	cursorPosition(): { x: number; y: number };
 	snapshot(maxLines?: number): TerminalSnapshot;
+	recoverySnapshot(): TerminalRecoverySnapshot;
 	dispose(): void;
 }
 
@@ -60,9 +65,11 @@ export function createModeTracker(
 		// Retains recent scrollback so `snapshot()` can serve line-mode history,
 		// not just the visible screen. Irrelevant to alt-screen TUIs (no
 		// scrollback), but cheap insurance for plain shell output.
-		scrollback: 1000,
+		scrollback: 5000,
 		allowProposedApi: true,
 	});
+	const serializeAddon = new HeadlessSerializeAddon();
+	term.loadAddon(serializeAddon);
 	const modes = new TerminalModes();
 	const internals = term as unknown as HeadlessInternals;
 
@@ -137,6 +144,10 @@ export function createModeTracker(
 			return { x: buffer.cursorX, y: buffer.cursorY };
 		},
 		snapshot,
+		recoverySnapshot: () =>
+			captureTerminalRecoverySnapshot(term, (options) =>
+				serializeAddon.serialize(options),
+			),
 		dispose() {
 			disposed = true;
 			term.dispose();

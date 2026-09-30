@@ -1,6 +1,7 @@
 import { Database } from "bun:sqlite";
 import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../db";
@@ -654,5 +655,93 @@ describe("restartAccountSessions", () => {
 		expect(disposedTerminals).toEqual(["t1"]);
 		expect(broadcasts).toEqual([]);
 		expect(findResumeCandidateBinding(db, "ws-1", "t1")).toBeDefined();
+	});
+});
+
+describe("explicit deleted-agent recovery", () => {
+	it("only resumes a disposed agent after explicit restore, once for concurrent requests", async () => {
+		const db = createTestDb();
+		seedResumableBinding(db);
+		db.update(terminalAgentBindings)
+			.set({ endReason: "disposed" })
+			.where(eq(terminalAgentBindings.terminalId, "t1"))
+			.run();
+		const { deps, runCalls } = createDeps(db);
+		expect(
+			await resumeTerminalAgentSession(deps, {
+				workspaceId: "ws-1",
+				terminalId: "t1",
+			}),
+		).toEqual({ resumed: false });
+		expect(runCalls).toHaveLength(0);
+		const input = {
+			workspaceId: "ws-1",
+			terminalId: "t1",
+			restoreDeleted: true,
+		};
+		const results = await Promise.all([
+			resumeTerminalAgentSession(deps, input),
+			resumeTerminalAgentSession(deps, input),
+		]);
+		expect(results[0]).toEqual(results[1]);
+		expect(results[0].resumed).toBe(true);
+		expect(runCalls).toHaveLength(1);
+		expect(runCalls[0]?.resumeSessionId).toBe("sess-t1");
+		expect(await resumeTerminalAgentSession(deps, input)).toEqual({
+			resumed: false,
+		});
+	});
+
+	it("keeps a failed explicit resume disposed and retryable", async () => {
+		const db = createTestDb();
+		seedResumableBinding(db);
+		db.update(terminalAgentBindings)
+			.set({ endReason: "disposed" })
+			.where(eq(terminalAgentBindings.terminalId, "t1"))
+			.run();
+		const failing = createDeps(db, {
+			runAgent: async () => {
+				throw new Error("launch failed");
+			},
+		});
+		const input = {
+			workspaceId: "ws-1",
+			terminalId: "t1",
+			restoreDeleted: true,
+		};
+		await expect(
+			resumeTerminalAgentSession(failing.deps, input),
+		).rejects.toThrow("launch failed");
+		expect(findResumeCandidateBinding(db, "ws-1", "t1")).toBeUndefined();
+		expect(db.query.terminalAgentBindings.findFirst().sync()?.endReason).toBe(
+			"disposed",
+		);
+		const retry = createDeps(db);
+		expect((await resumeTerminalAgentSession(retry.deps, input)).resumed).toBe(
+			true,
+		);
+	});
+
+	it("cannot restore another workspace's deleted agent or a cleanly detached agent", async () => {
+		const db = createTestDb();
+		seedResumableBinding(db);
+		db.update(terminalAgentBindings).set({ endReason: "disposed" }).run();
+		const { deps, runCalls } = createDeps(db);
+		expect(
+			await resumeTerminalAgentSession(deps, {
+				workspaceId: "other",
+				terminalId: "t1",
+				restoreDeleted: true,
+			}),
+		).toEqual({ resumed: false });
+		db.update(terminalAgentBindings).set({ endReason: "detached" }).run();
+		expect(
+			await resumeTerminalAgentSession(deps, {
+				workspaceId: "ws-1",
+				terminalId: "t1",
+				restoreDeleted: true,
+			}),
+		).toEqual({ resumed: false });
+		expect(runCalls).toHaveLength(0);
 	});
 });

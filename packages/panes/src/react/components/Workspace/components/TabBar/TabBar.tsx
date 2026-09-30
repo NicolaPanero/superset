@@ -61,7 +61,10 @@ function AddTabButton<_TData>({
 		return (
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>{button}</DropdownMenuTrigger>
-				<DropdownMenuContent align="end" className="w-56">
+				<DropdownMenuContent
+					align="end"
+					className="min-w-56 w-max max-w-[calc(100vw-1rem)]"
+				>
 					{renderAddTabMenu()}
 				</DropdownMenuContent>
 			</DropdownMenu>

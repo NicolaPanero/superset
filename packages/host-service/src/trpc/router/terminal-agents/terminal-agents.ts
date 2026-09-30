@@ -117,10 +117,11 @@ function bindingHasHarnessSession(
  */
 export async function resumeTerminalAgentSession(
 	deps: ResumeSessionDeps,
-	input: { workspaceId: string; terminalId: string },
+	input: { workspaceId: string; terminalId: string; restoreDeleted?: boolean },
 ): Promise<ResumeResult> {
 	const { workspaceId, terminalId } = input;
-	const key = `${workspaceId}::${terminalId}`;
+	const key = `${workspaceId}::${terminalId}::${input.restoreDeleted ?? false}`;
+	const endReason = input.restoreDeleted ? "disposed" : "terminal-exited";
 	const pending = resumeInflight.get(key);
 	if (pending) return pending;
 
@@ -129,6 +130,7 @@ export async function resumeTerminalAgentSession(
 			deps.db,
 			workspaceId,
 			terminalId,
+			endReason,
 		);
 		if (!claimed?.agentSessionId) return { resumed: false };
 
@@ -139,7 +141,7 @@ export async function resumeTerminalAgentSession(
 		if (!config || config.resumeArgs.length === 0) {
 			// Config gone or resume unsupported — leave the candidate intact
 			// rather than silently destroying the session id.
-			unclaimResumeCandidateBinding(deps.db, terminalId);
+			unclaimResumeCandidateBinding(deps.db, terminalId, endReason);
 			return { resumed: false };
 		}
 
@@ -158,7 +160,7 @@ export async function resumeTerminalAgentSession(
 				...(resumable ? { resumeSessionId: claimed.agentSessionId } : {}),
 			});
 		} catch (error) {
-			unclaimResumeCandidateBinding(deps.db, terminalId);
+			unclaimResumeCandidateBinding(deps.db, terminalId, endReason);
 			throw error;
 		}
 

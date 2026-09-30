@@ -143,6 +143,7 @@ const MOD_KEY = navigator.platform.toLowerCase().includes("mac")
 	: "Ctrl+";
 
 interface UsePaneRegistryOptions {
+	onRemoveSession: (terminalId: string) => Promise<void>;
 	onOpenDiff: OpenReviewDiff;
 	onOpenComment: (comment: CommentPaneData) => void;
 	onOpenFile: OpenFile;
@@ -152,6 +153,7 @@ interface UsePaneRegistryOptions {
 }
 
 export function usePaneRegistry({
+	onRemoveSession,
 	onOpenDiff,
 	onOpenComment,
 	onOpenFile,
@@ -429,7 +431,7 @@ export function usePaneRegistry({
 				renderTitle: (ctx: RendererContext<PaneViewerData>) => (
 					<div className="flex min-w-0 flex-1 items-center gap-1.5">
 						<TerminalSessionDropdown
-							onSessionRemoved={clearWorkspaceRunTerminal}
+							onRemoveSession={onRemoveSession}
 							context={ctx}
 							launcher={launcher}
 							workspaceId={workspaceId}
@@ -894,6 +896,7 @@ export function usePaneRegistry({
 			scrollToBottomShortcut,
 			killTerminalSession,
 			killTerminalSessionSilently,
+			onRemoveSession,
 			isKillingTerminalSession,
 			launcher,
 			onOpenDiff,

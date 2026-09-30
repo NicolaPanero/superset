@@ -6646,9 +6646,6 @@ msgstr "Verwijderen van lid mislukt"
 msgid "Failed to remove PR link: {0}"
 msgstr "Verwijderen van PR-koppeling mislukt: {0}"
 
-msgid "Failed to remove terminal"
-msgstr "Verwijderen van terminal mislukt"
-
 msgid "Failed to rename"
 msgstr "Naam wijzigen mislukt"
 
@@ -10189,6 +10186,9 @@ msgstr "Nog geen publieke agentconfiguraties. Deze route is klaar voor toekomsti
 msgid "No pull requests found."
 msgstr "Geen pull requests gevonden."
 
+msgid "No recently deleted panes"
+msgstr "Geen recent verwijderde panelen"
+
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Geen repository's gevonden. Controleer of je GitHub App toegang heeft tot repository's."
 
@@ -12623,9 +12623,6 @@ msgstr "Verwijdert deze agent alleen van dit apparaat."
 
 msgid "Removing member..."
 msgstr "Lid verwijderen..."
-
-msgid "Removing terminal..."
-msgstr "Terminal verwijderen..."
 
 msgid "Removing…"
 msgstr "Verwijderen…"
@@ -15501,9 +15498,6 @@ msgstr "terminal-ID"
 
 msgid "Terminal input"
 msgstr "Terminalinvoer"
-
-msgid "Terminal removed"
-msgstr "Terminal verwijderd"
 
 msgid "Terminal scripts"
 msgstr "Terminalscripts"

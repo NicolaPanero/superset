@@ -23,6 +23,10 @@ import {
 	terminalColorsSchema,
 } from "@superset/shared/terminal-colors";
 import {
+	type TerminalRecoverySnapshot,
+	terminalRecoverySnapshotSchema,
+} from "@superset/shared/terminal-recovery";
+import {
 	boundTranscriptText,
 	buildBoundedTerminalSessionTranscript,
 	TERMINAL_HANDOFF_MAX_CHARS,
@@ -37,7 +41,12 @@ import type { Hono } from "hono";
 import { getSupervisor } from "../daemon/index.ts";
 import { isProcessAlive, readPtyDaemonManifest } from "../daemon/manifest.ts";
 import type { HostDb } from "../db/index.ts";
-import { projects, terminalSessions, workspaces } from "../db/schema.ts";
+import {
+	closedPanes,
+	projects,
+	terminalSessions,
+	workspaces,
+} from "../db/schema.ts";
 import type { EventBus } from "../events/index.ts";
 import { portManager } from "../ports/port-manager.ts";
 import { issueAttributionToken } from "../terminal-agents/attribution-token.ts";
@@ -203,6 +212,7 @@ function getHostAgentHookUrl(): string {
 }
 
 type TerminalClientMessage =
+	| { type: "recovery-restored"; id: string }
 	| { type: "input"; data: string }
 	| { type: "colors"; colors: TerminalColors; resetOverrides?: boolean }
 	| { type: "resize"; cols: number; rows: number }
@@ -235,6 +245,7 @@ type TerminalClientMessage =
 // on attach) is a binary frame too; the renderer doesn't distinguish it
 // from live data.
 type TerminalServerMessage =
+	| { type: "recovery"; id: string; snapshot?: TerminalRecoverySnapshot }
 	| { type: "attached"; terminalId: string }
 	// `code: "session-gone"` marks the session as permanently destroyed (not
 	// found / disposed / exited) so the renderer can drop persisted scrollback;
@@ -527,6 +538,7 @@ type ShellReadyState =
 
 interface TerminalSession {
 	terminalId: string;
+	cwd: string;
 	workspaceId: string;
 	/** Handle for db writes from module-scope handlers (daemon disconnect). */
 	db: HostDb;
@@ -1312,6 +1324,17 @@ async function writeSessionMessage(
 		() => undefined,
 	);
 	return task;
+}
+
+export async function captureSessionRecoverySnapshot(input: {
+	terminalId: string;
+	workspaceId: string;
+	db: HostDb;
+	eventBus?: EventBus;
+}) {
+	const session = await getOrAdoptSession(input);
+	if ("error" in session) return undefined;
+	return { ...session.modeTracker.recoverySnapshot(), cwd: session.cwd };
 }
 
 /**
@@ -3270,6 +3293,7 @@ async function createTerminalSessionUnlocked({
 
 	const session: TerminalSession = {
 		terminalId,
+		cwd,
 		workspaceId,
 		db,
 		pty,
@@ -3593,6 +3617,38 @@ export function registerWorkspaceTerminalRoute({
 			): boolean => {
 				if (session.sockets.has(ws)) return false;
 				session.sockets.add(ws);
+				const recovery = db.query.closedPanes
+					.findFirst({
+						where: and(
+							eq(closedPanes.restoredTerminalId, terminalId),
+							eq(closedPanes.workspaceId, session.workspaceId),
+						),
+					})
+					.sync();
+				if (recovery && recovery.expiresAt > Date.now()) {
+					let snapshot: TerminalRecoverySnapshot | undefined;
+					if (
+						c.req.query("history") === "1" &&
+						recovery.terminalId !== terminalId
+					) {
+						const raw = recovery.descriptor.snapshot;
+						if (raw) {
+							const parsed = terminalRecoverySnapshotSchema.safeParse(
+								JSON.parse(raw),
+							);
+							if (parsed.success) snapshot = parsed.data;
+						} else if (recovery.descriptor.scrollback) {
+							snapshot = {
+								version: 1,
+								ansi: recovery.descriptor.scrollback,
+								cols: 80,
+								rows: 24,
+							};
+						}
+					}
+					if (snapshot || !recovery.restoredAt)
+						sendMessage(ws, { type: "recovery", id: recovery.id, snapshot });
+				}
 				sendMessage(ws, { type: "attached", terminalId });
 				// Ping straight away so a client that speaks pong declares itself
 				// within a round trip, not after the first sweep interval — a
@@ -3804,6 +3860,21 @@ export function registerWorkspaceTerminalRoute({
 					if (liveness) liveness.unansweredPings = 0;
 					if (message.type === "pong") {
 						if (liveness) liveness.answered = true;
+						return;
+					}
+
+					if (message.type === "recovery-restored") {
+						db.update(closedPanes)
+							.set({ restoredAt: Date.now() })
+							.where(
+								and(
+									eq(closedPanes.id, message.id),
+									eq(closedPanes.workspaceId, session.workspaceId),
+									eq(closedPanes.restoredTerminalId, terminalId),
+									isNull(closedPanes.restoredAt),
+								),
+							)
+							.run();
 						return;
 					}
 

@@ -6646,9 +6646,6 @@ msgstr "Mitglied konnte nicht entfernt werden"
 msgid "Failed to remove PR link: {0}"
 msgstr "PR-Link konnte nicht entfernt werden: {0}"
 
-msgid "Failed to remove terminal"
-msgstr "Terminal konnte nicht entfernt werden"
-
 msgid "Failed to rename"
 msgstr "Umbenennen fehlgeschlagen"
 
@@ -10189,6 +10186,9 @@ msgstr "Noch keine öffentlichen Agenten-Konfigurationen. Diese Seite ist für k
 msgid "No pull requests found."
 msgstr "Keine Pull Requests gefunden."
 
+msgid "No recently deleted panes"
+msgstr "Keine kürzlich gelöschten Bereiche"
+
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Keine Repositories gefunden. Stelle sicher, dass deine GitHub-App Zugriff auf Repositories hat."
 
@@ -12623,9 +12623,6 @@ msgstr "Entfernt diesen Agenten nur von diesem Gerät."
 
 msgid "Removing member..."
 msgstr "Mitglied wird entfernt..."
-
-msgid "Removing terminal..."
-msgstr "Terminal wird entfernt..."
 
 msgid "Removing…"
 msgstr "Wird entfernt…"
@@ -15501,9 +15498,6 @@ msgstr "Terminal-ID"
 
 msgid "Terminal input"
 msgstr "Terminal-Eingabe"
-
-msgid "Terminal removed"
-msgstr "Terminal entfernt"
 
 msgid "Terminal scripts"
 msgstr "Terminal-Skripte"

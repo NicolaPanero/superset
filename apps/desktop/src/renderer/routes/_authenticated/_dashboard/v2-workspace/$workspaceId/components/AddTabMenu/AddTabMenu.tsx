@@ -8,8 +8,11 @@ import { BsTerminalPlus } from "react-icons/bs";
 import { LuGitCompareArrows } from "react-icons/lu";
 import { TbDeviceDesktop, TbMessageCirclePlus, TbWorld } from "react-icons/tb";
 import { HotkeyMenuShortcut } from "renderer/components/HotkeyMenuShortcut";
+import type { usePaneRecovery } from "../../hooks/usePaneRecovery";
+import { PaneRecoveryMenu } from "./components/PaneRecoveryMenu";
 
 interface AddTabMenuProps {
+	recovery: ReturnType<typeof usePaneRecovery>;
 	onAddTerminal: () => void;
 	onAddChatV3?: (() => void) | undefined;
 	onAddBrowser: () => void;
@@ -20,6 +23,7 @@ interface AddTabMenuProps {
 }
 
 export function AddTabMenu({
+	recovery,
 	onAddTerminal,
 	onAddChatV3,
 	onAddBrowser,
@@ -68,6 +72,8 @@ export function AddTabMenu({
 					<HotkeyMenuShortcut hotkeyId="SPLIT_WITH_DESKTOP" />
 				</DropdownMenuItem>
 			)}
+			<DropdownMenuSeparator />
+			<PaneRecoveryMenu recovery={recovery} />
 			<DropdownMenuSeparator />
 			<DropdownMenuCheckboxItem
 				checked={showPresetsBar}

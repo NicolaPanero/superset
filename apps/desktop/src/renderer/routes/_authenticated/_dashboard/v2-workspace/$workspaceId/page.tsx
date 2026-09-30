@@ -46,6 +46,7 @@ import { useCreatePendingMigratedTerminals } from "./hooks/useCreatePendingMigra
 import { useDefaultContextMenuActions } from "./hooks/useDefaultContextMenuActions";
 import { useDefaultPaneActions } from "./hooks/useDefaultPaneActions";
 import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
+import { usePaneRecovery } from "./hooks/usePaneRecovery";
 import { usePaneRegistry } from "./hooks/usePaneRegistry";
 import { renderBrowserTabIcon } from "./hooks/usePaneRegistry/components/BrowserPane";
 import { usePullRequestPaneIntentOpener } from "./hooks/usePullRequestPaneIntentOpener";
@@ -257,7 +258,9 @@ function V2WorkspaceContent() {
 		executePreset,
 		setRightSidebarOpen,
 	});
-	const paneRegistry = usePaneRegistry({
+	const recovery = usePaneRecovery(store, workspaceId);
+	const basePaneRegistry = usePaneRegistry({
+		onRemoveSession: recovery.removeSession,
 		onOpenDiff: openDiffPane,
 		onOpenComment: openCommentPane,
 		onOpenFile: openFilePaneFromTreeClick,
@@ -265,6 +268,10 @@ function V2WorkspaceContent() {
 		launcher,
 		store,
 	});
+	const paneRegistry = useMemo(
+		() => recovery.wrapRegistry(basePaneRegistry),
+		[recovery.wrapRegistry, basePaneRegistry],
+	);
 	const defaultContextMenuActions = useDefaultContextMenuActions({
 		paneRegistry,
 		launcher,
@@ -318,7 +325,10 @@ function V2WorkspaceContent() {
 		[openFilePaneFromTreeClick, setRightSidebarOpen],
 	);
 	const defaultPaneActions = useDefaultPaneActions({ launcher });
-	const onBeforeCloseTab = useTabCloseGuard(store);
+	const tabCloseGuard = useTabCloseGuard(store);
+	const onBeforeCloseTab: typeof tabCloseGuard = async (tab) =>
+		(await tabCloseGuard(tab)) &&
+		(await recovery.prepare(Object.values(tab.panes)));
 
 	// Fallback for rows persisted before the rightSidebarWidth field existed —
 	// the live collection skips zod defaults, so an older row reads undefined
@@ -426,6 +436,7 @@ function V2WorkspaceContent() {
 							}
 							renderAddTabMenu={() => (
 								<AddTabMenu
+									recovery={recovery}
 									onAddTerminal={addTerminalTab}
 									onAddChatV3={isChatV3Enabled ? addChatV3Tab : undefined}
 									onAddBrowser={addBrowserTab}
