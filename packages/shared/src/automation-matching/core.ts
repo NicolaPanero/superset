@@ -54,19 +54,6 @@ export function scopeAllows(
 	return scope.ids.includes(value);
 }
 
-/**
- * Whether an event that arrived on `eventConnectionId` may fire a trigger
- * pinned to `pin`.
- *
- * An unpinned trigger takes any account, which is the only behaviour available
- * to an owner who has ever had one. A pinned trigger takes that account and
- * nothing else — not a sibling account on the same connector, and not an event
- * with no connection behind it, which cannot be the pinned one either.
- *
- * The candidate query narrows on this too. Both, deliberately: a pinned trigger
- * firing on the wrong account crosses an account boundary, and a rule that only
- * exists in a query is one refactor away from not existing.
- */
 export function accountAllows(
 	pin: string | null | undefined,
 	eventConnectionId: string | null | undefined,

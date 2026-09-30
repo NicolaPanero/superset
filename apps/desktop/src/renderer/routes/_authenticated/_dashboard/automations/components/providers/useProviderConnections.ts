@@ -26,7 +26,6 @@ export function useProviderConnections(organizationId: string): {
 	connected: Record<string, boolean>;
 	/** Connected once, but the refresh failed: the fix is Reconnect, not Connect. */
 	needsReauth: Record<string, boolean>;
-	/** The live accounts per connector, for the trigger's account picker. */
 	accounts: Record<string, ProviderAccount[]>;
 	isPending: boolean;
 } {

@@ -84,8 +84,6 @@ export function ConnectorSection({
 		</div>
 	);
 
-	// An org-scoped connector is the organization's one account; a second would
-	// have nothing to distinguish it and the unique index refuses it anyway.
 	if (connections.length > 0 && !addingAccount) {
 		return (
 			<div className="space-y-3">

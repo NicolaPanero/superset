@@ -36,7 +36,6 @@ interface TriggerSentenceProps {
 	requiresConnection?: boolean;
 	/** The connector was connected and its refresh failed; offer Reconnect. */
 	needsReauth?: boolean;
-	/** Live accounts on this row's connector, for the account chip. */
 	accounts?: ProviderAccount[];
 	disabled?: boolean;
 }
@@ -75,8 +74,6 @@ export function TriggerSentence({
 
 	const connector = connectorFor(provider);
 
-	// A pin already set keeps the chip even when the account it names is gone, so
-	// a trigger that is firing on nothing says so instead of looking unrestricted.
 	const accountChoice =
 		(accounts ?? []).length > 1 || Boolean(trigger.connectionId);
 
@@ -105,7 +102,6 @@ export function TriggerSentence({
 			    than the row's own 8px inset on purpose: the brand glyphs do not
 			    fill their 16px box, so a gap that measures even reads tight. */}
 			<Icon className="mr-1.5 size-4 shrink-0 text-muted-foreground" />
-
 			{requiresConnection ? (
 				<>
 					<span className="text-[13px]">
@@ -144,9 +140,6 @@ export function TriggerSentence({
 				})
 			)}
 
-			{/* After the provider's own words, not inside them: the account qualifies
-			    the whole sentence, and putting it in nine renderSentence bodies would
-			    give one question nine places to be worded differently. */}
 			{!requiresConnection && accountChoice && (
 				<>
 					<span className="text-[13px] text-muted-foreground">
@@ -165,7 +158,6 @@ export function TriggerSentence({
 					/>
 				</>
 			)}
-
 			{!requiresConnection && removeButton}
 		</div>
 	);

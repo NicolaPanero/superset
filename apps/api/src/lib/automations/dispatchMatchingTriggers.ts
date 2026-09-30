@@ -61,16 +61,6 @@ export async function dispatchMatchingTriggers(params: {
 	 * events would match every org member's triggers.
 	 */
 	ownerUserId?: string;
-	/**
-	 * Which connected account this event arrived on, and the same isolation one
-	 * level down: one member may hold two accounts on a connector — a work and a
-	 * personal mailbox — and a trigger pinned to one of them must not fire on
-	 * the other's events. Narrowed in SQL beside `ownerUserId` rather than in
-	 * the matcher, because a wrong match here crosses the same boundary.
-	 *
-	 * Null for providers with no connection row behind them (webhook, GitHub),
-	 * where a pinned trigger matches nothing — the direction that fails closed.
-	 */
 	integrationConnectionId?: string | null;
 }): Promise<{ matched: number; considered: number }> {
 	const { event } = params;

@@ -66,19 +66,11 @@ describe("the Add Trigger menu", () => {
 	});
 });
 
-/**
- * `TRIGGER_KIND_CONNECTOR` is the server's copy of this mapping: the connect
- * path reads it to pin existing triggers, and this registry drives the editor.
- * They have to agree — a kind the server thinks carries no account would have
- * its picker offered and its pin ignored.
- */
 describe("the kind-to-connector map", () => {
 	test("agrees with the one the server pins from", () => {
 		const fromRegistry = Object.fromEntries(
 			TRIGGER_PROVIDERS.map((provider) => [
 				provider.kind,
-				// GitHub connects as an installation, not a connection row, so the
-				// server maps it to null even though the editor names a connector.
 				provider.kind === "github" ? null : connectorFor(provider),
 			]),
 		);

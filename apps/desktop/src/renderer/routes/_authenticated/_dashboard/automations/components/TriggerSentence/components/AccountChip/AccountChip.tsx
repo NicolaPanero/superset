@@ -10,17 +10,6 @@ import { LuCheck, LuSettings2 } from "react-icons/lu";
 import type { ProviderAccount } from "../../../providers/useProviderConnections";
 import { ChipButton } from "../ChipButton";
 
-/**
- * Which connected account's events reach this trigger.
- *
- * Shown only when the choice exists — two or more accounts on the connector, or
- * a pin already set. One account is not a decision, and a chip asking for it
- * would add a word to every sentence to say the only thing it could say.
- *
- * A pin naming an account that is gone reads as unknown rather than silently
- * falling back to "any": the trigger really is firing on nothing, and the fix is
- * to pick again.
- */
 export function AccountChip({
 	accounts,
 	value,
@@ -31,7 +20,6 @@ export function AccountChip({
 	accounts: ProviderAccount[];
 	value: string | null | undefined;
 	onChange: (connectionId: string | null) => void;
-	/** Opens the connector's dialog, where every connected account is listed. */
 	onManage?: () => void;
 	disabled?: boolean;
 }) {

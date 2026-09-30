@@ -362,10 +362,6 @@ export const draftTriggerSchema = z.object({
 	// a save updates in place rather than deleting and recreating, which would
 	// otherwise roll a webhook trigger's key and lose a schedule's next run.
 	id: z.string().uuid().optional(),
-	// Which connected account's events reach this trigger, when its owner holds
-	// more than one on the connector. A sibling of `config` rather than a field
-	// inside it: the pin is the same question for every kind, so putting it in
-	// nine per-kind schemas would only give it nine places to differ.
 	connectionId: z.string().uuid().nullish(),
 	config: z.union([
 		scheduleTriggerConfigSchema,
@@ -382,16 +378,6 @@ export const draftTriggerSchema = z.object({
 export type DraftTrigger = z.infer<typeof draftTriggerSchema>;
 export type TriggerConfigInput = DraftTrigger["config"];
 
-/**
- * Which connector's account backs each trigger kind, for the kinds whose events
- * arrive on one. Null means the kind's events carry no connection — a schedule
- * fires from a clock, a raw webhook from a URL, and GitHub from an installation
- * in its own table — so a trigger of that kind is never pinned to an account.
- *
- * Server-side as well as client-side: the connect path reads it to pin existing
- * triggers, and the editor reads it to know which accounts to offer. The desktop
- * provider registry is checked against it by test, so the two cannot drift.
- */
 export const TRIGGER_KIND_CONNECTOR: Record<string, string | null> = {
 	schedule: null,
 	webhook: null,
@@ -404,23 +390,12 @@ export const TRIGGER_KIND_CONNECTOR: Record<string, string | null> = {
 	gmail: "google",
 };
 
-/** The trigger kinds an account on `connector` delivers events for. */
 export function triggerKindsForConnector(connector: string): string[] {
 	return Object.entries(TRIGGER_KIND_CONNECTOR)
 		.filter(([, slug]) => slug === connector)
 		.map(([kind]) => kind);
 }
 
-/**
- * The account an owner's existing triggers should be pinned to after they
- * connect `connectionId`, or null when nothing should move.
- *
- * Only on the transition from one account to two. An id already in `previous`
- * was a reconnect of an account they had, which changes nothing. With no
- * previous account there is nothing to pin to. With two already, the earlier
- * connect pinned them, and a third account's arrival must not re-point triggers
- * someone has since chosen for themselves.
- */
 export function accountToPinTo(
 	previousConnectionIds: string[],
 	connectionId: string,

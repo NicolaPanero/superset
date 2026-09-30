@@ -24,18 +24,12 @@ import { verifyOrgMembership } from "./utils";
  */
 export interface ProviderAccount {
 	id: string;
-	/** Who and where, as the connector reported them; null when it gave neither. */
 	label: string | null;
 }
 
 export interface ProviderConnection {
 	connected: boolean;
 	needsReauth: boolean;
-	/**
-	 * Every live account this caller holds on the connector, so a trigger can be
-	 * pinned to one of them. One entry is the ordinary case and the editor shows
-	 * no picker for it; two is what the picker exists for.
-	 */
 	accounts: ProviderAccount[];
 }
 
@@ -82,8 +76,6 @@ export const connectionStatusProcedure = protectedProcedure
 					entry = { connected: false, needsReauth: false, accounts: [] };
 					connected[row.connector] = entry;
 				}
-				// Every live account is listed, even when an expired sibling set the
-				// connector's own state: the picker offers what can be pinned.
 				if (!needsReauth) {
 					entry.accounts.push({
 						id: row.id,
@@ -100,7 +92,6 @@ export const connectionStatusProcedure = protectedProcedure
 			connected.github = {
 				connected: installation !== undefined && !installation.suspended,
 				needsReauth: false,
-				// An installation is not a connection row, so there is nothing to pin.
 				accounts: [],
 			};
 

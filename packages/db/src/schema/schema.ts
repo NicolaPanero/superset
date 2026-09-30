@@ -1560,11 +1560,6 @@ export const automationTriggers = pgTable(
 		kind: automationTriggerKind().notNull(),
 		config: jsonb().$type<TriggerConfig>().notNull(),
 
-		// Which connected account's events reach this trigger. Null means the
-		// kind has no connection behind it (schedule, webhook, github) or the
-		// owner has only ever had one. Not a foreign key, like
-		// automation_events.integration_connection_id: a pin left behind by a
-		// disconnect matches no event, which is the direction that fails closed.
 		connectionId: uuid("connection_id"),
 
 		// Schedule kind only. A column rather than config because the dispatcher

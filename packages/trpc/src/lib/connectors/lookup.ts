@@ -13,10 +13,6 @@ const NEWEST_FIRST = [desc(connections.updatedAt), desc(connections.id)];
  * under. Picking the newest would silently bind tool calls to whichever was
  * touched last — behaviour people would come to rely on before anyone noticed
  * it was arbitrary.
- *
- * Holding two accounts is supported: a trigger names which one its events come
- * from, and the MCP endpoint takes `?connection=<id>`. What is not supported is
- * a caller that names neither, which is what this reports.
  */
 export class AmbiguousConnectionError extends Error {
 	constructor(

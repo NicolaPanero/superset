@@ -61,8 +61,6 @@ export function ConnectorRow({
 						<LuCheck className="size-3" />
 						<Trans>Connected</Trans>
 					</Badge>
-					{/* Several accounts have no single one to unplug, so the row hands
-					    off to the dialog that lists them each with their own button. */}
 					{connections.length > 1 ? (
 						<Button variant="ghost" size="sm" onClick={onConnect}>
 							<Trans>Manage accounts</Trans>
