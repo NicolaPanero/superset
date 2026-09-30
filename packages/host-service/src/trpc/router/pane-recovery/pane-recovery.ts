@@ -34,7 +34,6 @@ import {
 	findResumedSuccessorTerminalId,
 	getTerminalAgentBinding,
 } from "../../../terminal-agents/persistence";
-import { markTerminalAgentBindingEnded } from "../../../terminal-agents/persistence.ts";
 import { protectedProcedure, router } from "../../index.ts";
 import {
 	resumeSessionDepsFor,
@@ -230,7 +229,7 @@ export const paneRecoveryRouter = router({
 				});
 				await Promise.all(
 					[...disposing].map(async (terminalId) => {
-						markTerminalAgentBindingEnded(ctx.db, terminalId, "disposed");
+						ctx.terminalAgentStore.markTerminalDisposed(terminalId);
 						await disposeSessionAndWait(terminalId, ctx.db);
 					}),
 				);

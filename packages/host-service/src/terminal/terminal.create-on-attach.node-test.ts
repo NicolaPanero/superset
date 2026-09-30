@@ -843,6 +843,9 @@ function recoveryCaller() {
 	return paneRecoveryRouter.createCaller({
 		db,
 		isAuthenticated: true,
+		terminalAgentStore: new TerminalAgentStore(
+			new SqliteTerminalAgentBindingPersistence(db),
+		),
 	} as Parameters<typeof paneRecoveryRouter.createCaller>[0]);
 }
 async function recoveryTerminal() {
@@ -904,6 +907,45 @@ test("deleting kills immediately; restore uses a new process and retries reuse i
 	);
 	await assert.rejects(() => caller.close({ workspaceId, entries: [entry] }));
 });
+test("recovery close clears live agent state and publishes the normal disposal change", async () => {
+	const terminalId = await recoveryTerminal();
+	const store = new TerminalAgentStore(
+		new SqliteTerminalAgentBindingPersistence(db),
+	);
+	store.recordEvent({
+		terminalId,
+		workspaceId,
+		agentId: "claude",
+		agentSessionId: "closed-conversation",
+		eventType: "Start",
+		occurredAt: Date.now(),
+	});
+	store.recordSubagentEvent({
+		terminalId,
+		workspaceId,
+		subagentId: "closed-child",
+		eventType: "SubagentStart",
+		occurredAt: Date.now(),
+	});
+	assert.ok(store.getSubagent(terminalId, "closed-child"));
+	const changes: string[] = [];
+	store.on("change", (id: string) => changes.push(id));
+	const caller = paneRecoveryRouter.createCaller({
+		db,
+		isAuthenticated: true,
+		terminalAgentStore: store,
+	} as Parameters<typeof paneRecoveryRouter.createCaller>[0]);
+	await caller.close({ workspaceId, entries: [closeEntry(terminalId)] });
+	assert.equal(store.get(terminalId), undefined);
+	assert.equal(store.getSubagent(terminalId, "closed-child"), undefined);
+	assert.deepEqual(changes, [workspaceId]);
+	const binding = db.query.terminalAgentBindings
+		.findFirst({ where: eq(terminalAgentBindings.terminalId, terminalId) })
+		.sync();
+	assert.equal(binding?.endReason, "disposed");
+	assert.equal(binding?.agentSessionId, "closed-conversation");
+});
+
 test("close before create-on-attach stamps permanent disposal", async () => {
 	const terminalId = randomUUID(),
 		entry = closeEntry(terminalId),
