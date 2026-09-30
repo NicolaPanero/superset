@@ -174,6 +174,42 @@ async function gitInitMainBranch(targetPath: string): Promise<void> {
 	}
 }
 
+/** The `--allow-empty` scaffold commit that gives a brand new repo a real
+ * branch/HEAD. Shared by every path that inits or adopts a repo with no
+ * commits yet. */
+async function commitInitialEmpty(repoPath: string): Promise<void> {
+	try {
+		await createUserSimpleGit(repoPath).raw([
+			...scaffoldCommitArgs,
+			"--allow-empty",
+			"-m",
+			"Initial commit",
+		]);
+	} catch (err) {
+		throw asInitialCommitTrpcError(err);
+	}
+}
+
+/**
+ * Makes sure `repoPath` has a resolvable `HEAD` before Superset treats it as
+ * a usable project. A bare `git init` with nothing committed leaves HEAD
+ * unborn, and `git worktree add` — which every workspace creation runs
+ * through (see `resolveStartPoint` / `GIT_REFS.md`) — has no start point to
+ * fork from and fails outright. `initEmptyRepo`/`initLocalRepoInPlace`
+ * already avoid this for repos Superset creates from scratch; this covers a
+ * repo a caller points us at that already exists but was never committed to.
+ */
+async function ensureNotUnborn(repoPath: string): Promise<void> {
+	try {
+		await createUserSimpleGit(repoPath).raw(["rev-parse", "--verify", "HEAD"]);
+		return;
+	} catch {
+		// Unborn HEAD — fall through and seed the same scaffold commit a
+		// freshly `git init`'d repo gets.
+	}
+	await commitInitialEmpty(repoPath);
+}
+
 /**
  * Returns the canonical git root for `path`, or `null` when `path` is not
  * inside a git work tree. Non-throwing variant of `revParseGitRoot` — callers
@@ -204,12 +240,22 @@ async function revParseGitRoot(path: string): Promise<string> {
  * Validates that a path is a git working tree and returns the canonical git
  * root plus its primary GitHub remote when one exists. Local-only repos are
  * valid v2 projects; they simply have no cloud clone URL or GitHub metadata.
+ *
+ * `ensureCommit` seeds an `--allow-empty` initial commit when the repo's
+ * `HEAD` is unborn (see `ensureNotUnborn`). Default off because this
+ * function also backs the read-only "detect import candidates" query, which
+ * must not write into a repo the user hasn't confirmed adopting yet — pass
+ * it only from paths that are actually adopting/creating the project.
  */
 export async function resolveLocalRepo(
 	repoPath: string,
+	options?: { ensureCommit?: boolean },
 ): Promise<ResolvedRepo> {
 	validateDirectoryPath(repoPath, "Path");
 	const gitRoot = await revParseGitRoot(repoPath);
+	if (options?.ensureCommit) {
+		await ensureNotUnborn(gitRoot);
+	}
 	const remotes = await getGitHubRemotes(createUserSimpleGit(gitRoot));
 	const originParsed = remotes.get("origin");
 	if (originParsed) {
@@ -230,7 +276,9 @@ export async function resolveLocalRepo(
  *
  * Idempotent: if the path is already inside a git work tree (e.g. it was
  * initialized between detection and this call, or it's nested under a parent
- * repo) we skip init and just resolve the existing root.
+ * repo) we skip init and just resolve the existing root — but still run the
+ * same unborn-HEAD guard, since that existing work tree may itself have zero
+ * commits.
  *
  * Like `initEmptyRepo`, creates an `--allow-empty` initial commit so the
  * checkout has a real branch/HEAD for `createLocalWorkspace` to record; a
@@ -242,19 +290,12 @@ export async function initLocalRepoInPlace(
 	validateDirectoryPath(repoPath, "Path");
 
 	const existingRoot = await tryRevParseGitRoot(repoPath);
-	if (existingRoot) return resolveLocalRepo(existingRoot);
+	if (existingRoot) {
+		return resolveLocalRepo(existingRoot, { ensureCommit: true });
+	}
 
 	await gitInitMainBranch(repoPath);
-	try {
-		await createUserSimpleGit(repoPath).raw([
-			...scaffoldCommitArgs,
-			"--allow-empty",
-			"-m",
-			"Initial commit",
-		]);
-	} catch (err) {
-		throw asInitialCommitTrpcError(err);
-	}
+	await commitInitialEmpty(repoPath);
 	return resolveLocalRepo(repoPath);
 }
 
@@ -265,7 +306,9 @@ export async function initLocalRepoInPlace(
  *
  * Used when the caller has an authoritative clone URL from the cloud and
  * wants to confirm this local repo is actually that project (`setup
- * mode=import`, post-clone validation).
+ * mode=import`, post-clone validation). Both callers are adopting/creating a
+ * project, so this always runs the unborn-HEAD guard — e.g. a GitHub repo
+ * cloned before its first push has no commits either.
  */
 export async function resolveMatchingSlug(
 	repoPath: string,
@@ -273,6 +316,7 @@ export async function resolveMatchingSlug(
 ): Promise<ResolvedGitHubRepo> {
 	validateDirectoryPath(repoPath, "Path");
 	const gitRoot = await revParseGitRoot(repoPath);
+	await ensureNotUnborn(gitRoot);
 	const remotes = await getGitHubRemotes(createUserSimpleGit(gitRoot));
 	const remoteName = findMatchingRemote(remotes, expectedSlug);
 	if (!remoteName) {
@@ -321,16 +365,7 @@ export async function initEmptyRepo(
 
 	try {
 		await gitInitMainBranch(targetPath);
-		try {
-			await createUserSimpleGit(targetPath).raw([
-				...scaffoldCommitArgs,
-				"--allow-empty",
-				"-m",
-				"Initial commit",
-			]);
-		} catch (err) {
-			throw asInitialCommitTrpcError(err);
-		}
+		await commitInitialEmpty(targetPath);
 		return { repoPath: targetPath, remoteName: null, parsed: null };
 	} catch (err) {
 		await rollbackTargetDir(targetPath);
@@ -444,7 +479,7 @@ export async function cloneRepoInto(
 		if (expectedSlug) {
 			return await resolveMatchingSlug(targetPath, expectedSlug);
 		}
-		return await resolveLocalRepo(targetPath);
+		return await resolveLocalRepo(targetPath, { ensureCommit: true });
 	} catch (err) {
 		await rollbackTargetDir(targetPath);
 		throw err;

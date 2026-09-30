@@ -776,7 +776,9 @@ export const projectRouter = router({
 							`${parsed.owner}/${parsed.name}`,
 						);
 					} else {
-						resolved = await resolveLocalRepo(input.mode.repoPath);
+						resolved = await resolveLocalRepo(input.mode.repoPath, {
+							ensureCommit: true,
+						});
 					}
 
 					// Each on-disk repo path maps to at most one project in the
