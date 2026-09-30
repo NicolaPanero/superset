@@ -5,14 +5,13 @@ import {
 	DropdownMenuSeparator,
 } from "@superset/ui/dropdown-menu";
 import { BsTerminalPlus } from "react-icons/bs";
-import { LuGitCompareArrows } from "react-icons/lu";
+import { LuGitCompareArrows, LuHistory } from "react-icons/lu";
 import { TbDeviceDesktop, TbMessageCirclePlus, TbWorld } from "react-icons/tb";
 import { HotkeyMenuShortcut } from "renderer/components/HotkeyMenuShortcut";
 import type { usePaneRecovery } from "../../hooks/usePaneRecovery";
-import { PaneRecoveryMenu } from "./components/PaneRecoveryMenu";
 
 interface AddTabMenuProps {
-	onRestored: () => void;
+	onCloseMenu: () => void;
 	recovery: ReturnType<typeof usePaneRecovery>;
 	onAddTerminal: () => void;
 	onAddChatV3?: (() => void) | undefined;
@@ -24,7 +23,7 @@ interface AddTabMenuProps {
 }
 
 export function AddTabMenu({
-	onRestored,
+	onCloseMenu,
 	recovery,
 	onAddTerminal,
 	onAddChatV3,
@@ -75,7 +74,16 @@ export function AddTabMenu({
 				</DropdownMenuItem>
 			)}
 			<DropdownMenuSeparator />
-			<PaneRecoveryMenu recovery={recovery} onRestored={onRestored} />
+			<DropdownMenuItem
+				className="gap-2"
+				onSelect={() => {
+					recovery.setHistoryOpen(true);
+					onCloseMenu();
+				}}
+			>
+				<LuHistory className="size-4" />
+				<Trans>Recently deleted</Trans>
+			</DropdownMenuItem>
 			<DropdownMenuSeparator />
 			<DropdownMenuCheckboxItem
 				checked={showPresetsBar}

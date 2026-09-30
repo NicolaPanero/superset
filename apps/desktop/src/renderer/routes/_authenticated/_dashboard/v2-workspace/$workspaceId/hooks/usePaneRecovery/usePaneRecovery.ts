@@ -21,9 +21,10 @@ export function usePaneRecovery(
 	const close = workspaceTrpc.paneRecovery.close.useMutation();
 	const restoreMutation = workspaceTrpc.paneRecovery.restore.useMutation();
 	const acknowledge = workspaceTrpc.paneRecovery.acknowledge.useMutation();
+	const [historyOpen, setHistoryOpen] = useState(false);
 	const history = workspaceTrpc.paneRecovery.list.useQuery(
 		{ workspaceId },
-		{ refetchInterval: 2000 },
+		{ enabled: historyOpen, refetchInterval: historyOpen ? 2000 : false },
 	);
 	const prepared = useRef(new Map<string, string>());
 	const restoring = useRef(false);
@@ -259,6 +260,10 @@ export function usePaneRecovery(
 			wrapRegistry,
 			removeSession,
 			restore,
+			historyOpen,
+			setHistoryOpen,
+			historyError: history.error,
+			refetchHistory: history.refetch,
 			history: history.data ?? [],
 			isLoading: history.isLoading,
 			isRestoring: restoringId !== null,
@@ -270,6 +275,9 @@ export function usePaneRecovery(
 			wrapRegistry,
 			removeSession,
 			restore,
+			historyOpen,
+			history.error,
+			history.refetch,
 			history.data,
 			history.isLoading,
 			restoringId,

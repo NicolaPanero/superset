@@ -28,6 +28,7 @@ import { AddTabMenu } from "./components/AddTabMenu";
 import { BackgroundTerminalsButton } from "./components/BackgroundTerminalsButton";
 import { ChangesControl } from "./components/ChangesControl";
 import { CloudWorkspaceTabBarControls } from "./components/CloudWorkspaceTabBarControls";
+import { PaneRecoveryDialog } from "./components/PaneRecoveryDialog";
 import { V2NotificationStatusIndicator } from "./components/V2NotificationStatusIndicator";
 import { V2PresetsBar } from "./components/V2PresetsBar";
 import { V2WorkspaceOpenInButton } from "./components/V2WorkspaceOpenInButton";
@@ -436,7 +437,7 @@ function V2WorkspaceContent() {
 							}
 							renderAddTabMenu={(closeMenu) => (
 								<AddTabMenu
-									onRestored={closeMenu}
+									onCloseMenu={closeMenu}
 									recovery={recovery}
 									onAddTerminal={addTerminalTab}
 									onAddChatV3={isChatV3Enabled ? addChatV3Tab : undefined}
@@ -510,6 +511,7 @@ function V2WorkspaceContent() {
 						sidebarSlotEl,
 					)}
 			</WorkspaceGitStatusProvider>
+			<PaneRecoveryDialog recovery={recovery} />
 			<CommandPalette
 				workspaceId={workspaceId}
 				open={quickOpenOpen}

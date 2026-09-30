@@ -1,45 +1,76 @@
 import { Trans } from "@lingui/react/macro";
+import { errorMessage } from "@superset/i18n/errors";
 import { formatCompactRelativeTime } from "@superset/i18n/format";
+import { Button } from "@superset/ui/button";
 import {
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-} from "@superset/ui/dropdown-menu";
-import {
-	LuFile,
-	LuGlobe,
-	LuHistory,
-	LuLoaderCircle,
-	LuTerminal,
-} from "react-icons/lu";
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@superset/ui/dialog";
+import { useRef } from "react";
+import { LuFile, LuGlobe, LuLoaderCircle, LuTerminal } from "react-icons/lu";
 import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import type { usePaneRecovery } from "../../../../hooks/usePaneRecovery";
+import type { usePaneRecovery } from "../../hooks/usePaneRecovery";
 
-export function PaneRecoveryMenu({
+export function PaneRecoveryDialog({
 	recovery,
-	onRestored,
 }: {
 	recovery: ReturnType<typeof usePaneRecovery>;
-	onRestored: () => void;
 }) {
 	const isDark = useIsDarkTheme();
+	const restored = useRef(false);
 	return (
-		<DropdownMenuSub>
-			<DropdownMenuSubTrigger className="gap-2">
-				<LuHistory className="size-4" />
-				<Trans>Recently deleted</Trans>
-			</DropdownMenuSubTrigger>
-			<DropdownMenuSubContent className="w-80">
-				<div className="max-h-80 overflow-y-auto">
-					{!recovery.history.length ? (
-						<DropdownMenuItem disabled>
+		<Dialog open={recovery.historyOpen} onOpenChange={recovery.setHistoryOpen}>
+			<DialogContent
+				className="sm:max-w-md"
+				onCloseAutoFocus={(event) => {
+					if (restored.current) {
+						event.preventDefault();
+						restored.current = false;
+					}
+				}}
+			>
+				<DialogHeader>
+					<DialogTitle>
+						<Trans>Recently deleted</Trans>
+					</DialogTitle>
+					<DialogDescription>
+						<Trans>Available for 24 hours</Trans>
+					</DialogDescription>
+				</DialogHeader>
+				<div
+					className="max-h-80 overflow-y-auto"
+					aria-busy={recovery.isLoading}
+				>
+					{recovery.isLoading ? (
+						<output className="flex items-center justify-center gap-2 py-8 text-sm text-muted-foreground">
+							<LuLoaderCircle
+								aria-hidden="true"
+								className="size-4 animate-spin"
+							/>
+							<Trans>Loading…</Trans>
+						</output>
+					) : recovery.historyError ? (
+						<div className="space-y-3 py-4">
+							<p role="alert" className="text-sm text-destructive">
+								{errorMessage(recovery.historyError)}
+							</p>
+							<Button
+								variant="outline"
+								onClick={() => void recovery.refetchHistory()}
+							>
+								<Trans>Retry</Trans>
+							</Button>
+						</div>
+					) : !recovery.history.length ? (
+						<p className="py-8 text-center text-sm text-muted-foreground">
 							<Trans>No recently deleted panes</Trans>
-						</DropdownMenuItem>
+						</p>
 					) : (
 						recovery.history.map((item) => {
 							const pending = recovery.restoringId === item.id;
@@ -59,16 +90,19 @@ export function PaneRecoveryMenu({
 							const cwd = item.descriptor.cwd;
 							const directory = cwd?.split(/[\\/]/).filter(Boolean).at(-1);
 							return (
-								<DropdownMenuItem
+								<button
+									type="button"
 									key={item.id}
 									disabled={recovery.isRestoring}
-									onSelect={(event) => {
-										event.preventDefault();
-										void recovery.restore(item.id).then((restored) => {
-											if (restored) onRestored();
+									onClick={() => {
+										void recovery.restore(item.id).then((success) => {
+											if (success) {
+												restored.current = true;
+												recovery.setHistoryOpen(false);
+											}
 										});
 									}}
-									className="flex items-start gap-2.5 py-2"
+									className="flex w-full items-start gap-2.5 rounded-md px-2 py-2 text-left text-sm hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
 								>
 									{icon ? (
 										<img
@@ -121,16 +155,12 @@ export function PaneRecoveryMenu({
 											formatCompactRelativeTime(item.closedAt)
 										)}
 									</span>
-								</DropdownMenuItem>
+								</button>
 							);
 						})
 					)}
 				</div>
-				<DropdownMenuSeparator />
-				<p className="px-2 py-1 text-xs text-muted-foreground">
-					<Trans>Available for 24 hours</Trans>
-				</p>
-			</DropdownMenuSubContent>
-		</DropdownMenuSub>
+			</DialogContent>
+		</Dialog>
 	);
 }
