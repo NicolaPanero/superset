@@ -489,8 +489,9 @@ async function execute(
 		});
 		// All command output must leave through writeStream; a bare console.log
 		// here reintroduces truncation for any payload past the pipe buffer.
+		if (!output) return;
 		const text = isRawResult(result) ? output : `${output}\n`;
-		if (text) await writeStream(process.stdout, text, signal);
+		await writeStream(process.stdout, text, signal);
 	}
 }
 

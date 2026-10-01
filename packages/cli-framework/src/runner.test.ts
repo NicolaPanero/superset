@@ -155,7 +155,15 @@ describe("introspectCli", () => {
 		expect(list?.options?.limit?.name).toBe("limit");
 	});
 
-	it("is unavailable once run() has returned", () => {
+	it("is unavailable once run() has returned", async () => {
+		await runArgs(["noop"], {
+			name: "demo",
+			version: "0.0.0",
+			tree: {
+				groups: [],
+				commands: [{ path: ["noop"], command: cmd("Noop") }],
+			},
+		});
 		expect(() => introspectCli()).toThrow(
 			/only available while a command runs/,
 		);
