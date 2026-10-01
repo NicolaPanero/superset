@@ -4807,6 +4807,12 @@ msgstr "이 페이지에서 디자인 모드를 시작할 수 없습니다"
 msgid "Couldn't start workspace"
 msgstr "워크스페이스를 시작하지 못했습니다"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "에이전트의 터미널을 중지할 수 없습니다"
+
+msgid "Couldn't stop the chat"
+msgstr "채팅을 중지할 수 없습니다"
+
 msgid "Couldn't unstage changes"
 msgstr "스테이징을 해제하지 못했습니다"
 
@@ -11163,6 +11169,9 @@ msgstr "폴더 열기"
 
 msgid "Opening pages"
 msgstr "페이지 열기"
+
+msgid "Opening the chat…"
+msgstr "채팅을 여는 중…"
 
 msgid "Opening the conversation…"
 msgstr "대화를 여는 중…"

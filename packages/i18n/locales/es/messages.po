@@ -4807,6 +4807,12 @@ msgstr "No se pudo iniciar el modo diseño en esta página"
 msgid "Couldn't start workspace"
 msgstr "No se pudo iniciar el espacio de trabajo"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "No se pudo detener la terminal del agente"
+
+msgid "Couldn't stop the chat"
+msgstr "No se pudo detener el chat"
+
 msgid "Couldn't unstage changes"
 msgstr "No se pudieron quitar los cambios de preparados"
 
@@ -11163,6 +11169,9 @@ msgstr "Abrir carpetas"
 
 msgid "Opening pages"
 msgstr "Abrir páginas"
+
+msgid "Opening the chat…"
+msgstr "Abriendo el chat…"
 
 msgid "Opening the conversation…"
 msgstr "Abriendo la conversación…"

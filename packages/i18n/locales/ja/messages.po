@@ -4807,6 +4807,12 @@ msgstr "このページでデザインモードを開始できませんでした
 msgid "Couldn't start workspace"
 msgstr "ワークスペースを開始できませんでした"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "エージェントのターミナルを停止できませんでした"
+
+msgid "Couldn't stop the chat"
+msgstr "チャットを停止できませんでした"
+
 msgid "Couldn't unstage changes"
 msgstr "変更をステージ解除できませんでした"
 
@@ -11163,6 +11169,9 @@ msgstr "フォルダーを開く"
 
 msgid "Opening pages"
 msgstr "ページを開く"
+
+msgid "Opening the chat…"
+msgstr "チャットを開いています…"
 
 msgid "Opening the conversation…"
 msgstr "会話を開いています…"

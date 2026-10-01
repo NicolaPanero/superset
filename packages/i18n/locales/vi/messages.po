@@ -4807,6 +4807,12 @@ msgstr "Không thể bật chế độ thiết kế trên trang này"
 msgid "Couldn't start workspace"
 msgstr "Không khởi động được workspace"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Không thể dừng terminal của tác nhân"
+
+msgid "Couldn't stop the chat"
+msgstr "Không thể dừng trò chuyện"
+
 msgid "Couldn't unstage changes"
 msgstr "Không thể bỏ stage các thay đổi"
 
@@ -11163,6 +11169,9 @@ msgstr "Mở thư mục"
 
 msgid "Opening pages"
 msgstr "Mở trang"
+
+msgid "Opening the chat…"
+msgstr "Đang mở trò chuyện…"
 
 msgid "Opening the conversation…"
 msgstr "Đang mở cuộc trò chuyện…"

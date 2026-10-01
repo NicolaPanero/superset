@@ -4807,6 +4807,12 @@ msgstr "Na této stránce se nepodařilo spustit režim designu"
 msgid "Couldn't start workspace"
 msgstr "Pracovní prostor se nepodařilo spustit"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Terminál agenta se nepodařilo zastavit"
+
+msgid "Couldn't stop the chat"
+msgstr "Chat se nepodařilo zastavit"
+
 msgid "Couldn't unstage changes"
 msgstr "Nepodařilo se zrušit přípravu změn"
 
@@ -11163,6 +11169,9 @@ msgstr "Otevírání složek"
 
 msgid "Opening pages"
 msgstr "Otevírání stránek"
+
+msgid "Opening the chat…"
+msgstr "Otevírání chatu…"
 
 msgid "Opening the conversation…"
 msgstr "Otevírám konverzaci…"

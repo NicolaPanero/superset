@@ -4807,6 +4807,12 @@ msgstr "無法在此頁面啟動設計模式"
 msgid "Couldn't start workspace"
 msgstr "無法啟動工作區"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "無法停止該代理的終端機"
+
+msgid "Couldn't stop the chat"
+msgstr "無法停止聊天"
+
 msgid "Couldn't unstage changes"
 msgstr "無法取消暫存更改"
 
@@ -11163,6 +11169,9 @@ msgstr "開啟資料夾"
 
 msgid "Opening pages"
 msgstr "開啟頁面"
+
+msgid "Opening the chat…"
+msgstr "正在開啟聊天…"
 
 msgid "Opening the conversation…"
 msgstr "正在開啟對話…"

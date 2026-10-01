@@ -3,8 +3,6 @@ import type { OutboxEntry } from "@superset/chat/core";
 import type { AvailableCommand, UserContent } from "@superset/chat/protocol";
 import {
 	PromptInput,
-	PromptInputAttachment,
-	PromptInputAttachments,
 	PromptInputFooter,
 	type PromptInputMessage,
 	PromptInputProvider,
@@ -123,7 +121,14 @@ function ComposerInner({
 
 	const handleSubmit = useCallback(
 		(message: PromptInputMessage) => {
-			if (message.text.trim() === "" || disabled) return;
+			if (message.text.trim() === "") return;
+			// PromptInput empties the composer before calling this and puts it
+			// back only when the handler fails, so refusing quietly would throw
+			// the draft away while the session is still coming up.
+			if (disabled) {
+				controller.textInput.setInput(message.text);
+				return;
+			}
 			onSend([{ type: "text", text: message.text }]);
 			controller.textInput.clear();
 			window.localStorage.removeItem(draftKey);
@@ -138,14 +143,8 @@ function ComposerInner({
 					"mx-auto w-full max-w-3xl rounded-2xl bg-card shadow-sm",
 					"[&>[data-slot=input-group]]:rounded-2xl [&>[data-slot=input-group]]:border-border [&>[data-slot=input-group]]:shadow-none",
 				)}
-				maxFileSize={50 * 1024 * 1024}
-				maxFiles={10}
-				multiple
 				onSubmit={handleSubmit}
 			>
-				<PromptInputAttachments>
-					{(file) => <PromptInputAttachment data={file} />}
-				</PromptInputAttachments>
 				<TiptapPromptEditor
 					cwd={cwd}
 					placeholder={
@@ -168,7 +167,10 @@ function ComposerInner({
 							<Square className="size-3.5" />
 						</Button>
 					) : (
-						<PromptInputSubmit className="size-7 rounded-full border border-transparent bg-foreground/10 p-[5px] shadow-none hover:bg-foreground/20">
+						<PromptInputSubmit
+							disabled={disabled}
+							className="size-7 rounded-full border border-transparent bg-foreground/10 p-[5px] shadow-none hover:bg-foreground/20"
+						>
 							<ArrowUpIcon className="size-3.5 text-muted-foreground" />
 						</PromptInputSubmit>
 					)}

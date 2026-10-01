@@ -4807,6 +4807,12 @@ msgstr "Impossibile avviare la modalità design su questa pagina"
 msgid "Couldn't start workspace"
 msgstr "Impossibile avviare il workspace"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Non è stato possibile arrestare il terminale dell'agente"
+
+msgid "Couldn't stop the chat"
+msgstr "Non è stato possibile arrestare la chat"
+
 msgid "Couldn't unstage changes"
 msgstr "Impossibile togliere le modifiche dallo stage"
 
@@ -11163,6 +11169,9 @@ msgstr "Apertura delle cartelle"
 
 msgid "Opening pages"
 msgstr "Apertura delle pagine"
+
+msgid "Opening the chat…"
+msgstr "Apertura della chat…"
 
 msgid "Opening the conversation…"
 msgstr "Apertura della conversazione…"

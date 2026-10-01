@@ -4807,6 +4807,12 @@ msgstr "Bu sayfada tasarım modu başlatılamadı"
 msgid "Couldn't start workspace"
 msgstr "Çalışma alanı başlatılamadı"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Aracının terminali durdurulamadı"
+
+msgid "Couldn't stop the chat"
+msgstr "Sohbet durdurulamadı"
+
 msgid "Couldn't unstage changes"
 msgstr "Değişiklikler hazırlıktan çıkarılamadı"
 
@@ -11163,6 +11169,9 @@ msgstr "Klasörleri açma"
 
 msgid "Opening pages"
 msgstr "Sayfaları açma"
+
+msgid "Opening the chat…"
+msgstr "Sohbet açılıyor…"
 
 msgid "Opening the conversation…"
 msgstr "Sohbet açılıyor…"

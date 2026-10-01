@@ -1,11 +1,15 @@
+import { Trans } from "@lingui/react/macro";
 import type { RendererContext } from "@superset/panes";
+import { useEffect, useRef } from "react";
 import type {
 	OpenFile,
 	PaneViewerData,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
 import type { TerminalPaneData } from "../../../../types";
 import { useAgentSurface } from "../../../useAgentSurface";
+import { useAgentSurfaceSwitch } from "../../../useAgentSurfaceSwitch";
 import { AcpChatPane } from "../AcpChatPane";
+import { AcpChatPending } from "../AcpChatPane/components/AcpChatPending";
 import { TerminalPane } from "../TerminalPane";
 
 /**
@@ -25,11 +29,33 @@ export function AgentTerminalPane({
 	onRevealPath: (path: string) => void;
 }) {
 	const data = ctx.pane.data as TerminalPaneData;
-	const { surface } = useAgentSurface(workspaceId, data);
+	const { agent, surface } = useAgentSurface(workspaceId, data);
+	const { switchSurface } = useAgentSurfaceSwitch(workspaceId);
+
+	// A pane that derives onto the chat has recorded nothing: the agent identity
+	// the chat resumes from is not in its data, and the pty it is replacing is
+	// still running the agent. Adopting the surface does both, through the same
+	// path an explicit toggle takes. Keyed by terminal id so a relaunch can be
+	// adopted again, and so this runs once per terminal rather than per render.
+	const adopted = useRef<string | null>(null);
+	const unrecorded = data.agentSurface === undefined;
+	useEffect(() => {
+		if (!unrecorded || surface !== "acp" || !agent) return;
+		if (adopted.current === data.terminalId) return;
+		adopted.current = data.terminalId;
+		void switchSurface(ctx, "acp", agent);
+	}, [unrecorded, surface, agent, data.terminalId, ctx, switchSurface]);
 
 	// Unmounted, not hidden: its pty is stopped on the chat surface, and a
 	// mounted TerminalPane would auto-resume the agent straight back into it.
 	if (surface === "acp") {
+		if (!data.agent) {
+			return (
+				<AcpChatPending>
+					<Trans>Opening the chat…</Trans>
+				</AcpChatPending>
+			);
+		}
 		return (
 			<AcpChatPane
 				agent={data.agent}

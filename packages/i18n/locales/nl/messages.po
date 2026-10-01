@@ -4807,6 +4807,12 @@ msgstr "Kan de designmodus niet starten op deze pagina"
 msgid "Couldn't start workspace"
 msgstr "Kan werkruimte niet starten"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Kon de terminal van de agent niet stoppen"
+
+msgid "Couldn't stop the chat"
+msgstr "Kon de chat niet stoppen"
+
 msgid "Couldn't unstage changes"
 msgstr "Kan wijzigingen niet unstagen"
 
@@ -11163,6 +11169,9 @@ msgstr "Mappen openen"
 
 msgid "Opening pages"
 msgstr "Pagina's openen"
+
+msgid "Opening the chat…"
+msgstr "Chat openen…"
 
 msgid "Opening the conversation…"
 msgstr "Gesprek wordt geopend…"

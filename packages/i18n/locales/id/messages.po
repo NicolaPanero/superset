@@ -4807,6 +4807,12 @@ msgstr "Tidak bisa memulai mode desain di halaman ini"
 msgid "Couldn't start workspace"
 msgstr "Tidak bisa memulai workspace"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Tidak dapat menghentikan terminal agen"
+
+msgid "Couldn't stop the chat"
+msgstr "Tidak dapat menghentikan obrolan"
+
 msgid "Couldn't unstage changes"
 msgstr "Tidak bisa meng-unstage perubahan"
 
@@ -11163,6 +11169,9 @@ msgstr "Membuka folder"
 
 msgid "Opening pages"
 msgstr "Membuka halaman"
+
+msgid "Opening the chat…"
+msgstr "Membuka obrolan…"
 
 msgid "Opening the conversation…"
 msgstr "Membuka percakapan…"

@@ -37,8 +37,12 @@ export function useAgentSurface(
 	// The pane remembers an agent it has already opened as a chat, so the
 	// surface survives the binding going away with the pty.
 	const chatCapable = Boolean(acpEnabled && (agent || data.agent));
-	const surface: AgentSurface =
-		data.agentSurface ?? (chatCapable ? "acp" : "cli");
+	// A stored "acp" outlives the flag it was chosen under, so the flag is read
+	// first: turning it off has to return every pane to its terminal, not just
+	// hide the toggle on a pane that keeps running the chat.
+	const surface: AgentSurface = !acpEnabled
+		? "cli"
+		: (data.agentSurface ?? (chatCapable ? "acp" : "cli"));
 
 	return { surface, agent, switchable: chatCapable };
 }

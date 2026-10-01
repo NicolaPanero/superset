@@ -1,15 +1,17 @@
 /**
  * Agent config id → the ACP harness that can run it as a chat. An agent absent
- * here simply has no chat surface; the pane falls back to its terminal.
+ * here simply has no chat surface; the pane stays the terminal it was.
+ *
+ * This mirrors what the host serves — `ACP_ADAPTERS` entries with a `bundled`
+ * distribution. An agent listed here that the host cannot run is worse than an
+ * omission: its terminal is replaced by a chat whose session never starts.
+ * Gemini and OpenCode are declared host-side but need provisioning first, so
+ * they are deliberately absent.
  */
 const ACP_HARNESS_BY_AGENT: Record<string, string> = {
 	claude: "claude-acp",
 	codex: "codex-acp",
 	pi: "pi-acp",
-	// Declared in the host's adapter table but not served yet: the toggle stays
-	// hidden and the pane falls back to the terminal until they are.
-	gemini: "gemini-acp",
-	opencode: "opencode-acp",
 };
 
 /** The ACP harness that can resume this agent, if any can. */

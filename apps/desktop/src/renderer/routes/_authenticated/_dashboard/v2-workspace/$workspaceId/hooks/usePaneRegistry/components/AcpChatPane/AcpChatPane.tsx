@@ -1,12 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { toast } from "@superset/ui/sonner";
-import { Spinner } from "@superset/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
-import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { acpHarnessForAgent } from "../../../../utils/acpHarness";
 import { SessionView } from "../ChatV3Pane/components/SessionView";
 import { useSessionClient } from "../ChatV3Pane/hooks/useSessionClient";
+import { AcpChatPending } from "./components/AcpChatPending";
 import { AcpRecovery } from "./components/AcpRecovery";
 
 /**
@@ -185,16 +184,6 @@ export function AcpChatPane({
 			sessionId={sessionId}
 			workspaceId={workspaceId}
 		/>
-	);
-}
-
-/** The pane is doing something that takes a moment; an empty pane reads broken. */
-function AcpChatPending({ children }: { children: ReactNode }) {
-	return (
-		<div className="flex h-full w-full flex-col items-center justify-center gap-3">
-			<Spinner className="size-5" />
-			<span className="text-muted-foreground text-xs">{children}</span>
-		</div>
 	);
 }
 

@@ -25,8 +25,11 @@ export type AgentSurfaceSwitch = {
 		surface: AgentSurface,
 		agent: AgentIdentity | undefined,
 	): Promise<void>;
-	/** For a pane closing on the ACP surface, whose adapter nothing else stops. */
-	stopChat(sessionId: string): Promise<void>;
+	/**
+	 * For a pane closing on the ACP surface, whose adapter nothing else stops.
+	 * Resolves false when the adapter is still running.
+	 */
+	stopChat(sessionId: string): Promise<boolean>;
 };
 
 export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
@@ -40,8 +43,10 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 		async (sessionId: string) => {
 			try {
 				await wiring.transport.closeSession({ sessionId });
+				return true;
 			} catch (error) {
 				console.warn("[acp-chat] could not stop the chat session", error);
+				return false;
 			}
 		},
 		[wiring.transport],
@@ -58,8 +63,9 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 
 			if (surface === "acp") {
 				if (!agent) return;
-				// Written before the kill: once the terminal is gone so is the
-				// binding these ids come from.
+				// Written before the kill: the binding these ids come from dies with
+				// the terminal, and until the surface is recorded the pane derives
+				// its own — which the kill is about to change the answer to.
 				ctx.actions.updateData({ ...data, agentSurface: "acp", agent });
 				terminalRuntimeRegistry.dispose(data.terminalId);
 				try {
@@ -68,9 +74,11 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 						workspaceId,
 					});
 				} catch (error) {
-					// The chat is up and the agent session is what it reads, so a pty
-					// that outlives the switch is untidy rather than broken.
+					// Put the pane back rather than run a chat over a live pty: both
+					// would drive the one agent session.
 					console.warn("[acp-chat] could not stop the terminal", error);
+					ctx.actions.updateData({ ...data, agentSurface: "cli", agent });
+					toast.error(t({ message: "Couldn't stop the agent's terminal" }));
 				}
 				return;
 			}
@@ -83,8 +91,12 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 
 			// Before the launch, not after: the pty resumes the same agent session
 			// the adapter still has open, and two processes on one session is what
-			// this whole switch exists to avoid.
-			if (data.acpSessionId) await stopChat(data.acpSessionId);
+			// this whole switch exists to avoid. A chat that would not stop keeps
+			// the pane where it is rather than racing the terminal against it.
+			if (data.acpSessionId && !(await stopChat(data.acpSessionId))) {
+				toast.error(t({ message: "Couldn't stop the chat" }));
+				return;
+			}
 
 			try {
 				const result = await runAgent.mutateAsync({

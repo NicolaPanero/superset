@@ -4807,6 +4807,12 @@ msgstr "Impossible de démarrer le mode design sur cette page"
 msgid "Couldn't start workspace"
 msgstr "Impossible de démarrer l'espace de travail"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Impossible d'arrêter le terminal de l'agent"
+
+msgid "Couldn't stop the chat"
+msgstr "Impossible d'arrêter la discussion"
+
 msgid "Couldn't unstage changes"
 msgstr "Impossible de désindexer les modifications"
 
@@ -11163,6 +11169,9 @@ msgstr "Ouverture des dossiers"
 
 msgid "Opening pages"
 msgstr "Ouverture des pages"
+
+msgid "Opening the chat…"
+msgstr "Ouverture de la discussion…"
 
 msgid "Opening the conversation…"
 msgstr "Ouverture de la conversation…"

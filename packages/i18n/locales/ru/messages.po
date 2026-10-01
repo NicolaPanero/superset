@@ -4807,6 +4807,12 @@ msgstr "Не удалось запустить режим дизайна на э
 msgid "Couldn't start workspace"
 msgstr "Не удалось запустить рабочую область"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Не удалось остановить терминал агента"
+
+msgid "Couldn't stop the chat"
+msgstr "Не удалось остановить чат"
+
 msgid "Couldn't unstage changes"
 msgstr "Не удалось снять индексацию"
 
@@ -11163,6 +11169,9 @@ msgstr "Открытие папок"
 
 msgid "Opening pages"
 msgstr "Открытие страниц"
+
+msgid "Opening the chat…"
+msgstr "Открытие чата…"
 
 msgid "Opening the conversation…"
 msgstr "Открываем разговор…"

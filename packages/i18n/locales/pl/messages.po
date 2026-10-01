@@ -4807,6 +4807,12 @@ msgstr "Nie udało się uruchomić trybu Design na tej stronie"
 msgid "Couldn't start workspace"
 msgstr "Nie udało się uruchomić obszaru roboczego"
 
+msgid "Couldn't stop the agent's terminal"
+msgstr "Nie udało się zatrzymać terminala agenta"
+
+msgid "Couldn't stop the chat"
+msgstr "Nie udało się zatrzymać czatu"
+
 msgid "Couldn't unstage changes"
 msgstr "Nie udało się usunąć zmian z indeksu"
 
@@ -11163,6 +11169,9 @@ msgstr "Otwieranie folderów"
 
 msgid "Opening pages"
 msgstr "Otwieranie stron"
+
+msgid "Opening the chat…"
+msgstr "Otwieranie czatu…"
 
 msgid "Opening the conversation…"
 msgstr "Otwieranie rozmowy…"
