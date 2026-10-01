@@ -1,6 +1,8 @@
 import type { Audience, CommandConfig } from "./command";
 import { CLIError } from "./errors";
 import {
+	type CliDescription,
+	type CommandNode,
 	generateCommandHelp,
 	generateGroupHelp,
 	generateRootHelp,
@@ -35,6 +37,37 @@ export interface RunOptions {
 	sandbox?: boolean;
 }
 
+interface ActiveCli {
+	name: string;
+	version: string;
+	tree: { groups: CliGroup[]; commands: CliCommand[] };
+	globals: Record<string, ProcessedBuilderConfig>;
+}
+
+let activeCli: ActiveCli | undefined;
+
+/**
+ * The running CLI's command tree with every node populated, for commands
+ * that describe the CLI itself (`schema`, `completion`). The root node's
+ * options are the globals. Built from the same audience-filtered tree the
+ * runner routes on, so it never lists a command this run cannot execute.
+ */
+export function introspectCli(): CliDescription {
+	if (!activeCli) {
+		throw new Error("introspectCli() is only available while a command runs");
+	}
+	const { root, commandMap } = buildTree(
+		activeCli.tree.groups,
+		activeCli.tree.commands,
+	);
+	root.options = activeCli.globals;
+	for (const [key, cmd] of commandMap) {
+		const node = getNode(root, key.split("/"));
+		if (node) populateNodeForHelp(node, cmd);
+	}
+	return { name: activeCli.name, version: activeCli.version, root };
+}
+
 export async function run(opts: RunOptions): Promise<void> {
 	const ac = new AbortController();
 	const onSignal = () => ac.abort();
@@ -46,6 +79,7 @@ export async function run(opts: RunOptions): Promise<void> {
 	} catch (error) {
 		await handleError(error, opts.name, ac.signal);
 	} finally {
+		activeCli = undefined;
 		process.off("SIGINT", onSignal);
 		process.off("SIGTERM", onSignal);
 	}
@@ -198,10 +232,7 @@ function splitArgsForRouting(
 	return { segments, passthrough };
 }
 
-function getNode(
-	root: import("./help").CommandNode,
-	path: string[],
-): import("./help").CommandNode | undefined {
+function getNode(root: CommandNode, path: string[]): CommandNode | undefined {
 	let node = root;
 	for (const segment of path) {
 		const child = node.children.get(segment);
@@ -212,7 +243,7 @@ function getNode(
 }
 
 function populateNodeForHelp(
-	node: import("./help").CommandNode,
+	node: CommandNode,
 	cmd: CommandConfig,
 	optionConfigs?: Record<string, ProcessedBuilderConfig>,
 ): void {
@@ -251,6 +282,7 @@ async function execute(
 		opts.sandbox ?? false,
 	);
 	const { root, commandMap } = buildTree(visible.groups, visible.commands);
+	activeCli = { name, version, tree: visible, globals: globalConfigs };
 
 	// EXPERIMENT: bare invocation on a TTY opens the interactive help browser
 	// instead of dumping static help. Agents/CI keep the static output.
