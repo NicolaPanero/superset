@@ -56,7 +56,12 @@ function ItemRow({
 			return <UserMessageRow harness={snapshot.session?.harness} item={item} />;
 		case "agent_message":
 			return (
-				<AgentMessageRow item={item} onFork={onFork} snapshot={snapshot} />
+				<AgentMessageRow
+					canForkToWorktree={canForkToWorktree}
+					item={item}
+					onFork={onFork}
+					snapshot={snapshot}
+				/>
 			);
 		case "reasoning":
 			return <ReasoningRow item={item} snapshot={snapshot} />;
