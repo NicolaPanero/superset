@@ -431,7 +431,7 @@ export function PullRequestDetailHeader({
 					<span
 						className={cn(
 							"inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 font-medium capitalize",
-							STATE_BADGE_STYLES[pendingLabel ? "queued" : state],
+							STATE_BADGE_STYLES[state],
 						)}
 						aria-live="polite"
 					>
