@@ -16,7 +16,6 @@ import {
 } from "@superset/shared/usercontent";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { env } from "../../env";
-import { notifyPageHub } from "../../lib/page-store";
 import { deleteObjects, putObject } from "../../lib/r2";
 
 // Expiry is rounded to a window boundary so identical claims give an
@@ -42,7 +41,6 @@ export async function writePageManifest(pageId: string): Promise<void> {
 
 	if (page.takenDownAt) {
 		await thrice(() => deleteObjects([pageManifestKey(pageId)]));
-		notifyPageHub(pageId);
 		return;
 	}
 
@@ -120,11 +118,6 @@ export async function writePageManifest(pageId: string): Promise<void> {
 			bucket: "private",
 		}),
 	);
-
-	// Every access fact a hub enforces comes from the manifest, so the nudge
-	// belongs here rather than at each call site: a future caller that writes
-	// the manifest cannot forget to invalidate the sockets reading it.
-	notifyPageHub(pageId);
 }
 
 // The manifest is the Worker's authorization source, so both writing it and

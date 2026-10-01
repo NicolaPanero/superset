@@ -108,7 +108,6 @@ mock.module("../page-store", () => ({
 		log.push(`page-storage.purge ${userId}`);
 		return { pages: 0, cleared: 0 };
 	},
-	notifyPageHub: () => {},
 	callPageStore: async () => ({ ok: true }),
 	deletePageStorage: async () => {},
 	mintPageStoreSubscribeTicket: async () => ({ url: "", expiresAt: 0 }),

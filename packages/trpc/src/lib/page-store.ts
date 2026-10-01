@@ -4,12 +4,10 @@ import {
 	type PageStorageHubReplyFor,
 	type PageStorageHubRequest,
 	type PageStorageHubResponse,
-	pageStorageNudgePath,
 	pageStorageOpPath,
 } from "@superset/shared/page-storage-hub";
 import { signPageStorageTicket } from "@superset/shared/usercontent";
 import { TRPCError } from "@trpc/server";
-import { waitUntil } from "@vercel/functions";
 import { and, eq, inArray, isNull } from "drizzle-orm";
 import { env } from "../env";
 
@@ -70,34 +68,6 @@ export async function callPageStore<Request extends PageStorageHubRequest>(
 		throw storageError(body.code, body.message);
 	}
 	return body as PageStorageHubReplyFor<Request["op"]>;
-}
-
-/**
- * Tells a page's hub its manifest moved, so it re-reads access and closes the
- * sockets that no longer pass. Fire-and-forget: a lost nudge costs a stale
- * window until the hub's own timed re-read, never the write that caused it.
- */
-export function notifyPageHub(pageId: string): void {
-	waitUntil(
-		fetch(`${env.REALTIME_URL}${pageStorageNudgePath(pageId)}`, {
-			method: "POST",
-			headers: { authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}` },
-			signal: AbortSignal.timeout(5_000),
-		})
-			.then((response) => {
-				if (!response.ok) {
-					console.warn(
-						`[pages] hub nudge rejected: ${response.status} for ${pageId}`,
-					);
-				}
-			})
-			.catch((error) => {
-				console.warn(
-					"[pages] hub nudge failed:",
-					error instanceof Error ? error.message : error,
-				);
-			}),
-	);
 }
 
 export async function deletePageStorage(pageId: string): Promise<void> {
