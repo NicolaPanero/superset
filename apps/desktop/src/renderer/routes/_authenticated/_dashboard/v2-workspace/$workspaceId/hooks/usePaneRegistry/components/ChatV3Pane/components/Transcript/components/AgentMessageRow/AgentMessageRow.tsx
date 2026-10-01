@@ -1,10 +1,17 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import type { SessionSnapshot } from "@superset/chat/core";
 import { displayText } from "@superset/chat/core";
 import type { AgentMessage } from "@superset/chat/protocol";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@superset/ui/dropdown-menu";
 import { cn } from "@superset/ui/utils";
 import { Check, Copy, GitBranch } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import type { ChatForkTarget } from "../../../../../../../useForkChat";
 import { MarkdownView } from "../../../MarkdownView";
 
 function clockLabel(item: AgentMessage): string {
@@ -16,6 +23,7 @@ function clockLabel(item: AgentMessage): string {
 }
 
 export function AgentMessageRow({
+	canForkToWorktree = true,
 	item,
 	onFork,
 	snapshot,
@@ -23,7 +31,9 @@ export function AgentMessageRow({
 	item: AgentMessage;
 	snapshot: SessionSnapshot;
 	/** Absent when this agent cannot branch its own session. */
-	onFork?: (() => void) | undefined;
+	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	/** False when there is no project to cut a worktree from. */
+	canForkToWorktree?: boolean;
 }) {
 	const { t } = useLingui();
 	const text = displayText(snapshot, item.id);
@@ -66,14 +76,45 @@ export function AgentMessageRow({
 					)}
 				</button>
 				{onFork && (
-					<button
-						aria-label={t({ message: "Branch this conversation" })}
-						className="rounded p-1 transition-colors hover:bg-secondary hover:text-foreground"
-						onClick={onFork}
-						type="button"
-					>
-						<GitBranch className="size-3.5" />
-					</button>
+					<DropdownMenu>
+						<DropdownMenuTrigger
+							aria-label={t({ message: "Branch this conversation" })}
+							className="rounded p-1 transition-colors hover:bg-secondary hover:text-foreground"
+						>
+							<GitBranch className="size-3.5" />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="start" className="w-72">
+							<DropdownMenuItem
+								className="flex-col items-start gap-0.5"
+								onSelect={() => onFork("workspace")}
+							>
+								<span className="text-xs">
+									<Trans>Branch in this workspace</Trans>
+								</span>
+								<span className="text-[11px] text-muted-foreground">
+									<Trans>
+										The agent copies the conversation; the branch opens here
+									</Trans>
+								</span>
+							</DropdownMenuItem>
+							{canForkToWorktree && (
+								<DropdownMenuItem
+									className="flex-col items-start gap-0.5"
+									onSelect={() => onFork("worktree")}
+								>
+									<span className="text-xs">
+										<Trans>Branch in a new worktree</Trans>
+									</span>
+									<span className="text-[11px] text-muted-foreground">
+										<Trans>
+											A new workspace off this branch, with the conversation
+											handed to a fresh agent
+										</Trans>
+									</span>
+								</DropdownMenuItem>
+							)}
+						</DropdownMenuContent>
+					</DropdownMenu>
 				)}
 				<span className="text-[11px] tabular-nums">{clockLabel(item)}</span>
 			</div>

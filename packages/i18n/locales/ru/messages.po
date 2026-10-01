@@ -351,6 +351,10 @@ msgstr "{0} и {1} выясняют отношения в облике терм�
 msgid "{0} behind you"
 msgstr "{0} позади вас"
 
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "ветвь {0}"
+
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} пока нельзя подключить таким способом."
@@ -1391,6 +1395,9 @@ msgstr "Большинство продакшен-изменений слива�
 
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Чтобы продолжить, нужна новая версия Superset. Обновитесь до последней версии."
+
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Новое рабочее пространство от этой ветки, разговор передаётся новому агенту"
 
 msgid "A process is still running in this tab"
 msgstr "В этой вкладке ещё работает процесс"
@@ -2815,6 +2822,12 @@ msgstr "Поведение веток для новых рабочих обла�
 
 msgid "Branch copied"
 msgstr "Ветка скопирована"
+
+msgid "Branch in a new worktree"
+msgstr "Ответвить в новом worktree"
+
+msgid "Branch in this workspace"
+msgstr "Ответвить в этом рабочем пространстве"
 
 msgid "branch name"
 msgstr "имя ветки"
@@ -4652,6 +4665,9 @@ msgstr "Не удалось проверить учётные данные: {rea
 
 msgid "Couldn't ask the workspace for a description"
 msgstr "Не удалось запросить описание у рабочего пространства"
+
+msgid "Couldn't branch into a new worktree"
+msgstr "Не удалось ответвить в новый worktree"
 
 msgid "Couldn't branch the conversation"
 msgstr "Не удалось ответвить разговор"
@@ -15656,6 +15672,9 @@ msgstr "активная организация"
 msgid "The address is unreachable"
 msgstr "Адрес недоступен"
 
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "Агент копирует разговор; ветвь откроется здесь"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Агент ведёт задачу от тикета до diff. Человек проверяет результат, а не нажатия клавиш. Внимание смещается с написания кода на постановку задач и оценку результата. Один инженер ведёт несколько агентов одновременно в изолированных рабочих областях."
 
@@ -16314,6 +16333,9 @@ msgstr "Это снимет индексацию и откатит все про
 
 msgid "This workspace"
 msgstr "Эта рабочая область"
+
+msgid "This workspace has no project to branch from"
+msgstr "В этом рабочем пространстве нет проекта для ответвления"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Возможно, эта рабочая область удалена или у вас больше нет к ней доступа."

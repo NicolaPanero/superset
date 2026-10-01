@@ -351,6 +351,10 @@ msgstr "{0} e {1} resolvem isso como dinossauros de terminal. As estatísticas d
 msgid "{0} behind you"
 msgstr "{0} atrás de você"
 
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "ramificação de {0}"
+
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} ainda não pode entrar dessa forma."
@@ -1391,6 +1395,9 @@ msgstr "A maioria das mudanças em produção é mesclada sem ninguém ler o dif
 
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "É necessária uma nova versão do Superset para continuar. Atualize para a versão mais recente."
+
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Um novo workspace a partir desta branch, com a conversa entregue a um novo agente"
 
 msgid "A process is still running in this tab"
 msgstr "Ainda há um processo rodando nesta aba"
@@ -2815,6 +2822,12 @@ msgstr "Comportamento de branch para novas áreas de trabalho neste dispositivo.
 
 msgid "Branch copied"
 msgstr "Branch copiada"
+
+msgid "Branch in a new worktree"
+msgstr "Ramificar em um novo worktree"
+
+msgid "Branch in this workspace"
+msgstr "Ramificar neste workspace"
 
 msgid "branch name"
 msgstr "nome da branch"
@@ -4652,6 +4665,9 @@ msgstr "Não foi possível verificar a credencial: {reason}"
 
 msgid "Couldn't ask the workspace for a description"
 msgstr "Não foi possível pedir uma descrição ao espaço de trabalho"
+
+msgid "Couldn't branch into a new worktree"
+msgstr "Não foi possível ramificar para um novo worktree"
 
 msgid "Couldn't branch the conversation"
 msgstr "Não foi possível ramificar a conversa"
@@ -15656,6 +15672,9 @@ msgstr "a organização ativa"
 msgid "The address is unreachable"
 msgstr "O endereço está inacessível"
 
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "O agente copia a conversa; a ramificação abre aqui"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "O agente é dono da tarefa, do ticket ao diff. A pessoa revisa o resultado, não as teclas digitadas. A atenção sai de escrever código e vai para especificar o trabalho e julgá-lo. Uma pessoa toca vários agentes ao mesmo tempo em áreas de trabalho isoladas."
 
@@ -16314,6 +16333,9 @@ msgstr "Isso remove do stage e reverte todas as alterações no stage. Arquivos 
 
 msgid "This workspace"
 msgstr "Esta área de trabalho"
+
+msgid "This workspace has no project to branch from"
+msgstr "Este workspace não tem projeto do qual ramificar"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Esta área de trabalho pode ter sido removida ou você não tem mais acesso a ela."

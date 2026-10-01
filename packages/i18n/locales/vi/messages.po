@@ -351,6 +351,10 @@ msgstr "{0} và {1} phân định thắng thua trong hình hài khủng long ter
 msgid "{0} behind you"
 msgstr "{0} phía sau bạn"
 
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "nhánh {0}"
+
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} chưa thể đăng nhập theo cách này."
@@ -1391,6 +1395,9 @@ msgstr "Phần lớn thay đổi lên production được merge mà không ai đ
 
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Cần phiên bản Superset mới để tiếp tục. Vui lòng cập nhật lên phiên bản mới nhất."
+
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Một workspace mới từ nhánh này, hội thoại được bàn giao cho tác nhân mới"
 
 msgid "A process is still running in this tab"
 msgstr "Vẫn còn một tiến trình đang chạy trong tab này"
@@ -2815,6 +2822,12 @@ msgstr "Hành vi nhánh cho workspace mới trên thiết bị này. Từng dự
 
 msgid "Branch copied"
 msgstr "Đã sao chép tên nhánh"
+
+msgid "Branch in a new worktree"
+msgstr "Tạo nhánh trong worktree mới"
+
+msgid "Branch in this workspace"
+msgstr "Tạo nhánh trong workspace này"
 
 msgid "branch name"
 msgstr "tên nhánh"
@@ -4652,6 +4665,9 @@ msgstr "Không xác minh được thông tin đăng nhập: {reason}"
 
 msgid "Couldn't ask the workspace for a description"
 msgstr "Không thể yêu cầu không gian làm việc tạo mô tả"
+
+msgid "Couldn't branch into a new worktree"
+msgstr "Không thể tạo nhánh sang worktree mới"
 
 msgid "Couldn't branch the conversation"
 msgstr "Không thể tạo nhánh hội thoại"
@@ -15656,6 +15672,9 @@ msgstr "tổ chức đang hoạt động"
 msgid "The address is unreachable"
 msgstr "Không tới được địa chỉ này"
 
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "Tác nhân sao chép hội thoại; nhánh mở tại đây"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent làm chủ một tác vụ từ ticket đến diff. Con người review kết quả, không phải từng thao tác gõ. Sự chú ý dịch từ viết code sang đặc tả công việc và đánh giá nó. Một kỹ sư chạy nhiều agent cùng lúc trong các workspace tách biệt."
 
@@ -16314,6 +16333,9 @@ msgstr "Thao tác này sẽ bỏ stage và hoàn nguyên toàn bộ thay đổi 
 
 msgid "This workspace"
 msgstr "Workspace này"
+
+msgid "This workspace has no project to branch from"
+msgstr "Workspace này không có dự án để tạo nhánh"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Workspace này có thể đã bị gỡ, hoặc bạn không còn quyền truy cập."

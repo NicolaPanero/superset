@@ -8,6 +8,7 @@ import {
 	CollapsibleTrigger,
 } from "@superset/ui/collapsible";
 import { ChevronRight } from "lucide-react";
+import type { ChatForkTarget } from "../../../../../../../useForkChat";
 import { rowKindForItem } from "../../utils/rowKind";
 import { AgentMessageRow } from "../AgentMessageRow";
 import { ApprovalRow } from "../ApprovalRow";
@@ -30,10 +31,12 @@ export type TurnGroupSectionProps = {
 	onToggleEntry: (entryKey: string, collapsed: boolean) => void;
 	onRespond: (approvalId: string, decision: Decision) => void;
 	/** Absent when the agent cannot branch its own session. */
-	onFork?: (() => void) | undefined;
+	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	canForkToWorktree?: boolean;
 };
 
 function ItemRow({
+	canForkToWorktree,
 	item,
 	onFork,
 	onRespond,
@@ -43,6 +46,7 @@ function ItemRow({
 	snapshot: SessionSnapshot;
 	onRespond: TurnGroupSectionProps["onRespond"];
 	onFork: TurnGroupSectionProps["onFork"];
+	canForkToWorktree: TurnGroupSectionProps["canForkToWorktree"];
 }) {
 	if (rowKindForItem(item) === "unknown" || !isKnownItem(item)) {
 		return <UnknownItemRow item={item} />;
@@ -68,6 +72,7 @@ function ItemRow({
 }
 
 export function TurnGroupSection({
+	canForkToWorktree,
 	group,
 	isEntryCollapsed,
 	onToggleEntry,
@@ -94,6 +99,7 @@ export function TurnGroupSection({
 							key={entry.item.id}
 						>
 							<ItemRow
+								canForkToWorktree={canForkToWorktree}
 								item={entry.item}
 								onFork={onFork}
 								onRespond={onRespond}

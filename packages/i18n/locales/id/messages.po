@@ -351,6 +351,10 @@ msgstr "{0} dan {1} menyelesaikannya sebagai dinosaurus terminal. Statistik yang
 msgid "{0} behind you"
 msgstr "{0} di belakang Anda"
 
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "cabang {0}"
+
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} belum bisa masuk dengan cara ini."
@@ -1391,6 +1395,9 @@ msgstr "Mayoritas perubahan produksi di-merge tanpa ada manusia yang membaca dif
 
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Versi baru Superset diperlukan untuk melanjutkan. Silakan perbarui ke versi terbaru."
+
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Ruang kerja baru dari cabang ini, dengan percakapan diserahkan ke agen baru"
 
 msgid "A process is still running in this tab"
 msgstr "Masih ada proses yang berjalan di tab ini"
@@ -2815,6 +2822,12 @@ msgstr "Perilaku branch untuk workspace baru di perangkat ini. Tiap proyek bisa 
 
 msgid "Branch copied"
 msgstr "Branch disalin"
+
+msgid "Branch in a new worktree"
+msgstr "Cabangkan di worktree baru"
+
+msgid "Branch in this workspace"
+msgstr "Cabangkan di ruang kerja ini"
 
 msgid "branch name"
 msgstr "nama branch"
@@ -4652,6 +4665,9 @@ msgstr "Tidak dapat memverifikasi kredensial: {reason}"
 
 msgid "Couldn't ask the workspace for a description"
 msgstr "Tidak dapat meminta deskripsi dari workspace"
+
+msgid "Couldn't branch into a new worktree"
+msgstr "Tidak dapat mencabangkan ke worktree baru"
 
 msgid "Couldn't branch the conversation"
 msgstr "Tidak dapat mencabangkan percakapan"
@@ -15656,6 +15672,9 @@ msgstr "organisasi aktif"
 msgid "The address is unreachable"
 msgstr "Alamatnya tidak bisa dijangkau"
 
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "Agen menyalin percakapan; cabang terbuka di sini"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agen memegang tugas dari tiket sampai diff. Manusia mereview hasilnya, bukan tiap ketukan tombolnya. Perhatian bergeser dari menulis kode ke menentukan pekerjaan dan menilainya. Satu engineer menjalankan beberapa agen sekaligus di workspace terisolasi."
 
@@ -16314,6 +16333,9 @@ msgstr "Ini akan meng-unstage dan mengembalikan semua perubahan yang di-stage. F
 
 msgid "This workspace"
 msgstr "Workspace ini"
+
+msgid "This workspace has no project to branch from"
+msgstr "Ruang kerja ini tidak memiliki proyek untuk dicabangkan"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Workspace ini mungkin sudah dihapus, atau Anda sudah tidak punya akses ke sana."

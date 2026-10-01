@@ -1,9 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { UserContent } from "@superset/chat/protocol";
 import { toast } from "@superset/ui/sonner";
+import { useWorkspaceClient } from "@superset/workspace-client";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { acpHarnessForAgent } from "../../../../utils/acpHarness";
+import type { ChatForkTarget } from "../../../useForkChat";
+import { useForkChat } from "../../../useForkChat";
 import { SessionView } from "../ChatV3Pane/components/SessionView";
 import { useSessionClient } from "../ChatV3Pane/hooks/useSessionClient";
 import { AcpChatPending } from "./components/AcpChatPending";
@@ -34,6 +38,12 @@ export function AcpChatPane({
 }) {
 	const { t } = useLingui();
 	const { client, wiring } = useSessionClient(sessionId);
+	const { forkToWorktree, canForkToWorktree } = useForkChat(workspaceId);
+	const { hostUrl } = useWorkspaceClient();
+	const { data: agentConfigs } = useV2AgentConfigs(hostUrl);
+	const agentLabel = agentConfigs?.find(
+		(config) => config.id === agent?.id,
+	)?.label;
 	const harness = acpHarnessForAgent(agent?.id);
 	const [failure, setFailure] = useState<string | null>(null);
 
@@ -82,7 +92,7 @@ export function AcpChatPane({
 	// nothing is lost by following the fork. The agent copies the session whole
 	// — `session/fork` takes no truncation point — so where it was clicked from
 	// makes no difference to what the branch contains.
-	const forkConversation = useCallback(() => {
+	const forkHere = useCallback(() => {
 		if (!sessionId) return;
 		void wiring.transport
 			.forkSession({
@@ -105,6 +115,26 @@ export function AcpChatPane({
 				toast.error(t({ message: "Couldn't branch the conversation" }));
 			});
 	}, [wiring.transport, sessionId, workspaceId, onSessionCreated, t]);
+
+	// A worktree of its own cannot resume this session — the agent keys its
+	// sessions to a project directory — so that branch is a fresh chat handed
+	// the conversation. Both live under one control because the user is
+	// choosing where the work continues, not which mechanism carries it.
+	const fork = useCallback(
+		(target: ChatForkTarget, transcript: string) => {
+			if (target === "workspace") {
+				forkHere();
+				return;
+			}
+			if (!agent) return;
+			void forkToWorktree({
+				agentId: agent.id,
+				agentLabel: agentLabel ?? agent.id,
+				transcript,
+			});
+		},
+		[forkHere, forkToWorktree, agent, agentLabel],
+	);
 
 	const startFresh = useCallback(() => {
 		if (!harness) return;
@@ -184,7 +214,9 @@ export function AcpChatPane({
 			client={client}
 			key={sessionId}
 			onFirstPromptSent={onFirstPromptSent ?? NOOP}
-			onFork={forkConversation}
+			agentLabel={agentLabel}
+			canForkToWorktree={canForkToWorktree}
+			onFork={fork}
 			onSessionState={(state) => {
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back

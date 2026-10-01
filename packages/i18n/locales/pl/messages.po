@@ -351,6 +351,10 @@ msgstr "{0} i {1} rozstrzygają to jako terminalowe dinozaury. O zwycięzcy decy
 msgid "{0} behind you"
 msgstr "{0} za tobą"
 
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "gałąź {0}"
+
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} nie może się jeszcze zalogować w ten sposób."
@@ -1391,6 +1395,9 @@ msgstr "Większość zmian produkcyjnych scala się bez czytania diffa przez cz�
 
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Do kontynuowania wymagana jest nowa wersja Superset. Zaktualizuj do najnowszej wersji."
+
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Nowy obszar roboczy z tej gałęzi, z rozmową przekazaną nowemu agentowi"
 
 msgid "A process is still running in this tab"
 msgstr "W tej karcie wciąż działa proces"
@@ -2815,6 +2822,12 @@ msgstr "Zachowanie gałęzi dla nowych obszarów roboczych na tym urządzeniu. P
 
 msgid "Branch copied"
 msgstr "Skopiowano gałąź"
+
+msgid "Branch in a new worktree"
+msgstr "Rozgałęź w nowym worktree"
+
+msgid "Branch in this workspace"
+msgstr "Rozgałęź w tym obszarze roboczym"
 
 msgid "branch name"
 msgstr "nazwa gałęzi"
@@ -4652,6 +4665,9 @@ msgstr "Nie udało się zweryfikować poświadczeń: {reason}"
 
 msgid "Couldn't ask the workspace for a description"
 msgstr "Nie udało się poprosić obszaru roboczego o opis"
+
+msgid "Couldn't branch into a new worktree"
+msgstr "Nie udało się rozgałęzić do nowego worktree"
 
 msgid "Couldn't branch the conversation"
 msgstr "Nie udało się rozgałęzić rozmowy"
@@ -15656,6 +15672,9 @@ msgstr "aktywnej organizacji"
 msgid "The address is unreachable"
 msgstr "Adres jest nieosiągalny"
 
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "Agent kopiuje rozmowę; gałąź otworzy się tutaj"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent prowadzi zadanie od zgłoszenia do diffa. Człowiek przegląda wynik, a nie naciśnięcia klawiszy. Uwaga przenosi się z pisania kodu na opisywanie pracy i jej ocenę. Jeden inżynier prowadzi kilku agentów naraz w izolowanych obszarach roboczych."
 
@@ -16314,6 +16333,9 @@ msgstr "Usunie to z indeksu i cofnie wszystkie zaindeksowane zmiany. Zaindeksowa
 
 msgid "This workspace"
 msgstr "Ten obszar roboczy"
+
+msgid "This workspace has no project to branch from"
+msgstr "Ten obszar roboczy nie ma projektu, z którego można się rozgałęzić"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Ten obszar roboczy mógł zostać usunięty albo nie masz już do niego dostępu."

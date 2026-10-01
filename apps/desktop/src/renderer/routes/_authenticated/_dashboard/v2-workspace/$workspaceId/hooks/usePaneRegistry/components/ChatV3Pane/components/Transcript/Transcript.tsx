@@ -8,6 +8,7 @@ import type { ApprovalRequest, Decision } from "@superset/chat/protocol";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ChatForkTarget } from "../../../../../useForkChat";
 import { TurnGroupSection } from "./components/TurnGroupSection";
 
 export type TranscriptProps = {
@@ -18,7 +19,8 @@ export type TranscriptProps = {
 	hasOlder: boolean;
 	onLoadOlder: () => void;
 	onRespond: (approvalId: string, decision: Decision) => void;
-	onFork?: (() => void) | undefined;
+	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	canForkToWorktree?: boolean;
 	onRetryPrompt: (clientId: string) => void;
 	onDiscardPrompt: (clientId: string) => void;
 };
@@ -46,6 +48,7 @@ function outboxText(entry: OutboxEntry): string {
 
 export function Transcript({
 	approvals,
+	canForkToWorktree,
 	groups,
 	hasOlder,
 	onDiscardPrompt,
@@ -112,6 +115,7 @@ export function Transcript({
 				)}
 				{groups.map((group) => (
 					<TurnGroupSection
+						canForkToWorktree={canForkToWorktree}
 						group={group}
 						isEntryCollapsed={isEntryCollapsed}
 						key={group.turnId}

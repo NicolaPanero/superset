@@ -9,11 +9,15 @@ import {
 import { Spinner } from "@superset/ui/spinner";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef } from "react";
+import type { ChatForkTarget } from "../../../../../useForkChat";
+import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { Composer } from "../Composer";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
 
 export function SessionView({
+	agentLabel,
+	canForkToWorktree,
 	client,
 	headerLeft,
 	pendingFirstPrompt,
@@ -30,8 +34,15 @@ export function SessionView({
 	pendingFirstPrompt: UserContent[] | null;
 	onFirstPromptSent: () => void;
 	onSessionState?: (session: SessionState | null) => void;
-	/** Absent when the agent cannot branch its own session. */
-	onFork?: (() => void) | undefined;
+	/**
+	 * Absent when the agent cannot branch its own session. The transcript is
+	 * built here because only this view holds the timeline; a branch into
+	 * another worktree cannot resume the session and is told it instead.
+	 */
+	onFork?: ((target: ChatForkTarget, transcript: string) => void) | undefined;
+	canForkToWorktree?: boolean;
+	/** Names the speaker in a handed-over transcript. */
+	agentLabel?: string;
 }) {
 	const session = useChatSession({ client });
 	const timeline = useTimeline(session.snapshot);
@@ -89,10 +100,23 @@ export function SessionView({
 			) : (
 				<Transcript
 					approvals={approvals}
+					canForkToWorktree={canForkToWorktree}
 					groups={timeline}
 					hasOlder={session.hasOlder}
 					onDiscardPrompt={session.discardPrompt}
-					onFork={onFork}
+					onFork={
+						onFork
+							? (target) =>
+									onFork(
+										target,
+										buildChatHandoffTranscript(
+											timeline,
+											session.snapshot,
+											agentLabel ?? "Agent",
+										),
+									)
+							: undefined
+					}
 					onLoadOlder={() => void session.loadOlder()}
 					onRespond={(approvalId, decision) =>
 						void session.respondToApproval(approvalId, decision)
