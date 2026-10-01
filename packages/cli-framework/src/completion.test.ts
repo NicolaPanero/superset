@@ -1,4 +1,7 @@
-import { describe, expect, it } from "bun:test";
+import { afterAll, describe, expect, it } from "bun:test";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { generateBashCompletion, generateZshCompletion } from "./completion";
 import type { CommandNode } from "./help";
 import type { ProcessedBuilderConfig } from "./option";
@@ -172,16 +175,29 @@ describe("generateBashCompletion", () => {
 	const script = generateBashCompletion(cli);
 
 	/** What bash would offer with the cursor on the last word. */
+	// Filename fallbacks complete against this directory, not the test's cwd.
+	const fixtureDir = mkdtempSync(join(tmpdir(), "superset-completion-"));
+	writeFileSync(join(fixtureDir, "fixture.txt"), "");
+	afterAll(() => rmSync(fixtureDir, { recursive: true, force: true }));
+
+	/** Bash's default COMP_WORDBREAKS, "=" included. */
+	const DEFAULT_WORDBREAKS = " \t\n\"'><=;|&(:";
+
 	function complete(...words: string[]): string[] {
+		return completeWith(DEFAULT_WORDBREAKS, ...words);
+	}
+
+	function completeWith(wordbreaks: string, ...words: string[]): string[] {
 		const quoted = words.map((w) => `'${w}'`).join(" ");
 		const program = [
 			script,
+			`COMP_WORDBREAKS=$'${wordbreaks.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`,
 			`COMP_WORDS=(${quoted})`,
 			`COMP_CWORD=${words.length - 1}`,
 			"_superset",
 			`printf "%s\\n" "\${COMPREPLY[@]}"`,
 		].join("\n");
-		const result = Bun.spawnSync(["bash", "-c", program]);
+		const result = Bun.spawnSync(["bash", "-c", program], { cwd: fixtureDir });
 		expect(result.stderr.toString()).toBe("");
 		return result.stdout.toString().split("\n").filter(Boolean).sort();
 	}
@@ -265,9 +281,44 @@ describe("generateBashCompletion", () => {
 	it.skipIf(!Bun.which("bash"))(
 		"offers filenames for a free-form value attached with =",
 		() => {
+			// "=" is a word break by default: readline replaces only the value.
 			expect(
-				complete("superset", "terminals", "read", "--workspace=./pack"),
-			).toEqual(["--workspace=./package.json"]);
+				complete("superset", "terminals", "read", "--workspace=./fix"),
+			).toEqual(["./fixture.txt"]);
+			// With "=" removed from COMP_WORDBREAKS the whole word is replaced.
+			expect(
+				completeWith(
+					" \t\n",
+					"superset",
+					"terminals",
+					"read",
+					"--workspace=./fix",
+				),
+			).toEqual(["--workspace=./fixture.txt"]);
+		},
+	);
+
+	it.skipIf(!Bun.which("bash"))(
+		"keeps its place after a boolean given as --flag=value",
+		() => {
+			expect(complete("superset", "--json=false", "comp")).toEqual([
+				"completion",
+			]);
+			expect(complete("superset", "--json", "=", "false", "comp")).toEqual([
+				"completion",
+			]);
+			expect(
+				complete("superset", "completion", "--json", "=", "false", ""),
+			).toEqual(["alpha-shell", "beta-shell"]);
+			expect(complete("superset", "--json=f")).toEqual(["false"]);
+			expect(completeWith(" \t\n", "superset", "--json=f")).toEqual([
+				"--json=false",
+			]);
+			expect(complete("superset", "--json", "=", "")).toEqual([
+				"false",
+				"true",
+			]);
+			expect(complete("superset", "--json", "=", "t")).toEqual(["true"]);
 		},
 	);
 
@@ -275,8 +326,11 @@ describe("generateBashCompletion", () => {
 		"completes an enum value attached with =",
 		() => {
 			expect(complete("superset", "tasks", "create", "--priority=ur")).toEqual([
-				"--priority=urgent",
+				"urgent",
 			]);
+			expect(
+				completeWith(" \t\n", "superset", "tasks", "create", "--priority=ur"),
+			).toEqual(["--priority=urgent"]);
 			expect(
 				complete("superset", "tasks", "create", "--priority", "=", "ur"),
 			).toEqual(["urgent"]);
