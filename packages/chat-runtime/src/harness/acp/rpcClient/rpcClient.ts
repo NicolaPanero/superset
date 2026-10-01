@@ -70,7 +70,11 @@ export function spawnAcpTransport(
 	};
 }
 
-export type AcpServerRequest = { id: number | string; method: string; params: unknown };
+export type AcpServerRequest = {
+	id: number | string;
+	method: string;
+	params: unknown;
+};
 export type AcpNotification = { method: string; params: unknown };
 
 export type AcpRpcClientOptions = {
@@ -176,7 +180,11 @@ export class AcpRpcClient {
 				else this.options.onServerRequest({ id, method, params });
 			} catch (dispatchError) {
 				if (id !== undefined) {
-					this.respondWithError(id, -32603, "unhandled by superset chat runtime");
+					this.respondWithError(
+						id,
+						-32603,
+						"unhandled by superset chat runtime",
+					);
 				}
 				this.options.onDispatchError?.(dispatchError, method);
 			}
@@ -188,7 +196,9 @@ export class AcpRpcClient {
 		if (!request) return;
 		this.pending.delete(id);
 		if (error !== undefined) {
-			request.reject(new AcpRpcError(request.method, error.code, error.message));
+			request.reject(
+				new AcpRpcError(request.method, error.code, error.message),
+			);
 			return;
 		}
 		request.resolve(result);

@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type {
 	CancelTurnInput,
+	CloseSessionInput,
 	Cursor,
 	GetItemsInput,
 	GetSessionInput,
@@ -10,6 +11,7 @@ import type {
 } from "@superset/chat/protocol";
 import {
 	cancelTurnInputSchema,
+	closeSessionInputSchema,
 	createSessionInputSchema,
 	getItemsInputSchema,
 	getSessionInputSchema,
@@ -48,6 +50,12 @@ export type CreateSessionResult = {
 export type GetSessionResult = {
 	session: ChatSessionRow | null;
 	cursor: Cursor | null;
+	/**
+	 * Whether a harness process is still behind this session. The stored row
+	 * outlives the process — after a host restart it still reads "idle" — so a
+	 * caller that wants to prompt has to ask this, not the status.
+	 */
+	live: boolean;
 };
 
 export type ChatCommands = {
@@ -56,6 +64,7 @@ export type ChatCommands = {
 	cancelTurn(input: CancelTurnInput): void;
 	respondToApproval(input: RespondToApprovalInput): void;
 	setMode(input: SetModeInput): void;
+	closeSession(input: CloseSessionInput): Promise<void>;
 	getSession(input: GetSessionInput): GetSessionResult;
 	listSessions(input: ListSessionsCommandInput): ChatSessionRow[];
 	getItems(input: z.input<typeof getItemsInputSchema>): PageResult;
@@ -145,10 +154,16 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			});
 		},
 
+		closeSession(input) {
+			const parsed: CloseSessionInput = closeSessionInputSchema.parse(input);
+			return options.live.dispose(parsed.sessionId);
+		},
+
 		getSession(input) {
 			const parsed: GetSessionInput = getSessionInputSchema.parse(input);
 			const session = options.sessions.get(parsed.sessionId);
 			return {
+				live: options.live.get(parsed.sessionId) !== null,
 				session,
 				cursor: session
 					? {

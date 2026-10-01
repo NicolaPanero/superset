@@ -1,5 +1,6 @@
 import {
 	cancelTurnInputSchema,
+	closeSessionInputSchema,
 	createSessionInputSchema,
 	getItemsInputSchema,
 	getSessionInputSchema,
@@ -90,6 +91,10 @@ export function createChatRouter(
 		setMode: t.procedure
 			.input(setModeInputSchema)
 			.mutation(({ input }) => guarded(() => runtime.commands.setMode(input))),
+
+		closeSession: t.procedure
+			.input(closeSessionInputSchema)
+			.mutation(({ input }) => runtime.commands.closeSession(input)),
 
 		getSession: t.procedure
 			.input(getSessionInputSchema)

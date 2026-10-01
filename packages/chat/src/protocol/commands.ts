@@ -72,6 +72,16 @@ export const forkSessionInputSchema = z.object({
 });
 export type ForkSessionInput = z.infer<typeof forkSessionInputSchema>;
 
+/**
+ * Stops the session's harness process. The transcript stays readable; only the
+ * live agent goes away, so a later `createSession` with `resume` picks it back
+ * up. Closing an already-stopped session is not an error.
+ */
+export const closeSessionInputSchema = z.object({
+	sessionId: z.string().min(1),
+});
+export type CloseSessionInput = z.infer<typeof closeSessionInputSchema>;
+
 export const getSessionInputSchema = z.object({ sessionId: z.string().min(1) });
 export type GetSessionInput = z.infer<typeof getSessionInputSchema>;
 
