@@ -27,6 +27,7 @@ export function RecordLayout({
 				<PageHeader
 					start={header}
 					end={headerEnd}
+					reservesWindowControls={false}
 					className="sticky top-0 z-10 min-w-0 bg-background text-[13px] [grid-area:header]"
 				/>
 				<WindowChromeScope enabled={false}>
