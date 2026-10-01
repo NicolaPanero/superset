@@ -2840,6 +2840,9 @@ msgstr "Dal öneki"
 msgid "Branch renamed to {newName}"
 msgstr "Dal {newName} olarak yeniden adlandırıldı"
 
+msgid "Branch this conversation"
+msgstr "Konuşmayı buradan çatalla"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Dal: {0}"

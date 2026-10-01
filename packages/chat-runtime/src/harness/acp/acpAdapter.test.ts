@@ -17,6 +17,8 @@ class FakeAcpAgent {
 	loadFails = false;
 	/** What the agent answers `initialize` with; older agents answer 1. */
 	protocolVersion = 2;
+	/** Session capabilities advertised at initialize; both shipped agents fork. */
+	sessionCapabilities: Record<string, unknown> | null = { fork: {} };
 	/** Replay history with v2's whole-message variants instead of chunks. */
 	wholeMessageReplay = false;
 	private handlers!: AcpTransportHandlers;
@@ -81,10 +83,17 @@ class FakeAcpAgent {
 			if (frame.method === "initialize") {
 				this.respond(frame.id as number, {
 					protocolVersion: this.protocolVersion,
-					capabilities: { promptCapabilities: { image: true } },
+					capabilities: {
+						promptCapabilities: { image: true },
+						...(this.sessionCapabilities
+							? { sessionCapabilities: this.sessionCapabilities }
+							: {}),
+					},
 				});
 			} else if (frame.method === "session/new") {
 				this.respond(frame.id as number, { sessionId: "sess-1" });
+			} else if (frame.method === "session/fork") {
+				this.respond(frame.id as number, { sessionId: "sess-forked" });
 			} else if (frame.method === "session/load" && this.loadFails) {
 				this.deliver({
 					jsonrpc: "2.0",
@@ -517,6 +526,35 @@ describe("AcpAdapter", () => {
 			expect(statuses).not.toContain("dead");
 			await adapter.dispose();
 		}
+	});
+
+	it("forks when the agent says it can, and declines when it does not", async () => {
+		const forking = new FakeAcpAgent();
+		const adapter = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => forking.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		void collect(adapter.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await adapter.fork()).toBe("sess-forked");
+		await adapter.dispose();
+
+		// An agent that advertises no fork capability is never asked.
+		const plain = new FakeAcpAgent();
+		plain.sessionCapabilities = null;
+		const second = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => plain.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		void collect(second.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await second.fork()).toBeNull();
+		expect(plain.sent.map((f) => f.method)).not.toContain("session/fork");
+		await second.dispose();
 	});
 
 	it("surfaces the agent's own slash commands", async () => {

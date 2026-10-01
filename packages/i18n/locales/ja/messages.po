@@ -2840,6 +2840,9 @@ msgstr "ブランチの接頭辞"
 msgid "Branch renamed to {newName}"
 msgstr "ブランチ名を{newName}に変更しました"
 
+msgid "Branch this conversation"
+msgstr "ここで会話を分岐"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "ブランチ: {0}"

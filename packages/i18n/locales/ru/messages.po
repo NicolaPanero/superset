@@ -2840,6 +2840,9 @@ msgstr "Префикс ветки"
 msgid "Branch renamed to {newName}"
 msgstr "Ветка переименована в {newName}"
 
+msgid "Branch this conversation"
+msgstr "Ответвить разговор здесь"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Ветка: {0}"

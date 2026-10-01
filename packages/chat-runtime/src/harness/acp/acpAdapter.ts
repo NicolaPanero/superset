@@ -254,6 +254,31 @@ export class AcpAdapter implements HarnessAdapter {
 		);
 	}
 
+	/**
+	 * session/fork is unstable but reachable on v1, and both shipped adapters
+	 * advertise it. The agent copies its own session; the caller decides what to
+	 * attach to the id that comes back.
+	 */
+	async fork(): Promise<string | null> {
+		if (!this.client || !this.sessionId) return null;
+		if (!this.supportsSessionCapability("fork")) return null;
+		const response = await this.client.request("session/fork", {
+			sessionId: this.sessionId,
+			cwd: this.cwd,
+			mcpServers: [],
+		});
+		const parsed = acpNewSessionResponseSchema.safeParse(response);
+		return parsed.success ? parsed.data.sessionId : null;
+	}
+
+	/** What `initialize` said this agent can do to a session. */
+	private supportsSessionCapability(name: string): boolean {
+		const caps = this.agentCapabilities.sessionCapabilities;
+		return Boolean(
+			caps && typeof caps === "object" && name in (caps as object),
+		);
+	}
+
 	async dispose(): Promise<void> {
 		if (this.disposed) return;
 		this.disposed = true;

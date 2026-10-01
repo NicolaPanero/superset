@@ -69,6 +69,24 @@ export function AcpChatPane({
 		void start(harness, agentSessionId);
 	}, [sessionId, harness, agentSessionId, start]);
 
+	// Branching opens the copy in this pane; the agent keeps the original, so
+	// nothing is lost by following the fork.
+	const forkConversation = useCallback(() => {
+		if (!sessionId) return;
+		void wiring.transport
+			.forkSession({
+				commandId: crypto.randomUUID(),
+				sessionId,
+				workspaceId,
+			})
+			.then((forked) => {
+				if (forked) onSessionCreated(forked.sessionId);
+			})
+			.catch((error: unknown) => {
+				console.error("[acp-chat] fork failed", error);
+			});
+	}, [wiring.transport, sessionId, workspaceId, onSessionCreated]);
+
 	const startFresh = useCallback(() => {
 		if (!harness) return;
 		attaching.current = false;
@@ -143,6 +161,7 @@ export function AcpChatPane({
 			client={client}
 			key={sessionId}
 			onFirstPromptSent={NOOP}
+			onFork={forkConversation}
 			onSessionState={(state) => {
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back

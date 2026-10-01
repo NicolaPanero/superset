@@ -13,6 +13,7 @@ import {
 	cancelTurnInputSchema,
 	closeSessionInputSchema,
 	createSessionInputSchema,
+	forkSessionInputSchema,
 	getItemsInputSchema,
 	getSessionInputSchema,
 	listSessionsInputSchema,
@@ -34,6 +35,11 @@ export const createSessionCommandSchema = createSessionInputSchema
 export type CreateSessionCommandInput = z.input<
 	typeof createSessionCommandSchema
 >;
+
+export const forkSessionCommandSchema = forkSessionInputSchema.extend({
+	cwd: z.string().min(1),
+});
+export type ForkSessionCommandInput = z.input<typeof forkSessionCommandSchema>;
 
 export const listSessionsCommandSchema = listSessionsInputSchema
 	.omit({ workspaceId: true })
@@ -65,6 +71,9 @@ export type ChatCommands = {
 	respondToApproval(input: RespondToApprovalInput): void;
 	setMode(input: SetModeInput): void;
 	closeSession(input: CloseSessionInput): Promise<void>;
+	forkSession(
+		input: ForkSessionCommandInput,
+	): Promise<CreateSessionResult | null>;
 	getSession(input: GetSessionInput): GetSessionResult;
 	listSessions(input: ListSessionsCommandInput): ChatSessionRow[];
 	getItems(input: z.input<typeof getItemsInputSchema>): PageResult;
@@ -151,6 +160,26 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const parsed: SetModeInput = setModeInputSchema.parse(input);
 			options.dedupe.run(`setMode:${parsed.commandId}`, () => {
 				options.live.require(parsed.sessionId).setMode(parsed.modeId);
+			});
+		},
+
+		/**
+		 * Branching is two steps: the agent copies its own session, and a new
+		 * chat is opened onto the copy. Null when the harness cannot fork — the
+		 * caller shows the conversation it already has rather than a dead one.
+		 */
+		async forkSession(input) {
+			const parsed = forkSessionCommandSchema.parse(input);
+			const forked = await options.live.require(parsed.sessionId).fork();
+			if (!forked) return null;
+			const source = options.sessions.get(parsed.sessionId);
+			if (!source) return null;
+			return this.createSession({
+				commandId: parsed.commandId,
+				scopeId: source.scopeId,
+				cwd: parsed.cwd,
+				harness: parsed.harness ?? source.harness,
+				resume: { harnessSessionId: forked },
 			});
 		},
 

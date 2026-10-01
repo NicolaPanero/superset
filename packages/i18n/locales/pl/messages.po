@@ -2840,6 +2840,9 @@ msgstr "Prefiks gałęzi"
 msgid "Branch renamed to {newName}"
 msgstr "Nazwę gałęzi zmieniono na {newName}"
 
+msgid "Branch this conversation"
+msgstr "Rozgałęź rozmowę tutaj"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Gałąź: {0}"

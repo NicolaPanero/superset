@@ -2840,6 +2840,9 @@ msgstr "Prefixo de branch"
 msgid "Branch renamed to {newName}"
 msgstr "Branch renomeada para {newName}"
 
+msgid "Branch this conversation"
+msgstr "Ramificar a conversa aqui"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Branch: {0}"

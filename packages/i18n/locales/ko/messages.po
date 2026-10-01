@@ -2840,6 +2840,9 @@ msgstr "브랜치 접두사"
 msgid "Branch renamed to {newName}"
 msgstr "브랜치 이름을 {newName}(으)로 변경했습니다"
 
+msgid "Branch this conversation"
+msgstr "여기서 대화 분기"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "브랜치: {0}"

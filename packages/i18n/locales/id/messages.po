@@ -2840,6 +2840,9 @@ msgstr "Awalan Cabang"
 msgid "Branch renamed to {newName}"
 msgstr "Nama branch diganti menjadi {newName}"
 
+msgid "Branch this conversation"
+msgstr "Cabangkan percakapan di sini"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Branch: {0}"

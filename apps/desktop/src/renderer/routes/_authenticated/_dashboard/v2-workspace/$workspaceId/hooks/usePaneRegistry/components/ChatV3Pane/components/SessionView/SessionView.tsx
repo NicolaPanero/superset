@@ -18,6 +18,7 @@ export function SessionView({
 	headerLeft,
 	pendingFirstPrompt,
 	onFirstPromptSent,
+	onFork,
 	onSessionState,
 	sessionId,
 	workspaceId,
@@ -29,6 +30,8 @@ export function SessionView({
 	pendingFirstPrompt: UserContent[] | null;
 	onFirstPromptSent: () => void;
 	onSessionState?: (session: SessionState | null) => void;
+	/** Absent when the agent cannot branch its own session. */
+	onFork?: (() => void) | undefined;
 }) {
 	const session = useChatSession({ client });
 	const timeline = useTimeline(session.snapshot);
@@ -89,6 +92,7 @@ export function SessionView({
 					groups={timeline}
 					hasOlder={session.hasOlder}
 					onDiscardPrompt={session.discardPrompt}
+					onFork={onFork}
 					onLoadOlder={() => void session.loadOlder()}
 					onRespond={(approvalId, decision) =>
 						void session.respondToApproval(approvalId, decision)

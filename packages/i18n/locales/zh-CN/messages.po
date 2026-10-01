@@ -2840,6 +2840,9 @@ msgstr "分支前缀"
 msgid "Branch renamed to {newName}"
 msgstr "分支已重命名为{newName}"
 
+msgid "Branch this conversation"
+msgstr "在此分叉对话"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "分支：{0}"

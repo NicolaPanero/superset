@@ -2840,6 +2840,9 @@ msgstr "Prefijo de rama"
 msgid "Branch renamed to {newName}"
 msgstr "La rama pasó a llamarse {newName}"
 
+msgid "Branch this conversation"
+msgstr "Bifurcar la conversación aquí"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Rama: {0}"

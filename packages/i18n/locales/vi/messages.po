@@ -2840,6 +2840,9 @@ msgstr "Tiền tố nhánh"
 msgid "Branch renamed to {newName}"
 msgstr "Đã đổi tên nhánh thành {newName}"
 
+msgid "Branch this conversation"
+msgstr "Tạo nhánh hội thoại tại đây"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Nhánh: {0}"

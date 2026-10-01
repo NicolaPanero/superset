@@ -2840,6 +2840,9 @@ msgstr "Branchvoorvoegsel"
 msgid "Branch renamed to {newName}"
 msgstr "Branch hernoemd naar {newName}"
 
+msgid "Branch this conversation"
+msgstr "Gesprek hier afsplitsen"
+
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
 msgstr "Branch: {0}"

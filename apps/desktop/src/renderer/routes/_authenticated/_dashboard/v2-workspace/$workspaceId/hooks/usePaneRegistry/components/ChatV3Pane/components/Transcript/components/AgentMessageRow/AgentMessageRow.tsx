@@ -3,7 +3,7 @@ import type { SessionSnapshot } from "@superset/chat/core";
 import { displayText } from "@superset/chat/core";
 import type { AgentMessage } from "@superset/chat/protocol";
 import { cn } from "@superset/ui/utils";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, GitBranch } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { MarkdownView } from "../../../MarkdownView";
 
@@ -17,10 +17,13 @@ function clockLabel(item: AgentMessage): string {
 
 export function AgentMessageRow({
 	item,
+	onFork,
 	snapshot,
 }: {
 	item: AgentMessage;
 	snapshot: SessionSnapshot;
+	/** Absent when this agent cannot branch its own session. */
+	onFork?: (() => void) | undefined;
 }) {
 	const { t } = useLingui();
 	const text = displayText(snapshot, item.id);
@@ -62,6 +65,16 @@ export function AgentMessageRow({
 						<Copy className="size-3.5" />
 					)}
 				</button>
+				{onFork && (
+					<button
+						aria-label={t({ message: "Branch this conversation" })}
+						className="rounded p-1 transition-colors hover:bg-secondary hover:text-foreground"
+						onClick={onFork}
+						type="button"
+					>
+						<GitBranch className="size-3.5" />
+					</button>
+				)}
 				<span className="text-[11px] tabular-nums">{clockLabel(item)}</span>
 			</div>
 		</div>
