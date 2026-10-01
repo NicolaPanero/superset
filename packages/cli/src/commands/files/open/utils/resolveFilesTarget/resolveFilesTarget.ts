@@ -3,12 +3,10 @@ import { getHostId } from "@superset/shared/host-info";
 import type { CliContext } from "../../../../../lib/command";
 import {
 	type HostServiceClient,
+	resolveHostFilter,
 	resolveHostTarget,
 } from "../../../../../lib/host-target";
-import {
-	listWorkspacesOnHost,
-	resolveWorkspaceTarget,
-} from "../../../../../lib/host-workspaces";
+import { resolveWorkspaceTarget } from "../../../../../lib/host-workspaces";
 import { findWorkspaceForPath } from "../findWorkspaceForPath";
 
 export interface FilesTarget {
@@ -43,8 +41,14 @@ export async function resolveFilesTarget(
 		return { workspaceId: options.workspace, hostId, client: target.client };
 	}
 
-	const hostId = options.host ?? getHostId();
-	const { workspaces } = await listWorkspacesOnHost({ ...shared, hostId });
+	const hostId =
+		resolveHostFilter({ host: options.host, local: options.local }) ??
+		getHostId();
+	const target = await resolveHostTarget({
+		...shared,
+		requestedHostId: hostId,
+	});
+	const workspaces = await target.client.workspace.list.query();
 	const envWorkspaceId = process.env.SUPERSET_WORKSPACE_ID;
 	const workspace =
 		findWorkspaceForPath(workspaces, cwd) ??
@@ -55,9 +59,5 @@ export async function resolveFilesTarget(
 			"Run from inside a workspace's worktree, or pass --workspace <id> (see `superset ws list --local`)",
 		);
 	}
-	const target = await resolveHostTarget({
-		...shared,
-		requestedHostId: hostId,
-	});
 	return { workspaceId: workspace.id, hostId, client: target.client };
 }

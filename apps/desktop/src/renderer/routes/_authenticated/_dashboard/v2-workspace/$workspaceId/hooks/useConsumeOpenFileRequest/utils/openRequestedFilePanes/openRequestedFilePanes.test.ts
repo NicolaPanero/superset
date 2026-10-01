@@ -85,6 +85,23 @@ describe("openRequestedFilePanes", () => {
 		expect(second?.data.pendingPosition).toBeUndefined();
 	});
 
+	it("lets the next single file replace the preview, like a tree click", () => {
+		const store = makeStore();
+		openRequestedFilePanes(
+			store,
+			{ paths: ["/repo/a.ts"], target: "current-tab" },
+			openVia(store),
+		);
+		openRequestedFilePanes(
+			store,
+			{ paths: ["/repo/b.ts"], target: "current-tab" },
+			openVia(store),
+		);
+		expect(filePanesOf(store, 0).map((pane) => pane.data.filePath)).toEqual([
+			"/repo/b.ts",
+		]);
+	});
+
 	it("shows the tab a single file is already open in, like a tree click", () => {
 		const store = makeStore();
 		openFilePaneInStore(store, "/repo/a.ts", true);

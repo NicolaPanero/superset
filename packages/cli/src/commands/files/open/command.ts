@@ -10,6 +10,14 @@ import { command } from "../../../lib/command";
 import { resolveFilePaths } from "./utils/resolveFilePaths";
 import { resolveFilesTarget } from "./utils/resolveFilesTarget";
 
+/** A cloud sandbox or a standalone `superset start` host has no desktop bridge. */
+function hasNoDesktop(error: unknown): error is TRPCClientError<never> {
+	return (
+		error instanceof TRPCClientError &&
+		error.data?.code === "PRECONDITION_FAILED"
+	);
+}
+
 /** A host-service released before `files.open` existed answers with tRPC's own not-found. */
 function isMissingProcedure(error: unknown): boolean {
 	return (
@@ -71,6 +79,12 @@ export default command({
 				throw new CLIError(
 					`Host ${target.hostId} runs a Superset without \`files open\``,
 					"Update the Superset desktop app on that machine, then retry",
+				);
+			}
+			if (hasNoDesktop(error)) {
+				throw new CLIError(
+					error.message,
+					"File panes live in the desktop app: pass --local for this machine, or --host <id> for a machine running it",
 				);
 			}
 			throw error;

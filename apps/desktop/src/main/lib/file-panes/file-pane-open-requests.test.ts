@@ -81,6 +81,17 @@ describe("FilePaneOpenRequests", () => {
 		);
 	});
 
+	it("settles the request when a listener throws instead of stranding it", async () => {
+		const requests = new FilePaneOpenRequests();
+		requests.on("open-request", () => {
+			throw new Error("listener exploded");
+		});
+		await expect(requests.request(input, { timeoutMs: 1_000 })).rejects.toThrow(
+			"listener exploded",
+		);
+		expect(requests.pendingCount()).toBe(0);
+	});
+
 	it("keeps concurrent requests apart by id", async () => {
 		const requests = new FilePaneOpenRequests();
 		const ids: string[] = [];

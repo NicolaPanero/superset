@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { TRPCClientError } from "@trpc/client";
 
 const open = mock(async (_input: unknown) => ({ paneIds: ["pane-1"] }));
@@ -52,16 +52,17 @@ async function invoke(
 
 describe("files open", () => {
 	test("resolves paths against the cwd and splits beside the active pane by default", async () => {
-		const result = await invoke(["src/a.ts", "/abs/b.ts"]);
+		const absolute = resolve("/abs/b.ts");
+		const result = await invoke(["src/a.ts", absolute]);
 		expect(open).toHaveBeenLastCalledWith({
 			workspaceId: "ws-1",
-			paths: [join(cwd, "src/a.ts"), "/abs/b.ts"],
+			paths: [join(cwd, "src/a.ts"), absolute],
 			line: undefined,
 			target: "current-tab",
 		});
 		expect(result.data).toEqual({
 			workspaceId: "ws-1",
-			paths: [join(cwd, "src/a.ts"), "/abs/b.ts"],
+			paths: [join(cwd, "src/a.ts"), absolute],
 			paneIds: ["pane-1"],
 		});
 		expect(resolveFilesTarget).toHaveBeenLastCalledWith(
@@ -118,18 +119,36 @@ describe("files open", () => {
 	});
 
 	test("passes other host errors through unchanged", async () => {
+		const hostError = new TRPCClientError("No such file: /x/a.ts", {
+			result: {
+				error: {
+					message: "No such file: /x/a.ts",
+					code: -32004,
+					data: { code: "NOT_FOUND", httpStatus: 404, path: "files.open" },
+				},
+			},
+		});
+		open.mockRejectedValueOnce(hostError);
+		await expect(invoke(["a.ts"])).rejects.toBe(hostError);
+	});
+
+	test("points at --local when the host has no desktop attached", async () => {
 		open.mockRejectedValueOnce(
-			new TRPCClientError("No such file: /x/a.ts", {
+			new TRPCClientError("This host has no panes to drive", {
 				result: {
 					error: {
-						message: "No such file: /x/a.ts",
-						code: -32004,
-						data: { code: "NOT_FOUND", httpStatus: 404, path: "files.open" },
+						message: "This host has no panes to drive",
+						code: -32000,
+						data: {
+							code: "PRECONDITION_FAILED",
+							httpStatus: 412,
+							path: "files.open",
+						},
 					},
 				},
 			}),
 		);
-		await expect(invoke(["a.ts"])).rejects.toThrow("No such file: /x/a.ts");
+		await expect(invoke(["a.ts"])).rejects.toThrow("no panes to drive");
 	});
 
 	test("prints one pane line per opened file", async () => {

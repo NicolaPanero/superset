@@ -39,29 +39,29 @@ const CDP_PATH = /^\/panes\/([^/]+)\/cdp$/;
 
 let server: Server | null = null;
 
-// Tail of the per-workspace open chain, so concurrent open requests for one
-// workspace run one at a time (see `/open` for why). Keyed by workspaceId;
-// entries delete themselves once the chain drains.
-const openQueues = new Map<string, Promise<void>>();
-// How many opens are queued per workspace, so a stuck renderer (each open waits
-// up to OPEN_PANE_TIMEOUT_MS) can't let the chain grow without bound.
-const openDepth = new Map<string, number>();
+// Tail of each open chain, so concurrent open requests under one key run one
+// at a time: `/open` keys by workspaceId (see the handler for why), `/open-file`
+// uses one key for all requests. Entries delete themselves once a chain drains.
+type OpenQueueKey = string | typeof FILE_OPEN_QUEUE;
+const openQueues = new Map<OpenQueueKey, Promise<void>>();
+// How many opens are queued per key, so a stuck renderer (each open waits up
+// to OPEN_PANE_TIMEOUT_MS) can't let a chain grow without bound.
+const openDepth = new Map<OpenQueueKey, number>();
 const MAX_QUEUED_OPENS = 8;
+// A Symbol so the file-open chain can never share a key with a workspace id.
+const FILE_OPEN_QUEUE: unique symbol = Symbol("file-open");
 
-/** Runs `run` after the workspace's earlier opens settle; false when the queue is full. */
-function enqueueWorkspaceOpen(
-	workspaceId: string,
-	run: () => Promise<void>,
-): boolean {
-	if ((openDepth.get(workspaceId) ?? 0) >= MAX_QUEUED_OPENS) return false;
-	openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 0) + 1);
-	const prev = openQueues.get(workspaceId) ?? Promise.resolve();
+/** Runs `run` after the earlier opens under `key` settle; false when that queue is full. */
+function enqueueOpen(key: OpenQueueKey, run: () => Promise<void>): boolean {
+	if ((openDepth.get(key) ?? 0) >= MAX_QUEUED_OPENS) return false;
+	openDepth.set(key, (openDepth.get(key) ?? 0) + 1);
+	const prev = openQueues.get(key) ?? Promise.resolve();
 	const next = prev.then(run, run);
-	openQueues.set(workspaceId, next);
+	openQueues.set(key, next);
 	void next.finally(() => {
-		openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 1) - 1);
-		if ((openDepth.get(workspaceId) ?? 0) <= 0) openDepth.delete(workspaceId);
-		if (openQueues.get(workspaceId) === next) openQueues.delete(workspaceId);
+		openDepth.set(key, (openDepth.get(key) ?? 1) - 1);
+		if ((openDepth.get(key) ?? 0) <= 0) openDepth.delete(key);
+		if (openQueues.get(key) === next) openQueues.delete(key);
 	});
 	return true;
 }
@@ -213,7 +213,7 @@ export async function startBrowserBridge(): Promise<void> {
 				} satisfies BrowserOpenRequest);
 			});
 
-		if (!enqueueWorkspaceOpen(workspaceId, run)) {
+		if (!enqueueOpen(workspaceId, run)) {
 			res.status(429).json({
 				error:
 					"Too many pending browser-open requests for this workspace. Try again once the earlier ones settle.",
@@ -245,11 +245,11 @@ export async function startBrowserBridge(): Promise<void> {
 		const abort = new AbortController();
 		res.on("close", () => abort.abort());
 
-		// Serialized per workspace like `/open`: a request navigates its window
-		// to the workspace with the request as search params, and a second one
-		// arriving before the first was consumed would replace it unanswered.
-		// The window is picked when the request runs, like a deep link, so the
-		// panes land where the person is looking.
+		// Serialized across all workspaces: a request navigates its window to
+		// the workspace with the request as search params, and a second one
+		// arriving before the first was consumed would replace it unanswered,
+		// whichever workspace it names. The window is picked when the request
+		// runs, like a deep link, so the panes land where the person is looking.
 		const run = () => {
 			const window = getFocusedOrLastWindow();
 			if (!window) {
@@ -284,10 +284,10 @@ export async function startBrowserBridge(): Promise<void> {
 					res.status(status).json({ error: errorMessage(err) });
 				});
 		};
-		if (!enqueueWorkspaceOpen(workspaceId, run)) {
+		if (!enqueueOpen(FILE_OPEN_QUEUE, run)) {
 			res.status(429).json({
 				error:
-					"Too many pending file-open requests for this workspace. Try again once the earlier ones settle.",
+					"Too many pending file-open requests. Try again once the earlier ones settle.",
 			});
 		}
 	});

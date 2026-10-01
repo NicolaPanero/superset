@@ -1,4 +1,4 @@
-import { statSync } from "node:fs";
+import { type Stats, statSync } from "node:fs";
 import { isAbsolute } from "node:path";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -17,19 +17,32 @@ function assertOpenableFile(path: string): void {
 			message: `Paths must be absolute: ${path}`,
 		});
 	}
-	let isDirectory: boolean;
+	let stats: Stats;
 	try {
-		isDirectory = statSync(path).isDirectory();
-	} catch {
+		stats = statSync(path);
+	} catch (err) {
+		const code = (err as NodeJS.ErrnoException).code;
+		if (code === "ENOENT" || code === "ENOTDIR") {
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: `No such file: ${path}`,
+			});
+		}
 		throw new TRPCError({
-			code: "NOT_FOUND",
-			message: `No such file: ${path}`,
+			code: "INTERNAL_SERVER_ERROR",
+			message: `Cannot read ${path}: ${code ?? (err instanceof Error ? err.message : String(err))}`,
 		});
 	}
-	if (isDirectory) {
+	if (stats.isDirectory()) {
 		throw new TRPCError({
 			code: "BAD_REQUEST",
 			message: `Is a directory, not a file: ${path}`,
+		});
+	}
+	if (!stats.isFile()) {
+		throw new TRPCError({
+			code: "BAD_REQUEST",
+			message: `Not a regular file: ${path}`,
 		});
 	}
 }

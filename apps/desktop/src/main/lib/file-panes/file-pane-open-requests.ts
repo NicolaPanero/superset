@@ -87,7 +87,11 @@ export class FilePaneOpenRequests extends EventEmitter {
 				return;
 			}
 			options.signal?.addEventListener("abort", onAbort, { once: true });
-			this.emit("open-request", request);
+			try {
+				this.emit("open-request", request);
+			} catch (err) {
+				finish(() => reject(err));
+			}
 		});
 	}
 

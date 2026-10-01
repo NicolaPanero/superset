@@ -44,7 +44,12 @@ export function useFilePaneOpenRequests() {
 									}`,
 								},
 							})
-							.catch(() => {});
+							.catch((reportErr: unknown) => {
+								console.error(
+									`[useFilePaneOpenRequests] could not report failure for ${request.requestId}:`,
+									reportErr,
+								);
+							});
 					});
 				},
 			},
