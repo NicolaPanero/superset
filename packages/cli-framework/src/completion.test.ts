@@ -281,10 +281,13 @@ describe("generateBashCompletion", () => {
 	it.skipIf(!Bun.which("bash"))(
 		"offers filenames for a free-form value attached with =",
 		() => {
-			// "=" is a word break by default: readline replaces only the value.
+			// "=" is a word break by default: the unsplit word only reaches here in
+			// bash 3, which has no compopt, so the script registers with -o default
+			// and leaves filenames to readline.
 			expect(
 				complete("superset", "terminals", "read", "--workspace=./fix"),
-			).toEqual(["./fixture.txt"]);
+			).toEqual([]);
+			expect(script).toContain("complete -o default -F _superset superset");
 			// With "=" removed from COMP_WORDBREAKS the whole word is replaced.
 			expect(
 				completeWith(
