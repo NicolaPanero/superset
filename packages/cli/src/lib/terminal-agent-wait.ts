@@ -78,25 +78,33 @@ export function waitErrorToCliError(
 		timeoutMs: number;
 	},
 ): CLIError | undefined {
+	const message = error instanceof Error ? error.message : "";
 	switch (trpcErrorCode(error)) {
-		case "TIMEOUT": {
-			const message =
-				error instanceof Error
-					? error.message
-					: `Timed out after ${context.timeoutMs}ms waiting for terminal ${context.terminalId} to reach one of: ${context.until.join(", ")}`;
+		case "TIMEOUT":
 			return new CLIError(
-				message,
+				message ||
+					`Timed out after ${context.timeoutMs}ms waiting for terminal ${context.terminalId} to reach one of: ${context.until.join(", ")}`,
 				message.includes("no agent has reported")
 					? "Only a terminal that 'agents create' launched reports a status. For a plain shell, use 'superset terminals wait-output'"
-					: "The agent may still be working. Read the terminal, or run 'superset terminals wait' again without --after",
+					: "The agent may still be working. Read the terminal, or run the wait again with the same --after so the status from before the prompt still does not count",
 			);
-		}
 		case "NOT_FOUND":
+			if (isMissingProcedure(message)) {
+				return new CLIError(
+					"This host is too old to wait on an agent",
+					"Update the host (superset update, or restart the desktop app), or poll with 'superset terminals read'",
+				);
+			}
 			return new CLIError(
-				`No terminal ${context.terminalId} in this workspace`,
+				message || `No terminal ${context.terminalId} in this workspace`,
 				"Run 'superset terminals list' for the live terminal IDs",
 			);
 		default:
 			return undefined;
 	}
+}
+
+/** tRPC's own NOT_FOUND for a router without the procedure: `No "mutation"-procedure on path "…"`. */
+export function isMissingProcedure(message: string): boolean {
+	return message.includes("-procedure on path");
 }

@@ -1,11 +1,12 @@
 import { Database } from "bun:sqlite";
 import { describe, expect, it } from "bun:test";
 import { resolve } from "node:path";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../db";
 import * as schema from "../../../db/schema";
-import { terminalSessions } from "../../../db/schema";
+import { terminalAgentBindings, terminalSessions } from "../../../db/schema";
 import type { EventBus, TerminalLifecycleEvent } from "../../../events";
 import {
 	SqliteTerminalAgentBindingPersistence,
@@ -347,6 +348,29 @@ describe("waitForTerminalAgentStatus", () => {
 
 		const result = await pending;
 		expect(result.status).toBe("ended");
+		expect(store.listenerCount("change")).toBe(0);
+	});
+
+	it("rejects with NOT_FOUND when the terminal is deleted under the wait", async () => {
+		const { db, store, eventBus, record } = createHarness();
+		record("Start", 1_000);
+
+		const pending = waitForTerminalAgentStatus(
+			{ db, terminalAgentStore: store, eventBus, endWritePollMs: 10 },
+			{ ...target, until: ["idle"], timeoutMs: 10_000 },
+		);
+		afterTick(() => {
+			db.delete(terminalAgentBindings)
+				.where(eq(terminalAgentBindings.terminalId, "t1"))
+				.run();
+			db.delete(terminalSessions).where(eq(terminalSessions.id, "t1")).run();
+			store.markTerminalDisposed("t1");
+		});
+
+		await expect(pending).rejects.toMatchObject({
+			code: "NOT_FOUND",
+			message: "Terminal t1 is gone from workspace ws-1",
+		});
 		expect(store.listenerCount("change")).toBe(0);
 	});
 

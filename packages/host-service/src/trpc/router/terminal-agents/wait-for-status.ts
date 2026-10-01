@@ -166,7 +166,20 @@ export function waitForTerminalAgentStatus(
 	return new Promise((resolve, reject) => {
 		const check = () => {
 			const current = snapshot();
-			if (!current) return;
+			if (!current) {
+				// A binding that was here and is gone, or a terminal row that
+				// vanished, means the terminal was deleted under the wait.
+				if (lastSeen || !terminalExists(deps.db, workspaceId, terminalId)) {
+					cleanup();
+					reject(
+						new TRPCError({
+							code: "NOT_FOUND",
+							message: `Terminal ${terminalId} is gone from workspace ${workspaceId}`,
+						}),
+					);
+				}
+				return;
+			}
 			lastSeen = current;
 			if (!accepted(current)) return;
 			cleanup();

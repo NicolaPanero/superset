@@ -48,7 +48,7 @@ export default command({
 				"Count only hook events newer than this timestamp: the lastEventAt that `terminals send` printed. Without it, a status that already matches returns at once",
 			),
 	},
-	run: async ({ ctx, options }) => {
+	run: async ({ ctx, options, signal }) => {
 		const until = parseUntil(options.until);
 
 		const organizationId = ctx.config.organizationId;
@@ -69,13 +69,16 @@ export default command({
 		assertWaitTimeoutFitsTarget(target.kind, options.timeout);
 
 		try {
-			const result = await target.client.terminalAgents.wait.mutate({
-				workspaceId: options.workspace,
-				terminalId: options.terminal,
-				until,
-				timeoutMs: options.timeout,
-				after: options.after ?? undefined,
-			});
+			const result = await target.client.terminalAgents.wait.mutate(
+				{
+					workspaceId: options.workspace,
+					terminalId: options.terminal,
+					until,
+					timeoutMs: options.timeout,
+					after: options.after ?? undefined,
+				},
+				{ signal },
+			);
 			return {
 				data: result,
 				message: `Terminal ${options.terminal} reached ${describeAgentStatus(result)}`,

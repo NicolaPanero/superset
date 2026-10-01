@@ -185,9 +185,10 @@ export const terminalRouter = router({
 	// claude/codex agent) instead of spawning a new session. Multi-line text
 	// is framed as a bracketed paste server-side.
 	//
-	// `lastEventAt` is the agent binding's clock just before the write, the
-	// watermark `terminalAgents.wait` needs to tell this prompt's completion
-	// from the idle recorded before it. `wait` does both in one request.
+	// `lastEventAt` is the agent binding's clock read right before Enter is
+	// pressed, inside the serialized write: the watermark `terminalAgents.wait`
+	// needs to tell this prompt's completion from the idle recorded before it.
+	// `wait` does both in one request.
 	send: protectedProcedure
 		.input(
 			z
@@ -221,18 +222,26 @@ export const terminalRouter = router({
 			const agent =
 				binding && binding.endedAt === undefined ? binding : undefined;
 			if (wait && !agent) {
+				// Rejected before anything is written, so a distinct code lets a
+				// client say "nothing was sent"; NOT_FOUND also covers failures
+				// after the text was staged.
 				throw new TRPCError({
-					code: "NOT_FOUND",
+					code: "PRECONDITION_FAILED",
 					message: `No agent is running in terminal ${input.terminalId}, so there is no status to wait for`,
 				});
 			}
-			const lastEventAt = agent?.lastEventAt ?? null;
+			let lastEventAt = agent?.lastEventAt ?? null;
 			const result = agent
 				? await sendAgentMessage({
 						...message,
 						db: ctx.db,
 						eventBus: ctx.eventBus,
 						terminalAgentStore: ctx.terminalAgentStore,
+						beforeSubmit: () => {
+							lastEventAt =
+								ctx.terminalAgentStore.get(input.terminalId)?.lastEventAt ??
+								lastEventAt;
+						},
 					})
 				: await writeFramedInputToSession({
 						...message,

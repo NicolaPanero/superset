@@ -127,10 +127,36 @@ describe("waitErrorToCliError", () => {
 		expect(error?.suggestion).toContain("terminals wait-output");
 	});
 
-	test("explains a host NOT_FOUND", () => {
-		expect(waitErrorToCliError(trpcError("NOT_FOUND"), context)?.message).toBe(
-			"No terminal t1 in this workspace",
+	test("passes the host's NOT_FOUND through, workspace id included", () => {
+		expect(
+			waitErrorToCliError(
+				trpcError("NOT_FOUND", "No terminal t1 in workspace ws-1"),
+				context,
+			)?.message,
+		).toBe("No terminal t1 in workspace ws-1");
+	});
+
+	test("tells an older host apart from a missing terminal", () => {
+		const error = waitErrorToCliError(
+			trpcError(
+				"NOT_FOUND",
+				'No "mutation"-procedure on path "terminalAgents.wait"',
+			),
+			context,
 		);
+		expect(error?.message).toBe("This host is too old to wait on an agent");
+		expect(error?.suggestion).toContain("Update the host");
+	});
+
+	test("the timeout hint keeps the watermark", () => {
+		const error = waitErrorToCliError(
+			trpcError(
+				"TIMEOUT",
+				"Timed out after 45000ms waiting for terminal t1 to reach one of: idle (last status: working)",
+			),
+			context,
+		);
+		expect(error?.suggestion).toContain("same --after");
 	});
 
 	test("leaves other errors alone", () => {

@@ -106,19 +106,28 @@ export default command({
 			terminalId: options.terminal,
 			workspaceId: options.workspace,
 		};
+		// `writeInput` only knows sessions the host has in memory. After a host
+		// restart the daemon still owns the PTY; a snapshot adopts it first, the
+		// way `send` and `read` do.
+		await target.client.terminal.snapshot.query({ ...input, maxLines: 1 });
+
+		let statusCleared = false;
 		for (const write of writes) {
 			await target.client.terminal.writeInput.mutate({
 				...input,
 				data: write.data,
 			});
+			// Clear before any later key: an Enter that follows the interrupt
+			// may start a new turn, and that turn's status must survive.
+			if (write.keys.some((name) => INTERRUPT_KEYS.has(name))) {
+				statusCleared =
+					(await clearInterruptedAgentStatus(target.client, input)) ||
+					statusCleared;
+			}
 			if (write.gapAfterMs > 0) {
 				await new Promise((resolve) => setTimeout(resolve, write.gapAfterMs));
 			}
 		}
-
-		const statusCleared = names.some((name) => INTERRUPT_KEYS.has(name))
-			? await clearInterruptedAgentStatus(target.client, input)
-			: false;
 
 		return {
 			data: {

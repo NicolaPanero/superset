@@ -45,7 +45,7 @@ export default command({
 				`With --wait: milliseconds to wait before failing (default ${DEFAULT_TERMINAL_AGENT_WAIT_TIMEOUT_MS}; at most ${MAX_REMOTE_TERMINAL_AGENT_WAIT_TIMEOUT_MS} for a workspace on another machine)`,
 			),
 	},
-	run: async ({ ctx, options }) => {
+	run: async ({ ctx, options, signal }) => {
 		if (!options.wait && (options.until || options.timeout !== undefined)) {
 			throw new CLIError(
 				"--until and --timeout only apply with --wait",
@@ -82,31 +82,39 @@ export default command({
 
 		let result: Awaited<ReturnType<typeof target.client.terminal.send.mutate>>;
 		try {
-			result = await target.client.terminal.send.mutate({
-				terminalId: options.terminal,
-				workspaceId: options.workspace,
-				text: options.text,
-				submit: !options.noSubmit,
-				...(options.wait ? { wait: { until, timeoutMs } } : {}),
-			});
+			result = await target.client.terminal.send.mutate(
+				{
+					terminalId: options.terminal,
+					workspaceId: options.workspace,
+					text: options.text,
+					submit: !options.noSubmit,
+					...(options.wait ? { wait: { until, timeoutMs } } : {}),
+				},
+				{ signal },
+			);
 		} catch (error) {
 			if (!options.wait) throw error;
-			if (trpcErrorCode(error) === "NOT_FOUND") {
+			// The host rejects a --wait on a terminal with no agent before it
+			// writes anything; every other failure may come after the text
+			// was staged, so only this one says nothing was sent.
+			if (trpcErrorCode(error) === "PRECONDITION_FAILED") {
 				throw new CLIError(
 					`Nothing was sent: no agent is running in terminal ${options.terminal}`,
 					"--wait needs an agent session (one that 'agents create' launched). Drop --wait to write to a plain shell",
 				);
 			}
-			const waitError = waitErrorToCliError(error, {
-				terminalId: options.terminal,
-				until,
-				timeoutMs,
-			});
-			if (waitError) {
-				throw new CLIError(
-					`The prompt was sent. ${waitError.message}`,
-					waitError.suggestion,
-				);
+			if (trpcErrorCode(error) === "TIMEOUT") {
+				const waitError = waitErrorToCliError(error, {
+					terminalId: options.terminal,
+					until,
+					timeoutMs,
+				});
+				if (waitError) {
+					throw new CLIError(
+						`The prompt was sent. ${waitError.message}`,
+						"The agent may still be working. Read the terminal, or run 'superset terminals wait --after' with the lastEventAt a plain send prints",
+					);
+				}
 			}
 			throw error;
 		}

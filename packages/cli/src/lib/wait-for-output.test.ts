@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import {
+	abortableSleep,
 	WaitForOutputTimeoutError,
 	waitForOutputMatch,
 } from "./wait-for-output";
@@ -114,6 +115,74 @@ describe("waitForOutputMatch", () => {
 		).rejects.toThrow(WaitForOutputTimeoutError);
 
 		expect(performance.now() - startedAt).toBeLessThan(1_000);
+		expect(seen?.aborted).toBe(true);
+	});
+
+	it("settles the race when readText throws synchronously, leaving no dangling timeout rejection", async () => {
+		const unhandled: unknown[] = [];
+		const onUnhandled = (reason: unknown) => unhandled.push(reason);
+		process.on("unhandledRejection", onUnhandled);
+		try {
+			await expect(
+				waitForOutputMatch(
+					{
+						readText: () => {
+							throw new Error("boom before the promise");
+						},
+						sleep: () => Promise.resolve(),
+					},
+					{ regex: /x/, timeoutMs: 20, pollIntervalMs: 5 },
+				),
+			).rejects.toThrow("boom before the promise");
+			await new Promise((r) => setTimeout(r, 40));
+			expect(unhandled).toEqual([]);
+		} finally {
+			process.off("unhandledRejection", onUnhandled);
+		}
+	});
+
+	it("stops at once when the caller aborts mid-sleep", async () => {
+		const controller = new AbortController();
+		const startedAt = performance.now();
+		const pending = waitForOutputMatch(
+			{
+				readText: () => Promise.resolve("nothing yet"),
+				sleep: abortableSleep,
+			},
+			{
+				regex: /never/,
+				timeoutMs: 60_000,
+				pollIntervalMs: 30_000,
+				signal: controller.signal,
+			},
+		);
+		setTimeout(() => controller.abort(new Error("user gave up")), 10);
+
+		await expect(pending).rejects.toThrow("user gave up");
+		expect(performance.now() - startedAt).toBeLessThan(1_000);
+	});
+
+	it("aborts an in-flight read when the caller gives up", async () => {
+		const controller = new AbortController();
+		let seen: AbortSignal | undefined;
+		const pending = waitForOutputMatch(
+			{
+				readText: (signal) => {
+					seen = signal;
+					return new Promise<string>(() => {});
+				},
+				sleep: abortableSleep,
+			},
+			{
+				regex: /never/,
+				timeoutMs: 60_000,
+				pollIntervalMs: 1_000,
+				signal: controller.signal,
+			},
+		);
+		setTimeout(() => controller.abort(new Error("user gave up")), 10);
+
+		await expect(pending).rejects.toThrow("user gave up");
 		expect(seen?.aborted).toBe(true);
 	});
 

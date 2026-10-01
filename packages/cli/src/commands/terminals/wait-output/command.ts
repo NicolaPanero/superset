@@ -2,6 +2,7 @@ import { boolean, CLIError, number, string } from "@superset/cli-framework";
 import { command } from "../../../lib/command";
 import { resolveWorkspaceTarget } from "../../../lib/host-workspaces";
 import {
+	abortableSleep,
 	WaitForOutputTimeoutError,
 	waitForOutputMatch,
 } from "../../../lib/wait-for-output";
@@ -49,7 +50,7 @@ export default command({
 				`Milliseconds between screen reads (default ${DEFAULT_POLL_INTERVAL_MS})`,
 			),
 	},
-	run: async ({ ctx, options }) => {
+	run: async ({ ctx, options, signal }) => {
 		let regex: RegExp;
 		try {
 			regex = new RegExp(options.regex);
@@ -79,23 +80,24 @@ export default command({
 		try {
 			const { text, match } = await waitForOutputMatch(
 				{
-					readText: async (signal) => {
+					readText: async (readSignal) => {
 						const snapshot = await target.client.terminal.snapshot.query(
 							{
 								terminalId: options.terminal,
 								workspaceId: options.workspace,
 								maxLines: options.maxLines ?? undefined,
 							},
-							{ signal },
+							{ signal: readSignal },
 						);
 						return snapshot.text;
 					},
-					sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+					sleep: abortableSleep,
 				},
 				{
 					regex,
 					timeoutMs: options.timeout,
 					pollIntervalMs: options.pollInterval,
+					signal,
 				},
 			);
 
@@ -105,9 +107,14 @@ export default command({
 			};
 		} catch (error) {
 			if (error instanceof WaitForOutputTimeoutError) {
+				const hostFlag = options.host
+					? ` --host ${options.host}`
+					: options.local
+						? " --local"
+						: "";
 				throw new CLIError(
 					error.message,
-					`Run 'superset terminals read --workspace ${options.workspace} --terminal ${options.terminal}' to see the current screen`,
+					`Run 'superset terminals read --workspace ${options.workspace} --terminal ${options.terminal}${hostFlag}' to see the current screen`,
 				);
 			}
 			throw error;

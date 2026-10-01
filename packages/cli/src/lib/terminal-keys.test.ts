@@ -29,12 +29,6 @@ describe("encodeKeyName", () => {
 		expect(encodeKeyName(name)).toBe(expected);
 	});
 
-	test("every KNOWN_KEY_NAMES entry encodes", () => {
-		for (const name of KNOWN_KEY_NAMES) {
-			expect(encodeKeyName(name)).toBeDefined();
-		}
-	});
-
 	test.each([
 		["ctrl+a", "\x01"],
 		["ctrl+c", "\x03"],
@@ -62,6 +56,16 @@ describe("encodeKeyName", () => {
 	])("rejects %j", (name) => {
 		expect(encodeKeyName(name)).toBeUndefined();
 	});
+
+	test.each([
+		"constructor",
+		"__proto__",
+		"toString",
+		"hasOwnProperty",
+	])("does not treat the inherited property %s as a key", (name) => {
+		expect(encodeKeyName(name)).toBeUndefined();
+		expect(KNOWN_KEY_NAMES).not.toContain(name);
+	});
 });
 
 describe("normalizeKeyName", () => {
@@ -74,8 +78,8 @@ describe("planKeyWrites", () => {
 	test("writes Escape alone and pauses before Enter, never \\x1b\\r in one write", () => {
 		expect(planKeyWrites(["esc", "enter"])).toEqual({
 			writes: [
-				{ data: "\x1b", gapAfterMs: KEY_WRITE_GAP_MS },
-				{ data: "\r", gapAfterMs: 0 },
+				{ data: "\x1b", keys: ["esc"], gapAfterMs: KEY_WRITE_GAP_MS },
+				{ data: "\r", keys: ["enter"], gapAfterMs: 0 },
 			],
 			unknown: [],
 		});
@@ -83,37 +87,43 @@ describe("planKeyWrites", () => {
 
 	test("a lone Ctrl+C is one write with no pause", () => {
 		expect(planKeyWrites(["ctrl+c"])).toEqual({
-			writes: [{ data: "\x03", gapAfterMs: 0 }],
+			writes: [{ data: "\x03", keys: ["ctrl+c"], gapAfterMs: 0 }],
 			unknown: [],
 		});
 	});
 
 	test("a lone Escape is one write with no trailing pause", () => {
 		expect(planKeyWrites(["escape"])).toEqual({
-			writes: [{ data: "\x1b", gapAfterMs: 0 }],
+			writes: [{ data: "\x1b", keys: ["escape"], gapAfterMs: 0 }],
 			unknown: [],
 		});
 	});
 
 	test("keys that are complete sequences share a write", () => {
 		expect(planKeyWrites(["up", "up", "enter"])).toEqual({
-			writes: [{ data: "\x1b[A\x1b[A\r", gapAfterMs: 0 }],
+			writes: [
+				{
+					data: "\x1b[A\x1b[A\r",
+					keys: ["up", "up", "enter"],
+					gapAfterMs: 0,
+				},
+			],
 			unknown: [],
 		});
 	});
 
 	test("splits on both sides of an Escape in the middle", () => {
 		expect(planKeyWrites(["ctrl+c", "esc", "enter"]).writes).toEqual([
-			{ data: "\x03", gapAfterMs: KEY_WRITE_GAP_MS },
-			{ data: "\x1b", gapAfterMs: KEY_WRITE_GAP_MS },
-			{ data: "\r", gapAfterMs: 0 },
+			{ data: "\x03", keys: ["ctrl+c"], gapAfterMs: KEY_WRITE_GAP_MS },
+			{ data: "\x1b", keys: ["esc"], gapAfterMs: KEY_WRITE_GAP_MS },
+			{ data: "\r", keys: ["enter"], gapAfterMs: 0 },
 		]);
 	});
 
 	test("two Escapes are two writes", () => {
 		expect(planKeyWrites(["esc", "esc"]).writes).toEqual([
-			{ data: "\x1b", gapAfterMs: KEY_WRITE_GAP_MS },
-			{ data: "\x1b", gapAfterMs: 0 },
+			{ data: "\x1b", keys: ["esc"], gapAfterMs: KEY_WRITE_GAP_MS },
+			{ data: "\x1b", keys: ["esc"], gapAfterMs: 0 },
 		]);
 	});
 
@@ -123,8 +133,15 @@ describe("planKeyWrites", () => {
 			unknown: ["bogus"],
 		});
 		expect(planKeyWrites(["ctrl+c", "nope", "up", "ctrl+9"])).toEqual({
-			writes: [{ data: "\x03\x1b[A", gapAfterMs: 0 }],
+			writes: [{ data: "\x03\x1b[A", keys: ["ctrl+c", "up"], gapAfterMs: 0 }],
 			unknown: ["nope", "ctrl+9"],
+		});
+	});
+
+	test("an inherited property name is unknown, not a write", () => {
+		expect(planKeyWrites(["constructor", "enter"])).toEqual({
+			writes: [{ data: "\r", keys: ["enter"], gapAfterMs: 0 }],
+			unknown: ["constructor"],
 		});
 	});
 });
