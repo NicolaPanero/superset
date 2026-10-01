@@ -3,7 +3,6 @@ import { msg } from "@lingui/core/macro";
 import type { StreamStatus } from "@superset/chat/client";
 import type { SessionState, SessionStatus } from "@superset/chat/protocol";
 import { i18n } from "@superset/i18n";
-import { Badge } from "@superset/ui/badge";
 import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
 
@@ -42,27 +41,30 @@ export function SessionHeader({
 }) {
 	const status = session?.status ?? null;
 	return (
-		<div className="flex items-center gap-2 border-b border-border px-3 py-2">
+		// Plain text rather than chips: this sits directly under the pane's own
+		// header, and two rows of badges read louder than the transcript.
+		<div className="flex items-center gap-2 border-b border-border/60 px-6 py-1.5 text-xs text-muted-foreground">
 			{left}
-			{session?.harness && (
-				<Badge className="font-mono" variant="outline">
-					{session.harness}
-				</Badge>
-			)}
+			{session?.harness && <span className="font-mono">{session.harness}</span>}
 			{status && (
-				<Badge
-					variant={status === "awaiting_input" ? "default" : "secondary"}
-					className={cn(
-						status === "awaiting_input" &&
-							"bg-amber-500/15 text-amber-600 dark:text-amber-400",
-					)}
-				>
-					{STATUS_LABELS[status] ? i18n._(STATUS_LABELS[status]) : status}
-				</Badge>
+				<>
+					<span aria-hidden="true" className="text-border">
+						·
+					</span>
+					<span
+						className={cn(
+							status === "awaiting_input" &&
+								"font-medium text-amber-600 dark:text-amber-400",
+							status === "dead" && "text-destructive",
+						)}
+					>
+						{STATUS_LABELS[status] ? i18n._(STATUS_LABELS[status]) : status}
+					</span>
+				</>
 			)}
 			<span
 				className={cn(
-					"ml-auto flex items-center gap-1.5 text-xs",
+					"ml-auto flex items-center gap-1.5",
 					connection === "open" && "text-emerald-600 dark:text-emerald-400",
 					connection === "connecting" && "text-muted-foreground",
 					connection === "closed" && "text-destructive",

@@ -71,21 +71,6 @@ export function Transcript({
 			return next;
 		});
 	}, []);
-	const expandAll = useCallback(() => {
-		setEntryOverrides((previous) => {
-			const next = new Map<string, boolean>();
-			for (const key of previous.keys()) next.set(key, false);
-			for (const group of groups) {
-				group.entries.forEach((entry, index) => {
-					if (entry.kind === "tool_run") {
-						next.set(`${group.turnId}:${index}`, false);
-					}
-				});
-			}
-			return next;
-		});
-	}, [groups]);
-
 	const pendingApprovalTargets = useMemo(() => {
 		const targets = new Set<string>();
 		for (const approval of approvals) {
@@ -112,75 +97,68 @@ export function Transcript({
 	}, [firstPendingApprovalId]);
 
 	return (
-		<div
-			className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-3"
-			ref={containerRef}
-		>
-			<div className="flex items-center gap-2">
+		// The scroller spans the pane so its bar sits at the edge; the column
+		// inside it holds the reading measure.
+		<div className="min-h-0 flex-1 overflow-y-auto" ref={containerRef}>
+			<div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-6 py-6">
 				{hasOlder && (
-					<Button onClick={onLoadOlder} size="sm" variant="ghost">
-						<Trans>Load earlier messages</Trans>
-					</Button>
-				)}
-				<Button
-					className="ml-auto text-xs text-muted-foreground"
-					onClick={expandAll}
-					size="sm"
-					variant="ghost"
-				>
-					<Trans>Expand all</Trans>
-				</Button>
-			</div>
-			{groups.map((group) => (
-				<TurnGroupSection
-					group={group}
-					isEntryCollapsed={isEntryCollapsed}
-					key={group.turnId}
-					onRespond={onRespond}
-					onToggleEntry={onToggleEntry}
-					pendingApprovalTargets={pendingApprovalTargets}
-					snapshot={snapshot}
-				/>
-			))}
-			{outbox.map((entry) => (
-				<div
-					className="flex flex-col items-end gap-1 self-end"
-					key={entry.clientId}
-				>
-					<div className="max-w-[80%] whitespace-pre-wrap break-words rounded-lg bg-primary/10 px-3 py-2 text-sm">
-						{outboxText(entry)}
-					</div>
 					<div className="flex items-center gap-2">
-						<Badge
-							variant={entry.state === "failed" ? "destructive" : "outline"}
-						>
-							{entry.state === "failed" ? (
-								<Trans>Failed to send</Trans>
-							) : (
-								<Trans>Sending</Trans>
-							)}
-						</Badge>
-						{entry.state === "failed" && (
-							<>
-								<Button
-									onClick={() => onRetryPrompt(entry.clientId)}
-									size="sm"
-									variant="ghost"
-								>
-									<Trans>Retry</Trans>
-								</Button>
-								<Button
-									onClick={() => onDiscardPrompt(entry.clientId)}
-									size="sm"
-									variant="ghost"
-								>
-									<Trans>Discard</Trans>
-								</Button>
-							</>
-						)}
+						<Button onClick={onLoadOlder} size="sm" variant="ghost">
+							<Trans>Load earlier messages</Trans>
+						</Button>
 					</div>
-				</div>
-			))}
+				)}
+				{groups.map((group) => (
+					<TurnGroupSection
+						group={group}
+						isEntryCollapsed={isEntryCollapsed}
+						key={group.turnId}
+						onRespond={onRespond}
+						onToggleEntry={onToggleEntry}
+						pendingApprovalTargets={pendingApprovalTargets}
+						snapshot={snapshot}
+					/>
+				))}
+				{outbox.map((entry) => (
+					<div
+						className="flex flex-col items-end gap-1 self-end"
+						key={entry.clientId}
+					>
+						<div className="max-w-[80%] whitespace-pre-wrap break-words rounded-lg bg-primary/10 px-3 py-2 text-sm">
+							{outboxText(entry)}
+						</div>
+						<div className="flex items-center gap-2">
+							<Badge
+								variant={entry.state === "failed" ? "destructive" : "outline"}
+							>
+								{entry.state === "failed" ? (
+									<Trans>Failed to send</Trans>
+								) : (
+									<Trans>Sending</Trans>
+								)}
+							</Badge>
+							{entry.state === "failed" && (
+								<>
+									<Button
+										onClick={() => onRetryPrompt(entry.clientId)}
+										size="sm"
+										variant="ghost"
+									>
+										<Trans>Retry</Trans>
+									</Button>
+									<Button
+										onClick={() => onDiscardPrompt(entry.clientId)}
+										size="sm"
+										variant="ghost"
+									>
+										<Trans>Discard</Trans>
+									</Button>
+								</>
+							)}
+						</div>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

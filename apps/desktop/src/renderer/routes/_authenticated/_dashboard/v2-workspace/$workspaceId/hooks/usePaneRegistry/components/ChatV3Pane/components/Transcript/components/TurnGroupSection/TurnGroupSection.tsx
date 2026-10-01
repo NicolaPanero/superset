@@ -17,6 +17,7 @@ import { ReasoningRow } from "../ReasoningRow";
 import { ToolCallRow } from "../ToolCallRow";
 import { UnknownItemRow } from "../UnknownItemRow";
 import { UserMessageRow } from "../UserMessageRow";
+import { WorkingFor } from "../WorkingFor";
 
 const OFFSCREEN_CLASSNAME =
 	"[content-visibility:auto] [contain-intrinsic-size:auto_240px]";
@@ -44,7 +45,7 @@ function ItemRow({
 	}
 	switch (item.kind) {
 		case "user_message":
-			return <UserMessageRow item={item} />;
+			return <UserMessageRow harness={snapshot.session?.harness} item={item} />;
 		case "agent_message":
 			return <AgentMessageRow item={item} snapshot={snapshot} />;
 		case "reasoning":
@@ -70,7 +71,13 @@ export function TurnGroupSection({
 }: TurnGroupSectionProps) {
 	const turnSettled = group.turn !== null && group.turn.status !== "running";
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-col gap-4">
+			{group.turn && (
+				<WorkingFor
+					completedAtMs={group.turn.completedAtMs}
+					startedAtMs={group.turn.startedAtMs}
+				/>
+			)}
 			{group.entries.map((entry, index) => {
 				if (entry.kind === "item") {
 					return (
@@ -120,7 +127,7 @@ export function TurnGroupSection({
 									other="# tool calls"
 								/>
 							</CollapsibleTrigger>
-							<CollapsibleContent className="flex flex-col gap-2 pt-1">
+							<CollapsibleContent className="flex flex-col gap-0.5 pt-1">
 								{entry.items.map((tool) => (
 									<ToolCallRow item={tool} key={tool.id} />
 								))}
