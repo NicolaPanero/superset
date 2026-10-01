@@ -915,7 +915,7 @@ msgid "{months}mo ago"
 msgstr "há {months}mês"
 
 msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} das suas automações falharam na última execução"
+msgstr "Suas automações com falha na última execução: {myFailedCount}"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"

@@ -31,6 +31,7 @@ import { and, asc, desc, eq, ilike, notInArray } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "../../env";
 import { assertCloudAccess } from "../../lib/cloud-guards";
+import { nudge } from "../../lib/realtime";
 import { planRequiredError, protectedProcedure, userError } from "../../trpc";
 import { loadUsableEnvironment } from "../cloud-workspace/start";
 import { joinSlackTriggerChannels } from "../integration/slack/joinChannels";
@@ -732,6 +733,7 @@ export const automationRouter = {
 			await getAutomationForUser(ctx.session.user.id, organizationId, input.id);
 
 			await db.delete(automations).where(eq(automations.id, input.id));
+			nudge(organizationId, "automation_runs");
 
 			return { ok: true };
 		}),

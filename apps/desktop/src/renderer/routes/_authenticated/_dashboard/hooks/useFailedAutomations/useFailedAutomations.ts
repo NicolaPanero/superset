@@ -4,6 +4,9 @@ import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useAutomationFailuresStore } from "renderer/stores/automation-failures";
 
+// Realtime nudges keep it current; this bounds staleness from a missed one.
+const LATEST_RUNS_STALE_MS = 10 * 60_000;
+
 const FAILED_STATUSES: SelectAutomationRun["status"][] = [
 	"skipped_offline",
 	"dispatch_failed",
@@ -39,10 +42,9 @@ export function useFailedAutomations(): FailedAutomations {
 		(s) => s.markFailuresSeen,
 	);
 
-	// Fresh until a realtime `automation_runs` nudge invalidates it.
 	const { data: runRows = [] } = cloudTrpc.automation.latestRuns.useQuery(
 		undefined,
-		{ staleTime: Number.POSITIVE_INFINITY },
+		{ staleTime: LATEST_RUNS_STALE_MS },
 	);
 
 	const { lastRunById, failedIds, myFailureTimes } = useMemo(() => {
