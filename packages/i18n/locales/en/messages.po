@@ -99,10 +99,6 @@ msgstr "(no output)"
 msgid "(so far)"
 msgstr "(so far)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, one {# account connected} other {# accounts connected}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
@@ -921,9 +917,6 @@ msgstr "{months}mo ago"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} of your automations failed their last run"
 
-msgid "{name} accounts"
-msgstr "{name} accounts"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is built in and cannot be removed"
@@ -1592,9 +1585,6 @@ msgstr "add an agent"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Add an environment in Settings before creating a cloud workspace"
 
-msgid "Add another account, or disconnect one you no longer use."
-msgstr "Add another account, or disconnect one you no longer use."
-
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 
@@ -2145,12 +2135,6 @@ msgstr "Anthropic rejected this API key."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic rejected this token."
 
-msgid "any account"
-msgstr "any account"
-
-msgid "Any account"
-msgstr "Any account"
-
 msgid "Any channel"
 msgstr "Any channel"
 
@@ -2298,9 +2282,6 @@ msgstr "Approved"
 
 msgid "Approved review"
 msgstr "Approved review"
-
-msgid "Apps"
-msgstr "Apps"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3998,12 +3979,6 @@ msgstr "Connect a Google account. Its mailbox is read-only, and triggers run for
 msgid "Connect a microphone to use dictation"
 msgstr "Connect a microphone to use dictation"
 
-msgid "Connect an account"
-msgstr "Connect an account"
-
-msgid "Connect another account"
-msgstr "Connect another account"
-
 msgid "Connect any AI agent to Superset."
 msgstr "Connect any AI agent to Superset."
 
@@ -4072,9 +4047,6 @@ msgstr "Connected"
 
 msgid "Connected {label}"
 msgstr "Connected {label}"
-
-msgid "Connected accounts"
-msgstr "Connected accounts"
 
 msgid "Connected as"
 msgstr "Connected as"
@@ -5671,10 +5643,6 @@ msgstr "Discarded — won't ask again"
 
 msgid "Disconnect"
 msgstr "Disconnect"
-
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Disconnect {0}"
 
 msgid "Disconnect {credential}?"
 msgstr "Disconnect {credential}?"
@@ -9102,15 +9070,6 @@ msgstr "Malware or phishing"
 msgid "Manage"
 msgstr "Manage"
 
-msgid "Manage {label}"
-msgstr "Manage {label}"
-
-msgid "Manage accounts"
-msgstr "Manage accounts"
-
-msgid "Manage accounts…"
-msgstr "Manage accounts…"
-
 msgid "Manage billing"
 msgstr "Manage billing"
 
@@ -9494,10 +9453,6 @@ msgstr "Months from August 2026"
 
 msgid "More"
 msgstr "More"
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "More {0} actions"
-msgstr "More {0} actions"
 
 msgid "More {kindLower} themes"
 msgstr "More {kindLower} themes"
@@ -16575,9 +16530,6 @@ msgstr "Try early access features and previews."
 msgid "Try it"
 msgstr "Try it"
 
-msgid "Try now"
-msgstr "Try now"
-
 msgid "Try Superset v2"
 msgstr "Try Superset v2"
 
@@ -16751,9 +16703,6 @@ msgstr "Unknown"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Unknown"
-
-msgid "Unknown account"
-msgstr "Unknown account"
 
 msgid "Unknown author"
 msgstr "Unknown author"
@@ -17040,10 +16989,6 @@ msgstr "Use Superset on mobile"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Use Superset on your phone with Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Use the {0} plugin to "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Use the desktop app to start running parallel coding agents."

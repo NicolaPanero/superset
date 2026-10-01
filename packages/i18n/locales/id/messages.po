@@ -99,10 +99,6 @@ msgstr "(tidak ada keluaran)"
 msgid "(so far)"
 msgstr "(sejauh ini)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {# akun terhubung}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# port aktif — sembunyikan detail} other {# port aktif — sembunyikan detail}}"
@@ -921,9 +917,6 @@ msgstr "{months}bln lalu"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} otomatisasi Anda gagal pada run terakhirnya"
 
-msgid "{name} accounts"
-msgstr "Akun {name}"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} bawaan dan tidak dapat dihapus"
@@ -1592,9 +1585,6 @@ msgstr "menambah agen"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Tambahkan environment di Pengaturan sebelum membuat workspace cloud"
 
-msgid "Add another account, or disconnect one you no longer use."
-msgstr "Hubungkan akun lain, atau putuskan yang tidak lagi kamu pakai."
-
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Tambahkan mesin apa pun sebagai host. Workspace tetap berjalan saat laptop Anda tidur, dan Anda bisa memeriksanya dari mana pun."
 
@@ -2145,12 +2135,6 @@ msgstr "Anthropic menolak kunci API ini."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic menolak token ini."
 
-msgid "any account"
-msgstr "akun apa pun"
-
-msgid "Any account"
-msgstr "Akun apa pun"
-
 msgid "Any channel"
 msgstr "Channel mana pun"
 
@@ -2298,9 +2282,6 @@ msgstr "Disetujui"
 
 msgid "Approved review"
 msgstr "Review disetujui"
-
-msgid "Apps"
-msgstr "Aplikasi"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3998,12 +3979,6 @@ msgstr "Hubungkan akun Google. Kotak suratnya hanya-baca, dan pemicu berjalan un
 msgid "Connect a microphone to use dictation"
 msgstr "Hubungkan mikrofon untuk memakai dikte"
 
-msgid "Connect an account"
-msgstr "Hubungkan akun"
-
-msgid "Connect another account"
-msgstr "Hubungkan akun lain"
-
 msgid "Connect any AI agent to Superset."
 msgstr "Hubungkan agen AI mana pun ke Superset."
 
@@ -4072,9 +4047,6 @@ msgstr "Terhubung"
 
 msgid "Connected {label}"
 msgstr "{label} terhubung"
-
-msgid "Connected accounts"
-msgstr "Akun terhubung"
 
 msgid "Connected as"
 msgstr "Terhubung sebagai"
@@ -5671,10 +5643,6 @@ msgstr "Dibuang — tidak akan ditanya lagi"
 
 msgid "Disconnect"
 msgstr "Putuskan"
-
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Putuskan {0}"
 
 msgid "Disconnect {credential}?"
 msgstr "Putuskan {credential}?"
@@ -9102,15 +9070,6 @@ msgstr "Malware atau phishing"
 msgid "Manage"
 msgstr "Kelola"
 
-msgid "Manage {label}"
-msgstr "Kelola {label}"
-
-msgid "Manage accounts"
-msgstr "Kelola akun"
-
-msgid "Manage accounts…"
-msgstr "Kelola akun…"
-
 msgid "Manage billing"
 msgstr "Kelola penagihan"
 
@@ -9494,10 +9453,6 @@ msgstr "Bulan sejak Agustus 2026"
 
 msgid "More"
 msgstr "Lainnya"
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "More {0} actions"
-msgstr "Tindakan {0} lainnya"
 
 msgid "More {kindLower} themes"
 msgstr "Tema {kindLower} lainnya"
@@ -16575,9 +16530,6 @@ msgstr "Coba fitur akses awal dan pratinjau."
 msgid "Try it"
 msgstr "Coba"
 
-msgid "Try now"
-msgstr "Coba sekarang"
-
 msgid "Try Superset v2"
 msgstr "Coba Superset v2"
 
@@ -16751,9 +16703,6 @@ msgstr "Tidak diketahui"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Tidak diketahui"
-
-msgid "Unknown account"
-msgstr "Akun tidak dikenal"
 
 msgid "Unknown author"
 msgstr "Penulis tidak dikenal"
@@ -17040,10 +16989,6 @@ msgstr "Gunakan Superset di ponsel"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Gunakan Superset di ponsel dengan Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Gunakan plugin {0} untuk "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Pakai aplikasi desktop untuk mulai menjalankan agen coding paralel."

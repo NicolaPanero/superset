@@ -99,10 +99,6 @@ msgstr "(출력 없음)"
 msgid "(so far)"
 msgstr "(현재까지)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, other {계정 #개 연결됨}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {활성 포트 #개 — 세부 정보 숨기기} other {활성 포트 #개 — 세부 정보 숨기기}}"
@@ -921,9 +917,6 @@ msgstr "{months}개월 전"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니다"
 
-msgid "{name} accounts"
-msgstr "{name} 계정"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
@@ -1592,9 +1585,6 @@ msgstr "에이전트를 추가할"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "클라우드 워크스페이스를 만들기 전에 설정에서 환경을 추가하세요"
 
-msgid "Add another account, or disconnect one you no longer use."
-msgstr "다른 계정을 연결하거나 더 이상 쓰지 않는 계정을 해제하세요."
-
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "어떤 머신이든 호스트로 추가하세요. 노트북이 잠자기에 들어가도 워크스페이스는 계속 돌고, 어디서든 확인할 수 있습니다."
 
@@ -2145,12 +2135,6 @@ msgstr "Anthropic이 이 API 키를 거부했습니다."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic이 이 토큰을 거부했습니다."
 
-msgid "any account"
-msgstr "모든 계정"
-
-msgid "Any account"
-msgstr "모든 계정"
-
 msgid "Any channel"
 msgstr "모든 채널"
 
@@ -2298,9 +2282,6 @@ msgstr "승인됨"
 
 msgid "Approved review"
 msgstr "승인된 리뷰"
-
-msgid "Apps"
-msgstr "앱"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3998,12 +3979,6 @@ msgstr "Google 계정을 연결하세요. 메일함은 읽기 전용이며 트�
 msgid "Connect a microphone to use dictation"
 msgstr "받아쓰기를 사용하려면 마이크를 연결하세요"
 
-msgid "Connect an account"
-msgstr "계정 연결"
-
-msgid "Connect another account"
-msgstr "다른 계정 연결"
-
 msgid "Connect any AI agent to Superset."
 msgstr "어떤 AI 에이전트든 Superset에 연결하세요."
 
@@ -4072,9 +4047,6 @@ msgstr "연결됨"
 
 msgid "Connected {label}"
 msgstr "{label} 연결됨"
-
-msgid "Connected accounts"
-msgstr "연결된 계정"
 
 msgid "Connected as"
 msgstr "연결 계정"
@@ -5671,10 +5643,6 @@ msgstr "버렸습니다 — 다시 묻지 않습니다"
 
 msgid "Disconnect"
 msgstr "연결 해제"
-
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "{0} 연결 해제"
 
 msgid "Disconnect {credential}?"
 msgstr "{credential} 연결을 해제할까요?"
@@ -9102,15 +9070,6 @@ msgstr "악성코드 또는 피싱"
 msgid "Manage"
 msgstr "관리"
 
-msgid "Manage {label}"
-msgstr "{label} 관리"
-
-msgid "Manage accounts"
-msgstr "계정 관리"
-
-msgid "Manage accounts…"
-msgstr "계정 관리…"
-
 msgid "Manage billing"
 msgstr "결제 관리"
 
@@ -9494,10 +9453,6 @@ msgstr "2026년 8월 이후 개월 수"
 
 msgid "More"
 msgstr "더 보기"
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "More {0} actions"
-msgstr "{0} 추가 작업"
 
 msgid "More {kindLower} themes"
 msgstr "{kindLower} 테마 더 보기"
@@ -16575,9 +16530,6 @@ msgstr "얼리 액세스 기능과 미리보기를 사용해 보세요."
 msgid "Try it"
 msgstr "사용해 보기"
 
-msgid "Try now"
-msgstr "사용해 보기"
-
 msgid "Try Superset v2"
 msgstr "Superset v2 사용해 보기"
 
@@ -16751,9 +16703,6 @@ msgstr "알 수 없음"
 msgctxt "person"
 msgid "Unknown"
 msgstr "알 수 없음"
-
-msgid "Unknown account"
-msgstr "알 수 없는 계정"
 
 msgid "Unknown author"
 msgstr "알 수 없는 작성자"
@@ -17040,10 +16989,6 @@ msgstr "모바일에서 Superset 사용하기"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Pro로 휴대폰에서 Superset을 사용하세요."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "{0} 플러그인으로 "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "데스크톱 앱에서 병렬 코딩 에이전트를 실행하세요."

@@ -99,10 +99,6 @@ msgstr "(нет вывода)"
 msgid "(so far)"
 msgstr "(пока)"
 
-#. placeholder {0}: connections.length
-msgid "{0, plural, one {# account connected} other {# accounts connected}}"
-msgstr "{0, plural, one {# аккаунт подключён} few {# аккаунта подключено} many {# аккаунтов подключено} other {# аккаунта подключено}}"
-
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# активный порт — скрыть детали} few {# активных порта — скрыть детали} many {# активных портов — скрыть детали} other {# активных портов — скрыть детали}}"
@@ -921,9 +917,6 @@ msgstr "{months} мес. назад"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Ваши автоматизации с ошибкой при последнем запуске: {myFailedCount}"
 
-msgid "{name} accounts"
-msgstr "Аккаунты {name}"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} встроен и не может быть удалён"
@@ -1592,9 +1585,6 @@ msgstr "добавить агента"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Добавьте окружение в Настройках, прежде чем создавать облачную рабочую область"
 
-msgid "Add another account, or disconnect one you no longer use."
-msgstr "Подключите ещё аккаунт или отключите тот, которым больше не пользуетесь."
-
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Добавьте любую машину как хост. Рабочие области продолжают работать, когда ноутбук спит, а вы можете заглянуть откуда угодно."
 
@@ -2145,12 +2135,6 @@ msgstr "Anthropic отклонил этот ключ API."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic отклонил этот токен."
 
-msgid "any account"
-msgstr "любой аккаунт"
-
-msgid "Any account"
-msgstr "Любой аккаунт"
-
 msgid "Any channel"
 msgstr "Любой канал"
 
@@ -2298,9 +2282,6 @@ msgstr "Одобрено"
 
 msgid "Approved review"
 msgstr "Одобренное ревью"
-
-msgid "Apps"
-msgstr "Приложения"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3998,12 +3979,6 @@ msgstr "Подключите аккаунт Google. Его почтовый ящ
 msgid "Connect a microphone to use dictation"
 msgstr "Подключите микрофон, чтобы использовать диктовку"
 
-msgid "Connect an account"
-msgstr "Подключить аккаунт"
-
-msgid "Connect another account"
-msgstr "Подключить ещё аккаунт"
-
 msgid "Connect any AI agent to Superset."
 msgstr "Подключите любого AI-агента к Superset."
 
@@ -4072,9 +4047,6 @@ msgstr "Подключено"
 
 msgid "Connected {label}"
 msgstr "{label} подключено"
-
-msgid "Connected accounts"
-msgstr "Подключённые аккаунты"
 
 msgid "Connected as"
 msgstr "Подключено как"
@@ -5671,10 +5643,6 @@ msgstr "Изменения отменены — больше не спросим
 
 msgid "Disconnect"
 msgstr "Отключить"
-
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Отключить {0}"
 
 msgid "Disconnect {credential}?"
 msgstr "Отключить {credential}?"
@@ -9102,15 +9070,6 @@ msgstr "Вредоносное ПО или фишинг"
 msgid "Manage"
 msgstr "Управлять"
 
-msgid "Manage {label}"
-msgstr "Управление {label}"
-
-msgid "Manage accounts"
-msgstr "Управление аккаунтами"
-
-msgid "Manage accounts…"
-msgstr "Управление аккаунтами…"
-
 msgid "Manage billing"
 msgstr "Управление оплатой"
 
@@ -9494,10 +9453,6 @@ msgstr "Месяцев с августа 2026 года"
 
 msgid "More"
 msgstr "Ещё"
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "More {0} actions"
-msgstr "Другие действия {0}"
 
 msgid "More {kindLower} themes"
 msgstr "Ещё {kindLower} темы"
@@ -16575,9 +16530,6 @@ msgstr "Попробуйте ранние функции и предварите
 msgid "Try it"
 msgstr "Попробуйте"
 
-msgid "Try now"
-msgstr "Попробовать"
-
 msgid "Try Superset v2"
 msgstr "Попробовать Superset v2"
 
@@ -16751,9 +16703,6 @@ msgstr "Неизвестно"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Неизвестно"
-
-msgid "Unknown account"
-msgstr "Неизвестный аккаунт"
 
 msgid "Unknown author"
 msgstr "Неизвестный автор"
@@ -17040,10 +16989,6 @@ msgstr "Используйте Superset на телефоне"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Используйте Superset на телефоне с Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Используй плагин {0}, чтобы "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Используйте десктопное приложение, чтобы запускать параллельных кодовых агентов."
