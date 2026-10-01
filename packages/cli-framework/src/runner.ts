@@ -418,6 +418,16 @@ async function execute(
 			if (posConfig.isRequired && value === undefined) {
 				throw new CLIError(`Missing required argument: <${argName}>`);
 			}
+			if (
+				value !== undefined &&
+				posConfig.enumVals &&
+				!posConfig.enumVals.includes(value)
+			) {
+				throw new CLIError(
+					`<${argName}>: invalid value "${value}"`,
+					`Valid values: ${posConfig.enumVals.join(", ")}`,
+				);
+			}
 			argsResult[argName] = value;
 			posIdx++;
 		}
