@@ -167,6 +167,46 @@
         font-size: 0.92rem;
         max-width: var(--sp-measure);
       }
+      .finding h4 {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--sp-muted);
+        font-weight: 600;
+        margin: 1.75rem 0 0.75rem;
+      }
+      .scroller {
+        overflow-x: auto;
+        margin-bottom: 1rem;
+      }
+      table {
+        border-collapse: collapse;
+        font-size: 0.87rem;
+        min-width: 44rem;
+      }
+      th {
+        text-align: left;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--sp-muted);
+        font-weight: 600;
+        padding: 0 1.25rem 0.5rem 0;
+        border-bottom: 1px solid var(--sp-border);
+        white-space: nowrap;
+      }
+      td {
+        padding: 0.6rem 1.25rem 0.6rem 0;
+        border-bottom: 1px solid var(--sp-border);
+        vertical-align: top;
+      }
+      td.bad {
+        color: var(--high);
+      }
+      th:last-child,
+      td:last-child {
+        padding-right: 0;
+      }
       ul.clean {
         margin: 0;
         padding-left: 1.1rem;
@@ -249,6 +289,85 @@
           <p class="fix">
             Fan Slack out over <code>accountConnections</code> like Linear and
             Notion, or exclude Slack from pinning until it does.
+          </p>
+
+          <h4>Which field each provider maps to a connection</h4>
+          <p>
+            The column being matched is
+            <code>connections.external_account_id</code>, populated at connect
+            time from the connector's <code>identity.account.id</code> —
+            <b>except Sentry</b>, which matches on connection state instead.
+          </p>
+          <div class="scroller">
+            <table>
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>Field in the inbound payload</th>
+                  <th>Matched against</th>
+                  <th>Lookup</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Slack</td>
+                  <td><code>envelope.team_id</code></td>
+                  <td><code>external_account_id</code> (from <code>$.team_id</code>)</td>
+                  <td class="bad">singular — <code>accountConnection</code>, LIMIT 1</td>
+                </tr>
+                <tr>
+                  <td>Linear</td>
+                  <td><code>payload.organizationId</code></td>
+                  <td><code>external_account_id</code> (from <code>viewer.organization.id</code>)</td>
+                  <td>fan-out — <code>accountConnections</code></td>
+                </tr>
+                <tr>
+                  <td>Notion</td>
+                  <td><code>event.workspace_id</code></td>
+                  <td><code>external_account_id</code> (from <code>$.workspace_id</code>)</td>
+                  <td>fan-out — <code>accountConnections</code></td>
+                </tr>
+                <tr>
+                  <td>Gmail</td>
+                  <td><code>notification.emailAddress</code>, lowercased</td>
+                  <td><code>external_account_id</code> (from <code>$.email</code>)</td>
+                  <td>fan-out — <code>accountConnections</code></td>
+                </tr>
+                <tr>
+                  <td>Teams</td>
+                  <td>
+                    <code>notification.tenantId</code>, plus a
+                    <code>clientState</code> equality check
+                  </td>
+                  <td><code>external_account_id</code> (the tenant id)</td>
+                  <td>singular — org-scoped, so only one can exist</td>
+                </tr>
+                <tr>
+                  <td>Sentry</td>
+                  <td><code>installationUuid</code> from the install callback</td>
+                  <td>
+                    <code>state-&gt;&gt;'installationUuid'</code> —
+                    <b>not</b> <code>external_account_id</code>
+                  </td>
+                  <td>singular — org-scoped</td>
+                </tr>
+                <tr>
+                  <td>GitHub</td>
+                  <td>—</td>
+                  <td>none; installation-backed, stamped <code>null</code></td>
+                  <td>n/a</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Two things fall out of this table. Slack is the only
+            <i>user-scoped</i> connector resolving through a singular lookup,
+            which is exactly this finding. And Sentry keys on installation state
+            rather than the account column, so a pin would compare against a
+            connection the account id never identified — moot today, because
+            Sentry and Teams are org-scoped and cannot hold two connections, but
+            it would matter if either ever became user-scoped.
           </p>
         </article>
 
