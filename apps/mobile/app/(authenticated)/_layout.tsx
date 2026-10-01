@@ -4,6 +4,8 @@ import { Redirect, Stack, usePathname } from "expo-router";
 import { usePrimeRelayUrl } from "@/hooks/usePrimeRelayUrl";
 import { useSession } from "@/lib/auth/client";
 
+export const unstable_settings = { anchor: "(home)" };
+
 const pageScreenOptions = {
 	headerShown: true,
 	headerBackButtonDisplayMode: "minimal" as const,

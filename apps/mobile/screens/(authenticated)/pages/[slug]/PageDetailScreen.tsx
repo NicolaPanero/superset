@@ -15,14 +15,14 @@ import {
 	useRouter,
 } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
+import * as WebBrowser from "expo-web-browser";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
-import { env } from "@/lib/env";
 import { errorCopy } from "@/lib/errors";
-import { openUrl } from "@/lib/open-url";
-import { pageUrlForSlug } from "@/lib/page-links";
+import { pageUrlForSlug } from "@/lib/web-links";
 import { PressableScale } from "@/screens/(authenticated)/components/PressableScale";
 import { usePageQuery } from "../hooks/usePages";
 import { CommentPin } from "./components/CommentPin";
@@ -304,17 +304,17 @@ export function PageDetailScreen({
 							: errorCopy(page.error)}
 					</Text>
 					{page.error && !offline ? (
-						<Pressable
-							accessibilityRole="button"
-							className="bg-secondary mt-6 h-[42px] items-center justify-center rounded-md px-6 active:opacity-80"
-							onPress={() =>
-								openUrl(pageUrlForSlug(slug, env.EXPO_PUBLIC_WEB_URL))
-							}
+						<Button
+							className="mt-6"
+							variant="secondary"
+							onPress={() => {
+								void WebBrowser.openBrowserAsync(pageUrlForSlug(slug));
+							}}
 						>
-							<Text className="font-medium text-[15px]">
+							<Text>
 								<Trans>Open in browser</Trans>
 							</Text>
-						</Pressable>
+						</Button>
 					) : null}
 				</View>
 			) : null}

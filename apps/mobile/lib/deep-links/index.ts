@@ -1,1 +1,0 @@
-export { appPathFromSystemUrl } from "./deepLinks";

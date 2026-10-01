@@ -1,5 +1,5 @@
-import { appPathFromSystemUrl } from "@/lib/deep-links";
 import { env } from "@/lib/env";
+import { pageSlugFromUrl } from "@/lib/page-links";
 
 export function redirectSystemPath({
 	path,
@@ -7,5 +7,6 @@ export function redirectSystemPath({
 	path: string;
 	initial: boolean;
 }): string {
-	return appPathFromSystemUrl(path, env.EXPO_PUBLIC_WEB_URL) ?? path;
+	const slug = pageSlugFromUrl(path, env.EXPO_PUBLIC_WEB_URL);
+	return slug === null ? path : `/pages/${slug}`;
 }
