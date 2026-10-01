@@ -3678,6 +3678,9 @@ msgstr "Chiudendo questa scheda terminerai il processo in esecuzione."
 msgid "Closing this terminal will end the running process."
 msgstr "Chiudendo questo terminale terminerai il processo in esecuzione."
 
+msgid "Closing…"
+msgstr "Chiusura…"
+
 msgid "Cloud"
 msgstr "Cloud"
 
@@ -9291,6 +9294,9 @@ msgstr "Merge della PR in corso..."
 msgid "Merging pull request"
 msgstr "Merge della pull request in corso"
 
+msgid "Merging…"
+msgstr "Unione in corso…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
@@ -12716,6 +12722,9 @@ msgstr "Riapri la PR"
 
 msgid "Reopen thread"
 msgstr "Riapri il thread"
+
+msgid "Reopening…"
+msgstr "Riapertura…"
 
 msgid "reorder agents"
 msgstr "riordinare gli agenti"

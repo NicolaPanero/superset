@@ -3678,6 +3678,9 @@ msgstr "關閉此分頁將結束正在執行的處理程序。"
 msgid "Closing this terminal will end the running process."
 msgstr "關閉此終端將結束正在執行的處理程序。"
 
+msgid "Closing…"
+msgstr "正在關閉…"
+
 msgid "Cloud"
 msgstr "雲端"
 
@@ -9291,6 +9294,9 @@ msgstr "正在合併PR..."
 msgid "Merging pull request"
 msgstr "正在合併拉取請求"
 
+msgid "Merging…"
+msgstr "正在合併…"
+
 msgid "Mesh Gradient"
 msgstr "網格漸變"
 
@@ -12716,6 +12722,9 @@ msgstr "重新開啟PR"
 
 msgid "Reopen thread"
 msgstr "重新開啟討論串"
+
+msgid "Reopening…"
+msgstr "正在重新開啟…"
 
 msgid "reorder agents"
 msgstr "重新排序代理程式"

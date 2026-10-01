@@ -3678,6 +3678,9 @@ msgstr "Bu sekmeyi kapatmak çalışan süreci sonlandırır."
 msgid "Closing this terminal will end the running process."
 msgstr "Bu terminali kapatmak çalışan süreci sonlandırır."
 
+msgid "Closing…"
+msgstr "Kapatılıyor…"
+
 msgid "Cloud"
 msgstr "Bulut"
 
@@ -9291,6 +9294,9 @@ msgstr "PR birleştiriliyor..."
 msgid "Merging pull request"
 msgstr "Pull request birleştiriliyor"
 
+msgid "Merging…"
+msgstr "Birleştiriliyor…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh gradyanı"
 
@@ -12716,6 +12722,9 @@ msgstr "PR'ı yeniden aç"
 
 msgid "Reopen thread"
 msgstr "Konuyu yeniden aç"
+
+msgid "Reopening…"
+msgstr "Yeniden açılıyor…"
 
 msgid "reorder agents"
 msgstr "ajanları yeniden sıralama"

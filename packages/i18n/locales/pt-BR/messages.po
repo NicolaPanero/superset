@@ -3678,6 +3678,9 @@ msgstr "Fechar esta aba encerra o processo em execução."
 msgid "Closing this terminal will end the running process."
 msgstr "Fechar este terminal encerra o processo em execução."
 
+msgid "Closing…"
+msgstr "Fechando…"
+
 msgid "Cloud"
 msgstr "Nuvem"
 
@@ -9291,6 +9294,9 @@ msgstr "Fazendo merge do PR..."
 msgid "Merging pull request"
 msgstr "Fazendo merge do pull request"
 
+msgid "Merging…"
+msgstr "Fazendo merge…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
@@ -12716,6 +12722,9 @@ msgstr "Reabrir PR"
 
 msgid "Reopen thread"
 msgstr "Reabrir thread"
+
+msgid "Reopening…"
+msgstr "Reabrindo…"
 
 msgid "reorder agents"
 msgstr "reordenar os agentes"

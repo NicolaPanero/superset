@@ -3678,6 +3678,9 @@ msgstr "このタブを閉じると実行中のプロセスが終了します。
 msgid "Closing this terminal will end the running process."
 msgstr "このターミナルを閉じると実行中のプロセスが終了します。"
 
+msgid "Closing…"
+msgstr "クローズ中…"
+
 msgid "Cloud"
 msgstr "クラウド"
 
@@ -9291,6 +9294,9 @@ msgstr "PRをマージ中..."
 msgid "Merging pull request"
 msgstr "プルリクエストをマージ中"
 
+msgid "Merging…"
+msgstr "マージ中…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
@@ -12716,6 +12722,9 @@ msgstr "PRを再オープン"
 
 msgid "Reopen thread"
 msgstr "スレッドを再開"
+
+msgid "Reopening…"
+msgstr "再オープン中…"
 
 msgid "reorder agents"
 msgstr "エージェントを並べ替える"

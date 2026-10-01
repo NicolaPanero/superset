@@ -3678,6 +3678,9 @@ msgstr "Zavřením této karty ukončíte běžící proces."
 msgid "Closing this terminal will end the running process."
 msgstr "Zavřením tohoto terminálu ukončíte běžící proces."
 
+msgid "Closing…"
+msgstr "Zavírání…"
+
 msgid "Cloud"
 msgstr "Cloud"
 
@@ -9291,6 +9294,9 @@ msgstr "Slučuji PR..."
 msgid "Merging pull request"
 msgstr "Slučuji pull request"
 
+msgid "Merging…"
+msgstr "Slučování…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
@@ -12716,6 +12722,9 @@ msgstr "Znovu otevřít PR"
 
 msgid "Reopen thread"
 msgstr "Znovu otevřít vlákno"
+
+msgid "Reopening…"
+msgstr "Znovuotevírání…"
 
 msgid "reorder agents"
 msgstr "změnit pořadí agentů"

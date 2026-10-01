@@ -3678,6 +3678,9 @@ msgstr "Al cerrar esta pestaña se terminará el proceso en marcha."
 msgid "Closing this terminal will end the running process."
 msgstr "Al cerrar esta terminal se terminará el proceso en marcha."
 
+msgid "Closing…"
+msgstr "Cerrando…"
+
 msgid "Cloud"
 msgstr "Nube"
 
@@ -9291,6 +9294,9 @@ msgstr "Fusionando la PR..."
 msgid "Merging pull request"
 msgstr "Fusionando la pull request"
 
+msgid "Merging…"
+msgstr "Fusionando…"
+
 msgid "Mesh Gradient"
 msgstr "Degradado de malla"
 
@@ -12716,6 +12722,9 @@ msgstr "Reabrir PR"
 
 msgid "Reopen thread"
 msgstr "Reabrir el hilo"
+
+msgid "Reopening…"
+msgstr "Reabriendo…"
 
 msgid "reorder agents"
 msgstr "reordenar los agentes"

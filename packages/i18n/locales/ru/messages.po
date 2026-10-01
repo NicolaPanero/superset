@@ -3678,6 +3678,9 @@ msgstr "Закрытие этой вкладки завершит работаю
 msgid "Closing this terminal will end the running process."
 msgstr "Закрытие этого терминала завершит работающий процесс."
 
+msgid "Closing…"
+msgstr "Закрытие…"
+
 msgid "Cloud"
 msgstr "Облако"
 
@@ -9291,6 +9294,9 @@ msgstr "Объединение PR..."
 msgid "Merging pull request"
 msgstr "Объединение пул-реквеста"
 
+msgid "Merging…"
+msgstr "Объединение…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh-градиент"
 
@@ -12716,6 +12722,9 @@ msgstr "Открыть PR заново"
 
 msgid "Reopen thread"
 msgstr "Снова открыть ветку"
+
+msgid "Reopening…"
+msgstr "Повторное открытие…"
 
 msgid "reorder agents"
 msgstr "изменить порядок агентов"

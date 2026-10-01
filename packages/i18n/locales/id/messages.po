@@ -3678,6 +3678,9 @@ msgstr "Menutup tab ini akan menghentikan proses yang berjalan."
 msgid "Closing this terminal will end the running process."
 msgstr "Menutup terminal ini akan menghentikan proses yang berjalan."
 
+msgid "Closing…"
+msgstr "Menutup…"
+
 msgid "Cloud"
 msgstr "Cloud"
 
@@ -9291,6 +9294,9 @@ msgstr "Me-merge PR..."
 msgid "Merging pull request"
 msgstr "Me-merge pull request"
 
+msgid "Merging…"
+msgstr "Melakukan merge…"
+
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
@@ -12716,6 +12722,9 @@ msgstr "Buka Lagi PR"
 
 msgid "Reopen thread"
 msgstr "Buka lagi thread"
+
+msgid "Reopening…"
+msgstr "Membuka kembali…"
 
 msgid "reorder agents"
 msgstr "mengurutkan ulang agen"
