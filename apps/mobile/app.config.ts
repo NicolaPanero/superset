@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext) => ({
 	locales: Object.fromEntries(
 		SUPPORTED_LOCALES.map((locale) => [locale, `./locales/${locale}.json`]),
 	),
-	version: "1.1.2",
+	version: "1.1.3",
 	orientation: "portrait",
 	icon: "./assets/icon.png",
 	userInterfaceStyle: "dark",
@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext) => ({
 		}),
 	},
 	ios: {
-		supportsTablet: false,
+		supportsTablet: true,
 		appleTeamId: IOS_APP.TEAM_ID,
 		// Shared with the AgentActivity widget extension: the Live Activity
 		// sandbox has no network, so project icons are cached here by the app
@@ -60,6 +60,12 @@ export default ({ config }: ConfigContext) => ({
 		associatedDomains: [`applinks:${webHost}`],
 		usesAppleSignIn: true,
 		infoPlist: {
+			"UISupportedInterfaceOrientations~ipad": [
+				"UIInterfaceOrientationPortrait",
+				"UIInterfaceOrientationPortraitUpsideDown",
+				"UIInterfaceOrientationLandscapeLeft",
+				"UIInterfaceOrientationLandscapeRight",
+			],
 			ITSAppUsesNonExemptEncryption: false,
 			NSSupportsLiveActivities: true,
 			// Dictation is native now (`modules/composer`), so no config plugin
