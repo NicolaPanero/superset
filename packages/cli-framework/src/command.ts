@@ -4,7 +4,7 @@ export type Audience = "internal" | "public";
 
 export type CommandResult =
 	| { data?: unknown; message?: string }
-	| { raw: string }
+	| { raw: string; data?: never; message?: never }
 	| unknown[]
 	| undefined;
 

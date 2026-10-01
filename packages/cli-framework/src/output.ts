@@ -3,13 +3,19 @@ export type OutputFlags = {
 	quiet: boolean;
 };
 
-/** Output that is a document, not data: printed as-is under --json and --quiet. */
+/**
+ * Output that is a document, not data: printed as-is under --json and
+ * --quiet. It carries nothing else, so a data result that happens to have a
+ * `raw` field is still data.
+ */
 export function isRawResult(result: unknown): result is { raw: string } {
 	return (
 		typeof result === "object" &&
 		result !== null &&
 		"raw" in result &&
-		typeof (result as { raw: unknown }).raw === "string"
+		typeof result.raw === "string" &&
+		!("data" in result) &&
+		!("message" in result)
 	);
 }
 

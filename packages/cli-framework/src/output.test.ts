@@ -45,6 +45,14 @@ describe("formatOutput", () => {
 		});
 		expect(JSON.parse(out)).toEqual({ raw: 1 });
 	});
+
+	test("treats a result that carries data or message beside raw as data", () => {
+		const out = formatOutput({ raw: "x", data: { id: 1 } }, undefined, {
+			json: true,
+			quiet: false,
+		});
+		expect(JSON.parse(out)).toEqual({ id: 1 });
+	});
 });
 
 describe("table", () => {
