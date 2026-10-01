@@ -50,7 +50,19 @@ export default defineConfig({
 			},
 			{
 				title: "Account & app",
-				commands: ["auth", "organization", "settings", "update", "feedback"],
+				commands: [
+					"auth",
+					"connections",
+					"integrations",
+					"organization",
+					"settings",
+					"update",
+					"feedback",
+				],
+			},
+			{
+				title: "Shell & tooling",
+				commands: ["completion", "schema", "config"],
 			},
 		],
 		examples: [
