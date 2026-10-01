@@ -6211,6 +6211,9 @@ msgstr "Cada minuto"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Todos los objetivos aportan lo suyo para el siguiente escalón. Medido en los últimos 30 días."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Hasta ahora todas las ejecuciones programadas encontraron un host en línea."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Todas las estrellas de <0>{repoSlug}</0>, trazadas desde el lanzamiento."
 
@@ -7722,9 +7725,6 @@ msgstr "No se encontró el host en esta organización"
 
 msgid "Host not found in this organization."
 msgstr "No se encontró el host en esta organización."
-
-msgid "host offline"
-msgstr "host sin conexión"
 
 msgid "Host service"
 msgstr "Servicio de host"
@@ -9349,6 +9349,15 @@ msgstr "Contraste mínimo"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "Réplica del <0>panel Success Metrics de PostHog</0> — producto mediante análisis guardados, negocio en directo desde Stripe/Neon"
 
+msgid "missed"
+msgstr "perdida"
+
+msgid "Missed"
+msgstr "Perdidas"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Perdidas <0>· 7 d</0>"
+
 msgid "Missing auth state"
 msgstr "Falta el estado de autenticación"
 
@@ -10517,6 +10526,9 @@ msgstr "Nada necesita reintento"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Aún no has publicado nada en los últimos 30 días. Tu puesto aparecerá cuando se sincronice el uso de esta máquina, publicando como <0>{handle}</0>."
+
+msgid "Nothing was missed"
+msgstr "No se perdió nada"
 
 msgid "Notice"
 msgstr "Aviso"
@@ -13472,6 +13484,9 @@ msgstr "Programar ejecuciones recurrentes, ejecutar bajo demanda, pausar, reanud
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Agentes programados y disparados por eventos (cron, eventos de GitHub, webhooks) con plantillas listas para usar."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Ejecuciones programadas que no encontraron ningún host en línea"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Las programaciones se repiten: quita COUNT o UNTIL."

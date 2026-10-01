@@ -6,9 +6,11 @@ interface AutomationStatCardsProps {
 	totalAutomations: number;
 	succeeded7d: number;
 	failed7d: number;
+	missed7d: number;
 	/** Run counts per 6-hour bucket over the last 7 days, oldest first. */
 	buckets: number[];
 	onShowFailed: () => void;
+	onShowMissed: () => void;
 	onShowHistory: () => void;
 }
 
@@ -44,20 +46,22 @@ export function AutomationStatCards({
 	totalAutomations,
 	succeeded7d,
 	failed7d,
+	missed7d,
 	buckets,
 	onShowFailed,
+	onShowMissed,
 	onShowHistory,
 }: AutomationStatCardsProps) {
 	const { t } = useLingui();
 	const { formatNumber, formatPercent } = useFormat();
-	const settled = succeeded7d + failed7d;
+	const settled = succeeded7d + failed7d + missed7d;
 	const pct = (n: number) =>
 		settled > 0
 			? formatPercent(n / settled, { maximumFractionDigits: 1 })
 			: null;
 
 	return (
-		<div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+		<div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
 			<div className={CARD}>
 				<p className={LABEL}>
 					<Trans>Total automations</Trans>
@@ -97,6 +101,24 @@ export function AutomationStatCards({
 				<p className={VALUE}>
 					{formatNumber(failed7d)}
 					{pct(failed7d) && <span className={PCT}>{pct(failed7d)}</span>}
+				</p>
+			</button>
+			<button
+				type="button"
+				onClick={onShowMissed}
+				title={t({
+					message: "Scheduled runs that found no host online",
+				})}
+				className={cn(CARD, CLICKABLE)}
+			>
+				<p className={LABEL}>
+					<Trans>
+						Missed <span className="text-muted-foreground/60">· 7d</span>
+					</Trans>
+				</p>
+				<p className={VALUE}>
+					{formatNumber(missed7d)}
+					{pct(missed7d) && <span className={PCT}>{pct(missed7d)}</span>}
 				</p>
 			</button>
 			<button

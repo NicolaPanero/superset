@@ -6211,6 +6211,9 @@ msgstr "Her dakika"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Tüm hedefler bir sonraki basamak için üzerine düşeni yapıyor. Son 30 gün üzerinden ölçülür."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Şimdiye kadar her zamanlanmış çalıştırma çevrimiçi bir ana makine buldu."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0> üzerindeki her yıldız, lansmandan bu yana grafikte."
 
@@ -7722,9 +7725,6 @@ msgstr "Bu kuruluşta host bulunamadı"
 
 msgid "Host not found in this organization."
 msgstr "Bu kuruluşta host bulunamadı."
-
-msgid "host offline"
-msgstr "ana makine çevrimdışı"
 
 msgid "Host service"
 msgstr "Ana makine hizmeti"
@@ -9349,6 +9349,15 @@ msgstr "En düşük kontrast"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "<0>PostHog Success Metrics panosunun</0> aynası — ürün kayıtlı içgörülerden, iş verileri Stripe/Neon üzerinden canlı"
 
+msgid "missed"
+msgstr "kaçırıldı"
+
+msgid "Missed"
+msgstr "Kaçırılan"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Kaçırılan <0>· 7g</0>"
+
 msgid "Missing auth state"
 msgstr "Kimlik doğrulama durumu eksik"
 
@@ -10517,6 +10526,9 @@ msgstr "Yeniden denenecek bir şey yok"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Son 30 günde henüz hiçbir şey yayınlanmadı. Bu makinedeki kullanım eşitlendiğinde sıralamanız görünür; <0>{handle}</0> olarak yayınlanıyor."
+
+msgid "Nothing was missed"
+msgstr "Hiçbir şey kaçırılmadı"
 
 msgid "Notice"
 msgstr "Bildirim"
@@ -13472,6 +13484,9 @@ msgstr "Yinelenen çalıştırmaları zamanlayın, istek üzerine çalıştırı
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Hazır şablonlarla zamanlanmış ve olay tetiklemeli ajanlar (cron, GitHub olayları, webhook'lar)."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Çevrimiçi ana makine bulamayan zamanlanmış çalıştırmalar"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Zamanlamalar yinelenir — COUNT veya UNTIL değerini kaldırın."

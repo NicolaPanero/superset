@@ -6211,6 +6211,9 @@ msgstr "Tiap menit"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Semua sasaran sudah berkontribusi sesuai bobotnya untuk tingkat berikutnya. Diukur selama 30 hari terakhir."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Sejauh ini setiap eksekusi terjadwal menemukan host yang online."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Tiap star di <0>{repoSlug}</0>, diplot sejak peluncuran."
 
@@ -7722,9 +7725,6 @@ msgstr "Host tidak ditemukan di organisasi ini"
 
 msgid "Host not found in this organization."
 msgstr "Host tidak ditemukan di organisasi ini."
-
-msgid "host offline"
-msgstr "host offline"
 
 msgid "Host service"
 msgstr "Layanan host"
@@ -9349,6 +9349,15 @@ msgstr "Kontras minimum"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "Cerminan <0>dasbor PostHog Success Metrics</0> — produk lewat insight tersimpan, bisnis langsung dari Stripe/Neon"
 
+msgid "missed"
+msgstr "terlewat"
+
+msgid "Missed"
+msgstr "Terlewat"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Terlewat <0>· 7h</0>"
+
 msgid "Missing auth state"
 msgstr "State auth tidak ada"
 
@@ -10517,6 +10526,9 @@ msgstr "Tidak ada yang perlu dicoba ulang"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Belum ada yang dipublikasikan dalam 30 hari terakhir. Peringkat Anda muncul setelah penggunaan dari mesin ini tersinkron, dipublikasikan sebagai <0>{handle}</0>."
+
+msgid "Nothing was missed"
+msgstr "Tidak ada yang terlewat"
 
 msgid "Notice"
 msgstr "Pemberitahuan"
@@ -13472,6 +13484,9 @@ msgstr "Menjadwalkan run berulang, menjalankan sesuai permintaan, menjeda, melan
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Agen terjadwal dan terpicu event (cron, event GitHub, webhook) dengan templat siap pakai."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Eksekusi terjadwal yang tidak menemukan host online"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Jadwal harus berulang — hapus COUNT atau UNTIL."

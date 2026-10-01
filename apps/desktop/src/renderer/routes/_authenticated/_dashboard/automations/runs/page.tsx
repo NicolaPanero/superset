@@ -29,6 +29,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
 	LuArrowLeft,
 	LuHistory,
+	LuMoonStar,
 	LuRotateCw,
 	LuTriangleAlert,
 } from "react-icons/lu";
@@ -47,8 +48,10 @@ export const Route = createFileRoute(
 	component: AutomationRunsPage,
 	validateSearch: (
 		search: Record<string, unknown>,
-	): { status?: "failed"; scope?: "all" | "mine" } => ({
-		...(search.status === "failed" ? { status: "failed" as const } : {}),
+	): { status?: "failed" | "missed"; scope?: "all" | "mine" } => ({
+		...(search.status === "failed" || search.status === "missed"
+			? { status: search.status }
+			: {}),
 		...(search.scope === "all" || search.scope === "mine"
 			? { scope: search.scope }
 			: {}),
@@ -56,7 +59,7 @@ export const Route = createFileRoute(
 });
 
 type Scope = "all" | "mine";
-type StatusFilter = "all" | "failed";
+type StatusFilter = "all" | "failed" | "missed";
 
 const PAGE_SIZE = 50;
 
@@ -281,6 +284,18 @@ function AutomationRunsPage() {
 								<LuTriangleAlert className="size-3.5" />
 								<Trans>Needs a retry</Trans>
 							</Button>
+							<Button
+								type="button"
+								variant={status === "missed" ? "default" : "outline"}
+								size="sm"
+								className="h-8 gap-1.5 px-3"
+								onClick={() =>
+									setStatus((prev) => (prev === "missed" ? "all" : "missed"))
+								}
+							>
+								<LuMoonStar className="size-3.5" />
+								<Trans>Missed</Trans>
+							</Button>
 							{selectedAutomationIds.length > 0 && (
 								<Button
 									type="button"
@@ -354,6 +369,8 @@ function AutomationRunsPage() {
 									<EmptyTitle>
 										{status === "failed" ? (
 											<Trans>Nothing needs a retry</Trans>
+										) : status === "missed" ? (
+											<Trans>Nothing was missed</Trans>
 										) : (
 											<Trans>No runs yet</Trans>
 										)}
@@ -361,6 +378,10 @@ function AutomationRunsPage() {
 									<EmptyDescription>
 										{status === "failed" ? (
 											<Trans>No failed runs.</Trans>
+										) : status === "missed" ? (
+											<Trans>
+												Every scheduled run so far found a host online.
+											</Trans>
 										) : (
 											<Trans>Runs appear here once an automation fires.</Trans>
 										)}

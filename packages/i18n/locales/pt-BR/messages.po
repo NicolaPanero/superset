@@ -6211,6 +6211,9 @@ msgstr "A cada minuto"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Todos os objetivos estão contribuindo para o próximo degrau. Medido nos últimos 30 dias."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Até agora, toda execução agendada encontrou um host on-line."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Cada estrela em <0>{repoSlug}</0>, no gráfico desde o lançamento."
 
@@ -7722,9 +7725,6 @@ msgstr "Host não encontrado nesta organização"
 
 msgid "Host not found in this organization."
 msgstr "Host não encontrado nesta organização."
-
-msgid "host offline"
-msgstr "host offline"
 
 msgid "Host service"
 msgstr "Serviço de host"
@@ -9349,6 +9349,15 @@ msgstr "Contraste mínimo"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "Espelho do <0>painel Success Metrics do PostHog</0> — produto via insights salvos, negócio ao vivo do Stripe/Neon"
 
+msgid "missed"
+msgstr "perdida"
+
+msgid "Missed"
+msgstr "Perdidas"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Perdidas <0>· 7d</0>"
+
 msgid "Missing auth state"
 msgstr "Falta o estado de autenticação"
 
@@ -10517,6 +10526,9 @@ msgstr "Nada precisa de nova tentativa"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Nada publicado nos últimos 30 dias ainda. Sua posição aparece assim que o uso desta máquina sincronizar, publicando como <0>{handle}</0>."
+
+msgid "Nothing was missed"
+msgstr "Nada foi perdido"
 
 msgid "Notice"
 msgstr "Aviso"
@@ -13472,6 +13484,9 @@ msgstr "Agendar execuções recorrentes, executar sob demanda, pausar, retomar e
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Agentes agendados e disparados por eventos (cron, eventos do GitHub, webhooks) com modelos prontos."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Execuções agendadas que não encontraram nenhum host on-line"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "As agendas se repetem — remova COUNT ou UNTIL."

@@ -117,7 +117,7 @@ export const listOrgRunsSchema = z.object({
 	cursor: z
 		.object({ createdAt: z.string().min(1), id: z.string().uuid() })
 		.optional(),
-	status: z.enum(["all", "failed"]).default("all"),
+	status: z.enum(["all", "failed", "missed"]).default("all"),
 	scope: z.enum(["all", "mine"]).default("all"),
 });
 

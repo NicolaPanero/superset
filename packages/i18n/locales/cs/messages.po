@@ -6211,6 +6211,9 @@ msgstr "Každou minutu"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Všechny cíle táhnou k dalšímu stupni. Měřeno za posledních 30 dní."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Každé naplánované spuštění zatím našlo online hostitele."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Každá hvězda na <0>{repoSlug}</0>, vynesená od spuštění."
 
@@ -7722,9 +7725,6 @@ msgstr "Host v této organizaci nenalezen"
 
 msgid "Host not found in this organization."
 msgstr "Host v této organizaci nenalezen."
-
-msgid "host offline"
-msgstr "hostitel offline"
 
 msgid "Host service"
 msgstr "Služba hostitele"
@@ -9349,6 +9349,15 @@ msgstr "Minimální kontrast"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "Zrcadlo přehledu <0>PostHog Success Metrics</0> — produkt přes uložené insighty, byznys živě ze Stripe/Neon"
 
+msgid "missed"
+msgstr "zmeškáno"
+
+msgid "Missed"
+msgstr "Zmeškaná"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Zmeškaná <0>· 7 d</0>"
+
 msgid "Missing auth state"
 msgstr "Chybí stav ověření"
 
@@ -10517,6 +10526,9 @@ msgstr "Není co opakovat"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Za posledních 30 dní zatím nebylo nic publikováno. Vaše pozice se objeví, jakmile se synchronizuje využití z tohoto počítače; publikujete jako <0>{handle}</0>."
+
+msgid "Nothing was missed"
+msgstr "Nic nebylo zmeškáno"
 
 msgid "Notice"
 msgstr "Upozornění"
@@ -13472,6 +13484,9 @@ msgstr "Naplánovat opakované běhy, spustit na vyžádání, pozastavit, obnov
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Agenti spouštění podle plánu i událostmi (cron, GitHub události, webhooky) s hotovými šablonami."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Naplánovaná spuštění, která nenašla žádného online hostitele"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Plány se opakují — odeberte COUNT nebo UNTIL."

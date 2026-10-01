@@ -489,8 +489,8 @@ function AutomationsPage() {
 					{!orgEmpty && (
 						<div className="mt-5">
 							{showAutomationLoading ? (
-								<div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-									{["a", "b", "c", "d"].map((key) => (
+								<div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
+									{["a", "b", "c", "d", "e"].map((key) => (
 										<Skeleton key={key} className="h-[70px] w-full" />
 									))}
 								</div>
@@ -499,11 +499,18 @@ function AutomationsPage() {
 									totalAutomations={automations.length}
 									succeeded7d={orgRunStats?.succeeded ?? 0}
 									failed7d={orgRunStats?.failed ?? 0}
+									missed7d={orgRunStats?.missed ?? 0}
 									buckets={orgRunStats?.buckets ?? []}
 									onShowFailed={() =>
 										navigate({
 											to: "/automations/runs",
 											search: { status: "failed", scope: "all" },
+										})
+									}
+									onShowMissed={() =>
+										navigate({
+											to: "/automations/runs",
+											search: { status: "missed", scope: "all" },
 										})
 									}
 									onShowHistory={() =>

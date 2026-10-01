@@ -6211,6 +6211,9 @@ msgstr "毎分"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "すべての目標が次の段に向けて力を発揮しています。直近30日間で計測。"
 
+msgid "Every scheduled run so far found a host online."
+msgstr "これまでのところ、すべてのスケジュール実行でホストがオンラインでした。"
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>のすべてのスターを、公開時からプロットしています。"
 
@@ -7722,9 +7725,6 @@ msgstr "この組織にホストが見つかりません"
 
 msgid "Host not found in this organization."
 msgstr "この組織にホストが見つかりません。"
-
-msgid "host offline"
-msgstr "ホストがオフライン"
 
 msgid "Host service"
 msgstr "ホストサービス"
@@ -9349,6 +9349,15 @@ msgstr "最小コントラスト"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "<0>PostHog Success Metricsダッシュボード</0>のミラー — プロダクトは保存済みインサイト、ビジネスはStripe/Neonからライブ取得"
 
+msgid "missed"
+msgstr "未実行"
+
+msgid "Missed"
+msgstr "未実行"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "未実行 <0>· 7日</0>"
+
 msgid "Missing auth state"
 msgstr "認証ステートがありません"
 
@@ -10517,6 +10526,9 @@ msgstr "再実行が必要なものはありません"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "直近30日に公開された実績はまだありません。このマシンの利用状況が同期されるとランクが表示されます(<0>{handle}</0>として公開)。"
+
+msgid "Nothing was missed"
+msgstr "未実行はありません"
 
 msgid "Notice"
 msgstr "お知らせ"
@@ -13472,6 +13484,9 @@ msgstr "定期実行のスケジュール設定、手動実行、一時停止、
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "スケジュール実行とイベント起動のエージェント(cron、GitHubイベント、webhook)。すぐ使えるテンプレート付き。"
+
+msgid "Scheduled runs that found no host online"
+msgstr "オンラインのホストが見つからなかったスケジュール実行"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "スケジュールは繰り返されます — COUNTまたはUNTILを削除してください。"

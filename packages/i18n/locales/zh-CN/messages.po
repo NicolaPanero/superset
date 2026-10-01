@@ -6211,6 +6211,9 @@ msgstr "每分钟"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "所有目标都在为下一档位发力。按最近 30 天计算。"
 
+msgid "Every scheduled run so far found a host online."
+msgstr "目前每次计划运行都找到了在线主机。"
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>的每一个星标，自发布起绘制。"
 
@@ -7722,9 +7725,6 @@ msgstr "在此组织中未找到该主机"
 
 msgid "Host not found in this organization."
 msgstr "在此组织中找不到该主机。"
-
-msgid "host offline"
-msgstr "主机离线"
 
 msgid "Host service"
 msgstr "主机服务"
@@ -9349,6 +9349,15 @@ msgstr "最小对比度"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "<0>PostHog成功指标仪表盘</0>的镜像 — 产品数据来自已保存的洞察，业务数据实时取自Stripe/Neon"
 
+msgid "missed"
+msgstr "已错过"
+
+msgid "Missed"
+msgstr "已错过"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "已错过 <0>· 7天</0>"
+
 msgid "Missing auth state"
 msgstr "缺少认证状态"
 
@@ -10517,6 +10526,9 @@ msgstr "没有需要重试的运行"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "最近30天还没有已公开的数据。待本机用量同步后，你的排名就会显示，将以<0>{handle}</0>身份公开。"
+
+msgid "Nothing was missed"
+msgstr "没有错过的运行"
 
 msgid "Notice"
 msgstr "提示"
@@ -13472,6 +13484,9 @@ msgstr "安排定时运行、按需运行、暂停、恢复并读取日志。"
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "定时和事件触发的智能体（cron、GitHub事件、webhook），并提供现成模板。"
+
+msgid "Scheduled runs that found no host online"
+msgstr "未找到在线主机的计划运行"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "计划会重复 — 请移除COUNT或UNTIL。"

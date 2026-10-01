@@ -18,9 +18,11 @@ export const RUN_STATUS_META: Record<RunStatus, RunStatusMeta> = {
 		dot: "bg-amber-500",
 		label: msg({ message: "creating" }),
 	},
+	// Not a failure: the schedule came due with no host online. Amber, not
+	// red, because nothing broke and retrying hours later is rarely wanted.
 	skipped_offline: {
-		dot: "bg-red-500",
-		label: msg({ message: "host offline" }),
+		dot: "bg-amber-500",
+		label: msg({ message: "missed" }),
 	},
 	dispatch_failed: {
 		dot: "bg-red-500",

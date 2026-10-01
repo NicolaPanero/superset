@@ -20,7 +20,11 @@ import {
 	CLOUD_AGENT_PROMPT_MAX_LENGTH,
 	isCloudAgentId,
 } from "@superset/shared/cloud-agent-launch";
-import { FAILED_RUN_STATUSES } from "@superset/shared/constants";
+import {
+	FAILED_RUN_STATUSES,
+	MISSED_RUN_STATUSES,
+	UNSUCCESSFUL_RUN_STATUSES,
+} from "@superset/shared/constants";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import {
 	describeSchedule,
@@ -160,7 +164,7 @@ function selectRuns(args: {
 	organizationId: string;
 	userId: string;
 	automationId?: string;
-	status?: "all" | "failed";
+	status?: "all" | "failed" | "missed";
 	scope?: "all" | "mine";
 	cursor?: { createdAt: string; id: string };
 	limit: number;
@@ -201,7 +205,9 @@ function selectRuns(args: {
 					: undefined,
 				args.status === "failed"
 					? inArray(automationRuns.status, [...FAILED_RUN_STATUSES])
-					: undefined,
+					: args.status === "missed"
+						? inArray(automationRuns.status, [...MISSED_RUN_STATUSES])
+						: undefined,
 				args.scope === "mine"
 					? eq(automations.ownerUserId, args.userId)
 					: undefined,
@@ -1100,7 +1106,9 @@ export const automationRouter = {
 					// failed schedule-caused runs can be retried.
 					canRetry:
 						run.ownerUserId === userId &&
-						(FAILED_RUN_STATUSES as readonly string[]).includes(run.status) &&
+						(UNSUCCESSFUL_RUN_STATUSES as readonly string[]).includes(
+							run.status,
+						) &&
 						run.scheduledFor !== null,
 				})),
 				nextCursor:
@@ -1190,16 +1198,19 @@ export const automationRouter = {
 
 		let succeeded = 0;
 		let failed = 0;
+		let missed = 0;
 		const buckets: number[] = Array(bucketCount).fill(0);
 		for (const row of rows) {
 			if (row.status === "dispatched") succeeded += row.count;
 			else if ((FAILED_RUN_STATUSES as readonly string[]).includes(row.status))
 				failed += row.count;
+			else if ((MISSED_RUN_STATUSES as readonly string[]).includes(row.status))
+				missed += row.count;
 			const index = row.bucket - baseBucket;
 			if (index >= 0 && index < bucketCount)
 				buckets[index] = (buckets[index] ?? 0) + row.count;
 		}
-		return { succeeded, failed, buckets };
+		return { succeeded, failed, missed, buckets };
 	}),
 
 	/** Validate an RRule body + preview its next occurrences. */

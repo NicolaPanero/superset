@@ -226,9 +226,20 @@ export const LAUNCHED_TRIGGER_KINDS = [
 	"gmail",
 ] as const satisfies readonly TriggerConfigInput["kind"][];
 
-export const FAILED_RUN_STATUSES = [
-	"skipped_offline",
-	"dispatch_failed",
+/**
+ * A run that tried and broke. Separate from MISSED_RUN_STATUSES because most
+ * of what used to read as "failed" was a schedule firing at a sleeping
+ * laptop, which is not a failure and is rarely worth retrying hours later.
+ */
+export const FAILED_RUN_STATUSES = ["dispatch_failed"] as const;
+
+/** A run that never started: no host was online when its schedule came due. */
+export const MISSED_RUN_STATUSES = ["skipped_offline"] as const;
+
+/** Everything that did not produce a workspace, failed or missed. */
+export const UNSUCCESSFUL_RUN_STATUSES = [
+	...FAILED_RUN_STATUSES,
+	...MISSED_RUN_STATUSES,
 ] as const;
 
 /**

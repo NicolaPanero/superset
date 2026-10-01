@@ -6211,6 +6211,9 @@ msgstr "Каждую минуту"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Все цели работают на следующую ступень. Измерено за последние 30 дней."
 
+msgid "Every scheduled run so far found a host online."
+msgstr "Пока каждый запуск по расписанию находил хост в сети."
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Каждая звезда на <0>{repoSlug}</0> с момента запуска."
 
@@ -7722,9 +7725,6 @@ msgstr "Хост не найден в этой организации"
 
 msgid "Host not found in this organization."
 msgstr "Хост не найден в этой организации."
-
-msgid "host offline"
-msgstr "хост не в сети"
 
 msgid "Host service"
 msgstr "Служба хоста"
@@ -9349,6 +9349,15 @@ msgstr "Минимальный контраст"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "Зеркало <0>дашборда PostHog Success Metrics</0> — продукт из сохранённых инсайтов, бизнес — вживую из Stripe/Neon"
 
+msgid "missed"
+msgstr "пропущен"
+
+msgid "Missed"
+msgstr "Пропущенные"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "Пропущенные <0>· 7 дн.</0>"
+
 msgid "Missing auth state"
 msgstr "Отсутствует состояние аутентификации"
 
@@ -10517,6 +10526,9 @@ msgstr "Повторять нечего"
 
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "За последние 30 дней ещё ничего не опубликовано. Ваше место появится, как только синхронизируется использование с этой машины; публикация как <0>{handle}</0>."
+
+msgid "Nothing was missed"
+msgstr "Ничего не пропущено"
 
 msgid "Notice"
 msgstr "Уведомление"
@@ -13472,6 +13484,9 @@ msgstr "Ставить повторяющиеся запуски по распи
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "Агенты по расписанию и по событиям (cron, события GitHub, вебхуки) с готовыми шаблонами."
+
+msgid "Scheduled runs that found no host online"
+msgstr "Запуски по расписанию, не нашедшие хост в сети"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "Расписания повторяются — уберите COUNT или UNTIL."
