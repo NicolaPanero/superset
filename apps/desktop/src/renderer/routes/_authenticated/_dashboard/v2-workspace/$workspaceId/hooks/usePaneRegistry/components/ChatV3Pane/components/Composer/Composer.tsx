@@ -1,116 +1,179 @@
 import { useLingui } from "@lingui/react/macro";
 import type { OutboxEntry } from "@superset/chat/core";
-import type { UserContent } from "@superset/chat/protocol";
+import type { AvailableCommand, UserContent } from "@superset/chat/protocol";
+import {
+	PromptInput,
+	PromptInputAttachment,
+	PromptInputAttachments,
+	PromptInputFooter,
+	type PromptInputMessage,
+	PromptInputProvider,
+	PromptInputSubmit,
+	usePromptInputController,
+} from "@superset/ui/ai-elements/prompt-input";
 import { Button } from "@superset/ui/button";
-import { Textarea } from "@superset/ui/textarea";
-import { ArrowUp, Square } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { cn } from "@superset/ui/utils";
+import { workspaceTrpc } from "@superset/workspace-client";
+import { ArrowUpIcon, Square } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { TiptapPromptEditor } from "renderer/components/TiptapPromptEditor";
+import type { SlashCommand } from "renderer/components/TiptapPromptEditor/slash-commands";
 
 const DRAFT_DEBOUNCE_MS = 300;
 
 export type ComposerProps = {
+	workspaceId: string;
 	draftKey: string;
-	outbox: OutboxEntry[];
+	availableCommands: AvailableCommand[];
 	onSend: (content: UserContent[]) => OutboxEntry | null;
 	placeholder?: string;
 	disabled?: boolean;
 	onCancelTurn?: (() => void) | null;
 };
 
-export function Composer({
+/**
+ * What the agent reported over ACP, in the shape the shared `/` menu takes.
+ * Everything the agent offers is harness-provided, so provenance is fixed.
+ */
+function toMenuCommands(commands: AvailableCommand[]): SlashCommand[] {
+	return commands.map((command) => ({
+		name: command.name,
+		aliases: [],
+		description: command.description ?? "",
+		argumentHint: command.hint ?? "",
+		kind: "builtin" as const,
+		source: "harness" as const,
+		entryKind: "command" as const,
+		trigger: "/" as const,
+	}));
+}
+
+export function Composer(props: ComposerProps) {
+	return (
+		<PromptInputProvider
+			initialInput={window.localStorage.getItem(props.draftKey) ?? ""}
+			key={props.draftKey}
+		>
+			<ComposerInner {...props} />
+		</PromptInputProvider>
+	);
+}
+
+function ComposerInner({
+	availableCommands,
 	disabled,
 	draftKey,
 	onCancelTurn,
 	onSend,
-	outbox,
 	placeholder,
+	workspaceId,
 }: ComposerProps) {
 	const { t } = useLingui();
-	const [value, setValue] = useState(
-		() => window.localStorage.getItem(draftKey) ?? "",
+	const controller = usePromptInputController();
+	const trpcUtils = workspaceTrpc.useUtils();
+
+	// Deduped with the page-level workspace.get query; gives the mention popover
+	// the cwd it shortens paths against.
+	const { data: workspaceStatus } = workspaceTrpc.workspace.get.useQuery(
+		{ id: workspaceId },
+		{ refetchOnWindowFocus: false },
 	);
-	const valueRef = useRef(value);
-	valueRef.current = value;
-	const pendingRef = useRef<{ clientId: string; sentText: string } | null>(
-		null,
+	const cwd = workspaceStatus?.worktreePath ?? "";
+
+	const searchFiles = useCallback(
+		async (query: string) => {
+			const { matches } = await trpcUtils.filesystem.searchFiles.fetch({
+				workspaceId,
+				query,
+				includeHidden: false,
+				limit: 20,
+			});
+			return matches.map((match) => ({
+				id: match.absolutePath,
+				name: match.name,
+				relativePath: match.relativePath,
+			}));
+		},
+		[trpcUtils, workspaceId],
 	);
 
+	const slashCommands = useMemo(
+		() => toMenuCommands(availableCommands),
+		[availableCommands],
+	);
+
+	const text = controller.textInput.value;
+	const textRef = useRef(text);
+	textRef.current = text;
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			if (value === "") window.localStorage.removeItem(draftKey);
-			else window.localStorage.setItem(draftKey, value);
+			if (text === "") window.localStorage.removeItem(draftKey);
+			else window.localStorage.setItem(draftKey, text);
 		}, DRAFT_DEBOUNCE_MS);
 		return () => clearTimeout(timer);
-	}, [value, draftKey]);
+	}, [text, draftKey]);
 
 	useEffect(() => {
 		return () => {
-			const latest = valueRef.current;
+			const latest = textRef.current;
 			if (latest === "") window.localStorage.removeItem(draftKey);
 			else window.localStorage.setItem(draftKey, latest);
 		};
 	}, [draftKey]);
 
-	useEffect(() => {
-		const pending = pendingRef.current;
-		if (!pending) return;
-		if (outbox.some((entry) => entry.clientId === pending.clientId)) return;
-		pendingRef.current = null;
-		if (valueRef.current === pending.sentText) {
-			setValue("");
+	const handleSubmit = useCallback(
+		(message: PromptInputMessage) => {
+			if (message.text.trim() === "" || disabled) return;
+			onSend([{ type: "text", text: message.text }]);
+			controller.textInput.clear();
 			window.localStorage.removeItem(draftKey);
-		}
-	}, [outbox, draftKey]);
-
-	const send = () => {
-		const text = valueRef.current;
-		if (text.trim() === "" || disabled) return;
-		const entry = onSend([{ type: "text", text }]);
-		if (entry === null) {
-			setValue("");
-			window.localStorage.removeItem(draftKey);
-			return;
-		}
-		pendingRef.current = { clientId: entry.clientId, sentText: text };
-	};
+		},
+		[disabled, onSend, controller, draftKey],
+	);
 
 	return (
-		<div className="flex items-end gap-2 border-t border-border p-3">
-			<Textarea
-				className="max-h-40 min-h-10 flex-1 resize-none"
-				disabled={disabled}
-				onChange={(event) => setValue(event.target.value)}
-				onKeyDown={(event) => {
-					if (
-						event.key === "Enter" &&
-						!event.shiftKey &&
-						!event.nativeEvent.isComposing
-					) {
-						event.preventDefault();
-						send();
+		<div className="px-6 pt-1 pb-5">
+			<PromptInput
+				className={cn(
+					"mx-auto w-full max-w-3xl rounded-2xl bg-card shadow-sm",
+					"[&>[data-slot=input-group]]:rounded-2xl [&>[data-slot=input-group]]:border-border [&>[data-slot=input-group]]:shadow-none",
+				)}
+				maxFileSize={50 * 1024 * 1024}
+				maxFiles={10}
+				multiple
+				onSubmit={handleSubmit}
+			>
+				<PromptInputAttachments>
+					{(file) => <PromptInputAttachment data={file} />}
+				</PromptInputAttachments>
+				<TiptapPromptEditor
+					cwd={cwd}
+					placeholder={
+						placeholder ??
+						t({ message: "Ask the agent, @mention files, run /commands" })
 					}
-				}}
-				placeholder={
-					placeholder ??
-					t({
-						message: "Message the agent",
-					})
-				}
-				value={value}
-			/>
-			{onCancelTurn ? (
-				<Button onClick={onCancelTurn} size="icon" variant="outline">
-					<Square className="size-4" />
-				</Button>
-			) : (
-				<Button
-					disabled={disabled || value.trim() === ""}
-					onClick={send}
-					size="icon"
-				>
-					<ArrowUp className="size-4" />
-				</Button>
-			)}
+					searchFiles={searchFiles}
+					slashCommands={slashCommands}
+				/>
+				<PromptInputFooter>
+					<span />
+					{onCancelTurn ? (
+						<Button
+							className="size-7 rounded-full"
+							onClick={onCancelTurn}
+							size="icon"
+							type="button"
+							variant="outline"
+						>
+							<Square className="size-3.5" />
+						</Button>
+					) : (
+						<PromptInputSubmit className="size-7 rounded-full border border-transparent bg-foreground/10 p-[5px] shadow-none hover:bg-foreground/20">
+							<ArrowUpIcon className="size-3.5 text-muted-foreground" />
+						</PromptInputSubmit>
+					)}
+				</PromptInputFooter>
+			</PromptInput>
 		</div>
 	);
 }

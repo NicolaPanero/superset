@@ -58,6 +58,7 @@ export function ChatV3Pane({
 
 	return (
 		<SessionView
+			workspaceId={workspaceId}
 			client={client}
 			headerLeft={picker}
 			key={sessionId}

@@ -47,12 +47,14 @@ export function NewSessionView({
 				</span>
 			</div>
 			<Composer
+				// No session yet, so no agent has reported its commands.
+				availableCommands={[]}
 				draftKey={`chat-v3-draft:new:${workspaceId}`}
 				onSend={(content) => {
 					onSend(content);
 					return null;
 				}}
-				outbox={[]}
+				workspaceId={workspaceId}
 				placeholder={t({
 					message: `Start a ${harness} session`,
 				})}
