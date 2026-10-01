@@ -4,17 +4,14 @@ import {
 	PAGE_THUMBNAIL_HEIGHT,
 	PAGE_THUMBNAIL_WIDTH,
 } from "@superset/shared/usercontent";
-import {
-	AllCommentsButton,
-	CommentsPanel,
-	PageCommentsView,
-} from "@superset/ui/page-comments";
+import { AllCommentsButton, CommentsPanel } from "@superset/ui/page-comments";
 import { TRPCClientError } from "@trpc/client";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { initServerI18n } from "@/lib/i18n-server";
 import { api } from "../../../trpc/server";
+import { PageCommentsFrame } from "./components/PageCommentsFrame";
 import { PageCommentsShell } from "./components/PageCommentsShell";
 import { PageHeaderBar } from "./components/PageHeaderBar";
 import { PageUnavailable } from "./components/PageUnavailable";
@@ -201,7 +198,11 @@ export default async function PublishedPage({
 
 				<div className="relative flex min-h-0 flex-1">
 					<main className="min-h-0 flex-1">
-						<PageCommentsView src={page.viewUrl} title={page.title} />
+						<PageCommentsFrame
+							pageId={page.id}
+							src={page.viewUrl}
+							title={page.title}
+						/>
 					</main>
 					<AllCommentsButton />
 					<CommentsPanel servedVersion={page.version} />

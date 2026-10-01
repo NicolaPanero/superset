@@ -32,6 +32,7 @@ export {
 	RenamePageDialog,
 } from "./components/PageHeader";
 export { useFramePointerDown } from "./hooks/useFramePointerDown";
+export { usePageStorageChannel } from "./hooks/usePageStorageChannel";
 export {
 	type CommentDraft,
 	type CommentIntent,

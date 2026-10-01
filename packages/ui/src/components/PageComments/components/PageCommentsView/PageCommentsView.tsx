@@ -11,11 +11,13 @@ import {
 	type PageLinkClick,
 	PENDING_ANCHOR_ID,
 } from "@superset/shared/page-comments-runtime";
+import type { PageStoragePort } from "@superset/shared/page-storage";
 import {
 	applyPageViewportZoom,
 	type PageViewportZoom,
 } from "@superset/shared/page-zoom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePageStorageChannel } from "../../hooks/usePageStorageChannel";
 import { useComments } from "../../providers/CommentProvider";
 import { PageFrame } from "../PageFrame";
 import { CommentBubble, pinClassName } from "./components/CommentBubble";
@@ -40,6 +42,13 @@ interface PageCommentsViewProps {
 	 */
 	onFramePointerDown?: () => void;
 	onLinkClick?: (click: PageLinkClick) => void;
+	/**
+	 * Serves the page's `window.superset.storage` calls and relays the hub's
+	 * change notifications. Omitted, the page's storage API reports itself
+	 * unavailable and the page renders its empty state — which is also what
+	 * happens wherever there is no host at all.
+	 */
+	storage?: PageStoragePort;
 }
 
 export function PageCommentsView({
@@ -50,6 +59,7 @@ export function PageCommentsView({
 	onScrollYChange,
 	onFramePointerDown,
 	onLinkClick,
+	storage,
 }: PageCommentsViewProps) {
 	const onLinkClickRef = useRef(onLinkClick);
 	onLinkClickRef.current = onLinkClick;
@@ -92,6 +102,8 @@ export function PageCommentsView({
 	} = useComments();
 
 	const frameOrigin = useMemo(() => new URL(src).origin, [src]);
+
+	usePageStorageChannel({ frameRef, frameOrigin, port: storage });
 
 	const [lastHoverRect, setLastHoverRect] = useState<FrameRect | null>(null);
 	useEffect(() => {

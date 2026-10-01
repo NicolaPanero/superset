@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { usePageComments } from "@superset/cloud-client";
+import { usePageComments, usePageStorageBridge } from "@superset/cloud-client";
 import { errorMessage } from "@superset/i18n/errors";
 import { pageCommentUser } from "@superset/shared/page-comments";
 import type { PageLinkClick } from "@superset/shared/page-comments-runtime";
@@ -74,6 +74,7 @@ export function PageViewer({
 		user,
 		onError: (error) => toast.error(errorMessage(error)),
 	});
+	const storage = usePageStorageBridge({ pageId: resolvedPageId ?? "" });
 	const scrollKey = `${resolvedPageId ?? slug}:${pull.data?.version ?? 0}`;
 
 	const onResolvedRef = useRef(onResolved);
@@ -153,6 +154,7 @@ export function PageViewer({
 							onScrollYChange={(y) => scrollPositions.set(scrollKey, y)}
 							onFramePointerDown={onFramePointerDown}
 							onLinkClick={onLinkClick}
+							{...(resolvedPageId ? { storage } : {})}
 						/>
 					</div>
 					<AllCommentsButton />
