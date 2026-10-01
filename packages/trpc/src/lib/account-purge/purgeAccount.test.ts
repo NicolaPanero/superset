@@ -112,6 +112,7 @@ mock.module("../page-store", () => ({
 	},
 	callPageStore: async () => ({ ok: true }),
 	deletePageStorage: async () => {},
+	notifyPageHub: () => {},
 }));
 
 mock.module("@superset/auth/stripe", () => ({

@@ -95,13 +95,6 @@ app.post("/v2/page/:pageId/storage/ticket", async (c) => {
 	const auth = await verifyJWT(token, c.env.NEXT_PUBLIC_API_URL);
 	if (!auth) return c.json({ error: "Unauthorized" }, 401);
 
-	const body = (await c.req.json().catch(() => null)) as {
-		name?: unknown;
-		image?: unknown;
-	} | null;
-	const name = typeof body?.name === "string" ? body.name : "Someone";
-	const image = typeof body?.image === "string" ? body.image : null;
-
 	const stub = await getServerByName(c.env.PageHub, pageId);
 	const manifest = await stub.readManifest();
 	if (!manifest) return c.json({ error: "Not found" }, 404);
@@ -116,8 +109,8 @@ app.post("/v2/page/:pageId/storage/ticket", async (c) => {
 	const ticket = await signPageConnectTicket(c.env.NUDGE_SECRET, {
 		pageId,
 		userId: auth.sub,
-		name,
-		image,
+		name: auth.name ?? "Someone",
+		image: auth.image ?? null,
 		organizationIds: auth.organizationIds,
 		author: manifest.createdByUserId === auth.sub,
 		writable: writableFor(manifest, viewer),

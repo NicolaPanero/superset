@@ -98,8 +98,13 @@ async function main() {
 	});
 	const issuer = `http://localhost:${JWKS_PORT}`;
 
-	const mint = (sub: string, organizationIds: string[]) =>
-		new SignJWT({ organizationIds })
+	const mint = (
+		sub: string,
+		organizationIds: string[],
+		name = "Ada",
+		image: string | null = null,
+	) =>
+		new SignJWT({ organizationIds, name, image })
 			.setProtectedHeader({ alg: "RS256", kid: "test-key" })
 			.setIssuer(issuer)
 			.setAudience(issuer)
@@ -232,8 +237,8 @@ async function main() {
 			socket.send(JSON.stringify({ type: "call", id, request }));
 		});
 
-	const authorJwt = await mint(AUTHOR, [ORG]);
-	const memberJwt = await mint(MEMBER, [ORG]);
+	const authorJwt = await mint(AUTHOR, [ORG], "Ada");
+	const memberJwt = await mint(MEMBER, [ORG], "Grace");
 	const outsiderJwt = await mint(OUTSIDER, [
 		"99999999-9999-4999-8999-999999999999",
 	]);
@@ -279,12 +284,24 @@ async function main() {
 	);
 	check("404s a page with no manifest", missing.status === 404, missing.status);
 
-	const authorTicket = await ticket(ORG_PAGE, authorJwt, "Ada");
+	const authorTicket = await ticket(ORG_PAGE, authorJwt);
 	check(
 		"issues a ticket for an org page",
 		authorTicket.status === 200 && Boolean(authorTicket.body?.ticket),
 		authorTicket,
 	);
+
+	const spoofed = await ticket(ORG_PAGE, memberJwt, "Ada");
+	const spoofedOpen = await open(String(spoofed.url), pageOrigin).catch(
+		() => null,
+	);
+	check(
+		"a body-supplied name cannot override the token's",
+		(spoofedOpen?.first as { viewer?: { name?: string } } | undefined)?.viewer
+			?.name === "Grace",
+		spoofedOpen?.first,
+	);
+	spoofedOpen?.socket.close();
 
 	console.log("\nsocket");
 	const url = String(authorTicket.url);
@@ -303,7 +320,7 @@ async function main() {
 		wrongOrigin,
 	);
 
-	const fresh = await ticket(ORG_PAGE, authorJwt, "Ada");
+	const fresh = await ticket(ORG_PAGE, authorJwt);
 	const first = await open(String(fresh.url), pageOrigin).catch((error) => {
 		console.error("  correct-origin open failed:", (error as Error).message);
 		console.error(
@@ -371,7 +388,7 @@ async function main() {
 	);
 
 	console.log("\npush between two viewers");
-	const second = await ticket(ORG_PAGE, memberJwt, "Grace");
+	const second = await ticket(ORG_PAGE, memberJwt);
 	const other = await open(String(second.url), pageOrigin);
 	check(
 		"a second viewer connects",
@@ -409,6 +426,33 @@ async function main() {
 		{ method: "POST" },
 	);
 	check("the nudge route refuses without it", nudgeNoSecret.status === 401);
+
+	const closed = new Promise<string>((resolve) => {
+		first.socket.addEventListener("close", (event) => resolve(`${event.code}`));
+		first.socket.addEventListener("message", (event) => {
+			const data = JSON.parse(String(event.data));
+			if (data.type === "revoked") resolve("revoked");
+		});
+		setTimeout(() => resolve("still open"), 6000);
+	});
+	seed(
+		ORG_PAGE,
+		manifest(ORG_PAGE, {
+			visibility: "just_me",
+			organizationId: ORG,
+			createdByUserId: OUTSIDER,
+		}),
+	);
+	await fetch(`${base}/v2/page/${ORG_PAGE}/storage/manifest-changed`, {
+		method: "POST",
+		headers: { authorization: `Bearer ${SECRET}` },
+	});
+	const outcome = await closed;
+	check(
+		"a manifest change closes a socket that no longer passes",
+		outcome === "revoked" || outcome === "4403",
+		outcome,
+	);
 
 	console.log("\nadmin route");
 	const list = await fetch(`${base}/v2/page/${ORG_PAGE}/storage/admin`, {

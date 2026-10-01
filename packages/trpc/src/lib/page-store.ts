@@ -5,8 +5,10 @@ import {
 	type PageStorageHubRequest,
 	type PageStorageHubResponse,
 	pageStorageAdminPath,
+	pageStorageNudgePath,
 } from "@superset/shared/page-storage-hub";
 import { TRPCError } from "@trpc/server";
+import { waitUntil } from "@vercel/functions";
 import { eq, inArray } from "drizzle-orm";
 import { env } from "../env";
 
@@ -66,6 +68,29 @@ export async function callPageStore<Request extends PageStorageHubRequest>(
 		throw storageError(body.code, body.message);
 	}
 	return body as PageStorageHubReplyFor<Request["op"]>;
+}
+
+export function notifyPageHub(pageId: string): void {
+	waitUntil(
+		fetch(`${env.REALTIME_URL}${pageStorageNudgePath(pageId)}`, {
+			method: "POST",
+			headers: { authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}` },
+			signal: AbortSignal.timeout(5_000),
+		})
+			.then((response) => {
+				if (!response.ok) {
+					console.warn(
+						`[pages] hub nudge rejected: ${response.status} for ${pageId}`,
+					);
+				}
+			})
+			.catch((error) => {
+				console.warn(
+					"[pages] hub nudge failed:",
+					error instanceof Error ? error.message : error,
+				);
+			}),
+	);
 }
 
 export async function deletePageStorage(pageId: string): Promise<void> {

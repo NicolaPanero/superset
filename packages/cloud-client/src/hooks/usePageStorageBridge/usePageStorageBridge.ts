@@ -33,11 +33,7 @@ export function usePageStorageBridge({
 		try {
 			response = await fetch(`${realtimeUrl}${pageStorageTicketPath(pageId)}`, {
 				method: "POST",
-				headers: {
-					authorization: `Bearer ${jwt}`,
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({ name: viewer.name, image: viewer.image }),
+				headers: { authorization: `Bearer ${jwt}` },
 			});
 		} catch {
 			return null;

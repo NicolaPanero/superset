@@ -165,10 +165,16 @@ Rules that matter when you write one:
   records rather than a broken page.
 - **Derive, don't accumulate.** A tally is computed from `getAll` on every
   render. Never keep a running count in a record.
-- **Values are JSON and small**: at most 8 KiB each, 128 keys per person, and
-  256 KiB for the whole page. An over-size write rejects.
-- **Branch on `error.code`**, never on the message:
-  `quota_exceeded`, `unauthenticated`, `invalid`, `unavailable`.
+- **Values are JSON and bounded**: at most 64 KiB each, 500 keys per person,
+  and 4 MiB for the whole page. An over-size write rejects.
+- **Branch on `error.code`**, never on the message: `quota_exceeded`,
+  `rate_limited`, `unauthenticated`, `invalid`, `unavailable`, and `revoked`.
+  `revoked` is terminal: the page's access changed while it was open, so
+  surface it once and stop retrying.
+- **Who is reading** is on the object: `store.viewer` is `{ userId, name,
+  image }`, `store.author` is true for the page's author, and
+  `store.writable` says whether this viewer may write. Use `store.author` for
+  controls only the author should have, like closing a poll.
 - **Signed-in viewers of the page's organization only.** A signed-out reader
   of an `everyone` page gets no storage, so the page must still render.
 - Writes are per-person, so there is nothing to merge and no need for a CRDT.

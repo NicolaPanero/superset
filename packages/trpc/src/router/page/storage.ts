@@ -16,6 +16,7 @@ import {
 } from "@superset/shared/usercontent";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { env } from "../../env";
+import { notifyPageHub } from "../../lib/page-store";
 import { deleteObjects, putObject } from "../../lib/r2";
 
 // Expiry is rounded to a window boundary so identical claims give an
@@ -41,6 +42,7 @@ export async function writePageManifest(pageId: string): Promise<void> {
 
 	if (page.takenDownAt) {
 		await thrice(() => deleteObjects([pageManifestKey(pageId)]));
+		notifyPageHub(pageId);
 		return;
 	}
 
@@ -118,6 +120,8 @@ export async function writePageManifest(pageId: string): Promise<void> {
 			bucket: "private",
 		}),
 	);
+
+	notifyPageHub(pageId);
 }
 
 // The manifest is the Worker's authorization source, so both writing it and

@@ -6,8 +6,6 @@ export const MAX_PAGE_STORAGE_KEYS_PER_USER = 500;
 export const MAX_PAGE_STORAGE_BYTES = 4 * 1024 * 1024;
 export const MAX_PAGE_STORAGE_KEY_LENGTH = 128;
 
-export const PAGE_STORAGE_OWN_PREFIX = "own/";
-
 export const PAGE_STORAGE_TICKET_SECONDS = 60;
 
 export type PageStorageErrorCode =
