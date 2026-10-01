@@ -161,10 +161,14 @@ export function CommentComposer({
 		}));
 		setValue("");
 		setImages((current) => current.filter((image) => image.status === "error"));
-		for (const image of ready) revokeSoon(image.previewUrl);
-		Promise.resolve(onSubmit(body, attachments)).catch(() => {
-			setValue((current) => current || body);
-		});
+		Promise.resolve(onSubmit(body, attachments))
+			.then(() => {
+				for (const image of ready) revokeSoon(image.previewUrl);
+			})
+			.catch(() => {
+				setValue((current) => current || body);
+				setImages((current) => [...ready, ...current]);
+			});
 	};
 
 	const addFilesRef = useRef(addFiles);

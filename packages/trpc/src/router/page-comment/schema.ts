@@ -51,9 +51,13 @@ const commentAttachmentsSchema = z
 		message: "The same image cannot be attached twice",
 	});
 
-/** A comment says something: words, or at least one image. */
+/**
+ * A comment says something: text, or at least one image. Text is any
+ * non-empty body, exactly what `min(1)` accepted before images existed —
+ * released clients must not find an input they used to send refused.
+ */
 function hasContent(input: { body: string; attachments?: string[] }): boolean {
-	return input.body.trim().length > 0 || (input.attachments?.length ?? 0) > 0;
+	return input.body.length > 0 || (input.attachments?.length ?? 0) > 0;
 }
 
 export const createPageCommentThreadSchema = z

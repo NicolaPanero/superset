@@ -641,9 +641,18 @@ export const pageCommentRouter = {
 				.delete(pageCommentThreads)
 				.where(eq(pageCommentThreads.id, input.threadId));
 
-			await reapOrphanFiles(
-				await detachAll({ parentKind: "comment", parentIds: commentIds }),
-			);
+			// The thread is gone either way; a storage failure here is logged,
+			// not surfaced as a failed delete.
+			try {
+				await reapOrphanFiles(
+					await detachAll({ parentKind: "comment", parentIds: commentIds }),
+				);
+			} catch (error) {
+				console.error("[page-comments] storage cleanup failed after delete", {
+					threadId: input.threadId,
+					error,
+				});
+			}
 
 			return { id: input.threadId };
 		}),

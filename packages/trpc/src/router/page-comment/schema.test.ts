@@ -45,8 +45,7 @@ describe("comment content", () => {
 
 	test("neither is not a comment", () => {
 		expect(
-			createPageCommentThreadSchema.safeParse(pageThread({ body: "  " }))
-				.success,
+			createPageCommentThreadSchema.safeParse(pageThread({ body: "" })).success,
 		).toBe(false);
 		expect(
 			replyPageCommentSchema.safeParse({
