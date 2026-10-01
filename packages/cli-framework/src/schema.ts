@@ -18,6 +18,8 @@ export interface SchemaOption {
 	min?: number;
 	max?: number;
 	env?: string;
+	/** Flag names this option cannot be combined with. */
+	conflicts?: string[];
 }
 
 export interface SchemaArg {
@@ -50,7 +52,10 @@ function defined<T extends object>(fields: T): Partial<T> {
 	) as Partial<T>;
 }
 
-function toOption(config: ProcessedBuilderConfig): SchemaOption {
+function toOption(
+	config: ProcessedBuilderConfig,
+	siblings: Record<string, ProcessedBuilderConfig>,
+): SchemaOption {
 	return {
 		name: config.name,
 		aliases: config.aliases,
@@ -65,6 +70,7 @@ function toOption(config: ProcessedBuilderConfig): SchemaOption {
 			min: config.minVal,
 			max: config.maxVal,
 			env: config.envVar,
+			conflicts: config.conflictsWith?.map((key) => siblings[key]?.name ?? key),
 		}),
 	};
 }
@@ -84,7 +90,7 @@ function toArg(config: ProcessedBuilderConfig): SchemaArg {
 function options(configs: Record<string, ProcessedBuilderConfig> | undefined) {
 	return Object.values(configs ?? {})
 		.filter((config) => config.type !== "positional" && !config.isHidden)
-		.map(toOption)
+		.map((config) => toOption(config, configs ?? {}))
 		.sort((a, b) => byName(a.name, b.name));
 }
 

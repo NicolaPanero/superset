@@ -54,7 +54,11 @@ function fixture(): CommandNode {
 								minVal: 1,
 								maxVal: 5000,
 							}),
-							apiKey: option({ name: "api-key", envVar: "SUPERSET_API_KEY" }),
+							apiKey: option({
+								name: "api-key",
+								envVar: "SUPERSET_API_KEY",
+								conflictsWith: ["workspace"],
+							}),
 							secret: option({ name: "secret", isHidden: true }),
 						},
 					}),
@@ -112,6 +116,7 @@ describe("generateSchema", () => {
 				type: "string",
 				required: false,
 				env: "SUPERSET_API_KEY",
+				conflicts: ["workspace"],
 			},
 			{
 				name: "lines",
