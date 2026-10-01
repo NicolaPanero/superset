@@ -3,7 +3,10 @@ import type {
 	PageStoragePort,
 	PageStorageResult,
 } from "@superset/shared/page-storage";
-import { pageStorageTicketPath } from "@superset/shared/page-storage-hub";
+import {
+	pageStorageSocketPath,
+	pageStorageTicketPath,
+} from "@superset/shared/page-storage-hub";
 import { useCallback, useMemo } from "react";
 import { useCloudClient } from "../../providers/CloudClientProvider";
 
@@ -42,10 +45,13 @@ export function usePageStorageBridge({
 		if (!response.ok) return null;
 
 		const body = (await response.json().catch(() => null)) as {
-			url?: string;
+			ticket?: string;
 			fallback?: boolean;
 		} | null;
-		if (body?.url) return { kind: "socket" as const, url: body.url };
+		if (body?.ticket) {
+			const socket = `${realtimeUrl.replace(/^http/, "ws")}${pageStorageSocketPath(pageId)}?ticket=${encodeURIComponent(body.ticket)}`;
+			return { kind: "socket" as const, url: socket };
+		}
 		if (body?.fallback) {
 			return {
 				kind: "bridge" as const,

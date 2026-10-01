@@ -1,10 +1,7 @@
 import * as Sentry from "@sentry/cloudflare";
 import { PAGE_STORAGE_TICKET_SECONDS } from "@superset/shared/page-storage";
 import { readable, writableFor } from "@superset/shared/page-storage-access";
-import {
-	type PageStorageHubRequest,
-	pageStorageSocketPath,
-} from "@superset/shared/page-storage-hub";
+import type { PageStorageHubRequest } from "@superset/shared/page-storage-hub";
 import {
 	isRealtimeNudgeKind,
 	isRealtimeUpdate,
@@ -128,13 +125,7 @@ app.post("/v2/page/:pageId/storage/ticket", async (c) => {
 		exp: Math.floor(Date.now() / 1000) + PAGE_STORAGE_TICKET_SECONDS,
 	});
 
-	const base = new URL(c.req.url);
-	base.protocol = base.protocol === "http:" ? "ws:" : "wss:";
-	base.pathname = pageStorageSocketPath(pageId);
-	base.search = "";
-	return c.json({
-		url: `${base.toString()}?ticket=${encodeURIComponent(ticket)}`,
-	});
+	return c.json({ ticket });
 });
 
 app.get("/v2/page/:pageId/storage/socket", async (c) => {
