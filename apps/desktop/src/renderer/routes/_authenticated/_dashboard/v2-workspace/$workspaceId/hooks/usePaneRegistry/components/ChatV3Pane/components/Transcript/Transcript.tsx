@@ -37,25 +37,6 @@ function latestUserItemId(groups: TurnGroup[]): string | null {
 	return null;
 }
 
-/**
- * `session/fork` copies a whole session — it takes no truncation point — so the
- * control belongs to the conversation, and sits on its last answer rather than
- * on every one, where it would read as "rewind to here".
- */
-function latestAgentItemId(groups: TurnGroup[]): string | null {
-	for (let groupIndex = groups.length - 1; groupIndex >= 0; groupIndex -= 1) {
-		const group = groups[groupIndex];
-		if (!group) continue;
-		for (let index = group.entries.length - 1; index >= 0; index -= 1) {
-			const entry = group.entries[index];
-			if (entry?.kind === "item" && entry.item.kind === "agent_message") {
-				return entry.item.id;
-			}
-		}
-	}
-	return null;
-}
-
 function outboxText(entry: OutboxEntry): string {
 	return entry.content
 		.filter((content) => content.type === "text")
@@ -101,7 +82,6 @@ export function Transcript({
 		return targets;
 	}, [approvals]);
 
-	const forkAnchorId = latestAgentItemId(groups) ?? undefined;
 	const anchorItemId = latestUserItemId(groups);
 	useEffect(() => {
 		if (!anchorItemId) return;
@@ -132,7 +112,6 @@ export function Transcript({
 				)}
 				{groups.map((group) => (
 					<TurnGroupSection
-						forkAnchorId={forkAnchorId}
 						group={group}
 						isEntryCollapsed={isEntryCollapsed}
 						key={group.turnId}

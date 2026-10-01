@@ -4653,6 +4653,9 @@ msgstr "Kimlik bilgisi doğrulanamadı: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Çalışma alanından açıklama istenemedi"
 
+msgid "Couldn't branch the conversation"
+msgstr "Konuşma çatallanamadı"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Yıldız durumu doğrulanamadı — GitHub CLI'nin (`gh`) kurulu ve oturum açmış olduğunu ve ağ bağlantınızın bulunduğunu kontrol edin"
 
@@ -15994,6 +15997,9 @@ msgstr "Bu işlem geri alınamaz."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Bu aracı sohbet olarak açamazsınız."
+
+msgid "This agent can't branch a conversation"
+msgstr "Bu aracı bir konuşmayı çatallayamaz"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Bu ajan bir bulut çalışma alanında çalışamaz"

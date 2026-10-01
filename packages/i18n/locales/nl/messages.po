@@ -4653,6 +4653,9 @@ msgstr "Kon de inloggegevens niet verifiëren: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Kon de workspace niet om een beschrijving vragen"
 
+msgid "Couldn't branch the conversation"
+msgstr "Kon het gesprek niet afsplitsen"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Kan de sterstatus niet bevestigen — controleer of de GitHub-CLI (`gh`) is geïnstalleerd, of je bent ingelogd en of je een netwerkverbinding hebt"
 
@@ -15994,6 +15997,9 @@ msgstr "Deze actie kan niet worden teruggedraaid."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Deze agent kan niet als chat worden geopend."
+
+msgid "This agent can't branch a conversation"
+msgstr "Deze agent kan een gesprek niet afsplitsen"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Deze agent kan niet in een cloudwerkruimte draaien"

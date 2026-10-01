@@ -4653,6 +4653,9 @@ msgstr "Không xác minh được thông tin đăng nhập: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Không thể yêu cầu không gian làm việc tạo mô tả"
 
+msgid "Couldn't branch the conversation"
+msgstr "Không thể tạo nhánh hội thoại"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Không xác nhận được trạng thái sao — hãy kiểm tra GitHub CLI (`gh`) đã cài, đã đăng nhập và bạn có kết nối mạng"
 
@@ -15994,6 +15997,9 @@ msgstr "Không thể hoàn tác thao tác này."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Không thể mở tác nhân này dưới dạng trò chuyện."
+
+msgid "This agent can't branch a conversation"
+msgstr "Tác nhân này không thể tạo nhánh hội thoại"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Agent này không thể chạy trong workspace cloud"

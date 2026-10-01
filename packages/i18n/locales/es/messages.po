@@ -4653,6 +4653,9 @@ msgstr "No se pudo verificar la credencial: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "No se pudo pedir una descripción al espacio de trabajo"
 
+msgid "Couldn't branch the conversation"
+msgstr "No se pudo bifurcar la conversación"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "No se pudo confirmar el estado de la estrella — comprueba que el CLI de GitHub (`gh`) esté instalado, con la sesión iniciada, y que tengas conexión de red"
 
@@ -15994,6 +15997,9 @@ msgstr "Esta acción es irreversible."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Este agente no se puede abrir como chat."
+
+msgid "This agent can't branch a conversation"
+msgstr "Este agente no puede bifurcar una conversación"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Este agente no puede ejecutarse en un espacio de trabajo en la nube"

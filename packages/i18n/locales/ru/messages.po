@@ -4653,6 +4653,9 @@ msgstr "Не удалось проверить учётные данные: {rea
 msgid "Couldn't ask the workspace for a description"
 msgstr "Не удалось запросить описание у рабочего пространства"
 
+msgid "Couldn't branch the conversation"
+msgstr "Не удалось ответвить разговор"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Не удалось проверить статус звезды — убедитесь, что GitHub CLI (`gh`) установлен, выполнен вход и есть подключение к сети"
 
@@ -15994,6 +15997,9 @@ msgstr "Это действие необратимо."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Этого агента нельзя открыть как чат."
+
+msgid "This agent can't branch a conversation"
+msgstr "Этот агент не может ответвить разговор"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Этот агент не может работать в облачной рабочей области"

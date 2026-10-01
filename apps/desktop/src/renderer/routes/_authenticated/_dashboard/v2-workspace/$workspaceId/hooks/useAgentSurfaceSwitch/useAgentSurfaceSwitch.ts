@@ -4,6 +4,8 @@ import type { RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo } from "react";
+import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
+import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import { terminalRuntimeRegistry } from "renderer/lib/terminal/terminal-runtime-registry";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import { useChatWiring } from "../usePaneRegistry/components/ChatV3Pane/hooks/useSessionClient";
@@ -32,6 +34,7 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 	const wiring = useChatWiring();
 	const killTerminal = workspaceTrpc.terminal.killSession.useMutation();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
+	const appearance = useTerminalAppearance();
 
 	const stopChat = useCallback(
 		async (sessionId: string) => {
@@ -78,9 +81,15 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				return;
 			}
 
+			// Before the launch, not after: the pty resumes the same agent session
+			// the adapter still has open, and two processes on one session is what
+			// this whole switch exists to avoid.
+			if (data.acpSessionId) await stopChat(data.acpSessionId);
+
 			try {
 				const result = await runAgent.mutateAsync({
 					workspaceId,
+					colors: terminalQueryColors(appearance.theme),
 					agent: resumeFrom.id,
 					prompt: "",
 					resumeSessionId: resumeFrom.sessionId,
@@ -91,10 +100,16 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					);
 					return;
 				}
-				if (data.acpSessionId) await stopChat(data.acpSessionId);
-				// A resumed agent is a new terminal with its own session id, so the
-				// captured pair is stale — the binding is the source of truth again.
-				ctx.actions.updateData({ terminalId: result.sessionId });
+				// `updateData` replaces the pane's data rather than merging into it,
+				// so the surface has to be written again here: dropped, it derives
+				// back to the chat for a chat-capable agent and the terminal this
+				// just launched is unmounted before it draws. `acpSessionId` is kept
+				// so toggling back resumes that chat instead of starting a new one.
+				ctx.actions.updateData({
+					...data,
+					agentSurface: "cli",
+					terminalId: result.sessionId,
+				});
 				ctx.actions.setTitle(result.label);
 			} catch (error) {
 				toast.error(t({ message: "Couldn't reopen the agent in a terminal" }), {
@@ -102,7 +117,7 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				});
 			}
 		},
-		[killTerminal, runAgent, stopChat, workspaceId, t],
+		[killTerminal, runAgent, stopChat, workspaceId, t, appearance.theme],
 	);
 
 	return useMemo(

@@ -4653,6 +4653,9 @@ msgstr "Tidak dapat memverifikasi kredensial: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Tidak dapat meminta deskripsi dari workspace"
 
+msgid "Couldn't branch the conversation"
+msgstr "Tidak dapat mencabangkan percakapan"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Tidak bisa memastikan status star — pastikan GitHub CLI (`gh`) terpasang, sudah masuk, dan Anda punya koneksi jaringan"
 
@@ -15994,6 +15997,9 @@ msgstr "Tindakan ini tidak bisa dibatalkan."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Agen ini tidak dapat dibuka sebagai chat."
+
+msgid "This agent can't branch a conversation"
+msgstr "Agen ini tidak dapat mencabangkan percakapan"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Agen ini tidak bisa berjalan di workspace cloud"

@@ -4653,6 +4653,9 @@ msgstr "자격 증명을 확인하지 못했습니다: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "워크스페이스에 설명을 요청하지 못했습니다"
 
+msgid "Couldn't branch the conversation"
+msgstr "대화를 분기할 수 없습니다"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "스타 상태를 확인하지 못했습니다 — GitHub CLI(`gh`)가 설치되어 로그인되어 있는지, 네트워크에 연결되어 있는지 확인하세요"
 
@@ -15994,6 +15997,9 @@ msgstr "이 동작은 되돌릴 수 없습니다."
 
 msgid "This agent can't be opened as a chat."
 msgstr "이 에이전트는 채팅으로 열 수 없습니다."
+
+msgid "This agent can't branch a conversation"
+msgstr "이 에이전트는 대화를 분기할 수 없습니다"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "이 에이전트는 클라우드 워크스페이스에서 실행할 수 없습니다"

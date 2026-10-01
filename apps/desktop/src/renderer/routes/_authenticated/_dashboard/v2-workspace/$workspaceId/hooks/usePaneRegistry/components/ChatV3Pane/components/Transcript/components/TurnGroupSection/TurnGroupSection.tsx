@@ -31,12 +31,9 @@ export type TurnGroupSectionProps = {
 	onRespond: (approvalId: string, decision: Decision) => void;
 	/** Absent when the agent cannot branch its own session. */
 	onFork?: (() => void) | undefined;
-	/** The one row that carries the branch control, if it is in this group. */
-	forkAnchorId?: string | undefined;
 };
 
 function ItemRow({
-	forkAnchorId,
 	item,
 	onFork,
 	onRespond,
@@ -46,7 +43,6 @@ function ItemRow({
 	snapshot: SessionSnapshot;
 	onRespond: TurnGroupSectionProps["onRespond"];
 	onFork: TurnGroupSectionProps["onFork"];
-	forkAnchorId: TurnGroupSectionProps["forkAnchorId"];
 }) {
 	if (rowKindForItem(item) === "unknown" || !isKnownItem(item)) {
 		return <UnknownItemRow item={item} />;
@@ -56,11 +52,7 @@ function ItemRow({
 			return <UserMessageRow harness={snapshot.session?.harness} item={item} />;
 		case "agent_message":
 			return (
-				<AgentMessageRow
-					item={item}
-					onFork={item.id === forkAnchorId ? onFork : undefined}
-					snapshot={snapshot}
-				/>
+				<AgentMessageRow item={item} onFork={onFork} snapshot={snapshot} />
 			);
 		case "reasoning":
 			return <ReasoningRow item={item} snapshot={snapshot} />;
@@ -76,7 +68,6 @@ function ItemRow({
 }
 
 export function TurnGroupSection({
-	forkAnchorId,
 	group,
 	isEntryCollapsed,
 	onToggleEntry,
@@ -103,7 +94,6 @@ export function TurnGroupSection({
 							key={entry.item.id}
 						>
 							<ItemRow
-								forkAnchorId={forkAnchorId}
 								item={entry.item}
 								onFork={onFork}
 								onRespond={onRespond}

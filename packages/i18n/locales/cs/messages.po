@@ -4653,6 +4653,9 @@ msgstr "Přihlašovací údaje se nepodařilo ověřit: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Nepodařilo se požádat pracovní prostor o popis"
 
+msgid "Couldn't branch the conversation"
+msgstr "Konverzaci se nepodařilo rozvětvit"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Nepodařilo se ověřit stav hvězdy — zkontrolujte, že je nainstalované GitHub CLI (`gh`), že jste přihlášeni a že máte připojení k síti"
 
@@ -15994,6 +15997,9 @@ msgstr "Tuto akci nelze vrátit zpět."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Tohoto agenta nelze otevřít jako chat."
+
+msgid "This agent can't branch a conversation"
+msgstr "Tento agent neumí rozvětvit konverzaci"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Tento agent nemůže běžet v cloudovém pracovním prostoru"

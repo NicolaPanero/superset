@@ -4653,6 +4653,9 @@ msgstr "Nie udało się zweryfikować poświadczeń: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Nie udało się poprosić obszaru roboczego o opis"
 
+msgid "Couldn't branch the conversation"
+msgstr "Nie udało się rozgałęzić rozmowy"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Nie udało się potwierdzić statusu gwiazdki — sprawdź, czy GitHub CLI (`gh`) jest zainstalowane, zalogowane i czy masz połączenie z siecią"
 
@@ -15994,6 +15997,9 @@ msgstr "Tej operacji nie można cofnąć."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Tego agenta nie można otworzyć jako czatu."
+
+msgid "This agent can't branch a conversation"
+msgstr "Ten agent nie może rozgałęzić rozmowy"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Ten agent nie może działać w obszarze roboczym w chmurze"

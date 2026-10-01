@@ -4653,6 +4653,9 @@ msgstr "Impossible de vérifier les identifiants : {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Impossible de demander une description à l’espace de travail"
 
+msgid "Couldn't branch the conversation"
+msgstr "Impossible de dupliquer la conversation"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Impossible de confirmer l'état de l'étoile — vérifiez que la CLI GitHub (`gh`) est installée, que vous y êtes connecté et que vous disposez d'une connexion réseau"
 
@@ -15994,6 +15997,9 @@ msgstr "Cette action est irréversible."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Cet agent ne peut pas être ouvert en tant que chat."
+
+msgid "This agent can't branch a conversation"
+msgstr "Cet agent ne peut pas dupliquer une conversation"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Cet agent ne peut pas s'exécuter dans un espace de travail cloud"

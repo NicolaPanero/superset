@@ -4653,6 +4653,9 @@ msgstr "无法验证凭据：{reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "无法请求工作区生成描述"
 
+msgid "Couldn't branch the conversation"
+msgstr "无法分叉对话"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "无法确认加星状态，请检查是否已安装并登录GitHub CLI（`gh`），以及网络是否连通"
 
@@ -15994,6 +15997,9 @@ msgstr "此操作不可逆。"
 
 msgid "This agent can't be opened as a chat."
 msgstr "该智能体无法以聊天方式打开。"
+
+msgid "This agent can't branch a conversation"
+msgstr "该智能体无法分叉对话"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "此智能体无法在云端工作区中运行"

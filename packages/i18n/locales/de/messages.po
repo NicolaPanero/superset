@@ -4653,6 +4653,9 @@ msgstr "Die Zugangsdaten konnten nicht überprüft werden: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Der Arbeitsbereich konnte nicht nach einer Beschreibung gefragt werden"
 
+msgid "Couldn't branch the conversation"
+msgstr "Unterhaltung konnte nicht verzweigt werden"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Der Star-Status ließ sich nicht bestätigen — prüfe, ob die GitHub-CLI (`gh`) installiert und angemeldet ist und ob du eine Netzwerkverbindung hast"
 
@@ -15994,6 +15997,9 @@ msgstr "Diese Aktion ist nicht umkehrbar."
 
 msgid "This agent can't be opened as a chat."
 msgstr "Dieser Agent kann nicht als Chat geöffnet werden."
+
+msgid "This agent can't branch a conversation"
+msgstr "Dieser Agent kann keine Unterhaltung verzweigen"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Dieser Agent kann nicht in einem Cloud-Arbeitsbereich laufen"

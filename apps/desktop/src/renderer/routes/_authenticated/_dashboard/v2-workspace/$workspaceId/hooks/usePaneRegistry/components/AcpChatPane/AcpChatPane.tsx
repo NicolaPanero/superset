@@ -1,4 +1,5 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -26,6 +27,7 @@ export function AcpChatPane({
 	onSessionCreated: (sessionId: string) => void;
 	onAgentSessionChanged: (harnessSessionId: string) => void;
 }) {
+	const { t } = useLingui();
 	const { client, wiring } = useSessionClient(sessionId);
 	const harness = acpHarnessForAgent(agent?.id);
 	const [failure, setFailure] = useState<string | null>(null);
@@ -70,7 +72,9 @@ export function AcpChatPane({
 	}, [sessionId, harness, agentSessionId, start]);
 
 	// Branching opens the copy in this pane; the agent keeps the original, so
-	// nothing is lost by following the fork.
+	// nothing is lost by following the fork. The agent copies the session whole
+	// — `session/fork` takes no truncation point — so where it was clicked from
+	// makes no difference to what the branch contains.
 	const forkConversation = useCallback(() => {
 		if (!sessionId) return;
 		void wiring.transport
@@ -80,12 +84,20 @@ export function AcpChatPane({
 				workspaceId,
 			})
 			.then((forked) => {
-				if (forked) onSessionCreated(forked.sessionId);
+				if (forked) {
+					onSessionCreated(forked.sessionId);
+					return;
+				}
+				// The adapter declines rather than sending a `session/fork` an
+				// agent would reject, and a button that does nothing is worse
+				// than one that says why.
+				toast.error(t({ message: "This agent can't branch a conversation" }));
 			})
 			.catch((error: unknown) => {
 				console.error("[acp-chat] fork failed", error);
+				toast.error(t({ message: "Couldn't branch the conversation" }));
 			});
-	}, [wiring.transport, sessionId, workspaceId, onSessionCreated]);
+	}, [wiring.transport, sessionId, workspaceId, onSessionCreated, t]);
 
 	const startFresh = useCallback(() => {
 		if (!harness) return;
