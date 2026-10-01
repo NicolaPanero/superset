@@ -58,10 +58,14 @@ function outputTail(
 		)
 		.filter((value): value is string => value !== null)
 		.join("\n")
-		.replace(/^```[^\n]*\n?|\n?```$/g, "")
 		.trimEnd();
 	if (text === "") return null;
-	const all = text.split("\n");
+	// A fence delimiter is markup, not a line of output, and in a three-line
+	// preview it costs a third of what there is to see. Dropped rather than
+	// peeled off the ends: the text may hold several blocks.
+	const all = text
+		.split("\n")
+		.filter((line) => !line.trimStart().startsWith("```"));
 	return {
 		lines: all.slice(-PREVIEW_LINES),
 		hidden: Math.max(0, all.length - PREVIEW_LINES),

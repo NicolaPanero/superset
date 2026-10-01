@@ -1,20 +1,19 @@
-/**
- * Agents often hand back a fenced block. This is already a monospace box, so
- * the fence would just render as literal backticks around the output.
- */
-function stripCodeFence(text: string): string {
-	const trimmed = text.trim();
-	if (!trimmed.startsWith("```")) return text;
-	const firstBreak = trimmed.indexOf("\n");
-	if (firstBreak === -1) return text;
-	const body = trimmed.slice(firstBreak + 1);
-	return body.endsWith("```") ? body.slice(0, -3).trimEnd() : body;
-}
+import { ChatMarkdown } from "@superset/chat-ui/ChatMarkdown";
 
+/**
+ * ACP carries tool-result text as markdown — Zed renders it that way, and
+ * neither our adapter nor the bundled ones add fences — so a fenced block here
+ * is the model writing markdown into a result (a subagent's summary, plan
+ * text). Rendering it as markdown is reading what the data says; peeling one
+ * fence off inside a `<pre>` was guessing at a content type it never carried.
+ *
+ * The content that really is raw — patches and terminal output — arrives as
+ * `diff` and `terminal`, and keeps its own renderer.
+ */
 export function TextContent({ text }: { text: string }) {
 	return (
-		<pre className="overflow-x-auto whitespace-pre-wrap font-mono text-muted-foreground text-xs">
-			{stripCodeFence(text)}
-		</pre>
+		<ChatMarkdown className="min-w-0 text-muted-foreground text-xs">
+			{text}
+		</ChatMarkdown>
 	);
 }

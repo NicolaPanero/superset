@@ -90,6 +90,7 @@
 		"@superset/agent-setup": "workspace:*",
 		"@superset/auth": "workspace:*",
 		"@superset/chat": "workspace:*",
+		"@superset/chat-ui": "workspace:*",
 		"@superset/cloud-client": "workspace:*",
 		"@superset/db": "workspace:*",
 		"@superset/host-service": "workspace:*",

@@ -18,6 +18,7 @@
 		"@superset/chat": "workspace:*",
 		"@superset/i18n": "workspace:*",
 		"@superset/ui": "workspace:*",
+		"streamdown": "2.5.0",
 		"lexical": "0.41.0",
 		"lucide-react": "0.563.0"
 	},
