@@ -1,11 +1,13 @@
-import { createRequire } from "node:module";
 import { mkdtempSync } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { createAcpAdapter } from "@superset/chat-runtime";
 
 const require = createRequire(import.meta.url);
-const pkg = require.resolve("@agentclientprotocol/claude-agent-acp/package.json");
+const pkg = require.resolve(
+	"@agentclientprotocol/claude-agent-acp/package.json",
+);
 const entry = join(dirname(pkg), "dist/index.js");
 const cwd = mkdtempSync(join(tmpdir(), "acp-smoke-"));
 
@@ -32,13 +34,17 @@ async function run() {
 			if (event.session.status === "idle" && !prompted) {
 				prompted = true;
 				console.log("[smoke] prompting…");
-				adapter.prompt([{ type: "text", text: "Reply with exactly one word: PONG" }]);
+				adapter.prompt([
+					{ type: "text", text: "Reply with exactly one word: PONG" },
+				]);
 			}
 		} else if (event.kind === "item") {
 			const item = event.item;
 			if (item.kind === "agent_message") console.log(`[agent] ${item.text}`);
-			else if (item.kind === "notice") console.log(`[notice:${item.noticeKind}] ${item.text ?? ""}`);
-			else if (item.kind === "tool_call") console.log(`[tool] ${item.title} (${item.status})`);
+			else if (item.kind === "notice")
+				console.log(`[notice:${item.noticeKind}] ${item.text ?? ""}`);
+			else if (item.kind === "tool_call")
+				console.log(`[tool] ${item.title} (${item.status})`);
 			else console.log(`[item:${item.kind}]`);
 		} else if (event.kind === "turn") {
 			console.log(`[turn] ${event.turn.status}`);
