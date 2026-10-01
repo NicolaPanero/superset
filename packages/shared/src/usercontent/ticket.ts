@@ -27,7 +27,6 @@ export interface FileTicketClaims {
 
 export interface PageStorageTicketClaims {
 	pageId: string;
-	/** Expiry, in seconds since the epoch. */
 	exp: number;
 }
 

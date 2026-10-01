@@ -1,4 +1,8 @@
-import { pageStorageRefusal } from "@superset/shared/page-storage";
+import {
+	pageStorageRefusal,
+	pageStorageValueBytes,
+	pageStorageValueRefusal,
+} from "@superset/shared/page-storage";
 import type {
 	PageStorageChangedMessage,
 	PageStorageHubRecord,
@@ -107,7 +111,9 @@ export class PageHub extends Server<RealtimeEnv> {
 		value: unknown,
 	): PageStorageHubResponse {
 		const encoded = JSON.stringify(value ?? null);
-		const sizeBytes = new TextEncoder().encode(encoded).length;
+		const sizeBytes = pageStorageValueBytes(value);
+		const tooLarge = pageStorageValueRefusal(sizeBytes);
+		if (tooLarge) return { ok: false, ...tooLarge };
 
 		const [usage] = this.ctx.storage.sql
 			.exec<{ total: number; mine: number; replacing: number }>(

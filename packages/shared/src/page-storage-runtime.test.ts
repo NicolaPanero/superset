@@ -150,7 +150,34 @@ describe("page storage runtime", () => {
 		h.toFrame({ type: "hello", writable: true });
 		await h.storage.ready;
 
+		const before = callCount(h.sent);
 		await expect(h.storage.get("")).rejects.toMatchObject({ code: "invalid" });
+		expect(callCount(h.sent)).toBe(before);
+	});
+
+	test("refuses a value postMessage could not clone, as invalid", async () => {
+		const h = mount();
+		h.toFrame({ type: "hello", writable: true });
+		await h.storage.ready;
+
+		const before = callCount(h.sent);
+		await expect(h.storage.set("k", () => {})).rejects.toMatchObject({
+			code: "invalid",
+		});
+		expect(callCount(h.sent)).toBe(before);
+	});
+
+	test("sends the JSON form of a value, not the object itself", async () => {
+		const h = mount();
+		h.toFrame({ type: "hello", writable: true });
+		await h.storage.ready;
+
+		h.storage.set("k", { keep: 1, drop: () => {}, when: new Date(0) });
+		await Promise.resolve();
+		expect((lastCall(h.sent)?.request as { value: unknown }).value).toEqual({
+			keep: 1,
+			when: "1970-01-01T00:00:00.000Z",
+		});
 	});
 
 	test("a pushed change makes a subscriber re-read", async () => {

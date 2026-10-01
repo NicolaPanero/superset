@@ -1,11 +1,4 @@
-/**
- * A page's storage lives only in its PageHub, and an org's subscribers only
- * in its OrgHub. Listing either class under `deleted_classes` or
- * `renamed_classes` tells Cloudflare to destroy every instance's storage: the
- * deploy succeeds, silently, and the data is gone for good. No migration tag
- * may ever name one.
- */
-import { readFileSync } from "node:fs";
+import wrangler from "../apps/realtime/wrangler.jsonc";
 
 interface Migration {
 	tag: string;
@@ -18,8 +11,7 @@ interface Migration {
 const CONFIG = "apps/realtime/wrangler.jsonc";
 const PROTECTED = ["PageHub", "OrgHub"];
 
-const raw = readFileSync(CONFIG, "utf8");
-const config = JSON.parse(raw.replace(/^\s*\/\/.*$/gm, "")) as {
+const config = wrangler as {
 	durable_objects?: { bindings?: { class_name: string }[] };
 	migrations?: Migration[];
 };
@@ -35,9 +27,14 @@ for (const migration of config.migrations ?? []) {
 		}
 	}
 	for (const rename of migration.renamed_classes ?? []) {
-		if (PROTECTED.includes(rename.from)) {
+		const name = PROTECTED.includes(rename.from)
+			? rename.from
+			: PROTECTED.includes(rename.to)
+				? rename.to
+				: null;
+		if (name) {
 			failures.push(
-				`${CONFIG}: migration "${migration.tag}" renames ${rename.from}. Instances are addressed by class, so their storage is orphaned.`,
+				`${CONFIG}: migration "${migration.tag}" renames ${rename.from} to ${rename.to}. Instances are addressed by class, so ${name}'s storage is orphaned.`,
 			);
 		}
 	}

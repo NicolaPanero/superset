@@ -48,8 +48,6 @@ describe("pageStorageRefusal", () => {
 	});
 
 	test("counts the page total after the replacement, not before", () => {
-		// The page is full, but this write replaces a slot of the same size,
-		// so it frees exactly what it costs and must be admitted.
 		expect(
 			pageStorageRefusal(
 				{

@@ -7,12 +7,20 @@ export function PageCommentsFrame({
 	pageId,
 	src,
 	title,
+	previewing = false,
 }: {
 	pageId: string;
 	src: string;
 	title: string;
+	previewing?: boolean;
 }) {
 	const storage = usePageStorageBridge({ pageId });
 
-	return <PageCommentsView src={src} title={title} storage={storage} />;
+	return (
+		<PageCommentsView
+			src={src}
+			title={title}
+			{...(previewing ? {} : { storage })}
+		/>
+	);
 }

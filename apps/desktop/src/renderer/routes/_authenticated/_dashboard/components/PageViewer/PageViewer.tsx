@@ -154,7 +154,7 @@ export function PageViewer({
 							onScrollYChange={(y) => scrollPositions.set(scrollKey, y)}
 							onFramePointerDown={onFramePointerDown}
 							onLinkClick={onLinkClick}
-							{...(resolvedPageId ? { storage } : {})}
+							{...(resolvedPageId && !previewing ? { storage } : {})}
 						/>
 					</div>
 					<AllCommentsButton />

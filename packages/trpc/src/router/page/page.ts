@@ -223,6 +223,14 @@ async function latestVersionNumber(pageId: string): Promise<number | null> {
 	return row?.version ?? null;
 }
 
+async function wipePageStorage(pageId: string): Promise<void> {
+	try {
+		await deletePageStorage(pageId);
+	} catch (error) {
+		console.error("[pages] hub wipe failed after delete", { pageId, error });
+	}
+}
+
 async function listPageBatch({
 	organizationId,
 	userId,
@@ -983,6 +991,7 @@ export const pageRouter = {
 						),
 					)
 					.returning({ id: pages.id });
+				if (discarded) await wipePageStorage(page.id);
 				return { id: page.id, deleted: Boolean(discarded) };
 			}
 
@@ -1046,14 +1055,7 @@ export const pageRouter = {
 				});
 			}
 
-			try {
-				await deletePageStorage(page.id);
-			} catch (error) {
-				console.error("[pages] hub wipe failed after delete", {
-					pageId: page.id,
-					error,
-				});
-			}
+			await wipePageStorage(page.id);
 
 			return { id: page.id, deleted: true };
 		}),

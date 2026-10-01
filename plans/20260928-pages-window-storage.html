@@ -392,7 +392,7 @@ form-action 'none'</code></pre>
             <li>
               The host's page viewer — the same component that already
               brokers comment messages — forwards the op to a new
-              <code>page.storage</code> tRPC procedure as the signed-in
+              <code>page.store</code> tRPC procedure as the signed-in
               viewer.
             </li>
             <li>
@@ -634,13 +634,16 @@ records (
           <div class="phase">
             <div class="n">1</div>
             <div>
-              <h4>Schema and router</h4>
+              <h4>Hub and router</h4>
               <p>
-                <code>pageStorage</code> table + migration; a
-                <code>page.storage</code> tRPC router with
-                <code>set / get / getAll / remove</code>, quota constants in
-                <code>packages/shared</code>, quota + rate-limit
-                enforcement, cascade on page delete.
+                A <code>PageHub</code> durable object holding the records, and
+                a <code>page.store</code> tRPC router with
+                <code>get / getAll / set / remove / list / clear</code> in
+                front of it. Quota constants in
+                <code>packages/shared</code>, enforced in the input schema and
+                again in the hub. No table and no migration, so page deletion
+                and account purge tell the hub out loud instead of riding a
+                cascade. Per-viewer rate limiting is out of scope for v0.
               </p>
             </div>
           </div>
@@ -780,7 +783,8 @@ records (
                                                         │     │         watch ownership,
         superset pages watch ── WebSocket ──────────────┘     │         pending deliveries
         (the agent, as a peer)                                ├─ applies each write, in order
-                                                              ├─ async write-through → Postgres
+                                                              ├─ the only system of record; no
+                                                              │  Postgres copy of the records
                                                               ├─ broadcasts changes to every
                                                               │  connected host and agent
                                                               └─ presence = who is connected</code></pre>
@@ -823,58 +827,36 @@ records (
             cascade for free, and now something has to tell the hub out loud.
           </p>
 
-          <h3>Buying those questions back: one pointer table</h3>
+          <h3>Buying those questions back without a table</h3>
           <p>
-            So we added exactly one table, and it is not a mirror of the
-            records:
+            A draft of this answered them with one pointer table —
+            <code>page_storage_index (page_id, user_id)</code>, written
+            best-effort on every write, holding only <em>where to look</em>.
+            We dropped it too, because Postgres already knows where to look:
+            writing requires membership of the page's organization, so a
+            person's records can only sit on pages in the organizations they
+            belonged to. A table recording what a join already implies is a
+            second write to lose.
           </p>
-          <pre><code>page_storage_index (
-  page_id     uuid,
-  user_id     uuid,
-  updated_at  timestamptz,
-  PRIMARY KEY (page_id, user_id)
-)   -- no values, no sizes, no content. No foreign keys.</code></pre>
           <p>
-            It holds only <em>where to look</em>. Three properties make it
-            carry its weight without reintroducing the dual-write problem we
-            dropped it to avoid:
-          </p>
-          <ul>
-            <li>
-              <strong>It is deliberately an over-approximation.</strong> A row
-              is written on first write and not removed when a single key is
-              deleted, so it means "may have written here" — and a purge that
-              finds an empty hub is a no-op. That keeps the write path to one
-              upsert and makes a stale row harmless rather than wrong.
-            </li>
-            <li>
-              <strong>It is best effort.</strong> Losing an index write costs
-              a future purge some completeness; it never costs the viewer
-              their vote. Failing a write over a bookkeeping row would be the
-              worse trade.
-            </li>
-            <li>
-              <strong>It has no foreign keys, and that is the point.</strong>
-              These rows are pointers into storage Postgres cannot see, so a
-              cascade would delete the pointer while leaving the records it
-              was the only way to find. The obvious schema is the broken one.
-            </li>
-          </ul>
-          <p>
-            With it, all three questions come back. <strong>Page
-            deletion</strong> wipes the hub and forgets the pointers, inside
-            the existing best-effort cleanup — and note the records are
-            already unreachable by then, since every read goes through the
-            API and the page no longer resolves, so this is hygiene rather
-            than containment. <strong>Account purge</strong> walks the index,
-            asks each named hub to drop that person's rows, then clears the
-            pointers; it runs with the other external deletions and is
-            re-runnable, which matters because the user row is
-            <em>tombstoned</em> rather than deleted, so no cascade would ever
-            have fired. <strong>Org-wide usage</strong> walks the index and
-            asks each hub its total, capped, and reports when it stopped
-            short rather than passing a partial total off as the whole
-            truth.
+            So the questions come back off the existing schema. <strong>Page
+            deletion</strong> wipes the hub after the rest of the cleanup, in
+            its own best-effort step — and note the records are already
+            unreachable by then, since every read goes through the API and the
+            page no longer resolves, so this is hygiene rather than
+            containment. <strong>Account purge</strong> lists the pages of
+            every organization the person belongs to, taken-down ones
+            included, and asks each hub to drop that person's rows; it runs
+            with the other external deletions and is re-runnable, which
+            matters because the user row is <em>tombstoned</em> rather than
+            deleted, so no cascade would ever have fired. A hub that never
+            held storage answers without creating anything, so asking is
+            cheap. Its one gap is deliberate and recorded: someone who leaves
+            an organization and later deletes their account keeps their
+            records on that organization's pages, which is closed by clearing
+            on org leave rather than here. <strong>Org-wide usage</strong> is
+            out of scope for v0 — <code>page.store.list</code> answers it for
+            one page at a time.
           </p>
           <p>
             Because the hub serializes writes, we get something Firestore

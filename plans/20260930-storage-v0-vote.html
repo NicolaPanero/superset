@@ -131,6 +131,7 @@
       let mine = null;
       let busy = false;
       let reads = 0;
+      let available = false;
 
       function log(line) {
         const stamp = new Date().toLocaleTimeString();
@@ -162,7 +163,7 @@
             const button = document.createElement("button");
             button.className = "option";
             button.type = "button";
-            button.disabled = !storage || busy;
+            button.disabled = !available || busy;
             button.setAttribute("aria-pressed", String(mine === option));
 
             const label = document.createElement("span");
@@ -200,7 +201,7 @@
       }
 
       async function vote(option) {
-        if (!storage || busy) return;
+        if (!available || busy) return;
         busy = true;
         const previous = mine;
         mine = option;
@@ -209,8 +210,6 @@
           await storage.set(KEY, option);
           notice("");
           log(`wrote "${option}"`);
-          records = await storage.getAll(KEY);
-          reads += 1;
         } catch (error) {
           mine = previous;
           const message =
@@ -221,16 +220,24 @@
                 : `Could not save the vote: ${error.message}`;
           notice(message);
           log(`write failed (${error.code ?? "unknown"})`);
-        } finally {
           busy = false;
           render();
+          return;
         }
+        try {
+          records = await storage.getAll(KEY);
+          reads += 1;
+        } catch (error) {
+          log(`refresh after the write failed (${error.code ?? "unknown"})`);
+        }
+        busy = false;
+        render();
       }
 
       async function start() {
         render();
 
-        const available = storage ? await storage.ready : false;
+        available = storage ? await storage.ready : false;
         if (!available) {
           setConnection("off", "storage unavailable — read-only preview");
           log("no host answered the handshake");

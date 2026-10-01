@@ -56,10 +56,6 @@ export function readAutomationErrorCode(cause: unknown): string | null {
 	return typeof code === "string" ? code : null;
 }
 
-/**
- * The page-storage code on a cause. A page branches on this, never on the
- * message, which is display-only and may be translated.
- */
 export function readPageStorageCode(cause: unknown): string | null {
 	const code = (cause as { pageStorageCode?: unknown } | null | undefined)
 		?.pageStorageCode;

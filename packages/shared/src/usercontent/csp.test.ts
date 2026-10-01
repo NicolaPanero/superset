@@ -52,7 +52,10 @@ describe("pageContentSecurityPolicy connect-src", () => {
 
 	it("stays closed when no realtime origin is configured", () => {
 		const policy = pageContentSecurityPolicy(["'none'"]);
-		expect(policy).toContain("connect-src 'none'");
+		const connectSrc = policy
+			.split("; ")
+			.find((directive) => directive.startsWith("connect-src"));
+		expect(connectSrc).toBe("connect-src 'none'");
 	});
 
 	it("admits no other host", () => {

@@ -19,6 +19,7 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 
 	const pending = new Map();
 	const watchers = new Map();
+	const DOCUMENT = Math.random().toString(36).slice(2, 10);
 	let seq = 0;
 	let host = null;
 	let settleReady = null;
@@ -88,7 +89,7 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		if (!(await ready)) {
 			throw fail("unavailable", "Page storage is not available in this view");
 		}
-		const id = "s" + ++seq;
+		const id = DOCUMENT + "." + ++seq;
 		return new Promise((resolve, reject) => {
 			pending.set(id, { resolve, reject });
 			post({ type: "call", id, request });
@@ -114,10 +115,13 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		} catch {
 			throw fail("invalid", "A storage value must be JSON");
 		}
+		if (encoded === undefined) {
+			throw fail("invalid", "A storage value must be JSON");
+		}
 		if (new TextEncoder().encode(encoded).length > MAX_VALUE_BYTES) {
 			throw fail("quota_exceeded", "A storage value is at most " + MAX_VALUE_BYTES + " bytes");
 		}
-		return value ?? null;
+		return JSON.parse(encoded);
 	};
 
 	const storage = {
@@ -156,7 +160,9 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 				try {
 					const records = await storage.getAll(key);
 					if (!stopped) onRecords(records);
-				} catch {}
+				} catch (error) {
+					console.warn("superset.storage: subscription to " + key + " failed", error);
+				}
 				inFlight = false;
 				if (again && !stopped) {
 					again = false;

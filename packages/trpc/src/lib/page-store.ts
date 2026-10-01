@@ -8,17 +8,13 @@ import {
 } from "@superset/shared/page-storage-hub";
 import { signPageStorageTicket } from "@superset/shared/usercontent";
 import { TRPCError } from "@trpc/server";
-import { and, eq, inArray, isNull } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { env } from "../env";
 
 export type PageStorageFailure = "quota_exceeded" | "invalid" | "unavailable";
 
-/**
- * Carries the hub's code on `cause`, which is where the router's
- * errorFormatter reads it onto `data.pageStorageCode`. FORBIDDEN alone is
- * ambiguous — a taken-down page produces it too — so the page branches on the
- * code and never on the message.
- */
+const PURGE_CONCURRENCY = 8;
+
 function storageError(code: PageStorageFailure, message: string): TRPCError {
 	return new TRPCError({
 		code: code === "unavailable" ? "INTERNAL_SERVER_ERROR" : "FORBIDDEN",
@@ -74,18 +70,6 @@ export async function deletePageStorage(pageId: string): Promise<void> {
 	await callPageStore(pageId, { op: "clear" });
 }
 
-/**
- * Removes everything one person wrote, everywhere it could be. A hub knows
- * only its own page, so the sweep comes from the one fact Postgres has:
- * writing requires membership of the page's organization, so their records
- * can only sit on pages in the orgs they belonged to. A hub that never held
- * storage answers without creating anything, which is why this needs no table
- * recording who wrote where.
- *
- * The gap it leaves: someone who leaves an organization and later deletes
- * their account keeps their records on that organization's pages. Closing it
- * means clearing on org leave, not here.
- */
 export async function purgePageStorageForUser(
 	userId: string,
 ): Promise<{ pages: number; cleared: number }> {
@@ -99,26 +83,43 @@ export async function purgePageStorageForUser(
 		.select({ id: pages.id })
 		.from(pages)
 		.where(
-			and(
-				inArray(
-					pages.organizationId,
-					memberships.map((row) => row.organizationId),
-				),
-				isNull(pages.takenDownAt),
+			inArray(
+				pages.organizationId,
+				memberships.map((row) => row.organizationId),
 			),
 		);
 
 	let cleared = 0;
-	for (const row of rows) {
-		try {
-			const result = await callPageStore(row.id, { op: "clearUser", userId });
-			cleared += result.cleared;
-		} catch (error) {
-			console.warn("[pages] could not clear a hub during purge", {
-				pageId: row.id,
-				error: error instanceof Error ? error.message : error,
-			});
-		}
+	let refused = 0;
+	let lastError: unknown;
+	for (let index = 0; index < rows.length; index += PURGE_CONCURRENCY) {
+		const batch = rows.slice(index, index + PURGE_CONCURRENCY);
+		await Promise.all(
+			batch.map(async (row) => {
+				try {
+					const result = await callPageStore(row.id, {
+						op: "clearUser",
+						userId,
+					});
+					cleared += result.cleared;
+				} catch (error) {
+					refused += 1;
+					lastError = error;
+					console.warn("[pages] could not clear a hub during purge", {
+						pageId: row.id,
+						error: error instanceof Error ? error.message : error,
+					});
+				}
+			}),
+		);
+	}
+	if (refused > 0) {
+		throw storageError(
+			"unavailable",
+			`Page storage kept records on ${refused} of ${rows.length} page(s): ${
+				lastError instanceof Error ? lastError.message : String(lastError)
+			}`,
+		);
 	}
 	return { pages: rows.length, cleared };
 }

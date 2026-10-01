@@ -81,13 +81,7 @@ export interface PageStorageUsage {
 
 export type PageStorageRefusal = { code: "quota_exceeded"; message: string };
 
-/**
- * Whether a write fits. Pure so it can be tested without a durable object:
- * the hub measures, this decides. `replacingBytes` is what the writer's own
- * slot under this key already costs, because replacing it frees those bytes.
- */
-export function pageStorageRefusal(
-	usage: PageStorageUsage,
+export function pageStorageValueRefusal(
 	sizeBytes: number,
 ): PageStorageRefusal | null {
 	if (sizeBytes > MAX_PAGE_STORAGE_VALUE_BYTES) {
@@ -96,6 +90,15 @@ export function pageStorageRefusal(
 			message: `quota_exceeded: a stored value is at most ${MAX_PAGE_STORAGE_VALUE_BYTES} bytes`,
 		};
 	}
+	return null;
+}
+
+export function pageStorageRefusal(
+	usage: PageStorageUsage,
+	sizeBytes: number,
+): PageStorageRefusal | null {
+	const tooLarge = pageStorageValueRefusal(sizeBytes);
+	if (tooLarge) return tooLarge;
 	if (
 		!usage.replacingExisting &&
 		usage.keysForUser >= MAX_PAGE_STORAGE_KEYS_PER_USER

@@ -202,6 +202,10 @@ export default async function PublishedPage({
 							pageId={page.id}
 							src={page.viewUrl}
 							title={page.title}
+							previewing={
+								page.servedVersion !== null &&
+								page.version !== page.servedVersion
+							}
 						/>
 					</main>
 					<AllCommentsButton />

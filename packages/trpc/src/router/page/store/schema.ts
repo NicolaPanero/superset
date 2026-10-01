@@ -1,6 +1,7 @@
 import {
 	MAX_PAGE_STORAGE_KEY_LENGTH,
 	MAX_PAGE_STORAGE_VALUE_BYTES,
+	pageStorageValueBytes,
 } from "@superset/shared/page-storage";
 import { z } from "zod";
 import { pageFields } from "../schema";
@@ -17,9 +18,7 @@ export const writePageStorageSchema = z.object({
 	value: z
 		.unknown()
 		.refine(
-			(value) =>
-				new TextEncoder().encode(JSON.stringify(value ?? null)).length <=
-				MAX_PAGE_STORAGE_VALUE_BYTES,
+			(value) => pageStorageValueBytes(value) <= MAX_PAGE_STORAGE_VALUE_BYTES,
 			`A stored value is at most ${MAX_PAGE_STORAGE_VALUE_BYTES} bytes of JSON`,
 		),
 });

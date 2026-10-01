@@ -56,7 +56,13 @@ export function usePageStorageBridge({
 				let url: string;
 				try {
 					({ url } = await client.page.store.subscribeUrl.query({ pageId }));
-				} catch {
+				} catch (error) {
+					if (attempt === 0) {
+						console.warn("[pages] page storage live updates are off", {
+							pageId,
+							error,
+						});
+					}
 					schedule();
 					return;
 				}
@@ -67,6 +73,7 @@ export function usePageStorageBridge({
 					attempt = 0;
 				});
 				socket.addEventListener("message", (event) => {
+					if (stopped) return;
 					const message = parsePageStorageChanged(event.data);
 					if (message) onChange(message.key);
 				});
