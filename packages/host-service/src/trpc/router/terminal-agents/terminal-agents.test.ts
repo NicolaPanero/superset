@@ -25,6 +25,7 @@ import {
 	findResumedSuccessor,
 	listAccountRestartCandidates,
 	type ResumeSessionDeps,
+	recoverTerminalAgentSession,
 	restartAccountSessions,
 	resumeTerminalAgentSession,
 } from "./terminal-agents";
@@ -744,4 +745,52 @@ describe("explicit deleted-agent recovery", () => {
 		).toEqual({ resumed: false });
 		expect(runCalls).toHaveLength(0);
 	});
+});
+
+describe("recoverTerminalAgentSession", () => {
+	for (const status of ["active", "exited", "disposed"] as const) {
+		it(`follows a ${status} successor through the shared resume path`, async () => {
+			const db = createTestDb();
+			seedResumableBinding(db);
+			db.update(terminalAgentBindings)
+				.set({ endReason: "resumed", resumedIntoTerminalId: "t2" })
+				.where(eq(terminalAgentBindings.terminalId, "t1"))
+				.run();
+			db.insert(terminalSessions)
+				.values({ id: "t2", status, originWorkspaceId: "ws-1" })
+				.run();
+			db.insert(terminalAgentBindings)
+				.values({
+					terminalId: "t2",
+					workspaceId: "ws-1",
+					agentId: "claude",
+					agentSessionId: "sess-t1",
+					startedAt: 1,
+					lastEventAt: 2,
+					lastEventType: "Stop",
+					endedAt: status === "active" ? null : 3,
+					endReason:
+						status === "active"
+							? null
+							: status === "disposed"
+								? "disposed"
+								: "terminal-exited",
+				})
+				.run();
+			const { deps, runCalls } = createDeps(db);
+			const result = await recoverTerminalAgentSession(deps, {
+				workspaceId: "ws-1",
+				terminalId: "t1",
+				restoredTerminalId: null,
+			});
+			expect(result).toEqual({
+				resumed: true,
+				terminalId: status === "active" ? "t2" : "t-new",
+				label: "Claude",
+			});
+			expect(runCalls.length).toBe(status === "active" ? 0 : 1);
+			if (status !== "active")
+				expect(runCalls[0]?.resumeSessionId).toBe("sess-t1");
+		});
+	}
 });

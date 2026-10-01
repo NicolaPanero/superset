@@ -4,9 +4,12 @@ import {
 } from "@superset/shared/agent-catalog";
 import { boundTranscriptText } from "@superset/shared/terminal-session-handoff";
 import { TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import type { HostDb } from "../../../db";
+import { terminalSessions } from "../../../db/schema";
 import type { EventBus } from "../../../events";
+import { terminalLifecycleState } from "../../../terminal/lifecycle/lifecycle";
 import { reconcileMissingTerminalSessions } from "../../../terminal/reaper/reaper";
 import {
 	createTerminalSessionInternal,
@@ -357,6 +360,36 @@ export function findResumedSuccessor(
 		terminalId: successorTerminalId,
 		label: config?.label ?? origin.agentId,
 	};
+}
+
+export async function recoverTerminalAgentSession(
+	deps: ResumeSessionDeps,
+	input: {
+		workspaceId: string;
+		terminalId: string;
+		restoredTerminalId: string | null;
+	},
+): Promise<ResumeResult> {
+	const { db } = deps;
+	const successor =
+		(input.restoredTerminalId &&
+			findResumedSuccessor(db, input.workspaceId, input.restoredTerminalId)) ||
+		findResumedSuccessor(db, input.workspaceId, input.terminalId);
+	if (successor) {
+		const session = db.query.terminalSessions
+			.findFirst({ where: eq(terminalSessions.id, successor.terminalId) })
+			.sync();
+		if (terminalLifecycleState(session) === "active")
+			return { resumed: true, ...successor };
+	}
+	const terminalId =
+		successor?.terminalId ?? input.restoredTerminalId ?? input.terminalId;
+	return resumeTerminalAgentSession(deps, {
+		workspaceId: input.workspaceId,
+		terminalId,
+		restoreDeleted:
+			getTerminalAgentBinding(db, terminalId)?.endReason === "disposed",
+	});
 }
 
 function inflightKey(

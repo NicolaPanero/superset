@@ -1,4 +1,5 @@
 import {
+	parseTerminalRecoverySnapshot,
 	type TerminalRecoverySnapshot,
 	terminalRecoverySnapshotSchema,
 } from "@superset/shared/terminal-recovery";
@@ -30,14 +31,11 @@ import {
 	disposeSessionAndWait,
 	getPendingTerminalWorkspaceId,
 } from "../../../terminal/terminal.ts";
-import {
-	findResumedSuccessorTerminalId,
-	getTerminalAgentBinding,
-} from "../../../terminal-agents/persistence";
+import { getTerminalAgentBinding } from "../../../terminal-agents/persistence";
 import { protectedProcedure, router } from "../../index.ts";
 import {
+	recoverTerminalAgentSession,
 	resumeSessionDepsFor,
-	resumeTerminalAgentSession,
 } from "../terminal-agents/terminal-agents";
 
 const operations = new TerminalLifecycleOperations();
@@ -124,17 +122,14 @@ export const paneRecoveryRouter = router({
 				for (const item of input.entries) {
 					if (item.pane.kind !== "terminal") continue;
 					const hostSnapshot = await captureSessionRecoverySnapshot({
+						snapshot: item.pane.snapshot,
 						terminalId: item.pane.terminalId,
 						workspaceId: input.workspaceId,
 						db: ctx.db,
 						eventBus: ctx.eventBus,
 					});
-					const snapshot = item.pane.snapshot ?? hostSnapshot;
-					if (snapshot)
-						snapshots.set(item.id, {
-							...snapshot,
-							cwd: hostSnapshot?.cwd ?? snapshot.cwd,
-						});
+					const snapshot = hostSnapshot ?? item.pane.snapshot;
+					if (snapshot) snapshots.set(item.id, snapshot);
 				}
 				ctx.db.transaction((tx) => {
 					tx.delete(closedPanes)
@@ -302,30 +297,14 @@ export const paneRecoveryRouter = router({
 						);
 					if (live) terminalId = row.terminalId;
 					else {
-						const successor =
-							(row.restoredTerminalId &&
-								findResumedSuccessorTerminalId(
-									ctx.db,
-									input.workspaceId,
-									row.restoredTerminalId,
-								)) ||
-							findResumedSuccessorTerminalId(
-								ctx.db,
-								input.workspaceId,
-								row.terminalId,
-							);
-						const candidate =
-							successor ?? row.restoredTerminalId ?? row.terminalId;
-						const resumed =
-							successor && lifecycle(successor) === "active"
-								? { resumed: true as const, terminalId: successor }
-								: await resumeTerminalAgentSession(resumeSessionDepsFor(ctx), {
-										workspaceId: input.workspaceId,
-										terminalId: candidate,
-										restoreDeleted:
-											getTerminalAgentBinding(ctx.db, candidate)?.endReason ===
-											"disposed",
-									});
+						const resumed = await recoverTerminalAgentSession(
+							resumeSessionDepsFor(ctx),
+							{
+								workspaceId: input.workspaceId,
+								terminalId: row.terminalId,
+								restoredTerminalId: row.restoredTerminalId,
+							},
+						);
 						terminalId = resumed.resumed
 							? resumed.terminalId
 							: crypto.randomUUID();
@@ -337,11 +316,7 @@ export const paneRecoveryRouter = router({
 						.run();
 				}
 				if (terminalId !== row.terminalId) {
-					const snapshot = row.descriptor.snapshot
-						? terminalRecoverySnapshotSchema.parse(
-								JSON.parse(row.descriptor.snapshot),
-							)
-						: undefined;
+					const snapshot = parseTerminalRecoverySnapshot(row.descriptor);
 					const created = await createTerminalSessionInternal({
 						terminalId,
 						workspaceId: input.workspaceId,

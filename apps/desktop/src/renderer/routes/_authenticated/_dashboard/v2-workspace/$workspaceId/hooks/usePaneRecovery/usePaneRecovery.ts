@@ -64,27 +64,24 @@ export function usePaneRecovery(
 				const paneId = `restored-${row.id}`;
 				const state = store.getState();
 				const existing = state.getPane(paneId);
+				const data: PaneViewerData =
+					row.kind === "terminal"
+						? {
+								terminalId: row.descriptor.terminalId,
+								createOnAttach: row.freshShell,
+							}
+						: row.kind === "file"
+							? { filePath: row.descriptor.filePath, mode: "editor" }
+							: { url: row.descriptor.url };
 				if (existing) {
 					if (row.kind === "terminal")
 						state.setPaneData({
 							paneId,
-							data: {
-								terminalId: row.descriptor.terminalId,
-								createOnAttach: row.freshShell,
-							},
+							data,
 						});
 					state.setActiveTab(existing.tabId);
 					state.setActivePane({ tabId: existing.tabId, paneId });
 				} else {
-					const data: PaneViewerData =
-						row.kind === "terminal"
-							? {
-									terminalId: row.descriptor.terminalId,
-									createOnAttach: row.freshShell,
-								}
-							: row.kind === "file"
-								? { filePath: row.descriptor.filePath, mode: "editor" }
-								: { url: row.descriptor.url };
 					state.addTab({
 						id: `restored-tab-${row.id}`,
 						panes: [

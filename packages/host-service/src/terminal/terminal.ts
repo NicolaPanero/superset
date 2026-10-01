@@ -23,8 +23,8 @@ import {
 	terminalColorsSchema,
 } from "@superset/shared/terminal-colors";
 import {
+	parseTerminalRecoverySnapshot,
 	type TerminalRecoverySnapshot,
-	terminalRecoverySnapshotSchema,
 } from "@superset/shared/terminal-recovery";
 import {
 	boundTranscriptText,
@@ -1327,6 +1327,7 @@ async function writeSessionMessage(
 }
 
 export async function captureSessionRecoverySnapshot(input: {
+	snapshot?: TerminalRecoverySnapshot;
 	terminalId: string;
 	workspaceId: string;
 	db: HostDb;
@@ -1334,7 +1335,10 @@ export async function captureSessionRecoverySnapshot(input: {
 }) {
 	const session = await getOrAdoptSession(input);
 	if ("error" in session) return undefined;
-	return { ...session.modeTracker.recoverySnapshot(), cwd: session.cwd };
+	return {
+		...(input.snapshot ?? session.modeTracker.recoverySnapshot()),
+		cwd: session.cwd,
+	};
 }
 
 /**
@@ -3636,20 +3640,7 @@ export function registerWorkspaceTerminalRoute({
 						c.req.query("history") === "1" &&
 						recovery.terminalId !== terminalId
 					) {
-						const raw = recovery.descriptor.snapshot;
-						if (raw) {
-							const parsed = terminalRecoverySnapshotSchema.safeParse(
-								JSON.parse(raw),
-							);
-							if (parsed.success) snapshot = parsed.data;
-						} else if (recovery.descriptor.scrollback) {
-							snapshot = {
-								version: 1,
-								ansi: recovery.descriptor.scrollback,
-								cols: 80,
-								rows: 24,
-							};
-						}
+						snapshot = parseTerminalRecoverySnapshot(recovery.descriptor);
 					}
 					if (snapshot || !recovery.restoredAt)
 						sendMessage(ws, { type: "recovery", id: recovery.id, snapshot });

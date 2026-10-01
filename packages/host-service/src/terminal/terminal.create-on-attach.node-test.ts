@@ -1363,22 +1363,13 @@ test("deleted agent restores through the real launcher with its resume session I
 			fs.readFileSync(argsFile, "utf8"),
 			"--resume\nrecovery-conversation\n",
 		);
-		db.insert(terminalAgentBindings)
-			.values({
-				terminalId: restoredId,
-				workspaceId,
-				agentId: "claude",
-				definitionId: configId,
-				agentSessionId: "recovery-conversation",
-				startedAt: Date.now(),
-				lastEventAt: Date.now(),
-				lastEventType: "Stop",
-			})
-			.onConflictDoUpdate({
-				target: terminalAgentBindings.terminalId,
-				set: { agentSessionId: "recovery-conversation", lastEventType: "Stop" },
-			})
-			.run();
+		store.recordEvent({
+			terminalId: restoredId,
+			workspaceId,
+			agentId: "claude",
+			eventType: "Stop",
+			occurredAt: Date.now(),
+		});
 		await caller.close({ workspaceId, entries: [closeEntry(restoredId)] });
 		const retried = (await caller.restore({ workspaceId, id: entry.id })).entry
 			.descriptor.terminalId;

@@ -2,6 +2,7 @@ import { expect, test } from "bun:test";
 import {
 	captureTerminalRecoverySnapshot,
 	MAX_TERMINAL_RECOVERY_BYTES,
+	parseTerminalRecoverySnapshot,
 	terminalRecoverySnapshotSchema,
 } from "./terminal-recovery";
 
@@ -33,4 +34,22 @@ test("fails explicitly if even the visible screen cannot fit", () => {
 			() => "x".repeat(MAX_TERMINAL_RECOVERY_BYTES + 1),
 		),
 	).toThrow("exceeds");
+});
+
+test("decodes archived and legacy history and rejects corrupt archives", () => {
+	const snapshot = { version: 1 as const, ansi: "history", cols: 80, rows: 24 };
+	expect(
+		parseTerminalRecoverySnapshot({ snapshot: JSON.stringify(snapshot) }),
+	).toEqual(snapshot);
+	expect(parseTerminalRecoverySnapshot({ scrollback: "history" })).toEqual(
+		snapshot,
+	);
+	const invalid: Record<string, string>[] = [
+		{},
+		{ snapshot: "{" },
+		{ snapshot: '{"version":99}' },
+		{ scrollback: "x".repeat(MAX_TERMINAL_RECOVERY_BYTES + 1) },
+	];
+	for (const descriptor of invalid)
+		expect(parseTerminalRecoverySnapshot(descriptor)).toBeUndefined();
 });

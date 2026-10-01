@@ -39,3 +39,19 @@ export function captureTerminalRecoverySnapshot(
 	}
 	throw new Error("Terminal screen exceeds the recovery history limit");
 }
+
+export function parseTerminalRecoverySnapshot(
+	descriptor: Record<string, string>,
+): TerminalRecoverySnapshot | undefined {
+	try {
+		const value = descriptor.snapshot
+			? JSON.parse(descriptor.snapshot)
+			: descriptor.scrollback
+				? { version: 1, ansi: descriptor.scrollback, cols: 80, rows: 24 }
+				: undefined;
+		const parsed = terminalRecoverySnapshotSchema.safeParse(value);
+		return parsed.success ? parsed.data : undefined;
+	} catch {
+		return undefined;
+	}
+}
