@@ -12,38 +12,17 @@ const MIN_SCROLL_DURATION_S = 0.5;
 const MAX_SCROLL_DURATION_S = 6;
 const SCROLL_START_DELAY_S = 0.35;
 const RESET_DURATION_S = 0.2;
-// scrollWidth/clientWidth each round to the nearest device pixel, so two
-// elements that are visually flush can still disagree by a pixel — without
-// this, that shows up as a 1px "jiggle" on hover under fractional zoom.
+// Absorbs device-pixel rounding that would otherwise jiggle flush text.
 const OVERFLOW_EPSILON_PX = 1.5;
 const EDGE_FADE_PX = 14;
 
 interface MarqueeTextProps {
 	children: ReactNode;
-	/** The full text of `children`: the tooltip for a clipped line, and the
-	 * key that re-measures the overflow when the content changes. */
 	title: string;
 	className?: string;
-	/** Reveals the text the same way hover does, driven by the row's own
-	 * focus state — the row (not this span) is the tabbable element, so a
-	 * keyboard-only user needs some other trigger to ever see clipped text. */
 	forceActive?: boolean;
 }
 
-/**
- * Clipped with a fade at the trailing edge, at rest. On hover (or when
- * `forceActive` is set, for keyboard users tabbing through the row), scrolls
- * the text left just far enough to reveal the cut-off tail at a constant,
- * readable pace, then snaps back to the start when it's no longer active —
- * so text that's been squeezed by a narrow row can still be read without
- * a tooltip popup.
- *
- * Not a plain `truncate`: `text-overflow: ellipsis` only ellipsizes text
- * that's a direct line box of the clipping element, and the scrolled text
- * here has to be an `inline-block` (for the transform to move it
- * predictably), which the ellipsis mechanism doesn't reach inside of — so
- * the trailing fade is a mask-image, not a "…" glyph.
- */
 export function MarqueeText({
 	children,
 	title,
@@ -68,9 +47,6 @@ export function MarqueeText({
 		measureOverflow();
 		const container = containerRef.current;
 		if (!container || typeof ResizeObserver === "undefined") return;
-		// Catches the row being resized (sidebar toggled, a sibling badge
-		// appearing) while this text isn't hovered — mouseEnter alone would
-		// leave `overflow` stale until the next hover.
 		const observer = new ResizeObserver(measureOverflow);
 		observer.observe(container);
 		return () => observer.disconnect();
@@ -100,8 +76,6 @@ export function MarqueeText({
 						: undefined,
 			}}
 			onMouseEnter={() => {
-				// Re-measure on entry in case the row was resized since the
-				// text last rendered (e.g. this row wasn't visible then).
 				measureOverflow();
 				setHovered(true);
 			}}

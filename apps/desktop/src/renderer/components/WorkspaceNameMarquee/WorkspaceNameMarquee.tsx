@@ -2,8 +2,6 @@ import { MarqueeText } from "renderer/components/MarqueeText";
 
 interface WorkspaceNameMarqueeProps {
 	name: string;
-	/** Qualifier shown dimmed ahead of the name as `prefix/name`, for rows
-	 * that sit outside the grouping that would otherwise identify them. */
 	prefix?: string;
 	className?: string;
 	forceActive?: boolean;
