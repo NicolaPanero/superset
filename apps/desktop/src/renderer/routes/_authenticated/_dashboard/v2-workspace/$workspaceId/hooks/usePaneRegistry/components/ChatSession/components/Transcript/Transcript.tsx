@@ -99,14 +99,15 @@ export function Transcript({
 			?.scrollIntoView({ block: "start" });
 	}, [anchorItemId]);
 
-	const requestedItemId = scrollRequest?.itemId;
-	const requestedNonce = scrollRequest?.nonce;
+	// On the request object rather than its fields: the nonce is what makes
+	// choosing the same message twice a second scroll, and a dependency list
+	// of fields would drop it as redundant.
 	useEffect(() => {
-		if (!requestedItemId) return;
+		if (!scrollRequest) return;
 		containerRef.current
-			?.querySelector(`[data-item-id="${CSS.escape(requestedItemId)}"]`)
+			?.querySelector(`[data-item-id="${CSS.escape(scrollRequest.itemId)}"]`)
 			?.scrollIntoView({ behavior: "smooth", block: "start" });
-	}, [requestedItemId, requestedNonce]);
+	}, [scrollRequest]);
 
 	const firstPendingApprovalId = approvals[0]?.id ?? null;
 	useEffect(() => {
