@@ -13,7 +13,13 @@ understanding the request.
 
 ## 1. Read the charge before you touch it
 
-Fetch the charge or PaymentIntent and check four fields:
+The checks live on the **charge**, so a `pi_` id is not where this starts: read
+the PaymentIntent, follow `latest_charge`, and read that charge. Skipping the hop
+is how an agent misses an open dispute, because `refunded`, `amount_refunded`,
+and `disputed` are not PaymentIntent fields and reading them off one yields
+`undefined` rather than an error.
+
+On the charge, check four fields:
 
 - `amount` and `currency`: the only authority for what can be refunded.
 - `amount_refunded`: a charge refunded in part looks fully refundable from a
@@ -83,6 +89,9 @@ question is always when it arrives.
 - **"Refund the last payment."** Name the charge you picked and why, or the user
   cannot catch you picking the wrong one.
 - **Guessing a partial amount from the thread.** Read the charge.
+- **Running the checklist against a PaymentIntent.** The refund and dispute
+  fields live on the charge; a PaymentIntent answers those questions with
+  `undefined`, which reads like "no".
 - **Treating a confirmation URL as an error.** It is the system working.
 - **Refunding when the user asked to cancel.** Cancelling a subscription stops
   future invoices and refunds nothing. Do the one that was asked for, and say

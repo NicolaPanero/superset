@@ -34,13 +34,22 @@ details tool exists so you do not have to.
 lives in two places:
 
 - The PaymentIntent's `last_payment_error`: the decline code and message.
-- The charge's `outcome`: `network_status`, `reason`, `risk_level`, and
-  `seller_message`, which is the sentence written for you to pass on.
+- The charge's `outcome`: `network_status`, `reason`, `risk_level`,
+  `seller_message`, which is the sentence written for you to pass on, and
+  `advice_code`.
 
-That pair separates the three cases that matter and look identical from
-outside: the issuer declined and a retry may work (`insufficient_funds`), the
-issuer declined and a retry never will (`do_not_honor`, `lost_card`), or Stripe
-Radar blocked it before the issuer ever saw it (`blocked`, with a risk level).
+Read the retry decision off `advice_code`, not off the decline code. It has three
+values and they say what to do: `try_again_later` means a retry may work,
+`do_not_try_again` means it will not for this transaction, and
+`confirm_card_data` means the customer mistyped something. The decline code
+answers a different question, and most of them are vague on purpose:
+`do_not_honor` and `generic_decline` both mean "the issuer declined and did not
+say why", so treating either as permanent is a guess the advice code already
+settles.
+
+What the pair does separate is the issuer declining at all from Stripe Radar
+blocking the payment before the issuer ever saw it, which shows as
+`network_status: "not_sent_to_network"` with a risk level.
 
 ## 4. Follow the chain the question actually asks about
 
@@ -48,7 +57,10 @@ Radar blocked it before the issuer ever saw it (`blocked`, with a risk level).
   `discount` and `tax` on the invoice. The number on the invoice is the end of
   a chain, not a fact in itself.
 - "What did we keep?" is charge to `balance_transaction`, which carries `fee`
-  and `net`. The charge amount is not revenue.
+  and `net`. The charge amount is not revenue, and that `net` is not the end of
+  it either: a refund and a dispute each create their own balance transaction,
+  so a refunded charge still reports the original `net`. Read the charge's
+  refunds and disputes and net them off before reporting a figure.
 - "Where is the money?" is `get_balance_summary` or payout to balance
   transactions, not the sum of recent charges.
 - "Is this customer current?" is subscription `status` plus
@@ -73,8 +85,9 @@ first, so "I found 10 charges" is a page size, not a finding.
 
 - **Mixing modes.** A sandbox id in a live-mode question returns a clean,
   confident 404. Check the mode before you believe the absence.
-- **Reporting the charge amount as revenue.** Fees, refunds, and disputes all
-  land on the balance transaction, not the charge.
+- **Reporting the charge amount as revenue.** The fee lands on the charge's
+  balance transaction; a refund or a dispute lands on its own, and neither
+  rewrites the first one.
 - **Trusting a list default.** Lists are paginated; an unbounded "how many"
   answered from one page is wrong without saying so.
 - **Explaining a decline from `status`.** The actionable text is in

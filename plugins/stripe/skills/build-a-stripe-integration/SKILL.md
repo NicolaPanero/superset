@@ -18,7 +18,10 @@ Run `stripe_implementation_planner` with what the integration has to do. The
 first decision is which Stripe product owns the flow, and it is hard to reverse:
 
 - A one-off payment with a page Stripe hosts is Checkout.
-- A one-off payment inside your own UI is PaymentIntents with Elements.
+- A one-off payment inside your own UI is either embedded Checkout or
+  PaymentIntents with Elements. Pick on how much of the checkout behavior you
+  want Stripe to own, not on where the form renders; staying inside your UI does
+  not oblige you to build the flow yourself.
 - Anything recurring is Billing, with prices and subscriptions, not a payment
   you re-run on a timer.
 - Charging after the fact with terms is Invoicing.
@@ -36,10 +39,16 @@ object, the method that is superseded.
 ## 3. Get parameters from the schema, never from memory
 
 `stripe_api_search` finds the method, `stripe_api_details` gives its real
-parameters and types. Do this even for calls you are sure of. Stripe accepts
-unknown parameters on some endpoints without complaint, so a misspelled field
-yields a success response and a wrong object, which surfaces later as a support
-ticket rather than a stack trace.
+parameters and types. Do this even for calls you are sure of.
+
+A misspelled parameter is the easy case: Stripe rejects what it does not
+recognize with an `invalid_request_error` naming the field, so you find out
+immediately. The expensive case is a parameter that is real but wrong here, and
+it has three shapes. A field that belongs to a sibling endpoint. A field nested
+at the wrong level, where Stripe sees the flat name as unknown and the value you
+meant never arrives. And a field that is accepted and does something other than
+what its name suggests, which no error can catch for you. The schema is what
+separates the three.
 
 ## 4. Stay in a sandbox
 
@@ -64,11 +73,15 @@ and extend that path rather than opening a second one with its own key handling.
 
 ## Anti-patterns
 
-- **Recalling a parameter list.** Confirm it. The cost of being wrong is silent.
+- **Recalling a parameter list.** Confirm it. A wrong name errors loudly; a
+  wrong nesting or the right name from the wrong endpoint does not.
 - **Rolling your own recurring billing.** Proration, tax, dunning, and the
   portal are the product you are skipping.
 - **Trusting the redirect.** The webhook is the event; the redirect is a hint.
-- **Storing card data.** Hand it to Stripe and keep the token. Taking it
-  yourself changes your compliance scope.
+- **Storing card data.** Hand it to Stripe and keep its reference. For a payment
+  you will make again later that reference is a PaymentMethod saved on a
+  Customer, set up with a SetupIntent or `setup_future_usage`, not a Token: a
+  Token is single use, so reusing one fails on the second charge. Taking card
+  data yourself changes your compliance scope.
 - **Amounts as floats.** Stripe takes integers in the smallest currency unit,
   and currencies with no minor unit break a hardcoded divide by 100.
