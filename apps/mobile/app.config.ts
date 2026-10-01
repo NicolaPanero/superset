@@ -12,9 +12,11 @@ config({
 	quiet: true,
 });
 
-const webHost = new URL(
+const webUrl = new URL(
 	process.env.EXPO_PUBLIC_WEB_URL || "https://app.superset.sh",
-).hostname;
+);
+const associatedDomains =
+	webUrl.protocol === "https:" ? [`applinks:${webUrl.hostname}`] : undefined;
 
 const SIGNED_BUILD_PROFILES = ["preview", "production"];
 const signedUpdates = process.env.MOBILE_SIGNED_UPDATES === "1";
@@ -57,7 +59,7 @@ export default ({ config }: ConfigContext) => ({
 			"com.apple.security.application-groups": ["group.sh.superset.mobile"],
 		},
 		bundleIdentifier: IOS_APP.BUNDLE_ID,
-		associatedDomains: [`applinks:${webHost}`],
+		...(associatedDomains && { associatedDomains }),
 		usesAppleSignIn: true,
 		infoPlist: {
 			"UISupportedInterfaceOrientations~ipad": [
