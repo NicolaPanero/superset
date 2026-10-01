@@ -11,11 +11,6 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { env } from "../env";
 
-/**
- * Calls a page's storage hub. Unlike a nudge this is awaited: the records
- * live in the hub, so a failed call is a failed read or write and the caller
- * has to hear about it rather than lose a vote quietly.
- */
 export async function callPageStore<Request extends PageStorageHubRequest>(
 	pageId: string,
 	request: Request,
@@ -57,19 +52,11 @@ export async function callPageStore<Request extends PageStorageHubRequest>(
 		});
 	}
 	if (!body.ok) {
-		// The hub counts bytes, so a quota refusal comes from there; the code
-		// travels in the message the page branches on.
 		throw new TRPCError({ code: "FORBIDDEN", message: body.message });
 	}
 	return body as PageStorageHubReplyFor<Request["op"]>;
 }
 
-/**
- * Notes that this person has written on this page, so an account purge can
- * find the hub later. Best effort: the index is a hint, and losing a write to
- * it costs a purge some completeness, never the viewer their vote. Failing the
- * write itself over a bookkeeping row would be the worse trade.
- */
 export async function notePageStorageWriter(
 	pageId: string,
 	userId: string,
@@ -87,22 +74,11 @@ export async function notePageStorageWriter(
 	}
 }
 
-/**
- * Wipes a page's hub and forgets where it was. Called when the page is
- * deleted. The records are already unreachable at that point — every read
- * goes through the API, which can no longer resolve the page — so this is
- * hygiene rather than containment, and it is safe to re-run.
- */
 export async function deletePageStorage(pageId: string): Promise<void> {
 	await callPageStore(pageId, { op: "clear" });
 	await db.delete(pageStorageIndex).where(eq(pageStorageIndex.pageId, pageId));
 }
 
-/**
- * Removes everything one person wrote across every page. The index is what
- * makes this answerable at all: a hub knows only itself, so without it their
- * records would sit in however many hubs with nothing naming them.
- */
 export async function purgePageStorageForUser(
 	userId: string,
 ): Promise<{ pages: number; cleared: number }> {
@@ -125,7 +101,6 @@ export async function purgePageStorageForUser(
 	return { pages: rows.length, cleared };
 }
 
-/** How long a subscribe ticket stays good. Short, because it is cheap to mint. */
 const SUBSCRIBE_TICKET_SECONDS = 15 * 60;
 
 export async function mintPageStoreSubscribeTicket(pageId: string): Promise<{

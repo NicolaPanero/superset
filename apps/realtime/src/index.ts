@@ -58,10 +58,6 @@ app.get("/v2/org/:organizationId/nudges", async (c) => {
 	});
 });
 
-// ── Page storage: the hub holds the records; the API fronts every call ──
-
-// Ops arrive from the API, which has already decided this viewer may read the
-// page. The secret is the whole check here; the hub never sees a user session.
 app.post("/v2/page/:pageId/storage", async (c) => {
 	const token = extractToken(c);
 	if (!token || token !== c.env.NUDGE_SECRET) {
@@ -77,9 +73,6 @@ app.post("/v2/page/:pageId/storage", async (c) => {
 	return c.json(await stub.apply(request));
 });
 
-// A window subscribing to change notifications. The ticket is a statement
-// from the API that this page may be read; the stream carries no values, so
-// the ticket is all the authority the Worker needs.
 app.get("/v2/page/:pageId/storage/subscribe", async (c) => {
 	if (c.req.header("Upgrade")?.toLowerCase() !== "websocket") {
 		return c.json({ error: "WebSocket upgrade required" }, 426);

@@ -42,12 +42,6 @@ interface PageCommentsViewProps {
 	 */
 	onFramePointerDown?: () => void;
 	onLinkClick?: (click: PageLinkClick) => void;
-	/**
-	 * Serves the page's `window.superset.storage` calls and relays the hub's
-	 * change notifications. Omitted, the page's storage API reports itself
-	 * unavailable and the page renders its empty state — which is also what
-	 * happens wherever there is no host at all.
-	 */
 	storage?: PageStoragePort;
 }
 

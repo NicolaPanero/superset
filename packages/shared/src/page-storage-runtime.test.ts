@@ -13,16 +13,9 @@ interface Harness {
 		subscribe(key: string, onRecords: (records: unknown[]) => void): () => void;
 	};
 	sent: Record<string, unknown>[];
-	/** Deliver a host message into the runtime. */
 	toFrame(body: Record<string, unknown>): void;
 }
 
-/**
- * Runs the injected source with the handful of globals it touches replaced by
- * fakes, so the handshake and the call correlation can be driven directly.
- * `parent` is a distinct object from `window`, which is what tells the runtime
- * it is framed.
- */
 function mount({ framed = true }: { framed?: boolean } = {}): Harness {
 	const sent: Record<string, unknown>[] = [];
 	const listeners: ((event: unknown) => void)[] = [];
@@ -67,7 +60,6 @@ function callCount(sent: Record<string, unknown>[]) {
 	return sent.filter((m) => m.type === "call").length;
 }
 
-/** Drains the microtask queue, which an await chain needs more than one of. */
 function flush(): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, 0));
 }
@@ -105,7 +97,6 @@ describe("page storage runtime", () => {
 
 		expect(firstId).not.toBe(secondId);
 
-		// Answer them out of order: correlation is by id, not arrival.
 		h.toFrame({
 			type: "result",
 			id: secondId,
@@ -170,7 +161,6 @@ describe("page storage runtime", () => {
 		const seen: unknown[][] = [];
 		h.storage.subscribe("votes", (records) => seen.push(records));
 
-		// The initial read a subscribe always does.
 		await flush();
 		h.toFrame({
 			type: "result",
@@ -180,8 +170,6 @@ describe("page storage runtime", () => {
 		});
 		await flush();
 
-		// Someone else votes: the hub pushes, and the runtime reads again
-		// without the page asking.
 		const before = callCount(h.sent);
 		h.toFrame({ type: "changed", key: "votes" });
 		await flush();

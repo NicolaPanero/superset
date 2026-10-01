@@ -5,26 +5,10 @@ import {
 	STORAGE_HOST_CHANNEL,
 } from "./page-storage";
 
-/**
- * How long the runtime waits for a host to answer its handshake before it
- * gives up and reports the API as unavailable. A page rendered with no host
- * at all — the thumbnail renderer, or a `file://` preview — has to reach a
- * decision rather than hang, so every call after this fails fast and the page
- * renders its empty state.
- */
 const HELLO_TIMEOUT_MS = 2000;
 
-/**
- * Backstop cadence for `subscribe`. The hub pushes a `changed` message the
- * moment anyone writes, so this only covers a dropped socket — hence slow.
- */
 const POLL_INTERVAL_MS = 60000;
 
-/**
- * Runs inside the served page and exposes `window.superset.storage`. Every
- * call is brokered: the page has no network, so the runtime posts the op to
- * the host, which holds the viewer's session, and resolves on the reply.
- */
 export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 	const FRAME = ${JSON.stringify(STORAGE_FRAME_CHANNEL)};
 	const HOST = ${JSON.stringify(STORAGE_HOST_CHANNEL)};
@@ -60,10 +44,6 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		parent.postMessage({ channel: FRAME, ...message }, "*");
 	};
 
-	// The host's listener may not be mounted when this script runs, so the
-	// handshake retries until it is answered or the deadline passes. A page
-	// with no host at all (the thumbnail renderer, a file:// preview) takes
-	// the deadline and reports itself unavailable.
 	if (parent === window) {
 		settle(false);
 	} else {
@@ -142,7 +122,6 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 
 	const storage = {
 		ready,
-		/** Whether this viewer may write at all; null until the handshake lands. */
 		get writable() {
 			return host ? host.writable : null;
 		},
@@ -160,12 +139,6 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		async remove(key) {
 			await call({ op: "remove", key: checkKey(key) });
 		},
-		/**
-		 * Re-reads whenever the page's hub says someone wrote, plus on focus
-		 * and a slow timer in case the hub's socket dropped. Overlapping
-		 * refreshes collapse into one, so a burst of other people's votes
-		 * costs a single read.
-		 */
 		subscribe(key, onRecords) {
 			checkKey(key);
 			let stopped = false;

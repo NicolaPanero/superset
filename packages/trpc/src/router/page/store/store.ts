@@ -25,15 +25,6 @@ import {
 	writePageStorageSchema,
 } from "./schema";
 
-/**
- * The records live in the page's hub, but whether this viewer may touch them
- * is a Postgres question — visibility, author, takedown — so every procedure
- * resolves the page here first and only then calls out.
- *
- * Storage is the one place where someone who is not the page's author writes
- * to it, so readable-means-writable is deliberate: a poll only its author can
- * answer is not a poll. Everything a viewer writes stays under their own id.
- */
 async function loadReadablePage(
 	pageId: string,
 	organizationId: string,
@@ -58,11 +49,6 @@ async function loadReadablePage(
 	return page;
 }
 
-/**
- * The hub stores opaque ids, so names are resolved here, on the way out, from
- * the one place that owns them. A viewer who has since been deleted reads as
- * "Someone" rather than breaking the tally.
- */
 async function withNames(
 	records: PageStorageHubRecord[],
 ): Promise<
@@ -101,7 +87,6 @@ export const pageStoreRouter = {
 			return { value: record ? record.value : null };
 		}),
 
-	/** Every viewer's record under a key — what a tally is derived from. */
 	getAll: protectedProcedure
 		.input(readPageStorageSchema)
 		.query(async ({ ctx, input }) => {
@@ -148,11 +133,6 @@ export const pageStoreRouter = {
 			return { ok: true as const };
 		}),
 
-	/**
-	 * Where a window listens for changes. The stream carries no values, so a
-	 * ticket is all the hub needs; the viewer still re-reads through `getAll`,
-	 * which is the only thing that decides what they can see.
-	 */
 	subscribeUrl: protectedProcedure
 		.input(z.object({ pageId: pageFields.id }))
 		.query(async ({ ctx, input }) => {
@@ -162,11 +142,6 @@ export const pageStoreRouter = {
 			return mintPageStoreSubscribeTicket(input.pageId);
 		}),
 
-	/**
-	 * Every record on the page, for the author and for the agent that
-	 * published it — this is the readback half of the loop, where collected
-	 * answers become something an agent can act on.
-	 */
 	list: protectedProcedure
 		.input(z.object({ pageId: pageFields.id }))
 		.query(async ({ ctx, input }) => {
@@ -190,13 +165,6 @@ export const pageStoreRouter = {
 			};
 		}),
 
-	/**
-	 * How much storage this organization's pages hold. Each hub knows only
-	 * its own total, so this walks the index and asks them — which is the
-	 * other question the index exists to make answerable. Capped, and it
-	 * says when it stopped short rather than reporting a short total as the
-	 * whole truth.
-	 */
 	usage: protectedProcedure
 		.input(z.object({ limit: z.number().int().min(1).max(200).default(50) }))
 		.query(async ({ ctx, input }) => {
@@ -243,8 +211,6 @@ export const pageStoreRouter = {
 				op: "clear",
 				...(input.key !== undefined ? { key: input.key } : {}),
 			});
-			// Only a full clear empties the page; clearing one key leaves the
-			// index's "may have written here" claim correctly standing.
 			if (input.key === undefined) {
 				await db
 					.delete(pageStorageIndex)

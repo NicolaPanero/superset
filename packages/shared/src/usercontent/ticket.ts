@@ -25,13 +25,6 @@ export interface FileTicketClaims {
 	exp: number;
 }
 
-/**
- * Lets a window subscribe to one page's storage changes. Signed with the
- * realtime secret rather than the usercontent one, because the realtime
- * Worker is what verifies it. It opens a content-free notification stream and
- * nothing else: every read and write still goes through the API, which is
- * where page readability is decided.
- */
 export interface PageStorageTicketClaims {
 	pageId: string;
 	/** Expiry, in seconds since the epoch. */

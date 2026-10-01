@@ -1,27 +1,3 @@
-/**
- * Local harness for page storage.
- *
- * Runs the real pieces — the injected runtime, the real PageHub Durable
- * Object behind `wrangler dev` — and stubs only the one layer that needs a
- * database and a login: who the viewer is. You pick that from a dropdown,
- * which is what makes two-person voting testable in two tabs.
- *
- * Two servers, so the page is a different origin from its host exactly as in
- * production and every postMessage really does cross an origin boundary:
- *
- *   :8787  the host  — iframe, user picker, serves the page's calls
- *   :8788  the page  — the vote document with the runtime injected
- *
- * Start the hub first, from apps/realtime:
- *   printf 'NUDGE_SECRET=local-test-secret\n' > .dev.vars
- *   bunx wrangler dev --port 8798 --local
- * Then, from anywhere in the repo:
- *   bun run apps/realtime/scripts/storage-harness.ts
- * and open http://localhost:8787 in two windows.
- *
- * PAGE_FILE points it at a different page; PAGE_ID at a different hub.
- */
-
 import { readFileSync } from "node:fs";
 import { PAGE_COMMENTS_RUNTIME_SOURCE } from "@superset/shared/page-comments-runtime";
 import {
@@ -56,8 +32,6 @@ const PAGE_ORIGIN = `http://localhost:${PAGE_PORT}`;
 
 const PEOPLE = ["Ada", "Grace", "Alan", "Katherine"];
 
-// ── :8788 the page origin ────────────────────────────────────────────────
-
 Bun.serve({
 	port: PAGE_PORT,
 	fetch(request) {
@@ -74,7 +48,6 @@ Bun.serve({
 			});
 		}
 
-		// Read on every request, so editing the page is just a reload.
 		const html = injectHeadScriptTag(
 			injectStyleTag(
 				injectScriptTag(readFileSync(PAGE_FILE, "utf8"), RUNTIME_SCRIPT_PATH),
@@ -90,8 +63,6 @@ Bun.serve({
 		});
 	},
 });
-
-// ── :8787 the host ───────────────────────────────────────────────────────
 
 async function hub(body: unknown): Promise<Response> {
 	const response = await fetch(`${HUB}${pageStorageOpPath(PAGE_ID)}`, {
@@ -113,7 +84,6 @@ Bun.serve({
 	async fetch(request) {
 		const url = new URL(request.url);
 
-		// The browser never sees the secret: the ticket is minted here.
 		if (url.pathname === "/subscribe-url") {
 			const ticket = await signPageStorageTicket(SECRET, {
 				pageId: PAGE_ID,
@@ -123,8 +93,6 @@ Bun.serve({
 			return Response.json({ url: ws });
 		}
 
-		// Stands in for the tRPC router: in production this is where the page
-		// is authorized against Postgres and the viewer comes from a session.
 		if (url.pathname === "/op" && request.method === "POST") {
 			const { userId, op, key, value } = (await request.json()) as {
 				userId: string;
@@ -149,11 +117,6 @@ Bun.serve({
 	},
 });
 
-/**
- * The host half: answers the frame's handshake, serves its calls, and relays
- * the hub's change notifications into the frame. Mirrors
- * `usePageStorageChannel`, minus React.
- */
 function shell(): string {
 	return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8" />
@@ -190,9 +153,6 @@ function shell(): string {
   const who = document.getElementById("who");
   let served = 0;
 
-  // A fresh window picks someone at random and keeps them, so a normal
-  // window and an incognito one are two different voters without anyone
-  // having to remember to change the dropdown. Reloading keeps you.
   const saved = sessionStorage.getItem("who");
   if (saved) {
     who.value = saved;
@@ -221,8 +181,6 @@ function shell(): string {
       error.code = body.code || "unavailable";
       throw error;
     }
-    // Shape the reply the way the real bridge does, including resolving the
-    // viewer's own id into a display name.
     if (request.op === "getAll") {
       return {
         op: "getAll",

@@ -1004,8 +1004,6 @@ export const pageRouter = {
 			await db.delete(pages).where(eq(pages.id, page.id));
 
 			try {
-				// The records live in the page's hub, which no foreign key
-				// reaches, so deletion has to say so out loud.
 				await deletePageStorage(page.id);
 				await deletePageObjects({
 					pageId: page.id,

@@ -7,14 +7,8 @@ import { parsePageStorageChanged } from "@superset/shared/page-storage-hub";
 import { useCallback, useMemo } from "react";
 import { useCloudClient } from "../../providers/CloudClientProvider";
 
-/** Reconnect backoff for the change socket, in milliseconds. */
 const RETRY_MS = [1000, 2000, 5000, 15000];
 
-/**
- * Serves a framed page's storage calls as the signed-in viewer, and keeps a
- * socket open to the page's hub so other people's writes arrive as they
- * happen. The page has no network of its own, so both halves live here.
- */
 export function usePageStorageBridge({
 	pageId,
 }: {
@@ -50,10 +44,6 @@ export function usePageStorageBridge({
 		[client, pageId],
 	);
 
-	/**
-	 * The ticket behind the socket URL expires, so a reconnect mints a fresh
-	 * one rather than retrying a URL that can only fail from now on.
-	 */
 	const watch = useCallback(
 		(onChange: (key?: string) => void) => {
 			let stopped = false;

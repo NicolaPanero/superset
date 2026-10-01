@@ -249,8 +249,6 @@ async function servePage(c: Context<AppContext>): Promise<Response> {
 		return new Response(object.body, { headers: headersFor(contentType) });
 	}
 
-	// Order matters on the way out, not here: the storage runtime and the
-	// theme both land in `<head>`, the comments runtime before `</body>`.
 	const html = injectHeadScriptTag(
 		injectStyleTag(
 			injectScriptTag(await object.text(), RUNTIME_SCRIPT_PATH),
@@ -547,8 +545,6 @@ app.get(RUNTIME_SCRIPT_PATH, (c) =>
 	c.body(PAGE_COMMENTS_RUNTIME_SOURCE, 200, SCRIPT_HEADERS),
 );
 
-// Served separately from the comments runtime because it is injected into
-// `<head>` and has to finish before the document's own scripts run.
 app.get(STORAGE_SCRIPT_PATH, (c) =>
 	c.body(PAGE_STORAGE_RUNTIME_SOURCE, 200, SCRIPT_HEADERS),
 );

@@ -32,8 +32,6 @@ describe("writePageStorageSchema", () => {
 	});
 
 	test("counts the serialized size, not the character count", () => {
-		// A 4-byte emoji is one JS character but four bytes on the wire, so a
-		// value that looks small by length can still break the ceiling.
 		const emoji = "🎉".repeat(MAX_PAGE_STORAGE_VALUE_BYTES / 4);
 		expect(pageStorageValueBytes(emoji)).toBeGreaterThan(
 			MAX_PAGE_STORAGE_VALUE_BYTES,

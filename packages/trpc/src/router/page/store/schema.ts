@@ -12,10 +12,6 @@ const storageRef = {
 
 export const readPageStorageSchema = z.object(storageRef);
 
-/**
- * The value ceiling is checked here so an over-size write is refused before
- * the row is read, and again in the procedure against the page's total.
- */
 export const writePageStorageSchema = z.object({
 	...storageRef,
 	value: z
@@ -30,6 +26,5 @@ export const writePageStorageSchema = z.object({
 
 export const clearPageStorageSchema = z.object({
 	pageId: pageFields.id,
-	/** Absent clears every key this viewer wrote on the page. */
 	key: z.string().min(1).max(MAX_PAGE_STORAGE_KEY_LENGTH).optional(),
 });

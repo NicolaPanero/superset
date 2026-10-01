@@ -103,9 +103,6 @@ mock.module("@superset/db/client", () => {
 	};
 });
 
-// Page storage lives in per-page Durable Objects, reached over HTTP; the
-// purge's contract here is that it asks for them to be wiped, in the same
-// phase as the other external deletions and before the tombstone.
 mock.module("../page-store", () => ({
 	purgePageStorageForUser: async (userId: string) => {
 		log.push(`page-storage.purge ${userId}`);

@@ -53,10 +53,6 @@ async function deleteCustomerIfNeverCharged(customerId: string) {
  * is safe to re-run. Deliberately silent — no removal or billing emails. */
 export async function purgeAccount(userId: string): Promise<void> {
 	await deletePostHogPerson(userId);
-	// Page storage records live in per-page Durable Objects, which the
-	// tombstone below cannot reach: the user row survives, so no cascade ever
-	// fires, and a hub knows nothing beyond its own page. Runs before the
-	// tombstone, with the rest of the external deletions, and is re-runnable.
 	await purgePageStorageForUser(userId);
 
 	const memberships = await db.query.members.findMany({

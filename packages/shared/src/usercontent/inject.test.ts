@@ -133,8 +133,6 @@ describe("injectScriptTag", () => {
 
 describe("injectHeadScriptTag", () => {
 	test("lands before a script the author wrote in the body", () => {
-		// The bug this exists for: a page that reads window.superset while
-		// parsing runs before anything injected at the end of the body.
 		const html = `<!doctype html><html><head><title>t</title></head><body><script>init()</script></body></html>`;
 		const out = injectHeadScriptTag(html, STORAGE_SCRIPT_PATH);
 		expect(out.indexOf(STORAGE_SCRIPT_PATH)).toBeLessThan(

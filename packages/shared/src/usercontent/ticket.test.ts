@@ -133,8 +133,6 @@ describe("page storage tickets", () => {
 	});
 
 	test("never crosses with the kinds that open content", async () => {
-		// A subscribe ticket is signed with the realtime secret and must not
-		// serve a document, nor a view ticket open a change stream.
 		const storage = await signPageStorageTicket(SECRET, {
 			pageId: PAGE,
 			exp: EXP,

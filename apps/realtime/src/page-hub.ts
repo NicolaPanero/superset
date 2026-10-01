@@ -12,8 +12,6 @@ import type {
 import { Server } from "partyserver";
 import type { RealtimeEnv } from "./types";
 
-// A type alias, not an interface: the SQLite cursor's row generic requires an
-// implicit index signature, which an interface does not get.
 type Row = {
 	key: string;
 	user_id: string;
@@ -22,18 +20,6 @@ type Row = {
 	updated_at: number;
 };
 
-/**
- * One object per page: everything that page remembers across its viewers,
- * and every window currently watching it.
- *
- * This is the whole store — there is no copy in Postgres. Being one object
- * per page is what makes that safe: the platform routes every write for a
- * page here, and this object applies them one at a time, so a vote is never
- * racing another vote. Its SQLite survives hibernation and redeploys.
- *
- * It holds opaque user ids. Names are the API's business, resolved on the way
- * out, so renaming someone does not leave a stale copy here.
- */
 export class PageHub extends Server<RealtimeEnv> {
 	static options = { hibernate: true };
 
@@ -53,8 +39,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		);
 		this.ready = true;
 	}
-
-	// ── RPC (called by the Worker, which has already checked the secret) ──
 
 	async apply(request: PageStorageHubRequest): Promise<PageStorageHubResponse> {
 		this.schema();
@@ -85,8 +69,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		for (const _ of this.getConnections()) count++;
 		return count;
 	}
-
-	// ── Reads ─────────────────────────────────────────────────────────────
 
 	private one(key: string, userId: string): PageStorageHubRecord | null {
 		const [row] = this.ctx.storage.sql
@@ -123,8 +105,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		};
 	}
 
-	// ── Writes ────────────────────────────────────────────────────────────
-
 	private set(
 		userId: string,
 		key: string,
@@ -140,8 +120,6 @@ export class PageHub extends Server<RealtimeEnv> {
 			};
 		}
 
-		// Measured here because this object is the only writer, so what it
-		// reads cannot be stale by the time it writes.
 		const [usage] = this.ctx.storage.sql
 			.exec<{ total: number; mine: number; replacing: number }>(
 				`SELECT
@@ -213,11 +191,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		return { ok: true, op: "clear", cleared };
 	}
 
-	/**
-	 * Drops everything one person wrote here. Called when their account is
-	 * purged, which is the one deletion a page-scoped object cannot notice
-	 * on its own.
-	 */
 	private clearUser(userId: string): PageStorageHubResponse {
 		const before = this.count();
 		this.ctx.storage.sql.exec("DELETE FROM records WHERE user_id = ?", userId);
@@ -233,13 +206,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		return row?.n ?? 0;
 	}
 
-	// ── Fan-out ───────────────────────────────────────────────────────────
-
-	/**
-	 * Tells every watching window that something under `key` moved. The
-	 * message carries no values: a subscriber re-reads through the API, which
-	 * is the only thing that may decide what that viewer can see.
-	 */
 	private announce(key?: string): void {
 		const message: PageStorageChangedMessage = {
 			type: "storage-changed",

@@ -194,8 +194,6 @@
         if (flash) {
           const bar = document.querySelector(".bar");
           bar.classList.remove("flash");
-          // Reading layout restarts the animation; without it a second
-          // change within the same second would not flash at all.
           void bar.offsetWidth;
           bar.classList.add("flash");
         }
@@ -255,9 +253,6 @@
         }
         render();
 
-        // Pushed by the page's hub the moment anyone writes, and re-read on
-        // focus plus a slow timer in case that socket dropped. Open this page
-        // in two windows and vote in one to watch the other move.
         storage.subscribe(KEY, (next) => {
           const changed =
             next.length !== records.length ||

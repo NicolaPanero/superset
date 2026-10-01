@@ -9,17 +9,6 @@ import {
 } from "@superset/shared/page-storage";
 import { type RefObject, useEffect, useRef, useState } from "react";
 
-/**
- * The host half of the page storage bridge. It answers the frame's handshake,
- * serves its calls through the port (which runs as the signed-in viewer), and
- * forwards the hub's change notifications into the frame so the page can
- * re-read.
- *
- * Every inbound message is checked against the frame's exact origin and its
- * own content window, the same way the comments channel is: the page is a
- * different origin, and a reply carrying someone else's data must never be
- * posted anywhere but back into that frame.
- */
 export function usePageStorageChannel({
 	frameRef,
 	frameOrigin,
@@ -33,8 +22,6 @@ export function usePageStorageChannel({
 }): void {
 	const portRef = useRef(port);
 	portRef.current = port;
-	/** Set once the frame has said hello, so a change is never posted into a
-	 * window that has no runtime listening yet. */
 	const [live, setLive] = useState(false);
 
 	useEffect(() => {
@@ -104,11 +91,6 @@ export function usePageStorageChannel({
 	}, [frameOrigin, frameRef, live, port]);
 }
 
-/**
- * A page gets a code it can branch on, never our error text. The quota
- * messages carry their own prefix so the page can tell "too big" from
- * "not signed in" without parsing prose.
- */
 function classify(error: unknown): {
 	code: PageStorageErrorCode;
 	message: string;
