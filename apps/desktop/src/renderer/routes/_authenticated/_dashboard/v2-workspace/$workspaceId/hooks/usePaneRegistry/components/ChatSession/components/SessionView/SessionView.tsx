@@ -6,11 +6,13 @@ import {
 	useChatSession,
 	useTimeline,
 } from "@superset/chat/react";
+import { ChatHistorySidebar } from "@superset/ui/chat-history-sidebar";
 import { Spinner } from "@superset/ui/spinner";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
+import { railMessages } from "../../utils/railMessages";
 import { Composer } from "../Composer";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
@@ -46,6 +48,20 @@ export function SessionView({
 }) {
 	const session = useChatSession({ client });
 	const timeline = useTimeline(session.snapshot);
+	const rail = useMemo(
+		() => railMessages(timeline, session.snapshot),
+		[timeline, session.snapshot],
+	);
+	const [scrollRequest, setScrollRequest] = useState<{
+		itemId: string;
+		nonce: number;
+	}>();
+	const selectFromRail = useCallback((message: { id: string }) => {
+		setScrollRequest((previous) => ({
+			itemId: message.id,
+			nonce: (previous?.nonce ?? 0) + 1,
+		}));
+	}, []);
 	const approvals = useApprovals(session.snapshot);
 
 	const firstPromptSentRef = useRef(false);
@@ -98,33 +114,43 @@ export function SessionView({
 					)}
 				</div>
 			) : (
-				<Transcript
-					approvals={approvals}
-					canForkToWorktree={canForkToWorktree}
-					groups={timeline}
-					hasOlder={session.hasOlder}
-					onDiscardPrompt={session.discardPrompt}
-					onFork={
-						onFork
-							? (target) =>
-									onFork(
-										target,
-										buildChatHandoffTranscript(
-											timeline,
-											session.snapshot,
-											agentLabel ?? "Agent",
-										),
-									)
-							: undefined
-					}
-					onLoadOlder={() => void session.loadOlder()}
-					onRespond={(approvalId, decision) =>
-						void session.respondToApproval(approvalId, decision)
-					}
-					onRetryPrompt={session.retryPrompt}
-					outbox={session.outbox}
-					snapshot={session.snapshot}
-				/>
+				<div className="flex min-h-0 flex-1">
+					<Transcript
+						approvals={approvals}
+						canForkToWorktree={canForkToWorktree}
+						groups={timeline}
+						hasOlder={session.hasOlder}
+						onDiscardPrompt={session.discardPrompt}
+						onFork={
+							onFork
+								? (target) =>
+										onFork(
+											target,
+											buildChatHandoffTranscript(
+												timeline,
+												session.snapshot,
+												agentLabel ?? "Agent",
+											),
+										)
+								: undefined
+						}
+						onLoadOlder={() => void session.loadOlder()}
+						onRespond={(approvalId, decision) =>
+							void session.respondToApproval(approvalId, decision)
+						}
+						onRetryPrompt={session.retryPrompt}
+						outbox={session.outbox}
+						scrollRequest={scrollRequest}
+						snapshot={session.snapshot}
+					/>
+					{rail.length > 1 && (
+						<ChatHistorySidebar
+							className="hidden shrink-0 self-start py-6 pr-3 lg:block"
+							messages={rail}
+							onMessageSelect={selectFromRail}
+						/>
+					)}
+				</div>
 			)}
 			<Composer
 				availableCommands={session.snapshot.session?.availableCommands ?? []}

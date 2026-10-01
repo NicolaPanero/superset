@@ -21,6 +21,11 @@ export type TranscriptProps = {
 	onRespond: (approvalId: string, decision: Decision) => void;
 	onFork?: ((target: ChatForkTarget) => void) | undefined;
 	canForkToWorktree?: boolean;
+	/**
+	 * An item the rail asked to see. Carries a nonce because selecting the
+	 * same message twice is a second request, not the same one.
+	 */
+	scrollRequest?: { itemId: string; nonce: number } | undefined;
 	onRetryPrompt: (clientId: string) => void;
 	onDiscardPrompt: (clientId: string) => void;
 };
@@ -49,6 +54,7 @@ function outboxText(entry: OutboxEntry): string {
 export function Transcript({
 	approvals,
 	canForkToWorktree,
+	scrollRequest,
 	groups,
 	hasOlder,
 	onDiscardPrompt,
@@ -92,6 +98,15 @@ export function Transcript({
 			?.querySelector(`[data-item-id="${CSS.escape(anchorItemId)}"]`)
 			?.scrollIntoView({ block: "start" });
 	}, [anchorItemId]);
+
+	const requestedItemId = scrollRequest?.itemId;
+	const requestedNonce = scrollRequest?.nonce;
+	useEffect(() => {
+		if (!requestedItemId) return;
+		containerRef.current
+			?.querySelector(`[data-item-id="${CSS.escape(requestedItemId)}"]`)
+			?.scrollIntoView({ behavior: "smooth", block: "start" });
+	}, [requestedItemId, requestedNonce]);
 
 	const firstPendingApprovalId = approvals[0]?.id ?? null;
 	useEffect(() => {

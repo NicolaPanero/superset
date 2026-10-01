@@ -1,21 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
-import type { OutboxEntry } from "@superset/chat/core";
 import type { AvailableCommand, UserContent } from "@superset/chat/protocol";
-import {
-	PromptInput,
-	PromptInputFooter,
-	type PromptInputMessage,
-	PromptInputProvider,
-	PromptInputSubmit,
-	usePromptInputController,
-} from "@superset/ui/ai-elements/prompt-input";
-import { Button } from "@superset/ui/button";
-import { cn } from "@superset/ui/utils";
+import type {
+	ComposerMentionEntry,
+	ComposerMentionProvider,
+	PromptInputCommand,
+} from "@superset/chat-ui/PromptInput";
+import { PromptInput } from "@superset/chat-ui/PromptInput";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { ArrowUpIcon, Square } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { TiptapPromptEditor } from "renderer/components/TiptapPromptEditor";
-import type { SlashCommand } from "renderer/components/TiptapPromptEditor/slash-commands";
+import { useCallback, useMemo, useRef } from "react";
 
 const DRAFT_DEBOUNCE_MS = 300;
 
@@ -23,41 +15,31 @@ export type ComposerProps = {
 	workspaceId: string;
 	draftKey: string;
 	availableCommands: AvailableCommand[];
-	onSend: (content: UserContent[]) => OutboxEntry | null;
+	onSend: (content: UserContent[]) => unknown;
 	placeholder?: string;
 	disabled?: boolean;
 	onCancelTurn?: (() => void) | null;
 };
 
 /**
- * What the agent reported over ACP, in the shape the shared `/` menu takes.
- * Everything the agent offers is harness-provided, so provenance is fixed.
+ * The agent's own slash commands, in the shape the composer's menu takes.
+ * Selecting one inserts a chip that serializes back to `/name`, so what the
+ * agent receives is the command it advertised.
  */
-function toMenuCommands(commands: AvailableCommand[]): SlashCommand[] {
+function toMenuCommands(commands: AvailableCommand[]): PromptInputCommand[] {
 	return commands.map((command) => ({
-		name: command.name,
-		aliases: [],
-		description: command.description ?? "",
-		argumentHint: command.hint ?? "",
-		kind: "builtin" as const,
-		source: "harness" as const,
-		entryKind: "command" as const,
-		trigger: "/" as const,
+		id: command.name,
+		title: `/${command.name}`,
+		description: command.description ?? command.hint ?? "",
+		onSelect: (ctx) =>
+			ctx.insertChip({
+				label: `/${command.name}`,
+				serialized: `/${command.name}`,
+			}),
 	}));
 }
 
-export function Composer(props: ComposerProps) {
-	return (
-		<PromptInputProvider
-			initialInput={window.localStorage.getItem(props.draftKey) ?? ""}
-			key={props.draftKey}
-		>
-			<ComposerInner {...props} />
-		</PromptInputProvider>
-	);
-}
-
-function ComposerInner({
+export function Composer({
 	availableCommands,
 	disabled,
 	draftKey,
@@ -67,16 +49,7 @@ function ComposerInner({
 	workspaceId,
 }: ComposerProps) {
 	const { t } = useLingui();
-	const controller = usePromptInputController();
 	const trpcUtils = workspaceTrpc.useUtils();
-
-	// Deduped with the page-level workspace.get query; gives the mention popover
-	// the cwd it shortens paths against.
-	const { data: workspaceStatus } = workspaceTrpc.workspace.get.useQuery(
-		{ id: workspaceId },
-		{ refetchOnWindowFocus: false },
-	);
-	const cwd = workspaceStatus?.worktreePath ?? "";
 
 	const searchFiles = useCallback(
 		async (query: string) => {
@@ -86,96 +59,84 @@ function ComposerInner({
 				includeHidden: false,
 				limit: 20,
 			});
-			return matches.map((match) => ({
-				id: match.absolutePath,
-				name: match.name,
-				relativePath: match.relativePath,
-			}));
+			return matches.map(
+				(match): ComposerMentionEntry => ({
+					id: match.absolutePath,
+					label: match.name,
+					description: match.relativePath,
+					// The agent reads the path itself, so a mention is the path.
+					select: (ctx) =>
+						ctx.insertChip({
+							label: match.name,
+							serialized: match.relativePath,
+						}),
+				}),
+			);
 		},
 		[trpcUtils, workspaceId],
 	);
 
-	const slashCommands = useMemo(
+	const mentionProviders = useMemo<ComposerMentionProvider[]>(
+		() => [
+			{
+				id: "files",
+				title: t({ message: "Files" }),
+				priority: 0,
+				source: {
+					kind: "search",
+					search: searchFiles,
+					emptyState: t({ message: "No matching files" }),
+				},
+			},
+		],
+		[searchFiles, t],
+	);
+
+	const commands = useMemo(
 		() => toMenuCommands(availableCommands),
 		[availableCommands],
 	);
 
-	const text = controller.textInput.value;
-	const textRef = useRef(text);
-	textRef.current = text;
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			if (text === "") window.localStorage.removeItem(draftKey);
-			else window.localStorage.setItem(draftKey, text);
-		}, DRAFT_DEBOUNCE_MS);
-		return () => clearTimeout(timer);
-	}, [text, draftKey]);
-
-	useEffect(() => {
-		return () => {
-			const latest = textRef.current;
-			if (latest === "") window.localStorage.removeItem(draftKey);
-			else window.localStorage.setItem(draftKey, latest);
-		};
-	}, [draftKey]);
+	// Debounced so a draft costs one write per pause rather than one per
+	// keystroke; the last value is flushed when the pane goes away.
+	const draftTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const onChange = useCallback(
+		(text: string) => {
+			if (draftTimer.current) clearTimeout(draftTimer.current);
+			draftTimer.current = setTimeout(() => {
+				if (text === "") window.localStorage.removeItem(draftKey);
+				else window.localStorage.setItem(draftKey, text);
+			}, DRAFT_DEBOUNCE_MS);
+		},
+		[draftKey],
+	);
 
 	const handleSubmit = useCallback(
-		(message: PromptInputMessage) => {
-			if (message.text.trim() === "") return;
-			// PromptInput empties the composer before calling this and puts it
-			// back only when the handler fails, so refusing quietly would throw
-			// the draft away while the session is still coming up.
-			if (disabled) {
-				controller.textInput.setInput(message.text);
-				return;
-			}
-			onSend([{ type: "text", text: message.text }]);
-			controller.textInput.clear();
+		({ text }: { text: string }) => {
+			if (text.trim() === "" || disabled) return;
+			onSend([{ type: "text", text }]);
 			window.localStorage.removeItem(draftKey);
 		},
-		[disabled, onSend, controller, draftKey],
+		[disabled, onSend, draftKey],
 	);
 
 	return (
 		<div className="px-6 pt-1 pb-5">
 			<PromptInput
-				className={cn(
-					"mx-auto w-full max-w-3xl rounded-2xl bg-card shadow-sm",
-					"[&>[data-slot=input-group]]:rounded-2xl [&>[data-slot=input-group]]:border-border [&>[data-slot=input-group]]:shadow-none",
-				)}
+				className="mx-auto w-full max-w-3xl"
+				commands={commands}
+				defaultValue={window.localStorage.getItem(draftKey) ?? undefined}
+				key={draftKey}
+				mentionProviders={mentionProviders}
+				onChange={onChange}
+				onStop={onCancelTurn ?? undefined}
 				onSubmit={handleSubmit}
-			>
-				<TiptapPromptEditor
-					cwd={cwd}
-					placeholder={
-						placeholder ??
-						t({ message: "Ask the agent, @mention files, run /commands" })
-					}
-					searchFiles={searchFiles}
-					slashCommands={slashCommands}
-				/>
-				<PromptInputFooter>
-					<span />
-					{onCancelTurn ? (
-						<Button
-							className="size-7 rounded-full"
-							onClick={onCancelTurn}
-							size="icon"
-							type="button"
-							variant="outline"
-						>
-							<Square className="size-3.5" />
-						</Button>
-					) : (
-						<PromptInputSubmit
-							disabled={disabled}
-							className="size-7 rounded-full border border-transparent bg-foreground/10 p-[5px] shadow-none hover:bg-foreground/20"
-						>
-							<ArrowUpIcon className="size-3.5 text-muted-foreground" />
-						</PromptInputSubmit>
-					)}
-				</PromptInputFooter>
-			</PromptInput>
+				placeholder={
+					placeholder ??
+					t({ message: "Ask the agent, @mention files, run /commands" })
+				}
+				status={onCancelTurn ? "streaming" : "ready"}
+			/>
 		</div>
 	);
 }
