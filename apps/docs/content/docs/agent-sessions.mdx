@@ -28,7 +28,7 @@ The fork icon in an agent terminal's header opens two actions. Both open the new
 
 ### Fork
 
-Fork uses the agent's own fork command, so the copy has the full conversation. Built-in agents that can fork:
+Fork uses the agent's own fork command, so the copy has the full conversation. Built-in agents that can fork, with the fork part of each command:
 
 | Agent | Fork command |
 | --- | --- |
@@ -39,7 +39,9 @@ Fork uses the agent's own fork command, so the copy has the full conversation. B
 | Grok | `grok --resume <id> --fork-session` |
 | Droid | `droid --fork <id>` |
 
-For other agents, set **Fork Args** under **Settings → Agents**. **Fork session** is disabled until Superset knows the agent's session id, and for agents without fork args. If the agent has deleted the source session, the fork is refused.
+Superset also passes the agent's launch flags, such as `--dangerously-skip-permissions` for Claude Code, so a fork runs with the same permissions as a new session. **Settings → Agents** shows each agent's command and fork args.
+
+For other agents, set **Fork Args** under **Settings → Agents**. **Fork session** is disabled until Superset knows the agent's session id, and for agents without fork args. For Claude Code, Codex, OpenCode, and Pi, Superset refuses the fork if the agent has deleted the source session. For other agents, Superset cannot check, so the new pane opens and the agent reports the missing session there.
 
 A fork copies the conversation, not the files. Both sessions work in the same workspace.
 
@@ -71,7 +73,7 @@ superset agents create --workspace <workspace-id> --agent codex --from-terminal 
 
 ## Read an Agent's Transcript
 
-`superset agents read` returns the agent's saved conversation, including what scrolled off a full-screen interface. Superset can read transcripts for Claude Code and Codex; for other agents the command fails.
+`superset agents read` returns the agent's saved conversation, including what scrolled off a full-screen interface. Superset can read saved transcripts for Claude Code and Codex. The command fails for other agents, and when the saved transcript is missing. It does not fall back to terminal output.
 
 ```bash
 superset agents read --local --workspace <workspace-id> --terminal <terminal-id>
