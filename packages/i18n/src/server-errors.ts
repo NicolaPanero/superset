@@ -298,6 +298,24 @@ export const serverErrorMessages: Record<
 				message: "Could not record environment",
 			}),
 		),
+	"serverError.task.notFound": () =>
+		i18n._(
+			msg({
+				message: "Task not found",
+			}),
+		),
+	"serverError.task.invalidLabel": () =>
+		i18n._(
+			msg({
+				message: "Invalid label",
+			}),
+		),
+	"serverError.task.commentNotYours": () =>
+		i18n._(
+			msg({
+				message: "Only the author can change a comment",
+			}),
+		),
 	"serverError.cloudWorkspace.couldNotRecordCloudWorkspace": () =>
 		i18n._(
 			msg({
@@ -394,6 +412,12 @@ export const serverErrorMessages: Record<
 		i18n._(
 			msg({
 				message: "GitHub installation not found",
+			}),
+		),
+	"serverError.integration.githubSyncRequiresThePro": () =>
+		i18n._(
+			msg({
+				message: "GitHub sync requires the Pro plan.",
 			}),
 		),
 	"serverError.integration.notAMemberOfThisOrganization": () =>
