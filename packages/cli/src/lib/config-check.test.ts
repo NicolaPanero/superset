@@ -110,8 +110,46 @@ describe("checkConfig", () => {
 		expect(result.valid).toBe(false);
 		expect(result.issues.map((i) => i.message)).toEqual([
 			"`auth.refreshToken` must be a non-empty string",
-			"`auth.expiresAt` must be a number (ms since the epoch)",
+			"`auth.expiresAt` must be a finite number (ms since the epoch)",
 		]);
+	});
+
+	it("rejects a non-finite expiresAt, which JSON can spell as 1e400", () => {
+		const result = checkConfig(
+			'{"auth":{"accessToken":"tok","expiresAt":1e400}}',
+			PATH,
+			NOW,
+		);
+		expect(result.valid).toBe(false);
+		expect(result.issues.map((i) => i.message)).toEqual([
+			"`auth.expiresAt` must be a finite number (ms since the epoch)",
+		]);
+	});
+
+	it("warns on unknown keys inside auth, where a typo loses the refresh token", () => {
+		const result = check({
+			auth: {
+				accessToken: "tok",
+				refeshToken: "r",
+				expiresAt: NOW + 3_600_000,
+			},
+		});
+		expect(result.valid).toBe(true);
+		expect(result.issues).toEqual([
+			{
+				severity: "warning",
+				message: 'Unknown key "auth.refeshToken" (this CLI version ignores it)',
+			},
+		]);
+	});
+
+	it("rejects whitespace-only credentials, which resolveAuth trims to nothing", () => {
+		expect(check({ apiKey: "   " }).valid).toBe(false);
+		expect(check({ apiKey: "   " }).loggedIn).toBe(false);
+		const auth = check({
+			auth: { accessToken: " ", expiresAt: NOW + 3_600_000 },
+		});
+		expect(auth.valid).toBe(false);
 	});
 
 	it("errors on auth that is not an object", () => {

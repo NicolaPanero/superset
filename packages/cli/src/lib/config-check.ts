@@ -37,8 +37,12 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 function isNonEmptyString(value: unknown): value is string {
-	return typeof value === "string" && value.length > 0;
+	return typeof value === "string" && value.trim().length > 0;
 }
+
+// Exhaustive over the auth block for the same reason as CHECKS below.
+const AUTH_KEYS: { [K in keyof NonNullable<SupersetConfig["auth"]>]-?: true } =
+	{ accessToken: true, refreshToken: true, expiresAt: true };
 
 function checkAuth(value: unknown, now: number): FieldCheck {
 	if (!isPlainObject(value)) {
@@ -53,10 +57,20 @@ function checkAuth(value: unknown, now: number): FieldCheck {
 	if (value.refreshToken !== undefined && !hasRefresh) {
 		issues.push(error("`auth.refreshToken` must be a non-empty string"));
 	}
+	for (const key of Object.keys(value)) {
+		if (!Object.hasOwn(AUTH_KEYS, key)) {
+			issues.push(
+				warning(`Unknown key "auth.${key}" (this CLI version ignores it)`),
+			);
+		}
+	}
 	let usable = true;
-	if (typeof value.expiresAt !== "number") {
+	if (
+		typeof value.expiresAt !== "number" ||
+		!Number.isFinite(value.expiresAt)
+	) {
 		issues.push(
-			error("`auth.expiresAt` must be a number (ms since the epoch)"),
+			error("`auth.expiresAt` must be a finite number (ms since the epoch)"),
 		);
 	} else if (value.expiresAt - AUTH_REFRESH_LEEWAY_MS < now) {
 		const when =
