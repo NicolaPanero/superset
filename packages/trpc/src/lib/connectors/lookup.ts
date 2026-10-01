@@ -19,8 +19,10 @@ export class AmbiguousConnectionError extends Error {
 		readonly connector: string,
 		readonly connectionIds: string[],
 	) {
+		// Reaches a shell as often as a fetch, so it names both ways rather than
+		// only the query parameter a CLI user cannot type.
 		super(
-			`More than one ${connector} account is connected; name one with ?connection=<id>.`,
+			`More than one ${connector} account is connected. Name one: --account <id> from the CLI, or ?connection=<id> on the endpoint.`,
 		);
 		this.name = "AmbiguousConnectionError";
 	}
