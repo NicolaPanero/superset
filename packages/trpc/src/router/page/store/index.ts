@@ -1,0 +1,1 @@
+export { pageStoreRouter } from "./store";

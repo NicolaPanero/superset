@@ -103,6 +103,16 @@ mock.module("@superset/db/client", () => {
 	};
 });
 
+// Page storage lives in per-page Durable Objects, reached over HTTP; the
+// purge's contract here is that it asks for them to be wiped, in the same
+// phase as the other external deletions and before the tombstone.
+mock.module("../page-store", () => ({
+	purgePageStorageForUser: async (userId: string) => {
+		log.push(`page-storage.purge ${userId}`);
+		return { pages: 0, cleared: 0 };
+	},
+}));
+
 mock.module("@superset/auth/stripe", () => ({
 	stripeClient: {
 		subscriptions: {
@@ -202,6 +212,7 @@ describe("purgeAccount", () => {
 		});
 		expect(log).toEqual([
 			"posthog.delete",
+			`page-storage.purge ${USER_ID}`,
 			"subscription.cancel sub_solo",
 			"charges.list cus_solo",
 			"customer.delete cus_solo",
@@ -225,6 +236,7 @@ describe("purgeAccount", () => {
 		expect(customerById("cus_paid").deleted).toBe(false);
 		expect(log).toEqual([
 			"posthog.delete",
+			`page-storage.purge ${USER_ID}`,
 			"charges.list cus_paid",
 			"organization.delete org-paid",
 			"tombstone",
@@ -245,6 +257,7 @@ describe("purgeAccount", () => {
 
 		expect(log).toEqual([
 			"posthog.delete",
+			`page-storage.purge ${USER_ID}`,
 			"subscription.update sub_shared 1",
 			"tombstone",
 		]);
@@ -268,6 +281,7 @@ describe("purgeAccount", () => {
 		await purge();
 		expect(log).toEqual([
 			"posthog.delete",
+			`page-storage.purge ${USER_ID}`,
 			"charges.list cus_gone",
 			"organization.delete org-solo",
 			"tombstone",
@@ -304,6 +318,10 @@ describe("purgeAccount", () => {
 		});
 
 		await expect(purge()).rejects.toThrow("rate limited");
-		expect(log).toEqual(["posthog.delete", "charges.list cus_solo"]);
+		expect(log).toEqual([
+			"posthog.delete",
+			`page-storage.purge ${USER_ID}`,
+			"charges.list cus_solo",
+		]);
 	});
 });

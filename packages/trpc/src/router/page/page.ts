@@ -36,6 +36,7 @@ import {
 } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "../../env";
+import { deletePageStorage } from "../../lib/page-store";
 import { deleteObjects, objectExists, presignedGetUrl } from "../../lib/r2";
 import { protectedProcedure, publicProcedure, userError } from "../../trpc";
 import { requireActiveOrgMembership } from "../utils/active-org";
@@ -73,6 +74,7 @@ import {
 	mintPageTicket,
 	writePageManifest,
 } from "./storage";
+import { pageStoreRouter } from "./store";
 import { enqueuePageThumbnail } from "./thumbnail";
 import { watchState } from "./watch";
 import {
@@ -385,6 +387,7 @@ async function listPageBatch({
 
 export const pageRouter = {
 	assets: pageAssetRouter,
+	store: pageStoreRouter,
 	...pageReportRouter,
 
 	/**
@@ -1001,6 +1004,9 @@ export const pageRouter = {
 			await db.delete(pages).where(eq(pages.id, page.id));
 
 			try {
+				// The records live in the page's hub, which no foreign key
+				// reaches, so deletion has to say so out loud.
+				await deletePageStorage(page.id);
 				await deletePageObjects({
 					pageId: page.id,
 					versions: rows,
