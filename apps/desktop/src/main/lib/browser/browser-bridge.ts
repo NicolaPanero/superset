@@ -13,6 +13,11 @@ import type { IncomingMessage, Server } from "node:http";
 import log from "electron-log";
 import express, { type Request, type Response } from "express";
 import { type WebSocket, WebSocketServer } from "ws";
+import {
+	FilePaneOpenRejectedError,
+	FilePaneOpenTimeoutError,
+	filePaneOpenRequests,
+} from "../file-panes/file-pane-open-requests";
 import { setBrowserBridgeInfo } from "./browser-bridge-info";
 import {
 	type BrowserOpenRequest,
@@ -205,6 +210,49 @@ export async function startBrowserBridge(): Promise<void> {
 			if ((openDepth.get(workspaceId) ?? 0) <= 0) openDepth.delete(workspaceId);
 			if (openQueues.get(workspaceId) === next) openQueues.delete(workspaceId);
 		});
+	});
+
+	// Open file panes in a workspace. Unlike `/open`, there is no main-process
+	// webContents to wait on: the workspace view opens the panes and reports
+	// their ids back through `filePanes.resolveOpenRequest`.
+	app.post("/open-file", (req, res) => {
+		const { workspaceId, projectId, paths, line, target } = req.body ?? {};
+		if (
+			typeof workspaceId !== "string" ||
+			!Array.isArray(paths) ||
+			paths.length === 0 ||
+			!paths.every((p) => typeof p === "string" && p.length > 0)
+		) {
+			res.status(400).json({
+				error: "workspaceId and a non-empty paths list are required",
+			});
+			return;
+		}
+		const resolvedLine =
+			typeof line === "number" && Number.isInteger(line) && line >= 1
+				? line
+				: undefined;
+		filePaneOpenRequests
+			.request(
+				{
+					workspaceId,
+					projectId: typeof projectId === "string" ? projectId : null,
+					paths,
+					line: resolvedLine,
+					target: target === "new-tab" ? "new-tab" : "current-tab",
+				},
+				OPEN_PANE_TIMEOUT_MS,
+			)
+			.then((paneIds) => res.json({ paneIds }))
+			.catch((err) => {
+				const status =
+					err instanceof FilePaneOpenTimeoutError
+						? 504
+						: err instanceof FilePaneOpenRejectedError
+							? 404
+							: 500;
+				res.status(status).json({ error: errorMessage(err) });
+			});
 	});
 
 	app.post("/panes/:paneId/navigate", (req, res) => {
