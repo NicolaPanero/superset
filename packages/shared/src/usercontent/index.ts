@@ -6,9 +6,11 @@ export {
 	pageAssetResponsePolicy,
 } from "./file-policy";
 export {
+	injectHeadScriptTag,
 	injectScriptTag,
 	injectStyleTag,
 	RUNTIME_SCRIPT_PATH,
+	STORAGE_SCRIPT_PATH,
 } from "./inject";
 export {
 	fileOriginalKey,
@@ -28,10 +30,13 @@ export {
 export { PAGE_THEME_CSS } from "./theme";
 export {
 	type FileTicketClaims,
+	type PageStorageTicketClaims,
 	type PageTicketClaims,
 	signFileTicket,
+	signPageStorageTicket,
 	signPageTicket,
 	verifyFileTicket,
+	verifyPageStorageTicket,
 	verifyPageTicket,
 } from "./ticket";
 export {

@@ -1,8 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
 	signFileTicket,
+	signPageStorageTicket,
 	signPageTicket,
 	verifyFileTicket,
+	verifyPageStorageTicket,
 	verifyPageTicket,
 } from "./ticket";
 
@@ -115,5 +117,56 @@ describe("file tickets", () => {
 		});
 		expect(await verifyFileTicket(SECRET, file, EXP * 1000)).toBeNull();
 		expect(await verifyFileTicket(OTHER, file, NOW)).toBeNull();
+	});
+});
+
+describe("page storage tickets", () => {
+	test("round-trips claims", async () => {
+		const ticket = await signPageStorageTicket(SECRET, {
+			pageId: PAGE,
+			exp: EXP,
+		});
+		expect(await verifyPageStorageTicket(SECRET, ticket, NOW)).toEqual({
+			pageId: PAGE,
+			exp: EXP,
+		});
+	});
+
+	test("never crosses with the kinds that open content", async () => {
+		// A subscribe ticket is signed with the realtime secret and must not
+		// serve a document, nor a view ticket open a change stream.
+		const storage = await signPageStorageTicket(SECRET, {
+			pageId: PAGE,
+			exp: EXP,
+		});
+		expect(await verifyPageTicket(SECRET, storage, NOW)).toBeNull();
+		expect(await verifyFileTicket(SECRET, storage, NOW)).toBeNull();
+
+		const view = await signPageTicket(SECRET, { pageId: PAGE, exp: EXP });
+		expect(await verifyPageStorageTicket(SECRET, view, NOW)).toBeNull();
+	});
+
+	test("rejects expiry and the wrong secret", async () => {
+		const ticket = await signPageStorageTicket(SECRET, {
+			pageId: PAGE,
+			exp: EXP,
+		});
+		expect(
+			await verifyPageStorageTicket(SECRET, ticket, EXP * 1000),
+		).toBeNull();
+		expect(await verifyPageStorageTicket(OTHER, ticket, NOW)).toBeNull();
+	});
+
+	test("honours a previous secret during rotation", async () => {
+		const ticket = await signPageStorageTicket(OTHER, {
+			pageId: PAGE,
+			exp: EXP,
+		});
+		expect(await verifyPageStorageTicket([SECRET, OTHER], ticket, NOW)).toEqual(
+			{
+				pageId: PAGE,
+				exp: EXP,
+			},
+		);
 	});
 });

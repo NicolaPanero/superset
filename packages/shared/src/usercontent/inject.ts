@@ -1,6 +1,16 @@
 export const RUNTIME_SCRIPT_PATH = "/_superset/runtime.js";
 
 /**
+ * Separate from the comments runtime, and injected into `<head>` rather than
+ * before `</body>`, because it has to exist before the document's own scripts
+ * run. A page that reads `window.superset.storage` while parsing — which is
+ * the obvious way to write one — would otherwise find nothing there and
+ * render its empty state forever. The comments runtime stays at the end of
+ * the body, where it wants a parsed DOM.
+ */
+export const STORAGE_SCRIPT_PATH = "/_superset/storage.js";
+
+/**
  * The origin's one edit to a published document: a same-origin script tag
  * before `</body>` (or appended when there is none), so the runtime can
  * change without republishing anything.
@@ -60,6 +70,16 @@ function findHeadTag(html: string): { index: number; length: number } | null {
  */
 export function injectStyleTag(html: string, css: string): string {
 	return injectIntoHead(html, `<style>${css}</style>`);
+}
+
+/**
+ * A blocking script in `<head>`, so it has finished defining its API before
+ * the parser reaches anything the author wrote. Deliberately not `defer` or
+ * `async`: both would run after the document's own inline scripts, which is
+ * the bug this exists to avoid.
+ */
+export function injectHeadScriptTag(html: string, src: string): string {
+	return injectIntoHead(html, `<script src="${src}"></script>`);
 }
 
 function injectIntoHead(html: string, tag: string): string {

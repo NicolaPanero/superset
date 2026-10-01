@@ -25,8 +25,22 @@ export interface FileTicketClaims {
 	exp: number;
 }
 
+/**
+ * Lets a window subscribe to one page's storage changes. Signed with the
+ * realtime secret rather than the usercontent one, because the realtime
+ * Worker is what verifies it. It opens a content-free notification stream and
+ * nothing else: every read and write still goes through the API, which is
+ * where page readability is decided.
+ */
+export interface PageStorageTicketClaims {
+	pageId: string;
+	/** Expiry, in seconds since the epoch. */
+	exp: number;
+}
+
 const PAGE_KIND = "page";
 const FILE_KIND = "file";
+const PAGE_STORAGE_KIND = "page-storage";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -156,6 +170,33 @@ export async function verifyPageTicket(
 		exp,
 		...(version !== undefined ? { version: version as number } : {}),
 	};
+}
+
+export async function signPageStorageTicket(
+	secret: string,
+	claims: PageStorageTicketClaims,
+): Promise<string> {
+	return signClaims(secret, {
+		kind: PAGE_STORAGE_KIND,
+		pageId: claims.pageId,
+		exp: claims.exp,
+	});
+}
+
+export async function verifyPageStorageTicket(
+	secrets: string | readonly string[],
+	ticket: string,
+	now: number = Date.now(),
+): Promise<PageStorageTicketClaims | null> {
+	const wire = await verifyClaims(secrets, ticket, now);
+	if (!wire) return null;
+	const { kind, pageId, exp } = wire as {
+		kind?: unknown;
+		pageId?: unknown;
+		exp: number;
+	};
+	if (kind !== PAGE_STORAGE_KIND || typeof pageId !== "string") return null;
+	return { pageId, exp };
 }
 
 export async function signFileTicket(
