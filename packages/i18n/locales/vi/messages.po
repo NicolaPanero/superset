@@ -222,6 +222,10 @@ msgstr "{0, plural, one {# lệnh gọi công cụ} other {# lệnh gọi công 
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {# workspace} other {# workspace}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, other {+# dòng nữa}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {# agent đang chạy vẫn dùng tài khoản trước — việc chuyển chỉ áp dụng cho lần khởi chạy mới.} other {# agent đang chạy vẫn dùng tài khoản trước — việc chuyển chỉ áp dụng cho lần khởi chạy mới.}}"
@@ -1353,9 +1357,6 @@ msgstr "Thành tích"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "ACP Chat"
-msgstr "Trò chuyện ACP"
-
 msgid "Acquisition"
 msgstr "Thu hút"
 
@@ -2171,6 +2172,9 @@ msgstr "Hãy nhờ một agent xuất bản một trang từ ứng dụng máy t
 msgid "Ask for this to be removed"
 msgstr "Yêu cầu xóa phần này"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "Hỏi tác nhân, @nhắc đến tệp, chạy /lệnh"
+
 msgid "Ask the agent…"
 msgstr "Hỏi agent…"
 
@@ -2210,14 +2214,11 @@ msgstr "Ít nhất một đội mà chúng tôi có thể nêu tên, kể cả �
 msgid "at once"
 msgstr "cùng lúc"
 
-msgid "Attach"
-msgstr "Kết nối"
-
-msgid "Attach to a running agent"
-msgstr "Kết nối với một tác nhân đang chạy"
-
 msgid "Attached"
 msgstr "Đã gắn"
+
+msgid "Attaching to the running session…"
+msgstr "Đang kết nối tới phiên đang chạy…"
 
 msgid "attachment"
 msgstr "tệp đính kèm"
@@ -4150,6 +4151,9 @@ msgstr "Sao chép log"
 msgid "Copy Markdown"
 msgstr "Sao chép Markdown"
 
+msgid "Copy message"
+msgstr "Sao chép tin nhắn"
+
 msgid "Copy on select"
 msgstr "Sao chép khi chọn"
 
@@ -4500,6 +4504,9 @@ msgstr "Không đọc được lịch sử sử dụng từ host này."
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Không thể xóa phiên đăng nhập cục bộ"
+
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "Không thể mở lại tác nhân trong terminal"
 
 msgid "Couldn't restart terminals"
 msgstr "Không thể khởi động lại terminal"
@@ -7265,6 +7272,9 @@ msgstr "Ẩn"
 msgid "Hide checks"
 msgstr "Ẩn check"
 
+msgid "Hide detail"
+msgstr "Ẩn chi tiết"
+
 msgid "Hide details"
 msgstr "Ẩn chi tiết"
 
@@ -8893,9 +8903,6 @@ msgstr "Mesh Gradient"
 msgid "Message in channel"
 msgstr "Tin nhắn trong kênh"
 
-msgid "Message the agent"
-msgstr "Nhắn cho agent"
-
 msgid "Message..."
 msgstr "Tin nhắn..."
 
@@ -9800,9 +9807,6 @@ msgstr "Chưa gán người review nào."
 msgid "No reviews"
 msgstr "Chưa có review"
 
-msgid "No running Claude or Codex sessions in this workspace. Start one in a terminal, or begin a new session below."
-msgstr "Không có phiên Claude hoặc Codex nào đang chạy trong không gian làm việc này. Hãy khởi động một phiên trong terminal, hoặc bắt đầu phiên mới bên dưới."
-
 msgid "No runs yet"
 msgstr "Chưa có lần chạy nào"
 
@@ -10412,9 +10416,6 @@ msgstr "Mở trong {0}"
 msgid "Open in {app}"
 msgstr "Mở trong {app}"
 
-msgid "Open in ACP chat"
-msgstr "Mở trong trò chuyện ACP"
-
 msgid "Open in any IDE"
 msgstr "Mở trong mọi IDE"
 
@@ -10704,6 +10705,9 @@ msgstr "Đã mở workspace có sẵn"
 
 msgid "opened PR #841 for review"
 msgstr "đã mở PR #841 để review"
+
+msgid "Opening the conversation…"
+msgstr "Đang mở cuộc trò chuyện…"
 
 msgid "Opening worktree..."
 msgstr "Đang mở worktree..."
@@ -12527,6 +12531,9 @@ msgstr "Tiếp tục tự động hóa"
 msgid "Resuming {0}…"
 msgstr "Đang resume {0}…"
 
+msgid "Resuming the conversation…"
+msgstr "Đang tiếp tục cuộc trò chuyện…"
+
 msgid "Retained MRR"
 msgstr "MRR giữ lại"
 
@@ -13622,6 +13629,9 @@ msgstr "Hiện issue đã đóng"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Hiện mức dùng CPU và bộ nhớ trên thanh trên cùng"
 
+msgid "Show detail"
+msgstr "Hiện chi tiết"
+
 msgid "Show details"
 msgstr "Hiện chi tiết"
 
@@ -14202,6 +14212,9 @@ msgstr "Bắt đầu một phiên agent mới với ngữ cảnh gần đây c�
 
 msgid "Start a new agent session each run"
 msgstr "Bắt đầu một phiên agent mới mỗi lần chạy"
+
+msgid "Start a new chat"
+msgstr "Bắt đầu trò chuyện mới"
 
 msgid "Start a session"
 msgstr "Bắt đầu một phiên"
@@ -15008,6 +15021,9 @@ msgstr "Cảm ơn bạn đã liên hệ"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Liên kết đăng nhập {plugin} đó đã hết hạn. Hãy thử kết nối lại."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "Phiên tác nhân đó chưa có cuộc trò chuyện nào để mở — nó đã khởi động nhưng chưa từng nhận yêu cầu."
+
 msgid "That endpoint could not be resolved."
 msgstr "Không thể phân giải endpoint đó."
 
@@ -15374,6 +15390,9 @@ msgstr "Tài khoản {plugin} này đã được một tổ chức Superset khá
 msgid "This action is irreversible."
 msgstr "Không thể hoàn tác thao tác này."
 
+msgid "This agent can't be opened as a chat."
+msgstr "Không thể mở tác nhân này dưới dạng trò chuyện."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."
 
@@ -15395,6 +15414,9 @@ msgstr "Tự động hóa này nằm trong một tổ chức khác"
 
 msgid "This cannot be undone."
 msgstr "Không thể hoàn tác."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "Tác nhân của cuộc trò chuyện này đã dừng và không thể tiếp tục."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "Thao tác này đóng mọi phiên terminal — trong workspace này và mọi workspace khác — và không thể hoàn tác. Nếu chúng chỉ kẹt trong chốc lát, chờ thêm thường là đủ."
@@ -16931,6 +16953,14 @@ msgstr "Làm việc từ ticket"
 msgid "Work with your agents across your favorite tools"
 msgstr "Làm việc với agent của bạn trên các công cụ ưa thích"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "Đã chạy {0} phút {1} giây"
+
+msgid "Worked for {seconds}s"
+msgstr "Đã chạy {seconds} giây"
+
 msgid "Worked for 39s"
 msgstr "Đã làm trong 39 giây"
 
@@ -16946,6 +16976,14 @@ msgstr "Đang làm"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Đang chạy"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "Đang chạy {0} phút {1} giây"
+
+msgid "Working for {seconds}s"
+msgstr "Đang chạy {seconds} giây"
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Chạy được khi môi trường sạch. Môi trường hiếm khi sạch."

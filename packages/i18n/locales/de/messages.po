@@ -222,6 +222,10 @@ msgstr "{0, plural, one {# Tool-Aufruf} other {# Tool-Aufrufe}}"
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {# Arbeitsbereich} other {# Arbeitsbereiche}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, one {+# weitere Zeile} other {+# weitere Zeilen}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {Ein laufender Agent nutzt noch das vorherige Konto — der Wechsel gilt nur für neue Starts.} other {# laufende Agenten nutzen noch das vorherige Konto — der Wechsel gilt nur für neue Starts.}}"
@@ -1353,9 +1357,6 @@ msgstr "Auszeichnungen"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "ACP Chat"
-msgstr "ACP-Chat"
-
 msgid "Acquisition"
 msgstr "Akquise"
 
@@ -2171,6 +2172,9 @@ msgstr "Bitte einen Agenten, eine aus der Desktop-App zu veröffentlichen."
 msgid "Ask for this to be removed"
 msgstr "Entfernung anfragen"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "Frag den Agenten, @erwähne Dateien, nutze /Befehle"
+
 msgid "Ask the agent…"
 msgstr "Frag den Agenten…"
 
@@ -2210,14 +2214,11 @@ msgstr "Mindestens ein Team, das wir benennen können, unseres eingeschlossen, b
 msgid "at once"
 msgstr "gleichzeitig"
 
-msgid "Attach"
-msgstr "Verbinden"
-
-msgid "Attach to a running agent"
-msgstr "Mit einem laufenden Agenten verbinden"
-
 msgid "Attached"
 msgstr "Verbunden"
+
+msgid "Attaching to the running session…"
+msgstr "Verbindung zur laufenden Sitzung…"
 
 msgid "attachment"
 msgstr "Anhang"
@@ -4150,6 +4151,9 @@ msgstr "Log kopieren"
 msgid "Copy Markdown"
 msgstr "Markdown kopieren"
 
+msgid "Copy message"
+msgstr "Nachricht kopieren"
+
 msgid "Copy on select"
 msgstr "Beim Auswählen kopieren"
 
@@ -4500,6 +4504,9 @@ msgstr "Der Nutzungsverlauf konnte von diesem Host nicht gelesen werden."
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Die lokale Anmeldung konnte nicht entfernt werden"
+
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "Der Agent konnte nicht erneut im Terminal geöffnet werden"
 
 msgid "Couldn't restart terminals"
 msgstr "Terminals konnten nicht neu gestartet werden"
@@ -7265,6 +7272,9 @@ msgstr "Ausblenden"
 msgid "Hide checks"
 msgstr "Prüfungen ausblenden"
 
+msgid "Hide detail"
+msgstr "Details ausblenden"
+
 msgid "Hide details"
 msgstr "Details ausblenden"
 
@@ -8893,9 +8903,6 @@ msgstr "Mesh Gradient"
 msgid "Message in channel"
 msgstr "Nachricht im Channel"
 
-msgid "Message the agent"
-msgstr "Schreib dem Agenten"
-
 msgid "Message..."
 msgstr "Nachricht..."
 
@@ -9800,9 +9807,6 @@ msgstr "Noch keine Reviewer zugewiesen."
 msgid "No reviews"
 msgstr "Keine Reviews"
 
-msgid "No running Claude or Codex sessions in this workspace. Start one in a terminal, or begin a new session below."
-msgstr "In diesem Workspace laufen keine Claude- oder Codex-Sitzungen. Starte eine im Terminal oder beginne unten eine neue Sitzung."
-
 msgid "No runs yet"
 msgstr "Noch keine Läufe"
 
@@ -10412,9 +10416,6 @@ msgstr "In {0} öffnen"
 msgid "Open in {app}"
 msgstr "In {app} öffnen"
 
-msgid "Open in ACP chat"
-msgstr "Im ACP-Chat öffnen"
-
 msgid "Open in any IDE"
 msgstr "In jeder IDE öffnen"
 
@@ -10704,6 +10705,9 @@ msgstr "Vorhandenen Arbeitsbereich geöffnet"
 
 msgid "opened PR #841 for review"
 msgstr "PR #841 zum Review geöffnet"
+
+msgid "Opening the conversation…"
+msgstr "Unterhaltung wird geöffnet…"
 
 msgid "Opening worktree..."
 msgstr "Worktree wird geöffnet..."
@@ -12527,6 +12531,9 @@ msgstr "Automatisierung fortsetzen"
 msgid "Resuming {0}…"
 msgstr "{0} wird fortgesetzt…"
 
+msgid "Resuming the conversation…"
+msgstr "Unterhaltung wird fortgesetzt…"
+
 msgid "Retained MRR"
 msgstr "Verbleibender MRR"
 
@@ -13622,6 +13629,9 @@ msgstr "Geschlossene anzeigen"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "CPU- und Speichernutzung in der oberen Leiste anzeigen"
 
+msgid "Show detail"
+msgstr "Details anzeigen"
+
 msgid "Show details"
 msgstr "Details anzeigen"
 
@@ -14202,6 +14212,9 @@ msgstr "Startet eine neue Agent-Sitzung mit dem jüngsten Kontext dieses Termina
 
 msgid "Start a new agent session each run"
 msgstr "Bei jedem Lauf eine neue Agent-Sitzung starten"
+
+msgid "Start a new chat"
+msgstr "Neuen Chat starten"
 
 msgid "Start a session"
 msgstr "Sitzung starten"
@@ -15008,6 +15021,9 @@ msgstr "Danke für deine Nachricht"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Dieser Anmeldelink für {plugin} ist abgelaufen. Versuchen Sie es erneut."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "Diese Agenten-Sitzung hat noch keine Unterhaltung zum Öffnen — sie wurde gestartet, aber nie beauftragt."
+
 msgid "That endpoint could not be resolved."
 msgstr "Dieser Endpunkt konnte nicht aufgelöst werden."
 
@@ -15374,6 +15390,9 @@ msgstr "Dieses {plugin}-Konto ist bereits mit einer anderen Superset-Organisatio
 msgid "This action is irreversible."
 msgstr "Diese Aktion ist nicht umkehrbar."
 
+msgid "This agent can't be opened as a chat."
+msgstr "Dieser Agent kann nicht als Chat geöffnet werden."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Diesen Agenten gibt es auf dem gewählten Gerät nicht mehr (seine Agenten wurden möglicherweise zurückgesetzt). Läufe schlagen fehl, bis du einen neuen auswählst."
 
@@ -15395,6 +15414,9 @@ msgstr "Diese Automatisierung befindet sich in einer anderen Organisation"
 
 msgid "This cannot be undone."
 msgstr "Das lässt sich nicht rückgängig machen."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "Der Agent dieses Chats wurde beendet und lässt sich nicht fortsetzen."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "Damit wird jede Terminal-Sitzung geschlossen — in diesem Arbeitsbereich und in allen anderen — und das lässt sich nicht rückgängig machen. Wenn sie nur kurz hängen, hilft Warten meist."
@@ -16931,6 +16953,14 @@ msgstr "Aus Tickets heraus arbeiten"
 msgid "Work with your agents across your favorite tools"
 msgstr "Arbeite mit deinen Agenten über deine liebsten Tools hinweg"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "Hat {0} Min. {1} Sek. gearbeitet"
+
+msgid "Worked for {seconds}s"
+msgstr "Hat {seconds} Sek. gearbeitet"
+
 msgid "Worked for 39s"
 msgstr "39 s gearbeitet"
 
@@ -16946,6 +16976,14 @@ msgstr "Arbeitet"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Arbeitet"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "Arbeitet seit {0} Min. {1} Sek."
+
+msgid "Working for {seconds}s"
+msgstr "Arbeitet seit {seconds} Sek."
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Funktioniert, wenn die Umgebungen sauber sind. Umgebungen sind selten sauber."

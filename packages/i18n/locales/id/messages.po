@@ -222,6 +222,10 @@ msgstr "{0, plural, one {# panggilan alat} other {# panggilan alat}}"
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {# workspace} other {# workspace}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, other {+# baris lagi}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {# agen yang sedang berjalan masih memakai akun sebelumnya — pergantian hanya berlaku untuk peluncuran baru.} other {# agen yang sedang berjalan masih memakai akun sebelumnya — pergantian hanya berlaku untuk peluncuran baru.}}"
@@ -1353,9 +1357,6 @@ msgstr "Pencapaian"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "ACP Chat"
-msgstr "Obrolan ACP"
-
 msgid "Acquisition"
 msgstr "Akuisisi"
 
@@ -2171,6 +2172,9 @@ msgstr "Minta agen untuk memublikasikan satu dari aplikasi desktop."
 msgid "Ask for this to be removed"
 msgstr "Minta ini dihapus"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "Tanya agen, @sebut berkas, jalankan /perintah"
+
 msgid "Ask the agent…"
 msgstr "Tanya agennya…"
 
@@ -2210,14 +2214,11 @@ msgstr "Setidaknya satu tim yang bisa kami sebut namanya, termasuk tim kami, mel
 msgid "at once"
 msgstr "sekaligus"
 
-msgid "Attach"
-msgstr "Sambungkan"
-
-msgid "Attach to a running agent"
-msgstr "Sambungkan ke agen yang sedang berjalan"
-
 msgid "Attached"
 msgstr "Terhubung"
+
+msgid "Attaching to the running session…"
+msgstr "Menghubungkan ke sesi yang berjalan…"
 
 msgid "attachment"
 msgstr "lampiran"
@@ -4150,6 +4151,9 @@ msgstr "Salin log"
 msgid "Copy Markdown"
 msgstr "Salin Markdown"
 
+msgid "Copy message"
+msgstr "Salin pesan"
+
 msgid "Copy on select"
 msgstr "Salin saat memilih"
 
@@ -4500,6 +4504,9 @@ msgstr "Tidak bisa membaca riwayat penggunaan dari host ini."
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Tidak bisa menghapus sesi masuk lokal"
+
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "Tidak dapat membuka kembali agen di terminal"
 
 msgid "Couldn't restart terminals"
 msgstr "Tidak bisa memulai ulang terminal"
@@ -7265,6 +7272,9 @@ msgstr "Sembunyikan"
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
+msgid "Hide detail"
+msgstr "Sembunyikan detail"
+
 msgid "Hide details"
 msgstr "Sembunyikan detail"
 
@@ -8893,9 +8903,6 @@ msgstr "Mesh Gradient"
 msgid "Message in channel"
 msgstr "Pesan di channel"
 
-msgid "Message the agent"
-msgstr "Kirim pesan ke agen"
-
 msgid "Message..."
 msgstr "Pesan..."
 
@@ -9800,9 +9807,6 @@ msgstr "Belum ada reviewer yang ditugaskan."
 msgid "No reviews"
 msgstr "Tanpa review"
 
-msgid "No running Claude or Codex sessions in this workspace. Start one in a terminal, or begin a new session below."
-msgstr "Tidak ada sesi Claude atau Codex yang berjalan di ruang kerja ini. Mulai satu di terminal, atau mulai sesi baru di bawah."
-
 msgid "No runs yet"
 msgstr "Belum ada run"
 
@@ -10412,9 +10416,6 @@ msgstr "Buka di {0}"
 msgid "Open in {app}"
 msgstr "Buka di {app}"
 
-msgid "Open in ACP chat"
-msgstr "Buka di obrolan ACP"
-
 msgid "Open in any IDE"
 msgstr "Buka di IDE mana pun"
 
@@ -10704,6 +10705,9 @@ msgstr "Membuka workspace yang ada"
 
 msgid "opened PR #841 for review"
 msgstr "membuka PR #841 untuk direview"
+
+msgid "Opening the conversation…"
+msgstr "Membuka percakapan…"
 
 msgid "Opening worktree..."
 msgstr "Membuka worktree..."
@@ -12527,6 +12531,9 @@ msgstr "Lanjutkan otomatisasi"
 msgid "Resuming {0}…"
 msgstr "Melanjutkan {0}…"
 
+msgid "Resuming the conversation…"
+msgstr "Melanjutkan percakapan…"
+
 msgid "Retained MRR"
 msgstr "MRR yang dipertahankan"
 
@@ -13622,6 +13629,9 @@ msgstr "Tampilkan yang ditutup"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Tampilkan penggunaan CPU dan memori di bilah atas"
 
+msgid "Show detail"
+msgstr "Tampilkan detail"
+
 msgid "Show details"
 msgstr "Tampilkan detail"
 
@@ -14202,6 +14212,9 @@ msgstr "Memulai sesi agen baru dengan konteks terbaru dari terminal ini. Berkas 
 
 msgid "Start a new agent session each run"
 msgstr "Mulai sesi agen baru setiap kali dijalankan"
+
+msgid "Start a new chat"
+msgstr "Mulai chat baru"
 
 msgid "Start a session"
 msgstr "Mulai sesi"
@@ -15008,6 +15021,9 @@ msgstr "Terima kasih sudah menghubungi"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Tautan masuk {plugin} itu telah kedaluwarsa. Coba hubungkan lagi."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "Sesi agen itu belum punya percakapan untuk dibuka — sudah dimulai tetapi belum pernah diberi perintah."
+
 msgid "That endpoint could not be resolved."
 msgstr "Endpoint itu tidak dapat ditemukan."
 
@@ -15374,6 +15390,9 @@ msgstr "Akun {plugin} ini sudah dihubungkan oleh organisasi Superset lain."
 msgid "This action is irreversible."
 msgstr "Tindakan ini tidak bisa dibatalkan."
 
+msgid "This agent can't be opened as a chat."
+msgstr "Agen ini tidak dapat dibuka sebagai chat."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."
 
@@ -15395,6 +15414,9 @@ msgstr "Otomatisasi ini berada di organisasi lain"
 
 msgid "This cannot be undone."
 msgstr "Ini tidak bisa dibatalkan."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "Agen chat ini sudah berhenti dan tidak dapat dilanjutkan."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "Ini menutup setiap sesi terminal — di workspace ini maupun yang lain — dan tidak bisa dibatalkan. Kalau hanya macet sebentar, menunggu biasanya cukup."
@@ -16931,6 +16953,14 @@ msgstr "Bekerja dari tiket"
 msgid "Work with your agents across your favorite tools"
 msgstr "Bekerja dengan agen Anda lintas alat favorit Anda"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "Bekerja {0} mnt {1} dtk"
+
+msgid "Worked for {seconds}s"
+msgstr "Bekerja {seconds} dtk"
+
 msgid "Worked for 39s"
 msgstr "Bekerja 39 dtk"
 
@@ -16946,6 +16976,14 @@ msgstr "Bekerja"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Bekerja"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "Bekerja selama {0} mnt {1} dtk"
+
+msgid "Working for {seconds}s"
+msgstr "Bekerja selama {seconds} dtk"
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Berhasil kalau environment-nya bersih. Environment jarang bersih."

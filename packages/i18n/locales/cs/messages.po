@@ -222,6 +222,10 @@ msgstr "{0, plural, one {# volání nástroje} few {# volání nástroje} many {
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {# pracovní prostor} few {# pracovní prostory} many {# pracovního prostoru} other {# pracovních prostorů}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, one {+# další řádek} few {+# další řádky} other {+# dalších řádků}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {# běžící agent stále používá předchozí účet — přepnutí platí jen pro nová spuštění.} few {# běžící agenti stále používají předchozí účet — přepnutí platí jen pro nová spuštění.} many {# běžícího agenta stále používá předchozí účet — přepnutí platí jen pro nová spuštění.} other {# běžících agentů stále používá předchozí účet — přepnutí platí jen pro nová spuštění.}}"
@@ -1353,9 +1357,6 @@ msgstr "Úspěchy"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "ACP Chat"
-msgstr "ACP Chat"
-
 msgid "Acquisition"
 msgstr "Akvizice"
 
@@ -2171,6 +2172,9 @@ msgstr "Požádejte agenta, aby nějakou publikoval z desktopové aplikace."
 msgid "Ask for this to be removed"
 msgstr "Požádat o odstranění"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "Zeptejte se agenta, @zmiňte soubory, spusťte /příkazy"
+
 msgid "Ask the agent…"
 msgstr "Zeptejte se agenta…"
 
@@ -2210,14 +2214,11 @@ msgstr "Alespoň jeden tým, který umíme jmenovat — včetně toho našeho �
 msgid "at once"
 msgstr "najednou"
 
-msgid "Attach"
-msgstr "Připojit"
-
-msgid "Attach to a running agent"
-msgstr "Připojit se k běžícímu agentovi"
-
 msgid "Attached"
 msgstr "Připojeno"
+
+msgid "Attaching to the running session…"
+msgstr "Připojuji se k běžící sezení…"
 
 msgid "attachment"
 msgstr "příloha"
@@ -4150,6 +4151,9 @@ msgstr "Kopírovat log"
 msgid "Copy Markdown"
 msgstr "Kopírovat Markdown"
 
+msgid "Copy message"
+msgstr "Kopírovat zprávu"
+
 msgid "Copy on select"
 msgstr "Kopírovat při výběru"
 
@@ -4500,6 +4504,9 @@ msgstr "Nepodařilo se z tohoto hosta načíst historii využití."
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Nepodařilo se odebrat místní přihlášení"
+
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "Agenta se nepodařilo znovu otevřít v terminálu"
 
 msgid "Couldn't restart terminals"
 msgstr "Nepodařilo se restartovat terminály"
@@ -7265,6 +7272,9 @@ msgstr "Skrýt"
 msgid "Hide checks"
 msgstr "Skrýt kontroly"
 
+msgid "Hide detail"
+msgstr "Skrýt detail"
+
 msgid "Hide details"
 msgstr "Skrýt podrobnosti"
 
@@ -8893,9 +8903,6 @@ msgstr "Mesh Gradient"
 msgid "Message in channel"
 msgstr "Zpráva v kanálu"
 
-msgid "Message the agent"
-msgstr "Napište agentovi"
-
 msgid "Message..."
 msgstr "Zpráva..."
 
@@ -9800,9 +9807,6 @@ msgstr "Zatím nejsou přiřazeni žádní recenzenti."
 msgid "No reviews"
 msgstr "Žádné revize"
 
-msgid "No running Claude or Codex sessions in this workspace. Start one in a terminal, or begin a new session below."
-msgstr "V tomto pracovním prostoru neběží žádná relace Claude ani Codex. Spusťte ji v terminálu nebo začněte novou relaci níže."
-
 msgid "No runs yet"
 msgstr "Zatím žádné běhy"
 
@@ -10412,9 +10416,6 @@ msgstr "Otevřít v {0}"
 msgid "Open in {app}"
 msgstr "Otevřít v {app}"
 
-msgid "Open in ACP chat"
-msgstr "Otevřít v ACP chatu"
-
 msgid "Open in any IDE"
 msgstr "Otevřete v jakémkoli IDE"
 
@@ -10704,6 +10705,9 @@ msgstr "Otevřen existující pracovní prostor"
 
 msgid "opened PR #841 for review"
 msgstr "otevřel PR #841 k revizi"
+
+msgid "Opening the conversation…"
+msgstr "Otevírám konverzaci…"
 
 msgid "Opening worktree..."
 msgstr "Otevírám worktree..."
@@ -12527,6 +12531,9 @@ msgstr "Pokračovat v automatizaci"
 msgid "Resuming {0}…"
 msgstr "Obnovuji {0}…"
 
+msgid "Resuming the conversation…"
+msgstr "Obnovuji konverzaci…"
+
 msgid "Retained MRR"
 msgstr "Udržené MRR"
 
@@ -13622,6 +13629,9 @@ msgstr "Zobrazit uzavřené"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Zobrazovat využití CPU a paměti v horní liště"
 
+msgid "Show detail"
+msgstr "Zobrazit detail"
+
 msgid "Show details"
 msgstr "Zobrazit podrobnosti"
 
@@ -14202,6 +14212,9 @@ msgstr "Spustí novou relaci agenta s nedávným kontextem tohoto terminálu. Zd
 
 msgid "Start a new agent session each run"
 msgstr "Při každém spuštění začít novou relaci agenta"
+
+msgid "Start a new chat"
+msgstr "Zahájit nový chat"
 
 msgid "Start a session"
 msgstr "Spustit relaci"
@@ -15008,6 +15021,9 @@ msgstr "Díky, že jste se ozvali"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Odkaz pro přihlášení k {plugin} vypršel. Zkuste se připojit znovu."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "Tato agentní relace zatím nemá konverzaci k otevření — byla spuštěna, ale nikdy nedostala zadání."
+
 msgid "That endpoint could not be resolved."
 msgstr "Tento koncový bod se nepodařilo přeložit."
 
@@ -15374,6 +15390,9 @@ msgstr "Tento účet {plugin} už je připojený k jiné organizaci Supersetu."
 msgid "This action is irreversible."
 msgstr "Tuto akci nelze vrátit zpět."
 
+msgid "This agent can't be opened as a chat."
+msgstr "Tohoto agenta nelze otevřít jako chat."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
 
@@ -15395,6 +15414,9 @@ msgstr "Tato automatizace je v jiné organizaci"
 
 msgid "This cannot be undone."
 msgstr "Nelze vrátit zpět."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "Agent tohoto chatu byl zastaven a nelze jej obnovit."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "Tímto se zavřou všechny relace terminálu — v tomto pracovním prostoru i ve všech ostatních — a nelze to vrátit zpět. Pokud jsou zaseknuté jen na chvíli, obvykle se samy vzpamatují."
@@ -16931,6 +16953,14 @@ msgstr "Práce z ticketů"
 msgid "Work with your agents across your favorite tools"
 msgstr "Pracujte s agenty napříč svými oblíbenými nástroji"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "Pracoval {0} m {1} s"
+
+msgid "Worked for {seconds}s"
+msgstr "Pracoval {seconds} s"
+
 msgid "Worked for 39s"
 msgstr "Pracoval 39 s"
 
@@ -16946,6 +16976,14 @@ msgstr "Pracuje"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Pracuje"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "Pracuje se {0} m {1} s"
+
+msgid "Working for {seconds}s"
+msgstr "Pracuje se {seconds} s"
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Funguje, když jsou prostředí čistá. Prostředí bývají čistá zřídka."

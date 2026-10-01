@@ -222,6 +222,10 @@ msgstr "{0, plural, one {도구 호출 #건} other {도구 호출 #건}}"
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {워크스페이스 #개} other {워크스페이스 #개}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, other {+#줄 더}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {실행 중인 에이전트 #개가 아직 이전 계정을 사용하고 있습니다. 전환은 새 실행에만 적용됩니다.} other {실행 중인 에이전트 #개가 아직 이전 계정을 사용하고 있습니다. 전환은 새 실행에만 적용됩니다.}}"
@@ -1353,9 +1357,6 @@ msgstr "업적"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
-msgid "ACP Chat"
-msgstr "ACP 채팅"
-
 msgid "Acquisition"
 msgstr "획득"
 
@@ -2171,6 +2172,9 @@ msgstr "데스크톱 앱에서 에이전트에게 게시를 요청하세요."
 msgid "Ask for this to be removed"
 msgstr "삭제 요청"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "에이전트에게 요청하고, @로 파일을 언급하고, /명령을 실행하세요"
+
 msgid "Ask the agent…"
 msgstr "에이전트에게 물어보세요…"
 
@@ -2210,14 +2214,11 @@ msgstr "우리를 포함해 이름을 댈 수 있는 팀 중 최소 한 곳이 �
 msgid "at once"
 msgstr "동시"
 
-msgid "Attach"
-msgstr "연결"
-
-msgid "Attach to a running agent"
-msgstr "실행 중인 에이전트에 연결"
-
 msgid "Attached"
 msgstr "연결됨"
+
+msgid "Attaching to the running session…"
+msgstr "실행 중인 세션에 연결 중…"
 
 msgid "attachment"
 msgstr "첨부 파일"
@@ -4150,6 +4151,9 @@ msgstr "로그 복사"
 msgid "Copy Markdown"
 msgstr "Markdown 복사"
 
+msgid "Copy message"
+msgstr "메시지 복사"
+
 msgid "Copy on select"
 msgstr "선택 시 복사"
 
@@ -4500,6 +4504,9 @@ msgstr "이 호스트에서 사용량 기록을 읽지 못했습니다."
 
 msgid "Couldn't remove the local sign-in"
 msgstr "로컬 로그인 정보를 제거하지 못했습니다"
+
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "터미널에서 에이전트를 다시 열 수 없습니다"
 
 msgid "Couldn't restart terminals"
 msgstr "터미널을 다시 시작하지 못했습니다"
@@ -7265,6 +7272,9 @@ msgstr "숨기기"
 msgid "Hide checks"
 msgstr "검사 숨기기"
 
+msgid "Hide detail"
+msgstr "세부 정보 숨기기"
+
 msgid "Hide details"
 msgstr "상세 정보 숨기기"
 
@@ -8893,9 +8903,6 @@ msgstr "메시 그라데이션"
 msgid "Message in channel"
 msgstr "채널 내 메시지"
 
-msgid "Message the agent"
-msgstr "에이전트에게 메시지 보내기"
-
 msgid "Message..."
 msgstr "메시지..."
 
@@ -9800,9 +9807,6 @@ msgstr "아직 지정된 리뷰어가 없습니다."
 msgid "No reviews"
 msgstr "리뷰 없음"
 
-msgid "No running Claude or Codex sessions in this workspace. Start one in a terminal, or begin a new session below."
-msgstr "이 워크스페이스에 실행 중인 Claude 또는 Codex 세션이 없습니다. 터미널에서 시작하거나 아래에서 새 세션을 시작하세요."
-
 msgid "No runs yet"
 msgstr "아직 실행 기록이 없습니다"
 
@@ -10412,9 +10416,6 @@ msgstr "{0}에서 열기"
 msgid "Open in {app}"
 msgstr "{app}에서 열기"
 
-msgid "Open in ACP chat"
-msgstr "ACP 채팅에서 열기"
-
 msgid "Open in any IDE"
 msgstr "어떤 IDE에서든 열기"
 
@@ -10704,6 +10705,9 @@ msgstr "기존 워크스페이스를 열었습니다"
 
 msgid "opened PR #841 for review"
 msgstr "리뷰용 PR #841 생성"
+
+msgid "Opening the conversation…"
+msgstr "대화를 여는 중…"
 
 msgid "Opening worktree..."
 msgstr "worktree를 여는 중..."
@@ -12527,6 +12531,9 @@ msgstr "자동화 재개"
 msgid "Resuming {0}…"
 msgstr "{0}을(를) 재개하는 중…"
 
+msgid "Resuming the conversation…"
+msgstr "대화를 이어가는 중…"
+
 msgid "Retained MRR"
 msgstr "유지된 MRR"
 
@@ -13622,6 +13629,9 @@ msgstr "닫힌 항목 표시"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "상단 바에 CPU와 메모리 사용량을 표시합니다"
 
+msgid "Show detail"
+msgstr "세부 정보 표시"
+
 msgid "Show details"
 msgstr "상세 정보 보기"
 
@@ -14202,6 +14212,9 @@ msgstr "이 터미널의 최근 컨텍스트를 넘겨받아 새 에이전트 �
 
 msgid "Start a new agent session each run"
 msgstr "실행할 때마다 새 에이전트 세션 시작"
+
+msgid "Start a new chat"
+msgstr "새 채팅 시작"
 
 msgid "Start a session"
 msgstr "세션 시작"
@@ -15008,6 +15021,9 @@ msgstr "연락해 주셔서 감사합니다"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "해당 {plugin} 로그인 링크가 만료되었습니다. 다시 연결해 보세요."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "이 에이전트 세션에는 아직 열 대화가 없습니다. 시작되었지만 한 번도 요청을 받지 않았습니다."
+
 msgid "That endpoint could not be resolved."
 msgstr "해당 엔드포인트를 확인할 수 없습니다."
 
@@ -15374,6 +15390,9 @@ msgstr "이 {plugin} 계정은 이미 다른 Superset 조직에 연결되어 있
 msgid "This action is irreversible."
 msgstr "이 동작은 되돌릴 수 없습니다."
 
+msgid "This agent can't be opened as a chat."
+msgstr "이 에이전트는 채팅으로 열 수 없습니다."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "이 에이전트는 선택한 기기에 더 이상 존재하지 않습니다 (에이전트가 초기화되었을 수 있습니다). 새 에이전트를 선택할 때까지 실행이 실패합니다."
 
@@ -15395,6 +15414,9 @@ msgstr "이 자동화는 다른 조직에 있습니다"
 
 msgid "This cannot be undone."
 msgstr "되돌릴 수 없습니다."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "이 채팅의 에이전트가 중지되어 이어갈 수 없습니다."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "이 워크스페이스를 포함한 모든 워크스페이스의 터미널 세션이 닫히며 되돌릴 수 없습니다. 잠깐 멈춘 것뿐이라면 기다리는 것만으로 대개 복구됩니다."
@@ -16931,6 +16953,14 @@ msgstr "티켓에서 바로 작업"
 msgid "Work with your agents across your favorite tools"
 msgstr "즐겨 쓰는 도구 전반에서 에이전트와 함께 작업하세요"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "{0}분 {1}초 동안 작업함"
+
+msgid "Worked for {seconds}s"
+msgstr "{seconds}초 동안 작업함"
+
 msgid "Worked for 39s"
 msgstr "39초 동안 작업"
 
@@ -16946,6 +16976,14 @@ msgstr "작업 중"
 msgctxt "agent status"
 msgid "Working"
 msgstr "작업 중"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "{0}분 {1}초 동안 작업 중"
+
+msgid "Working for {seconds}s"
+msgstr "{seconds}초 동안 작업 중"
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "환경이 깨끗할 때는 됩니다. 환경이 깨끗한 경우는 드뭅니다."
