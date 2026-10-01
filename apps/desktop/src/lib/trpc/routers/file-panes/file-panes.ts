@@ -8,12 +8,14 @@ import { publicProcedure, router } from "../..";
 
 export const createFilePanesRouter = () => {
 	return router({
-		// File-open requests from the CLI via the browser bridge. The global
-		// renderer hook navigates to the workspace, whose view opens the panes.
-		onOpenRequest: publicProcedure.subscription(() => {
+		// File-open requests from the CLI via the browser bridge. Each request
+		// names the window that should handle it, so only that window's global
+		// hook navigates to the workspace and opens the panes.
+		onOpenRequest: publicProcedure.subscription(({ ctx }) => {
+			const windowId = ctx.senderWindow?.id;
 			return observable<FilePaneOpenRequest>((emit) => {
 				const handler = (request: FilePaneOpenRequest) => {
-					emit.next(request);
+					if (request.targetWindowId === windowId) emit.next(request);
 				};
 				filePaneOpenRequests.on("open-request", handler);
 				return () => {

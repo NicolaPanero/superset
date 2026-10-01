@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { TRPCClientError } from "@trpc/client";
 
 const open = mock(async (_input: unknown) => ({ paneIds: ["pane-1"] }));
 const resolveFilesTarget = mock(async () => ({
@@ -97,6 +98,38 @@ describe("files open", () => {
 		);
 		expect(resolveFilesTarget).not.toHaveBeenCalled();
 		expect(open).not.toHaveBeenCalled();
+	});
+
+	test("explains a host whose Superset predates files.open", async () => {
+		open.mockRejectedValueOnce(
+			new TRPCClientError('No "mutation"-procedure on path "files.open"', {
+				result: {
+					error: {
+						message: 'No "mutation"-procedure on path "files.open"',
+						code: -32004,
+						data: { code: "NOT_FOUND", httpStatus: 404, path: "files.open" },
+					},
+				},
+			}),
+		);
+		await expect(invoke(["a.ts"])).rejects.toThrow(
+			"runs a Superset without `files open`",
+		);
+	});
+
+	test("passes other host errors through unchanged", async () => {
+		open.mockRejectedValueOnce(
+			new TRPCClientError("No such file: /x/a.ts", {
+				result: {
+					error: {
+						message: "No such file: /x/a.ts",
+						code: -32004,
+						data: { code: "NOT_FOUND", httpStatus: 404, path: "files.open" },
+					},
+				},
+			}),
+		);
+		await expect(invoke(["a.ts"])).rejects.toThrow("No such file: /x/a.ts");
 	});
 
 	test("prints one pane line per opened file", async () => {

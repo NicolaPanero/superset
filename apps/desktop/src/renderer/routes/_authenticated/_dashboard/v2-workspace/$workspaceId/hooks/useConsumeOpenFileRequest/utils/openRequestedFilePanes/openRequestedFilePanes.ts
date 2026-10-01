@@ -11,12 +11,14 @@ export interface OpenFilePanesRequest {
 
 /**
  * Opens one pane per path and returns their ids in order. A single file
- * behaves like a file-tree click (it may replace the unpinned preview pane).
- * With several files, each pane but the last is pinned as it opens, or the
- * next open would replace it as the preview. With `new-tab` only the first
- * file starts a tab; the rest split beside it so one request lands in one
- * place. The line applies to the first file, matching `--line`'s single-path
- * contract in the CLI.
+ * behaves like a file-tree click: it may replace the unpinned preview pane,
+ * and if it is already open in another tab that tab is shown. Several files
+ * belong together, so they all land in one destination tab (the active one,
+ * or the tab `new-tab` creates for the first file): the tab is re-activated
+ * before each open in case an earlier file was already open elsewhere, each
+ * pane but the last is pinned or the next open would replace it as the
+ * preview, and the request ends on the destination tab. The line applies to
+ * the first file, matching `--line`'s single-path contract in the CLI.
  */
 export function openRequestedFilePanes(
 	store: StoreApi<WorkspaceStore<PaneViewerData>>,
@@ -24,19 +26,34 @@ export function openRequestedFilePanes(
 	openFilePane: OpenFile,
 ): string[] {
 	const paneIds: string[] = [];
+	const several = request.paths.length > 1;
+	let destinationTabId =
+		request.target === "new-tab" ? null : store.getState().activeTabId;
 	request.paths.forEach((path, index) => {
 		const first = index === 0;
 		const last = index === request.paths.length - 1;
+		if (several && destinationTabId) {
+			const state = store.getState();
+			if (state.activeTabId !== destinationTabId)
+				state.setActiveTab(destinationTabId);
+		}
 		openFilePane(
 			path,
 			first && request.target === "new-tab",
 			first && request.line !== undefined ? { line: request.line } : undefined,
 		);
 		const state = store.getState();
-		const paneId = state.getActivePane()?.pane.id;
-		if (!paneId) return;
-		if (!last) state.setPanePinned({ paneId, pinned: true });
-		if (!paneIds.includes(paneId)) paneIds.push(paneId);
+		if (destinationTabId === null) destinationTabId = state.activeTabId;
+		const active = state.getActivePane();
+		if (!active) return;
+		if (several && !last && active.tabId === destinationTabId)
+			state.setPanePinned({ paneId: active.pane.id, pinned: true });
+		if (!paneIds.includes(active.pane.id)) paneIds.push(active.pane.id);
 	});
+	if (several && destinationTabId) {
+		const state = store.getState();
+		if (state.activeTabId !== destinationTabId)
+			state.setActiveTab(destinationTabId);
+	}
 	return paneIds;
 }

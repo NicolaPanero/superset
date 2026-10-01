@@ -5,9 +5,19 @@ import {
 	positional,
 	string,
 } from "@superset/cli-framework";
+import { TRPCClientError } from "@trpc/client";
 import { command } from "../../../lib/command";
 import { resolveFilePaths } from "./utils/resolveFilePaths";
 import { resolveFilesTarget } from "./utils/resolveFilesTarget";
+
+/** A host-service released before `files.open` existed answers with tRPC's own not-found. */
+function isMissingProcedure(error: unknown): boolean {
+	return (
+		error instanceof TRPCClientError &&
+		error.data?.code === "NOT_FOUND" &&
+		/procedure/i.test(error.message)
+	);
+}
 
 export default command({
 	description:
@@ -48,12 +58,23 @@ export default command({
 			},
 			process.cwd(),
 		);
-		const { paneIds } = await target.client.files.open.mutate({
-			workspaceId: target.workspaceId,
-			paths,
-			line: options.line ?? undefined,
-			target: options.newTab ? "new-tab" : "current-tab",
-		});
+		let paneIds: string[];
+		try {
+			({ paneIds } = await target.client.files.open.mutate({
+				workspaceId: target.workspaceId,
+				paths,
+				line: options.line ?? undefined,
+				target: options.newTab ? "new-tab" : "current-tab",
+			}));
+		} catch (error) {
+			if (isMissingProcedure(error)) {
+				throw new CLIError(
+					`Host ${target.hostId} runs a Superset without \`files open\``,
+					"Update the Superset desktop app on that machine, then retry",
+				);
+			}
+			throw error;
+		}
 		return {
 			data: { workspaceId: target.workspaceId, paths, paneIds },
 			message: [

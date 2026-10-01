@@ -14,10 +14,12 @@ import log from "electron-log";
 import express, { type Request, type Response } from "express";
 import { type WebSocket, WebSocketServer } from "ws";
 import {
+	FilePaneOpenAbortedError,
 	FilePaneOpenRejectedError,
 	FilePaneOpenTimeoutError,
 	filePaneOpenRequests,
 } from "../file-panes/file-pane-open-requests";
+import { getFocusedOrLastWindow } from "../window-registry/window-registry";
 import { setBrowserBridgeInfo } from "./browser-bridge-info";
 import {
 	type BrowserOpenRequest,
@@ -37,14 +39,32 @@ const CDP_PATH = /^\/panes\/([^/]+)\/cdp$/;
 
 let server: Server | null = null;
 
-// Tail of the per-workspace open chain, so concurrent `/open` requests for one
-// workspace run one at a time (see the handler for why). Keyed by workspaceId;
+// Tail of the per-workspace open chain, so concurrent open requests for one
+// workspace run one at a time (see `/open` for why). Keyed by workspaceId;
 // entries delete themselves once the chain drains.
 const openQueues = new Map<string, Promise<void>>();
 // How many opens are queued per workspace, so a stuck renderer (each open waits
 // up to OPEN_PANE_TIMEOUT_MS) can't let the chain grow without bound.
 const openDepth = new Map<string, number>();
 const MAX_QUEUED_OPENS = 8;
+
+/** Runs `run` after the workspace's earlier opens settle; false when the queue is full. */
+function enqueueWorkspaceOpen(
+	workspaceId: string,
+	run: () => Promise<void>,
+): boolean {
+	if ((openDepth.get(workspaceId) ?? 0) >= MAX_QUEUED_OPENS) return false;
+	openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 0) + 1);
+	const prev = openQueues.get(workspaceId) ?? Promise.resolve();
+	const next = prev.then(run, run);
+	openQueues.set(workspaceId, next);
+	void next.finally(() => {
+		openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 1) - 1);
+		if ((openDepth.get(workspaceId) ?? 0) <= 0) openDepth.delete(workspaceId);
+		if (openQueues.get(workspaceId) === next) openQueues.delete(workspaceId);
+	});
+	return true;
+}
 
 function isAuthorized(secret: string, req: IncomingMessage): boolean {
 	const url = new URL(req.url ?? "/", "http://127.0.0.1");
@@ -131,14 +151,6 @@ export async function startBrowserBridge(): Promise<void> {
 			return;
 		}
 
-		if ((openDepth.get(workspaceId) ?? 0) >= MAX_QUEUED_OPENS) {
-			res.status(429).json({
-				error:
-					"Too many pending browser-open requests for this workspace. Try again once the earlier ones settle.",
-			});
-			return;
-		}
-
 		// Each open resolves to "the first pane registered in this workspace that
 		// wasn't already open". The registration event can't tell us which request
 		// it belongs to, so two concurrent opens in one workspace would both latch
@@ -201,15 +213,12 @@ export async function startBrowserBridge(): Promise<void> {
 				} satisfies BrowserOpenRequest);
 			});
 
-		openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 0) + 1);
-		const prev = openQueues.get(workspaceId) ?? Promise.resolve();
-		const next = prev.then(run, run);
-		openQueues.set(workspaceId, next);
-		void next.finally(() => {
-			openDepth.set(workspaceId, (openDepth.get(workspaceId) ?? 1) - 1);
-			if ((openDepth.get(workspaceId) ?? 0) <= 0) openDepth.delete(workspaceId);
-			if (openQueues.get(workspaceId) === next) openQueues.delete(workspaceId);
-		});
+		if (!enqueueWorkspaceOpen(workspaceId, run)) {
+			res.status(429).json({
+				error:
+					"Too many pending browser-open requests for this workspace. Try again once the earlier ones settle.",
+			});
+		}
 	});
 
 	// Open file panes in a workspace. Unlike `/open`, there is no main-process
@@ -232,27 +241,55 @@ export async function startBrowserBridge(): Promise<void> {
 			typeof line === "number" && Number.isInteger(line) && line >= 1
 				? line
 				: undefined;
-		filePaneOpenRequests
-			.request(
-				{
-					workspaceId,
-					projectId: typeof projectId === "string" ? projectId : null,
-					paths,
-					line: resolvedLine,
-					target: target === "new-tab" ? "new-tab" : "current-tab",
-				},
-				OPEN_PANE_TIMEOUT_MS,
-			)
-			.then((paneIds) => res.json({ paneIds }))
-			.catch((err) => {
-				const status =
-					err instanceof FilePaneOpenTimeoutError
-						? 504
-						: err instanceof FilePaneOpenRejectedError
-							? 404
-							: 500;
-				res.status(status).json({ error: errorMessage(err) });
+		// Client hung up before the panes opened: stop waiting for the answer.
+		const abort = new AbortController();
+		res.on("close", () => abort.abort());
+
+		// Serialized per workspace like `/open`: a request navigates its window
+		// to the workspace with the request as search params, and a second one
+		// arriving before the first was consumed would replace it unanswered.
+		// The window is picked when the request runs, like a deep link, so the
+		// panes land where the person is looking.
+		const run = () => {
+			const window = getFocusedOrLastWindow();
+			if (!window) {
+				res.status(504).json({
+					error: "No desktop window is open to show the file in.",
+				});
+				return Promise.resolve();
+			}
+			return filePaneOpenRequests
+				.request(
+					{
+						targetWindowId: window.id,
+						workspaceId,
+						projectId: typeof projectId === "string" ? projectId : null,
+						paths,
+						line: resolvedLine,
+						target: target === "new-tab" ? "new-tab" : "current-tab",
+					},
+					{ timeoutMs: OPEN_PANE_TIMEOUT_MS, signal: abort.signal },
+				)
+				.then((paneIds) => {
+					res.json({ paneIds });
+				})
+				.catch((err) => {
+					if (err instanceof FilePaneOpenAbortedError) return;
+					const status =
+						err instanceof FilePaneOpenTimeoutError
+							? 504
+							: err instanceof FilePaneOpenRejectedError
+								? 404
+								: 500;
+					res.status(status).json({ error: errorMessage(err) });
+				});
+		};
+		if (!enqueueWorkspaceOpen(workspaceId, run)) {
+			res.status(429).json({
+				error:
+					"Too many pending file-open requests for this workspace. Try again once the earlier ones settle.",
 			});
+		}
 	});
 
 	app.post("/panes/:paneId/navigate", (req, res) => {

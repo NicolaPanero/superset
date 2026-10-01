@@ -1,11 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import {
+	FilePaneOpenAbortedError,
 	type FilePaneOpenRequest,
 	FilePaneOpenRequests,
 	FilePaneOpenTimeoutError,
 } from "./file-pane-open-requests";
 
 const input = {
+	targetWindowId: 7,
 	workspaceId: "ws-1",
 	projectId: "project-1",
 	paths: ["/repo/a.ts", "/repo/b.ts"],
@@ -21,7 +23,7 @@ describe("FilePaneOpenRequests", () => {
 			seen.push(request);
 		});
 
-		const promise = requests.request(input, 1_000);
+		const promise = requests.request(input, { timeoutMs: 1_000 });
 		expect(seen).toHaveLength(1);
 		expect(seen[0]).toMatchObject(input);
 		expect(seen[0]?.requestId).toMatch(/^[0-9a-f]{16}$/);
@@ -42,7 +44,7 @@ describe("FilePaneOpenRequests", () => {
 		requests.on("open-request", (request: FilePaneOpenRequest) => {
 			requestId = request.requestId;
 		});
-		const promise = requests.request(input, 1_000);
+		const promise = requests.request(input, { timeoutMs: 1_000 });
 		requests.resolve(requestId, { ok: false, error: "no such workspace" });
 		await expect(promise).rejects.toThrow("no such workspace");
 	});
@@ -53,8 +55,27 @@ describe("FilePaneOpenRequests", () => {
 		requests.on("open-request", (request: FilePaneOpenRequest) => {
 			requestId = request.requestId;
 		});
-		const promise = requests.request(input, 5);
+		const promise = requests.request(input, { timeoutMs: 5 });
 		await expect(promise).rejects.toBeInstanceOf(FilePaneOpenTimeoutError);
+		expect(requests.resolve(requestId, { ok: true, paneIds: ["late"] })).toBe(
+			false,
+		);
+	});
+
+	it("stops waiting when the caller aborts, and ignores a late answer", async () => {
+		const requests = new FilePaneOpenRequests();
+		let requestId = "";
+		requests.on("open-request", (request: FilePaneOpenRequest) => {
+			requestId = request.requestId;
+		});
+		const abort = new AbortController();
+		const promise = requests.request(input, {
+			timeoutMs: 1_000,
+			signal: abort.signal,
+		});
+		abort.abort();
+		await expect(promise).rejects.toBeInstanceOf(FilePaneOpenAbortedError);
+		expect(requests.pendingCount()).toBe(0);
 		expect(requests.resolve(requestId, { ok: true, paneIds: ["late"] })).toBe(
 			false,
 		);
@@ -66,8 +87,8 @@ describe("FilePaneOpenRequests", () => {
 		requests.on("open-request", (request: FilePaneOpenRequest) => {
 			ids.push(request.requestId);
 		});
-		const first = requests.request(input, 1_000);
-		const second = requests.request(input, 1_000);
+		const first = requests.request(input, { timeoutMs: 1_000 });
+		const second = requests.request(input, { timeoutMs: 1_000 });
 		requests.resolve(ids[1] ?? "", { ok: true, paneIds: ["second"] });
 		requests.resolve(ids[0] ?? "", { ok: true, paneIds: ["first"] });
 		await expect(first).resolves.toEqual(["first"]);
