@@ -167,22 +167,29 @@ describe("files.open", () => {
 		expect(bridgeCalls).toHaveLength(0);
 	});
 
-	it("reports an unreadable path as a read failure, not a missing file", async () => {
-		seedWorkspace();
-		chmodSync(join(worktree, "src"), 0o000);
-		await expect(
-			createCaller().open({
-				workspaceId: WORKSPACE_ID,
-				paths: [join(worktree, "src", "a.ts")],
-			}),
-		).rejects.toMatchObject({
-			code: "INTERNAL_SERVER_ERROR",
-			message: expect.stringContaining("EACCES"),
-		});
-		expect(bridgeCalls).toHaveLength(0);
-	});
+	// Permission bits are not enforced for root, and neither test has a Windows equivalent.
+	const posix = process.platform !== "win32";
+	const unprivileged = posix && process.getuid?.() !== 0;
 
-	it("rejects a path that is not a regular file", async () => {
+	it.skipIf(!unprivileged)(
+		"reports an unreadable path as a read failure, not a missing file",
+		async () => {
+			seedWorkspace();
+			chmodSync(join(worktree, "src"), 0o000);
+			await expect(
+				createCaller().open({
+					workspaceId: WORKSPACE_ID,
+					paths: [join(worktree, "src", "a.ts")],
+				}),
+			).rejects.toMatchObject({
+				code: "INTERNAL_SERVER_ERROR",
+				message: expect.stringContaining("EACCES"),
+			});
+			expect(bridgeCalls).toHaveLength(0);
+		},
+	);
+
+	it.skipIf(!posix)("rejects a path that is not a regular file", async () => {
 		seedWorkspace();
 		const fifo = join(worktree, "src", "pipe");
 		execFileSync("mkfifo", [fifo]);

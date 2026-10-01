@@ -63,6 +63,21 @@ describe("findWorkspaceForPath", () => {
 		).toBe("w");
 	});
 
+	it("skips a workspace whose checkout is gone, even at the same path", () => {
+		const path = join(root, "reused");
+		const workspaces = [
+			{ id: "archived", worktreePath: path, worktreeExists: false },
+			{ id: "live", worktreePath: path, worktreeExists: true },
+			{ id: "unknown-age", worktreePath: join(root, "other") },
+		];
+		expect(findWorkspaceForPath(workspaces, join(path, "src"))?.id).toBe(
+			"live",
+		);
+		expect(
+			findWorkspaceForPath(workspaces, join(root, "other", "src"))?.id,
+		).toBe("unknown-age");
+	});
+
 	it("returns undefined when nothing contains the path or the list is empty", () => {
 		expect(findWorkspaceForPath([], join(root, "x"))).toBeUndefined();
 		expect(
