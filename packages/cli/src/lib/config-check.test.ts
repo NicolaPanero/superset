@@ -40,7 +40,7 @@ describe("checkConfig", () => {
 
 	it("accepts a valid, unexpired auth block without issues", () => {
 		const result = check({
-			auth: { accessToken: "tok", expiresAt: NOW + 60_000 },
+			auth: { accessToken: "tok", expiresAt: NOW + 3_600_000 },
 			organizationId: "org-1",
 		});
 		expect(result).toEqual({
@@ -67,9 +67,31 @@ describe("checkConfig", () => {
 		]);
 	});
 
-	it("warns on an expired token that cannot be refreshed", () => {
+	it("counts an expired token with no refresh token as logged out", () => {
 		const result = check({ auth: { accessToken: "tok", expiresAt: NOW - 1 } });
-		expect(result.issues[0]?.message).toContain("no refresh token");
+		expect(result.valid).toBe(true);
+		expect(result.loggedIn).toBe(false);
+		expect(result.issues).toEqual([
+			{
+				severity: "warning",
+				message:
+					'`auth.expiresAt` is in the past and there is no refresh token: the next command fails with "Session expired" (run: superset auth login)',
+			},
+		]);
+	});
+
+	it("treats a token inside the refresh leeway as due, like resolveAuth does", () => {
+		const result = check({
+			auth: { accessToken: "tok", refreshToken: "r", expiresAt: NOW + 60_000 },
+		});
+		expect(result.loggedIn).toBe(true);
+		expect(result.issues).toEqual([
+			{
+				severity: "warning",
+				message:
+					"`auth.expiresAt` is less than 5 minutes away: the next command refreshes the token",
+			},
+		]);
 	});
 
 	it("errors on auth without an access token, and is then not logged in", () => {
@@ -172,7 +194,7 @@ describe("checkConfig", () => {
 	it("is logged in when apiKey and auth are both present and valid", () => {
 		const result = check({
 			apiKey: "sk_live_x",
-			auth: { accessToken: "tok", expiresAt: NOW + 1000 },
+			auth: { accessToken: "tok", expiresAt: NOW + 3_600_000 },
 		});
 		expect(result.loggedIn).toBe(true);
 		expect(result.valid).toBe(true);

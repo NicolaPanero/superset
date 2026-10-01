@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import type { SupersetConfig } from "./config";
+import { AUTH_REFRESH_LEEWAY_MS, type SupersetConfig } from "./config";
 
 // `settings get/set` validates at write time; config.json is plain JSON a
 // person can hand-edit or a restore can truncate, so it is checked on read.
@@ -53,20 +53,32 @@ function checkAuth(value: unknown, now: number): FieldCheck {
 	if (value.refreshToken !== undefined && !hasRefresh) {
 		issues.push(error("`auth.refreshToken` must be a non-empty string"));
 	}
+	let usable = true;
 	if (typeof value.expiresAt !== "number") {
 		issues.push(
 			error("`auth.expiresAt` must be a number (ms since the epoch)"),
 		);
-	} else if (value.expiresAt < now) {
-		issues.push(
-			warning(
-				hasRefresh
-					? "`auth.expiresAt` is in the past: the next command refreshes the token"
-					: "`auth.expiresAt` is in the past and there is no refresh token (run: superset auth login)",
-			),
-		);
+	} else if (value.expiresAt - AUTH_REFRESH_LEEWAY_MS < now) {
+		const when =
+			value.expiresAt < now
+				? "is in the past"
+				: `is less than ${Math.round(AUTH_REFRESH_LEEWAY_MS / 60_000)} minutes away`;
+		if (hasRefresh) {
+			issues.push(
+				warning(
+					`\`auth.expiresAt\` ${when}: the next command refreshes the token`,
+				),
+			);
+		} else {
+			usable = false;
+			issues.push(
+				warning(
+					`\`auth.expiresAt\` ${when} and there is no refresh token: the next command fails with "Session expired" (run: superset auth login)`,
+				),
+			);
+		}
 	}
-	return { issues, credential: hasToken };
+	return { issues, credential: hasToken && usable };
 }
 
 function checkApiKey(value: unknown): FieldCheck {
@@ -152,7 +164,7 @@ export function checkConfig(
 		issues.push(...field.issues);
 		loggedIn ||= field.credential;
 	}
-	if (!loggedIn) {
+	if (!loggedIn && parsed.auth === undefined && parsed.apiKey === undefined) {
 		issues.push(
 			warning(
 				"No `auth` or `apiKey`: this file holds no login (run: superset auth login)",
