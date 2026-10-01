@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "@tanstack/react-router";
 import { LuExternalLink } from "react-icons/lu";
+import { MarqueeText } from "renderer/components/MarqueeText";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import {
 	StatusIcon,
@@ -40,7 +41,6 @@ export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
 					to="/tasks/$taskId"
 					params={{ taskId: task.id }}
 					className="group/task flex min-w-0 flex-1 items-center gap-1.5 text-left hover:text-foreground"
-					title={task.title}
 				>
 					<span className="flex size-3.5 shrink-0 items-center justify-center">
 						{task.statusType ? (
@@ -53,10 +53,15 @@ export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
 							<span className="size-3 rounded-full border border-muted-foreground/40" />
 						)}
 					</span>
-					<span className="font-mono text-xs text-muted-foreground shrink-0">
-						{task.slug}
-					</span>
-					<span className="truncate text-xs">{task.title}</span>
+					<MarqueeText
+						title={`${task.slug} ${task.title}`}
+						className="min-w-0 flex-1 text-xs"
+					>
+						<span className="mr-1.5 font-mono text-muted-foreground">
+							{task.slug}
+						</span>
+						{task.title}
+					</MarqueeText>
 				</Link>
 				{task.externalUrl && (
 					<a
