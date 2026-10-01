@@ -123,6 +123,10 @@ describe.each(
 		}
 	});
 
+	it("never declares a shell local named path, which zsh ties to PATH", () => {
+		expect(script).not.toMatch(/local [^\n]*\bpath=/);
+	});
+
 	it("leaves out hidden options and command-less groups", () => {
 		expect(script).not.toContain("--secret");
 		expect(script).not.toContain("orphan");
@@ -213,4 +217,19 @@ describe("generateBashCompletion", () => {
 		expect(complete("superset", "completion", "")).toEqual(["bash", "zsh"]);
 		expect(complete("superset", "completion", "bash", "")).toEqual([]);
 	});
+
+	it.skipIf(!Bun.which("bash"))(
+		"completes an enum value attached with =",
+		() => {
+			expect(complete("superset", "tasks", "create", "--priority=ur")).toEqual([
+				"--priority=urgent",
+			]);
+			expect(
+				complete("superset", "tasks", "create", "--priority", "=", "ur"),
+			).toEqual(["urgent"]);
+			expect(
+				complete("superset", "tasks", "create", "--priority", "="),
+			).toEqual(["high", "low", "urgent"]);
+		},
+	);
 });

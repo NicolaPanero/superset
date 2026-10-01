@@ -216,7 +216,7 @@ function valueFlagTokens(spec: NodeSpec): string[] {
 	return spec.flags.filter((flag) => flag.takesValue).flatMap((f) => f.tokens);
 }
 
-/** The shared walk: `path`, `npos` and `descending` are the caller's locals. */
+/** The shared walk: `cmdpath`, `npos` and `descending` are the caller's locals. */
 function walkLines(fn: string, firstWord: number, cursor: string): string[] {
 	return [
 		`for ((i = ${firstWord}; i < ${cursor}; i++)); do`,
@@ -225,14 +225,14 @@ function walkLines(fn: string, firstWord: number, cursor: string): string[] {
 		"\t\t--) descending=0; continue ;;",
 		"\t\t--*=*) continue ;;",
 		"\t\t-*)",
-		`\t\t\tif ${fn}__takes_value "$path" "$word"; then i=$((i + 1)); fi`,
+		`\t\t\tif ${fn}__takes_value "$cmdpath" "$word"; then i=$((i + 1)); fi`,
 		"\t\t\tcontinue",
 		"\t\t\t;;",
 		"\tesac",
 		"\tif [[ $descending -eq 1 ]]; then",
-		`\t\tresolved="$(${fn}__resolve "$path" "$word")"`,
+		`\t\tresolved="$(${fn}__resolve "$cmdpath" "$word")"`,
 		'\t\tif [[ -n "$resolved" ]]; then',
-		`\t\t\tpath="\${path:+$path }$resolved"`,
+		`\t\t\tcmdpath="\${cmdpath:+$cmdpath }$resolved"`,
 		"\t\t\tcontinue",
 		"\t\tfi",
 		"\t\tdescending=0",
@@ -243,7 +243,7 @@ function walkLines(fn: string, firstWord: number, cursor: string): string[] {
 }
 
 const PREV_TAKES_VALUE = (fn: string) =>
-	`if [[ "$prev" == -* && "$prev" != --*=* && "$prev" != -- ]] && ${fn}__takes_value "$path" "$prev"; then`;
+	`if [[ "$prev" == -* && "$prev" != --*=* && "$prev" != -- ]] && ${fn}__takes_value "$cmdpath" "$prev"; then`;
 
 export function generateBashCompletion({ name, root }: CliDescription): string {
 	const specs = collectSpecs(root);
@@ -316,26 +316,41 @@ export function generateBashCompletion({ name, root }: CliDescription): string {
 			"return 1",
 		]),
 		...shellFunction(fn, [
-			"local cur prev word candidates path='' npos=0 descending=1 resolved i",
+			"local cur prev word flag candidates cmdpath='' npos=0 descending=1 resolved i",
 			`local -a words=("\${COMP_WORDS[@]}")`,
 			"COMPREPLY=()",
 			`cur="\${COMP_WORDS[COMP_CWORD]}"`,
 			...walkLines(fn, 1, "COMP_CWORD"),
 			"prev=''",
 			`if [[ $COMP_CWORD -gt 0 ]]; then prev="\${COMP_WORDS[COMP_CWORD - 1]}"; fi`,
+			'if [[ "$cur" == --*=* ]]; then',
+			`\tflag="\${cur%%=*}"`,
+			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "$flag")" -P "$flag=" -- "\${cur#*=}"))`,
+			"\treturn 0",
+			"fi",
+			'# Readline splits --flag=value at "=" (COMP_WORDBREAKS), so the flag sits',
+			"# one or two words back.",
+			'if [[ "$cur" == "=" && "$prev" == --* ]]; then',
+			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "$prev")" -- ""))`,
+			"\treturn 0",
+			"fi",
+			`if [[ "$prev" == "=" && $COMP_CWORD -ge 2 && "\${COMP_WORDS[COMP_CWORD - 2]}" == --* ]]; then`,
+			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "\${COMP_WORDS[COMP_CWORD - 2]}")" -- "$cur"))`,
+			"\treturn 0",
+			"fi",
 			PREV_TAKES_VALUE(fn),
-			`\tcandidates="$(${fn}__flag_values "$path" "$prev")"`,
+			`\tcandidates="$(${fn}__flag_values "$cmdpath" "$prev")"`,
 			'\tif [[ -z "$candidates" ]]; then',
 			"\t\t# Free-form value: let readline offer filenames.",
 			"\t\ttype compopt >/dev/null 2>&1 && compopt -o default 2>/dev/null",
 			"\t\treturn 0",
 			"\tfi",
 			'elif [[ "$cur" == -* ]]; then',
-			`\tcandidates="$(${fn}__flags "$path")"`,
+			`\tcandidates="$(${fn}__flags "$cmdpath")"`,
 			"else",
-			`\tcandidates="$(${fn}__subcommands "$path")"`,
+			`\tcandidates="$(${fn}__subcommands "$cmdpath")"`,
 			'\tif [[ -z "$candidates" ]]; then',
-			`\t\tcandidates="$(${fn}__arg_values "$path" "$npos")"`,
+			`\t\tcandidates="$(${fn}__arg_values "$cmdpath" "$npos")"`,
 			"\tfi",
 			"fi",
 			'COMPREPLY=($(compgen -W "$candidates" -- "$cur"))',
@@ -418,28 +433,34 @@ export function generateZshCompletion({ name, root }: CliDescription): string {
 		// No `emulate -L zsh` here: it would reset the options compsys sets
 		// for `_describe` (extended_glob among them).
 		...shellFunction(fn, [
-			"local cur prev word path='' npos=0 descending=1 resolved i",
+			"local cur prev word cmdpath='' npos=0 descending=1 resolved i",
 			"local -a reply",
 			`cur="\${words[CURRENT]}"`,
 			...walkLines(fn, 2, "CURRENT"),
 			"prev=''",
 			`(( CURRENT > 1 )) && prev="\${words[CURRENT - 1]}"`,
+			'if [[ "$cur" == --*=* ]]; then',
+			`\t${fn}__flag_values "$cmdpath" "\${cur%%=*}"`,
+			"\tcompset -P '*='",
+			`\t(( \${#reply} )) && _describe -t values 'value' reply`,
+			"\treturn",
+			"fi",
 			PREV_TAKES_VALUE(fn),
-			`\t${fn}__flag_values "$path" "$prev"`,
+			`\t${fn}__flag_values "$cmdpath" "$prev"`,
 			`\tif (( \${#reply} )); then`,
 			"\t\t_describe -t values 'value' reply",
 			"\telse",
 			"\t\t_files",
 			"\tfi",
 			'elif [[ "$cur" == -* ]]; then',
-			`\t${fn}__flags "$path"`,
+			`\t${fn}__flags "$cmdpath"`,
 			"\t_describe -t options 'option' reply",
 			"else",
-			`\t${fn}__subcommands "$path"`,
+			`\t${fn}__subcommands "$cmdpath"`,
 			`\tif (( \${#reply} )); then`,
 			"\t\t_describe -t commands 'command' reply",
 			"\telse",
-			`\t\t${fn}__arg_values "$path" "$npos"`,
+			`\t\t${fn}__arg_values "$cmdpath" "$npos"`,
 			`\t\t(( \${#reply} )) && _describe -t values 'value' reply`,
 			"\tfi",
 			"fi",

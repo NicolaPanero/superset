@@ -1963,9 +1963,11 @@ command tree, so it never drifts from what the binary accepts.
 	]}
 >
 Prints the script to stdout, byte for byte, in every output mode: `--json`,
-`--quiet` and agent environments do not wrap it. The script completes
-command names and their aliases at every level, each command's flags and
-their aliases, enum values for flags and arguments, and the global options.
+`--quiet` and agent environments do not wrap it. The script completes command
+names at every level and walks through an alias already typed
+(`superset ws cr<Tab>`), each command's flags and their aliases, enum values
+for flags (`--priority=u<Tab>` included) and arguments, and the global
+options.
 
 ```bash
 # This shell session
