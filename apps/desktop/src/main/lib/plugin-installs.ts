@@ -11,9 +11,9 @@ import {
 import { getBundledPluginDir } from "@superset/agent-setup/config";
 import { settings } from "@superset/local-db";
 import {
+	desiredPluginMcpServers,
 	getPluginByName,
 	type InstalledPlugin,
-	type PluginMcpServerConfig,
 	SUPERSET_MANAGED_SKILLS,
 } from "@superset/shared/plugins";
 import log from "electron-log/main";
@@ -73,25 +73,8 @@ function saveInstalledPlugins(next: InstalledPlugin[]): void {
 		.run();
 }
 
-function desiredMcpServers(
-	installed: InstalledPlugin[],
-): Record<string, PluginMcpServerConfig> {
-	const desired: Record<string, PluginMcpServerConfig> = {};
-	for (const install of installed) {
-		// Disabled installs and unknown names (a catalog entry removed after
-		// install) contribute nothing, so their servers reap on the next sync.
-		// Per-agent skipping of servers the user configured themselves happens
-		// inside syncManagedMcpServers, scoped to each agent's own config.
-		if (install.enabled === false) continue;
-		const plugin = getPluginByName(install.name);
-		if (!plugin) continue;
-		Object.assign(desired, plugin.mcpServers);
-	}
-	return desired;
-}
-
 export function syncInstalledPluginMcpServers(): void {
-	syncManagedMcpServers(desiredMcpServers(getInstalledPlugins()));
+	syncManagedMcpServers(desiredPluginMcpServers(getInstalledPlugins()));
 }
 
 /** Returns the updated install list; unknown plugin names return null. */

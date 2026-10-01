@@ -37,6 +37,14 @@ export type PluginMcpServerConfig =
 			type: "http" | "sse";
 			url: string;
 			headers?: Record<string, string>;
+			/**
+			 * A command printing a JSON object of headers on stdout, run per
+			 * connection. Both supported agents have this and it is the only way to
+			 * attach a credential without writing one to disk: Claude calls it
+			 * `headersHelper`, Codex `http_headers_helper`, so the dialect writers
+			 * rename it rather than this type carrying both spellings.
+			 */
+			headersHelper?: string;
 	  }
 	| {
 			command: string;
@@ -485,6 +493,27 @@ export function pluginProxyMcpServers(
 			url: `${SUPERSET_API_URL}/mcp/plugins/${marketplace}/${name}`,
 		},
 	};
+}
+
+/**
+ * The MCP entries an installed set should materialize, merged.
+ *
+ * Shared so the desktop and the host-service compute the same desired set from
+ * the same catalog: two copies of this is how one surface writes an entry the
+ * other reaps. A disabled install contributes nothing, which is what makes a
+ * disable reap its servers.
+ */
+export function desiredPluginMcpServers(
+	installed: readonly { name: string; enabled?: boolean }[],
+): Record<string, PluginMcpServerConfig> {
+	const desired: Record<string, PluginMcpServerConfig> = {};
+	for (const install of installed) {
+		if (install.enabled === false) continue;
+		const plugin = getPluginByName(install.name);
+		if (!plugin) continue;
+		Object.assign(desired, plugin.mcpServers);
+	}
+	return desired;
 }
 
 export function getPluginByName(name: string): PluginCatalogEntry | undefined {
