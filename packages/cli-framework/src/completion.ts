@@ -216,16 +216,43 @@ function valueFlagTokens(spec: NodeSpec): string[] {
 	return spec.flags.filter((flag) => flag.takesValue).flatMap((f) => f.tokens);
 }
 
-/** The shared walk: `cmdpath`, `npos` and `descending` are the caller's locals. */
+function boolFlagTokens(spec: NodeSpec): string[] {
+	return spec.flags.filter((flag) => !flag.takesValue).flatMap((f) => f.tokens);
+}
+
+/** Lookup table arms: one per path that has any token from `tokens(spec)`. */
+function tokenArms(
+	specs: NodeSpec[],
+	tokens: (spec: NodeSpec) => string[],
+	render: (values: string[]) => string,
+): CaseArm[] {
+	return specs
+		.filter((spec) => tokens(spec).length > 0)
+		.map((spec) => ({
+			pattern: pathPattern(spec),
+			body: [render(tokens(spec))],
+		}));
+}
+
+/**
+ * The shared walk: `cmdpath`, `npos`, `descending` and `dashdash` are the
+ * caller's locals. A flag's value is skipped whether it follows as one word,
+ * as readline's split `=` plus a word, or as a boolean's explicit true/false.
+ */
 function walkLines(fn: string, firstWord: number, cursor: string): string[] {
 	return [
 		`for ((i = ${firstWord}; i < ${cursor}; i++)); do`,
 		`\tword="\${words[i]}"`,
+		"\tif [[ $dashdash -eq 1 ]]; then npos=$((npos + 1)); continue; fi",
 		'\tcase "$word" in',
-		"\t\t--) descending=0; continue ;;",
+		"\t\t--) dashdash=1; descending=0; continue ;;",
 		"\t\t--*=*) continue ;;",
 		"\t\t-*)",
-		`\t\t\tif ${fn}__takes_value "$cmdpath" "$word"; then i=$((i + 1)); fi`,
+		`\t\t\tif ${fn}__takes_value "$cmdpath" "$word"; then`,
+		`\t\t\t\tif [[ "\${words[i + 1]}" == "=" ]]; then i=$((i + 2)); else i=$((i + 1)); fi`,
+		`\t\t\telif ${fn}__is_bool "$cmdpath" "$word" && (( i + 1 < ${cursor} )); then`,
+		`\t\t\t\tcase "\${words[i + 1]}" in [Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]|1|0) i=$((i + 1)) ;; esac`,
+		"\t\t\tfi",
 		"\t\t\tcontinue",
 		"\t\t\t;;",
 		"\tesac",
@@ -240,6 +267,17 @@ function walkLines(fn: string, firstWord: number, cursor: string): string[] {
 		"\tnpos=$((npos + 1))",
 		"done",
 	];
+}
+
+/** `name path token` succeeds when `listFn path` lists the token. */
+function bashMembership(name: string, listFn: string): string[] {
+	return shellFunction(name, [
+		"local f",
+		`for f in $(${listFn} "$1"); do`,
+		'\t[[ "$f" == "$2" ]] && return 0',
+		"done",
+		"return 1",
+	]);
 }
 
 const PREV_TAKES_VALUE = (fn: string) =>
@@ -281,16 +319,11 @@ export function generateBashCompletion({ name, root }: CliDescription): string {
 		),
 		...shellFunction(
 			`${fn}__value_flags`,
-			caseLines(
-				"$1",
-				specs
-					.filter((spec) => valueFlagTokens(spec).length > 0)
-					.map((spec) => ({
-						pattern: pathPattern(spec),
-						body: [echo(valueFlagTokens(spec))],
-					})),
-				"",
-			),
+			caseLines("$1", tokenArms(specs, valueFlagTokens, echo), ""),
+		),
+		...shellFunction(
+			`${fn}__bool_flags`,
+			caseLines("$1", tokenArms(specs, boolFlagTokens, echo), ""),
 		),
 		...shellFunction(
 			`${fn}__flag_values`,
@@ -308,34 +341,57 @@ export function generateBashCompletion({ name, root }: CliDescription): string {
 				"",
 			),
 		),
-		...shellFunction(`${fn}__takes_value`, [
-			"local f",
-			`for f in $(${fn}__value_flags "$1"); do`,
-			'\t[[ "$f" == "$2" ]] && return 0',
-			"done",
-			"return 1",
-		]),
+		...bashMembership(`${fn}__takes_value`, `${fn}__value_flags`),
+		...bashMembership(`${fn}__is_bool`, `${fn}__bool_flags`),
 		...shellFunction(fn, [
-			"local cur prev word flag candidates cmdpath='' npos=0 descending=1 resolved i",
+			"local cur prev word flag candidates cmdpath='' npos=0 descending=1 dashdash=0 resolved i",
 			`local -a words=("\${COMP_WORDS[@]}")`,
 			"COMPREPLY=()",
 			`cur="\${COMP_WORDS[COMP_CWORD]}"`,
 			...walkLines(fn, 1, "COMP_CWORD"),
 			"prev=''",
 			`if [[ $COMP_CWORD -gt 0 ]]; then prev="\${COMP_WORDS[COMP_CWORD - 1]}"; fi`,
+			"# After --, every word is positional.",
+			"if [[ $dashdash -eq 1 ]]; then",
+			`\tcandidates="$(${fn}__arg_values "$cmdpath" "$npos")"`,
+			'\tif [[ -z "$candidates" ]]; then',
+			"\t\ttype compopt >/dev/null 2>&1 && compopt -o default 2>/dev/null",
+			"\t\treturn 0",
+			"\tfi",
+			'\tCOMPREPLY=($(compgen -W "$candidates" -- "$cur"))',
+			"\treturn 0",
+			"fi",
 			'if [[ "$cur" == --*=* ]]; then',
 			`\tflag="\${cur%%=*}"`,
-			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "$flag")" -P "$flag=" -- "\${cur#*=}"))`,
+			`\tif ${fn}__takes_value "$cmdpath" "$flag"; then`,
+			`\t\tcandidates="$(${fn}__flag_values "$cmdpath" "$flag")"`,
+			'\t\tif [[ -n "$candidates" ]]; then',
+			`\t\t\tCOMPREPLY=($(compgen -W "$candidates" -P "$flag=" -- "\${cur#*=}"))`,
+			"\t\telse",
+			`\t\t\tCOMPREPLY=($(compgen -f -P "$flag=" -- "\${cur#*=}"))`,
+			"\t\tfi",
+			"\tfi",
 			"\treturn 0",
 			"fi",
 			'# Readline splits --flag=value at "=" (COMP_WORDBREAKS), so the flag sits',
 			"# one or two words back.",
 			'if [[ "$cur" == "=" && "$prev" == --* ]]; then',
-			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "$prev")" -- ""))`,
-			"\treturn 0",
+			'\tflag="$prev"',
+			`elif [[ "$prev" == "=" && $COMP_CWORD -ge 2 && "\${COMP_WORDS[COMP_CWORD - 2]}" == --* ]]; then`,
+			`\tflag="\${COMP_WORDS[COMP_CWORD - 2]}"`,
+			"else",
+			"\tflag=''",
 			"fi",
-			`if [[ "$prev" == "=" && $COMP_CWORD -ge 2 && "\${COMP_WORDS[COMP_CWORD - 2]}" == --* ]]; then`,
-			`\tCOMPREPLY=($(compgen -W "$(${fn}__flag_values "$cmdpath" "\${COMP_WORDS[COMP_CWORD - 2]}")" -- "$cur"))`,
+			'if [[ -n "$flag" ]]; then',
+			`\tif ${fn}__takes_value "$cmdpath" "$flag"; then`,
+			`\t\tcandidates="$(${fn}__flag_values "$cmdpath" "$flag")"`,
+			'\t\tif [[ -z "$candidates" ]]; then',
+			"\t\t\ttype compopt >/dev/null 2>&1 && compopt -o default 2>/dev/null",
+			"\t\t\treturn 0",
+			"\t\tfi",
+			'\t\t[[ "$cur" == "=" ]] && cur=\'\'',
+			'\t\tCOMPREPLY=($(compgen -W "$candidates" -- "$cur"))',
+			"\tfi",
 			"\treturn 0",
 			"fi",
 			PREV_TAKES_VALUE(fn),
@@ -411,12 +467,11 @@ export function generateZshCompletion({ name, root }: CliDescription): string {
 		),
 		...replyFunction(
 			`${fn}__value_flags`,
-			specs
-				.filter((spec) => valueFlagTokens(spec).length > 0)
-				.map((spec) => ({
-					pattern: pathPattern(spec),
-					body: [plain(valueFlagTokens(spec))],
-				})),
+			tokenArms(specs, valueFlagTokens, plain),
+		),
+		...replyFunction(
+			`${fn}__bool_flags`,
+			tokenArms(specs, boolFlagTokens, plain),
 		),
 		...replyFunction(
 			`${fn}__flag_values`,
@@ -430,19 +485,32 @@ export function generateZshCompletion({ name, root }: CliDescription): string {
 			`${fn}__value_flags "$1"`,
 			`(( \${reply[(Ie)$2]} ))`,
 		]),
+		...shellFunction(`${fn}__is_bool`, [
+			`${fn}__bool_flags "$1"`,
+			`(( \${reply[(Ie)$2]} ))`,
+		]),
 		// No `emulate -L zsh` here: it would reset the options compsys sets
 		// for `_describe` (extended_glob among them).
 		...shellFunction(fn, [
-			"local cur prev word cmdpath='' npos=0 descending=1 resolved i",
+			"local cur prev word flag cmdpath='' npos=0 descending=1 dashdash=0 resolved i",
 			"local -a reply",
 			`cur="\${words[CURRENT]}"`,
 			...walkLines(fn, 2, "CURRENT"),
 			"prev=''",
 			`(( CURRENT > 1 )) && prev="\${words[CURRENT - 1]}"`,
+			"# After --, every word is positional.",
+			"if (( dashdash )); then",
+			`\t${fn}__arg_values "$cmdpath" "$npos"`,
+			`\tif (( \${#reply} )); then _describe -t values 'value' reply; else _files; fi`,
+			"\treturn",
+			"fi",
 			'if [[ "$cur" == --*=* ]]; then',
-			`\t${fn}__flag_values "$cmdpath" "\${cur%%=*}"`,
+			`\tflag="\${cur%%=*}"`,
 			"\tcompset -P '*='",
-			`\t(( \${#reply} )) && _describe -t values 'value' reply`,
+			`\tif ${fn}__takes_value "$cmdpath" "$flag"; then`,
+			`\t\t${fn}__flag_values "$cmdpath" "$flag"`,
+			`\t\tif (( \${#reply} )); then _describe -t values 'value' reply; else _files; fi`,
+			"\tfi",
 			"\treturn",
 			"fi",
 			PREV_TAKES_VALUE(fn),

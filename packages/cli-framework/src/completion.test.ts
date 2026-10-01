@@ -63,7 +63,9 @@ function fixture(): CommandNode {
 				}),
 			]),
 			node("completion", {
-				args: [option({ name: "shell", enumVals: ["bash", "zsh"] })],
+				args: [
+					option({ name: "shell", enumVals: ["alpha-shell", "beta-shell"] }),
+				],
 			}),
 			node("status", { description: "Check host service status" }),
 			node("orphan", { hasCommand: false }),
@@ -118,13 +120,19 @@ describe.each(
 	});
 
 	it("offers enum values for flags and positionals", () => {
-		for (const value of ["urgent", "high", "low", "bash", "zsh"]) {
+		for (const value of [
+			"urgent",
+			"high",
+			"low",
+			"alpha-shell",
+			"beta-shell",
+		]) {
 			expect(script).toContain(value);
 		}
 	});
 
 	it("never declares a shell local named path, which zsh ties to PATH", () => {
-		expect(script).not.toMatch(/local [^\n]*\bpath=/);
+		expect(script).not.toMatch(/\blocal\b[^\n]*\bpath\b/);
 	});
 
 	it("leaves out hidden options and command-less groups", () => {
@@ -214,9 +222,54 @@ describe("generateBashCompletion", () => {
 			"low",
 			"urgent",
 		]);
-		expect(complete("superset", "completion", "")).toEqual(["bash", "zsh"]);
-		expect(complete("superset", "completion", "bash", "")).toEqual([]);
+		expect(complete("superset", "completion", "")).toEqual([
+			"alpha-shell",
+			"beta-shell",
+		]);
+		expect(complete("superset", "completion", "alpha-shell", "")).toEqual([]);
 	});
+
+	it.skipIf(!Bun.which("bash"))(
+		"skips a flag's value in every spelling while walking",
+		() => {
+			expect(complete("superset", "--api-key", "abc", "comp")).toEqual([
+				"completion",
+			]);
+			expect(complete("superset", "--api-key", "=", "abc", "comp")).toEqual([
+				"completion",
+			]);
+			expect(complete("superset", "--api-key=abc", "comp")).toEqual([
+				"completion",
+			]);
+			expect(complete("superset", "--json", "true", "comp")).toEqual([
+				"completion",
+			]);
+			expect(
+				complete("superset", "completion", "--api-key", "=", "abc", ""),
+			).toEqual(["alpha-shell", "beta-shell"]);
+		},
+	);
+
+	it.skipIf(!Bun.which("bash"))(
+		"treats everything after -- as positional",
+		() => {
+			expect(complete("superset", "completion", "--", "")).toEqual([
+				"alpha-shell",
+				"beta-shell",
+			]);
+			expect(complete("superset", "completion", "--", "-")).toEqual([]);
+			expect(complete("superset", "terminals", "--", "re")).toEqual([]);
+		},
+	);
+
+	it.skipIf(!Bun.which("bash"))(
+		"offers filenames for a free-form value attached with =",
+		() => {
+			expect(
+				complete("superset", "terminals", "read", "--workspace=./pack"),
+			).toEqual(["--workspace=./package.json"]);
+		},
+	);
 
 	it.skipIf(!Bun.which("bash"))(
 		"completes an enum value attached with =",
