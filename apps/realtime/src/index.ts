@@ -1,14 +1,17 @@
 import * as Sentry from "@sentry/cloudflare";
+import type { PageStorageHubRequest } from "@superset/shared/page-storage-hub";
 import {
 	isRealtimeNudgeKind,
 	isRealtimeUpdate,
 } from "@superset/shared/realtime";
+import { verifyPageStorageTicket } from "@superset/shared/usercontent";
 import { verifyJWT } from "@superset/shared/verify-jwt";
 import type { Context } from "hono";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { getServerByName } from "partyserver";
 import { OrgHub } from "./org-hub";
+import { PageHub } from "./page-hub";
 import type { RealtimeEnv } from "./types";
 
 type AppContext = { Bindings: RealtimeEnv };
@@ -50,6 +53,45 @@ app.get("/v2/org/:organizationId/nudges", async (c) => {
 		return acceptAndClose(4403, "Not a member of this organization");
 	}
 	const stub = await getServerByName(c.env.OrgHub, organizationId);
+	return stub.fetch("https://realtime/subscribe", {
+		headers: { Upgrade: "websocket" },
+	});
+});
+
+// ── Page storage: the hub holds the records; the API fronts every call ──
+
+// Ops arrive from the API, which has already decided this viewer may read the
+// page. The secret is the whole check here; the hub never sees a user session.
+app.post("/v2/page/:pageId/storage", async (c) => {
+	const token = extractToken(c);
+	if (!token || token !== c.env.NUDGE_SECRET) {
+		return c.json({ error: "Unauthorized" }, 401);
+	}
+	const request = (await c.req
+		.json()
+		.catch(() => null)) as PageStorageHubRequest | null;
+	if (!request || typeof request.op !== "string") {
+		return c.json({ error: "op required" }, 400);
+	}
+	const stub = await getServerByName(c.env.PageHub, c.req.param("pageId"));
+	return c.json(await stub.apply(request));
+});
+
+// A window subscribing to change notifications. The ticket is a statement
+// from the API that this page may be read; the stream carries no values, so
+// the ticket is all the authority the Worker needs.
+app.get("/v2/page/:pageId/storage/subscribe", async (c) => {
+	if (c.req.header("Upgrade")?.toLowerCase() !== "websocket") {
+		return c.json({ error: "WebSocket upgrade required" }, 426);
+	}
+	const pageId = c.req.param("pageId");
+	const ticket = extractToken(c);
+	if (!ticket) return acceptAndClose(4401, "Unauthorized");
+	const claims = await verifyPageStorageTicket(c.env.NUDGE_SECRET, ticket);
+	if (!claims || claims.pageId !== pageId) {
+		return acceptAndClose(4401, "Unauthorized");
+	}
+	const stub = await getServerByName(c.env.PageHub, pageId);
 	return stub.fetch("https://realtime/subscribe", {
 		headers: { Upgrade: "websocket" },
 	});
@@ -108,7 +150,11 @@ const InstrumentedOrgHub = Sentry.instrumentDurableObjectWithSentry(
 	sentryOptions,
 	OrgHub,
 );
-export { InstrumentedOrgHub as OrgHub };
+const InstrumentedPageHub = Sentry.instrumentDurableObjectWithSentry(
+	sentryOptions,
+	PageHub,
+);
+export { InstrumentedOrgHub as OrgHub, InstrumentedPageHub as PageHub };
 
 export default Sentry.withSentry(sentryOptions, {
 	fetch: app.fetch,

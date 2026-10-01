@@ -16,8 +16,16 @@
 	// NUDGE_SECRET is a secret (`wrangler secret put NUDGE_SECRET`); the API
 	// sends it on every emit.
 	"durable_objects": {
-		"bindings": [{ "name": "OrgHub", "class_name": "OrgHub" }]
+		"bindings": [
+			{ "name": "OrgHub", "class_name": "OrgHub" },
+			// One per page. Unlike OrgHub this one is a store, not a relay: a
+			// page's storage records live in its SQLite and nowhere else.
+			{ "name": "PageHub", "class_name": "PageHub" }
+		]
 	},
-	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["OrgHub"] }],
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["OrgHub"] },
+		{ "tag": "v2", "new_sqlite_classes": ["PageHub"] }
+	],
 	"observability": { "enabled": true }
 }
