@@ -115,32 +115,23 @@
         <code>localStorage</code>, but one reader's click is invisible to
         everyone else. This proposal adds a small persistent JSON store to
         every page, exposed to page script as
-        <code>window.superset.storage</code>, held in one Durable Object per
-        page, quota-limited, and live for everyone reading it — turning pages
-        into two-way surfaces the whole org writes to through one link.
+        <code>window.superset.storage</code>, held in one durable object per
+        page, quota-limited, and live for everyone reading it: pages become
+        two-way surfaces the whole organization writes to through one link.
       </p>
 
       <div class="tldr">
         <p>
-          <strong>TL;DR:</strong> extend the runtime script Superset already
-          injects into every page with a <code>window.superset.storage</code>
-          API. The page can't reach the network (CSP is
-          <code>default-src 'none'</code>), so calls travel over
-          <code>postMessage</code> to the host app — which has the viewer's
-          real session — and reach a <code>page.store</code> tRPC router that
-          authorizes the page in Postgres and then calls that page's
-          <code>PageHub</code> Durable Object, where the records live in
-          SQLite. <strong>No Postgres table, no migration.</strong> Writes
-          are viewer-scoped (you can only overwrite your own records), reads
-          see everyone's, and quotas are enforced at every layer:
-          8&nbsp;KiB per value, 128 keys per viewer, 256&nbsp;KiB per page.
-          No CRDTs needed — one record per viewer means there is nothing to
-          merge, and the hub applies a page's writes one at a time anyway.
-          The hub pushes every change down an open socket, so a tally moves
-          live, and it also gives us human and agent presence for free and
-          retires the heartbeat columns and lease procedures that fake
-          liveness today (section 3). The whole design converges with what
-          claude.ai already ships for artifacts (section 4).
+          <strong>TL;DR:</strong> a published page can keep one small JSON slot
+          per person per key, and read everyone's. The page opens a socket
+          straight to its own <code>PageHub</code> durable object, which holds
+          the records in SQLite and pushes changes to every viewer, so neither
+          our API nor Postgres is in a read or a write and there is no schema
+          change at all. Access comes from the page's R2 manifest, which the
+          realtime Worker reads after verifying the viewer's JWT locally. One
+          slot per person means two people writing at once touch different
+          rows, so no CRDT. Shipped shape and its costs in section 2; the use
+          cases that justify it first.
         </p>
       </div>
 
@@ -241,756 +232,167 @@
       </p>
 
       <details class="impl">
-        <summary>2 · Implementation <span class="hint">— v0 is built; architecture, API, data model, quotas, rollout</span></summary>
+        <summary>2 · How it works <span class="hint">— as built: the page talks to its own hub, with the API out of the hot path</span></summary>
         <div class="impl-body">
 
-          <h3>What v0 already does</h3>
+          <h3>The shape</h3>
           <p>
-            A working v0 is in the tree, on branch
-            <code>different-ox-a595deff</code>, and it is
-            <strong>Durable-Object-only: there is no Postgres table and no
-            migration at all</strong>. A page's records live in its
-            <code>PageHub</code> SQLite and nowhere else. What is built:
-            the hub (<code>apps/realtime/src/page-hub.ts</code>) with quota
-            enforcement and change broadcast, two Worker routes (ops behind
-            the shared secret, a subscribe socket behind a ticket), a
-            <code>page.store</code> tRPC router that authorizes the page in
-            Postgres and then calls the hub, the injected
-            <code>window.superset.storage</code> runtime with push-driven
-            <code>subscribe</code>, the host bridge wired in both the web
-            viewer and the desktop pane, and a lunch-vote page to try it on.
+            A page is served under a policy that lets its script reach exactly
+            one host: its own storage hub. Everything else a page renders is
+            still in the document.
           </p>
+          <pre><code>host (has the viewer's JWT)
+  │  POST /v2/page/&lt;id&gt;/storage/ticket
+  ▼
+realtime Worker ── verifies the JWT against the API's JWKS
+  │             ── reads the page's manifest from R2 (no database)
+  │             ── signs {pageId, userId, name, image, author, writable, nonce, exp 60s}
+  ▼
+host posts the one ticket into the frame
+  │
+  ▼
+page opens its own socket ──▶ PageHub (one per page)
+                              ├─ spends the nonce (SQLite, not memory)
+                              ├─ checks Origin is this page's frame origin
+                              ├─ pins identity to the connection
+                              ├─ upserts a visits row, replies hello
+                              └─ pushes records to every connection on change</code></pre>
           <p>
-            There is also a local harness
-            (<code>apps/realtime/scripts/storage-harness.ts</code>) that runs
-            the real runtime and the real hub with only the session layer
-            stubbed, so you pick who you are from a dropdown and two windows
-            are two people. Driving it in a real browser is what caught the
-            head-injection bug below.
-          </p>
-          <p>
-            Verified against a local Worker, not just typechecked: upsert
-            semantics (changing your vote leaves one row), quota refusal with
-            its code, a wrong secret refused, a live write arriving on a
-            subscriber's socket, a ticket for one page refused on another's
-            stream, and the deletion paths — one person's records dropped
-            across every key while another's survive, re-running the purge
-            cleanly, and a full wipe on page delete.
-          </p>
-          <p>
-            Deletion is wired: deleting a page wipes its hub, purging an
-            account removes that person's records from every page they wrote
-            on, and org-wide usage is answerable — all three through one
-            pointer table that holds no content (section 3).
-          </p>
-          <p>
-            Not in v0: the mobile WebView bridge, and the CLI/MCP surface for
-            agent readback — the <code>list</code> procedure exists, but
-            nothing calls it from a terminal yet. One deliberate narrowing
-            from the design below: every procedure is authenticated, so a
-            signed-out viewer of an <code>everyone</code> page cannot read
-            storage either, where the design says anonymous should read but
-            not write.
+            Neither our API nor Postgres is in a read or a write. The API
+            keeps the manifest write it already did, one nudge after it, and
+            the cross-page account purge.
           </p>
 
-          <h3>Why the obvious route is closed</h3>
+          <h3>Where access comes from</h3>
           <p>
-            Every page is served on its own origin
-            (<code>https://&lt;pageId&gt;.frame.supersetusercontent.com</code>)
-            by the usercontent Worker under this policy
-            (<code>packages/shared/src/usercontent/csp.ts</code>):
-          </p>
-          <pre><code>default-src 'none'
-script-src 'self' 'unsafe-inline'
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com
-img-src 'self' data: blob: https:
-…
-form-action 'none'</code></pre>
-          <p>
-            There is no <code>connect-src</code>, so it inherits
-            <code>default-src 'none'</code>: <code>fetch</code>, XHR,
-            <code>EventSource</code>, and WebSockets are all blocked from
-            page script. That is deliberate — the file's own docblock says
-            <em>"Network is closed … a page is a document that computes"</em>
-            — and this proposal keeps it. Opening <code>connect-src</code>
-            would turn every published page into a surface that can
-            exfiltrate whatever it computes. We don't touch the CSP at all.
+            The manifest, which every page already has in R2 and which the
+            usercontent Worker already treats as its whole authorization
+            source. It gains two fields, <code>organizationId</code> and
+            <code>createdByUserId</code>; taken down is already "no manifest".
+            The rule is a pure function with tests: an organization page opens
+            to a member, a <code>just_me</code> page only to its author, and a
+            manifest with no organization authorizes nobody.
           </p>
           <p>
-            The second closed route is identity at the Worker. Page URLs
-            carry an HMAC ticket that deliberately holds <strong>no user
-            id</strong>, and rendered HTML is cached per
-            <code>(storageKey, RENDER_REVISION)</code> for 24 hours across
-            all viewers. So the Worker can never answer "whose vote is
-            this", and nothing per-viewer can be baked into the document.
+            That last case is what lets this ship in one merge. A manifest
+            written before these fields existed answers
+            <code>{ fallback: true }</code> rather than refusing, and the host
+            serves that page over the bridge it already had. Deploy order
+            stops being load-bearing, and the backfill upgrades pages to the
+            direct path as it runs instead of gating the release. The bridge
+            is deleted in a follow-up once every manifest carries the fields.
           </p>
-
-          <h3>The architecture: brokered through the host</h3>
           <p>
-            One channel already crosses the sandbox boundary: Superset
-            injects <code>/_superset/runtime.js</code> into every page for
-            comment anchoring, and it speaks <code>postMessage</code> with
-            the host viewer, which validates the frame's exact origin on
-            every message. The host — web app, desktop pane, or mobile
-            WebView — is where the viewer's authenticated session and tRPC
-            client live. Storage rides the same rails:
+            When access changes, <code>writePageManifest</code> nudges the
+            hub, which re-reads and closes the connections that no longer
+            pass with a terminal <code>revoked</code>. No manifest means
+            deleted or taken down, and the records go with it. A slow timed
+            re-read covers a lost nudge.
           </p>
 
-          <figure>
-            <svg viewBox="0 0 720 240" role="img" aria-label="Flow: page script calls window.superset.storage, the injected runtime posts a message to the host app, the host calls the page.store tRPC router with the viewer's session, and that router reads and writes the page's PageHub Durable Object.">
-              <style>
-                .box { fill: var(--sp-surface); stroke: var(--sp-border); rx: 8; }
-                .frame-box { stroke-dasharray: 4 3; fill: none; stroke: var(--sp-border); rx: 10; }
-                .label { font: 600 13px var(--sp-font-sans); fill: var(--sp-text); }
-                .sub { font: 11px var(--sp-font-mono); fill: var(--sp-muted); }
-                .zone { font: 11px var(--sp-font-sans); fill: var(--sp-muted); letter-spacing: 0.06em; }
-                .arrow { stroke: var(--sp-text); fill: none; marker-end: url(#ah); }
-                .alabel { font: 11px var(--sp-font-mono); fill: var(--sp-muted); }
-              </style>
-              <defs>
-                <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-                  <path d="M0 0 L8 4 L0 8 z" fill="var(--sp-text)" />
-                </marker>
-              </defs>
-              <rect class="frame-box" x="8" y="30" width="220" height="180" />
-              <text class="zone" x="18" y="22">SANDBOXED PAGE ORIGIN</text>
-              <rect class="box" x="24" y="52" width="188" height="56" />
-              <text class="label" x="40" y="76">Page script</text>
-              <text class="sub" x="40" y="94">superset.storage.set(…)</text>
-              <rect class="box" x="24" y="136" width="188" height="56" />
-              <text class="label" x="40" y="160">Injected runtime</text>
-              <text class="sub" x="40" y="178">/_superset/runtime.js</text>
-              <line class="arrow" x1="118" y1="108" x2="118" y2="132" />
-              <rect class="box" x="292" y="94" width="170" height="64" />
-              <text class="label" x="308" y="118">Host viewer</text>
-              <text class="sub" x="308" y="138">session + tRPC client</text>
-              <path class="arrow" d="M212 164 C 258 164, 258 132, 288 128" />
-              <text class="alabel" x="222" y="188">postMessage</text>
-              <rect class="box" x="526" y="94" width="180" height="64" />
-              <text class="label" x="542" y="118">page.store router</text>
-              <text class="sub" x="542" y="138">→ PageHub (SQLite)</text>
-              <line class="arrow" x1="462" y1="126" x2="522" y2="126" />
-              <text class="alabel" x="470" y="116">tRPC</text>
-            </svg>
-            <figcaption>
-              The page never touches the network. The host makes the call
-              with the viewer's identity, and the response is posted back
-              into the frame.
-            </figcaption>
-          </figure>
+          <h3>The page-facing API</h3>
+          <pre><code>const store = window.superset?.storage;
+if (await store?.ready) {
+  store.viewer;    // { userId, name, image }
+  store.author;    // true for the page's author
+  store.writable;  // whether this viewer may write
 
-          <p>Each call is a request/response pair with a correlation id:</p>
-          <ol>
-            <li>
-              Page script calls
-              <code>superset.storage.set("vote", "option-b")</code>; the
-              runtime posts
-              <code>{ channel: "superset-storage/frame", id, op: "set", key, value }</code>
-              to <code>parent</code> and holds a pending promise keyed by
-              <code>id</code>.
-            </li>
-            <li>
-              The host's page viewer — the same component that already
-              brokers comment messages — forwards the op to a new
-              <code>page.store</code> tRPC procedure as the signed-in
-              viewer.
-            </li>
-            <li>
-              The procedure checks the viewer can read the page, enforces
-              quota, writes the row, and the host posts
-              <code>{ channel: "superset-storage/host", id, ok, value }</code>
-              back; the runtime resolves the promise.
-            </li>
-          </ol>
-
-          <h3>The API a page author sees</h3>
+  await store.set("lunch-vote", "Ramen");   // my slot under this key
+  const mine = await store.get("lunch-vote");
+  const all = await store.getAll("lunch-vote");
+  store.subscribe("lunch-vote", (records) => render(records));
+}</code></pre>
           <p>
-            Everything is JSON in, JSON out. Writes are always scoped to the
-            current viewer; reads can see either your own record or
-            everyone's. That asymmetry makes a voting page trivial and makes
-            vandalism (overwriting someone else's vote) impossible by
-            construction rather than by policy — and it is also why no CRDT
-            or Yjs layer is needed: two people writing at once touch two
-            different rows, so there is nothing to merge.
-          </p>
-          <pre><code>const store = window.superset.storage;
-
-await store.ready;                  // false-y if no host is listening (see edge cases)
-
-await store.set("vote", "option-b");    // upsert MY record under this key
-const mine = await store.get("vote");   // read MY record back
-await store.remove("vote");             // delete MY record
-
-const all = await store.getAll("vote"); // everyone's records for this key:
-// [ { user: { id, name }, value: "option-b", updatedAt: "…" }, … ]
-
-store.subscribe("vote", (records) => render(records)); // push over the
-// PageHub socket when connected (section 3); focus + 15s polling as the
-// automatic fallback — same callback either way</code></pre>
-          <p>
-            A later revision can add an explicit last-writer-wins shared
-            scope (<code>store.shared.set(…)</code>) for pages that want one
-            mutable document rather than a record per viewer. V1 ships
-            without it: every collaborative shape we actually want first —
-            votes, RSVPs, claims, reactions — is per-viewer records plus
-            <code>getAll</code>.
+            One slot per person per key: you write yours, you read everyone's.
+            Two people writing at once touch different rows, so there is
+            nothing to merge and no CRDT. Codes are stable and branched on
+            rather than parsed from prose:
+            <code>quota_exceeded</code>, <code>rate_limited</code>,
+            <code>unauthenticated</code>, <code>invalid</code>,
+            <code>unavailable</code>, and <code>revoked</code>, which is
+            terminal. A page must still render from zero records, because
+            there is no host in the thumbnail renderer or a
+            <code>file://</code> preview.
           </p>
 
-          <h3>Data model and quotas</h3>
-          <p>
-            One SQLite table inside each page's hub. No Postgres, so no
-            migration:
-          </p>
+          <h3>Data model and limits</h3>
           <pre><code>-- inside PageHub(pageId), in Cloudflare
-records (
-  key         TEXT     NOT NULL,
-  user_id     TEXT     NOT NULL,   -- opaque; names resolved by the API
-  value       TEXT     NOT NULL,   -- JSON
-  size_bytes  INTEGER  NOT NULL,
-  updated_at  INTEGER  NOT NULL,
-  PRIMARY KEY (key, user_id)       -- one row per viewer per key
-)</code></pre>
+records (key, user_id, value, size_bytes, updated_at, PRIMARY KEY (key, user_id))
+visits  (user_id PRIMARY KEY, name, image, first_seen_at, last_seen_at)
+spent_nonces (nonce PRIMARY KEY, spent_at)</code></pre>
           <p>
-            The primary key is the design: a vote is an upsert of your own
-            row, so changing your mind replaces one row rather than adding a
-            second, and two people voting at once touch two different rows.
-            Storage keys to the <strong>page</strong>, not the version — the
-            pages skill already promises authors that browser storage
-            persists across versions, and a republished poll should keep its
-            votes. Because the hub is one object per page, it is also the
-            only writer, so the byte and key counts it measures cannot be
-            stale by the time it writes.
-          </p>
-          <p>
-            Quotas start deliberately small — this is for votes and
-            checklists, not datasets — declared as exported constants and
-            enforced at all three layers — in the page before it calls out, in the
-            API's input schema, and finally in the hub, which is the only
-            thing that can count the page's real total — per the codebase's
-            own rule that <em>"a client is not a gate"</em>:
-          </p>
-          <div class="overflow">
-            <table>
-              <thead>
-                <tr><th>Constant</th><th>Value</th><th>Refused when</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>MAX_PAGE_STORAGE_VALUE_BYTES</code></td>
-                  <td>8 KiB</td>
-                  <td>a single value's serialized JSON exceeds it</td>
-                </tr>
-                <tr>
-                  <td><code>MAX_PAGE_STORAGE_KEYS_PER_USER</code></td>
-                  <td>128</td>
-                  <td>a viewer's distinct keys on one page exceed it</td>
-                </tr>
-                <tr>
-                  <td><code>MAX_PAGE_STORAGE_BYTES</code></td>
-                  <td>256 KiB</td>
-                  <td>the page's total <code>sum(sizeBytes)</code> would exceed it</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p>
-            A refused write comes back as a typed error the page can show
-            (<code>{ ok: false, code: "quota_exceeded" }</code>), not a
-            silent drop. Per-viewer rate limiting is still to do; the hub
-            serializing a page's writes bounds the damage in the meantime.
+            The records hold opaque ids; name and image come from the
+            person's <code>visits</code> row at read time, so a rename lands
+            the next time they open the page and the hub holds nothing
+            personal. 64 KiB a value, 500 keys a person, 4 MiB a page, plus a
+            per-connection call budget because page script can now reach its
+            own hub on CPU we are billed for. Because the hub is one object
+            per page it is also the only writer, so the counts it measures
+            cannot be stale by the time it writes.
           </p>
 
-          <h3>A new permission shape, named explicitly</h3>
-          <p>
-            Today only a page's creator can write to a page; everyone in the
-            org can read an <code>org</code> page. Storage introduces a
-            genuinely new rule: <strong>anyone who can read the page can
-            write their own storage records on it</strong>. That is the
-            point — a poll where only the author can vote is not a poll —
-            but it means user-generated content now lives under a page the
-            author didn't write. Two consequences we handle up front:
-          </p>
+          <h3>What this cost, stated plainly</h3>
           <ul>
             <li>
-              <strong>Anonymous viewers are read-only.</strong> A
-              <code>visibility: "everyone"</code> page served to a
-              logged-out reader has no user id; <code>getAll</code> works,
-              <code>set</code> returns
-              <code>{ ok: false, code: "unauthenticated" }</code>. No
-              anonymous-session identity in v1.
+              The page CSP opens one hole, to our realtime origin only. The
+              skill's "no network" line becomes "a page can reach its own
+              hub".
             </li>
             <li>
-              <strong>The author can see and clear storage.</strong>
-              <code>superset pages storage list|clear &lt;page&gt;</code> in
-              the CLI, and takedown/delete of a page cascades its storage
-              rows.
+              A credential crosses into untrusted page script. It is
+              single-use, spent at upgrade, scoped to one page and expires in
+              a minute; the host's JWT never enters the frame. The nonce is
+              in SQLite because a hibernation inside that minute would
+              otherwise make it replayable.
+            </li>
+            <li>
+              Identity must come from the signed token. An earlier revision
+              took the display name from the request body, which let any
+              member attribute their records to a teammate.
+            </li>
+            <li>
+              No table means no cross-page query. Account purge sweeps the
+              pages in the organizations the person belonged to, which leaves
+              one gap: someone who leaves an organization and later deletes
+              their account keeps their records on that organization's pages.
+            </li>
+            <li>
+              The JWT's organization list is hourly, so a removed member
+              keeps access until it expires, as with the org nudge socket
+              today.
             </li>
           </ul>
 
-          <h3>The worked example: a voting page</h3>
-          <p>The entire page-side logic of the poll:</p>
-          <pre><code>&lt;div id="options"&gt;&lt;/div&gt;
+          <h3>Still open</h3>
+          <ul>
+            <li>
+              The runtime gives up on its handshake after two seconds. On the
+              web the iframe is in the server-rendered HTML and starts
+              loading before the bundle hydrates, so a slow load can leave
+              storage permanently unavailable for that view. Raising the
+              deadline stalls a legitimately host-less viewer for just as
+              long, so the fix is an explicit negative hello rather than a
+              bigger number.
+            </li>
+            <li>
+              Whether to keep the bridge fallback at all, or delete it and
+              make the backfill a hard precondition of the Worker deploy.
+            </li>
+            <li>
+              Presence rides the same socket and is its own change, with the
+              cloud presence stack lifted to <code>packages/ui</code>.
+            </li>
+          </ul>
 
-&lt;script&gt;
-  const OPTIONS = ["Tacos", "Ramen", "Pizza"];
-  const store = window.superset?.storage;
-
-  async function render() {
-    const records = store ? await store.getAll("lunch-vote") : [];
-    const mine = store ? await store.get("lunch-vote") : null;
-    const tally = Object.fromEntries(OPTIONS.map(o =&gt; [o, 0]));
-    for (const r of records) tally[r.value] = (tally[r.value] ?? 0) + 1;
-
-    document.getElementById("options").replaceChildren(...OPTIONS.map(o =&gt; {
-      const b = document.createElement("button");
-      b.textContent = `${o} — ${tally[o]}`;
-      b.disabled = !store;
-      if (mine === o) b.setAttribute("aria-pressed", "true");
-      b.onclick = async () =&gt; { await store.set("lunch-vote", o); render(); };
-      return b;
-    }));
-  }
-
-  render();
-  store?.subscribe("lunch-vote", render);
-&lt;/script&gt;</code></pre>
           <p>
-            One record per viewer means changing your vote is just another
-            <code>set</code>, and the tally is derived on read. No page-side
-            locking, no merge logic, no way to stuff the ballot.
+            Diagrams and the full non-negotiables list are on the agreed
+            walkthrough:
+            <a href="https://app.superset.sh/page/page-storage-on-the-hub-walkthrough-hu3bjh">Page storage on the hub</a>.
           </p>
-
-          <h3>Edge cases the exploration surfaced</h3>
-          <ul>
-            <li>
-              <strong>The thumbnail renderer has no parent frame.</strong>
-              Page thumbnails come from Cloudflare Browser Rendering loading
-              the page with no host at all, so
-              <code>parent.postMessage</code> goes nowhere. The runtime
-              resolves <code>store.ready</code> to <code>false</code> after
-              a short handshake timeout and every op then fails fast — a
-              storage-using page must render something sane with zero
-              records, which the voting example above already does.
-            </li>
-            <li>
-              <strong>The API has to exist before the page's own script
-              runs.</strong> Superset injects the comments runtime before
-              <code>&lt;/body&gt;</code>, which is <em>after</em> anything
-              the author wrote — so a page reading
-              <code>window.superset.storage</code> while parsing, which is
-              the obvious way to write one, found nothing there and rendered
-              its empty state forever. The storage runtime is therefore a
-              second script, injected into <code>&lt;head&gt;</code> as a
-              blocking tag (not <code>defer</code> or <code>async</code>,
-              both of which run after inline scripts). The comments runtime
-              stays at the end of the body, where it wants a parsed DOM.
-              This was found by running it in a browser, not by reading it.
-            </li>
-            <li>
-              <strong>The colo cache does not key on the runtime's
-              content.</strong>
-              <code>RENDER_REVISION</code> hashes the runtime's <em>path</em>
-              plus the theme CSS, not its source, so a runtime change leaves
-              the 24-hour HTML cache untouched — which is what we want, since
-              the document only carries a script tag pointing at that path.
-              The script itself is served <code>max-age=300</code>, so a
-              runtime change reaches published pages within five minutes —
-              a window worth remembering when testing a runtime edit. The
-              revision does hash the script <em>paths</em>, though, so
-              adding the head script above correctly invalidates every
-              cached document.
-            </li>
-            <li>
-              <strong>Mobile has its own bridge.</strong> The mobile WebView
-              re-posts frame messages through
-              <code>injectedJavaScript</code>; the new channel must be
-              mirrored there or storage silently no-ops on phones.
-            </li>
-            <li>
-              <strong>The pages skill becomes wrong.</strong> It currently
-              tells agents "nothing else listens to <code>postMessage</code>,
-              so don't build a handshake on it" and that storage is
-              per-browser only. Updating
-              <code>plugins/superset/skills/page/SKILL.md</code> (and
-              republishing the plugin) ships with the feature, so agents
-              start building storage-backed pages the day it lands.
-            </li>
-          </ul>
-
-          <h3>Deliberately out of scope for v1</h3>
-          <ul>
-            <li>
-              <strong>Shared last-writer-wins scope</strong> — additive
-              later, and per-viewer records cover the launch use cases.
-            </li>
-            <li>
-              <strong>CSP changes and anonymous write identity</strong> —
-              both load-bearing invariants with written rationale; neither
-              is needed for the brokered design.
-            </li>
-          </ul>
-
-          <h3>Implementation plan</h3>
-          <div class="phase">
-            <div class="n">1</div>
-            <div>
-              <h4>Hub and router</h4>
-              <p>
-                A <code>PageHub</code> durable object holding the records, and
-                a <code>page.store</code> tRPC router with
-                <code>get / getAll / set / remove / list / clear</code> in
-                front of it. Quota constants in
-                <code>packages/shared</code>, enforced in the input schema and
-                again in the hub. No table and no migration, so page deletion
-                and account purge tell the hub out loud instead of riding a
-                cascade. Per-viewer rate limiting is out of scope for v0.
-              </p>
-            </div>
-          </div>
-          <div class="phase">
-            <div class="n">2</div>
-            <div>
-              <h4>Runtime and host bridge</h4>
-              <p>
-                Extend the injected runtime with
-                <code>window.superset.storage</code> and the
-                <code>superset-storage/*</code> channels; add the forwarding
-                handler to the shared page viewer component (covers web and
-                desktop at once), with origin validation identical to the
-                comments channel.
-              </p>
-            </div>
-          </div>
-          <div class="phase">
-            <div class="n">3</div>
-            <div>
-              <h4>Realtime: the PageHub Durable Object</h4>
-              <p>
-                A <code>PageHub</code> class beside <code>OrgHub</code> in
-                <code>apps/realtime</code>; the host viewer opens the socket
-                and <code>subscribe</code> switches from the polling timer to
-                push, with human and agent presence riding the same
-                connection. Roughly 2–3 days on top of the polling version
-                because the auth, deploy, and partyserver plumbing already
-                exist. Details in section 3.
-              </p>
-            </div>
-          </div>
-          <div class="phase">
-            <div class="n">4</div>
-            <div>
-              <h4>Agent-side readback, mobile, author tools</h4>
-              <p>
-                <code>superset pages storage list|clear</code> in the CLI
-                and MCP so the publishing agent can read the collected
-                answers — this ships with v1, it is the point. Then
-                <code>superset pages watch</code> as a socket client of the
-                hub, which is also where agent presence comes from. Mirror
-                the channel through the mobile WebView bridge.
-              </p>
-            </div>
-          </div>
-          <div class="phase">
-            <div class="n">5</div>
-            <div>
-              <h4>Docs and the proof</h4>
-              <p>
-                Update the pages skill so agents know the API, and launch
-                with an agent acting on collected answers — a variant-vote
-                page where the agent proceeds with the winner — not just a
-                lunch poll.
-              </p>
-            </div>
-          </div>
-          <div class="phase">
-            <div class="n">6</div>
-            <div>
-              <h4>Retire the watch machinery</h4>
-              <p>
-                Once the hub demonstrably handles the offline-agent case,
-                move watch ownership and the pending-delivery queue into its
-                SQLite and drop <code>watchState</code>,
-                <code>watchHeartbeatAt</code>, and the five lease
-                procedures. A cutover with both paths live, not a delete —
-                comment delivery works today and must not regress.
-              </p>
-            </div>
-          </div>
         </div>
       </details>
-
       <details class="impl">
-        <summary>3 · Realtime with Durable Objects <span class="hint">— what a DO is, the PageHub design, presence, and the watch machinery it retires</span></summary>
-        <div class="impl-body">
-
-          <h3>What a Durable Object is</h3>
-          <p>
-            A Durable Object is a Cloudflare primitive: a tiny
-            single-instance server created on demand, <strong>one per
-            name</strong>, with its own private storage attached. Four
-            properties matter here:
-          </p>
-          <ul>
-            <li>
-              <strong>One instance per key, always the same one.</strong>
-              Address it by page id and every request for that page, from
-              anywhere in the world, routes to the same instance. "One hub
-              per page" isn't something we build — the platform gives it by
-              construction.
-            </li>
-            <li>
-              <strong>Single-threaded on purpose.</strong> The instance
-              processes one message at a time, so every write to a page is
-              handled <em>in order</em>. No races, no locks, no
-              "two servers wrote at once — who wins?" The hardest problem in
-              shared state doesn't exist.
-            </li>
-            <li>
-              <strong>Durable storage.</strong> Each instance carries a
-              private transactional SQLite database that survives
-              hibernation, redeploys, and machine failures. Idle objects
-              cost nothing and wake with state intact. To be explicit,
-              because the name invites the wrong picture: that SQLite lives
-              <strong>inside Cloudflare</strong>, next to the code that owns
-              it — nothing is stored on a viewer's machine, and it has no
-              relationship to the desktop app's local state. A DO can't run
-              Postgres, so embedded SQLite is what Cloudflare gives each
-              instance instead; <code>OrgHub</code> already uses it.
-            </li>
-            <li>
-              <strong>It holds WebSockets.</strong> Connected clients stay
-              attached, so when a write commits the object loops over its
-              open sockets and pushes the change. That is the entire
-              realtime story — no pub/sub cluster, no broker.
-            </li>
-          </ul>
-          <p>
-            Together those four are the anatomy of a Firestore-style
-            document store, which is why realtime is cheap here rather than
-            a moonshot. And the substrate already runs in this repo:
-            <code>apps/realtime</code> is a partyserver app whose
-            <code>OrgHub</code> Durable Object (one per organization,
-            SQLite-backed, JWT verified against the API plus an
-            org-membership check) fans out content-free "hosts / cloud
-            workspaces changed" nudges today. Auth, deploy, and plumbing are
-            solved; <code>PageHub</code> is a second small class in the same
-            app, keyed by page id instead of org id.
-          </p>
-
-          <h3>The PageHub design</h3>
-          <pre><code>page script ── postMessage ──&gt; host viewer ── WebSocket ──&gt; PageHub DO (id = pageId)
-   subscribe("vote")             (has JWT)              ▲     ├─ SQLite: live records,
-                                                        │     │         watch ownership,
-        superset pages watch ── WebSocket ──────────────┘     │         pending deliveries
-        (the agent, as a peer)                                ├─ applies each write, in order
-                                                              ├─ the only system of record; no
-                                                              │  Postgres copy of the records
-                                                              ├─ broadcasts changes to every
-                                                              │  connected host and agent
-                                                              └─ presence = who is connected</code></pre>
-          <p>
-            The page still never touches the network — the CSP stays fully
-            closed. The <strong>host</strong> opens the socket
-            (authenticating with its JWT; the hub checks "can this user read
-            this page" against the API, mirroring OrgHub's membership
-            check), forwards storage ops from the bridge, and relays
-            broadcast changes into the frame. The
-            <code>window.superset.storage</code> API does not change at all:
-            <code>subscribe("vote", cb)</code> fires in ~100&nbsp;ms instead
-            of ~15&nbsp;s, and the polling path remains the automatic
-            fallback whenever the socket is down — the same
-            stream-with-polling-floor contract Claude's artifact db
-            documents.
-          </p>
-          <h3>Where the data lives: the hub, and only the hub</h3>
-          <p>
-            The first draft of this proposal kept a Postgres copy and
-            write-through from the hub. We dropped it. One system of record
-            means no dual-write divergence, no reconciliation job, no "which
-            one is authoritative" question later — and no schema change at
-            all, so no migration and no foreign key into the hot
-            <code>auth.users</code> table. The API still fronts every call,
-            because whether a viewer may touch a page is a Postgres question
-            (visibility, author, takedown) that the hub cannot answer. The
-            hub stores opaque user ids; names are resolved by the API on the
-            way out, so renaming someone leaves no stale copy and the hub
-            holds nothing personal.
-          </p>
-          <p>
-            <strong>What that would cost, left alone: every cross-page
-            question.</strong> A hub can only answer about itself, so
-            per-page questions stay easy and anything spanning pages becomes
-            impossible — "delete everything this user ever wrote" (their rows
-            sit in N hubs with nothing naming them), "how much storage is in
-            use org-wide", "show me everything from this account" for
-            moderation. Page deletion is the same shape: a foreign key used to
-            cascade for free, and now something has to tell the hub out loud.
-          </p>
-
-          <h3>Buying those questions back without a table</h3>
-          <p>
-            A draft of this answered them with one pointer table —
-            <code>page_storage_index (page_id, user_id)</code>, written
-            best-effort on every write, holding only <em>where to look</em>.
-            We dropped it too, because Postgres already knows where to look:
-            writing requires membership of the page's organization, so a
-            person's records can only sit on pages in the organizations they
-            belonged to. A table recording what a join already implies is a
-            second write to lose.
-          </p>
-          <p>
-            So the questions come back off the existing schema. <strong>Page
-            deletion</strong> wipes the hub after the rest of the cleanup, in
-            its own best-effort step — and note the records are already
-            unreachable by then, since every read goes through the API and the
-            page no longer resolves, so this is hygiene rather than
-            containment. <strong>Account purge</strong> lists the pages of
-            every organization the person belongs to, taken-down ones
-            included, and asks each hub to drop that person's rows; it runs
-            with the other external deletions and is re-runnable, which
-            matters because the user row is <em>tombstoned</em> rather than
-            deleted, so no cascade would ever have fired. A hub that never
-            held storage answers without creating anything, so asking is
-            cheap. Its one gap is deliberate and recorded: someone who leaves
-            an organization and later deletes their account keeps their
-            records on that organization's pages, which is closed by clearing
-            on org leave rather than here. <strong>Org-wide usage</strong> is
-            out of scope for v0 — <code>page.store.list</code> answers it for
-            one page at a time.
-          </p>
-          <p>
-            Because the hub serializes writes, we get something Firestore
-            itself doesn't guarantee: strict per-page write ordering, with
-            no last-writer-wins ambiguity.
-          </p>
-
-          <h3>What realtime unlocks that polling can't</h3>
-          <ul>
-            <li>
-              <strong>Live tallies</strong> — votes move on everyone's
-              screen as they're cast; the demo becomes two laptops, one
-              link, numbers moving.
-            </li>
-            <li>
-              <strong>Presence</strong> — who is here, human or agent, which
-              is a big enough consequence to get its own part below.
-            </li>
-            <li>
-              <strong>Reveal moments</strong> — planning poker where
-              everyone's estimate flips over the instant the last person
-              submits.
-            </li>
-            <li>
-              <strong>Meeting-speed surfaces</strong> — retro boards and
-              standup pages that work <em>during</em> the meeting, where a
-              15-second delay would make them unusable.
-            </li>
-          </ul>
-
-          <h3>Presence, and the watch machinery it retires</h3>
-          <p>
-            A hub per page pays for itself twice, because "who is looking at
-            this page right now" is a question we currently answer by
-            <em>simulating</em> liveness in Postgres. Nothing holds a live
-            connection today, so the <code>pages</code> table carries
-            <code>watchState</code> and <code>watchHeartbeatAt</code>
-            columns, and a procedure family —
-            <code>claimWatch</code>, <code>renewWatch</code>,
-            <code>releaseWatch</code>, <code>reserveWatchDelivery</code>,
-            <code>finishWatchDelivery</code> — exists to fake it with
-            heartbeat rows and delivery leases. That is the standard
-            workaround when a database is the only shared state.
-          </p>
-          <p>
-            With a hub, liveness stops being a simulation and becomes a
-            fact: a session is present if and only if its socket is open,
-            and the hub knows the instant it drops. No heartbeats to renew,
-            no leases to expire, no stale-watcher reaper. Three things
-            follow:
-          </p>
-          <ul>
-            <li>
-              <strong>Human presence</strong> — "7 viewing, 5 voted", live
-              cursors on a retro board, avatars on the page header.
-            </li>
-            <li>
-              <strong>Agent presence</strong> — the page can show "Claude is
-              listening" as a peer alongside human viewers, and readers know
-              a pinned comment will actually reach someone. Claude's
-              artifact runtime does exactly this: its presence peers carry a
-              <code>kind: "agent"</code> for the publishing session.
-            </li>
-            <li>
-              <strong>The CLI becomes a socket client.</strong>
-              <code>superset pages watch</code> connects to the page's hub
-              with the same JWT auth <code>OrgHub</code> already uses, and
-              comments <em>and</em> storage events push to the waiting agent
-              instead of being polled for. Connect/disconnect is the whole
-              protocol.
-            </li>
-          </ul>
-          <p>
-            One caution before deleting tables, though:
-            <strong>presence and delivery guarantees are different
-            problems.</strong> Part of why the lease machinery exists is the
-            offline case — a comment pinned while the watching agent's
-            terminal is closed must survive until something claims it, and
-            presence cannot answer that; only durable state can. So the
-            clean split is:
-          </p>
-          <ul>
-            <li>
-              <strong>Into the hub's SQLite:</strong> watch ownership, the
-              pending-delivery queue, and connection state. It is
-              transactional and survives hibernation, so it is a legitimate
-              home for a queue — and it is the thing the sockets are already
-              talking to.
-            </li>
-            <li>
-              <strong>Staying in Postgres:</strong> the page itself —
-              identity, visibility, author, versions, takedown — which is
-              what every authorization decision reads, and the only thing
-              that can answer a question spanning more than one page.
-            </li>
-          </ul>
-          <p>
-            Read that way, "clean up the tables we added" lands as: the
-            storage records never get a table in the first place, and the
-            liveness-simulation columns and lease procedures retire once the
-            hub proves it handles the offline-agent case. That is a real
-            simplification of code that exists today, and it is the
-            strongest argument for doing the hub in v1 rather than deferring
-            it.
-          </p>
-
-          <h3>Honest caveats</h3>
-          <ul>
-            <li>
-              Each page's writes serialize through one instance in one
-              location — perfect for org-scale collaboration (tens of
-              concurrent writers), not thousands. Pages never need
-              thousands.
-            </li>
-            <li>
-              Retiring the watch machinery is a migration with a
-              cutover, not a delete: comment delivery works today and must
-              not regress, so the hub runs alongside the existing procedures
-              until it demonstrably handles the offline-agent case.
-            </li>
-            <li>
-              Mobile's WebView host needs the socket too (React Native
-              WebSockets are fine, but it's a third bridge to wire).
-            </li>
-            <li>
-              The thumbnail renderer still has no host and no socket — the
-              same graceful zero-records degrade applies.
-            </li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="impl">
-        <summary>4 · Prior art: Claude's artifact db <span class="hint">— claude.ai already ships this shape; what we take from it</span></summary>
+        <summary>3 · Prior art: Claude's artifact db <span class="hint">— claude.ai already ships this shape; what we take from it</span></summary>
         <div class="impl-body">
           <p>
             Published claude.ai artifacts get a <code>window.claude</code>
