@@ -977,8 +977,10 @@ export const automationRouter = {
 				cloudWorkspaceId: automationRuns.cloudWorkspaceId,
 				chatSessionId: automationRuns.chatSessionId,
 				terminalSessionId: automationRuns.terminalSessionId,
+				ownerUserId: automations.ownerUserId,
 			})
 			.from(automationRuns)
+			.innerJoin(automations, eq(automations.id, automationRuns.automationId))
 			.where(eq(automationRuns.organizationId, organizationId))
 			.orderBy(automationRuns.automationId, desc(automationRuns.createdAt));
 	}),
