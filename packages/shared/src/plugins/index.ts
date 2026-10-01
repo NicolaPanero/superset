@@ -322,6 +322,7 @@ export const PLUGIN_CATALOG: readonly PluginCatalogEntry[] = [
 		version: "1.0.0",
 		description: "Query payments data and Stripe docs",
 		interface: { displayName: "Stripe", category: "Data & APIs" },
+		auth: [{ type: "oauth2" }],
 		mcpServers: {
 			stripe: { type: "http", url: "https://mcp.stripe.com" },
 		},
