@@ -12,6 +12,7 @@ import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { NewProjectDialog } from "renderer/routes/_authenticated/_dashboard/components/NewProjectDialog";
+import { StateScreenShell } from "renderer/routes/_authenticated/_dashboard/components/StateScreenShell";
 import { WorkspaceNotFoundState } from "renderer/routes/_authenticated/_dashboard/components/WorkspaceNotFoundState";
 import type { CloudPullRequest } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
 import {
@@ -22,7 +23,9 @@ import { useCopyShareLink } from "renderer/routes/_authenticated/_dashboard/hook
 import { useOpenPullRequestInApp } from "renderer/routes/_authenticated/_dashboard/hooks/useOpenPullRequestInApp";
 import { useOrganizationPeople } from "renderer/routes/_authenticated/_dashboard/hooks/useOrganizationPeople";
 import { useSetCloudWorkspaceVisibility } from "renderer/routes/_authenticated/_dashboard/hooks/useSetCloudWorkspaceVisibility";
+import { useUnarchiveCloudWorkspace } from "renderer/routes/_authenticated/_dashboard/hooks/useUnarchiveCloudWorkspace";
 import { useCloudSidebarStore } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
+import { useInviteMember } from "renderer/routes/_authenticated/hooks/useInviteMember";
 import { useSaveImageToDownloads } from "renderer/routes/_authenticated/hooks/useSaveImageToDownloads";
 import { useDeleteWorkspaceIntent } from "renderer/stores/delete-workspace-intent";
 import { useSaveAsEnvironmentIntent } from "renderer/stores/save-as-environment-intent";
@@ -48,6 +51,7 @@ export function CloudWorkspaceRecordScreen({
 	const organizationId = useActiveOrganizationId();
 	const { data: session } = authClient.useSession();
 	const setVisibility = useSetCloudWorkspaceVisibility();
+	const unarchive = useUnarchiveCloudWorkspace();
 	const copyShareLink = useCopyShareLink();
 	const requestSaveAsEnvironment = useSaveAsEnvironmentIntent(
 		(state) => state.request,
@@ -89,6 +93,7 @@ export function CloudWorkspaceRecordScreen({
 	} = useCloudWorkspaceRecordMutations(workspaceId);
 	const [newProjectName, setNewProjectName] = useState<string | null>(null);
 	const { people, currentUserId } = useOrganizationPeople();
+	const inviteMember = useInviteMember();
 	const createProject = cloudTrpc.taskProject.create.useMutation({
 		onSuccess: (project) => {
 			void utils.taskProject.list.invalidate();
@@ -127,13 +132,15 @@ export function CloudWorkspaceRecordScreen({
 		record.error.data?.code === "NOT_FOUND";
 	if (isGone || (!data && record.error)) {
 		return (
-			<WorkspaceNotFoundState
-				workspaceId={workspaceId}
-				browseTo="/cloud-workspaces"
-			/>
+			<StateScreenShell>
+				<WorkspaceNotFoundState
+					workspaceId={workspaceId}
+					browseTo="/cloud-workspaces"
+				/>
+			</StateScreenShell>
 		);
 	}
-	if (!data) return null;
+	if (!data) return <StateScreenShell />;
 
 	const workspace: CloudWorkspaceRecord = {
 		id: data.id,
@@ -188,6 +195,7 @@ export function CloudWorkspaceRecordScreen({
 				timeline={toTimelineEntries(activity.data ?? [])}
 				now={now}
 				isGeneratingDescription={isGeneratingDescription}
+				viewerId={session?.user?.id}
 				canEditSharing={
 					session?.user?.id !== undefined &&
 					data.createdBy?.userId === session.user.id
@@ -201,12 +209,13 @@ export function CloudWorkspaceRecordScreen({
 						? () => requestSaveAsEnvironment(workspace.id)
 						: undefined
 				}
-				onDelete={() =>
+				onArchive={() =>
 					useDeleteWorkspaceIntent.getState().request({
 						workspaceId,
 						workspaceName: workspace.name || (branch ?? ""),
 					})
 				}
+				onUnarchive={() => unarchive(workspaceId)}
 				onSetVisibility={(visibility) =>
 					setVisibility.mutateAsync({ id: workspaceId, visibility })
 				}
@@ -288,6 +297,7 @@ export function CloudWorkspaceRecordScreen({
 				open={newProjectName !== null}
 				initialName={newProjectName ?? ""}
 				people={people}
+				onInvite={inviteMember}
 				defaultLeadId={currentUserId}
 				isCreating={createProject.isPending}
 				onOpenChange={(open) => {

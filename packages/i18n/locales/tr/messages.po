@@ -663,6 +663,9 @@ msgstr "{actor} durumu {to} olarak ayarladı"
 msgid "{actor} shared the workspace with the organization"
 msgstr "{actor} çalışma alanını kuruluşla paylaştı"
 
+msgid "{actor} unarchived the workspace"
+msgstr "{actor} çalışma alanını arşivden çıkardı"
+
 msgid "{actor} unassigned {from}"
 msgstr "{actor} {from} atamasını kaldırdı"
 
@@ -1697,9 +1700,6 @@ msgstr "{where} konumuna 1 dosya eklendi"
 msgid "Added only when launching with a prompt — e.g. <0>--</0>, <1>--prompt</1>, <2>-i</2>."
 msgstr "Yalnızca istemle başlatılırken eklenir — örn. <0>--</0>, <1>--prompt</1>, <2>-i</2>."
 
-msgid "Adding members will increase your subscription cost, prorated to your billing cycle."
-msgstr "Üye eklemek, faturalandırma döngünüze orantılanarak abonelik maliyetinizi artırır."
-
 msgid "Address Comments with Agent"
 msgstr "Yorumları ajanla ele al"
 
@@ -2264,6 +2264,9 @@ msgstr "Terminal çıktısındaki klasör yolları için geçerlidir. Klasörler
 msgid "Applies to the file tree, changes list, and diff header."
 msgstr "Dosya ağacı, değişiklik listesi ve fark başlığı için geçerlidir."
 
+msgid "Applies to the Pages menu and page links in terminals, chat, and other pages."
+msgstr "Sayfalar menüsü ile terminallerdeki, sohbetteki ve diğer sayfalardaki sayfa bağlantıları için geçerlidir."
+
 msgid "Applies to URLs in terminals, chat messages, and task browsers."
 msgstr "Terminallerdeki, sohbet mesajlarındaki ve görev tarayıcılarındaki URL'ler için geçerlidir."
 
@@ -2295,12 +2298,19 @@ msgstr "Arşivle"
 msgid "Archive environment"
 msgstr "Ortamı arşivle"
 
+msgid "Archive workspace"
+msgstr "Çalışma alanını arşivle"
+
 msgid "Archived"
 msgstr "Arşivlenmiş"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
 msgid "Archived · {0}"
 msgstr "Arşivlendi · {0}"
+
+#. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
+msgid "Archived {0}"
+msgstr "{0} arşivlendi"
 
 msgid "Are you sure you want to delete this file? This action cannot be undone."
 msgstr "Bu dosyayı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
@@ -3056,9 +3066,6 @@ msgstr "Düzenlemeleri iptal et"
 msgid "Cancel plan"
 msgstr "Planı iptal et"
 
-msgid "Cancel reply"
-msgstr "Yanıtı iptal et"
-
 msgid "Canceled"
 msgstr "İptal edildi"
 
@@ -3710,6 +3717,9 @@ msgstr "Kod bloğu"
 
 msgid "Code Block"
 msgstr "Kod bloğu"
+
+msgid "Code isn't available — this workspace's project doesn't have this pull request's repository."
+msgstr "Kod kullanılamıyor — bu çalışma alanının projesi bu pull request'in deposuna sahip değil."
 
 msgid "Cohort"
 msgstr "Kohort"
@@ -5328,6 +5338,10 @@ msgstr "\"{workspaceName}\" oturumu silinsin mi?"
 msgid "Delete team"
 msgstr "Takımı sil"
 
+msgid "Delete this"
+msgstr "Bunu sil"
+
+msgctxt "quick reply button"
 msgid "Delete this"
 msgstr "Bunu sil"
 
@@ -7421,6 +7435,9 @@ msgstr "GitHub oturumu açmanız gerekiyor"
 msgid "GitHub stars"
 msgstr "GitHub yıldızları"
 
+msgid "GitHub sync requires the Pro plan."
+msgstr "GitHub eşitlemesi Pro planı gerektirir."
+
 msgid "GitHub unreachable"
 msgstr "GitHub'a ulaşılamıyor"
 
@@ -8232,9 +8249,6 @@ msgstr "Üye davet et"
 msgid "Invite Member"
 msgstr "Üye davet et"
 
-msgid "Invite people..."
-msgstr "Kişileri davet et..."
-
 msgid "Invite teammate"
 msgstr "Takım arkadaşı davet et"
 
@@ -9010,6 +9024,10 @@ msgstr "Uzun bekletmede yalnızca kısayol gösteren tooltip; çip stili artık 
 msgid "Looking for installed browsers…"
 msgstr "Kurulu tarayıcılar aranıyor…"
 
+msgid "Looks good"
+msgstr "İyi görünüyor"
+
+msgctxt "quick reply button"
 msgid "Looks good"
 msgstr "İyi görünüyor"
 
@@ -11139,6 +11157,9 @@ msgstr "Dosyaları açma"
 msgid "Opening folders"
 msgstr "Klasörleri açma"
 
+msgid "Opening pages"
+msgstr "Sayfaları açma"
+
 msgid "Opening worktree..."
 msgstr "Worktree açılıyor..."
 
@@ -11353,6 +11374,9 @@ msgstr "Sayfa silindi"
 
 msgid "Page has no versions"
 msgstr "Sayfanın sürümü yok"
+
+msgid "Page links"
+msgstr "Sayfa bağlantıları"
 
 msgid "Page Load Failed"
 msgstr "Sayfa yüklenemedi"
@@ -12222,6 +12246,10 @@ msgstr "Hızlı çalışma alanı oluştur"
 msgid "Quick feedback"
 msgstr "Hızlı geri bildirim"
 
+msgctxt "quick reply button"
+msgid "Quick feedback"
+msgstr "Hızlı geri bildirim"
+
 msgid "Quick Open File"
 msgstr "Hızlı dosya aç"
 
@@ -12736,9 +12764,6 @@ msgstr "Yanıtla"
 
 msgid "Reply to thread…"
 msgstr "Konuya yanıt verin…"
-
-msgid "Replying to {replyingTo}"
-msgstr "{replyingTo} kullanıcısına yanıt veriliyor"
 
 msgid "repo"
 msgstr "depo"
@@ -16114,6 +16139,12 @@ msgstr "Bu sayfa bir Superset kullanıcısı tarafından yayımlandı. İçeriğ
 msgid "This page was taken down and can no longer be changed"
 msgstr "Bu sayfa yayından kaldırıldı ve artık değiştirilemez"
 
+msgid "This pane can't be shown"
+msgstr "Bu bölme gösterilemiyor"
+
+msgid "This pane hit an error"
+msgstr "Bu bölme bir hatayla karşılaştı"
+
 msgid "This path exists, but it is not a directory."
 msgstr "Bu yol mevcut, ancak bir dizin değil."
 
@@ -16177,6 +16208,9 @@ msgstr "Bu alt ajan artık ana makine tarafından izlenmiyor. Dökümü, ajanın
 msgid "This terminal has no output to hand over yet."
 msgstr "Bu terminalde henüz devredilecek çıktı yok."
 
+msgid "This terminal is also open on a smaller screen, so it's sized to fit"
+msgstr "Bu terminal daha küçük bir ekranda da açık, bu yüzden ona sığacak şekilde boyutlandırıldı"
+
 msgid "This thread has no comment to reply to."
 msgstr "Bu konuda yanıtlanacak yorum yok."
 
@@ -16194,9 +16228,6 @@ msgstr "Bu görünüm bir hatayla karşılaştı"
 
 msgid "This week"
 msgstr "Bu hafta"
-
-msgid "This will affect your billing"
-msgstr "Bu, faturalandırmanızı etkiler"
 
 msgid "This will change your organization's public URL. Make sure to update any bookmarks or shared links."
 msgstr "Bu, kuruluşunuzun herkese açık URL'sini değiştirir. Yer imlerinizi veya paylaşılan bağlantıları güncellemeyi unutmayın."
@@ -16614,6 +16645,12 @@ msgstr "Sesle yazma başlatılamıyor"
 msgid "Unable to transcribe audio"
 msgstr "Ses yazıya dökülemiyor"
 
+msgid "Unarchive"
+msgstr "Arşivden çıkar"
+
+msgid "Unarchive workspace"
+msgstr "Çalışma alanını arşivden çıkar"
+
 msgid "Unassigned"
 msgstr "Atanmamış"
 
@@ -16708,6 +16745,12 @@ msgstr "Bilinmeyen host"
 
 msgid "Unknown Host"
 msgstr "Bilinmeyen host"
+
+msgid "Unknown pane"
+msgstr "Bilinmeyen bölme"
+
+msgid "Unknown pane type: {paneKind}"
+msgstr "Bilinmeyen bölme türü: {paneKind}"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.unknownPlugin"
@@ -17462,9 +17505,6 @@ msgstr "Kaçıncı sıradasınız?"
 
 msgid "Where does my code run?"
 msgstr "Kodum nerede çalışıyor?"
-
-msgid "Where Page links in terminals, chat messages, and task markdown open when clicked."
-msgstr "Terminallerdeki, sohbet mesajlarındaki ve görev markdown'undaki Sayfa bağlantılarının tıklandığında nereye açılacağı."
 
 msgid "Where serious teams are"
 msgstr "Ciddi takımların bulunduğu yer"

@@ -1,5 +1,5 @@
 {
-  "id": "5b3cfd41-967e-464e-9ff8-8f619c93e064",
+  "id": "e65d7552-75b0-4883-adff-bf14a48a20e3",
   "prevId": "aceeb2a3-86f9-4400-aba6-fd078a923bcc",
   "version": "7",
   "dialect": "postgresql",
@@ -5386,27 +5386,6 @@
           "columns": [
             {
               "expression": "automation_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "automation_runs_org_created_idx": {
-          "name": "automation_runs_org_created_idx",
-          "columns": [
-            {
-              "expression": "organization_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -12977,7 +12956,7 @@
         "chat_session",
         "comment",
         "page",
-        "cloud_workspace_prompt",
+        "cloud_workspace",
         "task_comment",
         "project_description"
       ]

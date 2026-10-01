@@ -20,12 +20,14 @@ const EMPTY_VALUE = "text-muted-foreground";
 interface ProjectRecordSideProps {
 	project: ProjectRecord;
 	people: { id: string; name: string; image: string | null }[];
+	onInvite?: () => void;
 	onChange: (changes: ProjectRecordChanges) => void;
 }
 
 export function ProjectRecordSide({
 	project,
 	people,
+	onInvite,
 	onChange,
 }: ProjectRecordSideProps) {
 	const { formatDate } = useFormat();
@@ -38,7 +40,7 @@ export function ProjectRecordSide({
 		});
 
 	return (
-		<aside className="shrink-0 space-y-4 border-t border-border px-3 py-[18px] text-[13px] @min-[900px]:w-[372px] @min-[900px]:overflow-auto @min-[900px]:border-t-0 @min-[900px]:border-l">
+		<aside className="space-y-4 px-3 py-[18px] text-[13px]">
 			<CloudSection title={<Trans>Properties</Trans>}>
 				<PropertyRow label={<Trans>Status</Trans>}>
 					<ProjectStatePicker
@@ -54,17 +56,14 @@ export function ProjectRecordSide({
 				<PropertyRow label={<Trans>Lead</Trans>}>
 					<ProjectLeadPicker
 						people={people}
+						onInvite={onInvite}
 						value={project.lead?.id ?? null}
 						onChange={(leadUserId) => onChange({ leadUserId })}
 					>
 						<button type="button" className={VALUE_BUTTON}>
 							{project.lead ? (
 								<>
-									<AvatarStack
-										people={[project.lead]}
-										size={18}
-										outlineClassName="outline-transparent"
-									/>
+									<AvatarStack people={[project.lead]} size={18} />
 									{project.lead.name}
 								</>
 							) : (
