@@ -42,9 +42,11 @@ export const Route = createFileRoute(
 	component: AutomationRunsPage,
 	validateSearch: (
 		search: Record<string, unknown>,
-	): { status?: "failed"; scope?: "mine" } => ({
+	): { status?: "failed"; scope?: "all" | "mine" } => ({
 		...(search.status === "failed" ? { status: "failed" as const } : {}),
-		...(search.scope === "mine" ? { scope: "mine" as const } : {}),
+		...(search.scope === "all" || search.scope === "mine"
+			? { scope: search.scope }
+			: {}),
 	}),
 });
 
@@ -60,7 +62,10 @@ function AutomationRunsPage() {
 	const { gateFeature } = usePaywall();
 
 	const { status: statusParam, scope: scopeParam } = Route.useSearch();
-	const [scope, setScope] = useState<Scope>(scopeParam ?? "all");
+	// Your own runs are the ones you can act on: the retry controls are
+	// owner-gated, so an unfiltered org view opens on failures that are not
+	// yours to restart. The stat cards count the org and pass scope=all.
+	const [scope, setScope] = useState<Scope>(scopeParam ?? "mine");
 	const [status, setStatus] = useState<StatusFilter>(statusParam ?? "all");
 	const [selected, setSelected] = useState<Set<string>>(new Set());
 	const [expanded, setExpanded] = useState<Set<string>>(new Set());

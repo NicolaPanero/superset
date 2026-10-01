@@ -503,11 +503,14 @@ function AutomationsPage() {
 									onShowFailed={() =>
 										navigate({
 											to: "/automations/runs",
-											search: { status: "failed" },
+											search: { status: "failed", scope: "all" },
 										})
 									}
 									onShowHistory={() =>
-										navigate({ to: "/automations/runs", search: {} })
+										navigate({
+											to: "/automations/runs",
+											search: { scope: "all" },
+										})
 									}
 								/>
 							)}
@@ -551,7 +554,7 @@ function AutomationsPage() {
 									onClick={() =>
 										navigate({
 											to: "/automations/runs",
-											search: scope === "mine" ? { scope: "mine" } : {},
+											search: { scope: scope === "mine" ? "mine" : "all" },
 										})
 									}
 								>
