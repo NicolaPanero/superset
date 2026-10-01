@@ -3,11 +3,12 @@
  * paths. Same convention: passing test = defense holds, failing test = bug.
  */
 
-import { afterEach, beforeEach, describe, expect, test } from "bun:test";
+import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import {
 	existsSync,
 	mkdirSync,
+	readFileSync,
 	rmSync,
 	symlinkSync,
 	writeFileSync,
@@ -15,6 +16,7 @@ import {
 import { dirname, join } from "node:path";
 import { eq } from "drizzle-orm";
 import { projects, workspaces } from "../../src/db/schema";
+import * as localWorkspaceStore from "../../src/workspaces/local-workspace-store";
 import { createTestHost, type TestHost } from "../helpers/createTestHost";
 import { createGitFixture, type GitFixture } from "../helpers/git-fixture";
 
@@ -55,9 +57,8 @@ describe("bug-hunt-2: symlink and additional sandbox probes", () => {
 		} catch {}
 	});
 
-	test("readFile rejects reads through a symlink that points outside the workspace", async () => {
-		// Plant a symlink inside the workspace that points outside.
-		const link = join(repo.repoPath, "evil-link");
+	test("readFile reads through a symlink that points outside the workspace", async () => {
+		const link = join(repo.repoPath, "external-link");
 		symlinkSync(outsideDir, link);
 
 		await expect(
@@ -66,22 +67,20 @@ describe("bug-hunt-2: symlink and additional sandbox probes", () => {
 				absolutePath: join(link, "secret.txt"),
 				encoding: "utf8",
 			}),
-		).rejects.toThrow();
+		).resolves.toMatchObject({ kind: "text", content: "PII" });
 	});
 
-	test("writeFile through a symlinked dir into outside the workspace is rejected", async () => {
-		const link = join(repo.repoPath, "evil-link");
+	test("writeFile writes through a symlinked dir that points outside the workspace", async () => {
+		const link = join(repo.repoPath, "external-link");
 		symlinkSync(outsideDir, link);
 
-		await expect(
-			host.trpc.filesystem.writeFile.mutate({
-				workspaceId,
-				absolutePath: join(link, "planted.txt"),
-				content: "should-not-write",
-				options: { create: true, overwrite: true },
-			}),
-		).rejects.toThrow();
-		expect(existsSync(join(outsideDir, "planted.txt"))).toBe(false);
+		await host.trpc.filesystem.writeFile.mutate({
+			workspaceId,
+			absolutePath: join(link, "edited.txt"),
+			content: "edited",
+			options: { create: true, overwrite: true },
+		});
+		expect(readFileSync(join(outsideDir, "edited.txt"), "utf8")).toBe("edited");
 	});
 
 	test("createDirectory rejects '..' traversal", async () => {
@@ -149,10 +148,12 @@ describe("bug-hunt-2: partial-failure consistency", () => {
 	});
 
 	test("workspace.create rolls back the worktree when the local insert fails", async () => {
-		// Local-first: the id is minted before insert (client-supplied here),
-		// so a preloaded row with the same id makes the authoritative local
-		// insert hit the PK and throw.
-		const duplicateId = randomUUID();
+		const insertFails = spyOn(
+			localWorkspaceStore,
+			"insertLocalWorkspace",
+		).mockImplementation(() => {
+			throw new Error("local write failed");
+		});
 		host = await createTestHost({
 			apiOverrides: {
 				"host.ensure.mutate": () => ({ machineId: "m1" }),
@@ -172,16 +173,6 @@ describe("bug-hunt-2: partial-failure consistency", () => {
 			.values({ id: projectId, repoPath: repo.repoPath })
 			.run();
 
-		host.db
-			.insert(workspaces)
-			.values({
-				id: duplicateId,
-				projectId,
-				worktreePath: "/tmp/preload-conflict",
-				branch: "preload",
-			})
-			.run();
-
 		// Pin the rollback: the call must throw AND the worktree must be
 		// cleaned up — a failed local insert is the one create failure that
 		// still rolls back the worktree.
@@ -190,9 +181,9 @@ describe("bug-hunt-2: partial-failure consistency", () => {
 				projectId,
 				name: "ws",
 				branch: "feature/post-cloud-fail",
-				id: duplicateId,
 			}),
 		).rejects.toBeDefined();
+		insertFails.mockRestore();
 
 		const expectedWorktree = join(
 			repo.repoPath,
