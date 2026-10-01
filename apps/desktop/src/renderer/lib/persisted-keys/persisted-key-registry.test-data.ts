@@ -113,6 +113,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 		["terminal-close-confirm-v1"],
 	],
 	[
+		"src/renderer/stores/automation-failures/store.ts",
+		["automation-failures-v1"],
+	],
+	[
 		"src/renderer/stores/app-version-history/store.ts",
 		["app-version-history-v1"],
 	],
@@ -191,6 +195,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	],
 	[
 		"src/renderer/routes/_authenticated/_dashboard/automations/components/AutomationRow/AutomationRow.tsx",
+		["lastViewedWorkspaceId"],
+	],
+	[
+		"src/renderer/routes/_authenticated/_dashboard/automations/runs/components/RunRow/RunRow.tsx",
 		["lastViewedWorkspaceId"],
 	],
 	[

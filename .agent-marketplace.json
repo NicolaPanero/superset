@@ -25,7 +25,7 @@
 			},
 			"category": "productivity",
 			"source": "./plugins/linear",
-			"version": "1.5.2"
+			"version": "1.5.3"
 		},
 		{
 			"name": "notion",
@@ -85,6 +85,16 @@
 			},
 			"category": "productivity",
 			"source": "./plugins/circleback",
+			"version": "1.0.0"
+		},
+		{
+			"name": "ynab",
+			"description": "Track money in YNAB: accounts, categories, budgets, and transactions.",
+			"author": {
+				"name": "Superset"
+			},
+			"category": "productivity",
+			"source": "./plugins/ynab",
 			"version": "1.0.0"
 		}
 	],
