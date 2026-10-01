@@ -11,7 +11,7 @@ import {
 import { runInteractiveHelp } from "./interactive-help";
 import type { MiddlewareFn } from "./middleware";
 import type { GenericBuilderInternals, ProcessedBuilderConfig } from "./option";
-import { formatOutput } from "./output";
+import { formatOutput, isRawResult } from "./output";
 import { camelToKebab, isAgentMode, parseArgv } from "./parser";
 import {
 	buildTree,
@@ -464,7 +464,8 @@ async function execute(
 		});
 		// All command output must leave through writeStream; a bare console.log
 		// here reintroduces truncation for any payload past the pipe buffer.
-		if (output) await writeStream(process.stdout, `${output}\n`, signal);
+		const text = isRawResult(result) ? output : `${output}\n`;
+		if (text) await writeStream(process.stdout, text, signal);
 	}
 }
 
