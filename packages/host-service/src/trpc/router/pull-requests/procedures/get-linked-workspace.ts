@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { protectedProcedure } from "../../../index";
-import { findLinkedWorkspaceIds } from "../shared/linked-workspaces";
+import { resolveGithubRepo } from "../../workspace-creation/shared/project-helpers";
+import {
+	findLinkedWorkspaceIds,
+	findPullRequestRow,
+} from "../shared/linked-workspaces";
 
 const getLinkedWorkspaceInputSchema = z.object({
 	projectId: z.string(),
@@ -14,11 +18,11 @@ const getLinkedWorkspaceInputSchema = z.object({
  */
 export const getLinkedWorkspace = protectedProcedure
 	.input(getLinkedWorkspaceInputSchema)
-	.query(({ ctx, input }) => {
-		const [workspaceId = null] = findLinkedWorkspaceIds(
-			ctx.db,
-			input.projectId,
-			input.prNumber,
-		);
+	.query(async ({ ctx, input }) => {
+		const repo = await resolveGithubRepo(ctx, input.projectId);
+		const row = findPullRequestRow(ctx.db, repo, input.prNumber);
+		const [workspaceId = null] = row
+			? findLinkedWorkspaceIds(ctx.db, row.id)
+			: [];
 		return { workspaceId };
 	});

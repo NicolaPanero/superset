@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
 import { resolve } from "node:path";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../../db";
@@ -25,12 +26,23 @@ export const REPO = { owner: "octocat", name: "hello" };
  * first: ws-newer, ws-older), one archived workspace still pointing at it,
  * and one unlinked workspace.
  */
-export function seedLinkedPullRequest(db: HostDb, repoPath = "/tmp/repo") {
+export function seedLinkedPullRequest(
+	db: HostDb,
+	repoPath = "/tmp/repo",
+	options: { rowProjectId?: string; isDraft?: boolean } = {},
+) {
+	const rowProjectId = options.rowProjectId ?? PROJECT_ID;
 	db.insert(projects).values({ id: PROJECT_ID, repoPath }).run();
+	if (rowProjectId !== PROJECT_ID) {
+		db.insert(projects)
+			.values({ id: rowProjectId, repoPath: `${repoPath}-sibling` })
+			.run();
+	}
 	db.insert(pullRequests)
 		.values({
 			id: "pr-42",
-			projectId: PROJECT_ID,
+			projectId: rowProjectId,
+			isDraft: options.isDraft ?? false,
 			repoProvider: "github",
 			repoOwner: REPO.owner,
 			repoName: REPO.name,
@@ -78,4 +90,16 @@ export function seedLinkedPullRequest(db: HostDb, repoPath = "/tmp/repo") {
 			},
 		])
 		.run();
+}
+
+export function readPullRequestRow(db: HostDb) {
+	return db
+		.select({
+			state: pullRequests.state,
+			mergedAt: pullRequests.mergedAt,
+			projectId: pullRequests.projectId,
+		})
+		.from(pullRequests)
+		.where(eq(pullRequests.id, "pr-42"))
+		.get();
 }

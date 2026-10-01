@@ -1,36 +1,67 @@
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import type { HostDb } from "../../../../db";
 import { pullRequests, workspaces } from "../../../../db/schema";
 
+export interface RepoIdentity {
+	owner: string;
+	name: string;
+}
+
+export interface LinkedPullRequestRow {
+	id: string;
+	state: string;
+	isDraft: boolean;
+	mergedAt: number | null;
+}
+
 /**
- * Reverse (PR -> workspaces) lookup. `workspaces.pullRequestId` is the single
- * "currently linked" pointer per workspace (see db/schema.ts) with no unique
- * constraint, so more than one live workspace can point at one PR (two
- * worktrees on the same branch, a stale duplicate). Most recently active
- * first, so a caller that wants exactly one takes index 0 deterministically.
+ * The host's row for this PR, matched by repository rather than project:
+ * rows are unique per repository and number, and each refresh stamps the
+ * project that performed it, so a project-scoped match misses a row that a
+ * sibling project on the same repository refreshed last.
  */
-export function findLinkedWorkspaceIds(
+export function findPullRequestRow(
 	db: HostDb,
-	projectId: string,
+	repo: RepoIdentity,
 	prNumber: number,
-): string[] {
-	const pr = db
-		.select({ id: pullRequests.id })
+): LinkedPullRequestRow | undefined {
+	return db
+		.select({
+			id: pullRequests.id,
+			state: pullRequests.state,
+			isDraft: pullRequests.isDraft,
+			mergedAt: pullRequests.mergedAt,
+		})
 		.from(pullRequests)
 		.where(
 			and(
-				eq(pullRequests.projectId, projectId),
+				eq(pullRequests.repoProvider, "github"),
+				eq(sql`lower(${pullRequests.repoOwner})`, repo.owner.toLowerCase()),
+				eq(sql`lower(${pullRequests.repoName})`, repo.name.toLowerCase()),
 				eq(pullRequests.prNumber, prNumber),
 			),
 		)
 		.get();
-	if (!pr) return [];
+}
 
+/**
+ * Live workspaces whose current link is this PR, most recently active first,
+ * so a caller that wants exactly one takes index 0 deterministically.
+ * `workspaces.pullRequestId` has no unique constraint: two worktrees on the
+ * same branch, or a stale duplicate, can point at one PR.
+ */
+export function findLinkedWorkspaceIds(
+	db: HostDb,
+	pullRequestId: string,
+): string[] {
 	return db
 		.select({ id: workspaces.id })
 		.from(workspaces)
 		.where(
-			and(eq(workspaces.pullRequestId, pr.id), isNull(workspaces.archivedAt)),
+			and(
+				eq(workspaces.pullRequestId, pullRequestId),
+				isNull(workspaces.archivedAt),
+			),
 		)
 		.orderBy(desc(workspaces.updatedAt), desc(workspaces.createdAt))
 		.all()

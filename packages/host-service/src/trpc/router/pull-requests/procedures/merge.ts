@@ -36,7 +36,6 @@ export const mergePR = protectedProcedure
 		}
 		await syncPullRequestAfterWrite(ctx, {
 			repo,
-			projectId: input.projectId,
 			prNumber: input.prNumber,
 			action: "merge",
 		});

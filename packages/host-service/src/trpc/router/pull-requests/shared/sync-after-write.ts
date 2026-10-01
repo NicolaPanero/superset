@@ -1,22 +1,32 @@
+import { eq } from "drizzle-orm";
+import { pullRequests } from "../../../../db/schema";
 import type { HostServiceContext } from "../../../../types";
-import { findLinkedWorkspaceIds } from "./linked-workspaces";
+import {
+	findLinkedWorkspaceIds,
+	findPullRequestRow,
+	type LinkedPullRequestRow,
+	type RepoIdentity,
+} from "./linked-workspaces";
 import { evictPullRequestContent } from "./pull-request-content-cache";
 
+type PullRequestWrite = "merge" | "close" | "reopen";
+
 interface SyncPullRequestAfterWriteInput {
-	repo: { owner: string; name: string };
-	projectId: string;
+	repo: RepoIdentity;
 	prNumber: number;
 	/** Names the write in the warning when the refresh fails. */
-	action: "merge" | "close" | "reopen";
+	action: PullRequestWrite;
 }
 
 /**
  * After GitHub accepted a state change, bring the host's own copies in line
  * before the caller's refetch lands: the content cache would replay the
  * pre-write `gh pr view` for up to its TTL, and the `pull_requests` row the
- * sidebar chips read would wait for the next sweep. The refresh is scoped to
- * the workspaces linked to this PR and rides the per-workspace sync queue, so
- * it registers nothing and coalesces with a sweep already in flight.
+ * sidebar chips read would wait for the next sweep. The row gets the state
+ * the write implies first, so it is right even when the refresh cannot
+ * fetch (no upstream to look up, a `gh` timeout, no linked workspace); the
+ * refresh then fills in checks, reviews and GitHub's own timestamps for the
+ * workspaces linked to this PR, through the per-workspace sync queue.
  */
 export async function syncPullRequestAfterWrite(
 	ctx: Pick<HostServiceContext, "db" | "runtime">,
@@ -24,15 +34,15 @@ export async function syncPullRequestAfterWrite(
 ): Promise<void> {
 	evictPullRequestContent(input.repo, input.prNumber);
 
-	const workspaceIds = findLinkedWorkspaceIds(
-		ctx.db,
-		input.projectId,
-		input.prNumber,
-	);
+	const row = findPullRequestRow(ctx.db, input.repo, input.prNumber);
+	if (!row) return;
+	recordWrittenState(ctx.db, row, input.action);
+
+	const workspaceIds = findLinkedWorkspaceIds(ctx.db, row.id);
 	if (workspaceIds.length === 0) return;
 
 	// GitHub already applied the change: a refresh hiccup (gh timeout, rate
-	// limit) must not surface as a failed action; the sweep heals the row.
+	// limit) must not surface as a failed action; the sweep heals the rest.
 	try {
 		await ctx.runtime.pullRequests.refreshPullRequestsByWorkspaces(
 			workspaceIds,
@@ -40,12 +50,32 @@ export async function syncPullRequestAfterWrite(
 	} catch (error) {
 		console.warn(
 			`[pull-requests:${input.action}] GitHub applied the change but the workspace refresh failed`,
-			{
-				projectId: input.projectId,
-				prNumber: input.prNumber,
-				workspaceIds,
-				error,
-			},
+			{ prNumber: input.prNumber, workspaceIds, error },
 		);
 	}
+}
+
+function recordWrittenState(
+	db: HostServiceContext["db"],
+	row: LinkedPullRequestRow,
+	action: PullRequestWrite,
+): void {
+	const now = Date.now();
+	const state =
+		action === "merge"
+			? "merged"
+			: action === "close"
+				? "closed"
+				: row.isDraft
+					? "draft"
+					: "open";
+	db.update(pullRequests)
+		.set({
+			state,
+			// Observation time until a fetch carries GitHub's own, never cleared.
+			mergedAt: action === "merge" ? (row.mergedAt ?? now) : row.mergedAt,
+			updatedAt: now,
+		})
+		.where(eq(pullRequests.id, row.id))
+		.run();
 }

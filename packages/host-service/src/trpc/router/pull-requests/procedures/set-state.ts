@@ -34,7 +34,6 @@ export const setState = protectedProcedure
 		}
 		await syncPullRequestAfterWrite(ctx, {
 			repo,
-			projectId: input.projectId,
 			prNumber: input.prNumber,
 			action: verb,
 		});

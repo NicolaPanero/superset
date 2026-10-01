@@ -15,6 +15,7 @@ import {
 	PR_NUMBER,
 	PROJECT_ID,
 	REPO,
+	readPullRequestRow,
 	seedLinkedPullRequest,
 } from "../shared/test-db";
 import { mergePR } from "./merge";
@@ -44,6 +45,7 @@ const createCaller = createCallerFactory(router({ mergePR }));
 
 interface Harness {
 	caller: ReturnType<typeof createCaller>;
+	db: ReturnType<typeof createTestDb>;
 	mergeCalls: unknown[];
 	refreshCalls: string[][];
 }
@@ -83,6 +85,7 @@ async function createHarness(
 	} as unknown as HostServiceContext;
 	return {
 		caller: createCaller(ctx),
+		db,
 		mergeCalls,
 		refreshCalls,
 	};
@@ -114,6 +117,7 @@ describe("pullRequests.mergePR", () => {
 			merge_method: "squash",
 		});
 		expect(readPullRequestContentCache(key)).toBeNull();
+		expect(readPullRequestRow(harness.db)).toMatchObject({ state: "merged" });
 		expect(harness.refreshCalls).toEqual([["ws-newer", "ws-older"]]);
 	});
 
@@ -157,6 +161,7 @@ describe("pullRequests.mergePR", () => {
 		});
 
 		expect(result.merged).toBe(true);
+		expect(readPullRequestRow(harness.db)).toMatchObject({ state: "merged" });
 		expect(harness.refreshCalls).toEqual([["ws-newer", "ws-older"]]);
 		expect(warn).toHaveBeenCalledTimes(1);
 	});
