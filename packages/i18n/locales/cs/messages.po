@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# aktivní port — zobrazit podrobnosti} few {# aktivn
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# agent} few {# agenti} many {# agenta} other {# agentů}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# automatizaci se nepodařilo spustit} few {# automatizace se nepodařilo spustit} many {# automatizace se nepodařilo spustit} other {# automatizací se nepodařilo spustit}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# změněný soubor} few {# změněné soubory} many {# změněného souboru} other {# změněných souborů}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Přemýšlel # sekundu} few {Přemýšlel # seku
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} v tomto workspace je už publikovaný jako stránka v jiné organizaci. Přesuň soubor nebo publikuj s ID té stránky."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# automatizaci se nepodařilo spustit} few {# automatizace se nepodařilo spustit} many {# automatizace se nepodařilo spustit} other {# automatizací se nepodařilo spustit}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# selhalo} few {# selhalo} many {# selhalo} other {# selhalo}}"
@@ -6210,9 +6211,6 @@ msgstr "Každou minutu"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Všechny cíle táhnou k dalšímu stupni. Měřeno za posledních 30 dní."
 
-msgid "Every run so far reached a host."
-msgstr "Zatím každý běh dosáhl hostitele."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Každá hvězda na <0>{repoSlug}</0>, vynesená od spuštění."
 
@@ -10002,6 +10000,9 @@ msgstr "Zatím žádná prostředí. Vytvořte jedno a spusťte z něj cloudový
 msgid "No extended thinking"
 msgstr "Bez rozšířeného přemýšlení"
 
+msgid "No failed runs."
+msgstr "Žádná neúspěšná spuštění."
+
 msgid "No files found"
 msgstr "Nenalezeny žádné soubory"
 
@@ -13362,6 +13363,9 @@ msgstr "Běží uvnitř aplikace Superset na tom zařízení, takže aktualizace
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Běhy skončí v pracovním prostoru. Projděte rozdíly a slučte, co je dobré."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Spuštění, která v posledních 7 dnech spustila svůj workspace"
 
 msgid "Runs when a new workspace is created."
 msgstr "Spouští se při vytvoření pracovního prostoru."
@@ -17704,9 +17708,6 @@ msgstr "Pracovní prostory"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Pracovní prostory jsou izolovaná prostředí pro úkoly postavená na git worktree."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Pracovní prostory vytvořené běhy za posledních 7 dní"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Pracovní prostory vytvořené na uživatele za posledních 7 dní, podle percentilu"

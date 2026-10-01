@@ -1,5 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { i18n } from "@superset/i18n";
+import { errorMessage } from "@superset/i18n/errors";
 import { COMPANY } from "@superset/shared/constants";
 import { Button } from "@superset/ui/button";
 import { Checkbox } from "@superset/ui/checkbox";
@@ -23,7 +25,7 @@ import { Tabs, TabsList, TabsTrigger } from "@superset/ui/tabs";
 import { cn } from "@superset/ui/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	LuArrowLeft,
 	LuHistory,
@@ -34,6 +36,9 @@ import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { DATA_TABLE_HEAD_CELL } from "renderer/routes/_authenticated/_dashboard/components/DataTableHeader";
+import { useFailedAutomations } from "renderer/routes/_authenticated/_dashboard/hooks/useFailedAutomations";
+import { HostOfflineRunDialog } from "../components/HostOfflineRunDialog";
+import { dispatchErrorCode, runErrorHelp } from "../utils/runErrorHelp";
 import { RunRow } from "./components/RunRow";
 
 export const Route = createFileRoute(
@@ -69,6 +74,17 @@ function AutomationRunsPage() {
 	const [status, setStatus] = useState<StatusFilter>(statusParam ?? "all");
 	const [selected, setSelected] = useState<Set<string>>(new Set());
 	const [expanded, setExpanded] = useState<Set<string>>(new Set());
+	const [hostOfflineRun, setHostOfflineRun] = useState<{
+		hostId: string | null;
+	} | null>(null);
+
+	// The sidebar badge counts failures, and this is the screen that shows
+	// them. Clearing it on the automations list would spend the signal before
+	// the user saw what it pointed at.
+	const { markMyFailuresSeen } = useFailedAutomations();
+	useEffect(() => {
+		markMyFailuresSeen();
+	}, [markMyFailuresSeen]);
 
 	const {
 		data,
@@ -82,8 +98,9 @@ function AutomationRunsPage() {
 	} = cloudTrpc.automation.listOrgRuns.useInfiniteQuery(
 		{ limit: PAGE_SIZE, scope, status },
 		{
+			// The automation_runs realtime nudge invalidates this, so polling
+			// would only duplicate it.
 			getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-			refetchInterval: 60_000,
 		},
 	);
 
@@ -146,8 +163,10 @@ function AutomationRunsPage() {
 			return results;
 		},
 		onSuccess: (results) => {
-			const failed = results.filter((r) => r.status === "rejected").length;
-			const started = results.length - failed;
+			const rejected = results.flatMap((r) =>
+				r.status === "rejected" ? [r.reason] : [],
+			);
+			const started = results.length - rejected.length;
 			if (started > 0) {
 				toast.success(
 					t({
@@ -159,14 +178,25 @@ function AutomationRunsPage() {
 				);
 				setSelected(new Set());
 			}
-			if (failed > 0) {
+			// A bare count hides the one thing the user can act on. Lead with
+			// the offline host, which is what most of these are, and otherwise
+			// show the same plain-language help the list page gives.
+			const offline = rejected.find(
+				(error) => dispatchErrorCode(error) === "host_offline",
+			);
+			if (offline) {
+				setHostOfflineRun({ hostId: null });
+			} else if (rejected.length > 0) {
+				const help = runErrorHelp(dispatchErrorCode(rejected[0]));
 				toast.error(
-					t({
-						message: plural(failed, {
-							one: "# automation couldn't be started",
-							other: "# automations couldn't be started",
-						}),
-					}),
+					help
+						? i18n._(help)
+						: t({
+								message: plural(rejected.length, {
+									one: "# automation couldn't be started",
+									other: "# automations couldn't be started",
+								}),
+							}),
 				);
 			}
 			void utils.automation.listOrgRuns.invalidate();
@@ -298,11 +328,7 @@ function AutomationRunsPage() {
 										<Trans>Couldn't load runs</Trans>
 									</EmptyTitle>
 									<EmptyDescription className="select-text cursor-text">
-										{error instanceof Error ? (
-											error.message
-										) : (
-											<Trans>The request failed.</Trans>
-										)}
+										{errorMessage(error, t({ message: "The request failed." }))}
 									</EmptyDescription>
 								</EmptyHeader>
 								<Button
@@ -334,7 +360,7 @@ function AutomationRunsPage() {
 									</EmptyTitle>
 									<EmptyDescription>
 										{status === "failed" ? (
-											<Trans>Every run so far reached a host.</Trans>
+											<Trans>No failed runs.</Trans>
 										) : (
 											<Trans>Runs appear here once an automation fires.</Trans>
 										)}
@@ -428,6 +454,14 @@ function AutomationRunsPage() {
 					)}
 				</div>
 			</div>
+
+			<HostOfflineRunDialog
+				hostId={hostOfflineRun?.hostId ?? null}
+				open={!!hostOfflineRun}
+				onOpenChange={(next) => {
+					if (!next) setHostOfflineRun(null);
+				}}
+			/>
 		</div>
 	);
 }

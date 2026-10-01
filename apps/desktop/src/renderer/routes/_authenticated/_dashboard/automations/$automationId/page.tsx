@@ -83,7 +83,6 @@ function AutomationDetailPage() {
 		{ automationId, limit: RUNS_PAGE_SIZE, scope: "all", status: "all" },
 		{
 			getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-			refetchInterval: 15_000,
 			staleTime: 30_000,
 		},
 	);

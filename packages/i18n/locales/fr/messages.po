@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# port actif — afficher les détails} other {# ports 
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# agent} other {# agents}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# automatisation n'a pas pu être lancée} other {# automatisations n'ont pas pu être lancées}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# fichier modifié} other {# fichiers modifiés}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {A réfléchi pendant # seconde} other {A réflé
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} de cet espace de travail est déjà publié comme page dans une autre organisation. Déplacez le fichier ou publiez avec l'id de cette page."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# automatisation n'a pas pu être lancée} other {# automatisations n'ont pas pu être lancées}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# en échec} other {# en échec}}"
@@ -6210,9 +6211,6 @@ msgstr "Chaque minute"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Tous les objectifs contribuent au palier suivant. Mesuré sur les 30 derniers jours."
 
-msgid "Every run so far reached a host."
-msgstr "Toutes les exécutions ont atteint un hôte jusqu'ici."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Chaque étoile sur <0>{repoSlug}</0>, tracée depuis le lancement."
 
@@ -10002,6 +10000,9 @@ msgstr "Aucun environnement pour l'instant. Créez-en un pour démarrer un espac
 msgid "No extended thinking"
 msgstr "Pas de réflexion étendue"
 
+msgid "No failed runs."
+msgstr "Aucune exécution en échec."
+
 msgid "No files found"
 msgstr "Aucun fichier trouvé"
 
@@ -13362,6 +13363,9 @@ msgstr "S'exécute dans l'application Superset de cet appareil ; le mettre à jo
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Les exécutions arrivent dans un espace de travail. Passez le diff en revue, fusionnez ce qui convient."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Exécutions ayant démarré leur espace de travail au cours des 7 derniers jours"
 
 msgid "Runs when a new workspace is created."
 msgstr "S’exécute à la création d’un espace de travail."
@@ -17704,9 +17708,6 @@ msgstr "Espaces de travail"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Les espaces de travail sont des environnements de tâche isolés reposant sur des worktrees git."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Espaces de travail créés par des exécutions au cours des 7 derniers jours"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Espaces de travail créés par utilisateur sur les 7 derniers jours, par centile"

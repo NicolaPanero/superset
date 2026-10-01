@@ -111,6 +111,10 @@ msgstr "{0, plural, one {활성 포트 #개 — 세부 정보 표시} other {활
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {에이전트 #개}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {자동화 #개를 시작하지 못했습니다} other {자동화 #개를 시작하지 못했습니다}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {변경된 파일 #개} other {변경된 파일 #개}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {#초 동안 생각함} other {#초 동안 생각
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "이 워크스페이스의 {entryPath}는 다른 조직에서 이미 페이지로 게시되었습니다. 파일을 옮기거나 해당 페이지 ID로 게시하세요."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {자동화 #개를 시작하지 못했습니다} other {자동화 #개를 시작하지 못했습니다}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {#개 실패} other {#개 실패}}"
@@ -6210,9 +6211,6 @@ msgstr "1분마다"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "모든 목표가 다음 단계를 향해 제 몫을 하고 있습니다. 최근 30일 기준입니다."
 
-msgid "Every run so far reached a host."
-msgstr "지금까지 모든 실행이 호스트에 도달했습니다."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "출시 이후 <0>{repoSlug}</0>의 모든 스타를 그래프로 나타냈습니다."
 
@@ -10002,6 +10000,9 @@ msgstr "아직 환경이 없습니다. 하나를 만들어 클라우드 워크�
 msgid "No extended thinking"
 msgstr "확장 사고 없음"
 
+msgid "No failed runs."
+msgstr "실패한 실행이 없습니다."
+
 msgid "No files found"
 msgstr "파일을 찾을 수 없음"
 
@@ -13362,6 +13363,9 @@ msgstr "해당 기기의 Superset 앱 안에서 실행되므로, 업데이트하
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "실행 결과는 워크스페이스에 도착합니다. 차이를 검토하고 괜찮은 것만 머지하세요."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "지난 7일 동안 워크스페이스를 시작한 실행"
 
 msgid "Runs when a new workspace is created."
 msgstr "새 작업 공간을 만들 때 실행됩니다."
@@ -17704,9 +17708,6 @@ msgstr "워크스페이스"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "워크스페이스는 git worktree를 기반으로 한 격리된 작업 환경입니다."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "최근 7일간 실행으로 만들어진 워크스페이스"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "최근 7일간 사용자당 생성한 워크스페이스 수, 백분위별"

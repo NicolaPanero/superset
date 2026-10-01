@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# etkin port — ayrıntıları göster} other {# etkin
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# ajan} other {# ajan}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# otomasyon başlatılamadı} other {# otomasyon başlatılamadı}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# değişen dosya} other {# değişen dosya}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {# saniye düşündü} other {# saniye düşünd�
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "Bu çalışma alanındaki {entryPath} başka bir organizasyonda zaten sayfa olarak yayımlanmış. Dosyayı taşı ya da o sayfanın kimliğiyle yayımla."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# otomasyon başlatılamadı} other {# otomasyon başlatılamadı}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# başarısız} other {# başarısız}}"
@@ -6210,9 +6211,6 @@ msgstr "Her dakika"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Tüm hedefler bir sonraki basamak için üzerine düşeni yapıyor. Son 30 gün üzerinden ölçülür."
 
-msgid "Every run so far reached a host."
-msgstr "Şimdiye kadar her çalıştırma bir ana makineye ulaştı."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0> üzerindeki her yıldız, lansmandan bu yana grafikte."
 
@@ -10002,6 +10000,9 @@ msgstr "Henüz ortam yok. Bir bulut çalışma alanını üzerinden başlatmak i
 msgid "No extended thinking"
 msgstr "Genişletilmiş düşünme yok"
 
+msgid "No failed runs."
+msgstr "Başarısız çalıştırma yok."
+
 msgid "No files found"
 msgstr "Dosya bulunamadı"
 
@@ -13362,6 +13363,9 @@ msgstr "O cihazdaki Superset uygulamasının içinde çalışır; bu yüzden gü
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Çalıştırmalar bir çalışma alanına düşer. Farkı inceleyin, iyi olanı birleştirin."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Son 7 günde workspace'ini başlatan çalıştırmalar"
 
 msgid "Runs when a new workspace is created."
 msgstr "Yeni bir çalışma alanı oluşturulduğunda çalışır."
@@ -17704,9 +17708,6 @@ msgstr "Çalışma alanları"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Çalışma alanları, git worktree'leriyle desteklenen yalıtılmış görev ortamlarıdır."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Son 7 günde çalıştırmaların oluşturduğu çalışma alanları"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Son 7 günde kullanıcı başına oluşturulan çalışma alanları, yüzdelik dilime göre"

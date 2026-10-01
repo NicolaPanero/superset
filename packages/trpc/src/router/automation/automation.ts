@@ -1093,7 +1093,15 @@ export const automationRouter = {
 				runs: page.map(({ eventId, cursorAt: _cursorAt, ...run }) => ({
 					...run,
 					hasPayload: eventId !== null,
-					canRetry: run.ownerUserId === userId,
+					// "Run again" dispatches a fresh schedule-caused run, so it
+					// cannot carry an event run's message, PR or issue — retrying
+					// one would start the agent with nothing. Until there is a
+					// retryRun that re-dispatches a row with its own cause, only
+					// failed schedule-caused runs can be retried.
+					canRetry:
+						run.ownerUserId === userId &&
+						(FAILED_RUN_STATUSES as readonly string[]).includes(run.status) &&
+						run.scheduledFor !== null,
 				})),
 				nextCursor:
 					hasMore && last ? { createdAt: last.cursorAt, id: last.id } : null,

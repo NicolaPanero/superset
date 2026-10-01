@@ -77,6 +77,12 @@ export default command({
 				"Session mode has none; drop --session or pass --no-continue-session",
 			);
 		}
+		if (options.rrule && (options.triggers || options.triggersFile)) {
+			throw new CLIError(
+				"Pass a schedule either as --rrule or inside the trigger set, not both",
+				"The server refuses the combination; add a schedule trigger to the set instead.",
+			);
+		}
 
 		const triggers = resolveTriggers(options);
 

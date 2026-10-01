@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# aktywny port — pokaż szczegóły} few {# aktywne p
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# agent} few {# agenci} many {# agentów} other {# agenta}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {Nie udało się uruchomić # automatyzacji} few {Nie udało się uruchomić # automatyzacji} many {Nie udało się uruchomić # automatyzacji} other {Nie udało się uruchomić # automatyzacji}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# zmieniony plik} few {# zmienione pliki} many {# zmienionych plików} other {# zmienionego pliku}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Myślał # sekundę} few {Myślał # sekundy} ma
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} w tym workspace jest już opublikowany jako strona w innej organizacji. Przenieś plik albo opublikuj z identyfikatorem tamtej strony."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {Nie udało się uruchomić # automatyzacji} few {Nie udało się uruchomić # automatyzacji} many {Nie udało się uruchomić # automatyzacji} other {Nie udało się uruchomić # automatyzacji}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# nieudany} few {# nieudane} many {# nieudanych} other {# nieudanego}}"
@@ -6210,9 +6211,6 @@ msgstr "Co minutę"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Wszystkie cele pracują na kolejny szczebel. Mierzone z ostatnich 30 dni."
 
-msgid "Every run so far reached a host."
-msgstr "Jak dotąd każde uruchomienie dotarło do hosta."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Każda gwiazdka na <0>{repoSlug}</0>, naniesiona od premiery."
 
@@ -10002,6 +10000,9 @@ msgstr "Brak środowisk. Utwórz jedno, aby uruchamiać z niego obszar roboczy w
 msgid "No extended thinking"
 msgstr "Bez rozszerzonego myślenia"
 
+msgid "No failed runs."
+msgstr "Brak nieudanych uruchomień."
+
 msgid "No files found"
 msgstr "Nie znaleziono plików"
 
@@ -13362,6 +13363,9 @@ msgstr "Działa wewnątrz aplikacji Superset na tamtym urządzeniu, więc aktual
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Uruchomienia lądują w obszarze roboczym. Przejrzyj różnice, scal to, co dobre."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Uruchomienia, które w ciągu ostatnich 7 dni wystartowały swój workspace"
 
 msgid "Runs when a new workspace is created."
 msgstr "Uruchamia się przy tworzeniu obszaru roboczego."
@@ -17704,9 +17708,6 @@ msgstr "Obszary robocze"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Obszary robocze to izolowane środowiska zadań oparte na worktree gita."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Obszary robocze utworzone przez uruchomienia w ostatnich 7 dniach"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Obszary robocze utworzone na użytkownika w ostatnich 7 dniach, wg percentyla"

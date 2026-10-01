@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# port aktif — tampilkan detail} other {# port aktif 
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {# agen}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# otomatisasi tidak dapat dimulai} other {# otomatisasi tidak dapat dimulai}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# file berubah} other {# file berubah}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Berpikir # detik} other {Berpikir # detik}}"
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} di workspace ini sudah diterbitkan sebagai halaman di organisasi lain. Pindahkan berkasnya atau terbitkan dengan id halaman tersebut."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# otomatisasi tidak dapat dimulai} other {# otomatisasi tidak dapat dimulai}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# gagal} other {# gagal}}"
@@ -6210,9 +6211,6 @@ msgstr "Tiap menit"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Semua sasaran sudah berkontribusi sesuai bobotnya untuk tingkat berikutnya. Diukur selama 30 hari terakhir."
 
-msgid "Every run so far reached a host."
-msgstr "Sejauh ini setiap run mencapai host."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Tiap star di <0>{repoSlug}</0>, diplot sejak peluncuran."
 
@@ -10002,6 +10000,9 @@ msgstr "Belum ada environment. Buat satu untuk memulai workspace cloud darinya."
 msgid "No extended thinking"
 msgstr "Tanpa extended thinking"
 
+msgid "No failed runs."
+msgstr "Tidak ada eksekusi yang gagal."
+
 msgid "No files found"
 msgstr "File tidak ditemukan"
 
@@ -13362,6 +13363,9 @@ msgstr "Berjalan di dalam aplikasi Superset di perangkat itu, jadi memperbaruiny
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Run mendarat di sebuah workspace. Review diff-nya, merge yang bagus."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Eksekusi yang memulai workspace-nya dalam 7 hari terakhir"
 
 msgid "Runs when a new workspace is created."
 msgstr "Dijalankan saat ruang kerja baru dibuat."
@@ -17704,9 +17708,6 @@ msgstr "Workspace"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Workspace adalah lingkungan tugas terisolasi yang didukung git worktree."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Workspace yang dibuat oleh run dalam 7 hari terakhir"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Workspace yang dibuat per pengguna dalam 7 hari terakhir, menurut persentil"

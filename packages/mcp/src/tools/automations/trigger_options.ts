@@ -18,12 +18,12 @@ export function register(server: McpServer): void {
 		name: "automations_trigger_options",
 		annotations: { readOnlyHint: true },
 		description:
-			"List the values an event trigger can filter on for one connected provider — Slack channels, GitHub repositories, Linear teams and projects, Sentry projects, Notion data sources, Google calendars. Call this before writing a {mode:'list', ids:[...]} scope in automations_create or automations_update: those ids are provider ids, and a name will not match. Returns {} for a provider the organization has not connected, and a source that fails yields an empty list rather than an error.",
+			"List the values an event trigger can filter on for one connected provider — Slack channels, GitHub repositories, Linear teams and projects, Sentry projects, Notion data sources, Gmail labels and people. Call this before writing a {mode:'list', ids:[...]} scope in automations_create or automations_update: those ids are provider ids, and a name will not match. Each list comes back keyed by name, and a list is empty both when the organization has not connected that provider and when the lookup failed (a revoked token, or the provider being down) — so treat empty as unknown and ask the user to check the connection rather than reporting it as not connected.",
 		inputSchema: {
 			group: z
 				.enum(OPTION_GROUPS)
 				.describe(
-					"Provider option group. 'google' covers both Gmail and Google Calendar; 'microsoftTeams' is Teams.",
+					"Provider option group. 'google' returns Gmail labels and people; 'microsoftTeams' is Teams.",
 				),
 		},
 		handler: async (input, ctx) => {

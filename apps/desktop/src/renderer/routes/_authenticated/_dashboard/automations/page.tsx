@@ -37,7 +37,7 @@ import { Tabs, TabsList, TabsTrigger } from "@superset/ui/tabs";
 import { cn } from "@superset/ui/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	LuArrowUpRight,
 	LuRotateCw,
@@ -233,14 +233,8 @@ function AutomationsPage() {
 		undefined,
 		{},
 	);
-	// failedIds drove the old failure sections; this list is one section, so
-	// only the badge acknowledgement is still needed here.
-	const { lastRunById, markMyFailuresSeen } = useFailedAutomations();
+	const { lastRunById } = useFailedAutomations();
 	const now = useNow(30_000);
-
-	useEffect(() => {
-		markMyFailuresSeen();
-	}, [markMyFailuresSeen]);
 
 	const recentProjects = useRecentProjects();
 
@@ -281,7 +275,7 @@ function AutomationsPage() {
 	// filter the table.
 	const { data: orgRunStats } = cloudTrpc.automation.orgRunStats.useQuery(
 		undefined,
-		{ refetchInterval: 60_000, staleTime: 30_000 },
+		{ staleTime: 30_000 },
 	);
 
 	const [sortField, setSortField] = useState<AutomationSortField | null>(null);
@@ -495,8 +489,8 @@ function AutomationsPage() {
 					{!orgEmpty && (
 						<div className="mt-5">
 							{showAutomationLoading ? (
-								<div className="grid grid-cols-3 gap-2">
-									{["a", "b", "c"].map((key) => (
+								<div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+									{["a", "b", "c", "d"].map((key) => (
 										<Skeleton key={key} className="h-[70px] w-full" />
 									))}
 								</div>
@@ -505,7 +499,7 @@ function AutomationsPage() {
 									totalAutomations={automations.length}
 									succeeded7d={orgRunStats?.succeeded ?? 0}
 									failed7d={orgRunStats?.failed ?? 0}
-									buckets={orgRunStats?.buckets ?? Array(28).fill(0)}
+									buckets={orgRunStats?.buckets ?? []}
 									onShowFailed={() =>
 										navigate({
 											to: "/automations/runs",

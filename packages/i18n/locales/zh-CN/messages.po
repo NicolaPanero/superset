@@ -111,6 +111,10 @@ msgstr "{0, plural, one {#个活动端口 — 显示详情} other {#个活动端
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {# 个智能体}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {无法启动 # 个自动化} other {无法启动 # 个自动化}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {#个已更改文件} other {#个已更改文件}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {思考了#秒} other {思考了#秒}}"
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "该工作区中的 {entryPath} 已在另一个组织中发布为页面。请移动该文件，或使用那个页面的 id 发布。"
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {无法启动 # 个自动化} other {无法启动 # 个自动化}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {#项失败} other {#项失败}}"
@@ -6210,9 +6211,6 @@ msgstr "每分钟"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "所有目标都在为下一档位发力。按最近 30 天计算。"
 
-msgid "Every run so far reached a host."
-msgstr "目前所有运行都已到达主机。"
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>的每一个星标，自发布起绘制。"
 
@@ -10002,6 +10000,9 @@ msgstr "还没有环境。创建一个，以便基于它启动云端工作区。
 msgid "No extended thinking"
 msgstr "不使用扩展思考"
 
+msgid "No failed runs."
+msgstr "没有失败的运行。"
+
 msgid "No files found"
 msgstr "未找到文件"
 
@@ -13362,6 +13363,9 @@ msgstr "运行在该设备的 Superset 应用内，因此更新它意味着更�
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "运行结果会落在一个工作区里。审查差异，把合适的合并进去。"
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "过去 7 天内启动了工作区的运行"
 
 msgid "Runs when a new workspace is created."
 msgstr "创建新工作区时运行。"
@@ -17704,9 +17708,6 @@ msgstr "工作区"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "工作区是由git worktree支撑的隔离任务环境。"
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "最近7天里由运行创建的工作区"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "最近7天每位用户创建的工作区数，按分位数"

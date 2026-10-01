@@ -67,7 +67,7 @@ export function AutomationStatCards({
 			<div
 				className={CARD}
 				title={t({
-					message: "Workspaces created by runs in the last 7 days",
+					message: "Runs that started their workspace in the last 7 days",
 				})}
 			>
 				<p className={LABEL}>

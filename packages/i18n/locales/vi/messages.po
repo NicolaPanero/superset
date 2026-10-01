@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# cổng đang hoạt động — hiện chi tiết} ot
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {# agent}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {Không thể khởi chạy # tự động hóa} other {Không thể khởi chạy # tự động hóa}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# tệp thay đổi} other {# tệp thay đổi}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Đã suy nghĩ # giây} other {Đã suy nghĩ # 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} trong workspace này đã được xuất bản thành một trang ở tổ chức khác. Hãy di chuyển tệp hoặc xuất bản kèm id của trang đó."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {Không thể khởi chạy # tự động hóa} other {Không thể khởi chạy # tự động hóa}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# thất bại} other {# thất bại}}"
@@ -6210,9 +6211,6 @@ msgstr "Mỗi phút"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Mọi mục tiêu đều đang đóng góp cho bậc kế tiếp. Đo trong 30 ngày gần nhất."
 
-msgid "Every run so far reached a host."
-msgstr "Cho đến nay mọi lần chạy đều đã đến được một host."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Mọi star trên <0>{repoSlug}</0>, vẽ từ ngày ra mắt."
 
@@ -10002,6 +10000,9 @@ msgstr "Chưa có environment nào. Tạo một cái để khởi động worksp
 msgid "No extended thinking"
 msgstr "Không suy nghĩ mở rộng"
 
+msgid "No failed runs."
+msgstr "Không có lần chạy thất bại."
+
 msgid "No files found"
 msgstr "Không tìm thấy tệp nào"
 
@@ -13362,6 +13363,9 @@ msgstr "Chạy bên trong ứng dụng Superset trên thiết bị đó, nên c�
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Kết quả chạy nằm trong một workspace. Xem diff, merge những gì tốt."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Các lần chạy đã khởi động workspace của chúng trong 7 ngày qua"
 
 msgid "Runs when a new workspace is created."
 msgstr "Chạy khi tạo không gian làm việc mới."
@@ -17704,9 +17708,6 @@ msgstr "Workspace"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Workspace là môi trường tác vụ tách biệt, dựa trên git worktree."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Workspace do các lần chạy tạo ra trong 7 ngày qua"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Số workspace được tạo trên mỗi người dùng trong 7 ngày qua, theo phân vị"

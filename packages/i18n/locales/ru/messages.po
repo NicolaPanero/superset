@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# активный порт — показать дет
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# агент} few {# агента} many {# агентов} other {# агента}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {Не удалось запустить # автоматизацию} few {Не удалось запустить # автоматизации} many {Не удалось запустить # автоматизаций} other {Не удалось запустить # автоматизаций}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# изменённый файл} few {# изменённых файла} many {# изменённых файлов} other {# изменённых файла}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Думал # секунду} few {Думал # �
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} в этом рабочем пространстве уже опубликован как страница в другой организации. Переместите файл или опубликуйте с идентификатором той страницы."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {Не удалось запустить # автоматизацию} few {Не удалось запустить # автоматизации} many {Не удалось запустить # автоматизаций} other {Не удалось запустить # автоматизаций}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# не пройдено} few {# не пройдено} many {# не пройдено} other {# не пройдено}}"
@@ -6210,9 +6211,6 @@ msgstr "Каждую минуту"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Все цели работают на следующую ступень. Измерено за последние 30 дней."
 
-msgid "Every run so far reached a host."
-msgstr "Пока все запуски достигли хоста."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Каждая звезда на <0>{repoSlug}</0> с момента запуска."
 
@@ -10002,6 +10000,9 @@ msgstr "Окружений пока нет. Создайте окружение,
 msgid "No extended thinking"
 msgstr "Без расширенного мышления"
 
+msgid "No failed runs."
+msgstr "Неудачных запусков нет."
+
 msgid "No files found"
 msgstr "Файлы не найдены"
 
@@ -13362,6 +13363,9 @@ msgstr "Работает внутри приложения Superset на том 
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Запуски приземляются в рабочую область. Посмотрите diff и объедините то, что подходит."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Запуски, которые за последние 7 дней запустили своё рабочее пространство"
 
 msgid "Runs when a new workspace is created."
 msgstr "Выполняется при создании рабочего пространства."
@@ -17704,9 +17708,6 @@ msgstr "Рабочие области"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Рабочие области — это изолированные окружения для задач на основе git worktree."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Рабочие области, созданные запусками за последние 7 дней"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Рабочие области, созданные одним пользователем за последние 7 дней, по перцентилям"

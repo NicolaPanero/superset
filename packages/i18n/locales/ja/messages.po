@@ -111,6 +111,10 @@ msgstr "{0, plural, one {#個のアクティブなポート — 詳細を表示}
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {エージェント # 件}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {#件のオートメーションを開始できませんでした} other {#件のオートメーションを開始できませんでした}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {#件の変更ファイル} other {#件の変更ファイル}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {#秒間思考しました} other {#秒間思考�
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "このワークスペースの {entryPath} は、別の組織のページとしてすでに公開されています。ファイルを移動するか、そのページの ID を指定して公開してください。"
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {#件のオートメーションを開始できませんでした} other {#件のオートメーションを開始できませんでした}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {#件失敗} other {#件失敗}}"
@@ -6210,9 +6211,6 @@ msgstr "毎分"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "すべての目標が次の段に向けて力を発揮しています。直近30日間で計測。"
 
-msgid "Every run so far reached a host."
-msgstr "これまでのすべての実行がホストに到達しました。"
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>のすべてのスターを、公開時からプロットしています。"
 
@@ -10002,6 +10000,9 @@ msgstr "環境はまだありません。作成すると、そこからクラウ
 msgid "No extended thinking"
 msgstr "拡張思考なし"
 
+msgid "No failed runs."
+msgstr "失敗した実行はありません。"
+
 msgid "No files found"
 msgstr "ファイルが見つかりません"
 
@@ -13362,6 +13363,9 @@ msgstr "そのデバイスのSupersetアプリ内で動作しているため、�
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "実行結果はワークスペースに入ります。差分を確認し、良いものをマージしてください。"
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "過去 7 日間にワークスペースを開始した実行"
 
 msgid "Runs when a new workspace is created."
 msgstr "新しいワークスペースの作成時に実行します。"
@@ -17704,9 +17708,6 @@ msgstr "ワークスペース"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "ワークスペースはgitワークツリーを基盤とした独立したタスク環境です。"
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "過去7日間の実行で作成されたワークスペース"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "直近7日のユーザーあたりワークスペース作成数(パーセンタイル別)"

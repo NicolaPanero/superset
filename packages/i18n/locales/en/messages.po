@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# active port â€” show details} other {# active ports â
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# agent} other {# agents}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# changed file} other {# changed files}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {Thought for # second} other {Thought for # secon
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} in this workspace is already published as a page in another organization. Move the file, or publish with that page's id."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# failed} other {# failed}}"
@@ -6210,9 +6211,6 @@ msgstr "Every minute"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 
-msgid "Every run so far reached a host."
-msgstr "Every run so far reached a host."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Every star on <0>{repoSlug}</0>, plotted since launch."
 
@@ -10002,6 +10000,9 @@ msgstr "No environments yet."
 msgid "No extended thinking"
 msgstr "No extended thinking"
 
+msgid "No failed runs."
+msgstr "No failed runs."
+
 msgid "No files found"
 msgstr "No files found"
 
@@ -13362,6 +13363,9 @@ msgstr "Runs inside the Superset app on that device, so updating it means updati
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Runs land in a workspace. Review the diff, merge what's good."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Runs that started their workspace in the last 7 days"
 
 msgid "Runs when a new workspace is created."
 msgstr "Runs when a new workspace is created."
@@ -17704,9 +17708,6 @@ msgstr "Workspaces"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Workspaces are isolated task environments backed by git worktrees."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Workspaces created by runs in the last 7 days"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Workspaces created per user in the last 7 days, by percentile"

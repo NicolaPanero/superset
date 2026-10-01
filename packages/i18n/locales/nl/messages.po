@@ -111,6 +111,10 @@ msgstr "{0, plural, one {# actieve poort — details tonen} other {# actieve poo
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, one {# agent} other {# agents}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {# automatisering kon niet worden gestart} other {# automatiseringen konden niet worden gestart}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {# gewijzigd bestand} other {# gewijzigde bestanden}}"
@@ -805,9 +809,6 @@ msgstr "{duration, plural, one {# seconde nagedacht} other {# seconden nagedacht
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByAnotherOrganization"
 msgstr "{entryPath} in deze workspace is al gepubliceerd als pagina in een andere organisatie. Verplaats het bestand of publiceer met het id van die pagina."
-
-msgid "{failed, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
-msgstr "{failed, plural, one {# automatisering kon niet worden gestart} other {# automatiseringen konden niet worden gestart}}"
 
 msgid "{failed, plural, one {# failed} other {# failed}}"
 msgstr "{failed, plural, one {# mislukt} other {# mislukt}}"
@@ -6210,9 +6211,6 @@ msgstr "Elke minuut"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "Alle doelen dragen bij aan de volgende trede. Gemeten over de laatste 30 dagen."
 
-msgid "Every run so far reached a host."
-msgstr "Tot nu toe heeft elke run een host bereikt."
-
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "Elke ster op <0>{repoSlug}</0>, uitgezet sinds de lancering."
 
@@ -10002,6 +10000,9 @@ msgstr "Nog geen omgevingen. Maak er een aan om er een cloudwerkruimte vanaf te 
 msgid "No extended thinking"
 msgstr "Geen uitgebreid nadenken"
 
+msgid "No failed runs."
+msgstr "Geen mislukte uitvoeringen."
+
 msgid "No files found"
 msgstr "Geen bestanden gevonden"
 
@@ -13362,6 +13363,9 @@ msgstr "Draait in de Superset-app op dat apparaat, dus bijwerken betekent de app
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Runs komen in een werkruimte terecht. Bekijk de diff, merge wat goed is."
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "Uitvoeringen die hun workspace in de afgelopen 7 dagen hebben gestart"
 
 msgid "Runs when a new workspace is created."
 msgstr "Wordt uitgevoerd bij het aanmaken van een werkruimte."
@@ -17704,9 +17708,6 @@ msgstr "Werkruimtes"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "Werkruimtes zijn geïsoleerde taakomgevingen op basis van git-worktrees."
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "Werkruimtes aangemaakt door runs in de laatste 7 dagen"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "Aangemaakte werkruimtes per gebruiker in de laatste 7 dagen, per percentiel"
