@@ -246,7 +246,8 @@
         <div><b>6</b><span>Medium</span></div>
         <div><b>3</b><span>Low</span></div>
         <div><b>4</b><span>Verified by me</span></div>
-        <div><b id="open-count">10</b><span>Still open</span></div>
+        <div><b id="open-count">9</b><span>Still open</span></div>
+        <div><b>1</b><span>Fixed</span></div>
       </div>
 
       <div class="filters">
@@ -257,15 +258,19 @@
         <button type="button" data-filter="verified" aria-pressed="false">
           Verified
         </button>
+        <button type="button" data-filter="open" aria-pressed="false">
+          Still open
+        </button>
       </div>
 
       <section id="findings">
-        <article class="finding" data-sev="high" data-verified="yes">
+        <article class="finding" data-sev="high" data-verified="yes" data-status="fixed">
           <div class="head">
             <span class="num">01</span>
             <h3>Slack resolves an event to one connection, so a pinned trigger drops</h3>
             <span class="chip sev-high">High</span>
             <span class="chip verified">Verified</span>
+            <span class="chip fixed">Fixed</span>
           </div>
           <p class="where">
             apps/api/src/app/api/integrations/slack/events/process-automation-event/process-automation-event.ts:52
@@ -287,8 +292,14 @@
             back and forth as tokens refresh.
           </p>
           <p class="fix">
-            Fan Slack out over <code>accountConnections</code> like Linear and
-            Notion, or exclude Slack from pinning until it does.
+            <b>Fixed.</b> <code>processAutomationEvent</code> now resolves with
+            <code>accountConnections</code> and records the event once per
+            connection on the workspace, so each account's pinned triggers get
+            their own delivery. Sequential rather than concurrent, for the
+            reason Linear's fan-out documents — neon-http opens a connection per
+            query, and asking for all of them at one instant starves the pool.
+            One connection failing is caught and logged so it cannot cost the
+            others their delivery. The fan-out itself lives in its own module with a type-only import, so its four tests need no database stub — registering one reached whichever suite loaded next and broke it.
           </p>
 
           <h4>Which field each provider maps to a connection</h4>
@@ -640,15 +651,17 @@
       buttons.forEach((button) => {
         button.addEventListener("click", () => {
           const filter = button.dataset.filter;
-          buttons.forEach((other) =>
-            other.setAttribute("aria-pressed", String(other === button)),
-          );
+          buttons.forEach((other) => {
+            other.setAttribute("aria-pressed", String(other === button));
+          });
           findings.forEach((finding) => {
             const match =
               filter === "all" ||
               (filter === "verified"
                 ? finding.dataset.verified === "yes"
-                : finding.dataset.sev === filter);
+                : filter === "open"
+                  ? finding.dataset.status !== "fixed"
+                  : finding.dataset.sev === filter);
             finding.hidden = !match;
           });
         });
