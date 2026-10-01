@@ -246,8 +246,8 @@
         <div><b>6</b><span>Medium</span></div>
         <div><b>3</b><span>Low</span></div>
         <div><b>4</b><span>Verified by me</span></div>
-        <div><b id="open-count">9</b><span>Still open</span></div>
-        <div><b>1</b><span>Fixed</span></div>
+        <div><b id="open-count">6</b><span>Still open</span></div>
+        <div><b>4</b><span>Fixed</span></div>
       </div>
 
       <div class="filters">
@@ -382,12 +382,13 @@
           </p>
         </article>
 
-        <article class="finding" data-sev="medium" data-verified="yes">
+        <article class="finding" data-sev="medium" data-verified="yes" data-status="fixed">
           <div class="head">
             <span class="num">02</span>
             <h3>The default pin picks an arbitrary account</h3>
             <span class="chip sev-medium">Medium</span>
             <span class="chip verified">Verified</span>
+            <span class="chip fixed">Fixed</span>
           </div>
           <p class="where">
             apps/desktop/…/TriggersEditor/TriggersEditor.tsx:70 ·
@@ -406,9 +407,12 @@
             triggers added minutes apart can land on different accounts.
           </p>
           <p class="fix">
-            Add a deterministic <code>orderBy</code> (e.g.
-            <code>asc(connections.createdAt)</code>), and consider making the
-            first pin an explicit choice rather than a silent default.
+            <b>Fixed.</b> Both reads now order by
+            <code>(createdAt, id)</code> — <code>connection-status</code> for
+            the picker and the default pin, and <code>connectors.status</code>
+            for the account list. Fixing the Slack fan-out did not make this
+            moot: fan-out decides which connections receive an event, this
+            decides which one a new trigger listens to.
           </p>
         </article>
 
@@ -440,11 +444,12 @@
           </p>
         </article>
 
-        <article class="finding" data-sev="medium" data-verified="no">
+        <article class="finding" data-sev="medium" data-verified="no" data-status="fixed">
           <div class="head">
             <span class="num">04</span>
             <h3>The backfill runs outside the connect transaction and can fail the connect</h3>
             <span class="chip sev-medium">Medium</span>
+            <span class="chip fixed">Fixed</span>
           </div>
           <p class="where">packages/trpc/src/lib/connectors/upsert.ts:143</p>
           <p>
@@ -460,15 +465,23 @@
             backfill never runs again.
           </p>
           <p class="fix">
-            Catch and log, or move it into the same transaction as the insert.
+            <b>Fixed.</b> The prior-account read, the connection write and the
+            pin now commit together in one <code>dbWs.transaction</code>.
+            Catching and logging was not enough on its own: it keeps the connect
+            from reporting failure, but a failed pin still leaves the new
+            account connected with every existing trigger unpinned — matching
+            both accounts — and the retry cannot repair it, because by then the
+            new row is in <code>previousConnectionIds</code>. Encryption stays
+            outside the transaction; it touches no database.
           </p>
         </article>
 
-        <article class="finding" data-sev="medium" data-verified="no">
+        <article class="finding" data-sev="medium" data-verified="no" data-status="fixed">
           <div class="head">
             <span class="num">05</span>
             <h3>An older client silently clears every pin, and pins are not validated</h3>
             <span class="chip sev-medium">Medium</span>
+            <span class="chip fixed">Partly fixed</span>
           </div>
           <p class="where">packages/trpc/src/router/automation/triggerSet.ts:120</p>
           <p>
@@ -481,8 +494,12 @@
             trigger that never fires and never errors.
           </p>
           <p class="fix">
-            Only write the field when the client sent it, and validate ownership
-            server-side.
+            <b>Half fixed.</b> <code>saveTriggerSet</code> now distinguishes
+            absent from null — undefined is a client that does not know the
+            field and leaves the pin alone, null is the “any account” the editor
+            writes. Server-side ownership validation of the uuid is
+            <b>still open</b>; a pin naming another org's connection persists
+            and matches nothing.
           </p>
         </article>
 

@@ -71,6 +71,9 @@ export const connectorsRouter = {
 			// dropping it here would offer "Connect" for an account they already
 			// linked, losing the distinction between never-connected and expired.
 			const rows = await db.query.connections.findMany({
+				// Stable order, so the account list and the "Primary" row it implies
+				// do not move between refetches.
+				orderBy: (row, { asc }) => [asc(row.createdAt), asc(row.id)],
 				where: and(
 					eq(connections.organizationId, input.organizationId),
 					or(

@@ -12,6 +12,9 @@ import { useConnector } from "renderer/components/ConnectorSection/hooks/useConn
 
 interface ConnectedAccountsProps {
 	slug: string;
+	/** False before the plugin is installed: connecting would grant an account
+	 * to something that contributes no tools yet. */
+	canConnect: boolean;
 	onConnect: () => void;
 }
 
@@ -21,7 +24,11 @@ function initials(label: string): string {
 	return (named[0]?.[0] ?? "?").concat(named[1]?.[0] ?? "").toUpperCase();
 }
 
-export function ConnectedAccounts({ slug, onConnect }: ConnectedAccountsProps) {
+export function ConnectedAccounts({
+	slug,
+	canConnect,
+	onConnect,
+}: ConnectedAccountsProps) {
 	const { t } = useLingui();
 	const { connector, connections, isPending, disconnect } = useConnector(slug);
 
@@ -83,7 +90,8 @@ export function ConnectedAccounts({ slug, onConnect }: ConnectedAccountsProps) {
 				);
 			})}
 
-			{connector.scope === "user" || connections.length === 0 ? (
+			{canConnect &&
+			(connector.scope === "user" || connections.length === 0) ? (
 				<button
 					type="button"
 					onClick={onConnect}

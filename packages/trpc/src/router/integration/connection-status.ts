@@ -41,6 +41,10 @@ export const connectionStatusProcedure = protectedProcedure
 
 			const [connectorRows, installation] = await Promise.all([
 				db.query.connections.findMany({
+					// Oldest first, and stable: the editor pins a new trigger to the
+					// first account, and an unordered read returns heap order, which
+					// moves every time a row is updated — a token refresh is an update.
+					orderBy: (row, { asc }) => [asc(row.createdAt), asc(row.id)],
 					where: and(
 						eq(connections.organizationId, input.organizationId),
 						or(

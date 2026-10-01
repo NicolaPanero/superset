@@ -1,4 +1,4 @@
-import { db } from "@superset/db/client";
+import { db, type dbWs } from "@superset/db/client";
 import {
 	type AutomationTriggerKind,
 	automations,
@@ -11,12 +11,21 @@ import {
 } from "@superset/shared/automation-triggers";
 import { and, eq, inArray, isNull } from "drizzle-orm";
 
+/**
+ * The connection write and the pin that follows it have to commit together, so
+ * both steps take the caller's transaction rather than the ambient client.
+ */
+export type ConnectorTx =
+	| typeof db
+	| Parameters<Parameters<typeof dbWs.transaction>[0]>[0];
+
 export async function liveConnectionIds(
 	organizationId: string,
 	connector: string,
 	userId: string,
+	tx: ConnectorTx = db,
 ): Promise<string[]> {
-	const rows = await db
+	const rows = await tx
 		.select({ id: connections.id })
 		.from(connections)
 		.where(
@@ -36,17 +45,19 @@ export async function pinTriggersToExistingAccount(params: {
 	userId: string;
 	previousConnectionIds: string[];
 	connectionId: string;
-}): Promise<{ pinned: number }> {
+	tx?: ConnectorTx;
+}): Promise<void> {
 	const existing = accountToPinTo(
 		params.previousConnectionIds,
 		params.connectionId,
 	);
-	if (!existing) return { pinned: 0 };
+	if (!existing) return;
 
 	const kinds = triggerKindsForConnector(params.connector);
-	if (kinds.length === 0) return { pinned: 0 };
+	if (kinds.length === 0) return;
 
-	const owned = db
+	const exec = params.tx ?? db;
+	const owned = exec
 		.select({ id: automations.id })
 		.from(automations)
 		.where(
@@ -56,7 +67,7 @@ export async function pinTriggersToExistingAccount(params: {
 			),
 		);
 
-	const rows = await db
+	await exec
 		.update(automationTriggers)
 		.set({ connectionId: existing })
 		.where(
@@ -66,8 +77,5 @@ export async function pinTriggersToExistingAccount(params: {
 				isNull(automationTriggers.connectionId),
 				inArray(automationTriggers.automationId, owned),
 			),
-		)
-		.returning({ id: automationTriggers.id });
-
-	return { pinned: rows.length };
+		);
 }

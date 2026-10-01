@@ -182,6 +182,7 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 						<div className="pt-4">
 							<ConnectedAccounts
 								slug={plugin.connector}
+								canConnect={plugin.installed}
 								onConnect={() => setIsConnectOpen(true)}
 							/>
 						</div>
