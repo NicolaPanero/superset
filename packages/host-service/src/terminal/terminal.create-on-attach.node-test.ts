@@ -907,6 +907,57 @@ test("deleting kills immediately; restore uses a new process and retries reuse i
 	);
 	await assert.rejects(() => caller.close({ workspaceId, entries: [entry] }));
 });
+for (const status of ["disposed", "exited"] as const) {
+	test(`restore replaces a ${status} replacement and preserves archived history`, async () => {
+		const terminalId = await recoveryTerminal();
+		const caller = recoveryCaller();
+		const entry = {
+			...closeEntry(terminalId),
+			pane: {
+				kind: "terminal" as const,
+				terminalId,
+				terminate: true,
+				snapshot: {
+					version: 1 as const,
+					ansi: "RETRY_HISTORY",
+					cols: 80,
+					rows: 24,
+				},
+			},
+		};
+		await caller.close({ workspaceId, entries: [entry] });
+		const first = (await caller.restore({ workspaceId, id: entry.id })).entry
+			.descriptor.terminalId;
+		assert.ok(first);
+		await disposeSessionAndWait(first, db);
+		if (status === "exited")
+			db.update(terminalSessions)
+				.set({ status: "exited", disposeRequestedAt: null })
+				.where(eq(terminalSessions.id, first))
+				.run();
+		const second = (await caller.restore({ workspaceId, id: entry.id })).entry
+			.descriptor.terminalId;
+		assert.ok(second);
+		assert.notEqual(second, first);
+		assert.notEqual(second, terminalId);
+		assert.equal(
+			(await caller.restore({ workspaceId, id: entry.id })).entry.descriptor
+				.terminalId,
+			second,
+		);
+		const messages = await recoveryAttach(second);
+		assert.equal(
+			(
+				messages.find((message) => message.type === "recovery")?.snapshot as {
+					ansi: string;
+				}
+			)?.ansi,
+			"RETRY_HISTORY",
+		);
+		await disposeSessionAndWait(second, db);
+	});
+}
+
 test("recovery close clears live agent state and publishes the normal disposal change", async () => {
 	const terminalId = await recoveryTerminal();
 	const store = new TerminalAgentStore(
@@ -1312,6 +1363,47 @@ test("deleted agent restores through the real launcher with its resume session I
 			fs.readFileSync(argsFile, "utf8"),
 			"--resume\nrecovery-conversation\n",
 		);
+		db.insert(terminalAgentBindings)
+			.values({
+				terminalId: restoredId,
+				workspaceId,
+				agentId: "claude",
+				definitionId: configId,
+				agentSessionId: "recovery-conversation",
+				startedAt: Date.now(),
+				lastEventAt: Date.now(),
+				lastEventType: "Stop",
+			})
+			.onConflictDoUpdate({
+				target: terminalAgentBindings.terminalId,
+				set: { agentSessionId: "recovery-conversation", lastEventType: "Stop" },
+			})
+			.run();
+		await caller.close({ workspaceId, entries: [closeEntry(restoredId)] });
+		const retried = (await caller.restore({ workspaceId, id: entry.id })).entry
+			.descriptor.terminalId;
+		assert.ok(retried);
+		assert.notEqual(retried, restoredId);
+		assert.equal(
+			(await caller.restore({ workspaceId, id: entry.id })).entry.descriptor
+				.terminalId,
+			retried,
+		);
+		try {
+			for (
+				let attempt = 0;
+				attempt < 100 &&
+				fs.readFileSync(argsFile, "utf8").split("--resume").length < 3;
+				attempt++
+			)
+				await new Promise((resolve) => setTimeout(resolve, 50));
+			assert.equal(
+				fs.readFileSync(argsFile, "utf8"),
+				"--resume\nrecovery-conversation\n--resume\nrecovery-conversation\n",
+			);
+		} finally {
+			await disposeSessionAndWait(retried, db);
+		}
 	} finally {
 		await disposeSessionAndWait(restoredId, db);
 	}

@@ -65,6 +65,14 @@ export function usePaneRecovery(
 				const state = store.getState();
 				const existing = state.getPane(paneId);
 				if (existing) {
+					if (row.kind === "terminal")
+						state.setPaneData({
+							paneId,
+							data: {
+								terminalId: row.descriptor.terminalId,
+								createOnAttach: row.freshShell,
+							},
+						});
 					state.setActiveTab(existing.tabId);
 					state.setActivePane({ tabId: existing.tabId, paneId });
 				} else {

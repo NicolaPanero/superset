@@ -279,32 +279,53 @@ export const paneRecoveryRouter = router({
 						status: "ready" as const,
 						entry: { ...row, freshShell: false },
 					};
+				const lifecycle = (id: string) =>
+					terminalLifecycleState(
+						ctx.db.query.terminalSessions
+							.findFirst({ where: eq(terminalSessions.id, id) })
+							.sync(),
+					);
 				let terminalId = row.restoredTerminalId;
+				if (
+					terminalId &&
+					["disposed", "exited"].includes(lifecycle(terminalId))
+				)
+					terminalId = null;
 				if (!terminalId) {
 					let live = false;
-					if (row.descriptor.reuseTerminalId) {
-						const terminal = ctx.db.query.terminalSessions
-							.findFirst({ where: eq(terminalSessions.id, row.terminalId) })
-							.sync();
-						if (terminalLifecycleState(terminal) === "active")
-							live = (await (await getDaemonClient()).list()).some(
-								(session) => session.id === row.terminalId && session.alive,
-							);
-					}
+					if (
+						row.descriptor.reuseTerminalId &&
+						lifecycle(row.terminalId) === "active"
+					)
+						live = (await (await getDaemonClient()).list()).some(
+							(session) => session.id === row.terminalId && session.alive,
+						);
 					if (live) terminalId = row.terminalId;
 					else {
-						const successor = findResumedSuccessorTerminalId(
-							ctx.db,
-							input.workspaceId,
-							row.terminalId,
-						);
-						const resumed = successor
-							? { resumed: true as const, terminalId: successor }
-							: await resumeTerminalAgentSession(resumeSessionDepsFor(ctx), {
-									workspaceId: input.workspaceId,
-									terminalId: row.terminalId,
-									restoreDeleted: true,
-								});
+						const successor =
+							(row.restoredTerminalId &&
+								findResumedSuccessorTerminalId(
+									ctx.db,
+									input.workspaceId,
+									row.restoredTerminalId,
+								)) ||
+							findResumedSuccessorTerminalId(
+								ctx.db,
+								input.workspaceId,
+								row.terminalId,
+							);
+						const candidate =
+							successor ?? row.restoredTerminalId ?? row.terminalId;
+						const resumed =
+							successor && lifecycle(successor) === "active"
+								? { resumed: true as const, terminalId: successor }
+								: await resumeTerminalAgentSession(resumeSessionDepsFor(ctx), {
+										workspaceId: input.workspaceId,
+										terminalId: candidate,
+										restoreDeleted:
+											getTerminalAgentBinding(ctx.db, candidate)?.endReason ===
+											"disposed",
+									});
 						terminalId = resumed.resumed
 							? resumed.terminalId
 							: crypto.randomUUID();
