@@ -115,6 +115,10 @@ msgstr "{0, plural, one {#個のアクティブなポート — 詳細を表示}
 msgid "{0, plural, one {# agent} other {# agents}}"
 msgstr "{0, plural, other {エージェント # 件}}"
 
+#. placeholder {0}: rejected.length
+msgid "{0, plural, one {# automation couldn't be started} other {# automations couldn't be started}}"
+msgstr "{0, plural, one {#件のオートメーションを開始できませんでした} other {#件のオートメーションを開始できませんでした}}"
+
 #. placeholder {0}: workspace.diffStats.fileCount
 msgid "{0, plural, one {# changed file} other {# changed files}}"
 msgstr "{0, plural, one {#件の変更ファイル} other {#件の変更ファイル}}"
@@ -1006,9 +1010,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
-msgid "{retried, plural, one {Retrying # automation} other {Retrying # automations}}"
-msgstr "{retried, plural, one {#件のオートメーションを再試行中} other {#件のオートメーションを再試行中}}"
-
 msgid "{runLabel} · everybody to {operatorTier}"
 msgstr "{runLabel} · 全員が{operatorTier}へ"
 
@@ -1037,6 +1038,9 @@ msgstr "スター{starCount}件、まだ増えています"
 
 msgid "{stars} stars · {perDay}/day this week · {peakPerDay}/day at peak"
 msgstr "{stars}スター · 今週{perDay}/日 · ピーク{peakPerDay}/日"
+
+msgid "{started, plural, one {Started # automation} other {Started # automations}}"
+msgstr "{started, plural, one {#件のオートメーションを開始しました} other {#件のオートメーションを開始しました}}"
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# 件のサブエージェントが実行中}}"
@@ -1983,6 +1987,9 @@ msgstr "すべてのリポジトリ"
 msgid "All reviews"
 msgstr "すべてのレビュー"
 
+msgid "All runs"
+msgstr "すべての実行"
+
 msgid "All sessions killed and daemon restarted. The app will use a fresh daemon."
 msgstr "すべてのセッションを終了し、デーモンを再起動しました。アプリは新しいデーモンを使用します。"
 
@@ -2550,6 +2557,9 @@ msgstr "{projectName}のワークスペースのセットアップを自動化"
 msgid "Automation"
 msgstr "オートメーション"
 
+msgid "Automation docs"
+msgstr "オートメーションのドキュメント"
+
 msgid "Automation has no instructions"
 msgstr "オートメーションに指示がありません"
 
@@ -2628,6 +2638,9 @@ msgstr "戻る"
 
 msgid "Back to About"
 msgstr "会社概要に戻る"
+
+msgid "Back to automations"
+msgstr "オートメーションに戻る"
 
 msgid "Back to billing"
 msgstr "請求に戻る"
@@ -3965,9 +3978,6 @@ msgstr "SupersetとLinearの間でタスクをどう同期するかを設定し�
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "ターミナルの動作と再利用可能なターミナルスクリプトを設定"
 
-msgid "Configure the automation yourself"
-msgstr "自分でオートメーションを設定する"
-
 msgid "Configure the in-app browser"
 msgstr "アプリ内ブラウザを設定"
 
@@ -4721,6 +4731,12 @@ msgstr "プルリクエストを読み込めませんでした: {msg}"
 msgid "Couldn't load review comments"
 msgstr "レビューコメントを読み込めませんでした"
 
+msgid "Couldn't load runs"
+msgstr "実行履歴を読み込めませんでした"
+
+msgid "Couldn't load this run's payload."
+msgstr "この実行のペイロードを読み込めませんでした。"
+
 msgid "Couldn't load your profile, so editing is disabled."
 msgstr "プロフィールを読み込めなかったため、編集は無効です。"
 
@@ -4997,9 +5013,6 @@ msgstr "{createdDate}に作成"
 
 msgid "Created {createdDirs} folders in {where}"
 msgstr "{createdDirs}件のフォルダを{where}に作成しました"
-
-msgid "Created <0>· 7d</0>"
-msgstr "作成 <0>· 7日</0>"
 
 msgid "Created 1 folder in {where}"
 msgstr "1件のフォルダを{where}に作成しました"
@@ -6230,6 +6243,9 @@ msgstr "毎分"
 msgid "Every objective is carrying its weight for the next rung. Measured over the trailing 30 days."
 msgstr "すべての目標が次の段に向けて力を発揮しています。直近30日間で計測。"
 
+msgid "Every scheduled run so far found a host online."
+msgstr "これまでのところ、すべてのスケジュール実行でホストがオンラインでした。"
+
 msgid "Every star on <0>{repoSlug}</0>, plotted since launch."
 msgstr "<0>{repoSlug}</0>のすべてのスターを、公開時からプロットしています。"
 
@@ -6402,8 +6418,8 @@ msgctxt "agent status"
 msgid "Failed"
 msgstr "失敗"
 
-msgid "Failed <0>· 7d</0>"
-msgstr "失敗 <0>· 7日</0>"
+msgid "Failed runs <0>· 7d</0>"
+msgstr "失敗した実行 <0>· 7日</0>"
 
 msgid "Failed to accept invitation"
 msgstr "招待を承諾できませんでした"
@@ -6745,12 +6761,6 @@ msgstr "デフォルトの復元に失敗しました"
 msgid "Failed to resume {0}"
 msgstr "{0}の再開に失敗しました"
 
-msgid "Failed to retry {failedCount} of {totalCount} automations"
-msgstr "{totalCount}件中{failedCount}件のオートメーションを再試行できませんでした"
-
-msgid "Failed to retry automation"
-msgstr "オートメーションを再試行できませんでした"
-
 msgid "Failed to reveal in Finder"
 msgstr "Finderでの表示に失敗しました"
 
@@ -6818,6 +6828,9 @@ msgstr "サインインに失敗しました。もう一度お試しください
 
 msgid "Failed to sign up. Please try again."
 msgstr "サインアップに失敗しました。もう一度お試しください。"
+
+msgid "Failed to start the selected automations"
+msgstr "選択したオートメーションを開始できませんでした"
 
 msgid "Failed to stop workspace run command"
 msgstr "ワークスペース実行コマンドの停止に失敗しました"
@@ -7025,9 +7038,6 @@ msgstr "ワークスペースを絞り込み…"
 
 msgid "Filter…"
 msgstr "フィルター…"
-
-msgid "filtering"
-msgstr "フィルター:"
 
 msgid "Filters"
 msgstr "フィルター"
@@ -9380,6 +9390,15 @@ msgstr "最小コントラスト"
 msgid "Mirror of the <0>PostHog Success Metrics dashboard</0> — product via saved insights, business live from Stripe/Neon"
 msgstr "<0>PostHog Success Metricsダッシュボード</0>のミラー — プロダクトは保存済みインサイト、ビジネスはStripe/Neonからライブ取得"
 
+msgid "missed"
+msgstr "未実行"
+
+msgid "Missed"
+msgstr "未実行"
+
+msgid "Missed <0>· 7d</0>"
+msgstr "未実行 <0>· 7日</0>"
+
 msgid "Missing auth state"
 msgstr "認証ステートがありません"
 
@@ -9505,6 +9524,9 @@ msgstr "他の{kindLower}テーマ"
 msgid "More actions"
 msgstr "その他の操作"
 
+msgid "More create options"
+msgstr "その他の作成オプション"
+
 msgid "More options"
 msgstr "その他のオプション"
 
@@ -9618,6 +9640,9 @@ msgstr "アプリ側の配線が必要です(フォームの状態、チャー�
 
 msgid "Need live chat/tool-call state (ToolUIPart, streams) or an app shell"
 msgstr "ライブのチャット/ツール呼び出し状態(ToolUIPart、ストリーム)またはアプリシェルが必要です"
+
+msgid "Needs a retry"
+msgstr "再実行が必要"
 
 msgid "Needs Action"
 msgstr "対応が必要"
@@ -10029,6 +10054,9 @@ msgstr "環境はまだありません。作成すると、そこからクラウ
 msgid "No extended thinking"
 msgstr "拡張思考なし"
 
+msgid "No failed runs."
+msgstr "失敗した実行はありません。"
+
 msgid "No files found"
 msgstr "ファイルが見つかりません"
 
@@ -10160,6 +10188,9 @@ msgstr "このフィルターに一致するページはありません"
 
 msgid "No pages yet"
 msgstr "ページはまだありません"
+
+msgid "No payload is stored for this run."
+msgstr "この実行のペイロードは保存されていません。"
 
 msgid "No payment method on file"
 msgstr "登録された支払い方法はありません"
@@ -10535,8 +10566,14 @@ msgstr "何も実行されていません。削除して新しく作成してく
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}には何もありません。"
 
+msgid "Nothing needs a retry"
+msgstr "再実行が必要なものはありません"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "直近30日に公開された実績はまだありません。このマシンの利用状況が同期されるとランクが表示されます(<0>{handle}</0>として公開)。"
+
+msgid "Nothing was missed"
+msgstr "未実行はありません"
 
 msgid "Notice"
 msgstr "お知らせ"
@@ -11163,6 +11200,9 @@ msgstr "実行のワークスペースを開く"
 msgid "open the task in a workspace"
 msgstr "タスクをワークスペースで開く"
 
+msgid "Open this run's workspace"
+msgstr "この実行のワークスペースを開く"
+
 msgid "Open workspace"
 msgstr "ワークスペースを開く"
 
@@ -11497,6 +11537,9 @@ msgstr "一部通過"
 
 msgid "Partner, Transpose Platform"
 msgstr "パートナー、Transpose Platform"
+
+msgid "Pass the schedule inside triggers as a schedule trigger, not as rrule beside them"
+msgstr "スケジュールは triggers 内の schedule トリガーとして渡してください。triggers と並べて rrule を渡すことはできません"
 
 msgid "Passed"
 msgstr "成功"
@@ -13088,14 +13131,8 @@ msgstr "再試行"
 msgid "Retry after the connection refreshes."
 msgstr "接続が更新されてから再試行してください。"
 
-msgid "Retry all"
-msgstr "すべて再試行"
-
 msgid "Retry dictation"
 msgstr "音声入力を再試行"
-
-msgid "Retry every automation whose last run failed"
-msgstr "前回の実行が失敗したすべてのオートメーションを再試行"
 
 msgid "Retry in a few seconds; if it persists, restart Superset."
 msgstr "数秒後に再試行してください。解消しない場合はSupersetを再起動してください。"
@@ -13178,6 +13215,9 @@ msgstr "シンタックスハイライト付きの差分をレビュー"
 
 msgid "Review the result."
 msgstr "結果をレビューする。"
+
+msgid "Review these runs in All runs"
+msgstr "「すべての実行」でこれらの実行を確認"
 
 msgid "Review thread…"
 msgstr "レビュースレッド…"
@@ -13276,6 +13316,9 @@ msgstr "端末上で10以上のコーディングエージェントを並列実�
 msgid "Run 10+ parallel coding agents on your machine."
 msgstr "手元のマシンで10以上のコーディングエージェントを並列実行できます。"
 
+msgid "Run again"
+msgstr "再実行"
+
 msgid "Run automations on data source and comment activity."
 msgstr "データソースやコメントの動きに応じてオートメーションを実行します。"
 
@@ -13369,14 +13412,17 @@ msgstr "実行中のターミナルプロセスは継続しますが、アプリ
 msgid "Runs a local command on your machine"
 msgstr "マシン上でローカルコマンドを実行します"
 
-msgid "Runs failed earlier this week, but nothing is failing right now"
-msgstr "今週これまでに失敗した実行がありますが、現在失敗しているものはありません"
+msgid "Runs appear here once an automation fires."
+msgstr "オートメーションが起動すると、ここに実行が表示されます。"
 
 msgid "Runs inside the Superset app on that device, so updating it means updating the app there."
 msgstr "そのデバイスのSupersetアプリ内で動作しているため、更新するにはそのデバイスのアプリを更新する必要があります。"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "実行結果はワークスペースに入ります。差分を確認し、良いものをマージしてください。"
+
+msgid "Runs that started their workspace in the last 7 days"
+msgstr "過去 7 日間にワークスペースを開始した実行"
 
 msgid "Runs when a new workspace is created."
 msgstr "新しいワークスペースの作成時に実行します。"
@@ -13483,6 +13529,9 @@ msgstr "定期実行のスケジュール設定、手動実行、一時停止、
 
 msgid "Scheduled and event-triggered agents (cron, GitHub events, webhooks) with ready-made templates."
 msgstr "スケジュール実行とイベント起動のエージェント(cron、GitHubイベント、webhook)。すぐ使えるテンプレート付き。"
+
+msgid "Scheduled runs that found no host online"
+msgstr "オンラインのホストが見つからなかったスケジュール実行"
 
 msgid "Schedules repeat — remove COUNT or UNTIL."
 msgstr "スケジュールは繰り返されます — COUNTまたはUNTILを削除してください。"
@@ -13822,6 +13871,9 @@ msgstr "ディレクトリを選択"
 msgid "Select environment"
 msgstr "環境を選択"
 
+msgid "Select every run"
+msgstr "すべての実行を選択"
+
 msgid "Select IDE"
 msgstr "IDEを選択"
 
@@ -13869,6 +13921,9 @@ msgstr "リポジトリを選択"
 
 msgid "Select repository"
 msgstr "リポジトリを選択"
+
+msgid "Select run"
+msgstr "実行を選択"
 
 msgid "Select senders"
 msgstr "送信者を選択"
@@ -14183,9 +14238,6 @@ msgstr "ホームのサイドバーの「プルリクエスト」の下に「使
 msgid "Show all {count}"
 msgstr "{count}件すべて表示"
 
-msgid "Show all automations again"
-msgstr "すべてのオートメーションを再表示"
-
 msgid "Show all comments"
 msgstr "すべてのコメントを表示"
 
@@ -14261,9 +14313,6 @@ msgstr "もっと見る"
 msgid "Show on Sidebar"
 msgstr "サイドバーに表示"
 
-msgid "Show only automations whose last run failed"
-msgstr "前回の実行が失敗したオートメーションのみ表示"
-
 msgid "Show open items"
 msgstr "オープンな項目を表示"
 
@@ -14299,6 +14348,9 @@ msgstr "セッションを表示"
 
 msgid "Show status and send notifications for this agent."
 msgstr "このエージェントのステータス表示と通知を有効にします。"
+
+msgid "Show the triggering payload"
+msgstr "トリガーのペイロードを表示"
 
 msgid "Show translation"
 msgstr "翻訳を表示"
@@ -15025,6 +15077,9 @@ msgstr "成功"
 
 msgid "Success!"
 msgstr "成功しました!"
+
+msgid "Successful runs <0>· 7d</0>"
+msgstr "成功した実行 <0>· 7日</0>"
 
 msgid "Suggested"
 msgstr "提案"
@@ -15785,12 +15840,6 @@ msgstr "人間がマージ前に全行を読む。"
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "職務の中身が変わります。エンジニアは審美眼のあるタイピストであることをやめ、審美眼のあるディスパッチャーになります。作業を分解し、フリートに割り振り、同じモジュールに触れたエージェント同士の衝突を裁く役です。"
 
-msgid "The last run failed. Click the row to see why."
-msgstr "前回の実行が失敗しました。行をクリックして原因を確認してください。"
-
-msgid "The last run failed. Open its workspace to see why"
-msgstr "前回の実行が失敗しました。ワークスペースを開いて原因を確認してください"
-
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Supersetの最新のアップデート、改善、新機能。"
 
@@ -16500,6 +16549,9 @@ msgstr "合計"
 msgid "Total agent sessions"
 msgstr "エージェントセッションの合計"
 
+msgid "Total automations"
+msgstr "自動化の合計"
+
 msgid "total cash"
 msgstr "総現金"
 
@@ -16532,6 +16584,9 @@ msgstr "新規issueをトリアージ"
 
 msgid "triaging 12 new issues…"
 msgstr "新規issue 12件をトリアージ中…"
+
+msgid "Trigger"
+msgstr "トリガー"
 
 msgid "Trigger alert()"
 msgstr "alert()を実行"
@@ -17723,9 +17778,6 @@ msgstr "ワークスペース"
 
 msgid "Workspaces are isolated task environments backed by git worktrees."
 msgstr "ワークスペースはgitワークツリーを基盤とした独立したタスク環境です。"
-
-msgid "Workspaces created by runs in the last 7 days"
-msgstr "過去7日間の実行で作成されたワークスペース"
 
 msgid "Workspaces created per user in the last 7 days, by percentile"
 msgstr "直近7日のユーザーあたりワークスペース作成数(パーセンタイル別)"
