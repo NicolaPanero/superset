@@ -37,7 +37,7 @@ import { Tabs, TabsList, TabsTrigger } from "@superset/ui/tabs";
 import { cn } from "@superset/ui/utils";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	LuArrowUpRight,
 	LuRotateCw,
@@ -62,13 +62,13 @@ import {
 	SortableHeader,
 	type SortDirection,
 } from "renderer/routes/_authenticated/_dashboard/components/SortableHeader";
+import { useFailedAutomations } from "renderer/routes/_authenticated/_dashboard/hooks/useFailedAutomations";
 import { AGENT_STORAGE_KEY } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/PromptGroup/types";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { AutomationRow } from "./components/AutomationRow";
 import { AutomationStatCards } from "./components/AutomationStatCards";
 import { AutomationsEmptyState } from "./components/AutomationsEmptyState";
 import { HostOfflineRunDialog } from "./components/HostOfflineRunDialog";
-import { useFailedAutomations } from "./hooks/useFailedAutomations";
 import type { AutomationTemplate } from "./templates";
 import { matchAgentChoice, portableAgentValue } from "./utils/agentIdentity";
 import { dispatchErrorCode, runErrorHelp } from "./utils/runErrorHelp";
@@ -233,8 +233,14 @@ function AutomationsPage() {
 		undefined,
 		{},
 	);
-	const { lastRunById } = useFailedAutomations();
+	// failedIds drove the old failure sections; this list is one section, so
+	// only the badge acknowledgement is still needed here.
+	const { lastRunById, markMyFailuresSeen } = useFailedAutomations();
 	const now = useNow(30_000);
+
+	useEffect(() => {
+		markMyFailuresSeen();
+	}, [markMyFailuresSeen]);
 
 	const recentProjects = useRecentProjects();
 

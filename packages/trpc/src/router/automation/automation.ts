@@ -43,6 +43,7 @@ import {
 import { z } from "zod";
 import { env } from "../../env";
 import { assertCloudAccess } from "../../lib/cloud-guards";
+import { nudge } from "../../lib/realtime";
 import { planRequiredError, protectedProcedure, userError } from "../../trpc";
 import { loadUsableEnvironment } from "../cloud-workspace/start";
 import { joinSlackTriggerChannels } from "../integration/slack/joinChannels";
@@ -768,6 +769,7 @@ export const automationRouter = {
 			await getAutomationForUser(ctx.session.user.id, organizationId, input.id);
 
 			await db.delete(automations).where(eq(automations.id, input.id));
+			nudge(organizationId, "automation_runs");
 
 			return { ok: true };
 		}),
@@ -1104,8 +1106,10 @@ export const automationRouter = {
 				cloudWorkspaceId: automationRuns.cloudWorkspaceId,
 				chatSessionId: automationRuns.chatSessionId,
 				terminalSessionId: automationRuns.terminalSessionId,
+				ownerUserId: automations.ownerUserId,
 			})
 			.from(automationRuns)
+			.innerJoin(automations, eq(automations.id, automationRuns.automationId))
 			.where(eq(automationRuns.organizationId, organizationId))
 			.orderBy(automationRuns.automationId, desc(automationRuns.createdAt));
 	}),
