@@ -77,12 +77,18 @@ export async function run(opts: RunOptions): Promise<void> {
 	try {
 		await execute(opts, opts.tree, ac.signal);
 	} catch (error) {
+		if (isBrokenPipe(error)) return;
 		await handleError(error, opts.name, ac.signal);
 	} finally {
 		activeCli = undefined;
 		process.off("SIGINT", onSignal);
 		process.off("SIGTERM", onSignal);
 	}
+}
+
+/** The reader stopped early (`superset schema | head`): nothing to report. */
+function isBrokenPipe(error: unknown): boolean {
+	return (error as { code?: unknown } | null)?.code === "EPIPE";
 }
 
 function formatZodIssues(message: string): string | null {
