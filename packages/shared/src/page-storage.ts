@@ -1,20 +1,33 @@
 export const STORAGE_FRAME_CHANNEL = "superset-storage/frame";
 export const STORAGE_HOST_CHANNEL = "superset-storage/host";
 
-export const MAX_PAGE_STORAGE_VALUE_BYTES = 8 * 1024;
-export const MAX_PAGE_STORAGE_KEYS_PER_USER = 128;
-export const MAX_PAGE_STORAGE_BYTES = 256 * 1024;
+export const MAX_PAGE_STORAGE_VALUE_BYTES = 64 * 1024;
+export const MAX_PAGE_STORAGE_KEYS_PER_USER = 500;
+export const MAX_PAGE_STORAGE_BYTES = 4 * 1024 * 1024;
 export const MAX_PAGE_STORAGE_KEY_LENGTH = 128;
+
+export const PAGE_STORAGE_OWN_PREFIX = "own/";
+
+export const PAGE_STORAGE_TICKET_SECONDS = 60;
 
 export type PageStorageErrorCode =
 	| "unavailable"
 	| "unauthenticated"
 	| "quota_exceeded"
-	| "invalid";
+	| "rate_limited"
+	| "invalid"
+	| "revoked";
+
+export interface PageStorageViewer {
+	userId: string;
+	name: string;
+	image: string | null;
+}
 
 export interface PageStorageRecord {
 	userId: string;
 	name: string;
+	image: string | null;
 	value: unknown;
 	updatedAt: string;
 }
@@ -31,17 +44,43 @@ export type PageStorageResult =
 	| { op: "set" }
 	| { op: "remove" };
 
-export type PageStorageFrameMessage =
-	| { channel: typeof STORAGE_FRAME_CHANNEL; type: "hello" }
-	| {
-			channel: typeof STORAGE_FRAME_CHANNEL;
-			type: "call";
-			id: string;
-			request: PageStorageOp;
-	  };
+export type PageStorageSocketCall = {
+	type: "call";
+	id: string;
+	request: PageStorageOp;
+};
 
-export type PageStorageResponse =
-	| { channel: typeof STORAGE_HOST_CHANNEL; type: "hello"; writable: boolean }
+export type PageStorageSocketMessage =
+	| {
+			type: "hello";
+			viewer: PageStorageViewer;
+			author: boolean;
+			writable: boolean;
+	  }
+	| { type: "result"; id: string; ok: true; result: PageStorageResult }
+	| {
+			type: "result";
+			id: string;
+			ok: false;
+			code: PageStorageErrorCode;
+			message: string;
+	  }
+	| { type: "records"; key: string; records: PageStorageRecord[] }
+	| { type: "revoked" };
+
+export type PageStorageHostMessage =
+	| {
+			channel: typeof STORAGE_HOST_CHANNEL;
+			type: "connect";
+			url: string;
+	  }
+	| {
+			channel: typeof STORAGE_HOST_CHANNEL;
+			type: "bridge";
+			viewer: PageStorageViewer;
+			author: boolean;
+			writable: boolean;
+	  }
 	| { channel: typeof STORAGE_HOST_CHANNEL; type: "changed"; key?: string }
 	| {
 			channel: typeof STORAGE_HOST_CHANNEL;
@@ -59,12 +98,31 @@ export type PageStorageResponse =
 			message: string;
 	  };
 
+export type PageStorageFrameMessage =
+	| { channel: typeof STORAGE_FRAME_CHANNEL; type: "hello" }
+	| {
+			channel: typeof STORAGE_FRAME_CHANNEL;
+			type: "call";
+			id: string;
+			request: PageStorageOp;
+	  };
+
 export type PageStorageHandler = (
 	op: PageStorageOp,
 ) => Promise<PageStorageResult>;
 
 export interface PageStoragePort {
-	call: PageStorageHandler;
+	connect?: () => Promise<
+		| { kind: "socket"; url: string }
+		| {
+				kind: "bridge";
+				viewer: PageStorageViewer;
+				author: boolean;
+				writable: boolean;
+		  }
+		| null
+	>;
+	call?: PageStorageHandler;
 	watch?: (onChange: (key?: string) => void) => () => void;
 }
 
@@ -79,7 +137,10 @@ export interface PageStorageUsage {
 	replacingExisting: boolean;
 }
 
-export type PageStorageRefusal = { code: "quota_exceeded"; message: string };
+export type PageStorageRefusal = {
+	code: "quota_exceeded";
+	message: string;
+};
 
 export function pageStorageValueRefusal(
 	sizeBytes: number,

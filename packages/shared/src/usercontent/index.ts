@@ -30,19 +30,20 @@ export {
 export { PAGE_THEME_CSS } from "./theme";
 export {
 	type FileTicketClaims,
-	type PageStorageTicketClaims,
+	type PageConnectTicketClaims,
 	type PageTicketClaims,
 	signFileTicket,
-	signPageStorageTicket,
+	signPageConnectTicket,
 	signPageTicket,
 	verifyFileTicket,
-	verifyPageStorageTicket,
+	verifyPageConnectTicket,
 	verifyPageTicket,
 } from "./ticket";
 export {
 	fileUrl,
 	PAGE_THUMBNAIL_HEIGHT,
 	PAGE_THUMBNAIL_WIDTH,
+	pageFrameOrigin,
 	pageIdFromHost,
 	pageOrigin,
 	pageThumbnailUrl,

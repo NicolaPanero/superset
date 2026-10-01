@@ -3,18 +3,59 @@ import type {
 	PageStoragePort,
 	PageStorageResult,
 } from "@superset/shared/page-storage";
-import { parsePageStorageChanged } from "@superset/shared/page-storage-hub";
+import { pageStorageTicketPath } from "@superset/shared/page-storage-hub";
 import { useCallback, useMemo } from "react";
 import { useCloudClient } from "../../providers/CloudClientProvider";
 
-const RETRY_MS = [1000, 2000, 5000, 15000];
+interface UsePageStorageBridgeOptions {
+	pageId: string;
+	realtimeUrl: string;
+	viewer: { userId: string; name: string; image: string | null };
+	token: () => Promise<string | null>;
+}
 
 export function usePageStorageBridge({
 	pageId,
-}: {
-	pageId: string;
-}): PageStoragePort {
+	realtimeUrl,
+	viewer,
+	token,
+}: UsePageStorageBridgeOptions): PageStoragePort {
 	const client = useCloudClient();
+
+	const connect = useCallback(async () => {
+		const jwt = await token().catch(() => null);
+		if (!jwt) return null;
+
+		let response: Response;
+		try {
+			response = await fetch(`${realtimeUrl}${pageStorageTicketPath(pageId)}`, {
+				method: "POST",
+				headers: {
+					authorization: `Bearer ${jwt}`,
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({ name: viewer.name, image: viewer.image }),
+			});
+		} catch {
+			return null;
+		}
+		if (!response.ok) return null;
+
+		const body = (await response.json().catch(() => null)) as {
+			url?: string;
+			fallback?: boolean;
+		} | null;
+		if (body?.url) return { kind: "socket" as const, url: body.url };
+		if (body?.fallback) {
+			return {
+				kind: "bridge" as const,
+				viewer,
+				author: false,
+				writable: true,
+			};
+		}
+		return null;
+	}, [pageId, realtimeUrl, token, viewer]);
 
 	const call = useCallback(
 		async (op: PageStorageOp): Promise<PageStorageResult> => {
@@ -44,65 +85,5 @@ export function usePageStorageBridge({
 		[client, pageId],
 	);
 
-	const watch = useCallback(
-		(onChange: (key?: string) => void) => {
-			let stopped = false;
-			let socket: WebSocket | null = null;
-			let timer: ReturnType<typeof setTimeout> | null = null;
-			let attempt = 0;
-
-			const connect = async () => {
-				if (stopped) return;
-				let url: string;
-				try {
-					({ url } = await client.page.store.subscribeUrl.query({ pageId }));
-				} catch (error) {
-					if (attempt === 0) {
-						console.warn("[pages] page storage live updates are off", {
-							pageId,
-							error,
-						});
-					}
-					schedule();
-					return;
-				}
-				if (stopped) return;
-
-				socket = new WebSocket(url);
-				socket.addEventListener("open", () => {
-					attempt = 0;
-				});
-				socket.addEventListener("message", (event) => {
-					if (stopped) return;
-					const message = parsePageStorageChanged(event.data);
-					if (message) onChange(message.key);
-				});
-				socket.addEventListener("close", () => {
-					socket = null;
-					schedule();
-				});
-			};
-
-			const schedule = () => {
-				if (stopped || timer) return;
-				const wait = RETRY_MS[Math.min(attempt, RETRY_MS.length - 1)] ?? 15000;
-				attempt += 1;
-				timer = setTimeout(() => {
-					timer = null;
-					connect();
-				}, wait);
-			};
-
-			connect();
-
-			return () => {
-				stopped = true;
-				if (timer) clearTimeout(timer);
-				socket?.close();
-			};
-		},
-		[client, pageId],
-	);
-
-	return useMemo(() => ({ call, watch }), [call, watch]);
+	return useMemo(() => ({ connect, call }), [connect, call]);
 }

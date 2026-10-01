@@ -2,32 +2,57 @@ import { describe, expect, test } from "bun:test";
 import { STORAGE_FRAME_CHANNEL, STORAGE_HOST_CHANNEL } from "./page-storage";
 import { PAGE_STORAGE_RUNTIME_SOURCE } from "./page-storage-runtime";
 
-interface Harness {
-	storage: {
-		ready: Promise<boolean>;
-		writable: boolean | null;
-		get(key: string): Promise<unknown>;
-		getAll(key: string): Promise<unknown[]>;
-		set(key: string, value: unknown): Promise<void>;
-		remove(key: string): Promise<void>;
-		subscribe(key: string, onRecords: (records: unknown[]) => void): () => void;
-	};
-	sent: Record<string, unknown>[];
-	toFrame(body: Record<string, unknown>): void;
+interface Storage {
+	ready: Promise<boolean>;
+	viewer: { userId: string; name: string; image: string | null } | null;
+	author: boolean;
+	writable: boolean | null;
+	get(key: string): Promise<unknown>;
+	getAll(key: string): Promise<unknown[]>;
+	set(key: string, value: unknown): Promise<void>;
+	remove(key: string): Promise<void>;
+	subscribe(key: string, onRecords: (records: unknown[]) => void): () => void;
 }
 
-function mount({ framed = true }: { framed?: boolean } = {}): Harness {
+interface Harness {
+	storage: Storage;
+	posted: Record<string, unknown>[];
+	sent: Record<string, unknown>[];
+	toFrame(body: Record<string, unknown>): void;
+	fromHub(body: Record<string, unknown>): void;
+	socketOpened: () => string | null;
+}
+
+function flush(): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+function mount({ framed = true } = {}): Harness {
+	const posted: Record<string, unknown>[] = [];
 	const sent: Record<string, unknown>[] = [];
 	const listeners: ((event: unknown) => void)[] = [];
+	const socketListeners = new Map<string, ((event: unknown) => void)[]>();
+	let socketUrl: string | null = null;
+
 	const win: Record<string, unknown> = {};
 	const parent = framed
-		? { postMessage: (message: Record<string, unknown>) => sent.push(message) }
+		? { postMessage: (m: Record<string, unknown>) => posted.push(m) }
 		: win;
-	if (!framed) win.postMessage = (m: Record<string, unknown>) => sent.push(m);
 
-	const addEventListener = (type: string, fn: (event: unknown) => void) => {
-		if (type === "message") listeners.push(fn);
-	};
+	class FakeSocket {
+		readyState = 1;
+		constructor(url: string) {
+			socketUrl = url;
+		}
+		addEventListener(type: string, fn: (event: unknown) => void) {
+			const fns = socketListeners.get(type) ?? [];
+			fns.push(fn);
+			socketListeners.set(type, fns);
+		}
+		send(payload: string) {
+			sent.push(JSON.parse(payload));
+		}
+	}
 
 	new Function(
 		"window",
@@ -35,12 +60,23 @@ function mount({ framed = true }: { framed?: boolean } = {}): Harness {
 		"addEventListener",
 		"removeEventListener",
 		"document",
+		"WebSocket",
 		PAGE_STORAGE_RUNTIME_SOURCE,
-	)(win, parent, addEventListener, () => {}, { visibilityState: "visible" });
+	)(
+		win,
+		parent,
+		(type: string, fn: (event: unknown) => void) => {
+			if (type === "message") listeners.push(fn);
+		},
+		() => {},
+		{ visibilityState: "visible" },
+		FakeSocket,
+	);
 
-	const superset = win.superset as { storage: Harness["storage"] };
+	const superset = win.superset as { storage: Storage };
 	return {
 		storage: superset.storage,
+		posted,
 		sent,
 		toFrame(body) {
 			const event = {
@@ -49,32 +85,190 @@ function mount({ framed = true }: { framed?: boolean } = {}): Harness {
 			};
 			for (const fn of [...listeners]) fn(event);
 		},
+		fromHub(body) {
+			for (const fn of socketListeners.get("message") ?? []) {
+				fn({ data: JSON.stringify(body) });
+			}
+		},
+		socketOpened: () => socketUrl,
 	};
 }
 
-function lastCall(sent: Record<string, unknown>[]) {
-	return sent.filter((m) => m.type === "call").at(-1);
-}
+const lastCall = (sent: Record<string, unknown>[]) =>
+	sent.filter((m) => m.type === "call").at(-1);
 
-function callCount(sent: Record<string, unknown>[]) {
-	return sent.filter((m) => m.type === "call").length;
-}
-
-function flush(): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, 0));
-}
-
-describe("page storage runtime", () => {
-	test("knocks until the host answers, then reports itself ready", async () => {
+describe("page storage runtime, socket path", () => {
+	test("asks the host for a connection, then opens the socket it is given", async () => {
 		const h = mount();
-		expect(h.sent.some((m) => m.type === "hello")).toBe(true);
+		expect(h.posted.some((m) => m.type === "hello")).toBe(true);
 
-		h.toFrame({ type: "hello", writable: true });
+		h.toFrame({ type: "connect", url: "wss://realtime/socket?ticket=t" });
+		expect(h.socketOpened()).toBe("wss://realtime/socket?ticket=t");
+
+		h.fromHub({
+			type: "hello",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: true,
+			writable: true,
+		});
 		expect(await h.storage.ready).toBe(true);
+		expect(h.storage.viewer).toEqual({
+			userId: "u1",
+			name: "Ada",
+			image: null,
+		});
+		expect(h.storage.author).toBe(true);
 		expect(h.storage.writable).toBe(true);
 	});
 
-	test("a page with no host at all settles unavailable rather than hanging", async () => {
+	test("calls go down the socket, not to the host", async () => {
+		const h = mount();
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await h.storage.ready;
+
+		const before = h.posted.length;
+		const pending = h.storage.getAll("votes");
+		await flush();
+		expect(lastCall(h.sent)?.request).toEqual({ op: "getAll", key: "votes" });
+		expect(h.posted.length).toBe(before);
+
+		h.fromHub({
+			type: "result",
+			id: lastCall(h.sent)?.id,
+			ok: true,
+			result: { op: "getAll", records: [{ value: "Ramen" }] },
+		});
+		expect(await pending).toEqual([{ value: "Ramen" }]);
+	});
+
+	test("a pushed record set reaches a subscriber with no extra read", async () => {
+		const h = mount();
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await h.storage.ready;
+
+		const seen: unknown[][] = [];
+		h.storage.subscribe("votes", (records) => seen.push(records));
+		await flush();
+		h.fromHub({
+			type: "result",
+			id: lastCall(h.sent)?.id,
+			ok: true,
+			result: { op: "getAll", records: [] },
+		});
+		await flush();
+
+		const before = h.sent.filter((m) => m.type === "call").length;
+		h.fromHub({
+			type: "records",
+			key: "votes",
+			records: [{ value: "Tacos" }, { value: "Pizza" }],
+		});
+		await flush();
+		expect(seen.at(-1)).toHaveLength(2);
+		expect(h.sent.filter((m) => m.type === "call").length).toBe(before);
+	});
+
+	test("revoked is terminal: later calls reject with it, not as unavailable", async () => {
+		const h = mount();
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await h.storage.ready;
+
+		h.fromHub({ type: "revoked" });
+		await expect(h.storage.get("votes")).rejects.toMatchObject({
+			code: "revoked",
+		});
+	});
+
+	test("carries the hub's code through to the page", async () => {
+		const h = mount();
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await h.storage.ready;
+
+		const pending = h.storage.set("votes", "Tacos");
+		await flush();
+		h.fromHub({
+			type: "result",
+			id: lastCall(h.sent)?.id,
+			ok: false,
+			code: "rate_limited",
+			message: "slow down",
+		});
+		await expect(pending).rejects.toMatchObject({ code: "rate_limited" });
+	});
+});
+
+describe("page storage runtime, bridge fallback", () => {
+	test("serves calls over postMessage when the host offers no socket", async () => {
+		const h = mount();
+		h.toFrame({
+			type: "bridge",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		expect(await h.storage.ready).toBe(true);
+		expect(h.socketOpened()).toBeNull();
+
+		h.storage.getAll("votes");
+		await flush();
+		const call = h.posted.filter((m) => m.type === "call").at(-1);
+		expect(call?.channel).toBe(STORAGE_FRAME_CHANNEL);
+		expect(call?.request).toEqual({ op: "getAll", key: "votes" });
+	});
+
+	test("a host-pushed change makes a bridge subscriber re-read", async () => {
+		const h = mount();
+		h.toFrame({
+			type: "bridge",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await h.storage.ready;
+
+		h.storage.subscribe("votes", () => {});
+		await flush();
+		h.toFrame({
+			type: "result",
+			id: h.posted.filter((m) => m.type === "call").at(-1)?.id,
+			ok: true,
+			result: { op: "getAll", records: [] },
+		});
+		await flush();
+
+		const before = h.posted.filter((m) => m.type === "call").length;
+		h.toFrame({ type: "changed", key: "votes" });
+		await flush();
+		expect(h.posted.filter((m) => m.type === "call").length).toBe(before + 1);
+	});
+});
+
+describe("page storage runtime, no host", () => {
+	test("settles unavailable rather than hanging", async () => {
 		const h = mount({ framed: false });
 		expect(await h.storage.ready).toBe(false);
 		await expect(h.storage.get("k")).rejects.toMatchObject({
@@ -82,191 +276,20 @@ describe("page storage runtime", () => {
 		});
 	});
 
-	test("resolves each call against its own id", async () => {
+	test("refuses a value JSON cannot represent before posting it", async () => {
 		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const first = h.storage.getAll("votes");
-		await Promise.resolve();
-		const firstId = lastCall(h.sent)?.id;
-
-		const second = h.storage.get("votes");
-		await Promise.resolve();
-		const secondId = lastCall(h.sent)?.id;
-
-		expect(firstId).not.toBe(secondId);
-
 		h.toFrame({
-			type: "result",
-			id: secondId,
-			ok: true,
-			result: { op: "get", value: "Ramen" },
+			type: "bridge",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
 		});
-		h.toFrame({
-			type: "result",
-			id: firstId,
-			ok: true,
-			result: { op: "getAll", records: [{ value: "Ramen" }] },
-		});
-
-		expect(await second).toBe("Ramen");
-		expect(await first).toEqual([{ value: "Ramen" }]);
-	});
-
-	test("carries the host's error code through to the page", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
 		await h.storage.ready;
 
-		const pending = h.storage.set("votes", "Tacos");
-		await Promise.resolve();
-		const id = lastCall(h.sent)?.id;
-		h.toFrame({
-			type: "result",
-			id,
-			ok: false,
-			code: "quota_exceeded",
-			message: "quota_exceeded: a page stores at most 262144 bytes",
-		});
-
-		await expect(pending).rejects.toMatchObject({ code: "quota_exceeded" });
-	});
-
-	test("refuses an over-size value before it reaches the host", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const before = h.sent.length;
-		await expect(h.storage.set("k", "x".repeat(9000))).rejects.toMatchObject({
-			code: "quota_exceeded",
-		});
-		expect(h.sent.length).toBe(before);
-	});
-
-	test("refuses a malformed key without calling out", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const before = callCount(h.sent);
-		await expect(h.storage.get("")).rejects.toMatchObject({ code: "invalid" });
-		expect(callCount(h.sent)).toBe(before);
-	});
-
-	test("refuses a value postMessage could not clone, as invalid", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const before = callCount(h.sent);
-		await expect(h.storage.set("k", () => {})).rejects.toMatchObject({
+		const before = h.posted.length;
+		await expect(h.storage.set("k", () => 1)).rejects.toMatchObject({
 			code: "invalid",
 		});
-		expect(callCount(h.sent)).toBe(before);
-	});
-
-	test("sends the JSON form of a value, not the object itself", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		h.storage.set("k", { keep: 1, drop: () => {}, when: new Date(0) });
-		await Promise.resolve();
-		expect((lastCall(h.sent)?.request as { value: unknown }).value).toEqual({
-			keep: 1,
-			when: "1970-01-01T00:00:00.000Z",
-		});
-	});
-
-	test("a pushed change makes a subscriber re-read", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const seen: unknown[][] = [];
-		h.storage.subscribe("votes", (records) => seen.push(records));
-
-		await flush();
-		h.toFrame({
-			type: "result",
-			id: lastCall(h.sent)?.id,
-			ok: true,
-			result: { op: "getAll", records: [{ value: "Tacos" }] },
-		});
-		await flush();
-
-		const before = callCount(h.sent);
-		h.toFrame({ type: "changed", key: "votes" });
-		await flush();
-		expect(callCount(h.sent)).toBe(before + 1);
-
-		h.toFrame({
-			type: "result",
-			id: lastCall(h.sent)?.id,
-			ok: true,
-			result: {
-				op: "getAll",
-				records: [{ value: "Tacos" }, { value: "Ramen" }],
-			},
-		});
-		await flush();
-		expect(seen.at(-1)).toHaveLength(2);
-	});
-
-	test("a change under another key leaves this subscriber alone", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		h.storage.subscribe("votes", () => {});
-		await flush();
-		h.toFrame({
-			type: "result",
-			id: lastCall(h.sent)?.id,
-			ok: true,
-			result: { op: "getAll", records: [] },
-		});
-		await flush();
-
-		const before = callCount(h.sent);
-		h.toFrame({ type: "changed", key: "something-else" });
-		await flush();
-		expect(callCount(h.sent)).toBe(before);
-	});
-
-	test("unsubscribing stops the pushes", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		const stop = h.storage.subscribe("votes", () => {});
-		await flush();
-		h.toFrame({
-			type: "result",
-			id: lastCall(h.sent)?.id,
-			ok: true,
-			result: { op: "getAll", records: [] },
-		});
-		await flush();
-		stop();
-
-		const before = callCount(h.sent);
-		h.toFrame({ type: "changed", key: "votes" });
-		await flush();
-		expect(callCount(h.sent)).toBe(before);
-	});
-
-	test("posts calls on the frame channel", async () => {
-		const h = mount();
-		h.toFrame({ type: "hello", writable: true });
-		await h.storage.ready;
-
-		h.storage.remove("votes");
-		await Promise.resolve();
-		const call = lastCall(h.sent);
-		expect(call?.channel).toBe(STORAGE_FRAME_CHANNEL);
-		expect(call?.request).toEqual({ op: "remove", key: "votes" });
+		expect(h.posted.length).toBe(before);
 	});
 });

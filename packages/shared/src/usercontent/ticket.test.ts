@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
 	signFileTicket,
-	signPageStorageTicket,
+	signPageConnectTicket,
 	signPageTicket,
 	verifyFileTicket,
-	verifyPageStorageTicket,
+	verifyPageConnectTicket,
 	verifyPageTicket,
 } from "./ticket";
 
@@ -120,51 +120,53 @@ describe("file tickets", () => {
 	});
 });
 
-describe("page storage tickets", () => {
-	test("round-trips claims", async () => {
-		const ticket = await signPageStorageTicket(SECRET, {
-			pageId: PAGE,
-			exp: EXP,
-		});
-		expect(await verifyPageStorageTicket(SECRET, ticket, NOW)).toEqual({
-			pageId: PAGE,
-			exp: EXP,
-		});
+describe("page connect tickets", () => {
+	const claims = {
+		pageId: PAGE,
+		userId: "user-1",
+		name: "Ada",
+		image: null,
+		organizationIds: ["org-1"],
+		author: true,
+		writable: true,
+		nonce: "n-1",
+		exp: EXP,
+	};
+
+	test("round-trips every claim the hub acts on", async () => {
+		const ticket = await signPageConnectTicket(SECRET, claims);
+		expect(await verifyPageConnectTicket(SECRET, ticket, NOW)).toEqual(claims);
 	});
 
 	test("never crosses with the kinds that open content", async () => {
-		const storage = await signPageStorageTicket(SECRET, {
-			pageId: PAGE,
-			exp: EXP,
-		});
-		expect(await verifyPageTicket(SECRET, storage, NOW)).toBeNull();
-		expect(await verifyFileTicket(SECRET, storage, NOW)).toBeNull();
+		const connect = await signPageConnectTicket(SECRET, claims);
+		expect(await verifyPageTicket(SECRET, connect, NOW)).toBeNull();
+		expect(await verifyFileTicket(SECRET, connect, NOW)).toBeNull();
 
 		const view = await signPageTicket(SECRET, { pageId: PAGE, exp: EXP });
-		expect(await verifyPageStorageTicket(SECRET, view, NOW)).toBeNull();
+		expect(await verifyPageConnectTicket(SECRET, view, NOW)).toBeNull();
 	});
 
 	test("rejects expiry and the wrong secret", async () => {
-		const ticket = await signPageStorageTicket(SECRET, {
-			pageId: PAGE,
-			exp: EXP,
-		});
+		const ticket = await signPageConnectTicket(SECRET, claims);
 		expect(
-			await verifyPageStorageTicket(SECRET, ticket, EXP * 1000),
+			await verifyPageConnectTicket(SECRET, ticket, EXP * 1000),
 		).toBeNull();
-		expect(await verifyPageStorageTicket(OTHER, ticket, NOW)).toBeNull();
+		expect(await verifyPageConnectTicket(OTHER, ticket, NOW)).toBeNull();
 	});
 
-	test("honours a previous secret during rotation", async () => {
-		const ticket = await signPageStorageTicket(OTHER, {
-			pageId: PAGE,
-			exp: EXP,
+	test("refuses a ticket with no nonce, which would be replayable", async () => {
+		const ticket = await signPageConnectTicket(SECRET, {
+			...claims,
+			nonce: "",
 		});
-		expect(await verifyPageStorageTicket([SECRET, OTHER], ticket, NOW)).toEqual(
-			{
-				pageId: PAGE,
-				exp: EXP,
-			},
-		);
+		expect(await verifyPageConnectTicket(SECRET, ticket, NOW)).toBeNull();
+	});
+
+	test("refuses tampered org ids rather than trusting the shape", async () => {
+		const ticket = await signPageConnectTicket(SECRET, claims);
+		const [payload] = ticket.split(".");
+		const forged = `${payload}.deadbeef`;
+		expect(await verifyPageConnectTicket(SECRET, forged, NOW)).toBeNull();
 	});
 });

@@ -5,10 +5,7 @@ import type { PageStorageHubRecord } from "@superset/shared/page-storage-hub";
 import { TRPCError, type TRPCRouterRecord } from "@trpc/server";
 import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
-import {
-	callPageStore,
-	mintPageStoreSubscribeTicket,
-} from "../../../lib/page-store";
+import { callPageStore } from "../../../lib/page-store";
 import { protectedProcedure } from "../../../trpc";
 import { requireActiveOrgMembership } from "../../utils/active-org";
 import { assertPageReadable, assertPageWritable } from "../access";
@@ -43,23 +40,28 @@ async function loadReadablePage(
 	return page;
 }
 
-async function withNames(
-	records: PageStorageHubRecord[],
-): Promise<
-	{ userId: string; name: string; value: unknown; updatedAt: string }[]
+async function withNames(records: PageStorageHubRecord[]): Promise<
+	{
+		userId: string;
+		name: string;
+		image: string | null;
+		value: unknown;
+		updatedAt: string;
+	}[]
 > {
 	const ids = [...new Set(records.map((record) => record.userId))];
 	const rows = ids.length
 		? await db
-				.select({ id: users.id, name: users.name })
+				.select({ id: users.id, name: users.name, image: users.image })
 				.from(users)
 				.where(inArray(users.id, ids))
 		: [];
-	const names = new Map(rows.map((row) => [row.id, row.name]));
+	const people = new Map(rows.map((row) => [row.id, row]));
 
 	return records.map((record) => ({
 		userId: record.userId,
-		name: names.get(record.userId) ?? "Someone",
+		name: people.get(record.userId)?.name ?? "Someone",
+		image: people.get(record.userId)?.image ?? null,
 		value: record.value,
 		updatedAt: new Date(record.updatedAt).toISOString(),
 	}));
@@ -124,15 +126,6 @@ export const pageStoreRouter = {
 				key: input.key,
 			});
 			return { ok: true as const };
-		}),
-
-	subscribeUrl: protectedProcedure
-		.input(z.object({ pageId: pageFields.id }))
-		.query(async ({ ctx, input }) => {
-			const organizationId = await requireActiveOrgMembership(ctx);
-			const userId = ctx.session.user.id;
-			await loadReadablePage(input.pageId, organizationId, userId);
-			return mintPageStoreSubscribeTicket(input.pageId);
 		}),
 
 	list: protectedProcedure

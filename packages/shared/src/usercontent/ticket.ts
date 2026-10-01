@@ -25,14 +25,21 @@ export interface FileTicketClaims {
 	exp: number;
 }
 
-export interface PageStorageTicketClaims {
+export interface PageConnectTicketClaims {
 	pageId: string;
+	userId: string;
+	name: string;
+	image: string | null;
+	organizationIds: string[];
+	author: boolean;
+	writable: boolean;
+	nonce: string;
 	exp: number;
 }
 
 const PAGE_KIND = "page";
 const FILE_KIND = "file";
-const PAGE_STORAGE_KIND = "page-storage";
+const PAGE_CONNECT_KIND = "page-connect";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -164,31 +171,69 @@ export async function verifyPageTicket(
 	};
 }
 
-export async function signPageStorageTicket(
+export async function signPageConnectTicket(
 	secret: string,
-	claims: PageStorageTicketClaims,
+	claims: PageConnectTicketClaims,
 ): Promise<string> {
 	return signClaims(secret, {
-		kind: PAGE_STORAGE_KIND,
+		kind: PAGE_CONNECT_KIND,
 		pageId: claims.pageId,
+		userId: claims.userId,
+		name: claims.name,
+		image: claims.image,
+		organizationIds: claims.organizationIds,
+		author: claims.author,
+		writable: claims.writable,
+		nonce: claims.nonce,
 		exp: claims.exp,
 	});
 }
 
-export async function verifyPageStorageTicket(
+export async function verifyPageConnectTicket(
 	secrets: string | readonly string[],
 	ticket: string,
 	now: number = Date.now(),
-): Promise<PageStorageTicketClaims | null> {
+): Promise<PageConnectTicketClaims | null> {
 	const wire = await verifyClaims(secrets, ticket, now);
 	if (!wire) return null;
-	const { kind, pageId, exp } = wire as {
-		kind?: unknown;
-		pageId?: unknown;
-		exp: number;
+	const {
+		kind,
+		pageId,
+		userId,
+		name,
+		image,
+		organizationIds,
+		author,
+		writable,
+		nonce,
+		exp,
+	} = wire as Record<string, unknown> & { exp: number };
+	if (
+		kind !== PAGE_CONNECT_KIND ||
+		typeof pageId !== "string" ||
+		typeof userId !== "string" ||
+		typeof name !== "string" ||
+		!(image === null || typeof image === "string") ||
+		!Array.isArray(organizationIds) ||
+		organizationIds.some((id) => typeof id !== "string") ||
+		typeof author !== "boolean" ||
+		typeof writable !== "boolean" ||
+		typeof nonce !== "string" ||
+		nonce.length === 0
+	) {
+		return null;
+	}
+	return {
+		pageId,
+		userId,
+		name,
+		image,
+		organizationIds: organizationIds as string[],
+		author,
+		writable,
+		nonce,
+		exp,
 	};
-	if (kind !== PAGE_STORAGE_KIND || typeof pageId !== "string") return null;
-	return { pageId, exp };
 }
 
 export async function signFileTicket(

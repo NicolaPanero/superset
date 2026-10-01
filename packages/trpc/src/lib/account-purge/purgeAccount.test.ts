@@ -112,7 +112,6 @@ mock.module("../page-store", () => ({
 	},
 	callPageStore: async () => ({ ok: true }),
 	deletePageStorage: async () => {},
-	mintPageStoreSubscribeTicket: async () => ({ url: "", expiresAt: 0 }),
 }));
 
 mock.module("@superset/auth/stripe", () => ({

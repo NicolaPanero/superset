@@ -7,7 +7,7 @@ import {
 	STORAGE_FRAME_CHANNEL,
 	STORAGE_HOST_CHANNEL,
 } from "@superset/shared/page-storage";
-import { type RefObject, useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
 export function usePageStorageChannel({
 	frameRef,
@@ -20,10 +20,11 @@ export function usePageStorageChannel({
 }): void {
 	const portRef = useRef(port);
 	portRef.current = port;
-	const [live, setLive] = useState(false);
 
 	useEffect(() => {
 		if (!port) return;
+		let stopped = false;
+		let unwatch: (() => void) | undefined;
 
 		const post = (body: Record<string, unknown>) => {
 			frameRef.current?.contentWindow?.postMessage(
@@ -39,8 +40,23 @@ export function usePageStorageChannel({
 			if (!data || data.channel !== STORAGE_FRAME_CHANNEL) return;
 
 			if (data.type === "hello") {
-				post({ type: "hello", writable: true });
-				setLive(true);
+				const opened = await portRef.current?.connect?.();
+				if (stopped) return;
+				if (opened?.kind === "socket") {
+					post({ type: "connect", url: opened.url });
+					return;
+				}
+				if (opened?.kind === "bridge") {
+					post({
+						type: "bridge",
+						viewer: opened.viewer,
+						author: opened.author,
+						writable: opened.writable,
+					});
+					unwatch ??= portRef.current?.watch?.((key) => {
+						post({ type: "changed", ...(key !== undefined ? { key } : {}) });
+					});
+				}
 				return;
 			}
 			if (data.type !== "call") return;
@@ -59,41 +75,30 @@ export function usePageStorageChannel({
 
 			try {
 				const result = await serve(data.request);
-				post({ type: "result", id: data.id, ok: true, result });
+				if (!stopped) post({ type: "result", id: data.id, ok: true, result });
 			} catch (error) {
-				post({
-					type: "result",
-					id: data.id,
-					ok: false,
-					...classify(error),
-				});
+				if (!stopped) {
+					post({ type: "result", id: data.id, ok: false, ...classify(error) });
+				}
 			}
 		};
 
 		window.addEventListener("message", onMessage);
-		return () => window.removeEventListener("message", onMessage);
+		return () => {
+			stopped = true;
+			unwatch?.();
+			window.removeEventListener("message", onMessage);
+		};
 	}, [frameOrigin, frameRef, port]);
-
-	useEffect(() => {
-		if (!live || !port?.watch) return;
-		return port.watch((key) => {
-			frameRef.current?.contentWindow?.postMessage(
-				{
-					channel: STORAGE_HOST_CHANNEL,
-					type: "changed",
-					...(key !== undefined ? { key } : {}),
-				},
-				frameOrigin,
-			);
-		});
-	}, [frameOrigin, frameRef, live, port]);
 }
 
 const STORAGE_CODES: readonly PageStorageErrorCode[] = [
 	"unavailable",
 	"unauthenticated",
 	"quota_exceeded",
+	"rate_limited",
 	"invalid",
+	"revoked",
 ];
 
 function classify(error: unknown): {

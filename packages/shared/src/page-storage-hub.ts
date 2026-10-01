@@ -37,39 +37,18 @@ export type PageStorageHubSuccess = Extract<
 export type PageStorageHubReplyFor<Op extends PageStorageHubRequest["op"]> =
 	Extract<PageStorageHubSuccess, { op: Op }>;
 
-export interface PageStorageChangedMessage {
-	type: "storage-changed";
-	key?: string;
+export function pageStorageAdminPath(pageId: string): string {
+	return `/v2/page/${encodeURIComponent(pageId)}/storage/admin`;
 }
 
-export function parsePageStorageChanged(
-	raw: unknown,
-): PageStorageChangedMessage | null {
-	if (typeof raw !== "string") return null;
-	let parsed: unknown;
-	try {
-		parsed = JSON.parse(raw);
-	} catch {
-		return null;
-	}
-	if (
-		typeof parsed !== "object" ||
-		parsed === null ||
-		(parsed as { type?: unknown }).type !== "storage-changed"
-	) {
-		return null;
-	}
-	const key = (parsed as { key?: unknown }).key;
-	return {
-		type: "storage-changed",
-		...(typeof key === "string" ? { key } : {}),
-	};
+export function pageStorageNudgePath(pageId: string): string {
+	return `/v2/page/${encodeURIComponent(pageId)}/storage/manifest-changed`;
 }
 
-export function pageStorageOpPath(pageId: string): string {
-	return `/v2/page/${encodeURIComponent(pageId)}/storage`;
+export function pageStorageTicketPath(pageId: string): string {
+	return `/v2/page/${encodeURIComponent(pageId)}/storage/ticket`;
 }
 
-export function pageStorageSubscribePath(pageId: string): string {
-	return `/v2/page/${encodeURIComponent(pageId)}/storage/subscribe`;
+export function pageStorageSocketPath(pageId: string): string {
+	return `/v2/page/${encodeURIComponent(pageId)}/storage/socket`;
 }

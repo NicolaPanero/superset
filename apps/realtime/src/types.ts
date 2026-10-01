@@ -6,6 +6,8 @@ export interface RealtimeEnv {
 	NUDGE_SECRET: string;
 	/** Optional; Sentry capture is a no-op until the secret is set. */
 	SENTRY_DSN?: string;
+	USERCONTENT_URL: string;
 	OrgHub: DurableObjectNamespace<OrgHub>;
 	PageHub: DurableObjectNamespace<PageHub>;
+	PRIVATE: R2Bucket;
 }

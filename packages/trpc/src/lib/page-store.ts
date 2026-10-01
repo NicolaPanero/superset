@@ -4,9 +4,8 @@ import {
 	type PageStorageHubReplyFor,
 	type PageStorageHubRequest,
 	type PageStorageHubResponse,
-	pageStorageOpPath,
+	pageStorageAdminPath,
 } from "@superset/shared/page-storage-hub";
-import { signPageStorageTicket } from "@superset/shared/usercontent";
 import { TRPCError } from "@trpc/server";
 import { eq, inArray } from "drizzle-orm";
 import { env } from "../env";
@@ -29,15 +28,18 @@ export async function callPageStore<Request extends PageStorageHubRequest>(
 ): Promise<PageStorageHubReplyFor<Request["op"]>> {
 	let response: Response;
 	try {
-		response = await fetch(`${env.REALTIME_URL}${pageStorageOpPath(pageId)}`, {
-			method: "POST",
-			headers: {
-				authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}`,
-				"content-type": "application/json",
+		response = await fetch(
+			`${env.REALTIME_URL}${pageStorageAdminPath(pageId)}`,
+			{
+				method: "POST",
+				headers: {
+					authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}`,
+					"content-type": "application/json",
+				},
+				body: JSON.stringify(request),
+				signal: AbortSignal.timeout(10_000),
 			},
-			body: JSON.stringify(request),
-			signal: AbortSignal.timeout(10_000),
-		});
+		);
 	} catch (error) {
 		throw storageError(
 			"unavailable",
@@ -122,22 +124,4 @@ export async function purgePageStorageForUser(
 		);
 	}
 	return { pages: rows.length, cleared };
-}
-
-const SUBSCRIBE_TICKET_SECONDS = 15 * 60;
-
-export async function mintPageStoreSubscribeTicket(pageId: string): Promise<{
-	url: string;
-	expiresAt: number;
-}> {
-	const exp = Math.floor(Date.now() / 1000) + SUBSCRIBE_TICKET_SECONDS;
-	const ticket = await signPageStorageTicket(env.REALTIME_NUDGE_SECRET, {
-		pageId,
-		exp,
-	});
-	const base = env.REALTIME_URL.replace(/^http/, "ws");
-	return {
-		url: `${base}/v2/page/${encodeURIComponent(pageId)}/storage/subscribe?token=${encodeURIComponent(ticket)}`,
-		expiresAt: exp * 1000,
-	};
 }
