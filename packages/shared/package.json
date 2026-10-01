@@ -4,6 +4,7 @@
 	"private": true,
 	"type": "module",
 	"exports": {
+		"./terminal-colors": "./src/terminal-colors.ts",
 		"./connectors": {
 			"types": "./src/connectors/index.ts",
 			"default": "./src/connectors/index.ts"
@@ -232,6 +233,14 @@
 			"types": "./src/agent-launch-request.ts",
 			"default": "./src/agent-launch-request.ts"
 		},
+		"./entity-colors": {
+			"types": "./src/entity-colors.ts",
+			"default": "./src/entity-colors.ts"
+		},
+		"./labels": {
+			"types": "./src/labels.ts",
+			"default": "./src/labels.ts"
+		},
 		"./workspace-tags": {
 			"types": "./src/workspace-tags.ts",
 			"default": "./src/workspace-tags.ts"
@@ -335,6 +344,10 @@
 		"./plugins/manifest-schema": {
 			"types": "./src/plugins/manifest-schema.ts",
 			"default": "./src/plugins/manifest-schema.ts"
+		},
+		"./workspace-activity": {
+			"types": "./src/workspace-activity.ts",
+			"default": "./src/workspace-activity.ts"
 		}
 	},
 	"scripts": {

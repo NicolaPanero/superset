@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ServerThread } from "@superset/cloud-client";
-import { formatDate } from "@superset/i18n/format";
+import { formatCompactRelativeTime } from "@superset/i18n/format";
 import { getInitials } from "@superset/shared/names";
 import { commentAuthor } from "@superset/shared/page-comments";
 import { Image } from "expo-image";
@@ -49,7 +49,7 @@ export function CommentRow({
 						{name}
 					</Text>
 					<Text className="text-muted-foreground text-xs">
-						{formatDate(comment.createdAt)}
+						{formatCompactRelativeTime(comment.createdAt)}
 					</Text>
 				</View>
 				{comment.body ? (
