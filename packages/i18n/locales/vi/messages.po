@@ -99,6 +99,10 @@ msgstr "(không có đầu ra)"
 msgid "(so far)"
 msgstr "(đến nay)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {# tài khoản đã kết nối}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# cổng đang hoạt động — ẩn chi tiết} other {# cổng đang hoạt động — ẩn chi tiết}}"
@@ -917,6 +921,9 @@ msgstr "{months} tháng trước"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần chạy gần nhất"
 
+msgid "{name} accounts"
+msgstr "Tài khoản {name}"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} là tích hợp sẵn nên không thể gỡ"
@@ -1585,6 +1592,9 @@ msgstr "thêm một agent"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Thêm một environment trong Settings trước khi tạo workspace cloud"
 
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "Kết nối tài khoản khác, hoặc ngắt tài khoản bạn không còn dùng."
+
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Thêm bất kỳ máy nào làm host. Workspace vẫn chạy khi laptop của bạn ngủ, và bạn có thể kiểm tra từ bất cứ đâu."
 
@@ -2135,6 +2145,12 @@ msgstr "Anthropic đã từ chối khóa API này."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic đã từ chối token này."
 
+msgid "any account"
+msgstr "bất kỳ tài khoản nào"
+
+msgid "Any account"
+msgstr "Bất kỳ tài khoản nào"
+
 msgid "Any channel"
 msgstr "Kênh bất kỳ"
 
@@ -2282,6 +2298,9 @@ msgstr "Đã duyệt"
 
 msgid "Approved review"
 msgstr "Review đã duyệt"
+
+msgid "Apps"
+msgstr "Ứng dụng"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3979,6 +3998,12 @@ msgstr "Kết nối tài khoản Google. Hộp thư chỉ ở chế độ đọc
 msgid "Connect a microphone to use dictation"
 msgstr "Kết nối micro để dùng đọc chính tả"
 
+msgid "Connect an account"
+msgstr "Kết nối tài khoản"
+
+msgid "Connect another account"
+msgstr "Kết nối tài khoản khác"
+
 msgid "Connect any AI agent to Superset."
 msgstr "Kết nối mọi agent AI với Superset."
 
@@ -4047,6 +4072,9 @@ msgstr "Đã kết nối"
 
 msgid "Connected {label}"
 msgstr "Đã kết nối {label}"
+
+msgid "Connected accounts"
+msgstr "Tài khoản đã kết nối"
 
 msgid "Connected as"
 msgstr "Đã kết nối với tư cách"
@@ -5643,6 +5671,10 @@ msgstr "Đã bỏ — sẽ không hỏi lại"
 
 msgid "Disconnect"
 msgstr "Ngắt kết nối"
+
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "Ngắt kết nối {0}"
 
 msgid "Disconnect {credential}?"
 msgstr "Ngắt kết nối {credential}?"
@@ -9070,6 +9102,15 @@ msgstr "Phần mềm độc hại hoặc lừa đảo"
 msgid "Manage"
 msgstr "Quản lý"
 
+msgid "Manage {label}"
+msgstr "Quản lý {label}"
+
+msgid "Manage accounts"
+msgstr "Quản lý tài khoản"
+
+msgid "Manage accounts…"
+msgstr "Quản lý tài khoản…"
+
 msgid "Manage billing"
 msgstr "Quản lý thanh toán"
 
@@ -9453,6 +9494,10 @@ msgstr "Số tháng kể từ tháng 8 năm 2026"
 
 msgid "More"
 msgstr "Thêm"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Thao tác khác của {0}"
 
 msgid "More {kindLower} themes"
 msgstr "Thêm chủ đề {kindLower}"
@@ -16530,6 +16575,9 @@ msgstr "Dùng thử các tính năng và bản xem trước sớm."
 msgid "Try it"
 msgstr "Thử ngay"
 
+msgid "Try now"
+msgstr "Dùng thử"
+
 msgid "Try Superset v2"
 msgstr "Dùng thử Superset v2"
 
@@ -16703,6 +16751,9 @@ msgstr "Không rõ"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Không rõ"
+
+msgid "Unknown account"
+msgstr "Tài khoản không xác định"
 
 msgid "Unknown author"
 msgstr "Tác giả không xác định"
@@ -16989,6 +17040,10 @@ msgstr "Dùng Superset trên điện thoại"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Dùng Superset trên điện thoại với Pro."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "Dùng plugin {0} để "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Dùng ứng dụng máy tính để chạy song song nhiều agent lập trình."

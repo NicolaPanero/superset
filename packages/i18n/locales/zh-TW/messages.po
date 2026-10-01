@@ -99,6 +99,10 @@ msgstr "（無輸出）"
 msgid "(so far)"
 msgstr "（截至目前）"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, other {已連接 # 個帳號}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {#個活動埠 — 隱藏詳情} other {#個活動埠 — 隱藏詳情}}"
@@ -917,6 +921,9 @@ msgstr "{months}個月前"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "你有{myFailedCount}個自動化上次執行失敗"
 
+msgid "{name} accounts"
+msgstr "{name} 帳號"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是內建的，無法移除"
@@ -1585,6 +1592,9 @@ msgstr "新增代理程式"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "建立雲端工作區前，請先在設定中新增環境"
 
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "連接其他帳號，或中斷不再使用的帳號。"
+
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "把任意機器新增為主機。筆記本休眠時工作區照常執行，你在哪兒都能檢視進展。"
 
@@ -2135,6 +2145,12 @@ msgstr "Anthropic拒絕了此API金鑰。"
 msgid "Anthropic rejected this token."
 msgstr "Anthropic拒絕了此權杖。"
 
+msgid "any account"
+msgstr "任一帳號"
+
+msgid "Any account"
+msgstr "任一帳號"
+
 msgid "Any channel"
 msgstr "任意頻道"
 
@@ -2282,6 +2298,9 @@ msgstr "已批准"
 
 msgid "Approved review"
 msgstr "審查已批准"
+
+msgid "Apps"
+msgstr "應用程式"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3979,6 +3998,12 @@ msgstr "連結一個 Google 帳號。其信箱為唯讀，觸發器以連結者�
 msgid "Connect a microphone to use dictation"
 msgstr "請連線麥克風以使用語音輸入"
 
+msgid "Connect an account"
+msgstr "連接帳號"
+
+msgid "Connect another account"
+msgstr "連接其他帳號"
+
 msgid "Connect any AI agent to Superset."
 msgstr "把任意AI代理程式接入Superset。"
 
@@ -4047,6 +4072,9 @@ msgstr "已連線"
 
 msgid "Connected {label}"
 msgstr "已連線 {label}"
+
+msgid "Connected accounts"
+msgstr "已連接帳號"
 
 msgid "Connected as"
 msgstr "已連線為"
@@ -5643,6 +5671,10 @@ msgstr "已放棄——不再詢問"
 
 msgid "Disconnect"
 msgstr "斷開連線"
+
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "中斷 {0}"
 
 msgid "Disconnect {credential}?"
 msgstr "中斷{credential}連線？"
@@ -9070,6 +9102,15 @@ msgstr "惡意軟體或釣魚"
 msgid "Manage"
 msgstr "管理"
 
+msgid "Manage {label}"
+msgstr "管理 {label}"
+
+msgid "Manage accounts"
+msgstr "管理帳號"
+
+msgid "Manage accounts…"
+msgstr "管理帳號…"
+
 msgid "Manage billing"
 msgstr "管理帳單"
 
@@ -9453,6 +9494,10 @@ msgstr "自 2026 年 8 月起的月數"
 
 msgid "More"
 msgstr "更多"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "{0} 的更多操作"
 
 msgid "More {kindLower} themes"
 msgstr "更多{kindLower}主題"
@@ -16530,6 +16575,9 @@ msgstr "試用搶先體驗功能和預覽版。"
 msgid "Try it"
 msgstr "試試看"
 
+msgid "Try now"
+msgstr "立即試用"
+
 msgid "Try Superset v2"
 msgstr "試用Superset v2"
 
@@ -16703,6 +16751,9 @@ msgstr "未知"
 msgctxt "person"
 msgid "Unknown"
 msgstr "未知"
+
+msgid "Unknown account"
+msgstr "未知帳號"
 
 msgid "Unknown author"
 msgstr "未知作者"
@@ -16989,6 +17040,10 @@ msgstr "在手機上使用 Superset"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "透過 Pro 在手機上使用 Superset。"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "使用 {0} 外掛來 "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "使用桌面應用程式開始並行執行編碼代理程式。"

@@ -99,6 +99,10 @@ msgstr "(çıktı yok)"
 msgid "(so far)"
 msgstr "(şimdiye kadar)"
 
+#. placeholder {0}: connections.length
+msgid "{0, plural, one {# account connected} other {# accounts connected}}"
+msgstr "{0, plural, one {# hesap bağlı} other {# hesap bağlı}}"
+
 #. placeholder {0}: ports.length
 msgid "{0, plural, one {# active port — hide details} other {# active ports — hide details}}"
 msgstr "{0, plural, one {# etkin port — ayrıntıları gizle} other {# etkin port — ayrıntıları gizle}}"
@@ -917,6 +921,9 @@ msgstr "{months}ay önce"
 msgid "{myFailedCount} of your automations failed their last run"
 msgstr "Otomasyonlarınızdan {myFailedCount} tanesi son çalıştırmasında başarısız oldu"
 
+msgid "{name} accounts"
+msgstr "{name} hesapları"
+
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} yerleşiktir ve kaldırılamaz"
@@ -1585,6 +1592,9 @@ msgstr "ajan ekleme"
 msgid "Add an environment in Settings before creating a cloud workspace"
 msgstr "Bulut çalışma alanı oluşturmadan önce Ayarlar'da bir ortam ekleyin"
 
+msgid "Add another account, or disconnect one you no longer use."
+msgstr "Başka bir hesap bağla ya da artık kullanmadığın birini kaldır."
+
 msgid "Add any machine as a host. Workspaces keep running when your laptop sleeps, and you can check in from wherever you are."
 msgstr "Herhangi bir makineyi host olarak ekleyin. Dizüstünüz uykuya geçtiğinde çalışma alanları çalışmaya devam eder ve nerede olursanız olun durumu kontrol edebilirsiniz."
 
@@ -2135,6 +2145,12 @@ msgstr "Anthropic bu API anahtarını reddetti."
 msgid "Anthropic rejected this token."
 msgstr "Anthropic bu token'ı reddetti."
 
+msgid "any account"
+msgstr "herhangi bir hesap"
+
+msgid "Any account"
+msgstr "Herhangi bir hesap"
+
 msgid "Any channel"
 msgstr "Tüm kanallar"
 
@@ -2282,6 +2298,9 @@ msgstr "Onaylandı"
 
 msgid "Approved review"
 msgstr "Onaylanmış inceleme"
+
+msgid "Apps"
+msgstr "Uygulamalar"
 
 msgid "apps/desktop/src/renderer"
 msgstr "apps/desktop/src/renderer"
@@ -3979,6 +3998,12 @@ msgstr "Bir Google hesabı bağlayın. Posta kutusu salt okunurdur ve tetikleyic
 msgid "Connect a microphone to use dictation"
 msgstr "Sesle yazmak için bir mikrofon bağlayın"
 
+msgid "Connect an account"
+msgstr "Hesap bağla"
+
+msgid "Connect another account"
+msgstr "Başka bir hesap bağla"
+
 msgid "Connect any AI agent to Superset."
 msgstr "Herhangi bir AI ajanını Superset'e bağlayın."
 
@@ -4047,6 +4072,9 @@ msgstr "Bağlı"
 
 msgid "Connected {label}"
 msgstr "{label} bağlandı"
+
+msgid "Connected accounts"
+msgstr "Bağlı hesaplar"
 
 msgid "Connected as"
 msgstr "Şu hesapla bağlı"
@@ -5643,6 +5671,10 @@ msgstr "Atıldı — bir daha sorulmayacak"
 
 msgid "Disconnect"
 msgstr "Bağlantıyı kes"
+
+#. placeholder {0}: who ?? where ?? ""
+msgid "Disconnect {0}"
+msgstr "{0} bağlantısını kes"
 
 msgid "Disconnect {credential}?"
 msgstr "{credential} bağlantısı kesilsin mi?"
@@ -9070,6 +9102,15 @@ msgstr "Kötü amaçlı yazılım veya kimlik avı"
 msgid "Manage"
 msgstr "Yönet"
 
+msgid "Manage {label}"
+msgstr "{label} yönet"
+
+msgid "Manage accounts"
+msgstr "Hesapları yönet"
+
+msgid "Manage accounts…"
+msgstr "Hesapları yönet…"
+
 msgid "Manage billing"
 msgstr "Faturalandırmayı yönet"
 
@@ -9453,6 +9494,10 @@ msgstr "Ağustos 2026'dan itibaren aylar"
 
 msgid "More"
 msgstr "Daha fazla"
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "More {0} actions"
+msgstr "Diğer {0} eylemleri"
 
 msgid "More {kindLower} themes"
 msgstr "Daha fazla {kindLower} tema"
@@ -16530,6 +16575,9 @@ msgstr "Erken erişim özelliklerini ve önizlemeleri deneyin."
 msgid "Try it"
 msgstr "Deneyin"
 
+msgid "Try now"
+msgstr "Şimdi dene"
+
 msgid "Try Superset v2"
 msgstr "Superset v2'yi deneyin"
 
@@ -16703,6 +16751,9 @@ msgstr "Bilinmiyor"
 msgctxt "person"
 msgid "Unknown"
 msgstr "Bilinmiyor"
+
+msgid "Unknown account"
+msgstr "Bilinmeyen hesap"
 
 msgid "Unknown author"
 msgstr "Bilinmeyen yazar"
@@ -16989,6 +17040,10 @@ msgstr "Superset’i mobilde kullanın"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Pro ile Superset’i telefonunuzda kullanın."
+
+#. placeholder {0}: plugin.interface.displayName
+msgid "Use the {0} plugin to "
+msgstr "{0} eklentisini şunun için kullan: "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Paralel kodlama ajanları çalıştırmaya başlamak için masaüstü uygulamasını kullanın."
