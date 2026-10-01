@@ -9,7 +9,7 @@ import {
 import { Spinner } from "@superset/ui/spinner";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef } from "react";
-import type { ChatForkTarget } from "../../../../../useForkChat";
+import type { ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { Composer } from "../Composer";
 import { SessionHeader } from "../SessionHeader";

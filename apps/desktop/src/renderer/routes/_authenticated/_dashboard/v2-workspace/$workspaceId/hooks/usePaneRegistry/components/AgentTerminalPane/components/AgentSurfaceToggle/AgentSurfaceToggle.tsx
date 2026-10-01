@@ -1,11 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
 import { cn } from "@superset/ui/utils";
 import type { TerminalPaneData } from "../../../../../../types";
-import { useAgentSurface } from "../../../../../useAgentSurface";
+import { useAgentSurface } from "../../hooks/useAgentSurface";
 import type {
 	AgentIdentity,
 	AgentSurface,
-} from "../../../../../useAgentSurfaceSwitch";
+} from "../../hooks/useAgentSurfaceSwitch";
 
 /**
  * Switches an agent terminal between its two surfaces. Hidden for anything the

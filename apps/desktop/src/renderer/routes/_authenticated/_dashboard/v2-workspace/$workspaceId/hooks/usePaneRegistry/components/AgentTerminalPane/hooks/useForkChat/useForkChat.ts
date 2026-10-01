@@ -8,9 +8,7 @@ import { useCreateWorkspace } from "renderer/react-query/workspaces";
 import { navigateToWorkspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import { queuePendingChatHandoff } from "renderer/stores/workspace-creates/queuePendingChatHandoff";
-import { useWorkspace } from "../../../providers/WorkspaceProvider";
-
-export type ChatForkTarget = "workspace" | "worktree";
+import { useWorkspace } from "../../../../../../../providers/WorkspaceProvider";
 
 export type ChatForkSource = {
 	agentId: string;

@@ -1,7 +1,8 @@
+import { FEATURE_FLAGS } from "@superset/shared/constants";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
-import type { TerminalPaneData } from "../../types";
+import type { TerminalPaneData } from "../../../../../../types";
 import { acpHarnessForAgent } from "../../utils/acpHarness";
-import { useAcpChatEnabled } from "../useAcpChatEnabled";
 import type { AgentIdentity, AgentSurface } from "../useAgentSurfaceSwitch";
 
 export type ResolvedAgentSurface = {
@@ -25,7 +26,7 @@ export function useAgentSurface(
 	workspaceId: string,
 	data: TerminalPaneData,
 ): ResolvedAgentSurface {
-	const acpEnabled = useAcpChatEnabled();
+	const acpEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false;
 	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
 	const harness = acpHarnessForAgent(binding?.agentId);
 

@@ -11,7 +11,7 @@ import {
 import { cn } from "@superset/ui/utils";
 import { Check, Copy, GitBranch } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import type { ChatForkTarget } from "../../../../../../../useForkChat";
+import type { ChatForkTarget } from "../../../../types";
 import { MarkdownView } from "../../../MarkdownView";
 
 function clockLabel(item: AgentMessage): string {

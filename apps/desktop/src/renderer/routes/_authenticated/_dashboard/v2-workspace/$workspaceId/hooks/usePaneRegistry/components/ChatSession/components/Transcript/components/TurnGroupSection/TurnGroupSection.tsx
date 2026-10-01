@@ -8,7 +8,7 @@ import {
 	CollapsibleTrigger,
 } from "@superset/ui/collapsible";
 import { ChevronRight } from "lucide-react";
-import type { ChatForkTarget } from "../../../../../../../useForkChat";
+import type { ChatForkTarget } from "../../../../types";
 import { rowKindForItem } from "../../utils/rowKind";
 import { AgentMessageRow } from "../AgentMessageRow";
 import { ApprovalRow } from "../ApprovalRow";

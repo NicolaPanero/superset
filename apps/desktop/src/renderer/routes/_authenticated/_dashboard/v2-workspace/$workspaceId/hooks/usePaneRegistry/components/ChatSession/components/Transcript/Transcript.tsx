@@ -8,7 +8,7 @@ import type { ApprovalRequest, Decision } from "@superset/chat/protocol";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ChatForkTarget } from "../../../../../useForkChat";
+import type { ChatForkTarget } from "../../types";
 import { TurnGroupSection } from "./components/TurnGroupSection";
 
 export type TranscriptProps = {

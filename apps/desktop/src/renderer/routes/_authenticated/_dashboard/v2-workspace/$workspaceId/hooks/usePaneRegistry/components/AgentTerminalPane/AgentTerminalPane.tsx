@@ -6,11 +6,11 @@ import type {
 	PaneViewerData,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
 import type { TerminalPaneData } from "../../../../types";
-import { useAgentSurface } from "../../../useAgentSurface";
-import { useAgentSurfaceSwitch } from "../../../useAgentSurfaceSwitch";
-import { AcpChatPane } from "../AcpChatPane";
-import { AcpChatPending } from "../AcpChatPane/components/AcpChatPending";
 import { TerminalPane } from "../TerminalPane";
+import { AcpChatPane } from "./components/AcpChatPane";
+import { AcpChatPending } from "./components/AcpChatPane/components/AcpChatPending";
+import { useAgentSurface } from "./hooks/useAgentSurface";
+import { useAgentSurfaceSwitch } from "./hooks/useAgentSurfaceSwitch";
 
 /**
  * A terminal pane, shown on whichever surface its agent calls for. The choice

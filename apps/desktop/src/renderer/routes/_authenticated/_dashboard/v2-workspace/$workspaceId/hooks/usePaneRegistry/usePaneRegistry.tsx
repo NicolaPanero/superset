@@ -72,10 +72,13 @@ import {
 } from "../../utils/focusTerminalPane";
 import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
-import { useAgentSurfaceSwitch } from "../useAgentSurfaceSwitch";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
-import { AgentTerminalPane } from "./components/AgentTerminalPane";
+import {
+	AgentSurfaceToggle,
+	AgentTerminalPane,
+	useAgentSurfaceSwitch,
+} from "./components/AgentTerminalPane";
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
 import { ChatV3Pane } from "./components/ChatV3Pane";
 import { CommentPane } from "./components/CommentPane";
@@ -92,7 +95,6 @@ import { PagePaneTitle } from "./components/PagePaneTitle";
 import { PullRequestPane } from "./components/PullRequestPane";
 import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/components/PullRequestPaneHeaderExtras";
 import { SubagentPane } from "./components/SubagentPane";
-import { AgentSurfaceToggle } from "./components/TerminalPane/components/AgentSurfaceToggle";
 import { TerminalPaneHeaderExtras } from "./components/TerminalPane/components/TerminalPaneHeaderExtras";
 import { TerminalPaneIcon } from "./components/TerminalPane/components/TerminalPaneIcon";
 import { TerminalSessionDropdown } from "./components/TerminalPane/components/TerminalSessionDropdown";

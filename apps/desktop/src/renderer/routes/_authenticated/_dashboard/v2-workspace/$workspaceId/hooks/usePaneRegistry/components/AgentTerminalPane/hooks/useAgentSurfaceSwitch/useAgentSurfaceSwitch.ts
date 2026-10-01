@@ -7,8 +7,8 @@ import { useCallback, useMemo } from "react";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import { terminalRuntimeRegistry } from "renderer/lib/terminal/terminal-runtime-registry";
-import type { PaneViewerData, TerminalPaneData } from "../../types";
-import { useChatWiring } from "../usePaneRegistry/components/ChatV3Pane/hooks/useSessionClient";
+import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
+import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
 export type AgentSurface = "cli" | "acp";
 

@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { readBookkeeping } from "@superset/chat/core";
 import type { UserMessage } from "@superset/chat/protocol";
 import { Message, MessageContent } from "@superset/ui/ai-elements/message";
 import { Badge } from "@superset/ui/badge";
@@ -10,7 +11,6 @@ import {
 import { cn } from "@superset/ui/utils";
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { readBookkeeping } from "./bookkeeping";
 
 function messageText(item: UserMessage): string {
 	return item.content

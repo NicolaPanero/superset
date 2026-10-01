@@ -5,11 +5,11 @@ import { useWorkspaceClient } from "@superset/workspace-client";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
-import { acpHarnessForAgent } from "../../../../utils/acpHarness";
-import type { ChatForkTarget } from "../../../useForkChat";
-import { useForkChat } from "../../../useForkChat";
-import { SessionView } from "../ChatV3Pane/components/SessionView";
-import { useSessionClient } from "../ChatV3Pane/hooks/useSessionClient";
+import { SessionView } from "../../../ChatSession/components/SessionView";
+import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
+import type { ChatForkTarget } from "../../../ChatSession/types";
+import { useForkChat } from "../../hooks/useForkChat";
+import { acpHarnessForAgent } from "../../utils/acpHarness";
 import { AcpChatPending } from "./components/AcpChatPending";
 import { AcpRecovery } from "./components/AcpRecovery";
 

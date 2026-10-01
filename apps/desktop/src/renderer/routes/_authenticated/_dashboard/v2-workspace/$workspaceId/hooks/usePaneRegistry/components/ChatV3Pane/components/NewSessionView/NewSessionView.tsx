@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { UserContent } from "@superset/chat/protocol";
 import { Button } from "@superset/ui/button";
 import type { ReactNode } from "react";
-import { Composer } from "../Composer";
+import { Composer } from "../../../ChatSession/components/Composer";
 
 export const HARNESSES = ["claude-code", "codex"] as const;
 export type HarnessId = (typeof HARNESSES)[number];

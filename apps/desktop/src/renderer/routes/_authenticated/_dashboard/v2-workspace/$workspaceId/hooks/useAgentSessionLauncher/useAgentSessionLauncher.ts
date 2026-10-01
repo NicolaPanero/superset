@@ -1,17 +1,18 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { WorkspaceStore } from "@superset/panes";
+import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useCallback } from "react";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
-import { acpHarnessForAgent } from "../../utils/acpHarness";
 import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
-import { useAcpChatEnabled } from "../useAcpChatEnabled";
+import { acpHarnessForAgent } from "../usePaneRegistry/components/AgentTerminalPane/utils/acpHarness";
 
 export interface CreateNewAgentSessionInput {
 	configId: string;
@@ -39,7 +40,7 @@ export function useAgentSessionLauncher({
 	const { t } = useLingui();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const appearance = useTerminalAppearance();
-	const acpEnabled = useAcpChatEnabled();
+	const acpEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false;
 	const { hostUrl } = useWorkspaceClient();
 	// The pty's launch reply is what normally names the pane; a chat has no
 	// launch, so the agent's own label stands in.
