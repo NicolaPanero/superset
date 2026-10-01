@@ -33,7 +33,6 @@ import {
 	LuPower,
 } from "react-icons/lu";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
-import { env } from "renderer/env.renderer";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import { FileIcon } from "renderer/lib/fileIcons";
 import { getBaseName } from "renderer/lib/pathBasename";
@@ -55,7 +54,6 @@ import {
 	useSharedFileDocument,
 } from "../../state/fileDocumentStore";
 import {
-	type AcpChatPaneData,
 	type BrowserPaneData,
 	type ChatV3PaneData,
 	type CommentPaneData,
@@ -74,11 +72,11 @@ import {
 } from "../../utils/focusTerminalPane";
 import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
+import { useAgentSurfaceSwitch } from "../useAgentSurfaceSwitch";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
-import { AcpChatPane } from "./components/AcpChatPane";
+import { AgentTerminalPane } from "./components/AgentTerminalPane";
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
-import { AcpChatToggle } from "./components/TerminalPane/components/AcpChatToggle";
 import { ChatV3Pane } from "./components/ChatV3Pane";
 import { CommentPane } from "./components/CommentPane";
 import { CommentPaneHeaderExtras } from "./components/CommentPane/components/CommentPaneHeaderExtras";
@@ -94,7 +92,7 @@ import { PagePaneTitle } from "./components/PagePaneTitle";
 import { PullRequestPane } from "./components/PullRequestPane";
 import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/components/PullRequestPaneHeaderExtras";
 import { SubagentPane } from "./components/SubagentPane";
-import { TerminalPane } from "./components/TerminalPane";
+import { AgentSurfaceToggle } from "./components/TerminalPane/components/AgentSurfaceToggle";
 import { TerminalPaneHeaderExtras } from "./components/TerminalPane/components/TerminalPaneHeaderExtras";
 import { TerminalPaneIcon } from "./components/TerminalPane/components/TerminalPaneIcon";
 import { TerminalSessionDropdown } from "./components/TerminalPane/components/TerminalSessionDropdown";
@@ -167,9 +165,7 @@ export function usePaneRegistry({
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
 	const isChatV3Enabled = useFeatureFlagEnabled(FEATURE_FLAGS.CHAT_V3) ?? false;
-	const isAcpChatEnabled =
-		(useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false) ||
-		env.NODE_ENV === "development";
+	const agentSurface = useAgentSurfaceSwitch(workspaceId);
 	const host = useWorkspaceHostTarget(workspaceId);
 	const desktopUrl =
 		host.status === "ready" && host.kind === "sandbox" ? host.desktopUrl : null;
@@ -408,7 +404,10 @@ export function usePaneRegistry({
 					);
 				},
 				onAfterClose: (pane, closedPanes) => {
-					const { terminalId } = pane.data as TerminalPaneData;
+					const { acpSessionId, terminalId } = pane.data as TerminalPaneData;
+					// The pty is already stopped on the ACP surface, so this adapter is
+					// the only process the close has left to end.
+					if (acpSessionId) void agentSurface.stopChat(acpSessionId);
 					const firstClosed = closedPanes.find(
 						(candidate) =>
 							candidate.kind === "terminal" &&
@@ -441,25 +440,13 @@ export function usePaneRegistry({
 							launcher={launcher}
 							workspaceId={workspaceId}
 						/>
-						{isAcpChatEnabled && (
-							<AcpChatToggle
-								workspaceId={workspaceId}
-								terminalId={(ctx.pane.data as TerminalPaneData).terminalId}
-								onOpen={(harness, agentSessionId) =>
-									store.getState().addTab({
-										panes: [
-											{
-												kind: "acp-chat",
-												data: {
-													sessionId: null,
-													attach: { harness, agentSessionId },
-												} as AcpChatPaneData,
-											},
-										],
-									})
-								}
-							/>
-						)}
+						<AgentSurfaceToggle
+							data={ctx.pane.data as TerminalPaneData}
+							onChange={(surface, agent) =>
+								void agentSurface.switchSurface(ctx, surface, agent)
+							}
+							workspaceId={workspaceId}
+						/>
 						<V2NotificationStatusIndicator
 							sources={getV2NotificationSourcesForPane(ctx.pane)}
 						/>
@@ -499,11 +486,11 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<TerminalPane
+					<AgentTerminalPane
 						ctx={ctx}
-						workspaceId={workspaceId}
 						onOpenFile={onOpenFile}
 						onRevealPath={onRevealPath}
+						workspaceId={workspaceId}
 					/>
 				),
 				contextMenuActions: (_ctx, defaults) => {
@@ -767,42 +754,6 @@ export function usePaneRegistry({
 						},
 					}
 				: {}),
-			...(isAcpChatEnabled
-				? {
-						"acp-chat": {
-							getIcon: () => <MessageSquare className="size-3.5" />,
-							getTitle: () =>
-								t({
-									message: "ACP Chat",
-								}),
-							renderPane: (ctx: RendererContext<PaneViewerData>) => {
-								const data = ctx.pane.data as AcpChatPaneData;
-								return (
-									<AcpChatPane
-										workspaceId={workspaceId}
-										sessionId={data.sessionId}
-										attach={data.attach}
-										onDataChange={(next) => ctx.actions.updateData(next)}
-									/>
-								);
-							},
-							contextMenuActions: (
-								_ctx: RendererContext<PaneViewerData>,
-								defaults: ContextMenuActionConfig<PaneViewerData>[],
-							) =>
-								defaults.map((d) =>
-									d.key === "close-pane"
-										? {
-												...d,
-												label: t({
-													message: "Close Chat",
-												}),
-											}
-										: d,
-								),
-						},
-					}
-				: {}),
 			comment: {
 				getIcon: (ctx: RendererContext<PaneViewerData>) => {
 					const data = ctx.pane.data as CommentPaneData;
@@ -950,7 +901,7 @@ export function usePaneRegistry({
 			store,
 			workspaceId,
 			isChatV3Enabled,
-			isAcpChatEnabled,
+			agentSurface,
 			clearWorkspaceRunTerminal,
 			clearShortcut,
 			scrollToBottomShortcut,

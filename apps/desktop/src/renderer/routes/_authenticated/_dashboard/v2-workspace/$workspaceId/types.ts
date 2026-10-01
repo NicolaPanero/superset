@@ -29,6 +29,23 @@ export interface TerminalPaneData {
 	 * clobber a live or exited session.
 	 */
 	createOnAttach?: boolean;
+	/**
+	 * Which surface an agent terminal shows. Only one of the two runs at a time:
+	 * on "acp" the pty is stopped and the chat drives the agent session; going
+	 * back to "cli" stops the chat and relaunches the agent on its resume args.
+	 * Absent means the terminal, as it always was.
+	 */
+	agentSurface?: "cli" | "acp";
+	/** chat-runtime session the ACP surface resumed this agent into. */
+	acpSessionId?: string | null;
+	/**
+	 * Captured before the pty is stopped, because the terminal row and its agent
+	 * binding go with it — and they are what the trip back needs.
+	 */
+	agent?: {
+		id: string;
+		sessionId: string;
+	};
 }
 
 export interface BrowserPaneData {
@@ -80,21 +97,6 @@ export interface ChatV3PaneData {
 	sessionId: string | null;
 }
 
-/**
- * A chat session bridged to a Claude/Codex agent over the Agent Client
- * Protocol. `sessionId` is the chat-runtime session (null until created).
- * `attach`, when present and no session exists yet, makes the pane resume the
- * given agent session on mount — this is how the terminal header's "open in
- * ACP chat" button hands off a running agent.
- */
-export interface AcpChatPaneData {
-	sessionId: string | null;
-	attach?: {
-		harness: string;
-		agentSessionId: string;
-	};
-}
-
 export interface DesktopPaneData {
 	kind: "desktop";
 }
@@ -135,7 +137,6 @@ export type PaneViewerData =
 	| FilePaneData
 	| TerminalPaneData
 	| ChatV3PaneData
-	| AcpChatPaneData
 	| BrowserPaneData
 	| DevtoolsPaneData
 	| DiffPaneData

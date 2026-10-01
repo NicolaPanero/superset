@@ -58,6 +58,9 @@ export function useAgentSessionLauncher({
 				}
 				const terminalId = result.sessionId;
 				const state = store.getState();
+				// No surface is stamped here: it is derived from the agent's binding
+				// so every path that starts an agent — presets, hotkeys, the session
+				// dropdown — opens on the same one.
 				const pane = {
 					kind: "terminal" as const,
 					titleOverride: result.label,

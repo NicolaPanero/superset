@@ -8,7 +8,6 @@ import type { V2TerminalPresetRow } from "renderer/routes/_authenticated/provide
 import { useSettings } from "renderer/stores/settings";
 import type { StoreApi } from "zustand/vanilla";
 import type {
-	AcpChatPaneData,
 	BrowserPaneData,
 	ChatV3PaneData,
 	CommentPaneData,
@@ -58,7 +57,6 @@ export function useWorkspacePaneOpeners({
 	) => void;
 	addTerminalTab: () => Promise<void>;
 	addChatV3Tab: () => void;
-	addAcpChatTab: () => void;
 	addBrowserTab: () => void;
 	openChangesPane: () => void;
 	/** Close the visible Changes pane, or open/focus one when none is showing. */
@@ -176,17 +174,6 @@ export function useWorkspacePaneOpeners({
 		});
 	}, [store]);
 
-	const addAcpChatTab = useCallback(() => {
-		store.getState().addTab({
-			panes: [
-				{
-					kind: "acp-chat",
-					data: { sessionId: null } as AcpChatPaneData,
-				},
-			],
-		});
-	}, [store]);
-
 	const defaultBrowserUrl = useDefaultBrowserUrl();
 	const addBrowserTab = useCallback(() => {
 		store.getState().addTab({
@@ -274,7 +261,6 @@ export function useWorkspacePaneOpeners({
 		openDiffPane,
 		addTerminalTab,
 		addChatV3Tab,
-		addAcpChatTab,
 		addBrowserTab,
 		openChangesPane,
 		toggleChangesPane,

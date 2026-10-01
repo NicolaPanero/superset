@@ -7,7 +7,6 @@ import { useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useQuickOpenStore } from "renderer/commandPalette/ui/QuickOpen/quickOpenStore";
 import { ZoomStable } from "renderer/components/ZoomStable";
-import { env } from "renderer/env.renderer";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useZoomFactor } from "renderer/hooks/useZoomFactor";
@@ -252,7 +251,6 @@ function V2WorkspaceContent() {
 		openDiffPane,
 		addTerminalTab,
 		addChatV3Tab,
-		addAcpChatTab,
 		addBrowserTab,
 		openChangesPane,
 		toggleChangesPane,
@@ -299,9 +297,6 @@ function V2WorkspaceContent() {
 		});
 	}, [store]);
 	const isChatV3Enabled = useFeatureFlagEnabled(FEATURE_FLAGS.CHAT_V3) ?? false;
-	const isAcpChatEnabled =
-		(useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false) ||
-		env.NODE_ENV === "development";
 	const { createNewAgentSession, focusAgentTerminal } = useAgentSessionLauncher(
 		{ workspaceId, store },
 	);
@@ -434,7 +429,6 @@ function V2WorkspaceContent() {
 								<AddTabMenu
 									onAddTerminal={addTerminalTab}
 									onAddChatV3={isChatV3Enabled ? addChatV3Tab : undefined}
-								onAddAcpChat={isAcpChatEnabled ? addAcpChatTab : undefined}
 									onAddBrowser={addBrowserTab}
 									onAddChanges={openChangesPane}
 									onAddDesktop={isSandbox ? addDesktopTab : undefined}
