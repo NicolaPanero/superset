@@ -10,7 +10,11 @@ import {
 } from "./help";
 import { runInteractiveHelp } from "./interactive-help";
 import type { MiddlewareFn } from "./middleware";
-import type { GenericBuilderInternals, ProcessedBuilderConfig } from "./option";
+import type {
+	BuilderConfig,
+	GenericBuilderInternals,
+	ProcessedBuilderConfig,
+} from "./option";
 import { formatOutput, isRawResult } from "./output";
 import { camelToKebab, isAgentMode, parseArgv } from "./parser";
 import {
@@ -271,6 +275,19 @@ function populateNodeForHelp(
 	}
 }
 
+function assertEnumValue(
+	argName: string,
+	value: string,
+	config: BuilderConfig,
+): void {
+	if (config.enumVals && !config.enumVals.includes(value)) {
+		throw new CLIError(
+			`<${argName}>: invalid value "${value}"`,
+			`Valid values: ${config.enumVals.join(", ")}`,
+		);
+	}
+}
+
 async function execute(
 	opts: RunOptions,
 	loaded: CommandTree,
@@ -410,12 +427,13 @@ async function execute(
 		for (const posConfig of positionalConfigs) {
 			const argName = posConfig.name ?? `arg${posIdx}`;
 			if (posConfig.isVariadic) {
-				argsResult[argName] = parsed.positionals.slice(posIdx);
+				const values = parsed.positionals.slice(posIdx);
+				for (const value of values) {
+					assertEnumValue(`${argName}...`, value, posConfig);
+				}
+				argsResult[argName] = values;
 				consumedVariadic = true;
-				if (
-					posConfig.isRequired &&
-					(argsResult[argName] as string[]).length === 0
-				) {
+				if (posConfig.isRequired && values.length === 0) {
 					throw new CLIError(`Missing required argument: <${argName}...>`);
 				}
 				break;
@@ -424,16 +442,7 @@ async function execute(
 			if (posConfig.isRequired && value === undefined) {
 				throw new CLIError(`Missing required argument: <${argName}>`);
 			}
-			if (
-				value !== undefined &&
-				posConfig.enumVals &&
-				!posConfig.enumVals.includes(value)
-			) {
-				throw new CLIError(
-					`<${argName}>: invalid value "${value}"`,
-					`Valid values: ${posConfig.enumVals.join(", ")}`,
-				);
-			}
+			if (value !== undefined) assertEnumValue(argName, value, posConfig);
 			argsResult[argName] = value;
 			posIdx++;
 		}
