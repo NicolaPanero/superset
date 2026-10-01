@@ -1,0 +1,61 @@
+import { afterEach, describe, expect, setSystemTime, test } from "bun:test";
+import {
+	evictPullRequestContent,
+	pullRequestContentCacheKey,
+	readPullRequestContentCache,
+	writePullRequestContentCache,
+} from "./pull-request-content-cache";
+
+const repo = { owner: "Octocat", name: "Hello" };
+
+describe("pull request content cache", () => {
+	afterEach(() => {
+		setSystemTime();
+	});
+
+	test("the key ignores repository casing and keeps the number", () => {
+		expect(pullRequestContentCacheKey(repo, 42)).toBe("octocat/hello#42");
+	});
+
+	test("serves the in-flight promise to later readers", () => {
+		const key = pullRequestContentCacheKey(repo, 1);
+		const promise = Promise.resolve({ state: "open" });
+		writePullRequestContentCache(key, promise);
+		expect(readPullRequestContentCache(key)).toBe(promise);
+	});
+
+	test("misses once the TTL has passed", () => {
+		const key = pullRequestContentCacheKey(repo, 2);
+		setSystemTime(new Date("2026-10-01T12:00:00Z"));
+		writePullRequestContentCache(key, Promise.resolve({ state: "open" }));
+		setSystemTime(new Date("2026-10-01T12:00:29Z"));
+		expect(readPullRequestContentCache(key)).not.toBeNull();
+		setSystemTime(new Date("2026-10-01T12:00:30Z"));
+		expect(readPullRequestContentCache(key)).toBeNull();
+	});
+
+	test("evicting a PR makes the next read miss, whatever the casing", () => {
+		const key = pullRequestContentCacheKey(repo, 3);
+		writePullRequestContentCache(key, Promise.resolve({ state: "open" }));
+		evictPullRequestContent({ owner: "OCTOCAT", name: "hello" }, 3);
+		expect(readPullRequestContentCache(key)).toBeNull();
+	});
+
+	test("a rejected fetch evicts itself", async () => {
+		const key = pullRequestContentCacheKey(repo, 4);
+		const failed = Promise.reject(new Error("gh timed out"));
+		writePullRequestContentCache(key, failed);
+		await failed.catch(() => {});
+		expect(readPullRequestContentCache(key)).toBeNull();
+	});
+
+	test("a rejected fetch leaves a newer entry for the same PR alone", async () => {
+		const key = pullRequestContentCacheKey(repo, 5);
+		const failed = Promise.reject(new Error("gh timed out"));
+		writePullRequestContentCache(key, failed);
+		const retry = Promise.resolve({ state: "merged" });
+		writePullRequestContentCache(key, retry);
+		await failed.catch(() => {});
+		expect(readPullRequestContentCache(key)).toBe(retry);
+	});
+});
