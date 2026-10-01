@@ -14,6 +14,7 @@ import {
 	type TriggerProvider,
 } from "renderer/routes/_authenticated/_dashboard/automations/components/providers";
 import { providerLabelText } from "renderer/routes/_authenticated/_dashboard/automations/components/TriggersEditor/triggerMenu";
+import { describeRunError } from "renderer/routes/_authenticated/_dashboard/automations/utils/runErrorHelp";
 import { RUN_STATUS_META } from "renderer/routes/_authenticated/_dashboard/automations/utils/runStatus";
 import { RunPayloadPanel } from "../RunPayloadPanel";
 
@@ -113,10 +114,12 @@ export function RunRow({
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<span className="line-clamp-1 text-[11px] text-muted-foreground">
-									{run.error}
+									{describeRunError(run)}
 								</span>
 							</TooltipTrigger>
-							<TooltipContent className="max-w-sm">{run.error}</TooltipContent>
+							<TooltipContent className="max-w-sm whitespace-pre-wrap">
+								{describeRunError(run)}
+							</TooltipContent>
 						</Tooltip>
 					)}
 				</TableCell>

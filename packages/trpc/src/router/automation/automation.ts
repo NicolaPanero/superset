@@ -152,6 +152,69 @@ async function verifyHostAccess(
 }
 
 /**
+ * The one run query. Both run lists read through this: All runs org-wide, and
+ * an automation's own history as the same list filtered to it. Two queries
+ * drifted apart once already, rendering the same run differently per screen.
+ */
+function selectRuns(args: {
+	organizationId: string;
+	userId: string;
+	automationId?: string;
+	status?: "all" | "failed";
+	scope?: "all" | "mine";
+	cursor?: { createdAt: string; id: string };
+	limit: number;
+}) {
+	return db
+		.select({
+			id: automationRuns.id,
+			automationId: automationRuns.automationId,
+			automationName: automations.name,
+			ownerUserId: automations.ownerUserId,
+			title: automationRuns.title,
+			status: automationRuns.status,
+			error: automationRuns.error,
+			errorCode: automationRuns.errorCode,
+			createdAt: automationRuns.createdAt,
+			cursorAt: sql<string>`${automationRuns.createdAt}::text`,
+			scheduledFor: automationRuns.scheduledFor,
+			dispatchedAt: automationRuns.dispatchedAt,
+			hostId: automationRuns.hostId,
+			triggerKind: automationTriggers.kind,
+			v2WorkspaceId: automationRuns.v2WorkspaceId,
+			cloudWorkspaceId: automationRuns.cloudWorkspaceId,
+			chatSessionId: automationRuns.chatSessionId,
+			terminalSessionId: automationRuns.terminalSessionId,
+			eventId: automationRuns.eventId,
+		})
+		.from(automationRuns)
+		.innerJoin(automations, eq(automations.id, automationRuns.automationId))
+		.leftJoin(
+			automationTriggers,
+			eq(automationTriggers.id, automationRuns.triggerId),
+		)
+		.where(
+			and(
+				eq(automationRuns.organizationId, args.organizationId),
+				args.automationId
+					? eq(automationRuns.automationId, args.automationId)
+					: undefined,
+				args.status === "failed"
+					? inArray(automationRuns.status, [...FAILED_RUN_STATUSES])
+					: undefined,
+				args.scope === "mine"
+					? eq(automations.ownerUserId, args.userId)
+					: undefined,
+				args.cursor
+					? sql`(${automationRuns.createdAt}, ${automationRuns.id}) < (${args.cursor.createdAt}::timestamptz, ${args.cursor.id}::uuid)`
+					: undefined,
+			),
+		)
+		.orderBy(desc(automationRuns.createdAt), desc(automationRuns.id))
+		.limit(args.limit);
+}
+
+/**
  * A trigger set replaces the whole set, so a top-level `rrule` passed beside
  * one is dropped and its schedule never fires. Refusing beats accepting a
  * write we only half-apply — the caller asked for a schedule.
@@ -994,12 +1057,16 @@ export const automationRouter = {
 				input.automationId,
 			);
 
-			return db
-				.select()
-				.from(automationRuns)
-				.where(eq(automationRuns.automationId, input.automationId))
-				.orderBy(desc(automationRuns.createdAt))
-				.limit(input.limit);
+			// Reads through selectRuns so the CLI and MCP see the same rows the
+			// screens do. The shape stays as shipped: no cursor field, and the
+			// run columns `automations logs` prints.
+			const rows = await selectRuns({
+				organizationId,
+				userId: ctx.session.user.id,
+				automationId: input.automationId,
+				limit: input.limit,
+			});
+			return rows.map(({ cursorAt: _cursorAt, ...run }) => run);
 		}),
 
 	listOrgRuns: protectedProcedure
@@ -1008,47 +1075,15 @@ export const automationRouter = {
 			const organizationId = await requireActiveOrgMembership(ctx);
 			const userId = ctx.session.user.id;
 
-			const rows = await db
-				.select({
-					id: automationRuns.id,
-					automationId: automationRuns.automationId,
-					automationName: automations.name,
-					ownerUserId: automations.ownerUserId,
-					title: automationRuns.title,
-					status: automationRuns.status,
-					error: automationRuns.error,
-					errorCode: automationRuns.errorCode,
-					createdAt: automationRuns.createdAt,
-					cursorAt: sql<string>`${automationRuns.createdAt}::text`,
-					scheduledFor: automationRuns.scheduledFor,
-					triggerKind: automationTriggers.kind,
-					v2WorkspaceId: automationRuns.v2WorkspaceId,
-					chatSessionId: automationRuns.chatSessionId,
-					terminalSessionId: automationRuns.terminalSessionId,
-					eventId: automationRuns.eventId,
-				})
-				.from(automationRuns)
-				.innerJoin(automations, eq(automations.id, automationRuns.automationId))
-				.leftJoin(
-					automationTriggers,
-					eq(automationTriggers.id, automationRuns.triggerId),
-				)
-				.where(
-					and(
-						eq(automationRuns.organizationId, organizationId),
-						input.status === "failed"
-							? inArray(automationRuns.status, [...FAILED_RUN_STATUSES])
-							: undefined,
-						input.scope === "mine"
-							? eq(automations.ownerUserId, userId)
-							: undefined,
-						input.cursor
-							? sql`(${automationRuns.createdAt}, ${automationRuns.id}) < (${input.cursor.createdAt}::timestamptz, ${input.cursor.id}::uuid)`
-							: undefined,
-					),
-				)
-				.orderBy(desc(automationRuns.createdAt), desc(automationRuns.id))
-				.limit(input.limit + 1);
+			const rows = await selectRuns({
+				organizationId,
+				userId,
+				automationId: input.automationId,
+				status: input.status,
+				scope: input.scope,
+				cursor: input.cursor,
+				limit: input.limit + 1,
+			});
 
 			const hasMore = rows.length > input.limit;
 			const page = hasMore ? rows.slice(0, input.limit) : rows;

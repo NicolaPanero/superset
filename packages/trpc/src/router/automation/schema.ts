@@ -109,6 +109,8 @@ export const listRunsSchema = z.object({
 
 export const listOrgRunsSchema = z.object({
 	limit: z.number().int().min(1).max(100).default(50),
+	/** Narrows to one automation; the detail page's history is this list filtered. */
+	automationId: z.string().uuid().optional(),
 	// createdAt stays the database's own text form: a JS Date truncates
 	// Postgres microseconds to milliseconds, and the keyset comparison then
 	// skips every row sharing the truncated millisecond.
