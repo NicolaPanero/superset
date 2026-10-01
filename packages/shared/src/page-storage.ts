@@ -71,3 +71,46 @@ export interface PageStoragePort {
 export function pageStorageValueBytes(value: unknown): number {
 	return new TextEncoder().encode(JSON.stringify(value ?? null)).length;
 }
+
+export interface PageStorageUsage {
+	totalBytes: number;
+	keysForUser: number;
+	replacingBytes: number;
+	replacingExisting: boolean;
+}
+
+export type PageStorageRefusal = { code: "quota_exceeded"; message: string };
+
+/**
+ * Whether a write fits. Pure so it can be tested without a durable object:
+ * the hub measures, this decides. `replacingBytes` is what the writer's own
+ * slot under this key already costs, because replacing it frees those bytes.
+ */
+export function pageStorageRefusal(
+	usage: PageStorageUsage,
+	sizeBytes: number,
+): PageStorageRefusal | null {
+	if (sizeBytes > MAX_PAGE_STORAGE_VALUE_BYTES) {
+		return {
+			code: "quota_exceeded",
+			message: `quota_exceeded: a stored value is at most ${MAX_PAGE_STORAGE_VALUE_BYTES} bytes`,
+		};
+	}
+	if (
+		!usage.replacingExisting &&
+		usage.keysForUser >= MAX_PAGE_STORAGE_KEYS_PER_USER
+	) {
+		return {
+			code: "quota_exceeded",
+			message: `quota_exceeded: at most ${MAX_PAGE_STORAGE_KEYS_PER_USER} keys per person on a page`,
+		};
+	}
+	const totalAfter = usage.totalBytes - usage.replacingBytes + sizeBytes;
+	if (totalAfter > MAX_PAGE_STORAGE_BYTES) {
+		return {
+			code: "quota_exceeded",
+			message: `quota_exceeded: a page stores at most ${MAX_PAGE_STORAGE_BYTES} bytes`,
+		};
+	}
+	return null;
+}

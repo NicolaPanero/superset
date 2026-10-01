@@ -13,12 +13,10 @@ export function usePageStorageChannel({
 	frameRef,
 	frameOrigin,
 	port,
-	writable = true,
 }: {
 	frameRef: RefObject<HTMLIFrameElement | null>;
 	frameOrigin: string;
 	port?: PageStoragePort;
-	writable?: boolean;
 }): void {
 	const portRef = useRef(port);
 	portRef.current = port;
@@ -41,7 +39,7 @@ export function usePageStorageChannel({
 			if (!data || data.channel !== STORAGE_FRAME_CHANNEL) return;
 
 			if (data.type === "hello") {
-				post({ type: "hello", writable });
+				post({ type: "hello", writable: true });
 				setLive(true);
 				return;
 			}
@@ -74,7 +72,7 @@ export function usePageStorageChannel({
 
 		window.addEventListener("message", onMessage);
 		return () => window.removeEventListener("message", onMessage);
-	}, [frameOrigin, frameRef, port, writable]);
+	}, [frameOrigin, frameRef, port]);
 
 	useEffect(() => {
 		if (!live || !port?.watch) return;
@@ -91,19 +89,30 @@ export function usePageStorageChannel({
 	}, [frameOrigin, frameRef, live, port]);
 }
 
+const STORAGE_CODES: readonly PageStorageErrorCode[] = [
+	"unavailable",
+	"unauthenticated",
+	"quota_exceeded",
+	"invalid",
+];
+
 function classify(error: unknown): {
 	code: PageStorageErrorCode;
 	message: string;
 } {
-	const raw = error instanceof Error ? error.message : String(error);
-	if (raw.includes("quota_exceeded")) {
-		return { code: "quota_exceeded", message: raw };
+	const data = (error as { data?: Record<string, unknown> } | null)?.data;
+	const declared = data?.pageStorageCode;
+	if (
+		typeof declared === "string" &&
+		(STORAGE_CODES as readonly string[]).includes(declared)
+	) {
+		return {
+			code: declared as PageStorageErrorCode,
+			message: error instanceof Error ? error.message : String(error),
+		};
 	}
-	if (/UNAUTHORIZED|No active organization/i.test(raw)) {
+	if (data?.code === "UNAUTHORIZED") {
 		return { code: "unauthenticated", message: "Sign in to store data" };
-	}
-	if (/FORBIDDEN|NOT_FOUND/i.test(raw)) {
-		return { code: "invalid", message: raw };
 	}
 	return { code: "unavailable", message: "Page storage could not be reached" };
 }

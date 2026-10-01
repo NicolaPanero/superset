@@ -1004,7 +1004,6 @@ export const pageRouter = {
 			await db.delete(pages).where(eq(pages.id, page.id));
 
 			try {
-				await deletePageStorage(page.id);
 				await deletePageObjects({
 					pageId: page.id,
 					versions: rows,
@@ -1042,6 +1041,15 @@ export const pageRouter = {
 				}
 			} catch (error) {
 				console.error("[pages] storage cleanup failed after delete", {
+					pageId: page.id,
+					error,
+				});
+			}
+
+			try {
+				await deletePageStorage(page.id);
+			} catch (error) {
+				console.error("[pages] hub wipe failed after delete", {
 					pageId: page.id,
 					error,
 				});

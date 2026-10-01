@@ -199,6 +199,7 @@ async function servePage(c: Context<AppContext>): Promise<Response> {
 				: "private, no-cache";
 	const policy = pageContentSecurityPolicy(
 		c.env.FRAME_ANCESTORS.split(/\s+/).filter(Boolean),
+		new URL(c.env.REALTIME_URL).origin,
 	);
 	// The policy is in the tag because a 304 has no other way to refresh it.
 	const etag = `W/"${version}.${revisionOf(policy)}"`;
@@ -473,6 +474,7 @@ async function serveAsset(c: Context<AppContext>): Promise<Response> {
 			"Content-Security-Policy",
 			pageContentSecurityPolicy(
 				c.env.FRAME_ANCESTORS.split(/\s+/).filter(Boolean),
+				new URL(c.env.REALTIME_URL).origin,
 			),
 		);
 		headers.set("Origin-Agent-Cluster", "?1");

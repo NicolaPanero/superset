@@ -56,6 +56,16 @@ export function readAutomationErrorCode(cause: unknown): string | null {
 	return typeof code === "string" ? code : null;
 }
 
+/**
+ * The page-storage code on a cause. A page branches on this, never on the
+ * message, which is display-only and may be translated.
+ */
+export function readPageStorageCode(cause: unknown): string | null {
+	const code = (cause as { pageStorageCode?: unknown } | null | undefined)
+		?.pageStorageCode;
+	return typeof code === "string" ? code : null;
+}
+
 export function isI18nErrorCause(cause: unknown): cause is I18nErrorCause {
 	return (
 		typeof cause === "object" &&
@@ -87,6 +97,7 @@ export function formatError<TShape extends { data: object }>({
 			i18nKey: i18nCause?.i18nKey ?? null,
 			i18nParams: i18nCause?.i18nParams ?? null,
 			automationErrorCode: readAutomationErrorCode(error.cause),
+			pageStorageCode: readPageStorageCode(error.cause),
 			requiredPlan: i18nCause?.requiredPlan ?? null,
 		},
 	};

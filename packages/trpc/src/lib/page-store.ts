@@ -1,15 +1,33 @@
 import { db } from "@superset/db/client";
-import { pageStorageIndex } from "@superset/db/schema";
+import { members, pages } from "@superset/db/schema";
 import {
 	type PageStorageHubReplyFor,
 	type PageStorageHubRequest,
 	type PageStorageHubResponse,
+	pageStorageNudgePath,
 	pageStorageOpPath,
 } from "@superset/shared/page-storage-hub";
 import { signPageStorageTicket } from "@superset/shared/usercontent";
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
+import { waitUntil } from "@vercel/functions";
+import { and, eq, inArray, isNull } from "drizzle-orm";
 import { env } from "../env";
+
+export type PageStorageFailure = "quota_exceeded" | "invalid" | "unavailable";
+
+/**
+ * Carries the hub's code on `cause`, which is where the router's
+ * errorFormatter reads it onto `data.pageStorageCode`. FORBIDDEN alone is
+ * ambiguous — a taken-down page produces it too — so the page branches on the
+ * code and never on the message.
+ */
+function storageError(code: PageStorageFailure, message: string): TRPCError {
+	return new TRPCError({
+		code: code === "unavailable" ? "INTERNAL_SERVER_ERROR" : "FORBIDDEN",
+		message,
+		cause: { pageStorageCode: code },
+	});
+}
 
 export async function callPageStore<Request extends PageStorageHubRequest>(
 	pageId: string,
@@ -27,77 +45,111 @@ export async function callPageStore<Request extends PageStorageHubRequest>(
 			signal: AbortSignal.timeout(10_000),
 		});
 	} catch (error) {
-		throw new TRPCError({
-			code: "INTERNAL_SERVER_ERROR",
-			message: `Page storage is unreachable: ${
+		throw storageError(
+			"unavailable",
+			`Page storage is unreachable: ${
 				error instanceof Error ? error.message : String(error)
 			}`,
-		});
+		);
 	}
 
 	if (!response.ok) {
-		throw new TRPCError({
-			code: "INTERNAL_SERVER_ERROR",
-			message: `Page storage refused the call (${response.status})`,
-		});
+		throw storageError(
+			"unavailable",
+			`Page storage refused the call (${response.status})`,
+		);
 	}
 
 	const body = (await response
 		.json()
 		.catch(() => null)) as PageStorageHubResponse | null;
 	if (!body) {
-		throw new TRPCError({
-			code: "INTERNAL_SERVER_ERROR",
-			message: "Page storage returned nothing",
-		});
+		throw storageError("unavailable", "Page storage returned nothing");
 	}
 	if (!body.ok) {
-		throw new TRPCError({ code: "FORBIDDEN", message: body.message });
+		throw storageError(body.code, body.message);
 	}
 	return body as PageStorageHubReplyFor<Request["op"]>;
 }
 
-export async function notePageStorageWriter(
-	pageId: string,
-	userId: string,
-): Promise<void> {
-	try {
-		await db
-			.insert(pageStorageIndex)
-			.values({ pageId, userId })
-			.onConflictDoUpdate({
-				target: [pageStorageIndex.pageId, pageStorageIndex.userId],
-				set: { updatedAt: new Date() },
-			});
-	} catch (error) {
-		console.warn("[pages] storage index write failed", { pageId, error });
-	}
+/**
+ * Tells a page's hub its manifest moved, so it re-reads access and closes the
+ * sockets that no longer pass. Fire-and-forget: a lost nudge costs a stale
+ * window until the hub's own timed re-read, never the write that caused it.
+ */
+export function notifyPageHub(pageId: string): void {
+	waitUntil(
+		fetch(`${env.REALTIME_URL}${pageStorageNudgePath(pageId)}`, {
+			method: "POST",
+			headers: { authorization: `Bearer ${env.REALTIME_NUDGE_SECRET}` },
+			signal: AbortSignal.timeout(5_000),
+		})
+			.then((response) => {
+				if (!response.ok) {
+					console.warn(
+						`[pages] hub nudge rejected: ${response.status} for ${pageId}`,
+					);
+				}
+			})
+			.catch((error) => {
+				console.warn(
+					"[pages] hub nudge failed:",
+					error instanceof Error ? error.message : error,
+				);
+			}),
+	);
 }
 
 export async function deletePageStorage(pageId: string): Promise<void> {
 	await callPageStore(pageId, { op: "clear" });
-	await db.delete(pageStorageIndex).where(eq(pageStorageIndex.pageId, pageId));
 }
 
+/**
+ * Removes everything one person wrote, everywhere it could be. A hub knows
+ * only its own page, so the sweep comes from the one fact Postgres has:
+ * writing requires membership of the page's organization, so their records
+ * can only sit on pages in the orgs they belonged to. A hub that never held
+ * storage answers without creating anything, which is why this needs no table
+ * recording who wrote where.
+ *
+ * The gap it leaves: someone who leaves an organization and later deletes
+ * their account keeps their records on that organization's pages. Closing it
+ * means clearing on org leave, not here.
+ */
 export async function purgePageStorageForUser(
 	userId: string,
 ): Promise<{ pages: number; cleared: number }> {
+	const memberships = await db
+		.select({ organizationId: members.organizationId })
+		.from(members)
+		.where(eq(members.userId, userId));
+	if (memberships.length === 0) return { pages: 0, cleared: 0 };
+
 	const rows = await db
-		.select({ pageId: pageStorageIndex.pageId })
-		.from(pageStorageIndex)
-		.where(eq(pageStorageIndex.userId, userId));
+		.select({ id: pages.id })
+		.from(pages)
+		.where(
+			and(
+				inArray(
+					pages.organizationId,
+					memberships.map((row) => row.organizationId),
+				),
+				isNull(pages.takenDownAt),
+			),
+		);
 
 	let cleared = 0;
 	for (const row of rows) {
-		const result = await callPageStore(row.pageId, {
-			op: "clearUser",
-			userId,
-		});
-		cleared += result.cleared;
+		try {
+			const result = await callPageStore(row.id, { op: "clearUser", userId });
+			cleared += result.cleared;
+		} catch (error) {
+			console.warn("[pages] could not clear a hub during purge", {
+				pageId: row.id,
+				error: error instanceof Error ? error.message : error,
+			});
+		}
 	}
-
-	await db.delete(pageStorageIndex).where(eq(pageStorageIndex.userId, userId));
-
 	return { pages: rows.length, cleared };
 }
 

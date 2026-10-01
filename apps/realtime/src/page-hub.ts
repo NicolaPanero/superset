@@ -1,8 +1,4 @@
-import {
-	MAX_PAGE_STORAGE_BYTES,
-	MAX_PAGE_STORAGE_KEYS_PER_USER,
-	MAX_PAGE_STORAGE_VALUE_BYTES,
-} from "@superset/shared/page-storage";
+import { pageStorageRefusal } from "@superset/shared/page-storage";
 import type {
 	PageStorageChangedMessage,
 	PageStorageHubRecord,
@@ -112,13 +108,6 @@ export class PageHub extends Server<RealtimeEnv> {
 	): PageStorageHubResponse {
 		const encoded = JSON.stringify(value ?? null);
 		const sizeBytes = new TextEncoder().encode(encoded).length;
-		if (sizeBytes > MAX_PAGE_STORAGE_VALUE_BYTES) {
-			return {
-				ok: false,
-				code: "quota_exceeded",
-				message: `quota_exceeded: a stored value is at most ${MAX_PAGE_STORAGE_VALUE_BYTES} bytes`,
-			};
-		}
 
 		const [usage] = this.ctx.storage.sql
 			.exec<{ total: number; mine: number; replacing: number }>(
@@ -133,23 +122,16 @@ export class PageHub extends Server<RealtimeEnv> {
 			)
 			.toArray();
 
-		const existing = this.one(key, userId);
-		if (!existing && (usage?.mine ?? 0) >= MAX_PAGE_STORAGE_KEYS_PER_USER) {
-			return {
-				ok: false,
-				code: "quota_exceeded",
-				message: `quota_exceeded: at most ${MAX_PAGE_STORAGE_KEYS_PER_USER} keys per person on a page`,
-			};
-		}
-		const totalAfter =
-			(usage?.total ?? 0) - (usage?.replacing ?? 0) + sizeBytes;
-		if (totalAfter > MAX_PAGE_STORAGE_BYTES) {
-			return {
-				ok: false,
-				code: "quota_exceeded",
-				message: `quota_exceeded: a page stores at most ${MAX_PAGE_STORAGE_BYTES} bytes`,
-			};
-		}
+		const refusal = pageStorageRefusal(
+			{
+				totalBytes: usage?.total ?? 0,
+				keysForUser: usage?.mine ?? 0,
+				replacingBytes: usage?.replacing ?? 0,
+				replacingExisting: this.one(key, userId) !== null,
+			},
+			sizeBytes,
+		);
+		if (refusal) return { ok: false, ...refusal };
 
 		this.ctx.storage.sql.exec(
 			`INSERT INTO records (key, user_id, value, size_bytes, updated_at)

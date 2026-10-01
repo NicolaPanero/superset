@@ -1965,25 +1965,6 @@ export const pageVersions = pgTable(
 export type InsertPageVersion = typeof pageVersions.$inferInsert;
 export type SelectPageVersion = typeof pageVersions.$inferSelect;
 
-export const pageStorageIndex = pgTable(
-	"page_storage_index",
-	{
-		pageId: uuid("page_id").notNull(),
-		userId: uuid("user_id").notNull(),
-		updatedAt: timestamp("updated_at", { withTimezone: true })
-			.notNull()
-			.defaultNow()
-			.$onUpdate(() => new Date()),
-	},
-	(table) => [
-		primaryKey({ columns: [table.pageId, table.userId] }),
-		index("page_storage_index_user_id_idx").on(table.userId),
-	],
-);
-
-export type InsertPageStorageIndex = typeof pageStorageIndex.$inferInsert;
-export type SelectPageStorageIndex = typeof pageStorageIndex.$inferSelect;
-
 export const pageReports = pgTable(
 	"page_reports",
 	{

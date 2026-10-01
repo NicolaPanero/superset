@@ -73,3 +73,12 @@ export function pageStorageOpPath(pageId: string): string {
 export function pageStorageSubscribePath(pageId: string): string {
 	return `/v2/page/${encodeURIComponent(pageId)}/storage/subscribe`;
 }
+
+/**
+ * Where the API tells a hub its manifest moved. The hub re-reads access and
+ * drops what no longer passes; storage keeps working if the nudge is lost,
+ * just against a stale view until its own timed re-read.
+ */
+export function pageStorageNudgePath(pageId: string): string {
+	return `/v2/page/${encodeURIComponent(pageId)}/storage/manifest-changed`;
+}

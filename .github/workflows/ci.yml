@@ -122,6 +122,12 @@ jobs:
       - name: Audit plugin marketplace
         run: bun run check:plugins
 
+      # Deleting or renaming a durable object class destroys every instance's
+      # storage, and the deploy that does it succeeds silently. A page's
+      # records live nowhere else.
+      - name: Check durable object classes
+        run: bun run check:durable-objects
+
   test:
     name: Test
     runs-on: ubuntu-latest

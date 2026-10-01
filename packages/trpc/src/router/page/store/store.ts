@@ -1,10 +1,5 @@
 import { db } from "@superset/db/client";
-import {
-	pageStorageIndex,
-	pages,
-	type SelectPage,
-	users,
-} from "@superset/db/schema";
+import { pages, type SelectPage, users } from "@superset/db/schema";
 import { MAX_PAGE_STORAGE_BYTES } from "@superset/shared/page-storage";
 import type { PageStorageHubRecord } from "@superset/shared/page-storage-hub";
 import { TRPCError, type TRPCRouterRecord } from "@trpc/server";
@@ -13,7 +8,6 @@ import { z } from "zod";
 import {
 	callPageStore,
 	mintPageStoreSubscribeTicket,
-	notePageStorageWriter,
 } from "../../../lib/page-store";
 import { protectedProcedure } from "../../../trpc";
 import { requireActiveOrgMembership } from "../../utils/active-org";
@@ -114,7 +108,6 @@ export const pageStoreRouter = {
 				key: input.key,
 				value: input.value ?? null,
 			});
-			await notePageStorageWriter(input.pageId, userId);
 			return { ok: true as const };
 		}),
 
@@ -165,40 +158,6 @@ export const pageStoreRouter = {
 			};
 		}),
 
-	usage: protectedProcedure
-		.input(z.object({ limit: z.number().int().min(1).max(200).default(50) }))
-		.query(async ({ ctx, input }) => {
-			const organizationId = await requireActiveOrgMembership(ctx);
-
-			const rows = await db
-				.selectDistinct({ pageId: pageStorageIndex.pageId })
-				.from(pageStorageIndex)
-				.innerJoin(pages, eq(pages.id, pageStorageIndex.pageId))
-				.where(eq(pages.organizationId, organizationId))
-				.limit(input.limit + 1);
-
-			const truncated = rows.length > input.limit;
-			const pageIds = rows.slice(0, input.limit).map((row) => row.pageId);
-
-			const totals = await Promise.all(
-				pageIds.map(async (pageId) => {
-					try {
-						const { totalBytes } = await callPageStore(pageId, { op: "list" });
-						return { pageId, totalBytes };
-					} catch {
-						return { pageId, totalBytes: 0, unreachable: true };
-					}
-				}),
-			);
-
-			return {
-				pages: totals,
-				totalBytes: totals.reduce((sum, row) => sum + row.totalBytes, 0),
-				limitBytesPerPage: MAX_PAGE_STORAGE_BYTES,
-				truncated,
-			};
-		}),
-
 	clear: protectedProcedure
 		.input(clearPageStorageSchema)
 		.mutation(async ({ ctx, input }) => {
@@ -211,11 +170,6 @@ export const pageStoreRouter = {
 				op: "clear",
 				...(input.key !== undefined ? { key: input.key } : {}),
 			});
-			if (input.key === undefined) {
-				await db
-					.delete(pageStorageIndex)
-					.where(eq(pageStorageIndex.pageId, input.pageId));
-			}
 			return { cleared };
 		}),
 } satisfies TRPCRouterRecord;

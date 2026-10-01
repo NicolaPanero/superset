@@ -23,6 +23,13 @@ export interface PageManifest {
 	pageId: string;
 	slug: string;
 	visibility: PageVisibility;
+	/**
+	 * Who the page belongs to and who wrote it. Absent on a manifest written
+	 * before storage existed, and a hub authorizes nobody without them, so the
+	 * backfill has to run before the Worker ships.
+	 */
+	organizationId?: string;
+	createdByUserId?: string | null;
 	sharedVersion: number | null;
 	latestVersion: number | null;
 	versions: Record<string, PageManifestVersion>;
@@ -81,6 +88,17 @@ export function parsePageManifest(text: string): PageManifest | null {
 		}
 		versions[version] = parsed;
 	}
+	const organizationId =
+		typeof candidate.organizationId === "string"
+			? candidate.organizationId
+			: undefined;
+	const createdByUserId =
+		typeof candidate.createdByUserId === "string"
+			? candidate.createdByUserId
+			: candidate.createdByUserId === null
+				? null
+				: undefined;
+
 	return {
 		v: 1,
 		pageId: candidate.pageId,
@@ -89,6 +107,8 @@ export function parsePageManifest(text: string): PageManifest | null {
 		sharedVersion: candidate.sharedVersion,
 		latestVersion: candidate.latestVersion,
 		versions,
+		...(organizationId !== undefined ? { organizationId } : {}),
+		...(createdByUserId !== undefined ? { createdByUserId } : {}),
 	};
 }
 
