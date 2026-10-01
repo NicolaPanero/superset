@@ -404,10 +404,19 @@ export function usePaneRegistry({
 					);
 				},
 				onAfterClose: (pane, closedPanes) => {
-					const { acpSessionId, terminalId } = pane.data as TerminalPaneData;
-					// The pty is already stopped on the ACP surface, so this adapter is
-					// the only process the close has left to end.
-					if (acpSessionId) void agentSurface.stopChat(acpSessionId);
+					const {
+						acpSessionId,
+						agentSurface: surface,
+						terminalId,
+					} = pane.data as TerminalPaneData;
+					// On the ACP surface the adapter is the only process the close has
+					// left to end: the pty was either stopped by the switch or — for a
+					// chat opened from the launcher — never started, and asking the
+					// host to kill an id it has never seen only logs a failure.
+					if (surface === "acp") {
+						if (acpSessionId) void agentSurface.stopChat(acpSessionId);
+						return;
+					}
 					const firstClosed = closedPanes.find(
 						(candidate) =>
 							candidate.kind === "terminal" &&

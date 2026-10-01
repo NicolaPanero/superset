@@ -59,6 +59,16 @@ export function AgentTerminalPane({
 		return (
 			<AcpChatPane
 				agent={data.agent}
+				onFirstPromptSent={() => {
+					if (data.pendingPrompt === undefined) return;
+					const { pendingPrompt: _sent, ...rest } = data;
+					ctx.actions.updateData(rest);
+				}}
+				pendingFirstPrompt={
+					data.pendingPrompt
+						? [{ type: "text", text: data.pendingPrompt }]
+						: null
+				}
 				onAgentSessionChanged={(sessionId) => {
 					if (!data.agent) return;
 					ctx.actions.updateData({

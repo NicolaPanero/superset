@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { UserContent } from "@superset/chat/protocol";
 import { toast } from "@superset/ui/sonner";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -16,13 +17,18 @@ import { AcpRecovery } from "./components/AcpRecovery";
 export function AcpChatPane({
 	agent,
 	onAgentSessionChanged,
+	onFirstPromptSent,
 	onSessionCreated,
+	pendingFirstPrompt,
 	sessionId,
 	workspaceId,
 }: {
 	workspaceId: string;
-	agent: { id: string; sessionId: string } | undefined;
+	/** `sessionId` is absent until the agent has run a turn to report one. */
+	agent: { id: string; sessionId?: string } | undefined;
 	sessionId: string | null;
+	pendingFirstPrompt?: UserContent[] | null;
+	onFirstPromptSent?: (() => void) | undefined;
 	onSessionCreated: (sessionId: string) => void;
 	onAgentSessionChanged: (harnessSessionId: string) => void;
 }) {
@@ -65,8 +71,10 @@ export function AcpChatPane({
 	);
 
 	const agentSessionId = agent?.sessionId;
+	// Resuming when there is a session to resume, and a plain new one when the
+	// pane was opened straight onto the chat and no agent has run yet.
 	useEffect(() => {
-		if (sessionId || attaching.current || !harness || !agentSessionId) return;
+		if (sessionId || attaching.current || !harness) return;
 		void start(harness, agentSessionId);
 	}, [sessionId, harness, agentSessionId, start]);
 
@@ -162,7 +170,11 @@ export function AcpChatPane({
 		}
 		return (
 			<AcpChatPending>
-				<Trans>Attaching to the running session…</Trans>
+				{agentSessionId ? (
+					<Trans>Attaching to the running session…</Trans>
+				) : (
+					<Trans>Starting the agent…</Trans>
+				)}
 			</AcpChatPending>
 		);
 	}
@@ -171,7 +183,7 @@ export function AcpChatPane({
 		<SessionView
 			client={client}
 			key={sessionId}
-			onFirstPromptSent={NOOP}
+			onFirstPromptSent={onFirstPromptSent ?? NOOP}
 			onFork={forkConversation}
 			onSessionState={(state) => {
 				// A resume that found no transcript lands on a different agent
@@ -180,7 +192,7 @@ export function AcpChatPane({
 				const bound = state?.harnessSessionId;
 				if (bound && bound !== agent?.sessionId) onAgentSessionChanged(bound);
 			}}
-			pendingFirstPrompt={null}
+			pendingFirstPrompt={pendingFirstPrompt ?? null}
 			sessionId={sessionId}
 			workspaceId={workspaceId}
 		/>

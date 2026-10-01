@@ -40,12 +40,16 @@ export interface TerminalPaneData {
 	acpSessionId?: string | null;
 	/**
 	 * Captured before the pty is stopped, because the terminal row and its agent
-	 * binding go with it — and they are what the trip back needs.
+	 * binding go with it — and they are what the trip back needs. A pane opened
+	 * straight onto the chat has no session yet: the agent reports one on its
+	 * first turn, and until then there is nothing to resume on either surface.
 	 */
 	agent?: {
 		id: string;
-		sessionId: string;
+		sessionId?: string;
 	};
+	/** First message for a chat opened from the launcher, sent once. */
+	pendingPrompt?: string;
 }
 
 export interface BrowserPaneData {

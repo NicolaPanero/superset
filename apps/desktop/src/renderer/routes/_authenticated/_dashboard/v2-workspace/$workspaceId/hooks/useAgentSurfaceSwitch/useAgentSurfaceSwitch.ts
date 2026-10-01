@@ -12,7 +12,7 @@ import { useChatWiring } from "../usePaneRegistry/components/ChatV3Pane/hooks/us
 
 export type AgentSurface = "cli" | "acp";
 
-export type AgentIdentity = { id: string; sessionId: string };
+export type AgentIdentity = { id: string; sessionId?: string };
 
 export type AgentSurfaceSwitch = {
 	/**
@@ -104,7 +104,11 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					colors: terminalQueryColors(appearance.theme),
 					agent: resumeFrom.id,
 					prompt: "",
-					resumeSessionId: resumeFrom.sessionId,
+					// A chat the launcher opened may not have run a turn yet, so
+					// there is no agent session to resume into the terminal.
+					...(resumeFrom.sessionId
+						? { resumeSessionId: resumeFrom.sessionId }
+						: {}),
 				});
 				if (result.kind !== "terminal") {
 					toast.error(
