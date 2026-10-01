@@ -1553,6 +1553,41 @@ export const pageVersions = pgTable(
 export type InsertPageVersion = typeof pageVersions.$inferInsert;
 export type SelectPageVersion = typeof pageVersions.$inferSelect;
 
+/**
+ * Where to look for a page's stored records, which live in that page's
+ * Durable Object and not here. It holds no values, no sizes and no content:
+ * it exists only to answer the questions one hub cannot, because a hub knows
+ * nothing beyond itself — "which pages has this person written to" when their
+ * account is purged, and "which pages hold storage at all" for usage.
+ *
+ * Deliberately an over-approximation. A row is written on first write and
+ * never removed when a single key is deleted, so it means "may have written
+ * here", and a purge that finds an empty hub is a no-op. That keeps the write
+ * path to one upsert and makes a stale row harmless rather than wrong.
+ *
+ * No foreign keys, which is the point and not an oversight: these rows are
+ * pointers into storage Postgres cannot see, so a cascade would delete the
+ * pointer while leaving the records it was the only way to find.
+ */
+export const pageStorageIndex = pgTable(
+	"page_storage_index",
+	{
+		pageId: uuid("page_id").notNull(),
+		userId: uuid("user_id").notNull(),
+		updatedAt: timestamp("updated_at", { withTimezone: true })
+			.notNull()
+			.defaultNow()
+			.$onUpdate(() => new Date()),
+	},
+	(table) => [
+		primaryKey({ columns: [table.pageId, table.userId] }),
+		index("page_storage_index_user_id_idx").on(table.userId),
+	],
+);
+
+export type InsertPageStorageIndex = typeof pageStorageIndex.$inferInsert;
+export type SelectPageStorageIndex = typeof pageStorageIndex.$inferSelect;
+
 export const pageReports = pgTable(
 	"page_reports",
 	{
