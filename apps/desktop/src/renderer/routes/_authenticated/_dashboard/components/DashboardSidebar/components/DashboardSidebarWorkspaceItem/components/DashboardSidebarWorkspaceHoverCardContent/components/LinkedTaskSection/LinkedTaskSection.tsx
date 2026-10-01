@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { LuExternalLink } from "react-icons/lu";
 import { MarqueeText } from "renderer/components/MarqueeText";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
+import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import {
 	StatusIcon,
@@ -14,6 +15,7 @@ interface LinkedTaskSectionProps {
 }
 
 export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
+	const taskDisplayId = useTaskDisplayId();
 	const { t } = useLingui();
 	const { data: taskRecord } = cloudTrpc.task.byIdOrSlug.useQuery(taskId);
 	const { data: statuses } = cloudTrpc.task.statuses.list.useQuery(undefined);
@@ -30,6 +32,8 @@ export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
 	const task = {
 		id: taskRecord.id,
 		slug: taskRecord.slug,
+		externalProvider: taskRecord.externalProvider,
+		externalKey: taskRecord.externalKey,
 		title: taskRecord.title,
 		externalUrl: taskRecord.externalUrl,
 		statusType: status?.type ?? null,
@@ -63,12 +67,12 @@ export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
 						)}
 					</span>
 					<MarqueeText
-						title={`${task.slug} ${task.title}`}
+						title={`${taskDisplayId(task)} ${task.title}`}
 						className="min-w-0 flex-1 text-xs"
 						forceActive={isFocusVisible}
 					>
 						<span className="mr-1.5 font-mono text-muted-foreground">
-							{task.slug}
+							{taskDisplayId(task)}
 						</span>
 						{task.title}
 					</MarqueeText>

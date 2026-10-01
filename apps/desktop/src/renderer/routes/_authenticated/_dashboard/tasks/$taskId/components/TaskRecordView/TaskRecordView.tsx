@@ -81,7 +81,7 @@ export function TaskRecordView({
 }: TaskRecordViewProps) {
 	return (
 		<RecordLayout
-			header={<TaskRecordTopBar slug={task.slug} onBack={onBack} />}
+			header={<TaskRecordTopBar task={task} onBack={onBack} />}
 			sideActions={
 				<TaskRecordActions
 					task={task}
