@@ -918,6 +918,9 @@ msgstr "{months}个月"
 msgid "{months}mo ago"
 msgstr "{months}个月前"
 
+msgid "{myFailedCount} of your automations failed their last run"
+msgstr "你有{myFailedCount}个自动化上次运行失败"
+
 msgid "{name} accounts"
 msgstr "{name} 账号"
 
@@ -2565,11 +2568,17 @@ msgstr "自动化标题"
 msgid "Automations"
 msgstr "自动化"
 
+msgid "Automations ({myFailedCount} failing)"
+msgstr "自动化（{myFailedCount}个失败）"
+
 msgid "Automations & event triggers"
 msgstr "自动化与事件触发"
 
 msgid "Automations require the Pro plan."
 msgstr "自动化需要Pro套餐。"
+
+msgid "Automations, {myFailedCount} failing"
+msgstr "自动化，{myFailedCount}个失败"
 
 msgid "Autonomous"
 msgstr "自主"
@@ -3724,6 +3733,9 @@ msgstr "代码块"
 
 msgid "Code Block"
 msgstr "代码块"
+
+msgid "Code isn't available — this workspace's project doesn't have this pull request's repository."
+msgstr "代码不可用 — 此工作区的项目没有此拉取请求所在的仓库。"
 
 msgid "Cohort"
 msgstr "同期群"
@@ -16219,6 +16231,9 @@ msgstr "主机不再跟踪该子智能体。其记录仍保存在磁盘上的智
 
 msgid "This terminal has no output to hand over yet."
 msgstr "该终端还没有可交接的输出。"
+
+msgid "This terminal is also open on a smaller screen, so it's sized to fit"
+msgstr "此终端也在较小的屏幕上打开，因此已调整为适配该屏幕的大小"
 
 msgid "This thread has no comment to reply to."
 msgstr "这个讨论里没有可回复的评论。"

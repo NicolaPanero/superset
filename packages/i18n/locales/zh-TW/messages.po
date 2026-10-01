@@ -918,6 +918,9 @@ msgstr "{months}個月"
 msgid "{months}mo ago"
 msgstr "{months}個月前"
 
+msgid "{myFailedCount} of your automations failed their last run"
+msgstr "你有{myFailedCount}個自動化上次執行失敗"
+
 msgid "{name} accounts"
 msgstr "{name} 帳號"
 
@@ -2565,11 +2568,17 @@ msgstr "自動化標題"
 msgid "Automations"
 msgstr "自動化"
 
+msgid "Automations ({myFailedCount} failing)"
+msgstr "自動化（{myFailedCount}個失敗）"
+
 msgid "Automations & event triggers"
 msgstr "自動化與事件觸發"
 
 msgid "Automations require the Pro plan."
 msgstr "自動化需要Pro方案。"
+
+msgid "Automations, {myFailedCount} failing"
+msgstr "自動化，{myFailedCount}個失敗"
 
 msgid "Autonomous"
 msgstr "自主"
@@ -3724,6 +3733,9 @@ msgstr "程式碼塊"
 
 msgid "Code Block"
 msgstr "程式碼塊"
+
+msgid "Code isn't available — this workspace's project doesn't have this pull request's repository."
+msgstr "程式碼無法使用 — 此工作區的專案沒有此拉取請求所在的儲存庫。"
 
 msgid "Cohort"
 msgstr "同期群"
@@ -16219,6 +16231,9 @@ msgstr "主機已不再追蹤此子代理程式。其逐字稿仍保留在磁碟
 
 msgid "This terminal has no output to hand over yet."
 msgstr "這個終端還沒有可交接的輸出。"
+
+msgid "This terminal is also open on a smaller screen, so it's sized to fit"
+msgstr "此終端機也在較小的螢幕上開啟，因此已調整為符合該螢幕的大小"
 
 msgid "This thread has no comment to reply to."
 msgstr "這個討論裡沒有可回覆的評論。"

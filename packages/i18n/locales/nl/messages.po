@@ -918,6 +918,9 @@ msgstr "{months}mnd"
 msgid "{months}mo ago"
 msgstr "{months}mnd geleden"
 
+msgid "{myFailedCount} of your automations failed their last run"
+msgstr "Bij {myFailedCount} van je automatiseringen is de laatste run mislukt"
+
 msgid "{name} accounts"
 msgstr "{name}-accounts"
 
@@ -2565,11 +2568,17 @@ msgstr "Titel van automatisering"
 msgid "Automations"
 msgstr "Automatiseringen"
 
+msgid "Automations ({myFailedCount} failing)"
+msgstr "Automatiseringen ({myFailedCount} mislukt)"
+
 msgid "Automations & event triggers"
 msgstr "Automatiseringen en event-triggers"
 
 msgid "Automations require the Pro plan."
 msgstr "Automatiseringen vereisen het Pro-abonnement."
+
+msgid "Automations, {myFailedCount} failing"
+msgstr "Automatiseringen, {myFailedCount} mislukt"
 
 msgid "Autonomous"
 msgstr "Autonoom"
@@ -3724,6 +3733,9 @@ msgstr "Codeblok"
 
 msgid "Code Block"
 msgstr "Codeblok"
+
+msgid "Code isn't available — this workspace's project doesn't have this pull request's repository."
+msgstr "Code is niet beschikbaar — het project van deze werkruimte heeft de repository van deze pull request niet."
 
 msgid "Cohort"
 msgstr "Cohort"
@@ -16219,6 +16231,9 @@ msgstr "Deze subagent wordt niet meer gevolgd door de host. Het transcript blijf
 
 msgid "This terminal has no output to hand over yet."
 msgstr "Deze terminal heeft nog geen uitvoer om over te dragen."
+
+msgid "This terminal is also open on a smaller screen, so it's sized to fit"
+msgstr "Deze terminal is ook open op een kleiner scherm en is daarom daarop afgestemd"
 
 msgid "This thread has no comment to reply to."
 msgstr "Deze thread heeft geen opmerking om op te reageren."

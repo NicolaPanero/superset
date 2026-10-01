@@ -918,6 +918,9 @@ msgstr "{months} mies."
 msgid "{months}mo ago"
 msgstr "{months} mies. temu"
 
+msgid "{myFailedCount} of your automations failed their last run"
+msgstr "Twoje automatyzacje z nieudanym ostatnim uruchomieniem: {myFailedCount}"
+
 msgid "{name} accounts"
 msgstr "Konta {name}"
 
@@ -2565,11 +2568,17 @@ msgstr "Tytuł automatyzacji"
 msgid "Automations"
 msgstr "Automatyzacje"
 
+msgid "Automations ({myFailedCount} failing)"
+msgstr "Automatyzacje (nieudane: {myFailedCount})"
+
 msgid "Automations & event triggers"
 msgstr "Automatyzacje i wyzwalacze zdarzeń"
 
 msgid "Automations require the Pro plan."
 msgstr "Automatyzacje wymagają planu Pro."
+
+msgid "Automations, {myFailedCount} failing"
+msgstr "Automatyzacje, nieudane: {myFailedCount}"
 
 msgid "Autonomous"
 msgstr "Autonomiczny"
@@ -3724,6 +3733,9 @@ msgstr "Blok kodu"
 
 msgid "Code Block"
 msgstr "Blok kodu"
+
+msgid "Code isn't available — this workspace's project doesn't have this pull request's repository."
+msgstr "Kod jest niedostępny — projekt tego obszaru roboczego nie ma repozytorium tego pull requesta."
 
 msgid "Cohort"
 msgstr "Kohorta"
@@ -16219,6 +16231,9 @@ msgstr "Ten subagent nie jest już śledzony przez hosta. Jego zapis pozostaje n
 
 msgid "This terminal has no output to hand over yet."
 msgstr "Ten terminal nie ma jeszcze danych do przekazania."
+
+msgid "This terminal is also open on a smaller screen, so it's sized to fit"
+msgstr "Ten terminal jest otwarty również na mniejszym ekranie, więc dopasowano go do jego rozmiaru"
 
 msgid "This thread has no comment to reply to."
 msgstr "Ten wątek nie ma komentarza, na który można odpowiedzieć."
