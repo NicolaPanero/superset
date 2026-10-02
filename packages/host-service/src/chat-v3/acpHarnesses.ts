@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
 
@@ -25,6 +25,8 @@ type AcpAdapter = {
 	/** The agent's id in the ACP registry, for tracing an entry back to it. */
 	registryId: string;
 	distribution: AcpDistribution;
+	/** Env this one adapter needs on top of `acpEnv()`. */
+	env?: () => NodeJS.ProcessEnv;
 };
 
 /** Keyed by the harness id the chat runtime uses. */
@@ -35,6 +37,7 @@ const ACP_ADAPTERS: Record<string, AcpAdapter> = {
 			kind: "bundled",
 			package: "@agentclientprotocol/claude-agent-acp",
 		},
+		env: claudeCodeExecutableEnv,
 	},
 	"codex-acp": {
 		registryId: "codex-acp",
@@ -74,6 +77,37 @@ function resolveAdapterEntry(packageName: string): string {
 	return join(dirname(pkgJson), "dist/index.js");
 }
 
+/**
+ * The agent resolves its CLI — a native binary — out of its own node_modules,
+ * which in a packaged build is a path inside `app.asar`: readable through
+ * Electron's patched `fs`, but not executable, so every session dies with
+ * `spawn ENOTDIR`. Point it at the copy electron-builder leaves beside the
+ * archive. Unpackaged hosts already resolve a real path, and know which linux
+ * libc variant they need, so leave those to resolve it themselves.
+ */
+function claudeCodeExecutableEnv(): NodeJS.ProcessEnv {
+	if (process.env.CLAUDE_CODE_EXECUTABLE) return {};
+	const binary = process.platform === "win32" ? "claude.exe" : "claude";
+	let resolved: string;
+	try {
+		// Anchored at the adapter so a nested install resolves the same binary the
+		// adapter would have picked, not a hoisted copy of another version.
+		const adapterPkg = createRequire(import.meta.url).resolve(
+			"@agentclientprotocol/claude-agent-acp/package.json",
+		);
+		resolved = createRequire(adapterPkg).resolve(
+			`@anthropic-ai/claude-agent-sdk-${process.platform}-${process.arch}/${binary}`,
+		);
+	} catch {
+		return {};
+	}
+	const unpacked = resolved.replace(
+		`app.asar${sep}`,
+		`app.asar.unpacked${sep}`,
+	);
+	return unpacked === resolved ? {} : { CLAUDE_CODE_EXECUTABLE: unpacked };
+}
+
 function acpEnv(): NodeJS.ProcessEnv {
 	const env: NodeJS.ProcessEnv = {
 		...process.env,
@@ -111,7 +145,7 @@ export function acpHarnessFactory(harness: string): HarnessFactory | null {
 			command: process.execPath,
 			args: [entry, ...args],
 			cwd: options.cwd,
-			env: acpEnv(),
+			env: { ...acpEnv(), ...adapter.env?.() },
 		});
 }
 

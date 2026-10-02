@@ -54,6 +54,9 @@ const config: Configuration = {
 		"**/resources/sounds/**/*",
 		// Tray icon must be unpacked so Electron Tray can load it
 		"**/resources/tray/**/*",
+		// The Claude agent SDK ships its CLI as a native binary the ACP harness
+		// spawns, and a path inside the archive cannot be executed
+		"**/node_modules/@anthropic-ai/claude-agent-sdk-*/claude*",
 	],
 
 	// Extra resources placed outside asar archive (accessible via process.resourcesPath)
