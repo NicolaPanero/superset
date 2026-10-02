@@ -7,17 +7,21 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
 import {
+	type TypeTab,
 	tasksSearchFromFilters,
 	useTasksFilterStore,
 } from "../../stores/tasks-filter-state";
+import type { LinearIssue } from "../../utils/linearIssueTypes";
 import { BoardContent } from "./components/BoardContent";
 import {
 	GitHubIssuesContent,
 	type SelectedIssue,
 } from "./components/GitHubIssuesContent";
+import { LinearIssuesContent } from "./components/LinearIssuesContent";
 import { TableContent } from "./components/TableContent";
 import {
 	type TabValue,
@@ -30,7 +34,7 @@ interface TasksViewProps {
 	initialTab?: TabValue;
 	initialAssignee?: string;
 	initialSearch?: string;
-	initialType?: "tasks" | "issues";
+	initialType?: TypeTab;
 	initialProjects?: string[];
 	initialLinearProject?: string;
 	initialState?: "open" | "all";
@@ -59,6 +63,10 @@ export function TasksView({
 		setTypeTab: storeSetTypeTab,
 		setProjectFilters: storeSetProjectFilters,
 		setLinearProjectFilter: storeSetLinearProjectFilter,
+		linearTeamFilter,
+		setLinearTeamFilter,
+		linearAssigneeFilter,
+		setLinearAssigneeFilter,
 		includeClosedIssues: storedIncludeClosedIssues,
 		setIncludeClosedIssues: storeSetIncludeClosedIssues,
 		viewMode,
@@ -68,7 +76,10 @@ export function TasksView({
 	const [searchQuery, setSearchQuery] = useState(initialSearch ?? storedSearch);
 	const deferredSearchQuery = useDeferredValue(searchQuery);
 	const assigneeFilter = initialAssignee ?? storedAssignee;
-	const typeTab = initialType ?? storedTypeTab;
+	const isLinearLive = useIsLinearLiveTabEnabled();
+	const requestedTypeTab = initialType ?? storedTypeTab;
+	const typeTab: TypeTab =
+		requestedTypeTab === "linear" && !isLinearLive ? "tasks" : requestedTypeTab;
 	const projectFilters = initialProjects ?? storedProjectFilters;
 	const linearProjectFilter = initialLinearProject ?? storedLinearProjectFilter;
 	const includeClosedIssues =
@@ -88,7 +99,7 @@ export function TasksView({
 			tab?: TabValue;
 			assignee?: string | null;
 			search?: string;
-			type?: "tasks" | "issues";
+			type?: TypeTab;
 			projects?: string[];
 			linearProject?: string | null;
 			includeClosedIssues?: boolean;
@@ -316,9 +327,18 @@ export function TasksView({
 		});
 	};
 
+	const handleLinearIssueOpen = (issue: LinearIssue) => {
+		navigate({
+			to: "/tasks/linear/$issueId",
+			params: { issueId: issue.identifier },
+			search: buildSearch({}),
+		});
+	};
+
 	const showTasks = typeTab === "tasks";
+	const showLinear = typeTab === "linear";
 	const showIssues = typeTab === "issues";
-	const taskSource: TaskSource = showIssues ? "issues" : "tasks";
+	const taskSource: TaskSource = typeTab;
 
 	return (
 		<div className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden">
@@ -341,6 +361,10 @@ export function TasksView({
 				onProjectFiltersChange={handleProjectFiltersChange}
 				linearProjectFilter={linearProjectFilter}
 				onLinearProjectFilterChange={handleLinearProjectFilterChange}
+				linearTeamFilter={linearTeamFilter}
+				onLinearTeamFilterChange={setLinearTeamFilter}
+				linearAssigneeFilter={linearAssigneeFilter}
+				onLinearAssigneeFilterChange={setLinearAssigneeFilter}
 				includeClosedIssues={includeClosedIssues}
 				onIncludeClosedIssuesChange={handleIncludeClosedIssuesChange}
 			/>
@@ -365,6 +389,18 @@ export function TasksView({
 							onSelectionChange={handleSelectionChange}
 						/>
 					))}
+				{showLinear && (
+					<LinearIssuesContent
+						filters={{
+							teamId: linearTeamFilter,
+							status: currentTab,
+							assignee: linearAssigneeFilter,
+							search: searchQuery,
+						}}
+						viewMode={viewMode}
+						onOpen={handleLinearIssueOpen}
+					/>
+				)}
 				{showIssues && (
 					<GitHubIssuesContent
 						projectFilters={projectFilters}

@@ -228,6 +228,13 @@ export const FEATURE_FLAGS = {
 	 * release condition on the flag, so widening never needs a release.
 	 */
 	ACP_CHAT: "acp-chat",
+	/**
+	 * Replaces the tasks view's mirrored Linear list with a Linear tab that
+	 * reads and writes Linear's API per member, a native-only Tasks tab, and
+	 * live Linear search in the new-workspace picker. The Linear sync is
+	 * removed only once this is on for everyone.
+	 */
+	LINEAR_LIVE_TAB: "linear-live-tab",
 } as const;
 
 /**

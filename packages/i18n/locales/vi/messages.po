@@ -289,6 +289,10 @@ msgstr "{0, plural, one {Không thể đóng # cổng} other {Không thể đón
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {Đã nhập # workspace} other {Đã nhập # workspace}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {issue Linear} other {issue Linear}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Chuyển # workspace đã chọn vào một nhóm} other {Chuyển # workspace đã chọn vào một nhóm}}"
@@ -1561,6 +1565,10 @@ msgstr "Thêm"
 msgid "Add {0} account"
 msgstr "Thêm tài khoản {0}"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "Thêm {0} vào workspace"
+
 msgid "Add a comment…"
 msgstr "Thêm bình luận…"
 
@@ -2057,6 +2065,9 @@ msgstr "Đã cho phép trong phiên này"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Đã có tài khoản? <0>Đăng nhập</0>"
 
+msgid "Already in tasks"
+msgstr "Đã có trong tác vụ"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "Cũng có dưới dạng CommandDialog cho bảng lệnh ⌘K"
 
@@ -2390,8 +2401,17 @@ msgstr "Yêu cầu thay đổi, @nhắc đến tệp, chạy /commands"
 msgid "Aspect Ratio"
 msgstr "Aspect Ratio"
 
+msgid "Assign to…"
+msgstr "Giao cho…"
+
 msgid "Assigned"
 msgstr "Được giao"
+
+msgid "Assigned to me"
+msgstr "Giao cho tôi"
+
+msgid "Assigned to you"
+msgstr "Giao cho bạn"
 
 msgid "Assignee"
 msgstr "Người phụ trách"
@@ -2666,6 +2686,9 @@ msgstr "Về trang chủ"
 
 msgid "Back to Integrations"
 msgstr "Quay lại Tích hợp"
+
+msgid "Back to Linear"
+msgstr "Quay lại Linear"
 
 msgid "Back to pages"
 msgstr "Quay lại danh sách trang"
@@ -3174,6 +3197,9 @@ msgstr "Lỗi chứng chỉ"
 msgid "Chain of Thought"
 msgstr "Chuỗi suy luận"
 
+msgid "Change assignee"
+msgstr "Đổi người phụ trách"
+
 msgid "Change avatar"
 msgstr "Đổi ảnh đại diện"
 
@@ -3195,6 +3221,9 @@ msgstr "Đổi logo tổ chức"
 msgid "Change organization slug"
 msgstr "Đổi slug tổ chức"
 
+msgid "Change priority"
+msgstr "Đổi mức ưu tiên"
+
 msgid "Change project icon and color"
 msgstr "Đổi biểu tượng và màu của dự án"
 
@@ -3203,6 +3232,10 @@ msgstr "Đổi vị trí dự án"
 
 msgid "Change role"
 msgstr "Đổi vai trò"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Đổi trạng thái (hiện tại: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4066,6 +4099,15 @@ msgstr "Kết nối máy tính này"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Kết nối các repository GitHub của bạn và đồng bộ pull request. Theo dõi trạng thái CI và review trong cả nhóm."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Kết nối tài khoản Linear của bạn trong Cài đặt → Tích hợp để liên kết issue Linear."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Kết nối tài khoản Linear của bạn để duyệt, cập nhật và bắt đầu làm việc trên issue Linear ngay trong Superset."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Kết nối tài khoản Linear của bạn để dùng Linear tại đây."
+
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Kết nối workspace Linear của bạn để đồng bộ issue hai chiều."
 
@@ -4888,6 +4930,9 @@ msgstr "Tạo một bản fork gốc ở nhà cung cấp với cùng ngữ cản
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Tạo khóa API mới cho các tích hợp bên ngoài như Claude Desktop hoặc Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Tạo issue mới trong Linear."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Tạo dự án mới bằng cách clone một repository hoặc đường dẫn cục bộ."
 
@@ -4920,6 +4965,12 @@ msgstr "Tạo tài khoản"
 
 msgid "Create failed: {message}"
 msgstr "Tạo thất bại: {message}"
+
+msgid "Create issue"
+msgstr "Tạo issue"
+
+msgid "Create Linear issue"
+msgstr "Tạo issue Linear"
 
 msgid "Create manually"
 msgstr "Tạo thủ công"
@@ -5007,6 +5058,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Đã tạo"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "Đã tạo {0}"
@@ -6532,6 +6584,9 @@ msgstr "Không thể tạo tự động hóa"
 msgid "Failed to create item"
 msgstr "Không thể tạo mục"
 
+msgid "Failed to create Linear issue"
+msgstr "Không thể tạo issue Linear"
+
 msgid "Failed to create organization"
 msgstr "Không thể tạo tổ chức"
 
@@ -7064,8 +7119,14 @@ msgstr "Bộ lọc, {activeFilterCount} đang bật"
 msgid "Find"
 msgstr "Tìm"
 
+msgid "Find a person…"
+msgstr "Tìm người…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Tìm một lỗi nhỏ và sửa nó…"
+
+msgid "Find a team…"
+msgstr "Tìm nhóm…"
 
 msgid "Find and fix a small bug"
 msgstr "Tìm và sửa một lỗi nhỏ"
@@ -8035,6 +8096,9 @@ msgstr "Nhập cài đặt từ trình duyệt khác"
 msgid "import the project"
 msgstr "nhập dự án"
 
+msgid "Import to tasks"
+msgstr "Nhập vào tác vụ"
+
 msgid "Import untracked worktrees"
 msgstr "Nhập các worktree chưa theo dõi"
 
@@ -8054,6 +8118,9 @@ msgstr "Đã nhập {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Được nhập từ Linear"
+
+msgid "Imported to tasks"
+msgstr "Đã nhập vào tác vụ"
 
 msgid "Importing..."
 msgstr "Đang nhập..."
@@ -8369,6 +8436,9 @@ msgstr "Không tìm thấy issue."
 
 msgid "Issue resolved"
 msgstr "Issue được giải quyết"
+
+msgid "Issue title"
+msgstr "Tiêu đề issue"
 
 msgid "Issue unresolved"
 msgstr "Issue chưa giải quyết"
@@ -8808,6 +8878,9 @@ msgstr "Đã kết nối Linear, nhưng lần đồng bộ đầu tiên không k
 msgid "Linear integration"
 msgstr "Tích hợp Linear"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear đang giới hạn yêu cầu. Hãy thử lại sau vài phút."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8838,6 +8911,9 @@ msgstr "Liên kết issue GitHub"
 
 msgid "Link issue"
 msgstr "Liên kết issue"
+
+msgid "Link Linear issue"
+msgstr "Liên kết issue Linear"
 
 msgid "Link pull request"
 msgstr "Liên kết pull request"
@@ -9526,6 +9602,10 @@ msgstr "Thêm chủ đề {kindLower}"
 
 msgid "More actions"
 msgstr "Thêm hành động"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Thao tác khác cho {0}"
 
 msgid "More create options"
 msgstr "Thêm tùy chọn tạo"
@@ -11043,6 +11123,9 @@ msgstr "Mở issue #{0} trong trình duyệt"
 msgid "Open issue in GitHub"
 msgstr "Mở issue trong GitHub"
 
+msgid "Open issue in Linear"
+msgstr "Mở issue trong Linear"
+
 msgid "Open issues"
 msgstr "Issue đang mở"
 
@@ -12549,6 +12632,9 @@ msgstr "Làm mới"
 msgid "Refresh GitHub issues"
 msgstr "Làm mới issue GitHub"
 
+msgid "Refresh Linear issues"
+msgstr "Làm mới issue Linear"
+
 msgid "Refresh metrics"
 msgstr "Làm mới số liệu"
 
@@ -13676,6 +13762,12 @@ msgstr "Tìm trong {frameTitle}…"
 msgid "Search issues..."
 msgstr "Tìm issue..."
 
+msgid "Search Linear"
+msgstr "Tìm trong Linear"
+
+msgid "Search Linear…"
+msgstr "Tìm trong Linear…"
+
 msgid "Search pages"
 msgstr "Tìm trang"
 
@@ -13765,6 +13857,9 @@ msgstr "Đang tìm các chỗ dùng Kbd"
 
 msgid "Searching..."
 msgstr "Đang tìm..."
+
+msgid "Searching…"
+msgstr "Đang tìm…"
 
 msgid "Secondary"
 msgstr "Secondary"

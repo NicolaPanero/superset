@@ -289,6 +289,10 @@ msgstr "{0, plural, one {# port kapatılamadı} other {# port kapatılamadı}}"
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {# çalışma alanı içe aktarıldı} other {# çalışma alanı içe aktarıldı}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear issue'su} other {Linear issue'su}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Seçili # çalışma alanını bir gruba taşı} other {Seçili # çalışma alanını bir gruba taşı}}"
@@ -1561,6 +1565,10 @@ msgstr "Ekle"
 msgid "Add {0} account"
 msgstr "{0} hesabı ekle"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "{0} öğesini çalışma alanına ekle"
+
 msgid "Add a comment…"
 msgstr "Yorum ekle…"
 
@@ -2057,6 +2065,9 @@ msgstr "Oturum boyunca izin verildi"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Zaten hesabınız var mı? <0>Oturum açın</0>"
 
+msgid "Already in tasks"
+msgstr "Zaten görevlerde"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "⌘K paletleri için CommandDialog olarak da kullanılabilir"
 
@@ -2390,8 +2401,17 @@ msgstr "Değişiklik isteyin, dosyaları @ ile anın, /komut çalıştırın"
 msgid "Aspect Ratio"
 msgstr "En boy oranı"
 
+msgid "Assign to…"
+msgstr "Şuna ata…"
+
 msgid "Assigned"
 msgstr "Atandı"
+
+msgid "Assigned to me"
+msgstr "Bana atananlar"
+
+msgid "Assigned to you"
+msgstr "Sana atananlar"
 
 msgid "Assignee"
 msgstr "Atanan"
@@ -2666,6 +2686,9 @@ msgstr "Ana sayfaya dön"
 
 msgid "Back to Integrations"
 msgstr "Entegrasyonlara dön"
+
+msgid "Back to Linear"
+msgstr "Linear'a dön"
 
 msgid "Back to pages"
 msgstr "Sayfalara dön"
@@ -3174,6 +3197,9 @@ msgstr "Sertifika hatası"
 msgid "Chain of Thought"
 msgstr "Düşünce zinciri"
 
+msgid "Change assignee"
+msgstr "Atananı değiştir"
+
 msgid "Change avatar"
 msgstr "Avatarı değiştir"
 
@@ -3195,6 +3221,9 @@ msgstr "Kuruluş logosunu değiştir"
 msgid "Change organization slug"
 msgstr "Kuruluş slug'ını değiştir"
 
+msgid "Change priority"
+msgstr "Önceliği değiştir"
+
 msgid "Change project icon and color"
 msgstr "Proje simgesini ve rengini değiştir"
 
@@ -3203,6 +3232,10 @@ msgstr "Proje konumunu değiştir"
 
 msgid "Change role"
 msgstr "Rolü değiştir"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Durumu değiştir (şu an: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4066,6 +4099,15 @@ msgstr "Bu bilgisayarı bağlayın"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "GitHub depolarınızı bağlayın ve pull request'leri eşitleyin. CI durumunu ve incelemeleri takımınız genelinde izleyin."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear issue'larını bağlamak için Ayarlar → Entegrasyonlar'dan Linear hesabını bağla."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Linear issue'larını Superset'ten görüntülemek, güncellemek ve üzerinde çalışmaya başlamak için Linear hesabını bağla."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Linear'ı burada kullanmak için Linear hesabını bağla."
+
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Issue'ları çift yönlü eşitlemek için Linear çalışma alanınızı bağlayın."
 
@@ -4888,6 +4930,9 @@ msgstr "Sağlayıcıda aynı konuşma bağlamına sahip yerel bir fork oluşturu
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude Desktop veya Claude Code gibi harici entegrasyonlar için yeni bir API anahtarı oluşturun."
 
+msgid "Create a new issue in Linear."
+msgstr "Linear'da yeni bir issue oluştur."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Bir depoyu veya yerel yolu klonlayarak yeni bir proje oluşturun."
 
@@ -4920,6 +4965,12 @@ msgstr "Hesap oluşturun"
 
 msgid "Create failed: {message}"
 msgstr "Oluşturulamadı: {message}"
+
+msgid "Create issue"
+msgstr "Issue oluştur"
+
+msgid "Create Linear issue"
+msgstr "Linear issue'su oluştur"
 
 msgid "Create manually"
 msgstr "Manuel oluştur"
@@ -5007,6 +5058,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Oluşturuldu"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "{0} oluşturuldu"
@@ -6532,6 +6584,9 @@ msgstr "Otomasyon oluşturulamadı"
 msgid "Failed to create item"
 msgstr "Öğe oluşturulamadı"
 
+msgid "Failed to create Linear issue"
+msgstr "Linear issue'su oluşturulamadı"
+
 msgid "Failed to create organization"
 msgstr "Kuruluş oluşturulamadı"
 
@@ -7064,8 +7119,14 @@ msgstr "Filtreler, {activeFilterCount} etkin"
 msgid "Find"
 msgstr "Bul"
 
+msgid "Find a person…"
+msgstr "Kişi bul…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Küçük bir hata bul ve düzelt…"
+
+msgid "Find a team…"
+msgstr "Takım bul…"
 
 msgid "Find and fix a small bug"
 msgstr "Küçük bir hata bul ve düzelt"
@@ -8035,6 +8096,9 @@ msgstr "Ayarları başka bir tarayıcıdan içe aktar"
 msgid "import the project"
 msgstr "projeyi içe aktarma"
 
+msgid "Import to tasks"
+msgstr "Görevlere aktar"
+
 msgid "Import untracked worktrees"
 msgstr "İzlenmeyen worktree'leri içe aktar"
 
@@ -8054,6 +8118,9 @@ msgstr "İçe aktarıldı: {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Linear’dan içe aktarıldı"
+
+msgid "Imported to tasks"
+msgstr "Görevlere aktarıldı"
 
 msgid "Importing..."
 msgstr "İçe aktarılıyor..."
@@ -8369,6 +8436,9 @@ msgstr "Issue bulunamadı."
 
 msgid "Issue resolved"
 msgstr "Issue çözüldü"
+
+msgid "Issue title"
+msgstr "Issue başlığı"
 
 msgid "Issue unresolved"
 msgstr "Issue çözülmedi"
@@ -8808,6 +8878,9 @@ msgstr "Linear bağlandı, ancak ilk eşitleme başlatılamadı. Lütfen yeniden
 msgid "Linear integration"
 msgstr "Linear entegrasyonu"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear istekleri sınırlıyor. Birkaç dakika sonra tekrar dene."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8838,6 +8911,9 @@ msgstr "GitHub issue'su bağla"
 
 msgid "Link issue"
 msgstr "Issue bağla"
+
+msgid "Link Linear issue"
+msgstr "Linear issue'su bağla"
 
 msgid "Link pull request"
 msgstr "Pull request bağla"
@@ -9526,6 +9602,10 @@ msgstr "Daha fazla {kindLower} tema"
 
 msgid "More actions"
 msgstr "Diğer eylemler"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "{0} için diğer işlemler"
 
 msgid "More create options"
 msgstr "Diğer oluşturma seçenekleri"
@@ -11043,6 +11123,9 @@ msgstr "#{0} issue'sunu tarayıcıda aç"
 msgid "Open issue in GitHub"
 msgstr "Issue'yu GitHub'da aç"
 
+msgid "Open issue in Linear"
+msgstr "Issue'yu Linear'da aç"
+
 msgid "Open issues"
 msgstr "Açık issue'lar"
 
@@ -12549,6 +12632,9 @@ msgstr "Yenile"
 msgid "Refresh GitHub issues"
 msgstr "GitHub issue'larını yenile"
 
+msgid "Refresh Linear issues"
+msgstr "Linear issue'larını yenile"
+
 msgid "Refresh metrics"
 msgstr "Metrikleri yenile"
 
@@ -13676,6 +13762,12 @@ msgstr "Şurada ara: {frameTitle}…"
 msgid "Search issues..."
 msgstr "Issue ara..."
 
+msgid "Search Linear"
+msgstr "Linear'da ara"
+
+msgid "Search Linear…"
+msgstr "Linear'da ara…"
+
 msgid "Search pages"
 msgstr "Sayfalarda ara"
 
@@ -13765,6 +13857,9 @@ msgstr "Kbd kullanımları aranıyor"
 
 msgid "Searching..."
 msgstr "Aranıyor..."
+
+msgid "Searching…"
+msgstr "Aranıyor…"
 
 msgid "Secondary"
 msgstr "İkincil"

@@ -289,6 +289,10 @@ msgstr "{0, plural, one {关闭#个端口失败} other {关闭#个端口失败}}
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {已导入#个工作区} other {已导入#个工作区}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear议题} other {Linear议题}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {把选中的#个工作区移动到分组} other {把选中的#个工作区移动到分组}}"
@@ -1561,6 +1565,10 @@ msgstr "添加"
 msgid "Add {0} account"
 msgstr "添加{0}账户"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "将{0}添加到工作区"
+
 msgid "Add a comment…"
 msgstr "添加评论…"
 
@@ -2057,6 +2065,9 @@ msgstr "本次会话内已允许"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "已有账户？<0>登录</0>"
 
+msgid "Already in tasks"
+msgstr "已在任务中"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "也可用作CommandDialog，用于⌘K命令面板"
 
@@ -2390,8 +2401,17 @@ msgstr "说明要做的修改，用@提及文件，用/运行命令"
 msgid "Aspect Ratio"
 msgstr "宽高比"
 
+msgid "Assign to…"
+msgstr "分配给…"
+
 msgid "Assigned"
 msgstr "已指派"
+
+msgid "Assigned to me"
+msgstr "分配给我"
+
+msgid "Assigned to you"
+msgstr "分配给你"
 
 msgid "Assignee"
 msgstr "负责人"
@@ -2666,6 +2686,9 @@ msgstr "返回首页"
 
 msgid "Back to Integrations"
 msgstr "返回集成"
+
+msgid "Back to Linear"
+msgstr "返回Linear"
 
 msgid "Back to pages"
 msgstr "返回页面"
@@ -3174,6 +3197,9 @@ msgstr "证书错误"
 msgid "Chain of Thought"
 msgstr "思维链"
 
+msgid "Change assignee"
+msgstr "更改负责人"
+
 msgid "Change avatar"
 msgstr "更换头像"
 
@@ -3195,6 +3221,9 @@ msgstr "更改组织logo"
 msgid "Change organization slug"
 msgstr "更改组织slug"
 
+msgid "Change priority"
+msgstr "更改优先级"
+
 msgid "Change project icon and color"
 msgstr "更改项目图标和颜色"
 
@@ -3203,6 +3232,10 @@ msgstr "更改项目位置"
 
 msgid "Change role"
 msgstr "更改角色"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "更改状态（当前：{0}）"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4066,6 +4099,15 @@ msgstr "连接这台电脑"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "连接你的GitHub仓库并同步拉取请求。跟踪整个团队的CI状态和代码审查。"
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "请在 设置 → 集成 中连接你的Linear账号，以关联Linear议题。"
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "连接你的Linear账号后，即可在Superset中浏览、更新Linear议题并开始工作。"
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "连接你的Linear账号即可在此使用Linear。"
+
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "连接你的Linear工作区以双向同步议题。"
 
@@ -4888,6 +4930,9 @@ msgstr "在提供方创建一个具有相同对话上下文的原生分叉。原
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "为Claude Desktop或Claude Code等外部集成创建新的API密钥。"
 
+msgid "Create a new issue in Linear."
+msgstr "在Linear中创建新议题。"
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "通过克隆仓库或本地路径来创建新项目。"
 
@@ -4920,6 +4965,12 @@ msgstr "创建账户"
 
 msgid "Create failed: {message}"
 msgstr "创建失败：{message}"
+
+msgid "Create issue"
+msgstr "创建议题"
+
+msgid "Create Linear issue"
+msgstr "创建Linear议题"
 
 msgid "Create manually"
 msgstr "手动创建"
@@ -5007,6 +5058,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "已创建"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "已创建{0}"
@@ -6532,6 +6584,9 @@ msgstr "创建自动化失败"
 msgid "Failed to create item"
 msgstr "创建项失败"
 
+msgid "Failed to create Linear issue"
+msgstr "无法创建Linear议题"
+
 msgid "Failed to create organization"
 msgstr "创建组织失败"
 
@@ -7064,8 +7119,14 @@ msgstr "筛选，{activeFilterCount}项生效"
 msgid "Find"
 msgstr "查找"
 
+msgid "Find a person…"
+msgstr "查找成员…"
+
 msgid "Find a small bug and fix it…"
 msgstr "找一个小bug并修好它…"
+
+msgid "Find a team…"
+msgstr "查找团队…"
 
 msgid "Find and fix a small bug"
 msgstr "找一个小bug并修好"
@@ -8035,6 +8096,9 @@ msgstr "从其他浏览器导入设置"
 msgid "import the project"
 msgstr "导入项目"
 
+msgid "Import to tasks"
+msgstr "导入到任务"
+
 msgid "Import untracked worktrees"
 msgstr "导入未跟踪的worktree"
 
@@ -8054,6 +8118,9 @@ msgstr "已导入{joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "从 Linear 导入"
+
+msgid "Imported to tasks"
+msgstr "已导入到任务"
 
 msgid "Importing..."
 msgstr "正在导入..."
@@ -8369,6 +8436,9 @@ msgstr "未找到议题。"
 
 msgid "Issue resolved"
 msgstr "问题已解决"
+
+msgid "Issue title"
+msgstr "议题标题"
 
 msgid "Issue unresolved"
 msgstr "问题未解决"
@@ -8808,6 +8878,9 @@ msgstr "Linear已连接，但初始同步未能启动。请尝试重新连接。
 msgid "Linear integration"
 msgstr "Linear集成"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear正在限制请求，请几分钟后重试。"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8838,6 +8911,9 @@ msgstr "关联GitHub议题"
 
 msgid "Link issue"
 msgstr "关联议题"
+
+msgid "Link Linear issue"
+msgstr "关联Linear议题"
 
 msgid "Link pull request"
 msgstr "关联拉取请求"
@@ -9526,6 +9602,10 @@ msgstr "更多{kindLower}主题"
 
 msgid "More actions"
 msgstr "更多操作"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "{0}的更多操作"
 
 msgid "More create options"
 msgstr "更多创建选项"
@@ -11043,6 +11123,9 @@ msgstr "在浏览器中打开议题#{0}"
 msgid "Open issue in GitHub"
 msgstr "在GitHub中打开议题"
 
+msgid "Open issue in Linear"
+msgstr "在Linear中打开议题"
+
 msgid "Open issues"
 msgstr "打开的议题"
 
@@ -12549,6 +12632,9 @@ msgstr "刷新"
 msgid "Refresh GitHub issues"
 msgstr "刷新GitHub议题"
 
+msgid "Refresh Linear issues"
+msgstr "刷新Linear议题"
+
 msgid "Refresh metrics"
 msgstr "刷新指标"
 
@@ -13676,6 +13762,12 @@ msgstr "在{frameTitle}中搜索…"
 msgid "Search issues..."
 msgstr "搜索议题..."
 
+msgid "Search Linear"
+msgstr "搜索Linear"
+
+msgid "Search Linear…"
+msgstr "搜索Linear…"
+
 msgid "Search pages"
 msgstr "搜索页面"
 
@@ -13765,6 +13857,9 @@ msgstr "正在搜索Kbd的使用处"
 
 msgid "Searching..."
 msgstr "正在搜索..."
+
+msgid "Searching…"
+msgstr "搜索中…"
 
 msgid "Secondary"
 msgstr "次要"

@@ -289,6 +289,10 @@ msgstr "{0, plural, one {Nepodařilo se zavřít # port} few {Nepodařilo se zav
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {Naimportován # pracovní prostor} few {Naimportovány # pracovní prostory} many {Naimportováno # pracovního prostoru} other {Naimportováno # pracovních prostorů}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear issue} few {Linear issues} many {Linear issues} other {Linear issues}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Přesunout # vybraný pracovní prostor do skupiny} few {Přesunout # vybrané pracovní prostory do skupiny} many {Přesunout # vybraného pracovního prostoru do skupiny} other {Přesunout # vybraných pracovních prostorů do skupiny}}"
@@ -1561,6 +1565,10 @@ msgstr "Přidat"
 msgid "Add {0} account"
 msgstr "Přidat účet {0}"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "Přidat {0} do pracovního prostoru"
+
 msgid "Add a comment…"
 msgstr "Přidat komentář…"
 
@@ -2057,6 +2065,9 @@ msgstr "Povoleno pro relaci"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Už máte účet? <0>Přihlaste se</0>"
 
+msgid "Already in tasks"
+msgstr "Už je v úkolech"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "Dostupné také jako CommandDialog pro palety ⌘K"
 
@@ -2390,8 +2401,17 @@ msgstr "Požádejte o změny, zmiňte soubory přes @, spouštějte /commands"
 msgid "Aspect Ratio"
 msgstr "Poměr stran"
 
+msgid "Assign to…"
+msgstr "Přiřadit…"
+
 msgid "Assigned"
 msgstr "Přiřazeno"
+
+msgid "Assigned to me"
+msgstr "Přiřazené mně"
+
+msgid "Assigned to you"
+msgstr "Přiřazené vám"
 
 msgid "Assignee"
 msgstr "Řešitel"
@@ -2666,6 +2686,9 @@ msgstr "Zpět na úvod"
 
 msgid "Back to Integrations"
 msgstr "Zpět na Integrace"
+
+msgid "Back to Linear"
+msgstr "Zpět na Linear"
 
 msgid "Back to pages"
 msgstr "Zpět na stránky"
@@ -3174,6 +3197,9 @@ msgstr "Chyba certifikátu"
 msgid "Chain of Thought"
 msgstr "Řetězec úvah"
 
+msgid "Change assignee"
+msgstr "Změnit řešitele"
+
 msgid "Change avatar"
 msgstr "Změnit avatar"
 
@@ -3195,6 +3221,9 @@ msgstr "Změnit logo organizace"
 msgid "Change organization slug"
 msgstr "Změnit slug organizace"
 
+msgid "Change priority"
+msgstr "Změnit prioritu"
+
 msgid "Change project icon and color"
 msgstr "Změnit ikonu a barvu projektu"
 
@@ -3203,6 +3232,10 @@ msgstr "Změnit umístění projektu"
 
 msgid "Change role"
 msgstr "Změnit roli"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Změnit stav (aktuálně: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4066,6 +4099,15 @@ msgstr "Připojte tento počítač"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Připojte své GitHub repozitáře a synchronizujte pull requesty. Sledujte stav CI a revize napříč týmem."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Připojte svůj účet Linear v Nastavení → Integrace, abyste mohli propojovat Linear issues."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Připojte svůj účet Linear a procházejte, upravujte a začněte pracovat na Linear issues přímo ze Superset."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Připojte svůj účet Linear, abyste mohli Linear používat zde."
+
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Připojte svůj Linear workspace a synchronizujte issues obousměrně."
 
@@ -4888,6 +4930,9 @@ msgstr "Vytvoří nativní fork u poskytovatele se stejným kontextem konverzace
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Vytvořte nový API klíč pro externí integrace, jako je Claude Desktop nebo Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Vytvořit nové issue v Linearu."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Vytvořte nový projekt naklonováním repozitáře nebo z lokální cesty."
 
@@ -4920,6 +4965,12 @@ msgstr "Vytvořit účet"
 
 msgid "Create failed: {message}"
 msgstr "Vytvoření selhalo: {message}"
+
+msgid "Create issue"
+msgstr "Vytvořit issue"
+
+msgid "Create Linear issue"
+msgstr "Vytvořit Linear issue"
 
 msgid "Create manually"
 msgstr "Vytvořit ručně"
@@ -5007,6 +5058,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Vytvořeno"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "Vytvořeno {0}"
@@ -6532,6 +6584,9 @@ msgstr "Nepodařilo se vytvořit automatizaci"
 msgid "Failed to create item"
 msgstr "Nepodařilo se vytvořit položku"
 
+msgid "Failed to create Linear issue"
+msgstr "Linear issue se nepodařilo vytvořit"
+
 msgid "Failed to create organization"
 msgstr "Nepodařilo se vytvořit organizaci"
 
@@ -7064,8 +7119,14 @@ msgstr "Filtry, aktivních: {activeFilterCount}"
 msgid "Find"
 msgstr "Najít"
 
+msgid "Find a person…"
+msgstr "Najít osobu…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Najdi malou chybu a oprav ji…"
+
+msgid "Find a team…"
+msgstr "Najít tým…"
 
 msgid "Find and fix a small bug"
 msgstr "Najít a opravit malou chybu"
@@ -8035,6 +8096,9 @@ msgstr "Importovat nastavení z jiného prohlížeče"
 msgid "import the project"
 msgstr "importovat projekt"
 
+msgid "Import to tasks"
+msgstr "Importovat do úkolů"
+
 msgid "Import untracked worktrees"
 msgstr "Importovat nesledované worktree"
 
@@ -8054,6 +8118,9 @@ msgstr "Importováno: {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Importováno z Linearu"
+
+msgid "Imported to tasks"
+msgstr "Importováno do úkolů"
 
 msgid "Importing..."
 msgstr "Importuji..."
@@ -8369,6 +8436,9 @@ msgstr "Issue nenalezena."
 
 msgid "Issue resolved"
 msgstr "Issue vyřešena"
+
+msgid "Issue title"
+msgstr "Název issue"
 
 msgid "Issue unresolved"
 msgstr "Issue nevyřešena"
@@ -8808,6 +8878,9 @@ msgstr "Linear je připojený, ale úvodní synchronizace se nespustila. Zkuste 
 msgid "Linear integration"
 msgstr "Integrace s Linearem"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear omezuje počet požadavků. Zkuste to za pár minut znovu."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8838,6 +8911,9 @@ msgstr "Propojit GitHub issue"
 
 msgid "Link issue"
 msgstr "Propojit issue"
+
+msgid "Link Linear issue"
+msgstr "Propojit Linear issue"
 
 msgid "Link pull request"
 msgstr "Propojit pull request"
@@ -9526,6 +9602,10 @@ msgstr "Další {kindLower} motivy"
 
 msgid "More actions"
 msgstr "Další akce"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Další akce pro {0}"
 
 msgid "More create options"
 msgstr "Další možnosti vytvoření"
@@ -11043,6 +11123,9 @@ msgstr "Otevřít issue #{0} v prohlížeči"
 msgid "Open issue in GitHub"
 msgstr "Otevřít issue na GitHubu"
 
+msgid "Open issue in Linear"
+msgstr "Otevřít issue v Linearu"
+
 msgid "Open issues"
 msgstr "Otevřené issues"
 
@@ -12549,6 +12632,9 @@ msgstr "Obnovit"
 msgid "Refresh GitHub issues"
 msgstr "Obnovit GitHub issues"
 
+msgid "Refresh Linear issues"
+msgstr "Obnovit Linear issues"
+
 msgid "Refresh metrics"
 msgstr "Obnovit metriky"
 
@@ -13676,6 +13762,12 @@ msgstr "Hledat v {frameTitle}…"
 msgid "Search issues..."
 msgstr "Hledat issues..."
 
+msgid "Search Linear"
+msgstr "Hledat v Linearu"
+
+msgid "Search Linear…"
+msgstr "Hledat v Linearu…"
+
 msgid "Search pages"
 msgstr "Hledat stránky"
 
@@ -13765,6 +13857,9 @@ msgstr "Hledám použití Kbd"
 
 msgid "Searching..."
 msgstr "Hledám..."
+
+msgid "Searching…"
+msgstr "Hledání…"
 
 msgid "Secondary"
 msgstr "Secondary"

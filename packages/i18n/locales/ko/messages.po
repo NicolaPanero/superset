@@ -289,6 +289,10 @@ msgstr "{0, plural, one {포트 #개를 닫지 못했습니다} other {포트 #�
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {워크스페이스 #개를 가져왔습니다} other {워크스페이스 #개를 가져왔습니다}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear 이슈} other {Linear 이슈}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {선택한 워크스페이스 #개를 그룹으로 이동} other {선택한 워크스페이스 #개를 그룹으로 이동}}"
@@ -1561,6 +1565,10 @@ msgstr "추가"
 msgid "Add {0} account"
 msgstr "{0} 계정 추가"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "{0}을(를) 워크스페이스에 추가"
+
 msgid "Add a comment…"
 msgstr "댓글 추가…"
 
@@ -2057,6 +2065,9 @@ msgstr "세션 동안 허용됨"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "이미 계정이 있으신가요? <0>로그인</0>"
 
+msgid "Already in tasks"
+msgstr "이미 작업에 있습니다"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "⌘K 팔레트용 CommandDialog로도 제공됩니다"
 
@@ -2390,8 +2401,17 @@ msgstr "변경을 요청하고, @로 파일을 멘션하고, /명령을 실행�
 msgid "Aspect Ratio"
 msgstr "종횡비"
 
+msgid "Assign to…"
+msgstr "담당자 지정…"
+
 msgid "Assigned"
 msgstr "할당됨"
+
+msgid "Assigned to me"
+msgstr "나에게 할당됨"
+
+msgid "Assigned to you"
+msgstr "나에게 할당됨"
 
 msgid "Assignee"
 msgstr "담당자"
@@ -2666,6 +2686,9 @@ msgstr "홈으로 돌아가기"
 
 msgid "Back to Integrations"
 msgstr "연동으로 돌아가기"
+
+msgid "Back to Linear"
+msgstr "Linear로 돌아가기"
 
 msgid "Back to pages"
 msgstr "페이지로 돌아가기"
@@ -3174,6 +3197,9 @@ msgstr "인증서 오류"
 msgid "Chain of Thought"
 msgstr "생각의 흐름"
 
+msgid "Change assignee"
+msgstr "담당자 변경"
+
 msgid "Change avatar"
 msgstr "아바타 변경"
 
@@ -3195,6 +3221,9 @@ msgstr "조직 로고 변경"
 msgid "Change organization slug"
 msgstr "조직 슬러그 변경"
 
+msgid "Change priority"
+msgstr "우선순위 변경"
+
 msgid "Change project icon and color"
 msgstr "프로젝트 아이콘 및 색상 변경"
 
@@ -3203,6 +3232,10 @@ msgstr "프로젝트 위치 변경"
 
 msgid "Change role"
 msgstr "역할 변경"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "상태 변경 (현재: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4066,6 +4099,15 @@ msgstr "이 컴퓨터에 연결"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "GitHub 리포지토리를 연결하고 풀 리퀘스트를 동기화하세요. 팀 전체의 CI 상태와 리뷰를 추적할 수 있습니다."
 
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear 이슈를 연결하려면 설정 → 연동에서 Linear 계정을 연결하세요."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Linear 계정을 연결하면 Superset에서 Linear 이슈를 탐색하고, 업데이트하고, 작업을 시작할 수 있습니다."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "여기서 Linear를 사용하려면 Linear 계정을 연결하세요."
+
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Linear 워크스페이스를 연결해 이슈를 양방향으로 동기화하세요."
 
@@ -4888,6 +4930,9 @@ msgstr "같은 대화 컨텍스트로 제공자의 네이티브 포크를 만듭
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude Desktop이나 Claude Code 같은 외부 연동에 사용할 새 API 키를 만듭니다."
 
+msgid "Create a new issue in Linear."
+msgstr "Linear에서 새 이슈를 만듭니다."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "리포지토리나 로컬 경로를 클론해 새 프로젝트를 만듭니다."
 
@@ -4920,6 +4965,12 @@ msgstr "계정 만들기"
 
 msgid "Create failed: {message}"
 msgstr "생성 실패: {message}"
+
+msgid "Create issue"
+msgstr "이슈 만들기"
+
+msgid "Create Linear issue"
+msgstr "Linear 이슈 만들기"
 
 msgid "Create manually"
 msgstr "수동으로 만들기"
@@ -5007,6 +5058,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "생성됨"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "{0} 생성됨"
@@ -6532,6 +6584,9 @@ msgstr "자동화를 만들지 못했습니다"
 msgid "Failed to create item"
 msgstr "항목을 만들지 못했습니다"
 
+msgid "Failed to create Linear issue"
+msgstr "Linear 이슈를 만들지 못했습니다"
+
 msgid "Failed to create organization"
 msgstr "조직을 만들지 못했습니다"
 
@@ -7064,8 +7119,14 @@ msgstr "필터, {activeFilterCount}개 적용됨"
 msgid "Find"
 msgstr "찾기"
 
+msgid "Find a person…"
+msgstr "사람 찾기…"
+
 msgid "Find a small bug and fix it…"
 msgstr "작은 버그를 찾아서 고치기…"
+
+msgid "Find a team…"
+msgstr "팀 찾기…"
 
 msgid "Find and fix a small bug"
 msgstr "작은 버그 찾아서 고치기"
@@ -8035,6 +8096,9 @@ msgstr "다른 브라우저에서 설정 가져오기"
 msgid "import the project"
 msgstr "프로젝트를 가져올"
 
+msgid "Import to tasks"
+msgstr "작업으로 가져오기"
+
 msgid "Import untracked worktrees"
 msgstr "추적되지 않은 worktree 가져오기"
 
@@ -8054,6 +8118,9 @@ msgstr "{joinedMessages} 가져옴"
 
 msgid "Imported from Linear"
 msgstr "Linear에서 가져옴"
+
+msgid "Imported to tasks"
+msgstr "작업으로 가져왔습니다"
 
 msgid "Importing..."
 msgstr "가져오는 중..."
@@ -8369,6 +8436,9 @@ msgstr "이슈를 찾을 수 없습니다."
 
 msgid "Issue resolved"
 msgstr "이슈 해결됨"
+
+msgid "Issue title"
+msgstr "이슈 제목"
 
 msgid "Issue unresolved"
 msgstr "이슈 미해결"
@@ -8808,6 +8878,9 @@ msgstr "Linear는 연결되었지만 초기 동기화를 시작하지 못했습�
 msgid "Linear integration"
 msgstr "Linear 연동"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear가 요청을 제한하고 있습니다. 몇 분 후 다시 시도하세요."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8838,6 +8911,9 @@ msgstr "GitHub 이슈 연결"
 
 msgid "Link issue"
 msgstr "이슈 연결"
+
+msgid "Link Linear issue"
+msgstr "Linear 이슈 연결"
 
 msgid "Link pull request"
 msgstr "풀 리퀘스트 연결"
@@ -9526,6 +9602,10 @@ msgstr "{kindLower} 테마 더 보기"
 
 msgid "More actions"
 msgstr "추가 작업"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "{0}에 대한 추가 작업"
 
 msgid "More create options"
 msgstr "추가 생성 옵션"
@@ -11043,6 +11123,9 @@ msgstr "브라우저에서 이슈 #{0} 열기"
 msgid "Open issue in GitHub"
 msgstr "GitHub에서 이슈 열기"
 
+msgid "Open issue in Linear"
+msgstr "Linear에서 이슈 열기"
+
 msgid "Open issues"
 msgstr "열린 이슈"
 
@@ -12549,6 +12632,9 @@ msgstr "새로 고침"
 msgid "Refresh GitHub issues"
 msgstr "GitHub 이슈 새로 고침"
 
+msgid "Refresh Linear issues"
+msgstr "Linear 이슈 새로 고침"
+
 msgid "Refresh metrics"
 msgstr "지표 새로 고침"
 
@@ -13676,6 +13762,12 @@ msgstr "{frameTitle}에서 검색…"
 msgid "Search issues..."
 msgstr "이슈 검색..."
 
+msgid "Search Linear"
+msgstr "Linear 검색"
+
+msgid "Search Linear…"
+msgstr "Linear 검색…"
+
 msgid "Search pages"
 msgstr "페이지 검색"
 
@@ -13765,6 +13857,9 @@ msgstr "Kbd 사용처를 검색하는 중"
 
 msgid "Searching..."
 msgstr "검색 중..."
+
+msgid "Searching…"
+msgstr "검색 중…"
 
 msgid "Secondary"
 msgstr "보조"
