@@ -950,15 +950,22 @@
     {
       "idx": 135,
       "version": "7",
-      "when": 1790888272919,
-      "tag": "0135_automation_trigger_connection_pin",
+      "when": 1790894174033,
+      "tag": "0135_cloud_workspace_boot_agent_credential_digest",
       "breakpoints": true
     },
     {
       "idx": 136,
       "version": "7",
-      "when": 1790894634883,
-      "tag": "0136_connection_nickname",
+      "when": 1790905447307,
+      "tag": "0136_automation_trigger_connection_pin",
+      "breakpoints": true
+    },
+    {
+      "idx": 137,
+      "version": "7",
+      "when": 1790905452860,
+      "tag": "0137_connection_nickname",
       "breakpoints": true
     }
   ]

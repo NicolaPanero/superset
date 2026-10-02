@@ -251,6 +251,10 @@ msgstr "{0, plural, one {# panggilan alat} other {# panggilan alat}}"
 msgid "{0, plural, one {# workspace} other {# workspaces}}"
 msgstr "{0, plural, one {# workspace} other {# workspace}}"
 
+#. placeholder {0}: tail.hidden
+msgid "{0, plural, one {+# more line} other {+# more lines}}"
+msgstr "{0, plural, other {+# baris lagi}}"
+
 #. placeholder {0}: shown?.count ?? 0
 msgid "{0, plural, one {A running agent still uses the previous account — the switch only reaches new launches.} other {# running agents still use the previous account — the switch only reaches new launches.}}"
 msgstr "{0, plural, one {# agen yang sedang berjalan masih memakai akun sebelumnya — pergantian hanya berlaku untuk peluncuran baru.} other {# agen yang sedang berjalan masih memakai akun sebelumnya — pergantian hanya berlaku untuk peluncuran baru.}}"
@@ -354,6 +358,10 @@ msgstr "{0} dan {1} menyelesaikannya sebagai dinosaurus terminal. Statistik yang
 #. placeholder {0}: formatTokens(belowGap > 0n ? belowGap : 0n)
 msgid "{0} behind you"
 msgstr "{0} di belakang Anda"
+
+#. placeholder {0}: workspace.name
+msgid "{0} branch"
+msgstr "cabang {0}"
 
 #. placeholder {0}: params?.agent
 msgid "{0} cannot be signed in this way yet."
@@ -1399,6 +1407,9 @@ msgstr "Mayoritas perubahan produksi di-merge tanpa ada manusia yang membaca dif
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Versi baru Superset diperlukan untuk melanjutkan. Silakan perbarui ke versi terbaru."
 
+msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
+msgstr "Ruang kerja baru dari cabang ini, dengan percakapan diserahkan ke agen baru"
+
 msgid "A process is still running in this tab"
 msgstr "Masih ada proses yang berjalan di tab ini"
 
@@ -1767,6 +1778,9 @@ msgstr "Agen Selesai — {workspaceName}"
 
 msgid "Agent Configs"
 msgstr "Konfigurasi Agen"
+
+msgid "Agent credentials changed"
+msgstr "Kredensial agen berubah"
 
 msgid "Agent finished"
 msgstr "Agen selesai"
@@ -2374,6 +2388,9 @@ msgstr "Minta agen untuk memublikasikan satu dari aplikasi desktop."
 msgid "Ask for this to be removed"
 msgstr "Minta ini dihapus"
 
+msgid "Ask the agent, @mention files, run /commands"
+msgstr "Tanya agen, @sebut berkas, jalankan /perintah"
+
 msgid "Ask the agent…"
 msgstr "Tanya agennya…"
 
@@ -2418,6 +2435,9 @@ msgstr "Lampirkan file"
 
 msgid "Attached"
 msgstr "Terhubung"
+
+msgid "Attaching to the running session…"
+msgstr "Menghubungkan ke sesi yang berjalan…"
 
 msgid "attachment"
 msgstr "lampiran"
@@ -2838,6 +2858,12 @@ msgstr "Perilaku branch untuk workspace baru di perangkat ini. Tiap proyek bisa 
 msgid "Branch copied"
 msgstr "Branch disalin"
 
+msgid "Branch in a new worktree"
+msgstr "Cabangkan di worktree baru"
+
+msgid "Branch in this workspace"
+msgstr "Cabangkan di ruang kerja ini"
+
 msgid "branch name"
 msgstr "nama branch"
 
@@ -2861,6 +2887,9 @@ msgstr "Awalan Cabang"
 
 msgid "Branch renamed to {newName}"
 msgstr "Nama branch diganti menjadi {newName}"
+
+msgid "Branch this conversation"
+msgstr "Cabangkan percakapan di sini"
 
 #. placeholder {0}: workspace.branch
 msgid "Branch: {0}"
@@ -4397,6 +4426,9 @@ msgstr "Salin log"
 msgid "Copy Markdown"
 msgstr "Salin Markdown"
 
+msgid "Copy message"
+msgstr "Salin pesan"
+
 msgid "Copy on select"
 msgstr "Salin saat memilih"
 
@@ -4678,6 +4710,12 @@ msgstr "Tidak dapat memverifikasi kredensial: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Tidak dapat meminta deskripsi dari workspace"
 
+msgid "Couldn't branch into a new worktree"
+msgstr "Tidak dapat mencabangkan ke worktree baru"
+
+msgid "Couldn't branch the conversation"
+msgstr "Tidak dapat mencabangkan percakapan"
+
 msgid "Couldn't confirm star status — check that the GitHub CLI (`gh`) is installed, signed in, and that you have a network connection"
 msgstr "Tidak bisa memastikan status star — pastikan GitHub CLI (`gh`) terpasang, sudah masuk, dan Anda punya koneksi jaringan"
 
@@ -4775,11 +4813,18 @@ msgstr "Tidak bisa membaca riwayat penggunaan dari host ini."
 msgid "Couldn't remove the local sign-in"
 msgstr "Tidak bisa menghapus sesi masuk lokal"
 
+msgid "Couldn't reopen the agent in a terminal"
+msgstr "Tidak dapat membuka kembali agen di terminal"
+
 msgid "Couldn't restart terminals"
 msgstr "Tidak bisa memulai ulang terminal"
 
 msgid "Couldn't restart the host service"
 msgstr "Tidak bisa memulai ulang layanan host"
+
+#. placeholder {0}: errorMessage(error)
+msgid "Couldn't restart the workspace: {0}"
+msgstr "Tidak dapat memulai ulang workspace: {0}"
 
 msgid "Couldn't restore \"{projectName}\""
 msgstr "Tidak dapat memulihkan \"{projectName}\""
@@ -4831,6 +4876,12 @@ msgstr "Tidak bisa memulai mode desain di halaman ini"
 
 msgid "Couldn't start workspace"
 msgstr "Tidak bisa memulai workspace"
+
+msgid "Couldn't stop the agent's terminal"
+msgstr "Tidak dapat menghentikan terminal agen"
+
+msgid "Couldn't stop the chat"
+msgstr "Tidak dapat menghentikan obrolan"
 
 msgid "Couldn't unstage changes"
 msgstr "Tidak bisa meng-unstage perubahan"
@@ -7661,6 +7712,9 @@ msgstr "Sembunyikan"
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
+msgid "Hide detail"
+msgstr "Sembunyikan detail"
+
 msgid "Hide details"
 msgstr "Sembunyikan detail"
 
@@ -9351,9 +9405,6 @@ msgstr "Mesh Gradient"
 msgid "Message in channel"
 msgstr "Pesan di channel"
 
-msgid "Message the agent"
-msgstr "Kirim pesan ke agen"
-
 msgid "Message..."
 msgstr "Pesan..."
 
@@ -10146,6 +10197,9 @@ msgstr "Tidak ada yang cocok"
 
 msgid "No matches"
 msgstr "Tidak ada yang cocok"
+
+msgid "No matching files"
+msgstr "Tidak ada berkas yang cocok"
 
 msgid "No matching org members."
 msgstr "Tidak ada anggota organisasi yang cocok."
@@ -11232,6 +11286,12 @@ msgstr "Membuka folder"
 
 msgid "Opening pages"
 msgstr "Membuka halaman"
+
+msgid "Opening the chat…"
+msgstr "Membuka obrolan…"
+
+msgid "Opening the conversation…"
+msgstr "Membuka percakapan…"
 
 msgid "Opening worktree..."
 msgstr "Membuka worktree..."
@@ -13048,6 +13108,9 @@ msgstr "Mulai ulang terminal"
 msgid "Restart to use the latest version of Superset."
 msgstr "Mulai ulang untuk menggunakan versi terbaru Superset."
 
+msgid "Restart workspace"
+msgstr "Mulai ulang workspace"
+
 msgid "Restart workspaces to pick up new agent credentials."
 msgstr "Mulai ulang workspace untuk memakai kredensial agen yang baru."
 
@@ -13124,6 +13187,9 @@ msgstr "Lanjutkan otomatisasi"
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"
 msgstr "Melanjutkan {0}…"
+
+msgid "Resuming the conversation…"
+msgstr "Melanjutkan percakapan…"
 
 msgid "Retained MRR"
 msgstr "MRR yang dipertahankan"
@@ -14259,6 +14325,9 @@ msgstr "Tampilkan yang ditutup"
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Tampilkan penggunaan CPU dan memori di bilah atas"
 
+msgid "Show detail"
+msgstr "Tampilkan detail"
+
 msgid "Show details"
 msgstr "Tampilkan detail"
 
@@ -14862,6 +14931,9 @@ msgstr "Memulai sesi agen baru dengan konteks terbaru dari terminal ini. Berkas 
 msgid "Start a new agent session each run"
 msgstr "Mulai sesi agen baru setiap kali dijalankan"
 
+msgid "Start a new chat"
+msgstr "Mulai chat baru"
+
 msgid "Start a session"
 msgstr "Mulai sesi"
 
@@ -14931,6 +15003,9 @@ msgstr "Memulai {agentLabel}"
 
 msgid "Starting cloud workspace"
 msgstr "Memulai workspace cloud"
+
+msgid "Starting the agent…"
+msgstr "Memulai agen…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Sedang memulai. Ini hanya perlu sebentar."
@@ -15686,6 +15761,9 @@ msgstr "Terima kasih, laporan diterima"
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Tautan masuk {plugin} itu telah kedaluwarsa. Coba hubungkan lagi."
 
+msgid "That agent session has no conversation to open yet — it was started but never prompted."
+msgstr "Sesi agen itu belum punya percakapan untuk dibuka — sudah dimulai tetapi belum pernah diberi perintah."
+
 msgid "That endpoint could not be resolved."
 msgstr "Endpoint itu tidak dapat ditemukan."
 
@@ -15712,6 +15790,9 @@ msgstr "organisasi aktif"
 
 msgid "The address is unreachable"
 msgstr "Alamatnya tidak bisa dijangkau"
+
+msgid "The agent copies the conversation; the branch opens here"
+msgstr "Agen menyalin percakapan; cabang terbuka di sini"
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agen memegang tugas dari tiket sampai diff. Manusia mereview hasilnya, bukan tiap ketukan tombolnya. Perhatian bergeser dari menulis kode ke menentukan pekerjaan dan menilainya. Satu engineer menjalankan beberapa agen sekaligus di workspace terisolasi."
@@ -16058,6 +16139,12 @@ msgstr "Akun {plugin} ini sudah dihubungkan oleh organisasi Superset lain."
 msgid "This action is irreversible."
 msgstr "Tindakan ini tidak bisa dibatalkan."
 
+msgid "This agent can't be opened as a chat."
+msgstr "Agen ini tidak dapat dibuka sebagai chat."
+
+msgid "This agent can't branch a conversation"
+msgstr "Agen ini tidak dapat mencabangkan percakapan"
+
 msgid "This agent can't run in a cloud workspace"
 msgstr "Agen ini tidak bisa berjalan di workspace cloud"
 
@@ -16082,6 +16169,9 @@ msgstr "Otomatisasi ini berada di organisasi lain"
 
 msgid "This cannot be undone."
 msgstr "Ini tidak bisa dibatalkan."
+
+msgid "This chat's agent has stopped and can't be resumed."
+msgstr "Agen chat ini sudah berhenti dan tidak dapat dilanjutkan."
 
 msgid "This closes every terminal session — in this workspace and any others — and can't be undone. If they're only briefly stuck, waiting usually brings them back."
 msgstr "Ini menutup setiap sesi terminal — di workspace ini maupun yang lain — dan tidak bisa dibatalkan. Kalau hanya macet sebentar, menunggu biasanya cukup."
@@ -16169,6 +16259,12 @@ msgstr "Ini lebih lama dari biasanya. Workspace-nya mungkin sudah siap — memua
 
 msgid "This issue link is invalid."
 msgstr "Tautan issue ini tidak valid."
+
+msgid "This Linear workspace is already connected by {owner}. Ask them to disconnect first."
+msgstr "Workspace Linear ini sudah terhubung oleh {owner}. Minta mereka memutuskannya dulu."
+
+msgid "This Linear workspace is already connected by another Superset organization."
+msgstr "Workspace Linear ini sudah terhubung oleh organisasi Superset lain."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Ini tampak seperti file biner. Membukanya sebagai teks bisa menampilkan output kacau atau membekukan editor untuk file besar."
@@ -16356,6 +16452,9 @@ msgstr "Ini akan meng-unstage dan mengembalikan semua perubahan yang di-stage. F
 
 msgid "This workspace"
 msgstr "Workspace ini"
+
+msgid "This workspace has no project to branch from"
+msgstr "Ruang kerja ini tidak memiliki proyek untuk dicabangkan"
 
 msgid "This workspace may have been removed, or you no longer have access to it."
 msgstr "Workspace ini mungkin sudah dihapus, atau Anda sudah tidak punya akses ke sana."
@@ -17682,6 +17781,14 @@ msgstr "Bekerja dari tiket"
 msgid "Work with your agents across your favorite tools"
 msgstr "Bekerja dengan agen Anda lintas alat favorit Anda"
 
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Worked for {0}m {1}s"
+msgstr "Bekerja {0} mnt {1} dtk"
+
+msgid "Worked for {seconds}s"
+msgstr "Bekerja {seconds} dtk"
+
 msgid "Worked for 39s"
 msgstr "Bekerja 39 dtk"
 
@@ -17697,6 +17804,14 @@ msgstr "Bekerja"
 msgctxt "agent status"
 msgid "Working"
 msgstr "Bekerja"
+
+#. placeholder {0}: Math.floor(seconds / 60)
+#. placeholder {1}: seconds % 60
+msgid "Working for {0}m {1}s"
+msgstr "Bekerja selama {0} mnt {1} dtk"
+
+msgid "Working for {seconds}s"
+msgstr "Bekerja selama {seconds} dtk"
 
 msgid "Works when environments are clean. Environments are rarely clean."
 msgstr "Berhasil kalau environment-nya bersih. Environment jarang bersih."
@@ -17869,8 +17984,8 @@ msgstr "Kuning"
 msgid "Yes, demote me"
 msgstr "Ya, turunkan peran saya"
 
-msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, the CLI, and GitHub integration. No credit card required."
-msgstr "Ya. Paket gratis mencakup perorangan dengan 1 pengguna, workspace lokal, aplikasi desktop, CLI, dan integrasi GitHub. Tanpa kartu kredit."
+msgid "Yes. Free covers individuals with 1 user, local workspaces, the desktop app, and the CLI. No credit card required."
+msgstr "Ya. Paket gratis mencakup perorangan dengan 1 pengguna, workspace lokal, aplikasi desktop, dan CLI. Tanpa kartu kredit."
 
 msgid "Yes. Superset has completed a SOC 2 Type II audit with an independent auditor, covering our security controls in operation over time. Request the report and review our security documentation at trust.superset.sh."
 msgstr "Ya. Superset telah menyelesaikan audit SOC 2 Type II dengan auditor independen, yang mencakup kontrol keamanan kami saat beroperasi dari waktu ke waktu. Minta laporannya dan tinjau dokumentasi keamanan kami di trust.superset.sh."

@@ -27,6 +27,8 @@ export function PluginConnectionsSync() {
 			connector: row.connector,
 			connectionId: row.id,
 			externalUserId: row.externalUserId,
+			nickname: row.nickname,
+			label: row.externalUserLabel ?? row.externalAccountLabel,
 		}));
 		const fingerprint = JSON.stringify(connections);
 		if (fingerprint === lastSynced.current) return;

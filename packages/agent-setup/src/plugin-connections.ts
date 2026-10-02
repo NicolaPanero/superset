@@ -35,6 +35,8 @@ export function readPluginConnections(
 			connectionId: row.connectionId,
 			externalUserId:
 				typeof row.externalUserId === "string" ? row.externalUserId : null,
+			nickname: typeof row.nickname === "string" ? row.nickname : null,
+			label: typeof row.label === "string" ? row.label : null,
 		});
 	}
 	return connections;

@@ -104,6 +104,8 @@ export const createPluginsRouter = () => {
 							connector: z.string().min(1),
 							connectionId: z.string().min(1),
 							externalUserId: z.string().nullable(),
+							nickname: z.string().nullable(),
+							label: z.string().nullable(),
 						}),
 					),
 				}),

@@ -6,6 +6,9 @@ import { writePluginConnections } from "@superset/agent-setup";
 import { writeInstalledPlugins } from "./host";
 import { syncPluginMcpServers } from "./mcp-servers";
 
+// The Linear plugin's connector slug, which is not its name.
+const CONNECTOR = "linear_mcp";
+
 const ORIGINAL_HOME_DIR = process.env.SUPERSET_HOME_DIR;
 const ORIGINAL_SANDBOX = process.env.SUPERSET_SANDBOX_WORKSPACE_ID;
 
@@ -54,7 +57,12 @@ describe("syncPluginMcpServers", () => {
 	test("writes one unpinned entry for a connector with a single account", () => {
 		install("linear");
 		writePluginConnections([
-			{ connector: "linear", connectionId: "c1", externalUserId: "lu-1" },
+			{
+				connector: CONNECTOR,
+				connectionId: "c1",
+				externalUserId: "9f8a",
+				nickname: "Work",
+			},
 		]);
 
 		const result = syncPluginMcpServers({ homeDir, supersetHomeDir });
@@ -71,23 +79,41 @@ describe("syncPluginMcpServers", () => {
 	test("splits a two-account connector into one pinned entry each", () => {
 		install("linear");
 		writePluginConnections([
-			{ connector: "linear", connectionId: "c1", externalUserId: "lu-1" },
-			{ connector: "linear", connectionId: "c2", externalUserId: "lu-2" },
+			{
+				connector: CONNECTOR,
+				connectionId: "c1",
+				externalUserId: "9f8a",
+				nickname: "Work",
+			},
+			{
+				connector: CONNECTOR,
+				connectionId: "c2",
+				externalUserId: "1c2d",
+				nickname: "Personal",
+			},
 		]);
 
 		const result = syncPluginMcpServers({ homeDir, supersetHomeDir });
 
 		expect(result.servers).toBe(2);
 		const servers = claudeServers();
-		expect(Object.keys(servers).sort()).toEqual(["linear-lu-1", "linear-lu-2"]);
-		expect(servers["linear-lu-1"]?.url).toContain("connection=c1");
-		expect(servers["linear-lu-2"]?.url).toContain("connection=c2");
+		expect(Object.keys(servers).sort()).toEqual([
+			"linear-personal",
+			"linear-work",
+		]);
+		expect(servers["linear-work"]?.url).toContain("connection=c1");
+		expect(servers["linear-personal"]?.url).toContain("connection=c2");
 	});
 
 	test("reaps the entries of an uninstalled plugin", () => {
 		install("linear");
 		writePluginConnections([
-			{ connector: "linear", connectionId: "c1", externalUserId: "lu-1" },
+			{
+				connector: CONNECTOR,
+				connectionId: "c1",
+				externalUserId: "9f8a",
+				nickname: "Work",
+			},
 		]);
 		syncPluginMcpServers({ homeDir, supersetHomeDir });
 

@@ -1,5 +1,5 @@
 {
-  "id": "4f89ef96-0029-494e-b709-5030d3be3e69",
+  "id": "436fda04-956c-4b91-ac61-800e2cfef5dd",
   "prevId": "cdb650fc-c1c8-4059-8f1b-e99c46e45180",
   "version": "7",
   "dialect": "postgresql",
@@ -5609,12 +5609,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "connection_id": {
-          "name": "connection_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
         "next_run_at": {
           "name": "next_run_at",
           "type": "timestamp with time zone",
@@ -6878,6 +6872,12 @@
         },
         "host_version": {
           "name": "host_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "boot_agent_credential_digest": {
+          "name": "boot_agent_credential_digest",
           "type": "text",
           "primaryKey": false,
           "notNull": false

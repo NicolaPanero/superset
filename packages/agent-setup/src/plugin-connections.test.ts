@@ -37,15 +37,39 @@ describe("the plugin connections cache", () => {
 	it("round-trips the connection refs the MCP writer needs", () => {
 		writePluginConnections(
 			[
-				{ connector: "linear", connectionId: "c1", externalUserId: "lu-1" },
-				{ connector: "linear", connectionId: "c2", externalUserId: null },
+				{
+					connector: "linear_mcp",
+					connectionId: "c1",
+					externalUserId: "lu-1",
+					nickname: "Work",
+					label: "harshith@tegon.ai",
+				},
+				{
+					connector: "linear_mcp",
+					connectionId: "c2",
+					externalUserId: null,
+					nickname: null,
+					label: null,
+				},
 			],
 			file,
 		);
 
 		expect(readPluginConnections(file)).toEqual([
-			{ connector: "linear", connectionId: "c1", externalUserId: "lu-1" },
-			{ connector: "linear", connectionId: "c2", externalUserId: null },
+			{
+				connector: "linear_mcp",
+				connectionId: "c1",
+				externalUserId: "lu-1",
+				nickname: "Work",
+				label: "harshith@tegon.ai",
+			},
+			{
+				connector: "linear_mcp",
+				connectionId: "c2",
+				externalUserId: null,
+				nickname: null,
+				label: null,
+			},
 		]);
 	});
 
@@ -73,7 +97,13 @@ describe("the plugin connections cache", () => {
 			"utf-8",
 		);
 		expect(readPluginConnections(file)).toEqual([
-			{ connector: "github", connectionId: "c3", externalUserId: null },
+			{
+				connector: "github",
+				connectionId: "c3",
+				externalUserId: null,
+				nickname: null,
+				label: null,
+			},
 		]);
 	});
 });

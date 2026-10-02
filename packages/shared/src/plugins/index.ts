@@ -486,11 +486,44 @@ export interface PluginConnectionRef {
 	connectionId: string;
 	/** The provider's id for the person; what tells two accounts apart. */
 	externalUserId: string | null;
+	/** What the person called this account, if they named it. */
+	nickname?: string | null;
+	/** The provider's own label for the account — an email, a username. */
+	label?: string | null;
 }
 
 /** Codex table keys and MCP server names are identifiers, not free text. */
 function slugSegment(value: string): string {
-	return value.replace(/[^A-Za-z0-9_-]/g, "-").slice(0, 40);
+	return value
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "")
+		.slice(0, 32);
+}
+
+/**
+ * How an account shows up in a server name. The agent reads this to choose an
+ * account, so it is the one place a human word beats a correct id: a nickname
+ * the person set, else the provider's label, else the id that is merely stable.
+ */
+function accountSegments(
+	connections: readonly PluginConnectionRef[],
+): string[] {
+	const byId = connections.map((connection) =>
+		slugSegment(connection.externalUserId ?? connection.connectionId),
+	);
+
+	const preferred = connections.map((connection) =>
+		slugSegment(connection.nickname || connection.label || ""),
+	);
+
+	// All or nothing. Two labels can slug to the same word, and mixing a label
+	// for one account with a raw id for its twin reads as two unrelated schemes.
+	const usable =
+		preferred.every((segment) => segment.length > 0) &&
+		new Set(preferred).size === preferred.length;
+
+	return usable ? preferred : byId;
 }
 
 export function pluginProxyMcpServers(
@@ -526,16 +559,14 @@ export function pluginProxyMcpServers(
 	// calling a differently-named server. Unpinned would be a 409 on every
 	// request, tool list included.
 	const servers: Record<string, PluginMcpServerConfig> = {};
-	for (const connection of mine) {
-		const suffix = slugSegment(
-			connection.externalUserId ?? connection.connectionId,
-		);
-		servers[`${name}-${suffix}`] = {
+	const segments = accountSegments(mine);
+	mine.forEach((connection, index) => {
+		servers[`${name}-${segments[index]}`] = {
 			type: "http",
 			url: `${base}?connection=${encodeURIComponent(connection.connectionId)}`,
 			...helper,
 		};
-	}
+	});
 	return servers;
 }
 
