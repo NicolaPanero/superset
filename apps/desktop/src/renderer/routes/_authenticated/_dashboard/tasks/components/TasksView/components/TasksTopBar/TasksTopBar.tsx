@@ -6,12 +6,12 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { GoIssueOpened } from "react-icons/go";
 import {
+	HiOutlineClipboardDocumentList,
 	HiOutlinePencilSquare,
 	HiOutlineQueueList,
 	HiOutlineViewColumns,
 	HiXMark,
 } from "react-icons/hi2";
-import { SiLinear } from "react-icons/si";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { CreateTaskDialog } from "renderer/routes/_authenticated/_dashboard/components/CreateTaskDialog";
 import { OpenClosedFilter } from "renderer/routes/_authenticated/_dashboard/components/OpenClosedFilter";
@@ -62,7 +62,7 @@ interface TasksTopBarProps {
 }
 
 const TASK_SOURCES = [
-	{ value: "tasks" as const, Icon: SiLinear },
+	{ value: "tasks" as const, Icon: HiOutlineClipboardDocumentList },
 	{ value: "issues" as const, Icon: GoIssueOpened },
 ] as const;
 
@@ -92,7 +92,7 @@ export function TasksTopBar({
 	const navigate = useNavigate();
 	const taskSourceLabels: Record<TaskSource, string> = {
 		tasks: t({
-			message: "Linear",
+			message: "Tasks",
 		}),
 		issues: t({
 			message: "GitHub issues",
@@ -192,7 +192,6 @@ export function TasksTopBar({
 											value={linearProjectFilter}
 											onChange={onLinearProjectFilterChange}
 										/>
-										<div className="h-4 w-px shrink-0 bg-border" />
 										<StatusFilter value={currentTab} onChange={onTabChange} />
 										<div className="h-4 w-px shrink-0 bg-border" />
 										<AssigneeFilter

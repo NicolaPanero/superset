@@ -4066,9 +4066,6 @@ msgstr "このコンピューターに接続"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "GitHubリポジトリを接続してプルリクエストを同期します。チーム全体のCIステータスとレビューを追跡できます。"
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "LinearワークスペースをつなぐとSupersetから直接issueを同期しタスクを管理できます。"
-
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Linearのワークスペースを接続して、Issueを双方向に同期します。"
 

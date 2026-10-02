@@ -7,8 +7,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
 import {
@@ -20,7 +18,6 @@ import {
 	GitHubIssuesContent,
 	type SelectedIssue,
 } from "./components/GitHubIssuesContent";
-import { LinearCTA } from "./components/LinearCTA";
 import { TableContent } from "./components/TableContent";
 import {
 	type TabValue,
@@ -49,7 +46,6 @@ export function TasksView({
 	initialState,
 }: TasksViewProps) {
 	const navigate = useNavigate();
-	const activeOrganizationId = useActiveOrganizationId();
 	const {
 		tab: storedTab,
 		assignee: storedAssignee,
@@ -178,11 +174,6 @@ export function TasksView({
 		storeSetIncludeClosedIssues(includeClosedIssues);
 	}, [includeClosedIssues, storeSetIncludeClosedIssues]);
 
-	const { data: integrations } = cloudTrpc.integration.list.useQuery(
-		{ organizationId: activeOrganizationId ?? "" },
-		{ enabled: !!activeOrganizationId },
-	);
-
 	// Projects are fully local — identity comes from the host fan-out.
 	const {
 		isReady: areProjectsReady,
@@ -219,9 +210,6 @@ export function TasksView({
 		navigate,
 		buildSearch,
 	]);
-
-	const isLinearConnected =
-		integrations?.some((i) => i.provider === "linear") ?? false;
 
 	// Defaults ("all"/null) are omitted from the URL, so write the store too —
 	// otherwise the render falls back to the stale stored value (no-op select).
@@ -328,9 +316,6 @@ export function TasksView({
 		});
 	};
 
-	const showLinearCTA =
-		integrations !== undefined && !isLinearConnected && typeTab === "tasks";
-
 	const showTasks = typeTab === "tasks";
 	const showIssues = typeTab === "issues";
 	const taskSource: TaskSource = showIssues ? "issues" : "tasks";
@@ -360,42 +345,38 @@ export function TasksView({
 				onIncludeClosedIssuesChange={handleIncludeClosedIssuesChange}
 			/>
 
-			{showLinearCTA ? (
-				<LinearCTA />
-			) : (
-				<div className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden">
-					{showTasks &&
-						(viewMode === "board" ? (
-							<BoardContent
-								filterTab={currentTab}
-								searchQuery={deferredSearchQuery}
-								assigneeFilter={assigneeFilter}
-								linearProjectFilter={linearProjectFilter}
-								onTaskClick={handleTaskClick}
-							/>
-						) : (
-							<TableContent
-								filterTab={currentTab}
-								searchQuery={deferredSearchQuery}
-								assigneeFilter={assigneeFilter}
-								linearProjectFilter={linearProjectFilter}
-								onTaskClick={handleTaskClick}
-								onSelectionChange={handleSelectionChange}
-							/>
-						))}
-					{showIssues && (
-						<GitHubIssuesContent
-							projectFilters={projectFilters}
-							projectTargets={projectTargets}
-							areProjectsReady={areProjectsReady}
-							hasProjects={v2Projects.length > 0}
-							searchQuery={searchQuery}
-							includeClosed={includeClosedIssues}
-							onSelectionChange={handleIssueSelectionChange}
+			<div className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden">
+				{showTasks &&
+					(viewMode === "board" ? (
+						<BoardContent
+							filterTab={currentTab}
+							searchQuery={deferredSearchQuery}
+							assigneeFilter={assigneeFilter}
+							linearProjectFilter={linearProjectFilter}
+							onTaskClick={handleTaskClick}
 						/>
-					)}
-				</div>
-			)}
+					) : (
+						<TableContent
+							filterTab={currentTab}
+							searchQuery={deferredSearchQuery}
+							assigneeFilter={assigneeFilter}
+							linearProjectFilter={linearProjectFilter}
+							onTaskClick={handleTaskClick}
+							onSelectionChange={handleSelectionChange}
+						/>
+					))}
+				{showIssues && (
+					<GitHubIssuesContent
+						projectFilters={projectFilters}
+						projectTargets={projectTargets}
+						areProjectsReady={areProjectsReady}
+						hasProjects={v2Projects.length > 0}
+						searchQuery={searchQuery}
+						includeClosed={includeClosedIssues}
+						onSelectionChange={handleIssueSelectionChange}
+					/>
+				)}
+			</div>
 		</div>
 	);
 }
