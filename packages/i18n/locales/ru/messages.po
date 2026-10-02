@@ -4770,6 +4770,9 @@ msgstr "Не удалось отправить ответ"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Не удалось связаться с облаком для {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Не удалось подключиться к этому облачному рабочему пространству. Возможно, оно ещё запускается — попробуйте снова."
+
 msgid "Couldn't reach workspace"
 msgstr "Не удалось подключиться к рабочей области"
 

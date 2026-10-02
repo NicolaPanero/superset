@@ -4770,6 +4770,9 @@ msgstr "Impossibile pubblicare la risposta"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Impossibile raggiungere il cloud per {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Impossibile raggiungere questo workspace cloud. Potrebbe essere ancora in fase di riattivazione: riprova."
+
 msgid "Couldn't reach workspace"
 msgstr "Impossibile raggiungere il workspace"
 

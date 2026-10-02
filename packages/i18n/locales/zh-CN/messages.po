@@ -4770,6 +4770,9 @@ msgstr "无法发布回复"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "无法为{0}连接云端：{1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "无法连接到此云工作区。它可能仍在唤醒中——请重试。"
+
 msgid "Couldn't reach workspace"
 msgstr "无法连接到工作区"
 

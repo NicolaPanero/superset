@@ -4770,6 +4770,9 @@ msgstr "Couldn't post reply"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Couldn't reach cloud for {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Couldn't reach this cloud workspace. It may still be waking up — try again."
+
 msgid "Couldn't reach workspace"
 msgstr "Couldn't reach workspace"
 

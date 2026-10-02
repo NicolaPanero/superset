@@ -4770,6 +4770,9 @@ msgstr "Tidak bisa mengirim balasan"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Tidak bisa menjangkau cloud untuk {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Tidak bisa menjangkau workspace cloud ini. Mungkin masih dibangunkan — coba lagi."
+
 msgid "Couldn't reach workspace"
 msgstr "Tidak bisa menjangkau workspace"
 

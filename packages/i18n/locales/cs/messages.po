@@ -4770,6 +4770,9 @@ msgstr "Nepodařilo se odeslat odpověď"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Nepodařilo se spojit s cloudem pro {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Nepodařilo se spojit s tímto cloudovým workspace. Možná se ještě probouzí – zkuste to znovu."
+
 msgid "Couldn't reach workspace"
 msgstr "Nepodařilo se spojit s pracovním prostorem"
 

@@ -4770,6 +4770,9 @@ msgstr "Không thể đăng trả lời"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Không kết nối được tới cloud cho {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Không kết nối được với không gian làm việc đám mây này. Có thể nó vẫn đang được đánh thức — hãy thử lại."
+
 msgid "Couldn't reach workspace"
 msgstr "Không kết nối được workspace"
 

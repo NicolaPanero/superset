@@ -4770,6 +4770,9 @@ msgstr "답글을 게시하지 못했습니다"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "{0}에 대해 클라우드에 연결할 수 없습니다: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "이 클라우드 워크스페이스에 연결하지 못했습니다. 아직 깨어나는 중일 수 있습니다 — 다시 시도해 주세요."
+
 msgid "Couldn't reach workspace"
 msgstr "워크스페이스에 연결하지 못했습니다"
 

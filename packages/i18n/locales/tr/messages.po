@@ -4770,6 +4770,9 @@ msgstr "Yanıt gönderilemedi"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "{0} için buluta erişilemedi: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Bu bulut çalışma alanına ulaşılamadı. Hâlâ uyandırılıyor olabilir — tekrar deneyin."
+
 msgid "Couldn't reach workspace"
 msgstr "Çalışma alanına ulaşılamadı"
 

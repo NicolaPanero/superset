@@ -4770,6 +4770,9 @@ msgstr "Kan antwoord niet plaatsen"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Kan de cloud niet bereiken voor {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Kan deze cloudwerkruimte niet bereiken. Mogelijk wordt deze nog gewekt — probeer het opnieuw."
+
 msgid "Couldn't reach workspace"
 msgstr "Kan werkruimte niet bereiken"
 
