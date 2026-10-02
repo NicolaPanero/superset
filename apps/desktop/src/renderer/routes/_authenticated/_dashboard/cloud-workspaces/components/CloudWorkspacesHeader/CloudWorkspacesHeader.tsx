@@ -280,7 +280,6 @@ export function CloudWorkspacesHeader({
 														},
 													]}
 													size={16}
-													surface="popover"
 												/>
 												<span className="min-w-0 truncate">{option.name}</span>
 											</span>
