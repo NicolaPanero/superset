@@ -12,7 +12,7 @@ import {
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { LuFolderOpen, LuLoaderCircle } from "react-icons/lu";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -64,8 +64,10 @@ export function NewProjectModal({
 	const [selectedRepository, setSelectedRepository] = useState<string | null>(
 		null,
 	);
-	const [working, setWorking] = useState(false);
-	const cloneAbortRef = useRef<AbortController | null>(null);
+	const [pendingClone, setPendingClone] = useState<AbortController | null>(
+		null,
+	);
+	const working = pendingClone !== null;
 
 	useEffect(() => {
 		if (parentDir || !homeDir) return;
@@ -82,13 +84,12 @@ export function NewProjectModal({
 		setName("");
 		setNameTouched(false);
 		setSelectedRepository(null);
-		setWorking(false);
 	};
 
 	const handleOpenChange = (next: boolean) => {
 		if (!next) {
-			cloneAbortRef.current?.abort();
-			cloneAbortRef.current = null;
+			pendingClone?.abort();
+			setPendingClone(null);
 			reset();
 		}
 		onOpenChange(next);
@@ -108,6 +109,24 @@ export function NewProjectModal({
 		} catch (err) {
 			toast.error(errorMessage(err));
 		}
+	};
+
+	const cloneOnHost = async (
+		hostUrl: string,
+		input: { name: string; parentDir: string; url: string },
+		signal: AbortSignal,
+	) => {
+		const result = await getHostServiceClientByUrl(
+			hostUrl,
+		).project.create.mutate(
+			{
+				name: input.name,
+				mode: { kind: "clone", parentDir: input.parentDir, url: input.url },
+			},
+			{ signal },
+		);
+		finalizeSetup(hostUrl, result);
+		return result.projectId;
 	};
 
 	const createFromClone = async () => {
@@ -130,28 +149,14 @@ export function NewProjectModal({
 			return;
 		}
 
-		const abort = new AbortController();
-		cloneAbortRef.current = abort;
-		setWorking(true);
-		try {
-			if (!isV2CloudEnabled) {
-				const projectId = await createV1Project.cloneFromUrl({
-					url: trimmedUrl,
-					parentDir: trimmedParent,
-				});
-				if (!projectId || abort.signal.aborted) return;
-				onSuccess?.({ projectId });
-				reset();
-				onOpenChange(false);
-				return;
-			}
+		const trimmedName = name.trim() || deriveProjectNameFromUrl(trimmedUrl);
+		if (isV2CloudEnabled) {
 			if (!activeHostUrl) {
 				showHostServiceUnavailableToast(hostService, {
 					action: "cloneRepository",
 				});
 				return;
 			}
-			const trimmedName = name.trim() || deriveProjectNameFromUrl(trimmedUrl);
 			if (!trimmedName) {
 				toast.error(
 					t({
@@ -160,17 +165,24 @@ export function NewProjectModal({
 				);
 				return;
 			}
-			const client = getHostServiceClientByUrl(activeHostUrl);
-			const result = await client.project.create.mutate(
-				{
-					name: trimmedName,
-					mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
-				},
-				{ signal: abort.signal },
-			);
-			if (abort.signal.aborted) return;
-			finalizeSetup(activeHostUrl, result);
-			onSuccess?.({ projectId: result.projectId });
+		}
+
+		const abort = new AbortController();
+		setPendingClone(abort);
+		try {
+			const projectId =
+				isV2CloudEnabled && activeHostUrl
+					? await cloneOnHost(
+							activeHostUrl,
+							{ name: trimmedName, parentDir: trimmedParent, url: trimmedUrl },
+							abort.signal,
+						)
+					: await createV1Project.cloneFromUrl({
+							url: trimmedUrl,
+							parentDir: trimmedParent,
+						});
+			if (abort.signal.aborted || !projectId) return;
+			onSuccess?.({ projectId });
 			reset();
 			onOpenChange(false);
 		} catch (err) {
@@ -195,10 +207,7 @@ export function NewProjectModal({
 			);
 			onError?.(message);
 		} finally {
-			if (cloneAbortRef.current === abort) {
-				cloneAbortRef.current = null;
-				setWorking(false);
-			}
+			setPendingClone((current) => (current === abort ? null : current));
 		}
 	};
 
