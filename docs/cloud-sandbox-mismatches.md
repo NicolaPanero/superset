@@ -162,6 +162,12 @@ model and GitHub ones, the API resolves that to the workspace's creator, and
 `SANDBOX_ALLOWED_PROCEDURES` is the list of things it may then call. A header
 rule applies to every process in the box, so that list is the boundary —
 widen it deliberately, and never to a procedure that can grant more access.
+A box acts in its own organization only: both procedure builders in
+`packages/trpc/src/trpc.ts` drop the creator's other memberships and refuse an
+organization header that names one. Archiving the box from inside it
+(`workspaces delete`) ends the session that ran the command: expect no output,
+put the box's own id last when deleting several, and unarchive from a
+signed-in client.
 
 **Docker is installed but not started.** An environment whose repository needs
 containers starts it from its own `start` command, which is also where it
@@ -266,11 +272,11 @@ preset, but the image installs only Claude and Codex.
 
 ## Lifecycle
 
-**Delete is not wired.** The generic delete routes to the owning host, which
-for a cloud workspace deletes the row *inside* the sandbox and leaves the
+**Delete was not wired.** The generic delete routed to the owning host, which
+for a cloud workspace deleted the row *inside* the sandbox and left the
 sandbox running (and billing) plus the `cloud_workspaces` row intact — the
-workspace reappears on the next refetch. It needs to call
-`cloudWorkspace.delete`. **Open.**
+workspace reappeared on the next refetch. **Fixed:** `useDestroyWorkspace`
+sends a cloud workspace to `cloudWorkspace.delete`.
 
 **Sidebar affordances are driven by local state, not by the row.** Visibility,
 pinning and ordering live in `v2WorkspaceLocalState`; a section that renders
