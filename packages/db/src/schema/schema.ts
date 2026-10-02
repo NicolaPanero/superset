@@ -381,6 +381,33 @@ export const taskActivity = pgTable(
 
 export type InsertTaskActivity = typeof taskActivity.$inferInsert;
 
+export const taskImports = pgTable(
+	"task_imports",
+	{
+		taskId: uuid("task_id")
+			.primaryKey()
+			.references(() => tasks.id, { onDelete: "cascade" }),
+		organizationId: uuid("organization_id").notNull(),
+		provider: integrationProvider().notNull(),
+		externalId: text("external_id").notNull(),
+		externalUrl: text("external_url").notNull(),
+		importedByUserId: uuid("imported_by_user_id").references(() => users.id, {
+			onDelete: "set null",
+		}),
+		createdAt: timestamp("created_at").notNull().defaultNow(),
+	},
+	(table) => [
+		unique("task_imports_org_provider_external_unique").on(
+			table.organizationId,
+			table.provider,
+			table.externalId,
+		),
+	],
+);
+
+export type InsertTaskImport = typeof taskImports.$inferInsert;
+export type SelectTaskImport = typeof taskImports.$inferSelect;
+
 // Integration connections for external providers (Linear, GitHub, etc.)
 export const integrationConnections = pgTable(
 	"integration_connections",
