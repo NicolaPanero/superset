@@ -54,7 +54,7 @@ function MentionRow({ item }: { item: RecordMentionItem }) {
 							progress={item.status.progressPercent ?? undefined}
 						/>
 					</span>
-					<span className="shrink-0 text-muted-foreground">
+					<span className="shrink-0 font-mono text-muted-foreground">
 						{taskDisplayId(item)}
 					</span>
 					<span className="truncate">{item.title}</span>

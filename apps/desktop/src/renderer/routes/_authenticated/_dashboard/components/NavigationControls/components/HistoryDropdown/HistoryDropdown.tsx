@@ -204,7 +204,7 @@ function TaskRow({
 		>
 			{task ? (
 				<>
-					<span className="text-muted-foreground text-xs shrink-0 w-20 text-left line-clamp-1">
+					<span className="font-mono text-muted-foreground text-xs shrink-0 w-20 text-left line-clamp-1">
 						{taskDisplayId(task)}
 					</span>
 					<span className="flex items-center justify-center w-4 shrink-0">

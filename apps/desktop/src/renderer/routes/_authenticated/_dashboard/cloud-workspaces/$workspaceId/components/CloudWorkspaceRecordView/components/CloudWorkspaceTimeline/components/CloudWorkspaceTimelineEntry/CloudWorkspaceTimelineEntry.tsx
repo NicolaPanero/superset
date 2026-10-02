@@ -171,7 +171,7 @@ export function CloudWorkspaceTimelineEntry({
 					icon={<CloudTaskIcon task={entry.task} />}
 					onClick={() => onOpenTask(entry.task.id)}
 				>
-					<span className="font-normal text-muted-foreground">
+					<span className="font-mono font-normal text-muted-foreground">
 						{taskDisplayId(entry.task)}
 					</span>{" "}
 					{entry.task.title}
@@ -195,7 +195,7 @@ export function CloudWorkspaceTimelineEntry({
 					icon={<CloudTaskIcon task={entry.task} />}
 					onClick={() => onOpenTask(entry.task.id)}
 				>
-					<span className="font-normal text-muted-foreground">
+					<span className="font-mono font-normal text-muted-foreground">
 						{taskDisplayId(entry.task)}
 					</span>{" "}
 					{entry.task.title}

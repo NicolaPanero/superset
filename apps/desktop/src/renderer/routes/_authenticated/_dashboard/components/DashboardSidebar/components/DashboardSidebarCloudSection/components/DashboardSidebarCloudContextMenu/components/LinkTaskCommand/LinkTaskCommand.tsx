@@ -91,7 +91,7 @@ export function LinkTaskCommand({
 							>
 								<Checkbox checked={isLinked} className="pointer-events-none" />
 								<CloudTaskIcon task={task} />
-								<span className="shrink-0 text-xs text-muted-foreground tabular-nums">
+								<span className="shrink-0 font-mono text-xs text-muted-foreground">
 									{taskDisplayId(task)}
 								</span>
 								<span className="min-w-0 flex-1 truncate">{task.title}</span>

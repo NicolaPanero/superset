@@ -353,7 +353,7 @@ function TaskRow({
 			onSelect={onSelect}
 			className={cn("gap-2.5", isCurrent && "bg-accent/50")}
 		>
-			<span className="text-muted-foreground text-xs shrink-0 w-24 text-left line-clamp-1">
+			<span className="font-mono text-muted-foreground text-xs shrink-0 w-24 text-left line-clamp-1">
 				{(task && taskDisplayId(task)) ??
 					i18n._(
 						msg({
