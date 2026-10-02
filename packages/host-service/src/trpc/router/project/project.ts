@@ -640,7 +640,7 @@ export const projectRouter = router({
 				]),
 			}),
 		)
-		.mutation(async ({ ctx, input }) => {
+		.mutation(async ({ ctx, input, signal }) => {
 			switch (input.mode.kind) {
 				case "empty":
 					return createFromEmpty(ctx, {
@@ -652,12 +652,14 @@ export const projectRouter = router({
 						name: input.name,
 						parentDir: input.mode.parentDir,
 						url: input.mode.url,
+						signal,
 					});
 				case "clone":
 					return createFromClone(ctx, {
 						name: input.name,
 						parentDir: input.mode.parentDir,
 						url: input.mode.url,
+						signal,
 					});
 				case "importLocal":
 					return createFromImportLocal(ctx, {

@@ -403,6 +403,7 @@ export async function cloneTemplateInto(
 	parentDir: string,
 	dirName: string,
 	credentials?: GitCredentialProvider,
+	signal?: AbortSignal,
 ): Promise<ResolvedRepo> {
 	if (!dirName.trim() || /[/\\]/.test(dirName)) {
 		throw new TRPCError({
@@ -419,10 +420,11 @@ export async function cloneTemplateInto(
 	try {
 		// --depth=1 since we're throwing away the template's history anyway.
 		const env = await cloneEnv(credentials, templateUrl);
-		const cloneGit = createUserSimpleGit();
+		const cloneGit = createUserSimpleGit(undefined, { abort: signal });
 		await (env ? cloneGit.env(env) : cloneGit).clone(templateUrl, targetPath, [
 			"--depth=1",
 		]);
+		signal?.throwIfAborted();
 		await rm(join(targetPath, ".git"), { recursive: true, force: true });
 
 		await gitInitMainBranch(targetPath);
@@ -467,6 +469,7 @@ export async function cloneRepoInto(
 	repoCloneUrl: string,
 	parentDir: string,
 	credentials?: GitCredentialProvider,
+	signal?: AbortSignal,
 ): Promise<ResolvedRepo> {
 	const parsedUrl = parseGitHubRemote(repoCloneUrl);
 	const expectedSlug = parsedUrl
@@ -482,8 +485,9 @@ export async function cloneRepoInto(
 
 	try {
 		const env = await cloneEnv(credentials, repoCloneUrl);
-		const git = createUserSimpleGit();
+		const git = createUserSimpleGit(undefined, { abort: signal });
 		await (env ? git.env(env) : git).clone(repoCloneUrl, targetPath);
+		signal?.throwIfAborted();
 	} catch (err) {
 		await rollbackTargetDir(targetPath);
 		throw new TRPCError({

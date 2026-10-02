@@ -78,12 +78,13 @@ async function persistFromResolved(
 
 export async function createFromClone(
 	ctx: HostServiceContext,
-	args: { name: string; parentDir: string; url: string },
+	args: { name: string; parentDir: string; url: string; signal?: AbortSignal },
 ): Promise<CreateResult> {
 	const resolved = await cloneRepoInto(
 		args.url,
 		args.parentDir,
 		ctx.credentials,
+		args.signal,
 	);
 	return persistFromResolved(ctx, {
 		name: args.name,
@@ -165,13 +166,14 @@ export async function createFromEmpty(
  */
 export async function createFromTemplate(
 	ctx: HostServiceContext,
-	args: { name: string; parentDir: string; url: string },
+	args: { name: string; parentDir: string; url: string; signal?: AbortSignal },
 ): Promise<CreateResult> {
 	const resolved = await cloneTemplateInto(
 		args.url,
 		args.parentDir,
 		dirNameForEmpty(args.name),
 		ctx.credentials,
+		args.signal,
 	);
 	return persistFromResolved(ctx, {
 		name: args.name,
