@@ -18,6 +18,9 @@ mock.module("@superset/db/client", () => ({
 mock.module("../../lib/analytics", () => ({
 	posthog: { capture: () => {}, isFeatureEnabled: async () => false },
 }));
+mock.module("../../lib/activation-events", () => ({
+	emitAppFirstOpened: async () => {},
+}));
 
 const { userRouter } = await import("./user");
 const { createCallerFactory, createTRPCContext, createTRPCRouter } =
