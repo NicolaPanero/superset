@@ -3,16 +3,19 @@ import { startedStatusProgress } from "@superset/db/seed-default-statuses";
 import { sql } from "drizzle-orm";
 
 /**
- * Gives every organization the "In Review" status new organizations get, right
- * after its "In Progress", and sets each native started status's progress from
- * how many started statuses the organization has.
+ * Brings every organization's default statuses in line with what new
+ * organizations get: an "In Review" right after "In Progress", each native
+ * started status's progress from how many started statuses it has, and
+ * Linear's color on "Done".
  *
  * Reports what it would do unless `--apply` is passed. Safe to run again.
  *
- * Usage: bun run packages/trpc/scripts/add-in-review-status.ts [--apply]
+ * Usage: bun run packages/trpc/scripts/align-default-statuses.ts [--apply]
  */
 
 const UPDATE_BATCH_SIZE = 5_000;
+const OLD_DONE_COLOR = "#0e9f6e";
+const DONE_COLOR = "#5e6ad2";
 
 const apply = process.argv.includes("--apply");
 
@@ -85,6 +88,25 @@ if (apply) {
 			`updated ${Math.min(i + UPDATE_BATCH_SIZE, changes.length)}/${changes.length}`,
 		);
 	}
+}
+
+const oldDone = sql`
+	FROM task_statuses
+	WHERE external_provider IS NULL
+		AND type = 'completed'
+		AND name = 'Done'
+		AND color = ${OLD_DONE_COLOR}
+`;
+const doneCount = await db.execute<{ n: number }>(
+	sql`SELECT count(*)::int AS n ${oldDone}`,
+);
+console.log(`Done statuses to recolor: ${doneCount.rows[0]?.n ?? 0}`);
+
+if (apply) {
+	await db.execute(sql`
+		UPDATE task_statuses SET color = ${DONE_COLOR}
+		WHERE id IN (SELECT id ${oldDone})
+	`);
 }
 
 console.log(apply ? "done" : "dry run; pass --apply to write");

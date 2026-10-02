@@ -42,7 +42,7 @@ const DEFAULT_STATUSES: Array<
 		position: 3,
 		progressPercent: IN_REVIEW,
 	},
-	{ name: "Done", color: "#0e9f6e", type: "completed", position: 4 },
+	{ name: "Done", color: "#5e6ad2", type: "completed", position: 4 },
 	{ name: "Canceled", color: "#95a2b3", type: "canceled", position: 5 },
 ];
 
