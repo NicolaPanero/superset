@@ -162,9 +162,11 @@ model and GitHub ones, the API resolves that to the workspace's creator, and
 `SANDBOX_ALLOWED_PROCEDURES` is the list of things it may then call. A header
 rule applies to every process in the box, so that list is the boundary —
 widen it deliberately, and never to a procedure that can grant more access.
-A box acts in its own organization only: both procedure builders in
-`packages/trpc/src/trpc.ts` drop the creator's other memberships and refuse an
-organization header that names one. Archiving the box from inside it
+A box acts in its own organization only. In `packages/trpc/src/trpc.ts`,
+`jwtProcedure` drops the creator's other memberships, both builders refuse an
+organization header that names one, and `protectedProcedure` keeps the box's
+organization as the active one; `user.myOrganizations` lists only the box's.
+Archiving the box from inside it
 (`workspaces delete`) ends the session that ran the command: expect no output,
 put the box's own id last when deleting several, and unarchive from a
 signed-in client.
