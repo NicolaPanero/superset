@@ -175,7 +175,7 @@ export const connectorsRouter = {
 			z.object({
 				organizationId: z.uuid(),
 				connectionId: z.uuid(),
-				label: z.string().max(64).nullable(),
+				label: z.string().trim().min(1).max(64),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -211,10 +211,9 @@ export const connectorsRouter = {
 			else if (existing.connectedByUserId !== ctx.session.user.id)
 				throw new TRPCError({ code: "NOT_FOUND", message: "No connection" });
 
-			const trimmed = input.label?.trim();
 			const [row] = await db
 				.update(connections)
-				.set({ externalUserLabel: trimmed ? trimmed : null })
+				.set({ externalUserLabel: input.label })
 				.where(
 					and(
 						eq(connections.id, input.connectionId),
