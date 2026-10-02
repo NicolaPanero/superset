@@ -39,17 +39,19 @@ lives in two places:
   `advice_code`.
 
 Read the retry decision off `advice_code`, not off the decline code. It has three
-values and they say what to do: `try_again_later` means a retry may work,
-`do_not_try_again` means it will not for this transaction, and
-`confirm_card_data` means the customer mistyped something. The decline code
-answers a different question, and most of them are vague on purpose:
-`do_not_honor` and `generic_decline` both mean "the issuer declined and did not
-say why", so treating either as permanent is a guess the advice code already
-settles.
+values and each is Stripe's advice rather than a verdict: `try_again_later` means
+a retry may work, `do_not_try_again` means Stripe advises against reusing the card
+for this transaction, and `confirm_card_data` means the customer mistyped
+something. The decline code answers a different question, and most of them are
+vague on purpose: `do_not_honor` and `generic_decline` both mean "the issuer
+declined and did not say why", so calling either permanent is a guess the advice
+code already settles.
 
-What the pair does separate is the issuer declining at all from Stripe Radar
-blocking the payment before the issuer ever saw it, which shows as
-`network_status: "not_sent_to_network"` with a risk level.
+To tell an issuer decline from a payment Stripe Radar blocked before the issuer
+ever saw it, read `outcome.type`: `blocked` with a `reason` such as
+`highest_risk_level` is Radar. A `network_status` of `not_sent_to_network` says
+only that the network never saw it, and a `risk_level` is attached to payments
+Radar allowed as well, so neither one attributes the failure on its own.
 
 ## 4. Follow the chain the question actually asks about
 
@@ -59,8 +61,10 @@ blocking the payment before the issuer ever saw it, which shows as
 - "What did we keep?" is charge to `balance_transaction`, which carries `fee`
   and `net`. The charge amount is not revenue, and that `net` is not the end of
   it either: a refund and a dispute each create their own balance transaction,
-  so a refunded charge still reports the original `net`. Read the charge's
-  refunds and disputes and net them off before reporting a figure.
+  so a refunded charge still reports the original `net`. Net off its refunds and
+  disputes before reporting a figure, and page the refund list to the end: the
+  charge embeds only the first ten, so a charge refunded in many parts overstates
+  what you kept until `has_more` is false.
 - "Where is the money?" is `get_balance_summary` or payout to balance
   transactions, not the sum of recent charges.
 - "Is this customer current?" is subscription `status` plus

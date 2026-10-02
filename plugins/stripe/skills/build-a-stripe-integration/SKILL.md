@@ -41,9 +41,11 @@ object, the method that is superseded.
 `stripe_api_search` finds the method, `stripe_api_details` gives its real
 parameters and types. Do this even for calls you are sure of.
 
-A misspelled parameter is the easy case: Stripe rejects what it does not
-recognize with an `invalid_request_error` naming the field, so you find out
-immediately. The expensive case is a parameter that is real but wrong here, and
+A misspelled parameter is usually the easy case: Stripe answers a name it does
+not recognize with an `invalid_request_error` naming the field, so you normally
+find out at once. Normally, not always, because what an endpoint accepts is the
+endpoint's business and the docs promise no blanket rule. The expensive case is
+a parameter that is real but wrong here, and
 it has three shapes. A field that belongs to a sibling endpoint. A field nested
 at the wrong level, where Stripe sees the flat name as unknown and the value you
 meant never arrives. And a field that is accepted and does something other than

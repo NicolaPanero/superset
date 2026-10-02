@@ -19,6 +19,10 @@ is how an agent misses an open dispute, because `refunded`, `amount_refunded`,
 and `disputed` are not PaymentIntent fields and reading them off one yields
 `undefined` rather than an error.
 
+A `latest_charge` of `null` ends the job rather than starting it: the
+PaymentIntent was never confirmed, or no attempt produced a charge, so there is
+nothing to refund. Say that and stop.
+
 On the charge, check four fields:
 
 - `amount` and `currency`: the only authority for what can be refunded.
