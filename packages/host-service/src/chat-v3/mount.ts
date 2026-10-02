@@ -21,6 +21,7 @@ import type { Hono, MiddlewareHandler } from "hono";
 import type { HostDb } from "../db";
 import { acpHarnessEntries } from "./acpHarnesses";
 import { resolveAgentCliSync } from "./agentCli";
+import { buildChatAgentEnv } from "./agentEnv";
 import { createResolveCwd } from "./resolveCwd";
 
 export const CHAT_V3_TRPC_PATH = "/chat-v3/trpc";
@@ -34,21 +35,27 @@ function migrationsFolder(): string {
 	return process.env.SUPERSET_CHAT_V3_MIGRATIONS ?? DEFAULT_MIGRATIONS_FOLDER;
 }
 
-function harnessRegistry(): HarnessRegistry {
+function harnessRegistry(db: HostDb): HarnessRegistry {
 	const entries: [string, HarnessFactory][] = [
 		[
 			"claude-code",
-			() => {
-				const cli = resolveAgentCliSync("claude");
+			(options) => {
+				const chatEnv = () =>
+					buildChatAgentEnv({
+						db,
+						cwd: options.cwd,
+						workspaceId: options.scopeId,
+					});
+				const cli = resolveAgentCliSync("claude", chatEnv());
 				return createClaudeAdapter({
 					pathToClaudeCodeExecutable:
 						process.env.SUPERSET_CHAT_V3_CLAUDE_BIN ?? cli.command,
-					resolveEnv: () => resolveAgentCliSync("claude").env,
+					resolveEnv: chatEnv,
 				});
 			},
 		],
 		["codex", () => new CodexAdapter()],
-		...acpHarnessEntries(),
+		...acpHarnessEntries(db),
 	];
 	return new Map(entries);
 }
@@ -73,7 +80,7 @@ export function createChatV3Mount(options: {
 		built = createChatRuntime({
 			dataDir: dirname(options.dbPath),
 			migrationsFolder: migrationsFolder(),
-			harnesses: harnessRegistry(),
+			harnesses: harnessRegistry(options.db),
 		});
 		return built;
 	};

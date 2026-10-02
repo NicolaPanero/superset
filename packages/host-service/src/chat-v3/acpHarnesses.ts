@@ -2,8 +2,10 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
+import type { HostDb } from "../db";
 import catalogue from "./acp-harnesses.json" with { type: "json" };
 import { resolveAgentCli } from "./agentCli";
+import { buildChatAgentEnv } from "./agentEnv";
 
 type AcpHarness = {
 	registryId: string;
@@ -32,7 +34,10 @@ function withoutAmbientKeys(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
 	return rest;
 }
 
-export function acpHarnessFactory(harness: string): HarnessFactory | null {
+export function acpHarnessFactory(
+	harness: string,
+	db: HostDb,
+): HarnessFactory | null {
 	const entry = ACP_HARNESSES[harness];
 	if (!entry) return null;
 
@@ -54,6 +59,11 @@ export function acpHarnessFactory(harness: string): HarnessFactory | null {
 					binary: entry.binary,
 					minVersion: entry.minVersion,
 					upgrade: entry.upgrade,
+					env: buildChatAgentEnv({
+						db,
+						cwd: options.cwd,
+						workspaceId: options.scopeId,
+					}),
 				});
 				const env = withoutAmbientKeys(cli.env);
 				if (!adapterEntry) {
@@ -77,10 +87,10 @@ export function acpHarnessFactory(harness: string): HarnessFactory | null {
 		});
 }
 
-export function acpHarnessEntries(): [string, HarnessFactory][] {
+export function acpHarnessEntries(db: HostDb): [string, HarnessFactory][] {
 	const entries: [string, HarnessFactory][] = [];
 	for (const harness of Object.keys(ACP_HARNESSES)) {
-		const factory = acpHarnessFactory(harness);
+		const factory = acpHarnessFactory(harness, db);
 		if (factory) entries.push([harness, factory]);
 	}
 	return entries;

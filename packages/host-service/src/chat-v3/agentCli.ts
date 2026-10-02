@@ -2,9 +2,9 @@ import { execFile } from "node:child_process";
 import { accessSync, constants, existsSync, statSync } from "node:fs";
 import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
-import { getBinDir, resolveSupersetHomeDir } from "@superset/agent-setup";
+import { getBinDir } from "@superset/agent-setup";
 import { coerce, gte } from "semver";
-import { getTerminalBaseEnv, waitForTerminalBaseEnv } from "../terminal/env";
+import { waitForTerminalBaseEnv } from "../terminal/env";
 
 const execFileAsync = promisify(execFile);
 
@@ -55,17 +55,6 @@ export function agentCliCommand(
 	env: NodeJS.ProcessEnv,
 ): string {
 	return supersetWrapper(binary) ?? findOnPath(binary, env) ?? binary;
-}
-
-function agentEnv(): NodeJS.ProcessEnv {
-	const base = getTerminalBaseEnv();
-	const binDir = getBinDir();
-	const path = (base.PATH ?? "").split(delimiter).filter(Boolean);
-	return {
-		...base,
-		SUPERSET_HOME_DIR: resolveSupersetHomeDir(),
-		PATH: [binDir, ...path.filter((entry) => entry !== binDir)].join(delimiter),
-	};
 }
 
 const cache = new Map<string, { at: number; version: string | null }>();
@@ -126,9 +115,10 @@ export async function resolveAgentCli(options: {
 	binary: string;
 	minVersion: string;
 	upgrade?: string;
+	env: NodeJS.ProcessEnv;
 }): Promise<AgentCli> {
 	await waitForTerminalBaseEnv();
-	const env = agentEnv();
+	const env = options.env;
 	const command = agentCliCommand(options.binary, env);
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {
@@ -137,7 +127,9 @@ export async function resolveAgentCli(options: {
 	return { command, env };
 }
 
-export function resolveAgentCliSync(binary: string): AgentCli {
-	const env = agentEnv();
+export function resolveAgentCliSync(
+	binary: string,
+	env: NodeJS.ProcessEnv,
+): AgentCli {
 	return { command: agentCliCommand(binary, env), env };
 }
