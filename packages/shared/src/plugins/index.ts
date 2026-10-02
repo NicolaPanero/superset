@@ -479,20 +479,64 @@ export const SUPERSET_API_URL = "https://api.superset.sh";
  * which the manifest already determines. Writing it out per plugin would only
  * add somewhere for it to be wrong.
  */
+/** A live connection, as the MCP entry writer needs to see it. */
+export interface PluginConnectionRef {
+	/** Connector slug, matching the plugin manifest's `connector.slug`. */
+	connector: string;
+	connectionId: string;
+	/** The provider's id for the person; what tells two accounts apart. */
+	externalUserId: string | null;
+}
+
+/** Codex table keys and MCP server names are identifiers, not free text. */
+function slugSegment(value: string): string {
+	return value.replace(/[^A-Za-z0-9_-]/g, "-").slice(0, 40);
+}
+
 export function pluginProxyMcpServers(
 	name: string,
 	marketplace: string = DEFAULT_MARKETPLACE,
+	options: {
+		connections?: readonly PluginConnectionRef[];
+		headersHelper?: string;
+	} = {},
 ): Record<string, PluginMcpServerConfig> | undefined {
 	const extension = firstPartyManifest(name)?.extensions?.superset as
 		| { connector?: { slug: string } }
 		| undefined;
 	if (!extension?.connector) return undefined;
-	return {
-		[name]: {
+
+	const base = `${SUPERSET_API_URL}/mcp/plugins/${marketplace}/${name}`;
+	const helper = options.headersHelper
+		? { headersHelper: options.headersHelper }
+		: {};
+	const mine = (options.connections ?? []).filter(
+		(connection) => connection.connector === extension.connector?.slug,
+	);
+
+	// One account needs no disambiguation, and naming it `<plugin>-<id>` would
+	// rename the entry the moment a second arrived — which orphans the token
+	// the agent stored against the old name. The plain name stays the plain
+	// name until there is genuinely a choice to express.
+	if (mine.length < 2) {
+		return { [name]: { type: "http", url: base, ...helper } };
+	}
+
+	// Two or more: one entry each, pinned, so the agent picks an account by
+	// calling a differently-named server. Unpinned would be a 409 on every
+	// request, tool list included.
+	const servers: Record<string, PluginMcpServerConfig> = {};
+	for (const connection of mine) {
+		const suffix = slugSegment(
+			connection.externalUserId ?? connection.connectionId,
+		);
+		servers[`${name}-${suffix}`] = {
 			type: "http",
-			url: `${SUPERSET_API_URL}/mcp/plugins/${marketplace}/${name}`,
-		},
-	};
+			url: `${base}?connection=${encodeURIComponent(connection.connectionId)}`,
+			...helper,
+		};
+	}
+	return servers;
 }
 
 /**
@@ -505,13 +549,24 @@ export function pluginProxyMcpServers(
  */
 export function desiredPluginMcpServers(
 	installed: readonly { name: string; enabled?: boolean }[],
+	options: {
+		/** Live connections, so a connector with two accounts emits one entry each. */
+		connections?: readonly PluginConnectionRef[];
+		/** Command printing the auth header, so no entry needs its own OAuth. */
+		headersHelper?: string;
+	} = {},
 ): Record<string, PluginMcpServerConfig> {
 	const desired: Record<string, PluginMcpServerConfig> = {};
 	for (const install of installed) {
 		if (install.enabled === false) continue;
-		const plugin = getPluginByName(install.name);
-		if (!plugin) continue;
-		Object.assign(desired, plugin.mcpServers);
+		const entry = PLUGIN_CATALOG.find((p) => p.name === install.name);
+		if (!entry) continue;
+		const proxied = pluginProxyMcpServers(
+			install.name,
+			DEFAULT_MARKETPLACE,
+			options,
+		);
+		Object.assign(desired, proxied ?? entry.mcpServers);
 	}
 	return desired;
 }
