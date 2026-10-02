@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { accessSync, constants, existsSync, statSync } from "node:fs";
+import { accessSync, constants, statSync } from "node:fs";
 import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
 import { getBinDir } from "@superset/agent-setup";
@@ -27,17 +27,17 @@ function isExecutableFile(path: string): boolean {
 	}
 }
 
+const WIN32_DIRECT_EXEC_EXTENSIONS = [".exe", ".com"];
+
+function candidateNames(binary: string): string[] {
+	if (process.platform !== "win32") return [binary];
+	return WIN32_DIRECT_EXEC_EXTENSIONS.map((ext) => binary + ext);
+}
+
 function findOnPath(binary: string, env: NodeJS.ProcessEnv): string | null {
-	const names =
-		process.platform === "win32"
-			? (env.PATHEXT ?? ".COM;.EXE;.BAT;.CMD")
-					.split(";")
-					.filter(Boolean)
-					.map((ext) => binary + ext.toLowerCase())
-			: [binary];
 	for (const dir of (env.PATH ?? "").split(delimiter)) {
 		if (!dir) continue;
-		for (const name of names) {
+		for (const name of candidateNames(binary)) {
 			if (isExecutableFile(join(dir, name))) return join(dir, name);
 		}
 	}
@@ -47,7 +47,7 @@ function findOnPath(binary: string, env: NodeJS.ProcessEnv): string | null {
 function supersetWrapper(binary: string): string | null {
 	if (process.platform === "win32") return null;
 	const wrapper = join(getBinDir(), binary);
-	return existsSync(wrapper) ? wrapper : null;
+	return isExecutableFile(wrapper) ? wrapper : null;
 }
 
 export function agentCliCommand(
