@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GoIssueOpened } from "react-icons/go";
+import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
@@ -45,6 +46,7 @@ import { useAgentEffortPreference } from "renderer/hooks/useAgentEffortPreferenc
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
 import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
+import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
 import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
@@ -76,6 +78,7 @@ import { CheckoutPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/com
 import { CompareBaseBranchPicker } from "../DashboardNewWorkspaceForm/PromptGroup/components/CompareBaseBranchPicker";
 import { EnvironmentPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/EnvironmentPickerPill";
 import { GitHubIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/GitHubIssueLinkCommand";
+import { LinearIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinearIssueLinkCommand";
 import { LinkedGitHubIssuePill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedGitHubIssuePill";
 import { LinkedPRPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedPRPill";
 import { PRLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PRLinkCommand";
@@ -340,11 +343,18 @@ export function NewWorkspaceScreen({
 	);
 	const {
 		addLinkedIssue,
+		addLinkedLinearIssue,
 		addLinkedGitHubIssue,
 		removeLinkedIssue,
 		setLinkedPR,
 		removeLinkedPR,
 	} = useLinkedContext(draft.linkedIssues, updateDraft);
+	const isLinearLive = useIsLinearLiveTabEnabled();
+	const linkTaskLabel = isLinearLive
+		? t({ message: "Link task" })
+		: t({
+				message: "Link issue",
+			});
 
 	// Restore the last-used launch host once per mount, like the modal does.
 	// A host named in the URL (the sidebar's Cloud "+") wins, and applies when
@@ -917,19 +927,32 @@ export function NewWorkspaceScreen({
 							<div className="flex items-center gap-2">
 								<IssueLinkCommand
 									onSelect={addLinkedIssue}
-									tooltipLabel={t({
-										message: "Link issue",
-									})}
+									tooltipLabel={linkTaskLabel}
 								>
 									<PromptInputButton
-										aria-label={t({
-											message: "Link issue",
-										})}
+										aria-label={linkTaskLabel}
 										className={`${PILL_BUTTON_CLASS} w-[22px]`}
 									>
-										<SiLinear className="size-3.5" />
+										{isLinearLive ? (
+											<HiOutlineCheckCircle className="size-3.5" />
+										) : (
+											<SiLinear className="size-3.5" />
+										)}
 									</PromptInputButton>
 								</IssueLinkCommand>
+								{isLinearLive && (
+									<LinearIssueLinkCommand
+										onSelect={addLinkedLinearIssue}
+										tooltipLabel={t({ message: "Link Linear issue" })}
+									>
+										<PromptInputButton
+											aria-label={t({ message: "Link Linear issue" })}
+											className={`${PILL_BUTTON_CLASS} w-[22px]`}
+										>
+											<SiLinear className="size-3.5" />
+										</PromptInputButton>
+									</LinearIssueLinkCommand>
+								)}
 								<GitHubIssueLinkCommand
 									onSelect={(issue) =>
 										addLinkedGitHubIssue(

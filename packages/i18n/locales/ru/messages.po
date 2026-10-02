@@ -293,6 +293,10 @@ msgstr "{0, plural, one {Не удалось закрыть # порт} few {Н�
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {Импортирована # рабочая область} few {Импортировано # рабочие области} many {Импортировано # рабочих областей} other {Импортировано # рабочей области}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {задача Linear} few {задачи Linear} many {задач Linear} other {задачи Linear}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Переместить # выбранную рабочую область в группу} few {Переместить # выбранные рабочие области в группу} many {Переместить # выбранных рабочих областей в группу} other {Переместить # выбранных рабочих областей в группу}}"
@@ -1571,6 +1575,10 @@ msgstr "Добавить"
 msgid "Add {0} account"
 msgstr "Добавить аккаунт {0}"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "Добавить {0} в рабочую область"
+
 msgid "Add a comment…"
 msgstr "Добавьте комментарий…"
 
@@ -2070,6 +2078,9 @@ msgstr "Разрешено на сессию"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Уже есть аккаунт? <0>Войдите</0>"
 
+msgid "Already in tasks"
+msgstr "Уже в задачах"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "Также доступен как CommandDialog для палитр ⌘K"
 
@@ -2412,8 +2423,17 @@ msgstr "Попросите внести изменения, упоминайте
 msgid "Aspect Ratio"
 msgstr "Соотношение сторон"
 
+msgid "Assign to…"
+msgstr "Назначить…"
+
 msgid "Assigned"
 msgstr "Назначена"
+
+msgid "Assigned to me"
+msgstr "Назначенные мне"
+
+msgid "Assigned to you"
+msgstr "Назначенные вам"
 
 msgid "Assignee"
 msgstr "Исполнитель"
@@ -2688,6 +2708,9 @@ msgstr "На главную"
 
 msgid "Back to Integrations"
 msgstr "К интеграциям"
+
+msgid "Back to Linear"
+msgstr "К Linear"
 
 msgid "Back to pages"
 msgstr "К страницам"
@@ -3196,6 +3219,9 @@ msgstr "Ошибка сертификата"
 msgid "Chain of Thought"
 msgstr "Цепочка рассуждений"
 
+msgid "Change assignee"
+msgstr "Изменить исполнителя"
+
 msgid "Change avatar"
 msgstr "Сменить аватар"
 
@@ -3217,6 +3243,9 @@ msgstr "Сменить логотип организации"
 msgid "Change organization slug"
 msgstr "Изменить slug организации"
 
+msgid "Change priority"
+msgstr "Изменить приоритет"
+
 msgid "Change project icon and color"
 msgstr "Изменить иконку и цвет проекта"
 
@@ -3225,6 +3254,10 @@ msgstr "Изменить расположение проекта"
 
 msgid "Change role"
 msgstr "Сменить роль"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Изменить статус (сейчас: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "Подключите этот компьютер"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Подключите репозитории GitHub и синхронизируйте пул-реквесты. Отслеживайте статус CI и ревью по всей команде."
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "Подключите рабочее пространство Linear, чтобы синхронизировать задачи и управлять ими прямо из Superset."
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Подключите свой аккаунт Linear в разделе Настройки → Интеграции, чтобы связывать задачи Linear."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Подключите свой аккаунт Linear, чтобы просматривать, обновлять задачи Linear и начинать работу над ними в Superset."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Подключите свой аккаунт Linear, чтобы пользоваться Linear здесь."
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Подключите рабочее пространство Linear для двусторонней синхронизации задач."
@@ -4798,6 +4837,9 @@ msgstr "Не удалось отправить ответ"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Не удалось связаться с облаком для {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Не удалось подключиться к этому облачному рабочему пространству. Возможно, оно ещё запускается — попробуйте снова."
+
 msgid "Couldn't reach workspace"
 msgstr "Не удалось подключиться к рабочей области"
 
@@ -4916,6 +4958,9 @@ msgstr "Создаёт нативный форк на стороне прова�
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Создайте новый ключ API для внешних интеграций вроде Claude Desktop или Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Создать новую задачу в Linear."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Создайте проект, клонировав репозиторий или локальный путь."
 
@@ -4948,6 +4993,12 @@ msgstr "Создать аккаунт"
 
 msgid "Create failed: {message}"
 msgstr "Не удалось создать: {message}"
+
+msgid "Create issue"
+msgstr "Создать задачу"
+
+msgid "Create Linear issue"
+msgstr "Создать задачу Linear"
 
 msgid "Create manually"
 msgstr "Создать вручную"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Создан"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "Создана {0}"
@@ -6563,6 +6615,9 @@ msgstr "Не удалось создать автоматизацию"
 msgid "Failed to create item"
 msgstr "Не удалось создать элемент"
 
+msgid "Failed to create Linear issue"
+msgstr "Не удалось создать задачу Linear"
+
 msgid "Failed to create organization"
 msgstr "Не удалось создать организацию"
 
@@ -7095,8 +7150,14 @@ msgstr "Фильтры, активных: {activeFilterCount}"
 msgid "Find"
 msgstr "Найти"
 
+msgid "Find a person…"
+msgstr "Найти человека…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Найди мелкий баг и исправь его…"
+
+msgid "Find a team…"
+msgstr "Найти команду…"
 
 msgid "Find and fix a small bug"
 msgstr "Найти и исправить мелкий баг"
@@ -8066,6 +8127,9 @@ msgstr "Импорт настроек из другого браузера"
 msgid "import the project"
 msgstr "импортировать проект"
 
+msgid "Import to tasks"
+msgstr "Импортировать в задачи"
+
 msgid "Import untracked worktrees"
 msgstr "Импортировать неотслеживаемые worktree"
 
@@ -8085,6 +8149,9 @@ msgstr "Импортировано: {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Импортировано из Linear"
+
+msgid "Imported to tasks"
+msgstr "Импортировано в задачи"
 
 msgid "Importing..."
 msgstr "Импорт..."
@@ -8400,6 +8467,9 @@ msgstr "Задача не найдена."
 
 msgid "Issue resolved"
 msgstr "Задача решена"
+
+msgid "Issue title"
+msgstr "Название задачи"
 
 msgid "Issue unresolved"
 msgstr "Задача снова открыта"
@@ -8839,6 +8909,9 @@ msgstr "Linear подключён, но начальную синхрониза�
 msgid "Linear integration"
 msgstr "Интеграция с Linear"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear ограничивает число запросов. Повторите попытку через несколько минут."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "Привязать задачу GitHub"
 
 msgid "Link issue"
 msgstr "Привязать задачу"
+
+msgid "Link Linear issue"
+msgstr "Связать задачу Linear"
 
 msgid "Link pull request"
 msgstr "Привязать пул-реквест"
@@ -9570,6 +9646,10 @@ msgstr "Ещё {kindLower} темы"
 
 msgid "More actions"
 msgstr "Ещё действия"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Другие действия для {0}"
 
 msgid "More create options"
 msgstr "Другие варианты создания"
@@ -11090,6 +11170,9 @@ msgstr "Открыть задачу #{0} в браузере"
 msgid "Open issue in GitHub"
 msgstr "Открыть задачу на GitHub"
 
+msgid "Open issue in Linear"
+msgstr "Открыть задачу в Linear"
+
 msgid "Open issues"
 msgstr "Открытые задачи"
 
@@ -12599,6 +12682,9 @@ msgstr "Обновить"
 msgid "Refresh GitHub issues"
 msgstr "Обновить задачи GitHub"
 
+msgid "Refresh Linear issues"
+msgstr "Обновить задачи Linear"
+
 msgid "Refresh metrics"
 msgstr "Обновить метрики"
 
@@ -13729,6 +13815,12 @@ msgstr "Поиск в {frameTitle}…"
 msgid "Search issues..."
 msgstr "Поиск задач..."
 
+msgid "Search Linear"
+msgstr "Поиск в Linear"
+
+msgid "Search Linear…"
+msgstr "Поиск в Linear…"
+
 msgid "Search pages"
 msgstr "Поиск страниц"
 
@@ -13818,6 +13910,9 @@ msgstr "Ищем использования Kbd"
 
 msgid "Searching..."
 msgstr "Поиск..."
+
+msgid "Searching…"
+msgstr "Поиск…"
 
 msgid "Secondary"
 msgstr "Вторичная"

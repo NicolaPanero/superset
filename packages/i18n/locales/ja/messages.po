@@ -293,6 +293,10 @@ msgstr "{0, plural, one {#個のポートを閉じられませんでした} othe
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {#件のワークスペースをインポートしました} other {#件のワークスペースをインポートしました}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear issue} other {Linear issue}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {選択した#件のワークスペースをグループに移動} other {選択した#件のワークスペースをグループに移動}}"
@@ -1571,6 +1575,10 @@ msgstr "追加"
 msgid "Add {0} account"
 msgstr "{0}アカウントを追加"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "{0} をワークスペースに追加"
+
 msgid "Add a comment…"
 msgstr "コメントを追加…"
 
@@ -2070,6 +2078,9 @@ msgstr "セッション中は許可"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "すでにアカウントをお持ちですか?<0>サインイン</0>"
 
+msgid "Already in tasks"
+msgstr "すでにタスクにあります"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "⌘Kパレット向けにCommandDialogとしても利用できます"
 
@@ -2412,8 +2423,17 @@ msgstr "変更を依頼、@でファイルをメンション、/でコマンド�
 msgid "Aspect Ratio"
 msgstr "Aspect Ratio"
 
+msgid "Assign to…"
+msgstr "担当者を割り当て…"
+
 msgid "Assigned"
 msgstr "割り当て"
+
+msgid "Assigned to me"
+msgstr "自分に割り当て"
+
+msgid "Assigned to you"
+msgstr "あなたに割り当て"
 
 msgid "Assignee"
 msgstr "担当者"
@@ -2688,6 +2708,9 @@ msgstr "ホームに戻る"
 
 msgid "Back to Integrations"
 msgstr "連携に戻る"
+
+msgid "Back to Linear"
+msgstr "Linearに戻る"
 
 msgid "Back to pages"
 msgstr "ページ"
@@ -3196,6 +3219,9 @@ msgstr "証明書エラー"
 msgid "Chain of Thought"
 msgstr "思考プロセス"
 
+msgid "Change assignee"
+msgstr "担当者を変更"
+
 msgid "Change avatar"
 msgstr "アバターを変更"
 
@@ -3217,6 +3243,9 @@ msgstr "組織のロゴを変更"
 msgid "Change organization slug"
 msgstr "組織スラッグを変更"
 
+msgid "Change priority"
+msgstr "優先度を変更"
+
 msgid "Change project icon and color"
 msgstr "プロジェクトのアイコンと色を変更"
 
@@ -3225,6 +3254,10 @@ msgstr "プロジェクトの場所を変更"
 
 msgid "Change role"
 msgstr "ロールを変更"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "ステータスを変更（現在: {0}）"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "このコンピューターに接続"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "GitHubリポジトリを接続してプルリクエストを同期します。チーム全体のCIステータスとレビューを追跡できます。"
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "LinearワークスペースをつなぐとSupersetから直接issueを同期しタスクを管理できます。"
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Linear issueをリンクするには、設定 → 連携でLinearアカウントを接続してください。"
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Linearアカウントを接続すると、SupersetからLinear issueの閲覧・更新・作業開始ができます。"
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "ここでLinearを使うには、Linearアカウントを接続してください。"
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Linearのワークスペースを接続して、Issueを双方向に同期します。"
@@ -4798,6 +4837,9 @@ msgstr "返信を投稿できませんでした"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "{0}のクラウドに接続できませんでした: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "このクラウドワークスペースに接続できませんでした。まだ起動中の可能性があります。もう一度お試しください。"
+
 msgid "Couldn't reach workspace"
 msgstr "ワークスペースに接続できませんでした"
 
@@ -4916,6 +4958,9 @@ msgstr "同じ会話コンテキストを持つネイティブのフォークを
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude DesktopやClaude Codeなどの外部連携用に新しいAPIキーを作成します。"
 
+msgid "Create a new issue in Linear."
+msgstr "Linearで新しいissueを作成します。"
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "リポジトリまたはローカルパスをクローンして新しいプロジェクトを作成します。"
 
@@ -4948,6 +4993,12 @@ msgstr "アカウントを作成"
 
 msgid "Create failed: {message}"
 msgstr "作成に失敗しました: {message}"
+
+msgid "Create issue"
+msgstr "Issueを作成"
+
+msgid "Create Linear issue"
+msgstr "Linear issueを作成"
 
 msgid "Create manually"
 msgstr "手動で作成"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "作成"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "{0}を作成しました"
@@ -6563,6 +6615,9 @@ msgstr "オートメーションを作成できませんでした"
 msgid "Failed to create item"
 msgstr "アイテムの作成に失敗しました"
 
+msgid "Failed to create Linear issue"
+msgstr "Linear issueを作成できませんでした"
+
 msgid "Failed to create organization"
 msgstr "組織を作成できませんでした"
 
@@ -7095,8 +7150,14 @@ msgstr "フィルター、{activeFilterCount}件適用中"
 msgid "Find"
 msgstr "検索"
 
+msgid "Find a person…"
+msgstr "メンバーを検索…"
+
 msgid "Find a small bug and fix it…"
 msgstr "小さなバグを見つけて修正…"
+
+msgid "Find a team…"
+msgstr "チームを検索…"
 
 msgid "Find and fix a small bug"
 msgstr "小さなバグを見つけて修正"
@@ -8066,6 +8127,9 @@ msgstr "別のブラウザから設定をインポート"
 msgid "import the project"
 msgstr "プロジェクトをインポートする"
 
+msgid "Import to tasks"
+msgstr "タスクにインポート"
+
 msgid "Import untracked worktrees"
 msgstr "未追跡のワークツリーをインポート"
 
@@ -8085,6 +8149,9 @@ msgstr "{joinedMessages}をインポートしました"
 
 msgid "Imported from Linear"
 msgstr "Linear からインポート"
+
+msgid "Imported to tasks"
+msgstr "タスクにインポートしました"
 
 msgid "Importing..."
 msgstr "インポート中..."
@@ -8400,6 +8467,9 @@ msgstr "Issueが見つかりません。"
 
 msgid "Issue resolved"
 msgstr "Issueを解決"
+
+msgid "Issue title"
+msgstr "Issueのタイトル"
 
 msgid "Issue unresolved"
 msgstr "Issueを未解決に"
@@ -8839,6 +8909,9 @@ msgstr "Linearは接続しましたが、初回同期を開始できませんで
 msgid "Linear integration"
 msgstr "Linear連携"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linearがリクエストを制限しています。数分後にもう一度お試しください。"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "GitHub issueをリンク"
 
 msgid "Link issue"
 msgstr "Issueをリンク"
+
+msgid "Link Linear issue"
+msgstr "Linear issueをリンク"
 
 msgid "Link pull request"
 msgstr "プルリクエストをリンク"
@@ -9570,6 +9646,10 @@ msgstr "他の{kindLower}テーマ"
 
 msgid "More actions"
 msgstr "その他の操作"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "{0} のその他の操作"
 
 msgid "More create options"
 msgstr "その他の作成オプション"
@@ -11090,6 +11170,9 @@ msgstr "issue #{0}をブラウザで開く"
 msgid "Open issue in GitHub"
 msgstr "GitHubでissueを開く"
 
+msgid "Open issue in Linear"
+msgstr "Linearでissueを開く"
+
 msgid "Open issues"
 msgstr "オープンなIssue"
 
@@ -12599,6 +12682,9 @@ msgstr "更新"
 msgid "Refresh GitHub issues"
 msgstr "GitHub issueを更新"
 
+msgid "Refresh Linear issues"
+msgstr "Linear issueを更新"
+
 msgid "Refresh metrics"
 msgstr "メトリクスを更新"
 
@@ -13729,6 +13815,12 @@ msgstr "{frameTitle}内を検索…"
 msgid "Search issues..."
 msgstr "Issueを検索..."
 
+msgid "Search Linear"
+msgstr "Linearを検索"
+
+msgid "Search Linear…"
+msgstr "Linearを検索…"
+
 msgid "Search pages"
 msgstr "ページを検索"
 
@@ -13818,6 +13910,9 @@ msgstr "Kbdの使用箇所を検索中"
 
 msgid "Searching..."
 msgstr "検索中..."
+
+msgid "Searching…"
+msgstr "検索中…"
 
 msgid "Secondary"
 msgstr "Secondary"

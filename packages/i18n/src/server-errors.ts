@@ -427,6 +427,18 @@ export const serverErrorMessages: Record<
 				message: "GitHub sync requires the Pro plan.",
 			}),
 		),
+	"serverError.integration.linearNotConnected": () =>
+		i18n._(
+			msg({
+				message: "Connect your Linear account to use Linear here.",
+			}),
+		),
+	"serverError.integration.linearRateLimited": () =>
+		i18n._(
+			msg({
+				message: "Linear is limiting requests. Try again in a few minutes.",
+			}),
+		),
 	"serverError.integration.notAMemberOfThisOrganization": () =>
 		i18n._(
 			msg({

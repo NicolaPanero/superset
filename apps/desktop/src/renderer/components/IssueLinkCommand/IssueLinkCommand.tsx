@@ -19,7 +19,7 @@ import {
 	StatusIcon,
 	type StatusType,
 } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/components/shared/StatusIcon";
-import { TASK_PICKER_INPUT } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/hooks/useTasksData";
+import { useTaskPickerInput } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/hooks/useTasksData";
 
 const MAX_RESULTS = 20;
 
@@ -51,12 +51,10 @@ export function IssueLinkCommand({
 	const [showClosed, setShowClosed] = useState(false);
 	const showClosedId = useId();
 
-	const { data: taskPage } = cloudTrpc.task.listPage.useQuery(
-		TASK_PICKER_INPUT,
-		{
-			enabled: open,
-		},
-	);
+	const taskPickerInput = useTaskPickerInput();
+	const { data: taskPage } = cloudTrpc.task.listPage.useQuery(taskPickerInput, {
+		enabled: open,
+	});
 
 	const allTasks = useMemo(
 		() =>

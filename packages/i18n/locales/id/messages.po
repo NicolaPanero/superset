@@ -293,6 +293,10 @@ msgstr "{0, plural, one {Gagal menutup # port} other {Gagal menutup # port}}"
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {Mengimpor # workspace} other {Mengimpor # workspace}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {issue Linear} other {issue Linear}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Pindahkan # workspace terpilih ke grup} other {Pindahkan # workspace terpilih ke grup}}"
@@ -1571,6 +1575,10 @@ msgstr "Tambah"
 msgid "Add {0} account"
 msgstr "Tambah akun {0}"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "Tambahkan {0} ke workspace"
+
 msgid "Add a comment…"
 msgstr "Tambahkan komentar…"
 
@@ -2070,6 +2078,9 @@ msgstr "Diizinkan untuk sesi ini"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Sudah punya akun? <0>Masuk</0>"
 
+msgid "Already in tasks"
+msgstr "Sudah ada di tugas"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "Tersedia juga sebagai CommandDialog untuk palet ⌘K"
 
@@ -2412,8 +2423,17 @@ msgstr "Minta perubahan, @mention file, jalankan /command"
 msgid "Aspect Ratio"
 msgstr "Aspect Ratio"
 
+msgid "Assign to…"
+msgstr "Tugaskan ke…"
+
 msgid "Assigned"
 msgstr "Ditugaskan"
+
+msgid "Assigned to me"
+msgstr "Ditugaskan kepada saya"
+
+msgid "Assigned to you"
+msgstr "Ditugaskan kepada Anda"
 
 msgid "Assignee"
 msgstr "Penerima tugas"
@@ -2688,6 +2708,9 @@ msgstr "Kembali ke Beranda"
 
 msgid "Back to Integrations"
 msgstr "Kembali ke Integrasi"
+
+msgid "Back to Linear"
+msgstr "Kembali ke Linear"
 
 msgid "Back to pages"
 msgstr "Kembali ke halaman"
@@ -3196,6 +3219,9 @@ msgstr "Kesalahan Sertifikat"
 msgid "Chain of Thought"
 msgstr "Rantai Pemikiran"
 
+msgid "Change assignee"
+msgstr "Ubah penerima tugas"
+
 msgid "Change avatar"
 msgstr "Ganti avatar"
 
@@ -3217,6 +3243,9 @@ msgstr "Ganti logo organisasi"
 msgid "Change organization slug"
 msgstr "Ubah slug organisasi"
 
+msgid "Change priority"
+msgstr "Ubah prioritas"
+
 msgid "Change project icon and color"
 msgstr "Ganti ikon dan warna proyek"
 
@@ -3225,6 +3254,10 @@ msgstr "Ubah lokasi proyek"
 
 msgid "Change role"
 msgstr "Ubah peran"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Ubah status (saat ini: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "Hubungkan komputer ini"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Hubungkan repositori GitHub Anda dan sinkronkan pull request. Lacak status CI dan review di seluruh tim Anda."
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "Hubungkan workspace Linear Anda untuk menyinkronkan issue dan mengelola tugas langsung dari Superset."
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Hubungkan akun Linear Anda di Pengaturan → Integrasi untuk menautkan issue Linear."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Hubungkan akun Linear Anda untuk menelusuri, memperbarui, dan mulai mengerjakan issue Linear dari Superset."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Hubungkan akun Linear Anda untuk menggunakan Linear di sini."
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Hubungkan workspace Linear Anda untuk menyinkronkan issue dua arah."
@@ -4798,6 +4837,9 @@ msgstr "Tidak bisa mengirim balasan"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Tidak bisa menjangkau cloud untuk {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Tidak bisa menjangkau workspace cloud ini. Mungkin masih dibangunkan — coba lagi."
+
 msgid "Couldn't reach workspace"
 msgstr "Tidak bisa menjangkau workspace"
 
@@ -4916,6 +4958,9 @@ msgstr "Membuat fork asli di penyedia dengan konteks percakapan yang sama. Sesi 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Buat kunci API baru untuk integrasi eksternal seperti Claude Desktop atau Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Buat issue baru di Linear."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Buat proyek baru dengan meng-clone repositori atau path lokal."
 
@@ -4948,6 +4993,12 @@ msgstr "Buat akun"
 
 msgid "Create failed: {message}"
 msgstr "Gagal membuat: {message}"
+
+msgid "Create issue"
+msgstr "Buat issue"
+
+msgid "Create Linear issue"
+msgstr "Buat issue Linear"
 
 msgid "Create manually"
 msgstr "Buat secara manual"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Dibuat"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "Membuat {0}"
@@ -6563,6 +6615,9 @@ msgstr "Gagal membuat otomatisasi"
 msgid "Failed to create item"
 msgstr "Gagal membuat item"
 
+msgid "Failed to create Linear issue"
+msgstr "Gagal membuat issue Linear"
+
 msgid "Failed to create organization"
 msgstr "Gagal membuat organisasi"
 
@@ -7095,8 +7150,14 @@ msgstr "Filter, {activeFilterCount} aktif"
 msgid "Find"
 msgstr "Cari"
 
+msgid "Find a person…"
+msgstr "Cari orang…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Cari bug kecil dan perbaiki…"
+
+msgid "Find a team…"
+msgstr "Cari tim…"
 
 msgid "Find and fix a small bug"
 msgstr "Cari dan perbaiki bug kecil"
@@ -8066,6 +8127,9 @@ msgstr "Impor pengaturan dari browser lain"
 msgid "import the project"
 msgstr "mengimpor proyek"
 
+msgid "Import to tasks"
+msgstr "Impor ke tugas"
+
 msgid "Import untracked worktrees"
 msgstr "Impor worktree yang belum terlacak"
 
@@ -8085,6 +8149,9 @@ msgstr "Mengimpor {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Diimpor dari Linear"
+
+msgid "Imported to tasks"
+msgstr "Diimpor ke tugas"
 
 msgid "Importing..."
 msgstr "Mengimpor..."
@@ -8400,6 +8467,9 @@ msgstr "Issue tidak ditemukan."
 
 msgid "Issue resolved"
 msgstr "Issue diselesaikan"
+
+msgid "Issue title"
+msgstr "Judul issue"
 
 msgid "Issue unresolved"
 msgstr "Issue belum selesai"
@@ -8839,6 +8909,9 @@ msgstr "Linear terhubung, tapi sinkronisasi awal gagal dimulai. Silakan coba hub
 msgid "Linear integration"
 msgstr "Integrasi Linear"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear membatasi permintaan. Coba lagi dalam beberapa menit."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "Tautkan issue GitHub"
 
 msgid "Link issue"
 msgstr "Tautkan issue"
+
+msgid "Link Linear issue"
+msgstr "Tautkan issue Linear"
 
 msgid "Link pull request"
 msgstr "Tautkan pull request"
@@ -9570,6 +9646,10 @@ msgstr "Tema {kindLower} lainnya"
 
 msgid "More actions"
 msgstr "Aksi lainnya"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Tindakan lain untuk {0}"
 
 msgid "More create options"
 msgstr "Opsi pembuatan lainnya"
@@ -11090,6 +11170,9 @@ msgstr "Buka issue #{0} di browser"
 msgid "Open issue in GitHub"
 msgstr "Buka issue di GitHub"
 
+msgid "Open issue in Linear"
+msgstr "Buka issue di Linear"
+
 msgid "Open issues"
 msgstr "Issue terbuka"
 
@@ -12599,6 +12682,9 @@ msgstr "Segarkan"
 msgid "Refresh GitHub issues"
 msgstr "Segarkan issue GitHub"
 
+msgid "Refresh Linear issues"
+msgstr "Segarkan issue Linear"
+
 msgid "Refresh metrics"
 msgstr "Segarkan metrik"
 
@@ -13729,6 +13815,12 @@ msgstr "Cari di {frameTitle}…"
 msgid "Search issues..."
 msgstr "Cari issue..."
 
+msgid "Search Linear"
+msgstr "Cari di Linear"
+
+msgid "Search Linear…"
+msgstr "Cari di Linear…"
+
 msgid "Search pages"
 msgstr "Cari halaman"
 
@@ -13818,6 +13910,9 @@ msgstr "Mencari penggunaan Kbd"
 
 msgid "Searching..."
 msgstr "Mencari..."
+
+msgid "Searching…"
+msgstr "Mencari…"
 
 msgid "Secondary"
 msgstr "Secondary"

@@ -1,5 +1,12 @@
 import { db, dbWs } from "@superset/db/client";
-import { members, taskStatuses, tasks, users } from "@superset/db/schema";
+import {
+	type InsertTaskImport,
+	members,
+	taskImports,
+	taskStatuses,
+	tasks,
+	users,
+} from "@superset/db/schema";
 import { seedDefaultStatuses } from "@superset/db/seed-default-statuses";
 import {
 	buildTaskListConditions,
@@ -23,6 +30,8 @@ import {
 import { syncTask } from "../../lib/integrations/sync";
 import { setTaskLabels } from "../../lib/labels";
 import { protectedProcedure, type TRPCContext } from "../../trpc";
+import { getIssue, type LinearStateType } from "../integration/linear/api";
+import { withLinear } from "../integration/linear/live";
 import { verifyOrgMembership } from "../integration/utils";
 import { requireActiveOrgMembership } from "../utils/active-org";
 import {
@@ -42,6 +51,17 @@ import {
 	updateTaskSchema,
 } from "./schema";
 import { taskStatusesRouter } from "./statuses";
+
+const TASK_IMPORT_CONSTRAINT = "task_imports_org_provider_external_unique";
+
+function isConstraintError(error: unknown, constraint: string): boolean {
+	if (!error || typeof error !== "object") {
+		return false;
+	}
+
+	const maybeError = error as { code?: string; constraint?: string };
+	return maybeError.code === "23505" && maybeError.constraint === constraint;
+}
 
 type DbWsTransaction = Parameters<Parameters<typeof dbWs.transaction>[0]>[0];
 type Executor = typeof db | DbWsTransaction;
@@ -183,9 +203,15 @@ type CreateTaskContext = {
 	activeOrganizationId: string | null;
 };
 
+type ImportSource = Pick<
+	InsertTaskImport,
+	"provider" | "externalId" | "externalUrl"
+>;
+
 async function createTask(
 	ctx: CreateTaskContext,
 	input: z.infer<typeof createTaskSchema>,
+	importedFrom?: ImportSource,
 ) {
 	const organizationId = await requireActiveOrgMembership(ctx);
 
@@ -240,6 +266,15 @@ async function createTask(
 			? await tx.select(taskColumns).from(tasks).where(eq(tasks.id, task.id))
 			: [];
 
+		if (task && importedFrom) {
+			await tx.insert(taskImports).values({
+				...importedFrom,
+				taskId: task.id,
+				organizationId,
+				importedByUserId: ctx.session.user.id,
+			});
+		}
+
 		const txid = await getCurrentTxid(tx);
 
 		return { task: created, txid };
@@ -247,7 +282,7 @@ async function createTask(
 
 	if (result.task) {
 		const { id, organizationId, description } = result.task;
-		syncTask(id);
+		if (!importedFrom) syncTask(id);
 		if (description) {
 			await anchorAttachments({
 				parentKind: "issue",
@@ -264,6 +299,84 @@ async function createTask(
 	}
 
 	return result;
+}
+
+const NATIVE_STATUS_TYPE_BY_LINEAR: Record<LinearStateType, string> = {
+	triage: "backlog",
+	backlog: "backlog",
+	unstarted: "unstarted",
+	started: "started",
+	completed: "completed",
+	canceled: "canceled",
+};
+
+async function nativeStatusIdFor(
+	organizationId: string,
+	linearStateType: LinearStateType,
+) {
+	const backlogId = await seedDefaultStatuses(organizationId);
+	const [status] = await db
+		.select({ id: taskStatuses.id })
+		.from(taskStatuses)
+		.where(
+			and(
+				eq(taskStatuses.organizationId, organizationId),
+				eq(taskStatuses.type, NATIVE_STATUS_TYPE_BY_LINEAR[linearStateType]),
+				isNull(taskStatuses.externalProvider),
+			),
+		)
+		.orderBy(asc(taskStatuses.position))
+		.limit(1);
+	return status?.id ?? backlogId;
+}
+
+async function findImportedTask(organizationId: string, externalId: string) {
+	const [row] = await db
+		.select({ task: tasks })
+		.from(taskImports)
+		.innerJoin(tasks, eq(taskImports.taskId, tasks.id))
+		.where(
+			and(
+				eq(taskImports.organizationId, organizationId),
+				eq(taskImports.provider, "linear"),
+				eq(taskImports.externalId, externalId),
+				isNull(tasks.deletedAt),
+			),
+		)
+		.limit(1);
+	return row?.task ?? null;
+}
+
+async function importLinearIssue(ctx: CreateTaskContext, issueId: string) {
+	const organizationId = await requireActiveOrgMembership(ctx);
+	const issue = await withLinear(
+		ctx.session.user.id,
+		organizationId,
+		(client) => getIssue(client, issueId),
+	);
+
+	const existing = await findImportedTask(organizationId, issue.id);
+	if (existing) return { task: existing, imported: false };
+
+	const statusId = await nativeStatusIdFor(organizationId, issue.state.type);
+	try {
+		const { task } = await createTask(
+			ctx,
+			{
+				title: issue.title,
+				description: issue.description,
+				statusId,
+				priority: issue.priority,
+			},
+			{ provider: "linear", externalId: issue.id, externalUrl: issue.url },
+		);
+		return { task, imported: true };
+	} catch (error) {
+		if (!isConstraintError(error, TASK_IMPORT_CONSTRAINT)) throw error;
+		const raced = await findImportedTask(organizationId, issue.id);
+		if (!raced) throw error;
+		return { task: raced, imported: false };
+	}
 }
 
 function selectTaskListRows() {
@@ -312,6 +425,7 @@ function buildTaskListFilters(
 
 	return buildTaskListConditions({
 		organizationId,
+		nativeOnly: input?.nativeOnly ?? undefined,
 		statusId: input?.statusId ?? undefined,
 		priority: input?.priority ?? undefined,
 		assigneeId: input?.assigneeMe ? userId : (input?.assigneeId ?? undefined),
@@ -479,6 +593,25 @@ export const taskRouter = {
 	create: protectedProcedure
 		.input(createTaskSchema)
 		.mutation(({ ctx, input }) => createTask(ctx, input)),
+
+	importSource: protectedProcedure
+		.input(z.string().uuid())
+		.query(async ({ ctx, input }) => {
+			await getTaskAccess(db, ctx.session.user.id, input);
+			const [source] = await db
+				.select({
+					provider: taskImports.provider,
+					externalUrl: taskImports.externalUrl,
+				})
+				.from(taskImports)
+				.where(eq(taskImports.taskId, input))
+				.limit(1);
+			return source ?? null;
+		}),
+
+	importFromLinear: protectedProcedure
+		.input(z.object({ issueId: z.string().min(1) }))
+		.mutation(({ ctx, input }) => importLinearIssue(ctx, input.issueId)),
 
 	/**
 	 * Moves a task to the organization's first "started"-type status (e.g.

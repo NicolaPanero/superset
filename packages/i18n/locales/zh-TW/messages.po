@@ -293,6 +293,10 @@ msgstr "{0, plural, one {關閉#個埠失敗} other {關閉#個埠失敗}}"
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {已匯入#個工作區} other {已匯入#個工作區}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear議題} other {Linear議題}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {把選中的#個工作區移動到群組} other {把選中的#個工作區移動到群組}}"
@@ -1571,6 +1575,10 @@ msgstr "新增"
 msgid "Add {0} account"
 msgstr "新增{0}帳戶"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "將{0}新增到工作區"
+
 msgid "Add a comment…"
 msgstr "新增留言…"
 
@@ -2070,6 +2078,9 @@ msgstr "本次會話內已允許"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "已有帳戶？<0>登入</0>"
 
+msgid "Already in tasks"
+msgstr "已在任務中"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "也可用作CommandDialog，用於⌘K命令面板"
 
@@ -2412,8 +2423,17 @@ msgstr "說明要做的修改，用@提及檔案，用/執行命令"
 msgid "Aspect Ratio"
 msgstr "寬高比"
 
+msgid "Assign to…"
+msgstr "指派給…"
+
 msgid "Assigned"
 msgstr "已指派"
+
+msgid "Assigned to me"
+msgstr "指派給我"
+
+msgid "Assigned to you"
+msgstr "指派給你"
 
 msgid "Assignee"
 msgstr "負責人"
@@ -2688,6 +2708,9 @@ msgstr "返回首頁"
 
 msgid "Back to Integrations"
 msgstr "返回整合"
+
+msgid "Back to Linear"
+msgstr "返回Linear"
 
 msgid "Back to pages"
 msgstr "返回頁面"
@@ -3196,6 +3219,9 @@ msgstr "證書錯誤"
 msgid "Chain of Thought"
 msgstr "思維鏈"
 
+msgid "Change assignee"
+msgstr "變更負責人"
+
 msgid "Change avatar"
 msgstr "更換頭像"
 
@@ -3217,6 +3243,9 @@ msgstr "更改組織logo"
 msgid "Change organization slug"
 msgstr "更改組織slug"
 
+msgid "Change priority"
+msgstr "變更優先順序"
+
 msgid "Change project icon and color"
 msgstr "更改專案圖示和顏色"
 
@@ -3225,6 +3254,10 @@ msgstr "更改專案位置"
 
 msgid "Change role"
 msgstr "更改角色"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "變更狀態（目前：{0}）"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "連線至這台電腦"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "連線你的GitHub儲存庫並同步拉取請求。追蹤整個團隊的CI狀態和程式碼審查。"
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "連線你的Linear工作區，同步問題並直接在Superset中管理任務。"
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "請在 設定 → 整合 中連結你的Linear帳號，以連結Linear議題。"
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "連結你的Linear帳號後，即可在Superset中瀏覽、更新Linear議題並開始工作。"
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "連結你的Linear帳號即可在此使用Linear。"
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "連線你的Linear工作區以雙向同步議題。"
@@ -4798,6 +4837,9 @@ msgstr "無法釋出回覆"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "無法為{0}連線雲端：{1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "無法連線到此雲端工作區。它可能仍在喚醒中——請重試。"
+
 msgid "Couldn't reach workspace"
 msgstr "無法連線到工作區"
 
@@ -4916,6 +4958,9 @@ msgstr "在供應商端建立具有相同對話上下文的原生分支。原本
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "為Claude Desktop或Claude Code等外部整合建立新的API金鑰。"
 
+msgid "Create a new issue in Linear."
+msgstr "在Linear中建立新議題。"
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "通過克隆儲存庫或本地路徑來建立新專案。"
 
@@ -4948,6 +4993,12 @@ msgstr "建立帳戶"
 
 msgid "Create failed: {message}"
 msgstr "建立失敗：{message}"
+
+msgid "Create issue"
+msgstr "建立議題"
+
+msgid "Create Linear issue"
+msgstr "建立Linear議題"
 
 msgid "Create manually"
 msgstr "手動建立"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "已建立"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "已建立{0}"
@@ -6563,6 +6615,9 @@ msgstr "建立自動化失敗"
 msgid "Failed to create item"
 msgstr "建立項失敗"
 
+msgid "Failed to create Linear issue"
+msgstr "無法建立Linear議題"
+
 msgid "Failed to create organization"
 msgstr "建立組織失敗"
 
@@ -7095,8 +7150,14 @@ msgstr "篩選，{activeFilterCount}項生效"
 msgid "Find"
 msgstr "尋找"
 
+msgid "Find a person…"
+msgstr "尋找成員…"
+
 msgid "Find a small bug and fix it…"
 msgstr "找一個小bug並修好它…"
+
+msgid "Find a team…"
+msgstr "尋找團隊…"
 
 msgid "Find and fix a small bug"
 msgstr "找一個小bug並修好"
@@ -8066,6 +8127,9 @@ msgstr "從其他瀏覽器匯入設定"
 msgid "import the project"
 msgstr "匯入專案"
 
+msgid "Import to tasks"
+msgstr "匯入到任務"
+
 msgid "Import untracked worktrees"
 msgstr "匯入未追蹤的worktree"
 
@@ -8085,6 +8149,9 @@ msgstr "已匯入{joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "從 Linear 匯入"
+
+msgid "Imported to tasks"
+msgstr "已匯入到任務"
 
 msgid "Importing..."
 msgstr "正在匯入..."
@@ -8400,6 +8467,9 @@ msgstr "未找到議題。"
 
 msgid "Issue resolved"
 msgstr "問題已解決"
+
+msgid "Issue title"
+msgstr "議題標題"
 
 msgid "Issue unresolved"
 msgstr "問題未解決"
@@ -8839,6 +8909,9 @@ msgstr "Linear已連線，但初始同步未能啟動。請嘗試重新連線。
 msgid "Linear integration"
 msgstr "Linear整合"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear正在限制請求，請幾分鐘後再試。"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "關聯GitHub議題"
 
 msgid "Link issue"
 msgstr "關聯議題"
+
+msgid "Link Linear issue"
+msgstr "連結Linear議題"
 
 msgid "Link pull request"
 msgstr "關聯拉取請求"
@@ -9570,6 +9646,10 @@ msgstr "更多{kindLower}主題"
 
 msgid "More actions"
 msgstr "更多操作"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "{0}的更多操作"
 
 msgid "More create options"
 msgstr "更多建立選項"
@@ -11090,6 +11170,9 @@ msgstr "在瀏覽器中開啟議題#{0}"
 msgid "Open issue in GitHub"
 msgstr "在GitHub中開啟議題"
 
+msgid "Open issue in Linear"
+msgstr "在Linear中開啟議題"
+
 msgid "Open issues"
 msgstr "開啟的議題"
 
@@ -12599,6 +12682,9 @@ msgstr "重新整理"
 msgid "Refresh GitHub issues"
 msgstr "重新整理GitHub議題"
 
+msgid "Refresh Linear issues"
+msgstr "重新整理Linear議題"
+
 msgid "Refresh metrics"
 msgstr "重新整理指標"
 
@@ -13729,6 +13815,12 @@ msgstr "在{frameTitle}中搜尋…"
 msgid "Search issues..."
 msgstr "搜尋議題..."
 
+msgid "Search Linear"
+msgstr "搜尋Linear"
+
+msgid "Search Linear…"
+msgstr "搜尋Linear…"
+
 msgid "Search pages"
 msgstr "搜尋頁面"
 
@@ -13818,6 +13910,9 @@ msgstr "正在搜尋Kbd的使用處"
 
 msgid "Searching..."
 msgstr "正在搜尋..."
+
+msgid "Searching…"
+msgstr "搜尋中…"
 
 msgid "Secondary"
 msgstr "次要"

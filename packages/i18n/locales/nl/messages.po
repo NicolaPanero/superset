@@ -293,6 +293,10 @@ msgstr "{0, plural, one {Sluiten van # poort mislukt} other {Sluiten van # poort
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {# werkruimte geïmporteerd} other {# werkruimtes geïmporteerd}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {Linear-issue} other {Linear-issues}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {# geselecteerde werkruimte naar een groep verplaatsen} other {# geselecteerde werkruimtes naar een groep verplaatsen}}"
@@ -1571,6 +1575,10 @@ msgstr "Toevoegen"
 msgid "Add {0} account"
 msgstr "{0}-account toevoegen"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "{0} toevoegen aan werkruimte"
+
 msgid "Add a comment…"
 msgstr "Voeg een reactie toe…"
 
@@ -2070,6 +2078,9 @@ msgstr "Toegestaan voor deze sessie"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Heb je al een account? <0>Inloggen</0>"
 
+msgid "Already in tasks"
+msgstr "Staat al in taken"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "Ook beschikbaar als CommandDialog voor ⌘K-paletten"
 
@@ -2412,8 +2423,17 @@ msgstr "Vraag om wijzigingen, @vermeld bestanden, voer /commands uit"
 msgid "Aspect Ratio"
 msgstr "Aspect Ratio"
 
+msgid "Assign to…"
+msgstr "Toewijzen aan…"
+
 msgid "Assigned"
 msgstr "Toegewezen"
+
+msgid "Assigned to me"
+msgstr "Aan mij toegewezen"
+
+msgid "Assigned to you"
+msgstr "Aan jou toegewezen"
 
 msgid "Assignee"
 msgstr "Toegewezen persoon"
@@ -2688,6 +2708,9 @@ msgstr "Terug naar home"
 
 msgid "Back to Integrations"
 msgstr "Terug naar integraties"
+
+msgid "Back to Linear"
+msgstr "Terug naar Linear"
 
 msgid "Back to pages"
 msgstr "Terug naar pagina's"
@@ -3196,6 +3219,9 @@ msgstr "Certificaatfout"
 msgid "Chain of Thought"
 msgstr "Gedachtegang"
 
+msgid "Change assignee"
+msgstr "Toegewezen persoon wijzigen"
+
 msgid "Change avatar"
 msgstr "Avatar wijzigen"
 
@@ -3217,6 +3243,9 @@ msgstr "Logo van organisatie wijzigen"
 msgid "Change organization slug"
 msgstr "Slug van organisatie wijzigen"
 
+msgid "Change priority"
+msgstr "Prioriteit wijzigen"
+
 msgid "Change project icon and color"
 msgstr "Projecticoon en -kleur wijzigen"
 
@@ -3225,6 +3254,10 @@ msgstr "Projectlocatie wijzigen"
 
 msgid "Change role"
 msgstr "Rol wijzigen"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Status wijzigen (nu: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "Verbind deze computer"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Koppel je GitHub-repository's en synchroniseer pull requests. Volg CI-status en reviews in je hele team."
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "Verbind je Linear-werkruimte om issues te synchroniseren en taken direct vanuit Superset te beheren."
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Koppel je Linear-account in Instellingen → Integraties om Linear-issues te koppelen."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Koppel je Linear-account om Linear-issues vanuit Superset te bekijken, bij te werken en eraan te beginnen."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Koppel je Linear-account om Linear hier te gebruiken."
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Verbind je Linear-werkruimte om issues beide kanten op te synchroniseren."
@@ -4798,6 +4837,9 @@ msgstr "Kan antwoord niet plaatsen"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "Kan de cloud niet bereiken voor {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "Kan deze cloudwerkruimte niet bereiken. Mogelijk wordt deze nog gewekt — probeer het opnieuw."
+
 msgid "Couldn't reach workspace"
 msgstr "Kan werkruimte niet bereiken"
 
@@ -4916,6 +4958,9 @@ msgstr "Maakt bij de provider een native fork met dezelfde gesprekscontext. De o
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Maak een nieuwe API-sleutel voor externe integraties zoals Claude Desktop of Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Maak een nieuwe issue aan in Linear."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Maak een nieuw project door een repository of lokaal pad te klonen."
 
@@ -4948,6 +4993,12 @@ msgstr "Een account aanmaken"
 
 msgid "Create failed: {message}"
 msgstr "Aanmaken mislukt: {message}"
+
+msgid "Create issue"
+msgstr "Issue aanmaken"
+
+msgid "Create Linear issue"
+msgstr "Linear-issue aanmaken"
 
 msgid "Create manually"
 msgstr "Handmatig maken"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Aangemaakt"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "{0} aangemaakt"
@@ -6563,6 +6615,9 @@ msgstr "Aanmaken van automatisering mislukt"
 msgid "Failed to create item"
 msgstr "Aanmaken van item mislukt"
 
+msgid "Failed to create Linear issue"
+msgstr "Linear-issue aanmaken mislukt"
+
 msgid "Failed to create organization"
 msgstr "Aanmaken van organisatie mislukt"
 
@@ -7095,8 +7150,14 @@ msgstr "Filters, {activeFilterCount} actief"
 msgid "Find"
 msgstr "Zoeken"
 
+msgid "Find a person…"
+msgstr "Persoon zoeken…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Vind een kleine bug en fix die…"
+
+msgid "Find a team…"
+msgstr "Team zoeken…"
 
 msgid "Find and fix a small bug"
 msgstr "Een kleine bug vinden en fixen"
@@ -8066,6 +8127,9 @@ msgstr "Instellingen importeren uit een andere browser"
 msgid "import the project"
 msgstr "het project importeren"
 
+msgid "Import to tasks"
+msgstr "Importeren naar taken"
+
 msgid "Import untracked worktrees"
 msgstr "Niet-gevolgde worktrees importeren"
 
@@ -8085,6 +8149,9 @@ msgstr "{joinedMessages} geïmporteerd"
 
 msgid "Imported from Linear"
 msgstr "Geïmporteerd uit Linear"
+
+msgid "Imported to tasks"
+msgstr "Geïmporteerd naar taken"
 
 msgid "Importing..."
 msgstr "Importeren..."
@@ -8400,6 +8467,9 @@ msgstr "Issue niet gevonden."
 
 msgid "Issue resolved"
 msgstr "Issue opgelost"
+
+msgid "Issue title"
+msgstr "Titel van issue"
 
 msgid "Issue unresolved"
 msgstr "Issue onopgelost"
@@ -8839,6 +8909,9 @@ msgstr "Linear is verbonden, maar de eerste synchronisatie kon niet starten. Ver
 msgid "Linear integration"
 msgstr "Linear-integratie"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear beperkt het aantal verzoeken. Probeer het over een paar minuten opnieuw."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "GitHub-issue koppelen"
 
 msgid "Link issue"
 msgstr "Issue koppelen"
+
+msgid "Link Linear issue"
+msgstr "Linear-issue koppelen"
 
 msgid "Link pull request"
 msgstr "Pull request koppelen"
@@ -9570,6 +9646,10 @@ msgstr "Meer {kindLower} thema's"
 
 msgid "More actions"
 msgstr "Meer acties"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Meer acties voor {0}"
 
 msgid "More create options"
 msgstr "Meer aanmaakopties"
@@ -11090,6 +11170,9 @@ msgstr "Issue #{0} openen in browser"
 msgid "Open issue in GitHub"
 msgstr "Issue openen in GitHub"
 
+msgid "Open issue in Linear"
+msgstr "Issue openen in Linear"
+
 msgid "Open issues"
 msgstr "Open issues"
 
@@ -12599,6 +12682,9 @@ msgstr "Vernieuwen"
 msgid "Refresh GitHub issues"
 msgstr "GitHub-issues vernieuwen"
 
+msgid "Refresh Linear issues"
+msgstr "Linear-issues vernieuwen"
+
 msgid "Refresh metrics"
 msgstr "Statistieken vernieuwen"
 
@@ -13729,6 +13815,12 @@ msgstr "Zoeken in {frameTitle}…"
 msgid "Search issues..."
 msgstr "Issues zoeken..."
 
+msgid "Search Linear"
+msgstr "Linear doorzoeken"
+
+msgid "Search Linear…"
+msgstr "Linear doorzoeken…"
+
 msgid "Search pages"
 msgstr "Pagina's zoeken"
 
@@ -13818,6 +13910,9 @@ msgstr "Zoeken naar Kbd-gebruik"
 
 msgid "Searching..."
 msgstr "Zoeken..."
+
+msgid "Searching…"
+msgstr "Zoeken…"
 
 msgid "Secondary"
 msgstr "Secundair"

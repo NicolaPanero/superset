@@ -293,6 +293,10 @@ msgstr "{0, plural, one {No se pudo cerrar # puerto} other {No se pudieron cerra
 msgid "{0, plural, one {Imported # workspace} other {Imported # workspaces}}"
 msgstr "{0, plural, one {# espacio de trabajo importado} other {# espacios de trabajo importados}}"
 
+#. placeholder {0}: issues.length
+msgid "{0, plural, one {Linear issue} other {Linear issues}}"
+msgstr "{0, plural, one {issue de Linear} other {issues de Linear}}"
+
 #. placeholder {0}: selectedWorkspaces.length
 msgid "{0, plural, one {Move # selected workspace to a group} other {Move # selected workspaces to a group}}"
 msgstr "{0, plural, one {Mover # espacio de trabajo seleccionado a un grupo} other {Mover # espacios de trabajo seleccionados a un grupo}}"
@@ -1571,6 +1575,10 @@ msgstr "Añadir"
 msgid "Add {0} account"
 msgstr "Añadir una cuenta de {0}"
 
+#. placeholder {0}: issue.identifier
+msgid "Add {0} to workspace"
+msgstr "Añadir {0} al espacio de trabajo"
+
 msgid "Add a comment…"
 msgstr "Añade un comentario…"
 
@@ -2070,6 +2078,9 @@ msgstr "Permitido en esta sesión"
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "¿Ya tienes cuenta? <0>Inicia sesión</0>"
 
+msgid "Already in tasks"
+msgstr "Ya está en las tareas"
+
 msgid "Also available as CommandDialog for ⌘K palettes"
 msgstr "También disponible como CommandDialog para paletas ⌘K"
 
@@ -2412,8 +2423,17 @@ msgstr "Pedir cambios, mencionar archivos con @, ejecutar /comandos"
 msgid "Aspect Ratio"
 msgstr "Relación de aspecto"
 
+msgid "Assign to…"
+msgstr "Asignar a…"
+
 msgid "Assigned"
 msgstr "Asignado"
+
+msgid "Assigned to me"
+msgstr "Asignados a mí"
+
+msgid "Assigned to you"
+msgstr "Asignados a ti"
 
 msgid "Assignee"
 msgstr "Responsable"
@@ -2688,6 +2708,9 @@ msgstr "Volver al inicio"
 
 msgid "Back to Integrations"
 msgstr "Volver a Integraciones"
+
+msgid "Back to Linear"
+msgstr "Volver a Linear"
 
 msgid "Back to pages"
 msgstr "Volver a páginas"
@@ -3196,6 +3219,9 @@ msgstr "Error de certificado"
 msgid "Chain of Thought"
 msgstr "Cadena de razonamiento"
 
+msgid "Change assignee"
+msgstr "Cambiar responsable"
+
 msgid "Change avatar"
 msgstr "Cambiar el avatar"
 
@@ -3217,6 +3243,9 @@ msgstr "Cambiar el logotipo de la organización"
 msgid "Change organization slug"
 msgstr "Cambiar el slug de la organización"
 
+msgid "Change priority"
+msgstr "Cambiar prioridad"
+
 msgid "Change project icon and color"
 msgstr "Cambiar el icono y el color del proyecto"
 
@@ -3225,6 +3254,10 @@ msgstr "Cambiar la ubicación del proyecto"
 
 msgid "Change role"
 msgstr "Cambiar el rol"
+
+#. placeholder {0}: issue.state.name
+msgid "Change status from {0}"
+msgstr "Cambiar estado (actual: {0})"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4091,8 +4124,14 @@ msgstr "Conectar este ordenador"
 msgid "Connect your GitHub repositories and sync pull requests. Track CI status and reviews across your team."
 msgstr "Conecta tus repositorios de GitHub y sincroniza las pull requests. Sigue el estado de CI y las revisiones de todo tu equipo."
 
-msgid "Connect your Linear workspace to sync issues and manage tasks directly from Superset."
-msgstr "Conecta tu espacio de trabajo de Linear para sincronizar issues y gestionar tareas directamente desde Superset."
+msgid "Connect your Linear account in Settings → Integrations to link Linear issues."
+msgstr "Conecta tu cuenta de Linear en Configuración → Integraciones para vincular issues de Linear."
+
+msgid "Connect your Linear account to browse, update and start work on Linear issues from Superset."
+msgstr "Conecta tu cuenta de Linear para explorar, actualizar y empezar a trabajar en issues de Linear desde Superset."
+
+msgid "Connect your Linear account to use Linear here."
+msgstr "Conecta tu cuenta de Linear para usar Linear aquí."
 
 msgid "Connect your Linear workspace to sync issues bidirectionally."
 msgstr "Conecta tu espacio de trabajo de Linear para sincronizar issues en ambos sentidos."
@@ -4798,6 +4837,9 @@ msgstr "No se pudo publicar la respuesta"
 msgid "Couldn't reach cloud for {0}: {1}"
 msgstr "No se pudo contactar con la nube para {0}: {1}"
 
+msgid "Couldn't reach this cloud workspace. It may still be waking up — try again."
+msgstr "No se pudo conectar con este espacio de trabajo en la nube. Es posible que todavía se esté reactivando: inténtalo de nuevo."
+
 msgid "Couldn't reach workspace"
 msgstr "No se pudo conectar con el espacio de trabajo"
 
@@ -4916,6 +4958,9 @@ msgstr "Crea una bifurcación nativa del proveedor con el mismo contexto de conv
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Crea una clave de API nueva para integraciones externas como Claude Desktop o Claude Code."
 
+msgid "Create a new issue in Linear."
+msgstr "Crea un nuevo issue en Linear."
+
 msgid "Create a new project by cloning a repository or local path."
 msgstr "Crea un proyecto nuevo clonando un repositorio o una ruta local."
 
@@ -4948,6 +4993,12 @@ msgstr "Crear una cuenta"
 
 msgid "Create failed: {message}"
 msgstr "Error al crear: {message}"
+
+msgid "Create issue"
+msgstr "Crear issue"
+
+msgid "Create Linear issue"
+msgstr "Crear issue de Linear"
 
 msgid "Create manually"
 msgstr "Crear manualmente"
@@ -5035,6 +5086,7 @@ msgctxt "github release action"
 msgid "Created"
 msgstr "Creada"
 
+#. placeholder {0}: issue.identifier
 #. placeholder {0}: result.task.slug
 msgid "Created {0}"
 msgstr "Se creó {0}"
@@ -6563,6 +6615,9 @@ msgstr "No se pudo crear la automatización"
 msgid "Failed to create item"
 msgstr "No se pudo crear el elemento"
 
+msgid "Failed to create Linear issue"
+msgstr "No se pudo crear el issue de Linear"
+
 msgid "Failed to create organization"
 msgstr "No se pudo crear la organización"
 
@@ -7095,8 +7150,14 @@ msgstr "Filtros, {activeFilterCount} activos"
 msgid "Find"
 msgstr "Buscar"
 
+msgid "Find a person…"
+msgstr "Buscar una persona…"
+
 msgid "Find a small bug and fix it…"
 msgstr "Encontrar un error pequeño y corregirlo…"
+
+msgid "Find a team…"
+msgstr "Buscar un equipo…"
 
 msgid "Find and fix a small bug"
 msgstr "Encontrar y corregir un error pequeño"
@@ -8066,6 +8127,9 @@ msgstr "Importar la configuración de otro navegador"
 msgid "import the project"
 msgstr "importar el proyecto"
 
+msgid "Import to tasks"
+msgstr "Importar a tareas"
+
 msgid "Import untracked worktrees"
 msgstr "Importar worktrees no registrados"
 
@@ -8085,6 +8149,9 @@ msgstr "Se importó {joinedMessages}"
 
 msgid "Imported from Linear"
 msgstr "Importada desde Linear"
+
+msgid "Imported to tasks"
+msgstr "Importado a tareas"
 
 msgid "Importing..."
 msgstr "Importando..."
@@ -8400,6 +8467,9 @@ msgstr "Issue no encontrado."
 
 msgid "Issue resolved"
 msgstr "Issue resuelto"
+
+msgid "Issue title"
+msgstr "Título del issue"
 
 msgid "Issue unresolved"
 msgstr "Issue sin resolver"
@@ -8839,6 +8909,9 @@ msgstr "Linear está conectado, pero la sincronización inicial no pudo empezar.
 msgid "Linear integration"
 msgstr "Integración con Linear"
 
+msgid "Linear is limiting requests. Try again in a few minutes."
+msgstr "Linear está limitando las solicitudes. Inténtalo de nuevo en unos minutos."
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 #. placeholder {1}: m.endLine
@@ -8869,6 +8942,9 @@ msgstr "Enlazar issue de GitHub"
 
 msgid "Link issue"
 msgstr "Enlazar issue"
+
+msgid "Link Linear issue"
+msgstr "Vincular issue de Linear"
 
 msgid "Link pull request"
 msgstr "Enlazar pull request"
@@ -9570,6 +9646,10 @@ msgstr "Más temas {kindLower}"
 
 msgid "More actions"
 msgstr "Más acciones"
+
+#. placeholder {0}: issue.identifier
+msgid "More actions for {0}"
+msgstr "Más acciones para {0}"
 
 msgid "More create options"
 msgstr "Más opciones de creación"
@@ -11090,6 +11170,9 @@ msgstr "Abrir el issue #{0} en el navegador"
 msgid "Open issue in GitHub"
 msgstr "Abrir el issue en GitHub"
 
+msgid "Open issue in Linear"
+msgstr "Abrir issue en Linear"
+
 msgid "Open issues"
 msgstr "Issues abiertos"
 
@@ -12599,6 +12682,9 @@ msgstr "Actualizar"
 msgid "Refresh GitHub issues"
 msgstr "Actualizar los issues de GitHub"
 
+msgid "Refresh Linear issues"
+msgstr "Actualizar los issues de Linear"
+
 msgid "Refresh metrics"
 msgstr "Actualizar métricas"
 
@@ -13729,6 +13815,12 @@ msgstr "Buscar en {frameTitle}…"
 msgid "Search issues..."
 msgstr "Buscar issues..."
 
+msgid "Search Linear"
+msgstr "Buscar en Linear"
+
+msgid "Search Linear…"
+msgstr "Buscar en Linear…"
+
 msgid "Search pages"
 msgstr "Buscar páginas"
 
@@ -13818,6 +13910,9 @@ msgstr "Buscando usos de Kbd"
 
 msgid "Searching..."
 msgstr "Buscando..."
+
+msgid "Searching…"
+msgstr "Buscando…"
 
 msgid "Secondary"
 msgstr "Secundario"

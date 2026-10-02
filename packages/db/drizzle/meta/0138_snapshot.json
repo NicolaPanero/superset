@@ -1,5 +1,5 @@
 {
-  "id": "5868cd45-d19b-4079-98fb-79dba368ba64",
+  "id": "f060d33a-36f4-4d3d-99f1-755b7aa29ad1",
   "prevId": "578df604-fef0-4778-884a-b65b9d8ad7ee",
   "version": "7",
   "dialect": "postgresql",
@@ -5609,12 +5609,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "connection_id": {
-          "name": "connection_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
         "next_run_at": {
           "name": "next_run_at",
           "type": "timestamp with time zone",
@@ -7130,12 +7124,6 @@
         },
         "external_user_label": {
           "name": "external_user_label",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "nickname": {
-          "name": "nickname",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -10613,6 +10601,101 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.task_imports": {
+      "name": "task_imports",
+      "schema": "",
+      "columns": {
+        "task_id": {
+          "name": "task_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "integration_provider",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_id": {
+          "name": "external_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_url": {
+          "name": "external_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "imported_by_user_id": {
+          "name": "imported_by_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "task_imports_task_id_tasks_id_fk": {
+          "name": "task_imports_task_id_tasks_id_fk",
+          "tableFrom": "task_imports",
+          "tableTo": "tasks",
+          "columnsFrom": [
+            "task_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "task_imports_imported_by_user_id_users_id_fk": {
+          "name": "task_imports_imported_by_user_id_users_id_fk",
+          "tableFrom": "task_imports",
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsFrom": [
+            "imported_by_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "task_imports_org_provider_external_unique": {
+          "name": "task_imports_org_provider_external_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "organization_id",
+            "provider",
+            "external_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
