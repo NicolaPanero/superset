@@ -41,7 +41,8 @@ type PermissionResult = Awaited<
 >;
 
 export type ClaudeSession = AsyncIterable<unknown> & {
-	interrupt?: () => Promise<void>;
+	// Settling is the whole signal; the SDK's own return type has changed before.
+	interrupt?: () => Promise<unknown>;
 };
 
 export type ClaudeQuery = (params: {
