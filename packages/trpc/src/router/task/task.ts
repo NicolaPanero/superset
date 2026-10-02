@@ -27,7 +27,6 @@ import {
 	toReadableDocument,
 	toStoredDocument,
 } from "../../lib/document-files";
-import { syncTask } from "../../lib/integrations/sync";
 import { setTaskLabels } from "../../lib/labels";
 import { protectedProcedure, type TRPCContext } from "../../trpc";
 import { getIssue, type LinearStateType } from "../integration/linear/api";
@@ -282,7 +281,6 @@ async function createTask(
 
 	if (result.task) {
 		const { id, organizationId, description } = result.task;
-		if (!importedFrom) syncTask(id);
 		if (description) {
 			await anchorAttachments({
 				parentKind: "issue",
@@ -720,16 +718,6 @@ export const taskRouter = {
 				return { task, txid };
 			});
 
-			if (result.task) {
-				const startedTaskId = result.task.id;
-				void syncTask(startedTaskId).catch((err) => {
-					console.warn(
-						`[task.start] failed to queue provider sync for task ${startedTaskId}:`,
-						err,
-					);
-				});
-			}
-
 			return result;
 		}),
 
@@ -819,7 +807,6 @@ export const taskRouter = {
 
 			if (result.task) {
 				const { id, organizationId, description } = result.task;
-				syncTask(id);
 				if (description) {
 					await anchorAttachments({
 						parentKind: "issue",
@@ -844,23 +831,13 @@ export const taskRouter = {
 			const result = await dbWs.transaction(async (tx) => {
 				await getTaskAccess(tx, ctx.session.user.id, input);
 
-				const [deleted] = await tx
+				await tx
 					.update(tasks)
 					.set({ deletedAt: new Date() })
-					.where(and(eq(tasks.id, input), isNull(tasks.deletedAt)))
-					.returning({
-						externalProvider: tasks.externalProvider,
-						externalId: tasks.externalId,
-					});
+					.where(and(eq(tasks.id, input), isNull(tasks.deletedAt)));
 
-				const txid = await getCurrentTxid(tx);
-
-				return { txid, deleted };
+				return { txid: await getCurrentTxid(tx) };
 			});
-
-			if (result.deleted?.externalProvider && result.deleted?.externalId) {
-				syncTask(input);
-			}
 
 			return { txid: result.txid };
 		}),

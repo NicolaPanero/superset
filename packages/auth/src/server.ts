@@ -4,7 +4,6 @@ import { oauthProvider } from "@better-auth/oauth-provider";
 import { stripe } from "@better-auth/stripe";
 import { db } from "@superset/db/client";
 import {
-	connections,
 	githubInstallations,
 	members,
 	subscriptions,
@@ -34,17 +33,7 @@ import {
 } from "better-auth/api";
 import { bearer, customSession, organization } from "better-auth/plugins";
 import { jwt } from "better-auth/plugins/jwt";
-import {
-	and,
-	asc,
-	count,
-	desc,
-	eq,
-	inArray,
-	isNull,
-	ne,
-	sql,
-} from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import type Stripe from "stripe";
 import { env } from "./env";
 import { acceptInvitationEndpoint } from "./lib/accept-invitation-endpoint";
@@ -100,50 +89,23 @@ const PENDING_DELETION_ALLOWED_PATH_PREFIXES = [
 const NOTIFY_SLACK_URL = `${env.NEXT_PUBLIC_API_URL}/api/integrations/stripe/jobs/notify-slack`;
 
 /**
- * Backfills the integrations that only sync for a paying organization.
- * GitHub and Linear deliveries are dropped at the webhook while an org is on
- * the free plan, so whatever changed in the gap is missing until these jobs
- * replay it.
+ * Backfills GitHub for a paying organization. Its deliveries are dropped at the
+ * webhook while an org is on the free plan, so whatever changed in the gap is
+ * missing until this job replays it.
  */
 async function resumeGatedSyncs(organizationId: string): Promise<void> {
-	const [installation, linearConnections] = await Promise.all([
-		db.query.githubInstallations.findFirst({
-			where: eq(githubInstallations.organizationId, organizationId),
-			columns: { id: true },
-		}),
-		db
-			.select({ connectedByUserId: connections.connectedByUserId })
-			.from(connections)
-			.where(
-				and(
-					eq(connections.organizationId, organizationId),
-					eq(connections.connector, "linear"),
-					isNull(connections.disconnectedAt),
-				),
-			),
-	]);
-
-	const jobs = [
-		...(installation
-			? [
-					{
-						url: `${env.NEXT_PUBLIC_API_URL}/api/github/jobs/initial-sync`,
-						body: { installationDbId: installation.id, organizationId },
-						retries: 3,
-					},
-				]
-			: []),
-		...linearConnections.map((connection) => ({
-			url: `${env.NEXT_PUBLIC_API_URL}/api/integrations/linear/jobs/initial-sync`,
-			body: { organizationId, creatorUserId: connection.connectedByUserId },
-			retries: 3,
-		})),
-	];
-
-	if (jobs.length === 0) return;
+	const installation = await db.query.githubInstallations.findFirst({
+		where: eq(githubInstallations.organizationId, organizationId),
+		columns: { id: true },
+	});
+	if (!installation) return;
 
 	try {
-		await qstash.batchJSON(jobs);
+		await qstash.publishJSON({
+			url: `${env.NEXT_PUBLIC_API_URL}/api/github/jobs/initial-sync`,
+			body: { installationDbId: installation.id, organizationId },
+			retries: 3,
+		});
 	} catch (error) {
 		console.error(
 			"[stripe/subscription-complete] Failed to queue integration backfill:",
