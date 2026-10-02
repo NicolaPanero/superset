@@ -17,6 +17,7 @@ import {
 	REPO,
 	readPullRequestRow,
 	seedLinkedPullRequest,
+	UNLINKED_PR_NUMBER,
 } from "../shared/test-db";
 import { mergePR } from "./merge";
 
@@ -98,6 +99,10 @@ describe("pullRequests.mergePR", () => {
 		warn.mockClear();
 	});
 
+	afterAll(() => {
+		warn.mockRestore();
+	});
+
 	test("merges on GitHub, drops the cached content, then refreshes the linked workspaces", async () => {
 		const harness = await createHarness();
 		const key = pullRequestContentCacheKey(REPO, PR_NUMBER);
@@ -121,15 +126,18 @@ describe("pullRequests.mergePR", () => {
 		expect(harness.refreshCalls).toEqual([["ws-newer", "ws-older"]]);
 	});
 
-	test("a PR nobody has checked out merges without a refresh", async () => {
+	test("a PR nobody has checked out merges, gets its row written, and skips the refresh", async () => {
 		const harness = await createHarness();
 
 		await harness.caller.mergePR({
 			projectId: PROJECT_ID,
-			prNumber: PR_NUMBER + 1,
+			prNumber: UNLINKED_PR_NUMBER,
 		});
 
 		expect(harness.mergeCalls).toHaveLength(1);
+		expect(readPullRequestRow(harness.db, "pr-43")).toMatchObject({
+			state: "merged",
+		});
 		expect(harness.refreshCalls).toEqual([]);
 	});
 

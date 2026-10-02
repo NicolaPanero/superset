@@ -3,7 +3,7 @@ import { pullRequests } from "../../../../db/schema";
 import type { HostServiceContext } from "../../../../types";
 import {
 	findLinkedWorkspaceIds,
-	findPullRequestRow,
+	findPullRequestRows,
 	type LinkedPullRequestRow,
 	type RepoIdentity,
 } from "./linked-workspaces";
@@ -14,7 +14,7 @@ type PullRequestWrite = "merge" | "close" | "reopen";
 interface SyncPullRequestAfterWriteInput {
 	repo: RepoIdentity;
 	prNumber: number;
-	/** Names the write in the warning when the refresh fails. */
+	/** Names the write in the warning when the sync fails. */
 	action: PullRequestWrite;
 }
 
@@ -27,30 +27,32 @@ interface SyncPullRequestAfterWriteInput {
  * fetch (no upstream to look up, a `gh` timeout, no linked workspace); the
  * refresh then fills in checks, reviews and GitHub's own timestamps for the
  * workspaces linked to this PR, through the per-workspace sync queue.
+ *
+ * Never throws: GitHub already applied the change, so nothing here may
+ * surface as a failed action. The sweep heals whatever a failure skipped.
  */
 export async function syncPullRequestAfterWrite(
 	ctx: Pick<HostServiceContext, "db" | "runtime">,
 	input: SyncPullRequestAfterWriteInput,
 ): Promise<void> {
 	evictPullRequestContent(input.repo, input.prNumber);
-
-	const row = findPullRequestRow(ctx.db, input.repo, input.prNumber);
-	if (!row) return;
-	recordWrittenState(ctx.db, row, input.action);
-
-	const workspaceIds = findLinkedWorkspaceIds(ctx.db, row.id);
-	if (workspaceIds.length === 0) return;
-
-	// GitHub already applied the change: a refresh hiccup (gh timeout, rate
-	// limit) must not surface as a failed action; the sweep heals the rest.
 	try {
+		const rows = findPullRequestRows(ctx.db, input.repo, input.prNumber);
+		if (rows.length === 0) return;
+		for (const row of rows) recordWrittenState(ctx.db, row, input.action);
+
+		const workspaceIds = findLinkedWorkspaceIds(
+			ctx.db,
+			rows.map((row) => row.id),
+		);
+		if (workspaceIds.length === 0) return;
 		await ctx.runtime.pullRequests.refreshPullRequestsByWorkspaces(
 			workspaceIds,
 		);
 	} catch (error) {
 		console.warn(
-			`[pull-requests:${input.action}] GitHub applied the change but the workspace refresh failed`,
-			{ prNumber: input.prNumber, workspaceIds, error },
+			`[pull-requests:${input.action}] GitHub applied the change but the host-side sync failed`,
+			{ prNumber: input.prNumber, error },
 		);
 	}
 }

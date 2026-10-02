@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, spyOn, test } from "bun:test";
+import { afterAll, afterEach, describe, expect, spyOn, test } from "bun:test";
 import type { HostServiceContext } from "../../../../types";
 import {
 	pullRequestContentCacheKey,
@@ -11,7 +11,9 @@ import {
 	PR_NUMBER,
 	REPO,
 	readPullRequestRow,
+	seedDuplicateCasingRow,
 	seedLinkedPullRequest,
+	UNLINKED_PR_NUMBER,
 } from "./test-db";
 
 function createContext(
@@ -37,6 +39,10 @@ describe("syncPullRequestAfterWrite", () => {
 
 	afterEach(() => {
 		warn.mockClear();
+	});
+
+	afterAll(() => {
+		warn.mockRestore();
 	});
 
 	test("evicts the cached content, records the merge, then refreshes the linked workspaces", async () => {
@@ -97,18 +103,53 @@ describe("syncPullRequestAfterWrite", () => {
 		expect(refreshed).toEqual([["ws-newer", "ws-older"]]);
 	});
 
-	test("skips the refresh when no live workspace is linked", async () => {
+	test("writes every row for a repository spelled two ways and refreshes all their workspaces", async () => {
+		const db = createTestDb();
+		seedLinkedPullRequest(db);
+		seedDuplicateCasingRow(db);
+		const { ctx, refreshed } = recordingContext(db);
+
+		await syncPullRequestAfterWrite(ctx, {
+			repo: REPO,
+			prNumber: PR_NUMBER,
+			action: "merge",
+		});
+
+		expect(readPullRequestRow(db, "pr-42")).toMatchObject({ state: "merged" });
+		expect(readPullRequestRow(db, "pr-42-dup")).toMatchObject({
+			state: "merged",
+		});
+		expect(refreshed).toEqual([["ws-dup", "ws-newer", "ws-older"]]);
+	});
+
+	test("writes the row but skips the refresh when no live workspace is linked", async () => {
 		const db = createTestDb();
 		seedLinkedPullRequest(db);
 		const { ctx, refreshed } = recordingContext(db);
 
 		await syncPullRequestAfterWrite(ctx, {
 			repo: REPO,
-			prNumber: PR_NUMBER + 1,
+			prNumber: UNLINKED_PR_NUMBER,
 			action: "close",
 		});
 
+		expect(readPullRequestRow(db, "pr-43")).toMatchObject({ state: "closed" });
 		expect(refreshed).toEqual([]);
+	});
+
+	test("does nothing but evict for a PR the host has never seen", async () => {
+		const db = createTestDb();
+		seedLinkedPullRequest(db);
+		const { ctx, refreshed } = recordingContext(db);
+
+		await syncPullRequestAfterWrite(ctx, {
+			repo: REPO,
+			prNumber: 99,
+			action: "merge",
+		});
+
+		expect(refreshed).toEqual([]);
+		expect(warn).not.toHaveBeenCalled();
 	});
 
 	test("a failed refresh is logged, not thrown, and the row keeps the written state", async () => {
@@ -125,5 +166,28 @@ describe("syncPullRequestAfterWrite", () => {
 		expect(readPullRequestRow(db)).toMatchObject({ state: "merged" });
 		expect(warn).toHaveBeenCalledTimes(1);
 		expect(String(warn.mock.calls[0]?.[0])).toContain("[pull-requests:merge]");
+	});
+
+	test("a database failure after the write is logged, not thrown", async () => {
+		const brokenDb = new Proxy(
+			{},
+			{
+				get() {
+					throw new Error("database closed");
+				},
+			},
+		) as unknown as HostServiceContext["db"];
+
+		await expect(
+			syncPullRequestAfterWrite(
+				createContext(brokenDb, async () => {}),
+				{
+					repo: REPO,
+					prNumber: PR_NUMBER,
+					action: "close",
+				},
+			),
+		).resolves.toBeUndefined();
+		expect(warn).toHaveBeenCalledTimes(1);
 	});
 });
