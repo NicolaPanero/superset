@@ -29,6 +29,7 @@ export interface ProviderAccount {
 	/** The provider's own label, so a renamed row can still show who it is. */
 	identity: string | null;
 	nickname: string | null;
+	needsReauth: boolean;
 }
 
 export interface ProviderConnection {
@@ -85,16 +86,15 @@ export const connectionStatusProcedure = protectedProcedure
 					entry = { connected: false, needsReauth: false, accounts: [] };
 					connected[row.connector] = entry;
 				}
-				if (!needsReauth) {
-					const identity =
-						row.externalUserLabel ?? row.externalAccountLabel ?? null;
-					entry.accounts.push({
-						id: row.id,
-						label: row.nickname ?? identity,
-						identity,
-						nickname: row.nickname,
-					});
-				}
+				const identity =
+					row.externalUserLabel ?? row.externalAccountLabel ?? null;
+				entry.accounts.push({
+					id: row.id,
+					label: row.nickname ?? identity,
+					identity,
+					nickname: row.nickname,
+					needsReauth,
+				});
 				// A live row wins over an expired one for the same connector.
 				if (entry.connected && needsReauth) continue;
 				entry.connected = !needsReauth;

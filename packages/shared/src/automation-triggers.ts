@@ -465,7 +465,7 @@ function scopeChoiceLabel(choice: ScopeChoice): string {
 		case "anySender":
 			return i18n._(
 				msg({
-					message: "Any sender",
+					message: "any sender",
 				}),
 			);
 	}
@@ -540,9 +540,11 @@ const REQUIREMENTS: Partial<
  * loop rather than schema refinements, so each rule carries a message the form
  * can put next to the field it belongs to — and so the draft/savable split
  * survives: the schema stays satisfiable by a half-configured trigger.
+ *
  */
 export function describeTriggerProblems(
 	triggers: DraftTrigger[],
+	options: { knownConnectionIds?: readonly string[] } = {},
 ): TriggerProblem[] {
 	// An empty set is legal: an automation starts untitled with no triggers
 	// and simply never fires until one is added.
@@ -607,6 +609,22 @@ export function describeTriggerProblems(
 					),
 				});
 			}
+		}
+
+		if (
+			options.knownConnectionIds &&
+			trigger.connectionId &&
+			!options.knownConnectionIds.includes(trigger.connectionId)
+		) {
+			problems.push({
+				index,
+				field: "connectionId",
+				message: i18n._(
+					msg({
+						message: "That account is no longer connected — choose another.",
+					}),
+				),
+			});
 		}
 	});
 

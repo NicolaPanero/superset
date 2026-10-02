@@ -17,6 +17,7 @@ import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agen
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { useWorkspaceHostOptions } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/components/DevicePicker/hooks/useWorkspaceHostOptions/useWorkspaceHostOptions";
 import { AgentPicker } from "../../../components/AgentPicker";
+import { useProviderConnections } from "../../../components/providers/useProviderConnections";
 import { useProviderOptions } from "../../../components/providers/useProviderOptions";
 import { useAutomationAgentChoices } from "../../../hooks/useAutomationAgentChoices";
 import { useProjectFileSearch } from "../../../hooks/useProjectFileSearch";
@@ -96,6 +97,19 @@ export function AutomationBody({
 		[automation],
 	);
 
+	const { accounts, isPending: connectionsPending } = useProviderConnections(
+		automation.organizationId,
+	);
+	const knownConnectionIds = useMemo(
+		() =>
+			connectionsPending
+				? undefined
+				: Object.values(accounts).flatMap((list) =>
+						(list ?? []).map((account) => account.id),
+					),
+		[accounts, connectionsPending],
+	);
+
 	const {
 		draft,
 		dirty,
@@ -106,16 +120,20 @@ export function AutomationBody({
 		editTriggers,
 		save,
 		discard,
-	} = useAutomationDraft(saved, async (next) => {
-		await updateMutation.mutateAsync(next);
-		toast.success(
-			t({
-				message: "Automation saved",
-			}),
-		);
-		// Saving may have joined channels, which flips `botMember`.
-		optionState.slack?.refetch();
-	});
+	} = useAutomationDraft(
+		saved,
+		async (next) => {
+			await updateMutation.mutateAsync(next);
+			toast.success(
+				t({
+					message: "Automation saved",
+				}),
+			);
+			// Saving may have joined channels, which flips `botMember`.
+			optionState.slack?.refetch();
+		},
+		knownConnectionIds,
+	);
 
 	const { options, state: optionState } = useProviderOptions(
 		automation.organizationId,
