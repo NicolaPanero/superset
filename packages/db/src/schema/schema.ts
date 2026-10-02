@@ -501,10 +501,7 @@ export const connections = pgTable(
 		externalAccountId: text("external_account_id").notNull(),
 		externalAccountLabel: text("external_account_label"),
 		externalUserId: text("external_user_id"),
-		// Seeded from the provider at first connect, then the person's to edit —
-		// which is why the upsert on reconnect leaves it alone.
 		externalUserLabel: text("external_user_label"),
-
 
 		config: jsonb().$type<Record<string, string | null>>(),
 		state: jsonb().$type<IntegrationConfig>(),

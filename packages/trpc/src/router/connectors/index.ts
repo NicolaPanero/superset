@@ -175,9 +175,6 @@ export const connectorsRouter = {
 			z.object({
 				organizationId: z.uuid(),
 				connectionId: z.uuid(),
-				// Null restores nothing — the provider's label is only seeded at
-				// first connect — so an empty rename leaves the row titled by its
-				// account label or, failing that, the connector's name.
 				label: z.string().max(64).nullable(),
 			}),
 		)

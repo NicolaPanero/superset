@@ -24,7 +24,6 @@ import { verifyOrgMembership } from "./utils";
  */
 export interface ProviderAccount {
 	id: string;
-	/** What to call this account: seeded from the provider, renameable by its owner. */
 	label: string | null;
 	needsReauth: boolean;
 }
