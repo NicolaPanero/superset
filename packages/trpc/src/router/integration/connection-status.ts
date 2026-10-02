@@ -24,11 +24,8 @@ import { verifyOrgMembership } from "./utils";
  */
 export interface ProviderAccount {
 	id: string;
-	/** What to call this account: the nickname if it has one, else the identity. */
+	/** What to call this account: seeded from the provider, renameable by its owner. */
 	label: string | null;
-	/** The provider's own label, so a renamed row can still show who it is. */
-	identity: string | null;
-	nickname: string | null;
 	needsReauth: boolean;
 }
 
@@ -64,7 +61,6 @@ export const connectionStatusProcedure = protectedProcedure
 						disconnectedAt: true,
 						externalAccountLabel: true,
 						externalUserLabel: true,
-						nickname: true,
 					},
 				}),
 				db.query.githubInstallations.findFirst({
@@ -86,13 +82,9 @@ export const connectionStatusProcedure = protectedProcedure
 					entry = { connected: false, needsReauth: false, accounts: [] };
 					connected[row.connector] = entry;
 				}
-				const identity =
-					row.externalUserLabel ?? row.externalAccountLabel ?? null;
 				entry.accounts.push({
 					id: row.id,
-					label: row.nickname ?? identity,
-					identity,
-					nickname: row.nickname,
+					label: row.externalUserLabel ?? row.externalAccountLabel ?? null,
 					needsReauth,
 				});
 				// A live row wins over an expired one for the same connector.

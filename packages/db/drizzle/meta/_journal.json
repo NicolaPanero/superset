@@ -981,6 +981,13 @@
       "when": 1790971280182,
       "tag": "0139_connection_pin_and_nickname",
       "breakpoints": true
+    },
+    {
+      "idx": 140,
+      "version": "7",
+      "when": 1790980188717,
+      "tag": "0140_connection_label_is_user_owned",
+      "breakpoints": true
     }
   ]
 }

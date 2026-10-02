@@ -90,7 +90,6 @@ export const connectorsRouter = {
 					externalAccountLabel: true,
 					externalUserId: true,
 					externalUserLabel: true,
-					nickname: true,
 					disconnectedAt: true,
 					disconnectReason: true,
 				},
@@ -176,9 +175,10 @@ export const connectorsRouter = {
 			z.object({
 				organizationId: z.uuid(),
 				connectionId: z.uuid(),
-				// Empty clears it and falls back to the provider's own label, so the
-				// row can never end up titled with the empty string.
-				nickname: z.string().max(64).nullable(),
+				// Null restores nothing — the provider's label is only seeded at
+				// first connect — so an empty rename leaves the row titled by its
+				// account label or, failing that, the connector's name.
+				label: z.string().max(64).nullable(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -214,10 +214,10 @@ export const connectorsRouter = {
 			else if (existing.connectedByUserId !== ctx.session.user.id)
 				throw new TRPCError({ code: "NOT_FOUND", message: "No connection" });
 
-			const trimmed = input.nickname?.trim();
+			const trimmed = input.label?.trim();
 			const [row] = await db
 				.update(connections)
-				.set({ nickname: trimmed ? trimmed : null })
+				.set({ externalUserLabel: trimmed ? trimmed : null })
 				.where(
 					and(
 						eq(connections.id, input.connectionId),
@@ -225,7 +225,10 @@ export const connectorsRouter = {
 						reachable,
 					),
 				)
-				.returning({ id: connections.id, nickname: connections.nickname });
+				.returning({
+					id: connections.id,
+					label: connections.externalUserLabel,
+				});
 
 			if (!row)
 				throw new TRPCError({ code: "NOT_FOUND", message: "No connection" });

@@ -501,12 +501,10 @@ export const connections = pgTable(
 		externalAccountId: text("external_account_id").notNull(),
 		externalAccountLabel: text("external_account_label"),
 		externalUserId: text("external_user_id"),
+		// Seeded from the provider at first connect, then the person's to edit —
+		// which is why the upsert on reconnect leaves it alone.
 		externalUserLabel: text("external_user_label"),
 
-		// What the person calls this account. Two accounts on one connector are
-		// told apart by the provider's own labels otherwise, and those are often
-		// the same word twice — "harshith@tegon.ai · harshith@tegon.ai".
-		nickname: text(),
 
 		config: jsonb().$type<Record<string, string | null>>(),
 		state: jsonb().$type<IntegrationConfig>(),
