@@ -42,9 +42,9 @@ Read the retry decision off `advice_code`, not off the decline code. It has thre
 values and each is Stripe's advice rather than a verdict: `try_again_later` means
 a retry may work, `do_not_try_again` means Stripe advises against reusing the card
 for this transaction, and `confirm_card_data` means some of the submitted card
-details are wrong and the customer should check them against the card, which a
-stored payment method can be as easily as a typo. The decline code answers a
-different question, and most of them are
+details are wrong and the customer should check them against the card. Stale
+details on a stored payment method trigger that one as readily as a typo does.
+The decline code answers a different question, and most of them are
 vague on purpose: `do_not_honor` and `generic_decline` both mean "the issuer
 declined and did not say why", so calling either permanent is a guess the advice
 code already settles.
