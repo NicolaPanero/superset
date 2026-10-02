@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { STORAGE_FRAME_CHANNEL, STORAGE_HOST_CHANNEL } from "./page-storage";
-import { PAGE_STORAGE_RUNTIME_SOURCE } from "./page-storage-runtime";
+import { pageStorageRuntimeSource } from "./page-storage-runtime";
 
 interface Storage {
 	ready: Promise<boolean>;
@@ -27,7 +27,7 @@ function flush(): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
-function mount({ framed = true } = {}): Harness {
+function mount({ framed = true, helloTimeoutMs = 2000 } = {}): Harness {
 	const posted: Record<string, unknown>[] = [];
 	const sent: Record<string, unknown>[] = [];
 	const listeners: ((event: unknown) => void)[] = [];
@@ -61,7 +61,7 @@ function mount({ framed = true } = {}): Harness {
 		"removeEventListener",
 		"document",
 		"WebSocket",
-		PAGE_STORAGE_RUNTIME_SOURCE,
+		pageStorageRuntimeSource({ helloTimeoutMs }),
 	)(
 		win,
 		parent,
@@ -269,7 +269,7 @@ describe("page storage runtime, bridge fallback", () => {
 
 describe("page storage runtime, a host that answers late", () => {
 	test("a connection after the deadline still works, instead of failing forever", async () => {
-		const h = mount();
+		const h = mount({ helloTimeoutMs: 20 });
 		// The handshake window passes with no answer, which is what a slow
 		// hydration looks like to the page.
 		expect(await h.storage.ready).toBe(false);
@@ -299,7 +299,7 @@ describe("page storage runtime, a host that answers late", () => {
 	});
 
 	test("a subscriber that failed before the host arrived re-reads", async () => {
-		const h = mount();
+		const h = mount({ helloTimeoutMs: 20 });
 		await h.storage.ready;
 
 		const seen: unknown[][] = [];
@@ -328,7 +328,7 @@ describe("page storage runtime, a host that answers late", () => {
 
 describe("page storage runtime, no host", () => {
 	test("settles unavailable rather than hanging", async () => {
-		const h = mount({ framed: false });
+		const h = mount({ framed: false, helloTimeoutMs: 20 });
 		expect(await h.storage.ready).toBe(false);
 		await expect(h.storage.get("k")).rejects.toMatchObject({
 			code: "unavailable",

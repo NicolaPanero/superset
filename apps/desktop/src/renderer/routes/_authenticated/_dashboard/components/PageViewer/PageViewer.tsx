@@ -13,7 +13,7 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { TRPCClientError } from "@trpc/client";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { env } from "renderer/env.renderer";
 import { authClient, getJwt } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -75,15 +75,20 @@ export function PageViewer({
 		user,
 		onError: (error) => toast.error(errorMessage(error)),
 	});
-	const storage = usePageStorageBridge({
-		pageId: resolvedPageId ?? "",
-		realtimeUrl: env.REALTIME_URL,
-		viewer: {
+	const storageViewer = useMemo(
+		() => ({
 			userId: session?.user?.id ?? "",
 			name: session?.user?.name ?? "Someone",
 			image: session?.user?.image ?? null,
-		},
-		token: async () => getJwt(),
+		}),
+		[session?.user?.id, session?.user?.name, session?.user?.image],
+	);
+	const storageToken = useCallback(async () => getJwt(), []);
+	const storage = usePageStorageBridge({
+		pageId: resolvedPageId ?? "",
+		realtimeUrl: env.REALTIME_URL,
+		viewer: storageViewer,
+		token: storageToken,
 	});
 	const scrollKey = `${resolvedPageId ?? slug}:${pull.data?.version ?? 0}`;
 

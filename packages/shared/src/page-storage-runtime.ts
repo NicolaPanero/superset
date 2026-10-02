@@ -9,12 +9,17 @@ const HELLO_TIMEOUT_MS = 2000;
 const POLL_INTERVAL_MS = 60000;
 const CALL_TIMEOUT_MS = 15000;
 
-export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
+export function pageStorageRuntimeSource({
+	helloTimeoutMs = HELLO_TIMEOUT_MS,
+}: {
+	helloTimeoutMs?: number;
+} = {}): string {
+	return `(() => {
 	const FRAME = ${JSON.stringify(STORAGE_FRAME_CHANNEL)};
 	const HOST = ${JSON.stringify(STORAGE_HOST_CHANNEL)};
 	const MAX_VALUE_BYTES = ${MAX_PAGE_STORAGE_VALUE_BYTES};
 	const MAX_KEY_LENGTH = ${MAX_PAGE_STORAGE_KEY_LENGTH};
-	const HELLO_TIMEOUT_MS = ${HELLO_TIMEOUT_MS};
+	const HELLO_TIMEOUT_MS = ${helloTimeoutMs};
 	const POLL_INTERVAL_MS = ${POLL_INTERVAL_MS};
 	const CALL_TIMEOUT_MS = ${CALL_TIMEOUT_MS};
 	const DOCUMENT = Math.random().toString(36).slice(2, 10);
@@ -273,3 +278,6 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 	window.superset = window.superset || {};
 	window.superset.storage = storage;
 })();`;
+}
+
+export const PAGE_STORAGE_RUNTIME_SOURCE = pageStorageRuntimeSource();

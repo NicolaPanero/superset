@@ -2,6 +2,7 @@
 
 import { usePageStorageBridge } from "@superset/cloud-client";
 import { PageCommentsView } from "@superset/ui/page-comments";
+import { useCallback, useMemo } from "react";
 import { env } from "@/env";
 import { getAuthToken } from "../../../../../trpc/auth-token";
 
@@ -10,19 +11,28 @@ export function PageCommentsFrame({
 	src,
 	title,
 	previewing = false,
-	viewer,
+	userId,
+	name,
+	image,
 }: {
 	pageId: string;
 	src: string;
 	title: string;
 	previewing?: boolean;
-	viewer: { userId: string; name: string; image: string | null };
+	userId: string;
+	name: string;
+	image: string | null;
 }) {
+	const viewer = useMemo(
+		() => ({ userId, name, image }),
+		[userId, name, image],
+	);
+	const token = useCallback(() => getAuthToken().catch(() => null), []);
 	const storage = usePageStorageBridge({
 		pageId,
 		realtimeUrl: env.NEXT_PUBLIC_REALTIME_URL,
 		viewer,
-		token: () => getAuthToken().catch(() => null),
+		token,
 	});
 
 	return (

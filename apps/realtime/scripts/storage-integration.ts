@@ -141,6 +141,16 @@ async function main() {
 		].join("\n"),
 	);
 
+	const base = `http://127.0.0.1:${PORT}`;
+	try {
+		await fetch(`${base}/health`, { signal: AbortSignal.timeout(500) });
+		console.error(
+			`something is already listening on ${PORT}; stop it first (pkill -f "wrangler dev")`,
+		);
+		jwks.stop();
+		process.exit(1);
+	} catch {}
+
 	const worker = spawn(
 		"bunx",
 		[
@@ -156,19 +166,30 @@ async function main() {
 		],
 		{ cwd: join(import.meta.dir, ".."), stdio: ["ignore", "pipe", "pipe"] },
 	);
+	let shuttingDown = false;
+	const shutdown = () => {
+		if (shuttingDown) return;
+		shuttingDown = true;
+		try {
+			worker.kill("SIGKILL");
+		} catch {}
+		try {
+			jwks.stop();
+		} catch {}
+	};
+	process.on("SIGINT", () => {
+		shutdown();
+		process.exit(130);
+	});
+	process.on("SIGTERM", () => {
+		shutdown();
+		process.exit(143);
+	});
+
 	const log: string[] = [];
 	worker.stdout?.on("data", (chunk) => log.push(String(chunk)));
 	worker.stderr?.on("data", (chunk) => log.push(String(chunk)));
 
-	const base = `http://127.0.0.1:${PORT}`;
-	try {
-		await fetch(`${base}/health`, { signal: AbortSignal.timeout(500) });
-		console.error(
-			`something is already listening on ${PORT}; stop it first (pkill -f "wrangler dev")`,
-		);
-		jwks.stop();
-		process.exit(1);
-	} catch {}
 	let up = false;
 	for (let attempt = 0; attempt < 60; attempt += 1) {
 		try {
@@ -329,8 +350,7 @@ async function main() {
 		return null;
 	});
 	if (!first) {
-		worker.kill("SIGTERM");
-		jwks.stop();
+		shutdown();
 		process.exit(1);
 	}
 	const hello = first.first as Record<string, unknown>;
@@ -427,13 +447,14 @@ async function main() {
 	);
 	check("the nudge route refuses without it", nudgeNoSecret.status === 401);
 
+	let sawRevoked = false;
+	first.socket.addEventListener("message", (event) => {
+		const data = JSON.parse(String(event.data));
+		if (data.type === "revoked") sawRevoked = true;
+	});
 	const closed = new Promise<string>((resolve) => {
 		first.socket.addEventListener("close", (event) => resolve(`${event.code}`));
-		first.socket.addEventListener("message", (event) => {
-			const data = JSON.parse(String(event.data));
-			if (data.type === "revoked") resolve("revoked");
-		});
-		setTimeout(() => resolve("still open"), 6000);
+		setTimeout(() => resolve("still open"), 8000);
 	});
 	seed(
 		ORG_PAGE,
@@ -450,9 +471,12 @@ async function main() {
 	const outcome = await closed;
 	check(
 		"a manifest change closes a socket that no longer passes",
-		outcome === "revoked" || outcome === "4403",
+		outcome === "4403",
 		outcome,
 	);
+	check("the page is told why before the socket goes", sawRevoked, {
+		sawRevoked,
+	});
 
 	console.log("\nadmin route");
 	const list = await fetch(`${base}/v2/page/${ORG_PAGE}/storage/admin`, {
@@ -499,8 +523,7 @@ async function main() {
 					.join("\n"),
 		);
 	}
-	worker.kill("SIGTERM");
-	jwks.stop();
+	shutdown();
 
 	console.log(
 		failures === 0
