@@ -247,6 +247,15 @@ http_headers_helper = "/Users/you/.superset/bin/superset auth mcp-headers"</code
         connection made on the web or from another machine lands here too.
       </p>
 
+      <p>
+        Both writers fill it from <code>connectors.status</code> and nowhere
+        else, because the entry names are built from
+        <code>externalUserId</code> and only that procedure carries it. A writer
+        that fell back to connection ids would rename every entry the other had
+        just named, and each rename orphans whatever the agent stored against the
+        old name.
+      </p>
+
       <h2>How the two agents differ</h2>
       <div class="scroller">
         <table>
@@ -378,19 +387,26 @@ http_headers_helper = "/Users/you/.superset/bin/superset auth mcp-headers"</code
             </tr>
             <tr>
               <td>
-                The CLI's own <code>plugins install</code> writing MCP entries
+                The CLI writing MCP entries from <code>plugins install</code>,
+                <code>connect</code>, <code>enable</code>,
+                <code>disable</code>, <code>uninstall</code> and
+                <code>sync</code>
               </td>
-              <td><span class="pill no">not wired</span></td>
+              <td><span class="pill yes">done</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p class="note">
-        The last row is the remaining gap, and a narrow one: a plugin installed
-        from the CLI writes no MCP entry at that moment. The host-service's
-        reconcile closes it at the next session start, which is also what repairs
-        an install made on the web or on another machine.
+        The CLI hangs off <code>syncPlugins()</code>, the one function every
+        plugin mutation there already called to converge skills — so install,
+        connect, enable, disable, uninstall and <code>plugins sync</code> all
+        gained MCP entries at once, and each reaps what it should. It also
+        refreshes the account cache from the API wherever it has a client, which
+        is what lets a machine the desktop never ran on split a two-account
+        connector at all. <code>plugins sync</code> itself stays offline and
+        reads the cache.
       </p>
 
       <h2>Worth deciding</h2>
