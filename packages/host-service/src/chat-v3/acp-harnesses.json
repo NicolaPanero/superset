@@ -1,0 +1,58 @@
+{
+	"$comment": [
+		"ACP harnesses, keyed by the harness id the chat runtime uses.",
+		"",
+		"Every harness drives the agent CLI the user already has, found the same way",
+		"a Superset terminal finds it: the ~/.superset/bin wrapper when it is",
+		"provisioned, else the bare name on the login shell's PATH. Nothing here is",
+		"bundled with the app, so a CLI the user upgrades is the one chat uses.",
+		"",
+		"binary       the executable name; also the ~/.superset/bin wrapper name",
+		"args         argv that puts that CLI into ACP mode",
+		"minVersion   lowest version these args are known to work with",
+		"adapter      npm package that translates ACP for a CLI that cannot speak it",
+		"executableEnv  env var that adapter reads to find the CLI",
+		"upgrade      command shown to a reader whose CLI is missing or too old",
+		"note         why minVersion is what it is; keep it current when you edit",
+		"",
+		"Raising or lowering minVersion is a one-line edit here. Lowering one needs",
+		"evidence: run the handshake against that version first, because an agent",
+		"below the floor fails at session/new rather than at launch."
+	],
+	"claude-acp": {
+		"registryId": "claude-acp",
+		"binary": "claude",
+		"args": [],
+		"minVersion": "2.1.226",
+		"adapter": "@agentclientprotocol/claude-agent-acp",
+		"executableEnv": "CLAUDE_CODE_EXECUTABLE",
+		"upgrade": "npm i -g @anthropic-ai/claude-code@latest",
+		"note": "2.1.226 verified against adapter 0.85.0: session/new returns the same modes and configOptions as 2.1.286."
+	},
+	"codex-acp": {
+		"registryId": "codex-acp",
+		"binary": "codex",
+		"args": [],
+		"minVersion": "0.160.0",
+		"adapter": "@agentclientprotocol/codex-acp",
+		"executableEnv": "CODEX_PATH",
+		"upgrade": "npm i -g @openai/codex@latest",
+		"note": "Conservative: the adapter drives `codex app-server`, and the release that introduced it is not pinned. Set to the latest release at authoring time; lower it once a older version is verified."
+	},
+	"gemini-acp": {
+		"registryId": "gemini",
+		"binary": "gemini",
+		"args": ["--acp"],
+		"upgrade": "npm i -g @google/gemini-cli@latest",
+		"minVersion": "0.62.0",
+		"note": "Conservative. `--acp` replaced `--experimental-acp`, and the rename release is not pinned beyond being above 0.20.0, which defined only the experimental spelling. Sending `--acp` to a CLI that predates it prints usage and exits 0, which looks like a crash, so the floor errs high."
+	},
+	"opencode-acp": {
+		"registryId": "opencode",
+		"binary": "opencode",
+		"args": ["acp"],
+		"upgrade": "npm i -g opencode-ai@latest",
+		"minVersion": "1.15.5",
+		"note": "1.15.5 verified: initialize reports OpenCode 1.15.5 and session/new returns a session with model options."
+	}
+}

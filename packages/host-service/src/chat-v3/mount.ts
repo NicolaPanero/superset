@@ -19,7 +19,9 @@ import {
 } from "@superset/chat-runtime";
 import type { Hono, MiddlewareHandler } from "hono";
 import type { HostDb } from "../db";
+import { warmToolEnvironment } from "../terminal/clean-shell-env";
 import { acpHarnessEntries } from "./acpHarnesses";
+import { resolveAgentCliSync } from "./agentCli";
 import { createResolveCwd } from "./resolveCwd";
 
 export const CHAT_V3_TRPC_PATH = "/chat-v3/trpc";
@@ -37,10 +39,17 @@ function harnessRegistry(): HarnessRegistry {
 	const entries: [string, HarnessFactory][] = [
 		[
 			"claude-code",
-			() =>
-				createClaudeAdapter({
-					pathToClaudeCodeExecutable: process.env.SUPERSET_CHAT_V3_CLAUDE_BIN,
-				}),
+			() => {
+				// The SDK resolves its own bundled CLI otherwise, which no build
+				// ships; this is the same install the ACP harnesses and the
+				// terminals use.
+				const cli = resolveAgentCliSync("claude");
+				return createClaudeAdapter({
+					pathToClaudeCodeExecutable:
+						process.env.SUPERSET_CHAT_V3_CLAUDE_BIN ?? cli.command,
+					resolveEnv: () => resolveAgentCliSync("claude").env,
+				});
+			},
 		],
 		["codex", () => new CodexAdapter()],
 		...acpHarnessEntries(),
@@ -62,6 +71,11 @@ export function createChatV3Mount(options: {
 	dbPath: string;
 }): ChatV3Mount {
 	let built: ChatRuntime | null = null;
+
+	// Every harness spawns one of the user's own CLIs, and `claude-code` resolves
+	// it from a synchronous `start`. Taking the login-shell snapshot now means
+	// that read is warm before the first session asks for it.
+	warmToolEnvironment();
 
 	const runtime = (): ChatRuntime => {
 		if (built) return built;

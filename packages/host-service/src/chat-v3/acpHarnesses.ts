@@ -1,75 +1,28 @@
 import { createRequire } from "node:module";
-import { dirname, join, sep } from "node:path";
+import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
+import catalogue from "./acp-harnesses.json" with { type: "json" };
+import { resolveAgentCli } from "./agentCli";
 
-/**
- * How an adapter reaches the machine, modelled on the `distribution` field of
- * the ACP registry (cdn.agentclientprotocol.com/registry/v1/latest/registry.json),
- * which is what Zed installs from.
- *
- * `bundled` is the only kind this resolver can serve: the package ships as a
- * desktop dependency and resolves locally, with no download and no network.
- * The registry's other kinds — an `npx` package fetched on demand, a
- * per-platform `binary` archive verified by sha256 — need provisioning
- * (fetch, verify, unpack, cache, and a path that survives a packaged build)
- * that does not exist yet. They are declared here so the catalogue is honest
- * about what exists, and `acpHarnessFactory` omits them until it does.
- */
-type AcpDistribution =
-	| { kind: "bundled"; package: string; args?: readonly string[] }
-	| { kind: "npx"; package: string; args?: readonly string[] }
-	| { kind: "binary"; releases: string };
-
-type AcpAdapter = {
+type AcpHarness = {
 	/** The agent's id in the ACP registry, for tracing an entry back to it. */
 	registryId: string;
-	distribution: AcpDistribution;
-	/** Env this one adapter needs on top of `acpEnv()`. */
-	env?: () => NodeJS.ProcessEnv;
+	/** Executable name, and the `~/.superset/bin` wrapper name. */
+	binary: string;
+	args?: string[];
+	minVersion: string;
+	upgrade?: string;
+	/** Absent when the CLI speaks ACP itself and needs no translator. */
+	adapter?: string;
+	executableEnv?: string;
 };
 
-/** Keyed by the harness id the chat runtime uses. */
-const ACP_ADAPTERS: Record<string, AcpAdapter> = {
-	"claude-acp": {
-		registryId: "claude-acp",
-		distribution: {
-			kind: "bundled",
-			package: "@agentclientprotocol/claude-agent-acp",
-		},
-		env: claudeCodeExecutableEnv,
-	},
-	"codex-acp": {
-		registryId: "codex-acp",
-		distribution: {
-			kind: "bundled",
-			package: "@agentclientprotocol/codex-acp",
-		},
-	},
-	"pi-acp": {
-		registryId: "pi-acp",
-		distribution: { kind: "bundled", package: "pi-acp" },
-	},
-	// Bundling this would add ~98 MB to the desktop app — more than thirty times
-	// every other adapter combined — which is the reason the registry fetches on
-	// demand rather than shipping agents inside the editor.
-	"gemini-acp": {
-		registryId: "gemini",
-		distribution: {
-			kind: "npx",
-			package: "@google/gemini-cli",
-			args: ["--acp"],
-		},
-	},
-	// Distributed as a per-platform archive rather than a package.
-	"opencode-acp": {
-		registryId: "opencode",
-		distribution: {
-			kind: "binary",
-			releases: "https://github.com/anomalyco/opencode/releases",
-		},
-	},
-};
+const ACP_HARNESSES: Record<string, AcpHarness> = Object.fromEntries(
+	Object.entries(catalogue as Record<string, unknown>).filter(
+		([key]) => !key.startsWith("$"),
+	),
+) as Record<string, AcpHarness>;
 
 function resolveAdapterEntry(packageName: string): string {
 	const moduleRequire = createRequire(import.meta.url);
@@ -78,80 +31,68 @@ function resolveAdapterEntry(packageName: string): string {
 }
 
 /**
- * The agent resolves its CLI — a native binary — out of its own node_modules,
- * which in a packaged build is a path inside `app.asar`: readable through
- * Electron's patched `fs`, but not executable, so every session dies with
- * `spawn ENOTDIR`. Point it at the copy electron-builder leaves beside the
- * archive. Unpackaged hosts already resolve a real path, and know which linux
- * libc variant they need, so leave those to resolve it themselves.
+ * Ambient keys must never override the user's own agent login — the whole
+ * point is to reuse the CLI's stored credentials, not bill an API key.
  */
-function claudeCodeExecutableEnv(): NodeJS.ProcessEnv {
-	if (process.env.CLAUDE_CODE_EXECUTABLE) return {};
-	const binary = process.platform === "win32" ? "claude.exe" : "claude";
-	let resolved: string;
-	try {
-		// Anchored at the adapter so a nested install resolves the same binary the
-		// adapter would have picked, not a hoisted copy of another version.
-		const adapterPkg = createRequire(import.meta.url).resolve(
-			"@agentclientprotocol/claude-agent-acp/package.json",
-		);
-		resolved = createRequire(adapterPkg).resolve(
-			`@anthropic-ai/claude-agent-sdk-${process.platform}-${process.arch}/${binary}`,
-		);
-	} catch {
-		return {};
-	}
-	const unpacked = resolved.replace(
-		`app.asar${sep}`,
-		`app.asar.unpacked${sep}`,
-	);
-	return unpacked === resolved ? {} : { CLAUDE_CODE_EXECUTABLE: unpacked };
-}
-
-function acpEnv(): NodeJS.ProcessEnv {
-	const env: NodeJS.ProcessEnv = {
-		...process.env,
-		// Packaged builds ship no `node` on PATH; Electron runs the script when
-		// this is set, and plain-node hosts ignore it.
-		ELECTRON_RUN_AS_NODE: "1",
-	};
-	// Ambient keys must never override the user's own agent login — the whole
-	// point is to reuse the CLI's stored credentials, not bill an API key.
-	delete env.ANTHROPIC_API_KEY;
-	delete env.ANTHROPIC_AUTH_TOKEN;
-	return env;
+function withoutAmbientKeys(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+	const { ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, ...rest } = env;
+	return rest;
 }
 
 /**
- * A HarnessFactory that spawns an ACP adapter subprocess and bridges it into
- * the chat runtime. Returns null when the adapter cannot be served — not
- * installed, or a distribution kind that needs provisioning — so the registry
- * omits that harness rather than crashing the host.
+ * A HarnessFactory that bridges an ACP agent into the chat runtime. The agent
+ * is whichever CLI the user has installed; nothing here ships one. Returns null
+ * only when a translator this harness needs is not in the bundle — a missing or
+ * outdated CLI is the reader's to fix, so it is reported when they open the
+ * chat rather than hidden by dropping the harness.
  */
 export function acpHarnessFactory(harness: string): HarnessFactory | null {
-	const adapter = ACP_ADAPTERS[harness];
-	if (adapter?.distribution.kind !== "bundled") return null;
-	const { package: packageName, args = [] } = adapter.distribution;
+	const entry = ACP_HARNESSES[harness];
+	if (!entry) return null;
 
-	let entry: string;
-	try {
-		entry = resolveAdapterEntry(packageName);
-	} catch {
-		return null;
+	let adapterEntry: string | undefined;
+	if (entry.adapter) {
+		try {
+			adapterEntry = resolveAdapterEntry(entry.adapter);
+		} catch {
+			return null;
+		}
 	}
 
 	return (options) =>
 		createAcpAdapter({
-			command: process.execPath,
-			args: [entry, ...args],
+			command: entry.binary,
 			cwd: options.cwd,
-			env: { ...acpEnv(), ...adapter.env?.() },
+			launch: async () => {
+				const cli = await resolveAgentCli({
+					binary: entry.binary,
+					minVersion: entry.minVersion,
+					upgrade: entry.upgrade,
+				});
+				const env = withoutAmbientKeys(cli.env);
+				if (!adapterEntry) {
+					return { command: cli.command, args: entry.args, env };
+				}
+				return {
+					command: process.execPath,
+					args: [adapterEntry, ...(entry.args ?? [])],
+					env: {
+						...env,
+						// Packaged builds ship no `node` on PATH; Electron runs the
+						// script when this is set, and plain-node hosts ignore it.
+						ELECTRON_RUN_AS_NODE: "1",
+						...(entry.executableEnv
+							? { [entry.executableEnv]: cli.command }
+							: {}),
+					},
+				};
+			},
 		});
 }
 
 export function acpHarnessEntries(): [string, HarnessFactory][] {
 	const entries: [string, HarnessFactory][] = [];
-	for (const harness of Object.keys(ACP_ADAPTERS)) {
+	for (const harness of Object.keys(ACP_HARNESSES)) {
 		const factory = acpHarnessFactory(harness);
 		if (factory) entries.push([harness, factory]);
 	}

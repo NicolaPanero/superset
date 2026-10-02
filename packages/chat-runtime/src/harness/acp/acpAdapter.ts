@@ -127,6 +127,13 @@ const SESSION_STATUS_BY_ACP_STATE: Record<string, SessionState["status"]> = {
 };
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
+	/**
+	 * Where the agent actually is, for a host that has to do I/O to answer —
+	 * read the user's login shell, probe an installed CLI's version. Awaited
+	 * once per session, and throwing is how a host reports an agent it cannot
+	 * launch: the message reaches the reader as the session's error notice.
+	 */
+	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	now?: () => number;
 	mintId?: () => string;
 	createTransport?(
@@ -290,14 +297,15 @@ export class AcpAdapter implements HarnessAdapter {
 	private async bootstrap(startOptions: HarnessStartOptions): Promise<void> {
 		this.emitSession({ status: "starting" });
 		try {
+			const launch = await this.options.launch?.();
 			const client = new AcpRpcClient({
 				createTransport: (handlers) =>
 					(this.options.createTransport ?? spawnAcpTransport)(
 						{
-							command: this.options.command,
-							args: this.options.args,
+							command: launch?.command ?? this.options.command,
+							args: launch?.args ?? this.options.args,
 							cwd: startOptions.cwd,
-							env: this.options.env,
+							env: launch?.env ?? this.options.env,
 						},
 						handlers,
 					),

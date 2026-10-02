@@ -301,6 +301,26 @@ export async function getToolEnvironment(): Promise<Record<string, string>> {
 	return { ...env, ...getManagedEnv() };
 }
 
+/**
+ * The same env as `getToolEnvironment`, for a caller that cannot await — a
+ * harness whose `start` is synchronous. Returns the login shell's only once
+ * something has already asked for it; `warmToolEnvironment` is how a caller
+ * arranges that before the first use, and a cold read still has the macOS
+ * PATH repaired so Homebrew installs resolve.
+ */
+export function toolEnvironmentSync(): Record<string, string> {
+	if (cache && Date.now() - cacheTime < CACHE_TTL_MS) {
+		return { ...cache, ...getManagedEnv() };
+	}
+	const env = { ...process.env } as Record<string, string>;
+	augmentPathForMacOS(env);
+	return { ...env, ...getManagedEnv() };
+}
+
+export function warmToolEnvironment(): void {
+	void getStrictShellEnvironment().catch(() => undefined);
+}
+
 export function clearStrictShellEnvCache(): void {
 	cache = null;
 	cacheTime = 0;

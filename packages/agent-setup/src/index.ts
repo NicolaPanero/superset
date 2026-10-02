@@ -75,6 +75,7 @@ export {
 
 export { getCommandShellArgs, getShellArgs, getShellEnv };
 
+export { getWrapperPath } from "./agent-wrappers-common";
 export {
 	getAgentSetupTemplatesDir,
 	setAgentSetupTemplatesDir,
