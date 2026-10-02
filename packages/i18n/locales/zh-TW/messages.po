@@ -719,6 +719,9 @@ msgstr "已完成 {completed}/{total} 項"
 msgid "{configTitle} font size"
 msgstr "{configTitle}字型大小"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} 帳號"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}個cookie——忘記此站點"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic拒絕了此權杖。"
 msgid "any account"
 msgstr "任一帳號"
 
-msgid "Any account"
-msgstr "任一帳號"
-
 msgid "Any channel"
 msgstr "任意頻道"
 
@@ -2183,6 +2183,9 @@ msgstr "任意資料來源"
 
 msgid "Any issue event"
 msgstr "任意問題事件"
+
+msgid "any label"
+msgstr "任意標籤"
 
 msgid "Any label"
 msgstr "任意標籤"
@@ -2199,13 +2202,13 @@ msgstr "任意頁面"
 msgid "Any project"
 msgstr "任意專案"
 
-msgid "Any recipient"
+msgid "any recipient"
 msgstr "任意收件人"
 
 msgid "Any review"
 msgstr "任意審查"
 
-msgid "Any sender"
+msgid "any sender"
 msgstr "任意發件人"
 
 msgid "Any status"
@@ -5739,12 +5742,11 @@ msgstr "已放棄——不再詢問"
 msgid "Disconnect"
 msgstr "斷開連線"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "中斷 {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "中斷{credential}連線？"
+
+msgid "Disconnect {title}"
+msgstr "中斷 {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "斷開GitHub連線？"
@@ -9169,8 +9171,8 @@ msgstr "惡意軟體或釣魚"
 msgid "Manage"
 msgstr "管理"
 
-msgid "Manage {label}"
-msgstr "管理 {label}"
+msgid "Manage {title}"
+msgstr "管理 {title}"
 
 msgid "Manage accounts"
 msgstr "管理帳號"
@@ -12558,6 +12560,9 @@ msgstr "推薦尺寸256×256。"
 msgid "Reconnect"
 msgstr "重新連線"
 
+msgid "Reconnect {name}"
+msgstr "重新連線 {name}"
+
 msgid "Reconnect Google"
 msgstr "重新連線Google"
 
@@ -12801,6 +12806,9 @@ msgstr "重新命名"
 
 msgid "Rename {title}"
 msgstr "重新命名 {title}"
+
+msgid "Rename account"
+msgstr "重新命名帳號"
 
 msgid "Rename branch"
 msgstr "重新命名分支"
@@ -15760,6 +15768,9 @@ msgstr "謝謝，我們已收到"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "該 {plugin} 登入連結已過期。請重新連線。"
+
+msgid "That account is no longer connected — choose another."
+msgstr "該帳號已中斷連線，請選擇其他帳號。"
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "該代理工作階段還沒有可開啟的對話——它已啟動但從未收到指令。"

@@ -719,6 +719,9 @@ msgstr "Đã hoàn thành {completed}/{total}"
 msgid "{configTitle} font size"
 msgstr "Cỡ chữ {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "Tài khoản {connectorName}"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookie — quên trang này"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic đã từ chối token này."
 msgid "any account"
 msgstr "bất kỳ tài khoản nào"
 
-msgid "Any account"
-msgstr "Bất kỳ tài khoản nào"
-
 msgid "Any channel"
 msgstr "Kênh bất kỳ"
 
@@ -2183,6 +2183,9 @@ msgstr "Nguồn dữ liệu bất kỳ"
 
 msgid "Any issue event"
 msgstr "Sự kiện issue bất kỳ"
+
+msgid "any label"
+msgstr "nhãn bất kỳ"
 
 msgid "Any label"
 msgstr "Nhãn bất kỳ"
@@ -2199,14 +2202,14 @@ msgstr "Trang bất kỳ"
 msgid "Any project"
 msgstr "Dự án bất kỳ"
 
-msgid "Any recipient"
-msgstr "Người nhận bất kỳ"
+msgid "any recipient"
+msgstr "người nhận bất kỳ"
 
 msgid "Any review"
 msgstr "Review bất kỳ"
 
-msgid "Any sender"
-msgstr "Người gửi bất kỳ"
+msgid "any sender"
+msgstr "người gửi bất kỳ"
 
 msgid "Any status"
 msgstr "Trạng thái bất kỳ"
@@ -5739,12 +5742,11 @@ msgstr "Đã bỏ — sẽ không hỏi lại"
 msgid "Disconnect"
 msgstr "Ngắt kết nối"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Ngắt kết nối {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Ngắt kết nối {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Ngắt kết nối {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Ngắt kết nối GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Phần mềm độc hại hoặc lừa đảo"
 msgid "Manage"
 msgstr "Quản lý"
 
-msgid "Manage {label}"
-msgstr "Quản lý {label}"
+msgid "Manage {title}"
+msgstr "Quản lý {title}"
 
 msgid "Manage accounts"
 msgstr "Quản lý tài khoản"
@@ -12558,6 +12560,9 @@ msgstr "Kích thước khuyến nghị 256×256."
 msgid "Reconnect"
 msgstr "Kết nối lại"
 
+msgid "Reconnect {name}"
+msgstr "Kết nối lại {name}"
+
 msgid "Reconnect Google"
 msgstr "Kết nối lại Google"
 
@@ -12801,6 +12806,9 @@ msgstr "Đổi tên"
 
 msgid "Rename {title}"
 msgstr "Đổi tên {title}"
+
+msgid "Rename account"
+msgstr "Đổi tên tài khoản"
 
 msgid "Rename branch"
 msgstr "Đổi tên nhánh"
@@ -15760,6 +15768,9 @@ msgstr "Cảm ơn, chúng tôi đã nhận được"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Liên kết đăng nhập {plugin} đó đã hết hạn. Hãy thử kết nối lại."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Tài khoản đó không còn được kết nối — hãy chọn tài khoản khác."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Phiên tác nhân đó chưa có cuộc trò chuyện nào để mở — nó đã khởi động nhưng chưa từng nhận yêu cầu."

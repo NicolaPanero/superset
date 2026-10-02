@@ -719,6 +719,9 @@ msgstr "{total}개 중 {completed}개 완료"
 msgid "{configTitle} font size"
 msgstr "{configTitle} 글꼴 크기"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} 계정"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "쿠키 {cookieCount}개 — 이 사이트 잊기"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic이 이 토큰을 거부했습니다."
 msgid "any account"
 msgstr "모든 계정"
 
-msgid "Any account"
-msgstr "모든 계정"
-
 msgid "Any channel"
 msgstr "모든 채널"
 
@@ -2183,6 +2183,9 @@ msgstr "모든 데이터 소스"
 
 msgid "Any issue event"
 msgstr "모든 이슈 이벤트"
+
+msgid "any label"
+msgstr "모든 라벨"
 
 msgid "Any label"
 msgstr "모든 라벨"
@@ -2199,13 +2202,13 @@ msgstr "모든 페이지"
 msgid "Any project"
 msgstr "모든 프로젝트"
 
-msgid "Any recipient"
+msgid "any recipient"
 msgstr "모든 수신자"
 
 msgid "Any review"
 msgstr "모든 리뷰"
 
-msgid "Any sender"
+msgid "any sender"
 msgstr "모든 발신자"
 
 msgid "Any status"
@@ -5739,12 +5742,11 @@ msgstr "버렸습니다 — 다시 묻지 않습니다"
 msgid "Disconnect"
 msgstr "연결 해제"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "{0} 연결 해제"
-
 msgid "Disconnect {credential}?"
 msgstr "{credential} 연결을 해제할까요?"
+
+msgid "Disconnect {title}"
+msgstr "{title} 연결 해제"
 
 msgid "Disconnect GitHub?"
 msgstr "GitHub 연결을 해제할까요?"
@@ -9169,8 +9171,8 @@ msgstr "악성코드 또는 피싱"
 msgid "Manage"
 msgstr "관리"
 
-msgid "Manage {label}"
-msgstr "{label} 관리"
+msgid "Manage {title}"
+msgstr "{title} 관리"
 
 msgid "Manage accounts"
 msgstr "계정 관리"
@@ -12558,6 +12560,9 @@ msgstr "권장 크기 256×256."
 msgid "Reconnect"
 msgstr "다시 연결"
 
+msgid "Reconnect {name}"
+msgstr "{name} 다시 연결"
+
 msgid "Reconnect Google"
 msgstr "Google 다시 연결"
 
@@ -12801,6 +12806,9 @@ msgstr "이름 변경"
 
 msgid "Rename {title}"
 msgstr "{title} 이름 변경"
+
+msgid "Rename account"
+msgstr "계정 이름 변경"
 
 msgid "Rename branch"
 msgstr "브랜치 이름 변경"
@@ -15760,6 +15768,9 @@ msgstr "감사합니다. 접수되었습니다"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "해당 {plugin} 로그인 링크가 만료되었습니다. 다시 연결해 보세요."
+
+msgid "That account is no longer connected — choose another."
+msgstr "해당 계정은 더 이상 연결되어 있지 않습니다. 다른 계정을 선택하세요."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "이 에이전트 세션에는 아직 열 대화가 없습니다. 시작되었지만 한 번도 요청을 받지 않았습니다."

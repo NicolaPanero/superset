@@ -719,6 +719,9 @@ msgstr "{completed} dari {total} selesai"
 msgid "{configTitle} font size"
 msgstr "Ukuran font {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "Akun {connectorName}"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookie — lupakan situs ini"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic menolak token ini."
 msgid "any account"
 msgstr "akun apa pun"
 
-msgid "Any account"
-msgstr "Akun apa pun"
-
 msgid "Any channel"
 msgstr "Channel mana pun"
 
@@ -2183,6 +2183,9 @@ msgstr "Sumber data mana pun"
 
 msgid "Any issue event"
 msgstr "Event issue apa pun"
+
+msgid "any label"
+msgstr "label apa pun"
 
 msgid "Any label"
 msgstr "Label apa pun"
@@ -2199,14 +2202,14 @@ msgstr "Halaman mana pun"
 msgid "Any project"
 msgstr "Proyek mana pun"
 
-msgid "Any recipient"
-msgstr "Penerima mana pun"
+msgid "any recipient"
+msgstr "penerima mana pun"
 
 msgid "Any review"
 msgstr "Review apa pun"
 
-msgid "Any sender"
-msgstr "Pengirim mana pun"
+msgid "any sender"
+msgstr "pengirim mana pun"
 
 msgid "Any status"
 msgstr "Status apa pun"
@@ -5739,12 +5742,11 @@ msgstr "Dibuang — tidak akan ditanya lagi"
 msgid "Disconnect"
 msgstr "Putuskan"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Putuskan {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Putuskan {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Putuskan {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Putuskan GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Malware atau phishing"
 msgid "Manage"
 msgstr "Kelola"
 
-msgid "Manage {label}"
-msgstr "Kelola {label}"
+msgid "Manage {title}"
+msgstr "Kelola {title}"
 
 msgid "Manage accounts"
 msgstr "Kelola akun"
@@ -12558,6 +12560,9 @@ msgstr "Ukuran yang disarankan 256×256."
 msgid "Reconnect"
 msgstr "Hubungkan ulang"
 
+msgid "Reconnect {name}"
+msgstr "Hubungkan ulang {name}"
+
 msgid "Reconnect Google"
 msgstr "Hubungkan ulang Google"
 
@@ -12801,6 +12806,9 @@ msgstr "Ganti nama"
 
 msgid "Rename {title}"
 msgstr "Ganti nama {title}"
+
+msgid "Rename account"
+msgstr "Ganti nama akun"
 
 msgid "Rename branch"
 msgstr "Ganti nama branch"
@@ -15760,6 +15768,9 @@ msgstr "Terima kasih, laporan diterima"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Tautan masuk {plugin} itu telah kedaluwarsa. Coba hubungkan lagi."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Akun itu sudah tidak terhubung — pilih yang lain."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Sesi agen itu belum punya percakapan untuk dibuka — sudah dimulai tetapi belum pernah diberi perintah."

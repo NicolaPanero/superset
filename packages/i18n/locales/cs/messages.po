@@ -719,6 +719,9 @@ msgstr "Dokončeno {completed} z {total}"
 msgid "{configTitle} font size"
 msgstr "Velikost písma: {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "Účet {connectorName}"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomenout tento web"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic tento token odmítl."
 msgid "any account"
 msgstr "libovolný účet"
 
-msgid "Any account"
-msgstr "Libovolný účet"
-
 msgid "Any channel"
 msgstr "Jakýkoli kanál"
 
@@ -2183,6 +2183,9 @@ msgstr "Jakýkoli zdroj dat"
 
 msgid "Any issue event"
 msgstr "Jakákoli událost issue"
+
+msgid "any label"
+msgstr "jakýkoli štítek"
 
 msgid "Any label"
 msgstr "Jakýkoli štítek"
@@ -2199,14 +2202,14 @@ msgstr "Jakákoli stránka"
 msgid "Any project"
 msgstr "Jakýkoli projekt"
 
-msgid "Any recipient"
-msgstr "Jakýkoli příjemce"
+msgid "any recipient"
+msgstr "jakýkoli příjemce"
 
 msgid "Any review"
 msgstr "Jakákoli revize"
 
-msgid "Any sender"
-msgstr "Jakýkoli odesílatel"
+msgid "any sender"
+msgstr "jakýkoli odesílatel"
 
 msgid "Any status"
 msgstr "Jakýkoli stav"
@@ -5739,12 +5742,11 @@ msgstr "Zahozeno — příště se nezeptáme"
 msgid "Disconnect"
 msgstr "Odpojit"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Odpojit {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Odpojit {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Odpojit {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Odpojit GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Malware nebo phishing"
 msgid "Manage"
 msgstr "Spravovat"
 
-msgid "Manage {label}"
-msgstr "Spravovat {label}"
+msgid "Manage {title}"
+msgstr "Spravovat {title}"
 
 msgid "Manage accounts"
 msgstr "Správa účtů"
@@ -12558,6 +12560,9 @@ msgstr "Doporučená velikost 256×256."
 msgid "Reconnect"
 msgstr "Připojit znovu"
 
+msgid "Reconnect {name}"
+msgstr "Znovu připojit {name}"
+
 msgid "Reconnect Google"
 msgstr "Připojit Google znovu"
 
@@ -12801,6 +12806,9 @@ msgstr "Přejmenovat"
 
 msgid "Rename {title}"
 msgstr "Přejmenovat {title}"
+
+msgid "Rename account"
+msgstr "Přejmenovat účet"
 
 msgid "Rename branch"
 msgstr "Přejmenovat větev"
@@ -15760,6 +15768,9 @@ msgstr "Děkujeme, máme to"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Odkaz pro přihlášení k {plugin} vypršel. Zkuste se připojit znovu."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Tento účet už není připojený — vyberte jiný."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Tato agentní relace zatím nemá konverzaci k otevření — byla spuštěna, ale nikdy nedostala zadání."

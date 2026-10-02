@@ -719,6 +719,9 @@ msgstr "{completed} van {total} voltooid"
 msgid "{configTitle} font size"
 msgstr "Tekengrootte van {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "{connectorName}-account"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — deze site vergeten"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic heeft dit token geweigerd."
 msgid "any account"
 msgstr "elk account"
 
-msgid "Any account"
-msgstr "Elk account"
-
 msgid "Any channel"
 msgstr "Elk kanaal"
 
@@ -2183,6 +2183,9 @@ msgstr "Elke databron"
 
 msgid "Any issue event"
 msgstr "Elke issue-gebeurtenis"
+
+msgid "any label"
+msgstr "elk label"
 
 msgid "Any label"
 msgstr "Elk label"
@@ -2199,14 +2202,14 @@ msgstr "Elke pagina"
 msgid "Any project"
 msgstr "Elk project"
 
-msgid "Any recipient"
-msgstr "Elke ontvanger"
+msgid "any recipient"
+msgstr "elke ontvanger"
 
 msgid "Any review"
 msgstr "Elke review"
 
-msgid "Any sender"
-msgstr "Elke afzender"
+msgid "any sender"
+msgstr "elke afzender"
 
 msgid "Any status"
 msgstr "Elke status"
@@ -5739,12 +5742,11 @@ msgstr "Verworpen — we vragen het niet meer"
 msgid "Disconnect"
 msgstr "Verbinding verbreken"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "{0} loskoppelen"
-
 msgid "Disconnect {credential}?"
 msgstr "{credential} loskoppelen?"
+
+msgid "Disconnect {title}"
+msgstr "{title} loskoppelen"
 
 msgid "Disconnect GitHub?"
 msgstr "GitHub loskoppelen?"
@@ -9169,8 +9171,8 @@ msgstr "Malware of phishing"
 msgid "Manage"
 msgstr "Beheren"
 
-msgid "Manage {label}"
-msgstr "{label} beheren"
+msgid "Manage {title}"
+msgstr "{title} beheren"
 
 msgid "Manage accounts"
 msgstr "Accounts beheren"
@@ -12558,6 +12560,9 @@ msgstr "Aanbevolen formaat 256×256."
 msgid "Reconnect"
 msgstr "Opnieuw verbinden"
 
+msgid "Reconnect {name}"
+msgstr "{name} opnieuw verbinden"
+
 msgid "Reconnect Google"
 msgstr "Google opnieuw verbinden"
 
@@ -12801,6 +12806,9 @@ msgstr "Naam wijzigen"
 
 msgid "Rename {title}"
 msgstr "Naam van {title} wijzigen"
+
+msgid "Rename account"
+msgstr "Accountnaam wijzigen"
 
 msgid "Rename branch"
 msgstr "Branchnaam wijzigen"
@@ -15760,6 +15768,9 @@ msgstr "Bedankt, we hebben het ontvangen"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Die aanmeldlink voor {plugin} is verlopen. Probeer opnieuw verbinding te maken."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Dit account is niet meer verbonden — kies een ander."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Die agentsessie heeft nog geen gesprek om te openen — hij is gestart maar nooit aangestuurd."

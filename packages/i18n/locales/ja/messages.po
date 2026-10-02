@@ -719,6 +719,9 @@ msgstr "{total} 件中 {completed} 件完了"
 msgid "{configTitle} font size"
 msgstr "{configTitle}のフォントサイズ"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} アカウント"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}件のCookie — このサイトを削除"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropicがこのトークンを拒否しました。"
 msgid "any account"
 msgstr "すべてのアカウント"
 
-msgid "Any account"
-msgstr "すべてのアカウント"
-
 msgid "Any channel"
 msgstr "すべてのチャンネル"
 
@@ -2183,6 +2183,9 @@ msgstr "すべてのデータソース"
 
 msgid "Any issue event"
 msgstr "すべてのIssueイベント"
+
+msgid "any label"
+msgstr "すべてのラベル"
 
 msgid "Any label"
 msgstr "すべてのラベル"
@@ -2199,13 +2202,13 @@ msgstr "すべてのページ"
 msgid "Any project"
 msgstr "すべてのプロジェクト"
 
-msgid "Any recipient"
+msgid "any recipient"
 msgstr "すべての宛先"
 
 msgid "Any review"
 msgstr "すべてのレビュー"
 
-msgid "Any sender"
+msgid "any sender"
 msgstr "すべての送信者"
 
 msgid "Any status"
@@ -5739,12 +5742,11 @@ msgstr "破棄しました — 今後は確認しません"
 msgid "Disconnect"
 msgstr "切断"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "{0} を切断"
-
 msgid "Disconnect {credential}?"
 msgstr "{credential}の接続を解除しますか？"
+
+msgid "Disconnect {title}"
+msgstr "{title} を切断"
 
 msgid "Disconnect GitHub?"
 msgstr "GitHubの接続を解除しますか?"
@@ -9169,8 +9171,8 @@ msgstr "マルウェアまたはフィッシング"
 msgid "Manage"
 msgstr "管理"
 
-msgid "Manage {label}"
-msgstr "{label} を管理"
+msgid "Manage {title}"
+msgstr "{title} を管理"
 
 msgid "Manage accounts"
 msgstr "アカウントを管理"
@@ -12558,6 +12560,9 @@ msgstr "推奨サイズは256×256です。"
 msgid "Reconnect"
 msgstr "再接続"
 
+msgid "Reconnect {name}"
+msgstr "{name} を再接続"
+
 msgid "Reconnect Google"
 msgstr "Googleを再接続"
 
@@ -12801,6 +12806,9 @@ msgstr "名前を変更"
 
 msgid "Rename {title}"
 msgstr "{title} の名前を変更"
+
+msgid "Rename account"
+msgstr "アカウント名を変更"
 
 msgid "Rename branch"
 msgstr "ブランチ名を変更"
@@ -15760,6 +15768,9 @@ msgstr "ありがとうございます。受け付けました"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "{plugin} のサインインリンクの有効期限が切れました。もう一度接続してください。"
+
+msgid "That account is no longer connected — choose another."
+msgstr "このアカウントは接続されていません。別のアカウントを選択してください。"
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "このエージェントセッションにはまだ開ける会話がありません。開始されましたが、一度も指示を受けていません。"

@@ -719,6 +719,9 @@ msgstr "已完成 {completed}/{total} 项"
 msgid "{configTitle} font size"
 msgstr "{configTitle}字号"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} 账号"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount}个cookie——忘记此站点"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic拒绝了此令牌。"
 msgid "any account"
 msgstr "任意账号"
 
-msgid "Any account"
-msgstr "任意账号"
-
 msgid "Any channel"
 msgstr "任意频道"
 
@@ -2183,6 +2183,9 @@ msgstr "任意数据源"
 
 msgid "Any issue event"
 msgstr "任意问题事件"
+
+msgid "any label"
+msgstr "任意标签"
 
 msgid "Any label"
 msgstr "任意标签"
@@ -2199,13 +2202,13 @@ msgstr "任意页面"
 msgid "Any project"
 msgstr "任意项目"
 
-msgid "Any recipient"
+msgid "any recipient"
 msgstr "任意收件人"
 
 msgid "Any review"
 msgstr "任意审查"
 
-msgid "Any sender"
+msgid "any sender"
 msgstr "任意发件人"
 
 msgid "Any status"
@@ -5739,12 +5742,11 @@ msgstr "已放弃——不再询问"
 msgid "Disconnect"
 msgstr "断开连接"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "断开 {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "断开{credential}？"
+
+msgid "Disconnect {title}"
+msgstr "断开 {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "断开GitHub连接？"
@@ -9169,8 +9171,8 @@ msgstr "恶意软件或钓鱼"
 msgid "Manage"
 msgstr "管理"
 
-msgid "Manage {label}"
-msgstr "管理 {label}"
+msgid "Manage {title}"
+msgstr "管理 {title}"
 
 msgid "Manage accounts"
 msgstr "管理账号"
@@ -12558,6 +12560,9 @@ msgstr "推荐尺寸256×256。"
 msgid "Reconnect"
 msgstr "重新连接"
 
+msgid "Reconnect {name}"
+msgstr "重新连接 {name}"
+
 msgid "Reconnect Google"
 msgstr "重新连接Google"
 
@@ -12801,6 +12806,9 @@ msgstr "重命名"
 
 msgid "Rename {title}"
 msgstr "重命名 {title}"
+
+msgid "Rename account"
+msgstr "重命名账号"
 
 msgid "Rename branch"
 msgstr "重命名分支"
@@ -15760,6 +15768,9 @@ msgstr "谢谢，我们已收到"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "该 {plugin} 登录链接已过期。请重新连接。"
+
+msgid "That account is no longer connected — choose another."
+msgstr "该账号已断开连接，请选择其他账号。"
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "该智能体会话还没有可打开的对话——它已启动但从未收到指令。"

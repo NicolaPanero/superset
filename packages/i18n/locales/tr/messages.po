@@ -719,6 +719,9 @@ msgstr "{total} adımdan {completed} tanesi tamamlandı"
 msgid "{configTitle} font size"
 msgstr "{configTitle} yazı tipi boyutu"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} hesabı"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} çerez — bu siteyi unut"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic bu token'ı reddetti."
 msgid "any account"
 msgstr "herhangi bir hesap"
 
-msgid "Any account"
-msgstr "Herhangi bir hesap"
-
 msgid "Any channel"
 msgstr "Tüm kanallar"
 
@@ -2183,6 +2183,9 @@ msgstr "Tüm veri kaynakları"
 
 msgid "Any issue event"
 msgstr "Tüm issue olayları"
+
+msgid "any label"
+msgstr "tüm etiketler"
 
 msgid "Any label"
 msgstr "Tüm etiketler"
@@ -2199,14 +2202,14 @@ msgstr "Tüm sayfalar"
 msgid "Any project"
 msgstr "Tüm projeler"
 
-msgid "Any recipient"
-msgstr "Tüm alıcılar"
+msgid "any recipient"
+msgstr "tüm alıcılar"
 
 msgid "Any review"
 msgstr "Tüm incelemeler"
 
-msgid "Any sender"
-msgstr "Tüm gönderenler"
+msgid "any sender"
+msgstr "tüm gönderenler"
 
 msgid "Any status"
 msgstr "Tüm durumlar"
@@ -5739,12 +5742,11 @@ msgstr "Atıldı — bir daha sorulmayacak"
 msgid "Disconnect"
 msgstr "Bağlantıyı kes"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "{0} bağlantısını kes"
-
 msgid "Disconnect {credential}?"
 msgstr "{credential} bağlantısı kesilsin mi?"
+
+msgid "Disconnect {title}"
+msgstr "{title} bağlantısını kes"
 
 msgid "Disconnect GitHub?"
 msgstr "GitHub bağlantısı kesilsin mi?"
@@ -9169,8 +9171,8 @@ msgstr "Kötü amaçlı yazılım veya kimlik avı"
 msgid "Manage"
 msgstr "Yönet"
 
-msgid "Manage {label}"
-msgstr "{label} yönet"
+msgid "Manage {title}"
+msgstr "{title} yönet"
 
 msgid "Manage accounts"
 msgstr "Hesapları yönet"
@@ -12558,6 +12560,9 @@ msgstr "Önerilen boyut 256×256."
 msgid "Reconnect"
 msgstr "Yeniden bağlan"
 
+msgid "Reconnect {name}"
+msgstr "{name} hesabını yeniden bağla"
+
 msgid "Reconnect Google"
 msgstr "Google'a yeniden bağlan"
 
@@ -12801,6 +12806,9 @@ msgstr "Yeniden adlandır"
 
 msgid "Rename {title}"
 msgstr "{title} adını değiştir"
+
+msgid "Rename account"
+msgstr "Hesabı yeniden adlandır"
 
 msgid "Rename branch"
 msgstr "Dalı yeniden adlandır"
@@ -15760,6 +15768,9 @@ msgstr "Teşekkürler, aldık"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Bu {plugin} oturum açma bağlantısının süresi doldu. Yeniden bağlanmayı deneyin."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Bu hesap artık bağlı değil — başka bir hesap seçin."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Bu aracı oturumunda açılacak bir konuşma yok — başlatıldı ama hiç istek almadı."

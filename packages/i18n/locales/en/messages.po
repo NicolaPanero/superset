@@ -719,6 +719,9 @@ msgstr "{completed} of {total} completed"
 msgid "{configTitle} font size"
 msgstr "{configTitle} font size"
 
+msgid "{connectorName} account"
+msgstr "{connectorName} account"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — forget this site"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic rejected this token."
 msgid "any account"
 msgstr "any account"
 
-msgid "Any account"
-msgstr "Any account"
-
 msgid "Any channel"
 msgstr "Any channel"
 
@@ -2183,6 +2183,9 @@ msgstr "Any data source"
 
 msgid "Any issue event"
 msgstr "Any issue event"
+
+msgid "any label"
+msgstr "any label"
 
 msgid "Any label"
 msgstr "Any label"
@@ -2199,14 +2202,14 @@ msgstr "Any page"
 msgid "Any project"
 msgstr "Any project"
 
-msgid "Any recipient"
-msgstr "Any recipient"
+msgid "any recipient"
+msgstr "any recipient"
 
 msgid "Any review"
 msgstr "Any review"
 
-msgid "Any sender"
-msgstr "Any sender"
+msgid "any sender"
+msgstr "any sender"
 
 msgid "Any status"
 msgstr "Any status"
@@ -5739,12 +5742,11 @@ msgstr "Discarded — won't ask again"
 msgid "Disconnect"
 msgstr "Disconnect"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Disconnect {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Disconnect {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Disconnect {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Disconnect GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Malware or phishing"
 msgid "Manage"
 msgstr "Manage"
 
-msgid "Manage {label}"
-msgstr "Manage {label}"
+msgid "Manage {title}"
+msgstr "Manage {title}"
 
 msgid "Manage accounts"
 msgstr "Manage accounts"
@@ -12558,6 +12560,9 @@ msgstr "Recommended size 256×256."
 msgid "Reconnect"
 msgstr "Reconnect"
 
+msgid "Reconnect {name}"
+msgstr "Reconnect {name}"
+
 msgid "Reconnect Google"
 msgstr "Reconnect Google"
 
@@ -12801,6 +12806,9 @@ msgstr "Rename"
 
 msgid "Rename {title}"
 msgstr "Rename {title}"
+
+msgid "Rename account"
+msgstr "Rename account"
 
 msgid "Rename branch"
 msgstr "Rename branch"
@@ -15760,6 +15768,9 @@ msgstr "Thanks, we got it"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "That {plugin} sign-in link expired. Try connecting again."
+
+msgid "That account is no longer connected — choose another."
+msgstr "That account is no longer connected — choose another."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "That agent session has no conversation to open yet — it was started but never prompted."

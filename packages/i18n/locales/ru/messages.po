@@ -719,6 +719,9 @@ msgstr "Завершено {completed} из {total}"
 msgid "{configTitle} font size"
 msgstr "Размер шрифта: {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "Аккаунт {connectorName}"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — забыть этот сайт"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic отклонил этот токен."
 msgid "any account"
 msgstr "любой аккаунт"
 
-msgid "Any account"
-msgstr "Любой аккаунт"
-
 msgid "Any channel"
 msgstr "Любой канал"
 
@@ -2183,6 +2183,9 @@ msgstr "Любой источник данных"
 
 msgid "Any issue event"
 msgstr "Любое событие задачи"
+
+msgid "any label"
+msgstr "любая метка"
 
 msgid "Any label"
 msgstr "Любая метка"
@@ -2199,14 +2202,14 @@ msgstr "Любая страница"
 msgid "Any project"
 msgstr "Любой проект"
 
-msgid "Any recipient"
-msgstr "Любой получатель"
+msgid "any recipient"
+msgstr "любой получатель"
 
 msgid "Any review"
 msgstr "Любое ревью"
 
-msgid "Any sender"
-msgstr "Любой отправитель"
+msgid "any sender"
+msgstr "любой отправитель"
 
 msgid "Any status"
 msgstr "Любой статус"
@@ -5739,12 +5742,11 @@ msgstr "Изменения отменены — больше не спросим
 msgid "Disconnect"
 msgstr "Отключить"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Отключить {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Отключить {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Отключить {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Отключить GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Вредоносное ПО или фишинг"
 msgid "Manage"
 msgstr "Управлять"
 
-msgid "Manage {label}"
-msgstr "Управление {label}"
+msgid "Manage {title}"
+msgstr "Управление {title}"
 
 msgid "Manage accounts"
 msgstr "Управление аккаунтами"
@@ -12558,6 +12560,9 @@ msgstr "Рекомендуемый размер 256×256."
 msgid "Reconnect"
 msgstr "Переподключить"
 
+msgid "Reconnect {name}"
+msgstr "Переподключить {name}"
+
 msgid "Reconnect Google"
 msgstr "Переподключить Google"
 
@@ -12801,6 +12806,9 @@ msgstr "Переименовать"
 
 msgid "Rename {title}"
 msgstr "Переименовать {title}"
+
+msgid "Rename account"
+msgstr "Переименовать аккаунт"
 
 msgid "Rename branch"
 msgstr "Переименовать ветку"
@@ -15760,6 +15768,9 @@ msgstr "Спасибо, мы получили жалобу"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Срок действия ссылки для входа в {plugin} истёк. Попробуйте подключиться снова."
+
+msgid "That account is no longer connected — choose another."
+msgstr "Этот аккаунт больше не подключён — выберите другой."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "У этой сессии агента пока нет разговора, который можно открыть: она была запущена, но ни разу не получила запрос."

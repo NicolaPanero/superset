@@ -719,6 +719,9 @@ msgstr "Ukończono {completed} z {total}"
 msgid "{configTitle} font size"
 msgstr "Rozmiar czcionki: {configTitle}"
 
+msgid "{connectorName} account"
+msgstr "Konto {connectorName}"
+
 msgid "{cookieCount} cookies — forget this site"
 msgstr "{cookieCount} cookies — zapomnij tę witrynę"
 
@@ -2169,9 +2172,6 @@ msgstr "Anthropic odrzucił ten token."
 msgid "any account"
 msgstr "dowolne konto"
 
-msgid "Any account"
-msgstr "Dowolne konto"
-
 msgid "Any channel"
 msgstr "Dowolny kanał"
 
@@ -2183,6 +2183,9 @@ msgstr "Dowolne źródło danych"
 
 msgid "Any issue event"
 msgstr "Dowolne zdarzenie zgłoszenia"
+
+msgid "any label"
+msgstr "dowolna etykieta"
 
 msgid "Any label"
 msgstr "Dowolna etykieta"
@@ -2199,14 +2202,14 @@ msgstr "Dowolna strona"
 msgid "Any project"
 msgstr "Dowolny projekt"
 
-msgid "Any recipient"
-msgstr "Dowolny odbiorca"
+msgid "any recipient"
+msgstr "dowolny odbiorca"
 
 msgid "Any review"
 msgstr "Dowolny przegląd"
 
-msgid "Any sender"
-msgstr "Dowolny nadawca"
+msgid "any sender"
+msgstr "dowolny nadawca"
 
 msgid "Any status"
 msgstr "Dowolny status"
@@ -5739,12 +5742,11 @@ msgstr "Odrzucono — nie zapytamy ponownie"
 msgid "Disconnect"
 msgstr "Rozłącz"
 
-#. placeholder {0}: who ?? where ?? ""
-msgid "Disconnect {0}"
-msgstr "Odłącz {0}"
-
 msgid "Disconnect {credential}?"
 msgstr "Odłączyć {credential}?"
+
+msgid "Disconnect {title}"
+msgstr "Odłącz {title}"
 
 msgid "Disconnect GitHub?"
 msgstr "Rozłączyć GitHub?"
@@ -9169,8 +9171,8 @@ msgstr "Złośliwe oprogramowanie lub phishing"
 msgid "Manage"
 msgstr "Zarządzaj"
 
-msgid "Manage {label}"
-msgstr "Zarządzaj {label}"
+msgid "Manage {title}"
+msgstr "Zarządzaj {title}"
 
 msgid "Manage accounts"
 msgstr "Zarządzaj kontami"
@@ -12558,6 +12560,9 @@ msgstr "Zalecany rozmiar 256×256."
 msgid "Reconnect"
 msgstr "Połącz ponownie"
 
+msgid "Reconnect {name}"
+msgstr "Połącz ponownie {name}"
+
 msgid "Reconnect Google"
 msgstr "Połącz Google ponownie"
 
@@ -12801,6 +12806,9 @@ msgstr "Zmień nazwę"
 
 msgid "Rename {title}"
 msgstr "Zmień nazwę {title}"
+
+msgid "Rename account"
+msgstr "Zmień nazwę konta"
 
 msgid "Rename branch"
 msgstr "Zmień nazwę gałęzi"
@@ -15760,6 +15768,9 @@ msgstr "Dzięki, mamy to"
 
 msgid "That {plugin} sign-in link expired. Try connecting again."
 msgstr "Ten link logowania do {plugin} wygasł. Spróbuj połączyć się ponownie."
+
+msgid "That account is no longer connected — choose another."
+msgstr "To konto nie jest już połączone — wybierz inne."
 
 msgid "That agent session has no conversation to open yet — it was started but never prompted."
 msgstr "Ta sesja agenta nie ma jeszcze rozmowy do otwarcia — została uruchomiona, ale nigdy nie dostała polecenia."
