@@ -9,6 +9,9 @@ export default command({
 	// will not carry SUPERSET_CLI_AUDIENCE=internal. `auth` is also where the
 	// credential it prints comes from.
 	audience: "public",
+	// Runnable but unlisted: a person never types this, an agent's headers
+	// helper does. Internal would have made it absent rather than quiet.
+	hidden: true,
 	// A cloud workspace holds no credential at all: the firewall attaches one
 	// on the way out, naming the workspace rather than a person. There is
 	// nothing here to print, and printing an empty Bearer would look like
