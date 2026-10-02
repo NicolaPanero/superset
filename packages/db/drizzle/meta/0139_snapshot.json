@@ -1,5 +1,5 @@
 {
-  "id": "c55004f6-b6cb-4d24-9165-eb5578b8b90e",
+  "id": "80e9e24d-ca6c-4638-9dcb-841d3433a839",
   "prevId": "f060d33a-36f4-4d3d-99f1-755b7aa29ad1",
   "version": "7",
   "dialect": "postgresql",
@@ -7130,12 +7130,6 @@
         },
         "external_user_label": {
           "name": "external_user_label",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "nickname": {
-          "name": "nickname",
           "type": "text",
           "primaryKey": false,
           "notNull": false
