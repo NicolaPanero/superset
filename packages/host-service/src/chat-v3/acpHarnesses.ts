@@ -3,25 +3,9 @@ import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
 import type { HostDb } from "../db";
-import catalogue from "./acp-harnesses.json" with { type: "json" };
+import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
-
-type AcpHarness = {
-	registryId: string;
-	binary: string;
-	args?: string[];
-	minVersion: string;
-	upgrade?: string;
-	adapter?: string;
-	executableEnv?: string;
-};
-
-const ACP_HARNESSES = Object.fromEntries(
-	Object.entries(catalogue as unknown as Record<string, AcpHarness>).filter(
-		([key]) => !key.startsWith("$"),
-	),
-);
 
 function resolveAdapterEntry(packageName: string): string {
 	const moduleRequire = createRequire(import.meta.url);

@@ -5,12 +5,12 @@ import { promisify } from "node:util";
 import { getBinDir } from "@superset/agent-setup";
 import { coerce, gte } from "semver";
 import { waitForTerminalBaseEnv } from "../terminal/env";
+import { UNGATED_VERSION } from "./acpCatalogue";
 
 const execFileAsync = promisify(execFile);
 
 const VERSION_TIMEOUT_MS = 10_000;
 const CACHE_TTL_MS = 60_000;
-const UNGATED = "0.0.0";
 
 export type AgentCli = {
 	command: string;
@@ -95,7 +95,9 @@ export function agentCliUnsupported(options: {
 }): string {
 	const upgrade = options.upgrade ? ` Upgrade with: ${options.upgrade}` : "";
 	const wanted =
-		UNGATED === options.minVersion ? "" : ` ${options.minVersion} or newer`;
+		UNGATED_VERSION === options.minVersion
+			? ""
+			: ` ${options.minVersion} or newer`;
 	if (!options.found) {
 		return (
 			`${options.binary} was not found, so this chat cannot start. Install` +
@@ -106,7 +108,7 @@ export function agentCliUnsupported(options: {
 }
 
 function meetsFloor(found: string, minVersion: string): boolean {
-	if (minVersion === UNGATED) return true;
+	if (minVersion === UNGATED_VERSION) return true;
 	const coerced = coerce(found);
 	return !coerced || gte(coerced, minVersion);
 }
