@@ -47,6 +47,7 @@ export function LinkedTaskSection({ taskId }: LinkedTaskSectionProps) {
 					to="/tasks/$taskId"
 					params={{ taskId: task.id }}
 					className="group/task flex min-w-0 flex-1 items-center gap-1.5 text-left hover:text-foreground"
+					title={task.title}
 					onFocus={handleLinkFocus}
 					onBlur={handleLinkBlur}
 				>
