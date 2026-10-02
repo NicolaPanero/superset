@@ -115,10 +115,10 @@ export async function resolveAgentCli(options: {
 	binary: string;
 	minVersion: string;
 	upgrade?: string;
-	env: NodeJS.ProcessEnv;
+	env: () => NodeJS.ProcessEnv;
 }): Promise<AgentCli> {
 	await waitForTerminalBaseEnv();
-	const env = options.env;
+	const env = options.env();
 	const command = agentCliCommand(options.binary, env);
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {

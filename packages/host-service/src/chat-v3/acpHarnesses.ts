@@ -29,11 +29,6 @@ function resolveAdapterEntry(packageName: string): string {
 	return join(dirname(pkgJson), "dist/index.js");
 }
 
-function withoutAmbientKeys(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
-	const { ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, ...rest } = env;
-	return rest;
-}
-
 export function acpHarnessFactory(
 	harness: string,
 	db: HostDb,
@@ -59,13 +54,14 @@ export function acpHarnessFactory(
 					binary: entry.binary,
 					minVersion: entry.minVersion,
 					upgrade: entry.upgrade,
-					env: buildChatAgentEnv({
-						db,
-						cwd: options.cwd,
-						workspaceId: options.scopeId,
-					}),
+					env: () =>
+						buildChatAgentEnv({
+							db,
+							cwd: options.cwd,
+							workspaceId: options.scopeId,
+						}),
 				});
-				const env = withoutAmbientKeys(cli.env);
+				const env = cli.env;
 				if (!adapterEntry) {
 					return { command: cli.command, args: entry.args, env };
 				}

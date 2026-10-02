@@ -25,10 +25,19 @@ function withSupersetBinFirst(
 	env: Record<string, string>,
 ): Record<string, string> {
 	const binDir = getBinDir();
-	const entries = (env.PATH ?? "")
+	const key =
+		Object.keys(env).find((name) => name.toUpperCase() === "PATH") ?? "PATH";
+	const entries = (env[key] ?? "")
 		.split(delimiter)
 		.filter((entry) => entry && entry !== binDir);
-	return { ...env, PATH: [binDir, ...entries].join(delimiter) };
+	return { ...env, [key]: [binDir, ...entries].join(delimiter) };
+}
+
+function withoutAmbientKeys(
+	env: Record<string, string>,
+): Record<string, string> {
+	const { ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, ...rest } = env;
+	return rest;
 }
 
 export function buildChatAgentEnv(options: {
@@ -36,24 +45,33 @@ export function buildChatAgentEnv(options: {
 	cwd: string;
 	workspaceId: string;
 }): Record<string, string> {
-	const baseEnv = getTerminalBaseEnv();
+	let baseEnv: Record<string, string>;
+	try {
+		baseEnv = getTerminalBaseEnv();
+	} catch {
+		throw new Error(
+			"Chat is still starting up and cannot reach your shell environment yet. Try again in a moment.",
+		);
+	}
 	const supersetHomeDir = resolveSupersetHomeDir();
-	return withSupersetBinFirst({
-		...buildV2TerminalEnv({
-			baseEnv,
-			shell: resolveLaunchShell(baseEnv),
-			supersetHomeDir,
-			organizationId: process.env.ORGANIZATION_ID || "",
-			cwd: options.cwd,
-			terminalId: "",
-			workspaceId: options.workspaceId,
-			workspacePath: options.cwd,
-			rootPath: rootPathFor(options.db, options.workspaceId),
-			supersetEnv:
-				process.env.NODE_ENV === "development" ? "development" : "production",
-			agentHookPort: process.env.SUPERSET_AGENT_HOOK_PORT || "",
-			agentHookVersion: process.env.SUPERSET_AGENT_HOOK_VERSION || "",
+	return withoutAmbientKeys(
+		withSupersetBinFirst({
+			...buildV2TerminalEnv({
+				baseEnv,
+				shell: resolveLaunchShell(baseEnv),
+				supersetHomeDir,
+				organizationId: process.env.ORGANIZATION_ID || "",
+				cwd: options.cwd,
+				terminalId: "",
+				workspaceId: options.workspaceId,
+				workspacePath: options.cwd,
+				rootPath: rootPathFor(options.db, options.workspaceId),
+				supersetEnv:
+					process.env.NODE_ENV === "development" ? "development" : "production",
+				agentHookPort: process.env.SUPERSET_AGENT_HOOK_PORT || "",
+				agentHookVersion: process.env.SUPERSET_AGENT_HOOK_VERSION || "",
+			}),
+			...resolveDefaultAccountTerminalEnv(options.db),
 		}),
-		...resolveDefaultAccountTerminalEnv(options.db),
-	});
+	);
 }
