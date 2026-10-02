@@ -7,7 +7,7 @@ import {
 	DialogTitle,
 } from "@superset/ui/dialog";
 import { toast } from "@superset/ui/sonner";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -51,7 +51,6 @@ export function TemplateGalleryModal({
 	const { data: homeDir } = electronTrpc.window.getHomeDir.useQuery();
 	const parentDir = homeDir ? `${homeDir}/.superset/projects` : null;
 	const [cloningId, setCloningId] = useState<string | null>(null);
-	const cloneAbortRef = useRef<AbortController | null>(null);
 
 	const handleSelect = async (template: ProjectTemplate) => {
 		if (!template.repo || cloningId) return;
@@ -61,8 +60,6 @@ export function TemplateGalleryModal({
 			else toast.error("Could not create project", { description: message });
 			return;
 		}
-		const abort = new AbortController();
-		cloneAbortRef.current = abort;
 		setCloningId(template.id);
 		let createdProjectId: string | null = null;
 		try {
@@ -74,14 +71,10 @@ export function TemplateGalleryModal({
 					return;
 				}
 				const client = getHostServiceClientByUrl(activeHostUrl);
-				const result = await client.project.create.mutate(
-					{
-						name: deriveProjectNameFromUrl(template.repo),
-						mode: { kind: "template", parentDir, url: template.repo },
-					},
-					{ signal: abort.signal },
-				);
-				if (abort.signal.aborted) return;
+				const result = await client.project.create.mutate({
+					name: deriveProjectNameFromUrl(template.repo),
+					mode: { kind: "template", parentDir, url: template.repo },
+				});
 				finalizeSetup(activeHostUrl, result);
 				createdProjectId = result.projectId;
 			} else {
@@ -91,26 +84,17 @@ export function TemplateGalleryModal({
 				});
 			}
 		} catch (err) {
-			if (abort.signal.aborted) return;
 			const message = errorMessage(err);
 			if (onError) onError(message);
 			else toast.error("Could not create project", { description: message });
 		} finally {
-			if (cloneAbortRef.current === abort) {
-				cloneAbortRef.current = null;
-				setCloningId(null);
-			}
+			setCloningId(null);
 		}
-		if (createdProjectId && !abort.signal.aborted)
-			onCreated({ projectId: createdProjectId });
+		if (createdProjectId) onCreated({ projectId: createdProjectId });
 	};
 
 	const handleOpenChange = (next: boolean) => {
-		if (!next) {
-			cloneAbortRef.current?.abort();
-			cloneAbortRef.current = null;
-			setCloningId(null);
-		}
+		if (!next && cloningId) return;
 		onOpenChange(next);
 	};
 

@@ -652,7 +652,6 @@ export const projectRouter = router({
 						name: input.name,
 						parentDir: input.mode.parentDir,
 						url: input.mode.url,
-						signal,
 					});
 				case "clone":
 					return createFromClone(ctx, {

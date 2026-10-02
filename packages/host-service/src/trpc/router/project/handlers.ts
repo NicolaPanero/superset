@@ -166,14 +166,13 @@ export async function createFromEmpty(
  */
 export async function createFromTemplate(
 	ctx: HostServiceContext,
-	args: { name: string; parentDir: string; url: string; signal?: AbortSignal },
+	args: { name: string; parentDir: string; url: string },
 ): Promise<CreateResult> {
 	const resolved = await cloneTemplateInto(
 		args.url,
 		args.parentDir,
 		dirNameForEmpty(args.name),
 		ctx.credentials,
-		args.signal,
 	);
 	return persistFromResolved(ctx, {
 		name: args.name,
