@@ -4116,6 +4116,9 @@ msgstr "Đang kết nối"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Máy chủ này chưa cấu hình kết nối GitHub"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "Khi kết nối, các agent của bạn có thể đọc và thao tác trong {displayName} thay bạn. Hãy xem lại những gì bạn cấp trước khi tiếp tục."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Kết nối cho phép các tác nhân của bạn đọc và thao tác trong {name} thay mặt bạn. Hãy xem lại những gì bạn đang cấp trước khi tiếp tục."
 
@@ -9880,6 +9883,9 @@ msgstr "Cách tiếp cận hay"
 
 msgid "Nice, open a PR when ready."
 msgstr "Tốt, mở PR khi sẵn sàng nhé."
+
+msgid "Nickname"
+msgstr "Tên gọi"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

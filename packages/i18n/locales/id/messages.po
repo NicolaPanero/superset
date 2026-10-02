@@ -4116,6 +4116,9 @@ msgstr "Menghubungkan"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Koneksi GitHub belum dikonfigurasi di server ini"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "Setelah terhubung, agen kamu bisa membaca dan bertindak di {displayName} atas namamu. Tinjau apa yang kamu berikan sebelum melanjutkan."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Menghubungkan memungkinkan agen Anda membaca dan bertindak di {name} atas nama Anda. Tinjau apa yang Anda berikan sebelum melanjutkan."
 
@@ -9880,6 +9883,9 @@ msgstr "Pendekatan yang bagus"
 
 msgid "Nice, open a PR when ready."
 msgstr "Bagus, buka PR kalau sudah siap."
+
+msgid "Nickname"
+msgstr "Nama panggilan"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

@@ -4116,6 +4116,9 @@ msgstr "连接中"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "此服务器未配置 GitHub 连接"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "连接后，你的智能体可以代表你在 {displayName} 中读取和操作。继续前请确认你授予的权限。"
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "连接后，你的智能体可代表你在 {name} 中读取和操作。继续前请检查你授予的权限。"
 
@@ -9880,6 +9883,9 @@ msgstr "思路不错"
 
 msgid "Nice, open a PR when ready."
 msgstr "不错，准备好就开个PR。"
+
+msgid "Nickname"
+msgstr "昵称"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

@@ -4116,6 +4116,9 @@ msgstr "Verbinden"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "GitHub koppelen is niet ingesteld op deze server"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "Door te verbinden kunnen je agents in {displayName} lezen en handelen namens jou. Controleer wat je toestaat voordat je doorgaat."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Verbinden laat je agents in {name} lezen en handelen namens jou. Controleer wat je verleent voordat je doorgaat."
 
@@ -9880,6 +9883,9 @@ msgstr "Goede aanpak"
 
 msgid "Nice, open a PR when ready."
 msgstr "Mooi, open een PR als het klaar is."
+
+msgid "Nickname"
+msgstr "Bijnaam"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

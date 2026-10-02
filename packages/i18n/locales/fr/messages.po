@@ -4116,6 +4116,9 @@ msgstr "Connexion"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "La connexion GitHub n'est pas configurée sur ce serveur"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "En connectant, vos agents peuvent lire et agir dans {displayName} en votre nom. Vérifiez ce que vous accordez avant de continuer."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "La connexion permet à vos agents de lire et d'agir dans {name} en votre nom. Vérifiez ce que vous accordez avant de continuer."
 
@@ -9880,6 +9883,9 @@ msgstr "Bonne approche"
 
 msgid "Nice, open a PR when ready."
 msgstr "Parfait, ouvre une pull request quand c'est prêt."
+
+msgid "Nickname"
+msgstr "Surnom"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

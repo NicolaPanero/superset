@@ -4116,6 +4116,9 @@ msgstr "Bağlanılıyor"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Bu sunucuda GitHub bağlantısı yapılandırılmamış"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "Bağladığında ajanlarin {displayName} içinde senin adına okuyabilir ve işlem yapabilir. Devam etmeden önce neyi verdiğini gözden geçir."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Bağlanmak, aracılarınızın {name} içinde sizin adınıza okuma ve işlem yapmasına izin verir. Devam etmeden önce neyi verdiğinizi gözden geçirin."
 
@@ -9880,6 +9883,9 @@ msgstr "Güzel yaklaşım"
 
 msgid "Nice, open a PR when ready."
 msgstr "Güzel, hazır olduğunda bir PR aç."
+
+msgid "Nickname"
+msgstr "Takma ad"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

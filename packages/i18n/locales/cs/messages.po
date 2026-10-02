@@ -4116,6 +4116,9 @@ msgstr "Připojuji"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Připojení ke GitHubu není na tomto serveru nastaveno"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "Po připojení mohou tvoji agenti číst a jednat v {displayName} tvým jménem. Zkontroluj, co uděluješ, než budeš pokračovat."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Připojením umožníte svým agentům číst a jednat v {name} vaším jménem. Než budete pokračovat, zkontrolujte, co udělujete."
 
@@ -9880,6 +9883,9 @@ msgstr "Dobrý přístup"
 
 msgid "Nice, open a PR when ready."
 msgstr "Super, až budeš mít hotovo, otevři PR."
+
+msgid "Nickname"
+msgstr "Přezdívka"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."

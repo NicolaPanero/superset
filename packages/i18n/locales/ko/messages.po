@@ -4116,6 +4116,9 @@ msgstr "연결 중"
 msgid "Connecting GitHub is not configured on this server"
 msgstr "이 서버에는 GitHub 연결이 구성되어 있지 않습니다"
 
+msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
+msgstr "연결하면 에이전트가 사용자를 대신해 {displayName}에서 읽고 작업할 수 있습니다. 계속하기 전에 무엇을 허용하는지 확인하세요."
+
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "연결하면 에이전트가 사용자를 대신해 {name}에서 읽고 작업할 수 있습니다. 계속하기 전에 부여하는 권한을 확인하세요."
 
@@ -9880,6 +9883,9 @@ msgstr "좋은 접근"
 
 msgid "Nice, open a PR when ready."
 msgstr "좋아요, 준비되면 PR을 올려 주세요."
+
+msgid "Nickname"
+msgstr "별칭"
 
 #. placeholder {0}: AGENT_LABELS[agent]
 msgid "No {0} logins on this host — sign in and usage appears here."
