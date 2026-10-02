@@ -3,6 +3,17 @@ import { command } from "../../../lib/command";
 export default command({
 	description:
 		"Print the auth headers for Superset's plugin MCP endpoints (for an agent's headers helper)",
+	// Under `auth` because it has to be publicly reachable and `plugins` is
+	// not: an audience-gated group is absent, not hidden, and a command marked
+	// public inside it is pruned with its parent. An agent runs this itself and
+	// will not carry SUPERSET_CLI_AUDIENCE=internal. `auth` is also where the
+	// credential it prints comes from.
+	audience: "public",
+	// A cloud workspace holds no credential at all: the firewall attaches one
+	// on the way out, naming the workspace rather than a person. There is
+	// nothing here to print, and printing an empty Bearer would look like
+	// success.
+	sandbox: false,
 	args: [],
 	options: {},
 	/**
