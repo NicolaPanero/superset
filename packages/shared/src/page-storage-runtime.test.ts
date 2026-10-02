@@ -267,6 +267,65 @@ describe("page storage runtime, bridge fallback", () => {
 	});
 });
 
+describe("page storage runtime, a host that answers late", () => {
+	test("a connection after the deadline still works, instead of failing forever", async () => {
+		const h = mount();
+		// The handshake window passes with no answer, which is what a slow
+		// hydration looks like to the page.
+		expect(await h.storage.ready).toBe(false);
+		await expect(h.storage.get("votes")).rejects.toMatchObject({
+			code: "unavailable",
+		});
+
+		h.toFrame({
+			type: "bridge",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await flush();
+
+		const pending = h.storage.getAll("votes");
+		await flush();
+		const call = h.posted.filter((m) => m.type === "call").at(-1);
+		expect(call?.request).toEqual({ op: "getAll", key: "votes" });
+		h.toFrame({
+			type: "result",
+			id: call?.id,
+			ok: true,
+			result: { op: "getAll", records: [{ value: "Ramen" }] },
+		});
+		expect(await pending).toEqual([{ value: "Ramen" }]);
+	});
+
+	test("a subscriber that failed before the host arrived re-reads", async () => {
+		const h = mount();
+		await h.storage.ready;
+
+		const seen: unknown[][] = [];
+		h.storage.subscribe("votes", (records) => seen.push(records));
+		await flush();
+		expect(seen).toHaveLength(0);
+
+		h.toFrame({
+			type: "bridge",
+			viewer: { userId: "u1", name: "Ada", image: null },
+			author: false,
+			writable: true,
+		});
+		await flush();
+		const call = h.posted.filter((m) => m.type === "call").at(-1);
+		h.toFrame({
+			type: "result",
+			id: call?.id,
+			ok: true,
+			result: { op: "getAll", records: [{ value: "Tacos" }] },
+		});
+		await flush();
+		expect(seen.at(-1)).toEqual([{ value: "Tacos" }]);
+	});
+});
+
 describe("page storage runtime, no host", () => {
 	test("settles unavailable rather than hanging", async () => {
 		const h = mount({ framed: false });

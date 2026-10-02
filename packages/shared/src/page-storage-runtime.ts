@@ -25,6 +25,7 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 	let settleReady = null;
 	let socket = null;
 	let mode = null;
+	let available = false;
 	let identity = null;
 	let revoked = false;
 
@@ -82,13 +83,16 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 			if (data.type === "hello") {
 				identity = { viewer: data.viewer, author: data.author, writable: data.writable };
 				mode = "socket";
+				available = true;
 				settle(true);
+				revive();
 				return;
 			}
 			deliver(data);
 		});
 		socket.addEventListener("close", () => {
 			socket = null;
+			available = false;
 			settle(false);
 			if (!revoked) settleAll("unavailable", "The page's storage socket closed");
 		});
@@ -121,7 +125,9 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		if (data.type === "bridge") {
 			identity = { viewer: data.viewer, author: data.author, writable: data.writable };
 			mode = "bridge";
+			available = true;
 			settle(true);
+			revive();
 			return;
 		}
 		if (data.type === "changed") {
@@ -134,10 +140,19 @@ export const PAGE_STORAGE_RUNTIME_SOURCE = `(() => {
 		deliver(data);
 	});
 
+	const revive = () => {
+		for (const [, fns] of watchers) {
+			for (const fn of fns) fn.refresh();
+		}
+	};
+
 	const call = async (request) => {
 		if (revoked) throw fail("revoked", "Access to this page changed");
-		if (!(await ready)) {
-			throw fail("unavailable", "Page storage is not available in this view");
+		if (!available) {
+			await ready;
+			if (!available) {
+				throw fail("unavailable", "Page storage is not available in this view");
+			}
 		}
 		const id = DOCUMENT + "." + ++seq;
 		return new Promise((resolve, reject) => {
