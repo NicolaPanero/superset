@@ -2345,6 +2345,9 @@ msgstr "アーカイブ済み"
 msgid "Archived · {0}"
 msgstr "アーカイブ済み · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "「{name}」をアーカイブしました"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "アーカイブ済み {0}"
@@ -12846,9 +12849,6 @@ msgstr "メンバーを削除中..."
 msgid "Removing terminal..."
 msgstr "ターミナルを削除中..."
 
-msgid "Removing…"
-msgstr "削除中…"
-
 msgid "Rename"
 msgstr "名前を変更"
 
@@ -13207,11 +13207,17 @@ msgstr "プランを復元"
 msgid "restore the agent defaults"
 msgstr "エージェントの既定値を復元する"
 
+msgid "Restore the workspace you just archived"
+msgstr "アーカイブしたばかりのワークスペースを復元する"
+
 msgid "Restore this version?"
 msgstr "このバージョンを復元しますか?"
 
 msgid "Restored"
 msgstr "復元済み"
+
+msgid "Restored \"{name}\""
+msgstr "「{name}」を復元しました"
 
 msgid "Restored \"{projectName}\""
 msgstr "「{projectName}」を復元しました"
@@ -16938,6 +16944,9 @@ msgstr "進行中"
 
 msgid "Undo"
 msgstr "取り消す"
+
+msgid "Undo Archive"
+msgstr "アーカイブを元に戻す"
 
 msgid "Ungroup"
 msgstr "グループ解除"

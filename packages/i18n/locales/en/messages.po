@@ -2345,6 +2345,9 @@ msgstr "Archived"
 msgid "Archived · {0}"
 msgstr "Archived · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "Archived \"{name}\""
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Archived {0}"
@@ -12846,9 +12849,6 @@ msgstr "Removing member..."
 msgid "Removing terminal..."
 msgstr "Removing terminal..."
 
-msgid "Removing…"
-msgstr "Removing…"
-
 msgid "Rename"
 msgstr "Rename"
 
@@ -13207,11 +13207,17 @@ msgstr "Restore plan"
 msgid "restore the agent defaults"
 msgstr "restore the agent defaults"
 
+msgid "Restore the workspace you just archived"
+msgstr "Restore the workspace you just archived"
+
 msgid "Restore this version?"
 msgstr "Restore this version?"
 
 msgid "Restored"
 msgstr "Restored"
+
+msgid "Restored \"{name}\""
+msgstr "Restored \"{name}\""
 
 msgid "Restored \"{projectName}\""
 msgstr "Restored \"{projectName}\""
@@ -16938,6 +16944,9 @@ msgstr "Underway"
 
 msgid "Undo"
 msgstr "Undo"
+
+msgid "Undo Archive"
+msgstr "Undo Archive"
 
 msgid "Ungroup"
 msgstr "Ungroup"

@@ -32,9 +32,9 @@ export function useUnarchiveCloudWorkspace() {
 			void utils.cloudWorkspace.activity.invalidate({ id });
 		},
 	});
-	return (id: string) => {
+	return (id: string, options?: { onSuccess?: () => void }) => {
 		restartProvisioningTimer(id);
-		mutate({ id });
+		mutate({ id }, { onSuccess: options?.onSuccess });
 		void navigate({
 			to: "/v2-workspace/$workspaceId",
 			params: { workspaceId: id },

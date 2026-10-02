@@ -2345,6 +2345,9 @@ msgstr "已歸檔"
 msgid "Archived · {0}"
 msgstr "已封存 · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "已歸檔「{name}」"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "已封存 {0}"
@@ -12846,9 +12849,6 @@ msgstr "正在移除成員..."
 msgid "Removing terminal..."
 msgstr "正在移除終端..."
 
-msgid "Removing…"
-msgstr "正在移除…"
-
 msgid "Rename"
 msgstr "重新命名"
 
@@ -13207,11 +13207,17 @@ msgstr "恢復方案"
 msgid "restore the agent defaults"
 msgstr "恢復代理程式預設設定"
 
+msgid "Restore the workspace you just archived"
+msgstr "還原剛剛歸檔的工作區"
+
 msgid "Restore this version?"
 msgstr "恢復這個版本？"
 
 msgid "Restored"
 msgstr "已恢復"
+
+msgid "Restored \"{name}\""
+msgstr "已還原「{name}」"
 
 msgid "Restored \"{projectName}\""
 msgstr "已還原「{projectName}」"
@@ -16938,6 +16944,9 @@ msgstr "進行中"
 
 msgid "Undo"
 msgstr "撤銷"
+
+msgid "Undo Archive"
+msgstr "復原歸檔"
 
 msgid "Ungroup"
 msgstr "取消群組"

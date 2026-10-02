@@ -2345,6 +2345,9 @@ msgstr "Архив"
 msgid "Archived · {0}"
 msgstr "В архиве · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "«{name}» в архиве"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "В архиве {0}"
@@ -12846,9 +12849,6 @@ msgstr "Удаление участника..."
 msgid "Removing terminal..."
 msgstr "Удаление терминала..."
 
-msgid "Removing…"
-msgstr "Удаление…"
-
 msgid "Rename"
 msgstr "Переименовать"
 
@@ -13207,11 +13207,17 @@ msgstr "Восстановить тариф"
 msgid "restore the agent defaults"
 msgstr "восстановить настройки агента по умолчанию"
 
+msgid "Restore the workspace you just archived"
+msgstr "Восстановить только что заархивированное рабочее пространство"
+
 msgid "Restore this version?"
 msgstr "Восстановить эту версию?"
 
 msgid "Restored"
 msgstr "Восстановлено"
+
+msgid "Restored \"{name}\""
+msgstr "«{name}» восстановлен"
 
 msgid "Restored \"{projectName}\""
 msgstr "«{projectName}» восстановлен"
@@ -16938,6 +16944,9 @@ msgstr "Идёт"
 
 msgid "Undo"
 msgstr "Отменить"
+
+msgid "Undo Archive"
+msgstr "Отменить архивацию"
 
 msgid "Ungroup"
 msgstr "Убрать из группы"

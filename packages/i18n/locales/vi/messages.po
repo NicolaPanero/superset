@@ -2345,6 +2345,9 @@ msgstr "Đã lưu trữ"
 msgid "Archived · {0}"
 msgstr "Đã lưu trữ · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "Đã lưu trữ \"{name}\""
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Đã lưu trữ {0}"
@@ -12846,9 +12849,6 @@ msgstr "Đang gỡ thành viên..."
 msgid "Removing terminal..."
 msgstr "Đang gỡ terminal..."
 
-msgid "Removing…"
-msgstr "Đang gỡ…"
-
 msgid "Rename"
 msgstr "Đổi tên"
 
@@ -13207,11 +13207,17 @@ msgstr "Khôi phục gói"
 msgid "restore the agent defaults"
 msgstr "khôi phục mặc định của agent"
 
+msgid "Restore the workspace you just archived"
+msgstr "Khôi phục không gian làm việc bạn vừa lưu trữ"
+
 msgid "Restore this version?"
 msgstr "Khôi phục phiên bản này?"
 
 msgid "Restored"
 msgstr "Đã khôi phục"
+
+msgid "Restored \"{name}\""
+msgstr "Đã khôi phục \"{name}\""
 
 msgid "Restored \"{projectName}\""
 msgstr "Đã khôi phục \"{projectName}\""
@@ -16938,6 +16944,9 @@ msgstr "Đang diễn ra"
 
 msgid "Undo"
 msgstr "Hoàn tác"
+
+msgid "Undo Archive"
+msgstr "Hoàn tác lưu trữ"
 
 msgid "Ungroup"
 msgstr "Bỏ nhóm"

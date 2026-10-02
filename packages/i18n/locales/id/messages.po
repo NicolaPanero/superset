@@ -2345,6 +2345,9 @@ msgstr "Diarsipkan"
 msgid "Archived · {0}"
 msgstr "Diarsipkan · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "\"{name}\" diarsipkan"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Diarsipkan {0}"
@@ -12846,9 +12849,6 @@ msgstr "Menghapus anggota..."
 msgid "Removing terminal..."
 msgstr "Menghapus terminal..."
 
-msgid "Removing…"
-msgstr "Menghapus…"
-
 msgid "Rename"
 msgstr "Ganti nama"
 
@@ -13207,11 +13207,17 @@ msgstr "Pulihkan paket"
 msgid "restore the agent defaults"
 msgstr "memulihkan setelan bawaan agen"
 
+msgid "Restore the workspace you just archived"
+msgstr "Pulihkan ruang kerja yang baru saja Anda arsipkan"
+
 msgid "Restore this version?"
 msgstr "Pulihkan versi ini?"
 
 msgid "Restored"
 msgstr "Dipulihkan"
+
+msgid "Restored \"{name}\""
+msgstr "\"{name}\" dipulihkan"
 
 msgid "Restored \"{projectName}\""
 msgstr "\"{projectName}\" dipulihkan"
@@ -16938,6 +16944,9 @@ msgstr "Sedang berjalan"
 
 msgid "Undo"
 msgstr "Undo"
+
+msgid "Undo Archive"
+msgstr "Batalkan arsip"
 
 msgid "Ungroup"
 msgstr "Keluarkan dari grup"

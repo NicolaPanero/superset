@@ -2345,6 +2345,9 @@ msgstr "Archivados"
 msgid "Archived · {0}"
 msgstr "Archivado · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "\"{name}\" archivado"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Archivado {0}"
@@ -12846,9 +12849,6 @@ msgstr "Quitando el miembro..."
 msgid "Removing terminal..."
 msgstr "Quitando la terminal..."
 
-msgid "Removing…"
-msgstr "Quitando…"
-
 msgid "Rename"
 msgstr "Cambiar nombre"
 
@@ -13207,11 +13207,17 @@ msgstr "Restaurar el plan"
 msgid "restore the agent defaults"
 msgstr "restaurar los valores predeterminados del agente"
 
+msgid "Restore the workspace you just archived"
+msgstr "Restaurar el espacio de trabajo que acabas de archivar"
+
 msgid "Restore this version?"
 msgstr "¿Restaurar esta versión?"
 
 msgid "Restored"
 msgstr "Restaurada"
+
+msgid "Restored \"{name}\""
+msgstr "\"{name}\" restaurado"
 
 msgid "Restored \"{projectName}\""
 msgstr "Se restauró \"{projectName}\""
@@ -16938,6 +16944,9 @@ msgstr "En marcha"
 
 msgid "Undo"
 msgstr "Deshacer"
+
+msgid "Undo Archive"
+msgstr "Deshacer archivado"
 
 msgid "Ungroup"
 msgstr "Desagrupar"
