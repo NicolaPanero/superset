@@ -1526,6 +1526,10 @@ msgstr "Активация, насколько активно им пользу�
 msgid "Active"
 msgstr "Активна"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Активные"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "В сети"
@@ -2316,6 +2320,9 @@ msgstr "Архивировать"
 msgid "Archive environment"
 msgstr "Архивировать окружение"
 
+msgid "Archive failed"
+msgstr "Не удалось архивировать"
+
 msgid "Archive workspace"
 msgstr "Архивировать рабочую область"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Архив"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "В архиве · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Кем создано"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Создатель: <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Созданные мной"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Команда «{trimmedName}» создана"
 
@@ -5296,10 +5307,6 @@ msgstr "Удалить"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Удалить «{0}»? Это удалит её worktree с хоста."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Удалить «{0}»? Это выключит её песочницу и всё, что в ней."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Удалить «{basename}»?"
 
@@ -5346,9 +5353,6 @@ msgstr "Удалить автоматизацию"
 
 msgid "Delete automation?"
 msgstr "Удалить автоматизацию?"
-
-msgid "Delete cloud workspace"
-msgstr "Удалить облачную рабочую область"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Середина 2027"
 msgid "Mine"
 msgstr "Мои"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Мои"
+
 msgid "Minimal reasoning effort"
 msgstr "Минимальные рассуждения"
 
@@ -9934,6 +9942,9 @@ msgstr "Агентов пока нет."
 msgid "No API keys yet."
 msgstr "Ключей API пока нет."
 
+msgid "No archived workspaces"
+msgstr "Нет архивированных рабочих областей"
+
 msgid "No assignee"
 msgstr "Без исполнителя"
 
@@ -9981,6 +9992,9 @@ msgstr "Chrome, Brave, Arc и другие браузеры на Chromium не �
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "На этой машине пока нет данных об использовании Claude или Codex. Присоединяйтесь — вы появитесь, как только поработаете с агентом."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Нет облачных рабочих областей, подходящих под эти фильтры"
 
 msgid "No cloud workspaces yet"
 msgstr "Облачных рабочих областей пока нет"
@@ -10566,8 +10580,8 @@ msgstr "Здесь пусто."
 msgid "Nothing installed yet."
 msgstr "Пока ничего не установлено."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Ничего не запущено. Удалите её и создайте новую."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Ничего не запущено. Архивируйте её и создайте новую."
 
 msgid "Nothing lives at {pathname}."
 msgstr "По адресу {pathname} ничего нет."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Пул-реквест"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Пул-реквест #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Шаг {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Хост по-прежнему недоступен."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Продолжаем попытки. Если не получится, удалите её и создайте новую."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Продолжаем попытки. Если не получится, архивируйте её и создайте новую."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Ещё работаем — большие репозитории могут занять несколько минут. Можно выйти; рабочая область появится на главной, когда будет готова."
@@ -16771,6 +16786,9 @@ msgstr "Не удалось расшифровать аудио"
 
 msgid "Unarchive"
 msgstr "Вернуть из архива"
+
+msgid "Unarchive failed"
+msgstr "Не удалось вернуть из архива"
 
 msgid "Unarchive workspace"
 msgstr "Вернуть рабочую область из архива"

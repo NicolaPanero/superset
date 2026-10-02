@@ -1526,6 +1526,10 @@ msgstr "L'activation, l'usage une fois les gens entrés, et s'ils reviennent."
 msgid "Active"
 msgstr "Actives"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Actifs"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Actif"
@@ -2316,6 +2320,9 @@ msgstr "Archiver"
 msgid "Archive environment"
 msgstr "Archiver l'environnement"
 
+msgid "Archive failed"
+msgstr "Échec de l'archivage"
+
 msgid "Archive workspace"
 msgstr "Archiver l'espace de travail"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Archivés"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Archivé · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Créé par"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Créé par <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Créés par moi"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Équipe « {trimmedName} » créée"
 
@@ -5296,10 +5307,6 @@ msgstr "Supprimer"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Supprimer « {0} » ? Cela retire son worktree de l'hôte."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Supprimer « {0} » ? Cela arrête son bac à sable et tout ce qu'il contient."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Supprimer « {basename} » ?"
 
@@ -5346,9 +5353,6 @@ msgstr "Supprimer l'automatisation"
 
 msgid "Delete automation?"
 msgstr "Supprimer l'automatisation ?"
-
-msgid "Delete cloud workspace"
-msgstr "Supprimer l'espace de travail cloud"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Mi-2027"
 msgid "Mine"
 msgstr "Les miennes"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Les miens"
+
 msgid "Minimal reasoning effort"
 msgstr "Effort de raisonnement minimal"
 
@@ -9934,6 +9942,9 @@ msgstr "Aucun agent pour l'instant."
 msgid "No API keys yet."
 msgstr "Aucune clé API pour l'instant."
 
+msgid "No archived workspaces"
+msgstr "Aucun espace de travail archivé"
+
 msgid "No assignee"
 msgstr "Aucun assigné"
 
@@ -9981,6 +9992,9 @@ msgstr "Aucun navigateur Chrome, Brave, Arc ou autre navigateur Chromium n'a ét
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Aucune utilisation de Claude ou Codex trouvée sur cette machine pour l'instant. Rejoignez maintenant et vous apparaîtrez dès que vous aurez utilisé un agent."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Aucun espace de travail cloud ne correspond à ces filtres"
 
 msgid "No cloud workspaces yet"
 msgstr "Aucun espace de travail cloud pour l'instant"
@@ -10566,8 +10580,8 @@ msgstr "Rien ici."
 msgid "Nothing installed yet."
 msgstr "Rien d'installé pour le moment."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Rien ne tourne. Supprimez-le et créez-en un nouveau."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Rien ne tourne. Archivez-le et créez-en un nouveau."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Il n'y a rien à l'emplacement {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Étape {step} : {name}"
 msgid "Still can't reach the host."
 msgstr "L'hôte reste injoignable."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Nouvelle tentative en cours. Si l'échec persiste, supprimez-le et créez-en un nouveau."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Nouvelle tentative en cours. Si l'échec persiste, archivez-le et créez-en un nouveau."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Toujours en cours — les gros dépôts peuvent prendre quelques minutes. Vous pouvez quitter ; l'espace de travail apparaîtra sur l'accueil dès qu'il sera prêt."
@@ -16771,6 +16786,9 @@ msgstr "Impossible de transcrire l'audio"
 
 msgid "Unarchive"
 msgstr "Désarchiver"
+
+msgid "Unarchive failed"
+msgstr "Échec du désarchivage"
 
 msgid "Unarchive workspace"
 msgstr "Désarchiver l'espace de travail"

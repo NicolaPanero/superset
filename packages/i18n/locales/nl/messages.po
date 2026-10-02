@@ -1526,6 +1526,10 @@ msgstr "Activatie, hoeveel mensen het gebruiken zodra ze binnen zijn, en of ze t
 msgid "Active"
 msgstr "Actief"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Actief"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Actief"
@@ -2316,6 +2320,9 @@ msgstr "Archiveren"
 msgid "Archive environment"
 msgstr "Omgeving archiveren"
 
+msgid "Archive failed"
+msgstr "Archiveren mislukt"
+
 msgid "Archive workspace"
 msgstr "Werkruimte archiveren"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Gearchiveerd"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Gearchiveerd · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Gemaakt door"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Aangemaakt door <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Door mij gemaakt"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Team \"{trimmedName}\" aangemaakt"
 
@@ -5296,10 +5307,6 @@ msgstr "Verwijderen"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "\"{0}\" verwijderen? Hiermee wordt de worktree van de host verwijderd."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "\"{0}\" verwijderen? Hiermee wordt de sandbox met alles erin afgesloten."
-
 msgid "Delete \"{basename}\"?"
 msgstr "\"{basename}\" verwijderen?"
 
@@ -5346,9 +5353,6 @@ msgstr "Automatisering verwijderen"
 
 msgid "Delete automation?"
 msgstr "Automatisering verwijderen?"
-
-msgid "Delete cloud workspace"
-msgstr "Cloudwerkruimte verwijderen"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Medio 2027"
 msgid "Mine"
 msgstr "Mijn"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Mijn"
+
 msgid "Minimal reasoning effort"
 msgstr "Minimale redeneerinspanning"
 
@@ -9934,6 +9942,9 @@ msgstr "Nog geen agents."
 msgid "No API keys yet."
 msgstr "Nog geen API-sleutels."
 
+msgid "No archived workspaces"
+msgstr "Geen gearchiveerde werkruimtes"
+
 msgid "No assignee"
 msgstr "Geen toegewezen persoon"
 
@@ -9981,6 +9992,9 @@ msgstr "Er zijn geen Chrome-, Brave-, Arc- of andere Chromium-browsers gevonden.
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Nog geen Claude- of Codex-gebruik gevonden op deze machine. Doe nu mee, dan verschijn je zodra je een agent hebt gebruikt."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Geen cloudwerkruimtes komen overeen met deze filters"
 
 msgid "No cloud workspaces yet"
 msgstr "Nog geen cloudwerkruimtes"
@@ -10566,8 +10580,8 @@ msgstr "Hier is niets."
 msgid "Nothing installed yet."
 msgstr "Nog niets geïnstalleerd."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Er draait niets. Verwijder deze en maak een nieuwe aan."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Er draait niets. Archiveer deze en maak een nieuwe aan."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Er staat niets op {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Stap {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "De host is nog steeds onbereikbaar."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "We blijven het proberen. Als het blijft mislukken, verwijder deze en maak een nieuwe aan."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "We blijven het proberen. Als het blijft mislukken, archiveer deze en maak een nieuwe aan."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Nog bezig — grote repo's kunnen een paar minuten duren. Je kunt weggaan; de werkruimte verschijnt op Home zodra die klaar is."
@@ -16771,6 +16786,9 @@ msgstr "Kan audio niet transcriberen"
 
 msgid "Unarchive"
 msgstr "Dearchiveren"
+
+msgid "Unarchive failed"
+msgstr "Dearchiveren mislukt"
 
 msgid "Unarchive workspace"
 msgstr "Werkruimte dearchiveren"

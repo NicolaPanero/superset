@@ -1526,6 +1526,10 @@ msgstr "激活情况、进来之后的使用量，以及他们是否会回来。
 msgid "Active"
 msgstr "启用中"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "活跃"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "活跃"
@@ -2316,6 +2320,9 @@ msgstr "归档"
 msgid "Archive environment"
 msgstr "归档环境"
 
+msgid "Archive failed"
+msgstr "归档失败"
+
 msgid "Archive workspace"
 msgstr "归档工作区"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "已归档"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "已归档 · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "创建者"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "创建者 <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "我创建的"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "已创建团队“{trimmedName}”"
 
@@ -5296,10 +5307,6 @@ msgstr "删除"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "删除“{0}”？这会从主机上移除它的worktree。"
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "删除“{0}”？这会关闭它的沙箱以及其中的一切。"
-
 msgid "Delete \"{basename}\"?"
 msgstr "删除“{basename}”？"
 
@@ -5346,9 +5353,6 @@ msgstr "删除自动化"
 
 msgid "Delete automation?"
 msgstr "删除自动化？"
-
-msgid "Delete cloud workspace"
-msgstr "删除云端工作区"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "2027年中"
 msgid "Mine"
 msgstr "我的"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "我的"
+
 msgid "Minimal reasoning effort"
 msgstr "最少的推理投入"
 
@@ -9934,6 +9942,9 @@ msgstr "暂无智能体。"
 msgid "No API keys yet."
 msgstr "暂无API密钥。"
 
+msgid "No archived workspaces"
+msgstr "没有已归档的工作区"
+
 msgid "No assignee"
 msgstr "无负责人"
 
@@ -9981,6 +9992,9 @@ msgstr "未找到Chrome、Brave、Arc或其他Chromium浏览器。"
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "这台机器上还没有发现Claude或Codex的用量。现在加入，用过智能体后你就会出现在榜单上。"
+
+msgid "No cloud workspaces match these filters"
+msgstr "没有符合这些筛选条件的云端工作区"
 
 msgid "No cloud workspaces yet"
 msgstr "暂无云端工作区"
@@ -10566,8 +10580,8 @@ msgstr "这里没有内容。"
 msgid "Nothing installed yet."
 msgstr "还没有安装任何插件。"
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "没有任何东西在运行。移除它，再建一个。"
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "没有任何东西在运行。归档它，再建一个。"
 
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}下没有任何内容。"
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "拉取请求"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "拉取请求#{0}"
@@ -15000,8 +15015,8 @@ msgstr "第{step}步：{name}"
 msgid "Still can't reach the host."
 msgstr "仍然无法连接到主机。"
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "仍在重试。如果一直失败，移除它，再建一个。"
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "仍在重试。如果一直失败，归档它，再建一个。"
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "仍在处理 — 大仓库可能需要几分钟。你可以离开；工作区就绪后会出现在首页。"
@@ -16771,6 +16786,9 @@ msgstr "无法转写音频"
 
 msgid "Unarchive"
 msgstr "取消归档"
+
+msgid "Unarchive failed"
+msgstr "取消归档失败"
 
 msgid "Unarchive workspace"
 msgstr "取消归档工作区"

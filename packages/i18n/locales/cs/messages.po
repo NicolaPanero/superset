@@ -1526,6 +1526,10 @@ msgstr "Aktivace, kolik toho lidé používají, když už jsou uvnitř, a jestl
 msgid "Active"
 msgstr "Aktivní"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Aktivní"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Aktivní"
@@ -2316,6 +2320,9 @@ msgstr "Archivovat"
 msgid "Archive environment"
 msgstr "Archivovat prostředí"
 
+msgid "Archive failed"
+msgstr "Archivace selhala"
+
 msgid "Archive workspace"
 msgstr "Archivovat pracovní prostor"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Archivované"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Archivováno · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Vytvořil(a)"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Vytvořil(a) <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Vytvořeno mnou"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Tým „{trimmedName}“ vytvořen"
 
@@ -5296,10 +5307,6 @@ msgstr "Smazat"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Smazat „{0}“? Tím se z hosta odstraní jeho worktree."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Smazat „{0}“? Tím se vypne jeho sandbox i všechno v něm."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Smazat „{basename}“?"
 
@@ -5346,9 +5353,6 @@ msgstr "Smazat automatizaci"
 
 msgid "Delete automation?"
 msgstr "Smazat automatizaci?"
-
-msgid "Delete cloud workspace"
-msgstr "Smazat cloudový pracovní prostor"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Pol. 2027"
 msgid "Mine"
 msgstr "Moje"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Moje"
+
 msgid "Minimal reasoning effort"
 msgstr "Minimální uvažování"
 
@@ -9934,6 +9942,9 @@ msgstr "Zatím žádní agenti."
 msgid "No API keys yet."
 msgstr "Zatím žádné API klíče."
 
+msgid "No archived workspaces"
+msgstr "Žádné archivované pracovní prostory"
+
 msgid "No assignee"
 msgstr "Bez řešitele"
 
@@ -9981,6 +9992,9 @@ msgstr "Nebyl nalezen Chrome, Brave, Arc ani jiný prohlížeč založený na Ch
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Na tomto počítači zatím nebylo nalezeno žádné využití Claude ani Codex. Připojte se a objevíte se, jakmile použijete agenta."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Těmto filtrům neodpovídají žádné cloudové pracovní prostory"
 
 msgid "No cloud workspaces yet"
 msgstr "Zatím žádné cloudové pracovní prostory"
@@ -10566,8 +10580,8 @@ msgstr "Nic tu není."
 msgid "Nothing installed yet."
 msgstr "Zatím není nic nainstalováno."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Nic neběží. Odeberte ho a vytvořte nový."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Nic neběží. Archivujte ho a vytvořte nový."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Na {pathname} nic není."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Krok {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Host je stále nedostupný."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Stále to zkoušíme. Pokud to dál selhává, odeberte ho a vytvořte nový."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Stále to zkoušíme. Pokud to dál selhává, archivujte ho a vytvořte nový."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Stále pracuji — u velkých repozitářů to může trvat pár minut. Můžete odejít; pracovní prostor se objeví na úvodní obrazovce, až bude hotový."
@@ -16771,6 +16786,9 @@ msgstr "Zvuk se nepodařilo přepsat"
 
 msgid "Unarchive"
 msgstr "Obnovit z archivu"
+
+msgid "Unarchive failed"
+msgstr "Obnovení z archivu selhalo"
 
 msgid "Unarchive workspace"
 msgstr "Obnovit pracovní prostor z archivu"

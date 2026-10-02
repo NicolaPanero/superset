@@ -1526,6 +1526,10 @@ msgstr "Kích hoạt, mức độ sử dụng sau khi bắt đầu dùng, và li
 msgid "Active"
 msgstr "Đang hoạt động"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Đang hoạt động"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Đang hoạt động"
@@ -2316,6 +2320,9 @@ msgstr "Lưu trữ"
 msgid "Archive environment"
 msgstr "Lưu trữ environment"
 
+msgid "Archive failed"
+msgstr "Lưu trữ thất bại"
+
 msgid "Archive workspace"
 msgstr "Lưu trữ workspace"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Đã lưu trữ"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Đã lưu trữ · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Người tạo"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Tạo bởi <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Do tôi tạo"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Đã tạo nhóm \"{trimmedName}\""
 
@@ -5296,10 +5307,6 @@ msgstr "Xóa"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Xóa \"{0}\"? Thao tác này gỡ worktree của nó khỏi host."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Xóa \"{0}\"? Thao tác này tắt sandbox của nó và mọi thứ bên trong."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Xóa \"{basename}\"?"
 
@@ -5346,9 +5353,6 @@ msgstr "Xóa tự động hóa"
 
 msgid "Delete automation?"
 msgstr "Xóa tự động hóa?"
-
-msgid "Delete cloud workspace"
-msgstr "Xóa workspace cloud"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Giữa 2027"
 msgid "Mine"
 msgstr "Của tôi"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Của tôi"
+
 msgid "Minimal reasoning effort"
 msgstr "Mức suy luận tối thiểu"
 
@@ -9934,6 +9942,9 @@ msgstr "Chưa có agent nào."
 msgid "No API keys yet."
 msgstr "Chưa có khóa API nào."
 
+msgid "No archived workspaces"
+msgstr "Không có workspace nào đã lưu trữ"
+
 msgid "No assignee"
 msgstr "Không có người phụ trách"
 
@@ -9981,6 +9992,9 @@ msgstr "Không tìm thấy Chrome, Brave, Arc hay trình duyệt Chromium nào k
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Chưa tìm thấy mức sử dụng Claude hay Codex nào trên máy này. Hãy tham gia ngay và bạn sẽ xuất hiện khi đã dùng một agent."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Không có workspace cloud nào khớp với các bộ lọc này"
 
 msgid "No cloud workspaces yet"
 msgstr "Chưa có workspace cloud nào"
@@ -10566,8 +10580,8 @@ msgstr "Không có gì ở đây."
 msgid "Nothing installed yet."
 msgstr "Chưa cài gì cả."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Không có gì đang chạy. Hãy gỡ nó và tạo cái mới."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Không có gì đang chạy. Hãy lưu trữ nó và tạo cái mới."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Không có gì ở {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Bước {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Vẫn không thể kết nối tới host."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Vẫn đang thử. Nếu tiếp tục lỗi, hãy gỡ nó và tạo cái mới."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Vẫn đang thử. Nếu tiếp tục lỗi, hãy lưu trữ nó và tạo cái mới."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Vẫn đang xử lý — repo lớn có thể mất vài phút. Bạn có thể rời đi; workspace sẽ xuất hiện ở Trang chủ khi sẵn sàng."
@@ -16771,6 +16786,9 @@ msgstr "Không thể chuyển âm thanh thành văn bản"
 
 msgid "Unarchive"
 msgstr "Bỏ lưu trữ"
+
+msgid "Unarchive failed"
+msgstr "Bỏ lưu trữ thất bại"
 
 msgid "Unarchive workspace"
 msgstr "Bỏ lưu trữ workspace"

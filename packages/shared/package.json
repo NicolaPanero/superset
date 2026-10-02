@@ -353,6 +353,10 @@
 			"types": "./src/plugins/manifest-schema.ts",
 			"default": "./src/plugins/manifest-schema.ts"
 		},
+		"./cloud-workspace-groups": {
+			"types": "./src/cloud-workspace-groups.ts",
+			"default": "./src/cloud-workspace-groups.ts"
+		},
 		"./workspace-activity": {
 			"types": "./src/workspace-activity.ts",
 			"default": "./src/workspace-activity.ts"

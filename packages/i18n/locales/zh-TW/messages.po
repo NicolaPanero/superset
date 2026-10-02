@@ -1526,6 +1526,10 @@ msgstr "啟用情況、進來之後的使用量，以及他們是否會回來。
 msgid "Active"
 msgstr "啟用中"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "使用中"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "活躍"
@@ -2316,6 +2320,9 @@ msgstr "歸檔"
 msgid "Archive environment"
 msgstr "封存環境"
 
+msgid "Archive failed"
+msgstr "封存失敗"
+
 msgid "Archive workspace"
 msgstr "封存工作區"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "已歸檔"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "已封存 · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "建立者"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "建立者 <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "我建立的"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "已建立團隊「{trimmedName}」"
 
@@ -5296,10 +5307,6 @@ msgstr "刪除"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "刪除「{0}」？這會從主機上移除它的worktree。"
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "刪除「{0}」？這會關閉它的沙箱以及其中的一切。"
-
 msgid "Delete \"{basename}\"?"
 msgstr "刪除「{basename}」？"
 
@@ -5346,9 +5353,6 @@ msgstr "刪除自動化"
 
 msgid "Delete automation?"
 msgstr "刪除自動化？"
-
-msgid "Delete cloud workspace"
-msgstr "刪除雲端工作區"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "2027年中"
 msgid "Mine"
 msgstr "我的"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "我的"
+
 msgid "Minimal reasoning effort"
 msgstr "最少的推理投入"
 
@@ -9934,6 +9942,9 @@ msgstr "暫無代理程式。"
 msgid "No API keys yet."
 msgstr "暫無API金鑰。"
 
+msgid "No archived workspaces"
+msgstr "沒有已封存的工作區"
+
 msgid "No assignee"
 msgstr "無負責人"
 
@@ -9981,6 +9992,9 @@ msgstr "未找到Chrome、Brave、Arc或其他Chromium瀏覽器。"
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "這臺機器上還沒有發現Claude或Codex的用量。現在加入，用過代理程式後你就會出現在榜單上。"
+
+msgid "No cloud workspaces match these filters"
+msgstr "沒有符合這些篩選條件的雲端工作區"
 
 msgid "No cloud workspaces yet"
 msgstr "暫無雲端工作區"
@@ -10566,8 +10580,8 @@ msgstr "這裡沒有內容。"
 msgid "Nothing installed yet."
 msgstr "還沒有安裝任何外掛。"
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "沒有任何東西在執行。移除它，再建一個。"
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "沒有任何東西在執行。封存它，再建一個。"
 
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}下沒有任何內容。"
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "拉取請求"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "拉取請求#{0}"
@@ -15000,8 +15015,8 @@ msgstr "第{step}步：{name}"
 msgid "Still can't reach the host."
 msgstr "仍然無法連線到主機。"
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "仍在重試。如果一直失敗，移除它，再建一個。"
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "仍在重試。如果一直失敗，封存它，再建一個。"
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "仍在處理 — 大儲存庫可能需要幾分鐘。你可以離開；工作區就緒後會出現在首頁。"
@@ -16771,6 +16786,9 @@ msgstr "無法轉寫音訊"
 
 msgid "Unarchive"
 msgstr "取消封存"
+
+msgid "Unarchive failed"
+msgstr "取消封存失敗"
 
 msgid "Unarchive workspace"
 msgstr "取消封存工作區"

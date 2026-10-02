@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
 	groupCloudWorkspaces,
 	groupCloudWorkspacesByTime,
-} from "./groupCloudWorkspaces";
+} from "./cloud-workspace-groups";
 
 describe("groupCloudWorkspaces", () => {
 	test("groups each box under whoever is in it now, else its creator", () => {
@@ -186,5 +186,39 @@ describe("groupCloudWorkspacesByTime", () => {
 			sort: "created",
 		});
 		expect(group?.period).toEqual({ unit: "week", count: 1 });
+	});
+});
+
+describe("groupCloudWorkspacesByTime with at", () => {
+	test("groups and orders by the given time instead of the sort's", () => {
+		const now = new Date("2026-09-30T12:00:00");
+		const groups = groupCloudWorkspacesByTime({
+			workspaces: [
+				{
+					id: "archived-yesterday",
+					createdAt: new Date("2026-09-30T09:00:00"),
+					agentStatusAt: null,
+					deletedAt: new Date("2026-09-29T10:00:00"),
+				},
+				{
+					id: "archived-today",
+					createdAt: new Date("2026-09-01T09:00:00"),
+					agentStatusAt: null,
+					deletedAt: new Date("2026-09-30T11:00:00"),
+				},
+			],
+			now,
+			sort: "activity",
+			at: (workspace) => workspace.deletedAt,
+		});
+		expect(
+			groups.map(({ period, workspaces }) => [
+				period.count,
+				workspaces.map((workspace) => workspace.id),
+			]),
+		).toEqual([
+			[0, ["archived-today"]],
+			[1, ["archived-yesterday"]],
+		]);
 	});
 });

@@ -1526,6 +1526,10 @@ msgstr "Activation, how much people use it once they are in, and whether they co
 msgid "Active"
 msgstr "Active"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Active"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Active"
@@ -2316,6 +2320,9 @@ msgstr "Archive"
 msgid "Archive environment"
 msgstr "Archive environment"
 
+msgid "Archive failed"
+msgstr "Archive failed"
+
 msgid "Archive workspace"
 msgstr "Archive workspace"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Archived"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Archived · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Created by"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Created by <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Created by me"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Created team \"{trimmedName}\""
 
@@ -5296,10 +5307,6 @@ msgstr "Delete"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Delete \"{0}\"? This removes its worktree from the host."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Delete \"{basename}\"?"
 
@@ -5346,9 +5353,6 @@ msgstr "Delete automation"
 
 msgid "Delete automation?"
 msgstr "Delete automation?"
-
-msgid "Delete cloud workspace"
-msgstr "Delete cloud workspace"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Mid 2027"
 msgid "Mine"
 msgstr "Mine"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Mine"
+
 msgid "Minimal reasoning effort"
 msgstr "Minimal reasoning effort"
 
@@ -9934,6 +9942,9 @@ msgstr "No agents yet."
 msgid "No API keys yet."
 msgstr "No API keys yet."
 
+msgid "No archived workspaces"
+msgstr "No archived workspaces"
+
 msgid "No assignee"
 msgstr "No assignee"
 
@@ -9981,6 +9992,9 @@ msgstr "No Chrome, Brave, Arc, or other Chromium browsers were found."
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
+
+msgid "No cloud workspaces match these filters"
+msgstr "No cloud workspaces match these filters"
 
 msgid "No cloud workspaces yet"
 msgstr "No cloud workspaces yet"
@@ -10566,8 +10580,8 @@ msgstr "Nothing here."
 msgid "Nothing installed yet."
 msgstr "Nothing installed yet."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Nothing is running. Remove it and create a new one."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Nothing is running. Archive it and create a new one."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Nothing lives at {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Step {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Still can't reach the host."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Still trying. If it keeps failing, remove it and create a new one."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Still trying. If it keeps failing, archive it and create a new one."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
@@ -16771,6 +16786,9 @@ msgstr "Unable to transcribe audio"
 
 msgid "Unarchive"
 msgstr "Unarchive"
+
+msgid "Unarchive failed"
+msgstr "Unarchive failed"
 
 msgid "Unarchive workspace"
 msgstr "Unarchive workspace"

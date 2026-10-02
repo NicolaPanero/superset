@@ -1,27 +1,28 @@
-import type { CloudWorkspaceRow } from "renderer/hooks/useCloudWorkspaces";
-import { sortByLastAgentMessage } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
-
-type GroupedWorkspace = Pick<
-	CloudWorkspaceRow,
-	"id" | "createdBy" | "presence" | "agentStatusAt" | "createdAt"
->;
-type Person = NonNullable<CloudWorkspaceRow["createdBy"]>;
-
 export type CloudWorkspaceSort = "activity" | "created";
-
-interface CloudWorkspaceGroup<Workspace extends GroupedWorkspace> {
-	person: Person | null;
-	workspaces: Workspace[];
-}
-
-type SortableWorkspace = Pick<CloudWorkspaceRow, "agentStatusAt" | "createdAt">;
 
 export interface CloudWorkspacePeriod {
 	unit: "day" | "week" | "month" | "year";
 	count: number;
 }
 
+interface Person {
+	userId: string;
+	name: string;
+	image: string | null;
+}
+
+type SortableWorkspace = { agentStatusAt: Date | null; createdAt: Date };
+
+type GroupedWorkspace = SortableWorkspace & {
+	id: string;
+	createdBy: Person | null;
+	presence: (Person & { lastSeenAt: Date })[];
+};
+
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+const lastAgentMessageAt = (workspace: SortableWorkspace) =>
+	(workspace.agentStatusAt ?? workspace.createdAt).getTime();
 
 const sortedAt = (workspace: SortableWorkspace, sort: CloudWorkspaceSort) =>
 	sort === "created"
@@ -42,29 +43,12 @@ function periodOf(date: Date, now: Date): CloudWorkspacePeriod {
 	return { unit: "year", count: Math.floor(days / 365) };
 }
 
-export function groupCloudWorkspacesByTime<
-	Workspace extends SortableWorkspace,
->({
-	workspaces,
-	now,
-	sort,
-}: {
-	workspaces: Workspace[];
-	now: Date;
-	sort: CloudWorkspaceSort;
-}): { period: CloudWorkspacePeriod; workspaces: Workspace[] }[] {
-	const groups = new Map<
-		string,
-		{ period: CloudWorkspacePeriod; workspaces: Workspace[] }
-	>();
-	for (const workspace of sortCloudWorkspaces(workspaces, sort)) {
-		const period = periodOf(sortedAt(workspace, sort), now);
-		const key = `${period.unit}:${period.count}`;
-		const group = groups.get(key) ?? { period, workspaces: [] };
-		group.workspaces.push(workspace);
-		groups.set(key, group);
-	}
-	return [...groups.values()];
+export function sortByLastAgentMessage<Workspace extends SortableWorkspace>(
+	workspaces: Workspace[],
+): Workspace[] {
+	return [...workspaces].sort(
+		(left, right) => lastAgentMessageAt(right) - lastAgentMessageAt(left),
+	);
 }
 
 export function sortCloudWorkspaces<Workspace extends SortableWorkspace>(
@@ -76,6 +60,36 @@ export function sortCloudWorkspaces<Workspace extends SortableWorkspace>(
 				(left, right) => right.createdAt.getTime() - left.createdAt.getTime(),
 			)
 		: sortByLastAgentMessage(workspaces);
+}
+
+export function groupCloudWorkspacesByTime<
+	Workspace extends SortableWorkspace,
+>({
+	workspaces,
+	now,
+	sort,
+	at = (workspace) => sortedAt(workspace, sort),
+}: {
+	workspaces: Workspace[];
+	now: Date;
+	sort: CloudWorkspaceSort;
+	at?: (workspace: Workspace) => Date;
+}): { period: CloudWorkspacePeriod; workspaces: Workspace[] }[] {
+	const groups = new Map<
+		string,
+		{ period: CloudWorkspacePeriod; workspaces: Workspace[] }
+	>();
+	const ordered = [...workspaces].sort(
+		(left, right) => at(right).getTime() - at(left).getTime(),
+	);
+	for (const workspace of ordered) {
+		const period = periodOf(at(workspace), now);
+		const key = `${period.unit}:${period.count}`;
+		const group = groups.get(key) ?? { period, workspaces: [] };
+		group.workspaces.push(workspace);
+		groups.set(key, group);
+	}
+	return [...groups.values()];
 }
 
 export function groupCloudWorkspaces<Workspace extends GroupedWorkspace>({
@@ -90,10 +104,12 @@ export function groupCloudWorkspaces<Workspace extends GroupedWorkspace>({
 	now: Date;
 	activeWithinMs: number;
 	sort?: CloudWorkspaceSort;
-}): CloudWorkspaceGroup<Workspace>[] {
-	const groups = new Map<string, CloudWorkspaceGroup<Workspace>>();
-	const ordered = sortCloudWorkspaces(workspaces, sort);
-	for (const workspace of ordered) {
+}): { person: Person | null; workspaces: Workspace[] }[] {
+	const groups = new Map<
+		string,
+		{ person: Person | null; workspaces: Workspace[] }
+	>();
+	for (const workspace of sortCloudWorkspaces(workspaces, sort)) {
 		const inItNow = workspace.presence.find(
 			(person) => now.getTime() - person.lastSeenAt.getTime() < activeWithinMs,
 		);

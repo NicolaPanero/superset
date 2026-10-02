@@ -1526,6 +1526,10 @@ msgstr "アクティベーション、使い始めてからの利用量、そし
 msgid "Active"
 msgstr "有効"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "アクティブ"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "アクティブ"
@@ -2316,6 +2320,9 @@ msgstr "アーカイブ"
 msgid "Archive environment"
 msgstr "環境をアーカイブ"
 
+msgid "Archive failed"
+msgstr "アーカイブに失敗しました"
+
 msgid "Archive workspace"
 msgstr "ワークスペースをアーカイブ"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "アーカイブ済み"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "アーカイブ済み · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "作成者"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "作成者 <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "自分が作成"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "チーム「{trimmedName}」を作成しました"
 
@@ -5296,10 +5307,6 @@ msgstr "削除"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "「{0}」を削除しますか?ホストからワークツリーが削除されます。"
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "「{0}」を削除しますか?サンドボックスとその中身がすべて停止されます。"
-
 msgid "Delete \"{basename}\"?"
 msgstr "「{basename}」を削除しますか?"
 
@@ -5346,9 +5353,6 @@ msgstr "オートメーションを削除"
 
 msgid "Delete automation?"
 msgstr "オートメーションを削除しますか?"
-
-msgid "Delete cloud workspace"
-msgstr "クラウドワークスペースを削除"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "2027年半ば"
 msgid "Mine"
 msgstr "自分"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "自分"
+
 msgid "Minimal reasoning effort"
 msgstr "最小限の推論"
 
@@ -9934,6 +9942,9 @@ msgstr "エージェントはまだありません。"
 msgid "No API keys yet."
 msgstr "APIキーはまだありません。"
 
+msgid "No archived workspaces"
+msgstr "アーカイブ済みのワークスペースはありません"
+
 msgid "No assignee"
 msgstr "担当者なし"
 
@@ -9981,6 +9992,9 @@ msgstr "Chrome、Brave、ArcなどのChromiumブラウザが見つかりませ�
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "このマシンでClaudeやCodexの使用がまだ見つかりません。今参加すれば、エージェントを使い始めた時点で表示されます。"
+
+msgid "No cloud workspaces match these filters"
+msgstr "これらのフィルターに一致するクラウドワークスペースはありません"
 
 msgid "No cloud workspaces yet"
 msgstr "クラウドワークスペースはまだありません"
@@ -10566,8 +10580,8 @@ msgstr "何もありません。"
 msgid "Nothing installed yet."
 msgstr "まだ何もインストールされていません。"
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "何も実行されていません。削除して新しく作成してください。"
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "何も実行されていません。アーカイブして新しく作成してください。"
 
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}には何もありません。"
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "プルリクエスト"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "プルリクエスト #{0}"
@@ -15000,8 +15015,8 @@ msgstr "ステップ{step}: {name}"
 msgid "Still can't reach the host."
 msgstr "ホストにまだ接続できません。"
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "再試行しています。失敗が続く場合は、削除して新しく作成してください。"
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "再試行しています。失敗が続く場合は、アーカイブして新しく作成してください。"
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "処理を続けています — 大きなリポジトリでは数分かかることがあります。画面を離れても構いません。準備ができるとホームに表示されます。"
@@ -16771,6 +16786,9 @@ msgstr "音声を文字起こしできません"
 
 msgid "Unarchive"
 msgstr "アーカイブ解除"
+
+msgid "Unarchive failed"
+msgstr "アーカイブ解除に失敗しました"
 
 msgid "Unarchive workspace"
 msgstr "ワークスペースのアーカイブを解除"

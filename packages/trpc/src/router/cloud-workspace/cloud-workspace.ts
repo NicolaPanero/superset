@@ -15,7 +15,7 @@ import {
 } from "@superset/shared/cloud-agent-launch";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
-import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, isNotNull, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { assertCloudAccess, assertMember } from "../../lib/cloud-guards";
 import { nudge } from "../../lib/realtime";
@@ -222,7 +222,11 @@ export const cloudWorkspaceRouter = {
 						// the client renders provisioning and failed rows off
 						// `status` rather than being told they don't exist yet.
 						input.archived
-							? eq(cloudWorkspaces.status, "deleted")
+							? and(
+									eq(cloudWorkspaces.status, "deleted"),
+									// Rows deleted before archiving existed have no deletedAt and no box.
+									isNotNull(cloudWorkspaces.deletedAt),
+								)
 							: ne(cloudWorkspaces.status, "deleted"),
 					),
 				)

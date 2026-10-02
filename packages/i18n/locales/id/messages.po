@@ -1526,6 +1526,10 @@ msgstr "Aktivasi, seberapa banyak dipakai setelah masuk, dan apakah mereka kemba
 msgid "Active"
 msgstr "Aktif"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Aktif"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Aktif"
@@ -2316,6 +2320,9 @@ msgstr "Arsipkan"
 msgid "Archive environment"
 msgstr "Arsipkan environment"
 
+msgid "Archive failed"
+msgstr "Pengarsipan gagal"
+
 msgid "Archive workspace"
 msgstr "Arsipkan workspace"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Diarsipkan"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Diarsipkan · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Dibuat oleh"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Dibuat oleh <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Dibuat oleh saya"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Membuat tim \"{trimmedName}\""
 
@@ -5296,10 +5307,6 @@ msgstr "Hapus"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Hapus \"{0}\"? Ini menghapus worktree-nya dari host."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Hapus \"{0}\"? Ini mematikan sandbox-nya beserta seluruh isinya."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Hapus \"{basename}\"?"
 
@@ -5346,9 +5353,6 @@ msgstr "Hapus otomatisasi"
 
 msgid "Delete automation?"
 msgstr "Hapus otomatisasi?"
-
-msgid "Delete cloud workspace"
-msgstr "Hapus workspace cloud"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Pertengahan 2027"
 msgid "Mine"
 msgstr "Milik saya"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Milik saya"
+
 msgid "Minimal reasoning effort"
 msgstr "Upaya penalaran minimal"
 
@@ -9934,6 +9942,9 @@ msgstr "Belum ada agen."
 msgid "No API keys yet."
 msgstr "Belum ada kunci API."
 
+msgid "No archived workspaces"
+msgstr "Tidak ada workspace yang diarsipkan"
+
 msgid "No assignee"
 msgstr "Tanpa penerima tugas"
 
@@ -9981,6 +9992,9 @@ msgstr "Tidak ditemukan Chrome, Brave, Arc, atau browser Chromium lainnya."
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Belum ada penggunaan Claude atau Codex di mesin ini. Gabung sekarang dan Anda akan muncul setelah memakai agen."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Tidak ada workspace cloud yang cocok dengan filter ini"
 
 msgid "No cloud workspaces yet"
 msgstr "Belum ada workspace cloud"
@@ -10566,8 +10580,8 @@ msgstr "Tidak ada apa-apa di sini."
 msgid "Nothing installed yet."
 msgstr "Belum ada yang terpasang."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Tidak ada yang berjalan. Hapus dan buat yang baru."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Tidak ada yang berjalan. Arsipkan dan buat yang baru."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Tidak ada apa pun di {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Langkah {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Host masih tidak dapat dijangkau."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Masih mencoba. Jika terus gagal, hapus dan buat yang baru."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Masih mencoba. Jika terus gagal, arsipkan dan buat yang baru."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Masih berjalan — repo besar bisa makan beberapa menit. Anda boleh keluar; workspace-nya akan muncul di Beranda saat siap."
@@ -16771,6 +16786,9 @@ msgstr "Tidak bisa mentranskripsi audio"
 
 msgid "Unarchive"
 msgstr "Batalkan arsip"
+
+msgid "Unarchive failed"
+msgstr "Pembatalan arsip gagal"
 
 msgid "Unarchive workspace"
 msgstr "Batalkan arsip workspace"

@@ -1526,6 +1526,10 @@ msgstr "Ativação, quanto as pessoas usam depois de entrar e se voltam."
 msgid "Active"
 msgstr "Ativa"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Ativos"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Ativo"
@@ -2316,6 +2320,9 @@ msgstr "Arquivar"
 msgid "Archive environment"
 msgstr "Arquivar ambiente"
 
+msgid "Archive failed"
+msgstr "Falha ao arquivar"
+
 msgid "Archive workspace"
 msgstr "Arquivar área de trabalho"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Arquivadas"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Arquivado · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Criado por"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Criado por <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Criados por mim"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "Equipe \"{trimmedName}\" criada"
 
@@ -5296,10 +5307,6 @@ msgstr "Excluir"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "Excluir \"{0}\"? Isso remove a worktree dela do host."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "Excluir \"{0}\"? Isso encerra o sandbox dela e tudo que há nele."
-
 msgid "Delete \"{basename}\"?"
 msgstr "Excluir \"{basename}\"?"
 
@@ -5346,9 +5353,6 @@ msgstr "Excluir automação"
 
 msgid "Delete automation?"
 msgstr "Excluir a automação?"
-
-msgid "Delete cloud workspace"
-msgstr "Excluir área de trabalho na nuvem"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "Meados de 2027"
 msgid "Mine"
 msgstr "Minhas"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Meus"
+
 msgid "Minimal reasoning effort"
 msgstr "Esforço de raciocínio mínimo"
 
@@ -9934,6 +9942,9 @@ msgstr "Nenhum agente ainda."
 msgid "No API keys yet."
 msgstr "Nenhuma chave de API ainda."
 
+msgid "No archived workspaces"
+msgstr "Nenhuma área de trabalho arquivada"
+
 msgid "No assignee"
 msgstr "Sem responsável"
 
@@ -9981,6 +9992,9 @@ msgstr "Nenhum navegador Chrome, Brave, Arc ou outro baseado em Chromium foi enc
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Nenhum uso do Claude ou do Codex encontrado nesta máquina ainda. Entre agora e você aparecerá assim que usar um agente."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Nenhuma área de trabalho na nuvem corresponde a esses filtros"
 
 msgid "No cloud workspaces yet"
 msgstr "Nenhuma área de trabalho na nuvem ainda"
@@ -10566,8 +10580,8 @@ msgstr "Nada aqui."
 msgid "Nothing installed yet."
 msgstr "Nada instalado ainda."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Nada está rodando. Remova e crie outra."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Nada está rodando. Arquive e crie outra."
 
 msgid "Nothing lives at {pathname}."
 msgstr "Não há nada em {pathname}."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Etapa {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "O host continua inacessível."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Ainda tentando. Se continuar falhando, remova e crie outra."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Ainda tentando. Se continuar falhando, arquive e crie outra."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Ainda trabalhando — repositórios grandes podem levar alguns minutos. Você pode sair; a área de trabalho aparece no Início quando ficar pronta."
@@ -16771,6 +16786,9 @@ msgstr "Não foi possível transcrever o áudio"
 
 msgid "Unarchive"
 msgstr "Desarquivar"
+
+msgid "Unarchive failed"
+msgstr "Falha ao desarquivar"
 
 msgid "Unarchive workspace"
 msgstr "Desarquivar área de trabalho"

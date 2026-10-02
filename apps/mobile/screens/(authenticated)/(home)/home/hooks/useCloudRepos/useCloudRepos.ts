@@ -5,11 +5,8 @@ import { useMemo } from "react";
 import { useSession } from "@/lib/auth/client";
 import { apiClient } from "@/lib/trpc/client";
 
-/**
- * The repo URL prefix each cloud workspace's pull requests live under, by
- * cloud workspace id: the primary repository it checked out.
- */
-export function useCloudRepoPrefixes(): Map<string, string> {
+/** Each cloud workspace's primary repository, `owner/name`, by cloud workspace id. */
+export function useCloudRepos(): Map<string, string> {
 	const { data: session } = useSession();
 	const organizationId = session?.session?.activeOrganizationId ?? null;
 	const enabledByFlag = Boolean(useFeatureFlag(FEATURE_FLAGS.CLOUD_WORKSPACES));
@@ -23,15 +20,13 @@ export function useCloudRepoPrefixes(): Map<string, string> {
 				organizationId: organizationId as string,
 			}),
 	});
-	return useMemo(() => {
-		const prefixes = new Map<string, string>();
-		for (const row of data ?? []) {
-			if (!row.primary) continue;
-			prefixes.set(
-				row.cloudWorkspaceId,
-				`https://github.com/${row.fullName}/`.toLowerCase(),
-			);
-		}
-		return prefixes;
-	}, [data]);
+	return useMemo(
+		() =>
+			new Map(
+				(data ?? [])
+					.filter((row) => row.primary)
+					.map((row) => [row.cloudWorkspaceId, row.fullName]),
+			),
+		[data],
+	);
 }

@@ -1526,6 +1526,10 @@ msgstr "Aktivasyon, içeri girdikten sonra ne kadar kullandıkları ve geri dön
 msgid "Active"
 msgstr "Etkin"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "Etkin"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "Etkin"
@@ -2316,6 +2320,9 @@ msgstr "Arşivle"
 msgid "Archive environment"
 msgstr "Ortamı arşivle"
 
+msgid "Archive failed"
+msgstr "Arşivlenemedi"
+
 msgid "Archive workspace"
 msgstr "Çalışma alanını arşivle"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "Arşivlenmiş"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "Arşivlendi · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "Oluşturan"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "Oluşturan: <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "Benim oluşturduklarım"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "\"{trimmedName}\" takımı oluşturuldu"
 
@@ -5296,10 +5307,6 @@ msgstr "Sil"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "\"{0}\" silinsin mi? Bu, worktree'sini host'tan kaldırır."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "\"{0}\" silinsin mi? Bu, sandbox'ını ve içindeki her şeyi kapatır."
-
 msgid "Delete \"{basename}\"?"
 msgstr "\"{basename}\" silinsin mi?"
 
@@ -5346,9 +5353,6 @@ msgstr "Otomasyonu sil"
 
 msgid "Delete automation?"
 msgstr "Otomasyon silinsin mi?"
-
-msgid "Delete cloud workspace"
-msgstr "Bulut çalışma alanını sil"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "2027 ortası"
 msgid "Mine"
 msgstr "Benim"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "Benimkiler"
+
 msgid "Minimal reasoning effort"
 msgstr "En az akıl yürütme çabası"
 
@@ -9934,6 +9942,9 @@ msgstr "Henüz ajan yok."
 msgid "No API keys yet."
 msgstr "Henüz API anahtarı yok."
 
+msgid "No archived workspaces"
+msgstr "Arşivlenmiş çalışma alanı yok"
+
 msgid "No assignee"
 msgstr "Atanan yok"
 
@@ -9981,6 +9992,9 @@ msgstr "Chrome, Brave, Arc veya başka bir Chromium tarayıcısı bulunamadı."
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Bu makinede henüz Claude veya Codex kullanımı bulunamadı. Şimdi katılın; bir ajan kullandığınızda listede görüneceksiniz."
+
+msgid "No cloud workspaces match these filters"
+msgstr "Bu filtrelerle eşleşen bulut çalışma alanı yok"
 
 msgid "No cloud workspaces yet"
 msgstr "Henüz bulut çalışma alanı yok"
@@ -10566,8 +10580,8 @@ msgstr "Burada bir şey yok."
 msgid "Nothing installed yet."
 msgstr "Henüz kurulu bir şey yok."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "Hiçbir şey çalışmıyor. Bunu kaldırıp yeni bir tane oluşturun."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "Hiçbir şey çalışmıyor. Bunu arşivleyip yeni bir tane oluşturun."
 
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname} yolunda bir şey yok."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "Pull request"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "Pull request #{0}"
@@ -15000,8 +15015,8 @@ msgstr "Adım {step}: {name}"
 msgid "Still can't reach the host."
 msgstr "Host'a hâlâ ulaşılamıyor."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "Hâlâ deneniyor. Başarısız olmaya devam ederse bunu kaldırıp yeni bir tane oluşturun."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "Hâlâ deneniyor. Başarısız olmaya devam ederse bunu arşivleyip yeni bir tane oluşturun."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "Hâlâ çalışıyor — büyük depolar birkaç dakika sürebilir. Ayrılabilirsiniz; çalışma alanı hazır olduğunda Ana sayfada görünecek."
@@ -16771,6 +16786,9 @@ msgstr "Ses yazıya dökülemiyor"
 
 msgid "Unarchive"
 msgstr "Arşivden çıkar"
+
+msgid "Unarchive failed"
+msgstr "Arşivden çıkarılamadı"
 
 msgid "Unarchive workspace"
 msgstr "Çalışma alanını arşivden çıkar"

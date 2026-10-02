@@ -1526,6 +1526,10 @@ msgstr "활성화, 들어온 뒤 얼마나 쓰는지, 그리고 다시 돌아오
 msgid "Active"
 msgstr "활성"
 
+msgctxt "cloud workspace status"
+msgid "Active"
+msgstr "활성"
+
 msgctxt "presence"
 msgid "Active"
 msgstr "활성"
@@ -2316,6 +2320,9 @@ msgstr "보관"
 msgid "Archive environment"
 msgstr "환경 보관"
 
+msgid "Archive failed"
+msgstr "보관 실패"
+
 msgid "Archive workspace"
 msgstr "워크스페이스 보관"
 
@@ -2323,6 +2330,7 @@ msgid "Archived"
 msgstr "보관됨"
 
 #. placeholder {0}: formatCompactRelativeTime(archivedAt, now)
+#. placeholder {0}: formatCompactRelativeTime(cloud.deletedAt)
 msgid "Archived · {0}"
 msgstr "보관됨 · {0}"
 
@@ -5046,6 +5054,9 @@ msgstr "만든 사람"
 msgid "Created by <0/> · {createdAgo}"
 msgstr "만든 사람 <0/> · {createdAgo}"
 
+msgid "Created by me"
+msgstr "내가 만든 항목"
+
 msgid "Created team \"{trimmedName}\""
 msgstr "\"{trimmedName}\" 팀을 만들었습니다"
 
@@ -5296,10 +5307,6 @@ msgstr "삭제"
 msgid "Delete \"{0}\"? This removes its worktree from the host."
 msgstr "\"{0}\"을(를) 삭제할까요? 호스트에서 해당 worktree가 제거됩니다."
 
-#. placeholder {0}: target.name
-msgid "Delete \"{0}\"? This shuts down its sandbox and everything in it."
-msgstr "\"{0}\"을(를) 삭제할까요? 샌드박스와 그 안의 모든 것이 종료됩니다."
-
 msgid "Delete \"{basename}\"?"
 msgstr "\"{basename}\"을(를) 삭제할까요?"
 
@@ -5346,9 +5353,6 @@ msgstr "자동화 삭제"
 
 msgid "Delete automation?"
 msgstr "자동화를 삭제할까요?"
-
-msgid "Delete cloud workspace"
-msgstr "클라우드 워크스페이스 삭제"
 
 #. placeholder {0}: index + 1
 msgid "Delete command {0}"
@@ -9382,6 +9386,10 @@ msgstr "2027년 중반"
 msgid "Mine"
 msgstr "내 자동화"
 
+msgctxt "workspaces I created"
+msgid "Mine"
+msgstr "내 워크스페이스"
+
 msgid "Minimal reasoning effort"
 msgstr "최소한의 추론"
 
@@ -9934,6 +9942,9 @@ msgstr "아직 에이전트가 없습니다."
 msgid "No API keys yet."
 msgstr "아직 API 키가 없습니다."
 
+msgid "No archived workspaces"
+msgstr "보관된 워크스페이스가 없습니다"
+
 msgid "No assignee"
 msgstr "담당자 없음"
 
@@ -9981,6 +9992,9 @@ msgstr "Chrome, Brave, Arc 등 Chromium 기반 브라우저를 찾을 수 없습
 
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "이 컴퓨터에서 아직 Claude 또는 Codex 사용량을 찾지 못했습니다. 지금 참여하면 에이전트를 사용한 뒤 순위에 표시됩니다."
+
+msgid "No cloud workspaces match these filters"
+msgstr "이 필터와 일치하는 클라우드 워크스페이스가 없습니다"
 
 msgid "No cloud workspaces yet"
 msgstr "아직 클라우드 워크스페이스가 없습니다"
@@ -10566,8 +10580,8 @@ msgstr "아무것도 없습니다."
 msgid "Nothing installed yet."
 msgstr "아직 설치된 항목이 없습니다."
 
-msgid "Nothing is running. Remove it and create a new one."
-msgstr "실행 중인 것이 없습니다. 제거하고 새로 만드세요."
+msgid "Nothing is running. Archive it and create a new one."
+msgstr "실행 중인 것이 없습니다. 보관하고 새로 만드세요."
 
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}에는 아무것도 없습니다."
@@ -12242,6 +12256,7 @@ msgid "Pull request"
 msgstr "풀 리퀘스트"
 
 #. placeholder {0}: data.number
+#. placeholder {0}: pullRequest.number
 #. placeholder {0}: pullRequest.prNumber
 msgid "Pull request #{0}"
 msgstr "풀 리퀘스트 #{0}"
@@ -15000,8 +15015,8 @@ msgstr "{step}단계: {name}"
 msgid "Still can't reach the host."
 msgstr "아직 호스트에 연결할 수 없습니다."
 
-msgid "Still trying. If it keeps failing, remove it and create a new one."
-msgstr "계속 시도하는 중입니다. 계속 실패하면 제거하고 새로 만드세요."
+msgid "Still trying. If it keeps failing, archive it and create a new one."
+msgstr "계속 시도하는 중입니다. 계속 실패하면 보관하고 새로 만드세요."
 
 msgid "Still working — large repos can take a few minutes. You can leave; the workspace will appear on Home when it's ready."
 msgstr "아직 진행 중입니다 — 큰 리포지토리는 몇 분 걸릴 수 있습니다. 나가도 되며, 준비되면 홈에 워크스페이스가 표시됩니다."
@@ -16771,6 +16786,9 @@ msgstr "오디오를 변환할 수 없습니다"
 
 msgid "Unarchive"
 msgstr "보관 해제"
+
+msgid "Unarchive failed"
+msgstr "보관 해제 실패"
 
 msgid "Unarchive workspace"
 msgstr "워크스페이스 보관 해제"
