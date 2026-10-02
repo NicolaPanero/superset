@@ -74,7 +74,6 @@ import {
 	mintPageTicket,
 	writePageManifest,
 } from "./storage";
-import { pageStoreRouter } from "./store";
 import { enqueuePageThumbnail } from "./thumbnail";
 import { watchState } from "./watch";
 import {
@@ -395,7 +394,6 @@ async function listPageBatch({
 
 export const pageRouter = {
 	assets: pageAssetRouter,
-	store: pageStoreRouter,
 	...pageReportRouter,
 
 	/**

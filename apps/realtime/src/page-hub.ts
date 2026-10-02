@@ -8,7 +8,6 @@ import {
 } from "@superset/shared/page-storage";
 import { readable, writableFor } from "@superset/shared/page-storage-access";
 import type {
-	PageStorageHubRecord,
 	PageStorageHubRequest,
 	PageStorageHubResponse,
 } from "@superset/shared/page-storage-hub";
@@ -20,6 +19,13 @@ import {
 } from "@superset/shared/usercontent";
 import { type Connection, type ConnectionContext, Server } from "partyserver";
 import type { RealtimeEnv } from "./types";
+
+interface StoredRecord {
+	userId: string;
+	value: unknown;
+	sizeBytes: number;
+	updatedAt: number;
+}
 
 type RecordRow = {
 	key: string;
@@ -429,41 +435,6 @@ export class PageHub extends Server<RealtimeEnv> {
 	async apply(request: PageStorageHubRequest): Promise<PageStorageHubResponse> {
 		this.schema();
 		switch (request.op) {
-			case "get":
-				return {
-					ok: true,
-					op: "get",
-					record: this.one(request.key, request.userId),
-				};
-			case "getAll":
-				return { ok: true, op: "getAll", records: this.rows(request.key) };
-			case "set": {
-				const refusal = this.write(request.userId, request.key, request.value);
-				if (refusal) return { ok: false, ...refusal };
-				this.push(request.key);
-				return { ok: true, op: "set" };
-			}
-			case "remove":
-				this.ctx.storage.sql.exec(
-					"DELETE FROM records WHERE key = ? AND user_id = ?",
-					request.key,
-					request.userId,
-				);
-				this.push(request.key);
-				return { ok: true, op: "remove" };
-			case "list": {
-				const rows = this.ctx.storage.sql
-					.exec<RecordRow>(
-						"SELECT key, user_id, value, size_bytes, updated_at FROM records ORDER BY key, updated_at",
-					)
-					.toArray();
-				return {
-					ok: true,
-					op: "list",
-					records: rows.map((row) => ({ ...toRecord(row), key: row.key })),
-					totalBytes: rows.reduce((sum, row) => sum + row.size_bytes, 0),
-				};
-			}
 			case "clear": {
 				const before = this.count();
 				if (request.key === undefined) {
@@ -509,7 +480,7 @@ export class PageHub extends Server<RealtimeEnv> {
 		for (const key of keys) this.push(key);
 	}
 
-	private one(key: string, userId: string): PageStorageHubRecord | null {
+	private one(key: string, userId: string): StoredRecord | null {
 		const [row] = this.ctx.storage.sql
 			.exec<RecordRow>(
 				"SELECT key, user_id, value, size_bytes, updated_at FROM records WHERE key = ? AND user_id = ?",
@@ -589,16 +560,6 @@ export class PageHub extends Server<RealtimeEnv> {
 		return null;
 	}
 
-	private rows(key: string): PageStorageHubRecord[] {
-		return this.ctx.storage.sql
-			.exec<RecordRow>(
-				"SELECT key, user_id, value, size_bytes, updated_at FROM records WHERE key = ? ORDER BY updated_at",
-				key,
-			)
-			.toArray()
-			.map(toRecord);
-	}
-
 	private count(): number {
 		const [row] = this.ctx.storage.sql
 			.exec<{ n: number }>("SELECT count(*) AS n FROM records")
@@ -615,7 +576,7 @@ function decode(value: string): unknown {
 	}
 }
 
-function toRecord(row: RecordRow): PageStorageHubRecord {
+function toRecord(row: RecordRow): StoredRecord {
 	return {
 		userId: row.user_id,
 		value: decode(row.value),

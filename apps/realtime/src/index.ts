@@ -98,7 +98,6 @@ app.post("/v2/page/:pageId/storage/ticket", async (c) => {
 	const stub = await getServerByName(c.env.PageHub, pageId);
 	const manifest = await stub.readManifest();
 	if (!manifest) return c.json({ error: "Not found" }, 404);
-	if (!manifest.organizationId) return c.json({ fallback: true });
 
 	const viewer = { userId: auth.sub, organizationIds: auth.organizationIds };
 	if (!readable(manifest, viewer)) {

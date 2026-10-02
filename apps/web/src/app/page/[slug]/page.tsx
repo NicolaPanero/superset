@@ -206,9 +206,6 @@ export default async function PublishedPage({
 							pageId={page.id}
 							src={page.viewUrl}
 							title={page.title}
-							userId={session.user.id}
-							name={session.user.name ?? "Someone"}
-							image={session.user.image ?? null}
 							previewing={
 								page.servedVersion !== null &&
 								page.version !== page.servedVersion

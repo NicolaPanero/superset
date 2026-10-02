@@ -3,7 +3,6 @@ export {
 	usePageComments,
 } from "./hooks/usePageComments";
 export { usePageCommentThreads } from "./hooks/usePageCommentThreads";
-export { usePageStorageBridge } from "./hooks/usePageStorageBridge";
 export { CLOUD_QUERY_KEY_ROOT, pageCommentKeys } from "./lib/pageCommentKeys";
 export { toThreads } from "./lib/toThreads";
 export {

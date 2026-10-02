@@ -1,8 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
-import { usePageComments, usePageStorageBridge } from "@superset/cloud-client";
+import { usePageComments } from "@superset/cloud-client";
 import { errorMessage } from "@superset/i18n/errors";
 import { pageCommentUser } from "@superset/shared/page-comments";
 import type { PageLinkClick } from "@superset/shared/page-comments-runtime";
+import { pageStorageSocketUrl } from "@superset/shared/page-storage-ticket";
 import {
 	AllCommentsButton,
 	CommentProvider,
@@ -75,21 +76,15 @@ export function PageViewer({
 		user,
 		onError: (error) => toast.error(errorMessage(error)),
 	});
-	const storageViewer = useMemo(
-		() => ({
-			userId: session?.user?.id ?? "",
-			name: session?.user?.name ?? "Someone",
-			image: session?.user?.image ?? null,
-		}),
-		[session?.user?.id, session?.user?.name, session?.user?.image],
+	const storageTicket = useCallback(
+		() =>
+			pageStorageSocketUrl({
+				pageId: resolvedPageId ?? "",
+				realtimeUrl: env.REALTIME_URL,
+				token: async () => getJwt(),
+			}),
+		[resolvedPageId],
 	);
-	const storageToken = useCallback(async () => getJwt(), []);
-	const storage = usePageStorageBridge({
-		pageId: resolvedPageId ?? "",
-		realtimeUrl: env.REALTIME_URL,
-		viewer: storageViewer,
-		token: storageToken,
-	});
 	const scrollKey = `${resolvedPageId ?? slug}:${pull.data?.version ?? 0}`;
 
 	const onResolvedRef = useRef(onResolved);
@@ -169,7 +164,7 @@ export function PageViewer({
 							onScrollYChange={(y) => scrollPositions.set(scrollKey, y)}
 							onFramePointerDown={onFramePointerDown}
 							onLinkClick={onLinkClick}
-							{...(resolvedPageId && !previewing ? { storage } : {})}
+							{...(resolvedPageId && !previewing ? { storageTicket } : {})}
 						/>
 					</div>
 					<AllCommentsButton />

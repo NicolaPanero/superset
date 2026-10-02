@@ -11,13 +11,12 @@ import {
 	type PageLinkClick,
 	PENDING_ANCHOR_ID,
 } from "@superset/shared/page-comments-runtime";
-import type { PageStoragePort } from "@superset/shared/page-storage";
 import {
 	applyPageViewportZoom,
 	type PageViewportZoom,
 } from "@superset/shared/page-zoom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePageStorageChannel } from "../../hooks/usePageStorageChannel";
+import { usePageStorageConnect } from "../../hooks/usePageStorageConnect";
 import { useComments } from "../../providers/CommentProvider";
 import { PageFrame } from "../PageFrame";
 import { CommentBubble, pinClassName } from "./components/CommentBubble";
@@ -42,7 +41,7 @@ interface PageCommentsViewProps {
 	 */
 	onFramePointerDown?: () => void;
 	onLinkClick?: (click: PageLinkClick) => void;
-	storage?: PageStoragePort;
+	storageTicket?: () => Promise<string | null>;
 }
 
 export function PageCommentsView({
@@ -53,7 +52,7 @@ export function PageCommentsView({
 	onScrollYChange,
 	onFramePointerDown,
 	onLinkClick,
-	storage,
+	storageTicket,
 }: PageCommentsViewProps) {
 	const onLinkClickRef = useRef(onLinkClick);
 	onLinkClickRef.current = onLinkClick;
@@ -97,7 +96,7 @@ export function PageCommentsView({
 
 	const frameOrigin = useMemo(() => new URL(src).origin, [src]);
 
-	usePageStorageChannel({ frameRef, frameOrigin, port: storage });
+	usePageStorageConnect({ frameRef, frameOrigin, ticket: storageTicket });
 
 	const [lastHoverRect, setLastHoverRect] = useState<FrameRect | null>(null);
 	useEffect(() => {

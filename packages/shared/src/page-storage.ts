@@ -66,35 +66,11 @@ export type PageStorageSocketMessage =
 	| { type: "records"; key: string; records: PageStorageRecord[] }
 	| { type: "revoked" };
 
-export type PageStorageHostMessage =
-	| {
-			channel: typeof STORAGE_HOST_CHANNEL;
-			type: "connect";
-			url: string;
-	  }
-	| {
-			channel: typeof STORAGE_HOST_CHANNEL;
-			type: "bridge";
-			viewer: PageStorageViewer;
-			author: boolean;
-			writable: boolean;
-	  }
-	| { channel: typeof STORAGE_HOST_CHANNEL; type: "changed"; key?: string }
-	| {
-			channel: typeof STORAGE_HOST_CHANNEL;
-			type: "result";
-			id: string;
-			ok: true;
-			result: PageStorageResult;
-	  }
-	| {
-			channel: typeof STORAGE_HOST_CHANNEL;
-			type: "result";
-			id: string;
-			ok: false;
-			code: PageStorageErrorCode;
-			message: string;
-	  };
+export type PageStorageHostMessage = {
+	channel: typeof STORAGE_HOST_CHANNEL;
+	type: "connect";
+	url: string;
+};
 
 export type PageStorageFrameMessage =
 	| { channel: typeof STORAGE_FRAME_CHANNEL; type: "hello" }
@@ -104,25 +80,6 @@ export type PageStorageFrameMessage =
 			id: string;
 			request: PageStorageOp;
 	  };
-
-export type PageStorageHandler = (
-	op: PageStorageOp,
-) => Promise<PageStorageResult>;
-
-export interface PageStoragePort {
-	connect?: () => Promise<
-		| { kind: "socket"; url: string }
-		| {
-				kind: "bridge";
-				viewer: PageStorageViewer;
-				author: boolean;
-				writable: boolean;
-		  }
-		| null
-	>;
-	call?: PageStorageHandler;
-	watch?: (onChange: (key?: string) => void) => () => void;
-}
 
 export function pageStorageValueBytes(value: unknown): number {
 	return new TextEncoder().encode(JSON.stringify(value ?? null)).length;

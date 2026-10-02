@@ -29,7 +29,6 @@ export function pageStorageRuntimeSource({
 	let seq = 0;
 	let settleReady = null;
 	let socket = null;
-	let mode = null;
 	let available = false;
 	let identity = null;
 	let revoked = false;
@@ -87,7 +86,6 @@ export function pageStorageRuntimeSource({
 			try { data = JSON.parse(event.data); } catch { return; }
 			if (data.type === "hello") {
 				identity = { viewer: data.viewer, author: data.author, writable: data.writable };
-				mode = "socket";
 				available = true;
 				settle(true);
 				revive();
@@ -127,22 +125,6 @@ export function pageStorageRuntimeSource({
 			if (!socket) openSocket(data.url);
 			return;
 		}
-		if (data.type === "bridge") {
-			identity = { viewer: data.viewer, author: data.author, writable: data.writable };
-			mode = "bridge";
-			available = true;
-			settle(true);
-			revive();
-			return;
-		}
-		if (data.type === "changed") {
-			for (const [key, fns] of watchers) {
-				if (data.key !== undefined && data.key !== key) continue;
-				for (const fn of fns) fn.refresh();
-			}
-			return;
-		}
-		deliver(data);
 	});
 
 	const revive = () => {
@@ -162,16 +144,12 @@ export function pageStorageRuntimeSource({
 		const id = DOCUMENT + "." + ++seq;
 		return new Promise((resolve, reject) => {
 			pending.set(id, { resolve, reject });
-			if (mode === "socket") {
-				if (!socket || socket.readyState !== 1) {
-					pending.delete(id);
-					reject(fail("unavailable", "The page's storage socket is closed"));
-					return;
-				}
-				socket.send(JSON.stringify({ type: "call", id, request }));
-			} else {
-				post({ type: "call", id, request });
+			if (!socket || socket.readyState !== 1) {
+				pending.delete(id);
+				reject(fail("unavailable", "The page's storage socket is closed"));
+				return;
 			}
+			socket.send(JSON.stringify({ type: "call", id, request }));
 			setTimeout(() => {
 				if (!pending.has(id)) return;
 				pending.delete(id);
@@ -253,7 +231,7 @@ export function pageStorageRuntimeSource({
 
 			const tick = () => {
 				read();
-				if (!stopped && mode !== "socket") {
+				if (!stopped && !available) {
 					timer = setTimeout(tick, POLL_INTERVAL_MS);
 				}
 			};

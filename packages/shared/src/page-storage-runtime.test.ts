@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { STORAGE_FRAME_CHANNEL, STORAGE_HOST_CHANNEL } from "./page-storage";
+import { STORAGE_HOST_CHANNEL } from "./page-storage";
 import { pageStorageRuntimeSource } from "./page-storage-runtime";
 
 interface Storage {
@@ -221,52 +221,6 @@ describe("page storage runtime, socket path", () => {
 	});
 });
 
-describe("page storage runtime, bridge fallback", () => {
-	test("serves calls over postMessage when the host offers no socket", async () => {
-		const h = mount();
-		h.toFrame({
-			type: "bridge",
-			viewer: { userId: "u1", name: "Ada", image: null },
-			author: false,
-			writable: true,
-		});
-		expect(await h.storage.ready).toBe(true);
-		expect(h.socketOpened()).toBeNull();
-
-		h.storage.getAll("votes");
-		await flush();
-		const call = h.posted.filter((m) => m.type === "call").at(-1);
-		expect(call?.channel).toBe(STORAGE_FRAME_CHANNEL);
-		expect(call?.request).toEqual({ op: "getAll", key: "votes" });
-	});
-
-	test("a host-pushed change makes a bridge subscriber re-read", async () => {
-		const h = mount();
-		h.toFrame({
-			type: "bridge",
-			viewer: { userId: "u1", name: "Ada", image: null },
-			author: false,
-			writable: true,
-		});
-		await h.storage.ready;
-
-		h.storage.subscribe("votes", () => {});
-		await flush();
-		h.toFrame({
-			type: "result",
-			id: h.posted.filter((m) => m.type === "call").at(-1)?.id,
-			ok: true,
-			result: { op: "getAll", records: [] },
-		});
-		await flush();
-
-		const before = h.posted.filter((m) => m.type === "call").length;
-		h.toFrame({ type: "changed", key: "votes" });
-		await flush();
-		expect(h.posted.filter((m) => m.type === "call").length).toBe(before + 1);
-	});
-});
-
 describe("page storage runtime, a host that answers late", () => {
 	test("a connection after the deadline still works, instead of failing forever", async () => {
 		const h = mount({ helloTimeoutMs: 20 });
@@ -277,8 +231,9 @@ describe("page storage runtime, a host that answers late", () => {
 			code: "unavailable",
 		});
 
-		h.toFrame({
-			type: "bridge",
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
 			viewer: { userId: "u1", name: "Ada", image: null },
 			author: false,
 			writable: true,
@@ -287,11 +242,9 @@ describe("page storage runtime, a host that answers late", () => {
 
 		const pending = h.storage.getAll("votes");
 		await flush();
-		const call = h.posted.filter((m) => m.type === "call").at(-1);
-		expect(call?.request).toEqual({ op: "getAll", key: "votes" });
-		h.toFrame({
+		h.fromHub({
 			type: "result",
-			id: call?.id,
+			id: lastCall(h.sent)?.id,
 			ok: true,
 			result: { op: "getAll", records: [{ value: "Ramen" }] },
 		});
@@ -307,17 +260,17 @@ describe("page storage runtime, a host that answers late", () => {
 		await flush();
 		expect(seen).toHaveLength(0);
 
-		h.toFrame({
-			type: "bridge",
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
 			viewer: { userId: "u1", name: "Ada", image: null },
 			author: false,
 			writable: true,
 		});
 		await flush();
-		const call = h.posted.filter((m) => m.type === "call").at(-1);
-		h.toFrame({
+		h.fromHub({
 			type: "result",
-			id: call?.id,
+			id: lastCall(h.sent)?.id,
 			ok: true,
 			result: { op: "getAll", records: [{ value: "Tacos" }] },
 		});
@@ -337,18 +290,19 @@ describe("page storage runtime, no host", () => {
 
 	test("refuses a value JSON cannot represent before posting it", async () => {
 		const h = mount();
-		h.toFrame({
-			type: "bridge",
+		h.toFrame({ type: "connect", url: "wss://realtime/socket" });
+		h.fromHub({
+			type: "hello",
 			viewer: { userId: "u1", name: "Ada", image: null },
 			author: false,
 			writable: true,
 		});
 		await h.storage.ready;
 
-		const before = h.posted.length;
+		const before = h.sent.length;
 		await expect(h.storage.set("k", () => 1)).rejects.toMatchObject({
 			code: "invalid",
 		});
-		expect(h.posted.length).toBe(before);
+		expect(h.sent.length).toBe(before);
 	});
 });

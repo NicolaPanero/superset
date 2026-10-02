@@ -294,8 +294,8 @@ async function main() {
 
 	const legacy = await ticket(LEGACY_PAGE, memberJwt);
 	check(
-		"answers fallback for a manifest with no organization",
-		legacy.status === 200 && legacy.body?.fallback === true,
+		"refuses a manifest with no organization",
+		legacy.status === 403,
 		legacy,
 	);
 
@@ -479,30 +479,12 @@ async function main() {
 	});
 
 	console.log("\nadmin route");
-	const list = await fetch(`${base}/v2/page/${ORG_PAGE}/storage/admin`, {
-		method: "POST",
-		headers: {
-			authorization: `Bearer ${SECRET}`,
-			"content-type": "application/json",
-		},
-		body: JSON.stringify({ op: "list" }),
-	});
-	const listed = (await list.json()) as {
-		records?: unknown[];
-		totalBytes?: number;
-	};
-	check(
-		"list returns both records for the API",
-		(listed.records ?? []).length === 2 && (listed.totalBytes ?? 0) > 0,
-		listed,
-	);
-
 	const unauthorizedAdmin = await fetch(
 		`${base}/v2/page/${ORG_PAGE}/storage/admin`,
 		{
 			method: "POST",
 			headers: { "content-type": "application/json" },
-			body: JSON.stringify({ op: "list" }),
+			body: JSON.stringify({ op: "clear" }),
 		},
 	);
 	check(
@@ -510,19 +492,36 @@ async function main() {
 		unauthorizedAdmin.status === 401,
 	);
 
-	first.socket.close();
-	other.socket.close();
-	if (failures > 0) {
-		console.error(
-			"\nworker log:\n" +
-				log
-					.join("")
-					.split("\n")
-					.filter((line) => /error|Error|✘|exception/i.test(line))
-					.slice(-15)
-					.join("\n"),
-		);
-	}
+	const purged = await fetch(`${base}/v2/page/${ORG_PAGE}/storage/admin`, {
+		method: "POST",
+		headers: {
+			authorization: `Bearer ${SECRET}`,
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({ op: "clearUser", userId: AUTHOR }),
+	});
+	const purgedBody = (await purged.json()) as { cleared?: number };
+	check(
+		"clearUser drops one person's records for an account purge",
+		purged.ok && (purgedBody.cleared ?? 0) >= 1,
+		purgedBody,
+	);
+
+	const wiped = await fetch(`${base}/v2/page/${ORG_PAGE}/storage/admin`, {
+		method: "POST",
+		headers: {
+			authorization: `Bearer ${SECRET}`,
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({ op: "clear" }),
+	});
+	const wipedBody = (await wiped.json()) as { cleared?: number };
+	check(
+		"clear wipes what is left, for page delete",
+		wiped.ok && (wipedBody.cleared ?? 0) >= 1,
+		wipedBody,
+	);
+
 	shutdown();
 
 	console.log(
