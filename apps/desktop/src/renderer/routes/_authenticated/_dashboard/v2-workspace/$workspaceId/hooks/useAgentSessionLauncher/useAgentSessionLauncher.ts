@@ -4,7 +4,7 @@ import type { WorkspaceStore } from "@superset/panes";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
-import { useFeatureFlagEnabled } from "posthog-js/react";
+import { useFeatureFlagEnabled, usePostHog } from "posthog-js/react";
 import { useCallback } from "react";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
@@ -13,6 +13,32 @@ import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
 import { acpHarnessForAgent } from "../usePaneRegistry/components/AgentTerminalPane/utils/acpHarness";
+
+/**
+ * Launching is one-shot, so an unresolved flag cannot be guessed: reading it as
+ * off spawns a pty the chat then has to tear down, and reading it as on shows a
+ * chat to someone who turned it off. Wait for the answer instead, and treat a
+ * shrug as off so the terminal — which every account can use — is the fallback.
+ */
+const FLAG_WAIT_MS = 2_000;
+
+function awaitAcpFlag(
+	posthog: ReturnType<typeof usePostHog> | undefined,
+): Promise<boolean> {
+	if (!posthog) return Promise.resolve(false);
+	return new Promise((resolve) => {
+		let unsubscribe: (() => void) | undefined;
+		const settle = (enabled: boolean) => {
+			clearTimeout(timer);
+			unsubscribe?.();
+			resolve(enabled);
+		};
+		const timer = setTimeout(() => settle(false), FLAG_WAIT_MS);
+		unsubscribe = posthog.onFeatureFlags(() => {
+			settle(posthog.isFeatureEnabled(FEATURE_FLAGS.ACP_CHAT) === true);
+		});
+	});
+}
 
 export interface CreateNewAgentSessionInput {
 	configId: string;
@@ -40,7 +66,8 @@ export function useAgentSessionLauncher({
 	const { t } = useLingui();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const appearance = useTerminalAppearance();
-	const acpEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false;
+	const acpFlag = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT);
+	const posthog = usePostHog();
 	const { hostUrl } = useWorkspaceClient();
 	// The pty's launch reply is what normally names the pane; a chat has no
 	// launch, so the agent's own label stands in.
@@ -52,6 +79,7 @@ export function useAgentSessionLauncher({
 			// first would run the agent once, derive onto the chat, kill it and
 			// run it again. Forking a terminal session is still the terminal's
 			// own flow, so it keeps the pty.
+			const acpEnabled = acpFlag ?? (await awaitAcpFlag(posthog));
 			if (
 				acpEnabled &&
 				!input.forkSessionId &&
@@ -142,7 +170,8 @@ export function useAgentSessionLauncher({
 			workspaceId,
 			t,
 			appearance.theme,
-			acpEnabled,
+			acpFlag,
+			posthog,
 			agentConfigs,
 		],
 	);
