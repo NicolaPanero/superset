@@ -26,7 +26,11 @@ export function useAgentSurface(
 	workspaceId: string,
 	data: TerminalPaneData,
 ): ResolvedAgentSurface {
-	const acpEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) ?? false;
+	// Undefined until PostHog answers. Reading that as "off" would open every
+	// pane on its terminal for the first frames — mounting a pty that resumes
+	// the agent — and then tear it down for the chat the pane already knew it
+	// was. Only a resolved `false` turns the chat off.
+	const acpDisabled = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT) === false;
 	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
 	const harness = acpHarnessForAgent(binding?.agentId);
 
@@ -37,11 +41,11 @@ export function useAgentSurface(
 
 	// The pane remembers an agent it has already opened as a chat, so the
 	// surface survives the binding going away with the pty.
-	const chatCapable = Boolean(acpEnabled && (agent || data.agent));
+	const chatCapable = Boolean(!acpDisabled && (agent || data.agent));
 	// A stored "acp" outlives the flag it was chosen under, so the flag is read
 	// first: turning it off has to return every pane to its terminal, not just
 	// hide the toggle on a pane that keeps running the chat.
-	const surface: AgentSurface = !acpEnabled
+	const surface: AgentSurface = acpDisabled
 		? "cli"
 		: (data.agentSurface ?? (chatCapable ? "acp" : "cli"));
 

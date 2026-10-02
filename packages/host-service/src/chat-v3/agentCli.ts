@@ -4,7 +4,6 @@ import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
 import { getBinDir } from "@superset/agent-setup";
 import { coerce, gte } from "semver";
-import { waitForTerminalBaseEnv } from "../terminal/env";
 import { UNGATED_VERSION } from "./acpCatalogue";
 
 const execFileAsync = promisify(execFile);
@@ -117,21 +116,13 @@ export async function resolveAgentCli(options: {
 	binary: string;
 	minVersion: string;
 	upgrade?: string;
-	env: () => NodeJS.ProcessEnv;
+	env: () => Promise<NodeJS.ProcessEnv>;
 }): Promise<AgentCli> {
-	await waitForTerminalBaseEnv();
-	const env = options.env();
+	const env = await options.env();
 	const command = agentCliCommand(options.binary, env);
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {
 		throw new Error(agentCliUnsupported({ ...options, found }));
 	}
 	return { command, env };
-}
-
-export function resolveAgentCliSync(
-	binary: string,
-	env: NodeJS.ProcessEnv,
-): AgentCli {
-	return { command: agentCliCommand(binary, env), env };
 }

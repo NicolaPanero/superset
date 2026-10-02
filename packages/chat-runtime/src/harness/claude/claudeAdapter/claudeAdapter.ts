@@ -50,10 +50,15 @@ export type ClaudeQuery = (params: {
 	options: ClaudeQueryOptions;
 }) => ClaudeSession;
 
+export type ClaudeLaunch = {
+	pathToClaudeCodeExecutable?: string;
+	env?: ClaudeQueryOptions["env"];
+};
+
 export type ClaudeAdapterOptions = {
 	query: ClaudeQuery;
 	pathToClaudeCodeExecutable?: string;
-	resolveEnv?: () => ClaudeQueryOptions["env"];
+	launch?: () => Promise<ClaudeLaunch>;
 	now?: () => number;
 	mintId?: () => string;
 };
@@ -171,13 +176,42 @@ export class ClaudeAdapter implements HarnessAdapter {
 		});
 		this.translator = translator;
 
+		void this.begin(startOptions, translator);
+		const events = this.events;
+		return {
+			[Symbol.asyncIterator](): AsyncIterator<AdapterEvent> {
+				return { next: () => events.next() };
+			},
+		};
+	}
+
+	private async begin(
+		startOptions: HarnessStartOptions,
+		translator: ClaudeTranslator,
+	): Promise<void> {
+		let launch: ClaudeLaunch | undefined;
+		try {
+			launch = await this.options.launch?.();
+		} catch (error) {
+			for (const event of translator.interrupt(
+				error instanceof Error ? error.message : String(error),
+			)) {
+				this.events.push(event);
+			}
+			this.events.close();
+			return;
+		}
+		if (this.disposed) return;
+
 		const stream = this.options.query({
 			prompt: this.prompts.stream(),
 			options: {
 				cwd: startOptions.cwd,
 				model: startOptions.modelId,
-				pathToClaudeCodeExecutable: this.options.pathToClaudeCodeExecutable,
-				env: this.options.resolveEnv?.(),
+				pathToClaudeCodeExecutable:
+					launch?.pathToClaudeCodeExecutable ??
+					this.options.pathToClaudeCodeExecutable,
+				env: launch?.env,
 				includePartialMessages: true,
 				settingSources: [],
 				permissionMode: "default",
@@ -190,12 +224,6 @@ export class ClaudeAdapter implements HarnessAdapter {
 
 		this.session = stream;
 		this.pump = this.run(stream, translator);
-		const events = this.events;
-		return {
-			[Symbol.asyncIterator](): AsyncIterator<AdapterEvent> {
-				return { next: () => events.next() };
-			},
-		};
 	}
 
 	prompt(content: UserContent[]): void {

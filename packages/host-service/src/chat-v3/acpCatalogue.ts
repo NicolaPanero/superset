@@ -60,3 +60,18 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		note: "Ungated: no pi install was available to verify a floor against, and gating on a guess would reject working versions. It reached the same state before this catalogue, since the harness resolved pi off PATH either way.",
 	},
 };
+
+/**
+ * The floor for a CLI, by the harness that documents it. The non-ACP harnesses
+ * drive the same binaries, so they gate on the same versions.
+ */
+export function cliFloor(harness: string): {
+	minVersion: string;
+	upgrade?: string;
+} {
+	const entry = ACP_HARNESSES[harness];
+	return {
+		minVersion: entry?.minVersion ?? UNGATED_VERSION,
+		upgrade: entry?.upgrade,
+	};
+}

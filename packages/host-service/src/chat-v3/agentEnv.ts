@@ -1,24 +1,27 @@
 import { delimiter } from "node:path";
-import { getBinDir, resolveSupersetHomeDir } from "@superset/agent-setup";
+import { getBinDir } from "@superset/agent-setup";
 import { eq } from "drizzle-orm";
 import type { HostDb } from "../db";
 import { projects, workspaces } from "../db/schema";
-import {
-	buildV2TerminalEnv,
-	getTerminalBaseEnv,
-	resolveLaunchShell,
-} from "../terminal/env";
+import { buildHostLaunchEnv, waitForTerminalBaseEnv } from "../terminal/env";
 import { resolveDefaultAccountTerminalEnv } from "../trpc/router/usage/default-account";
 
-function rootPathFor(db: HostDb, workspaceId: string): string {
+function workspacePaths(
+	db: HostDb,
+	workspaceId: string,
+): { workspacePath: string; rootPath: string } {
 	const workspace = db.query.workspaces
 		.findFirst({ where: eq(workspaces.id, workspaceId) })
 		.sync();
-	if (!workspace?.projectId) return "";
-	const project = db.query.projects
-		.findFirst({ where: eq(projects.id, workspace.projectId) })
-		.sync();
-	return project?.repoPath ?? "";
+	const project = workspace?.projectId
+		? db.query.projects
+				.findFirst({ where: eq(projects.id, workspace.projectId) })
+				.sync()
+		: undefined;
+	return {
+		workspacePath: workspace?.worktreePath ?? "",
+		rootPath: project?.repoPath ?? "",
+	};
 }
 
 function withSupersetBinFirst(
@@ -40,36 +43,27 @@ function withoutAmbientKeys(
 	return rest;
 }
 
-export function buildChatAgentEnv(options: {
+/**
+ * A chat agent is launched with the env a terminal would launch it with, so
+ * the same CLI resolves the same tools and auth either way. `~/.superset/bin`
+ * leads PATH because a terminal picks that up from the shell bootstrap, which
+ * a directly spawned agent never runs, and it is what puts the superset CLI
+ * and the agent wrappers in reach.
+ */
+export async function buildChatAgentEnv(options: {
 	db: HostDb;
 	cwd: string;
 	workspaceId: string;
-}): Record<string, string> {
-	let baseEnv: Record<string, string>;
-	try {
-		baseEnv = getTerminalBaseEnv();
-	} catch {
-		throw new Error(
-			"Chat is still starting up and cannot reach your shell environment yet. Try again in a moment.",
-		);
-	}
-	const supersetHomeDir = resolveSupersetHomeDir();
+}): Promise<Record<string, string>> {
+	await waitForTerminalBaseEnv();
+	const paths = workspacePaths(options.db, options.workspaceId);
 	return withoutAmbientKeys(
 		withSupersetBinFirst({
-			...buildV2TerminalEnv({
-				baseEnv,
-				shell: resolveLaunchShell(baseEnv),
-				supersetHomeDir,
-				organizationId: process.env.ORGANIZATION_ID || "",
+			...buildHostLaunchEnv({
 				cwd: options.cwd,
-				terminalId: "",
 				workspaceId: options.workspaceId,
-				workspacePath: options.cwd,
-				rootPath: rootPathFor(options.db, options.workspaceId),
-				supersetEnv:
-					process.env.NODE_ENV === "development" ? "development" : "production",
-				agentHookPort: process.env.SUPERSET_AGENT_HOOK_PORT || "",
-				agentHookVersion: process.env.SUPERSET_AGENT_HOOK_VERSION || "",
+				workspacePath: paths.workspacePath || options.cwd,
+				rootPath: paths.rootPath,
 			}),
 			...resolveDefaultAccountTerminalEnv(options.db),
 		}),

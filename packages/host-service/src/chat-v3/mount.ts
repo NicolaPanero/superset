@@ -19,8 +19,9 @@ import {
 } from "@superset/chat-runtime";
 import type { Hono, MiddlewareHandler } from "hono";
 import type { HostDb } from "../db";
+import { cliFloor } from "./acpCatalogue";
 import { acpHarnessEntries } from "./acpHarnesses";
-import { resolveAgentCliSync } from "./agentCli";
+import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import { createResolveCwd } from "./resolveCwd";
 
@@ -39,22 +40,46 @@ function harnessRegistry(db: HostDb): HarnessRegistry {
 	const entries: [string, HarnessFactory][] = [
 		[
 			"claude-code",
-			(options) => {
-				const chatEnv = () =>
-					buildChatAgentEnv({
-						db,
-						cwd: options.cwd,
-						workspaceId: options.scopeId,
-					});
-				const cli = resolveAgentCliSync("claude", chatEnv());
-				return createClaudeAdapter({
-					pathToClaudeCodeExecutable:
-						process.env.SUPERSET_CHAT_V3_CLAUDE_BIN ?? cli.command,
-					resolveEnv: chatEnv,
-				});
-			},
+			(options) =>
+				createClaudeAdapter({
+					launch: async () => {
+						const cli = await resolveAgentCli({
+							binary: "claude",
+							...cliFloor("claude-acp"),
+							env: () =>
+								buildChatAgentEnv({
+									db,
+									cwd: options.cwd,
+									workspaceId: options.scopeId,
+								}),
+						});
+						return {
+							pathToClaudeCodeExecutable:
+								process.env.SUPERSET_CHAT_V3_CLAUDE_BIN ?? cli.command,
+							env: cli.env,
+						};
+					},
+				}),
 		],
-		["codex", () => new CodexAdapter()],
+		[
+			"codex",
+			(options) =>
+				new CodexAdapter({
+					launch: async () => {
+						const cli = await resolveAgentCli({
+							binary: "codex",
+							...cliFloor("codex-acp"),
+							env: () =>
+								buildChatAgentEnv({
+									db,
+									cwd: options.cwd,
+									workspaceId: options.scopeId,
+								}),
+						});
+						return { command: cli.command, env: cli.env };
+					},
+				}),
+		],
 		...acpHarnessEntries(db),
 	];
 	return new Map(entries);

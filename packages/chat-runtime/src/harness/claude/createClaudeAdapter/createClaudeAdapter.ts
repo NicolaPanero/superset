@@ -9,11 +9,11 @@ import { ClaudeAdapter } from "../claudeAdapter";
  */
 export function createClaudeAdapter(options?: {
 	pathToClaudeCodeExecutable?: string;
-	resolveEnv?: ClaudeAdapterOptions["resolveEnv"];
+	launch?: ClaudeAdapterOptions["launch"];
 }): HarnessAdapter {
 	return new ClaudeAdapter({
 		query,
 		pathToClaudeCodeExecutable: options?.pathToClaudeCodeExecutable,
-		resolveEnv: options?.resolveEnv,
+		launch: options?.launch,
 	});
 }
