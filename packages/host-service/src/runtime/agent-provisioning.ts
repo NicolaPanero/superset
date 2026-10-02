@@ -5,7 +5,6 @@ import {
 	getAgentSetupTemplatesDir,
 	mcpHeadersHelperCommand,
 	readInstalledPluginSources,
-	readPluginConnections,
 	reconcileMcpServers,
 	setAgentSetupTemplatesDir,
 	setupAgentIntegrations,
@@ -63,7 +62,6 @@ export function provisionAgentIntegrations(): void {
 		// already agree, which is the usual case.
 		const reports = reconcileMcpServers(
 			desiredPluginMcpServers(readInstalledPluginSources() ?? [], {
-				connections: readPluginConnections(),
 				headersHelper: mcpHeadersHelperCommand(),
 			}),
 		);
