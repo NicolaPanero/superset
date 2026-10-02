@@ -10,6 +10,7 @@ describe("acp-harnesses.json", () => {
 	it("describes at least the harnesses the product offers", () => {
 		expect(entries.map(([id]) => id)).toContain("claude-acp");
 		expect(entries.map(([id]) => id)).toContain("codex-acp");
+		expect(entries.map(([id]) => id)).toContain("pi-acp");
 	});
 
 	it.each(entries)("%s names a binary and a usable floor", (_id, entry) => {
@@ -18,14 +19,18 @@ describe("acp-harnesses.json", () => {
 		expect(valid(entry.minVersion as string)).not.toBeNull();
 	});
 
-	it.each(entries)("%s tells a reader how to upgrade", (_id, entry) => {
-		expect(typeof entry.upgrade).toBe("string");
+	it.each(entries)("%s tells a gated reader how to upgrade", (_id, entry) => {
+		if (entry.minVersion === "0.0.0") return;
+		expect(entry.upgrade).toBeTypeOf("string");
+		expect(entry.upgrade).not.toBe("");
 	});
 
 	it.each(entries)("%s can reach the CLI it translates for", (_id, entry) => {
-		// A translator that cannot be told where the CLI is would silently fall
-		// back to resolving one out of the bundle, which no build ships.
-		if (entry.adapter) expect(typeof entry.executableEnv).toBe("string");
-		else expect(entry.executableEnv).toBeUndefined();
+		if (entry.adapter) {
+			expect(entry.executableEnv).toBeTypeOf("string");
+			expect(entry.executableEnv).not.toBe("");
+		} else {
+			expect(entry.executableEnv).toBeUndefined();
+		}
 	});
 });

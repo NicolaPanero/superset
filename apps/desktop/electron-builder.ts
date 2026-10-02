@@ -95,9 +95,6 @@ const config: Configuration = {
 		// before building (required for Bun 1.3+ isolated installs).
 		...packagedNodeModuleCopies,
 		"!**/.DS_Store",
-		// Agent CLIs, pulled in as optional deps of the ACP adapters. Chat runs
-		// whichever version the user has installed, so shipping these would add
-		// half a gigabyte of binaries nothing reads.
 		"!**/node_modules/@anthropic-ai/claude-agent-sdk-*/**",
 		"!**/node_modules/@openai/codex*/**",
 	],

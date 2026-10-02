@@ -1,18 +1,16 @@
 import { execFile } from "node:child_process";
 import { accessSync, constants, existsSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
-import { getWrapperPath } from "@superset/agent-setup";
+import { getBinDir, resolveSupersetHomeDir } from "@superset/agent-setup";
 import { coerce, gte } from "semver";
-import {
-	getToolEnvironment,
-	toolEnvironmentSync,
-} from "../terminal/clean-shell-env";
+import { getTerminalBaseEnv, waitForTerminalBaseEnv } from "../terminal/env";
 
 const execFileAsync = promisify(execFile);
 
 const VERSION_TIMEOUT_MS = 10_000;
 const CACHE_TTL_MS = 60_000;
+const UNGATED = "0.0.0";
 
 export type AgentCli = {
 	command: string;
@@ -30,26 +28,44 @@ function isExecutableFile(path: string): boolean {
 }
 
 function findOnPath(binary: string, env: NodeJS.ProcessEnv): string | null {
-	for (const dir of (env.PATH ?? "").split(":")) {
-		if (dir && isExecutableFile(join(dir, binary))) return join(dir, binary);
+	const names =
+		process.platform === "win32"
+			? (env.PATHEXT ?? ".COM;.EXE;.BAT;.CMD")
+					.split(";")
+					.filter(Boolean)
+					.map((ext) => binary + ext.toLowerCase())
+			: [binary];
+	for (const dir of (env.PATH ?? "").split(delimiter)) {
+		if (!dir) continue;
+		for (const name of names) {
+			if (isExecutableFile(join(dir, name))) return join(dir, name);
+		}
 	}
 	return null;
 }
 
-/**
- * How a Superset terminal reaches an agent: the `~/.superset/bin` wrapper when
- * `setupAgentIntegrations` has provisioned one, because that is what applies
- * the user's selected account and the managed hooks. Otherwise the install
- * itself, resolved to an absolute path — a GUI-launched app inherits launchd's
- * bare PATH, so a bare name is not a command this process can find.
- */
+function supersetWrapper(binary: string): string | null {
+	if (process.platform === "win32") return null;
+	const wrapper = join(getBinDir(), binary);
+	return existsSync(wrapper) ? wrapper : null;
+}
+
 export function agentCliCommand(
 	binary: string,
 	env: NodeJS.ProcessEnv,
 ): string {
-	const wrapper = getWrapperPath(binary);
-	if (existsSync(wrapper)) return wrapper;
-	return findOnPath(binary, env) ?? binary;
+	return supersetWrapper(binary) ?? findOnPath(binary, env) ?? binary;
+}
+
+function agentEnv(): NodeJS.ProcessEnv {
+	const base = getTerminalBaseEnv();
+	const binDir = getBinDir();
+	const path = (base.PATH ?? "").split(delimiter).filter(Boolean);
+	return {
+		...base,
+		SUPERSET_HOME_DIR: resolveSupersetHomeDir(),
+		PATH: [binDir, ...path.filter((entry) => entry !== binDir)].join(delimiter),
+	};
 }
 
 const cache = new Map<string, { at: number; version: string | null }>();
@@ -72,8 +88,6 @@ async function probeVersion(
 		});
 		version = parseVersion(stdout) ?? parseVersion(stderr);
 	} catch {
-		// Absent, not executable, or broken past launching. One outcome, because
-		// the reader's next step is the same for all three.
 		version = null;
 	}
 	cache.set(command, { at: Date.now(), version });
@@ -91,36 +105,30 @@ export function agentCliUnsupported(options: {
 	upgrade?: string;
 }): string {
 	const upgrade = options.upgrade ? ` Upgrade with: ${options.upgrade}` : "";
+	const wanted =
+		UNGATED === options.minVersion ? "" : ` ${options.minVersion} or newer`;
 	if (!options.found) {
 		return (
 			`${options.binary} was not found, so this chat cannot start. Install` +
-			` ${options.binary} ${options.minVersion} or newer and make sure it is on your PATH.${upgrade}`
+			` ${options.binary}${wanted} and make sure it is on your PATH.${upgrade}`
 		);
 	}
 	return `${options.binary} ${options.minVersion} or newer is needed for chat, and ${options.found} is installed.${upgrade}`;
 }
 
-/**
- * Checks a version against a floor. Anything unparseable passes: the floors are
- * a guard against a CLI too old to speak the protocol, not a gate on people
- * running builds from source.
- */
 function meetsFloor(found: string, minVersion: string): boolean {
+	if (minVersion === UNGATED) return true;
 	const coerced = coerce(found);
 	return !coerced || gte(coerced, minVersion);
 }
 
-/**
- * The agent CLI the user has installed, or a throw naming what they need. The
- * env is their login shell's, so chat resolves the same binaries and auth the
- * terminal does.
- */
 export async function resolveAgentCli(options: {
 	binary: string;
 	minVersion: string;
 	upgrade?: string;
 }): Promise<AgentCli> {
-	const env = await getToolEnvironment();
+	await waitForTerminalBaseEnv();
+	const env = agentEnv();
 	const command = agentCliCommand(options.binary, env);
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {
@@ -129,12 +137,7 @@ export async function resolveAgentCli(options: {
 	return { command, env };
 }
 
-/**
- * The same resolution for a harness whose `start` cannot await. No version
- * check, because probing spawns a process: an unsupported CLI surfaces as the
- * agent's own launch failure rather than as this message.
- */
 export function resolveAgentCliSync(binary: string): AgentCli {
-	const env = toolEnvironmentSync();
+	const env = agentEnv();
 	return { command: agentCliCommand(binary, env), env };
 }

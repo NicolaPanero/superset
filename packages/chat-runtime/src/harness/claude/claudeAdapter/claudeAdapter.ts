@@ -42,7 +42,6 @@ type PermissionResult = Awaited<
 >;
 
 export type ClaudeSession = AsyncIterable<unknown> & {
-	// Settling is the whole signal; the SDK's own return type has changed before.
 	interrupt?: () => Promise<unknown>;
 };
 
@@ -54,7 +53,6 @@ export type ClaudeQuery = (params: {
 export type ClaudeAdapterOptions = {
 	query: ClaudeQuery;
 	pathToClaudeCodeExecutable?: string;
-	/** Read per session, so a host can resolve the CLI's env lazily. */
 	resolveEnv?: () => ClaudeQueryOptions["env"];
 	now?: () => number;
 	mintId?: () => string;
