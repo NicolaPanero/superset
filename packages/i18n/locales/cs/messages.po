@@ -4025,9 +4025,6 @@ msgstr "Potvrdit před ukončením"
 msgid "Connect"
 msgstr "Připojit"
 
-msgid "Connect {displayName}"
-msgstr "Připojit {displayName}"
-
 msgid "Connect {name}"
 msgstr "Připojit {name}"
 
@@ -4147,9 +4144,6 @@ msgstr "Připojuji"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Připojení ke GitHubu není na tomto serveru nastaveno"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "Po připojení mohou tvoji agenti číst a jednat v {displayName} tvým jménem. Zkontroluj, co uděluješ, než budeš pokračovat."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Připojením umožníte svým agentům číst a jednat v {name} vaším jménem. Než budete pokračovat, zkontrolujte, co udělujete."
@@ -6639,9 +6633,6 @@ msgstr "Nepodařilo se načíst podrobnosti instalace. Zkuste to prosím znovu."
 
 msgid "Failed to force stop workspace run command"
 msgstr "Nepodařilo se vynuceně zastavit spouštěcí příkaz pracovního prostoru"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Nepodařilo se vygenerovat jedinečný slug úkolu"
 
 msgid "Failed to generate API key"
 msgstr "Nepodařilo se vygenerovat API klíč"

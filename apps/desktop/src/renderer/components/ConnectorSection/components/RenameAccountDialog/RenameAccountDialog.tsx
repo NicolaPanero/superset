@@ -1,4 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import {
+	type AccountLabelSource,
+	accountIdentity,
+} from "@superset/shared/account-labels";
 import { Button } from "@superset/ui/button";
 import {
 	Dialog,
@@ -10,10 +14,6 @@ import {
 } from "@superset/ui/dialog";
 import { Input } from "@superset/ui/input";
 import { useState } from "react";
-import {
-	type AccountLabelSource,
-	accountIdentity,
-} from "../../utils/accountLabels";
 
 const NICKNAME_MAX = 64;
 

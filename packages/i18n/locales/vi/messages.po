@@ -4025,9 +4025,6 @@ msgstr "Xác nhận trước khi thoát"
 msgid "Connect"
 msgstr "Kết nối"
 
-msgid "Connect {displayName}"
-msgstr "Kết nối {displayName}"
-
 msgid "Connect {name}"
 msgstr "Kết nối {name}"
 
@@ -4147,9 +4144,6 @@ msgstr "Đang kết nối"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Máy chủ này chưa cấu hình kết nối GitHub"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "Khi kết nối, các agent của bạn có thể đọc và thao tác trong {displayName} thay bạn. Hãy xem lại những gì bạn cấp trước khi tiếp tục."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Kết nối cho phép các tác nhân của bạn đọc và thao tác trong {name} thay mặt bạn. Hãy xem lại những gì bạn đang cấp trước khi tiếp tục."
@@ -6639,9 +6633,6 @@ msgstr "Không thể lấy thông tin bản cài đặt. Vui lòng thử lại."
 
 msgid "Failed to force stop workspace run command"
 msgstr "Không thể dừng cưỡng bức lệnh chạy của workspace"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Không thể tạo slug tác vụ duy nhất"
 
 msgid "Failed to generate API key"
 msgstr "Không thể tạo khóa API"

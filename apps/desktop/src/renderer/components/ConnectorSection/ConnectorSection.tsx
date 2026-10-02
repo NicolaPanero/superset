@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
+import { accountLabels } from "@superset/shared/account-labels";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
@@ -21,7 +22,6 @@ import {
 } from "react-icons/lu";
 import { RenameAccountDialog } from "./components/RenameAccountDialog";
 import { useConnector } from "./hooks/useConnector";
-import { accountLabels } from "./utils/accountLabels";
 
 interface ConnectorSectionProps {
 	slug: string;

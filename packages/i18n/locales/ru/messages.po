@@ -4025,9 +4025,6 @@ msgstr "Подтверждать выход"
 msgid "Connect"
 msgstr "Подключить"
 
-msgid "Connect {displayName}"
-msgstr "Подключить {displayName}"
-
 msgid "Connect {name}"
 msgstr "Подключить {name}"
 
@@ -4147,9 +4144,6 @@ msgstr "Подключение"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Подключение GitHub не настроено на этом сервере"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "После подключения ваши агенты смогут читать и действовать в {displayName} от вашего имени. Проверьте, что вы предоставляете, прежде чем продолжить."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Подключение позволит вашим агентам читать и действовать в {name} от вашего имени. Проверьте, что вы предоставляете, прежде чем продолжить."
@@ -6639,9 +6633,6 @@ msgstr "Не удалось получить данные установки. П
 
 msgid "Failed to force stop workspace run command"
 msgstr "Не удалось принудительно остановить команду запуска рабочей области"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Не удалось сгенерировать уникальный slug задачи"
 
 msgid "Failed to generate API key"
 msgstr "Не удалось создать ключ API"

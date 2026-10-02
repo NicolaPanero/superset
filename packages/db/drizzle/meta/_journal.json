@@ -957,15 +957,22 @@
     {
       "idx": 136,
       "version": "7",
-      "when": 1790905447307,
-      "tag": "0136_automation_trigger_connection_pin",
+      "when": 1790910735849,
+      "tag": "0136_task_teams_and_numbers",
       "breakpoints": true
     },
     {
       "idx": 137,
       "version": "7",
-      "when": 1790905452860,
-      "tag": "0137_connection_nickname",
+      "when": 1790910736627,
+      "tag": "0137_task_number_trigger",
+      "breakpoints": true
+    },
+    {
+      "idx": 138,
+      "version": "7",
+      "when": 1790966805284,
+      "tag": "0138_connection_pin_and_nickname",
       "breakpoints": true
     }
   ]

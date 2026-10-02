@@ -4025,9 +4025,6 @@ msgstr "Potwierdzaj przed zamknięciem"
 msgid "Connect"
 msgstr "Połącz"
 
-msgid "Connect {displayName}"
-msgstr "Połącz {displayName}"
-
 msgid "Connect {name}"
 msgstr "Połącz {name}"
 
@@ -4147,9 +4144,6 @@ msgstr "Łączenie"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Połączenie z GitHubem nie jest skonfigurowane na tym serwerze"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "Po połączeniu twoi agenci mogą czytać i działać w {displayName} w twoim imieniu. Sprawdź, co udostępniasz, zanim przejdziesz dalej."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Połączenie pozwoli Twoim agentom czytać i działać w {name} w Twoim imieniu. Sprawdź, co przyznajesz, zanim przejdziesz dalej."
@@ -6639,9 +6633,6 @@ msgstr "Nie udało się pobrać szczegółów instalacji. Spróbuj ponownie."
 
 msgid "Failed to force stop workspace run command"
 msgstr "Nie udało się wymusić zatrzymania polecenia uruchamiania obszaru roboczego"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Nie udało się wygenerować unikalnego sluga zadania"
 
 msgid "Failed to generate API key"
 msgstr "Nie udało się wygenerować klucza API"

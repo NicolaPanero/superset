@@ -4025,9 +4025,6 @@ msgstr "종료 전 확인"
 msgid "Connect"
 msgstr "연결"
 
-msgid "Connect {displayName}"
-msgstr "{displayName} 연결"
-
 msgid "Connect {name}"
 msgstr "{name} 연결"
 
@@ -4147,9 +4144,6 @@ msgstr "연결 중"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "이 서버에는 GitHub 연결이 구성되어 있지 않습니다"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "연결하면 에이전트가 사용자를 대신해 {displayName}에서 읽고 작업할 수 있습니다. 계속하기 전에 무엇을 허용하는지 확인하세요."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "연결하면 에이전트가 사용자를 대신해 {name}에서 읽고 작업할 수 있습니다. 계속하기 전에 부여하는 권한을 확인하세요."
@@ -6639,9 +6633,6 @@ msgstr "설치 정보를 가져오지 못했습니다. 다시 시도해 주세�
 
 msgid "Failed to force stop workspace run command"
 msgstr "워크스페이스 실행 명령을 강제 중지하지 못했습니다"
-
-msgid "Failed to generate a unique task slug"
-msgstr "고유한 작업 슬러그를 생성하지 못했습니다"
 
 msgid "Failed to generate API key"
 msgstr "API 키를 생성하지 못했습니다"

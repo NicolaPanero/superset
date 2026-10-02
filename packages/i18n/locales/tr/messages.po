@@ -4025,9 +4025,6 @@ msgstr "Çıkmadan önce onay iste"
 msgid "Connect"
 msgstr "Bağla"
 
-msgid "Connect {displayName}"
-msgstr "{displayName} bağla"
-
 msgid "Connect {name}"
 msgstr "{name} bağla"
 
@@ -4147,9 +4144,6 @@ msgstr "Bağlanılıyor"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "Bu sunucuda GitHub bağlantısı yapılandırılmamış"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "Bağladığında ajanlarin {displayName} içinde senin adına okuyabilir ve işlem yapabilir. Devam etmeden önce neyi verdiğini gözden geçir."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Bağlanmak, aracılarınızın {name} içinde sizin adınıza okuma ve işlem yapmasına izin verir. Devam etmeden önce neyi verdiğinizi gözden geçirin."
@@ -6639,9 +6633,6 @@ msgstr "Kurulum ayrıntıları alınamadı. Lütfen yeniden deneyin."
 
 msgid "Failed to force stop workspace run command"
 msgstr "Çalışma alanı çalıştırma komutu zorla durdurulamadı"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Benzersiz bir görev slug'ı üretilemedi"
 
 msgid "Failed to generate API key"
 msgstr "API anahtarı oluşturulamadı"

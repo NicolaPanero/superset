@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { accountLabels } from "@superset/shared/account-labels";
 import { Avatar, AvatarFallback } from "@superset/ui/avatar";
 import { Button } from "@superset/ui/button";
 import {
@@ -12,7 +13,6 @@ import { useState } from "react";
 import { LuEllipsis, LuPencil, LuPlug, LuPlus, LuUnplug } from "react-icons/lu";
 import { RenameAccountDialog } from "renderer/components/ConnectorSection/components/RenameAccountDialog";
 import { useConnector } from "renderer/components/ConnectorSection/hooks/useConnector";
-import { accountLabels } from "renderer/components/ConnectorSection/utils/accountLabels";
 
 interface ConnectedAccountsProps {
 	slug: string;

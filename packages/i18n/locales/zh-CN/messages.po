@@ -4025,9 +4025,6 @@ msgstr "退出前确认"
 msgid "Connect"
 msgstr "连接"
 
-msgid "Connect {displayName}"
-msgstr "连接 {displayName}"
-
 msgid "Connect {name}"
 msgstr "连接 {name}"
 
@@ -4147,9 +4144,6 @@ msgstr "连接中"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "此服务器未配置 GitHub 连接"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "连接后，你的智能体可以代表你在 {displayName} 中读取和操作。继续前请确认你授予的权限。"
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "连接后，你的智能体可代表你在 {name} 中读取和操作。继续前请检查你授予的权限。"
@@ -6639,9 +6633,6 @@ msgstr "获取安装详情失败。请重试。"
 
 msgid "Failed to force stop workspace run command"
 msgstr "强制停止工作区运行命令失败"
-
-msgid "Failed to generate a unique task slug"
-msgstr "无法生成唯一的任务slug"
 
 msgid "Failed to generate API key"
 msgstr "生成API密钥失败"

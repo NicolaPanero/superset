@@ -1,6 +1,10 @@
 "use client";
 
 import { Trans, useLingui } from "@lingui/react/macro";
+import {
+	accountIdentity,
+	accountLabels,
+} from "@superset/shared/account-labels";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
@@ -40,18 +44,6 @@ interface ConnectorConnectProps {
 }
 
 /** Nickname first, then whatever the provider called it. Never the id. */
-function accountTitle(connection: {
-	externalAccountLabel: string | null;
-	externalUserLabel: string | null;
-	nickname: string | null;
-}): string | null {
-	return (
-		connection.nickname ??
-		connection.externalUserLabel ??
-		connection.externalAccountLabel
-	);
-}
-
 function initials(label: string): string {
 	const parts = label
 		.trim()
@@ -62,7 +54,7 @@ function initials(label: string): string {
 
 export function ConnectorConnect({
 	slug,
-	displayName,
+	displayName: name,
 	organizationId,
 	methods,
 	scope,
@@ -121,10 +113,8 @@ export function ConnectorConnect({
 	const connected = connections.length > 0 && (
 		<div className="divide-y divide-border overflow-hidden rounded-lg border">
 			{connections.map((connection) => {
-				const title = accountTitle(connection) ?? t({ message: "Account" });
-				const identity =
-					connection.externalUserLabel ?? connection.externalAccountLabel;
-				const subtitle = identity === title ? null : identity;
+				const { title, subtitle } = accountLabels(connection, name);
+				const identity = accountIdentity(connection);
 
 				if (renaming === connection.id) {
 					return (
@@ -203,6 +193,7 @@ export function ConnectorConnect({
 							size="sm"
 							variant="ghost"
 							disabled={disconnect.isPending}
+							aria-label={t({ message: `Disconnect ${title}` })}
 							onClick={() =>
 								disconnect.mutate({
 									organizationId,
@@ -282,7 +273,7 @@ export function ConnectorConnect({
 						</div>
 						<p className="mt-0.5 text-muted-foreground text-xs">
 							{t({
-								message: `Connecting lets your agents read and act in ${displayName} on your behalf. Review what you are granting before you continue.`,
+								message: `Connecting lets your agents read and act in ${name} on your behalf. Review what you are granting before you continue.`,
 							})}
 						</p>
 					</div>
@@ -341,14 +332,12 @@ export function ConnectorConnect({
 						{connectApiKey.isPending ? (
 							<Trans>Connecting…</Trans>
 						) : (
-							t({ message: `Connect ${displayName}` })
+							t({ message: `Connect ${name}` })
 						)}
 					</Button>
 				</form>
 			) : (
-				<Button onClick={redirect}>
-					{t({ message: `Connect ${displayName}` })}
-				</Button>
+				<Button onClick={redirect}>{t({ message: `Connect ${name}` })}</Button>
 			)}
 
 			{error && <p className="text-sm text-destructive">{error}</p>}

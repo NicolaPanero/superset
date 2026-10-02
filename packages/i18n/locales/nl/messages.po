@@ -4025,9 +4025,6 @@ msgstr "Bevestigen voor afsluiten"
 msgid "Connect"
 msgstr "Verbinden"
 
-msgid "Connect {displayName}"
-msgstr "{displayName} verbinden"
-
 msgid "Connect {name}"
 msgstr "{name} verbinden"
 
@@ -4147,9 +4144,6 @@ msgstr "Verbinden"
 
 msgid "Connecting GitHub is not configured on this server"
 msgstr "GitHub koppelen is niet ingesteld op deze server"
-
-msgid "Connecting lets your agents read and act in {displayName} on your behalf. Review what you are granting before you continue."
-msgstr "Door te verbinden kunnen je agents in {displayName} lezen en handelen namens jou. Controleer wat je toestaat voordat je doorgaat."
 
 msgid "Connecting lets your agents read and act in {name} on your behalf. Review what you are granting before you continue."
 msgstr "Verbinden laat je agents in {name} lezen en handelen namens jou. Controleer wat je verleent voordat je doorgaat."
@@ -6639,9 +6633,6 @@ msgstr "Ophalen van installatiegegevens mislukt. Probeer het opnieuw."
 
 msgid "Failed to force stop workspace run command"
 msgstr "Geforceerd stoppen van het run-commando mislukt"
-
-msgid "Failed to generate a unique task slug"
-msgstr "Kan geen unieke taak-slug genereren"
 
 msgid "Failed to generate API key"
 msgstr "Genereren van API-sleutel mislukt"

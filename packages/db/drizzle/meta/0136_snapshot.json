@@ -1,5 +1,5 @@
 {
-  "id": "33df06df-ec48-40c9-87b4-5888e5ba624e",
+  "id": "3f734fc3-d4b9-480e-bd5d-ad1f132ae0d4",
   "prevId": "436fda04-956c-4b91-ac61-800e2cfef5dd",
   "version": "7",
   "dialect": "postgresql",
@@ -5609,12 +5609,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "connection_id": {
-          "name": "connection_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
         "next_run_at": {
           "name": "next_run_at",
           "type": "timestamp with time zone",
@@ -11033,6 +11027,81 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.task_sequences": {
+      "name": "task_sequences",
+      "schema": "",
+      "columns": {
+        "team_id": {
+          "name": "team_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_number": {
+          "name": "last_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "task_sequences_team_id_teams_id_fk": {
+          "name": "task_sequences_team_id_teams_id_fk",
+          "tableFrom": "task_sequences",
+          "tableTo": "teams",
+          "schemaTo": "auth",
+          "columnsFrom": [
+            "team_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "task_sequences_organization_id_organizations_id_fk": {
+          "name": "task_sequences_organization_id_organizations_id_fk",
+          "tableFrom": "task_sequences",
+          "tableTo": "organizations",
+          "schemaTo": "auth",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "task_sequences_organization_unique": {
+          "name": "task_sequences_organization_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "organization_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.task_statuses": {
       "name": "task_statuses",
       "schema": "",
@@ -11187,7 +11256,8 @@
           "name": "slug",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "NULL"
         },
         "title": {
           "name": "title",
@@ -11232,6 +11302,18 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "team_id": {
+          "name": "team_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "estimate": {
           "name": "estimate",
