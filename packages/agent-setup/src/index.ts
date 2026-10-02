@@ -104,6 +104,12 @@ export {
 } from "./managed-skills";
 export { getBinDir, resolveSupersetHomeDir } from "./paths";
 export {
+	mcpHeadersHelperCommand,
+	pluginConnectionsFilePath,
+	readPluginConnections,
+	writePluginConnections,
+} from "./plugin-connections";
+export {
 	type McpReconcileReport,
 	reconcileMcpServers,
 } from "./reconcile-mcp-servers";

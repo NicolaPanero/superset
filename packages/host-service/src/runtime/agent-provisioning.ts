@@ -3,7 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
 	getAgentSetupTemplatesDir,
+	mcpHeadersHelperCommand,
 	readInstalledPluginSources,
+	readPluginConnections,
 	reconcileMcpServers,
 	setAgentSetupTemplatesDir,
 	setupAgentIntegrations,
@@ -60,7 +62,10 @@ export function provisionAgentIntegrations(): void {
 		// configured elsewhere. This reads two files and does nothing when they
 		// already agree, which is the usual case.
 		const reports = reconcileMcpServers(
-			desiredPluginMcpServers(readInstalledPluginSources() ?? []),
+			desiredPluginMcpServers(readInstalledPluginSources() ?? [], {
+				connections: readPluginConnections(),
+				headersHelper: mcpHeadersHelperCommand(),
+			}),
 		);
 		for (const report of reports) {
 			if (report.wrote) {

@@ -176,20 +176,27 @@
   "linear-lu-1": {
     "type": "http",
     "url": "https://api.superset.sh/mcp/plugins/superset/linear?connection=conn-work",
-    "headersHelper": "/Users/you/.superset/bin/superset mcp headers"
+    "headersHelper": "/Users/you/.superset/bin/superset auth mcp-headers"
   }
 }</code></pre>
 
       <p class="cap">~/.codex/config.toml</p>
       <pre><code>[mcp_servers.linear-lu-1]
 url = "https://api.superset.sh/mcp/plugins/superset/linear?connection=conn-work"
-http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pre>
+http_headers_helper = "/Users/you/.superset/bin/superset auth mcp-headers"</code></pre>
 
       <p>
         The path is the managed shim at <code>~/.superset/bin/superset</code>,
         not the bare word <code>superset</code>. The agent runs this command
         itself, and its environment is not the Superset terminal's — a bare name
         would resolve only when the agent happened to inherit our PATH.
+      </p>
+
+      <p>
+        It sits under <code>auth</code> rather than a group of its own, because
+        what it prints is the CLI's own credential and nothing about MCP. It is
+        hidden from <code>--help</code>: the audience is an agent reading a
+        config we wrote, not a person at a prompt.
       </p>
 
       <h2>What runs, and what it returns</h2>
@@ -205,7 +212,7 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
         <span class="step">calls the proxy</span>
       </div>
 
-      <p class="cap">superset mcp headers</p>
+      <p class="cap">superset auth mcp-headers</p>
       <pre><code>{"Authorization":"Bearer sk_live_…"}</code></pre>
 
       <p>
@@ -213,6 +220,31 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
         values, nothing else. The credential comes from the auth the CLI already
         holds, which is why there is nothing new to provision and nothing new to
         rotate.
+      </p>
+
+      <h2>Where the account list comes from</h2>
+      <p>
+        One entry per account needs the account list, and every writer of agent
+        config runs where that list is not reachable: the desktop's is the main
+        process, and the host-service's reconcile runs at session start in a
+        terminal. So the renderer pushes what it can see into a cache beside the
+        install ledger, and both writers read it from there.
+      </p>
+
+      <p class="cap">~/.superset/plugins/connections.json</p>
+      <pre><code>{
+  "connections": [
+    { "connector": "linear", "connectionId": "conn-work", "externalUserId": "lu-1" },
+    { "connector": "linear", "connectionId": "conn-personal", "externalUserId": "lu-2" }
+  ]
+}</code></pre>
+
+      <p>
+        A cache, never a source of truth. An absent or unparseable file reads as
+        no connections, which is the one-entry-per-connector shape — wrong only
+        until the next sync, and never a failed write. The renderer watches the
+        whole set rather than hooking the connect and disconnect mutations, so a
+        connection made on the web or from another machine lands here too.
       </p>
 
       <h2>How the two agents differ</h2>
@@ -322,7 +354,7 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
               <td><span class="pill yes">done</span></td>
             </tr>
             <tr>
-              <td><code>superset mcp headers</code></td>
+              <td><code>superset auth mcp-headers</code></td>
               <td><span class="pill yes">done</span></td>
             </tr>
             <tr>
@@ -331,12 +363,23 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
             </tr>
             <tr>
               <td>
-                A caller passing <code>connections</code> and the helper path
+                Desktop and host-service both passing <code>connections</code>
+                and the helper path
               </td>
-              <td><span class="pill no">not wired</span></td>
+              <td><span class="pill yes">done</span></td>
             </tr>
             <tr>
               <td>A config rewrite when an account connects or disconnects</td>
+              <td><span class="pill yes">done</span></td>
+            </tr>
+            <tr>
+              <td>The helper omitted on a cloud box, which needs none</td>
+              <td><span class="pill yes">done</span></td>
+            </tr>
+            <tr>
+              <td>
+                The CLI's own <code>plugins install</code> writing MCP entries
+              </td>
               <td><span class="pill no">not wired</span></td>
             </tr>
           </tbody>
@@ -344,11 +387,10 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
       </div>
 
       <p class="note">
-        The last two are why none of this changes a laptop yet. The desktop sync
-        runs in the main process and the connection list is server-side, so
-        something has to fetch it; and writing is still triggered by plugin
-        install, uninstall and enable only — connecting a second account, the
-        event that should split one entry into two, currently writes nothing.
+        The last row is the remaining gap, and a narrow one: a plugin installed
+        from the CLI writes no MCP entry at that moment. The host-service's
+        reconcile closes it at the next session start, which is also what repairs
+        an install made on the web or on another machine.
       </p>
 
       <h2>Worth deciding</h2>
@@ -361,10 +403,11 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
           reconnecting.
         </li>
         <li>
-          <b>What happens on a cloud box?</b> The helper is a command, so it
-          works anywhere the CLI can authenticate — but in a sandbox the CLI
-          resolves its bearer to the empty string, so the helper would print an
-          empty credential rather than fail loudly.
+          <b>Which credential does a cloud box use?</b> None of ours: the
+          firewall adds one naming the workspace, and the CLI there resolves its
+          bearer to the empty string. So the helper is omitted entirely when
+          <code>SUPERSET_SANDBOX_WORKSPACE_ID</code> is set, rather than written
+          and left to print <code>Bearer </code> at every call.
         </li>
         <li>
           <b>Does the helper belong on non-plugin entries too?</b> Nothing else
@@ -379,7 +422,7 @@ http_headers_helper = "/Users/you/.superset/bin/superset mcp headers"</code></pr
         documentation, Codex's <code>http_headers_helper</code> from
         <code>codex-rs/config/src/mcp_types.rs</code> and
         <code>rmcp-client/src/http_headers.rs</code>. Written from this
-        worktree, 2026-10-01.
+        worktree, 2026-10-01; revised 2026-10-02 once the wiring landed.
       </p>
     </main>
   </body>
