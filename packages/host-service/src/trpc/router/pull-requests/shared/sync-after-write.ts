@@ -36,12 +36,13 @@ export async function syncPullRequestAfterWrite(
 	input: SyncPullRequestAfterWriteInput,
 ): Promise<void> {
 	evictPullRequestContent(input.repo, input.prNumber);
+	let workspaceIds: string[] = [];
 	try {
 		const rows = findPullRequestRows(ctx.db, input.repo, input.prNumber);
 		if (rows.length === 0) return;
 		for (const row of rows) recordWrittenState(ctx.db, row, input.action);
 
-		const workspaceIds = findLinkedWorkspaceIds(
+		workspaceIds = findLinkedWorkspaceIds(
 			ctx.db,
 			rows.map((row) => row.id),
 		);
@@ -52,7 +53,12 @@ export async function syncPullRequestAfterWrite(
 	} catch (error) {
 		console.warn(
 			`[pull-requests:${input.action}] GitHub applied the change but the host-side sync failed`,
-			{ prNumber: input.prNumber, error },
+			{
+				repo: `${input.repo.owner}/${input.repo.name}`,
+				prNumber: input.prNumber,
+				workspaceIds,
+				error,
+			},
 		);
 	}
 }

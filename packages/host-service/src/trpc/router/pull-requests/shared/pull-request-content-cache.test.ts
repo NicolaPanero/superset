@@ -38,21 +38,26 @@ describe("pull request content cache", () => {
 	test("expired entries are dropped on the next write, so the map holds only the last TTL", () => {
 		// Far enough ahead that entries other tests wrote at the real clock
 		// count as expired too: the cache is one module-wide map.
-		setSystemTime(new Date("2030-01-01T00:00:00Z"));
-		for (let n = 100; n < 110; n++) {
+		try {
+			setSystemTime(new Date("2030-01-01T00:00:00Z"));
+			for (let n = 100; n < 110; n++) {
+				writePullRequestContentCache(
+					pullRequestContentCacheKey(repo, n),
+					Promise.resolve({ state: "open" }),
+				);
+			}
+			const before = pullRequestContentCacheSize();
+			setSystemTime(new Date("2030-01-01T00:00:31Z"));
 			writePullRequestContentCache(
-				pullRequestContentCacheKey(repo, n),
+				pullRequestContentCacheKey(repo, 110),
 				Promise.resolve({ state: "open" }),
 			);
+			expect(before).toBeGreaterThanOrEqual(10);
+			expect(pullRequestContentCacheSize()).toBe(1);
+		} finally {
+			// Entries stamped in 2030 would read as fresh to every later test.
+			for (let n = 100; n <= 110; n++) evictPullRequestContent(repo, n);
 		}
-		const before = pullRequestContentCacheSize();
-		setSystemTime(new Date("2030-01-01T00:00:31Z"));
-		writePullRequestContentCache(
-			pullRequestContentCacheKey(repo, 110),
-			Promise.resolve({ state: "open" }),
-		);
-		expect(before).toBeGreaterThanOrEqual(10);
-		expect(pullRequestContentCacheSize()).toBe(1);
 	});
 
 	test("evicting a PR makes the next read miss, whatever the casing", () => {

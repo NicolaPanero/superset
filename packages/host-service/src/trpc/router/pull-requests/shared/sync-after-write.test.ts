@@ -137,9 +137,11 @@ describe("syncPullRequestAfterWrite", () => {
 		expect(refreshed).toEqual([]);
 	});
 
-	test("does nothing but evict for a PR the host has never seen", async () => {
+	test("evicts the cached content, and nothing else, for a PR the host has never seen", async () => {
 		const db = createTestDb();
 		seedLinkedPullRequest(db);
+		const key = pullRequestContentCacheKey(REPO, 99);
+		writePullRequestContentCache(key, Promise.resolve({ state: "open" }));
 		const { ctx, refreshed } = recordingContext(db);
 
 		await syncPullRequestAfterWrite(ctx, {
@@ -148,6 +150,7 @@ describe("syncPullRequestAfterWrite", () => {
 			action: "merge",
 		});
 
+		expect(readPullRequestContentCache(key)).toBeNull();
 		expect(refreshed).toEqual([]);
 		expect(warn).not.toHaveBeenCalled();
 	});
@@ -166,6 +169,11 @@ describe("syncPullRequestAfterWrite", () => {
 		expect(readPullRequestRow(db)).toMatchObject({ state: "merged" });
 		expect(warn).toHaveBeenCalledTimes(1);
 		expect(String(warn.mock.calls[0]?.[0])).toContain("[pull-requests:merge]");
+		expect(warn.mock.calls[0]?.[1]).toMatchObject({
+			repo: "octocat/hello",
+			prNumber: PR_NUMBER,
+			workspaceIds: ["ws-newer", "ws-older"],
+		});
 	});
 
 	test("a database failure after the write is logged, not thrown", async () => {
