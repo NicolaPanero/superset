@@ -15,10 +15,13 @@ import {
 	LuCheck,
 	LuExternalLink,
 	LuKeyRound,
+	LuPencil,
 	LuPlus,
 	LuUnplug,
 } from "react-icons/lu";
+import { RenameAccountDialog } from "./components/RenameAccountDialog";
 import { useConnector } from "./hooks/useConnector";
+import { accountLabels } from "./utils/accountLabels";
 
 interface ConnectorSectionProps {
 	slug: string;
@@ -38,6 +41,7 @@ export function ConnectorSection({
 		isPending,
 		connectApiKey,
 		disconnect,
+		rename,
 		openOAuth,
 		organizationId: resolvedOrganizationId,
 	} = useConnector(slug, organizationId, onConnected);
@@ -46,6 +50,7 @@ export function ConnectorSection({
 	const [values, setValues] = useState<Record<string, string>>({});
 	const [error, setError] = useState<string | null>(null);
 	const [addingAccount, setAddingAccount] = useState(false);
+	const [renaming, setRenaming] = useState<string | null>(null);
 
 	if (isPending || !connector) {
 		return (
@@ -55,29 +60,63 @@ export function ConnectorSection({
 		);
 	}
 
+	const oauthMethod = connector.methods.find(
+		(entry) => entry.type !== "api_key",
+	);
+
 	const connected = connections.length > 0 && (
 		<div className="w-full min-w-0 divide-y divide-border/40 rounded-lg border border-border/60">
 			{connections.map((connection) => {
-				const who = connection.externalUserLabel;
-				const where = connection.externalAccountLabel;
+				const { title, subtitle } = accountLabels(
+					connection,
+					connector.displayName,
+				);
 				return (
 					<div
 						key={connection.id}
 						className="flex w-full min-w-0 items-center gap-2 px-3 py-2"
 					>
-						<Badge variant="secondary" className="shrink-0 gap-1">
-							<LuCheck className="size-3" />
-							<Trans>Connected</Trans>
-						</Badge>
+						{connection.needsReauth ? (
+							<Badge
+								variant="secondary"
+								className="shrink-0 gap-1 text-amber-700 dark:text-amber-400"
+							>
+								<Trans>Reconnect required</Trans>
+							</Badge>
+						) : (
+							<Badge variant="secondary" className="shrink-0 gap-1">
+								<LuCheck className="size-3" />
+								<Trans>Connected</Trans>
+							</Badge>
+						)}
 						<span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">
-							{who && where ? `${who} · ${where}` : (who ?? where ?? "")}
+							{subtitle ? `${title} · ${subtitle}` : title}
 						</span>
+						{connection.needsReauth && oauthMethod && (
+							<Button
+								variant="ghost"
+								size="sm"
+								className="shrink-0"
+								onClick={() => openOAuth(oauthMethod.type)}
+							>
+								<Trans>Reconnect</Trans>
+							</Button>
+						)}
 						<Button
 							variant="ghost"
-							size="sm"
-							className="shrink-0"
+							size="icon"
+							className="size-7 shrink-0"
+							aria-label={t({ message: `Rename ${title}` })}
+							onClick={() => setRenaming(connection.id)}
+						>
+							<LuPencil className="size-3.5" />
+						</Button>
+						<Button
+							variant="ghost"
+							size="icon"
+							className="size-7 shrink-0"
 							disabled={disconnect.isPending}
-							aria-label={t({ message: `Disconnect ${who ?? where ?? ""}` })}
+							aria-label={t({ message: `Disconnect ${title}` })}
 							onClick={() => disconnect.mutate({ connectionId: connection.id })}
 						>
 							<LuUnplug className="size-3.5" />
@@ -85,6 +124,21 @@ export function ConnectorSection({
 					</div>
 				);
 			})}
+
+			<RenameAccountDialog
+				account={
+					connections.find((connection) => connection.id === renaming) ?? null
+				}
+				connectorName={connector.displayName}
+				isPending={rename.isPending}
+				onOpenChange={(open) => {
+					if (!open) setRenaming(null);
+				}}
+				onSubmit={(nickname) => {
+					if (renaming) rename.mutate({ connectionId: renaming, nickname });
+					setRenaming(null);
+				}}
+			/>
 		</div>
 	);
 

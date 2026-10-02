@@ -69,6 +69,24 @@ export function useConnector(
 		onSettled: invalidate,
 	});
 
+	const rename = cloudTrpc.connectors.rename.useMutation({
+		onMutate: async ({ connectionId, nickname }) => {
+			await utils.connectors.status.cancel({ organizationId });
+			const previous = utils.connectors.status.getData({ organizationId });
+			utils.connectors.status.setData({ organizationId }, (rows) =>
+				(rows ?? []).map((row) =>
+					row.id === connectionId ? { ...row, nickname } : row,
+				),
+			);
+			return { previous };
+		},
+		onError: (_error, _input, context) => {
+			if (context?.previous)
+				utils.connectors.status.setData({ organizationId }, context.previous);
+		},
+		onSettled: invalidate,
+	});
+
 	const openOAuth = (method: string) => {
 		const url = new URL(
 			`${env.NEXT_PUBLIC_API_URL}/api/connectors/${slug}/connect`,
@@ -92,6 +110,15 @@ export function useConnector(
 			...disconnect,
 			mutate: (input: { connectionId: string }) =>
 				disconnect.mutate({ organizationId, ...input }),
+		},
+		rename: {
+			...rename,
+			mutate: (input: { connectionId: string; nickname: string | null }) =>
+				rename.mutate({
+					organizationId,
+					connectionId: input.connectionId,
+					nickname: input.nickname?.trim() ? input.nickname.trim() : null,
+				}),
 		},
 		openOAuth,
 	};

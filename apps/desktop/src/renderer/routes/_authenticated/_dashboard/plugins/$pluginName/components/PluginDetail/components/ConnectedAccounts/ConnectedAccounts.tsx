@@ -7,8 +7,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
-import { LuEllipsis, LuPlus, LuUnplug } from "react-icons/lu";
+import { cn } from "@superset/ui/utils";
+import { useState } from "react";
+import { LuEllipsis, LuPencil, LuPlug, LuPlus, LuUnplug } from "react-icons/lu";
+import { RenameAccountDialog } from "renderer/components/ConnectorSection/components/RenameAccountDialog";
 import { useConnector } from "renderer/components/ConnectorSection/hooks/useConnector";
+import { accountLabels } from "renderer/components/ConnectorSection/utils/accountLabels";
 
 interface ConnectedAccountsProps {
 	slug: string;
@@ -30,17 +34,19 @@ export function ConnectedAccounts({
 	onConnect,
 }: ConnectedAccountsProps) {
 	const { t } = useLingui();
-	const { connector, connections, isPending, disconnect } = useConnector(slug);
+	const { connector, connections, isPending, disconnect, rename, openOAuth } =
+		useConnector(slug);
+	const [renaming, setRenaming] = useState<string | null>(null);
 
 	if (isPending || !connector) return null;
 
+	const connectorName = connector.displayName;
+	const oauth = connector.methods.find((method) => method.type !== "api_key");
+
 	return (
 		<div className="overflow-hidden rounded-xl border border-border/60">
-			{connections.map((connection, index) => {
-				const label =
-					connection.externalUserLabel ??
-					connection.externalAccountLabel ??
-					connection.id;
+			{connections.map((connection) => {
+				const { title, subtitle } = accountLabels(connection, connectorName);
 				return (
 					<div
 						key={connection.id}
@@ -48,18 +54,32 @@ export function ConnectedAccounts({
 					>
 						<Avatar className="size-9">
 							<AvatarFallback className="text-xs">
-								{initials(label)}
+								{initials(title)}
 							</AvatarFallback>
 						</Avatar>
 						<div className="min-w-0 flex-1">
-							<div className="truncate text-sm font-medium text-foreground">
-								{label}
+							<div
+								className={cn(
+									"truncate text-sm font-medium",
+									connection.needsReauth
+										? "text-muted-foreground"
+										: "text-foreground",
+								)}
+							>
+								{title}
 							</div>
-							<p className="text-xs text-muted-foreground">
-								{index === 0 ? (
-									<Trans>Primary</Trans>
+							<p
+								className={cn(
+									"truncate text-xs",
+									connection.needsReauth
+										? "text-amber-600 dark:text-amber-400"
+										: "text-muted-foreground",
+								)}
+							>
+								{connection.needsReauth ? (
+									<Trans>Reconnect required</Trans>
 								) : (
-									connection.externalAccountLabel
+									subtitle
 								)}
 							</p>
 						</div>
@@ -69,12 +89,26 @@ export function ConnectedAccounts({
 									variant="ghost"
 									size="icon"
 									className="size-7 shrink-0 text-muted-foreground"
-									aria-label={t({ message: `Manage ${label}` })}
+									aria-label={t({ message: `Manage ${title}` })}
 								>
 									<LuEllipsis className="size-4" />
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
+								<DropdownMenuItem onSelect={() => setRenaming(connection.id)}>
+									<LuPencil className="size-3.5 shrink-0 text-current" />
+									<Trans>Rename account</Trans>
+								</DropdownMenuItem>
+								{connection.needsReauth && (
+									<DropdownMenuItem
+										onSelect={() =>
+											oauth ? openOAuth(oauth.type) : onConnect()
+										}
+									>
+										<LuPlug className="size-3.5 shrink-0 text-current" />
+										<Trans>Reconnect</Trans>
+									</DropdownMenuItem>
+								)}
 								<DropdownMenuItem
 									disabled={disconnect.isPending}
 									onSelect={() =>
@@ -109,6 +143,21 @@ export function ConnectedAccounts({
 					</span>
 				</button>
 			) : null}
+
+			<RenameAccountDialog
+				account={
+					connections.find((connection) => connection.id === renaming) ?? null
+				}
+				connectorName={connectorName}
+				isPending={rename.isPending}
+				onOpenChange={(open) => {
+					if (!open) setRenaming(null);
+				}}
+				onSubmit={(nickname) => {
+					if (renaming) rename.mutate({ connectionId: renaming, nickname });
+					setRenaming(null);
+				}}
+			/>
 		</div>
 	);
 }
