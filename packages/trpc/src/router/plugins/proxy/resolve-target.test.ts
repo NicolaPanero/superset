@@ -378,6 +378,7 @@ describe("resolveTarget with several accounts", () => {
 		expect(target).toMatchObject({
 			kind: "multi",
 			connector: "acme-crm",
+			connectorLabel: "acme-crm",
 			accounts: [
 				{ connectionId: "conn-personal", label: "satya.personal@gmail.com" },
 				{ connectionId: "conn-work", label: "satya@superset.sh" },
@@ -488,6 +489,7 @@ describe("targetKey", () => {
 			plugin: "acme",
 			version: "1.0.0",
 			connector: "acme-crm",
+			connectorLabel: "acme-crm",
 			resolve: () => expect.unreachable("not called"),
 		};
 		const forward = targetKey({
