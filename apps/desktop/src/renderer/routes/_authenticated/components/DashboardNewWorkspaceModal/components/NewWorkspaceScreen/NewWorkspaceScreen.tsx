@@ -548,6 +548,7 @@ export function NewWorkspaceScreen({
 	const { submitWorkspace: createWorkspace, isCreating } = useSubmitWorkspace(
 		projectId,
 		selectedAgent,
+		selectedPresetId,
 		modelSupport ? selectedModel : null,
 		effortForLaunch,
 		modeSupport ? selectedMode : null,

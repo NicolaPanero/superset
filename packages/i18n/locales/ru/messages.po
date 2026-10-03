@@ -4679,6 +4679,9 @@ msgstr "Не удалось проверить учётные данные: {rea
 msgid "Couldn't ask the workspace for a description"
 msgstr "Не удалось запросить описание у рабочего пространства"
 
+msgid "Couldn't attach files"
+msgstr "Не удалось прикрепить файлы"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Не удалось ответвить в новый worktree"
 

@@ -60,8 +60,8 @@ export type SetModelInput = z.infer<typeof setModelInputSchema>;
 
 export const setConfigOptionInputSchema = z.object({
 	...commandBaseFields,
-	optionId: z.string().min(1),
-	value: z.unknown(),
+	configId: z.string().min(1),
+	value: z.string().min(1),
 });
 export type SetConfigOptionInput = z.infer<typeof setConfigOptionInputSchema>;
 

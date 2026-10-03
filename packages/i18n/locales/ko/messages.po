@@ -4679,6 +4679,9 @@ msgstr "자격 증명을 확인하지 못했습니다: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "워크스페이스에 설명을 요청하지 못했습니다"
 
+msgid "Couldn't attach files"
+msgstr "파일을 첨부할 수 없습니다"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "새 worktree로 분기할 수 없습니다"
 

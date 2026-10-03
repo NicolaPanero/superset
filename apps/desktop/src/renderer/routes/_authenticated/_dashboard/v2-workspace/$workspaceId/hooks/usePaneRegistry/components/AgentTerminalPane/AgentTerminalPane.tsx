@@ -58,17 +58,36 @@ export function AgentTerminalPane({
 		}
 		return (
 			<AcpChatPane
+				key={data.terminalId}
 				agent={data.agent}
 				onFirstPromptSent={() => {
-					if (data.pendingPrompt === undefined) return;
-					const { pendingPrompt: _sent, ...rest } = data;
+					if (
+						data.pendingPrompt === undefined &&
+						data.pendingAttachments === undefined
+					)
+						return;
+					const {
+						pendingPrompt: _sent,
+						pendingAttachments: _attached,
+						...rest
+					} = data;
 					ctx.actions.updateData(rest);
 				}}
 				pendingFirstPrompt={
-					data.pendingPrompt
-						? [{ type: "text", text: data.pendingPrompt }]
+					data.pendingPrompt || data.pendingAttachments?.length
+						? [
+								...(data.pendingPrompt
+									? [{ type: "text" as const, text: data.pendingPrompt }]
+									: []),
+								...(data.pendingAttachments ?? []).map((attachment) => ({
+									type: "attachment" as const,
+									...attachment,
+								})),
+							]
 						: null
 				}
+				modelId={data.chatModelId}
+				modeId={data.chatModeId}
 				onAgentSessionChanged={(sessionId) => {
 					if (!data.agent) return;
 					ctx.actions.updateData({

@@ -1,54 +1,40 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { WorkspaceStore } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
-import { useFeatureFlagEnabled, usePostHog } from "posthog-js/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
-import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import {
+	useV2AgentConfigs,
+	v2AgentConfigsQueryOptions,
+} from "renderer/hooks/useV2AgentConfigs";
+import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
-import { acpHarnessForAgent } from "../usePaneRegistry/components/AgentTerminalPane/utils/acpHarness";
-
-/**
- * Launching is one-shot, so an unresolved flag cannot be guessed: reading it as
- * off spawns a pty the chat then has to tear down, and reading it as on shows a
- * chat to someone who turned it off. Wait for the answer instead, and treat a
- * shrug as off so the terminal — which every account can use — is the fallback.
- */
-const FLAG_WAIT_MS = 2_000;
-
-function awaitAcpFlag(
-	posthog: ReturnType<typeof usePostHog> | undefined,
-): Promise<boolean> {
-	if (!posthog) return Promise.resolve(false);
-	return new Promise((resolve) => {
-		let unsubscribe: (() => void) | undefined;
-		const settle = (enabled: boolean) => {
-			clearTimeout(timer);
-			unsubscribe?.();
-			resolve(enabled);
-		};
-		const timer = setTimeout(() => settle(false), FLAG_WAIT_MS);
-		unsubscribe = posthog.onFeatureFlags(() => {
-			settle(posthog.isFeatureEnabled(FEATURE_FLAGS.ACP_CHAT) === true);
-		});
-	});
-}
 
 export interface CreateNewAgentSessionInput {
 	configId: string;
 	placement: "split-pane" | "new-tab";
 	prompt: string;
 	forkSessionId?: string;
+	attachments?: Array<{ attachmentId: string; name: string; mimeType: string }>;
+	modelId?: string;
+	modeId?: string;
 }
 
 export type CreateNewAgentSession = (
 	input: CreateNewAgentSessionInput,
+) => Promise<{ terminalId: string } | null>;
+
+export type OpenAgentChat = (
+	input: Omit<CreateNewAgentSessionInput, "forkSessionId" | "prompt"> & {
+		prompt?: string;
+	},
 ) => Promise<{ terminalId: string } | null>;
 
 interface UseAgentSessionLauncherOptions {
@@ -61,54 +47,59 @@ export function useAgentSessionLauncher({
 	store,
 }: UseAgentSessionLauncherOptions): {
 	createNewAgentSession: CreateNewAgentSession;
+	openAgentChat: OpenAgentChat;
 	focusAgentTerminal: (terminalId: string) => void;
 } {
 	const { t } = useLingui();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const appearance = useTerminalAppearance();
-	const acpFlag = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT);
-	const posthog = usePostHog();
+	const awaitAcpChatEnabled = useAwaitAcpChatEnabled();
 	const { hostUrl } = useWorkspaceClient();
-	// The pty's launch reply is what normally names the pane; a chat has no
-	// launch, so the agent's own label stands in.
 	const { data: agentConfigs } = useV2AgentConfigs(hostUrl);
+	const queryClient = useQueryClient();
+
+	const openAgentChat = useCallback<OpenAgentChat>(
+		async (input) => {
+			if (!(await awaitAcpChatEnabled())) return null;
+			const configs = await queryClient
+				.ensureQueryData(v2AgentConfigsQueryOptions(hostUrl))
+				.catch(() => agentConfigs ?? []);
+			const config = configs.find((entry) => entry.id === input.configId);
+			const presetId = config?.presetId;
+			if (!presetId || !acpHarnessForPreset(presetId)) return null;
+			const state = store.getState();
+			const terminalId = crypto.randomUUID();
+			const label = config?.label;
+			const pane = {
+				kind: "terminal" as const,
+				...(label ? { titleOverride: label } : {}),
+				data: {
+					terminalId,
+					agentSurface: "acp",
+					agent: { id: presetId },
+					...(input.prompt ? { pendingPrompt: input.prompt } : {}),
+					...(input.attachments?.length
+						? { pendingAttachments: input.attachments }
+						: {}),
+					...(input.modelId ? { chatModelId: input.modelId } : {}),
+					...(input.modeId ? { chatModeId: input.modeId } : {}),
+				} as TerminalPaneData,
+			};
+			if (input.placement === "split-pane" && state.activeTabId) {
+				state.addPane({ tabId: state.activeTabId, pane });
+			} else {
+				state.addTab({ panes: [pane] });
+			}
+			return { terminalId };
+		},
+		[awaitAcpChatEnabled, queryClient, hostUrl, agentConfigs, store],
+	);
 
 	const createNewAgentSession = useCallback<CreateNewAgentSession>(
 		async (input) => {
-			// A chat-capable agent opens straight onto its chat: starting a pty
-			// first would run the agent once, derive onto the chat, kill it and
-			// run it again. Forking a terminal session is still the terminal's
-			// own flow, so it keeps the pty.
-			const acpEnabled = acpFlag ?? (await awaitAcpFlag(posthog));
-			if (
-				acpEnabled &&
-				!input.forkSessionId &&
-				acpHarnessForAgent(input.configId)
-			) {
-				const state = store.getState();
-				// No pty, so no host session id to key the pane on. Nothing is
-				// registered against this one until the CLI surface launches a
-				// terminal and replaces it.
-				const terminalId = crypto.randomUUID();
-				const label = agentConfigs?.find(
-					(config) => config.id === input.configId,
-				)?.label;
-				const pane = {
-					kind: "terminal" as const,
-					...(label ? { titleOverride: label } : {}),
-					data: {
-						terminalId,
-						agentSurface: "acp",
-						agent: { id: input.configId },
-						...(input.prompt ? { pendingPrompt: input.prompt } : {}),
-					} as TerminalPaneData,
-				};
-				if (input.placement === "split-pane" && state.activeTabId) {
-					state.addPane({ tabId: state.activeTabId, pane });
-				} else {
-					state.addTab({ panes: [pane] });
-				}
-				return { terminalId };
+			if (!input.forkSessionId) {
+				const chat = await openAgentChat(input);
+				if (chat) return chat;
 			}
 
 			try {
@@ -120,6 +111,15 @@ export function useAgentSessionLauncher({
 					colors: terminalQueryColors(appearance.theme),
 					agent: input.configId,
 					prompt: input.prompt,
+					...(input.attachments?.length
+						? {
+								attachmentIds: input.attachments.map(
+									(attachment) => attachment.attachmentId,
+								),
+							}
+						: {}),
+					...(input.modelId ? { model: input.modelId } : {}),
+					...(input.modeId ? { mode: input.modeId } : {}),
 					...(input.forkSessionId
 						? { forkSessionId: input.forkSessionId }
 						: {}),
@@ -134,9 +134,6 @@ export function useAgentSessionLauncher({
 				}
 				const terminalId = result.sessionId;
 				const state = store.getState();
-				// No surface is stamped here: it is derived from the agent's binding
-				// so every path that starts an agent — presets, hotkeys, the session
-				// dropdown — opens on the same one.
 				const pane = {
 					kind: "terminal" as const,
 					titleOverride: result.label,
@@ -164,16 +161,7 @@ export function useAgentSessionLauncher({
 				return null;
 			}
 		},
-		[
-			runAgent,
-			store,
-			workspaceId,
-			t,
-			appearance.theme,
-			acpFlag,
-			posthog,
-			agentConfigs,
-		],
+		[runAgent, store, workspaceId, t, appearance.theme, openAgentChat],
 	);
 
 	const focusAgentTerminal = useCallback(
@@ -183,5 +171,5 @@ export function useAgentSessionLauncher({
 		[store],
 	);
 
-	return { createNewAgentSession, focusAgentTerminal };
+	return { createNewAgentSession, openAgentChat, focusAgentTerminal };
 }

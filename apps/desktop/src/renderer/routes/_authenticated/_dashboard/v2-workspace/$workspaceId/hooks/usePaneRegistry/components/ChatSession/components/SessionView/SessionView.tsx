@@ -154,6 +154,10 @@ export function SessionView({
 			)}
 			<Composer
 				availableCommands={session.snapshot.session?.availableCommands ?? []}
+				configOptions={session.snapshot.session?.configOptions ?? []}
+				onSetConfigOption={(configId, value) =>
+					void session.setConfigOption(configId, value)
+				}
 				disabled={session.status !== "ready"}
 				draftKey={`chat-v3-draft:${sessionId}`}
 				onCancelTurn={

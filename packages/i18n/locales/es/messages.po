@@ -4679,6 +4679,9 @@ msgstr "No se pudo verificar la credencial: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "No se pudo pedir una descripción al espacio de trabajo"
 
+msgid "Couldn't attach files"
+msgstr "No se pudieron adjuntar los archivos"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "No se pudo bifurcar en un nuevo worktree"
 

@@ -4679,6 +4679,9 @@ msgstr "無法驗證憑證：{reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "無法請求工作區產生描述"
 
+msgid "Couldn't attach files"
+msgstr "無法附加檔案"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "無法分叉到新的 worktree"
 

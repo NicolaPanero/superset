@@ -120,6 +120,13 @@ export class LiveSession {
 		this.options.adapter.setMode(modeId);
 	}
 
+	setConfigOption(configId: string, value: string): void {
+		if (!this.options.adapter.setConfigOption) {
+			throw new Error("this agent has no settings to change");
+		}
+		this.options.adapter.setConfigOption(configId, value);
+	}
+
 	fork(): Promise<string | null> {
 		return this.options.adapter.fork?.() ?? Promise.resolve(null);
 	}

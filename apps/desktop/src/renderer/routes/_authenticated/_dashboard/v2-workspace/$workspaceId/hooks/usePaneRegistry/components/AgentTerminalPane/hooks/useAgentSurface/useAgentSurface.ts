@@ -1,8 +1,7 @@
-import { FEATURE_FLAGS } from "@superset/shared/constants";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
+import { useAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
+import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import type { TerminalPaneData } from "../../../../../../types";
-import { acpHarnessForAgent } from "../../utils/acpHarness";
 import type { AgentIdentity, AgentSurface } from "../useAgentSurfaceSwitch";
 
 export type ResolvedAgentSurface = {
@@ -26,14 +25,9 @@ export function useAgentSurface(
 	workspaceId: string,
 	data: TerminalPaneData,
 ): ResolvedAgentSurface {
-	// Undefined until PostHog answers, and the two unknowns pull opposite ways:
-	// deriving a chat before the flag resolves would show one to someone who
-	// has it off, while dropping a pane that was already opened as a chat to
-	// its terminal is the flash this surface exists to avoid. So deriving needs
-	// a resolved `true`, and only a resolved `false` takes a stamped pane back.
-	const acpFlag = useFeatureFlagEnabled(FEATURE_FLAGS.ACP_CHAT);
+	const acpChat = useAcpChatEnabled();
 	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
-	const harness = acpHarnessForAgent(binding?.agentId);
+	const harness = acpHarnessForPreset(binding?.agentId);
 
 	const agent =
 		harness && binding?.agentId && binding.agentSessionId && !binding.endedAt
@@ -42,12 +36,12 @@ export function useAgentSurface(
 
 	// The pane remembers an agent it has already opened as a chat, so the
 	// surface survives the binding going away with the pty.
-	const chatCapable = Boolean(acpFlag === true && (agent || data.agent));
+	const chatCapable = Boolean(acpChat === "enabled" && (agent || data.agent));
 	// A stored "acp" outlives the flag it was chosen under, so the flag is read
 	// first: turning it off has to return every pane to its terminal, not just
 	// hide the toggle on a pane that keeps running the chat.
 	const surface: AgentSurface =
-		acpFlag === false
+		acpChat === "disabled"
 			? "cli"
 			: (data.agentSurface ?? (chatCapable ? "acp" : "cli"));
 

@@ -32,6 +32,7 @@ import {
 import {
 	ArrowUpIcon,
 	MicIcon,
+	PaperclipIcon,
 	RefreshCcwIcon,
 	SquareIcon,
 	XIcon,
@@ -40,7 +41,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useComposerDropZone } from "../../../ComposerDropZone";
 import { useDictation } from "../../hooks/useDictation";
-import { useMentionSources } from "../../hooks/useMentionSources";
+import {
+	type MentionSection,
+	useMentionSources,
+} from "../../hooks/useMentionSources";
 import { MentionChipNode } from "../../nodes/mentionChipNode";
 import type {
 	ComposerActionContext,
@@ -83,6 +87,7 @@ export type ComposerBodyProps = Required<
 		| "commands"
 		| "dictation"
 		| "toolbar"
+		| "toolbarEnd"
 		| "defaultValue"
 		| "onChange"
 		| "onSubmit"
@@ -129,6 +134,7 @@ export function ComposerBody({
 	status,
 	placement,
 	toolbar,
+	toolbarEnd,
 	defaultValue,
 	onChange,
 	onSubmit,
@@ -219,9 +225,28 @@ export function ComposerBody({
 		mentionQuery != null || browseOpen,
 		mentionQuery ?? "",
 	);
+	const browseSections = useMemo<MentionSection[]>(
+		() => [
+			{
+				providerId: "add",
+				title: t({ message: "Add" }),
+				isLoading: false,
+				entries: [
+					{
+						id: "attach-files",
+						label: t({ message: "Attach files" }),
+						icon: <PaperclipIcon className="size-4" />,
+						select: (ctx) => ctx.attachFiles(),
+					},
+				],
+			},
+			...sections.filter((section) => section.entries.length > 0),
+		],
+		[sections, t],
+	);
 	const browseEntries = useMemo(
-		() => sections.flatMap((section) => section.entries),
-		[sections],
+		() => browseSections.flatMap((section) => section.entries),
+		[browseSections],
 	);
 
 	useEffect(() => {
@@ -566,7 +591,8 @@ export function ComposerBody({
 			>
 				{browseOpen && (
 					<MentionMenu
-						sections={sections}
+						sections={browseSections}
+						className="max-w-80"
 						selectedIndex={browseIndex}
 						onHighlight={setBrowseIndex}
 						onSelectionChange={onMentionHighlight}
@@ -785,6 +811,7 @@ export function ComposerBody({
 					<>
 						{toolbar}
 						<div className="flex-1" />
+						{toolbarEnd}
 						{dictation && status !== "streaming" && (
 							<button
 								type="button"

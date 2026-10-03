@@ -7,6 +7,7 @@ import type {
 	GetSessionInput,
 	PromptInput,
 	RespondToApprovalInput,
+	SetConfigOptionInput,
 	SetModeInput,
 } from "@superset/chat/protocol";
 import {
@@ -19,6 +20,7 @@ import {
 	listSessionsInputSchema,
 	promptInputSchema,
 	respondToApprovalInputSchema,
+	setConfigOptionInputSchema,
 	setModeInputSchema,
 } from "@superset/chat/protocol";
 import { z } from "zod";
@@ -70,6 +72,7 @@ export type ChatCommands = {
 	cancelTurn(input: CancelTurnInput): void;
 	respondToApproval(input: RespondToApprovalInput): void;
 	setMode(input: SetModeInput): void;
+	setConfigOption(input: SetConfigOptionInput): void;
 	closeSession(input: CloseSessionInput): Promise<void>;
 	forkSession(
 		input: ForkSessionCommandInput,
@@ -160,6 +163,16 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 			const parsed: SetModeInput = setModeInputSchema.parse(input);
 			options.dedupe.run(`setMode:${parsed.commandId}`, () => {
 				options.live.require(parsed.sessionId).setMode(parsed.modeId);
+			});
+		},
+
+		setConfigOption(input) {
+			const parsed: SetConfigOptionInput =
+				setConfigOptionInputSchema.parse(input);
+			options.dedupe.run(`setConfigOption:${parsed.commandId}`, () => {
+				options.live
+					.require(parsed.sessionId)
+					.setConfigOption(parsed.configId, parsed.value);
 			});
 		},
 

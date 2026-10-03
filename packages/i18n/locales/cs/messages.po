@@ -4679,6 +4679,9 @@ msgstr "Přihlašovací údaje se nepodařilo ověřit: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Nepodařilo se požádat pracovní prostor o popis"
 
+msgid "Couldn't attach files"
+msgstr "Soubory se nepodařilo připojit"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Nepodařilo se rozvětvit do nového worktree"
 

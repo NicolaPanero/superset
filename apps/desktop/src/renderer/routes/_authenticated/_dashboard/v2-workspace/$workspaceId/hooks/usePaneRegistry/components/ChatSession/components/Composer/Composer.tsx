@@ -1,13 +1,20 @@
 import { useLingui } from "@lingui/react/macro";
-import type { AvailableCommand, UserContent } from "@superset/chat/protocol";
+import type {
+	AvailableCommand,
+	SessionConfigOption,
+	UserContent,
+} from "@superset/chat/protocol";
 import type {
 	ComposerMentionEntry,
 	ComposerMentionProvider,
 	PromptInputCommand,
 } from "@superset/chat-ui/PromptInput";
 import { PromptInput } from "@superset/chat-ui/PromptInput";
+import { errorMessage } from "@superset/i18n/errors";
+import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo, useRef } from "react";
+import { ModelPicker } from "./components/ModelPicker";
 
 const DRAFT_DEBOUNCE_MS = 300;
 
@@ -15,6 +22,8 @@ export type ComposerProps = {
 	workspaceId: string;
 	draftKey: string;
 	availableCommands: AvailableCommand[];
+	configOptions?: SessionConfigOption[];
+	onSetConfigOption?: (configId: string, value: string) => unknown;
 	onSend: (content: UserContent[]) => unknown;
 	placeholder?: string;
 	disabled?: boolean;
@@ -41,6 +50,8 @@ function toMenuCommands(commands: AvailableCommand[]): PromptInputCommand[] {
 
 export function Composer({
 	availableCommands,
+	configOptions,
+	onSetConfigOption,
 	disabled,
 	draftKey,
 	onCancelTurn,
@@ -50,6 +61,7 @@ export function Composer({
 }: ComposerProps) {
 	const { t } = useLingui();
 	const trpcUtils = workspaceTrpc.useUtils();
+	const uploadAttachment = workspaceTrpc.attachments.upload.useMutation();
 
 	const searchFiles = useCallback(
 		async (query: string) => {
@@ -112,12 +124,39 @@ export function Composer({
 	);
 
 	const handleSubmit = useCallback(
-		({ text }: { text: string }) => {
-			if (text.trim() === "" || disabled) return;
-			onSend([{ type: "text", text }]);
+		async ({ text, files }: { text: string; files: File[] }) => {
+			if (disabled || (text.trim() === "" && files.length === 0)) return;
+			let attachments: UserContent[];
+			try {
+				attachments = await Promise.all(
+					files.map(async (file) => {
+						const mimeType = file.type || "application/octet-stream";
+						const { attachmentId } = await uploadAttachment.mutateAsync({
+							data: { kind: "base64", data: await fileToBase64(file) },
+							mediaType: mimeType,
+							originalFilename: file.name,
+						});
+						return {
+							type: "attachment" as const,
+							attachmentId,
+							name: file.name,
+							mimeType,
+						};
+					}),
+				);
+			} catch (error) {
+				toast.error(t({ message: "Couldn't attach files" }), {
+					description: errorMessage(error, t({ message: "Unknown error" })),
+				});
+				return;
+			}
+			onSend([
+				...(text.trim() === "" ? [] : [{ type: "text" as const, text }]),
+				...attachments,
+			]);
 			window.localStorage.removeItem(draftKey);
 		},
-		[disabled, onSend, draftKey],
+		[disabled, onSend, draftKey, uploadAttachment, t],
 	);
 
 	return (
@@ -136,7 +175,24 @@ export function Composer({
 					t({ message: "Ask the agent, @mention files, run /commands" })
 				}
 				status={onCancelTurn ? "streaming" : "ready"}
+				toolbarEnd={
+					configOptions && onSetConfigOption ? (
+						<ModelPicker
+							configOptions={configOptions}
+							onSelect={onSetConfigOption}
+						/>
+					) : null
+				}
 			/>
 		</div>
 	);
+}
+
+async function fileToBase64(file: File): Promise<string> {
+	const bytes = new Uint8Array(await file.arrayBuffer());
+	let binary = "";
+	for (let i = 0; i < bytes.length; i += 0x8000) {
+		binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+	}
+	return btoa(binary);
 }

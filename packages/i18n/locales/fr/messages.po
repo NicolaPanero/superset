@@ -4679,6 +4679,9 @@ msgstr "Impossible de vérifier les identifiants : {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Impossible de demander une description à l’espace de travail"
 
+msgid "Couldn't attach files"
+msgstr "Impossible de joindre les fichiers"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Impossible de dupliquer dans un nouveau worktree"
 

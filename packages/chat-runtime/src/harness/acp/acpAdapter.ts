@@ -4,6 +4,7 @@ import type {
 	Decision,
 	Item,
 	Plan,
+	SessionConfigOption,
 	SessionState,
 	ToolCall,
 	ToolContent,
@@ -25,6 +26,7 @@ import type {
 	SpawnAcpOptions,
 } from "./rpcClient";
 import { AcpRpcClient, spawnAcpTransport } from "./rpcClient";
+import type { AcpConfigSelectOption } from "./wire";
 import {
 	type AcpContentBlock,
 	type AcpToolCallContent,
@@ -126,8 +128,15 @@ const SESSION_STATUS_BY_ACP_STATE: Record<string, SessionState["status"]> = {
 	requires_action: "awaiting_input",
 };
 
+export type AcpAttachment = {
+	path: string;
+	mimeType: string;
+	data: string;
+};
+
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
+	resolveAttachment?: (attachmentId: string) => Promise<AcpAttachment | null>;
 	now?: () => number;
 	mintId?: () => string;
 	createTransport?(
@@ -187,6 +196,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private agentCapabilities: Record<string, unknown> = {};
 	/** The v2 config option that stands in for v1's session mode, once seen. */
 	private modeConfigId: string | null = null;
+	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
 	private queuedPrompts: UserContent[][] = [];
 	private disposed = false;
@@ -253,6 +263,33 @@ export class AcpAdapter implements HarnessAdapter {
 		void pending.catch((error: Error) =>
 			this.emitNotice("error", error.message),
 		);
+	}
+
+	setConfigOption(configId: string, value: string): void {
+		const client = this.client;
+		const sessionId = this.sessionId;
+		if (!client || !sessionId) return;
+		const previous = this.configOptions;
+		this.configOptions = previous.map((option) =>
+			option.id === configId ? { ...option, currentValue: value } : option,
+		);
+		this.emitSession({
+			configOptions: this.configOptions,
+			...(configId === this.modeConfigId ? { modeId: value } : {}),
+		});
+		client
+			.request("session/set_config_option", {
+				sessionId,
+				configId,
+				value,
+				...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
+			})
+			.then((response) => this.handleConfigOptions(response))
+			.catch((error: Error) => {
+				this.configOptions = previous;
+				this.emitSession({ configOptions: previous });
+				this.emitNotice("error", error.message);
+			});
 	}
 
 	/**
@@ -410,6 +447,8 @@ export class AcpAdapter implements HarnessAdapter {
 						}
 					: {}),
 			});
+			this.handleConfigOptions(response);
+			this.applyStartSelections(startOptions);
 
 			const queued = this.queuedPrompts.splice(0, this.queuedPrompts.length);
 			for (const content of queued) await this.runTurn(content);
@@ -429,7 +468,7 @@ export class AcpAdapter implements HarnessAdapter {
 		try {
 			const response = await client.request("session/prompt", {
 				sessionId: this.sessionId,
-				prompt: this.toAcpPrompt(content),
+				prompt: await this.toAcpPrompt(content),
 			});
 			this.flushOpenText();
 			const stopReason =
@@ -864,40 +903,59 @@ export class AcpAdapter implements HarnessAdapter {
 		);
 	}
 
-	/**
-	 * v2 has no session mode: a mode is a `select` config option whose category
-	 * says so, and `session/set_config_option` sets it.
-	 */
 	private handleConfigOptions(raw: unknown): void {
 		const parsed = acpConfigOptionUpdateSchema.safeParse(raw);
 		if (!parsed.success) return;
-		const mode = parsed.data.configOptions.find(
+		this.configOptions = parsed.data.configOptions.flatMap((option) => {
+			const id = option.configId ?? option.id;
+			if (!id || (option.type && option.type !== "select")) return [];
+			return [
+				{
+					id,
+					label: option.name,
+					...(option.category ? { category: option.category } : {}),
+					...(typeof option.currentValue === "string"
+						? { currentValue: option.currentValue }
+						: {}),
+					options: flattenSelectOptions(option.options ?? []),
+				},
+			];
+		});
+		const mode = this.configOptions.find(
 			(option) => option.category === "mode",
 		);
-		if (!mode) return;
-		this.modeConfigId = mode.configId;
-		// Options arrive either flat or grouped under headers.
-		const options = (mode.options ?? []).flatMap((entry) =>
-			entry.options
-				? entry.options
-				: entry.value
-					? [{ value: entry.value, name: entry.name }]
-					: [],
-		);
-		const session: Partial<SessionState> = {
-			...(typeof mode.currentValue === "string"
-				? { modeId: mode.currentValue }
-				: {}),
-			...(options.length
+		if (mode) this.modeConfigId = mode.id;
+		this.emitSession({
+			configOptions: this.configOptions,
+			...(mode?.currentValue ? { modeId: mode.currentValue } : {}),
+			...(mode?.options.length
 				? {
-						availableModes: options.map((option) => ({
-							id: option.value,
-							label: option.name,
+						availableModes: mode.options.map((option) => ({
+							id: option.id,
+							label: option.label,
 						})),
 					}
 				: {}),
-		};
-		if (Object.keys(session).length > 0) this.emitSession(session);
+		});
+	}
+
+	private applyStartSelections(startOptions: HarnessStartOptions): void {
+		for (const [category, value] of [
+			["model", startOptions.modelId],
+			["mode", startOptions.modeId],
+		] as const) {
+			const option = this.configOptions.find(
+				(entry) => entry.category === category,
+			);
+			if (
+				value &&
+				option &&
+				option.currentValue !== value &&
+				option.options.some((entry) => entry.id === value)
+			) {
+				this.setConfigOption(option.id, value);
+			}
+		}
 	}
 
 	private handleServerRequest(request: AcpServerRequest): void {
@@ -968,18 +1026,48 @@ export class AcpAdapter implements HarnessAdapter {
 			: { outcome: { outcome: "cancelled" } };
 	}
 
-	private toAcpPrompt(content: UserContent[]): unknown[] {
+	private async toAcpPrompt(content: UserContent[]): Promise<unknown[]> {
 		const blocks: unknown[] = [];
-		let skippedAttachment = false;
+		const dropped: string[] = [];
+		const takesImages =
+			(
+				this.agentCapabilities as {
+					promptCapabilities?: { image?: boolean };
+				}
+			).promptCapabilities?.image === true;
+
 		for (const entry of content) {
-			if (entry.type === "text")
+			if (entry.type === "text") {
 				blocks.push({ type: "text", text: entry.text });
-			else skippedAttachment = true;
+				continue;
+			}
+			const attachment = await this.options
+				.resolveAttachment?.(entry.attachmentId)
+				.catch(() => null);
+			if (!attachment) {
+				dropped.push(entry.name);
+				continue;
+			}
+			if (takesImages && attachment.mimeType.startsWith("image/")) {
+				blocks.push({
+					type: "image",
+					mimeType: attachment.mimeType,
+					data: attachment.data,
+				});
+				continue;
+			}
+			blocks.push({
+				type: "resource_link",
+				uri: `file://${attachment.path}`,
+				name: entry.name,
+				mimeType: attachment.mimeType,
+			});
 		}
-		if (skippedAttachment) {
+
+		if (dropped.length > 0) {
 			this.emitNotice(
 				"info",
-				"Attachments are not supported by the ACP harness and were omitted",
+				`Could not read ${dropped.join(", ")}, so ${dropped.length === 1 ? "it was" : "they were"} left out of this message.`,
 			);
 		}
 		return blocks;
@@ -1091,4 +1179,18 @@ export class AcpAdapter implements HarnessAdapter {
 
 export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {
 	return new AcpAdapter(options);
+}
+
+function flattenSelectOptions(
+	entries: AcpConfigSelectOption[],
+): SessionConfigOption["options"] {
+	return entries.flatMap((entry) => {
+		const leaves =
+			entry.options ?? (entry.value ? [{ ...entry, value: entry.value }] : []);
+		return leaves.map((leaf) => ({
+			id: leaf.value,
+			label: leaf.name,
+			...(leaf.description ? { description: leaf.description } : {}),
+		}));
+	});
 }

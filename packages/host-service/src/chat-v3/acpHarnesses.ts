@@ -1,11 +1,23 @@
+import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
 import type { HostDb } from "../db";
+import { resolveAttachmentPath } from "../trpc/router/attachments/storage";
 import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
+
+async function resolveAttachment(attachmentId: string) {
+	const resolved = resolveAttachmentPath(attachmentId);
+	if (!resolved) return null;
+	return {
+		path: resolved.path,
+		mimeType: resolved.metadata.mediaType,
+		data: (await readFile(resolved.path)).toString("base64"),
+	};
+}
 
 function resolveAdapterEntry(packageName: string): string {
 	const moduleRequire = createRequire(import.meta.url);
@@ -33,6 +45,7 @@ export function acpHarnessFactory(
 		createAcpAdapter({
 			command: entry.binary,
 			cwd: options.cwd,
+			resolveAttachment,
 			launch: async () => {
 				const cli = await resolveAgentCli({
 					binary: entry.binary,

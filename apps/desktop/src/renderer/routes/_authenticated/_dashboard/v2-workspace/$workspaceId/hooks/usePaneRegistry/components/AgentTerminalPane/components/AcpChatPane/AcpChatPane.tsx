@@ -5,11 +5,11 @@ import { useWorkspaceClient } from "@superset/workspace-client";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
 import type { ChatForkTarget } from "../../../ChatSession/types";
 import { useForkChat } from "../../hooks/useForkChat";
-import { acpHarnessForAgent } from "../../utils/acpHarness";
 import { AcpChatPending } from "./components/AcpChatPending";
 import { AcpRecovery } from "./components/AcpRecovery";
 
@@ -26,6 +26,8 @@ export function AcpChatPane({
 	pendingFirstPrompt,
 	sessionId,
 	workspaceId,
+	modelId,
+	modeId,
 }: {
 	workspaceId: string;
 	/** `sessionId` is absent until the agent has run a turn to report one. */
@@ -35,6 +37,8 @@ export function AcpChatPane({
 	onFirstPromptSent?: (() => void) | undefined;
 	onSessionCreated: (sessionId: string) => void;
 	onAgentSessionChanged: (harnessSessionId: string) => void;
+	modelId?: string;
+	modeId?: string;
 }) {
 	const { t } = useLingui();
 	const { client, wiring } = useSessionClient(sessionId);
@@ -44,7 +48,7 @@ export function AcpChatPane({
 	const agentLabel = agentConfigs?.find(
 		(config) => config.id === agent?.id,
 	)?.label;
-	const harness = acpHarnessForAgent(agent?.id);
+	const harness = acpHarnessForPreset(agent?.id);
 	const [failure, setFailure] = useState<string | null>(null);
 
 	// The stored session outlives its process — after a host restart the row
@@ -69,6 +73,8 @@ export function AcpChatPane({
 					commandId: crypto.randomUUID(),
 					workspaceId,
 					harness: resumeHarness,
+					...(modelId ? { modelId } : {}),
+					...(modeId ? { modeId } : {}),
 					...(resume ? { resume: { harnessSessionId: resume } } : {}),
 				});
 				onSessionCreated(created.sessionId);
@@ -77,7 +83,7 @@ export function AcpChatPane({
 				setFailure(error instanceof Error ? error.message : String(error));
 			}
 		},
-		[wiring.transport, workspaceId, onSessionCreated],
+		[wiring.transport, workspaceId, onSessionCreated, modelId, modeId],
 	);
 
 	const agentSessionId = agent?.sessionId;

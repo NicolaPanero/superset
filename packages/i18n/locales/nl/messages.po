@@ -4679,6 +4679,9 @@ msgstr "Kon de inloggegevens niet verifiëren: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Kon de workspace niet om een beschrijving vragen"
 
+msgid "Couldn't attach files"
+msgstr "Kan bestanden niet bijvoegen"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Kon niet afsplitsen naar een nieuwe worktree"
 

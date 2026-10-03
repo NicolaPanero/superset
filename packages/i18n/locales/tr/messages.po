@@ -4679,6 +4679,9 @@ msgstr "Kimlik bilgisi doğrulanamadı: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Çalışma alanından açıklama istenemedi"
 
+msgid "Couldn't attach files"
+msgstr "Dosyalar eklenemedi"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Yeni bir worktree'ye çatallanamadı"
 

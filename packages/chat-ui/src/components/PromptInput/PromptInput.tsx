@@ -38,6 +38,7 @@ export function PromptInput({
 	status = "ready",
 	placement = "top",
 	toolbar,
+	toolbarEnd,
 	defaultValue,
 	onChange,
 	onSubmit,
@@ -66,6 +67,7 @@ export function PromptInput({
 					status={status}
 					placement={placement}
 					toolbar={toolbar}
+					toolbarEnd={toolbarEnd}
 					defaultValue={defaultValue}
 					onChange={onChange}
 					onSubmit={onSubmit}

@@ -4679,6 +4679,9 @@ msgstr "Không xác minh được thông tin đăng nhập: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Không thể yêu cầu không gian làm việc tạo mô tả"
 
+msgid "Couldn't attach files"
+msgstr "Không thể đính kèm tệp"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Không thể tạo nhánh sang worktree mới"
 

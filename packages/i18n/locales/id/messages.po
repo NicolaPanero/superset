@@ -4679,6 +4679,9 @@ msgstr "Tidak dapat memverifikasi kredensial: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Tidak dapat meminta deskripsi dari workspace"
 
+msgid "Couldn't attach files"
+msgstr "Tidak dapat melampirkan file"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Tidak dapat mencabangkan ke worktree baru"
 

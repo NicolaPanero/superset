@@ -8,6 +8,7 @@ import {
 	listSessionsInputSchema,
 	promptInputSchema,
 	respondToApprovalInputSchema,
+	setConfigOptionInputSchema,
 	setModeInputSchema,
 } from "@superset/chat/protocol";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
@@ -93,6 +94,12 @@ export function createChatRouter(
 		setMode: t.procedure
 			.input(setModeInputSchema)
 			.mutation(({ input }) => guarded(() => runtime.commands.setMode(input))),
+
+		setConfigOption: t.procedure
+			.input(setConfigOptionInputSchema)
+			.mutation(({ input }) =>
+				guarded(() => runtime.commands.setConfigOption(input)),
+			),
 
 		forkSession: t.procedure
 			.input(forkSessionInputSchema.extend({ workspaceId: z.string().min(1) }))

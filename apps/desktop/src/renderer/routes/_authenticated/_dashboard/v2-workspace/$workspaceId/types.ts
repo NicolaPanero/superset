@@ -50,6 +50,13 @@ export interface TerminalPaneData {
 	};
 	/** First message for a chat opened from the launcher, sent once. */
 	pendingPrompt?: string;
+	pendingAttachments?: Array<{
+		attachmentId: string;
+		name: string;
+		mimeType: string;
+	}>;
+	chatModelId?: string;
+	chatModeId?: string;
 }
 
 export interface BrowserPaneData {

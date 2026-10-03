@@ -4679,6 +4679,9 @@ msgstr "Die Zugangsdaten konnten nicht überprüft werden: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "Der Arbeitsbereich konnte nicht nach einer Beschreibung gefragt werden"
 
+msgid "Couldn't attach files"
+msgstr "Dateien konnten nicht angehängt werden"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "Verzweigen in einen neuen Worktree fehlgeschlagen"
 

@@ -21,6 +21,7 @@ class FakeAcpAgent {
 	sessionCapabilities: Record<string, unknown> | null = { fork: {} };
 	/** Replay history with v2's whole-message variants instead of chunks. */
 	wholeMessageReplay = false;
+	newSessionConfigOptions: Array<Record<string, unknown>> | null = null;
 	private handlers!: AcpTransportHandlers;
 
 	transport(handlers: AcpTransportHandlers): AcpTransport {
@@ -91,7 +92,12 @@ class FakeAcpAgent {
 					},
 				});
 			} else if (frame.method === "session/new") {
-				this.respond(frame.id as number, { sessionId: "sess-1" });
+				this.respond(frame.id as number, {
+					sessionId: "sess-1",
+					...(this.newSessionConfigOptions
+						? { configOptions: this.newSessionConfigOptions }
+						: {}),
+				});
 			} else if (frame.method === "session/fork") {
 				this.respond(frame.id as number, { sessionId: "sess-forked" });
 			} else if (frame.method === "session/load" && this.loadFails) {
@@ -172,6 +178,7 @@ async function flush(times = 8): Promise<void> {
 function startAdapter(
 	agent: FakeAcpAgent,
 	resume?: string,
+	selections: { modelId?: string } = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
 	let counter = 0;
 	const adapter = new AcpAdapter({
@@ -185,6 +192,7 @@ function startAdapter(
 		adapter.start({
 			cwd: "/work",
 			...(resume ? { resume: { harnessSessionId: resume } } : {}),
+			...selections,
 		}),
 		events,
 	);
@@ -1015,5 +1023,224 @@ describe("AcpAdapter on protocol v2", () => {
 		);
 
 		await adapter.dispose();
+	});
+});
+
+describe("AcpAdapter config options", () => {
+	const MODEL_OPTION = {
+		id: "model",
+		name: "Model",
+		type: "select",
+		category: "model",
+		currentValue: "opus",
+		options: [
+			{ value: "opus", name: "Opus", description: "For complex work" },
+			{ value: "sonnet", name: "Sonnet" },
+		],
+	};
+	const EFFORT_OPTION = {
+		id: "effort",
+		name: "Effort",
+		type: "select",
+		category: "thought_level",
+		currentValue: "high",
+		options: [
+			{ value: "low", name: "Low" },
+			{ value: "high", name: "High" },
+		],
+	};
+
+	it("reads the options session/new returns, keyed by v1's id", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		agent.newSessionConfigOptions = [MODEL_OPTION, EFFORT_OPTION];
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		expect(sessionsOf(events).pop()?.configOptions).toEqual([
+			{
+				id: "model",
+				label: "Model",
+				category: "model",
+				currentValue: "opus",
+				options: [
+					{ id: "opus", label: "Opus", description: "For complex work" },
+					{ id: "sonnet", label: "Sonnet" },
+				],
+			},
+			{
+				id: "effort",
+				label: "Effort",
+				category: "thought_level",
+				currentValue: "high",
+				options: [
+					{ id: "low", label: "Low" },
+					{ id: "high", label: "High" },
+				],
+			},
+		]);
+
+		await adapter.dispose();
+	});
+
+	it("sets an option and shows the new value before the agent answers", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		agent.newSessionConfigOptions = [MODEL_OPTION];
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		adapter.setConfigOption("model", "sonnet");
+		await flush();
+
+		expect(sessionsOf(events).pop()?.configOptions?.[0]?.currentValue).toBe(
+			"sonnet",
+		);
+		const sent = agent.sent.find(
+			(f) => f.method === "session/set_config_option",
+		);
+		expect(sent?.params).toEqual({
+			sessionId: "sess-1",
+			configId: "model",
+			value: "sonnet",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("applies the model it was started with", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		agent.newSessionConfigOptions = [MODEL_OPTION];
+		const { adapter } = startAdapter(agent, undefined, { modelId: "sonnet" });
+		await flush();
+
+		const sent = agent.sent.find(
+			(f) => f.method === "session/set_config_option",
+		);
+		expect(sent?.params).toEqual({
+			sessionId: "sess-1",
+			configId: "model",
+			value: "sonnet",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("leaves the model alone when the start model is not offered", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		agent.newSessionConfigOptions = [MODEL_OPTION];
+		const { adapter } = startAdapter(agent, undefined, { modelId: "gpt-5.4" });
+		await flush();
+
+		expect(agent.sent.map((f) => f.method)).not.toContain(
+			"session/set_config_option",
+		);
+
+		await adapter.dispose();
+	});
+});
+
+describe("AcpAdapter attachments", () => {
+	const startWith = (
+		agent: FakeAcpAgent,
+		resolveAttachment: (id: string) => Promise<{
+			path: string;
+			mimeType: string;
+			data: string;
+		} | null>,
+	) => {
+		const adapter = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => agent.transport(handlers),
+			resolveAttachment,
+			now: () => 1,
+			mintId: () => "id-1",
+		});
+		const events: AdapterEvent[] = [];
+		void collect(adapter.start({ cwd: "/work" }), events);
+		return { adapter, events };
+	};
+
+	const promptBlocks = (agent: FakeAcpAgent): unknown[] =>
+		((
+			agent.sent.find((f) => f.method === "session/prompt")?.params as {
+				prompt?: unknown[];
+			}
+		)?.prompt ?? []) as unknown[];
+
+	it("sends an image as content when the agent reads images", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter } = startWith(agent, async () => ({
+			path: "/tmp/shot.png",
+			mimeType: "image/png",
+			data: "YmFzZTY0",
+		}));
+		await flush();
+		adapter.prompt([
+			{ type: "text", text: "what is this" },
+			{
+				type: "attachment",
+				attachmentId: "a1",
+				name: "shot.png",
+				mimeType: "image/png",
+			},
+		]);
+		await flush();
+		expect(promptBlocks(agent)).toEqual([
+			{ type: "text", text: "what is this" },
+			{ type: "image", mimeType: "image/png", data: "YmFzZTY0" },
+		]);
+	});
+
+	it("links a non-image so the agent can open it itself", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter } = startWith(agent, async () => ({
+			path: "/tmp/notes.md",
+			mimeType: "text/markdown",
+			data: "ZG9j",
+		}));
+		await flush();
+		adapter.prompt([
+			{
+				type: "attachment",
+				attachmentId: "a2",
+				name: "notes.md",
+				mimeType: "text/markdown",
+			},
+		]);
+		await flush();
+		expect(promptBlocks(agent)).toEqual([
+			{
+				type: "resource_link",
+				uri: "file:///tmp/notes.md",
+				name: "notes.md",
+				mimeType: "text/markdown",
+			},
+		]);
+	});
+
+	it("names an attachment it could not read", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startWith(agent, async () => null);
+		await flush();
+		adapter.prompt([
+			{
+				type: "attachment",
+				attachmentId: "gone",
+				name: "missing.png",
+				mimeType: "image/png",
+			},
+		]);
+		await flush();
+		expect(promptBlocks(agent)).toEqual([]);
+		const told = events.some(
+			(e) =>
+				e.kind === "item" &&
+				"text" in e.item &&
+				/missing\.png/.test(String(e.item.text)),
+		);
+		expect(told).toBe(true);
 	});
 });

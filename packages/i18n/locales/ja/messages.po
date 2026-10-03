@@ -4679,6 +4679,9 @@ msgstr "認証情報を確認できませんでした: {reason}"
 msgid "Couldn't ask the workspace for a description"
 msgstr "ワークスペースに説明を依頼できませんでした"
 
+msgid "Couldn't attach files"
+msgstr "ファイルを添付できませんでした"
+
 msgid "Couldn't branch into a new worktree"
 msgstr "新しい worktree へ分岐できませんでした"
 
