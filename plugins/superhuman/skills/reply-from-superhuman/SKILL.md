@@ -14,8 +14,10 @@ would have written. Read the whole thread, draft once, and stop at the draft.
 
 `get_thread` with drafts and comments included. The last message is not the
 whole ask: an earlier message often holds the question, a team comment may say
-how to answer it, and the question itself may sit in an attachment, which
-`get_attachment` reads. When the thread is trimmed, raise `message_limit`. Note who is on the thread and who
+how to answer it, and the question itself may sit in an attachment.
+`get_attachment` returns images and audio directly; for anything else it
+returns a download link, so a PDF or a spreadsheet is unread until the user
+opens it. When the thread is trimmed, raise `message_limit`. Note who is on the thread and who
 spoke last; the reply goes to the person waiting, not to whoever wrote first.
 
 ## 2. Look for a draft before writing one
