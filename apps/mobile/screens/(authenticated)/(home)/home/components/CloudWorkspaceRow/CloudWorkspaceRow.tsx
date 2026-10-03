@@ -110,7 +110,7 @@ export function CloudWorkspaceRow({
 			{showsPullRequest ? null : (
 				<CloudWorkspaceDiffStats workspaceId={row.id} />
 			)}
-			{showsPullRequest ? (
+			{pullRequest && prStatus && !archived ? (
 				<Button
 					accessibilityLabel={t({
 						message: `Pull request #${pullRequest.number}`,
