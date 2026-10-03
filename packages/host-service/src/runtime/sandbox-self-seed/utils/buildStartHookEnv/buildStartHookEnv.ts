@@ -1,5 +1,11 @@
 import { stripTerminalRuntimeEnv } from "../../../../terminal/env-strip.ts";
 
+const SANDBOX_IDENTITY_KEYS = [
+	"SUPERSET_SANDBOX_WORKSPACE_ID",
+	"SUPERSET_SANDBOX_ORGANIZATION_ID",
+	"SUPERSET_SANDBOX_CREATOR_USER_ID",
+] as const;
+
 export function buildStartHookEnv(
 	hostEnv: NodeJS.ProcessEnv,
 	managedEnv: Record<string, string>,
@@ -12,8 +18,9 @@ export function buildStartHookEnv(
 	// SUPERSET_RUN_DIR's ptyd.sock with this one and replace its daemon.
 	const env = stripTerminalRuntimeEnv(stringEnv);
 	delete env.PORT;
-	if (hostEnv.SUPERSET_SANDBOX_WORKSPACE_ID) {
-		env.SUPERSET_SANDBOX_WORKSPACE_ID = hostEnv.SUPERSET_SANDBOX_WORKSPACE_ID;
+	for (const key of SANDBOX_IDENTITY_KEYS) {
+		const value = hostEnv[key];
+		if (value) env[key] = value;
 	}
 	return { ...env, ...managedEnv, IS_SANDBOX: "1" };
 }
