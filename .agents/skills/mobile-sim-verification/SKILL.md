@@ -112,8 +112,9 @@ steps above become `lim ios` commands, and the simulator reaches this box only t
   new one with `lim xcode build` only after a native change.
 - **Tunnel.** One selector for each local port the app calls, all in one command, because selector
   sets cannot change: `lim ios tunnel --selector localhost:8081 --selector localhost:$API_PORT
-  --selector localhost:$REALTIME_PORT --detach --id <id>`. A port with no selector fails as a
-  network error in the app.
+  --selector localhost:$RELAY_PORT --selector localhost:$REALTIME_PORT --detach --id <id>`. A port
+  with no selector fails as a network error in the app; without the relay, Home says it cannot
+  check the host.
 - **Metro.** Start it with `EXPO_PACKAGER_PROXY_URL=http://localhost:8081`. Without it, Metro
   advertises `127.0.0.1`, which the tunnel does not route. Set `EXPO_PUBLIC_*` overrides inline;
   they take precedence over the root `.env`.

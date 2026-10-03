@@ -50,6 +50,27 @@ describe("patchCloudWorkspaceRows", () => {
 		expect(a?.agentStatus).toBeNull();
 	});
 
+	test("ignores a status older than the cached one", () => {
+		const [a] = patchCloudWorkspaceRows(
+			[
+				{
+					...row("a"),
+					agentStatus: "review",
+					agentStatusAt: new Date(5_000).toISOString(),
+				} as unknown as CloudWorkspaceRow,
+			],
+			[
+				{
+					kind: "cloud_workspaces",
+					workspaceId: "a",
+					agentStatus: "working",
+					agentStatusAt: 4_000,
+				},
+			],
+		);
+		expect(a?.agentStatus).toBe("review");
+	});
+
 	test("merges presence with a persisted row whose dates are strings", () => {
 		const [a] = patchCloudWorkspaceRows(
 			[

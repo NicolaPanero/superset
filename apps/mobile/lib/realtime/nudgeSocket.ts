@@ -11,6 +11,8 @@ import { setRealtimeConnected } from "./connection";
 const MIN_RETRY_MS = 1_000;
 const MAX_RETRY_MS = 30_000;
 const OPEN_TIMEOUT_MS = 15_000;
+// The Worker refuses a token by opening the socket and closing it at once.
+const OPEN_SETTLE_MS = 2_000;
 // A JWT minted before an org change is missing that org, so it answers 4403.
 const STALE_TOKEN_CODES = new Set([4401, 4403]);
 
@@ -85,6 +87,7 @@ export function openNudgeSocket(args: {
 
 		const next = new WebSocket(nudgeUrl(args.organizationId, token));
 		socket = next;
+		let settleTimer: ReturnType<typeof setTimeout> | null = null;
 		const openTimeout = setTimeout(() => {
 			if (socket !== next) return;
 			socket = null;
@@ -93,11 +96,13 @@ export function openNudgeSocket(args: {
 		}, OPEN_TIMEOUT_MS);
 		next.onopen = () => {
 			clearTimeout(openTimeout);
-			if (socket !== next) return;
-			retryMs = MIN_RETRY_MS;
-			setRealtimeConnected(true);
-			if (missedNudges) args.onReopen();
-			missedNudges = false;
+			settleTimer = setTimeout(() => {
+				if (socket !== next) return;
+				retryMs = MIN_RETRY_MS;
+				setRealtimeConnected(true);
+				if (missedNudges) args.onReopen();
+				missedNudges = false;
+			}, OPEN_SETTLE_MS);
 		};
 		next.onmessage = (event) => {
 			if (socket !== next) return;
@@ -106,6 +111,7 @@ export function openNudgeSocket(args: {
 		};
 		next.onclose = (event) => {
 			clearTimeout(openTimeout);
+			if (settleTimer) clearTimeout(settleTimer);
 			if (socket !== next) return;
 			socket = null;
 			if (STALE_TOKEN_CODES.has(event.code)) refreshToken = true;

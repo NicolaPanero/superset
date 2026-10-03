@@ -7,6 +7,9 @@ import type { CloudWorkspaceRow } from "../useCloudWorkspaces";
 const lastSeenAtMs = (person: { lastSeenAt: Date | string }) =>
 	new Date(person.lastSeenAt).getTime();
 
+const isNewerStatus = (row: CloudWorkspaceRow, at: number) =>
+	row.agentStatusAt === null || at >= new Date(row.agentStatusAt).getTime();
+
 export function patchCloudWorkspaceRows(
 	rows: CloudWorkspaceRow[],
 	updates: readonly RealtimeUpdate[],
@@ -16,10 +19,11 @@ export function patchCloudWorkspaceRows(
 		if (!update) return row;
 		return {
 			...row,
-			...(update.agentStatusAt !== undefined && {
-				agentStatus: update.agentStatus ?? null,
-				agentStatusAt: new Date(update.agentStatusAt),
-			}),
+			...(update.agentStatusAt !== undefined &&
+				isNewerStatus(row, update.agentStatusAt) && {
+					agentStatus: update.agentStatus ?? null,
+					agentStatusAt: new Date(update.agentStatusAt),
+				}),
 			...(update.presence && {
 				presence: mergePresenceByUser(
 					row.presence,
