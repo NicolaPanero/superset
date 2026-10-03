@@ -17,6 +17,11 @@ const sentry: PluginMentionOption = {
 	displayName: "Sentry",
 	description: "Investigate errors and issues in production.",
 };
+const gdocs: PluginMentionOption = {
+	name: "gdocs",
+	displayName: "Google Docs",
+	description: "Read and edit documents.",
+};
 
 describe("matchPluginMentions", () => {
 	it("returns every option for an empty query", () => {
@@ -48,6 +53,11 @@ describe("matchPluginMentions", () => {
 		expect(matchPluginMentions([linear, notion, sentry], "errors")).toEqual([
 			sentry,
 		]);
+	});
+
+	it("matches a display name that differs from the manifest name", () => {
+		expect(matchPluginMentions([linear, gdocs], "google")).toEqual([gdocs]);
+		expect(matchPluginMentions([linear, gdocs], "docs")).toEqual([gdocs]);
 	});
 
 	it("drops options that match nowhere", () => {

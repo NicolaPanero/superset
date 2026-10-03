@@ -36,6 +36,7 @@ import {
 	PluginMentionNode,
 	type PluginMentionOption,
 	pluginMentionText,
+	restorePluginMentions,
 } from "renderer/components/PluginMention";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { resolveHotkeyFromEvent } from "renderer/hotkeys";
@@ -500,6 +501,8 @@ export function TiptapPromptEditor({
 									const mention = mentionStateRef.current;
 									const entries = mentionEntriesRef.current;
 									if (!mention) return false;
+									// Enter that confirms an IME candidate belongs to the IME.
+									if (event.isComposing || isComposingRef.current) return false;
 
 									if (event.key === "Escape") {
 										setMentionState(null);
@@ -535,7 +538,10 @@ export function TiptapPromptEditor({
 										);
 										return true;
 									}
-									if (event.key === "Enter" || event.key === "Tab") {
+									if (
+										(event.key === "Enter" && !event.shiftKey) ||
+										event.key === "Tab"
+									) {
 										const entry = entries[mention.selectedIndex];
 										if (entry) {
 											mention.tiptapCommand(entry);
@@ -632,11 +638,23 @@ export function TiptapPromptEditor({
 		},
 
 		onUpdate: ({ editor: e }) => {
-			const text = serializeEditorToText(e);
+			const text = serializeEditorToText(e, pluginMentionsRef.current);
 			lastEditorSyncedValue.current = text;
 			controllerRef.current.textInput.setInput(text);
 		},
 	});
+
+	// A draft restored before the catalog answered parsed `@name` as a file; the
+	// first catalog arrival swaps those for chips. Later refreshes leave typing alone.
+	const hadPluginMentions = useRef((pluginMentions?.length ?? 0) > 0);
+	useEffect(() => {
+		if (!editor || hadPluginMentions.current || !pluginMentions?.length) return;
+		hadPluginMentions.current = true;
+		restorePluginMentions(
+			editor,
+			(name) => pluginMentions.find((plugin) => plugin.name === name) ?? null,
+		);
+	}, [editor, pluginMentions]);
 
 	// Register focus callback so controller.textInput.focus() targets the editor
 	useEffect(() => {
@@ -670,7 +688,10 @@ export function TiptapPromptEditor({
 		const externalText = controller.textInput.value;
 		// Skip if the editor itself just produced this value
 		if (externalText === lastEditorSyncedValue.current) return;
-		const currentText = serializeEditorToText(editor);
+		const currentText = serializeEditorToText(
+			editor,
+			pluginMentionsRef.current,
+		);
 		if (externalText === currentText) return;
 		// Update editor without firing onUpdate (prevents loop)
 		editor.commands.setContent(

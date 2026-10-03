@@ -63,7 +63,8 @@ describe("PluginMentionNode", () => {
 	});
 
 	it("leaves unknown handles, mid-word @ and emails as text", () => {
-		const markdown = "Mail avi@linear.app about @slack and foo@notion";
+		const markdown =
+			"Mail avi@linear.app about @slack, @linearé and foo@notion";
 		const { mentions, saved } = load(markdown);
 		expect(mentions).toEqual([]);
 		expect(saved).toBe(markdown);
@@ -73,6 +74,50 @@ describe("PluginMentionNode", () => {
 		const { mentions, saved } = load("@linear triage the inbox");
 		expect(mentions).toEqual([{ name: "linear", label: "Linear" }]);
 		expect(saved).toBe("@linear triage the inbox");
+	});
+
+	it("writes a space between a chip and a word glued to it, in markdown and text", () => {
+		const editor = new Editor({
+			extensions: [
+				Document,
+				Paragraph,
+				Text,
+				PluginMentionNode.configure({
+					resolvePlugin: (name) =>
+						PLUGINS.find((plugin) => plugin.name === name) ?? null,
+				}),
+				Markdown.configure({ html: true }),
+			],
+			content: {
+				type: "doc",
+				content: [
+					{
+						type: "paragraph",
+						content: [
+							{
+								type: "plugin-mention",
+								attrs: { name: "linear", label: "Linear" },
+							},
+							{ type: "text", text: "file an issue, " },
+							{
+								type: "plugin-mention",
+								attrs: { name: "notion", label: "Notion" },
+							},
+							{ type: "text", text: ", please" },
+						],
+					},
+				],
+			},
+		});
+		const storage = editor.storage as unknown as Record<
+			string,
+			{ getMarkdown?: () => string }
+		>;
+		expect(storage.markdown?.getMarkdown?.()).toBe(
+			"@linear file an issue, @notion, please",
+		);
+		expect(editor.getText()).toBe("@linear file an issue, @notion, please");
+		editor.destroy();
 	});
 
 	it("separates a word typed right after a chip, but not punctuation", () => {

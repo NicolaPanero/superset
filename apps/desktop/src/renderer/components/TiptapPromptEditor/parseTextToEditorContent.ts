@@ -12,6 +12,8 @@ import {
  */
 const MENTION_RE = /(?:^|(?<=\s))@(?:"([^"]+)"|(\S+))/g;
 
+const TRAILING_PUNCTUATION = /[.,;:!?)]+$/;
+
 /**
  * Converts a plain-text string (as produced by serializeEditorToText) back
  * into a Tiptap JSONContent document, restoring file-mention atoms wherever
@@ -43,18 +45,22 @@ export function parseTextToEditorContent(
 			// group 1 = quoted path, group 2 = unquoted path or plugin handle
 			const quotedPath = match[1];
 			const token = quotedPath ?? match[2] ?? "";
-			const plugin =
-				quotedPath === undefined
-					? plugins.find((candidate) => candidate.name === token)
-					: undefined;
-			inlineNodes.push(
-				plugin
-					? {
-							type: PLUGIN_MENTION_NODE_NAME,
-							attrs: { name: plugin.name, label: plugin.displayName },
-						}
-					: { type: "file-mention", attrs: { path: token } },
-			);
+			const handle =
+				quotedPath === undefined ? token.replace(TRAILING_PUNCTUATION, "") : "";
+			const plugin = plugins.find((candidate) => candidate.name === handle);
+			if (plugin) {
+				inlineNodes.push({
+					type: PLUGIN_MENTION_NODE_NAME,
+					attrs: { name: plugin.name, label: plugin.displayName },
+				});
+				const punctuation = token.slice(handle.length);
+				if (punctuation) inlineNodes.push({ type: "text", text: punctuation });
+			} else {
+				inlineNodes.push({
+					type: "file-mention",
+					attrs: { path: token, fromText: quotedPath === undefined },
+				});
+			}
 			lastIndex = match.index + match[0].length;
 			match = MENTION_RE.exec(line);
 		}

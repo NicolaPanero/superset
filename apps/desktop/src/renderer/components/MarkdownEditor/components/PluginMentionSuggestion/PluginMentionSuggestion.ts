@@ -2,6 +2,7 @@ import { type Editor, Extension } from "@tiptap/core";
 import { PluginKey } from "@tiptap/pm/state";
 import { ReactRenderer } from "@tiptap/react";
 import Suggestion, {
+	exitSuggestion,
 	type SuggestionKeyDownProps,
 	type SuggestionProps,
 } from "@tiptap/suggestion";
@@ -107,7 +108,12 @@ export const PluginMentionSuggestion = Extension.create<
 					> | null = null;
 					let popup: TippyInstance[] | null = null;
 					let editor: Editor | null = null;
-					const hide = () => popup?.[0]?.hide();
+					// Ends the session, not just the popup: a hidden list must not
+					// keep swallowing Enter or come back on the next keystroke.
+					const dismiss = () => {
+						storage.open = false;
+						if (editor) exitSuggestion(editor.view, pluginMentionSuggestionKey);
+					};
 
 					return {
 						onStart: (props: SuggestionProps<PluginMentionOption>) => {
@@ -117,7 +123,7 @@ export const PluginMentionSuggestion = Extension.create<
 								editor: props.editor,
 							});
 							editor = props.editor;
-							editor.on("blur", hide);
+							editor.on("blur", dismiss);
 							if (!props.clientRect) return;
 							const clientRect = props.clientRect;
 							popup = tippy("body", {
@@ -126,7 +132,7 @@ export const PluginMentionSuggestion = Extension.create<
 									props.editor.view.dom.closest("[role=dialog]") ??
 									document.body,
 								content: component.element,
-								showOnCreate: true,
+								showOnCreate: props.items.length > 0,
 								interactive: true,
 								trigger: "manual",
 								placement: "top-start",
@@ -140,21 +146,21 @@ export const PluginMentionSuggestion = Extension.create<
 							popup?.[0]?.setProps({
 								getReferenceClientRect: () => getClientRect() ?? new DOMRect(),
 							});
-							popup?.[0]?.show();
+							if (props.items.length > 0) popup?.[0]?.show();
+							else popup?.[0]?.hide();
 						},
 						onKeyDown: (props: SuggestionKeyDownProps) => {
 							if (props.event.key === "Escape") {
 								props.event.preventDefault();
 								props.event.stopPropagation();
-								storage.open = false;
-								hide();
+								dismiss();
 								return true;
 							}
 							return component?.ref?.onKeyDown(props) ?? false;
 						},
 						onExit: () => {
 							storage.open = false;
-							editor?.off("blur", hide);
+							editor?.off("blur", dismiss);
 							popup?.[0]?.destroy();
 							component?.destroy();
 						},

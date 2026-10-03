@@ -1,4 +1,3 @@
-import { Trans } from "@lingui/react/macro";
 import { cn } from "@superset/ui/utils";
 import type {
 	SuggestionKeyDownProps,
@@ -38,7 +37,7 @@ export const PluginMentionList = forwardRef<
 
 	useImperativeHandle(ref, () => ({
 		onKeyDown: ({ event }: SuggestionKeyDownProps) => {
-			if (items.length === 0) return false;
+			if (items.length === 0 || event.isComposing) return false;
 			if (event.key === "ArrowUp") {
 				setSelectedIndex((prev) => (prev - 1 + items.length) % items.length);
 				return true;
@@ -47,7 +46,7 @@ export const PluginMentionList = forwardRef<
 				setSelectedIndex((prev) => (prev + 1) % items.length);
 				return true;
 			}
-			if (event.key === "Enter" || event.key === "Tab") {
+			if ((event.key === "Enter" && !event.shiftKey) || event.key === "Tab") {
 				const item = items[selectedIndex];
 				if (item) command(item);
 				return true;
@@ -56,27 +55,24 @@ export const PluginMentionList = forwardRef<
 		},
 	}));
 
-	if (items.length === 0) {
-		return (
-			<div className="rounded-lg border bg-popover p-1 text-popover-foreground shadow-md">
-				<div className="px-2 py-1.5 text-xs text-muted-foreground">
-					<Trans>No matching plugins</Trans>
-				</div>
-			</div>
-		);
-	}
-
+	// The suggestion hides the popup when nothing matches; an empty list is
+	// never shown.
 	return (
 		<div
 			ref={containerRef}
+			role="listbox"
 			className="max-h-80 w-[28rem] max-w-[calc(100vw-2rem)] overflow-y-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-md"
 		>
 			{items.map((item, index) => (
 				<button
 					type="button"
+					role="option"
+					aria-selected={index === selectedIndex}
 					key={item.name}
 					data-index={index}
 					onMouseEnter={() => setSelectedIndex(index)}
+					// Focus stays in the editor; a blur would end the session before click.
+					onMouseDown={(event) => event.preventDefault()}
 					onClick={() => command(item)}
 					className={cn(
 						"flex w-full cursor-default items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm outline-hidden select-none",

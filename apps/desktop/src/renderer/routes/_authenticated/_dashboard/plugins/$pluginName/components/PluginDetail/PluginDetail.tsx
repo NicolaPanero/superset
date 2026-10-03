@@ -151,7 +151,7 @@ export function PluginDetail({ plugin }: { plugin: CatalogPlugin }) {
 							</Button>
 						)}
 						{plugin.installed && (
-							<Button size="sm" onClick={tryNow}>
+							<Button size="sm" disabled={!plugin.enabled} onClick={tryNow}>
 								<LuSparkles className="size-4" />
 								<Trans>Try now</Trans>
 							</Button>

@@ -43,6 +43,7 @@ import { BubbleMenuToolbar } from "renderer/components/MarkdownRenderer/componen
 import {
 	PluginMentionNode,
 	type PluginMentionOption,
+	restorePluginMentions,
 } from "renderer/components/PluginMention";
 import { useUrlLinkAction } from "renderer/lib/clickPolicy";
 import {
@@ -525,6 +526,18 @@ export function MarkdownEditor({
 	useEffect(() => {
 		if (editor && editor.isEditable !== editable) editor.setEditable(editable);
 	}, [editable, editor]);
+
+	// Content read before the catalog answered kept `@name` as text; the first
+	// catalog arrival turns those into chips. Later refreshes leave typing alone.
+	const hadPluginMentions = useRef((pluginMentions?.length ?? 0) > 0);
+	useEffect(() => {
+		if (!editor || hadPluginMentions.current || !pluginMentions?.length) return;
+		hadPluginMentions.current = true;
+		restorePluginMentions(
+			editor,
+			(name) => pluginMentions.find((plugin) => plugin.name === name) ?? null,
+		);
+	}, [editor, pluginMentions]);
 
 	useEffect(() => {
 		if (!editor || editor.isFocused) return;

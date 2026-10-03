@@ -12,14 +12,24 @@ describe("parseTextToEditorContent", () => {
 			{ type: "text", text: "Ask " },
 			{ type: "plugin-mention", attrs: { name: "linear", label: "Linear" } },
 			{ type: "text", text: " about " },
-			{ type: "file-mention", attrs: { path: "src/app.ts" } },
+			{ type: "file-mention", attrs: { path: "src/app.ts", fromText: true } },
+		]);
+	});
+
+	it("keeps sentence punctuation after a plugin handle as text", () => {
+		const doc = parseTextToEditorContent("Ask @linear, then stop.", [linear]);
+		expect(doc.content?.[0]?.content).toEqual([
+			{ type: "text", text: "Ask " },
+			{ type: "plugin-mention", attrs: { name: "linear", label: "Linear" } },
+			{ type: "text", text: "," },
+			{ type: "text", text: " then stop." },
 		]);
 	});
 
 	it("reads every handle as a file without a plugin list", () => {
 		const doc = parseTextToEditorContent("@linear");
 		expect(doc.content?.[0]?.content).toEqual([
-			{ type: "file-mention", attrs: { path: "linear" } },
+			{ type: "file-mention", attrs: { path: "linear", fromText: true } },
 		]);
 	});
 
@@ -27,7 +37,7 @@ describe("parseTextToEditorContent", () => {
 		const doc = parseTextToEditorContent('see @"linear"', [linear]);
 		expect(doc.content?.[0]?.content).toEqual([
 			{ type: "text", text: "see " },
-			{ type: "file-mention", attrs: { path: "linear" } },
+			{ type: "file-mention", attrs: { path: "linear", fromText: false } },
 		]);
 	});
 

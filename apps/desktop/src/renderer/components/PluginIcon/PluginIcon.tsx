@@ -1,4 +1,5 @@
 import { cn } from "@superset/ui/utils";
+import { renderToStaticMarkup } from "react-dom/server";
 import type { IconType } from "react-icons";
 import { FaGithub } from "react-icons/fa";
 import { LuBookOpen, LuDrama, LuPuzzle } from "react-icons/lu";
@@ -73,13 +74,24 @@ const PLUGIN_ICONS: Record<
 	vercel: { icon: SiVercel, scale: "size-1/2" },
 };
 
-/** Square artwork as a URL, for chips that cannot render a component. */
+/**
+ * The same artwork PluginIcon shows, as a URL for chips that cannot render a
+ * component. Glyph brands are rendered to an inline SVG in the theme's
+ * foreground so the chip matches the menu entry.
+ */
 export function getPluginIconUrl(
 	pluginName: string,
 	isDark: boolean,
 ): string | undefined {
 	if (pluginName === "superset") return getPresetIcon("superset", isDark);
-	return FULL_BLEED_ICONS[pluginName] ?? IMAGE_ICONS[pluginName];
+	const artwork = FULL_BLEED_ICONS[pluginName] ?? IMAGE_ICONS[pluginName];
+	if (artwork !== undefined) return artwork;
+	const entry = PLUGIN_ICONS[pluginName];
+	const Icon = entry?.icon ?? LuPuzzle;
+	const svg = renderToStaticMarkup(
+		<Icon color={entry?.color ?? (isDark ? "#fafafa" : "#18181b")} />,
+	);
+	return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
 interface PluginIconProps {

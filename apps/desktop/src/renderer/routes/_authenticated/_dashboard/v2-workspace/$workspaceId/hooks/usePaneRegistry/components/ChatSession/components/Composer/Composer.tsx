@@ -78,7 +78,7 @@ export function Composer({
 					icon: (
 						<PluginIcon pluginName={plugin.name} className="size-4 rounded" />
 					),
-					keywords: [plugin.name],
+					keywords: [plugin.name, plugin.description],
 					select: (ctx) =>
 						ctx.insertChip({
 							label: plugin.displayName,

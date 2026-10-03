@@ -20,9 +20,21 @@ export function pluginMentionText(name: string): string {
 	return `@${name}`;
 }
 
-const MENTION_TOKEN = /^@([a-z0-9][a-z0-9.-]*)(?![A-Za-z0-9_])/;
+const MENTION_TOKEN = /^@([a-z0-9][a-z0-9.-]*)(?![\p{L}\p{M}\p{N}_])/u;
 
 const WORD_START = /^[\p{L}\p{N}_]/u;
+
+/**
+ * Text that must not touch a handle: `@linearfile` is a different handle, so
+ * every serializer puts a space between a chip and a following word.
+ */
+export function needsSeparatorAfterMention(
+	parent: ProseMirrorNode | null | undefined,
+	index: number,
+): boolean {
+	const next = parent?.maybeChild(index + 1);
+	return next?.isText === true && WORD_START.test(next.text ?? "");
+}
 
 const spacingKey = new PluginKey("pluginMentionSpacing");
 
@@ -141,8 +153,9 @@ export const PluginMentionNode = Node.create<PluginMentionNodeOptions>({
 		];
 	},
 
-	renderText({ node }) {
-		return pluginMentionText(String(node.attrs.name ?? ""));
+	renderText({ node, parent, index }) {
+		const text = pluginMentionText(String(node.attrs.name ?? ""));
+		return needsSeparatorAfterMention(parent, index) ? `${text} ` : text;
 	},
 
 	addStorage() {
@@ -151,8 +164,13 @@ export const PluginMentionNode = Node.create<PluginMentionNodeOptions>({
 				serialize(
 					state: { write: (text: string) => void },
 					node: ProseMirrorNode,
+					parent: ProseMirrorNode,
+					index: number,
 				) {
-					state.write(pluginMentionText(String(node.attrs.name ?? "")));
+					const text = pluginMentionText(String(node.attrs.name ?? ""));
+					state.write(
+						needsSeparatorAfterMention(parent, index) ? `${text} ` : text,
+					);
 				},
 				parse: {
 					setup(
