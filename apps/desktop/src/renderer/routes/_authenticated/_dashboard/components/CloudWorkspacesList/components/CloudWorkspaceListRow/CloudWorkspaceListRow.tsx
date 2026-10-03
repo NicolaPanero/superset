@@ -9,7 +9,6 @@ import type { CloudWorkspaceRow } from "renderer/hooks/useCloudWorkspaces";
 import { ACTIVE_WITHIN_MS } from "renderer/routes/_authenticated/_dashboard/components/CloudWorkspacePresenceStack";
 import { CloudWorkspaceStatus } from "renderer/routes/_authenticated/_dashboard/components/CloudWorkspaceStatus";
 import type { CloudPullRequest } from "renderer/routes/_authenticated/_dashboard/hooks/useCloudPullRequests";
-import { CloudWorkspaceDiffStats } from "./components/CloudWorkspaceDiffStats";
 import { CloudWorkspacePullRequestsBadge } from "./components/CloudWorkspacePullRequestsBadge";
 import { CloudWorkspaceReposBadge } from "./components/CloudWorkspaceReposBadge";
 
@@ -102,9 +101,6 @@ export function CloudWorkspaceListRow({
 						/>
 					</span>
 				</span>
-			</td>
-			<td className="w-0 pr-3">
-				<CloudWorkspaceDiffStats workspaceId={workspace.id} />
 			</td>
 			<td className="w-0 pr-3">
 				<span className="flex min-w-[50px] justify-end">

@@ -17,13 +17,6 @@ export interface RealtimeCloudWorkspacePresence {
 	lastSeenAt: number;
 }
 
-/** Lines changed in the workspace's checkout, as the box last counted them; `at` is epoch ms. */
-export interface RealtimeDiffStats {
-	additions: number;
-	deletions: number;
-	at: number;
-}
-
 /** A patch to one listed row: each field present replaces the row's. */
 export interface RealtimeCloudWorkspaceUpdate {
 	kind: "cloud_workspaces";
@@ -31,7 +24,6 @@ export interface RealtimeCloudWorkspaceUpdate {
 	agentStatus?: ActiveAgentStatus | null;
 	agentStatusAt?: number;
 	presence?: RealtimeCloudWorkspacePresence[];
-	diffStats?: RealtimeDiffStats;
 }
 
 export type RealtimeUpdate = RealtimeCloudWorkspaceUpdate;
@@ -82,22 +74,6 @@ function isRealtimePresence(
 	);
 }
 
-function isCount(value: unknown): value is number {
-	return typeof value === "number" && Number.isInteger(value) && value >= 0;
-}
-
-export function isRealtimeDiffStats(
-	value: unknown,
-): value is RealtimeDiffStats {
-	if (typeof value !== "object" || value === null) return false;
-	const stats = value as Record<string, unknown>;
-	return (
-		isCount(stats.additions) &&
-		isCount(stats.deletions) &&
-		typeof stats.at === "number"
-	);
-}
-
 export function isRealtimeUpdate(value: unknown): value is RealtimeUpdate {
 	if (typeof value !== "object" || value === null) return false;
 	const update = value as Record<string, unknown>;
@@ -118,15 +94,10 @@ export function isRealtimeUpdate(value: unknown): value is RealtimeUpdate {
 		update.presence === undefined ||
 		(Array.isArray(update.presence) &&
 			update.presence.every(isRealtimePresence));
-	const diffStatsValid =
-		update.diffStats === undefined || isRealtimeDiffStats(update.diffStats);
 	return (
 		agentStatusValid &&
 		presenceValid &&
-		diffStatsValid &&
-		(update.agentStatus !== undefined ||
-			update.presence !== undefined ||
-			update.diffStats !== undefined)
+		(update.agentStatus !== undefined || update.presence !== undefined)
 	);
 }
 

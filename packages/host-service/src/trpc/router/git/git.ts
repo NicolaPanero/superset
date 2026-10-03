@@ -211,16 +211,6 @@ function sumSnapshotDiffStats(snapshot: {
 	return { additions, deletions, fileCount: byPath.size };
 }
 
-/** The totals `getDiffStatsByWorkspaces` reports for one workspace. */
-export async function workspaceDiffStats(
-	ctx: Parameters<typeof runStatusSnapshot>[0],
-	workspaceId: string,
-): Promise<{ additions: number; deletions: number; fileCount: number }> {
-	return sumSnapshotDiffStats(
-		await runStatusSnapshot(ctx, { workspaceId, priority: "background" }),
-	);
-}
-
 const getDiffInputShape = z.object({
 	workspaceId: z.string(),
 	path: z.string(),
@@ -349,9 +339,13 @@ export const gitRouter = router({
 						workspaceId = queue.shift()
 					) {
 						try {
+							const snapshot = await runStatusSnapshot(ctx, {
+								workspaceId,
+								priority: "background",
+							});
 							workspaces.push({
 								workspaceId,
-								...(await workspaceDiffStats(ctx, workspaceId)),
+								...sumSnapshotDiffStats(snapshot),
 							});
 						} catch {
 							// Missing worktree, wedged repo, etc. — omit the row rather

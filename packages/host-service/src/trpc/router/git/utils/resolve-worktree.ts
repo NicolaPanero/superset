@@ -2,10 +2,10 @@ import { existsSync } from "node:fs";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { workspaces } from "../../../../db/schema";
-import type { HostServiceContext } from "../../../../types";
+import type { protectedProcedure } from "../../../index";
 
 export function resolveWorktreePath(
-	ctx: Pick<HostServiceContext, "db">,
+	ctx: Parameters<Parameters<typeof protectedProcedure.query>[0]>[0]["ctx"],
 	workspaceId: string,
 ): string {
 	const workspace = ctx.db.query.workspaces

@@ -1,11 +1,10 @@
 import {
 	mergePresenceByUser,
-	type RealtimeDiffStats,
 	type RealtimeNudgeKind,
 	type RealtimeNudgeMessage,
 	type RealtimeUpdate,
 } from "@superset/shared/realtime";
-import { type Connection, Server } from "partyserver";
+import { Server } from "partyserver";
 import type { RealtimeEnv } from "./types";
 
 // A burst of writes is one message: kinds accumulate for this long, then one
@@ -13,16 +12,12 @@ import type { RealtimeEnv } from "./types";
 const COALESCE_MS = 500;
 const PENDING_KEY = "pendingKinds";
 const PENDING_UPDATES_KEY = "pendingUpdates";
-const DIFF_STATS_KEY = "diffStats";
-// Only a running box reports, so a workspace silent this long is archived or gone.
-const DIFF_STATS_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 /**
  * One object per organization. Holds every subscribed window's socket
  * (hibernating, so idle subscribers cost nothing) and fans out invalidation
- * nudges the API sends after its writes. It stores what is waiting on the
- * next broadcast, and each workspace's latest diff stats, which live nowhere
- * else: a box reports them here and a new socket gets them on connect.
+ * nudges the API sends after its writes. It stores nothing but what is
+ * waiting on the next broadcast; the data itself stays in Postgres.
  */
 export class OrgHub extends Server<RealtimeEnv> {
 	static options = { hibernate: true };
@@ -30,9 +25,6 @@ export class OrgHub extends Server<RealtimeEnv> {
 	// ── RPC (called by the Worker) ────────────────────────────────────
 
 	async nudge(kind: RealtimeNudgeKind, update?: RealtimeUpdate): Promise<void> {
-		if (update?.diffStats) {
-			await this.recordDiffStats(update.workspaceId, update.diffStats);
-		}
 		if (update) {
 			const updates =
 				(await this.ctx.storage.get<Record<string, RealtimeUpdate>>(
@@ -62,40 +54,6 @@ export class OrgHub extends Server<RealtimeEnv> {
 		if ((await this.ctx.storage.getAlarm()) === null) {
 			await this.ctx.storage.setAlarm(Date.now() + COALESCE_MS);
 		}
-	}
-
-	private async recordDiffStats(
-		workspaceId: string,
-		stats: RealtimeDiffStats,
-	): Promise<void> {
-		const all =
-			(await this.ctx.storage.get<Record<string, RealtimeDiffStats>>(
-				DIFF_STATS_KEY,
-			)) ?? {};
-		if ((all[workspaceId]?.at ?? 0) > stats.at) return;
-		all[workspaceId] = stats;
-		const oldest = Date.now() - DIFF_STATS_MAX_AGE_MS;
-		for (const [id, entry] of Object.entries(all)) {
-			if (entry.at < oldest) delete all[id];
-		}
-		await this.ctx.storage.put(DIFF_STATS_KEY, all);
-	}
-
-	async onConnect(connection: Connection): Promise<void> {
-		const all =
-			(await this.ctx.storage.get<Record<string, RealtimeDiffStats>>(
-				DIFF_STATS_KEY,
-			)) ?? {};
-		const updates: RealtimeUpdate[] = Object.entries(all).map(
-			([workspaceId, diffStats]) => ({
-				kind: "cloud_workspaces",
-				workspaceId,
-				diffStats,
-			}),
-		);
-		if (updates.length === 0) return;
-		const message: RealtimeNudgeMessage = { type: "nudge", kinds: [], updates };
-		connection.send(JSON.stringify(message));
 	}
 
 	async subscriberCount(): Promise<number> {

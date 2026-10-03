@@ -77,20 +77,6 @@ A closed box's dot is therefore at most a few seconds behind; the open box's
 own subscribers stay live as before. Reaches a box only through a
 host-service release.
 
-**A closed box's diff stats don't come from the box either.** A host's line
-counts come from asking its host-service, which a list of cloud workspaces must
-not do: it would wake every box. The box reports its own totals instead (the
-same union the Changes tab shows, primary checkout only) to
-`POST /api/cloud-workspaces/:id/diff-stats` with its host secret, only when
-they change and at most once per ten seconds (`sandbox-diff-stats` in
-host-service, which holds its own git watch since no client does). They never
-reach Postgres: the API forwards them as a realtime patch, and the
-organization's hub in `apps/realtime` keeps the latest per workspace and sends
-them to every socket as it connects. A stopped box can't change its tree, so
-the last value stays right. Reaches a box only through a host-service release.
-**Open:** other repositories in a multi-repo workspace are not counted, and a
-client without the realtime socket (an old mobile build) shows nothing.
-
 **Nobody on the box knows who is in it.** A host is one person's machine, so
 a workspace row implies its owner and the sidebar never had to say. A cloud
 workspace is opened by any member of the organization, and host-service inside

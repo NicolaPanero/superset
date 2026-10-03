@@ -1,2 +1,2 @@
-export { gitRouter, workspaceDiffStats } from "./git";
+export { gitRouter } from "./git";
 export type * from "./types";

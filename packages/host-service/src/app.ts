@@ -47,7 +47,6 @@ import {
 	TerminalAgentStore,
 } from "./terminal-agents";
 import { appRouter } from "./trpc/router";
-import { workspaceDiffStats } from "./trpc/router/git";
 import { gitStatusStore } from "./trpc/router/git/utils/git-status-store";
 import {
 	resumeCrashedAgentSessions,
@@ -114,12 +113,6 @@ export interface CreateAppResult {
 	 */
 	launchSandboxAgent: () => Promise<void>;
 	resumeCrashedAgents: () => Promise<void>;
-	/** Line totals as the sidebar shows them, for the sandbox's own reporter. */
-	readDiffStats: (
-		workspaceId: string,
-	) => Promise<{ additions: number; deletions: number }>;
-	/** Watches the workspace until the returned function is called. */
-	watchGitChanges: (workspaceId: string, listener: () => void) => () => void;
 	terminalAgentStore: TerminalAgentStore;
 	dispose: () => Promise<void>;
 }
@@ -523,43 +516,44 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		}
 	};
 
-	/** The context a request gets, for work the box starts on its own. */
-	const serviceContext = {
-		git,
-		credentials: providers.credentials,
-		github,
-		execGh,
-		api,
-		db,
-		runtime,
-		eventBus,
-		terminalAgentStore,
-		organizationId: config.organizationId,
-		isAuthenticated: true,
-		browserBridge: config.browserBridge,
-	} as HostServiceContext;
-
 	const launchSandboxAgent = async () => {
 		if (!sandboxIdentity?.launch) return;
-		await launchSandboxAgentOnce(serviceContext, sandboxIdentity);
+		await launchSandboxAgentOnce(
+			{
+				git,
+				credentials: providers.credentials,
+				github,
+				execGh,
+				api,
+				db,
+				runtime,
+				eventBus,
+				terminalAgentStore,
+				organizationId: config.organizationId,
+				isAuthenticated: true,
+				browserBridge: config.browserBridge,
+			} as HostServiceContext,
+			sandboxIdentity,
+		);
 	};
 
+	/** Same context the launcher above builds: a resume runs an agent. */
 	const resumeCrashedAgents = async () => {
-		await resumeCrashedAgentSessions(resumeSessionDepsFor(serviceContext));
-	};
-
-	const readDiffStats = (workspaceId: string) =>
-		workspaceDiffStats(serviceContext, workspaceId);
-
-	const watchGitChanges = (workspaceId: string, listener: () => void) => {
-		gitWatcher.watchWorkspace(workspaceId);
-		const off = gitWatcher.onChanged((event) => {
-			if (event.workspaceId === workspaceId) listener();
-		});
-		return () => {
-			off();
-			gitWatcher.unwatchWorkspace(workspaceId);
-		};
+		const ctx = {
+			git,
+			credentials: providers.credentials,
+			github,
+			execGh,
+			api,
+			db,
+			runtime,
+			eventBus,
+			terminalAgentStore,
+			organizationId: config.organizationId,
+			isAuthenticated: true,
+			browserBridge: config.browserBridge,
+		} as HostServiceContext;
+		await resumeCrashedAgentSessions(resumeSessionDepsFor(ctx));
 	};
 
 	return {
@@ -570,8 +564,6 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		eventBus,
 		launchSandboxAgent,
 		resumeCrashedAgents,
-		readDiffStats,
-		watchGitChanges,
 		terminalAgentStore,
 		dispose,
 	};

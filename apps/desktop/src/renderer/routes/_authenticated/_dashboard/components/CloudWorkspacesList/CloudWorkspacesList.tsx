@@ -96,7 +96,7 @@ export function CloudWorkspacesList({
 							}
 							label={label}
 							count={items.length}
-							colSpan={5}
+							colSpan={4}
 							isCollapsed={isCollapsed}
 							onToggle={() =>
 								setCollapsed((current) => {
