@@ -5,17 +5,11 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize]
-  workflow_call:
-    inputs:
-      runner:
-        description: "runs-on label for every Linux job; the CLI builds are skipped when set"
-        type: string
-        default: ""
 
 jobs:
   sherif:
     name: Sherif
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -40,7 +34,7 @@ jobs:
 
   vale:
     name: Vale prose lint
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -64,7 +58,7 @@ jobs:
 
   version-sync:
     name: Version Sync
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -95,7 +89,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -136,7 +130,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -185,7 +179,7 @@ jobs:
 
   page-storage:
     name: Page storage integration
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -202,11 +196,6 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Setup Node.js (wrangler needs 22)
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
-        with:
-          node-version: 22
-
       - name: Install dependencies
         run: bun install --frozen --ignore-scripts
 
@@ -222,7 +211,7 @@ jobs:
 
   typecheck:
     name: Typecheck
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -247,7 +236,6 @@ jobs:
 
   cli-changes:
     name: Detect CLI Changes
-    if: ${{ !inputs.runner }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
