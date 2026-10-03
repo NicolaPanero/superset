@@ -41,11 +41,14 @@ const relayBackupHttpOrigin = process.env.RELAY_BACKUP_URL
 const relayBackupWsOrigin = relayBackupHttpOrigin
 	? relayBackupHttpOrigin.replace(/^http/, "ws")
 	: null;
-const realtimeWsOrigin = process.env.REALTIME_URL
-	? new URL(process.env.REALTIME_URL).origin.replace(/^http/, "ws")
+const realtimeHttpOrigin = process.env.REALTIME_URL
+	? new URL(process.env.REALTIME_URL).origin
 	: isProduction
-		? "wss://realtime.superset.sh"
+		? "https://realtime.superset.sh"
 		: null;
+const realtimeWsOrigin = realtimeHttpOrigin
+	? realtimeHttpOrigin.replace(/^http/, "ws")
+	: null;
 // Published pages are framed from their own origin, one subdomain per page.
 // An unset GitHub Actions var arrives as an empty string, which `??`
 // does not catch — and `new URL("")` throws before Next even loads.
@@ -67,6 +70,7 @@ const contentSecurityPolicy = [
 		relayHttpOrigin,
 		relayBackupWsOrigin,
 		relayBackupHttpOrigin,
+		realtimeHttpOrigin,
 		realtimeWsOrigin,
 		"https://*.ingest.sentry.io",
 		"https://*.sentry.io",
