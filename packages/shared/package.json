@@ -293,6 +293,10 @@
 			"types": "./src/host-info.ts",
 			"default": "./src/host-info.ts"
 		},
+		"./auth-token-crypto": {
+			"types": "./src/auth-token-crypto.ts",
+			"default": "./src/auth-token-crypto.ts"
+		},
 		"./rotating-log": {
 			"types": "./src/rotating-log.ts",
 			"default": "./src/rotating-log.ts"

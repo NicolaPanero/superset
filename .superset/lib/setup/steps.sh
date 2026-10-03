@@ -658,3 +658,18 @@ step_validate_env() {
   success ".env satisfies packages/trpc/src/env.ts and apps/api/src/env.ts"
   return 0
 }
+
+# A no-op anywhere this machine has never signed into desktop — see
+# packages/auth/src/seed-local-mobile-token.ts. Never worth failing setup over.
+step_seed_local_mobile_token() {
+  echo "📱 Seeding mobile dev sign-in token..."
+
+  if ! NODE_ENV=development bun --env-file=.env run packages/auth/src/seed-local-mobile-token.ts; then
+    warn "Could not seed a mobile dev sign-in token (non-fatal)"
+    step_skipped "Seed mobile dev token"
+    return 0
+  fi
+
+  success "Mobile dev sign-in token step complete"
+  return 0
+}

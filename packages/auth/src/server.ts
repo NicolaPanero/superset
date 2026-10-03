@@ -32,7 +32,12 @@ import {
 	createAuthMiddleware,
 	getSessionFromCtx,
 } from "better-auth/api";
-import { bearer, customSession, organization } from "better-auth/plugins";
+import {
+	bearer,
+	customSession,
+	oneTimeToken,
+	organization,
+} from "better-auth/plugins";
 import { jwt } from "better-auth/plugins/jwt";
 import {
 	and,
@@ -241,6 +246,14 @@ export const auth = betterAuth({
 	user: userOptions,
 	hooks: {
 		before: createAuthMiddleware(async (ctx) => {
+			// See the oneTimeToken() comment above: the plugin is always registered,
+			// so this is what actually keeps it dev-only.
+			if (
+				ctx.path.startsWith("/one-time-token") &&
+				process.env.NODE_ENV !== "development"
+			) {
+				throw new APIError("NOT_FOUND");
+			}
 			if (
 				PENDING_DELETION_ALLOWED_PATH_PREFIXES.some((prefix) =>
 					ctx.path.startsWith(prefix),
@@ -1081,6 +1094,14 @@ export const auth = betterAuth({
 			},
 		}),
 		bearer(),
+		// Lets a cloud sandbox's mobile build redeem a token minted directly in
+		// its own branch (seed-cloud-mobile-token.ts) for a real session, instead
+		// of a human signing in. Registered unconditionally — a ternary on this
+		// array defeats better-auth's tuple-based plugin type inference for the
+		// whole Session type (broke packages/trpc/src/router/automation/automation.ts
+		// when tried) — and blocked outside development in the `before` hook below
+		// instead, so /one-time-token/* 404s anywhere but dev.
+		oneTimeToken({ expiresIn: 60 * 24 * 30 }),
 		customSession(
 			async ({ user, session: baseSession }) => {
 				const session = baseSession as typeof sessions.$inferSelect;
