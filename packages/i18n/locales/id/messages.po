@@ -4576,6 +4576,9 @@ msgstr "Tidak bisa membuka tautan"
 msgid "Could not open Photos"
 msgstr "Tidak bisa membuka Photos"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Tidak dapat menjangkau simulator seluler."
+
 msgid "Could not reach the desktop."
 msgstr "Tidak dapat menjangkau desktop."
 
@@ -9079,6 +9082,9 @@ msgstr "Keandalan jangka panjang melewati ambang batas. Pekerjaan yang diberikan
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Tooltip khusus pintasan saat hover lama; gaya chip-nya kini menjadi bawaan TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Mencari simulator seluler…"
+
 msgid "Looking for installed browsers…"
 msgstr "Mencari browser yang terpasang…"
 
@@ -10164,6 +10170,9 @@ msgstr "Tidak ada pull request yang di-merge."
 
 msgid "No messages yet"
 msgstr "Belum ada pesan"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "Tidak ada simulator seluler yang tersedia di sini. Diperlukan sandbox cloud yang mendukung Limrun atau toolchain iOS/Android lokal."
 
 msgid "No name on file"
 msgstr "Tidak ada nama tersimpan"
@@ -14759,6 +14768,9 @@ msgstr "Bagi ke Kanan"
 msgid "Split the current pane along its longer side"
 msgstr "Bagi panel saat ini di sisi yang lebih panjang"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Bagi panel saat ini dan buka simulator seluler"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Bagi panel saat ini dan buka panel browser baru"
 
@@ -14779,6 +14791,9 @@ msgstr "Tampilan terpisah"
 
 msgid "Split with Desktop"
 msgstr "Bagi dengan Desktop"
+
+msgid "Split with Mobile Simulator"
+msgstr "Bagi dengan Simulator Seluler"
 
 msgid "Split with New Browser"
 msgstr "Bagi dengan Browser Baru"
@@ -14952,6 +14967,9 @@ msgstr "Memulai workspace cloud"
 
 msgid "Starting the agent…"
 msgstr "Memulai agen…"
+
+msgid "Starting the simulator…"
+msgstr "Memulai simulator…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Sedang memulai. Ini hanya perlu sebentar."
@@ -15985,6 +16003,9 @@ msgstr "Servernya tidak ditemukan"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Tautan masuk tidak lengkap. Silakan coba lagi."
+
+msgid "The simulator instance was terminated."
+msgstr "Instans simulator telah dihentikan."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "Certificate authority situs ini tidak tepercaya"

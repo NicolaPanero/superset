@@ -4576,6 +4576,9 @@ msgstr "No se pudo abrir el enlace"
 msgid "Could not open Photos"
 msgstr "No se pudo abrir Fotos"
 
+msgid "Could not reach a mobile simulator."
+msgstr "No se pudo acceder a un simulador móvil."
+
 msgid "Could not reach the desktop."
 msgstr "No se pudo acceder al escritorio."
 
@@ -9079,6 +9082,9 @@ msgstr "La fiabilidad a largo plazo cruza un umbral. El trabajo asignado a las 1
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Tooltip de solo atajo que aparece tras un hover largo; su estilo de chip es ahora el predeterminado de TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Buscando un simulador móvil…"
+
 msgid "Looking for installed browsers…"
 msgstr "Buscando navegadores instalados…"
 
@@ -10164,6 +10170,9 @@ msgstr "No hay pull requests fusionadas."
 
 msgid "No messages yet"
 msgstr "Aún no hay mensajes"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "No hay ningún simulador móvil disponible aquí. Se necesita un entorno aislado en la nube compatible con Limrun o una cadena de herramientas local de iOS/Android."
 
 msgid "No name on file"
 msgstr "No hay ningún nombre registrado"
@@ -14759,6 +14768,9 @@ msgstr "Dividir hacia la derecha"
 msgid "Split the current pane along its longer side"
 msgstr "Dividir el panel actual por su lado más largo"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Dividir el panel actual y abrir un simulador móvil"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Dividir el panel actual y abrir un panel de navegador nuevo"
 
@@ -14779,6 +14791,9 @@ msgstr "Vista dividida"
 
 msgid "Split with Desktop"
 msgstr "Dividir con escritorio"
+
+msgid "Split with Mobile Simulator"
+msgstr "Dividir con simulador móvil"
 
 msgid "Split with New Browser"
 msgstr "Dividir con un navegador nuevo"
@@ -14952,6 +14967,9 @@ msgstr "Iniciando el espacio de trabajo en la nube"
 
 msgid "Starting the agent…"
 msgstr "Iniciando el agente…"
+
+msgid "Starting the simulator…"
+msgstr "Iniciando el simulador…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Iniciando. Solo debería tardar un momento."
@@ -15985,6 +16003,9 @@ msgstr "No se encontró el servidor"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "El enlace de inicio de sesión estaba incompleto. Inténtalo de nuevo."
+
+msgid "The simulator instance was terminated."
+msgstr "La instancia del simulador finalizó."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "La autoridad de certificación del sitio no es de confianza"

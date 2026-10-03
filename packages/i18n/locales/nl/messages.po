@@ -4576,6 +4576,9 @@ msgstr "Kan link niet openen"
 msgid "Could not open Photos"
 msgstr "Kan Foto's niet openen"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Kan geen mobiele simulator bereiken."
+
 msgid "Could not reach the desktop."
 msgstr "Kan het bureaublad niet bereiken."
 
@@ -9079,6 +9082,9 @@ msgstr "Betrouwbaarheid over lange horizon overschrijdt een drempel. Werk dat om
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Tooltip met alleen de sneltoets bij lang hoveren; de chipstijl is nu de standaard voor TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Zoeken naar een mobiele simulator…"
+
 msgid "Looking for installed browsers…"
 msgstr "Zoeken naar geïnstalleerde browsers…"
 
@@ -10164,6 +10170,9 @@ msgstr "Geen gemergede pull requests."
 
 msgid "No messages yet"
 msgstr "Nog geen berichten"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een Limrun-compatibele cloudsandbox of een lokale iOS/Android-toolchain nodig."
 
 msgid "No name on file"
 msgstr "Geen naam bekend"
@@ -14759,6 +14768,9 @@ msgstr "Naar rechts splitsen"
 msgid "Split the current pane along its longer side"
 msgstr "Het huidige paneel langs de langste zijde splitsen"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Het huidige paneel splitsen en een mobiele simulator openen"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Het huidige paneel splitsen en een nieuw browserpaneel openen"
 
@@ -14779,6 +14791,9 @@ msgstr "Gesplitste weergave"
 
 msgid "Split with Desktop"
 msgstr "Splitsen met bureaublad"
+
+msgid "Split with Mobile Simulator"
+msgstr "Splitsen met mobiele simulator"
 
 msgid "Split with New Browser"
 msgstr "Splitsen met nieuwe browser"
@@ -14952,6 +14967,9 @@ msgstr "Cloudwerkruimte starten"
 
 msgid "Starting the agent…"
 msgstr "Agent starten…"
+
+msgid "Starting the simulator…"
+msgstr "Simulator wordt gestart…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Bezig met starten. Dit duurt maar even."
@@ -15985,6 +16003,9 @@ msgstr "De server is niet gevonden"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "De inloglink was onvolledig. Probeer het opnieuw."
+
+msgid "The simulator instance was terminated."
+msgstr "Het simulatorexemplaar is beëindigd."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "De certificaatautoriteit van de site wordt niet vertrouwd"

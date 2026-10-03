@@ -4576,6 +4576,9 @@ msgstr "Không thể mở liên kết"
 msgid "Could not open Photos"
 msgstr "Không thể mở Photos"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Không thể kết nối tới trình giả lập di động."
+
 msgid "Could not reach the desktop."
 msgstr "Không thể kết nối tới màn hình nền."
 
@@ -9079,6 +9082,9 @@ msgstr "Độ tin cậy dài hạn vượt một ngưỡng. Việc giao lúc 6 g
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Tooltip chỉ hiện phím tắt khi di chuột lâu; kiểu chip của nó giờ là mặc định của TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Đang tìm trình giả lập di động…"
+
 msgid "Looking for installed browsers…"
 msgstr "Đang tìm các trình duyệt đã cài…"
 
@@ -10164,6 +10170,9 @@ msgstr "Không có pull request nào đã merge."
 
 msgid "No messages yet"
 msgstr "Chưa có tin nhắn nào"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "Không có trình giả lập di động nào khả dụng ở đây. Cần có hộp cát đám mây hỗ trợ Limrun hoặc bộ công cụ iOS/Android cục bộ."
 
 msgid "No name on file"
 msgstr "Chưa có tên nào được lưu"
@@ -14759,6 +14768,9 @@ msgstr "Chia sang phải"
 msgid "Split the current pane along its longer side"
 msgstr "Chia khung hiện tại theo cạnh dài hơn"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Chia khung hiện tại và mở một trình giả lập di động"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Chia khung hiện tại và mở một khung trình duyệt mới"
 
@@ -14779,6 +14791,9 @@ msgstr "Xem chia đôi"
 
 msgid "Split with Desktop"
 msgstr "Chia với Màn hình nền"
+
+msgid "Split with Mobile Simulator"
+msgstr "Chia với Trình giả lập di động"
 
 msgid "Split with New Browser"
 msgstr "Chia kèm trình duyệt mới"
@@ -14952,6 +14967,9 @@ msgstr "Đang khởi động workspace trên cloud"
 
 msgid "Starting the agent…"
 msgstr "Đang khởi động tác nhân…"
+
+msgid "Starting the simulator…"
+msgstr "Đang khởi động trình giả lập…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Đang khởi động. Sẽ chỉ mất một lát."
@@ -15985,6 +16003,9 @@ msgstr "Không tìm thấy server"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Liên kết đăng nhập không đầy đủ. Vui lòng thử lại."
+
+msgid "The simulator instance was terminated."
+msgstr "Phiên bản trình giả lập đã bị chấm dứt."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "Tổ chức cấp chứng chỉ của trang không được tin cậy"

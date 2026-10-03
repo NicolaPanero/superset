@@ -4576,6 +4576,9 @@ msgstr "Odkaz se nepodařilo otevřít"
 msgid "Could not open Photos"
 msgstr "Nepodařilo se otevřít Fotky"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Nepodařilo se připojit k mobilnímu simulátoru."
+
 msgid "Could not reach the desktop."
 msgstr "K ploše se nepodařilo připojit."
 
@@ -9079,6 +9082,9 @@ msgstr "Spolehlivost na dlouhém horizontu překročí práh. Práce zadaná v 1
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Tooltip jen se zkratkou při dlouhém najetí; jeho styl čipu je nyní výchozí pro TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Hledám mobilní simulátor…"
+
 msgid "Looking for installed browsers…"
 msgstr "Hledám nainstalované prohlížeče…"
 
@@ -10164,6 +10170,9 @@ msgstr "Žádné sloučené pull requesty."
 
 msgid "No messages yet"
 msgstr "Zatím žádné zprávy"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "Zde není k dispozici žádný mobilní simulátor. Je potřeba cloudový sandbox s podporou Limrun nebo místní sada nástrojů iOS/Android."
 
 msgid "No name on file"
 msgstr "Není uloženo žádné jméno"
@@ -14759,6 +14768,9 @@ msgstr "Rozdělit doprava"
 msgid "Split the current pane along its longer side"
 msgstr "Rozdělit aktuální panel podél delší strany"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Rozdělit aktuální panel a otevřít mobilní simulátor"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Rozdělit aktuální panel a otevřít nový panel prohlížeče"
 
@@ -14779,6 +14791,9 @@ msgstr "Rozdělené zobrazení"
 
 msgid "Split with Desktop"
 msgstr "Rozdělit s plochou"
+
+msgid "Split with Mobile Simulator"
+msgstr "Rozdělit s mobilním simulátorem"
 
 msgid "Split with New Browser"
 msgstr "Rozdělit s novým prohlížečem"
@@ -14952,6 +14967,9 @@ msgstr "Spouštím cloudový pracovní prostor"
 
 msgid "Starting the agent…"
 msgstr "Spouštění agenta…"
+
+msgid "Starting the simulator…"
+msgstr "Spouštění simulátoru…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Spouští se. Mělo by to trvat jen chvilku."
@@ -15985,6 +16003,9 @@ msgstr "Server se nepodařilo najít"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Přihlašovací odkaz byl neúplný. Zkuste to prosím znovu."
+
+msgid "The simulator instance was terminated."
+msgstr "Instance simulátoru byla ukončena."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "Certifikační autorita webu není důvěryhodná"

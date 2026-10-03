@@ -4576,6 +4576,9 @@ msgstr "Не удалось открыть ссылку"
 msgid "Could not open Photos"
 msgstr "Не удалось открыть «Фото»"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Не удалось подключиться к мобильному симулятору."
+
 msgid "Could not reach the desktop."
 msgstr "Не удалось подключиться к рабочему столу."
 
@@ -9079,6 +9082,9 @@ msgstr "Надёжность на длинной дистанции перехо
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Подсказка только с сочетанием клавиш при долгом наведении; её стиль чипа теперь по умолчанию для TooltipContent"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Поиск мобильного симулятора…"
+
 msgid "Looking for installed browsers…"
 msgstr "Поиск установленных браузеров…"
 
@@ -10164,6 +10170,9 @@ msgstr "Нет объединённых пул-реквестов."
 
 msgid "No messages yet"
 msgstr "Сообщений пока нет"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "Здесь нет доступного мобильного симулятора. Нужна облачная песочница с поддержкой Limrun или локальный набор инструментов iOS/Android."
 
 msgid "No name on file"
 msgstr "Имя не указано"
@@ -14759,6 +14768,9 @@ msgstr "Разделить вправо"
 msgid "Split the current pane along its longer side"
 msgstr "Разделить текущую панель по длинной стороне"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Разделить текущую панель и открыть мобильный симулятор"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Разделить текущую панель и открыть новую панель браузера"
 
@@ -14779,6 +14791,9 @@ msgstr "Раздельный вид"
 
 msgid "Split with Desktop"
 msgstr "Разделить с рабочим столом"
+
+msgid "Split with Mobile Simulator"
+msgstr "Разделить с мобильным симулятором"
 
 msgid "Split with New Browser"
 msgstr "Разделить с новым браузером"
@@ -14952,6 +14967,9 @@ msgstr "Запуск облачной рабочей области"
 
 msgid "Starting the agent…"
 msgstr "Запуск агента…"
+
+msgid "Starting the simulator…"
+msgstr "Запуск симулятора…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Запускается. Это займёт всего несколько мгновений."
@@ -15985,6 +16003,9 @@ msgstr "Не удалось найти сервер"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Ссылка для входа была неполной. Попробуйте ещё раз."
+
+msgid "The simulator instance was terminated."
+msgstr "Экземпляр симулятора был завершён."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "Удостоверяющий центр сайта не является доверенным"

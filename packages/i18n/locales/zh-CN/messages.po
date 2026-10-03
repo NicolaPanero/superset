@@ -4576,6 +4576,9 @@ msgstr "无法打开链接"
 msgid "Could not open Photos"
 msgstr "无法打开“照片”"
 
+msgid "Could not reach a mobile simulator."
+msgstr "无法连接到移动模拟器。"
+
 msgid "Could not reach the desktop."
 msgstr "无法连接到桌面。"
 
@@ -9079,6 +9082,9 @@ msgstr "长周期可靠性越过了一个门槛。傍晚6点派出去的活儿�
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "长时间悬停才出现、只显示快捷键的tooltip；它的chip样式现在是TooltipContent的默认样式"
 
+msgid "Looking for a mobile simulator…"
+msgstr "正在查找移动模拟器…"
+
 msgid "Looking for installed browsers…"
 msgstr "正在查找已安装的浏览器…"
 
@@ -10164,6 +10170,9 @@ msgstr "没有已合并的拉取请求。"
 
 msgid "No messages yet"
 msgstr "还没有消息"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "此处没有可用的移动模拟器。需要支持 Limrun 的云沙箱，或本地 iOS/Android 工具链。"
 
 msgid "No name on file"
 msgstr "未登记姓名"
@@ -14759,6 +14768,9 @@ msgstr "向右拆分"
 msgid "Split the current pane along its longer side"
 msgstr "沿较长的一边拆分当前窗格"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "拆分当前窗格并打开移动模拟器"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "拆分当前窗格并打开新的浏览器窗格"
 
@@ -14779,6 +14791,9 @@ msgstr "分栏视图"
 
 msgid "Split with Desktop"
 msgstr "拆分并打开桌面"
+
+msgid "Split with Mobile Simulator"
+msgstr "拆分并打开移动模拟器"
 
 msgid "Split with New Browser"
 msgstr "拆分并新建浏览器"
@@ -14952,6 +14967,9 @@ msgstr "正在启动云端工作区"
 
 msgid "Starting the agent…"
 msgstr "正在启动智能体…"
+
+msgid "Starting the simulator…"
+msgstr "正在启动模拟器…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "正在启动，请稍等片刻。"
@@ -15985,6 +16003,9 @@ msgstr "找不到服务器"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "登录链接不完整。请重试。"
+
+msgid "The simulator instance was terminated."
+msgstr "模拟器实例已终止。"
 
 msgid "The site's certificate authority is not trusted"
 msgstr "该站点的证书颁发机构不受信任"

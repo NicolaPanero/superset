@@ -4576,6 +4576,9 @@ msgstr "リンクを開けませんでした"
 msgid "Could not open Photos"
 msgstr "「写真」を開けませんでした"
 
+msgid "Could not reach a mobile simulator."
+msgstr "モバイルシミュレーターに接続できませんでした。"
+
 msgid "Could not reach the desktop."
 msgstr "デスクトップに接続できませんでした。"
 
@@ -9079,6 +9082,9 @@ msgstr "長時間にわたる信頼性がしきい値を超えます。18時に�
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "長めのホバーでショートカットだけを出すtooltip。そのチップスタイルが現在のTooltipContentのデフォルトです"
 
+msgid "Looking for a mobile simulator…"
+msgstr "モバイルシミュレーターを検索中…"
+
 msgid "Looking for installed browsers…"
 msgstr "インストール済みブラウザを検索中…"
 
@@ -10164,6 +10170,9 @@ msgstr "マージ済みのプルリクエストはありません。"
 
 msgid "No messages yet"
 msgstr "メッセージはまだありません"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "ここで利用できるモバイルシミュレーターがありません。Limrun対応のクラウドサンドボックスか、ローカルのiOS/Androidツールチェーンのいずれかが必要です。"
 
 msgid "No name on file"
 msgstr "登録された名前はありません"
@@ -14759,6 +14768,9 @@ msgstr "右に分割"
 msgid "Split the current pane along its longer side"
 msgstr "現在のペインを長い辺に沿って分割する"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "現在のペインを分割してモバイルシミュレーターを開く"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "現在のペインを分割して新しいブラウザペインを開く"
 
@@ -14779,6 +14791,9 @@ msgstr "分割表示"
 
 msgid "Split with Desktop"
 msgstr "デスクトップで分割"
+
+msgid "Split with Mobile Simulator"
+msgstr "モバイルシミュレーターで分割"
 
 msgid "Split with New Browser"
 msgstr "新規ブラウザで分割"
@@ -14952,6 +14967,9 @@ msgstr "クラウドワークスペースを開始中"
 
 msgid "Starting the agent…"
 msgstr "エージェントを起動しています…"
+
+msgid "Starting the simulator…"
+msgstr "シミュレーターを起動しています…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "起動中です。まもなく準備が整います。"
@@ -15985,6 +16003,9 @@ msgstr "サーバーが見つかりませんでした"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "サインインリンクが不完全でした。もう一度お試しください。"
+
+msgid "The simulator instance was terminated."
+msgstr "シミュレーターインスタンスが終了しました。"
 
 msgid "The site's certificate authority is not trusted"
 msgstr "サイトの認証局が信頼されていません"

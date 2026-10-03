@@ -4576,6 +4576,9 @@ msgstr "Could not open link"
 msgid "Could not open Photos"
 msgstr "Could not open Photos"
 
+msgid "Could not reach a mobile simulator."
+msgstr "Could not reach a mobile simulator."
+
 msgid "Could not reach the desktop."
 msgstr "Could not reach the desktop."
 
@@ -9079,6 +9082,9 @@ msgstr "Long-horizon reliability crosses a threshold. Work assigned at 6pm is me
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 
+msgid "Looking for a mobile simulator…"
+msgstr "Looking for a mobile simulator…"
+
 msgid "Looking for installed browsers…"
 msgstr "Looking for installed browsers…"
 
@@ -10164,6 +10170,9 @@ msgstr "No merged pull requests."
 
 msgid "No messages yet"
 msgstr "No messages yet"
+
+msgid "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
+msgstr "No mobile simulator available here. This needs either a Limrun-enabled cloud sandbox or a local iOS/Android toolchain."
 
 msgid "No name on file"
 msgstr "No name on file"
@@ -14759,6 +14768,9 @@ msgstr "Split Right"
 msgid "Split the current pane along its longer side"
 msgstr "Split the current pane along its longer side"
 
+msgid "Split the current pane and open a mobile simulator"
+msgstr "Split the current pane and open a mobile simulator"
+
 msgid "Split the current pane and open a new browser pane"
 msgstr "Split the current pane and open a new browser pane"
 
@@ -14779,6 +14791,9 @@ msgstr "Split view"
 
 msgid "Split with Desktop"
 msgstr "Split with Desktop"
+
+msgid "Split with Mobile Simulator"
+msgstr "Split with Mobile Simulator"
 
 msgid "Split with New Browser"
 msgstr "Split with New Browser"
@@ -14952,6 +14967,9 @@ msgstr "Starting cloud workspace"
 
 msgid "Starting the agent…"
 msgstr "Starting the agent…"
+
+msgid "Starting the simulator…"
+msgstr "Starting the simulator…"
 
 msgid "Starting up. This should only take a moment."
 msgstr "Starting up. This should only take a moment."
@@ -15985,6 +16003,9 @@ msgstr "The server could not be found"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "The sign-in link was incomplete. Please try again."
+
+msgid "The simulator instance was terminated."
+msgstr "The simulator instance was terminated."
 
 msgid "The site's certificate authority is not trusted"
 msgstr "The site's certificate authority is not trusted"
