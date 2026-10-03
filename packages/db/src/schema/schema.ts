@@ -220,9 +220,11 @@ export const tasks = pgTable(
 		creatorId: uuid("creator_id")
 			.notNull()
 			.references(() => users.id, { onDelete: "cascade" }),
-		/** Foreign key and index wait for the Linear mirror prune; at 7M rows each blocks writes for longer than the deploy allows. */
-		teamId: uuid("team_id"),
-		number: integer(),
+		teamId: uuid("team_id")
+			.notNull()
+			.default(sql`NULL`)
+			.references(() => teams.id),
+		number: integer().notNull().default(sql`NULL`),
 
 		// Planning
 		estimate: integer(),
@@ -286,6 +288,7 @@ export const tasks = pgTable(
 			table.externalId,
 		),
 		unique("tasks_org_slug_unique").on(table.organizationId, table.slug),
+		unique("tasks_team_number_unique").on(table.teamId, table.number),
 	],
 );
 
