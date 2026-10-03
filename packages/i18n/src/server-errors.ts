@@ -579,6 +579,12 @@ export const serverErrorMessages: Record<
 				message: "Members cannot modify roles",
 			}),
 		),
+	"serverError.organization.connectLinearToTrackTasks": () =>
+		i18n._(
+			msg({
+				message: "Connect your Linear account before tracking tasks in Linear.",
+			}),
+		),
 	"serverError.organization.onlyOwnersCanUpdateOrganizationSettings": () =>
 		i18n._(
 			msg({

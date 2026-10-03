@@ -2,6 +2,7 @@ import type { LinearClient } from "@linear/sdk";
 import { taskPriorityValues } from "@superset/db/enums";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
+import { env } from "../../../env";
 import { userError } from "../../../i18n-error";
 import { protectedProcedure } from "../../../trpc";
 import { verifyOrgMembership } from "../utils";
@@ -40,7 +41,7 @@ export async function withLinear<T>(
 	if (result === null) {
 		throw userError({
 			code: "PRECONDITION_FAILED",
-			message: "Connect your Linear account to use Linear here.",
+			message: `Connect your Linear account to use Linear here: ${env.NEXT_PUBLIC_WEB_URL}/integrations/linear`,
 			i18nKey: "serverError.integration.linearNotConnected",
 		});
 	}

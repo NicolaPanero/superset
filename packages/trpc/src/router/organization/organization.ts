@@ -23,6 +23,7 @@ import { canRemoveMember, type OrganizationRole } from "@superset/shared/auth";
 import { TRPCError, type TRPCRouterRecord } from "@trpc/server";
 import { and, desc, eq, isNull, ne, sql } from "drizzle-orm";
 import { z } from "zod";
+import { userConnection } from "../../lib/connectors";
 import { generateImagePathname, uploadImage } from "../../lib/upload";
 import {
 	jwtProcedure,
@@ -421,6 +422,18 @@ export const organizationRouter = {
 					message: "Only owners can update organization settings",
 					i18nKey:
 						"serverError.organization.onlyOwnersCanUpdateOrganizationSettings",
+				});
+			}
+
+			if (
+				data.taskTracker === "linear" &&
+				!(await userConnection(id, "linear", ctx.session.user.id))
+			) {
+				throw userError({
+					code: "PRECONDITION_FAILED",
+					message:
+						"Connect your Linear account before tracking tasks in Linear.",
+					i18nKey: "serverError.organization.connectLinearToTrackTasks",
 				});
 			}
 
