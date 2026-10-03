@@ -60,7 +60,7 @@ export function useCloudWorkspaces(): CloudWorkspacesValue {
 		refetchInterval: (current) =>
 			current.state.data?.some((row) => row.status === "provisioning")
 				? PROVISIONING_POLL_MS
-				: realtimeConnected
+				: realtimeConnected && current.state.status !== "error"
 					? false
 					: IDLE_POLL_MS,
 		select: reviveCloudWorkspaceRows,

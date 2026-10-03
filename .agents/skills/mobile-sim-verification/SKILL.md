@@ -128,9 +128,10 @@ steps above become `lim ios` commands, and the simulator reaches this box only t
 - **Request counts.** The tunnel logs every request the app makes, in
   `~/.lim/tunnels/<dir>/<tunnel-id>.log`. Note its line count, act, and read the new lines.
 - **Cloud screens.** The workspace's Neon branch is a copy of production, and cloud access is a
-  PostHog flag on the email, so the dev account sees no cloud workspaces. To use a real account,
-  save its `auth.accounts` credential `password`, set a temporary hash (`hashPassword` from
-  `better-auth/crypto`), and sign in with "Sign in with email (dev)". After the test, restore the
-  hash and delete the sessions the test created.
+  PostHog flag on the email, so the dev account sees no cloud workspaces. Prefer a test account
+  that has the flag. Use a real account only with its owner's approval: save its `auth.accounts`
+  credential `password`, set a temporary hash (`hashPassword` from `better-auth/crypto`), and sign
+  in with "Sign in with email (dev)". After the test, restore the hash and delete the sessions the
+  test created.
 - **Cleanup.** `lim ios tunnel stop --id <id>` and `lim ios delete <id>`; the simulator bills while
   it runs. Stop local processes by PID: `pkill -f <pattern>` also matches the shell that runs it.
