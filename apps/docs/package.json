@@ -33,7 +33,7 @@
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"tailwind-merge": "3.5.0",
-		"zod": "4.4.3"
+		"zod": "4.6.5"
 	},
 	"devDependencies": {
 		"@lingui/swc-plugin": "6.6.0",
@@ -46,6 +46,6 @@
 		"postcss": "8.5.25",
 		"tailwindcss": "4.2.2",
 		"tailwindcss-animate": "1.0.7",
-		"typescript": "6.0.3"
+		"typescript": "7.0.2"
 	}
 }

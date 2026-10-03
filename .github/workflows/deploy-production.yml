@@ -86,9 +86,6 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
         run: npm install --global vercel@$VERCEL_CLI_VERSION
 
@@ -291,9 +288,6 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
         run: npm install --global vercel@$VERCEL_CLI_VERSION
 
@@ -389,9 +383,6 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
         run: npm install --global vercel@$VERCEL_CLI_VERSION
 
@@ -477,9 +468,6 @@ jobs:
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
-
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
 
       - name: Install Vercel CLI
         run: npm install --global vercel@$VERCEL_CLI_VERSION
@@ -764,9 +752,6 @@ jobs:
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
-
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
 
       - name: Install Vercel CLI
         run: npm install --global vercel@$VERCEL_CLI_VERSION

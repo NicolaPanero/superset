@@ -1,4 +1,4 @@
-import { getLocaleMessages, SUPPORTED_LOCALES } from "@superset/i18n";
+import { getLocaleMessages } from "@superset/i18n";
 import { COMPANY } from "@superset/shared/constants";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
@@ -104,13 +104,6 @@ export const metadata: Metadata = {
 	},
 	manifest: "/manifest.json",
 };
-
-// Declares the locale space for the [lang] segment. Pages themselves stay
-// dynamic (the nav resolves the viewer's session), but Next validates and
-// types the param set from this.
-export function generateStaticParams() {
-	return SUPPORTED_LOCALES.map((lang) => ({ lang }));
-}
 
 export default async function RootLayout({
 	children,

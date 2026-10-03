@@ -1,0 +1,17 @@
+name: CI (Blacksmith)
+
+# Runs the CI jobs on Blacksmith runners next to the GitHub-hosted run, to
+# compare speed and cost. Not a required check.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  ci:
+    name: Blacksmith
+    uses: ./.github/workflows/ci.yml
+    with:
+      runner: blacksmith-4vcpu-ubuntu-2404
+    secrets: inherit

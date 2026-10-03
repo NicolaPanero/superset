@@ -11,18 +11,10 @@ import { notFound } from "next/navigation";
 import { localeUrl, localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
 import { BreadcrumbJsonLd, JsonLdScript } from "@/components/JsonLd";
-import {
-	getAllThemeSlugs,
-	getThemeListing,
-	themeListings,
-} from "@/lib/marketplace";
+import { getThemeListing, themeListings } from "@/lib/marketplace";
 
 interface PageProps {
 	params: Promise<{ slug: string }>;
-}
-
-export function generateStaticParams() {
-	return getAllThemeSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

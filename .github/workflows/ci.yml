@@ -5,11 +5,17 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize]
+  workflow_call:
+    inputs:
+      runner:
+        description: "runs-on label for every Linux job; the CLI builds are skipped when set"
+        type: string
+        default: ""
 
 jobs:
   sherif:
     name: Sherif
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -34,7 +40,7 @@ jobs:
 
   vale:
     name: Vale prose lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     permissions:
       contents: read
     steps:
@@ -58,7 +64,7 @@ jobs:
 
   version-sync:
     name: Version Sync
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -89,7 +95,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -130,7 +136,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -179,7 +185,7 @@ jobs:
 
   page-storage:
     name: Page storage integration
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -211,7 +217,7 @@ jobs:
 
   typecheck:
     name: Typecheck
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -234,45 +240,57 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
-  build:
-    name: Build
+  cli-changes:
+    name: Detect CLI Changes
+    if: ${{ !inputs.runner }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      cli: ${{ steps.filter.outputs.cli }}
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
-      - name: Setup Bun
-        id: setup-bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - name: Filter changed paths
+        id: filter
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         with:
-          bun-version-file: .bun-version
-
-      - name: Cache dependencies
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
-
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
-      - name: Install Linux native build deps
-        run: sudo apt-get update && sudo apt-get install -y libx11-dev libxkbfile-dev
-
-      - name: Install desktop native dependencies
-        working-directory: apps/desktop
-        run: bun run install:deps
-
-      - name: Build Desktop
-        env:
-          RELAY_URL: ${{ secrets.RELAY_URL }}
-          REALTIME_URL: ${{ secrets.REALTIME_URL }}
-        run: bun turbo run build --filter=@superset/desktop
+          filters: |
+            cli:
+              - 'package.json'
+              - 'bun.lock'
+              - 'bunfig.toml'
+              - '.bun-version'
+              - 'patches/**'
+              - 'tooling/**'
+              - '.github/workflows/ci.yml'
+              - '.github/workflows/build-cli.yml'
+              - 'packages/agent-setup/**'
+              - 'packages/auth/**'
+              - 'packages/chat/**'
+              - 'packages/chat-runtime/**'
+              - 'packages/cli/**'
+              - 'packages/cli-framework/**'
+              - 'packages/db/**'
+              - 'packages/email/**'
+              - 'packages/host-client/**'
+              - 'packages/host-service/**'
+              - 'packages/i18n/**'
+              - 'packages/local-db/**'
+              - 'packages/port-scanner/**'
+              - 'packages/pty-daemon/**'
+              - 'packages/shared/**'
+              - 'packages/trpc/**'
+              - 'packages/workspace-fs/**'
 
   build-cli:
     name: Build CLI
+    needs: cli-changes
+    if: github.event_name == 'push' || needs.cli-changes.outputs.cli == 'true'
     uses: ./.github/workflows/build-cli.yml
     with:
-      targets: '[{"os":"ubuntu-latest","target":"linux-x64"},{"os":"macos-14","target":"darwin-arm64"},{"os":"macos-15-intel","target":"darwin-x64"},{"os":"ubuntu-24.04-arm","target":"linux-arm64"}]'
+      targets: ${{ github.event_name == 'push' && '[{"os":"ubuntu-latest","target":"linux-x64"},{"os":"macos-14","target":"darwin-arm64"},{"os":"macos-15-intel","target":"darwin-x64"},{"os":"ubuntu-24.04-arm","target":"linux-arm64"}]' || '[{"os":"ubuntu-latest","target":"linux-x64"}]' }}
       upload: false
     secrets: inherit

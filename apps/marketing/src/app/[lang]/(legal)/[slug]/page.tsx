@@ -6,7 +6,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { localizedAlternates } from "@/app/[lang]/metadata";
 import { initServerI18n } from "@/app/i18n-server";
-import { getAllLegalSlugs, getLegalPage } from "@/lib/legal";
+import { getLegalPage } from "@/lib/legal";
 
 interface PageProps {
 	params: Promise<{ slug: string }>;
@@ -53,10 +53,6 @@ export default async function LegalPage({ params }: PageProps) {
 			</article>
 		</main>
 	);
-}
-
-export async function generateStaticParams() {
-	return getAllLegalSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

@@ -12,7 +12,7 @@ import {
 	FAQPageJsonLd,
 	ItemListJsonLd,
 } from "@/components/JsonLd";
-import { getAllComparisonSlugs, getComparisonPage } from "@/lib/compare";
+import { getComparisonPage } from "@/lib/compare";
 import {
 	extractComparisonFaqItems,
 	extractRoundupItems,
@@ -81,10 +81,6 @@ export default async function ComparePageRoute({ params }: PageProps) {
 			</CompareLayout>
 		</main>
 	);
-}
-
-export async function generateStaticParams() {
-	return getAllComparisonSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

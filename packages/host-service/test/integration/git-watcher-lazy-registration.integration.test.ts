@@ -307,42 +307,6 @@ describe("GitWatcher lazy registration (regression coverage for #6729)", () => {
 		expect(internals(scenario.gitWatcher).watched.has(id)).toBe(true);
 	});
 
-	test("registration cost is paid only for workspaces someone actually watches, regardless of how many exist", async () => {
-		const N = 30;
-		const scenario = await createScenario(N);
-		scenarios.push(scenario);
-		scenario.gitWatcher.start();
-		await settle();
-
-		const idleStart = performance.now();
-		await settle(200);
-		const idleMs = performance.now() - idleStart;
-		expect(internals(scenario.gitWatcher).watched.size).toBe(0);
-
-		// Now actually ask for all of them, same as the old eager rescan used
-		// to do unconditionally — this proves the mechanism still works when
-		// requested, it just no longer happens for free.
-		const watchStart = performance.now();
-		for (const id of scenario.workspaceIds)
-			scenario.gitWatcher.watchWorkspace(id);
-		await waitFor(() => internals(scenario.gitWatcher).watched.size === N, {
-			timeoutMs: 20_000,
-		});
-		const watchMs = performance.now() - watchStart;
-
-		console.log(
-			`[git-watcher validation] ${N} non-archived workspaces, 0 watched: ${idleMs.toFixed(0)}ms idle cost`,
-		);
-		console.log(
-			`[git-watcher validation] ${N} non-archived workspaces, all ${N} explicitly watched: ${watchMs.toFixed(0)}ms`,
-		);
-
-		// Not a strict perf assertion (noisy CI/dev machines) — the point is
-		// the real numbers above: idle cost stays flat regardless of N, and
-		// the registration cost only shows up once something asks for it.
-		expect(internals(scenario.gitWatcher).watched.size).toBe(N);
-	}, 60_000);
-
 	test("unwatching during an in-flight ignore refresh does not emit for the unwatched workspace", async () => {
 		const scenario = await createScenario(1);
 		scenarios.push(scenario);

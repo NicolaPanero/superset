@@ -9,12 +9,7 @@ import {
 	BreadcrumbJsonLd,
 	FAQPageJsonLd,
 } from "@/components/JsonLd";
-import {
-	extractToc,
-	getAllSlugs,
-	getBlogPost,
-	getRelatedPosts,
-} from "@/lib/blog";
+import { extractToc, getBlogPost, getRelatedPosts } from "@/lib/blog";
 import { mdxComponents } from "../components/mdx-components";
 import { BlogPostLayout } from "./components/BlogPostLayout";
 
@@ -80,10 +75,6 @@ export default async function BlogPostPage({ params }: PageProps) {
 			</BlogPostLayout>
 		</main>
 	);
-}
-
-export async function generateStaticParams() {
-	return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
