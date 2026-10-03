@@ -1,6 +1,7 @@
 import { auth } from "@superset/auth/server";
 import { stripeClient } from "@superset/auth/stripe";
 import { db } from "@superset/db/client";
+import { taskTrackerEnum } from "@superset/db/enums";
 import {
 	members,
 	organizations,
@@ -214,7 +215,7 @@ export const organizationRouter = {
 
 		const org = await db.query.organizations.findFirst({
 			where: eq(organizations.id, orgId),
-			columns: { id: true, name: true, slug: true },
+			columns: { id: true, name: true, slug: true, taskTracker: true },
 		});
 		return org ?? null;
 	}),
@@ -232,7 +233,7 @@ export const organizationRouter = {
 
 		const org = await db.query.organizations.findFirst({
 			where: eq(organizations.id, ctx.activeOrganizationId),
-			columns: { id: true, name: true, slug: true },
+			columns: { id: true, name: true, slug: true, taskTracker: true },
 		});
 		return org ?? null;
 	}),
@@ -252,7 +253,7 @@ export const organizationRouter = {
 
 			const org = await db.query.organizations.findFirst({
 				where: eq(organizations.id, input.id),
-				columns: { id: true, name: true, slug: true },
+				columns: { id: true, name: true, slug: true, taskTracker: true },
 			});
 			return org ?? null;
 		}),
@@ -395,6 +396,7 @@ export const organizationRouter = {
 					.regex(/[a-z0-9]$/, "Slug must end with a letter or number")
 					.optional(),
 				logo: z.string().url().optional(),
+				taskTracker: taskTrackerEnum.optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {

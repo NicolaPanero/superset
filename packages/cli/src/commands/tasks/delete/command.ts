@@ -1,22 +1,27 @@
 import { CLIError, positional } from "@superset/cli-framework";
 import { command } from "../../../lib/command";
+import { requireOrganizationId, resolveTask, trackerOption } from "../tracker";
 
 export default command({
-	description: "Delete tasks",
+	description: "Delete tasks (Linear issues are archived)",
 	args: [positional("ids").required().variadic().desc("Task IDs or slugs")],
-	run: async ({ ctx, args }) => {
+	options: { tracker: trackerOption },
+	run: async ({ ctx, args, options }) => {
 		const ids = args.ids as string[];
 		const deleted: string[] = [];
 		const failed: { id: string; reason: string }[] = [];
 
 		for (const idOrSlug of ids) {
 			try {
-				const task = await ctx.api.task.byIdOrSlug.query(idOrSlug);
-				if (!task) {
-					failed.push({ id: idOrSlug, reason: "not found" });
-					continue;
+				const resolved = await resolveTask(ctx, idOrSlug, options.tracker);
+				if (resolved.tracker === "linear") {
+					await ctx.api.integration.linear.archiveIssue.mutate({
+						organizationId: requireOrganizationId(ctx),
+						issueId: resolved.issueId,
+					});
+				} else {
+					await ctx.api.task.delete.mutate(resolved.task.id);
 				}
-				await ctx.api.task.delete.mutate(task.id);
 				deleted.push(idOrSlug);
 			} catch (error) {
 				failed.push({

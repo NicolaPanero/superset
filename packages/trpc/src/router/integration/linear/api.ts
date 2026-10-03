@@ -228,9 +228,13 @@ export async function updateIssue(
 	client: LinearClient,
 	id: string,
 	input: {
+		title?: string;
+		description?: string;
 		stateId?: string;
 		priority?: TaskPriority;
 		assigneeId?: string | null;
+		dueDate?: string | null;
+		estimate?: number | null;
 	},
 ): Promise<LinearIssueDetail> {
 	const data = await request<{
@@ -260,6 +264,22 @@ export async function updateIssue(
 	return toIssue(data.issueUpdate.issue);
 }
 
+export async function archiveIssue(
+	client: LinearClient,
+	id: string,
+): Promise<void> {
+	const data = await request<{ issueArchive: { success: boolean } }>(
+		client,
+		`mutation SupersetIssueArchive($id: String!) {
+			issueArchive(id: $id) { success }
+		}`,
+		{ id },
+	);
+	if (!data.issueArchive.success) {
+		throw new Error("Linear did not archive the issue");
+	}
+}
+
 export async function createIssue(
 	client: LinearClient,
 	input: {
@@ -269,6 +289,8 @@ export async function createIssue(
 		stateId?: string;
 		priority?: TaskPriority;
 		assigneeId?: string;
+		dueDate?: string;
+		estimate?: number;
 	},
 ): Promise<LinearIssueDetail> {
 	const data = await request<{
@@ -349,16 +371,12 @@ export function isLinearRateLimitError(error: unknown): boolean {
 	);
 }
 
-export const linearStatusFilterValues = [
-	"all",
-	"active",
-	"backlog",
-	"unstarted",
-	"started",
-	"completed",
-	"canceled",
-] as const;
-export type LinearStatusFilter = (typeof linearStatusFilterValues)[number];
+import type { LinearStatusFilter } from "./status-filter";
+
+export {
+	type LinearStatusFilter,
+	linearStatusFilterValues,
+} from "./status-filter";
 
 const STATE_TYPES_BY_FILTER: Record<
 	Exclude<LinearStatusFilter, "all">,

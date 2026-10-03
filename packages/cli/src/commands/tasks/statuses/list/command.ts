@@ -1,15 +1,34 @@
-import { table } from "@superset/cli-framework";
+import { string, table } from "@superset/cli-framework";
 import { command } from "../../../../lib/command";
+import { linearTeam, linearWorkspace } from "../../linear";
+import {
+	requireOrganizationId,
+	resolveTracker,
+	trackerOption,
+} from "../../tracker";
 
 export default command({
 	description: "List task statuses in the active organization",
+	options: {
+		tracker: trackerOption,
+		team: string().desc("Linear team key (Linear only)"),
+	},
 	display: (data) =>
 		table(
 			data as Record<string, unknown>[],
-			["name", "type", "position", "id"],
-			["NAME", "TYPE", "POS", "ID"],
+			["team", "name", "type", "position", "id"],
+			["TEAM", "NAME", "TYPE", "POS", "ID"],
 		),
-	run: async ({ ctx }) => {
+	run: async ({ ctx, options }) => {
+		if ((await resolveTracker(ctx, options.tracker)) === "linear") {
+			const workspace = await linearWorkspace(ctx, requireOrganizationId(ctx));
+			const teams = options.team
+				? [linearTeam(workspace, options.team)]
+				: workspace.teams;
+			return teams.flatMap((team) =>
+				team.states.map((state) => ({ team: team.key, ...state })),
+			);
+		}
 		return ctx.api.task.statuses.list.query();
 	},
 });

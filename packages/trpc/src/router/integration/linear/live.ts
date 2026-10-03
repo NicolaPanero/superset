@@ -6,6 +6,7 @@ import { userError } from "../../../i18n-error";
 import { protectedProcedure } from "../../../trpc";
 import { verifyOrgMembership } from "../utils";
 import {
+	archiveIssue,
 	createIssue,
 	getIssue,
 	getWorkspace,
@@ -87,9 +88,13 @@ export const linearLiveRouter = {
 		.input(
 			organizationInput.extend({
 				issueId: z.string().min(1),
+				title: z.string().trim().min(1).optional(),
+				description: z.string().optional(),
 				stateId: z.string().optional(),
 				priority: z.enum(taskPriorityValues).optional(),
 				assigneeId: z.string().nullable().optional(),
+				dueDate: z.iso.date().nullable().optional(),
+				estimate: z.number().int().min(0).nullable().optional(),
 			}),
 		)
 		.mutation(({ ctx, input }) => {
@@ -98,6 +103,14 @@ export const linearLiveRouter = {
 				updateIssue(client, issueId, changes),
 			);
 		}),
+
+	archiveIssue: protectedProcedure
+		.input(organizationInput.extend({ issueId: z.string().min(1) }))
+		.mutation(({ ctx, input }) =>
+			withLinear(ctx.session.user.id, input.organizationId, (client) =>
+				archiveIssue(client, input.issueId),
+			),
+		),
 
 	createIssue: protectedProcedure
 		.input(
@@ -108,6 +121,8 @@ export const linearLiveRouter = {
 				stateId: z.string().optional(),
 				priority: z.enum(taskPriorityValues).optional(),
 				assigneeId: z.string().optional(),
+				dueDate: z.iso.date().optional(),
+				estimate: z.number().int().min(0).optional(),
 			}),
 		)
 		.mutation(({ ctx, input }) => {
