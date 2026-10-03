@@ -1,45 +1,48 @@
-name: Debug git-watcher OOM (temporary)
+name: Debug host-service OOM (temporary)
 
 on:
   pull_request:
     types: [opened, synchronize]
     paths:
       - ".github/workflows/debug-git-watcher-oom.yml"
-      - "packages/host-service/**"
 
 jobs:
   repro:
+    name: repro bun ${{ matrix.bun }} #${{ matrix.n }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        bun: ["1.3.14", "1.4.2"]
+        n: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          bun-version-file: .bun-version
+          bun-version: ${{ matrix.bun }}
 
       - run: bun install --frozen --ignore-scripts
 
-      - name: Run the full test suite like CI, with memory and kernel logs
-        env:
-          RELAY_URL: ${{ secrets.RELAY_URL }}
-          REALTIME_URL: ${{ secrets.REALTIME_URL }}
+      - run: bun run --filter=@superset/i18n build
+
+      - name: host-service tests in one process, sampling memory
+        working-directory: packages/host-service
         run: |
           set +e
-          sudo dmesg -w > /tmp/dmesg.log 2>&1 &
           (while true; do
-            echo "=== $(date +%T) avail=$(free -m | awk '/Mem:/{print $7}')MB"
-            ps -eo rss,pid,ppid,pgid,etimes,args --sort=-rss | head -8 | cut -c1-200
+            echo "$(date +%T) bun_rss_mb=$(ps -C bun -o rss= | awk '{s+=$1} END {print int(s/1024)}') avail_mb=$(awk '/MemAvailable/{print int($2/1024)}' /proc/meminfo) git_procs=$(pgrep -c git)"
             sleep 1
-          done) > /tmp/mem.log 2>&1 &
-          for i in 1 2 3; do
-            echo "##### run $i"
-            timeout 900 bun turbo test --concurrency=2 --force --output-logs=errors-only
-            echo "##### run $i exit=$?"
-          done
-          echo "##### lowest available memory"
-          grep -o "avail=[0-9]*" /tmp/mem.log | sort -t= -k2 -n | head -3
-          echo "##### samples around the lowest point"
-          low=$(grep -n "avail=" /tmp/mem.log | sort -t= -k2 -n | head -1 | cut -d: -f1)
-          sed -n "$((low-20)),$((low+10))p" /tmp/mem.log
-          echo "##### kernel log"
-          grep -iE "oom|killed process|out of memory" /tmp/dmesg.log | tail -20
+          done) > /tmp/mem.log &
+          bun test --pass-with-no-tests > /tmp/test.log 2>&1
+          echo "exit=$?"
+          echo "##### files in the order they started, last 6"
+          grep -E "^\S+\.test\.ts:$" /tmp/test.log | tail -6
+          tail -4 /tmp/test.log
+          echo "##### peak"
+          sort -t= -k2 -n /tmp/mem.log | awk -F'bun_rss_mb=' '{print $2}' | sort -n | tail -1
+          echo "##### every 10th sample"
+          awk 'NR % 10 == 0' /tmp/mem.log
+          echo "##### last 30 samples"
+          tail -30 /tmp/mem.log
+          sudo dmesg | grep -iE "oom|killed process" | tail -5
