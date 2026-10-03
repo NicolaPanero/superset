@@ -9,7 +9,10 @@ import {
 	SiStripe,
 	SiVercel,
 } from "react-icons/si";
-import { usePresetIcon } from "renderer/assets/app-icons/preset-icons";
+import {
+	getPresetIcon,
+	usePresetIcon,
+} from "renderer/assets/app-icons/preset-icons";
 import circlebackIconUrl from "renderer/assets/icons/circleback-icon.png";
 import figmaIconUrl from "renderer/assets/icons/figma-icon.svg";
 import gmailIconUrl from "renderer/assets/icons/gmail-icon.svg";
@@ -69,6 +72,15 @@ const PLUGIN_ICONS: Record<
 	"google-sheets": { icon: SiGooglesheets, color: "#0F9D58" },
 	vercel: { icon: SiVercel, scale: "size-1/2" },
 };
+
+/** Square artwork as a URL, for chips that cannot render a component. */
+export function getPluginIconUrl(
+	pluginName: string,
+	isDark: boolean,
+): string | undefined {
+	if (pluginName === "superset") return getPresetIcon("superset", isDark);
+	return FULL_BLEED_ICONS[pluginName] ?? IMAGE_ICONS[pluginName];
+}
 
 interface PluginIconProps {
 	pluginName: string;

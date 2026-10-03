@@ -47,6 +47,7 @@ import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferen
 import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
 import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
+import { usePluginMentionOptions } from "renderer/hooks/usePluginMentionOptions";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
 import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
@@ -350,6 +351,7 @@ export function NewWorkspaceScreen({
 		removeLinkedPR,
 	} = useLinkedContext(draft.linkedIssues, updateDraft);
 	const isLinearLive = useIsLinearLiveTabEnabled();
+	const pluginMentions = usePluginMentionOptions();
 	const linkTaskLabel = isLinearLive
 		? t({ message: "Link task" })
 		: t({
@@ -862,6 +864,7 @@ export function NewWorkspaceScreen({
 							onChange={(markdown) => updateDraft({ prompt: markdown })}
 							onPasteFiles={(files) => attachments.add(files)}
 							onEnterSubmit={handleSubmit}
+							pluginMentions={pluginMentions}
 							autoFocus={draft.prompt ? "end" : "start"}
 							placeholder={promptPlaceholder}
 							className="flex flex-col min-h-[80px] max-h-[min(50vh,600px)] px-3 pt-3"

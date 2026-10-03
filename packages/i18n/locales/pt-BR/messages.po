@@ -10325,6 +10325,9 @@ msgstr "Nenhum arquivo correspondente"
 msgid "No matching org members."
 msgstr "Nenhum membro da organização corresponde."
 
+msgid "No matching plugins"
+msgstr "Nenhum plugin correspondente"
+
 msgid "No members yet"
 msgstr "Nenhum membro ainda"
 
@@ -13888,6 +13891,9 @@ msgstr "Buscar pessoas..."
 msgid "Search plugins"
 msgstr "Buscar plugins"
 
+msgid "Search plugins or files..."
+msgstr "Buscar plugins ou arquivos..."
+
 msgid "Search previous prompts..."
 msgstr "Buscar prompts anteriores..."
 
@@ -17373,10 +17379,6 @@ msgstr "Use o Superset no celular"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Use o Superset no celular com o Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Use o plugin do {0} para "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Use o app de desktop para rodar agentes de código em paralelo."

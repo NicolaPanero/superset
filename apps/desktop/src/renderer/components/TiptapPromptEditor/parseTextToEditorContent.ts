@@ -1,4 +1,8 @@
 import type { JSONContent } from "@tiptap/core";
+import {
+	PLUGIN_MENTION_NODE_NAME,
+	type PluginMentionOption,
+} from "renderer/components/PluginMention";
 
 /**
  * Matches file-mention tokens produced by serializeEditorToText.
@@ -11,9 +15,13 @@ const MENTION_RE = /(?:^|(?<=\s))@(?:"([^"]+)"|(\S+))/g;
 /**
  * Converts a plain-text string (as produced by serializeEditorToText) back
  * into a Tiptap JSONContent document, restoring file-mention atoms wherever
- * an @path token is found.
+ * an @path token is found. An unquoted token naming one of `plugins` is a
+ * plugin mention instead.
  */
-export function parseTextToEditorContent(text: string): JSONContent {
+export function parseTextToEditorContent(
+	text: string,
+	plugins: readonly PluginMentionOption[] = [],
+): JSONContent {
 	const paragraphs = text.split("\n").map((line): JSONContent => {
 		if (line === "") {
 			return { type: "paragraph" };
@@ -32,11 +40,21 @@ export function parseTextToEditorContent(text: string): JSONContent {
 					text: line.slice(lastIndex, match.index),
 				});
 			}
-			// The file-mention node — group 1 = quoted path, group 2 = unquoted path
-			inlineNodes.push({
-				type: "file-mention",
-				attrs: { path: match[1] ?? match[2] },
-			});
+			// group 1 = quoted path, group 2 = unquoted path or plugin handle
+			const quotedPath = match[1];
+			const token = quotedPath ?? match[2] ?? "";
+			const plugin =
+				quotedPath === undefined
+					? plugins.find((candidate) => candidate.name === token)
+					: undefined;
+			inlineNodes.push(
+				plugin
+					? {
+							type: PLUGIN_MENTION_NODE_NAME,
+							attrs: { name: plugin.name, label: plugin.displayName },
+						}
+					: { type: "file-mention", attrs: { path: token } },
+			);
 			lastIndex = match.index + match[0].length;
 			match = MENTION_RE.exec(line);
 		}

@@ -10325,6 +10325,9 @@ msgstr "Không có tệp phù hợp"
 msgid "No matching org members."
 msgstr "Không có thành viên tổ chức nào khớp."
 
+msgid "No matching plugins"
+msgstr "Không có plugin phù hợp"
+
 msgid "No members yet"
 msgstr "Chưa có thành viên nào"
 
@@ -13888,6 +13891,9 @@ msgstr "Tìm người..."
 msgid "Search plugins"
 msgstr "Tìm plugin"
 
+msgid "Search plugins or files..."
+msgstr "Tìm plugin hoặc tệp..."
+
 msgid "Search previous prompts..."
 msgstr "Tìm prompt trước đó..."
 
@@ -17373,10 +17379,6 @@ msgstr "Dùng Superset trên điện thoại"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Dùng Superset trên điện thoại với Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Dùng plugin {0} để "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Dùng ứng dụng máy tính để chạy song song nhiều agent lập trình."

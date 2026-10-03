@@ -10325,6 +10325,9 @@ msgstr "Tidak ada berkas yang cocok"
 msgid "No matching org members."
 msgstr "Tidak ada anggota organisasi yang cocok."
 
+msgid "No matching plugins"
+msgstr "Tidak ada plugin yang cocok"
+
 msgid "No members yet"
 msgstr "Belum ada anggota"
 
@@ -13888,6 +13891,9 @@ msgstr "Cari orang..."
 msgid "Search plugins"
 msgstr "Cari plugin"
 
+msgid "Search plugins or files..."
+msgstr "Cari plugin atau file..."
+
 msgid "Search previous prompts..."
 msgstr "Cari prompt sebelumnya..."
 
@@ -17373,10 +17379,6 @@ msgstr "Gunakan Superset di ponsel"
 
 msgid "Use Superset on your phone with Pro."
 msgstr "Gunakan Superset di ponsel dengan Pro."
-
-#. placeholder {0}: plugin.interface.displayName
-msgid "Use the {0} plugin to "
-msgstr "Gunakan plugin {0} untuk "
 
 msgid "Use the desktop app to start running parallel coding agents."
 msgstr "Pakai aplikasi desktop untuk mulai menjalankan agen coding paralel."

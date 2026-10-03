@@ -1,9 +1,13 @@
 import type { Editor } from "@tiptap/core";
+import {
+	PLUGIN_MENTION_NODE_NAME,
+	pluginMentionText,
+} from "renderer/components/PluginMention";
 
 /**
  * Serializes Tiptap editor content to plain text for submission.
- * FileMentionNode atoms → "@path", text nodes → text, hardBreaks → "\n",
- * block-level nodes separated by "\n".
+ * FileMentionNode atoms → "@path", PluginMentionNode atoms → "@name",
+ * text nodes → text, hardBreaks → "\n", block-level nodes separated by "\n".
  */
 export function serializeEditorToText(editor: Editor): string {
 	const lines: string[] = [];
@@ -15,6 +19,8 @@ export function serializeEditorToText(editor: Editor): string {
 			if (child.type.name === "file-mention") {
 				const p = child.attrs.path as string;
 				parts.push(p.includes(" ") ? `@"${p}"` : `@${p}`);
+			} else if (child.type.name === PLUGIN_MENTION_NODE_NAME) {
+				parts.push(pluginMentionText(child.attrs.name as string));
 			} else if (child.type.name === "slash-command") {
 				const cmdName = child.attrs.name as string;
 				const cmdArgs = (child.attrs.args as string) ?? "";
