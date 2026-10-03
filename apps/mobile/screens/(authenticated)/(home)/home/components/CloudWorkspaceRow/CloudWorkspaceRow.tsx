@@ -73,6 +73,7 @@ export function CloudWorkspaceRow({
 	const prStatus = pullRequest
 		? PULL_REQUEST_STATUS[pullRequestStatus({ ...pullRequest, mergedAt: null })]
 		: null;
+	const showsPullRequest = Boolean(pullRequest && prStatus && !archived);
 
 	const body = (
 		<Pressable
@@ -106,8 +107,10 @@ export function CloudWorkspaceRow({
 					/>
 				) : null}
 			</View>
-			<CloudWorkspaceDiffStats workspaceId={row.id} />
-			{pullRequest && prStatus && !archived ? (
+			{showsPullRequest ? null : (
+				<CloudWorkspaceDiffStats workspaceId={row.id} />
+			)}
+			{showsPullRequest ? (
 				<Button
 					accessibilityLabel={t({
 						message: `Pull request #${pullRequest.number}`,

@@ -94,7 +94,6 @@ export function CloudWorkspaceListRow({
 					>
 						{workspace.name}
 					</button>
-					<CloudWorkspaceDiffStats workspaceId={workspace.id} />
 					<span className="flex min-w-0 shrink-[999] items-center gap-2 overflow-hidden">
 						<CloudWorkspaceReposBadge repos={repos} onOpenRepo={onOpenRepo} />
 						<CloudWorkspacePullRequestsBadge
@@ -144,6 +143,9 @@ export function CloudWorkspaceListRow({
 						<Trans>Add to sidebar</Trans>
 					</Button>
 				)}
+			</td>
+			<td className="w-0 pr-3">
+				<CloudWorkspaceDiffStats workspaceId={workspace.id} />
 			</td>
 			<td className="w-0 pr-4">
 				<span className="flex min-w-6 justify-end text-xs whitespace-nowrap text-muted-foreground tabular-nums">
