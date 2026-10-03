@@ -12,8 +12,8 @@
 	},
 	"dependencies": {
 		"@lexical/react": "0.41.0",
-		"@lingui/core": "6.6.0",
-		"@lingui/react": "6.6.0",
+		"@lingui/core": "6.8.0",
+		"@lingui/react": "6.8.0",
 		"@shadcn/react": "0.2.1",
 		"@superset/chat": "workspace:*",
 		"@superset/i18n": "workspace:*",
