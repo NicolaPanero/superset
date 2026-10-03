@@ -15940,6 +15940,9 @@ msgstr "Ce point de terminaison n'est pas autorisé."
 msgid "That handle is taken."
 msgstr "Ce pseudo est déjà pris."
 
+msgid "That Linear issue doesn't exist or you can't see it."
+msgstr "Ce ticket Linear n'existe pas ou vous n'y avez pas accès."
+
 msgid "That link doesn't lead anywhere in the app."
 msgstr "Ce lien ne mène nulle part dans l'application."
 

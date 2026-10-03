@@ -434,6 +434,12 @@ export const serverErrorMessages: Record<
 				message: "GitHub sync requires the Pro plan.",
 			}),
 		),
+	"serverError.integration.linearIssueNotFound": () =>
+		i18n._(
+			msg({
+				message: "That Linear issue doesn't exist or you can't see it.",
+			}),
+		),
 	"serverError.integration.linearNotConnected": () =>
 		i18n._(
 			msg({

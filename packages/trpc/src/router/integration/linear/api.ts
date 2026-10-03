@@ -1,5 +1,6 @@
 import type { LinearClient } from "@linear/sdk";
 import type { TaskPriority } from "@superset/db/enums";
+import { userError } from "../../../i18n-error";
 
 export function mapPriorityToLinear(priority: TaskPriority): number {
 	switch (priority) {
@@ -214,14 +215,27 @@ export async function getIssue(
 	client: LinearClient,
 	idOrIdentifier: string,
 ): Promise<LinearIssueDetail> {
-	const data = await request<{ issue: RawIssueDetail }>(
-		client,
-		`query SupersetIssue($id: String!) {
-			issue(id: $id) { ${ISSUE_FIELDS} description }
-		}`,
-		{ id: idOrIdentifier },
-	);
-	return toIssue(data.issue);
+	let issue: RawIssueDetail | null;
+	try {
+		({ issue } = await request<{ issue: RawIssueDetail | null }>(
+			client,
+			`query SupersetIssue($id: String!) {
+				issue(id: $id) { ${ISSUE_FIELDS} description }
+			}`,
+			{ id: idOrIdentifier },
+		));
+	} catch (error) {
+		if (isLinearNotFoundError(error)) issue = null;
+		else throw error;
+	}
+	if (!issue) {
+		throw userError({
+			code: "NOT_FOUND",
+			message: `Linear issue not found: ${idOrIdentifier}`,
+			i18nKey: "serverError.integration.linearIssueNotFound",
+		});
+	}
+	return toIssue(issue);
 }
 
 export async function updateIssue(
@@ -268,14 +282,14 @@ export async function archiveIssue(
 	client: LinearClient,
 	id: string,
 ): Promise<void> {
-	const data = await request<{ issueArchive: { success: boolean } }>(
+	const data = await request<{ issueArchive: { success: boolean } | null }>(
 		client,
 		`mutation SupersetIssueArchive($id: String!) {
 			issueArchive(id: $id) { success }
 		}`,
 		{ id },
 	);
-	if (!data.issueArchive.success) {
+	if (!data.issueArchive?.success) {
 		throw new Error("Linear did not archive the issue");
 	}
 }
@@ -354,6 +368,17 @@ export async function getWorkspace(
 			a.displayName.localeCompare(b.displayName),
 		),
 	};
+}
+
+export function isLinearNotFoundError(error: unknown): boolean {
+	if (typeof error !== "object" || error === null) return false;
+	const candidate = error as {
+		message?: string;
+		errors?: Array<{ message?: string }>;
+	};
+	return [candidate.message, ...(candidate.errors ?? []).map((e) => e.message)]
+		.filter(Boolean)
+		.some((message) => /entity not found/i.test(message as string));
 }
 
 export function isLinearRateLimitError(error: unknown): boolean {

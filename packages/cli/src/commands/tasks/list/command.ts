@@ -38,7 +38,7 @@ export default command({
 			.enum("urgent", "high", "medium", "low", "none")
 			.desc("Filter by priority"),
 		assignee: string().desc(
-			"Filter by assignee user id (for Linear: Linear user id or email)",
+			"Filter by assignee user id (for Linear: Linear user id, email, me or unassigned)",
 		),
 		assigneeMe: boolean().alias("m").desc("Filter to my tasks"),
 		creatorMe: boolean().desc("Filter to tasks I created"),
@@ -54,8 +54,8 @@ export default command({
 			.enum("createdAt", "updatedAt", "dueDate", "priority")
 			.desc("Sort field (default: createdAt)"),
 		sortOrder: string().enum("asc", "desc").desc("Sort direction"),
-		limit: number().default(50).desc("Max results"),
-		offset: number().default(0).desc("Skip results"),
+		limit: number().int().min(1).max(500).default(50).desc("Max results"),
+		offset: number().int().min(0).default(0).desc("Skip results"),
 	},
 	display: (data) =>
 		table(
@@ -66,6 +66,9 @@ export default command({
 	run: async ({ ctx, options }) => {
 		if ((await resolveTracker(ctx, options.tracker)) === "linear") {
 			return listLinearIssues(ctx, options);
+		}
+		if (options.team) {
+			throw new CLIError("--team only applies to Linear issues");
 		}
 		const result = await ctx.api.task.list.query({
 			statusId: options.status ?? undefined,
@@ -133,8 +136,11 @@ async function listLinearIssues(
 		);
 	}
 	const organizationId = requireOrganizationId(ctx);
+	const assigneeIsKeyword = assignee === "me" || assignee === "unassigned";
 	const workspace =
-		team || assignee ? await linearWorkspace(ctx, organizationId) : null;
+		team || (assignee && !assigneeIsKeyword)
+			? await linearWorkspace(ctx, organizationId)
+			: null;
 
 	const rows: ReturnType<typeof linearIssueRow>[] = [];
 	let cursor: string | null = null;
@@ -145,9 +151,11 @@ async function listLinearIssues(
 			teamId: workspace && team ? linearTeam(workspace, team).id : undefined,
 			assignee: assigneeMe
 				? "me"
-				: workspace && assignee
-					? linearUserId(workspace, assignee)
-					: undefined,
+				: assigneeIsKeyword
+					? assignee
+					: workspace && assignee
+						? linearUserId(workspace, assignee)
+						: undefined,
 			search: search ?? undefined,
 			cursor,
 		});

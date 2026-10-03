@@ -1,5 +1,5 @@
 import { CLIError, number, positional, string } from "@superset/cli-framework";
-import { format, isValid, parseISO } from "date-fns";
+import { isValid, parseISO } from "date-fns";
 import { command } from "../../../lib/command";
 import {
 	linearIssueRow,
@@ -74,7 +74,7 @@ export default command({
 							)
 						: undefined,
 				estimate: options.estimate ?? undefined,
-				dueDate: dueDate ? format(dueDate, "yyyy-MM-dd") : undefined,
+				dueDate: options.dueDate ? options.dueDate.slice(0, 10) : undefined,
 			});
 			const row = linearIssueRow(issue);
 			return { data: row, message: `Updated Linear issue ${row.slug}` };

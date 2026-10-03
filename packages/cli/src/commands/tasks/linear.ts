@@ -58,11 +58,15 @@ export function linearStateId(team: LinearTeam, value: string): string {
 	return state.id;
 }
 
-/** By Linear user id or email. */
+const LINEAR_ID =
+	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** By Linear user id or email. An id passes through: the workspace lists only the first 250 users. */
 export function linearUserId(
 	workspace: LinearWorkspace,
 	value: string,
 ): string {
+	if (LINEAR_ID.test(value.trim())) return value.trim();
 	const needle = value.trim().toLowerCase();
 	const user = workspace.users.find(
 		(u) => u.id === value || u.email?.toLowerCase() === needle,

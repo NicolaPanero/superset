@@ -9,6 +9,7 @@ export default command({
 	run: async ({ ctx, args, options }) => {
 		const ids = args.ids as string[];
 		const deleted: string[] = [];
+		const archived: string[] = [];
 		const failed: { id: string; reason: string }[] = [];
 
 		for (const idOrSlug of ids) {
@@ -19,10 +20,11 @@ export default command({
 						organizationId: requireOrganizationId(ctx),
 						issueId: resolved.issueId,
 					});
+					archived.push(idOrSlug);
 				} else {
 					await ctx.api.task.delete.mutate(resolved.task.id);
+					deleted.push(idOrSlug);
 				}
-				deleted.push(idOrSlug);
 			} catch (error) {
 				failed.push({
 					id: idOrSlug,
@@ -32,16 +34,22 @@ export default command({
 		}
 
 		if (failed.length > 0) {
-			const summary = `Deleted ${deleted.length}/${ids.length}; ${failed.length} failed (${failed.map((f) => `${f.id}: ${f.reason}`).join("; ")})`;
+			const summary = `Removed ${deleted.length + archived.length}/${ids.length} (${deleted.length} deleted, ${archived.length} archived); ${failed.length} failed (${failed.map((f) => `${f.id}: ${f.reason}`).join("; ")})`;
 			throw new CLIError(summary);
 		}
 
-		return {
-			data: { deleted, failed },
-			message:
-				deleted.length === 1
+		const message = [
+			deleted.length > 0 &&
+				(deleted.length === 1
 					? `Deleted task ${deleted[0]}`
-					: `Deleted ${deleted.length} tasks`,
-		};
+					: `Deleted ${deleted.length} tasks`),
+			archived.length > 0 &&
+				(archived.length === 1
+					? `Archived Linear issue ${archived[0]}`
+					: `Archived ${archived.length} Linear issues`),
+		]
+			.filter(Boolean)
+			.join("; ");
+		return { data: { deleted, archived, failed }, message };
 	},
 });
