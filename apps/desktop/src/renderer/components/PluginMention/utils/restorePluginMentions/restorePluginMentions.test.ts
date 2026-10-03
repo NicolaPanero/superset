@@ -8,6 +8,8 @@ const { Editor } = await import("@tiptap/core");
 const { default: Document } = await import("@tiptap/extension-document");
 const { default: Paragraph } = await import("@tiptap/extension-paragraph");
 const { default: Text } = await import("@tiptap/extension-text");
+const { default: Code } = await import("@tiptap/extension-code");
+const { default: CodeBlock } = await import("@tiptap/extension-code-block");
 const { FileMentionNode } = await import(
 	"renderer/components/TiptapPromptEditor/FileMentionNode"
 );
@@ -23,7 +25,15 @@ const resolve = (name: string) => (name === "linear" ? linear : null);
 
 function editorWith(content: object) {
 	return new Editor({
-		extensions: [Document, Paragraph, Text, FileMentionNode, PluginMentionNode],
+		extensions: [
+			Document,
+			Paragraph,
+			Text,
+			Code,
+			CodeBlock,
+			FileMentionNode,
+			PluginMentionNode,
+		],
 		content,
 	});
 }
@@ -57,6 +67,41 @@ describe("restorePluginMentions", () => {
 		]);
 		expect(editor.getText()).toBe("Ask @linear. then @slack, mail a@linear");
 		expect(restorePluginMentions(editor, resolve)).toBe(false);
+		editor.destroy();
+	});
+
+	it("leaves handles inside code blocks and inline code alone", () => {
+		const editor = editorWith({
+			type: "doc",
+			content: [
+				{
+					type: "codeBlock",
+					content: [{ type: "text", text: "@linear in a sample" }],
+				},
+				{
+					type: "paragraph",
+					content: [
+						{ type: "text", text: "run " },
+						{ type: "text", text: "@linear", marks: [{ type: "code" }] },
+						{ type: "text", text: " then @linear" },
+					],
+				},
+			],
+		});
+		expect(restorePluginMentions(editor, resolve)).toBe(true);
+		expect(editor.state.doc.firstChild?.textContent).toBe(
+			"@linear in a sample",
+		);
+		const names: string[] = [];
+		editor.state.doc.lastChild?.forEach((node) => {
+			names.push(node.isText ? `text:${node.text}` : node.type.name);
+		});
+		expect(names).toEqual([
+			"text:run ",
+			"text:@linear",
+			"text: then ",
+			"plugin-mention",
+		]);
 		editor.destroy();
 	});
 

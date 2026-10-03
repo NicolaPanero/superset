@@ -24,6 +24,7 @@ export function restorePluginMentions(
 	const replacements: Replacement[] = [];
 
 	editor.state.doc.descendants((node, pos) => {
+		if (node.type.spec.code) return false;
 		if (node.type.name === "file-mention") {
 			const plugin =
 				node.attrs.fromText === true
@@ -39,6 +40,7 @@ export function restorePluginMentions(
 			return false;
 		}
 		if (!node.isText || !node.text) return;
+		if (node.marks.some((mark) => mark.type.name === "code")) return;
 		for (const match of node.text.matchAll(HANDLE)) {
 			const name = (match[2] ?? "").replace(/[.-]+$/, "");
 			const plugin = resolvePlugin(name);
