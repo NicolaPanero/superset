@@ -2383,6 +2383,9 @@ msgstr "Gearchiveerd"
 msgid "Archived · {0}"
 msgstr "Gearchiveerd · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "\"{name}\" gearchiveerd"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Gearchiveerd {0}"
@@ -8972,9 +8975,6 @@ msgstr "Link gekopieerd"
 msgid "Link GitHub issue"
 msgstr "GitHub-issue koppelen"
 
-msgid "Link issue"
-msgstr "Issue koppelen"
-
 msgid "Link Linear issue"
 msgstr "Linear-issue koppelen"
 
@@ -12930,9 +12930,6 @@ msgstr "Lid verwijderen..."
 msgid "Removing terminal..."
 msgstr "Terminal verwijderen..."
 
-msgid "Removing…"
-msgstr "Verwijderen…"
-
 msgid "Rename"
 msgstr "Naam wijzigen"
 
@@ -13294,11 +13291,17 @@ msgstr "Plan herstellen"
 msgid "restore the agent defaults"
 msgstr "de standaardwaarden van de agent herstellen"
 
+msgid "Restore the workspace you just archived"
+msgstr "De werkruimte herstellen die je net hebt gearchiveerd"
+
 msgid "Restore this version?"
 msgstr "Deze versie herstellen?"
 
 msgid "Restored"
 msgstr "Hersteld"
+
+msgid "Restored \"{name}\""
+msgstr "\"{name}\" hersteld"
 
 msgid "Restored \"{projectName}\""
 msgstr "\"{projectName}\" hersteld"
@@ -17049,6 +17052,9 @@ msgstr "Gaande"
 
 msgid "Undo"
 msgstr "Ongedaan maken"
+
+msgid "Undo Archive"
+msgstr "Archiveren ongedaan maken"
 
 msgid "Ungroup"
 msgstr "Groepering opheffen"

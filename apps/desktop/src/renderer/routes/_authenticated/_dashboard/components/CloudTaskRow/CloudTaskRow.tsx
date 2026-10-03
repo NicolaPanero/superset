@@ -1,6 +1,5 @@
 import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { CloudTaskIcon } from "renderer/routes/_authenticated/_dashboard/components/CloudTaskIcon";
 import type { CloudTask } from "./types";
 
@@ -12,7 +11,6 @@ interface CloudTaskRowProps {
 }
 
 export function CloudTaskRow({ task, onOpen, trailing }: CloudTaskRowProps) {
-	const taskDisplayId = useTaskDisplayId();
 	return (
 		<div className="group/task-row relative flex h-7 w-fit max-w-full items-center rounded-sm text-xs hover:bg-fill-hover has-[:focus-visible]:bg-fill-hover">
 			<button
@@ -22,7 +20,7 @@ export function CloudTaskRow({ task, onOpen, trailing }: CloudTaskRowProps) {
 			>
 				<CloudTaskIcon task={task} />
 				<span className="shrink-0 font-mono text-muted-foreground">
-					{taskDisplayId(task)}
+					{task.slug}
 				</span>
 				<span
 					className={cn(

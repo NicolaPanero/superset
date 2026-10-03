@@ -2383,6 +2383,9 @@ msgstr "Zarchiwizowane"
 msgid "Archived · {0}"
 msgstr "Zarchiwizowano · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "Zarchiwizowano „{name}”"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Zarchiwizowano {0}"
@@ -8972,9 +8975,6 @@ msgstr "Skopiowano link"
 msgid "Link GitHub issue"
 msgstr "Powiąż zgłoszenie GitHub"
 
-msgid "Link issue"
-msgstr "Powiąż zgłoszenie"
-
 msgid "Link Linear issue"
 msgstr "Połącz zgłoszenie Linear"
 
@@ -12930,9 +12930,6 @@ msgstr "Usuwanie członka..."
 msgid "Removing terminal..."
 msgstr "Usuwanie terminala..."
 
-msgid "Removing…"
-msgstr "Usuwanie…"
-
 msgid "Rename"
 msgstr "Zmień nazwę"
 
@@ -13294,11 +13291,17 @@ msgstr "Przywróć plan"
 msgid "restore the agent defaults"
 msgstr "przywrócić domyślnych ustawień agenta"
 
+msgid "Restore the workspace you just archived"
+msgstr "Przywróć właśnie zarchiwizowany obszar roboczy"
+
 msgid "Restore this version?"
 msgstr "Przywrócić tę wersję?"
 
 msgid "Restored"
 msgstr "Przywrócona"
+
+msgid "Restored \"{name}\""
+msgstr "Przywrócono „{name}”"
 
 msgid "Restored \"{projectName}\""
 msgstr "Przywrócono „{projectName}”"
@@ -17049,6 +17052,9 @@ msgstr "W toku"
 
 msgid "Undo"
 msgstr "Cofnij"
+
+msgid "Undo Archive"
+msgstr "Cofnij archiwizację"
 
 msgid "Ungroup"
 msgstr "Rozgrupuj"

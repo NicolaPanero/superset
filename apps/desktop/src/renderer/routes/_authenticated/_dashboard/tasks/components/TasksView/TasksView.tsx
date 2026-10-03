@@ -7,7 +7,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
 import {
@@ -76,10 +75,7 @@ export function TasksView({
 	const [searchQuery, setSearchQuery] = useState(initialSearch ?? storedSearch);
 	const deferredSearchQuery = useDeferredValue(searchQuery);
 	const assigneeFilter = initialAssignee ?? storedAssignee;
-	const isLinearLive = useIsLinearLiveTabEnabled();
-	const requestedTypeTab = initialType ?? storedTypeTab;
-	const typeTab: TypeTab =
-		requestedTypeTab === "linear" && !isLinearLive ? "tasks" : requestedTypeTab;
+	const typeTab: TypeTab = initialType ?? storedTypeTab;
 	const projectFilters = initialProjects ?? storedProjectFilters;
 	const linearProjectFilter = initialLinearProject ?? storedLinearProjectFilter;
 	const includeClosedIssues =
@@ -269,16 +265,6 @@ export function TasksView({
 		});
 	};
 
-	const handleLinearProjectFilterChange = (linearProject: string | null) => {
-		cancelPendingSearchNavigation();
-		storeSetLinearProjectFilter(linearProject);
-		navigate({
-			to: "/tasks",
-			search: buildSearch({ linearProject }),
-			replace: true,
-		});
-	};
-
 	const handleIncludeClosedIssuesChange = (nextIncludeClosed: boolean) => {
 		cancelPendingSearchNavigation();
 		storeSetIncludeClosedIssues(nextIncludeClosed);
@@ -359,8 +345,6 @@ export function TasksView({
 				onTaskSourceChange={handleTaskSourceChange}
 				projectFilters={projectFilters}
 				onProjectFiltersChange={handleProjectFiltersChange}
-				linearProjectFilter={linearProjectFilter}
-				onLinearProjectFilterChange={handleLinearProjectFilterChange}
 				linearTeamFilter={linearTeamFilter}
 				onLinearTeamFilterChange={setLinearTeamFilter}
 				linearAssigneeFilter={linearAssigneeFilter}

@@ -14,7 +14,6 @@ import {
 	HiXMark,
 } from "react-icons/hi2";
 import { SiLinear } from "react-icons/si";
-import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { CreateTaskDialog } from "renderer/routes/_authenticated/_dashboard/components/CreateTaskDialog";
 import { OpenClosedFilter } from "renderer/routes/_authenticated/_dashboard/components/OpenClosedFilter";
@@ -28,7 +27,6 @@ import type { SelectedIssue } from "../GitHubIssuesContent";
 import { AssigneeFilter } from "./components/AssigneeFilter";
 import { CreateLinearIssueDialog } from "./components/CreateLinearIssueDialog";
 import { LinearAssigneeFilter } from "./components/LinearAssigneeFilter";
-import { LinearProjectFilter } from "./components/LinearProjectFilter";
 import { LinearTeamFilter } from "./components/LinearTeamFilter";
 import { RunInWorkspacePopover } from "./components/RunInWorkspacePopover";
 import { RunIssuesInWorkspacePopover } from "./components/RunIssuesInWorkspacePopover";
@@ -61,8 +59,6 @@ interface TasksTopBarProps {
 	onTaskSourceChange: (taskSource: TaskSource) => void;
 	projectFilters: string[];
 	onProjectFiltersChange: (projectIds: string[]) => void;
-	linearProjectFilter: string | null;
-	onLinearProjectFilterChange: (projectId: string | null) => void;
 	linearTeamFilter: string | null;
 	onLinearTeamFilterChange: (teamId: string | null) => void;
 	linearAssigneeFilter: string | null;
@@ -73,15 +69,9 @@ interface TasksTopBarProps {
 
 const TASK_SOURCES: ReadonlyArray<{ value: TaskSource; Icon: IconType }> = [
 	{ value: "tasks", Icon: HiOutlineClipboardDocumentList },
+	{ value: "linear", Icon: SiLinear },
 	{ value: "issues", Icon: GoIssueOpened },
 ];
-
-const LIVE_TASK_SOURCES: ReadonlyArray<{ value: TaskSource; Icon: IconType }> =
-	[
-		{ value: "tasks", Icon: HiOutlineClipboardDocumentList },
-		{ value: "linear", Icon: SiLinear },
-		{ value: "issues", Icon: GoIssueOpened },
-	];
 
 export function TasksTopBar({
 	currentTab,
@@ -100,8 +90,6 @@ export function TasksTopBar({
 	onTaskSourceChange,
 	projectFilters,
 	onProjectFiltersChange,
-	linearProjectFilter,
-	onLinearProjectFilterChange,
 	linearTeamFilter,
 	onLinearTeamFilterChange,
 	linearAssigneeFilter,
@@ -111,8 +99,6 @@ export function TasksTopBar({
 }: TasksTopBarProps) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
-	const isLinearLive = useIsLinearLiveTabEnabled();
-	const taskSources = isLinearLive ? LIVE_TASK_SOURCES : TASK_SOURCES;
 	const taskSourceLabels: Record<TaskSource, string> = {
 		tasks: t({
 			message: "Tasks",
@@ -199,7 +185,7 @@ export function TasksTopBar({
 									className="flex-row gap-0"
 								>
 									<TabsList className="h-8 gap-0.5 rounded-md bg-muted/50 p-0.5">
-										{taskSources.map((source) => {
+										{TASK_SOURCES.map((source) => {
 											const Icon = source.Icon;
 											return (
 												<TabsTrigger
@@ -232,15 +218,6 @@ export function TasksTopBar({
 									</>
 								) : showTaskOnlyControls ? (
 									<>
-										{!isLinearLive && (
-											<>
-												<LinearProjectFilter
-													value={linearProjectFilter}
-													onChange={onLinearProjectFilterChange}
-												/>
-												<div className="h-4 w-px shrink-0 bg-border" />
-											</>
-										)}
 										<StatusFilter value={currentTab} onChange={onTabChange} />
 										<div className="h-4 w-px shrink-0 bg-border" />
 										<AssigneeFilter

@@ -5,8 +5,6 @@ export {
 	type TaskAssignee,
 	type TasksPagination,
 	type TaskWithStatus,
-	useStatusPickerInput,
-	useTaskPickerInput,
 	useTasksData,
 	useTasksJoinedWithStatuses,
 } from "./useTasksData";

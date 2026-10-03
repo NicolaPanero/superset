@@ -227,6 +227,18 @@ export const HOTKEYS_REGISTRY = {
 			message: "Close or delete the current workspace",
 		}),
 	},
+	UNDO_ARCHIVE_WORKSPACE: {
+		key: {
+			mac: L("meta+z"),
+			windows: L("ctrl+z"),
+			linux: L("ctrl+z"),
+		},
+		label: msg({ message: "Undo Archive" }),
+		category: "Workspace",
+		description: msg({
+			message: "Restore the workspace you just archived",
+		}),
+	},
 	NEW_WORKSPACE: {
 		key: {
 			mac: L("meta+n"),

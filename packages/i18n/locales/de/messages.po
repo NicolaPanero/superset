@@ -2383,6 +2383,9 @@ msgstr "Archiviert"
 msgid "Archived · {0}"
 msgstr "Archiviert · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "„{name}“ archiviert"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Archiviert {0}"
@@ -8972,9 +8975,6 @@ msgstr "Link kopiert"
 msgid "Link GitHub issue"
 msgstr "GitHub-Issue verknüpfen"
 
-msgid "Link issue"
-msgstr "Issue verknüpfen"
-
 msgid "Link Linear issue"
 msgstr "Linear-Issue verknüpfen"
 
@@ -12930,9 +12930,6 @@ msgstr "Mitglied wird entfernt..."
 msgid "Removing terminal..."
 msgstr "Terminal wird entfernt..."
 
-msgid "Removing…"
-msgstr "Wird entfernt…"
-
 msgid "Rename"
 msgstr "Umbenennen"
 
@@ -13294,11 +13291,17 @@ msgstr "Tarif wiederherstellen"
 msgid "restore the agent defaults"
 msgstr "die Agenten-Standardwerte wiederherstellen"
 
+msgid "Restore the workspace you just archived"
+msgstr "Den gerade archivierten Arbeitsbereich wiederherstellen"
+
 msgid "Restore this version?"
 msgstr "Diese Version wiederherstellen?"
 
 msgid "Restored"
 msgstr "Wiederhergestellt"
+
+msgid "Restored \"{name}\""
+msgstr "„{name}“ wiederhergestellt"
 
 msgid "Restored \"{projectName}\""
 msgstr "„{projectName}“ wiederhergestellt"
@@ -17049,6 +17052,9 @@ msgstr "Läuft"
 
 msgid "Undo"
 msgstr "Rückgängig"
+
+msgid "Undo Archive"
+msgstr "Archivierung rückgängig machen"
 
 msgid "Ungroup"
 msgstr "Gruppierung aufheben"

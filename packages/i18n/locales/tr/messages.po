@@ -2383,6 +2383,9 @@ msgstr "Arşivlenmiş"
 msgid "Archived · {0}"
 msgstr "Arşivlendi · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "\"{name}\" arşivlendi"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "{0} arşivlendi"
@@ -8972,9 +8975,6 @@ msgstr "Bağlantı kopyalandı"
 msgid "Link GitHub issue"
 msgstr "GitHub issue'su bağla"
 
-msgid "Link issue"
-msgstr "Issue bağla"
-
 msgid "Link Linear issue"
 msgstr "Linear issue'su bağla"
 
@@ -12930,9 +12930,6 @@ msgstr "Üye kaldırılıyor..."
 msgid "Removing terminal..."
 msgstr "Terminal kaldırılıyor..."
 
-msgid "Removing…"
-msgstr "Kaldırılıyor…"
-
 msgid "Rename"
 msgstr "Yeniden adlandır"
 
@@ -13294,11 +13291,17 @@ msgstr "Planı geri yükle"
 msgid "restore the agent defaults"
 msgstr "ajan varsayılanlarını geri yükleme"
 
+msgid "Restore the workspace you just archived"
+msgstr "Az önce arşivlediğiniz çalışma alanını geri yükle"
+
 msgid "Restore this version?"
 msgstr "Bu sürüm geri yüklensin mi?"
 
 msgid "Restored"
 msgstr "Geri yüklendi"
+
+msgid "Restored \"{name}\""
+msgstr "\"{name}\" geri yüklendi"
 
 msgid "Restored \"{projectName}\""
 msgstr "\"{projectName}\" geri yüklendi"
@@ -17049,6 +17052,9 @@ msgstr "Sürüyor"
 
 msgid "Undo"
 msgstr "Geri al"
+
+msgid "Undo Archive"
+msgstr "Arşivlemeyi geri al"
 
 msgid "Ungroup"
 msgstr "Gruptan çıkar"

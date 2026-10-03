@@ -2383,6 +2383,9 @@ msgstr "Archivované"
 msgid "Archived · {0}"
 msgstr "Archivováno · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "„{name}“ archivováno"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "Archivováno {0}"
@@ -8972,9 +8975,6 @@ msgstr "Odkaz zkopírován"
 msgid "Link GitHub issue"
 msgstr "Propojit GitHub issue"
 
-msgid "Link issue"
-msgstr "Propojit issue"
-
 msgid "Link Linear issue"
 msgstr "Propojit Linear issue"
 
@@ -12930,9 +12930,6 @@ msgstr "Odebírám člena..."
 msgid "Removing terminal..."
 msgstr "Odebírám terminál..."
 
-msgid "Removing…"
-msgstr "Odebírám…"
-
 msgid "Rename"
 msgstr "Přejmenovat"
 
@@ -13294,11 +13291,17 @@ msgstr "Obnovit tarif"
 msgid "restore the agent defaults"
 msgstr "obnovit výchozí nastavení agenta"
 
+msgid "Restore the workspace you just archived"
+msgstr "Obnovit pracovní prostor, který jste právě archivovali"
+
 msgid "Restore this version?"
 msgstr "Obnovit tuto verzi?"
 
 msgid "Restored"
 msgstr "Obnoveno"
+
+msgid "Restored \"{name}\""
+msgstr "„{name}“ obnoveno"
 
 msgid "Restored \"{projectName}\""
 msgstr "„{projectName}“ obnoven"
@@ -17049,6 +17052,9 @@ msgstr "Probíhá"
 
 msgid "Undo"
 msgstr "Zpět"
+
+msgid "Undo Archive"
+msgstr "Vrátit archivaci"
 
 msgid "Ungroup"
 msgstr "Zrušit skupinu"

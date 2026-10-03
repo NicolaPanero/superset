@@ -2383,6 +2383,9 @@ msgstr "보관됨"
 msgid "Archived · {0}"
 msgstr "보관됨 · {0}"
 
+msgid "Archived \"{name}\""
+msgstr "\"{name}\"을(를) 보관했습니다"
+
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
 msgstr "보관됨 {0}"
@@ -8972,9 +8975,6 @@ msgstr "링크 복사됨"
 msgid "Link GitHub issue"
 msgstr "GitHub 이슈 연결"
 
-msgid "Link issue"
-msgstr "이슈 연결"
-
 msgid "Link Linear issue"
 msgstr "Linear 이슈 연결"
 
@@ -12930,9 +12930,6 @@ msgstr "멤버를 제거하는 중..."
 msgid "Removing terminal..."
 msgstr "터미널을 제거하는 중..."
 
-msgid "Removing…"
-msgstr "제거하는 중…"
-
 msgid "Rename"
 msgstr "이름 변경"
 
@@ -13294,11 +13291,17 @@ msgstr "플랜 복원"
 msgid "restore the agent defaults"
 msgstr "에이전트 기본값을 복원할"
 
+msgid "Restore the workspace you just archived"
+msgstr "방금 보관한 워크스페이스를 복원합니다"
+
 msgid "Restore this version?"
 msgstr "이 버전을 복원할까요?"
 
 msgid "Restored"
 msgstr "복원됨"
+
+msgid "Restored \"{name}\""
+msgstr "\"{name}\"을(를) 복원했습니다"
 
 msgid "Restored \"{projectName}\""
 msgstr "\"{projectName}\"을(를) 복원했습니다"
@@ -17049,6 +17052,9 @@ msgstr "진행 중"
 
 msgid "Undo"
 msgstr "실행 취소"
+
+msgid "Undo Archive"
+msgstr "보관 실행 취소"
 
 msgid "Ungroup"
 msgstr "그룹 해제"
