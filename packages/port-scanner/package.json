@@ -12,7 +12,7 @@
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
-		"test": "bun test",
+		"test": "bun test --isolate",
 		"build:types": "tsc -p tsconfig.types.json"
 	},
 	"dependencies": {
