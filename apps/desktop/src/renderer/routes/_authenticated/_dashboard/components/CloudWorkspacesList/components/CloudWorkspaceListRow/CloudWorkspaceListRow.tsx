@@ -124,30 +124,37 @@ export function CloudWorkspaceListRow({
 				</span>
 			</td>
 			<td className="w-0 pr-3 text-right">
-				{isArchived || item.isMine ? null : isInSidebar ? (
-					<Button
-						variant="outline"
-						size="xs"
-						onClick={(event) => {
-							event.stopPropagation();
-							onSetInSidebar(false);
-						}}
-						className="gap-1 text-xs whitespace-nowrap"
-					>
-						<HiMiniXMark className="size-3.5" />
-						<Trans>Remove from sidebar</Trans>
-					</Button>
-				) : (
-					<Button
-						size="xs"
-						onClick={(event) => {
-							event.stopPropagation();
-							onSetInSidebar(true);
-						}}
-						className="text-xs whitespace-nowrap"
-					>
-						<Trans>Add to sidebar</Trans>
-					</Button>
+				{isArchived || item.isMine ? null : (
+					<span className="inline-grid justify-items-end *:[grid-area:1/1]">
+						<Button
+							variant="outline"
+							size="xs"
+							onClick={(event) => {
+								event.stopPropagation();
+								onSetInSidebar(false);
+							}}
+							className={cn(
+								"gap-1 text-xs whitespace-nowrap",
+								!isInSidebar && "invisible",
+							)}
+						>
+							<HiMiniXMark className="size-3.5" />
+							<Trans>Remove from sidebar</Trans>
+						</Button>
+						<Button
+							size="xs"
+							onClick={(event) => {
+								event.stopPropagation();
+								onSetInSidebar(true);
+							}}
+							className={cn(
+								"text-xs whitespace-nowrap",
+								isInSidebar && "invisible",
+							)}
+						>
+							<Trans>Add to sidebar</Trans>
+						</Button>
+					</span>
 				)}
 			</td>
 			<td className="w-0 pr-4">
