@@ -19,6 +19,7 @@ import {
 	Globe,
 	MessageSquare,
 	Monitor,
+	Smartphone,
 } from "lucide-react";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useMemo } from "react";
@@ -89,6 +90,7 @@ import { DiffPane } from "./components/DiffPane";
 import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneHeaderExtras";
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
+import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
 import { PagePaneTitle } from "./components/PagePaneTitle";
@@ -728,6 +730,14 @@ export function usePaneRegistry({
 						},
 					}
 				: {}),
+			mobile: {
+				getIcon: () => <Smartphone className="size-3.5" />,
+				getTitle: () =>
+					t({
+						message: "Mobile",
+					}),
+				renderPane: () => <MobilePane />,
+			},
 			...(isChatV3Enabled
 				? {
 						"chat-v3": {

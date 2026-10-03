@@ -407,6 +407,20 @@ export const HOTKEYS_REGISTRY = {
 			message: "Split the current pane and open the sandbox desktop",
 		}),
 	},
+	SPLIT_WITH_MOBILE: {
+		key: {
+			mac: L("meta+shift+m"),
+			windows: L("ctrl+shift+alt+m"),
+			linux: L("ctrl+shift+alt+m"),
+		},
+		label: msg({
+			message: "Split with Mobile Simulator",
+		}),
+		category: "Layout",
+		description: msg({
+			message: "Split the current pane and open a mobile simulator",
+		}),
+	},
 	EQUALIZE_PANE_SPLITS: {
 		key: {
 			mac: L("meta+shift+0"),
