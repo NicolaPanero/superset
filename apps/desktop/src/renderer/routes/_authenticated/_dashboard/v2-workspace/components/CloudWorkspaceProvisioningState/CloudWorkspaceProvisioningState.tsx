@@ -134,9 +134,10 @@ function CloudWorkspaceFailedState({
 					size="sm"
 					variant="outline"
 					onClick={() =>
-						useDeleteWorkspaceIntent
-							.getState()
-							.request({ workspaceId, workspaceName: name })
+						useDeleteWorkspaceIntent.getState().request({
+							workspaceId,
+							workspaceName: name || t({ message: "Untitled workspace" }),
+						})
 					}
 				>
 					<Trans>Remove workspace</Trans>

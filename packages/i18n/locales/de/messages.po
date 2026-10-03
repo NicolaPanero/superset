@@ -2346,7 +2346,7 @@ msgid "Archived · {0}"
 msgstr "Archiviert · {0}"
 
 msgid "Archived \"{name}\""
-msgstr "\"{name}\" archiviert"
+msgstr "„{name}“ archiviert"
 
 #. placeholder {0}: formatCompactRelativeTime(workspace.deletedAt, now)
 msgid "Archived {0}"
@@ -13217,7 +13217,7 @@ msgid "Restored"
 msgstr "Wiederhergestellt"
 
 msgid "Restored \"{name}\""
-msgstr "\"{name}\" wiederhergestellt"
+msgstr "„{name}“ wiederhergestellt"
 
 msgid "Restored \"{projectName}\""
 msgstr "„{projectName}“ wiederhergestellt"

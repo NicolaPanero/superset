@@ -94,12 +94,12 @@ export function useNavigateAwayFromWorkspace() {
 					useDeletingWorkspacesStore.getState().deletingIds.has(id),
 			});
 
-			if (!target) return;
+			if (!target) return null;
 			if (target.kind === "workspace") {
 				void navigateToV2Workspace(target.workspaceId, navigate, {
 					replace: true,
 				}).catch(reportRemovalNavigationError);
-				return;
+				return target;
 			}
 			// Straight to the v2 empty state — "/" detours through the v1
 			// workspace index, which can restore stale pre-migration state
@@ -107,6 +107,7 @@ export function useNavigateAwayFromWorkspace() {
 			void navigate({ to: "/new-workspace", replace: true }).catch(
 				reportRemovalNavigationError,
 			);
+			return target;
 		},
 		[
 			collections,

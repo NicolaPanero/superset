@@ -34,7 +34,14 @@ export function useUnarchiveCloudWorkspace() {
 	});
 	return (id: string, options?: { onSuccess?: () => void }) => {
 		restartProvisioningTimer(id);
-		mutate({ id }, { onSuccess: options?.onSuccess });
+		mutate(
+			{ id },
+			{
+				onSuccess: ({ unarchived }) => {
+					if (unarchived) options?.onSuccess?.();
+				},
+			},
+		);
 		void navigate({
 			to: "/v2-workspace/$workspaceId",
 			params: { workspaceId: id },
