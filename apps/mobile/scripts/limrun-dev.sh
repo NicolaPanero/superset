@@ -16,6 +16,7 @@
 #   apps/mobile/scripts/limrun-dev.sh               # install the shared asset if one exists, else build
 #   apps/mobile/scripts/limrun-dev.sh --rebuild      # native dep/config changed: go through Xcode (incremental)
 #   apps/mobile/scripts/limrun-dev.sh --force-prebuild   # also regenerate ios/ (an --env-level native value changed)
+#   MOBILE_LIMRUN_ASSET=<name> apps/mobile/scripts/limrun-dev.sh   # JS-only branch: reuse another branch's build
 #
 # Requires: lim CLI authenticated (LIM_API_KEY in .env), this repo's .env
 # already written (.superset/setup.sh or setup.cloud.sh), and port 8081 free.
@@ -53,7 +54,7 @@ METRO_PORT=8081
 API_PORT="${API_PORT:?API_PORT is missing from .env}"
 BRANCH="$(git branch --show-current 2>/dev/null || echo main)"
 SNAPSHOT_KEY="mobile-${BRANCH//\//-}"
-ASSET_NAME="sh.superset.mobile/${BRANCH//\//-}-debug.zip"
+ASSET_NAME="${MOBILE_LIMRUN_ASSET:-sh.superset.mobile/${BRANCH//\//-}-debug.zip}"
 # A snapshot restore never carries this; .env itself never reaches the
 # remote build at all (it's gitignored, so Limrun's sync drops it) — forward
 # whatever this box actually has, real secret or the committed placeholder.
@@ -117,10 +118,15 @@ else
 fi
 echo "    $IOS_ID"
 
-echo "==> Tunnel (Metro :$METRO_PORT, API :$API_PORT)"
+# One selector per port the app calls; selector sets can't change later.
+TUNNEL_PORTS=("$METRO_PORT" "$API_PORT")
+[ -n "${REALTIME_PORT:-}" ] && TUNNEL_PORTS+=("$REALTIME_PORT")
+[ -n "${RELAY_PORT:-}" ] && TUNNEL_PORTS+=("$RELAY_PORT")
+SELECTORS=()
+for port in "${TUNNEL_PORTS[@]}"; do SELECTORS+=(--selector "localhost:$port"); done
+echo "==> Tunnel (ports ${TUNNEL_PORTS[*]})"
 lim ios tunnel stop --id "$IOS_ID" >/dev/null 2>&1 || true
-lim ios tunnel --selector "localhost:$METRO_PORT" --selector "localhost:$API_PORT" \
-	--detach --id "$IOS_ID"
+lim ios tunnel "${SELECTORS[@]}" --detach --id "$IOS_ID"
 
 if ! curl -s "http://127.0.0.1:$METRO_PORT/status" 2>/dev/null | grep -q "packager-status:running"; then
 	echo "==> Starting Metro"
@@ -142,7 +148,7 @@ Ready.
   Stream:         https://console.limrun.com/stream/$IOS_ID
   Metro log:      /tmp/superset-metro.log
 
-This does not start apps/relay or tunnel its port — host/workspace presence
-features will show as unreachable until you do, same as running the app
-normally without the relay up. See apps/mobile/AGENTS.md.
+The relay and realtime ports are tunnelled, but this starts neither service:
+run "bun dev:realtime" for live cloud rows, and the relay for host presence.
+See apps/mobile/AGENTS.md.
 SUMMARY
