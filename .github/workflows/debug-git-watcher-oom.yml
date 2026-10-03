@@ -1,0 +1,41 @@
+name: Debug git-watcher OOM (temporary)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - ".github/workflows/debug-git-watcher-oom.yml"
+      - "packages/host-service/**"
+
+jobs:
+  repro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+
+      - run: bun install --frozen --ignore-scripts
+
+      - name: Run the git-watcher file with a memory sampler
+        working-directory: packages/host-service
+        run: |
+          set +e
+          (while true; do
+            echo "=== $(date +%T) free=$(free -m | awk '/Mem:/{print $7}')MB"
+            ps -eo rss,pid,ppid,comm --sort=-rss | head -6
+            sleep 1
+          done) > /tmp/mem.log 2>&1 &
+          sampler=$!
+          for i in 1 2 3 4 5; do
+            echo "##### run $i"
+            timeout 300 bun test ./test/integration/git-watcher-lazy-registration.integration.test.ts
+            echo "##### run $i exit=$?"
+          done
+          kill $sampler
+          echo "##### peak samples"
+          awk '/^ *[0-9]+ +[0-9]+ +[0-9]+ /{print}' /tmp/mem.log | sort -rn | head -15
+          echo "##### lowest free memory"
+          grep -o "free=[0-9]*" /tmp/mem.log | sort -t= -k2 -n | head -3
