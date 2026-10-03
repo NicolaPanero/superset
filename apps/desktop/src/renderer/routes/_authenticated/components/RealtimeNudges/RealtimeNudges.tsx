@@ -12,6 +12,7 @@ import { env } from "renderer/env.renderer";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { getJwt } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { useCloudDiffStatsStore } from "renderer/stores/cloud-diff-stats";
 
 /**
  * One socket per window to the realtime Worker. The API sends a nudge after
@@ -57,6 +58,7 @@ export function RealtimeNudges() {
 
 		const patch = (updates: readonly RealtimeUpdate[]) => {
 			if (updates.length === 0) return;
+			useCloudDiffStatsStore.getState().record(updates);
 			utils.cloudWorkspace.list.setData({ organizationId }, (rows) =>
 				rows?.map((row) => {
 					const update = updates.find((u) => u.workspaceId === row.id);

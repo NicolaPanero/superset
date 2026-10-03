@@ -5,7 +5,7 @@ import type {
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSession } from "@/lib/auth/client";
-import { openNudgeSocket } from "@/lib/realtime";
+import { openNudgeSocket, useCloudDiffStatsStore } from "@/lib/realtime";
 import type { CloudWorkspaceRow } from "../useCloudWorkspaces";
 import { patchCloudWorkspaceRows } from "./patchCloudWorkspaceRows";
 
@@ -38,6 +38,7 @@ function patch(
 	updates: readonly RealtimeUpdate[],
 ) {
 	if (updates.length === 0) return;
+	useCloudDiffStatsStore.getState().record(updates);
 	queryClient.setQueriesData<CloudWorkspaceRow[]>(
 		{ queryKey: ["cloud", "cloudWorkspace", "list", organizationId] },
 		(rows) => rows && patchCloudWorkspaceRows(rows, updates),

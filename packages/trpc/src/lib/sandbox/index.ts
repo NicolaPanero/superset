@@ -10,6 +10,7 @@ export {
 } from "./api-credential";
 export { buildSandboxClaim } from "./claim";
 export { deriveSandboxCredentials } from "./credentials";
+export { reportSandboxDiffStats } from "./diff-stats";
 export {
 	listRemoteBranches,
 	type RemoteBranch,

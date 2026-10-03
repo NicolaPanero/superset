@@ -16,6 +16,7 @@ import {
 } from "@/screens/(authenticated)/workspace/[id]/utils/pullRequest";
 import type { CloudPullRequest } from "../../hooks/useCloudPullRequests";
 import { ArchivedCloudRowMenu } from "./components/ArchivedCloudRowMenu";
+import { CloudWorkspaceDiffStats } from "./components/CloudWorkspaceDiffStats";
 import { CloudWorkspaceRowMenu } from "./components/CloudWorkspaceRowMenu";
 import { CloudWorkspaceStatus } from "./components/CloudWorkspaceStatus";
 
@@ -105,6 +106,7 @@ export function CloudWorkspaceRow({
 					/>
 				) : null}
 			</View>
+			<CloudWorkspaceDiffStats workspaceId={row.id} />
 			{pullRequest && prStatus && !archived ? (
 				<Button
 					accessibilityLabel={t({
