@@ -388,7 +388,7 @@ describe("probeIdentity", () => {
 		expect(identity.user).toEqual({ id: "42", label: "h@tegon.ai" });
 	});
 
-	test("superhuman_mcp reads the primary account from the MCP server", async () => {
+	test("superhuman_mcp reads the default account wherever the server lists it", async () => {
 		const calls: { method?: string; params?: { name?: string } }[] = [];
 		globalThis.fetch = (async (_url: string, init: RequestInit) => {
 			const body = init.body
@@ -409,6 +409,11 @@ describe("probeIdentity", () => {
 									type: "text",
 									text: JSON.stringify({
 										accounts: [
+											{
+												accountEmail: "personal@example.com",
+												isPrimary: false,
+												addedAt: "2026-09-01T00:00:00Z",
+											},
 											{
 												accountEmail: "h@tegon.ai",
 												isPrimary: true,

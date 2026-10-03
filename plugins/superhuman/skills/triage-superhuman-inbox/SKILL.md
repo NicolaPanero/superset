@@ -13,13 +13,19 @@ next, and change the mailbox only where the user said to.
 
 ## 1. Scope the sweep
 
-`list_accounts`, then `list_splits` for the account: splits carry thread and
-unread counts, so you can say "Important has 14 unread, Other has 212" before
-reading anything. Triage the splits the user cares about (Important, VIP, Team,
-a support split) one at a time with `list_threads`, and leave Other and the
-notification splits for a cleanup pass the user asks for. `is_unread` and
-`start_date` bound the sweep; the default page is 25 threads, so page with
-`cursor` until the window is covered.
+`list_accounts` first. When the user named an account, or more than one is
+linked, every call that follows carries that account's `acting_email`, reads
+and changes alike: a call without it acts on the default account, so a sweep of
+the wrong mailbox looks exactly like a successful sweep. Then `list_splits`:
+splits carry thread and unread counts, so you can say "Important has 14 unread,
+Other has 212" before reading anything. Triage the splits the user cares about
+(Important, VIP, Team, a support split) one at a time with `list_threads`, and
+leave Other and the notification splits for a cleanup pass the user asks for.
+`is_unread` narrows a split, but `split` ignores the date filters and `sort`
+only orders the returned page, so a time window is yours to enforce: page with
+`cursor` and compare each thread's timestamp against the window. An older
+thread on a page does not end the sweep; later pages can still hold threads
+inside it.
 
 ## 2. Read enough to classify
 
@@ -35,7 +41,9 @@ exchange. Sort each thread into one of four groups:
 - **Noise**: newsletters, automated notifications, cold outreach.
 
 Participants and dates decide the group, not the sender's name or the subject
-line. A thread where the user replied last is waiting, however urgent it reads.
+line. A thread where the user replied last is waiting only when that reply
+asked for something; a closing thanks, or an answer that settled the question,
+is done, however urgent the subject reads.
 
 ## 3. Report before changing anything
 
@@ -50,7 +58,9 @@ user already said what to do with each group.
 `update_thread` archives (`mark_done`), stars, marks read, moves a thread
 between Important and Other, and adds or removes labels. It needs the thread's
 `last_message_id` from `get_thread`, so a reply that landed meanwhile is not
-archived unseen. Labels must already exist; check `list_labels`.
+archived unseen. Labels must already exist; check `list_labels`. Its
+`move_to_folder` never points at Trash: that is how `update_thread` can trash a
+thread, and trashing is not triage.
 
 `create_or_update_reminder` is Superhuman's Remind Me: by default it removes the
 thread from the inbox until `remind_at`, and it cancels itself if someone
@@ -61,8 +71,9 @@ visible. A thread holds one reminder, so setting another reschedules it.
 `also_trash` off unless the user asked for them, and never block a domain over
 one message: `also_domain` silences everyone at that company.
 
-Marking spam and trashing are not triage. If the user wants that, name the
-thread and let them confirm it.
+Marking spam and trashing are not triage, and neither `mark_spam` nor
+`trash_thread` is granted here, so each asks before it runs. If the user wants
+a thread gone, name it and let them confirm.
 
 ## Anti-patterns
 

@@ -2,7 +2,7 @@
 name: reply-from-superhuman
 description: Draft a reply, a follow-up, or a new email in Superhuman in the user's own voice — read the whole thread first, reuse an existing draft instead of adding a second one, keep the right people on the thread, and leave sending to the user unless they asked for it. Use when the user says reply to, answer, follow up with, draft an email to, or send, or when a triage turned up threads that need a response.
 argument-hint: the thread or person to write to, and what the email should say
-allowed-tools: mcp__superhuman__list_accounts, mcp__superhuman__list_threads, mcp__superhuman__get_thread, mcp__superhuman__get_message, mcp__superhuman__list_drafts, mcp__superhuman__get_draft, mcp__superhuman__get_draft_send_status, mcp__superhuman__create_or_update_draft, mcp__superhuman__discard_draft, mcp__superhuman__list_snippets, mcp__superhuman__get_snippet, mcp__superhuman__undo_send
+allowed-tools: mcp__superhuman__list_accounts, mcp__superhuman__list_threads, mcp__superhuman__get_thread, mcp__superhuman__get_message, mcp__superhuman__get_attachment, mcp__superhuman__list_drafts, mcp__superhuman__get_draft, mcp__superhuman__get_draft_send_status, mcp__superhuman__create_or_update_draft, mcp__superhuman__discard_draft, mcp__superhuman__list_snippets, mcp__superhuman__get_snippet, mcp__superhuman__undo_send
 ---
 
 # Write it as the user would, and let them send
@@ -14,8 +14,8 @@ would have written. Read the whole thread, draft once, and stop at the draft.
 
 `get_thread` with drafts and comments included. The last message is not the
 whole ask: an earlier message often holds the question, a team comment may say
-how to answer it, and an attachment may be what they are waiting for. When the
-thread is trimmed, raise `message_limit`. Note who is on the thread and who
+how to answer it, and the question itself may sit in an attachment, which
+`get_attachment` reads. When the thread is trimmed, raise `message_limit`. Note who is on the thread and who
 spoke last; the reply goes to the person waiting, not to whoever wrote first.
 
 ## 2. Look for a draft before writing one
@@ -28,11 +28,13 @@ sent from Superhuman minutes ago looks exactly like one that still needs work.
 
 ## 3. Draft with instructions, not prose
 
-`create_or_update_draft` with `type` `reply` or `reply_all` and the thread id.
-Give it `instructions` (what to say, what to ask, what tone the thread calls
-for) and let it write in the user's style and signature. Pass `body` only when
-the user dictated exact wording, or when forwarding, where `body` holds the
-intro and the forwarded message is appended for you.
+`create_or_update_draft` with `type` `reply` or `reply_all` and the thread id
+for a thread, or `type` `new` with `to` for a fresh email, where `subject` can
+be left for the writer and `from` picks one of the user's aliases. Give it
+`instructions` (what to say, what to ask, what tone the thread calls for) and
+let it write in the user's style and signature. Pass `body` only when the user
+dictated exact wording, or when forwarding, where `body` holds the intro and
+the forwarded message is appended for you.
 
 - `reply_all` when others on the thread need the answer; `reply` when the user
   is answering one person. Keep the CCs the thread already had.

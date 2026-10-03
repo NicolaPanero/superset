@@ -657,11 +657,11 @@
 						"tool": "list_accounts",
 						"arguments": {},
 						"account": {
-							"id": "$.accounts[0].accountEmail",
-							"label": "$.accounts[0].accountEmail"
+							"id": "$.accounts[?(@.isPrimary)].accountEmail",
+							"label": "$.accounts[?(@.isPrimary)].accountEmail"
 						},
 						"user": {
-							"id": "$.accounts[0].accountEmail"
+							"id": "$.accounts[?(@.isPrimary)].accountEmail"
 						}
 					},
 					"bind": {

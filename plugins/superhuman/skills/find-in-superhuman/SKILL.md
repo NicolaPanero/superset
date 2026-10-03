@@ -55,10 +55,12 @@ says "I just sent it", wait and retry rather than reporting it missing.
 
 ## 5. Cite the thread
 
-Every claim names who said it and when, and links the thread:
-`https://mail.superhuman.com/<account email>/thread/<thread id>`. Quote the
-sentence when wording matters (a price, a date, a commitment). If two messages
-disagree, report both with their dates rather than picking one.
+A mail claim names who said it and when, and links the thread:
+`https://mail.superhuman.com/<account email>/thread/<thread id>`. A calendar or
+contact claim from `query_email_and_calendar` has no thread to link; cite the
+event (title, date, organizer) or the contact it came from. Quote the sentence
+when wording matters (a price, a date, a commitment). If two messages disagree,
+report both with their dates rather than picking one.
 
 ## Anti-patterns
 
