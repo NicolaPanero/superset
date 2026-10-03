@@ -30,6 +30,7 @@
 		"dev:docs": "turbo dev --filter=@superset/docs",
 		"dev:marketing": "turbo dev --filter=@superset/marketing --filter=@superset/docs",
 		"dev:relay": "turbo dev --filter=@superset/relay",
+		"dev:realtime": "bash apps/realtime/scripts/dev-local.sh",
 		"cli:dev": "bun scripts/dev-cli.ts",
 		"dev:skills": "bun scripts/sync-dev-skills.ts",
 		"build": "turbo build --filter=@superset/desktop",

@@ -54,6 +54,8 @@ superset terminals create --local --workspace "$SUPERSET_WORKSPACE_ID" --command
   cd apps/relay && while true; do CI=1 WRANGLER_SEND_METRICS=false node_modules/.bin/wrangler dev \
     --port "$RELAY_PORT" --var NEXT_PUBLIC_API_URL:http://localhost:$API_PORT --local; sleep 1; done
   ```
+- **Realtime:** `bun dev:realtime`. It runs the Worker on this worktree's `REALTIME_PORT` and
+  restarts it when it exits. Without it, the app falls back to polling and nudges go nowhere.
 - **Metro:** `cd apps/mobile && CI=1 bunx expo start --dev-client --port 8081`. `CI=1` turns off file
   watching, so restart Metro after editing code. The first bundle after a dependency change takes
   minutes and the dev client gives up waiting: warm it first by fetching `launchAsset.url` from
