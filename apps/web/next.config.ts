@@ -41,8 +41,8 @@ const relayBackupHttpOrigin = process.env.RELAY_BACKUP_URL
 const relayBackupWsOrigin = relayBackupHttpOrigin
 	? relayBackupHttpOrigin.replace(/^http/, "ws")
 	: null;
-const realtimeHttpOrigin = process.env.REALTIME_URL
-	? new URL(process.env.REALTIME_URL).origin
+const realtimeHttpOrigin = process.env.NEXT_PUBLIC_REALTIME_URL
+	? new URL(process.env.NEXT_PUBLIC_REALTIME_URL).origin
 	: isProduction
 		? "https://realtime.superset.sh"
 		: null;
