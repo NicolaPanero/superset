@@ -9,7 +9,6 @@ import {
 	CommandList,
 } from "@superset/ui/command";
 import { type KeyboardEvent, useDeferredValue, useMemo, useState } from "react";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { CloudTaskIcon } from "renderer/routes/_authenticated/_dashboard/components/CloudTaskIcon";
 import type { CloudTask } from "renderer/routes/_authenticated/_dashboard/components/CloudTaskRow";
@@ -27,7 +26,6 @@ export function LinkTaskCommand({
 	onToggle,
 	onKeyDown,
 }: LinkTaskCommandProps) {
-	const taskDisplayId = useTaskDisplayId();
 	const { t } = useLingui();
 	const [query, setQuery] = useState("");
 	const search = useDeferredValue(query.trim());
@@ -92,7 +90,7 @@ export function LinkTaskCommand({
 								<Checkbox checked={isLinked} className="pointer-events-none" />
 								<CloudTaskIcon task={task} />
 								<span className="shrink-0 font-mono text-xs text-muted-foreground">
-									{taskDisplayId(task)}
+									{task.slug}
 								</span>
 								<span className="min-w-0 flex-1 truncate">{task.title}</span>
 							</CommandItem>

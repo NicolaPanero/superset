@@ -18,7 +18,6 @@ import { RichText, type RichTextHandle } from "renderer/components/RichText";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import { useStatusPickerInput } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/hooks/useTasksData";
 import { compareStatusesForDropdown } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/utils/sorting";
 import { CreateTaskAssigneePicker } from "./components/CreateTaskAssigneePicker";
 import { CreateTaskPriorityPicker } from "./components/CreateTaskPriorityPicker";
@@ -45,9 +44,8 @@ export function CreateTaskDialog({
 	const [isCreating, setIsCreating] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 
-	const statusPickerInput = useStatusPickerInput();
 	const { data: statusData } = cloudTrpc.task.statuses.list.useQuery(
-		statusPickerInput,
+		undefined,
 		{ enabled: open },
 	);
 

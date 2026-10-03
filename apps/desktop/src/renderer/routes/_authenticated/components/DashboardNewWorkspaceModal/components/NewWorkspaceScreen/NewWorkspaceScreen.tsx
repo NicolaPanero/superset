@@ -46,7 +46,6 @@ import { useAgentEffortPreference } from "renderer/hooks/useAgentEffortPreferenc
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
 import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
-import { useIsLinearLiveTabEnabled } from "renderer/hooks/useIsLinearLiveTabEnabled";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
 import { useV2AgentChoices } from "renderer/hooks/useV2AgentChoices";
@@ -349,12 +348,7 @@ export function NewWorkspaceScreen({
 		setLinkedPR,
 		removeLinkedPR,
 	} = useLinkedContext(draft.linkedIssues, updateDraft);
-	const isLinearLive = useIsLinearLiveTabEnabled();
-	const linkTaskLabel = isLinearLive
-		? t({ message: "Link task" })
-		: t({
-				message: "Link issue",
-			});
+	const linkTaskLabel = t({ message: "Link task" });
 
 	// Restore the last-used launch host once per mount, like the modal does.
 	// A host named in the URL (the sidebar's Cloud "+") wins, and applies when
@@ -934,26 +928,20 @@ export function NewWorkspaceScreen({
 										aria-label={linkTaskLabel}
 										className={`${PILL_BUTTON_CLASS} w-[22px]`}
 									>
-										{isLinearLive ? (
-											<HiOutlineCheckCircle className="size-3.5" />
-										) : (
-											<SiLinear className="size-3.5" />
-										)}
+										<HiOutlineCheckCircle className="size-3.5" />
 									</PromptInputButton>
 								</IssueLinkCommand>
-								{isLinearLive && (
-									<LinearIssueLinkCommand
-										onSelect={addLinkedLinearIssue}
-										tooltipLabel={t({ message: "Link Linear issue" })}
+								<LinearIssueLinkCommand
+									onSelect={addLinkedLinearIssue}
+									tooltipLabel={t({ message: "Link Linear issue" })}
+								>
+									<PromptInputButton
+										aria-label={t({ message: "Link Linear issue" })}
+										className={`${PILL_BUTTON_CLASS} w-[22px]`}
 									>
-										<PromptInputButton
-											aria-label={t({ message: "Link Linear issue" })}
-											className={`${PILL_BUTTON_CLASS} w-[22px]`}
-										>
-											<SiLinear className="size-3.5" />
-										</PromptInputButton>
-									</LinearIssueLinkCommand>
-								)}
+										<SiLinear className="size-3.5" />
+									</PromptInputButton>
+								</LinearIssueLinkCommand>
 								<GitHubIssueLinkCommand
 									onSelect={(issue) =>
 										addLinkedGitHubIssue(

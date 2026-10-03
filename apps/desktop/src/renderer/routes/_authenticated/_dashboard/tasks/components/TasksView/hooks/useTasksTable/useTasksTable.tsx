@@ -16,7 +16,6 @@ import {
 import { format } from "date-fns";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HiChevronRight } from "react-icons/hi2";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { create } from "zustand";
 import {
 	StatusIcon,
@@ -130,11 +129,10 @@ export function useTasksTable({
 		}
 	}, [filterTab, assigneeFilter, setRowSelection]);
 
-	const taskDisplayId = useTaskDisplayId();
 	const slugWidth = useMemo(
 		() =>
-			`${(data ?? []).reduce((max, task) => Math.max(max, taskDisplayId(task).length), 0)}ch`,
-		[data, taskDisplayId],
+			`${(data ?? []).reduce((max, task) => Math.max(max, task.slug.length), 0)}ch`,
+		[data],
 	);
 
 	const columns = useMemo(
@@ -235,7 +233,7 @@ export function useTasksTable({
 							className="font-mono text-xs text-muted-foreground"
 							style={{ width: slugWidth }}
 						>
-							{taskDisplayId(info.row.original)}
+							{info.row.original.slug}
 						</span>
 					);
 				},
@@ -314,7 +312,7 @@ export function useTasksTable({
 				},
 			}),
 		],
-		[t, taskDisplayId, slugWidth],
+		[t, slugWidth],
 	);
 
 	const table = useReactTable({

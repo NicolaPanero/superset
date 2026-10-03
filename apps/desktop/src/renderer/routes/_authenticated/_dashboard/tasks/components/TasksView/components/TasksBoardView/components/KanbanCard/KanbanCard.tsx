@@ -5,7 +5,6 @@ import { Avatar } from "@superset/ui/atoms/Avatar";
 import { Badge } from "@superset/ui/badge";
 import { cn } from "@superset/ui/utils";
 import { format } from "date-fns";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { PriorityIcon } from "../../../../components/shared/PriorityIcon";
 import type { TaskWithStatus } from "../../../../hooks/useTasksData";
 
@@ -16,7 +15,6 @@ interface KanbanCardProps {
 }
 
 export function KanbanCard({ task, onClick, overlay }: KanbanCardProps) {
-	const taskDisplayId = useTaskDisplayId();
 	const {
 		attributes,
 		listeners,
@@ -67,7 +65,7 @@ export function KanbanCard({ task, onClick, overlay }: KanbanCardProps) {
 			{/* Row 1: Slug + Assignee avatar */}
 			<div className="flex items-center justify-between gap-2 mb-1">
 				<span className="font-mono text-xs text-muted-foreground font-medium">
-					{taskDisplayId(task)}
+					{task.slug}
 				</span>
 				{assigneeName && (
 					<Avatar

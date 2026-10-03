@@ -26,7 +26,6 @@ import { HiCheck, HiMiniPlay, HiXMark } from "react-icons/hi2";
 import { LuCircle } from "react-icons/lu";
 import { AgentSelect } from "renderer/components/AgentSelect";
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { launchAgentSession } from "renderer/lib/agent-session-orchestrator";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useCreateWorkspace } from "renderer/react-query/workspaces";
@@ -59,7 +58,6 @@ export function RunInWorkspacePopover({
 	tasks,
 	onComplete,
 }: RunInWorkspacePopoverProps) {
-	const taskDisplayId = useTaskDisplayId();
 	const { t } = useLingui();
 	const { data: recentProjects = [] } =
 		electronTrpc.projects.getRecents.useQuery();
@@ -392,9 +390,7 @@ export function RunInWorkspacePopover({
 									<BatchStatusIcon
 										status={taskStatuses.get(task.id) ?? "pending"}
 									/>
-									<span className="truncate font-mono">
-										{taskDisplayId(task)}
-									</span>
+									<span className="truncate font-mono">{task.slug}</span>
 								</div>
 							))}
 						</div>

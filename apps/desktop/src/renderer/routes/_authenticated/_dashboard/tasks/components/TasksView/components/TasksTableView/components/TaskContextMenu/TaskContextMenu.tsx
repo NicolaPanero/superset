@@ -17,9 +17,7 @@ import {
 	HiOutlineUserCircle,
 } from "react-icons/hi2";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import { useStatusPickerInput } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/hooks/useTasksData";
 import { useOptimisticActions } from "renderer/routes/_authenticated/hooks/useOptimisticActions";
 import type { TaskWithStatus } from "../../../../hooks/useTasksTable";
 import { compareStatusesForDropdown } from "../../../../utils/sorting";
@@ -40,13 +38,11 @@ export function TaskContextMenu({
 	task,
 	onDelete,
 }: TaskContextMenuProps) {
-	const taskDisplayId = useTaskDisplayId();
 	const { tasks: taskActions } = useOptimisticActions();
 	const [open, setOpen] = useState(false);
 
-	const statusPickerInput = useStatusPickerInput();
 	const { data: allStatuses } = cloudTrpc.task.statuses.list.useQuery(
-		statusPickerInput,
+		undefined,
 		{ enabled: open },
 	);
 
@@ -80,7 +76,7 @@ export function TaskContextMenu({
 	const { copyToClipboard } = useCopyToClipboard();
 
 	const handleCopyId = () => {
-		copyToClipboard(taskDisplayId(task));
+		copyToClipboard(task.slug);
 	};
 
 	const handleCopyTitle = () => {

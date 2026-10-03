@@ -14,7 +14,6 @@ import {
 	useState,
 } from "react";
 import { LuGitPullRequest } from "react-icons/lu";
-import { useTaskDisplayId } from "renderer/hooks/useTaskDisplayId";
 import {
 	StatusIcon,
 	type StatusType,
@@ -32,7 +31,6 @@ const GROUPS: { kind: RecordMentionItem["kind"]; title: ReactNode }[] = [
 ];
 
 function MentionRow({ item }: { item: RecordMentionItem }) {
-	const taskDisplayId = useTaskDisplayId();
 	switch (item.kind) {
 		case "person":
 			return (
@@ -55,7 +53,7 @@ function MentionRow({ item }: { item: RecordMentionItem }) {
 						/>
 					</span>
 					<span className="shrink-0 font-mono text-muted-foreground">
-						{taskDisplayId(item)}
+						{item.slug}
 					</span>
 					<span className="truncate">{item.title}</span>
 				</>

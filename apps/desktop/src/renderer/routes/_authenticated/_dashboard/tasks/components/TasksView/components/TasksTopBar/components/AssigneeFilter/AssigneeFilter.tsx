@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HiCheck, HiChevronDown, HiOutlineUserCircle } from "react-icons/hi2";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import { useTaskPickerInput } from "../../../../hooks/useTasksData";
+import { TASK_PICKER_INPUT } from "../../../../hooks/useTasksData";
 
 type Tab = "all" | "internal" | "external";
 
@@ -37,8 +37,8 @@ export function AssigneeFilter({ value, onChange }: AssigneeFilterProps) {
 		[members],
 	);
 
-	const taskPickerInput = useTaskPickerInput();
-	const { data: taskPage } = cloudTrpc.task.listPage.useQuery(taskPickerInput);
+	const { data: taskPage } =
+		cloudTrpc.task.listPage.useQuery(TASK_PICKER_INPUT);
 
 	const externalAssignees = useMemo(() => {
 		if (!taskPage) return [];
