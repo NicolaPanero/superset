@@ -104,18 +104,24 @@ export function CloudWorkspaceListRow({
 				</span>
 			</td>
 			<td className="w-0 pr-3">
-				{item.showsPresence && (
-					<AvatarStack
-						people={workspace.presence.map((person) => ({
-							id: person.userId,
-							name: person.name,
-							image: person.image,
-							isActive:
-								now.getTime() - person.lastSeenAt.getTime() < ACTIVE_WITHIN_MS,
-						}))}
-						size={20}
-					/>
-				)}
+				<CloudWorkspaceDiffStats workspaceId={workspace.id} />
+			</td>
+			<td className="w-0 pr-3">
+				<span className="flex min-w-[50px] justify-end">
+					{item.showsPresence && (
+						<AvatarStack
+							people={workspace.presence.map((person) => ({
+								id: person.userId,
+								name: person.name,
+								image: person.image,
+								isActive:
+									now.getTime() - person.lastSeenAt.getTime() <
+									ACTIVE_WITHIN_MS,
+							}))}
+							size={20}
+						/>
+					)}
+				</span>
 			</td>
 			<td className="w-0 pr-3 text-right">
 				{isArchived || item.isMine ? null : isInSidebar ? (
@@ -143,9 +149,6 @@ export function CloudWorkspaceListRow({
 						<Trans>Add to sidebar</Trans>
 					</Button>
 				)}
-			</td>
-			<td className="w-0 pr-3">
-				<CloudWorkspaceDiffStats workspaceId={workspace.id} />
 			</td>
 			<td className="w-0 pr-4">
 				<span className="flex min-w-6 justify-end text-xs whitespace-nowrap text-muted-foreground tabular-nums">
