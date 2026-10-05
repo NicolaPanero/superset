@@ -16,7 +16,7 @@ const input: TransferInput = {
 };
 const output = {
 	protocolVersion: 1,
-	engineVersion: "0.14.4-nicola.2",
+	engineVersion: "0.14.4-nicola.3",
 	targetAgent: "claude_code",
 	targetSessionId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
 	reference: "/target/projects/repo/session.jsonl",
