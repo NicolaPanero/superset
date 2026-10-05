@@ -15,13 +15,19 @@ import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
-import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
+import {
+	focusOrAddTerminalPane,
+	focusTerminalPane,
+} from "../../utils/focusTerminalPane";
 
 export interface CreateNewAgentSessionInput {
+	nativeTerminal?: boolean;
+	accountSelection?: string | null;
 	configId: string;
 	placement: "split-pane" | "new-tab";
 	prompt: string;
 	forkSessionId?: string;
+	nativeTransferId?: string;
 	attachments?: Array<{ attachmentId: string; name: string; mimeType: string }>;
 	modelId?: string;
 	modeId?: string;
@@ -52,6 +58,7 @@ export function useAgentSessionLauncher({
 } {
 	const { t } = useLingui();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
+	const launchTransfer = workspaceTrpc.sessionTransfer.launch.useMutation();
 	const appearance = useTerminalAppearance();
 	const awaitAcpChatEnabled = useAwaitAcpChatEnabled();
 	const { hostUrl } = useWorkspaceClient();
@@ -97,7 +104,12 @@ export function useAgentSessionLauncher({
 
 	const createNewAgentSession = useCallback<CreateNewAgentSession>(
 		async (input) => {
-			if (!input.forkSessionId) {
+			if (
+				!input.nativeTerminal &&
+				input.accountSelection === undefined &&
+				!input.forkSessionId &&
+				!input.nativeTransferId
+			) {
 				const chat = await openAgentChat(input);
 				if (chat) return chat;
 			}
@@ -106,24 +118,33 @@ export function useAgentSessionLauncher({
 				// Host pipeline bakes the prompt into the initialCommand using the
 				// agent's argv/stdin transport — no follow-up writeInput needed,
 				// no bind-wait race vs. the launching shell.
-				const result = await runAgent.mutateAsync({
-					workspaceId,
-					colors: terminalQueryColors(appearance.theme),
-					agent: input.configId,
-					prompt: input.prompt,
-					...(input.attachments?.length
-						? {
-								attachmentIds: input.attachments.map(
-									(attachment) => attachment.attachmentId,
-								),
-							}
-						: {}),
-					...(input.modelId ? { model: input.modelId } : {}),
-					...(input.modeId ? { mode: input.modeId } : {}),
-					...(input.forkSessionId
-						? { forkSessionId: input.forkSessionId }
-						: {}),
-				});
+				const result = input.nativeTransferId
+					? await launchTransfer.mutateAsync({
+							workspaceId,
+							transferId: input.nativeTransferId,
+							colors: terminalQueryColors(appearance.theme),
+						})
+					: await runAgent.mutateAsync({
+							workspaceId,
+							colors: terminalQueryColors(appearance.theme),
+							agent: input.configId,
+							prompt: input.prompt,
+							...(input.accountSelection !== undefined
+								? { accountSelection: input.accountSelection }
+								: {}),
+							...(input.attachments?.length
+								? {
+										attachmentIds: input.attachments.map(
+											(attachment) => attachment.attachmentId,
+										),
+									}
+								: {}),
+							...(input.modelId ? { model: input.modelId } : {}),
+							...(input.modeId ? { mode: input.modeId } : {}),
+							...(input.forkSessionId
+								? { forkSessionId: input.forkSessionId }
+								: {}),
+						});
 				if (result.kind !== "terminal") {
 					toast.error(
 						t({
@@ -133,6 +154,7 @@ export function useAgentSessionLauncher({
 					return null;
 				}
 				const terminalId = result.sessionId;
+				if (focusTerminalPane(store, terminalId)) return { terminalId };
 				const state = store.getState();
 				const pane = {
 					kind: "terminal" as const,
@@ -161,7 +183,15 @@ export function useAgentSessionLauncher({
 				return null;
 			}
 		},
-		[runAgent, store, workspaceId, t, appearance.theme, openAgentChat],
+		[
+			runAgent,
+			launchTransfer,
+			store,
+			workspaceId,
+			t,
+			appearance.theme,
+			openAgentChat,
+		],
 	);
 
 	const focusAgentTerminal = useCallback(

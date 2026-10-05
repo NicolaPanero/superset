@@ -1519,6 +1519,9 @@ msgstr "Instalace do účtu zpracovává jen manifesty první strany, takže {pl
 msgid "Account is pending deletion."
 msgstr "Účet čeká na smazání."
 
+msgid "Account name"
+msgstr "Název účtu"
+
 msgid "Account pending deletion"
 msgstr "Účet čeká na smazání"
 
@@ -1800,6 +1803,9 @@ msgstr "Proti main"
 
 msgid "Agent"
 msgstr "Agent"
+
+msgid "Agent accounts"
+msgstr "Účty agentů"
 
 msgid "Agent commands"
 msgstr "Příkazy agentů"
@@ -2694,6 +2700,9 @@ msgstr "prům. pozice {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "Čeká na {0}"
 
+msgid "Awaiting permission"
+msgstr "Čeká na oprávnění"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Čeká na odpověď — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Než otevřete pull request, vyberte projekt v sekci Pull requesty."
 msgid "Choose a section."
 msgstr "Vyberte sekci."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Účty vybírejte ručně. Noví agenti používají výchozí účet, pokud konfigurace nebo spuštění neurčí jiný."
+
 msgid "Choose agent"
 msgstr "Vyberte agenta"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI a SDK"
+
+msgid "CLI default"
+msgstr "Výchozí nastavení CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentace CLI"
@@ -4082,6 +4097,9 @@ msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejic
 msgid "Configure workspace run command"
 msgstr "Nastavit spouštěcí příkaz pracovního prostoru"
 
+msgid "Configured account"
+msgstr "Nakonfigurovaný účet"
+
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
 
@@ -4305,6 +4323,9 @@ msgstr "Publikovaný nebo aktualizovaný obsah"
 msgid "Context"
 msgstr "Kontext"
 
+msgid "Context Handoff"
+msgstr "Předání kontextu"
+
 msgid "Context Menu"
 msgstr "Kontextová nabídka"
 
@@ -4343,6 +4364,9 @@ msgstr "Pokračovat přes GitHub"
 msgid "Continue with Google"
 msgstr "Pokračovat přes Google"
 
+msgid "Continue with…"
+msgstr "Pokračovat s…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
 
@@ -4378,6 +4402,9 @@ msgstr "Konverze zatím"
 
 msgid "Converted"
 msgstr "Konvertovalo"
+
+msgid "Converting…"
+msgstr "Převádění…"
 
 msgid "cookies and site data"
 msgstr "cookies a data webů"
@@ -4630,6 +4657,9 @@ msgstr "Nepodařilo se opustit frontu"
 msgid "Could not list directory"
 msgstr "Nepodařilo se vypsat adresář"
 
+msgid "Could not load agent configurations."
+msgstr "Nepodařilo se načíst konfigurace agentů."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Nepodařilo se načíst agenty z {0}"
@@ -4714,6 +4744,9 @@ msgstr "Prostředí se nepodařilo uložit"
 
 msgid "Could not rename the session"
 msgstr "Relaci se nepodařilo přejmenovat"
+
+msgid "Could not rename this account."
+msgstr "Tento účet se nepodařilo přejmenovat."
 
 msgid "Could not rename this page"
 msgstr "Tuto stránku se nepodařilo přejmenovat"
@@ -4850,6 +4883,9 @@ msgstr "Nepodařilo se načíst komentáře k revizi"
 msgid "Couldn't load runs"
 msgstr "Běhy se nepodařilo načíst"
 
+msgid "Couldn't load session lineage."
+msgstr "Nepodařilo se načíst historii relací."
+
 msgid "Couldn't load this run's payload."
 msgstr "Data tohoto běhu se nepodařilo načíst."
 
@@ -4893,6 +4929,9 @@ msgstr "Nepodařilo se odebrat místní přihlášení"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Agenta se nepodařilo znovu otevřít v terminálu"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Nepodařilo se znovu otevřít tuto relaci. Ověřte, že konfigurace agenta a nativní relace stále existují."
 
 msgid "Couldn't restart terminals"
 msgstr "Nepodařilo se restartovat terminály"
@@ -5011,6 +5050,9 @@ msgstr "Vytvořit nový pracovní prostor"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Vytvořte projekt a seskupte do něj úkoly a cloudové pracovní prostory."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Vytvořte obnovitelnou relaci s historií konverzace. Oprávnění a přihlašovací údaje zůstávají cílovému agentovi."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Vytvoř úkol na opravu chyby v přihlašování"
@@ -5246,6 +5288,9 @@ msgstr "Aktuální karta"
 
 msgid "Cursor"
 msgstr "Kurzor"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Účty Cursor Agent, Grok Build a OpenCode se spravují v jejich vlastních aplikacích."
 
 msgid "Cursor blinking"
 msgstr "Blikání kurzoru"
@@ -8789,14 +8834,23 @@ msgstr "Spuštění"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Spouštějte agenty na funkce, opravy chyb i refaktory, všechno paralelně. Stav na první pohled ukáže, kteří agenti pracují, kteří jsou zablokovaní a kteří čekají na vás."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Volby spuštění se zobrazují, pokud jsou známé. Aktivní model se může v CLI změnit."
+
 msgid "Launch mode"
 msgstr "Režim spuštění"
+
+msgid "Launch model"
+msgstr "Model při spuštění"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Spustit tento terminálový skript při vytvoření nového pracovního prostoru."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Spustit tento terminálový skript při každém otevření nové karty terminálu."
+
+msgid "Launching…"
+msgstr "Spouštění…"
 
 msgid "Layout"
 msgstr "Rozložení"
@@ -9137,6 +9191,9 @@ msgstr "Načítám repozitáře..."
 msgid "Loading review..."
 msgstr "Načítám revizi..."
 
+msgid "Loading session lineage…"
+msgstr "Načítání historie relací…"
+
 msgid "Loading sessions…"
 msgstr "Načítám relace…"
 
@@ -9154,6 +9211,9 @@ msgstr "Načítání…"
 
 msgid "Local"
 msgstr "Lokální"
+
+msgid "Local agent accounts"
+msgstr "Místní účty agentů"
 
 msgid "Local Device"
 msgstr "Lokální zařízení"
@@ -9324,6 +9384,9 @@ msgstr "Spravujte vzhled a členy své organizace."
 
 msgid "Managed"
 msgstr "Spravováno"
+
+msgid "Managed by the CLI"
+msgstr "Spravováno v CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Spravuje správce vaší organizace."
@@ -9780,6 +9843,21 @@ msgstr "Zařaďte nové větve tohoto projektu pod jmenný prostor. Ve výchozí
 msgid "Naming instructions"
 msgstr "Pravidla pojmenování"
 
+msgid "Native Handoff"
+msgstr "Nativní předání"
+
+msgid "Native handoff complete"
+msgstr "Nativní předání dokončeno"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "Nativní předání se nezdařilo. Zkuste to znovu nebo zvolte předání kontextu."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Nativní předání není pro tuto dvojici agentů nebo tento hostitel dostupné."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Nativní předání uložená lokálně. Každá relace může mít více potomků."
+
 msgid "Native PR reviews"
 msgstr "Nativní revize PR"
 
@@ -10078,6 +10156,9 @@ msgstr "Není vybraná žádná aktivní organizace"
 msgid "No active services"
 msgstr "Žádné aktivní služby"
 
+msgid "No active sessions"
+msgstr "Žádné aktivní relace"
+
 msgid "No active terminal sessions"
 msgstr "Žádné aktivní relace terminálu"
 
@@ -10345,6 +10426,9 @@ msgstr "Zde není k dispozici žádný mobilní simulátor. Je potřeba cloudov�
 
 msgid "No name on file"
 msgstr "Není uloženo žádné jméno"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "V tomto workspace zatím nejsou zaznamenána žádná nativní předání."
 
 msgid "No open issues found."
 msgstr "Nenalezeny žádné otevřené issues."
@@ -10713,6 +10797,9 @@ msgstr "Není v této verzi"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Zatím nepřicházejí žádné události: Microsoft Graph odmítl odběry oznámení. Zkontrolujte souhlas administrátora a schválení chráněného API, pak se připojte znovu."
 
+msgid "Not recorded"
+msgstr "Nezaznamenáno"
+
 msgid "Not reviewed by you"
 msgstr "Bez vaší revize"
 
@@ -11057,6 +11144,9 @@ msgstr "Otevřít změny"
 msgid "Open Chat v3"
 msgstr "Otevřít Chat v3"
 
+msgid "Open child"
+msgstr "Otevřít potomka"
+
 msgid "Open Command Palette"
 msgstr "Otevřít paletu příkazů"
 
@@ -11261,6 +11351,9 @@ msgstr "Otevřít na GitHubu"
 msgid "Open Page in Default Browser"
 msgstr "Otevřít stránku ve výchozím prohlížeči"
 
+msgid "Open parent"
+msgstr "Otevřít rodiče"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Otevřít PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "Otevřít repozitář..."
 
 msgid "Open roles"
 msgstr "Otevřené pozice"
+
+msgid "Open session"
+msgstr "Otevřít relaci"
 
 msgid "Open session in"
 msgstr "Otevřít relaci v"
@@ -11413,6 +11509,9 @@ msgstr "Otevírání souborů"
 
 msgid "Opening folders"
 msgstr "Otevírání složek"
+
+msgid "Opening native session…"
+msgstr "Otevírání nativní relace…"
 
 msgid "Opening pages"
 msgstr "Otevírání stránek"
@@ -13709,6 +13808,9 @@ msgstr "Uloženo"
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" uloženo jako prostředí"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Uloženo na tomto hostiteli. Pro původní název ponechte prázdné."
+
 msgid "Saved to Downloads"
 msgstr "Uloženo do Stažených souborů"
 
@@ -14273,6 +14375,9 @@ msgstr "Podrobnosti relace"
 
 msgid "Session ended"
 msgstr "Relace skončila"
+
+msgid "Session lineage"
+msgstr "Historie relací"
 
 msgid "Session name"
 msgstr "Název relace"
@@ -14840,6 +14945,9 @@ msgstr "Zpráva SOC 2 Type II"
 msgid "Social"
 msgstr "Sociální sítě"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Některá metadata specifická pro agenta nebylo možné přenést."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Některé soubory nemají povolený typ a nebyly přidány."
 
@@ -15075,6 +15183,9 @@ msgstr "Získané hvězdy za den"
 
 msgid "Stars gained per week"
 msgstr "Získané hvězdy za týden"
+
+msgid "Start"
+msgstr "Spustit"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Synchronizuji..."
 
 msgid "System"
 msgstr "Systémový"
+
+msgid "System default"
+msgstr "Výchozí nastavení systému"
 
 msgid "System memory"
 msgstr "Systémová paměť"

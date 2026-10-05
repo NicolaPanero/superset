@@ -1519,6 +1519,9 @@ msgstr "Cài đặt lên tài khoản chỉ xử lý manifest nội bộ, nên {
 msgid "Account is pending deletion."
 msgstr "Tài khoản đang chờ xóa."
 
+msgid "Account name"
+msgstr "Tên tài khoản"
+
 msgid "Account pending deletion"
 msgstr "Tài khoản đang chờ xóa"
 
@@ -1800,6 +1803,9 @@ msgstr "So với main"
 
 msgid "Agent"
 msgstr "Agent"
+
+msgid "Agent accounts"
+msgstr "Tài khoản tác nhân"
 
 msgid "Agent commands"
 msgstr "Lệnh của agent"
@@ -2694,6 +2700,9 @@ msgstr "vị trí trung bình {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "Đang chờ {0}"
 
+msgid "Awaiting permission"
+msgstr "Đang chờ quyền"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Đang chờ phản hồi — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Chọn một dự án trong mục Pull request trước khi mở pull re
 msgid "Choose a section."
 msgstr "Chọn một mục."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Chọn tài khoản thủ công. Tác nhân mới dùng tài khoản mặc định trừ khi cấu hình hoặc lựa chọn khởi chạy chỉ định tài khoản khác."
+
 msgid "Choose agent"
 msgstr "Chọn agent"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI & SDK"
+
+msgid "CLI default"
+msgstr "Mặc định của CLI"
 
 msgid "CLI docs"
 msgstr "Tài liệu CLI"
@@ -4082,6 +4097,9 @@ msgstr "Chọn agent nào xuất hiện trong trình khởi chạy và cách d�
 msgid "Configure workspace run command"
 msgstr "Cấu hình lệnh chạy của workspace"
 
+msgid "Configured account"
+msgstr "Tài khoản đã cấu hình"
+
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
 
@@ -4305,6 +4323,9 @@ msgstr "Nội dung đã xuất bản hoặc cập nhật"
 msgid "Context"
 msgstr "Ngữ cảnh"
 
+msgid "Context Handoff"
+msgstr "Chuyển ngữ cảnh"
+
 msgid "Context Menu"
 msgstr "Context Menu"
 
@@ -4343,6 +4364,9 @@ msgstr "Tiếp tục với GitHub"
 msgid "Continue with Google"
 msgstr "Tiếp tục với Google"
 
+msgid "Continue with…"
+msgstr "Tiếp tục với…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Để tiếp tục phiên agent, cần ghim một workspace"
 
@@ -4378,6 +4402,9 @@ msgstr "Chuyển đổi đến hiện tại"
 
 msgid "Converted"
 msgstr "Đã chuyển đổi"
+
+msgid "Converting…"
+msgstr "Đang chuyển đổi…"
 
 msgid "cookies and site data"
 msgstr "cookie và dữ liệu trang"
@@ -4630,6 +4657,9 @@ msgstr "Không thể rời hàng đợi"
 msgid "Could not list directory"
 msgstr "Không thể liệt kê thư mục"
 
+msgid "Could not load agent configurations."
+msgstr "Không thể tải cấu hình tác nhân."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Không thể tải agent từ {0}"
@@ -4714,6 +4744,9 @@ msgstr "Không thể lưu environment"
 
 msgid "Could not rename the session"
 msgstr "Không thể đổi tên phiên"
+
+msgid "Could not rename this account."
+msgstr "Không thể đổi tên tài khoản này."
 
 msgid "Could not rename this page"
 msgstr "Không thể đổi tên trang này"
@@ -4850,6 +4883,9 @@ msgstr "Không thể tải bình luận review"
 msgid "Couldn't load runs"
 msgstr "Không thể tải các lần chạy"
 
+msgid "Couldn't load session lineage."
+msgstr "Không thể tải lịch sử phiên."
+
 msgid "Couldn't load this run's payload."
 msgstr "Không thể tải payload của lần chạy này."
 
@@ -4893,6 +4929,9 @@ msgstr "Không thể xóa phiên đăng nhập cục bộ"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Không thể mở lại tác nhân trong terminal"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Không thể mở lại phiên này. Hãy kiểm tra xem cấu hình tác nhân và phiên gốc còn tồn tại hay không."
 
 msgid "Couldn't restart terminals"
 msgstr "Không thể khởi động lại terminal"
@@ -5011,6 +5050,9 @@ msgstr "Tạo workspace mới"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Tạo dự án để nhóm các nhiệm vụ và không gian làm việc đám mây."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Tạo phiên có thể tiếp tục với lịch sử hội thoại. Quyền và thông tin đăng nhập vẫn thuộc về tác tử đích."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Tạo một tác vụ để sửa lỗi đăng nhập"
@@ -5246,6 +5288,9 @@ msgstr "Tab hiện tại"
 
 msgid "Cursor"
 msgstr "Con trỏ"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Tài khoản Cursor Agent, Grok Build và OpenCode được quản lý trong ứng dụng tương ứng."
 
 msgid "Cursor blinking"
 msgstr "Con trỏ nhấp nháy"
@@ -8789,14 +8834,23 @@ msgstr "Khởi chạy"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Khởi chạy agent cho tính năng, sửa lỗi và refactor, tất cả song song. Trạng thái hiển thị ngay cho biết agent nào đang làm, agent nào bị chặn và agent nào đang chờ bạn."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Các lựa chọn khởi chạy đã biết được hiển thị. Mô hình đang dùng có thể thay đổi trong CLI."
+
 msgid "Launch mode"
 msgstr "Chế độ chạy"
+
+msgid "Launch model"
+msgstr "Mô hình khi khởi chạy"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Chạy script terminal này khi tạo workspace mới."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Chạy script terminal này mỗi khi mở tab terminal mới."
+
+msgid "Launching…"
+msgstr "Đang khởi chạy…"
 
 msgid "Layout"
 msgstr "Bố cục"
@@ -9137,6 +9191,9 @@ msgstr "Đang tải repository..."
 msgid "Loading review..."
 msgstr "Đang tải review..."
 
+msgid "Loading session lineage…"
+msgstr "Đang tải lịch sử phiên…"
+
 msgid "Loading sessions…"
 msgstr "Đang tải phiên…"
 
@@ -9154,6 +9211,9 @@ msgstr "Đang tải…"
 
 msgid "Local"
 msgstr "Cục bộ"
+
+msgid "Local agent accounts"
+msgstr "Tài khoản tác nhân cục bộ"
 
 msgid "Local Device"
 msgstr "Thiết bị cục bộ"
@@ -9324,6 +9384,9 @@ msgstr "Quản lý nhận diện thương hiệu và thành viên của tổ ch�
 
 msgid "Managed"
 msgstr "Được quản lý"
+
+msgid "Managed by the CLI"
+msgstr "Do CLI quản lý"
 
 msgid "Managed by your organization admin."
 msgstr "Do admin tổ chức của bạn quản lý."
@@ -9780,6 +9843,21 @@ msgstr "Đặt không gian tên cho nhánh mới của dự án này. Mặc đ�
 msgid "Naming instructions"
 msgstr "Hướng dẫn đặt tên"
 
+msgid "Native Handoff"
+msgstr "Chuyển phiên gốc"
+
+msgid "Native handoff complete"
+msgstr "Đã hoàn tất chuyển giao gốc"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "Chuyển phiên gốc thất bại. Bạn có thể thử lại hoặc chọn chuyển ngữ cảnh."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Chuyển phiên gốc không khả dụng cho cặp tác tử hoặc máy chủ này."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Các lần chuyển phiên gốc được lưu cục bộ. Mỗi phiên có thể có nhiều phiên con."
+
 msgid "Native PR reviews"
 msgstr "Review PR ngay trong ứng dụng"
 
@@ -10078,6 +10156,9 @@ msgstr "Chưa chọn tổ chức hoạt động"
 msgid "No active services"
 msgstr "Không có dịch vụ nào đang chạy"
 
+msgid "No active sessions"
+msgstr "Không có phiên hoạt động"
+
 msgid "No active terminal sessions"
 msgstr "Không có phiên terminal nào đang chạy"
 
@@ -10345,6 +10426,9 @@ msgstr "Không có trình giả lập di động nào khả dụng ở đây. C�
 
 msgid "No name on file"
 msgstr "Chưa có tên nào được lưu"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "Chưa có lần chuyển phiên gốc nào được ghi trong workspace này."
 
 msgid "No open issues found."
 msgstr "Không có issue nào đang mở."
@@ -10713,6 +10797,9 @@ msgstr "Không có trong phiên bản này"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Chưa nhận được sự kiện: Microsoft Graph đã từ chối các đăng ký thông báo. Hãy kiểm tra phần cấp quyền quản trị và phê duyệt API bảo vệ của ứng dụng, rồi kết nối lại."
 
+msgid "Not recorded"
+msgstr "Chưa ghi nhận"
+
 msgid "Not reviewed by you"
 msgstr "Bạn chưa review"
 
@@ -11057,6 +11144,9 @@ msgstr "Mở thay đổi"
 msgid "Open Chat v3"
 msgstr "Mở Chat v3"
 
+msgid "Open child"
+msgstr "Mở phiên con"
+
 msgid "Open Command Palette"
 msgstr "Mở bảng lệnh"
 
@@ -11261,6 +11351,9 @@ msgstr "Mở trên GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Mở trang trong trình duyệt mặc định"
 
+msgid "Open parent"
+msgstr "Mở phiên cha"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Mở PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "Mở repo..."
 
 msgid "Open roles"
 msgstr "Vị trí đang tuyển"
+
+msgid "Open session"
+msgstr "Mở phiên"
 
 msgid "Open session in"
 msgstr "Mở phiên trong"
@@ -11413,6 +11509,9 @@ msgstr "Mở tệp"
 
 msgid "Opening folders"
 msgstr "Mở thư mục"
+
+msgid "Opening native session…"
+msgstr "Đang mở phiên gốc…"
 
 msgid "Opening pages"
 msgstr "Mở trang"
@@ -13709,6 +13808,9 @@ msgstr "Đã lưu"
 msgid "Saved \"{0}\" as an environment"
 msgstr "Đã lưu \"{0}\" thành một environment"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Được lưu trên máy chủ này. Để trống để dùng tên gốc."
+
 msgid "Saved to Downloads"
 msgstr "Đã lưu vào Downloads"
 
@@ -14273,6 +14375,9 @@ msgstr "Chi tiết phiên"
 
 msgid "Session ended"
 msgstr "Phiên đã kết thúc"
+
+msgid "Session lineage"
+msgstr "Lịch sử phiên"
 
 msgid "Session name"
 msgstr "Tên phiên"
@@ -14840,6 +14945,9 @@ msgstr "Báo cáo SOC 2 Type II"
 msgid "Social"
 msgstr "Mạng xã hội"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Không thể chuyển một số siêu dữ liệu riêng của tác nhân."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Một số tệp không thuộc loại được chấp nhận nên không được thêm."
 
@@ -15075,6 +15183,9 @@ msgstr "Số star tăng mỗi ngày"
 
 msgid "Stars gained per week"
 msgstr "Số star tăng mỗi tuần"
+
+msgid "Start"
+msgstr "Bắt đầu"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Đang đồng bộ..."
 
 msgid "System"
 msgstr "Hệ thống"
+
+msgid "System default"
+msgstr "Mặc định hệ thống"
 
 msgid "System memory"
 msgstr "Bộ nhớ hệ thống"

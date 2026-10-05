@@ -27,6 +27,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import type { HostDb } from "../../../db";
 import { workspaces } from "../../../db/schema";
+import { waitForTerminalBaseEnv } from "../../../terminal/env";
 import {
 	createTerminalSessionInternal,
 	sendAgentMessage,
@@ -42,7 +43,33 @@ import type { HostServiceContext } from "../../../types";
 import { protectedProcedure, router } from "../../index";
 import { resolveAttachmentPath } from "../attachments/storage";
 import { toTerminalSessionError } from "../terminal/errors";
+import { listAccountAliases } from "../usage/account-aliases";
 import { seedAgentFolderTrust } from "../workspace-creation/shared/seed-agent-trust";
+import { agentAccountOptions, selectedAccountEnv } from "./account-selection";
+
+// Runtime launch details are deliberately labelled as launch choices, not as
+// the active model (a CLI can change models later). Missing/evicted data is unknown.
+const launchDetails = new Map<
+	string,
+	{
+		workspaceId: string;
+		agent: string;
+		configId: string;
+		label: string;
+		model: string | null;
+	}
+>();
+
+export function terminalLaunchConfigId(
+	workspaceId: string,
+	terminalId: string,
+	agent: string,
+) {
+	const details = launchDetails.get(terminalId);
+	return details?.workspaceId === workspaceId && details.agent === agent
+		? details.configId
+		: undefined;
+}
 
 /**
  * Build a shell command string that runs the resolved agent config with the
@@ -128,6 +155,11 @@ function buildAttachmentBlock(
 }
 
 export interface AgentRunInput {
+	accountSelection?: string | null;
+	launchSnapshot?: {
+		config: ResolvedHostAgentConfig;
+		env: Record<string, string>;
+	};
 	colors?: TerminalColors;
 	workspaceId: string;
 	agent: string;
@@ -382,7 +414,8 @@ export function buildTerminalAgentLaunch(
 	db: HostDb,
 	input: AgentRunInput,
 ): { fullCommand: string; label: string } {
-	const config = resolveHostAgentConfig(db, input.agent);
+	const config =
+		input.launchSnapshot?.config ?? resolveHostAgentConfig(db, input.agent);
 	if (!config) {
 		// Worded for end users (automation run errors show this verbatim), but
 		// keep "No host agent config matching" — the desktop matches on it to
@@ -451,7 +484,7 @@ export function buildTerminalAgentLaunch(
 	);
 	const modelEnv = buildAgentModelEnv(launchPresetId, input.model);
 	return {
-		fullCommand: `${envOverlayPrefix({ ...agentLaunchEnv(db, config), ...modelEnv })}${command}`,
+		fullCommand: `${envOverlayPrefix({ ...(input.launchSnapshot?.env ?? agentLaunchEnv(db, config)), ...modelEnv })}${command}`,
 		label: config.label,
 	};
 }
@@ -472,7 +505,9 @@ export function bindResumedSession(
 	terminalId: string,
 ): void {
 	if (!input.resumeSessionId) return;
-	const presetId = resolveHostAgentConfig(ctx.db, input.agent)?.presetId;
+	const presetId =
+		input.launchSnapshot?.config.presetId ??
+		resolveHostAgentConfig(ctx.db, input.agent)?.presetId;
 	if (!presetId || !isBuiltinAgentId(presetId)) return;
 
 	ctx.terminalAgentStore.recordEvent({
@@ -506,6 +541,27 @@ async function runTerminalAgent(
 	}
 
 	bindResumedSession(ctx, input, result.terminalId);
+	const config =
+		input.launchSnapshot?.config ?? resolveHostAgentConfig(ctx.db, input.agent);
+	if (config) {
+		const support = getAgentModelSupport(config.presetId);
+		const flagIndex = support?.modelFlag
+			? config.args.lastIndexOf(support.modelFlag)
+			: -1;
+		const configuredModel =
+			flagIndex >= 0 ? config.args[flagIndex + 1] : undefined;
+		launchDetails.set(result.terminalId, {
+			workspaceId: input.workspaceId,
+			agent: config.presetId,
+			configId: config.id,
+			label,
+			model: input.model ?? configuredModel ?? null,
+		});
+		while (launchDetails.size > 1024) {
+			const oldest = launchDetails.keys().next().value;
+			if (oldest) launchDetails.delete(oldest);
+		}
+	}
 
 	return {
 		kind: "terminal",
@@ -536,6 +592,7 @@ export function continuationTarget(
 	// These all pick something about how the process starts, and the process is
 	// already started. Launching is the only way to honour them.
 	if (
+		input.accountSelection !== undefined ||
 		input.model ||
 		input.effort ||
 		input.mode ||
@@ -633,6 +690,37 @@ export async function runAgentInWorkspace(
 			message: `Workspace ${input.workspaceId} not found on this host — it may have been deleted.`,
 		});
 	}
+	if (input.accountSelection !== undefined) {
+		await waitForTerminalBaseEnv();
+		const config = resolveHostAgentConfig(ctx.db, input.agent);
+		if (!config)
+			throw new TRPCError({
+				code: "NOT_FOUND",
+				message: "account_selection_unavailable",
+			});
+		const env = await selectedAccountEnv(
+			config,
+			agentLaunchEnv(ctx.db, config),
+			input.accountSelection,
+		);
+		input = { ...input, launchSnapshot: { config, env } };
+	}
+	// CLI identity applies to plain launches as well as native handoffs.
+	const launchConfig =
+		input.launchSnapshot?.config ?? resolveHostAgentConfig(ctx.db, input.agent);
+	if (launchConfig?.presetId === "cursor-agent") {
+		input = {
+			...input,
+			launchSnapshot: {
+				config: launchConfig,
+				env: {
+					...(input.launchSnapshot?.env ??
+						agentLaunchEnv(ctx.db, launchConfig)),
+					CURSOR_AGENT: "1",
+				},
+			},
+		};
+	}
 	// Ahead of the launch path: continuing costs no pty and no trust seeding.
 	const continued = await continueTerminalAgent(ctx, input);
 	if (continued) return continued;
@@ -643,15 +731,56 @@ export async function runAgentInWorkspace(
 	// interactive boot skips the trust dialog. Worktree workspaces inherit
 	// trust from the main checkout and need nothing.
 	if (workspace.projectId === null) {
-		const config = resolveHostAgentConfig(ctx.db, input.agent);
+		const config =
+			input.launchSnapshot?.config ??
+			resolveHostAgentConfig(ctx.db, input.agent);
 		if (config) {
-			await seedAgentFolderTrust(ctx.db, workspace.worktreePath, config);
+			await seedAgentFolderTrust(
+				ctx.db,
+				workspace.worktreePath,
+				input.launchSnapshot
+					? { ...config, env: input.launchSnapshot.env }
+					: config,
+			);
 		}
 	}
 	return runTerminalAgent(ctx, input);
 }
 
 export const agentsRouter = router({
+	accountOptions: protectedProcedure
+		.input(z.object({ agent: z.string().min(1) }))
+		.query(async ({ ctx, input }) => {
+			const aliases = listAccountAliases(ctx.db);
+			return (await agentAccountOptions(input.agent)).map((option) => {
+				const alias =
+					aliases.find(
+						(alias) =>
+							alias.agent === input.agent &&
+							alias.selection === option.selection,
+					)?.label ?? null;
+				return { ...option, alias, label: alias ?? option.label };
+			});
+		}),
+	launchDetails: protectedProcedure
+		.input(z.object({ workspaceId: z.string().uuid() }))
+		.query(({ ctx, input }) =>
+			ctx.terminalAgentStore
+				.listByWorkspace(input.workspaceId)
+				.flatMap((binding) => {
+					const details = launchDetails.get(binding.terminalId);
+					return details?.workspaceId === input.workspaceId &&
+						details.agent === binding.agentId
+						? [
+								{
+									terminalId: binding.terminalId,
+									label: details.label,
+									model: details.model,
+								},
+							]
+						: [];
+				}),
+		),
 	run: protectedProcedure
 		.input(
 			z.object({
@@ -668,6 +797,7 @@ export const agentsRouter = router({
 				resumeSessionId: z.string().min(1).optional(),
 				forkSessionId: z.string().min(1).optional(),
 				continueTerminalId: z.string().min(1).optional(),
+				accountSelection: z.string().min(1).max(4096).nullable().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => runAgentInWorkspace(ctx, input)),

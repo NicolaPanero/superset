@@ -4,11 +4,19 @@ import { i18n } from "@superset/i18n";
 import { errorMessage } from "@superset/i18n/errors";
 import { Button } from "@superset/ui/button";
 import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@superset/ui/dialog";
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
+import { Input } from "@superset/ui/input";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { useEffect, useRef, useState } from "react";
@@ -28,6 +36,7 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
+import { useAgentAccountAliases } from "renderer/hooks/host-service/useAgentAccountAliases";
 import type {
 	UsageAccount,
 	UsageQuotaWindow,
@@ -138,6 +147,8 @@ function AccountCard({
 	isSwitching,
 	selectable,
 	hideEmails,
+	alias,
+	onRename,
 }: {
 	account: UsageAccount;
 	onMakeDefault: (() => void) | null;
@@ -151,6 +162,8 @@ function AccountCard({
 	selectable: boolean;
 	/** Replaces account emails so screenshots do not retain identifying pixels. */
 	hideEmails: boolean;
+	alias?: string;
+	onRename?: () => void;
 }) {
 	const { t } = useLingui();
 	const credits = creditsLine(account);
@@ -202,7 +215,7 @@ function AccountCard({
 					{hideEmails && account.email ? (
 						<Trans>Email hidden</Trans>
 					) : (
-						(account.email ?? AGENT_LABELS[account.agent])
+						(alias ?? account.email ?? AGENT_LABELS[account.agent])
 					)}
 				</span>
 				{account.plan && (
@@ -246,6 +259,11 @@ function AccountCard({
 							{onSwitchSignIn && (
 								<DropdownMenuItem onClick={onSwitchSignIn}>
 									<Trans>Switch sign-in…</Trans>
+								</DropdownMenuItem>
+							)}
+							{onRename && (
+								<DropdownMenuItem onClick={onRename}>
+									<Trans>Rename account</Trans>
 								</DropdownMenuItem>
 							)}
 							{onRemove && (
@@ -369,15 +387,20 @@ export function UsageView({
 	hostUrl,
 	focusedAccountKey,
 	focusedAgent,
+	accountsOnly = false,
 }: {
 	hostUrl: string | null;
 	focusedAccountKey?: string;
 	focusedAgent?: string;
+	accountsOnly?: boolean;
 }) {
 	const focusRef = useRef<HTMLDivElement>(null);
 	const focusedOnce = useRef<string | null>(null);
 	const { t } = useLingui();
 	const quotaQuery = useHostUsageQuota(hostUrl);
+	const aliases = useAgentAccountAliases(hostUrl);
+	const [renameTarget, setRenameTarget] = useState<UsageAccount | null>(null);
+	const [renameLabel, setRenameLabel] = useState("");
 	const setDefault = useSetDefaultUsageAccount(hostUrl);
 	const removeAccount = useRemoveUsageAccount(hostUrl);
 	const isDark = useIsDarkTheme();
@@ -522,7 +545,7 @@ export function UsageView({
 
 	return (
 		<div className="mx-auto flex min-h-full w-full max-w-5xl flex-col gap-3 px-6 py-4">
-			<LeaderboardCard hostUrl={hostUrl} />
+			{!accountsOnly && <LeaderboardCard hostUrl={hostUrl} />}
 			<div className="flex items-center gap-2">
 				<span className="ml-auto text-[10px] text-muted-foreground">
 					<Trans>Official quota · refreshes every 5 min</Trans>
@@ -638,6 +661,27 @@ export function UsageView({
 												isManagedAgent(agent) && agentAccounts.length > 1
 											}
 											hideEmails={hideEmails}
+											alias={
+												aliases.data?.find(
+													(alias) =>
+														alias.agent === account.agent &&
+														alias.selection === account.selection,
+												)?.label
+											}
+											onRename={
+												isManagedAgent(account.agent) && aliases.isSuccess
+													? () => {
+															setRenameTarget(account);
+															setRenameLabel(
+																aliases.data?.find(
+																	(alias) =>
+																		alias.agent === account.agent &&
+																		alias.selection === account.selection,
+																)?.label ?? "",
+															);
+														}
+													: undefined
+											}
 										/>
 									</div>
 								))}
@@ -709,7 +753,71 @@ export function UsageView({
 				}}
 			/>
 
-			<UsageHistorySection hostUrl={hostUrl} />
+			<Dialog
+				open={renameTarget !== null}
+				onOpenChange={(open) => {
+					if (!open && !aliases.rename.isPending) setRenameTarget(null);
+				}}
+			>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>
+							<Trans>Rename account</Trans>
+						</DialogTitle>
+						<DialogDescription>
+							<Trans>
+								Saved on this host. Leave empty to use the original name.
+							</Trans>
+						</DialogDescription>
+					</DialogHeader>
+					<form
+						onSubmit={(event) => {
+							event.preventDefault();
+							if (
+								!renameTarget ||
+								!isManagedAgent(renameTarget.agent) ||
+								aliases.rename.isPending
+							)
+								return;
+							aliases.rename.mutate(
+								{
+									agent: renameTarget.agent,
+									selection: renameTarget.selection,
+									label: renameLabel || null,
+								},
+								{
+									onSuccess: () => setRenameTarget(null),
+									onError: () =>
+										toast.error(
+											t({ message: "Could not rename this account." }),
+										),
+								},
+							);
+						}}
+						className="space-y-4"
+					>
+						<Input
+							aria-label={t({ message: "Account name" })}
+							value={renameLabel}
+							onChange={(event) => setRenameLabel(event.target.value)}
+							maxLength={64}
+							disabled={aliases.rename.isPending}
+						/>
+						<Button type="submit" disabled={aliases.rename.isPending}>
+							<Trans>Save</Trans>
+						</Button>
+					</form>
+				</DialogContent>
+			</Dialog>
+			{accountsOnly && (
+				<p className="text-xs text-muted-foreground">
+					<Trans>
+						Cursor Agent, Grok Build and OpenCode accounts are managed in their
+						own apps.
+					</Trans>
+				</p>
+			)}
+			{!accountsOnly && <UsageHistorySection hostUrl={hostUrl} />}
 		</div>
 	);
 }

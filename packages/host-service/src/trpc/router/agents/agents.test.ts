@@ -588,6 +588,28 @@ describe("buildTerminalAgentLaunch default account env", () => {
 		);
 	});
 
+	it("keeps the native transfer launch on its saved profile after the default and config change", () => {
+		const db = createTestDb();
+		seedClaude(db, { CLAUDE_CONFIG_DIR: "/changed/config-profile" });
+		setDefaultAccountSelection(db, "claude", existingDir);
+		const launch = buildTerminalAgentLaunch(db, {
+			workspaceId: "11111111-1111-1111-1111-111111111111",
+			agent: "claude",
+			prompt: "",
+			resumeSessionId: "native-id",
+			launchSnapshot: {
+				config: { ...argvConfig, args: [] },
+				env: {
+					CLAUDE_CONFIG_DIR: "/saved/profile",
+					SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR: "",
+				},
+			},
+		});
+		expect(launch.fullCommand).toBe(
+			"CLAUDE_CONFIG_DIR='/saved/profile' SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR='' 'claude' '--resume' 'native-id'",
+		);
+	});
+
 	it("lets a per-agent CLAUDE_CONFIG_DIR beat the host default", () => {
 		const db = createTestDb();
 		seedClaude(db, { CLAUDE_CONFIG_DIR: "/pinned/profile" });

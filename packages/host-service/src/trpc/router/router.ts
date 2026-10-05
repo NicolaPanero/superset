@@ -17,6 +17,7 @@ import { portsRouter } from "./ports";
 import { projectRouter } from "./project";
 import { pullRequestsRouter } from "./pull-requests";
 import { sandboxRouter } from "./sandbox";
+import { sessionTransferRouter } from "./session-transfer";
 import { settingsRouter } from "./settings";
 import { systemRouter } from "./system";
 import { tagFoldersRouter } from "./tag-folders";
@@ -49,6 +50,7 @@ export const appRouter = router({
 	ports: portsRouter,
 	sandbox: sandboxRouter,
 	settings: settingsRouter,
+	sessionTransfer: sessionTransferRouter,
 	system: systemRouter,
 	terminal: terminalRouter,
 	terminalAgents: terminalAgentsRouter,

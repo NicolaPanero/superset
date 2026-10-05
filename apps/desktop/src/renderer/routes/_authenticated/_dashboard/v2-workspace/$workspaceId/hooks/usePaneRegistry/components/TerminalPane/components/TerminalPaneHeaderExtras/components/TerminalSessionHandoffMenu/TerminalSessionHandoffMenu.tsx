@@ -17,15 +17,17 @@ import {
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { Label } from "@superset/ui/label";
+import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { Bot, GitFork, PanelRight, SquareStack } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { AGENT_STORAGE_KEY } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/PromptGroup/types";
+import { TerminalSessionLineage } from "./components/TerminalSessionLineage";
 import { resolveDefaultTargetConfigId } from "./resolveDefaultTargetConfigId";
 
 type Placement = "split-pane" | "new-tab";
@@ -47,6 +49,7 @@ interface TerminalSessionHandoffMenuProps {
 		placement: Placement;
 		prompt: string;
 		forkSessionId?: string;
+		nativeTransferId?: string;
 	}) => Promise<{ terminalId: string } | null>;
 }
 
@@ -58,10 +61,15 @@ export function TerminalSessionHandoffMenu({
 	const { formatNumber } = useFormat();
 
 	const { t } = useLingui();
-	const binding = useTerminalAgentBinding(workspaceId, terminalId);
+	const [sourceTerminalId, setSourceTerminalId] = useState(terminalId);
+	const binding = useTerminalAgentBinding(workspaceId, sourceTerminalId);
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const trpcUtils = workspaceTrpc.useUtils();
+	const { data: workspace } = workspaceTrpc.workspace.get.useQuery(
+		{ id: workspaceId },
+		{ enabled: Boolean(binding) },
+	);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [action, setAction] = useState<SessionAction | null>(null);
 	const [targetConfigId, setTargetConfigId] = useState("");
@@ -69,6 +77,23 @@ export function TerminalSessionHandoffMenu({
 	const [isStarting, setIsStarting] = useState(false);
 	const [transcript, setTranscript] = useState<string | null>(null);
 	const [transcriptFailed, setTranscriptFailed] = useState(false);
+	const [transferMode, setTransferMode] = useState<"native" | "context">(
+		"context",
+	);
+	const [transferId, setTransferId] = useState(() => crypto.randomUUID());
+	const [nativeError, setNativeError] = useState(false);
+	const [nativeStage, setNativeStage] = useState<
+		"converting" | "launching" | null
+	>(null);
+	const prepareNative = workspaceTrpc.sessionTransfer.prepare.useMutation();
+	const cancelNative = workspaceTrpc.sessionTransfer.cancel.useMutation();
+	const runSequence = useRef(0);
+	const { data: transferCapabilities } =
+		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
+			enabled: Boolean(workspaceId),
+			retry: false,
+			staleTime: 60_000,
+		});
 
 	const sourceConfig = useMemo(() => {
 		const sourceId = binding?.definitionId ?? binding?.agentId;
@@ -80,6 +105,17 @@ export function TerminalSessionHandoffMenu({
 	const selectedConfig = configs.find((config) => config.id === targetConfigId);
 	// `forkArgs` is absent when the host service predates it, so an older
 	// remote host degrades to "cannot fork" instead of throwing in render.
+	const canNative = Boolean(
+		binding?.agentSessionId &&
+			transferCapabilities?.nativeAvailable &&
+			binding.agentId !== selectedConfig?.presetId &&
+			selectedConfig?.resumeArgs?.length &&
+			transferCapabilities.adapters.find((a) => a.agent === binding.agentId)
+				?.verified &&
+			transferCapabilities.adapters.find(
+				(a) => a.agent === selectedConfig?.presetId,
+			)?.verified,
+	);
 	const canFork = Boolean(
 		binding?.agentSessionId && sourceConfig?.forkArgs?.length,
 	);
@@ -102,7 +138,7 @@ export function TerminalSessionHandoffMenu({
 		let cancelled = false;
 		setTranscriptFailed(false);
 		trpcUtils.terminal.transcript
-			.fetch({ workspaceId, terminalId })
+			.fetch({ workspaceId, terminalId: sourceTerminalId })
 			.then((result) => {
 				if (!cancelled) setTranscript(result.text ?? "");
 			})
@@ -114,19 +150,46 @@ export function TerminalSessionHandoffMenu({
 		return () => {
 			cancelled = true;
 		};
-	}, [action, terminalId, trpcUtils, workspaceId]);
+	}, [action, sourceTerminalId, trpcUtils, workspaceId]);
+
+	useEffect(() => {
+		if (action === null) setSourceTerminalId(terminalId);
+	}, [action, terminalId]);
 
 	useEffect(() => {
 		if (action !== "handoff" || targetConfigId) return;
 		if (defaultTargetConfigId) setTargetConfigId(defaultTargetConfigId);
 	}, [action, defaultTargetConfigId, targetConfigId]);
 
-	if (!binding) return null;
+	const lineage = transferCapabilities?.lineageAvailable ? (
+		<TerminalSessionLineage
+			workspaceId={workspaceId}
+			onCreateNewAgentSession={onCreateNewAgentSession}
+			onContinueSession={(id) => {
+				setSourceTerminalId(id);
+				setTargetConfigId("");
+				setPlacement("new-tab");
+				setTransferId(crypto.randomUUID());
+				setNativeError(false);
+				setTransferMode(
+					transferCapabilities.nativeAvailable ? "native" : "context",
+				);
+				setAction("handoff");
+			}}
+		/>
+	) : null;
+	if (!binding) return lineage;
 
 	const openAction = (nextAction: SessionAction) => {
 		setMenuOpen(false);
 		setAction(nextAction);
 		setPlacement("split-pane");
+		setNativeError(false);
+		setNativeStage(null);
+		setTransferId(crypto.randomUUID());
+		setTransferMode(
+			transferCapabilities?.nativeAvailable ? "native" : "context",
+		);
 		if (nextAction === "handoff") {
 			setTargetConfigId(defaultTargetConfigId);
 		}
@@ -134,6 +197,7 @@ export function TerminalSessionHandoffMenu({
 
 	const start = async () => {
 		if (!action) return;
+		const run = ++runSequence.current;
 		setIsStarting(true);
 		try {
 			if (action === "fork") {
@@ -149,21 +213,83 @@ export function TerminalSessionHandoffMenu({
 			}
 
 			if (!selectedConfig) return;
+			if (transferMode === "native") {
+				if (!canNative) return;
+				setNativeError(false);
+				setNativeStage("converting");
+				const transfer = await prepareNative.mutateAsync({
+					workspaceId,
+					terminalId: sourceTerminalId,
+					targetConfigId: selectedConfig.id,
+					transferId,
+				});
+				if (run !== runSequence.current) return;
+				setNativeStage("launching");
+				const result = await onCreateNewAgentSession({
+					configId: selectedConfig.id,
+					placement,
+					prompt: "",
+					nativeTransferId: transfer.transferId,
+				});
+				if (result) {
+					setAction(null);
+					toast.success(t({ message: "Native handoff complete" }), {
+						duration: 15_000,
+						description: (
+							<div className="flex flex-col gap-1">
+								<span>
+									{sourceConfig?.label ?? binding.agentId} →{" "}
+									{selectedConfig.label}
+								</span>
+								<code className="break-all text-xs">
+									{transfer.targetSessionId}
+								</code>
+								{transfer.warnings.length > 1 && (
+									<span>
+										{t({
+											message:
+												"Some agent-specific metadata could not be transferred.",
+										})}
+									</span>
+								)}
+							</div>
+						),
+					});
+				} else setNativeError(true);
+				return;
+			}
 			// Continue stays disabled without a transcript, and the dialog says
 			// why inline; this only guards the impossible.
 			if (!transcript) return;
+			const context = transferCapabilities
+				? await trpcUtils.sessionTransfer.context.fetch({
+						workspaceId,
+						terminalId: sourceTerminalId,
+					})
+				: null;
 			const result = await onCreateNewAgentSession({
 				configId: selectedConfig.id,
 				placement,
-				prompt: buildTerminalSessionHandoffPrompt({
-					transcript,
-					sourceAgentLabel: sourceConfig?.label ?? binding.agentId,
-					sourceTerminalId: terminalId,
-				}),
+				prompt:
+					context?.mode === "context"
+						? context.prompt
+						: buildTerminalSessionHandoffPrompt({
+								transcript,
+								sourceAgentLabel: sourceConfig?.label ?? binding.agentId,
+								sourceTerminalId,
+							}),
 			});
 			if (result) setAction(null);
+		} catch {
+			if (run === runSequence.current) {
+				if (transferMode === "native") setNativeError(true);
+				else setTranscriptFailed(true);
+			}
 		} finally {
-			setIsStarting(false);
+			if (run === runSequence.current) {
+				setNativeStage(null);
+				setIsStarting(false);
+			}
 		}
 	};
 
@@ -176,6 +302,7 @@ export function TerminalSessionHandoffMenu({
 
 	return (
 		<>
+			{lineage}
 			<DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -225,6 +352,11 @@ export function TerminalSessionHandoffMenu({
 									Create a native provider fork with the same conversation
 									context. The original session stays unchanged.
 								</Trans>
+							) : transferMode === "native" ? (
+								<Trans>
+									Create a resumable session with the conversation history.
+									Permissions and credentials stay with the target agent.
+								</Trans>
 							) : (
 								<Trans>
 									Start a fresh agent session seeded with this terminal's recent
@@ -237,6 +369,44 @@ export function TerminalSessionHandoffMenu({
 					<div className="flex flex-col gap-4 py-1">
 						{action === "handoff" ? (
 							<div className="flex flex-col gap-2">
+								<div className="grid grid-cols-2 gap-2">
+									<Button
+										variant={
+											transferMode === "native" ? "secondary" : "outline"
+										}
+										disabled={isStarting || !canNative}
+										onClick={() => setTransferMode("native")}
+									>
+										<Trans>Native Handoff</Trans>
+									</Button>
+									<Button
+										variant={
+											transferMode === "context" ? "secondary" : "outline"
+										}
+										disabled={isStarting}
+										onClick={() => {
+											setTransferMode("context");
+											setNativeError(false);
+										}}
+									>
+										<Trans>Context Handoff</Trans>
+									</Button>
+								</div>
+								{!canNative && (
+									<p className="text-muted-foreground text-xs">
+										<Trans>
+											Native handoff is unavailable for this agent pair or host.
+										</Trans>
+									</p>
+								)}
+								{nativeError && (
+									<p role="alert" className="text-destructive text-sm">
+										<Trans>
+											Native handoff failed. You can retry or choose Context
+											Handoff.
+										</Trans>
+									</p>
+								)}
 								<Label>
 									<Trans>Target agent</Trans>
 								</Label>
@@ -251,12 +421,40 @@ export function TerminalSessionHandoffMenu({
 									placeholder={t({
 										message: "Select an agent",
 									})}
-									onValueChange={setTargetConfigId}
+									onValueChange={(id) => {
+										setTargetConfigId(id);
+										setTransferId(crypto.randomUUID());
+										setNativeError(false);
+									}}
 									disabled={isStarting || configs.length === 0}
 									triggerClassName="w-full"
 									onBeforeConfigureAgents={() => setAction(null)}
 								/>
-								{selectedConfig && (
+								{transferMode === "native" && (
+									<dl className="rounded-md border bg-muted/30 p-3 text-xs">
+										<dt className="text-muted-foreground">
+											<Trans>Source</Trans>
+										</dt>
+										<dd>{sourceConfig?.label ?? binding.agentId}</dd>
+										<dt className="mt-2 text-muted-foreground">
+											<Trans>Session</Trans>
+										</dt>
+										<dd className="break-all font-mono">
+											{binding.agentSessionId ?? "—"}
+										</dd>
+										{workspace?.worktreePath && (
+											<>
+												<dt className="mt-2 text-muted-foreground">
+													<Trans>Workspace</Trans>
+												</dt>
+												<dd className="break-all font-mono">
+													{workspace.worktreePath}
+												</dd>
+											</>
+										)}
+									</dl>
+								)}
+								{selectedConfig && transferMode === "context" && (
 									<p className="text-muted-foreground text-xs">
 										{transcriptFailed ? (
 											<Trans>Couldn't read this terminal's context.</Trans>
@@ -319,8 +517,16 @@ export function TerminalSessionHandoffMenu({
 					<DialogFooter>
 						<Button
 							variant="ghost"
-							onClick={() => setAction(null)}
-							disabled={isStarting}
+							onClick={() => {
+								if (nativeStage === "converting") {
+									++runSequence.current;
+									cancelNative.mutate({ transferId });
+									setNativeStage(null);
+									setIsStarting(false);
+								}
+								setAction(null);
+							}}
+							disabled={isStarting && nativeStage !== "converting"}
 						>
 							<Trans>Cancel</Trans>
 						</Button>
@@ -332,10 +538,15 @@ export function TerminalSessionHandoffMenu({
 									? !canFork
 									: // Nothing to hand over, or the read failed: refuse before
 										// the click rather than after it.
-										!selectedConfig || !transcript)
+										!selectedConfig ||
+										(transferMode === "native" ? !canNative : !transcript))
 							}
 						>
-							{isStarting ? (
+							{nativeStage === "converting" ? (
+								<Trans>Converting…</Trans>
+							) : nativeStage === "launching" ? (
+								<Trans>Launching…</Trans>
+							) : isStarting ? (
 								<Trans>Starting…</Trans>
 							) : action === "fork" ? (
 								<Trans>Fork session</Trans>

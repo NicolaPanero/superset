@@ -88,6 +88,33 @@ describe("buildDefaultAccountResolver", () => {
 		).toBe(profile);
 	});
 
+	it("keeps a native-transfer profile pinned when the host pointer changes", () => {
+		const { home, profile } = makeHome(null);
+		writeFileSync(join(home, "state", "default-claude-config-dir"), profile);
+		expect(
+			resolve({
+				SUPERSET_TERMINAL_ID: "t1",
+				SUPERSET_HOME_DIR: home,
+				CLAUDE_CONFIG_DIR: "/tmp/native-transfer-profile",
+				SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR: "",
+			}),
+		).toBe("/tmp/native-transfer-profile");
+	});
+
+	it("keeps the native-transfer system login unset after the pointer changes", () => {
+		const { home, profile } = makeHome(null);
+		writeFileSync(join(home, "state", "default-claude-config-dir"), profile);
+		expect(
+			resolve({
+				SUPERSET_TERMINAL_ID: "t1",
+				SUPERSET_HOME_DIR: home,
+				CLAUDE_CONFIG_DIR: "",
+				SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR: "",
+				SUPERSET_PINNED_ACCOUNT_ENV: "CLAUDE_CONFIG_DIR",
+			}),
+		).toBe("<unset>");
+	});
+
 	it("updates the injection marker when it adopts a new pointer", () => {
 		const { home, profile } = makeHome(null);
 		writeFileSync(join(home, "state", "default-claude-config-dir"), profile);

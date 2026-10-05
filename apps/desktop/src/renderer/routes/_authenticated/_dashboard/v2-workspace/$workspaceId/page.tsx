@@ -32,6 +32,7 @@ import { V2NotificationStatusIndicator } from "./components/V2NotificationStatus
 import { V2PresetsBar } from "./components/V2PresetsBar";
 import { V2WorkspaceOpenInButton } from "./components/V2WorkspaceOpenInButton";
 import { V2WorkspaceRunButton } from "./components/V2WorkspaceRunButton";
+import { WorkspaceAgentOverview } from "./components/WorkspaceAgentOverview";
 import { WorkspaceEmptyState } from "./components/WorkspaceEmptyState";
 import { WorkspaceMissingWorktreeState } from "./components/WorkspaceMissingWorktreeState";
 import { WorkspacePagesMenu } from "./components/WorkspacePagesMenu";
@@ -430,6 +431,13 @@ function V2WorkspaceContent() {
 							renderTabBarLeading={() => <WindowChrome />}
 							renderTabBarTrailing={() => (
 								<div className="flex items-center gap-1">
+									<WorkspaceAgentOverview
+										key={workspaceId}
+										workspaceId={workspaceId}
+										workspaceName={workspace.name}
+										onCreateNewAgentSession={createNewAgentSession}
+										onFocusAgentTerminal={focusAgentTerminal}
+									/>
 									<CloudWorkspaceTabBarControls workspaceId={workspaceId} />
 									{/* Until the pane layout hydrates, tabs read as empty and
 									    every running terminal miscounts as "background", so the
