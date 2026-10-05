@@ -9858,6 +9858,9 @@ msgstr "Native Übergabe abgeschlossen"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Die native Übergabe ist fehlgeschlagen. Versuchen Sie es erneut oder wählen Sie die Kontextübergabe."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Die native Übergabe ist fehlgeschlagen. Versuchen Sie es erneut."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Die native Übergabe ist für dieses Agentenpaar oder diesen Host nicht verfügbar."
 
@@ -17722,6 +17725,9 @@ msgstr "Lautstärke"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Warten Sie vor der Übergabe, bis der Agent fertig ist."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Auf das Arbeitsbereich-Setup warten, bevor Agenten starten"

@@ -9858,6 +9858,9 @@ msgstr "Transferencia nativa completada"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "La transferencia nativa falló. Puedes reintentar o elegir la transferencia de contexto."
 
+msgid "Native handoff failed. You can retry."
+msgstr "La transferencia nativa falló. Puedes reintentar."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "La transferencia nativa no está disponible para esta pareja de agentes o este host."
 
@@ -17722,6 +17725,9 @@ msgstr "Volumen"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Espera a que el agente termine antes de transferir."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Esperar a la configuración del espacio de trabajo antes de iniciar los agentes"

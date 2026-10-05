@@ -5,9 +5,13 @@ import { terminalColorsSchema } from "@superset/shared/terminal-colors";
 import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
+import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
 import { workspaces } from "../../../db/schema";
 import { TransferJobs } from "../../../session-transfer/jobs";
-import { LocalLineageStore } from "../../../session-transfer/lineage";
+import {
+	type LineageNode,
+	LocalLineageStore,
+} from "../../../session-transfer/lineage";
 import { lineageResumeLaunch } from "../../../session-transfer/lineage-resume";
 import {
 	ContextTransferProvider,
@@ -26,6 +30,7 @@ import { TxcriptTransferProvider } from "../../../session-transfer/txcript";
 import { transcriptSession } from "../../../terminal/terminal";
 import {
 	agentLaunchEnv,
+	type ResolvedHostAgentConfig,
 	resolveHostAgentConfig,
 } from "../../../terminal-agents/agent-config";
 import { terminalHarnessSession } from "../../../terminal-agents/harness-session-ref";
@@ -35,6 +40,7 @@ import { codexSessionFiles } from "../../../terminal-agents/harness-sessions/cod
 import { getTerminalAgentBinding } from "../../../terminal-agents/persistence";
 import { isTrustedTranscriptPath } from "../../../terminal-agents/transcript-path";
 import { protectedProcedure, router } from "../../index";
+import { selectedAccountEnv } from "../agents/account-selection";
 import {
 	type AgentRunInput,
 	type AgentRunResult,
@@ -50,6 +56,9 @@ type Prepared = {
 	launchPromise?: Promise<AgentRunResult>;
 };
 const jobs = new TransferJobs<Prepared>();
+const chatJobs = new TransferJobs<
+	Extract<TransferResult, { mode: "native" }>
+>();
 const nodeLaunches = new Map<string, Promise<AgentRunResult>>();
 const inputSchema = z.object({
 	workspaceId: z.string().uuid(),
@@ -57,6 +66,123 @@ const inputSchema = z.object({
 	targetConfigId: z.string().uuid(),
 	transferId: z.string().uuid(),
 });
+
+async function pinTargetProfile(
+	config: ResolvedHostAgentConfig,
+	launchEnv: Record<string, string>,
+	selection?: string | null,
+) {
+	// Absolute CLI commands bypass Superset's identity wrapper. Cursor
+	// hooks use this native CLI marker to distinguish it from the IDE.
+	if (config.presetId === "cursor-agent")
+		return { ...launchEnv, CURSOR_AGENT: "1" };
+	if (config.presetId !== "claude" && config.presetId !== "codex")
+		return launchEnv;
+	if (selection !== undefined)
+		return selectedAccountEnv(config, launchEnv, selection);
+	const target = TRANSFER_AGENTS[config.presetId];
+	const selected =
+		launchEnv[target.profileKey] || process.env[target.profileKey];
+	const profile = await realpath(selected || join(homedir(), target.home));
+	return pinNativeProfile(
+		launchEnv,
+		config.presetId,
+		selected ? profile : null,
+	);
+}
+
+async function convertNative(
+	lineage: LocalLineageStore,
+	input: {
+		transferId: string;
+		workspaceId: string;
+		cwd: string;
+		signal: AbortSignal;
+		source: {
+			agent: LineageNode["agent"];
+			sessionId: string;
+			root: string;
+			reference: string;
+			configId: string;
+			label: string;
+			terminalId: string;
+		};
+		target: {
+			config: ResolvedHostAgentConfig;
+			env: Record<string, string>;
+			root: string;
+			terminalId: string | null;
+		};
+	},
+) {
+	const { cwd, signal, source, target } = input;
+	const presetId = target.config.presetId;
+	if (!isVerifiedNativeAgent(presetId))
+		throw new Error("native_pair_unavailable");
+	const result = await new TxcriptTransferProvider().transfer({
+		signal,
+		sourceAgent: source.agent,
+		sourceSessionId: source.sessionId,
+		sourceTerminalId: source.terminalId,
+		sourceRoot: source.root,
+		sourceReference: source.reference,
+		targetAgent: presetId,
+		targetRoot: target.root,
+		cwd,
+	});
+	if (
+		result.mode !== "native" ||
+		(["claude", "codex", "opencode"].includes(presetId) &&
+			hasHarnessSession({
+				agentId: presetId,
+				sessionId: result.targetSessionId,
+				worktreePath: cwd,
+				env: target.env,
+			}) !== true)
+	)
+		throw new Error("target_session_unavailable");
+	signal.throwIfAborted();
+	const canonicalSourceRoot = await realpath(source.root);
+	let sourceProfile: string | null = null;
+	if (source.agent === "claude" || source.agent === "codex") {
+		const adapter = TRANSFER_AGENTS[source.agent];
+		const defaultPath = join(homedir(), adapter.home);
+		const defaultProfile = await realpath(defaultPath).catch(() => defaultPath);
+		if (dirname(canonicalSourceRoot) !== defaultProfile)
+			sourceProfile = dirname(canonicalSourceRoot);
+	}
+	const edge = lineage.record({
+		id: input.transferId,
+		workspaceId: input.workspaceId,
+		source: {
+			agent: source.agent,
+			sessionId: source.sessionId,
+			storeRoot: canonicalSourceRoot,
+			reference: await realpath(source.reference),
+			cwd,
+			configId: source.configId,
+			label: source.label,
+			profileOverride: sourceProfile,
+			lastTerminalId: source.terminalId,
+		},
+		target: {
+			agent: presetId,
+			sessionId: result.targetSessionId,
+			storeRoot: target.root,
+			reference: await realpath(result.reference),
+			cwd,
+			configId: target.config.id,
+			label: target.config.label,
+			profileOverride:
+				presetId === "claude" || presetId === "codex"
+					? target.env[TRANSFER_AGENTS[presetId].profileKey] || null
+					: null,
+			lastTerminalId: target.terminalId,
+		},
+		warnings: result.warnings,
+	});
+	return { result, lineageNodeId: edge.targetNodeId };
+}
 
 export const sessionTransferRouter = router({
 	context: protectedProcedure
@@ -165,23 +291,7 @@ export const sessionTransferRouter = router({
 						const launchEnv = agentLaunchEnv(ctx.db, config);
 						// Absolute CLI commands bypass Superset's identity wrapper. Cursor
 						// hooks use this native CLI marker to distinguish it from the IDE.
-						let env =
-							config.presetId === "cursor-agent"
-								? { ...launchEnv, CURSOR_AGENT: "1" }
-								: launchEnv;
-						if (config.presetId === "claude" || config.presetId === "codex") {
-							const target = TRANSFER_AGENTS[config.presetId];
-							const selected =
-								launchEnv[target.profileKey] || process.env[target.profileKey];
-							const profile = await realpath(
-								selected || join(homedir(), target.home),
-							);
-							env = pinNativeProfile(
-								launchEnv,
-								config.presetId,
-								selected ? profile : null,
-							);
-						}
+						const env = await pinTargetProfile(config, launchEnv);
 						const targetRoot = await realpath(
 							defaultNativeStore(config.presetId, { ...process.env, ...env }),
 						);
@@ -257,74 +367,25 @@ export const sessionTransferRouter = router({
 								cwd,
 							);
 						}
-						const provider = new TxcriptTransferProvider();
-						const result = await provider.transfer({
-							signal,
-							sourceAgent: binding.agentId,
-							sourceSessionId: binding.agentSessionId,
-							sourceTerminalId: input.terminalId,
-							sourceRoot,
-							sourceReference,
-							targetAgent: config.presetId,
-							targetRoot,
-							cwd,
-						});
-						if (
-							result.mode !== "native" ||
-							(["claude", "codex", "opencode"].includes(config.presetId) &&
-								hasHarnessSession({
-									agentId: config.presetId,
-									sessionId: result.targetSessionId,
-									worktreePath: cwd,
-									env,
-								}) !== true)
-						)
-							throw new Error("target_session_unavailable");
-						signal.throwIfAborted();
-						const canonicalSourceRoot = await realpath(sourceRoot);
-						let sourceProfile: string | null = null;
-						if (binding.agentId === "claude" || binding.agentId === "codex") {
-							const adapter = TRANSFER_AGENTS[binding.agentId];
-							const defaultPath = join(homedir(), adapter.home);
-							const defaultProfile = await realpath(defaultPath).catch(
-								() => defaultPath,
-							);
-							if (dirname(canonicalSourceRoot) !== defaultProfile)
-								sourceProfile = dirname(canonicalSourceRoot);
-						}
-						const edge = lineage.record({
-							id: input.transferId,
+						const { result, lineageNodeId } = await convertNative(lineage, {
+							transferId: input.transferId,
 							workspaceId: input.workspaceId,
+							cwd,
+							signal,
 							source: {
 								agent: binding.agentId,
 								sessionId: binding.agentSessionId,
-								storeRoot: canonicalSourceRoot,
-								reference: await realpath(sourceReference),
-								cwd,
+								root: sourceRoot,
+								reference: sourceReference,
 								configId: sourceConfig.id,
 								label: sourceConfig.label,
-								profileOverride: sourceProfile,
-								lastTerminalId: input.terminalId,
+								terminalId: input.terminalId,
 							},
-							target: {
-								agent: config.presetId,
-								sessionId: result.targetSessionId,
-								storeRoot: targetRoot,
-								reference: await realpath(result.reference),
-								cwd,
-								configId: config.id,
-								label: config.label,
-								profileOverride:
-									config.presetId === "claude" || config.presetId === "codex"
-										? env[TRANSFER_AGENTS[config.presetId].profileKey] || null
-										: null,
-								lastTerminalId: null,
-							},
-							warnings: result.warnings,
+							target: { config, env, root: targetRoot, terminalId: null },
 						});
 						return {
 							result,
-							lineageNodeId: edge.targetNodeId,
+							lineageNodeId,
 							launch: {
 								workspaceId: input.workspaceId,
 								agent: config.id,
@@ -350,6 +411,153 @@ export const sessionTransferRouter = router({
 					message: "transfer_id_conflict",
 				});
 			return { transferId: input.transferId, ...prepared.result };
+		}),
+	prepareFromChat: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				transferId: z.string().uuid(),
+				sourceTerminalId: z.string().uuid(),
+				sourceConfigId: z.string().min(1),
+				sourceSessionId: z.string().min(1).max(128),
+				sourceAccountSelection: z.string().min(1).nullable().optional(),
+				targetConfigId: z.string().min(1),
+				targetAccountSelection: z.string().min(1).nullable().optional(),
+				targetTerminalId: z.string().uuid(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			try {
+				const result = await chatJobs.run(
+					`${ctx.organizationId}:${input.transferId}`,
+					JSON.stringify(input),
+					async (signal) => {
+						const lineage = new LocalLineageStore(ctx.db, ctx.organizationId);
+						if (lineage.edge(input.workspaceId, input.transferId))
+							throw new Error("transfer_already_recorded");
+						const workspace = ctx.db
+							.select()
+							.from(workspaces)
+							.where(
+								and(
+									eq(workspaces.id, input.workspaceId),
+									isNull(workspaces.archivedAt),
+								),
+							)
+							.get();
+						const sourceConfig = resolveHostAgentConfig(
+							ctx.db,
+							input.sourceConfigId,
+						);
+						const config = resolveHostAgentConfig(ctx.db, input.targetConfigId);
+						if (!workspace || !sourceConfig || !config)
+							throw new Error("session_unavailable");
+						const sourceAgent = sourceConfig.presetId;
+						if (
+							!isVerifiedNativeAgent(sourceAgent) ||
+							!isVerifiedNativeAgent(config.presetId) ||
+							sourceAgent === config.presetId ||
+							!config.resumeArgs.length
+						)
+							throw new Error("native_pair_unavailable");
+						const cwd = await realpath(workspace.worktreePath);
+						const sourceEnv = await pinTargetProfile(
+							sourceConfig,
+							agentLaunchEnv(ctx.db, sourceConfig),
+							input.sourceAccountSelection,
+						);
+						let sourceReference: string | null;
+						let sourceRoot: string;
+						if (sourceAgent === "claude" || sourceAgent === "codex") {
+							const files =
+								sourceAgent === "claude"
+									? claudeSessionFiles
+									: codexSessionFiles;
+							sourceReference = files.locate({
+								sessionId: input.sourceSessionId,
+								worktreePath: cwd,
+								env: sourceEnv,
+							});
+							if (!sourceReference) throw new Error("source_unavailable");
+							sourceRoot = dirname(sourceReference);
+							const store = TRANSFER_AGENTS[sourceAgent].store;
+							while (
+								basename(sourceRoot) !== store &&
+								dirname(sourceRoot) !== sourceRoot
+							)
+								sourceRoot = dirname(sourceRoot);
+							if (basename(sourceRoot) !== store)
+								throw new Error("source_store_unavailable");
+						} else {
+							// Cursor keeps ACP chats apart from its CLI store, which is
+							// the one the converter reads.
+							if (sourceAgent === "cursor-agent")
+								await bridgeCursorSession({
+									cwd: workspace.worktreePath,
+									sessionId: input.sourceSessionId,
+									from: "acp",
+								});
+							sourceRoot = await realpath(
+								defaultNativeStore(sourceAgent, {
+									...process.env,
+									...sourceEnv,
+								}),
+							);
+							sourceReference = peerSessionReference(
+								sourceAgent,
+								sourceRoot,
+								input.sourceSessionId,
+								cwd,
+							);
+						}
+						const env = await pinTargetProfile(
+							config,
+							agentLaunchEnv(ctx.db, config),
+							input.targetAccountSelection,
+						);
+						const targetRoot = await realpath(
+							defaultNativeStore(config.presetId, { ...process.env, ...env }),
+						);
+						const { result } = await convertNative(lineage, {
+							transferId: input.transferId,
+							workspaceId: input.workspaceId,
+							cwd,
+							signal,
+							source: {
+								agent: sourceAgent,
+								sessionId: input.sourceSessionId,
+								root: sourceRoot,
+								reference: sourceReference,
+								configId: sourceConfig.id,
+								label: sourceConfig.label,
+								terminalId: input.sourceTerminalId,
+							},
+							target: {
+								config,
+								env,
+								root: targetRoot,
+								terminalId: input.targetTerminalId,
+							},
+						});
+						if (config.presetId === "cursor-agent")
+							await bridgeCursorSession({
+								cwd: workspace.worktreePath,
+								sessionId: result.targetSessionId,
+								from: "cli",
+							});
+						return result;
+					},
+				);
+				return { transferId: input.transferId, ...result };
+			} catch (error) {
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message:
+						error instanceof Error && /^[a-z_]{1,64}$/.test(error.message)
+							? error.message
+							: "native_transfer_failed",
+				});
+			}
 		}),
 	lineage: protectedProcedure
 		.input(
@@ -419,6 +627,7 @@ export const sessionTransferRouter = router({
 		.input(z.object({ transferId: z.string().uuid() }))
 		.mutation(({ ctx, input }) => {
 			jobs.cancel(`${ctx.organizationId}:${input.transferId}`);
+			chatJobs.cancel(`${ctx.organizationId}:${input.transferId}`);
 			return { cancelled: true };
 		}),
 	launch: protectedProcedure

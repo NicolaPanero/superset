@@ -9858,6 +9858,9 @@ msgstr "Đã hoàn tất chuyển giao gốc"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Chuyển phiên gốc thất bại. Bạn có thể thử lại hoặc chọn chuyển ngữ cảnh."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Chuyển phiên gốc thất bại. Bạn có thể thử lại."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Chuyển phiên gốc không khả dụng cho cặp tác tử hoặc máy chủ này."
 
@@ -17722,6 +17725,9 @@ msgstr "Âm lượng"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Hãy đợi tác tử hoàn tất trước khi chuyển."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Chờ setup workspace xong rồi mới khởi động agent"

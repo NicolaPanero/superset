@@ -9858,6 +9858,9 @@ msgstr "ネイティブ引き継ぎが完了しました"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "ネイティブセッションの引き継ぎに失敗しました。再試行するか、コンテキストの引き継ぎを選択してください。"
 
+msgid "Native handoff failed. You can retry."
+msgstr "ネイティブセッションの引き継ぎに失敗しました。再試行してください。"
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "このエージェントの組み合わせ、またはホストではネイティブセッションの引き継ぎを利用できません。"
 
@@ -17722,6 +17725,9 @@ msgstr "音量"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "引き継ぐ前に、エージェントの処理が終わるまでお待ちください。"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "エージェント起動前にワークスペースのセットアップを待つ"

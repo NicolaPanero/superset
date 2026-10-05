@@ -9858,6 +9858,9 @@ msgstr "Нативная передача завершена"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Нативная передача не удалась. Повторите попытку или выберите передачу контекста."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Нативная передача не удалась. Повторите попытку."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Нативная передача недоступна для этой пары агентов или этого хоста."
 
@@ -17722,6 +17725,9 @@ msgstr "Громкость"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Перед передачей дождитесь, пока агент закончит."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Ждать настройки рабочей области перед запуском агентов"

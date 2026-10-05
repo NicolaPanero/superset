@@ -9858,6 +9858,9 @@ msgstr "Native overdracht voltooid"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "De native overdracht is mislukt. Probeer opnieuw of kies contextoverdracht."
 
+msgid "Native handoff failed. You can retry."
+msgstr "De native overdracht is mislukt. Probeer opnieuw."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Native overdracht is niet beschikbaar voor dit agentenpaar of deze host."
 
@@ -17722,6 +17725,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Wacht tot de agent klaar is voordat u overdraagt."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Wachten op werkruimte-setup voordat agents starten"

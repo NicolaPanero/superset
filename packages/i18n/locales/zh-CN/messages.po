@@ -9858,6 +9858,9 @@ msgstr "原生交接已完成"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "原生会话交接失败。你可以重试或选择上下文交接。"
 
+msgid "Native handoff failed. You can retry."
+msgstr "原生会话交接失败。你可以重试。"
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "此代理组合或主机不支持原生会话交接。"
 
@@ -17722,6 +17725,9 @@ msgstr "音量"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "请等待代理完成后再交接。"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "启动智能体前等待工作区设置完成"
