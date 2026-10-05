@@ -37,7 +37,9 @@ import { defaultNativeStore } from "../../../session-transfer/stores";
 import { waitForTerminalBaseEnv } from "../../../terminal/env";
 import {
 	createTerminalSessionInternal,
+	isLiveTerminalSession,
 	sendAgentMessage,
+	sessionHasRunningProcess,
 } from "../../../terminal/terminal";
 import type { TerminalAgentStore } from "../../../terminal-agents";
 import {
@@ -755,6 +757,25 @@ export async function runAgentInWorkspace(
 	return runTerminalAgent(ctx, input);
 }
 
+/**
+ * Open bindings whose agent has already quit. An agent that exits before its
+ * first hook (Claude's folder trust prompt) never reports an end.
+ */
+export function exitedAgentTerminalIds(
+	bindings: Array<{ terminalId: string; endedAt?: number }>,
+	isLive: (terminalId: string) => boolean,
+	isRunning: (terminalId: string) => boolean,
+): string[] {
+	return bindings
+		.filter(
+			(binding) =>
+				!binding.endedAt &&
+				isLive(binding.terminalId) &&
+				!isRunning(binding.terminalId),
+		)
+		.map((binding) => binding.terminalId);
+}
+
 export const agentsRouter = router({
 	prepareCursorSurface: protectedProcedure
 		.input(
@@ -956,6 +977,15 @@ export const agentsRouter = router({
 							]
 						: [];
 				}),
+		),
+	exitedAgentTerminals: protectedProcedure
+		.input(z.object({ workspaceId: z.string().uuid() }))
+		.query(({ ctx, input }) =>
+			exitedAgentTerminalIds(
+				ctx.terminalAgentStore.listByWorkspace(input.workspaceId),
+				isLiveTerminalSession,
+				(terminalId) => sessionHasRunningProcess(terminalId, input.workspaceId),
+			),
 		),
 	run: protectedProcedure
 		.input(
