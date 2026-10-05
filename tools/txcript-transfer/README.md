@@ -25,7 +25,7 @@ It returns a fresh native targetSessionId, reference, cwd, messageCount and
 warnings. `capabilities` returns declared and verified adapters separately.
 Errors contain fixed codes, never transcript text or credentials.
 
-Engine `0.14.4-nicola.2` has verified Claude Code, Codex, Cursor CLI, Grok
+Engine `0.14.4-nicola.3` has verified Claude Code, Codex, Cursor CLI, Grok
 Build and OpenCode adapters on macOS arm64. All 20 cross-agent directions
 passed real native resumes using dedicated multi-turn read/edit/shell
 fixtures. Assertions check persisted targets, cwd, unmodified source
@@ -36,6 +36,9 @@ Structured results are preserved as JSON text for target formats that
 cannot accept the source block tags. Invalid tool IDs are normalized with
 deterministic aliases, preserving call/result pairing; the helper response
 includes `toolIdMap` for verification.
+Cursor CLI user turns drop the `<timestamp>` prefix Cursor adds before
+`<user_query>`, and message times are made strictly increasing because
+Cursor stores one time for a whole chat.
 Permissions, MCP configuration and credentials are not transferred; opaque
 provider reasoning is not claimed to be portable. The helper never launches
 an agent. Superset owns profile selection and the subsequent native resume.

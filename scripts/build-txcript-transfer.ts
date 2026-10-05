@@ -63,7 +63,7 @@ const details = JSON.parse(capability.stdout.toString());
 if (
 	capability.exitCode !== 0 ||
 	details.protocolVersion !== 1 ||
-	details.engineVersion !== "0.14.4-nicola.2" ||
+	details.engineVersion !== "0.14.4-nicola.3" ||
 	!details.conversionOnly
 )
 	throw new Error("Invalid transfer helper");
