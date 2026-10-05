@@ -1,7 +1,14 @@
 import { Database } from "bun:sqlite";
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, readFile, rm, symlink } from "node:fs/promises";
+import {
+	mkdir,
+	mkdtemp,
+	readFile,
+	rm,
+	symlink,
+	writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
@@ -71,6 +78,23 @@ describe("Cursor surface bridge", () => {
 			copied.query("SELECT value FROM meta WHERE key='name'").get(),
 		).toEqual({ value: "conversation" });
 		copied.close();
+	});
+	it("restores the workspace in a CLI sidecar that Cursor rewrote without it", async () => {
+		await bridgeCursorSession(
+			{ cwd, sessionId: id, from: "cli", cursorRoot: root },
+			openDatabase,
+		);
+		await writeFile(
+			join(cliDir, "meta.json"),
+			JSON.stringify({ schemaVersion: 1, title: "Imported Session" }),
+		);
+		await bridgeCursorSession(
+			{ cwd, sessionId: id, from: "acp", cursorRoot: root },
+			openDatabase,
+		);
+		expect(
+			JSON.parse(await readFile(join(cliDir, "meta.json"), "utf8")),
+		).toEqual({ schemaVersion: 1, title: "Imported Session", cwd });
 	});
 	it("rejects path traversal, another workspace, links and an open target", async () => {
 		await expect(

@@ -114,6 +114,24 @@ export async function bridgeCursorSession(
 				{ mode: 0o600 },
 			);
 			await rename(join(staging, "meta.json"), join(targetDir, "meta.json"));
+		} else {
+			// Cursor rewrites the CLI sidecar without `cwd` after loading an
+			// imported chat, and the converter needs it to find the workspace.
+			await rejectLinks(join(targetDir, "meta.json"), root);
+			let meta: Record<string, unknown> = {};
+			try {
+				meta = JSON.parse(await readFile(join(targetDir, "meta.json"), "utf8"));
+			} catch (error) {
+				if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+			}
+			if (meta.cwd !== options.cwd) {
+				await writeFile(
+					join(staging, "meta.json"),
+					JSON.stringify({ schemaVersion: 1, ...meta, cwd: options.cwd }),
+					{ mode: 0o600 },
+				);
+				await rename(join(staging, "meta.json"), join(targetDir, "meta.json"));
+			}
 		}
 		await rename(join(staging, "store.db"), join(targetDir, "store.db"));
 	} finally {
