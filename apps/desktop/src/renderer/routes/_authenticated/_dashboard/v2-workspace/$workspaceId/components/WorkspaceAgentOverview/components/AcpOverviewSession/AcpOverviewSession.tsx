@@ -1,17 +1,44 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type { TerminalPaneData } from "../../../../types";
 
 export function AcpOverviewSession({
+	agent,
 	data,
+	hostUrl,
 	status,
 	onOpen,
 }: {
+	agent: string;
 	data: TerminalPaneData;
+	hostUrl: string | null;
 	status: string;
 	onOpen: () => void;
 }) {
 	const { t } = useLingui();
+	const selection = data.acpAccountSelection;
+	const options = useQuery({
+		queryKey: ["agent-launch-account-options", hostUrl, agent],
+		enabled: !!hostUrl && selection !== undefined,
+		queryFn: () =>
+			hostUrl
+				? getHostServiceClientByUrl(hostUrl).agents.accountOptions.query({
+						agent,
+					})
+				: [],
+		retry: false,
+		staleTime: 30_000,
+	});
+	const option = options.data?.find((o) => o.selection === selection);
+	const accountLabel =
+		selection === undefined
+			? t({ message: "Managed by the CLI" })
+			: (option?.alias ??
+				(selection === null
+					? t({ message: "System default" })
+					: (option?.label ?? t({ message: "Selected account" }))));
 	const label =
 		status === "closed"
 			? t({ message: "Closed" })
@@ -35,12 +62,7 @@ export function AcpOverviewSession({
 				{data.chatModelId ?? t({ message: "CLI default" })}
 			</p>
 			<p className="break-words">
-				<Trans>Account</Trans>:{" "}
-				{data.acpAccountSelection === null
-					? t({ message: "System default" })
-					: data.acpAccountSelection
-						? t({ message: "Selected account" })
-						: t({ message: "Managed by the CLI" })}
+				<Trans>Account</Trans>: {accountLabel}
 			</p>
 			<Button variant="outline" size="sm" onClick={onOpen}>
 				<Trans>Open session</Trans>
