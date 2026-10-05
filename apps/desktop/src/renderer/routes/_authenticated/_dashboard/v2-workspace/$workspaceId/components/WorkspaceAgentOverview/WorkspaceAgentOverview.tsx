@@ -348,7 +348,9 @@ export function WorkspaceAgentOverview({
 									{chatSessions.map(({ data, session }) => (
 										<AcpOverviewSession
 											key={data.terminalId}
+											agent={peer.id}
 											data={data}
+											hostUrl={hostUrl}
 											status={
 												session?.live
 													? (session.session?.status ?? "idle")
