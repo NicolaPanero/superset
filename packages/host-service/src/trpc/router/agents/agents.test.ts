@@ -17,6 +17,7 @@ import {
 	buildAgentCommandString,
 	buildTerminalAgentLaunch,
 	continuationTarget,
+	exitedAgentTerminalIds,
 	validateAgentEffortSelection,
 	validateAgentForkSelection,
 	validateAgentModelSelection,
@@ -1058,5 +1059,23 @@ describe("continuationTarget", () => {
 				workspaceId: "33333333-3333-3333-3333-333333333333",
 			}),
 		).toBeNull();
+	});
+});
+
+describe("exitedAgentTerminalIds", () => {
+	it("lists only open bindings whose live terminal is back at the prompt", () => {
+		const bindings = [
+			{ terminalId: "quit" },
+			{ terminalId: "running" },
+			{ terminalId: "ended", endedAt: 1 },
+			{ terminalId: "unknown" },
+		];
+		expect(
+			exitedAgentTerminalIds(
+				bindings,
+				(id) => id !== "unknown",
+				(id) => id === "running",
+			),
+		).toEqual(["quit"]);
 	});
 });

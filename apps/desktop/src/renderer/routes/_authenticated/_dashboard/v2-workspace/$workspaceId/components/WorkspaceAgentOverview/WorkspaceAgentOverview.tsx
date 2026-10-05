@@ -222,6 +222,18 @@ export function WorkspaceAgentOverview({
 		retry: false,
 		staleTime: 30_000,
 	});
+	const exited = useQuery({
+		queryKey: ["agent-exited-terminals", hostUrl, workspaceId],
+		enabled: open && !!hostUrl,
+		queryFn: () =>
+			hostUrl
+				? getHostServiceClientByUrl(hostUrl).agents.exitedAgentTerminals.query({
+						workspaceId,
+					})
+				: [],
+		retry: false,
+		refetchInterval: 5000,
+	});
 	const managed =
 		selected?.presetId === "claude" || selected?.presetId === "codex";
 	const options = useQuery({
@@ -317,7 +329,10 @@ export function WorkspaceAgentOverview({
 						{PEERS.map((peer) => {
 							const icon = getPresetIcon(peer.id, dark);
 							const sessions = [...bindings.values()].filter(
-								(binding) => binding.agentId === peer.id && !binding.endedAt,
+								(binding) =>
+									binding.agentId === peer.id &&
+									!binding.endedAt &&
+									!exited.data?.includes(binding.terminalId),
 							);
 							const chatSessions =
 								chats.data?.filter(
