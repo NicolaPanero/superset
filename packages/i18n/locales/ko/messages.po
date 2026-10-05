@@ -1519,6 +1519,9 @@ msgstr "계정 설치는 자체 매니페스트만 해석하므로 {marketplace}
 msgid "Account is pending deletion."
 msgstr "계정이 삭제 대기 중입니다."
 
+msgid "Account name"
+msgstr "계정 이름"
+
 msgid "Account pending deletion"
 msgstr "삭제 예정 계정"
 
@@ -1800,6 +1803,9 @@ msgstr "main 기준"
 
 msgid "Agent"
 msgstr "에이전트"
+
+msgid "Agent accounts"
+msgstr "에이전트 계정"
 
 msgid "Agent commands"
 msgstr "에이전트 명령"
@@ -2694,6 +2700,9 @@ msgstr "평균 순위 {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "{0} 대기 중"
 
+msgid "Awaiting permission"
+msgstr "권한 대기 중"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "응답 대기 중 — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "풀 리퀘스트를 열기 전에 풀 리퀘스트 화면에서 프로�
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "계정을 수동으로 선택합니다. 구성이나 시작 설정에서 다른 계정을 선택하지 않으면 새 에이전트는 기본 계정을 사용합니다."
+
 msgid "Choose agent"
 msgstr "에이전트 선택"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI 및 SDK"
+
+msgid "CLI default"
+msgstr "CLI 기본값"
 
 msgid "CLI docs"
 msgstr "CLI 문서"
@@ -4082,6 +4097,9 @@ msgstr "실행기에 표시할 에이전트와 실행 구성 방식을 설정합
 msgid "Configure workspace run command"
 msgstr "워크스페이스 실행 명령 구성"
 
+msgid "Configured account"
+msgstr "설정된 계정"
+
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
 
@@ -4305,6 +4323,9 @@ msgstr "발행 또는 업데이트된 콘텐츠"
 msgid "Context"
 msgstr "컨텍스트"
 
+msgid "Context Handoff"
+msgstr "컨텍스트 전달"
+
 msgid "Context Menu"
 msgstr "컨텍스트 메뉴"
 
@@ -4343,6 +4364,9 @@ msgstr "GitHub로 계속하기"
 msgid "Continue with Google"
 msgstr "Google로 계속하기"
 
+msgid "Continue with…"
+msgstr "다른 에이전트로 계속…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "에이전트 세션을 계속하려면 고정된 워크스페이스가 필요합니다"
 
@@ -4378,6 +4402,9 @@ msgstr "누적 전환율"
 
 msgid "Converted"
 msgstr "전환됨"
+
+msgid "Converting…"
+msgstr "변환 중…"
 
 msgid "cookies and site data"
 msgstr "쿠키 및 사이트 데이터"
@@ -4630,6 +4657,9 @@ msgstr "대기열에서 나갈 수 없습니다"
 msgid "Could not list directory"
 msgstr "디렉터리를 나열할 수 없습니다"
 
+msgid "Could not load agent configurations."
+msgstr "에이전트 구성을 불러올 수 없습니다."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "{0}에서 에이전트를 불러오지 못했습니다"
@@ -4714,6 +4744,9 @@ msgstr "환경을 저장할 수 없습니다"
 
 msgid "Could not rename the session"
 msgstr "세션 이름을 변경할 수 없습니다"
+
+msgid "Could not rename this account."
+msgstr "이 계정의 이름을 변경할 수 없습니다."
 
 msgid "Could not rename this page"
 msgstr "이 페이지의 이름을 변경할 수 없습니다"
@@ -4850,6 +4883,9 @@ msgstr "리뷰 코멘트를 불러오지 못했습니다"
 msgid "Couldn't load runs"
 msgstr "실행 기록을 불러오지 못했습니다"
 
+msgid "Couldn't load session lineage."
+msgstr "세션 기록을 불러올 수 없습니다."
+
 msgid "Couldn't load this run's payload."
 msgstr "이 실행의 페이로드를 불러오지 못했습니다."
 
@@ -4893,6 +4929,9 @@ msgstr "로컬 로그인 정보를 제거하지 못했습니다"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "터미널에서 에이전트를 다시 열 수 없습니다"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "이 세션을 다시 열 수 없습니다. 에이전트 설정과 네이티브 세션이 아직 존재하는지 확인하세요."
 
 msgid "Couldn't restart terminals"
 msgstr "터미널을 다시 시작하지 못했습니다"
@@ -5011,6 +5050,9 @@ msgstr "새 워크스페이스를 만듭니다"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "작업과 클라우드 워크스페이스를 묶는 프로젝트를 만드세요."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "대화 기록이 포함된 재개 가능한 세션을 만듭니다. 권한과 인증 정보는 대상 에이전트의 것을 사용합니다."
 
 msgid "Create a task for fixing the login bug"
 msgstr "로그인 버그를 고치는 작업을 만들어 줘"
@@ -5246,6 +5288,9 @@ msgstr "현재 탭"
 
 msgid "Cursor"
 msgstr "커서"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Cursor Agent, Grok Build 및 OpenCode 계정은 각 앱에서 관리합니다."
 
 msgid "Cursor blinking"
 msgstr "커서 깜박임"
@@ -8789,14 +8834,23 @@ msgstr "실행"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "기능 개발, 버그 수정, 리팩터링에 에이전트를 병렬로 띄우세요. 어떤 에이전트가 작업 중이고, 막혀 있고, 응답을 기다리는지 한눈에 보입니다."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "알려진 시작 설정을 표시합니다. 활성 모델은 CLI에서 변경될 수 있습니다."
+
 msgid "Launch mode"
 msgstr "실행 방식"
+
+msgid "Launch model"
+msgstr "시작 모델"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "새 워크스페이스가 만들어질 때 이 터미널 스크립트를 실행합니다."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "새 터미널 탭이 열릴 때마다 이 터미널 스크립트를 실행합니다."
+
+msgid "Launching…"
+msgstr "시작 중…"
 
 msgid "Layout"
 msgstr "레이아웃"
@@ -9137,6 +9191,9 @@ msgstr "리포지토리를 불러오는 중..."
 msgid "Loading review..."
 msgstr "리뷰를 불러오는 중..."
 
+msgid "Loading session lineage…"
+msgstr "세션 기록 불러오는 중…"
+
 msgid "Loading sessions…"
 msgstr "세션을 불러오는 중…"
 
@@ -9154,6 +9211,9 @@ msgstr "불러오는 중…"
 
 msgid "Local"
 msgstr "로컬"
+
+msgid "Local agent accounts"
+msgstr "로컬 에이전트 계정"
 
 msgid "Local Device"
 msgstr "로컬 기기"
@@ -9324,6 +9384,9 @@ msgstr "조직의 브랜딩과 멤버를 관리합니다."
 
 msgid "Managed"
 msgstr "관리됨"
+
+msgid "Managed by the CLI"
+msgstr "CLI에서 관리"
 
 msgid "Managed by your organization admin."
 msgstr "조직 관리자가 관리합니다."
@@ -9780,6 +9843,21 @@ msgstr "이 프로젝트의 새 브랜치에 네임스페이스를 붙입니다.
 msgid "Naming instructions"
 msgstr "이름 지정 지침"
 
+msgid "Native Handoff"
+msgstr "네이티브 세션 전달"
+
+msgid "Native handoff complete"
+msgstr "네이티브 인계 완료"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하거나 컨텍스트 전달을 선택하세요."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "이 에이전트 조합 또는 호스트에서는 네이티브 세션 전달을 사용할 수 없습니다."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "네이티브 인계가 로컬에 저장됩니다. 각 세션에는 여러 하위 세션이 있을 수 있습니다."
+
 msgid "Native PR reviews"
 msgstr "네이티브 PR 리뷰"
 
@@ -10078,6 +10156,9 @@ msgstr "선택된 활성 조직이 없습니다"
 msgid "No active services"
 msgstr "활성 서비스 없음"
 
+msgid "No active sessions"
+msgstr "활성 세션 없음"
+
 msgid "No active terminal sessions"
 msgstr "활성 터미널 세션 없음"
 
@@ -10345,6 +10426,9 @@ msgstr "여기에서 사용할 수 있는 모바일 시뮬레이터가 없습니
 
 msgid "No name on file"
 msgstr "등록된 이름 없음"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "이 워크스페이스에는 아직 기록된 네이티브 인계가 없습니다."
 
 msgid "No open issues found."
 msgstr "열린 이슈를 찾을 수 없습니다."
@@ -10713,6 +10797,9 @@ msgstr "이 버전에는 없음"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "아직 이벤트를 받지 못하고 있습니다. Microsoft Graph가 알림 구독을 거부했습니다. 앱의 관리자 동의와 보호된 API 승인을 확인한 뒤 다시 연결하세요."
 
+msgid "Not recorded"
+msgstr "기록되지 않음"
+
 msgid "Not reviewed by you"
 msgstr "내가 리뷰하지 않음"
 
@@ -11057,6 +11144,9 @@ msgstr "변경 열기"
 msgid "Open Chat v3"
 msgstr "Chat v3 열기"
 
+msgid "Open child"
+msgstr "하위 세션 열기"
+
 msgid "Open Command Palette"
 msgstr "명령 팔레트 열기"
 
@@ -11261,6 +11351,9 @@ msgstr "GitHub에서 열기"
 msgid "Open Page in Default Browser"
 msgstr "기본 브라우저에서 페이지 열기"
 
+msgid "Open parent"
+msgstr "상위 세션 열기"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} 열기"
@@ -11311,6 +11404,9 @@ msgstr "리포지토리 열기..."
 
 msgid "Open roles"
 msgstr "채용 공고"
+
+msgid "Open session"
+msgstr "세션 열기"
 
 msgid "Open session in"
 msgstr "세션 열기 위치"
@@ -11413,6 +11509,9 @@ msgstr "파일 열기"
 
 msgid "Opening folders"
 msgstr "폴더 열기"
+
+msgid "Opening native session…"
+msgstr "네이티브 세션 여는 중…"
 
 msgid "Opening pages"
 msgstr "페이지 열기"
@@ -13709,6 +13808,9 @@ msgstr "저장됨"
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\"을(를) 환경으로 저장했습니다"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "이 호스트에 저장됩니다. 원래 이름을 사용하려면 비워 두세요."
+
 msgid "Saved to Downloads"
 msgstr "다운로드 폴더에 저장했습니다"
 
@@ -14273,6 +14375,9 @@ msgstr "세션 상세"
 
 msgid "Session ended"
 msgstr "세션 종료"
+
+msgid "Session lineage"
+msgstr "세션 기록"
 
 msgid "Session name"
 msgstr "세션 이름"
@@ -14840,6 +14945,9 @@ msgstr "SOC 2 Type II 보고서"
 msgid "Social"
 msgstr "소셜"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "일부 에이전트별 메타데이터를 전송하지 못했습니다."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "일부 파일이 허용되지 않는 형식이라 추가되지 않았습니다."
 
@@ -15075,6 +15183,9 @@ msgstr "하루에 늘어난 스타"
 
 msgid "Stars gained per week"
 msgstr "한 주에 늘어난 스타"
+
+msgid "Start"
+msgstr "시작"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "동기화하는 중..."
 
 msgid "System"
 msgstr "시스템"
+
+msgid "System default"
+msgstr "시스템 기본값"
 
 msgid "System memory"
 msgstr "시스템 메모리"

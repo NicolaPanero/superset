@@ -33,6 +33,7 @@ export const SETTING_ITEM_ID = {
 	RINGTONES_NOTIFICATION: "ringtones-notification",
 
 	USAGE_TOKENS: "usage-tokens",
+	LOCAL_AGENT_ACCOUNTS: "local-agent-accounts",
 	USAGE_RESOURCES: "usage-resources",
 
 	KEYBOARD_SHORTCUTS: "keyboard-shortcuts",
@@ -182,6 +183,7 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.RINGTONES_NOTIFICATION]: "shared",
 
 	[SETTING_ITEM_ID.USAGE_TOKENS]: "shared",
+	[SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS]: "v2",
 	[SETTING_ITEM_ID.USAGE_RESOURCES]: "shared",
 
 	[SETTING_ITEM_ID.KEYBOARD_SHORTCUTS]: "shared",
@@ -713,6 +715,24 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 			"claude",
 			"account",
 			"history",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS,
+		section: "localAgentAccounts",
+		title: "Local agent accounts",
+		description:
+			"Choose local CLI accounts, rename profiles and view provider quotas",
+		keywords: [
+			"accounts",
+			"claude",
+			"codex",
+			"local",
+			"quota",
+			"profile",
+			"login",
+			"rename",
+			"default",
 		],
 	},
 	{

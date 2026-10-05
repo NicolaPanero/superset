@@ -1519,6 +1519,9 @@ msgstr "帳戶安裝僅解析第一方資訊清單，因此來自 {marketplace} 
 msgid "Account is pending deletion."
 msgstr "帳戶正在等待刪除。"
 
+msgid "Account name"
+msgstr "帳戶名稱"
+
 msgid "Account pending deletion"
 msgstr "帳戶待刪除"
 
@@ -1800,6 +1803,9 @@ msgstr "對比main"
 
 msgid "Agent"
 msgstr "代理程式"
+
+msgid "Agent accounts"
+msgstr "代理帳戶"
 
 msgid "Agent commands"
 msgstr "代理程式指令"
@@ -2694,6 +2700,9 @@ msgstr "平均排名 {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "等待{0}"
 
+msgid "Awaiting permission"
+msgstr "等待授權"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "等待回覆 — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "開拉取請求之前，請先在「拉取請求」裡選擇一個專案
 msgid "Choose a section."
 msgstr "選擇一個分區。"
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "手動選擇帳戶。新的代理使用預設帳戶，除非設定或啟動時選擇了其他帳戶。"
+
 msgid "Choose agent"
 msgstr "選擇代理程式"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI與SDK"
+
+msgid "CLI default"
+msgstr "CLI 預設值"
 
 msgid "CLI docs"
 msgstr "CLI文件"
@@ -4082,6 +4097,9 @@ msgstr "配置哪些代理程式出現在啟動器中，以及它們的啟動方
 msgid "Configure workspace run command"
 msgstr "配置工作區執行命令"
 
+msgid "Configured account"
+msgstr "已設定的帳戶"
+
 msgid "Confirm before quitting"
 msgstr "退出前確認"
 
@@ -4305,6 +4323,9 @@ msgstr "已發佈或更新的內容"
 msgid "Context"
 msgstr "上下文"
 
+msgid "Context Handoff"
+msgstr "上下文交接"
+
 msgid "Context Menu"
 msgstr "右鍵選單"
 
@@ -4343,6 +4364,9 @@ msgstr "使用GitHub繼續"
 msgid "Continue with Google"
 msgstr "使用Google繼續"
 
+msgid "Continue with…"
+msgstr "繼續使用…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "繼續代理程式工作階段需要已釘選的工作區"
 
@@ -4378,6 +4402,9 @@ msgstr "累計轉換率"
 
 msgid "Converted"
 msgstr "已轉換"
+
+msgid "Converting…"
+msgstr "正在轉換…"
 
 msgid "cookies and site data"
 msgstr "Cookie和站點資料"
@@ -4630,6 +4657,9 @@ msgstr "無法移出佇列"
 msgid "Could not list directory"
 msgstr "無法列出目錄"
 
+msgid "Could not load agent configurations."
+msgstr "無法載入代理設定。"
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "無法從{0}載入代理程式"
@@ -4714,6 +4744,9 @@ msgstr "無法儲存環境"
 
 msgid "Could not rename the session"
 msgstr "無法重新命名會話"
+
+msgid "Could not rename this account."
+msgstr "無法重新命名此帳戶。"
 
 msgid "Could not rename this page"
 msgstr "無法重新命名此頁面"
@@ -4850,6 +4883,9 @@ msgstr "無法載入審查評論"
 msgid "Couldn't load runs"
 msgstr "無法載入執行紀錄"
 
+msgid "Couldn't load session lineage."
+msgstr "無法載入工作階段歷史。"
+
 msgid "Couldn't load this run's payload."
 msgstr "無法載入此次執行的酬載。"
 
@@ -4893,6 +4929,9 @@ msgstr "無法移除本地登入"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "無法在終端機中重新開啟此代理"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "無法重新開啟此工作階段。請檢查其代理設定和原生工作階段是否仍然存在。"
 
 msgid "Couldn't restart terminals"
 msgstr "無法重啟終端"
@@ -5011,6 +5050,9 @@ msgstr "建立新工作區"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "建立專案，將任務與雲端工作區歸在一起。"
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "建立包含對話歷史的可恢復工作階段。權限和憑證仍使用目標代理的設定。"
 
 msgid "Create a task for fixing the login bug"
 msgstr "建立一個任務，修復登入的bug"
@@ -5246,6 +5288,9 @@ msgstr "目前分頁"
 
 msgid "Cursor"
 msgstr "游標"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Cursor Agent、Grok Build 和 OpenCode 的帳戶在各自的應用程式中管理。"
 
 msgid "Cursor blinking"
 msgstr "游標閃爍"
@@ -8789,14 +8834,23 @@ msgstr "啟動"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "在新功能、缺陷修復和重構上同時啟動代理程式，全部並行。狀態一眼可見：哪些在幹活、哪些被阻塞、哪些在等你。"
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "顯示已知的啟動選項。使用中的模型可能在 CLI 中變更。"
+
 msgid "Launch mode"
 msgstr "啟動方式"
+
+msgid "Launch model"
+msgstr "啟動模型"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "建立新工作區時啟動此終端指令碼。"
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "每當開啟新的終端分頁時啟動此終端指令碼。"
+
+msgid "Launching…"
+msgstr "正在啟動…"
 
 msgid "Layout"
 msgstr "佈局"
@@ -9137,6 +9191,9 @@ msgstr "正在載入儲存庫..."
 msgid "Loading review..."
 msgstr "正在載入評審..."
 
+msgid "Loading session lineage…"
+msgstr "正在載入工作階段歷史…"
+
 msgid "Loading sessions…"
 msgstr "正在載入會話…"
 
@@ -9154,6 +9211,9 @@ msgstr "正在載入…"
 
 msgid "Local"
 msgstr "本地"
+
+msgid "Local agent accounts"
+msgstr "本機代理帳戶"
 
 msgid "Local Device"
 msgstr "本地裝置"
@@ -9324,6 +9384,9 @@ msgstr "管理組織的品牌形象和成員。"
 
 msgid "Managed"
 msgstr "託管"
+
+msgid "Managed by the CLI"
+msgstr "由 CLI 管理"
 
 msgid "Managed by your organization admin."
 msgstr "由你所在組織的管理員管理。"
@@ -9780,6 +9843,21 @@ msgstr "為此專案的新分支設定名稱空間。預設使用主機全域性
 msgid "Naming instructions"
 msgstr "命名說明"
 
+msgid "Native Handoff"
+msgstr "原生工作階段交接"
+
+msgid "Native handoff complete"
+msgstr "原生交接已完成"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "原生工作階段交接失敗。你可以重試或選擇上下文交接。"
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "此代理組合或主機不支援原生工作階段交接。"
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "原生交接儲存在本機。每個工作階段可有多個子工作階段。"
+
 msgid "Native PR reviews"
 msgstr "原生PR審查"
 
@@ -10078,6 +10156,9 @@ msgstr "未選擇活動組織"
 msgid "No active services"
 msgstr "沒有活動的服務"
 
+msgid "No active sessions"
+msgstr "沒有作用中的工作階段"
+
 msgid "No active terminal sessions"
 msgstr "沒有活動的終端會話"
 
@@ -10345,6 +10426,9 @@ msgstr "此處沒有可用的行動模擬器。需要支援 Limrun 的雲端沙�
 
 msgid "No name on file"
 msgstr "未登記姓名"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "此工作區尚未記錄任何原生交接。"
 
 msgid "No open issues found."
 msgstr "未找到開啟的議題。"
@@ -10713,6 +10797,9 @@ msgstr "不在此版本中"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "尚未接收到事件：Microsoft Graph拒絕了通知訂閱。請檢查應用的管理員同意和受保護API的審批，然後重新連線。"
 
+msgid "Not recorded"
+msgstr "未記錄"
+
 msgid "Not reviewed by you"
 msgstr "你還沒有審查"
 
@@ -11057,6 +11144,9 @@ msgstr "開啟更改"
 msgid "Open Chat v3"
 msgstr "開啟Chat v3"
 
+msgid "Open child"
+msgstr "開啟子工作階段"
+
 msgid "Open Command Palette"
 msgstr "開啟命令面板"
 
@@ -11261,6 +11351,9 @@ msgstr "在GitHub上開啟"
 msgid "Open Page in Default Browser"
 msgstr "在預設瀏覽器中開啟頁面"
 
+msgid "Open parent"
+msgstr "開啟父工作階段"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "開啟PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "開啟儲存庫..."
 
 msgid "Open roles"
 msgstr "空缺職位"
+
+msgid "Open session"
+msgstr "開啟工作階段"
 
 msgid "Open session in"
 msgstr "會話開啟於"
@@ -11413,6 +11509,9 @@ msgstr "開啟檔案"
 
 msgid "Opening folders"
 msgstr "開啟資料夾"
+
+msgid "Opening native session…"
+msgstr "正在開啟原生工作階段…"
 
 msgid "Opening pages"
 msgstr "開啟頁面"
@@ -13709,6 +13808,9 @@ msgstr "已儲存"
 msgid "Saved \"{0}\" as an environment"
 msgstr "已將「{0}」儲存為環境"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "儲存在此主機上。留空以使用原始名稱。"
+
 msgid "Saved to Downloads"
 msgstr "已儲存到「下載」資料夾"
 
@@ -14273,6 +14375,9 @@ msgstr "會話詳情"
 
 msgid "Session ended"
 msgstr "工作階段已結束"
+
+msgid "Session lineage"
+msgstr "工作階段歷史"
 
 msgid "Session name"
 msgstr "會話名稱"
@@ -14840,6 +14945,9 @@ msgstr "SOC 2 Type II報告"
 msgid "Social"
 msgstr "社群媒體"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "部分代理專用中繼資料無法轉移。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "部分檔案的型別不被允許，未新增。"
 
@@ -15075,6 +15183,9 @@ msgstr "每日新增星標"
 
 msgid "Stars gained per week"
 msgstr "每週新增星標"
+
+msgid "Start"
+msgstr "啟動"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "正在同步..."
 
 msgid "System"
 msgstr "跟隨系統"
+
+msgid "System default"
+msgstr "系統預設值"
 
 msgid "System memory"
 msgstr "系統記憶體"

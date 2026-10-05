@@ -1519,6 +1519,9 @@ msgstr "L'installazione sull'account risolve solo i manifest interni, quindi {pl
 msgid "Account is pending deletion."
 msgstr "L'account è in attesa di eliminazione."
 
+msgid "Account name"
+msgstr "Nome account"
+
 msgid "Account pending deletion"
 msgstr "Account in attesa di eliminazione"
 
@@ -1800,6 +1803,9 @@ msgstr "Rispetto a main"
 
 msgid "Agent"
 msgstr "Agente"
+
+msgid "Agent accounts"
+msgstr "Account degli agenti"
 
 msgid "Agent commands"
 msgstr "Comandi degli agenti"
@@ -2694,6 +2700,9 @@ msgstr "posizione media {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "In attesa di {0}"
 
+msgid "Awaiting permission"
+msgstr "In attesa di autorizzazione"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "In attesa di risposta — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Scegli un progetto in Pull request prima di aprire una pull request."
 msgid "Choose a section."
 msgstr "Scegli una sezione."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Scegli gli account manualmente. I nuovi agenti usano l’account predefinito, salvo una scelta diversa nella configurazione o all’avvio."
+
 msgid "Choose agent"
 msgstr "Scegli l'agente"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI e SDK"
+
+msgid "CLI default"
+msgstr "Predefinito del CLI"
 
 msgid "CLI docs"
 msgstr "Documentazione CLI"
@@ -4082,6 +4097,9 @@ msgstr "Configura quali agenti compaiono nei launcher e come vengono costruiti i
 msgid "Configure workspace run command"
 msgstr "Configura il comando di esecuzione del workspace"
 
+msgid "Configured account"
+msgstr "Account configurato"
+
 msgid "Confirm before quitting"
 msgstr "Chiedi conferma prima di uscire"
 
@@ -4305,6 +4323,9 @@ msgstr "Contenuti pubblicati o aggiornati"
 msgid "Context"
 msgstr "Context"
 
+msgid "Context Handoff"
+msgstr "Passaggio del contesto"
+
 msgid "Context Menu"
 msgstr "Context Menu"
 
@@ -4343,6 +4364,9 @@ msgstr "Continua con GitHub"
 msgid "Continue with Google"
 msgstr "Continua con Google"
 
+msgid "Continue with…"
+msgstr "Continua con…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuare una sessione dell'agente richiede un workspace fissato"
 
@@ -4378,6 +4402,9 @@ msgstr "Conversione finora"
 
 msgid "Converted"
 msgstr "Convertiti"
+
+msgid "Converting…"
+msgstr "Conversione…"
 
 msgid "cookies and site data"
 msgstr "cookie e dati dei siti"
@@ -4630,6 +4657,9 @@ msgstr "Impossibile uscire dalla coda"
 msgid "Could not list directory"
 msgstr "Impossibile elencare la directory"
 
+msgid "Could not load agent configurations."
+msgstr "Impossibile caricare le configurazioni degli agenti."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Impossibile caricare gli agenti da {0}"
@@ -4714,6 +4744,9 @@ msgstr "Impossibile salvare l'ambiente"
 
 msgid "Could not rename the session"
 msgstr "Impossibile rinominare la sessione"
+
+msgid "Could not rename this account."
+msgstr "Impossibile rinominare questo account."
 
 msgid "Could not rename this page"
 msgstr "Impossibile rinominare questa pagina"
@@ -4850,6 +4883,9 @@ msgstr "Impossibile caricare i commenti di revisione"
 msgid "Couldn't load runs"
 msgstr "Impossibile caricare le esecuzioni"
 
+msgid "Couldn't load session lineage."
+msgstr "Impossibile caricare lo storico delle sessioni."
+
 msgid "Couldn't load this run's payload."
 msgstr "Impossibile caricare il payload di questa esecuzione."
 
@@ -4893,6 +4929,9 @@ msgstr "Impossibile rimuovere l'accesso locale"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Non è stato possibile riaprire l'agente in un terminale"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Impossibile riaprire questa sessione. Verifica che la configurazione dell’agente e la sessione nativa esistano ancora."
 
 msgid "Couldn't restart terminals"
 msgstr "Impossibile riavviare i terminali"
@@ -5011,6 +5050,9 @@ msgstr "Crea un nuovo workspace"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Crea un progetto per raggruppare attività e spazi di lavoro cloud."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Crea una sessione riprendibile con la cronologia della conversazione. Permessi e credenziali restano quelli dell’agente di destinazione."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Crea un task per correggere il bug del login"
@@ -5246,6 +5288,9 @@ msgstr "Scheda corrente"
 
 msgid "Cursor"
 msgstr "Cursore"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Gli account di Cursor Agent, Grok Build e OpenCode sono gestiti nelle rispettive app."
 
 msgid "Cursor blinking"
 msgstr "Cursore lampeggiante"
@@ -8789,14 +8834,23 @@ msgstr "Avvio"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Avvia agenti su funzioni, correzioni di bug e refactor, tutti in parallelo. Lo stato a colpo d'occhio mostra quali agenti stanno lavorando, quali sono bloccati e quali aspettano te."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Le scelte di avvio vengono mostrate quando disponibili. Il modello attivo può cambiare nel CLI."
+
 msgid "Launch mode"
 msgstr "Modalità di avvio"
+
+msgid "Launch model"
+msgstr "Modello di avvio"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Avvia questo script del terminale alla creazione di un nuovo workspace."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Avvia questo script del terminale ogni volta che si apre una nuova scheda del terminale."
+
+msgid "Launching…"
+msgstr "Avvio…"
 
 msgid "Layout"
 msgstr "Layout"
@@ -9137,6 +9191,9 @@ msgstr "Caricamento dei repository..."
 msgid "Loading review..."
 msgstr "Caricamento della revisione..."
 
+msgid "Loading session lineage…"
+msgstr "Caricamento dello storico delle sessioni…"
+
 msgid "Loading sessions…"
 msgstr "Caricamento delle sessioni…"
 
@@ -9154,6 +9211,9 @@ msgstr "Caricamento…"
 
 msgid "Local"
 msgstr "Locale"
+
+msgid "Local agent accounts"
+msgstr "Account locali degli agenti"
 
 msgid "Local Device"
 msgstr "Dispositivo locale"
@@ -9324,6 +9384,9 @@ msgstr "Gestisci il branding e i membri della tua organizzazione."
 
 msgid "Managed"
 msgstr "Gestita"
+
+msgid "Managed by the CLI"
+msgstr "Gestito dal CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Gestito dall'amministratore della tua organizzazione."
@@ -9780,6 +9843,21 @@ msgstr "Assegna uno spazio dei nomi ai nuovi branch di questo progetto. Per impo
 msgid "Naming instructions"
 msgstr "Istruzioni di denominazione"
 
+msgid "Native Handoff"
+msgstr "Passaggio nativo"
+
+msgid "Native handoff complete"
+msgstr "Handoff nativo completato"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "Il passaggio nativo è fallito. Puoi riprovare o scegliere il passaggio del contesto."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Il passaggio nativo non è disponibile per questa coppia di agenti o questo host."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Passaggi nativi salvati localmente. Ogni sessione può avere più sessioni figlie."
+
 msgid "Native PR reviews"
 msgstr "Revisioni delle PR native"
 
@@ -10078,6 +10156,9 @@ msgstr "Nessuna organizzazione attiva selezionata"
 msgid "No active services"
 msgstr "Nessun servizio attivo"
 
+msgid "No active sessions"
+msgstr "Nessuna sessione attiva"
+
 msgid "No active terminal sessions"
 msgstr "Nessuna sessione del terminale attiva"
 
@@ -10345,6 +10426,9 @@ msgstr "Nessun simulatore mobile disponibile qui. Serve un sandbox cloud compati
 
 msgid "No name on file"
 msgstr "Nessun nome registrato"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "Nessun passaggio nativo registrato in questo workspace."
 
 msgid "No open issues found."
 msgstr "Nessuna issue aperta trovata."
@@ -10713,6 +10797,9 @@ msgstr "Non presente in questa versione"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Non stai ancora ricevendo eventi: Microsoft Graph ha rifiutato le sottoscrizioni alle notifiche. Controlla il consenso amministrativo dell'app e l'approvazione delle API protette, poi ricollegati."
 
+msgid "Not recorded"
+msgstr "Non registrato"
+
 msgid "Not reviewed by you"
 msgstr "Non revisionate da te"
 
@@ -11057,6 +11144,9 @@ msgstr "Apri le modifiche"
 msgid "Open Chat v3"
 msgstr "Apri Chat v3"
 
+msgid "Open child"
+msgstr "Apri figlia"
+
 msgid "Open Command Palette"
 msgstr "Apri la palette dei comandi"
 
@@ -11261,6 +11351,9 @@ msgstr "Apri su GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Apri la pagina nel browser predefinito"
 
+msgid "Open parent"
+msgstr "Apri padre"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Apri PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "Apri repo..."
 
 msgid "Open roles"
 msgstr "Posizioni aperte"
+
+msgid "Open session"
+msgstr "Apri sessione"
 
 msgid "Open session in"
 msgstr "Apri sessione in"
@@ -11413,6 +11509,9 @@ msgstr "Apertura dei file"
 
 msgid "Opening folders"
 msgstr "Apertura delle cartelle"
+
+msgid "Opening native session…"
+msgstr "Apertura della sessione nativa…"
 
 msgid "Opening pages"
 msgstr "Apertura delle pagine"
@@ -13709,6 +13808,9 @@ msgstr "Salvato"
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" salvato come ambiente"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Salvato su questo host. Lascia vuoto per usare il nome originale."
+
 msgid "Saved to Downloads"
 msgstr "Salvata in Download"
 
@@ -14273,6 +14375,9 @@ msgstr "Dettagli della sessione"
 
 msgid "Session ended"
 msgstr "Sessione terminata"
+
+msgid "Session lineage"
+msgstr "Storico delle sessioni"
 
 msgid "Session name"
 msgstr "Nome della sessione"
@@ -14840,6 +14945,9 @@ msgstr "Report SOC 2 Type II"
 msgid "Social"
 msgstr "Social"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Alcuni metadati specifici dell’agente non sono stati trasferiti."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Alcuni file non sono di un tipo consentito e non sono stati aggiunti."
 
@@ -15075,6 +15183,9 @@ msgstr "Star guadagnate al giorno"
 
 msgid "Stars gained per week"
 msgstr "Star guadagnate a settimana"
+
+msgid "Start"
+msgstr "Avvia"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Sincronizzazione..."
 
 msgid "System"
 msgstr "Sistema"
+
+msgid "System default"
+msgstr "Predefinito di sistema"
 
 msgid "System memory"
 msgstr "Memoria di sistema"

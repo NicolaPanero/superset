@@ -1519,6 +1519,9 @@ msgstr "Установка в аккаунт работает только с с
 msgid "Account is pending deletion."
 msgstr "Аккаунт ожидает удаления."
 
+msgid "Account name"
+msgstr "Название учётной записи"
+
 msgid "Account pending deletion"
 msgstr "Аккаунт ожидает удаления"
 
@@ -1800,6 +1803,9 @@ msgstr "Против main"
 
 msgid "Agent"
 msgstr "Агент"
+
+msgid "Agent accounts"
+msgstr "Учётные записи агентов"
 
 msgid "Agent commands"
 msgstr "Команды агентов"
@@ -2694,6 +2700,9 @@ msgstr "средняя позиция {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "Ожидает {0}"
 
+msgid "Awaiting permission"
+msgstr "Ожидание разрешения"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Ожидает ответа — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Выберите проект в разделе «Пул-реквест�
 msgid "Choose a section."
 msgstr "Выберите раздел."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Выбирайте учётные записи вручную. Новые агенты используют учётную запись по умолчанию, если при настройке или запуске не выбрана другая."
+
 msgid "Choose agent"
 msgstr "Выберите агента"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI и SDK"
+
+msgid "CLI default"
+msgstr "По умолчанию в CLI"
 
 msgid "CLI docs"
 msgstr "Документация CLI"
@@ -4082,6 +4097,9 @@ msgstr "Настройте, какие агенты появляются в за
 msgid "Configure workspace run command"
 msgstr "Настроить команду запуска рабочей области"
 
+msgid "Configured account"
+msgstr "Настроенная учётная запись"
+
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
 
@@ -4305,6 +4323,9 @@ msgstr "Опубликованный или обновлённый контен�
 msgid "Context"
 msgstr "Контекст"
 
+msgid "Context Handoff"
+msgstr "Передача контекста"
+
 msgid "Context Menu"
 msgstr "Контекстное меню"
 
@@ -4343,6 +4364,9 @@ msgstr "Продолжить с GitHub"
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
 
+msgid "Continue with…"
+msgstr "Продолжить с…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Для продолжения сессии агента нужно закреплённое рабочее пространство"
 
@@ -4378,6 +4402,9 @@ msgstr "Конверсия на текущий момент"
 
 msgid "Converted"
 msgstr "Сконвертировались"
+
+msgid "Converting…"
+msgstr "Преобразование…"
 
 msgid "cookies and site data"
 msgstr "cookies и данные сайтов"
@@ -4630,6 +4657,9 @@ msgstr "Не удалось выйти из очереди"
 msgid "Could not list directory"
 msgstr "Не удалось прочитать содержимое папки"
 
+msgid "Could not load agent configurations."
+msgstr "Не удалось загрузить настройки агентов."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Не удалось загрузить агентов с {0}"
@@ -4714,6 +4744,9 @@ msgstr "Не удалось сохранить окружение"
 
 msgid "Could not rename the session"
 msgstr "Не удалось переименовать сессию"
+
+msgid "Could not rename this account."
+msgstr "Не удалось переименовать эту учётную запись."
 
 msgid "Could not rename this page"
 msgstr "Не удалось переименовать эту страницу"
@@ -4850,6 +4883,9 @@ msgstr "Не удалось загрузить комментарии ревью
 msgid "Couldn't load runs"
 msgstr "Не удалось загрузить запуски"
 
+msgid "Couldn't load session lineage."
+msgstr "Не удалось загрузить историю сеансов."
+
 msgid "Couldn't load this run's payload."
 msgstr "Не удалось загрузить полезную нагрузку этого запуска."
 
@@ -4893,6 +4929,9 @@ msgstr "Не удалось удалить локальный вход"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Не удалось снова открыть агента в терминале"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Не удалось снова открыть этот сеанс. Проверьте, что конфигурация агента и нативный сеанс всё ещё существуют."
 
 msgid "Couldn't restart terminals"
 msgstr "Не удалось перезапустить терминалы"
@@ -5011,6 +5050,9 @@ msgstr "Создать новую рабочую область"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Создайте проект, чтобы объединить задачи и облачные рабочие области."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Создайте возобновляемый сеанс с историей разговора. Разрешения и учётные данные остаются у целевого агента."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Создай задачу на исправление бага со входом"
@@ -5246,6 +5288,9 @@ msgstr "Текущая вкладка"
 
 msgid "Cursor"
 msgstr "Курсор"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Учётные записи Cursor Agent, Grok Build и OpenCode управляются в соответствующих приложениях."
 
 msgid "Cursor blinking"
 msgstr "Мигание курсора"
@@ -8789,14 +8834,23 @@ msgstr "Запуск"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Запускайте агентов на фичи, исправления багов и рефакторинги — все параллельно. Статус с одного взгляда показывает, кто работает, кто заблокирован, а кто ждёт вас."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Известные параметры запуска отображаются. Активная модель может измениться в CLI."
+
 msgid "Launch mode"
 msgstr "Режим запуска"
+
+msgid "Launch model"
+msgstr "Модель при запуске"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Запускать этот скрипт терминала при создании новой рабочей области."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Запускать этот скрипт терминала при открытии новой вкладки терминала."
+
+msgid "Launching…"
+msgstr "Запуск…"
 
 msgid "Layout"
 msgstr "Раскладка"
@@ -9137,6 +9191,9 @@ msgstr "Загрузка репозиториев..."
 msgid "Loading review..."
 msgstr "Загрузка ревью..."
 
+msgid "Loading session lineage…"
+msgstr "Загрузка истории сеансов…"
+
 msgid "Loading sessions…"
 msgstr "Загрузка сессий…"
 
@@ -9154,6 +9211,9 @@ msgstr "Загрузка…"
 
 msgid "Local"
 msgstr "Локальная"
+
+msgid "Local agent accounts"
+msgstr "Локальные учётные записи агентов"
 
 msgid "Local Device"
 msgstr "Локальное устройство"
@@ -9324,6 +9384,9 @@ msgstr "Управление брендингом и участниками ва
 
 msgid "Managed"
 msgstr "Управляемый"
+
+msgid "Managed by the CLI"
+msgstr "Управляется CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Управляется администратором вашей организации."
@@ -9780,6 +9843,21 @@ msgstr "Пространство имён для новых веток этог�
 msgid "Naming instructions"
 msgstr "Правила именования"
 
+msgid "Native Handoff"
+msgstr "Нативная передача"
+
+msgid "Native handoff complete"
+msgstr "Нативная передача завершена"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "Нативная передача не удалась. Повторите попытку или выберите передачу контекста."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Нативная передача недоступна для этой пары агентов или этого хоста."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Нативные передачи сохраняются локально. У каждого сеанса может быть несколько дочерних сеансов."
+
 msgid "Native PR reviews"
 msgstr "Нативное ревью PR"
 
@@ -10078,6 +10156,9 @@ msgstr "Активная организация не выбрана"
 msgid "No active services"
 msgstr "Нет активных служб"
 
+msgid "No active sessions"
+msgstr "Нет активных сеансов"
+
 msgid "No active terminal sessions"
 msgstr "Нет активных сессий терминала"
 
@@ -10345,6 +10426,9 @@ msgstr "Здесь нет доступного мобильного симуля
 
 msgid "No name on file"
 msgstr "Имя не указано"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "В этом workspace пока нет записанных нативных передач."
 
 msgid "No open issues found."
 msgstr "Открытых задач не найдено."
@@ -10713,6 +10797,9 @@ msgstr "Нет в этой версии"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "События пока не приходят: Microsoft Graph отклонил подписки на уведомления. Проверьте согласие администратора и одобрение защищённого API, затем переподключитесь."
 
+msgid "Not recorded"
+msgstr "Не записано"
+
 msgid "Not reviewed by you"
 msgstr "Не проверено вами"
 
@@ -11057,6 +11144,9 @@ msgstr "Открыть изменения"
 msgid "Open Chat v3"
 msgstr "Открыть Chat v3"
 
+msgid "Open child"
+msgstr "Открыть дочерний сеанс"
+
 msgid "Open Command Palette"
 msgstr "Открыть палитру команд"
 
@@ -11261,6 +11351,9 @@ msgstr "Открыть на GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Открыть страницу в браузере по умолчанию"
 
+msgid "Open parent"
+msgstr "Открыть родительский сеанс"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Открыть PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "Открыть репозиторий..."
 
 msgid "Open roles"
 msgstr "Вакансии"
+
+msgid "Open session"
+msgstr "Открыть сеанс"
 
 msgid "Open session in"
 msgstr "Открыть сессию в"
@@ -11413,6 +11509,9 @@ msgstr "Открытие файлов"
 
 msgid "Opening folders"
 msgstr "Открытие папок"
+
+msgid "Opening native session…"
+msgstr "Открытие нативного сеанса…"
 
 msgid "Opening pages"
 msgstr "Открытие страниц"
@@ -13709,6 +13808,9 @@ msgstr "Сохранено"
 msgid "Saved \"{0}\" as an environment"
 msgstr "«{0}» сохранено как окружение"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Сохранено на этом хосте. Оставьте пустым для исходного названия."
+
 msgid "Saved to Downloads"
 msgstr "Сохранено в «Загрузки»"
 
@@ -14273,6 +14375,9 @@ msgstr "Детали сессии"
 
 msgid "Session ended"
 msgstr "Сеанс завершён"
+
+msgid "Session lineage"
+msgstr "История сеансов"
 
 msgid "Session name"
 msgstr "Имя сессии"
@@ -14840,6 +14945,9 @@ msgstr "Отчёт SOC 2 Type II"
 msgid "Social"
 msgstr "Соцсети"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Некоторые метаданные, специфичные для агента, не удалось перенести."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Некоторые файлы не подходят по типу и не были добавлены."
 
@@ -15075,6 +15183,9 @@ msgstr "Звёзд в день"
 
 msgid "Stars gained per week"
 msgstr "Звёзд в неделю"
+
+msgid "Start"
+msgstr "Запустить"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Синхронизация..."
 
 msgid "System"
 msgstr "Системная"
+
+msgid "System default"
+msgstr "Системное значение по умолчанию"
 
 msgid "System memory"
 msgstr "Системная память"

@@ -1519,6 +1519,9 @@ msgstr "Instalasi ke akun hanya menangani manifes internal, jadi {plugin} dari {
 msgid "Account is pending deletion."
 msgstr "Akun sedang menunggu penghapusan."
 
+msgid "Account name"
+msgstr "Nama akun"
+
 msgid "Account pending deletion"
 msgstr "Akun menunggu penghapusan"
 
@@ -1800,6 +1803,9 @@ msgstr "Terhadap Main"
 
 msgid "Agent"
 msgstr "Agen"
+
+msgid "Agent accounts"
+msgstr "Akun agen"
 
 msgid "Agent commands"
 msgstr "Perintah agen"
@@ -2694,6 +2700,9 @@ msgstr "posisi rata-rata {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "Menunggu {0}"
 
+msgid "Awaiting permission"
+msgstr "Menunggu izin"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Menunggu Balasan — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Pilih proyek dari Pull request sebelum membuka pull request."
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Pilih akun secara manual. Agen baru memakai akun default kecuali konfigurasi atau pilihan saat mulai menentukan akun lain."
+
 msgid "Choose agent"
 msgstr "Pilih agen"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI & SDK"
+
+msgid "CLI default"
+msgstr "Default CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentasi CLI"
@@ -4082,6 +4097,9 @@ msgstr "Atur agen mana yang muncul di peluncur dan bagaimana peluncurannya disus
 msgid "Configure workspace run command"
 msgstr "Atur perintah run workspace"
 
+msgid "Configured account"
+msgstr "Akun yang dikonfigurasi"
+
 msgid "Confirm before quitting"
 msgstr "Konfirmasi sebelum keluar"
 
@@ -4305,6 +4323,9 @@ msgstr "Konten yang dipublikasikan atau diperbarui"
 msgid "Context"
 msgstr "Konteks"
 
+msgid "Context Handoff"
+msgstr "Transfer konteks"
+
 msgid "Context Menu"
 msgstr "Menu Konteks"
 
@@ -4343,6 +4364,9 @@ msgstr "Lanjutkan dengan GitHub"
 msgid "Continue with Google"
 msgstr "Lanjutkan dengan Google"
 
+msgid "Continue with…"
+msgstr "Lanjutkan dengan…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Melanjutkan sesi agen memerlukan ruang kerja yang disematkan"
 
@@ -4378,6 +4402,9 @@ msgstr "Konversi sejauh ini"
 
 msgid "Converted"
 msgstr "Terkonversi"
+
+msgid "Converting…"
+msgstr "Mengonversi…"
 
 msgid "cookies and site data"
 msgstr "cookie dan data situs"
@@ -4630,6 +4657,9 @@ msgstr "Tidak bisa keluar dari antrean"
 msgid "Could not list directory"
 msgstr "Tidak bisa menampilkan isi direktori"
 
+msgid "Could not load agent configurations."
+msgstr "Tidak dapat memuat konfigurasi agen."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Tidak bisa memuat agen dari {0}"
@@ -4714,6 +4744,9 @@ msgstr "Tidak dapat menyimpan environment"
 
 msgid "Could not rename the session"
 msgstr "Tidak dapat mengganti nama sesi"
+
+msgid "Could not rename this account."
+msgstr "Tidak dapat mengganti nama akun ini."
 
 msgid "Could not rename this page"
 msgstr "Tidak dapat mengganti nama halaman ini"
@@ -4850,6 +4883,9 @@ msgstr "Tidak bisa memuat komentar review"
 msgid "Couldn't load runs"
 msgstr "Tidak dapat memuat run"
 
+msgid "Couldn't load session lineage."
+msgstr "Tidak dapat memuat riwayat sesi."
+
 msgid "Couldn't load this run's payload."
 msgstr "Tidak dapat memuat payload run ini."
 
@@ -4893,6 +4929,9 @@ msgstr "Tidak bisa menghapus sesi masuk lokal"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Tidak dapat membuka kembali agen di terminal"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Tidak dapat membuka kembali sesi ini. Pastikan konfigurasi agen dan sesi native masih ada."
 
 msgid "Couldn't restart terminals"
 msgstr "Tidak bisa memulai ulang terminal"
@@ -5011,6 +5050,9 @@ msgstr "Buat workspace baru"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Buat proyek untuk mengelompokkan tugas dan workspace cloud."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Buat sesi yang dapat dilanjutkan dengan riwayat percakapan. Izin dan kredensial tetap milik agen tujuan."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Buat tugas untuk memperbaiki bug login"
@@ -5246,6 +5288,9 @@ msgstr "Tab saat ini"
 
 msgid "Cursor"
 msgstr "Kursor"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Akun Cursor Agent, Grok Build, dan OpenCode dikelola di aplikasi masing-masing."
 
 msgid "Cursor blinking"
 msgstr "Kursor berkedip"
@@ -8789,14 +8834,23 @@ msgstr "Peluncuran"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Jalankan agen untuk fitur, perbaikan bug, dan refactor, semuanya paralel. Status sekilas menunjukkan agen mana yang bekerja, mana yang terhambat, dan mana yang menunggu Anda."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Pilihan saat mulai ditampilkan jika diketahui. Model aktif dapat berubah di dalam CLI."
+
 msgid "Launch mode"
 msgstr "Mode peluncuran"
+
+msgid "Launch model"
+msgstr "Model saat mulai"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Jalankan skrip terminal ini saat workspace baru dibuat."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Jalankan skrip terminal ini setiap kali tab terminal baru dibuka."
+
+msgid "Launching…"
+msgstr "Memulai…"
 
 msgid "Layout"
 msgstr "Tata letak"
@@ -9137,6 +9191,9 @@ msgstr "Memuat repositori..."
 msgid "Loading review..."
 msgstr "Memuat review..."
 
+msgid "Loading session lineage…"
+msgstr "Memuat riwayat sesi…"
+
 msgid "Loading sessions…"
 msgstr "Memuat sesi…"
 
@@ -9154,6 +9211,9 @@ msgstr "Memuat…"
 
 msgid "Local"
 msgstr "Lokal"
+
+msgid "Local agent accounts"
+msgstr "Akun agen lokal"
 
 msgid "Local Device"
 msgstr "Perangkat Lokal"
@@ -9324,6 +9384,9 @@ msgstr "Kelola identitas dan anggota organisasi Anda."
 
 msgid "Managed"
 msgstr "Terkelola"
+
+msgid "Managed by the CLI"
+msgstr "Dikelola oleh CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Dikelola oleh admin organisasi Anda."
@@ -9780,6 +9843,21 @@ msgstr "Beri namespace untuk branch baru di proyek ini. Bawaannya mengikuti peng
 msgid "Naming instructions"
 msgstr "Instruksi penamaan"
 
+msgid "Native Handoff"
+msgstr "Transfer sesi asli"
+
+msgid "Native handoff complete"
+msgstr "Handoff native selesai"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "Transfer sesi asli gagal. Coba lagi atau pilih transfer konteks."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Transfer sesi asli tidak tersedia untuk pasangan agen atau host ini."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Handoff native disimpan secara lokal. Setiap sesi dapat memiliki beberapa sesi turunan."
+
 msgid "Native PR reviews"
 msgstr "Review PR native"
 
@@ -10078,6 +10156,9 @@ msgstr "Tidak ada organisasi aktif yang dipilih"
 msgid "No active services"
 msgstr "Tidak ada layanan aktif"
 
+msgid "No active sessions"
+msgstr "Tidak ada sesi aktif"
+
 msgid "No active terminal sessions"
 msgstr "Tidak ada sesi terminal aktif"
 
@@ -10345,6 +10426,9 @@ msgstr "Tidak ada simulator seluler yang tersedia di sini. Diperlukan sandbox cl
 
 msgid "No name on file"
 msgstr "Tidak ada nama tersimpan"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "Belum ada handoff native yang tercatat di workspace ini."
 
 msgid "No open issues found."
 msgstr "Tidak ada issue terbuka."
@@ -10713,6 +10797,9 @@ msgstr "Tidak ada di versi ini"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Belum menerima event: Microsoft Graph menolak langganan notifikasi. Periksa persetujuan admin aplikasi dan persetujuan protected API, lalu hubungkan ulang."
 
+msgid "Not recorded"
+msgstr "Tidak tercatat"
+
 msgid "Not reviewed by you"
 msgstr "Belum Anda review"
 
@@ -11057,6 +11144,9 @@ msgstr "Buka Perubahan"
 msgid "Open Chat v3"
 msgstr "Buka Chat v3"
 
+msgid "Open child"
+msgstr "Buka turunan"
+
 msgid "Open Command Palette"
 msgstr "Buka Command Palette"
 
@@ -11261,6 +11351,9 @@ msgstr "Buka di GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Buka Halaman di Browser Bawaan"
 
+msgid "Open parent"
+msgstr "Buka induk"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Buka PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "Buka Repo..."
 
 msgid "Open roles"
 msgstr "Lowongan terbuka"
+
+msgid "Open session"
+msgstr "Buka sesi"
 
 msgid "Open session in"
 msgstr "Buka sesi di"
@@ -11413,6 +11509,9 @@ msgstr "Membuka file"
 
 msgid "Opening folders"
 msgstr "Membuka folder"
+
+msgid "Opening native session…"
+msgstr "Membuka sesi native…"
 
 msgid "Opening pages"
 msgstr "Membuka halaman"
@@ -13709,6 +13808,9 @@ msgstr "Tersimpan"
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" disimpan sebagai environment"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Disimpan di host ini. Kosongkan untuk memakai nama asli."
+
 msgid "Saved to Downloads"
 msgstr "Disimpan ke Downloads"
 
@@ -14273,6 +14375,9 @@ msgstr "Detail sesi"
 
 msgid "Session ended"
 msgstr "Sesi berakhir"
+
+msgid "Session lineage"
+msgstr "Riwayat sesi"
 
 msgid "Session name"
 msgstr "Nama sesi"
@@ -14840,6 +14945,9 @@ msgstr "Laporan SOC 2 Type II"
 msgid "Social"
 msgstr "Media sosial"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Sebagian metadata khusus agen tidak dapat ditransfer."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sebagian file bukan tipe yang diterima dan tidak ditambahkan."
 
@@ -15075,6 +15183,9 @@ msgstr "Star yang didapat per hari"
 
 msgid "Stars gained per week"
 msgstr "Star yang didapat per minggu"
+
+msgid "Start"
+msgstr "Mulai"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Menyinkronkan..."
 
 msgid "System"
 msgstr "Sistem"
+
+msgid "System default"
+msgstr "Default sistem"
 
 msgid "System memory"
 msgstr "Memori sistem"

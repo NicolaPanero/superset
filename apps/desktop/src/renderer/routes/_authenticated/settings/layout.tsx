@@ -73,6 +73,7 @@ const SECTION_PATHS: Partial<Record<SettingsSection, string>> = {
 	appearance: "/settings/appearance",
 	ringtones: "/settings/ringtones",
 	usage: "/settings/usage",
+	localAgentAccounts: "/settings/local-agent-accounts",
 	keyboard: "/settings/keyboard",
 	behavior: "/settings/behavior",
 	git: "/settings/git",

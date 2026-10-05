@@ -1519,6 +1519,9 @@ msgstr "Installatie op het account werkt alleen met eigen manifests, dus {plugin
 msgid "Account is pending deletion."
 msgstr "Account wordt verwijderd."
 
+msgid "Account name"
+msgstr "Accountnaam"
+
 msgid "Account pending deletion"
 msgstr "Account wordt verwijderd"
 
@@ -1800,6 +1803,9 @@ msgstr "Ten opzichte van main"
 
 msgid "Agent"
 msgstr "Agent"
+
+msgid "Agent accounts"
+msgstr "Agentaccounts"
 
 msgid "Agent commands"
 msgstr "Agentcommando's"
@@ -2694,6 +2700,9 @@ msgstr "gem. positie {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "Wacht op {0}"
 
+msgid "Awaiting permission"
+msgstr "Wacht op toestemming"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Wacht op antwoord — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "Kies een project bij Pull requests voordat je een pull request opent."
 msgid "Choose a section."
 msgstr "Kies een onderdeel."
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "Kies accounts handmatig. Nieuwe agents gebruiken het standaardaccount tenzij de configuratie of startkeuze een ander account bepaalt."
+
 msgid "Choose agent"
 msgstr "Kies agent"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI & SDK"
+
+msgid "CLI default"
+msgstr "CLI-standaard"
 
 msgid "CLI docs"
 msgstr "CLI-docs"
@@ -4082,6 +4097,9 @@ msgstr "Bepaal welke agents in launchers verschijnen en hoe hun starts worden op
 msgid "Configure workspace run command"
 msgstr "Run-commando van werkruimte configureren"
 
+msgid "Configured account"
+msgstr "Geconfigureerd account"
+
 msgid "Confirm before quitting"
 msgstr "Bevestigen voor afsluiten"
 
@@ -4305,6 +4323,9 @@ msgstr "Gepubliceerde of bijgewerkte content"
 msgid "Context"
 msgstr "Context"
 
+msgid "Context Handoff"
+msgstr "Contextoverdracht"
+
 msgid "Context Menu"
 msgstr "Contextmenu"
 
@@ -4343,6 +4364,9 @@ msgstr "Doorgaan met GitHub"
 msgid "Continue with Google"
 msgstr "Doorgaan met Google"
 
+msgid "Continue with…"
+msgstr "Doorgaan met…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Een agentsessie voortzetten vereist een vastgezette workspace"
 
@@ -4378,6 +4402,9 @@ msgstr "Conversie tot nu toe"
 
 msgid "Converted"
 msgstr "Geconverteerd"
+
+msgid "Converting…"
+msgstr "Converteren…"
 
 msgid "cookies and site data"
 msgstr "cookies en sitegegevens"
@@ -4630,6 +4657,9 @@ msgstr "Kan de wachtrij niet verlaten"
 msgid "Could not list directory"
 msgstr "Kan map niet uitlezen"
 
+msgid "Could not load agent configurations."
+msgstr "Agentconfiguraties konden niet worden geladen."
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "Kan agents van {0} niet laden"
@@ -4714,6 +4744,9 @@ msgstr "Omgeving kon niet worden opgeslagen"
 
 msgid "Could not rename the session"
 msgstr "Kan de naam van de sessie niet wijzigen"
+
+msgid "Could not rename this account."
+msgstr "Dit account kon niet worden hernoemd."
 
 msgid "Could not rename this page"
 msgstr "Kan deze pagina niet hernoemen"
@@ -4850,6 +4883,9 @@ msgstr "Kan reviewopmerkingen niet laden"
 msgid "Couldn't load runs"
 msgstr "Kan runs niet laden"
 
+msgid "Couldn't load session lineage."
+msgstr "De sessiegeschiedenis kon niet worden geladen."
+
 msgid "Couldn't load this run's payload."
 msgstr "Kan de payload van deze run niet laden."
 
@@ -4893,6 +4929,9 @@ msgstr "Kan de lokale login niet verwijderen"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Kon de agent niet opnieuw in een terminal openen"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "Deze sessie kon niet opnieuw worden geopend. Controleer of de agentconfiguratie en de native sessie nog bestaan."
 
 msgid "Couldn't restart terminals"
 msgstr "Kan terminals niet herstarten"
@@ -5011,6 +5050,9 @@ msgstr "Een nieuwe werkruimte aanmaken"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "Maak een project om taken en cloudwerkruimtes te groeperen."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "Maak een hervatbare sessie met de gespreksgeschiedenis. Machtigingen en inloggegevens blijven die van de doelagent."
 
 msgid "Create a task for fixing the login bug"
 msgstr "Maak een taak voor het fixen van de loginbug"
@@ -5246,6 +5288,9 @@ msgstr "Huidig tabblad"
 
 msgid "Cursor"
 msgstr "Cursor"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Accounts van Cursor Agent, Grok Build en OpenCode worden in hun eigen apps beheerd."
 
 msgid "Cursor blinking"
 msgstr "Knipperende cursor"
@@ -8789,14 +8834,23 @@ msgstr "Starten"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Start agents op features, bugfixes en refactors, allemaal parallel. In één oogopslag zie je welke agents werken, welke vastzitten en welke op jou wachten."
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "Bekende startkeuzes worden getoond. Het actieve model kan in de CLI veranderen."
+
 msgid "Launch mode"
 msgstr "Startmodus"
+
+msgid "Launch model"
+msgstr "Model bij start"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Start dit terminalscript wanneer er een nieuwe werkruimte wordt aangemaakt."
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "Start dit terminalscript telkens als er een nieuw terminaltabblad opent."
+
+msgid "Launching…"
+msgstr "Starten…"
 
 msgid "Layout"
 msgstr "Indeling"
@@ -9137,6 +9191,9 @@ msgstr "Repository's laden..."
 msgid "Loading review..."
 msgstr "Review laden..."
 
+msgid "Loading session lineage…"
+msgstr "Sessiegeschiedenis laden…"
+
 msgid "Loading sessions…"
 msgstr "Sessies laden…"
 
@@ -9154,6 +9211,9 @@ msgstr "Laden…"
 
 msgid "Local"
 msgstr "Lokaal"
+
+msgid "Local agent accounts"
+msgstr "Lokale agentaccounts"
 
 msgid "Local Device"
 msgstr "Lokaal apparaat"
@@ -9324,6 +9384,9 @@ msgstr "Beheer de branding en leden van je organisatie."
 
 msgid "Managed"
 msgstr "Beheerd"
+
+msgid "Managed by the CLI"
+msgstr "Beheerd door de CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Beheerd door de beheerder van je organisatie."
@@ -9780,6 +9843,21 @@ msgstr "Geef nieuwe branches van dit project een eigen naamruimte. Standaard gel
 msgid "Naming instructions"
 msgstr "Naamgevingsinstructies"
 
+msgid "Native Handoff"
+msgstr "Native overdracht"
+
+msgid "Native handoff complete"
+msgstr "Native overdracht voltooid"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "De native overdracht is mislukt. Probeer opnieuw of kies contextoverdracht."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "Native overdracht is niet beschikbaar voor dit agentenpaar of deze host."
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "Native overdrachten worden lokaal opgeslagen. Elke sessie kan meerdere vervolgsessies hebben."
+
 msgid "Native PR reviews"
 msgstr "Native PR-reviews"
 
@@ -10078,6 +10156,9 @@ msgstr "Geen actieve organisatie geselecteerd"
 msgid "No active services"
 msgstr "Geen actieve services"
 
+msgid "No active sessions"
+msgstr "Geen actieve sessies"
+
 msgid "No active terminal sessions"
 msgstr "Geen actieve terminalsessies"
 
@@ -10345,6 +10426,9 @@ msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een Limrun-compa
 
 msgid "No name on file"
 msgstr "Geen naam bekend"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "Er zijn nog geen native overdrachten vastgelegd in deze workspace."
 
 msgid "No open issues found."
 msgstr "Geen open issues gevonden."
@@ -10713,6 +10797,9 @@ msgstr "Niet in deze versie"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Er komen nog geen gebeurtenissen binnen: Microsoft Graph heeft de meldingsabonnementen geweigerd. Controleer de beheerderstoestemming en de goedkeuring van de beveiligde API van de app, en verbind opnieuw."
 
+msgid "Not recorded"
+msgstr "Niet vastgelegd"
+
 msgid "Not reviewed by you"
 msgstr "Niet door jou gereviewd"
 
@@ -11057,6 +11144,9 @@ msgstr "Wijzigingen openen"
 msgid "Open Chat v3"
 msgstr "Chat v3 openen"
 
+msgid "Open child"
+msgstr "Vervolgsessie openen"
+
 msgid "Open Command Palette"
 msgstr "Opdrachtenpalet openen"
 
@@ -11261,6 +11351,9 @@ msgstr "Openen op GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Pagina openen in standaardbrowser"
 
+msgid "Open parent"
+msgstr "Bovenliggende sessie openen"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} openen"
@@ -11311,6 +11404,9 @@ msgstr "Repo openen..."
 
 msgid "Open roles"
 msgstr "Openstaande vacatures"
+
+msgid "Open session"
+msgstr "Sessie openen"
 
 msgid "Open session in"
 msgstr "Sessie openen in"
@@ -11413,6 +11509,9 @@ msgstr "Bestanden openen"
 
 msgid "Opening folders"
 msgstr "Mappen openen"
+
+msgid "Opening native session…"
+msgstr "Native sessie openen…"
 
 msgid "Opening pages"
 msgstr "Pagina's openen"
@@ -13709,6 +13808,9 @@ msgstr "Opgeslagen"
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" opgeslagen als omgeving"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "Op deze host opgeslagen. Laat leeg om de oorspronkelijke naam te gebruiken."
+
 msgid "Saved to Downloads"
 msgstr "Opgeslagen in Downloads"
 
@@ -14273,6 +14375,9 @@ msgstr "Sessiedetails"
 
 msgid "Session ended"
 msgstr "Sessie beëindigd"
+
+msgid "Session lineage"
+msgstr "Sessiegeschiedenis"
 
 msgid "Session name"
 msgstr "Sessienaam"
@@ -14840,6 +14945,9 @@ msgstr "SOC 2 Type II-rapport"
 msgid "Social"
 msgstr "Social"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "Sommige agentspecifieke metadata konden niet worden overgedragen."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sommige bestanden hebben geen toegestaan type en zijn niet toegevoegd."
 
@@ -15075,6 +15183,9 @@ msgstr "Nieuwe sterren per dag"
 
 msgid "Stars gained per week"
 msgstr "Nieuwe sterren per week"
+
+msgid "Start"
+msgstr "Starten"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "Synchroniseren..."
 
 msgid "System"
 msgstr "Systeem"
+
+msgid "System default"
+msgstr "Systeemstandaard"
 
 msgid "System memory"
 msgstr "Systeemgeheugen"

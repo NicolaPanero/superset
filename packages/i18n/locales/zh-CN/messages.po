@@ -1519,6 +1519,9 @@ msgstr "账户安装仅解析第一方清单，因此来自 {marketplace} 的 {p
 msgid "Account is pending deletion."
 msgstr "账户正在等待删除。"
 
+msgid "Account name"
+msgstr "账户名称"
+
 msgid "Account pending deletion"
 msgstr "账户待删除"
 
@@ -1800,6 +1803,9 @@ msgstr "对比main"
 
 msgid "Agent"
 msgstr "智能体"
+
+msgid "Agent accounts"
+msgstr "智能体账户"
 
 msgid "Agent commands"
 msgstr "智能体命令"
@@ -2694,6 +2700,9 @@ msgstr "平均排名 {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "等待{0}"
 
+msgid "Awaiting permission"
+msgstr "等待授权"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "等待回复 — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "开拉取请求之前，请先在“拉取请求”里选择一个项目
 msgid "Choose a section."
 msgstr "选择一个分区。"
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "手动选择账户。新智能体使用默认账户，除非配置或启动时选择了其他账户。"
+
 msgid "Choose agent"
 msgstr "选择智能体"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLI与SDK"
+
+msgid "CLI default"
+msgstr "CLI 默认值"
 
 msgid "CLI docs"
 msgstr "CLI文档"
@@ -4082,6 +4097,9 @@ msgstr "配置哪些智能体出现在启动器中，以及它们的启动方式
 msgid "Configure workspace run command"
 msgstr "配置工作区运行命令"
 
+msgid "Configured account"
+msgstr "已配置的账户"
+
 msgid "Confirm before quitting"
 msgstr "退出前确认"
 
@@ -4305,6 +4323,9 @@ msgstr "已发布或更新的内容"
 msgid "Context"
 msgstr "上下文"
 
+msgid "Context Handoff"
+msgstr "上下文交接"
+
 msgid "Context Menu"
 msgstr "右键菜单"
 
@@ -4343,6 +4364,9 @@ msgstr "使用GitHub继续"
 msgid "Continue with Google"
 msgstr "使用Google继续"
 
+msgid "Continue with…"
+msgstr "继续使用…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "继续智能体会话需要固定的工作区"
 
@@ -4378,6 +4402,9 @@ msgstr "累计转化率"
 
 msgid "Converted"
 msgstr "已转化"
+
+msgid "Converting…"
+msgstr "正在转换…"
 
 msgid "cookies and site data"
 msgstr "Cookie和站点数据"
@@ -4630,6 +4657,9 @@ msgstr "无法移出队列"
 msgid "Could not list directory"
 msgstr "无法列出目录"
 
+msgid "Could not load agent configurations."
+msgstr "无法加载智能体配置。"
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "无法从{0}加载智能体"
@@ -4714,6 +4744,9 @@ msgstr "无法保存环境"
 
 msgid "Could not rename the session"
 msgstr "无法重命名会话"
+
+msgid "Could not rename this account."
+msgstr "无法重命名此账户。"
 
 msgid "Could not rename this page"
 msgstr "无法重命名此页面"
@@ -4850,6 +4883,9 @@ msgstr "无法加载审查评论"
 msgid "Couldn't load runs"
 msgstr "无法加载运行记录"
 
+msgid "Couldn't load session lineage."
+msgstr "无法加载会话历史。"
+
 msgid "Couldn't load this run's payload."
 msgstr "无法加载此次运行的负载。"
 
@@ -4893,6 +4929,9 @@ msgstr "无法移除本地登录"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "无法在终端中重新打开该智能体"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "无法重新打开此会话。请检查其智能体配置和原生会话是否仍然存在。"
 
 msgid "Couldn't restart terminals"
 msgstr "无法重启终端"
@@ -5011,6 +5050,9 @@ msgstr "创建新工作区"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "创建项目，将任务和云工作区归到一起。"
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "创建包含对话历史的可恢复会话。权限和凭据仍使用目标代理的配置。"
 
 msgid "Create a task for fixing the login bug"
 msgstr "创建一个任务，修复登录的bug"
@@ -5246,6 +5288,9 @@ msgstr "当前标签页"
 
 msgid "Cursor"
 msgstr "光标"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Cursor Agent、Grok Build 和 OpenCode 的账户在各自的应用中管理。"
 
 msgid "Cursor blinking"
 msgstr "光标闪烁"
@@ -8789,14 +8834,23 @@ msgstr "启动"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "在新功能、缺陷修复和重构上同时启动智能体，全部并行。状态一眼可见：哪些在干活、哪些被阻塞、哪些在等你。"
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "显示已知的启动选项。活动模型可能在 CLI 中改变。"
+
 msgid "Launch mode"
 msgstr "启动方式"
+
+msgid "Launch model"
+msgstr "启动模型"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "创建新工作区时启动此终端脚本。"
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "每当打开新的终端标签页时启动此终端脚本。"
+
+msgid "Launching…"
+msgstr "正在启动…"
 
 msgid "Layout"
 msgstr "布局"
@@ -9137,6 +9191,9 @@ msgstr "正在加载仓库..."
 msgid "Loading review..."
 msgstr "正在加载评审..."
 
+msgid "Loading session lineage…"
+msgstr "正在加载会话历史…"
+
 msgid "Loading sessions…"
 msgstr "正在加载会话…"
 
@@ -9154,6 +9211,9 @@ msgstr "正在加载…"
 
 msgid "Local"
 msgstr "本地"
+
+msgid "Local agent accounts"
+msgstr "本地智能体账户"
 
 msgid "Local Device"
 msgstr "本地设备"
@@ -9324,6 +9384,9 @@ msgstr "管理组织的品牌形象和成员。"
 
 msgid "Managed"
 msgstr "托管"
+
+msgid "Managed by the CLI"
+msgstr "由 CLI 管理"
 
 msgid "Managed by your organization admin."
 msgstr "由你所在组织的管理员管理。"
@@ -9780,6 +9843,21 @@ msgstr "为此项目的新分支设置命名空间。默认使用主机全局的
 msgid "Naming instructions"
 msgstr "命名说明"
 
+msgid "Native Handoff"
+msgstr "原生会话交接"
+
+msgid "Native handoff complete"
+msgstr "原生交接已完成"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "原生会话交接失败。你可以重试或选择上下文交接。"
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "此代理组合或主机不支持原生会话交接。"
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "原生交接保存在本地。每个会话可以有多个子会话。"
+
 msgid "Native PR reviews"
 msgstr "原生PR审查"
 
@@ -10078,6 +10156,9 @@ msgstr "未选择活动组织"
 msgid "No active services"
 msgstr "没有活动的服务"
 
+msgid "No active sessions"
+msgstr "没有活动会话"
+
 msgid "No active terminal sessions"
 msgstr "没有活动的终端会话"
 
@@ -10345,6 +10426,9 @@ msgstr "此处没有可用的移动模拟器。需要支持 Limrun 的云沙箱�
 
 msgid "No name on file"
 msgstr "未登记姓名"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "此工作区尚未记录任何原生交接。"
 
 msgid "No open issues found."
 msgstr "未找到打开的议题。"
@@ -10713,6 +10797,9 @@ msgstr "不在此版本中"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "尚未接收到事件：Microsoft Graph拒绝了通知订阅。请检查应用的管理员同意和受保护API的审批，然后重新连接。"
 
+msgid "Not recorded"
+msgstr "未记录"
+
 msgid "Not reviewed by you"
 msgstr "你还没有审查"
 
@@ -11057,6 +11144,9 @@ msgstr "打开更改"
 msgid "Open Chat v3"
 msgstr "打开Chat v3"
 
+msgid "Open child"
+msgstr "打开子会话"
+
 msgid "Open Command Palette"
 msgstr "打开命令面板"
 
@@ -11261,6 +11351,9 @@ msgstr "在GitHub上打开"
 msgid "Open Page in Default Browser"
 msgstr "在默认浏览器中打开页面"
 
+msgid "Open parent"
+msgstr "打开父会话"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "打开PR #{0}"
@@ -11311,6 +11404,9 @@ msgstr "打开仓库..."
 
 msgid "Open roles"
 msgstr "空缺职位"
+
+msgid "Open session"
+msgstr "打开会话"
 
 msgid "Open session in"
 msgstr "会话打开位置"
@@ -11413,6 +11509,9 @@ msgstr "打开文件"
 
 msgid "Opening folders"
 msgstr "打开文件夹"
+
+msgid "Opening native session…"
+msgstr "正在打开原生会话…"
 
 msgid "Opening pages"
 msgstr "打开页面"
@@ -13709,6 +13808,9 @@ msgstr "已保存"
 msgid "Saved \"{0}\" as an environment"
 msgstr "已将“{0}”保存为环境"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "保存在此主机上。留空以使用原始名称。"
+
 msgid "Saved to Downloads"
 msgstr "已保存到“下载”文件夹"
 
@@ -14273,6 +14375,9 @@ msgstr "会话详情"
 
 msgid "Session ended"
 msgstr "会话已结束"
+
+msgid "Session lineage"
+msgstr "会话历史"
 
 msgid "Session name"
 msgstr "会话名称"
@@ -14840,6 +14945,9 @@ msgstr "SOC 2 Type II报告"
 msgid "Social"
 msgstr "社交"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "部分代理专用元数据无法转移。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "部分文件的类型不被允许，未添加。"
 
@@ -15075,6 +15183,9 @@ msgstr "每日新增星标"
 
 msgid "Stars gained per week"
 msgstr "每周新增星标"
+
+msgid "Start"
+msgstr "启动"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "正在同步..."
 
 msgid "System"
 msgstr "跟随系统"
+
+msgid "System default"
+msgstr "系统默认值"
 
 msgid "System memory"
 msgstr "系统内存"

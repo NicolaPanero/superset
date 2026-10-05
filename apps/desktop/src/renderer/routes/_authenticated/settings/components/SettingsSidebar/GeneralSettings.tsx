@@ -50,6 +50,7 @@ type SettingsRoute =
 	| "/settings/appearance"
 	| "/settings/ringtones"
 	| "/settings/usage"
+	| "/settings/local-agent-accounts"
 	| "/settings/keyboard"
 	| "/settings/behavior"
 	| "/settings/browser"
@@ -135,6 +136,13 @@ const SECTION_GROUPS: SectionGroup[] = [
 				section: "mobile",
 				label: msg({ message: "Mobile" }),
 				icon: <HiOutlineDevicePhoneMobile className="h-4 w-4" />,
+			},
+			{
+				id: "/settings/local-agent-accounts",
+				section: "localAgentAccounts",
+				label: msg({ message: "Local agent accounts" }),
+				icon: <LuKeyRound className="h-4 w-4" />,
+				fullWidth: true,
 			},
 		],
 	},

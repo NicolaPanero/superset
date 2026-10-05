@@ -1,0 +1,1095 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 1ec6c6a..03f9583 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -58,7 +58,7 @@ futures-util = { version = "0.3.33", optional = true }
+ tokio = { version = "1.52.3", default-features = false, features = ["rt", "time"], optional = true }
+ wreq = { version = "6.0.0-rc.31", default-features = false, features = ["brotli", "deflate", "gzip", "stream", "tokio-rt", "webpki-roots", "zstd"], optional = true }
+ wreq-util = { version = "3.0.0-rc.14", features = ["emulation-compression"], optional = true }
+-uuid = { version = "1.23.4", features = ["v4", "v5"] }
++uuid = { version = "1.23.4", features = ["v4", "v5", "v7"] }
+ wasm-bindgen = { version = "0.2.126", optional = true }
+ 
+ [target.'cfg(target_os = "macos")'.dependencies]
+diff --git a/examples/superset-transfer.rs b/examples/superset-transfer.rs
+new file mode 100644
+index 0000000..61ccaec
+--- /dev/null
++++ b/examples/superset-transfer.rs
+@@ -0,0 +1,359 @@
++use chrono::Utc;
++use serde::Deserialize;
++use serde_json::{Value, json};
++use std::collections::{BTreeMap, HashSet};
++use std::io::{self, Read};
++use std::path::{Path, PathBuf};
++use txcript::common::{Block, Message, ToolOutput};
++use txcript::harness::{
++    claude_code::ClaudeStore, codex::CodexStore, cursor::CursorStore, grok::GrokStore,
++    opencode::OpenCodeStore,
++};
++use txcript::{Codec, Common, HarnessId, Store, Transcript};
++
++const ENGINE: &str = "0.14.4-nicola.2";
++const MAX_SOURCE: u64 = 100 * 1024 * 1024;
++const ADAPTERS: [&str; 5] = ["claude_code", "codex", "cursor", "grok", "opencode"];
++
++#[derive(Deserialize)]
++#[serde(rename_all = "camelCase", deny_unknown_fields)]
++struct Request {
++    source_agent: String,
++    source_session_id: String,
++    source_root: PathBuf,
++    source_reference: PathBuf,
++    target_agent: String,
++    target_root: PathBuf,
++    cwd: PathBuf,
++}
++
++fn read<S>(store: &S, reference: &S::Ref) -> Result<Transcript<Common>, String>
++where
++    S: Store,
++    S::H: Codec,
++{
++    let native = store.load(reference).map_err(|_| "source_unreadable")?;
++    S::H::to_common(&native).map_err(|_| "source_conversion_failed".into())
++}
++
++fn read_source(req: &Request, root: &Path, reference: &Path) -> Result<Transcript<Common>, String> {
++    match req.source_agent.as_str() {
++        "claude_code" => read(&ClaudeStore::new(root), &reference.to_path_buf()),
++        "codex" => read(&CodexStore::new(root), &reference.to_path_buf()),
++        "cursor" => read(&CursorStore::new(root), &reference.to_path_buf()),
++        "grok" => read(&GrokStore::new(root), &reference.to_path_buf()),
++        "opencode" => read(&OpenCodeStore::new(reference), &req.source_session_id),
++        _ => Err("source_not_verified".into()),
++    }
++}
++
++fn validate_jsonl(path: &Path) -> Result<(), String> {
++    let file = std::fs::File::open(path).map_err(|_| "source_unreadable")?;
++    if file.metadata().map_err(|_| "source_unreadable")?.len() > MAX_SOURCE {
++        return Err("source_too_large".into());
++    }
++    let mut bytes = Vec::new();
++    file.take(MAX_SOURCE + 1)
++        .read_to_end(&mut bytes)
++        .map_err(|_| "source_unreadable")?;
++    if bytes.len() as u64 > MAX_SOURCE {
++        return Err("source_too_large".into());
++    }
++    if std::str::from_utf8(&bytes)
++        .map_err(|_| "source_not_utf8")?
++        .lines()
++        .filter(|line| !line.trim().is_empty())
++        .any(|line| serde_json::from_str::<Value>(line).is_err())
++    {
++        return Err("source_incomplete".into());
++    }
++    Ok(())
++}
++
++fn target_harness(agent: &str) -> Result<HarnessId, String> {
++    match agent {
++        "claude_code" => Ok(HarnessId::ClaudeCode),
++        "codex" => Ok(HarnessId::Codex),
++        "cursor" => Ok(HarnessId::Cursor),
++        "grok" => Ok(HarnessId::Grok),
++        "opencode" => Ok(HarnessId::OpenCode),
++        _ => Err("target_not_verified".into()),
++    }
++}
++
++fn validated_source(req: &Request) -> Result<(PathBuf, Transcript<Common>), String> {
++    let cwd = req.cwd.canonicalize().map_err(|_| "cwd_unavailable")?;
++    let root = req
++        .source_root
++        .canonicalize()
++        .map_err(|_| "source_root_unavailable")?;
++    let reference = req
++        .source_reference
++        .canonicalize()
++        .map_err(|_| "source_unavailable")?;
++    if !reference.starts_with(&root) {
++        return Err("source_outside_store".into());
++    }
++    match req.source_agent.as_str() {
++        "claude_code" | "codex" => validate_jsonl(&reference)?,
++        "grok" => {
++            for name in ["chat_history.jsonl", "updates.jsonl", "events.jsonl"] {
++                let path = reference.join(name);
++                if path.exists() {
++                    let path = path.canonicalize().map_err(|_| "source_unreadable")?;
++                    if !path.starts_with(&reference) {
++                        return Err("source_outside_store".into());
++                    }
++                    validate_jsonl(&path)?;
++                }
++            }
++        }
++        _ => {}
++    }
++    let common = read_source(req, &root, &reference)?;
++    if common.meta.id != req.source_session_id {
++        return Err("source_id_mismatch".into());
++    }
++    if common.body.is_empty() {
++        return Err("source_empty".into());
++    }
++    if serde_json::to_vec(&common.body)
++        .map_err(|_| "source_conversion_failed")?
++        .len() as u64
++        > MAX_SOURCE
++    {
++        return Err("source_too_large".into());
++    }
++    let source_cwd = common.meta.cwd.as_deref().ok_or("source_cwd_missing")?;
++    if Path::new(source_cwd)
++        .canonicalize()
++        .map_err(|_| "source_cwd_unavailable")?
++        != cwd
++    {
++        return Err("source_cwd_mismatch".into());
++    }
++    if common != read_source(req, &root, &reference)? {
++        return Err("source_changed_during_read".into());
++    }
++    Ok((cwd, common))
++}
++
++fn normalize_tool_ids(messages: &mut [Message]) -> BTreeMap<String, String> {
++    let mut occupied: HashSet<String> = messages
++        .iter()
++        .flat_map(|m| &m.content)
++        .filter_map(|b| match b {
++            Block::ToolUse { id, .. } => Some(id.clone()),
++            _ => None,
++        })
++        .collect();
++    let mut aliases = BTreeMap::new();
++    for message in messages {
++        for block in &mut message.content {
++            let id = match block {
++                Block::ToolUse { id, .. } => id,
++                Block::ToolResult { tool_use_id, .. } => tool_use_id,
++                _ => continue,
++            };
++            if id.is_empty()
++                || id.len() > 64
++                || !id
++                    .bytes()
++                    .all(|b| b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
++            {
++                let replacement = aliases.entry(id.clone()).or_insert_with(|| {
++                    let mut counter = 0_u64;
++                    loop {
++                        let key = format!("{id}:{counter}");
++                        let candidate = format!(
++                            "call_{}",
++                            uuid::Uuid::new_v5(&uuid::Uuid::NAMESPACE_URL, key.as_bytes()).simple()
++                        );
++                        if occupied.insert(candidate.clone()) {
++                            break candidate;
++                        }
++                        counter += 1;
++                    }
++                });
++                id.clone_from(replacement);
++            }
++        }
++    }
++    aliases
++}
++
++fn convert(req: &Request) -> Result<Value, String> {
++    let (cwd, mut common) = validated_source(req)?;
++    let target = target_harness(&req.target_agent)?;
++    if req.source_agent == req.target_agent {
++        return Err("same_agent".into());
++    }
++    let target_root = req
++        .target_root
++        .canonicalize()
++        .map_err(|_| "target_root_unavailable")?;
++    if target == HarnessId::OpenCode {
++        let store = OpenCodeStore::default_db().ok_or("target_root_unavailable")?;
++        if store
++            .db_path
++            .canonicalize()
++            .map_err(|_| "target_root_unavailable")?
++            != target_root
++        {
++            return Err("target_store_mismatch".into());
++        }
++    }
++    let mut warnings =
++        vec!["Runtime permissions, MCP configuration and credentials are not transferred."];
++    if matches!(target, HarnessId::ClaudeCode | HarnessId::OpenCode)
++        && common.body.iter().flat_map(|m| &m.content).any(|b| {
++            matches!(
++                b,
++                Block::ToolResult {
++                    content: ToolOutput::Json(_),
++                    ..
++                }
++            )
++        })
++    {
++        warnings.push("Structured tool output is preserved as JSON text for this target.");
++    }
++    if common
++        .body
++        .iter()
++        .flat_map(|m| &m.content)
++        .any(|b| matches!(b, Block::Thinking { .. }))
++    {
++        warnings.push(
++            "Provider-specific reasoning signatures and encrypted reasoning are not portable.",
++        );
++    }
++    common.meta.id = if target == HarnessId::Codex {
++        uuid::Uuid::now_v7()
++    } else {
++        uuid::Uuid::new_v4()
++    }
++    .to_string();
++    common.meta.timestamp = Utc::now();
++    common.meta.cwd = Some(cwd.to_string_lossy().into_owned());
++    common.meta.model = None;
++    common.meta.lineage = None;
++    let tool_id_map = normalize_tool_ids(&mut common.body);
++    if !tool_id_map.is_empty() {
++        warnings.push("Tool call identifiers were normalized for the target; call/result pairing is retained.");
++    }
++    let messages = common.body.len();
++    let written = txcript::local::write(
++        target,
++        &common,
++        if target == HarnessId::OpenCode {
++            None
++        } else {
++            Some(&target_root)
++        },
++    )
++    .map_err(|_| "target_write_failed")?;
++    let reference: String = if target == HarnessId::OpenCode {
++        target_root.to_string_lossy().into_owned()
++    } else {
++        serde_json::from_str(&written.location).unwrap_or_else(|_| written.location.clone())
++    };
++    let verify = Request {
++        source_agent: req.target_agent.clone(),
++        source_session_id: written.id.clone(),
++        source_root: target_root.clone(),
++        source_reference: reference.clone().into(),
++        target_agent: String::new(),
++        target_root: target_root.clone(),
++        cwd: cwd.clone(),
++    };
++    let restored = read_source(&verify, &target_root, Path::new(&reference))?;
++    if restored.meta.id != written.id
++        || restored.body.is_empty()
++        || restored.meta.cwd.as_deref() != common.meta.cwd.as_deref()
++    {
++        return Err("target_validation_failed".into());
++    }
++    Ok(
++        json!({"protocolVersion":1,"engineVersion":ENGINE,"targetAgent":req.target_agent,
++        "targetSessionId":written.id,"reference":reference,"cwd":cwd,"messageCount":messages,"warnings":warnings,"toolIdMap":tool_id_map}),
++    )
++}
++
++fn run() -> Result<(), String> {
++    if std::env::args().nth(1).as_deref() == Some("capabilities") {
++        println!(
++            "{}",
++            json!({"protocolVersion":1,"engineVersion":ENGINE,"conversionOnly":true,"verifiedAdapters":ADAPTERS,"declaredAdapters":ADAPTERS})
++        );
++        return Ok(());
++    }
++    let mut input = String::new();
++    io::stdin()
++        .take(64 * 1024 + 1)
++        .read_to_string(&mut input)
++        .map_err(|_| "input_unreadable")?;
++    if input.len() > 64 * 1024 {
++        return Err("input_too_large".into());
++    }
++    let request = serde_json::from_str(&input).map_err(|_| "input_invalid")?;
++    println!("{}", convert(&request)?);
++    Ok(())
++}
++
++fn main() -> std::process::ExitCode {
++    match run() {
++        Ok(()) => std::process::ExitCode::SUCCESS,
++        Err(code) => {
++            eprintln!("{}", json!({"error":code}));
++            std::process::ExitCode::FAILURE
++        }
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use txcript::common::{Role, Tool};
++    #[test]
++    fn aliases_invalid_ids_without_collisions_and_keeps_results_paired() {
++        let invalid = "functions.shell:call.with.a.long.identifier.that.exceeds.the.targets.sixty.four.characters";
++        let collision = format!(
++            "call_{}",
++            uuid::Uuid::new_v5(
++                &uuid::Uuid::NAMESPACE_URL,
++                format!("{invalid}:0").as_bytes()
++            )
++            .simple()
++        );
++        let call = |id: &str| Block::ToolUse {
++            id: id.into(),
++            tool: Tool::Raw {
++                tool_name: "Shell".into(),
++                input: json!({"command":"printf fixture"}),
++            },
++        };
++        let result = |id: &str| Block::ToolResult {
++            tool_use_id: id.into(),
++            content: ToolOutput::Text("fixture".into()),
++            is_error: false,
++        };
++        let mut messages = vec![Message {
++            role: Role::Assistant,
++            content: vec![call(invalid), call(&collision), result(invalid)],
++            timestamp: Utc::now(),
++            model: None,
++            stop_reason: None,
++            usage: None,
++        }];
++        let aliases = normalize_tool_ids(&mut messages);
++        let mapped = &aliases[invalid];
++        assert_ne!(mapped, &collision);
++        assert!(mapped.len() <= 64);
++        assert_eq!(
++            messages[0].content,
++            vec![call(mapped), call(&collision), result(mapped)]
++        );
++        assert!(normalize_tool_ids(&mut messages).is_empty());
++    }
++}
+diff --git a/src/harness/codex.rs b/src/harness/codex.rs
+index 85d0b4c..cc243a6 100644
+--- a/src/harness/codex.rs
++++ b/src/harness/codex.rs
+@@ -327,12 +327,7 @@ fn lines_to_messages(lines: &[Line], fallback_ts: DateTime<Utc>) -> Vec<Message>
+                             .and_then(Value::as_str)
+                             .map(String::from)
+                         {
+-                            let content = payload
+-                                .get("output")
+-                                .and_then(Value::as_str)
+-                                .map_or(ToolOutput::Text(String::new()), |s| {
+-                                    ToolOutput::Text(s.to_string())
+-                                });
++                            let content = parse_tool_output_value(payload.get("output"));
+                             queued.push(tool_result(
+                                 ts,
+                                 result_key(&call_id),
+@@ -378,11 +373,10 @@ fn lines_to_messages(lines: &[Line], fallback_ts: DateTime<Utc>) -> Vec<Message>
+                             .and_then(Value::as_str)
+                             .map(String::from)
+                         {
+-                            let raw = payload
+-                                .get("output")
+-                                .and_then(Value::as_str)
+-                                .unwrap_or_default();
+-                            let (content, is_error) = parse_custom_tool_output(raw);
++                            let (content, is_error) = match payload.get("output") {
++                                Some(Value::String(raw)) => parse_custom_tool_output(raw),
++                                other => (parse_tool_output_value(other), false),
++                            };
+                             canonical_results.insert(result_key(&call_id));
+                             queued.push(tool_result(
+                                 ts,
+@@ -1542,6 +1536,14 @@ fn format_exec_output(payload: &Value) -> String {
+     }
+ }
+ 
++fn parse_tool_output_value(output: Option<&Value>) -> ToolOutput {
++    match output {
++        Some(Value::String(text)) => ToolOutput::Text(text.clone()),
++        Some(value) => ToolOutput::Json(value.clone()),
++        None => ToolOutput::Text(String::new()),
++    }
++}
++
+ fn parse_custom_tool_output(raw: &str) -> (ToolOutput, bool) {
+     match parse_json_string_or_raw(raw) {
+         Value::Object(ref obj) => {
+diff --git a/src/harness/cursor.rs b/src/harness/cursor.rs
+index 66e5533..836970b 100644
+--- a/src/harness/cursor.rs
++++ b/src/harness/cursor.rs
+@@ -60,7 +60,7 @@ impl Codec for Cursor {
+     fn to_common(transcript: &Transcript<Self>) -> Result<Transcript<Common>> {
+         Ok(Transcript::new(
+             transcript.meta.clone(),
+-            db_to_messages(&transcript.body, &transcript.meta),
++            db_to_messages(&transcript.body, &transcript.meta)?,
+         ))
+     }
+ 
+@@ -364,13 +364,88 @@ fn sqlite_unavailable() -> Error {
+ 
+ // -- db <-> common -------------------------------------------------------
+ 
+-fn db_to_messages(db: &CursorDb, meta: &Meta) -> Vec<Message> {
++fn db_to_messages(db: &CursorDb, meta: &Meta) -> Result<Vec<Message>> {
+     let fallback_ts = meta.timestamp;
+-    db.blobs.iter().fold(Vec::new(), |mut messages, blob| {
++    let blobs = active_message_blobs(db)?.unwrap_or_else(|| db.blobs.iter().collect());
++    Ok(blobs.into_iter().fold(Vec::new(), |mut messages, blob| {
+         // `messages.len()` numbers the message, minting deterministic ids.
+         messages.extend(blob_message(blob, meta, fallback_ts, messages.len()));
+         messages
+-    })
++    }))
++}
++
++// Cursor keeps previous versions of messages in its content-addressed store.
++// Only field 1 of the current root identifies the active model transcript.
++fn active_message_blobs(db: &CursorDb) -> Result<Option<Vec<&CursorBlob>>> {
++    let Some(root_id) = cursor_meta_value(db)
++        .and_then(|v| {
++            v.get("latestRootBlobId")
++                .and_then(Value::as_str)
++                .map(String::from)
++        })
++        .filter(|id| !id.is_empty())
++    else {
++        return Ok(None);
++    };
++    let by_id: HashMap<_, _> = db
++        .blobs
++        .iter()
++        .map(|blob| (blob.id.as_str(), blob))
++        .collect();
++    let malformed = || Error::Malformed {
++        harness: Cursor::NAME,
++        detail: "invalid active transcript references".into(),
++    };
++    let root = by_id.get(root_id.as_str()).ok_or_else(malformed)?;
++    let mut input = root.data.as_slice();
++    let mut messages = Vec::new();
++    while !input.is_empty() {
++        let tag = read_proto_varint(&mut input).ok_or_else(malformed)?;
++        let field = tag >> 3;
++        match tag & 7 {
++            0 => {
++                read_proto_varint(&mut input).ok_or_else(malformed)?;
++            }
++            1 | 5 => {
++                let size = if tag & 7 == 1 { 8 } else { 4 };
++                input = input.get(size..).ok_or_else(malformed)?;
++            }
++            2 => {
++                let size = usize::try_from(read_proto_varint(&mut input).ok_or_else(malformed)?)
++                    .map_err(|_| malformed())?;
++                let bytes = input.get(..size).ok_or_else(malformed)?;
++                if field == 1 {
++                    if bytes.len() != 32 {
++                        return Err(malformed());
++                    }
++                    messages.push(
++                        *by_id
++                            .get(hex_encode(bytes).as_str())
++                            .ok_or_else(malformed)?,
++                    );
++                }
++                input = input.get(size..).ok_or_else(malformed)?;
++            }
++            _ => return Err(malformed()),
++        }
++    }
++    Ok(Some(messages))
++}
++
++fn read_proto_varint(input: &mut &[u8]) -> Option<u64> {
++    let mut value = 0u64;
++    for shift in (0..70).step_by(7) {
++        let (&byte, rest) = input.split_first()?;
++        *input = rest;
++        if shift == 63 && byte > 1 {
++            return None;
++        }
++        value |= u64::from(byte & 127) << shift;
++        if byte < 128 {
++            return Some(value);
++        }
++    }
++    None
+ }
+ 
+ /// The conversational turn one blob carries, if any.
+@@ -521,7 +596,7 @@ struct CursorStateToolResult {
+ fn cursor_state_blobs(
+     meta: &Meta,
+     messages: &[Message],
+-    _message_ids: &[String],
++    message_ids: &[String],
+ ) -> Vec<CursorBlob> {
+     let turns = cursor_state_turns(meta, messages);
+     let mut blobs = Vec::new();
+@@ -552,7 +627,11 @@ fn cursor_state_blobs(
+         blobs.push(turn_blob);
+     }
+ 
+-    blobs.push(cursor_blob(cursor_root_state_proto(meta, &turn_ids)));
++    blobs.push(cursor_blob(cursor_root_state_proto(
++        meta,
++        &turn_ids,
++        message_ids,
++    )));
+     blobs
+ }
+ 
+@@ -1184,8 +1263,15 @@ fn cursor_turn_structure_proto(user_id: &[u8; 32], step_ids: &[[u8; 32]]) -> Vec
+     turn
+ }
+ 
+-fn cursor_root_state_proto(meta: &Meta, turn_ids: &[[u8; 32]]) -> Vec<u8> {
++fn cursor_root_state_proto(meta: &Meta, turn_ids: &[[u8; 32]], message_ids: &[String]) -> Vec<u8> {
+     let mut root = Vec::new();
++    // Field 1 is the model-protocol transcript. Field 8 alone restores the UI
++    // turn graph but gives the resumed model no imported conversation.
++    for id in message_ids {
++        if let Ok(bytes) = hex_decode(id) {
++            pb_len(&mut root, 1, &bytes);
++        }
++    }
+     for turn_id in turn_ids {
+         pb_len(&mut root, 8, turn_id);
+     }
+@@ -1195,6 +1281,9 @@ fn cursor_root_state_proto(meta: &Meta, turn_ids: &[[u8; 32]]) -> Vec<u8> {
+         && ms > 0
+     {
+         pb_varint_field(&mut root, 26, ms);
++        // Cursor requires a timezone whenever the conversation start time is set.
++        // Canonical timestamps are UTC; source CLI timezone is not portable.
++        pb_string(&mut root, 27, "UTC");
+     }
+     root
+ }
+@@ -1466,7 +1555,14 @@ fn meta_from_db(db: &CursorDb, db_path: Option<&Path>) -> Meta {
+         .as_ref()
+         .and_then(|v| v.get("workspacePath"))
+         .and_then(Value::as_str)
+-        .map(String::from);
++        .map(String::from)
++        .or_else(|| {
++            session_meta
++                .and_then(|v| v.get("cwd"))
++                .and_then(Value::as_str)
++                .filter(|s| !s.is_empty())
++                .map(String::from)
++        });
+     let mut model = db_meta
+         .as_ref()
+         .and_then(|v| v.get("lastUsedModel"))
+@@ -1567,8 +1663,7 @@ fn ensure_cursor_meta(body: &mut CursorDb, meta: &Meta, id: &str) {
+         "name": title,
+         "createdAt": created_at,
+         "mode": "default",
+-        "isRunEverything": true,
+-        "approvalMode": "unrestricted",
++        "isRunEverything": false,
+         "lastUsedModel": model,
+     });
+     if let Some(cwd) = meta.cwd.as_ref() {
+@@ -1608,7 +1703,7 @@ fn write_session_files(session_dir: &Path, body: &CursorDb, meta: &Meta, _id: &s
+         serde_json::to_string(&session_meta)?,
+     )?;
+ 
+-    let prompts = db_to_messages(body, meta)
++    let prompts = db_to_messages(body, meta)?
+         .into_iter()
+         .filter(|message| message.role == Role::User)
+         .flat_map(|message| message.content)
+@@ -2140,6 +2235,63 @@ mod serde_hex {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn resumed_session_retains_cwd_from_native_sidecar() {
++        let mut db = CursorDb {
++            blobs: Vec::new(),
++            meta: vec![CursorMetaEntry {
++                key: "0".into(),
++                value: json!({"latestRootBlobId":"rewritten"}).to_string(),
++            }],
++            session_meta: Some(json!({"cwd":"/workspace/original"})),
++        };
++        assert_eq!(
++            meta_from_db(&db, None).cwd.as_deref(),
++            Some("/workspace/original")
++        );
++        db.meta[0].value = json!({"workspacePath":"/workspace/current"}).to_string();
++        assert_eq!(
++            meta_from_db(&db, None).cwd.as_deref(),
++            Some("/workspace/current")
++        );
++        db.meta.clear();
++        db.session_meta = Some(json!({"cwd":""}));
++        assert!(meta_from_db(&db, None).cwd.is_none());
++    }
++
++    #[test]
++    #[allow(clippy::unwrap_used)]
++    fn active_root_excludes_stale_messages_and_preserves_reference_order() {
++        let old = cursor_blob(br#"{"role":"user","content":"obsolete"}"#.to_vec());
++        let first = cursor_blob(br#"{"role":"user","content":"first"}"#.to_vec());
++        let second = cursor_blob(
++            br#"{"role":"assistant","content":[{"type":"text","text":"second"}]}"#.to_vec(),
++        );
++        let mut root_data = Vec::new();
++        for blob in [&first, &second] {
++            pb_len(&mut root_data, 1, &hex_decode(&blob.id).unwrap());
++        }
++        let root = cursor_blob(root_data);
++        let db = CursorDb {
++            blobs: vec![old, second, first, root.clone()],
++            meta: vec![CursorMetaEntry {
++                key: "0".into(),
++                value: json!({"latestRootBlobId":root.id}).to_string(),
++            }],
++            session_meta: None,
++        };
++        let selected = active_message_blobs(&db).unwrap().unwrap();
++        assert_eq!(selected.len(), 2);
++        assert!(String::from_utf8_lossy(&selected[0].data).contains("first"));
++        assert!(String::from_utf8_lossy(&selected[1].data).contains("second"));
++        let mut broken = db.clone();
++        broken.blobs.remove(1);
++        assert!(active_message_blobs(&broken).is_err());
++        let mut truncated = db;
++        truncated.blobs.last_mut().unwrap().data = vec![10, 255];
++        assert!(active_message_blobs(&truncated).is_err());
++    }
++
+     #[test]
+     fn hashes_match_cursor_paths_and_blob_ids() {
+         assert_eq!(
+diff --git a/src/harness/opencode.rs b/src/harness/opencode.rs
+index 09da176..5cbf223 100644
+--- a/src/harness/opencode.rs
++++ b/src/harness/opencode.rs
+@@ -14,6 +14,8 @@
+ //! (step-start/finish, snapshot, patch, …) are dropped from the conversation
+ //! but preserved in the native body.
+ 
++use std::collections::HashMap;
++
+ use chrono::{DateTime, Utc};
+ use serde::{Deserialize, Serialize};
+ use serde_json::{Map, Value, json};
+@@ -287,6 +289,14 @@ fn parse_tool(part: &Value) -> Option<(Block, Option<Block>)> {
+         .and_then(|s| s.get("input"))
+         .cloned()
+         .unwrap_or(Value::Object(Map::new()));
++    // OpenCode requires object-shaped tool inputs. This reserved single-key
++    // wrapper keeps raw Codex custom-tool strings reversible through Common.
++    let raw_input = match raw_input.as_object() {
++        Some(obj) if obj.len() == 1 && obj.contains_key("$txcriptRawInput") => {
++            obj["$txcriptRawInput"].clone()
++        }
++        _ => raw_input,
++    };
+     let (name, input) = normalize_tool(tool, raw_input);
+     let use_block = Block::ToolUse {
+         id: call_id.clone(),
+@@ -338,7 +348,32 @@ struct ExportContext<'a> {
+     session_id: &'a str,
+     cwd: &'a str,
+     default_model: Option<&'a str>,
+-    messages: &'a [Message],
++    tool_results: HashMap<(usize, &'a str), (&'a ToolOutput, bool)>,
++}
++
++fn pair_tool_results(messages: &[Message]) -> HashMap<(usize, &str), (&ToolOutput, bool)> {
++    let mut pending = HashMap::new();
++    let mut paired = HashMap::new();
++    for (i, message) in messages.iter().enumerate().rev() {
++        for block in message.content.iter().rev() {
++            match block {
++                Block::ToolResult {
++                    tool_use_id,
++                    content,
++                    is_error,
++                } => {
++                    pending.insert(tool_use_id.as_str(), (content, *is_error));
++                }
++                Block::ToolUse { id, .. } => {
++                    if let Some(result) = pending.remove(id.as_str()) {
++                        paired.insert((i, id.as_str()), result);
++                    }
++                }
++                _ => {}
++            }
++        }
++    }
++    paired
+ }
+ 
+ fn build_user_record(
+@@ -387,7 +422,7 @@ fn build_assistant_record(
+     msg: &Message,
+     msg_id: &str,
+     parent_id: &str,
+-    idx: &mut usize,
++    idx: usize,
+ ) -> MessageRecord {
+     let msg_ms = msg.timestamp.timestamp_millis();
+     let mut info = Map::new();
+@@ -414,7 +449,7 @@ fn build_assistant_record(
+     info.insert("tokens".into(), tokens_value(msg.usage.as_ref()));
+ 
+     let mut parts = vec![json!({
+-        "id": format!("prt_{}", det_hex(ctx.session_id, *idx, 0)),
++        "id": format!("prt_{}", det_hex(ctx.session_id, idx, 0)),
+         "sessionID": ctx.session_id,
+         "messageID": msg_id,
+         "type": "step-start",
+@@ -424,11 +459,10 @@ fn build_assistant_record(
+             block,
+             ctx.session_id,
+             msg_id,
+-            *idx,
++            idx,
+             j + 1,
+             msg_ms,
+-            ctx.messages,
+-            idx,
++            &ctx.tool_results,
+         );
+         parts.push(part);
+     }
+@@ -445,7 +479,7 @@ fn build_export(meta: &Meta, messages: &[Message]) -> Export {
+         session_id: &session_id,
+         cwd: meta.cwd.as_deref().unwrap_or_default(),
+         default_model: meta.model.as_deref(),
+-        messages,
++        tool_results: pair_tool_results(messages),
+     };
+ 
+     let mut out: Vec<MessageRecord> = Vec::new();
+@@ -465,7 +499,7 @@ fn build_export(meta: &Meta, messages: &[Message]) -> Export {
+             }
+             Role::Assistant => {
+                 let parent_id = last_user_msg_id.as_deref().unwrap_or(&msg_id);
+-                let record = build_assistant_record(&ctx, msg, &msg_id, parent_id, &mut idx);
++                let record = build_assistant_record(&ctx, msg, &msg_id, parent_id, idx);
+                 out.push(record);
+             }
+         }
+@@ -548,8 +582,7 @@ fn assistant_part(
+     i: usize,
+     j: usize,
+     ms: i64,
+-    messages: &[Message],
+-    idx: &mut usize,
++    tool_results: &HashMap<(usize, &str), (&ToolOutput, bool)>,
+ ) -> Value {
+     let time = json!({ "start": ms, "end": ms });
+     let mut p = match block {
+@@ -567,6 +600,11 @@ fn assistant_part(
+         Block::ToolUse { id, tool } => {
+             let (name, input) = tool.to_canonical();
+             let (oc_name, oc_input) = denormalize_tool(&name, input);
++            let oc_input = if oc_input.is_object() {
++                oc_input
++            } else {
++                json!({"$txcriptRawInput": oc_input})
++            };
+             let mut state = json!({
+                 "status": "completed",
+                 "input": oc_input,
+@@ -575,26 +613,18 @@ fn assistant_part(
+                 "metadata": {},
+                 "time": time,
+             });
+-            // Fold matching ToolResult from the following user turn into state.output.
+-            if let Some(next) = messages.get(*idx + 1)
+-                && matches!(next.role, Role::User)
+-                && let Some(result) = next.content.iter().find_map(|b| match b {
+-                    Block::ToolResult {
+-                        tool_use_id,
+-                        content,
+-                        is_error,
+-                    } if tool_use_id == id => Some((content, *is_error)),
+-                    _ => None,
+-                })
+-                && let Value::Object(obj) = &mut state
+-            {
+-                if result.1 {
+-                    obj.insert("status".into(), json!("error"));
+-                    obj.insert("error".into(), json!(output_to_string(result.0)));
+-                    obj.remove("output");
++            if let Some((content, is_error)) = tool_results.get(&(i, id.as_str())) {
++                if *is_error {
++                    state["status"] = json!("error");
++                    state["error"] = json!(output_to_string(content));
++                    if let Some(object) = state.as_object_mut() {
++                        object.remove("output");
++                    }
+                 } else {
+-                    obj.insert("output".into(), json!(output_to_string(result.0)));
++                    state["output"] = json!(output_to_string(content));
+                 }
++            } else {
++                state["status"] = json!("pending");
+             }
+             json!({ "type": "tool", "tool": oc_name, "callID": id, "state": state })
+         }
+diff --git a/tests/integration/cursor.rs b/tests/integration/cursor.rs
+index c1807fb..b842ef8 100644
+--- a/tests/integration/cursor.rs
++++ b/tests/integration/cursor.rs
+@@ -194,10 +194,27 @@ fn text_codec_round_trips_native_export() {
+ fn from_common_writes_cursor_resume_state_turns() {
+     let native = cursor::Cursor::from_common(&sample_common()).unwrap();
+     let root = latest_root_blob(&native.body);
++    assert!(!len_fields(&root.data, 1).is_empty());
+     let turn_refs = len_fields(&root.data, 8);
+ 
+     assert_eq!(turn_refs.len(), 1);
+-    assert!(len_fields(&root.data, 1).is_empty());
++    let message_refs = len_fields(&root.data, 1);
++    assert!(!message_refs.is_empty());
++    for reference in &message_refs {
++        let id = hex_encode_test(reference);
++        let blob = native
++            .body
++            .blobs
++            .iter()
++            .find(|blob| blob.id == id)
++            .expect("referenced message exists");
++        let value: serde_json::Value =
++            serde_json::from_slice(&blob.data).expect("referenced message is JSON");
++        assert!(
++            value.get("role").is_some(),
++            "root references conversational messages"
++        );
++    }
+ 
+     let turn_id = hex_encode_test(&turn_refs[0]);
+     let turn_blob = native
+@@ -547,6 +564,16 @@ fn cursor_meta_json(body: &cursor::CursorDb) -> serde_json::Value {
+     serde_json::from_slice(&decoded).expect("cursor meta json")
+ }
+ 
++#[test]
++fn imported_cursor_conversation_has_a_timezone_and_keeps_permission_checks() {
++    let native = cursor::Cursor::from_common(&sample_common()).unwrap();
++    let root = latest_root_blob(&native.body);
++    assert_eq!(string_fields(&root.data, 27), vec!["UTC"]);
++    let meta = cursor_meta_json(&native.body);
++    assert_eq!(meta["isRunEverything"], false);
++    assert!(meta.get("approvalMode").is_none());
++}
++
+ fn first_tool_call(body: &cursor::CursorDb) -> Option<Vec<u8>> {
+     let root = latest_root_blob(body);
+     len_fields(&root.data, 8)
+diff --git a/tests/regression/codex_structured_output.rs b/tests/regression/codex_structured_output.rs
+new file mode 100644
+index 0000000..0384566
+--- /dev/null
++++ b/tests/regression/codex_structured_output.rs
+@@ -0,0 +1,75 @@
++use serde_json::{Value, json};
++use txcript::common::{Block, ToolOutput};
++use txcript::harness::{claude_code::ClaudeCode, codex::Codex};
++use txcript::{Codec, TextCodec};
++
++#[test]
++fn codex_structured_outputs_survive_claude_conversion() {
++    for kind in ["custom_tool_call_output", "function_call_output"] {
++        for output in [
++            json!([
++                {"type":"input_text","text":"Script completed with exit code 0."},
++                {"type":"input_text","text":"{\"output\":\"/work/repo\\nstatus: codex\"}"}
++            ]),
++            json!({"future_output":{"text":"keep this too"}}),
++            json!("legacy text output"),
++        ] {
++            let call_kind = if kind == "custom_tool_call_output" {
++                "custom_tool_call"
++            } else {
++                "function_call"
++            };
++            let lines = [
++                json!({"type":"session_meta","payload":{"id":"source","cwd":"/work/repo","timestamp":"2026-01-02T03:04:05Z"}}),
++                json!({"type":"response_item","payload":{"type":call_kind,"call_id":"call-real-format","name":"exec_command","input":"pwd","arguments":"{\"cmd\":\"pwd\"}"}}),
++                json!({"type":"response_item","payload":{"type":kind,"call_id":"call-real-format","output":output}}),
++            ];
++            let text = lines
++                .iter()
++                .map(Value::to_string)
++                .collect::<Vec<_>>()
++                .join("\n");
++            let native = Codex::from_text(&text).unwrap();
++            let common = Codex::to_common(&native).unwrap();
++            let results = common
++                .body
++                .iter()
++                .flat_map(|m| &m.content)
++                .filter_map(|b| {
++                    if let Block::ToolResult { content, .. } = b {
++                        Some(content)
++                    } else {
++                        None
++                    }
++                })
++                .collect::<Vec<_>>();
++            let expected = if let Some(s) = output.as_str() {
++                ToolOutput::Text(s.into())
++            } else {
++                ToolOutput::Json(output.clone())
++            };
++            assert_eq!(results, [&expected]);
++            let target = ClaudeCode::from_common(&common).unwrap();
++            let saved = ClaudeCode::to_text(&target).unwrap();
++            let target_lines = saved
++                .lines()
++                .map(|s| serde_json::from_str::<Value>(s).unwrap())
++                .collect::<Vec<_>>();
++            let result = target_lines
++                .iter()
++                .flat_map(|l| l["message"]["content"].as_array().into_iter().flatten())
++                .find(|b| b["type"] == "tool_result")
++                .unwrap();
++            let expected_text = output
++                .as_str()
++                .map_or_else(|| output.to_string(), str::to_owned);
++            assert_eq!(result["content"], expected_text);
++            let roundtrip = Codex::to_text(&native).unwrap();
++            let reloaded = roundtrip
++                .lines()
++                .map(|s| serde_json::from_str::<Value>(s).unwrap())
++                .collect::<Vec<_>>();
++            assert_eq!(reloaded, lines);
++        }
++    }
++}
+diff --git a/tests/regression/main.rs b/tests/regression/main.rs
+index dedc51f..91b192a 100644
+--- a/tests/regression/main.rs
++++ b/tests/regression/main.rs
+@@ -8,6 +8,8 @@
+ 
+ mod claude_tool_result;
+ mod codex_pairing;
++mod codex_structured_output;
++mod opencode_raw_input;
+ 
+ use chrono::{DateTime, Utc};
+ use txcript::common::{Block, Message, Meta, Role, Tool, ToolOutput};
+diff --git a/tests/regression/opencode_raw_input.rs b/tests/regression/opencode_raw_input.rs
+new file mode 100644
+index 0000000..46f4d77
+--- /dev/null
++++ b/tests/regression/opencode_raw_input.rs
+@@ -0,0 +1,94 @@
++use serde_json::json;
++use txcript::common::{Block, Role, Tool, ToolOutput};
++use txcript::harness::opencode::OpenCode;
++use txcript::{Codec, Transcript};
++
++#[test]
++fn codex_custom_tool_strings_are_valid_opencode_inputs_and_round_trip() {
++    let source = Transcript::new(
++        super::meta("custom-tool-source"),
++        vec![super::msg(
++            Role::Assistant,
++            vec![Block::ToolUse {
++                id: "custom-call".into(),
++                tool: Tool::Raw {
++                    tool_name: "functions.exec".into(),
++                    input: json!("text(await tools.exec_command({cmd:'pwd'}));"),
++                },
++            }],
++            0,
++        )],
++    );
++    let target = OpenCode::from_common(&source).unwrap();
++    let part = target.body.messages[0]
++        .parts
++        .iter()
++        .find(|part| part["type"] == "tool")
++        .unwrap();
++    let input = &part["state"]["input"];
++    assert!(input.is_object(), "OpenCode import rejects string inputs");
++    assert_eq!(
++        input["$txcriptRawInput"],
++        json!("text(await tools.exec_command({cmd:'pwd'}));")
++    );
++    let round_trip = OpenCode::to_common(&target).unwrap();
++    assert_eq!(round_trip.body[0].content, source.body[0].content);
++}
++
++#[test]
++fn nonadjacent_parallel_results_and_reused_call_ids_keep_their_outputs() {
++    let call = |id: &str| Block::ToolUse {
++        id: id.into(),
++        tool: Tool::Raw {
++            tool_name: "test".into(),
++            input: json!({}),
++        },
++    };
++    let result = |id: &str, text: &str, is_error: bool| Block::ToolResult {
++        tool_use_id: id.into(),
++        content: ToolOutput::Text(text.into()),
++        is_error,
++    };
++    let source = Transcript::new(
++        super::meta("parallel-tools"),
++        vec![
++            super::msg(Role::Assistant, vec![call("read")], 0),
++            super::msg(Role::Assistant, vec![call("shell")], 1),
++            super::msg(Role::User, vec![result("read", "contents", false)], 2),
++            super::msg(Role::User, vec![result("shell", "failed command", true)], 3),
++            super::msg(Role::Assistant, vec![call("read")], 4),
++            super::msg(Role::User, vec![result("read", "new contents", false)], 5),
++            super::msg(Role::Assistant, vec![call("unfinished")], 6),
++        ],
++    );
++    let target = OpenCode::from_common(&source).unwrap();
++    let states: Vec<_> = target
++        .body
++        .messages
++        .iter()
++        .flat_map(|m| &m.parts)
++        .filter(|p| p["type"] == "tool")
++        .map(|p| &p["state"])
++        .collect();
++    assert_eq!(states[0]["output"], "contents");
++    assert_eq!(states[1]["status"], "error");
++    assert_eq!(states[1]["error"], "failed command");
++    assert_eq!(states[2]["output"], "new contents");
++    assert_eq!(states[3]["status"], "pending");
++    let round = OpenCode::to_common(&target).unwrap();
++    let results: Vec<_> = round
++        .body
++        .iter()
++        .flat_map(|m| &m.content)
++        .filter(|b| matches!(b, Block::ToolResult { .. }))
++        .cloned()
++        .collect();
++    assert_eq!(
++        results,
++        vec![
++            result("read", "contents", false),
++            result("shell", "failed command", true),
++            result("read", "new contents", false)
++        ]
++    );
++}

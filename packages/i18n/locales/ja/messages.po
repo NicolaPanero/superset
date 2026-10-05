@@ -1519,6 +1519,9 @@ msgstr "アカウントへのインストールはファーストパーティの
 msgid "Account is pending deletion."
 msgstr "アカウントは削除待ちです。"
 
+msgid "Account name"
+msgstr "アカウント名"
+
 msgid "Account pending deletion"
 msgstr "アカウントは削除待ちです"
 
@@ -1800,6 +1803,9 @@ msgstr "mainとの比較"
 
 msgid "Agent"
 msgstr "エージェント"
+
+msgid "Agent accounts"
+msgstr "エージェントのアカウント"
 
 msgid "Agent commands"
 msgstr "エージェントコマンド"
@@ -2694,6 +2700,9 @@ msgstr "平均掲載順位 {avgPosition}"
 msgid "Awaiting {0}"
 msgstr "{0}を待機中"
 
+msgid "Awaiting permission"
+msgstr "許可待ち"
+
 msgid "Awaiting Response — {workspaceName}"
 msgstr "返信待ち — {workspaceName}"
 
@@ -3452,6 +3461,9 @@ msgstr "プルリクエストを作成する前に、プルリクエスト画面
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
 
+msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
+msgstr "アカウントを手動で選択します。設定または起動時に別のアカウントを選ばない限り、新しいエージェントはデフォルトのアカウントを使用します。"
+
 msgid "Choose agent"
 msgstr "エージェントを選択"
 
@@ -3580,6 +3592,9 @@ msgstr "CLI"
 
 msgid "CLI & SDK"
 msgstr "CLIとSDK"
+
+msgid "CLI default"
+msgstr "CLIのデフォルト"
 
 msgid "CLI docs"
 msgstr "CLIドキュメント"
@@ -4082,6 +4097,9 @@ msgstr "ランチャーに表示するエージェントと起動方法を設定
 msgid "Configure workspace run command"
 msgstr "ワークスペースの実行コマンドを設定"
 
+msgid "Configured account"
+msgstr "設定されたアカウント"
+
 msgid "Confirm before quitting"
 msgstr "終了前に確認"
 
@@ -4305,6 +4323,9 @@ msgstr "公開または更新されたコンテンツ"
 msgid "Context"
 msgstr "Context"
 
+msgid "Context Handoff"
+msgstr "コンテキストの引き継ぎ"
+
 msgid "Context Menu"
 msgstr "Context Menu"
 
@@ -4343,6 +4364,9 @@ msgstr "GitHubで続行"
 msgid "Continue with Google"
 msgstr "Googleで続行"
 
+msgid "Continue with…"
+msgstr "別のエージェントで続行…"
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "エージェントセッションを継続するには、ワークスペースをピン留めする必要があります"
 
@@ -4378,6 +4402,9 @@ msgstr "ここまでの転換率"
 
 msgid "Converted"
 msgstr "転換"
+
+msgid "Converting…"
+msgstr "変換中…"
 
 msgid "cookies and site data"
 msgstr "Cookieとサイトデータ"
@@ -4630,6 +4657,9 @@ msgstr "キューから抜けられませんでした"
 msgid "Could not list directory"
 msgstr "ディレクトリを一覧表示できませんでした"
 
+msgid "Could not load agent configurations."
+msgstr "エージェント設定を読み込めませんでした。"
+
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
 msgstr "{0}からエージェントを読み込めませんでした"
@@ -4714,6 +4744,9 @@ msgstr "環境を保存できませんでした"
 
 msgid "Could not rename the session"
 msgstr "セッションの名前を変更できませんでした"
+
+msgid "Could not rename this account."
+msgstr "このアカウントの名前を変更できませんでした。"
 
 msgid "Could not rename this page"
 msgstr "このページの名前を変更できませんでした"
@@ -4850,6 +4883,9 @@ msgstr "レビューコメントを読み込めませんでした"
 msgid "Couldn't load runs"
 msgstr "実行履歴を読み込めませんでした"
 
+msgid "Couldn't load session lineage."
+msgstr "セッションの履歴を読み込めませんでした。"
+
 msgid "Couldn't load this run's payload."
 msgstr "この実行のペイロードを読み込めませんでした。"
 
@@ -4893,6 +4929,9 @@ msgstr "ローカルのサインインを削除できませんでした"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "エージェントをターミナルで再度開けませんでした"
+
+msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
+msgstr "このセッションを再度開けませんでした。エージェント設定とネイティブセッションがまだ存在するか確認してください。"
 
 msgid "Couldn't restart terminals"
 msgstr "ターミナルを再起動できませんでした"
@@ -5011,6 +5050,9 @@ msgstr "新しいワークスペースを作成"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "タスクとクラウドワークスペースをまとめるプロジェクトを作成します。"
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "会話履歴を含む再開可能なセッションを作成します。権限と認証情報は移行先エージェントのものを使用します。"
 
 msgid "Create a task for fixing the login bug"
 msgstr "ログインのバグを直すタスクを作って"
@@ -5246,6 +5288,9 @@ msgstr "現在のタブ"
 
 msgid "Cursor"
 msgstr "カーソル"
+
+msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
+msgstr "Cursor Agent、Grok Build、OpenCodeのアカウントは各アプリで管理されます。"
 
 msgid "Cursor blinking"
 msgstr "カーソルの点滅"
@@ -8789,14 +8834,23 @@ msgstr "起動"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "機能開発、バグ修正、リファクタリングにまたがってエージェントを並列に起動できます。どのエージェントが作業中で、どれがブロックされ、どれがあなたの返事を待っているかが一目で分かります。"
 
+msgid "Launch choices are shown when known. The active model can change inside the CLI."
+msgstr "判明している起動時の選択を表示します。使用中のモデルはCLI内で変更される場合があります。"
+
 msgid "Launch mode"
 msgstr "起動モード"
+
+msgid "Launch model"
+msgstr "起動時のモデル"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "新しいワークスペースが作成されたときにこのターミナルスクリプトを起動します。"
 
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "新しいターミナルタブを開くたびにこのターミナルスクリプトを起動します。"
+
+msgid "Launching…"
+msgstr "起動中…"
 
 msgid "Layout"
 msgstr "レイアウト"
@@ -9137,6 +9191,9 @@ msgstr "リポジトリを読み込み中..."
 msgid "Loading review..."
 msgstr "レビューを読み込み中..."
 
+msgid "Loading session lineage…"
+msgstr "セッションの履歴を読み込み中…"
+
 msgid "Loading sessions…"
 msgstr "セッションを読み込み中…"
 
@@ -9154,6 +9211,9 @@ msgstr "読み込み中…"
 
 msgid "Local"
 msgstr "ローカル"
+
+msgid "Local agent accounts"
+msgstr "ローカルのエージェントアカウント"
 
 msgid "Local Device"
 msgstr "ローカルデバイス"
@@ -9324,6 +9384,9 @@ msgstr "組織のブランディングとメンバーを管理します。"
 
 msgid "Managed"
 msgstr "管理対象"
+
+msgid "Managed by the CLI"
+msgstr "CLIが管理"
 
 msgid "Managed by your organization admin."
 msgstr "組織の管理者によって管理されています。"
@@ -9780,6 +9843,21 @@ msgstr "このプロジェクトの新しいブランチに名前空間を付け
 msgid "Naming instructions"
 msgstr "命名指示"
 
+msgid "Native Handoff"
+msgstr "ネイティブセッションの引き継ぎ"
+
+msgid "Native handoff complete"
+msgstr "ネイティブ引き継ぎが完了しました"
+
+msgid "Native handoff failed. You can retry or choose Context Handoff."
+msgstr "ネイティブセッションの引き継ぎに失敗しました。再試行するか、コンテキストの引き継ぎを選択してください。"
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "このエージェントの組み合わせ、またはホストではネイティブセッションの引き継ぎを利用できません。"
+
+msgid "Native handoffs saved locally. Each session can have several children."
+msgstr "ネイティブ引き継ぎはローカルに保存されます。各セッションは複数の子セッションを持てます。"
+
 msgid "Native PR reviews"
 msgstr "ネイティブのPRレビュー"
 
@@ -10078,6 +10156,9 @@ msgstr "アクティブな組織が選択されていません"
 msgid "No active services"
 msgstr "アクティブなサービスはありません"
 
+msgid "No active sessions"
+msgstr "アクティブなセッションなし"
+
 msgid "No active terminal sessions"
 msgstr "アクティブなターミナルセッションはありません"
 
@@ -10345,6 +10426,9 @@ msgstr "ここで利用できるモバイルシミュレーターがありませ
 
 msgid "No name on file"
 msgstr "登録された名前はありません"
+
+msgid "No native handoffs recorded in this workspace yet."
+msgstr "このワークスペースにはまだネイティブ引き継ぎの記録がありません。"
 
 msgid "No open issues found."
 msgstr "オープンなIssueが見つかりません。"
@@ -10713,6 +10797,9 @@ msgstr "このバージョンにはありません"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "まだイベントを受信していません: Microsoft Graphが通知サブスクリプションを拒否しました。アプリの管理者同意と保護されたAPIの承認を確認してから、再接続してください。"
 
+msgid "Not recorded"
+msgstr "未記録"
+
 msgid "Not reviewed by you"
 msgstr "自分がレビューしていない"
 
@@ -11057,6 +11144,9 @@ msgstr "変更を開く"
 msgid "Open Chat v3"
 msgstr "チャットv3を開く"
 
+msgid "Open child"
+msgstr "子セッションを開く"
+
 msgid "Open Command Palette"
 msgstr "コマンドパレットを開く"
 
@@ -11261,6 +11351,9 @@ msgstr "GitHubで開く"
 msgid "Open Page in Default Browser"
 msgstr "ページを既定のブラウザで開く"
 
+msgid "Open parent"
+msgstr "親セッションを開く"
+
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} を開く"
@@ -11311,6 +11404,9 @@ msgstr "リポジトリを開く..."
 
 msgid "Open roles"
 msgstr "募集中のポジション"
+
+msgid "Open session"
+msgstr "セッションを開く"
 
 msgid "Open session in"
 msgstr "セッションを開く場所"
@@ -11413,6 +11509,9 @@ msgstr "ファイルを開く"
 
 msgid "Opening folders"
 msgstr "フォルダーを開く"
+
+msgid "Opening native session…"
+msgstr "ネイティブセッションを開いています…"
 
 msgid "Opening pages"
 msgstr "ページを開く"
@@ -13709,6 +13808,9 @@ msgstr "保存済み"
 msgid "Saved \"{0}\" as an environment"
 msgstr "「{0}」を環境として保存しました"
 
+msgid "Saved on this host. Leave empty to use the original name."
+msgstr "このホストに保存されます。元の名前を使う場合は空欄にしてください。"
+
 msgid "Saved to Downloads"
 msgstr "ダウンロードフォルダに保存しました"
 
@@ -14273,6 +14375,9 @@ msgstr "セッションの詳細"
 
 msgid "Session ended"
 msgstr "セッション終了"
+
+msgid "Session lineage"
+msgstr "セッションの履歴"
 
 msgid "Session name"
 msgstr "セッション名"
@@ -14840,6 +14945,9 @@ msgstr "SOC 2 Type IIレポート"
 msgid "Social"
 msgstr "ソーシャル"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "エージェント固有のメタデータの一部を転送できませんでした。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "一部のファイルは対応していない形式のため追加されませんでした。"
 
@@ -15075,6 +15183,9 @@ msgstr "1日あたりの獲得スター"
 
 msgid "Stars gained per week"
 msgstr "1週間あたりの獲得スター"
+
+msgid "Start"
+msgstr "開始"
 
 msgctxt "project date"
 msgid "Start"
@@ -15650,6 +15761,9 @@ msgstr "同期中..."
 
 msgid "System"
 msgstr "システム"
+
+msgid "System default"
+msgstr "システムのデフォルト"
 
 msgid "System memory"
 msgstr "システムメモリ"

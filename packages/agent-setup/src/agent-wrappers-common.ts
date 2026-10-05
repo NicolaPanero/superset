@@ -155,7 +155,10 @@ export function buildDefaultAccountResolver(
   fi`
 		: `unset ${envVar}
   unset SUPERSET_DEFAULT_${envVar}`;
-	return `if [ -n "$SUPERSET_TERMINAL_ID" ] && [ -n "$SUPERSET_HOME_DIR" ] \\
+	return `if [ "$SUPERSET_PINNED_ACCOUNT_ENV" = "${envVar}" ]; then
+  # An unset Claude profile uses the system login; ~/.claude is not equivalent.
+  [ -n "\${${envVar}}" ] || unset ${envVar}
+elif [ -n "$SUPERSET_TERMINAL_ID" ] && [ -n "$SUPERSET_HOME_DIR" ] \\
   && { [ -z "\${${envVar}}" ] || [ "\${${envVar}}" = "\${SUPERSET_DEFAULT_${envVar}}" ]; } \\
   && [ -f ${pointer} ]; then
   superset_default_account="$(cat ${pointer} 2>/dev/null)"
