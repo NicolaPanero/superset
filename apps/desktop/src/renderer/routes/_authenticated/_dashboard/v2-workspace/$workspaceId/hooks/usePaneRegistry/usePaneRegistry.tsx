@@ -227,9 +227,8 @@ export function usePaneRegistry({
 		[collections.v2WorkspaceLocalState, workspaceId],
 	);
 
-	const { createNewAgentSession, focusAgentTerminal } = useAgentSessionLauncher(
-		{ workspaceId, store },
-	);
+	const { createNewAgentSession, openAgentChat, focusAgentTerminal } =
+		useAgentSessionLauncher({ workspaceId, store });
 
 	return useMemo<PaneRegistry<PaneViewerData>>(
 		() => ({
@@ -466,11 +465,14 @@ export function usePaneRegistry({
 					</div>
 				),
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
-					const { terminalId } = ctx.pane.data as TerminalPaneData;
+					const data = ctx.pane.data as TerminalPaneData;
+					const { terminalId } = data;
 					return (
 						<TerminalPaneHeaderExtras
 							workspaceId={workspaceId}
 							terminalId={terminalId}
+							paneData={data}
+							onOpenAgentChat={openAgentChat}
 							terminalInstanceId={ctx.pane.id}
 							onNewShell={() =>
 								replaceEndedTerminal({
@@ -936,6 +938,7 @@ export function usePaneRegistry({
 			onOpenFile,
 			onRevealPath,
 			createNewAgentSession,
+			openAgentChat,
 			focusAgentTerminal,
 			workspaceTrpcUtils,
 			t,

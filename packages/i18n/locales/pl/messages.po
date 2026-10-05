@@ -9858,6 +9858,9 @@ msgstr "Przekazanie natywne zakończone"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Przekazanie natywne nie powiodło się. Spróbuj ponownie lub wybierz przekazanie kontekstu."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Przekazanie natywne nie powiodło się. Spróbuj ponownie."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Przekazanie natywne nie jest dostępne dla tej pary agentów lub tego hosta."
 
@@ -17722,6 +17725,9 @@ msgstr "Głośność"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Przed przekazaniem poczekaj, aż agent skończy."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Czekaj na konfigurację obszaru roboczego przed uruchomieniem agentów"

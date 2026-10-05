@@ -9858,6 +9858,9 @@ msgstr "Nativní předání dokončeno"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Nativní předání se nezdařilo. Zkuste to znovu nebo zvolte předání kontextu."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Nativní předání se nezdařilo. Zkuste to znovu."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Nativní předání není pro tuto dvojici agentů nebo tento hostitel dostupné."
 
@@ -17722,6 +17725,9 @@ msgstr "Hlasitost"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Před předáním počkejte, až agent dokončí práci."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Před spuštěním agentů počkat na setup pracovního prostoru"

@@ -3,11 +3,16 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { SquarePen } from "lucide-react";
 import { useHotkeyDisplay } from "renderer/hotkeys";
-import type { SubagentPaneData } from "../../../../../../types";
+import type {
+	SubagentPaneData,
+	TerminalPaneData,
+} from "../../../../../../types";
+import type { OpenAgentChat } from "../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import {
 	terminalRichInputOpenStore,
 	useTerminalRichInputOpen,
 } from "../../richInputOpenStore";
+import { AcpChatHandoffMenu } from "./components/AcpChatHandoffMenu";
 import { TerminalAccountUsage } from "./components/TerminalAccountUsage";
 import { TerminalConnectionIndicator } from "./components/TerminalConnectionIndicator";
 import { TerminalIdCopyMenu } from "./components/TerminalIdCopyMenu";
@@ -19,6 +24,8 @@ interface TerminalPaneHeaderExtrasProps {
 	workspaceId: string;
 	terminalId: string;
 	terminalInstanceId: string;
+	paneData?: TerminalPaneData;
+	onOpenAgentChat?: OpenAgentChat;
 	onNewShell: () => Promise<void>;
 	onCreateNewAgentSession: (input: {
 		configId: string;
@@ -40,6 +47,8 @@ export function TerminalPaneHeaderExtras({
 	workspaceId,
 	terminalId,
 	terminalInstanceId,
+	paneData,
+	onOpenAgentChat,
 	onCreateNewAgentSession,
 	onOpenSubagent,
 	onNewShell,
@@ -78,11 +87,19 @@ export function TerminalPaneHeaderExtras({
 				terminalId={terminalId}
 			/>
 			<TerminalIdCopyMenu workspaceId={workspaceId} terminalId={terminalId} />
-			<TerminalSessionHandoffMenu
-				workspaceId={workspaceId}
-				terminalId={terminalId}
-				onCreateNewAgentSession={onCreateNewAgentSession}
-			/>
+			{paneData?.agentSurface === "acp" && onOpenAgentChat ? (
+				<AcpChatHandoffMenu
+					workspaceId={workspaceId}
+					data={paneData}
+					onOpenAgentChat={onOpenAgentChat}
+				/>
+			) : (
+				<TerminalSessionHandoffMenu
+					workspaceId={workspaceId}
+					terminalId={terminalId}
+					onCreateNewAgentSession={onCreateNewAgentSession}
+				/>
+			)}
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<button

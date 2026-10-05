@@ -9858,6 +9858,9 @@ msgstr "Native handoff complete"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Native handoff failed. You can retry or choose Context Handoff."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Native handoff failed. You can retry."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Native handoff is unavailable for this agent pair or host."
 
@@ -17722,6 +17725,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Wait for the agent to finish before handing off."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Wait for workspace setup before starting agents"

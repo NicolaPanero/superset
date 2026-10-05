@@ -9858,6 +9858,9 @@ msgstr "Handoff native selesai"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Transfer sesi asli gagal. Coba lagi atau pilih transfer konteks."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Transfer sesi asli gagal. Coba lagi."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Transfer sesi asli tidak tersedia untuk pasangan agen atau host ini."
 
@@ -17722,6 +17725,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Tunggu hingga agen selesai sebelum mentransfer."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Tunggu setup workspace sebelum menjalankan agen"

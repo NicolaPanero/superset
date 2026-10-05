@@ -9858,6 +9858,9 @@ msgstr "Yerel aktarım tamamlandı"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "Yerel oturum aktarımı başarısız oldu. Yeniden deneyin veya bağlam aktarımını seçin."
 
+msgid "Native handoff failed. You can retry."
+msgstr "Yerel oturum aktarımı başarısız oldu. Yeniden deneyin."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Yerel oturum aktarımı bu ajan çifti veya bu ana makine için kullanılamıyor."
 
@@ -17722,6 +17725,9 @@ msgstr "Ses düzeyi"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "Aktarmadan önce ajanın bitirmesini bekleyin."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Ajanları başlatmadan önce çalışma alanı kurulumunu bekle"

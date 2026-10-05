@@ -9858,6 +9858,9 @@ msgstr "네이티브 인계 완료"
 msgid "Native handoff failed. You can retry or choose Context Handoff."
 msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하거나 컨텍스트 전달을 선택하세요."
 
+msgid "Native handoff failed. You can retry."
+msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하세요."
+
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "이 에이전트 조합 또는 호스트에서는 네이티브 세션 전달을 사용할 수 없습니다."
 
@@ -17722,6 +17725,9 @@ msgstr "볼륨"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent to finish before handing off."
+msgstr "전달하기 전에 에이전트가 끝날 때까지 기다리세요."
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "에이전트를 시작하기 전에 워크스페이스 설정 기다리기"
