@@ -40,6 +40,8 @@ export type CreateNewAgentSession = (
 export type OpenAgentChat = (
 	input: Omit<CreateNewAgentSessionInput, "forkSessionId" | "prompt"> & {
 		prompt?: string;
+		resumeSessionId?: string;
+		terminalId?: string;
 	},
 ) => Promise<{ terminalId: string } | null>;
 
@@ -68,7 +70,9 @@ export function useAgentSessionLauncher({
 
 	const openAgentChat = useCallback<OpenAgentChat>(
 		async (input) => {
-			if (!(await awaitAcpChatEnabled())) return null;
+			// A handoff out of an open chat continues it, so the flag that gates
+			// new chats does not apply.
+			if (!input.resumeSessionId && !(await awaitAcpChatEnabled())) return null;
 			const configs = await queryClient
 				.ensureQueryData(v2AgentConfigsQueryOptions(hostUrl))
 				.catch(() => agentConfigs ?? []);
@@ -90,7 +94,7 @@ export function useAgentSessionLauncher({
 				return null;
 			}
 			const state = store.getState();
-			const terminalId = crypto.randomUUID();
+			const terminalId = input.terminalId ?? crypto.randomUUID();
 			const label = config?.label;
 			const pane = {
 				kind: "terminal" as const,
@@ -100,12 +104,16 @@ export function useAgentSessionLauncher({
 					agentSurface: "acp",
 					acpAgentConfigId: launch.agentConfigId,
 					acpAccountSelection: launch.accountSelection,
-					agent: { id: presetId },
+					agent: input.resumeSessionId
+						? { id: presetId, sessionId: input.resumeSessionId }
+						: { id: presetId },
 					...(input.prompt ? { pendingPrompt: input.prompt } : {}),
 					...(input.attachments?.length
 						? { pendingAttachments: input.attachments }
 						: {}),
-					...(input.modelId ? { chatModelId: input.modelId } : {}),
+					...((input.modelId ?? launch.defaultModelId)
+						? { chatModelId: input.modelId ?? launch.defaultModelId }
+						: {}),
 					...(input.modeId ? { chatModeId: input.modeId } : {}),
 				} as TerminalPaneData,
 			};

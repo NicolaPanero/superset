@@ -26,6 +26,7 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { ACP_HARNESSES } from "../../../chat-v3/acpCatalogue";
+import { acpDefaultModel } from "../../../chat-v3/acpDefaultModel";
 import { acpHarnessFactory } from "../../../chat-v3/acpHarnesses";
 import { resolveAgentCli } from "../../../chat-v3/agentCli";
 import { buildChatAgentEnv } from "../../../chat-v3/agentEnv";
@@ -916,7 +917,12 @@ export const agentsRouter = router({
 				upgrade: entry.upgrade,
 				env: async () => env,
 			});
-			return { agentConfigId: config.id, accountSelection, harness };
+			return {
+				agentConfigId: config.id,
+				accountSelection,
+				harness,
+				defaultModelId: await acpDefaultModel(config.presetId),
+			};
 		}),
 	accountOptions: protectedProcedure
 		.input(z.object({ agent: z.string().min(1) }))
