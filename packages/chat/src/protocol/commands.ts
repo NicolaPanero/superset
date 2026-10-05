@@ -14,6 +14,9 @@ export const createSessionInputSchema = z.object({
 	modeId: z.string().optional(),
 	modelId: z.string().optional(),
 	resume: z.object({ harnessSessionId: z.string().min(1) }).optional(),
+	agentConfigId: z.string().min(1).optional(),
+	accountSelection: z.string().min(1).nullable().optional(),
+	strictResume: z.boolean().optional(),
 });
 export type CreateSessionInput = z.infer<typeof createSessionInputSchema>;
 

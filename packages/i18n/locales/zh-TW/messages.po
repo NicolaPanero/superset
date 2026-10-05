@@ -1534,6 +1534,15 @@ msgstr "成就"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP 聊天"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP 聊天無法使用"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP 聊天無法使用。正在開啟終端機。"
+
 msgid "Acquisition"
 msgstr "獲客"
 
@@ -4993,9 +5002,6 @@ msgstr "無法在此頁面啟動設計模式"
 
 msgid "Couldn't start workspace"
 msgstr "無法啟動工作區"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "無法停止該代理的終端機"
 
 msgid "Couldn't stop the chat"
 msgstr "無法停止聊天"
@@ -11345,6 +11351,9 @@ msgstr "開啟選單"
 msgid "Open navigation"
 msgstr "開啟導覽"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "在共用聊天介面中開啟新建的受支援代理。現有工作階段維持目前檢視。終端機仍可使用。"
+
 msgid "Open on GitHub"
 msgstr "在GitHub上開啟"
 
@@ -14269,6 +14278,9 @@ msgstr "選擇終端指令碼目錄"
 msgid "Select worktree location"
 msgstr "選擇worktree位置"
 
+msgid "Selected account"
+msgstr "所選帳戶"
+
 msgid "Selected agent is not available on this host"
 msgstr "所選代理程式在此主機上不可用"
 
@@ -16042,9 +16054,6 @@ msgstr "該 {plugin} 登入連結已過期。請重新連線。"
 msgid "That account is no longer connected — choose another."
 msgstr "該帳號已中斷連線，請選擇其他帳號。"
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "該代理工作階段還沒有可開啟的對話——它已啟動但從未收到指令。"
-
 msgid "That endpoint could not be resolved."
 msgstr "無法解析該端點。"
 
@@ -16074,6 +16083,9 @@ msgstr "無法存取該地址"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "代理複製該對話，分支在此開啟"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "代理無法開啟此對話。你可以重試或開始新聊天。"
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "代理程式從工單一路負責到差異。人類審查結果，而不是擊鍵過程。注意力從寫程式碼轉向定義工作和判斷成果。一名工程師在隔離工作區裡同時跑好幾個代理程式。"

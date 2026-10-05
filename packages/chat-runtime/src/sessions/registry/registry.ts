@@ -11,6 +11,9 @@ export type HarnessFactoryOptions = {
 	modeId?: string;
 	modelId?: string;
 	resume?: { harnessSessionId: string };
+	agentConfigId?: string;
+	accountSelection?: string | null;
+	strictResume?: boolean;
 };
 
 export type HarnessFactory = (options: HarnessFactoryOptions) => HarnessAdapter;
@@ -58,6 +61,7 @@ export class LiveSessionRegistry {
 				modeId: options.modeId,
 				modelId: options.modelId,
 				resume: options.resume,
+				strictResume: options.strictResume,
 			});
 		} catch (error) {
 			this.live.delete(options.sessionId);

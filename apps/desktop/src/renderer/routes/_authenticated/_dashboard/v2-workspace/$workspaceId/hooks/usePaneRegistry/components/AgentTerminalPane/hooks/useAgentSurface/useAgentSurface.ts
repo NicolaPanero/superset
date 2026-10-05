@@ -12,15 +12,6 @@ export type ResolvedAgentSurface = {
 	switchable: boolean;
 };
 
-/**
- * Which surface an agent terminal shows.
- *
- * Derived rather than stamped at creation: a terminal becomes an agent
- * terminal when the agent reports its binding, and several paths create one
- * (the launcher, presets, hotkeys, the session dropdown). Deciding here means
- * every one of them opens on the chat, and a pane the user has toggled keeps
- * the choice they made.
- */
 export function useAgentSurface(
 	workspaceId: string,
 	data: TerminalPaneData,
@@ -31,19 +22,22 @@ export function useAgentSurface(
 
 	const agent =
 		harness && binding?.agentId && binding.agentSessionId && !binding.endedAt
-			? { id: binding.agentId, sessionId: binding.agentSessionId }
-			: undefined;
+			? {
+					id: binding.agentId,
+					sessionId: binding.agentSessionId,
+					terminalId: data.terminalId,
+				}
+			: data.agent
+				? { id: data.agent.id, sessionId: data.agent.sessionId }
+				: undefined;
 
 	// The pane remembers an agent it has already opened as a chat, so the
 	// surface survives the binding going away with the pty.
-	const chatCapable = Boolean(acpChat === "enabled" && (agent || data.agent));
-	// A stored "acp" outlives the flag it was chosen under, so the flag is read
-	// first: turning it off has to return every pane to its terminal, not just
-	// hide the toggle on a pane that keeps running the chat.
-	const surface: AgentSurface =
-		acpChat === "disabled"
-			? "cli"
-			: (data.agentSurface ?? (chatCapable ? "acp" : "cli"));
+	const chatCapable = Boolean(
+		(acpChat === "enabled" || data.agentSurface === "acp") &&
+			(agent || data.agent),
+	);
+	const surface: AgentSurface = data.agentSurface ?? "cli";
 
 	return { surface, agent, switchable: chatCapable };
 }

@@ -1534,6 +1534,15 @@ msgstr "実績"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACPチャット"
+
+msgid "ACP chat is unavailable"
+msgstr "ACPチャットは利用できません"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACPチャットは利用できません。ターミナルを開きます。"
+
 msgid "Acquisition"
 msgstr "獲得"
 
@@ -4993,9 +5002,6 @@ msgstr "このページでデザインモードを開始できませんでした
 
 msgid "Couldn't start workspace"
 msgstr "ワークスペースを開始できませんでした"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "エージェントのターミナルを停止できませんでした"
 
 msgid "Couldn't stop the chat"
 msgstr "チャットを停止できませんでした"
@@ -11345,6 +11351,9 @@ msgstr "メニューを開く"
 msgid "Open navigation"
 msgstr "ナビゲーションを開く"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "対応する新しいエージェントを共通のチャット画面で開きます。既存のセッションは現在の表示を維持します。ターミナルも引き続き利用できます。"
+
 msgid "Open on GitHub"
 msgstr "GitHubで開く"
 
@@ -14269,6 +14278,9 @@ msgstr "ターミナルスクリプトのディレクトリを選択"
 msgid "Select worktree location"
 msgstr "ワークツリーの場所を選択"
 
+msgid "Selected account"
+msgstr "選択したアカウント"
+
 msgid "Selected agent is not available on this host"
 msgstr "選択したエージェントはこのホストで利用できません"
 
@@ -16042,9 +16054,6 @@ msgstr "{plugin} のサインインリンクの有効期限が切れました。
 msgid "That account is no longer connected — choose another."
 msgstr "このアカウントは接続されていません。別のアカウントを選択してください。"
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "このエージェントセッションにはまだ開ける会話がありません。開始されましたが、一度も指示を受けていません。"
-
 msgid "That endpoint could not be resolved."
 msgstr "そのエンドポイントを解決できませんでした。"
 
@@ -16074,6 +16083,9 @@ msgstr "アドレスに到達できません"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "エージェントが会話を複製し、分岐はここで開きます"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "エージェントはこの会話を開けませんでした。再試行するか、新しいチャットを開始できます。"
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "エージェントがチケットから差分までタスクを引き受けます。人間はキー入力ではなく結果をレビューします。関心はコードを書くことから、作業を仕様化し判断することへ移ります。エンジニア1人が独立したワークスペースで複数のエージェントを同時に動かします。"

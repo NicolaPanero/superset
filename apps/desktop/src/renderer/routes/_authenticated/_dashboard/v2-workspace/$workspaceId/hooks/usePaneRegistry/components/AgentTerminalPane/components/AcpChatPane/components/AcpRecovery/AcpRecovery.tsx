@@ -13,11 +13,13 @@ import { Button } from "@superset/ui/button";
 export function AcpRecovery({
 	detail,
 	onStartNew,
+	onRetry,
 	reason,
 }: {
 	reason: "no-transcript" | "stopped";
 	detail?: string | undefined;
 	onStartNew: () => void;
+	onRetry?: () => void;
 }) {
 	return (
 		// w-full because the pane lays its children out in a row: without it this
@@ -26,8 +28,8 @@ export function AcpRecovery({
 			<p className="max-w-sm text-muted-foreground text-sm">
 				{reason === "no-transcript" ? (
 					<Trans>
-						That agent session has no conversation to open yet — it was started
-						but never prompted.
+						The agent could not open this conversation. You can retry or start a
+						new chat.
 					</Trans>
 				) : (
 					<Trans>This chat's agent has stopped and can't be resumed.</Trans>
@@ -37,6 +39,11 @@ export function AcpRecovery({
 				<p className="max-w-lg font-mono text-[11px] text-muted-foreground/60">
 					{detail}
 				</p>
+			)}
+			{onRetry && (
+				<Button onClick={onRetry} size="sm" variant="outline">
+					<Trans>Retry</Trans>
+				</Button>
 			)}
 			<Button onClick={onStartNew} size="sm" variant="secondary">
 				<Trans>Start a new chat</Trans>

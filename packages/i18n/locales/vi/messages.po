@@ -1534,6 +1534,15 @@ msgstr "Thành tích"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "Chat ACP"
+
+msgid "ACP chat is unavailable"
+msgstr "Chat ACP không khả dụng"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "Chat ACP không khả dụng. Đang mở cửa sổ dòng lệnh."
+
 msgid "Acquisition"
 msgstr "Thu hút"
 
@@ -4993,9 +5002,6 @@ msgstr "Không thể bật chế độ thiết kế trên trang này"
 
 msgid "Couldn't start workspace"
 msgstr "Không khởi động được workspace"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Không thể dừng terminal của tác nhân"
 
 msgid "Couldn't stop the chat"
 msgstr "Không thể dừng trò chuyện"
@@ -11345,6 +11351,9 @@ msgstr "Mở menu"
 msgid "Open navigation"
 msgstr "Mở điều hướng"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Mở tác nhân mới được hỗ trợ trong giao diện chat chung. Các phiên hiện có giữ nguyên chế độ xem. Cửa sổ dòng lệnh vẫn khả dụng."
+
 msgid "Open on GitHub"
 msgstr "Mở trên GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Chọn thư mục cho script terminal"
 msgid "Select worktree location"
 msgstr "Chọn vị trí worktree"
 
+msgid "Selected account"
+msgstr "Tài khoản đã chọn"
+
 msgid "Selected agent is not available on this host"
 msgstr "Agent đã chọn không khả dụng trên host này"
 
@@ -16042,9 +16054,6 @@ msgstr "Liên kết đăng nhập {plugin} đó đã hết hạn. Hãy thử k�
 msgid "That account is no longer connected — choose another."
 msgstr "Tài khoản đó không còn được kết nối — hãy chọn tài khoản khác."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Phiên tác nhân đó chưa có cuộc trò chuyện nào để mở — nó đã khởi động nhưng chưa từng nhận yêu cầu."
-
 msgid "That endpoint could not be resolved."
 msgstr "Không thể phân giải endpoint đó."
 
@@ -16074,6 +16083,9 @@ msgstr "Không tới được địa chỉ này"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Tác nhân sao chép hội thoại; nhánh mở tại đây"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "Tác nhân không thể mở cuộc trò chuyện này. Bạn có thể thử lại hoặc bắt đầu chat mới."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent làm chủ một tác vụ từ ticket đến diff. Con người review kết quả, không phải từng thao tác gõ. Sự chú ý dịch từ viết code sang đặc tả công việc và đánh giá nó. Một kỹ sư chạy nhiều agent cùng lúc trong các workspace tách biệt."

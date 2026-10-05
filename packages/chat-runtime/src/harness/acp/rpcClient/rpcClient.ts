@@ -42,6 +42,8 @@ export function spawnAcpTransport(
 	});
 	child.stderr.setEncoding("utf8");
 	child.stderr.on("data", (chunk: string) => handlers.onStderr(chunk));
+	child.on("error", () => handlers.onExit(1, null));
+	child.stdin.on("error", () => undefined);
 	child.on("exit", (code, signal) => handlers.onExit(code, signal));
 
 	let exited = false;
@@ -122,13 +124,37 @@ export class AcpRpcClient {
 		});
 	}
 
-	request(method: string, params?: unknown): Promise<unknown> {
+	request(
+		method: string,
+		params?: unknown,
+		timeoutMs?: number,
+	): Promise<unknown> {
 		if (this.closed) {
 			return Promise.reject(new Error(`${method}: acp agent closed`));
 		}
 		const id = this.nextId++;
 		return new Promise((resolve, reject) => {
-			this.pending.set(id, { method, resolve, reject });
+			let timer: ReturnType<typeof setTimeout> | undefined;
+			this.pending.set(id, {
+				method,
+				resolve: (result) => {
+					clearTimeout(timer);
+					resolve(result);
+				},
+				reject: (error) => {
+					clearTimeout(timer);
+					reject(error);
+				},
+			});
+			if (timeoutMs !== undefined)
+				timer = setTimeout(() => {
+					this.pending.delete(id);
+					reject(
+						new Error(
+							`${method}: agent did not respond within ${timeoutMs} ms`,
+						),
+					);
+				}, timeoutMs);
 			this.write({ jsonrpc: "2.0", id, method, params: params ?? {} });
 		});
 	}

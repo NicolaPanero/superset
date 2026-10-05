@@ -1534,6 +1534,15 @@ msgstr "Prestaties"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP-chat"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP-chat is niet beschikbaar"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP-chat is niet beschikbaar. De terminal wordt geopend."
+
 msgid "Acquisition"
 msgstr "Acquisitie"
 
@@ -4993,9 +5002,6 @@ msgstr "Kan de designmodus niet starten op deze pagina"
 
 msgid "Couldn't start workspace"
 msgstr "Kan werkruimte niet starten"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Kon de terminal van de agent niet stoppen"
 
 msgid "Couldn't stop the chat"
 msgstr "Kon de chat niet stoppen"
@@ -11345,6 +11351,9 @@ msgstr "Menu openen"
 msgid "Open navigation"
 msgstr "Navigatie openen"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Open nieuwe ondersteunde agents in een gedeelde chatinterface. Bestaande sessies behouden hun huidige weergave. De terminal blijft beschikbaar."
+
 msgid "Open on GitHub"
 msgstr "Openen op GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Map voor terminalscript kiezen"
 msgid "Select worktree location"
 msgstr "Locatie voor worktree kiezen"
 
+msgid "Selected account"
+msgstr "Geselecteerd account"
+
 msgid "Selected agent is not available on this host"
 msgstr "De gekozen agent is niet beschikbaar op deze host"
 
@@ -16042,9 +16054,6 @@ msgstr "Die aanmeldlink voor {plugin} is verlopen. Probeer opnieuw verbinding te
 msgid "That account is no longer connected — choose another."
 msgstr "Dit account is niet meer verbonden — kies een ander."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Die agentsessie heeft nog geen gesprek om te openen — hij is gestart maar nooit aangestuurd."
-
 msgid "That endpoint could not be resolved."
 msgstr "Dat endpoint kon niet worden omgezet."
 
@@ -16074,6 +16083,9 @@ msgstr "Het adres is onbereikbaar"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "De agent kopieert het gesprek; de aftakking opent hier"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "De agent kon dit gesprek niet openen. Je kunt het opnieuw proberen of een nieuwe chat starten."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "De agent bezit een taak van ticket tot diff. De mens reviewt het resultaat, niet de toetsaanslagen. De aandacht verschuift van code schrijven naar werk specificeren en beoordelen. Eén engineer laat meerdere agents tegelijk draaien in geïsoleerde werkruimtes."

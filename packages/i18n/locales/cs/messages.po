@@ -1534,6 +1534,15 @@ msgstr "Úspěchy"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "Chat ACP"
+
+msgid "ACP chat is unavailable"
+msgstr "Chat ACP není dostupný"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "Chat ACP není dostupný. Otevírá se terminál."
+
 msgid "Acquisition"
 msgstr "Akvizice"
 
@@ -4993,9 +5002,6 @@ msgstr "Na této stránce se nepodařilo spustit režim designu"
 
 msgid "Couldn't start workspace"
 msgstr "Pracovní prostor se nepodařilo spustit"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Terminál agenta se nepodařilo zastavit"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat se nepodařilo zastavit"
@@ -11345,6 +11351,9 @@ msgstr "Otevřít nabídku"
 msgid "Open navigation"
 msgstr "Otevřít navigaci"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Otevírejte nové podporované agenty ve společném rozhraní chatu. Stávající relace si zachovají aktuální zobrazení. Terminál zůstane dostupný."
+
 msgid "Open on GitHub"
 msgstr "Otevřít na GitHubu"
 
@@ -14269,6 +14278,9 @@ msgstr "Vyberte adresář terminálového skriptu"
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
 
+msgid "Selected account"
+msgstr "Vybraný účet"
+
 msgid "Selected agent is not available on this host"
 msgstr "Vybraný agent není na tomto hostu dostupný"
 
@@ -16042,9 +16054,6 @@ msgstr "Odkaz pro přihlášení k {plugin} vypršel. Zkuste se připojit znovu.
 msgid "That account is no longer connected — choose another."
 msgstr "Tento účet už není připojený — vyberte jiný."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Tato agentní relace zatím nemá konverzaci k otevření — byla spuštěna, ale nikdy nedostala zadání."
-
 msgid "That endpoint could not be resolved."
 msgstr "Tento koncový bod se nepodařilo přeložit."
 
@@ -16074,6 +16083,9 @@ msgstr "Adresa je nedostupná"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Agent zkopíruje konverzaci; větev se otevře zde"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "Agent nemohl otevřít tuto konverzaci. Můžete to zkusit znovu nebo zahájit nový chat."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent vlastní úkol od ticketu po diff. Člověk reviduje výsledek, ne úhozy. Pozornost se přesouvá od psaní kódu k zadávání práce a jejímu posuzování. Jeden inženýr běží několik agentů naráz v izolovaných pracovních prostorech."

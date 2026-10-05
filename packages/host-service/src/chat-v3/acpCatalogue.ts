@@ -7,6 +7,7 @@ export type AcpHarness = {
 	binary: string;
 	args: string[];
 	minVersion: string;
+	authMethodId?: string;
 	upgrade?: string;
 	note: string;
 } & AcpTranslator;
@@ -28,11 +29,11 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		registryId: "codex-acp",
 		binary: "codex",
 		args: [],
-		minVersion: "0.160.0",
+		minVersion: "0.159.0",
 		adapter: "@agentclientprotocol/codex-acp",
 		executableEnv: "CODEX_PATH",
 		upgrade: "npm i -g @openai/codex@latest",
-		note: "Conservative: the adapter drives `codex app-server`, and the release that introduced it is not pinned. The native codex adapter's MIN_CODEX_VERSION is 0.143.0, so this floor is probably lowerable once app-server is verified against an older build.",
+		note: "0.159.0 verified against adapter 2.1.0; the adapter drives the installed Codex app-server.",
 	},
 	"gemini-acp": {
 		registryId: "gemini",
@@ -49,6 +50,21 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		minVersion: "1.15.5",
 		upgrade: "npm i -g opencode-ai@latest",
 		note: "1.15.5 verified: initialize reports OpenCode 1.15.5 and session/new returns a session with model options.",
+	},
+	"cursor-acp": {
+		registryId: "cursor",
+		authMethodId: "cursor_login",
+		binary: "cursor-agent",
+		args: ["acp"],
+		minVersion: UNGATED_VERSION,
+		note: "Cursor uses calendar versions. Availability is verified by initialize when the chat starts.",
+	},
+	"grok-acp": {
+		registryId: "grok",
+		binary: "grok",
+		args: ["agent", "stdio"],
+		minVersion: UNGATED_VERSION,
+		note: "Native ACP availability is verified by initialize when the chat starts.",
 	},
 	"pi-acp": {
 		registryId: "pi-acp",

@@ -1534,6 +1534,15 @@ msgstr "成就"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP 聊天"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP 聊天不可用"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP 聊天不可用。正在打开终端。"
+
 msgid "Acquisition"
 msgstr "获客"
 
@@ -4993,9 +5002,6 @@ msgstr "无法在此页面启动设计模式"
 
 msgid "Couldn't start workspace"
 msgstr "无法启动工作区"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "无法停止该智能体的终端"
 
 msgid "Couldn't stop the chat"
 msgstr "无法停止聊天"
@@ -11345,6 +11351,9 @@ msgstr "打开菜单"
 msgid "Open navigation"
 msgstr "打开导航"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "在统一聊天界面中打开新建的受支持智能体。现有会话保持当前视图。终端仍然可用。"
+
 msgid "Open on GitHub"
 msgstr "在GitHub上打开"
 
@@ -14269,6 +14278,9 @@ msgstr "选择终端脚本目录"
 msgid "Select worktree location"
 msgstr "选择worktree位置"
 
+msgid "Selected account"
+msgstr "所选账户"
+
 msgid "Selected agent is not available on this host"
 msgstr "所选智能体在此主机上不可用"
 
@@ -16042,9 +16054,6 @@ msgstr "该 {plugin} 登录链接已过期。请重新连接。"
 msgid "That account is no longer connected — choose another."
 msgstr "该账号已断开连接，请选择其他账号。"
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "该智能体会话还没有可打开的对话——它已启动但从未收到指令。"
-
 msgid "That endpoint could not be resolved."
 msgstr "无法解析该端点。"
 
@@ -16074,6 +16083,9 @@ msgstr "无法访问该地址"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "智能体复制该对话，分支在此打开"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "智能体无法打开此对话。你可以重试或开始新聊天。"
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "智能体从工单一路负责到差异。人类审查结果，而不是击键过程。注意力从写代码转向定义工作和判断成果。一名工程师在隔离工作区里同时跑好几个智能体。"

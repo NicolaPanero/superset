@@ -78,6 +78,10 @@ export class ChatJournal {
 				.run();
 			writeSessionProjection(this.db, sessionId, {
 				status: next.status,
+				...(parsed.type === "session" &&
+				parsed.session.harnessSessionId !== undefined
+					? { harnessSessionId: parsed.session.harnessSessionId }
+					: {}),
 				title: next.title,
 				queuedCount: next.queuedItemIds.size,
 				updatedAt: ts,

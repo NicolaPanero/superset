@@ -18,6 +18,7 @@ import type {
 	HarnessAdapter,
 	HarnessStartOptions,
 } from "../types";
+import { cursorApproval } from "./cursorExtensions";
 import type {
 	AcpNotification,
 	AcpServerRequest,
@@ -135,6 +136,8 @@ export type AcpAttachment = {
 };
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
+	authMethodId?: string;
+	startupTimeoutMs?: number;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	resolveAttachment?: (attachmentId: string) => Promise<AcpAttachment | null>;
 	now?: () => number;
@@ -159,6 +162,7 @@ type PendingApproval = {
 	requestId: number | string;
 	turnId: string;
 	item: ApprovalRequest;
+	respond?: (decision: Decision) => unknown;
 };
 
 /**
@@ -226,11 +230,11 @@ export class AcpAdapter implements HarnessAdapter {
 	respondToApproval(approvalId: string, decision: Decision): void {
 		const pending = this.pendingApprovals.get(approvalId);
 		if (!pending || !this.client) return;
+		const response = pending.respond
+			? pending.respond(decision)
+			: this.approvalOutcome(pending, decision);
 		this.pendingApprovals.delete(approvalId);
-		this.client.respond(
-			pending.requestId,
-			this.approvalOutcome(pending, decision),
-		);
+		this.client.respond(pending.requestId, response);
 		this.emitItem(
 			{
 				...pending.item,
@@ -353,12 +357,15 @@ export class AcpAdapter implements HarnessAdapter {
 			});
 			this.client = client;
 
-			const initialized = await client.request("initialize", {
+			const startupRequest = (method: string, params: unknown) =>
+				client.request(method, params, this.options.startupTimeoutMs ?? 120000);
+			const initialized = await startupRequest("initialize", {
 				protocolVersion: LATEST_PROTOCOL_VERSION,
 				// v2 requires `info` and renamed `clientCapabilities` to
 				// `capabilities`, so both names go out and one request serves either
 				// side of the bump.
 				info: CLIENT_INFO,
+				clientInfo: CLIENT_INFO,
 				// Nothing to advertise either way: v2 moved fs and terminal out of
 				// client capabilities entirely, and receiving `subagent_update` is a
 				// baseline v2 requirement rather than a capability.
@@ -381,16 +388,21 @@ export class AcpAdapter implements HarnessAdapter {
 					{};
 			}
 
+			if (this.options.authMethodId)
+				await startupRequest("authenticate", {
+					methodId: this.options.authMethodId,
+				});
 			let response: unknown;
 			if (startOptions.resume) {
 				this.replaying = true;
 				try {
-					response = await client.request("session/load", {
+					response = await startupRequest("session/load", {
 						sessionId: startOptions.resume.harnessSessionId,
 						cwd: startOptions.cwd,
 						mcpServers: [],
 					});
 				} catch (loadError) {
+					if (startOptions.strictResume) throw loadError;
 					// An agent that was started but never prompted has a session id and
 					// no transcript behind it, so loading one answers "not found".
 					// There is no conversation to lose in that case, and none to
@@ -402,7 +414,7 @@ export class AcpAdapter implements HarnessAdapter {
 						"No earlier conversation to open, so this is a new one.",
 					);
 					console.warn("[acp] session/load failed", loadError);
-					response = await client.request("session/new", {
+					response = await startupRequest("session/new", {
 						cwd: startOptions.cwd,
 						mcpServers: [],
 					});
@@ -413,7 +425,7 @@ export class AcpAdapter implements HarnessAdapter {
 					this.flushOpenText();
 				}
 			} else {
-				response = await client.request("session/new", {
+				response = await startupRequest("session/new", {
 					cwd: startOptions.cwd,
 					mcpServers: [],
 				});
@@ -425,6 +437,12 @@ export class AcpAdapter implements HarnessAdapter {
 				? parsed.data.sessionId
 				: (startOptions.resume?.harnessSessionId ?? null);
 
+			if (
+				startOptions.strictResume &&
+				startOptions.resume &&
+				this.sessionId !== startOptions.resume.harnessSessionId
+			)
+				throw new Error("session/load returned a different conversation");
 			if (!this.sessionId) {
 				this.emitNotice("error", "acp agent returned no session id");
 				this.emitSession({ status: "dead" });
@@ -455,6 +473,7 @@ export class AcpAdapter implements HarnessAdapter {
 		} catch (error) {
 			this.emitNotice("error", this.authAwareMessage(error));
 			this.emitSession({ status: "dead" });
+			await this.client?.close();
 			this.queue.close();
 		}
 	}
@@ -959,6 +978,37 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private handleServerRequest(request: AcpServerRequest): void {
+		if (
+			request.method === "cursor/ask_question" ||
+			request.method === "cursor/create_plan"
+		) {
+			try {
+				const extension = cursorApproval(request.method, request.params);
+				if (!extension) return;
+				const turnId = this.resolveTurnId();
+				const id = `approval:${request.id}:${this.mintId()}`;
+				const item: ApprovalRequest = {
+					...extension.item,
+					id,
+					startedAtMs: this.nextStartMs(),
+				};
+				this.pendingApprovals.set(id, {
+					requestId: request.id,
+					turnId,
+					item,
+					respond: extension.respond,
+				});
+				this.emitItem(item, turnId);
+				this.emitSession({ status: "awaiting_input" });
+			} catch {
+				this.client?.respondWithError(
+					request.id,
+					-32602,
+					"invalid Cursor request",
+				);
+			}
+			return;
+		}
 		if (request.method !== "session/request_permission") {
 			this.client?.respondWithError(
 				request.id,

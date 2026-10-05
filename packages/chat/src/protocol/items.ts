@@ -54,7 +54,18 @@ export const decisionSchema = z.discriminatedUnion("type", [
 	z.looseObject({ type: z.literal("accept_for_session") }),
 	z.looseObject({ type: z.literal("decline") }),
 	z.looseObject({ type: z.literal("cancel") }),
-	z.looseObject({ type: z.literal("option"), optionId: z.string().min(1) }),
+	z.looseObject({
+		type: z.literal("option"),
+		optionId: z.string().min(1),
+		answers: z
+			.array(
+				z.object({
+					questionId: z.string().min(1),
+					selectedOptionIds: z.array(z.string().min(1)),
+				}),
+			)
+			.optional(),
+	}),
 ]);
 export type Decision = z.infer<typeof decisionSchema>;
 
@@ -142,6 +153,16 @@ export const approvalRequestSchema = z.looseObject({
 	detail: z.array(toolContentSchema).optional(),
 	options: z
 		.array(z.looseObject({ optionId: z.string().min(1), label: z.string() }))
+		.optional(),
+	questions: z
+		.array(
+			z.object({
+				id: z.string(),
+				prompt: z.string(),
+				options: z.array(z.object({ id: z.string(), label: z.string() })),
+				allowMultiple: z.boolean().optional(),
+			}),
+		)
 		.optional(),
 	status: z.enum(["pending", "answered", "stale"]),
 	decision: decisionSchema.optional(),
