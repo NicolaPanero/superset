@@ -432,6 +432,7 @@ function V2WorkspaceContent() {
 							renderTabBarTrailing={() => (
 								<div className="flex items-center gap-1">
 									<WorkspaceAgentOverview
+										store={store}
 										key={workspaceId}
 										workspaceId={workspaceId}
 										workspaceName={workspace.name}

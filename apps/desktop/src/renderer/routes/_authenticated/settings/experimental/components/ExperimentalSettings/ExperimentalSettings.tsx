@@ -13,6 +13,7 @@ import {
 	useInlineWorkspacePortsStore,
 	usePortsDisplayMode,
 } from "renderer/stores/inline-workspace-ports";
+import { useSettings } from "renderer/stores/settings";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import { useOpenV1ImportModal } from "renderer/stores/v1-import-modal";
 import { useV2LocalOverrideStore } from "renderer/stores/v2-local-override";
@@ -35,6 +36,8 @@ export function ExperimentalSettings({
 	visibleItems,
 }: ExperimentalSettingsProps) {
 	const { t } = useLingui();
+	const acpChatEnabled = useSettings((state) => state.acpChatEnabled === true);
+	const updateSettings = useSettings((state) => state.update);
 	const searchQuery = useSettingsSearchQuery();
 	const showSupersetV2 = isItemVisible(
 		SETTING_ITEM_ID.EXPERIMENTAL_SUPERSET_V2,
@@ -82,6 +85,29 @@ export function ExperimentalSettings({
 			</div>
 
 			<div className="space-y-6">
+				{isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT, visibleItems) && (
+					<div className="flex items-center justify-between gap-6">
+						<div className="min-w-0 flex-1 space-y-0.5">
+							<Label htmlFor="local-acp-chat" className="text-sm font-medium">
+								<Trans>ACP chat</Trans>
+							</Label>
+							<p className="text-xs text-muted-foreground">
+								<Trans>
+									Open new supported agents in a shared chat interface. Existing
+									sessions keep their current view. The terminal remains
+									available.
+								</Trans>
+							</p>
+						</div>
+						<Switch
+							id="local-acp-chat"
+							checked={acpChatEnabled}
+							onCheckedChange={(enabled) =>
+								updateSettings("acpChatEnabled", enabled)
+							}
+						/>
+					</div>
+				)}
 				{showSupersetV2 && !isV1FlipLocked && (
 					<div className="flex items-center justify-between gap-6">
 						<div className="min-w-0 flex-1 space-y-0.5">

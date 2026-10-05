@@ -52,6 +52,18 @@ describe("ChatSessionStore", () => {
 		});
 	});
 
+	test("projects the native session id from durable adapter events", () => {
+		runtime.journal.append("s1", {
+			type: "session",
+			session: sessionState({ harnessSessionId: "native-s1", status: "idle" }),
+		});
+		expect(runtime.sessions.get("s1")?.harnessSessionId).toBe("native-s1");
+		runtime.journal.append("s1", {
+			type: "turn",
+			turn: { id: "t1", status: "completed", startedAtMs: 1, completedAtMs: 2 },
+		});
+		expect(runtime.sessions.get("s1")?.harnessSessionId).toBe("native-s1");
+	});
 	test("returns null for an unknown session", () => {
 		expect(runtime.sessions.get("nope")).toBeNull();
 	});

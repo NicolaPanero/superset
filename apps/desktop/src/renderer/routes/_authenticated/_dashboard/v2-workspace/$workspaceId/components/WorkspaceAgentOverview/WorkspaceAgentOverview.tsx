@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { WorkspaceStore } from "@superset/panes";
 import { getAgentModelSupport } from "@superset/shared/agent-models";
 import { agentStatusFromEvent } from "@superset/shared/agent-status";
 import { Button } from "@superset/ui/button";
@@ -34,7 +35,12 @@ import {
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { useStore } from "zustand";
+import type { StoreApi } from "zustand/vanilla";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher/useAgentSessionLauncher";
+import { useChatWiring } from "../../hooks/usePaneRegistry/components/ChatSession/hooks/useSessionClient";
+import type { PaneViewerData, TerminalPaneData } from "../../types";
+import { AcpOverviewSession } from "./components/AcpOverviewSession";
 
 const PEERS = [
 	{ id: "claude", label: "Claude Code" },
@@ -139,7 +145,9 @@ export function WorkspaceAgentOverview({
 	workspaceName,
 	onCreateNewAgentSession,
 	onFocusAgentTerminal,
+	store,
 }: {
+	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	workspaceId: string;
 	workspaceName: string;
 	onCreateNewAgentSession: CreateNewAgentSession;
@@ -164,6 +172,38 @@ export function WorkspaceAgentOverview({
 	const models = selected
 		? (getAgentModelSupport(selected.presetId)?.models ?? [])
 		: [];
+	const tabs = useStore(store, (s) => s.tabs);
+	const chatPanes = tabs
+		.flatMap((tab) => Object.values(tab.panes))
+		.filter(
+			(p) =>
+				p.kind === "terminal" &&
+				(p.data as TerminalPaneData).agentSurface === "acp",
+		);
+	const wiring = useChatWiring();
+	const chats = useQuery({
+		queryKey: [
+			"overview-acp",
+			hostUrl,
+			workspaceId,
+			chatPanes.map((p) => (p.data as TerminalPaneData).acpSessionId).join(","),
+		],
+		enabled: open && chatPanes.length > 0,
+		queryFn: async () =>
+			Promise.all(
+				chatPanes.map(async (pane) => {
+					const data = pane.data as TerminalPaneData;
+					const session = data.acpSessionId
+						? await wiring.transport
+								.getSession({ sessionId: data.acpSessionId })
+								.catch(() => null)
+						: null;
+					return { data, session };
+				}),
+			),
+		retry: false,
+		refetchInterval: 5000,
+	});
 	const bindings = useTerminalAgentBindings(workspaceId, { enabled: open });
 	const details = useQuery({
 		queryKey: [
@@ -215,7 +255,7 @@ export function WorkspaceAgentOverview({
 				configId: selected.id,
 				placement: "new-tab",
 				prompt: "",
-				nativeTerminal: true,
+
 				...(model ? { modelId: model } : {}),
 				...(managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
 					? {
@@ -279,6 +319,10 @@ export function WorkspaceAgentOverview({
 							const sessions = [...bindings.values()].filter(
 								(binding) => binding.agentId === peer.id && !binding.endedAt,
 							);
+							const chatSessions =
+								chats.data?.filter(
+									(c) => c.data.agent?.id === peer.id && c.session?.session,
+								) ?? [];
 							const config = peers.find((item) => item.presetId === peer.id);
 							return (
 								<section
@@ -296,11 +340,26 @@ export function WorkspaceAgentOverview({
 										)}
 										{peer.label}
 									</h3>
-									{sessions.length === 0 && (
+									{sessions.length === 0 && chatSessions.length === 0 && (
 										<p className="text-xs text-muted-foreground">
 											<Trans>No active sessions</Trans>
 										</p>
 									)}
+									{chatSessions.map(({ data, session }) => (
+										<AcpOverviewSession
+											key={data.terminalId}
+											data={data}
+											status={
+												session?.live
+													? (session.session?.status ?? "idle")
+													: "closed"
+											}
+											onOpen={() => {
+												setOpen(false);
+												onFocusAgentTerminal(data.terminalId);
+											}}
+										/>
+									))}
 									{sessions.map((binding) => (
 										<LiveSession
 											key={binding.terminalId}

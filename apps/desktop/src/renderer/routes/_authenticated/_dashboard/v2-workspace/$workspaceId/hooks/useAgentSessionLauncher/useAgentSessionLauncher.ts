@@ -57,6 +57,7 @@ export function useAgentSessionLauncher({
 	focusAgentTerminal: (terminalId: string) => void;
 } {
 	const { t } = useLingui();
+	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const launchTransfer = workspaceTrpc.sessionTransfer.launch.useMutation();
 	const appearance = useTerminalAppearance();
@@ -74,6 +75,20 @@ export function useAgentSessionLauncher({
 			const config = configs.find((entry) => entry.id === input.configId);
 			const presetId = config?.presetId;
 			if (!presetId || !acpHarnessForPreset(presetId)) return null;
+			let launch: Awaited<ReturnType<typeof prepareAcpLaunch.mutateAsync>>;
+			try {
+				launch = await prepareAcpLaunch.mutateAsync({
+					workspaceId,
+					configId: input.configId,
+					accountSelection: input.accountSelection,
+				});
+			} catch (error) {
+				toast.error(
+					t({ message: "ACP chat is unavailable. Opening the terminal." }),
+					{ description: errorMessage(error, t({ message: "Unknown error" })) },
+				);
+				return null;
+			}
 			const state = store.getState();
 			const terminalId = crypto.randomUUID();
 			const label = config?.label;
@@ -83,6 +98,8 @@ export function useAgentSessionLauncher({
 				data: {
 					terminalId,
 					agentSurface: "acp",
+					acpAgentConfigId: launch.agentConfigId,
+					acpAccountSelection: launch.accountSelection,
 					agent: { id: presetId },
 					...(input.prompt ? { pendingPrompt: input.prompt } : {}),
 					...(input.attachments?.length
@@ -99,14 +116,22 @@ export function useAgentSessionLauncher({
 			}
 			return { terminalId };
 		},
-		[awaitAcpChatEnabled, queryClient, hostUrl, agentConfigs, store],
+		[
+			awaitAcpChatEnabled,
+			queryClient,
+			hostUrl,
+			agentConfigs,
+			store,
+			prepareAcpLaunch,
+			workspaceId,
+			t,
+		],
 	);
 
 	const createNewAgentSession = useCallback<CreateNewAgentSession>(
 		async (input) => {
 			if (
 				!input.nativeTerminal &&
-				input.accountSelection === undefined &&
 				!input.forkSessionId &&
 				!input.nativeTransferId
 			) {

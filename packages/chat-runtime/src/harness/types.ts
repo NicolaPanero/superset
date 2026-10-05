@@ -18,6 +18,7 @@ export type HarnessStartOptions = {
 	modeId?: string;
 	modelId?: string;
 	resume?: { harnessSessionId: string };
+	strictResume?: boolean;
 };
 
 export interface HarnessAdapter {

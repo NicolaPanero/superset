@@ -5,6 +5,7 @@ import { i18n } from "@superset/i18n";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { ToolContentList } from "../ToolContentList";
+import { QuestionAnswers } from "./components/QuestionAnswers";
 
 const DECISION_ANSWERED = msg({
 	message: "Answered",
@@ -61,7 +62,9 @@ export function ApprovalRow({
 			</div>
 			{item.detail && <ToolContentList itemId={item.id} items={item.detail} />}
 			{pending &&
-				(item.options?.length ? (
+				(item.questions?.length ? (
+					<QuestionAnswers item={item} onRespond={onRespond} />
+				) : item.options?.length ? (
 					<div className="flex flex-wrap gap-2">
 						{item.options.map((option) => (
 							<Button

@@ -124,6 +124,9 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 						modeId: parsed.modeId,
 						modelId: parsed.modelId,
 						resume: parsed.resume,
+						agentConfigId: parsed.agentConfigId,
+						accountSelection: parsed.accountSelection,
+						strictResume: parsed.strictResume,
 					});
 				} catch (error) {
 					options.journal.discard(sessionId);

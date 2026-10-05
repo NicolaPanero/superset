@@ -4,6 +4,11 @@ import { eq } from "drizzle-orm";
 import type { HostDb } from "../db";
 import { projects, workspaces } from "../db/schema";
 import { buildHostLaunchEnv, waitForTerminalBaseEnv } from "../terminal/env";
+import {
+	agentLaunchEnv,
+	resolveHostAgentConfig,
+} from "../terminal-agents/agent-config";
+import { selectedAccountEnv } from "../trpc/router/agents/account-selection";
 import { resolveDefaultAccountTerminalEnv } from "../trpc/router/usage/default-account";
 
 function workspacePaths(
@@ -54,10 +59,27 @@ export async function buildChatAgentEnv(options: {
 	db: HostDb;
 	cwd: string;
 	workspaceId: string;
+	agentConfigId?: string;
+	accountSelection?: string | null;
 }): Promise<Record<string, string>> {
 	await waitForTerminalBaseEnv();
 	const paths = workspacePaths(options.db, options.workspaceId);
-	return withoutAmbientKeys(
+	const config = options.agentConfigId
+		? resolveHostAgentConfig(options.db, options.agentConfigId)
+		: null;
+	if (options.agentConfigId && !config)
+		throw new Error("agent_config_unavailable");
+	let configEnv = config ? agentLaunchEnv(options.db, config) : {};
+	if (options.accountSelection !== undefined) {
+		if (!config) throw new Error("agent_config_unavailable");
+		configEnv = await selectedAccountEnv(
+			config,
+			configEnv,
+			options.accountSelection,
+		);
+	}
+	if (config?.presetId === "cursor-agent") configEnv.CURSOR_AGENT = "1";
+	const result = withoutAmbientKeys(
 		withSupersetBinFirst({
 			...buildHostLaunchEnv({
 				cwd: options.cwd,
@@ -66,6 +88,10 @@ export async function buildChatAgentEnv(options: {
 				rootPath: paths.rootPath,
 			}),
 			...resolveDefaultAccountTerminalEnv(options.db),
+			...configEnv,
 		}),
 	);
+	if (config?.presetId === "claude" && options.accountSelection === null)
+		delete result.CLAUDE_CONFIG_DIR;
+	return result;
 }

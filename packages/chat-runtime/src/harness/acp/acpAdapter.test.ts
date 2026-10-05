@@ -439,6 +439,33 @@ describe("AcpAdapter", () => {
 		await adapter.dispose();
 	});
 
+	it("keeps an explicitly requested conversation intact when loading fails", async () => {
+		const agent = new FakeAcpAgent();
+		agent.loadFails = true;
+		const adapter = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => agent.transport(handlers),
+			now: () => 1,
+			mintId: () => "strict",
+		});
+		const events: AdapterEvent[] = [];
+		void collect(
+			adapter.start({
+				cwd: "/work",
+				resume: { harnessSessionId: "sess-1" },
+				strictResume: true,
+			}),
+			events,
+		);
+		await flush(40);
+		expect(agent.sent.map((f) => f.method)).toEqual([
+			"initialize",
+			"session/load",
+		]);
+		expect(sessionsOf(events).some((s) => s.status === "dead")).toBe(true);
+		await adapter.dispose();
+	});
+
 	it("opens a new session when there is no transcript to resume", async () => {
 		const agent = new FakeAcpAgent();
 		agent.loadFails = true;
@@ -993,11 +1020,13 @@ describe("AcpAdapter on protocol v2", () => {
 		const params = initialize?.params as {
 			protocolVersion?: number;
 			info?: { name?: string; version?: string };
+			clientInfo?: { name?: string; version?: string };
 			capabilities?: unknown;
 			clientCapabilities?: unknown;
 		};
 		expect(params.protocolVersion).toBe(2);
 		expect(params.info?.name).toBe("superset");
+		expect(params.clientInfo).toEqual(params.info);
 		expect(params.info?.version).toBeString();
 		// v2 renamed the field; v1 agents still read the old name.
 		expect(params.capabilities).toEqual({});
@@ -1243,4 +1272,29 @@ describe("AcpAdapter attachments", () => {
 		);
 		expect(told).toBe(true);
 	});
+});
+
+it("ends startup and closes an agent that never answers initialize", async () => {
+	let closed = 0;
+	const adapter = new AcpAdapter({
+		command: "never",
+		startupTimeoutMs: 10,
+		createTransport: () => ({
+			send: () => {},
+			close: async () => {
+				closed++;
+			},
+		}),
+	});
+	const events: AdapterEvent[] = [];
+	const iterator = adapter.start({ cwd: "/tmp" });
+	const collected = (async () => {
+		for await (const event of iterator) events.push(event);
+	})();
+	await collected;
+	expect(
+		events.some((e) => e.kind === "session" && e.session.status === "dead"),
+	).toBe(true);
+	expect(closed).toBe(1);
+	await adapter.dispose();
 });

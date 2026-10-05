@@ -1534,6 +1534,15 @@ msgstr "Conquistas"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "Chat ACP"
+
+msgid "ACP chat is unavailable"
+msgstr "O chat ACP não está disponível"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "O chat ACP não está disponível. Abrindo o terminal."
+
 msgid "Acquisition"
 msgstr "Aquisição"
 
@@ -4993,9 +5002,6 @@ msgstr "Não foi possível iniciar o modo design nesta página"
 
 msgid "Couldn't start workspace"
 msgstr "Não foi possível iniciar a área de trabalho"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Não foi possível parar o terminal do agente"
 
 msgid "Couldn't stop the chat"
 msgstr "Não foi possível parar o chat"
@@ -11345,6 +11351,9 @@ msgstr "Abrir menu"
 msgid "Open navigation"
 msgstr "Abrir navegação"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Abra novos agentes compatíveis em uma interface de chat comum. As sessões existentes mantêm a visualização atual. O terminal continua disponível."
+
 msgid "Open on GitHub"
 msgstr "Abrir no GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Selecionar o diretório do script de terminal"
 msgid "Select worktree location"
 msgstr "Selecionar o local das worktrees"
 
+msgid "Selected account"
+msgstr "Conta selecionada"
+
 msgid "Selected agent is not available on this host"
 msgstr "O agente selecionado não está disponível neste host"
 
@@ -16042,9 +16054,6 @@ msgstr "Esse link de login do {plugin} expirou. Tente conectar novamente."
 msgid "That account is no longer connected — choose another."
 msgstr "Essa conta não está mais conectada — escolha outra."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Essa sessão do agente ainda não tem conversa para abrir: ela foi iniciada, mas nunca recebeu um pedido."
-
 msgid "That endpoint could not be resolved."
 msgstr "Não foi possível resolver esse endpoint."
 
@@ -16074,6 +16083,9 @@ msgstr "O endereço está inacessível"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "O agente copia a conversa; a ramificação abre aqui"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "O agente não conseguiu abrir esta conversa. Você pode tentar novamente ou iniciar um novo chat."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "O agente é dono da tarefa, do ticket ao diff. A pessoa revisa o resultado, não as teclas digitadas. A atenção sai de escrever código e vai para especificar o trabalho e julgá-lo. Uma pessoa toca vários agentes ao mesmo tempo em áreas de trabalho isoladas."

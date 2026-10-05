@@ -1534,6 +1534,15 @@ msgstr "업적"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP 채팅"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP 채팅을 사용할 수 없습니다"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP 채팅을 사용할 수 없습니다. 터미널을 엽니다."
+
 msgid "Acquisition"
 msgstr "획득"
 
@@ -4993,9 +5002,6 @@ msgstr "이 페이지에서 디자인 모드를 시작할 수 없습니다"
 
 msgid "Couldn't start workspace"
 msgstr "워크스페이스를 시작하지 못했습니다"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "에이전트의 터미널을 중지할 수 없습니다"
 
 msgid "Couldn't stop the chat"
 msgstr "채팅을 중지할 수 없습니다"
@@ -11345,6 +11351,9 @@ msgstr "메뉴 열기"
 msgid "Open navigation"
 msgstr "내비게이션 열기"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "지원되는 새 에이전트를 공통 채팅 인터페이스에서 엽니다. 기존 세션은 현재 보기를 유지합니다. 터미널도 계속 사용할 수 있습니다."
+
 msgid "Open on GitHub"
 msgstr "GitHub에서 열기"
 
@@ -14269,6 +14278,9 @@ msgstr "터미널 스크립트 디렉터리 선택"
 msgid "Select worktree location"
 msgstr "worktree 위치 선택"
 
+msgid "Selected account"
+msgstr "선택한 계정"
+
 msgid "Selected agent is not available on this host"
 msgstr "선택한 에이전트를 이 호스트에서 사용할 수 없습니다"
 
@@ -16042,9 +16054,6 @@ msgstr "해당 {plugin} 로그인 링크가 만료되었습니다. 다시 연결
 msgid "That account is no longer connected — choose another."
 msgstr "해당 계정은 더 이상 연결되어 있지 않습니다. 다른 계정을 선택하세요."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "이 에이전트 세션에는 아직 열 대화가 없습니다. 시작되었지만 한 번도 요청을 받지 않았습니다."
-
 msgid "That endpoint could not be resolved."
 msgstr "해당 엔드포인트를 확인할 수 없습니다."
 
@@ -16074,6 +16083,9 @@ msgstr "이 주소에 연결할 수 없습니다"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "에이전트가 대화를 복사하고 분기는 여기서 열립니다"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "에이전트가 이 대화를 열지 못했습니다. 다시 시도하거나 새 채팅을 시작할 수 있습니다."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "에이전트가 티켓부터 차이까지 작업을 맡습니다. 사람은 키 입력이 아니라 결과를 리뷰합니다. 관심은 코드를 쓰는 데서 일을 명세하고 판단하는 데로 옮겨 갑니다. 엔지니어 한 명이 격리된 워크스페이스에서 여러 에이전트를 동시에 돌립니다."

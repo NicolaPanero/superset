@@ -38,6 +38,8 @@ export interface TerminalPaneData {
 	agentSurface?: "cli" | "acp";
 	/** chat-runtime session the ACP surface resumed this agent into. */
 	acpSessionId?: string | null;
+	acpAgentConfigId?: string;
+	acpAccountSelection?: string | null;
 	/**
 	 * Captured before the pty is stopped, because the terminal row and its agent
 	 * binding go with it — and they are what the trip back needs. A pane opened

@@ -1534,6 +1534,15 @@ msgstr "Достижения"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "Чат ACP"
+
+msgid "ACP chat is unavailable"
+msgstr "Чат ACP недоступен"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "Чат ACP недоступен. Открываем терминал."
+
 msgid "Acquisition"
 msgstr "Привлечение"
 
@@ -4993,9 +5002,6 @@ msgstr "Не удалось запустить режим дизайна на э
 
 msgid "Couldn't start workspace"
 msgstr "Не удалось запустить рабочую область"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Не удалось остановить терминал агента"
 
 msgid "Couldn't stop the chat"
 msgstr "Не удалось остановить чат"
@@ -11345,6 +11351,9 @@ msgstr "Открыть меню"
 msgid "Open navigation"
 msgstr "Открыть навигацию"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Открывайте новых поддерживаемых агентов в общем интерфейсе чата. Существующие сеансы сохраняют текущий вид. Терминал остаётся доступным."
+
 msgid "Open on GitHub"
 msgstr "Открыть на GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Выберите папку скрипта терминала"
 msgid "Select worktree location"
 msgstr "Выберите расположение worktree"
 
+msgid "Selected account"
+msgstr "Выбранный аккаунт"
+
 msgid "Selected agent is not available on this host"
 msgstr "Выбранный агент недоступен на этом хосте"
 
@@ -16042,9 +16054,6 @@ msgstr "Срок действия ссылки для входа в {plugin} и�
 msgid "That account is no longer connected — choose another."
 msgstr "Этот аккаунт больше не подключён — выберите другой."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "У этой сессии агента пока нет разговора, который можно открыть: она была запущена, но ни разу не получила запрос."
-
 msgid "That endpoint could not be resolved."
 msgstr "Не удалось разрешить эту конечную точку."
 
@@ -16074,6 +16083,9 @@ msgstr "Адрес недоступен"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Агент копирует разговор; ветвь откроется здесь"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "Агент не смог открыть этот разговор. Можно повторить попытку или начать новый чат."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Агент ведёт задачу от тикета до diff. Человек проверяет результат, а не нажатия клавиш. Внимание смещается с написания кода на постановку задач и оценку результата. Один инженер ведёт несколько агентов одновременно в изолированных рабочих областях."

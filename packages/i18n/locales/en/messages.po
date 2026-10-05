@@ -1534,6 +1534,15 @@ msgstr "Achievements"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP chat"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP chat is unavailable"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP chat is unavailable. Opening the terminal."
+
 msgid "Acquisition"
 msgstr "Acquisition"
 
@@ -4993,9 +5002,6 @@ msgstr "Couldn't start design mode on this page"
 
 msgid "Couldn't start workspace"
 msgstr "Couldn't start workspace"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Couldn't stop the agent's terminal"
 
 msgid "Couldn't stop the chat"
 msgstr "Couldn't stop the chat"
@@ -11345,6 +11351,9 @@ msgstr "Open menu"
 msgid "Open navigation"
 msgstr "Open navigation"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+
 msgid "Open on GitHub"
 msgstr "Open on GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Select terminal script directory"
 msgid "Select worktree location"
 msgstr "Select worktree location"
 
+msgid "Selected account"
+msgstr "Selected account"
+
 msgid "Selected agent is not available on this host"
 msgstr "Selected agent is not available on this host"
 
@@ -16042,9 +16054,6 @@ msgstr "That {plugin} sign-in link expired. Try connecting again."
 msgid "That account is no longer connected — choose another."
 msgstr "That account is no longer connected — choose another."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "That agent session has no conversation to open yet — it was started but never prompted."
-
 msgid "That endpoint could not be resolved."
 msgstr "That endpoint could not be resolved."
 
@@ -16074,6 +16083,9 @@ msgstr "The address is unreachable"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "The agent copies the conversation; the branch opens here"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "The agent could not open this conversation. You can retry or start a new chat."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."

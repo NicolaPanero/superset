@@ -12,7 +12,11 @@ import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
 export type AgentSurface = "cli" | "acp";
 
-export type AgentIdentity = { id: string; sessionId?: string };
+export type AgentIdentity = {
+	id: string;
+	sessionId?: string;
+	terminalId?: string;
+};
 
 export type AgentSurfaceSwitch = {
 	/**
@@ -35,6 +39,9 @@ export type AgentSurfaceSwitch = {
 export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 	const { t } = useLingui();
 	const wiring = useChatWiring();
+	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
+	const prepareCursorSurface =
+		workspaceTrpc.agents.prepareCursorSurface.useMutation();
 	const killTerminal = workspaceTrpc.terminal.killSession.useMutation();
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const appearance = useTerminalAppearance();
@@ -63,22 +70,48 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 
 			if (surface === "acp") {
 				if (!agent) return;
-				// Written before the kill: the binding these ids come from dies with
-				// the terminal, and until the surface is recorded the pane derives
-				// its own — which the kill is about to change the answer to.
-				ctx.actions.updateData({ ...data, agentSurface: "acp", agent });
+				let launch: Awaited<ReturnType<typeof prepareAcpLaunch.mutateAsync>>;
+				try {
+					launch = await prepareAcpLaunch.mutateAsync({
+						workspaceId,
+						configId: data.acpAgentConfigId ?? agent.id,
+						accountSelection: data.acpAccountSelection,
+						sourceTerminalId: agent.terminalId,
+					});
+				} catch (error) {
+					toast.error(t({ message: "ACP chat is unavailable" }), {
+						description: errorMessage(error, t({ message: "Unknown error" })),
+					});
+					return;
+				}
 				terminalRuntimeRegistry.dispose(data.terminalId);
 				try {
 					await killTerminal.mutateAsync({
 						terminalId: data.terminalId,
 						workspaceId,
 					});
+					if (agent.id === "cursor-agent" && agent.sessionId)
+						await prepareCursorSurface.mutateAsync({
+							workspaceId,
+							configId: launch.agentConfigId,
+							sessionId: agent.sessionId,
+							from: "cli",
+						});
+					ctx.actions.updateData({
+						...data,
+						agentSurface: "acp",
+						agent,
+						acpAgentConfigId: launch.agentConfigId,
+						acpAccountSelection: launch.accountSelection,
+					});
 				} catch (error) {
 					// Put the pane back rather than run a chat over a live pty: both
 					// would drive the one agent session.
 					console.warn("[acp-chat] could not stop the terminal", error);
 					ctx.actions.updateData({ ...data, agentSurface: "cli", agent });
-					toast.error(t({ message: "Couldn't stop the agent's terminal" }));
+					toast.error(t({ message: "ACP chat is unavailable" }), {
+						description: errorMessage(error, t({ message: "Unknown error" })),
+					});
 				}
 				return;
 			}
@@ -99,10 +132,18 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 			}
 
 			try {
+				if (resumeFrom.id === "cursor-agent" && resumeFrom.sessionId)
+					await prepareCursorSurface.mutateAsync({
+						workspaceId,
+						configId: data.acpAgentConfigId ?? resumeFrom.id,
+						sessionId: resumeFrom.sessionId,
+						from: "acp",
+					});
 				const result = await runAgent.mutateAsync({
 					workspaceId,
 					colors: terminalQueryColors(appearance.theme),
-					agent: resumeFrom.id,
+					agent: data.acpAgentConfigId ?? resumeFrom.id,
+					accountSelection: data.acpAccountSelection,
 					prompt: "",
 					// A chat the launcher opened may not have run a turn yet, so
 					// there is no agent session to resume into the terminal.
@@ -133,7 +174,16 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				});
 			}
 		},
-		[killTerminal, runAgent, stopChat, workspaceId, t, appearance.theme],
+		[
+			prepareAcpLaunch,
+			prepareCursorSurface,
+			killTerminal,
+			runAgent,
+			stopChat,
+			workspaceId,
+			t,
+			appearance.theme,
+		],
 	);
 
 	return useMemo(

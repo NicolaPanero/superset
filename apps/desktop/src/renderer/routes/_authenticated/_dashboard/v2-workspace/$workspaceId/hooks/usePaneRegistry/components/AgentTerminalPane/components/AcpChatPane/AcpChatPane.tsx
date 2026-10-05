@@ -26,6 +26,8 @@ export function AcpChatPane({
 	pendingFirstPrompt,
 	sessionId,
 	workspaceId,
+	agentConfigId,
+	accountSelection,
 	modelId,
 	modeId,
 }: {
@@ -37,6 +39,8 @@ export function AcpChatPane({
 	onFirstPromptSent?: (() => void) | undefined;
 	onSessionCreated: (sessionId: string) => void;
 	onAgentSessionChanged: (harnessSessionId: string) => void;
+	agentConfigId?: string;
+	accountSelection?: string | null;
 	modelId?: string;
 	modeId?: string;
 }) {
@@ -49,6 +53,7 @@ export function AcpChatPane({
 		(config) => config.id === agent?.id,
 	)?.label;
 	const harness = acpHarnessForPreset(agent?.id);
+	const [runtimeDead, setRuntimeDead] = useState(false);
 	const [failure, setFailure] = useState<string | null>(null);
 
 	// The stored session outlives its process — after a host restart the row
@@ -68,11 +73,15 @@ export function AcpChatPane({
 		async (resumeHarness: string, resume?: string) => {
 			attaching.current = true;
 			setFailure(null);
+			setRuntimeDead(false);
 			try {
 				const created = await wiring.transport.createSession({
 					commandId: crypto.randomUUID(),
 					workspaceId,
 					harness: resumeHarness,
+					agentConfigId,
+					accountSelection,
+					strictResume: true,
 					...(modelId ? { modelId } : {}),
 					...(modeId ? { modeId } : {}),
 					...(resume ? { resume: { harnessSessionId: resume } } : {}),
@@ -83,7 +92,15 @@ export function AcpChatPane({
 				setFailure(error instanceof Error ? error.message : String(error));
 			}
 		},
-		[wiring.transport, workspaceId, onSessionCreated, modelId, modeId],
+		[
+			wiring.transport,
+			workspaceId,
+			onSessionCreated,
+			modelId,
+			modeId,
+			agentConfigId,
+			accountSelection,
+		],
 	);
 
 	const agentSessionId = agent?.sessionId;
@@ -148,7 +165,7 @@ export function AcpChatPane({
 		void start(harness);
 	}, [harness, start]);
 
-	const sessionDead = stored?.session?.status === "dead";
+	const sessionDead = runtimeDead || stored?.session?.status === "dead";
 	const sessionStopped =
 		stored !== undefined && stored !== null && !stored.live;
 	// A stopped chat has not lost anything: the agent session it was bound to
@@ -181,6 +198,11 @@ export function AcpChatPane({
 		return (
 			<AcpRecovery
 				detail={failure ?? undefined}
+				onRetry={() => {
+					if (!harness) return;
+					attaching.current = false;
+					void start(harness, agentSessionId);
+				}}
 				onStartNew={startFresh}
 				reason={sessionDead ? "no-transcript" : "stopped"}
 			/>
@@ -192,6 +214,11 @@ export function AcpChatPane({
 			return (
 				<AcpRecovery
 					detail={failure}
+					onRetry={() => {
+						if (!harness) return;
+						attaching.current = false;
+						void start(harness, agentSessionId);
+					}}
 					onStartNew={startFresh}
 					reason="no-transcript"
 				/>
@@ -227,6 +254,7 @@ export function AcpChatPane({
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back
 				// to the CLI resumes an id that no longer exists.
+				if (state?.status === "dead") setRuntimeDead(true);
 				const bound = state?.harnessSessionId;
 				if (bound && bound !== agent?.sessionId) onAgentSessionChanged(bound);
 			}}

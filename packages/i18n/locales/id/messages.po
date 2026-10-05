@@ -1534,6 +1534,15 @@ msgstr "Pencapaian"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "Chat ACP"
+
+msgid "ACP chat is unavailable"
+msgstr "Chat ACP tidak tersedia"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "Chat ACP tidak tersedia. Membuka terminal."
+
 msgid "Acquisition"
 msgstr "Akuisisi"
 
@@ -4993,9 +5002,6 @@ msgstr "Tidak bisa memulai mode desain di halaman ini"
 
 msgid "Couldn't start workspace"
 msgstr "Tidak bisa memulai workspace"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Tidak dapat menghentikan terminal agen"
 
 msgid "Couldn't stop the chat"
 msgstr "Tidak dapat menghentikan obrolan"
@@ -11345,6 +11351,9 @@ msgstr "Buka menu"
 msgid "Open navigation"
 msgstr "Buka navigasi"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Buka agen baru yang didukung dalam antarmuka chat bersama. Sesi yang ada tetap menggunakan tampilan saat ini. Terminal tetap tersedia."
+
 msgid "Open on GitHub"
 msgstr "Buka di GitHub"
 
@@ -14269,6 +14278,9 @@ msgstr "Pilih direktori skrip terminal"
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"
 
+msgid "Selected account"
+msgstr "Akun yang dipilih"
+
 msgid "Selected agent is not available on this host"
 msgstr "Agen yang dipilih tidak tersedia di host ini"
 
@@ -16042,9 +16054,6 @@ msgstr "Tautan masuk {plugin} itu telah kedaluwarsa. Coba hubungkan lagi."
 msgid "That account is no longer connected — choose another."
 msgstr "Akun itu sudah tidak terhubung — pilih yang lain."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Sesi agen itu belum punya percakapan untuk dibuka — sudah dimulai tetapi belum pernah diberi perintah."
-
 msgid "That endpoint could not be resolved."
 msgstr "Endpoint itu tidak dapat ditemukan."
 
@@ -16074,6 +16083,9 @@ msgstr "Alamatnya tidak bisa dijangkau"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Agen menyalin percakapan; cabang terbuka di sini"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "Agen tidak dapat membuka percakapan ini. Anda dapat mencoba lagi atau memulai chat baru."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agen memegang tugas dari tiket sampai diff. Manusia mereview hasilnya, bukan tiap ketukan tombolnya. Perhatian bergeser dari menulis kode ke menentukan pekerjaan dan menilainya. Satu engineer menjalankan beberapa agen sekaligus di workspace terisolasi."

@@ -1534,6 +1534,15 @@ msgstr "Başarımlar"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP sohbeti"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP sohbeti kullanılamıyor"
+
+msgid "ACP chat is unavailable. Opening the terminal."
+msgstr "ACP sohbeti kullanılamıyor. Terminal açılıyor."
+
 msgid "Acquisition"
 msgstr "Edinme"
 
@@ -4993,9 +5002,6 @@ msgstr "Bu sayfada tasarım modu başlatılamadı"
 
 msgid "Couldn't start workspace"
 msgstr "Çalışma alanı başlatılamadı"
-
-msgid "Couldn't stop the agent's terminal"
-msgstr "Aracının terminali durdurulamadı"
 
 msgid "Couldn't stop the chat"
 msgstr "Sohbet durdurulamadı"
@@ -11345,6 +11351,9 @@ msgstr "Menüyü aç"
 msgid "Open navigation"
 msgstr "Gezinmeyi aç"
 
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "Yeni desteklenen ajanları ortak bir sohbet arayüzünde açın. Mevcut oturumlar geçerli görünümlerini korur. Terminal kullanılabilir durumda kalır."
+
 msgid "Open on GitHub"
 msgstr "GitHub'da aç"
 
@@ -14269,6 +14278,9 @@ msgstr "Terminal betiği dizinini seçin"
 msgid "Select worktree location"
 msgstr "Worktree konumunu seçin"
 
+msgid "Selected account"
+msgstr "Seçilen hesap"
+
 msgid "Selected agent is not available on this host"
 msgstr "Seçili ajan bu host'ta kullanılamıyor"
 
@@ -16042,9 +16054,6 @@ msgstr "Bu {plugin} oturum açma bağlantısının süresi doldu. Yeniden bağla
 msgid "That account is no longer connected — choose another."
 msgstr "Bu hesap artık bağlı değil — başka bir hesap seçin."
 
-msgid "That agent session has no conversation to open yet — it was started but never prompted."
-msgstr "Bu aracı oturumunda açılacak bir konuşma yok — başlatıldı ama hiç istek almadı."
-
 msgid "That endpoint could not be resolved."
 msgstr "Bu uç nokta çözümlenemedi."
 
@@ -16074,6 +16083,9 @@ msgstr "Adrese erişilemiyor"
 
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Aracı konuşmayı kopyalar; çatal burada açılır"
+
+msgid "The agent could not open this conversation. You can retry or start a new chat."
+msgstr "Ajan bu konuşmayı açamadı. Yeniden deneyebilir veya yeni bir sohbet başlatabilirsiniz."
 
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Ajan, bir görevi biletten farka kadar sahiplenir. İnsan tuş vuruşlarını değil, sonucu inceler. Dikkat, kod yazmaktan işi tanımlamaya ve değerlendirmeye kayar. Bir mühendis, yalıtılmış çalışma alanlarında aynı anda birkaç ajan çalıştırır."
