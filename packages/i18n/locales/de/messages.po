@@ -16469,6 +16469,9 @@ msgstr "Diese Automatisierung hat noch keine Anweisungen. Schreibe vor dem Ausf�
 msgid "This automation is in another organization"
 msgstr "Diese Automatisierung befindet sich in einer anderen Organisation"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "Dieser Build aktualisiert sich nicht selbst. Erstellen Sie ihn zum Aktualisieren neu aus dem Quellcode."
+
 msgid "This cannot be undone."
 msgstr "Das lässt sich nicht rückgängig machen."
 

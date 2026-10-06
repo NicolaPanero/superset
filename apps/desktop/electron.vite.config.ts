@@ -17,8 +17,13 @@ import {
 	linguiMacroPlugin,
 } from "./vite/helpers";
 
-// override: true ensures .env values take precedence over inherited env vars
-config({ path: resolve(__dirname, "../../.env"), override: true, quiet: true });
+// override: true ensures .env values take precedence over inherited env vars.
+// SUPERSET_ENV_FILE swaps the file, so a build can skip the local dev .env.
+config({
+	path: process.env.SUPERSET_ENV_FILE || resolve(__dirname, "../../.env"),
+	override: true,
+	quiet: true,
+});
 
 const DEV_SERVER_PORT = Number(process.env.DESKTOP_VITE_PORT);
 
@@ -101,6 +106,10 @@ export default defineConfig({
 			),
 			"process.env.RELAY_URL": defineEnv(process.env.RELAY_URL),
 			"process.env.REALTIME_URL": defineEnv(process.env.REALTIME_URL),
+			"process.env.SUPERSET_AUTO_UPDATE": defineEnv(
+				process.env.SUPERSET_AUTO_UPDATE,
+				"",
+			),
 			// Must match renderer for analytics in main process
 			"process.env.NEXT_PUBLIC_POSTHOG_KEY": defineEnv(
 				process.env.NEXT_PUBLIC_POSTHOG_KEY,

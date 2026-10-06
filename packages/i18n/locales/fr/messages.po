@@ -16469,6 +16469,9 @@ msgstr "Cette automatisation n'a pas encore d'instructions. Rédigez un prompt d
 msgid "This automation is in another organization"
 msgstr "Cette automatisation se trouve dans une autre organisation"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "Cette version ne se met pas à jour toute seule. Recompilez-la depuis ses sources pour la mettre à jour."
+
 msgid "This cannot be undone."
 msgstr "Cette action est irréversible."
 

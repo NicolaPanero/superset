@@ -16469,6 +16469,9 @@ msgstr "Bu otomasyonun henüz talimatı yok. Çalıştırmadan önce ayarlarınd
 msgid "This automation is in another organization"
 msgstr "Bu otomasyon başka bir kuruluşta"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "Bu derleme kendini güncellemez. Güncellemek için kaynak koddan yeniden derleyin."
+
 msgid "This cannot be undone."
 msgstr "Bu geri alınamaz."
 

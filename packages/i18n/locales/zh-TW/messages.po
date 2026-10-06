@@ -16469,6 +16469,9 @@ msgstr "此自動化尚未有指示。請先在設定中撰寫提示，再執行
 msgid "This automation is in another organization"
 msgstr "此自動化位於其他組織"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "此版本不會自動更新。如需更新，請從原始碼重新建置。"
+
 msgid "This cannot be undone."
 msgstr "此操作無法復原。"
 
