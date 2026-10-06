@@ -14,6 +14,15 @@ Run Claude Code, Codex, or another CLI agent with terminals, code review, and br
 
 </div>
 
+> [!NOTE]
+> **Fork di Nicola.** Rispetto a upstream aggiunge: chat ACP come vista
+> predefinita per Claude, Codex, Cursor, Grok e OpenCode; passaggio nativo
+> della conversazione tra agenti con txcript, dal terminale e dalla chat;
+> storico locale dei passaggi; pannello Agents; account locali di Claude e
+> Codex scelti a ogni avvio; build senza aggiornamento automatico e
+> sincronizzazione notturna con upstream. Installazione, sviluppo e limiti in
+> [FORK.md](FORK.md).
+
 ### Documentation for agents
 
 The docs are available as [a Markdown index](https://docs.superset.sh/llms.txt) linking to individual pages, or [one full-text file](https://docs.superset.sh/llms-full.txt).
