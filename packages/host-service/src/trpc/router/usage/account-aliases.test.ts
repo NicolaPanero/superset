@@ -6,6 +6,7 @@ import { join, resolve } from "node:path";
 import { runMigrations } from "@superset/shared/sqlite-migrations";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import type { HostDb } from "../../../db";
+import { ensureForkTables } from "../../../db/fork-tables";
 import * as schema from "../../../db/schema";
 import { listAccountAliases, setAccountAlias } from "./account-aliases";
 
@@ -21,6 +22,7 @@ function open(path = ":memory:") {
 	connections.push(sqlite);
 	const db = drizzle(sqlite, { schema });
 	runMigrations(db, resolve(import.meta.dir, "../../../../drizzle"));
+	ensureForkTables(sqlite);
 	return db as unknown as HostDb;
 }
 
