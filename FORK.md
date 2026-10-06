@@ -11,7 +11,7 @@ girano sul Mac.
 | Branch | Contenuto |
 |---|---|
 | `main` | Copia esatta di `superset-sh/superset` `main`. Nessun commit del fork. |
-| `fork/main` | Branch di integrazione: upstream più tutte le funzioni del fork. È quello da usare. |
+| `fork/main` | Branch di integrazione: l'ultima release stabile di upstream più tutte le funzioni del fork. È quello da usare e da cui si compila. |
 | `feature/*` | Storico dei singoli sviluppi, già fusi in `fork/main`. |
 
 ## Funzioni aggiunte
@@ -72,22 +72,28 @@ Gli altri agenti usano il login del loro CLI.
 
 ## Installare l'app
 
-Requisiti: Bun (versione in `.bun-version`), Git e Rust (`cargo`) per compilare
-il convertitore txcript.
+Su un Mac Apple Silicon, dall'ultima release del fork:
 
 ```bash
-bun install
-bun run fork:install
+curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Lo script compila il convertitore in `~/.superset/bin`, compila l'app con i
-servizi di produzione e la installa in `/Applications/Superset.app`. L'app
-precedente resta in `~/.superset/previous-app`. Chiudi Superset prima di
-lanciarlo.
+Installa `/Applications/Superset.app` e il convertitore txcript in
+`~/.superset/bin`. Impostazioni e dati restano (stanno in `~/.superset` e
+`~/Library/Application Support/Superset`), quindi aggiornare equivale a
+reinstallare. L'app non è notarizzata: installata con il comando si apre
+normalmente; scaricata dal browser va aperta una volta da Impostazioni di
+Sistema → Privacy e sicurezza → "Apri comunque".
 
-Le build del fork **non si aggiornano da sole**: il feed ufficiale le
-sostituirebbe con la versione di upstream. Per aggiornare, sincronizza il
-branch e rilancia `bun run fork:install`.
+Il fork mantiene l'identità dell'app ufficiale, così login e dati funzionano
+come con la build di upstream: **sostituisce** Superset ufficiale, non convive
+con esso. L'aggiornamento automatico di upstream è spento, perché riporterebbe
+l'app alla versione ufficiale. Al suo posto l'app controlla le release del fork
+ogni 6 ore e propone "Installa e riavvia", che esegue lo script sopra.
+
+Per compilare e installare dal checkout locale (serve anche Rust per il
+convertitore): `bun run fork:install`. L'app precedente resta in
+`~/.superset/previous-app`.
 
 ## Sviluppo
 
@@ -103,42 +109,40 @@ cartella). Dopo una modifica alla patch:
 bun scripts/build-txcript-transfer.ts
 ```
 
-## Restare allineati con upstream
+## Automatismi su GitHub
+
+| Workflow | Quando | Cosa fa |
+|---|---|---|
+| `fork-sync-upstream.yml` | ogni giorno alle 05:17 UTC, o a mano | Allinea `main` a upstream. Fonde in `fork/main` l'ultima release stabile di upstream (tag `desktop-v*`), esegue lint, `check:i18n` e il typecheck dei pacchetti modificati dal fork, e solo se passano fa il push. Tiene disattivati i workflow ereditati da upstream. |
+| `fork-release.yml` | dopo ogni sincronizzazione, o a mano | Se `fork/main` ha un commit senza release, compila l'app su un runner macOS (firma ad-hoc) e il convertitore txcript, e li pubblica come release `desktop-vX.Y.Z-fork.<commit>`. |
+
+Se un'esecuzione fallisce GitHub manda una mail. Una sincronizzazione fallita
+(conflitti o controlli rossi) non pubblica nulla: si risolve a mano con lo
+script locale.
+
+`main` e `fork/main` sono protetti: niente force-push né cancellazione, anche
+per l'amministratore; i push normali restano permessi.
+
+Il token automatico delle Actions non può pubblicare modifiche ai file in
+`.github/workflows`, che upstream cambia spesso. Per quelle serve il secret
+`FORK_SYNC_TOKEN`: un token fine-grained limitato a questo repository, con
+permessi **Contents** e **Workflows** in scrittura. Va rinnovato alla
+scadenza: quando scade, la sincronizzazione fallisce e arriva la mail.
+
+### Sincronizzare a mano
 
 ```bash
 git switch fork/main
 bun run fork:sync
 ```
 
-`fork:sync` fonde `superset-sh/superset` `main` nel branch corrente. Risolve da
-solo i conflitti dei cataloghi di traduzione (serve `msgcat`, pacchetto
-`gettext`) e poi esegue lint, `check:i18n` e il typecheck dei pacchetti
-modificati dal fork. Codici di uscita: `2` conflitti nel codice, `3` controlli
-falliti dopo la fusione (la fusione resta locale: `git reset --hard ORIG_HEAD`
-per annullarla).
-
-### Sincronizzazione automatica sul Mac (consigliata)
-
-```bash
-scripts/fork/sync-schedule.sh install 09:30
-```
-
-Installa un LaunchAgent che ogni giorno all'ora indicata esegue `fork:sync` in
-un worktree dedicato (`~/.superset-fork/sync`), quindi non tocca il checkout in
-cui lavori. Usa il login della GitHub CLI (serve il permesso `workflow`:
-`gh auth refresh -s workflow`) per aggiornare `main` e `fork/main`. Se la
-sincronizzazione non riesce mostra una notifica e apre una issue sul fork. Log
-in `~/.superset-fork/sync.log`; `scripts/fork/sync-schedule.sh run` la esegue
-subito, `uninstall` la rimuove. Il Mac deve essere acceso all'ora indicata.
-
-### Sincronizzazione su GitHub (alternativa)
-
-Il workflow `.github/workflows/fork-sync-upstream.yml` fa lo stesso su GitHub,
-anche a Mac spento. Richiede un token fine-grained solo per questo repository,
-con permessi **Contents**, **Workflows** e **Issues** in scrittura, salvato come
-secret `FORK_SYNC_TOKEN` (il token automatico delle Actions non può pubblicare
-modifiche ai file in `.github/workflows`, che upstream cambia spesso), e le
-Actions abilitate con i workflow ereditati da upstream disattivati.
+`fork:sync` fonde l'ultima release stabile di upstream nel branch corrente
+(`bash scripts/fork/sync-upstream.sh --checks upstream/main` segue invece il
+`main` di sviluppo). Risolve da solo i conflitti dei cataloghi di traduzione
+(serve `msgcat`, pacchetto `gettext`) e poi esegue gli stessi controlli del
+workflow. Codici di uscita: `2` conflitti nel codice, `3` controlli falliti
+dopo la fusione (la fusione resta locale: `git reset --hard ORIG_HEAD` per
+annullarla).
 
 ## Separazione da upstream
 
@@ -155,6 +159,9 @@ upstream ricevono solo agganci brevi:
   invariato;
 - voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
   `AcpChatSetting`, rinomina account in `AccountRenameDialog`.
+- avviso di aggiornamento in `apps/desktop/src/main/lib/fork-updates.ts`,
+  avviato con una riga accanto all'aggiornamento automatico di upstream;
+- automatismi in `.github/workflows/fork-*.yml` e `scripts/fork/`.
 
 Nuove funzioni del fork vanno scritte allo stesso modo.
 

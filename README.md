@@ -19,9 +19,11 @@ Run Claude Code, Codex, or another CLI agent with terminals, code review, and br
 > predefinita per Claude, Codex, Cursor, Grok e OpenCode; passaggio nativo
 > della conversazione tra agenti con txcript, dal terminale e dalla chat;
 > storico locale dei passaggi; pannello Agents; account locali di Claude e
-> Codex scelti a ogni avvio; build senza aggiornamento automatico e
-> sincronizzazione notturna con upstream. Installazione, sviluppo e limiti in
-> [FORK.md](FORK.md).
+> Codex scelti a ogni avvio; sincronizzazione giornaliera con le release di
+> upstream e build pubblicate nelle Release del fork. Installazione su Mac
+> Apple Silicon:
+> `curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh`.
+> Dettagli e limiti in [FORK.md](FORK.md).
 
 ### Documentation for agents
 
