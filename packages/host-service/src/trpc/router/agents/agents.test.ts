@@ -17,13 +17,13 @@ import {
 	buildAgentCommandString,
 	buildTerminalAgentLaunch,
 	continuationTarget,
-	exitedAgentTerminalIds,
 	validateAgentEffortSelection,
 	validateAgentForkSelection,
 	validateAgentModelSelection,
 	validateAgentModeSelection,
 	validateAgentResumeSelection,
 } from "./agents";
+import { exitedAgentTerminalIds } from "./fork-launch";
 
 const argvConfig = {
 	id: "00000000-0000-0000-0000-000000000001",
