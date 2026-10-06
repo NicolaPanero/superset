@@ -3,7 +3,8 @@
 #
 #   scripts/fork/sync-upstream.sh [--checks] [--push]
 #
-# --checks  install dependencies, then run lint, typecheck and check:i18n
+# --checks  install dependencies, then run lint, check:i18n and typecheck of
+#           the workspaces the fork changes
 # --push    push the merged branch (and main as a mirror of upstream)
 #
 # Exit codes: 0 merged or up to date, 2 conflicts, 3 checks failed.
@@ -71,7 +72,12 @@ fi
 
 if $run_checks; then
 	bun install --frozen --ignore-scripts
-	if ! { bun run lint && bun run typecheck && bun run check:i18n &&
+	# Only the workspaces the fork changes: a failure elsewhere is upstream's.
+	if ! { bun run lint &&
+		bunx turbo typecheck --filter=@superset/desktop \
+			--filter=@superset/host-service --filter=@superset/chat-runtime \
+			--filter=@superset/chat --filter=@superset/agent-setup &&
+		bun run check:i18n &&
 		git diff --exit-code --stat HEAD -- packages/i18n/locales; }; then
 		echo "checks failed after merging upstream" >&2
 		exit 3
