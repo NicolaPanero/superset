@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 
 export type AcpTransport = {
+	pid?: number;
 	send(line: string): void;
 	close(): Promise<void>;
 };
@@ -52,6 +53,7 @@ export function spawnAcpTransport(
 	});
 
 	return {
+		pid: child.pid,
 		send: (line) => {
 			if (!exited) child.stdin.write(`${line}\n`);
 		},

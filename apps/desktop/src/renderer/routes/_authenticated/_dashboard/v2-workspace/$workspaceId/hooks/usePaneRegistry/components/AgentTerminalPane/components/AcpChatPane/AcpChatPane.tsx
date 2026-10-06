@@ -1,15 +1,20 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { UserContent } from "@superset/chat/protocol";
+import { AGENT_DEFAULT_MODE, type UserContent } from "@superset/chat/protocol";
+import { getAgentModelSupport } from "@superset/shared/agent-models";
+import { buildChatSessionHandoffPrompt } from "@superset/shared/terminal-session-handoff";
 import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient } from "@superset/workspace-client";
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { acpHarnessForPreset } from "renderer/lib/acpHarness";
+import type { OpenFile } from "../../../../../../types";
 import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
 import type { ChatForkTarget } from "../../../ChatSession/types";
+import { isUnrestrictedMode } from "../../../ChatSession/utils/isUnrestrictedMode";
 import { useForkChat } from "../../hooks/useForkChat";
+import { readSavedChatMode } from "../../utils/savedChatMode";
 import { AcpChatPending } from "./components/AcpChatPending";
 import { AcpRecovery } from "./components/AcpRecovery";
 
@@ -20,28 +25,46 @@ import { AcpRecovery } from "./components/AcpRecovery";
  */
 export function AcpChatPane({
 	agent,
-	onAgentSessionChanged,
+	isActive,
+	onSessionInfo,
 	onFirstPromptSent,
+	onOpenFile,
+	onModeChange,
 	onSessionCreated,
+	onSwitchAgent,
 	pendingFirstPrompt,
 	sessionId,
+	terminalId,
 	workspaceId,
 	agentConfigId,
 	accountSelection,
 	modelId,
+	modelLabel,
 	modeId,
 }: {
 	workspaceId: string;
+	terminalId: string;
 	/** `sessionId` is absent until the agent has run a turn to report one. */
 	agent: { id: string; sessionId?: string } | undefined;
+	isActive: boolean;
 	sessionId: string | null;
 	pendingFirstPrompt?: UserContent[] | null;
 	onFirstPromptSent?: (() => void) | undefined;
 	onSessionCreated: (sessionId: string) => void;
-	onAgentSessionChanged: (harnessSessionId: string) => void;
+	onModeChange?: (modeId: string) => void;
+	onSessionInfo: (info: { harnessSessionId?: string; title?: string }) => void;
+	onOpenFile?: OpenFile;
+	onSwitchAgent?: (target: {
+		presetId: string;
+		label: string;
+		model: { id: string; label: string } | null;
+		modeId: string | undefined;
+		handoffPrompt: string | null;
+	}) => void;
 	agentConfigId?: string;
 	accountSelection?: string | null;
 	modelId?: string;
+	modelLabel?: string;
 	modeId?: string;
 }) {
 	const { t } = useLingui();
@@ -69,12 +92,24 @@ export function AcpChatPane({
 	});
 
 	const attaching = useRef(false);
+	// A switch to another agent remounts this pane; its pending calls must not
+	// write the old agent back over the new one.
+	const mounted = useRef(true);
+	useEffect(() => {
+		mounted.current = true;
+		return () => {
+			mounted.current = false;
+		};
+	}, []);
 	const start = useCallback(
 		async (resumeHarness: string, resume?: string) => {
 			attaching.current = true;
 			setFailure(null);
 			setRuntimeDead(false);
 			try {
+				const startModeId =
+					modeId ??
+					(resume || !agent ? undefined : readSavedChatMode(agent.id));
 				const created = await wiring.transport.createSession({
 					commandId: crypto.randomUUID(),
 					workspaceId,
@@ -82,11 +117,12 @@ export function AcpChatPane({
 					agentConfigId,
 					accountSelection,
 					strictResume: true,
+					terminalId,
 					...(modelId ? { modelId } : {}),
-					...(modeId ? { modeId } : {}),
+					...(startModeId ? { modeId: startModeId } : {}),
 					...(resume ? { resume: { harnessSessionId: resume } } : {}),
 				});
-				onSessionCreated(created.sessionId);
+				if (mounted.current) onSessionCreated(created.sessionId);
 			} catch (error) {
 				attaching.current = false;
 				setFailure(error instanceof Error ? error.message : String(error));
@@ -95,9 +131,11 @@ export function AcpChatPane({
 		[
 			wiring.transport,
 			workspaceId,
+			terminalId,
 			onSessionCreated,
 			modelId,
 			modeId,
+			agent,
 			agentConfigId,
 			accountSelection,
 		],
@@ -125,7 +163,16 @@ export function AcpChatPane({
 			})
 			.then((forked) => {
 				if (forked) {
+					if (!mounted.current) return;
 					onSessionCreated(forked.sessionId);
+					void wiring.transport
+						.closeSession({ sessionId })
+						.catch((error: unknown) =>
+							console.warn(
+								"[acp-chat] could not close the branched-from chat",
+								error,
+							),
+						);
 					return;
 				}
 				// The adapter declines rather than sending a `session/fork` an
@@ -165,28 +212,96 @@ export function AcpChatPane({
 		void start(harness);
 	}, [harness, start]);
 
+	const agentSwitch = useMemo(() => {
+		if (!agent || !onSwitchAgent) return undefined;
+		const presetIds = [
+			...new Set((agentConfigs ?? []).map((config) => config.presetId)),
+		].filter((presetId) => acpHarnessForPreset(presetId));
+		if (!presetIds.includes(agent.id)) return undefined;
+		return {
+			currentPresetId: agent.id,
+			agents: presetIds.map((presetId) => ({
+				presetId,
+				label:
+					agentConfigs?.find((config) => config.presetId === presetId)?.label ??
+					presetId,
+				models: (getAgentModelSupport(presetId)?.models ?? []).map(
+					({ id, label }) => ({ id, label }),
+				),
+			})),
+			onSwitch: async (
+				presetId: string,
+				nextModel: { id: string; label: string } | null,
+				transcript: string,
+				currentModeId: string | undefined,
+			) => {
+				if (sessionId) {
+					try {
+						await wiring.transport.closeSession({ sessionId });
+					} catch (error) {
+						console.warn("[acp-chat] could not stop the chat session", error);
+						toast.error(t({ message: "Couldn't stop the chat" }));
+						return;
+					}
+				}
+				if (!mounted.current) return;
+				onSwitchAgent({
+					presetId,
+					label:
+						agentConfigs?.find((config) => config.presetId === presetId)
+							?.label ?? presetId,
+					model: nextModel,
+					// Never more access than the chat being left, unless the user
+					// already chose otherwise for the agent being switched to.
+					modeId:
+						readSavedChatMode(presetId) ??
+						(isUnrestrictedMode(currentModeId)
+							? undefined
+							: AGENT_DEFAULT_MODE),
+					handoffPrompt: transcript.trim()
+						? buildChatSessionHandoffPrompt({
+								transcript,
+								sourceAgentLabel: agentConfigs?.find(
+									(config) => config.presetId === agent.id,
+								)?.label,
+							})
+						: null,
+				});
+			},
+		};
+	}, [agent, agentConfigs, onSwitchAgent, sessionId, t, wiring.transport]);
+
 	const sessionDead = runtimeDead || stored?.session?.status === "dead";
 	const sessionStopped =
 		stored !== undefined && stored !== null && !stored.live;
-	// A stopped chat has not lost anything: the agent session it was bound to
-	// can be loaded again. Reopening a pane should just work, so do it rather
-	// than asking. Dead is different — that load already found no transcript.
+	// A stopped or dead chat has not lost anything: the agent session it was
+	// bound to can be loaded again. Dead means the agent exited or failed to
+	// start, and a later attempt may get past either. Reopening a pane should
+	// just work, so do it.
 	const canResume = Boolean(
-		sessionStopped && !sessionDead && harness && agentSessionId,
+		(sessionStopped || sessionDead) && harness && agentSessionId,
 	);
 
 	// Once per mount: if the session we resume into is itself unusable, fall
 	// through to the panel instead of spawning adapters in a loop.
 	const autoResumed = useRef(false);
+	const resumingFrom = useRef<string | null>(null);
 	useEffect(() => {
 		if (!canResume || autoResumed.current) return;
-		if (!harness || !agentSessionId) return;
+		if (!harness || !agentSessionId || !sessionId) return;
 		autoResumed.current = true;
+		resumingFrom.current = sessionId;
 		attaching.current = false;
-		void start(harness, agentSessionId);
-	}, [canResume, harness, agentSessionId, start]);
+		void wiring.transport
+			.closeSession({ sessionId })
+			.catch(() => undefined)
+			.then(() => start(harness, agentSessionId));
+	}, [canResume, harness, agentSessionId, sessionId, start, wiring.transport]);
 
-	if (canResume && !autoResumed.current) {
+	const resuming =
+		canResume &&
+		(!autoResumed.current || (resumingFrom.current === sessionId && !failure));
+	if (resuming) {
 		return (
 			<AcpChatPending>
 				<Trans>Resuming the conversation…</Trans>
@@ -248,17 +363,28 @@ export function AcpChatPane({
 			key={sessionId}
 			onFirstPromptSent={onFirstPromptSent ?? NOOP}
 			agentLabel={agentLabel}
+			agentSwitch={agentSwitch}
+			onModeChange={onModeChange}
 			canForkToWorktree={canForkToWorktree}
+			isActive={isActive}
 			onFork={fork}
+			openFile={onOpenFile}
 			onSessionState={(state) => {
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back
 				// to the CLI resumes an id that no longer exists.
 				if (state?.status === "dead") setRuntimeDead(true);
 				const bound = state?.harnessSessionId;
-				if (bound && bound !== agent?.sessionId) onAgentSessionChanged(bound);
+				if (!mounted.current) return;
+				onSessionInfo({
+					...(bound && bound !== agent?.sessionId
+						? { harnessSessionId: bound }
+						: {}),
+					...(state?.title ? { title: state.title } : {}),
+				});
 			}}
 			pendingFirstPrompt={pendingFirstPrompt ?? null}
+			preferredModelLabel={modelLabel}
 			sessionId={sessionId}
 			workspaceId={workspaceId}
 		/>

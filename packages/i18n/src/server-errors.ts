@@ -434,6 +434,12 @@ export const serverErrorMessages: Record<
 				message: "GitHub sync requires the Pro plan.",
 			}),
 		),
+	"serverError.integration.linearIssueNotFound": () =>
+		i18n._(
+			msg({
+				message: "That Linear issue doesn't exist or you can't see it.",
+			}),
+		),
 	"serverError.integration.linearNotConnected": () =>
 		i18n._(
 			msg({
@@ -571,6 +577,12 @@ export const serverErrorMessages: Record<
 		i18n._(
 			msg({
 				message: "Members cannot modify roles",
+			}),
+		),
+	"serverError.organization.connectLinearToTrackTasks": () =>
+		i18n._(
+			msg({
+				message: "Connect your Linear account before tracking tasks in Linear.",
 			}),
 		),
 	"serverError.organization.onlyOwnersCanUpdateOrganizationSettings": () =>

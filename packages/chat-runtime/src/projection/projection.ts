@@ -1,3 +1,4 @@
+import type { SessionStatus } from "@superset/chat/protocol";
 import { desc, eq } from "drizzle-orm";
 import type { ChatDb, ChatSessionRow } from "../db";
 import { chatSessionsLocal } from "../db";
@@ -6,7 +7,7 @@ export type SessionRowInsert = typeof chatSessionsLocal.$inferInsert;
 
 export type SessionProjection = {
 	harnessSessionId?: string | null;
-	status: string;
+	status: SessionStatus;
 	title: string | null;
 	queuedCount: number;
 	updatedAt: number;
@@ -45,7 +46,7 @@ export function resetSessionForEpoch(
 	db: ChatDb,
 	sessionId: string,
 	epoch: string,
-	status: string,
+	status: SessionStatus,
 	updatedAt: number,
 ): void {
 	db.update(chatSessionsLocal)

@@ -84,6 +84,15 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					});
 					return;
 				}
+				if (
+					data.cliTitle !== undefined &&
+					ctx.pane.titleOverride === data.cliTitle
+				) {
+					ctx.store.getState().setPaneTitleOverride({
+						tabId: ctx.tab.id,
+						paneId: ctx.pane.id,
+					});
+				}
 				terminalRuntimeRegistry.dispose(data.terminalId);
 				try {
 					await killTerminal.mutateAsync({
@@ -166,6 +175,7 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					...data,
 					agentSurface: "cli",
 					terminalId: result.sessionId,
+					cliTitle: result.label,
 				});
 				ctx.actions.setTitle(result.label);
 			} catch (error) {

@@ -13,9 +13,12 @@ import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import {
 	Circle,
+	FileDiff,
 	FileText,
+	FolderTree,
 	GitCompareArrows,
 	GitPullRequest,
+	GitPullRequestArrow,
 	Globe,
 	MessageSquare,
 	Monitor,
@@ -81,6 +84,7 @@ import {
 	useAgentSurfaceSwitch,
 } from "./components/AgentTerminalPane";
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
+import { ChangesListPane } from "./components/ChangesListPane";
 import { ChatV3Pane } from "./components/ChatV3Pane";
 import { CommentPane } from "./components/CommentPane";
 import { CommentPaneHeaderExtras } from "./components/CommentPane/components/CommentPaneHeaderExtras";
@@ -90,12 +94,14 @@ import { DiffPane } from "./components/DiffPane";
 import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneHeaderExtras";
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
+import { FilesTreePane } from "./components/FilesTreePane";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
 import { PagePaneTitle } from "./components/PagePaneTitle";
 import { PullRequestPane } from "./components/PullRequestPane";
 import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/components/PullRequestPaneHeaderExtras";
+import { ReviewPane } from "./components/ReviewPane";
 import { SubagentPane } from "./components/SubagentPane";
 import { TerminalPaneHeaderExtras } from "./components/TerminalPane/components/TerminalPaneHeaderExtras";
 import { TerminalPaneIcon } from "./components/TerminalPane/components/TerminalPaneIcon";
@@ -155,6 +161,8 @@ interface UsePaneRegistryOptions {
 	onRevealPath: (path: string) => void;
 	launcher: TerminalLauncher;
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
+	linkedStores?: StoreApi<WorkspaceStore<PaneViewerData>>[];
+	onSearch?: () => void;
 }
 
 export function usePaneRegistry({
@@ -164,6 +172,8 @@ export function usePaneRegistry({
 	onRevealPath,
 	launcher,
 	store,
+	linkedStores,
+	onSearch,
 }: UsePaneRegistryOptions): PaneRegistry<PaneViewerData> {
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
@@ -373,7 +383,14 @@ export function usePaneRegistry({
 						message: "Terminal",
 					}),
 				titleSource: (pane) => {
-					const { terminalId } = pane.data as TerminalPaneData;
+					const { terminalId, agentSurface, chatTitle } =
+						pane.data as TerminalPaneData;
+					if (agentSurface === "acp") {
+						return {
+							subscribe: () => () => {},
+							getSnapshot: () => chatTitle,
+						};
+					}
 					const instanceId = pane.id;
 					return {
 						subscribe: (callback) =>
@@ -426,7 +443,11 @@ export function usePaneRegistry({
 							(candidate.data as TerminalPaneData).terminalId === terminalId,
 					);
 					if (firstClosed?.id !== pane.id) return;
-					if (findTerminalPaneLocation(store.getState(), terminalId)) {
+					if (
+						[store, ...(linkedStores ?? [])].some((candidate) =>
+							findTerminalPaneLocation(candidate.getState(), terminalId),
+						)
+					) {
 						terminalRuntimeRegistry.release(terminalId, pane.id);
 						return;
 					}
@@ -732,6 +753,31 @@ export function usePaneRegistry({
 						},
 					}
 				: {}),
+			files: {
+				getIcon: () => <FolderTree className="size-3.5" />,
+				getTitle: () => t({ message: "Files" }),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => (
+					<FilesTreePane
+						context={ctx}
+						workspaceId={workspaceId}
+						onSearch={onSearch}
+					/>
+				),
+			},
+			"changes-list": {
+				getIcon: () => <FileDiff className="size-3.5" />,
+				getTitle: () => t({ message: "Changes" }),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => (
+					<ChangesListPane context={ctx} workspaceId={workspaceId} />
+				),
+			},
+			review: {
+				getIcon: () => <GitPullRequestArrow className="size-3.5" />,
+				getTitle: () => t({ message: "Review" }),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => (
+					<ReviewPane context={ctx} workspaceId={workspaceId} />
+				),
+			},
 			mobile: {
 				getIcon: () => <Smartphone className="size-3.5" />,
 				getTitle: () =>
@@ -752,7 +798,9 @@ export function usePaneRegistry({
 								const data = ctx.pane.data as ChatV3PaneData;
 								return (
 									<ChatV3Pane
+										isActive={ctx.isActive}
 										workspaceId={workspaceId}
+										onOpenFile={onOpenFile}
 										sessionId={data.sessionId}
 										onSessionIdChange={(id) =>
 											ctx.actions.updateData({ ...data, sessionId: id })
@@ -923,6 +971,7 @@ export function usePaneRegistry({
 		}),
 		[
 			store,
+			linkedStores,
 			workspaceId,
 			isChatV3Enabled,
 			agentSurface,
@@ -937,6 +986,7 @@ export function usePaneRegistry({
 			onOpenComment,
 			onOpenFile,
 			onRevealPath,
+			onSearch,
 			createNewAgentSession,
 			openAgentChat,
 			focusAgentTerminal,

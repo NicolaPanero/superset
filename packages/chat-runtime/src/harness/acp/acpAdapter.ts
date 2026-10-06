@@ -12,12 +12,25 @@ import type {
 	Turn,
 	UserContent,
 } from "@superset/chat/protocol";
+import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import { BackgroundTasks } from "../backgroundTasks";
 import { EventQueue } from "../eventQueue";
 import type {
 	AdapterEvent,
 	HarnessAdapter,
 	HarnessStartOptions,
 } from "../types";
+import {
+	AIR_ASYNC_TASK_STOP_METHOD,
+	AIR_CLIENT_META,
+	airAsyncTaskProgressSchema,
+	airAsyncTaskSpawnedSchema,
+	airAsyncTaskStateSchema,
+	airSubagentSpawnedSchema,
+	airSubagentStateSchema,
+	isSubagentControlCall,
+	isTerminalAirState,
+} from "./air";
 import { cursorApproval } from "./cursorExtensions";
 import type {
 	AcpNotification,
@@ -41,6 +54,7 @@ import {
 	acpPlanUpdateSchema,
 	acpPromptResponseSchema,
 	acpRequestPermissionParamsSchema,
+	acpSessionInfoUpdateSchema,
 	acpSessionNotificationSchema,
 	acpSessionUpdateSchema,
 	acpStateUpdateSchema,
@@ -135,11 +149,19 @@ export type AcpAttachment = {
 	data: string;
 };
 
+const SELECTION_WAIT_MS = 5000;
+
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
 	startupTimeoutMs?: number;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
+	/** Selected for a new session that asks for no mode, when the agent offers it. */
+	defaultModeId?: string;
+	/** How long a prompt waits for mode and option changes the agent has not answered. */
+	selectionWaitMs?: number;
 	resolveAttachment?: (attachmentId: string) => Promise<AcpAttachment | null>;
+	onSpawn?: (pid: number) => void;
+	backgroundDetailIntervalMs?: number;
 	now?: () => number;
 	mintId?: () => string;
 	createTransport?(
@@ -165,12 +187,29 @@ type PendingApproval = {
 	respond?: (decision: Decision) => unknown;
 };
 
+type AcpSessionModes = NonNullable<
+	ReturnType<typeof acpNewSessionResponseSchema.parse>["modes"]
+>;
+
 /**
  * Bridges an Agent Client Protocol subprocess (Claude Code / Codex ACP
  * adapters) into the chat runtime. A chat turn maps to one `session/prompt`
  * round trip; ACP `session/update` notifications stream into chat items and
  * deltas; `session/request_permission` becomes an approval item.
  */
+const APPROVAL_OPTION_KINDS = new Set([
+	"allow_once",
+	"allow_always",
+	"reject_once",
+	"reject_always",
+]);
+
+function isApprovalOptionKind(
+	kind: string | undefined,
+): kind is "allow_once" | "allow_always" | "reject_once" | "reject_always" {
+	return kind !== undefined && APPROVAL_OPTION_KINDS.has(kind);
+}
+
 export class AcpAdapter implements HarnessAdapter {
 	private readonly queue = new EventQueue();
 	private readonly toolCalls = new Map<string, ToolCall>();
@@ -184,12 +223,17 @@ export class AcpAdapter implements HarnessAdapter {
 		string,
 		{ text: string; startedAtMs: number }
 	>();
-	/** Children announced by `subagent_update`, so each is noted once. */
-	private readonly subagents = new Set<string>();
+	private readonly subagents = new Map<
+		string,
+		{ item: ToolCall; turnId: string }
+	>();
+	private readonly finishedSubagents = new Set<string>();
+	private readonly backgroundTasks: BackgroundTasks;
 	/** Start of each named v2 plan, so a revision keeps its place in the order. */
 	private readonly planItems = new Map<string, number>();
 	private client: AcpRpcClient | null = null;
 	private sessionId: string | null = null;
+	private loadingSessionId: string | null = null;
 	private cwd = process.cwd();
 	private openText: OpenText | null = null;
 	private currentTurn: Turn | null = null;
@@ -200,12 +244,24 @@ export class AcpAdapter implements HarnessAdapter {
 	private agentCapabilities: Record<string, unknown> = {};
 	/** The v2 config option that stands in for v1's session mode, once seen. */
 	private modeConfigId: string | null = null;
+	private modeId: string | undefined;
+	private readonly selectionsInFlight = new Set<Promise<void>>();
 	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
 	private queuedPrompts: UserContent[][] = [];
 	private disposed = false;
 
-	constructor(private readonly options: AcpAdapterOptions) {}
+	constructor(private readonly options: AcpAdapterOptions) {
+		this.backgroundTasks = new BackgroundTasks(
+			(tasks) => this.emitSession({ backgroundTasks: tasks }),
+			(taskId, detail) =>
+				this.emit({
+					kind: "delta",
+					delta: { type: "background", itemId: taskId, append: detail },
+				}),
+			options.backgroundDetailIntervalMs,
+		);
+	}
 
 	start(startOptions: HarnessStartOptions): AsyncIterable<AdapterEvent> {
 		this.cwd = startOptions.cwd;
@@ -248,6 +304,7 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	setMode(modeId: string): void {
+		const previous = this.modeId;
 		this.emitSession({ modeId });
 		if (!this.client || !this.sessionId) return;
 		// v2 dropped session/set_mode outright: a mode is a config option there,
@@ -264,9 +321,44 @@ export class AcpAdapter implements HarnessAdapter {
 						sessionId: this.sessionId,
 						modeId,
 					});
-		void pending.catch((error: Error) =>
-			this.emitNotice("error", error.message),
+		this.trackSelection(pending);
+		void pending.catch((error: Error) => {
+			if (previous && this.modeId === modeId) {
+				this.emitSession({ modeId: previous });
+			}
+			this.emitNotice("error", error.message);
+		});
+	}
+
+	private trackSelection(request: Promise<unknown>): void {
+		const settled = request.then(
+			() => undefined,
+			() => undefined,
 		);
+		this.selectionsInFlight.add(settled);
+		void settled.then(() => this.selectionsInFlight.delete(settled));
+	}
+
+	/** An agent may run a prompt before it applies a mode or model it was just sent. */
+	private async selectionsApplied(): Promise<void> {
+		if (this.selectionsInFlight.size === 0) return;
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		const confirmed = await Promise.race([
+			Promise.all(this.selectionsInFlight).then(() => true),
+			new Promise<boolean>((resolve) => {
+				timer = setTimeout(
+					() => resolve(false),
+					this.options.selectionWaitMs ?? SELECTION_WAIT_MS,
+				);
+			}),
+		]);
+		clearTimeout(timer);
+		if (!confirmed) {
+			this.emitNotice(
+				"error",
+				"The agent did not confirm a mode or model change. This turn can run with the previous setting.",
+			);
+		}
 	}
 
 	setConfigOption(configId: string, value: string): void {
@@ -274,6 +366,8 @@ export class AcpAdapter implements HarnessAdapter {
 		const sessionId = this.sessionId;
 		if (!client || !sessionId) return;
 		const previous = this.configOptions;
+		const previousModeId =
+			configId === this.modeConfigId ? this.modeId : undefined;
 		this.configOptions = previous.map((option) =>
 			option.id === configId ? { ...option, currentValue: value } : option,
 		);
@@ -281,19 +375,33 @@ export class AcpAdapter implements HarnessAdapter {
 			configOptions: this.configOptions,
 			...(configId === this.modeConfigId ? { modeId: value } : {}),
 		});
-		client
-			.request("session/set_config_option", {
-				sessionId,
-				configId,
-				value,
-				...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
-			})
+		const request = client.request("session/set_config_option", {
+			sessionId,
+			configId,
+			value,
+			...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
+		});
+		this.trackSelection(request);
+		request
 			.then((response) => this.handleConfigOptions(response))
 			.catch((error: Error) => {
 				this.configOptions = previous;
-				this.emitSession({ configOptions: previous });
+				this.emitSession({
+					configOptions: previous,
+					...(previousModeId ? { modeId: previousModeId } : {}),
+				});
 				this.emitNotice("error", error.message);
 			});
+	}
+
+	async stopBackgroundTask(taskId: string): Promise<boolean> {
+		if (!this.client || !this.sessionId) return false;
+		if (!this.backgroundTasks.canStop(taskId)) return false;
+		const response = await this.client.request(AIR_ASYNC_TASK_STOP_METHOD, {
+			sessionId: this.sessionId,
+			asyncTaskId: taskId,
+		});
+		return (response as { stopped?: unknown } | null)?.stopped === true;
 	}
 
 	/**
@@ -325,6 +433,7 @@ export class AcpAdapter implements HarnessAdapter {
 		if (this.disposed) return;
 		this.disposed = true;
 		this.stalePendingApprovals();
+		this.backgroundTasks.dispose();
 		await this.client?.close();
 		this.queue.close();
 	}
@@ -335,8 +444,8 @@ export class AcpAdapter implements HarnessAdapter {
 			const launch = await this.options.launch?.();
 			if (this.disposed) return;
 			const client = new AcpRpcClient({
-				createTransport: (handlers) =>
-					(this.options.createTransport ?? spawnAcpTransport)(
+				createTransport: (handlers) => {
+					const transport = (this.options.createTransport ?? spawnAcpTransport)(
 						{
 							command: launch?.command ?? this.options.command,
 							args: launch?.args ?? this.options.args,
@@ -344,7 +453,11 @@ export class AcpAdapter implements HarnessAdapter {
 							env: launch?.env ?? this.options.env,
 						},
 						handlers,
-					),
+					);
+					if (transport.pid !== undefined)
+						this.options.onSpawn?.(transport.pid);
+					return transport;
+				},
 				onNotification: (notification) => this.handleNotification(notification),
 				onServerRequest: (request) => this.handleServerRequest(request),
 				onStderr: () => undefined,
@@ -369,12 +482,13 @@ export class AcpAdapter implements HarnessAdapter {
 				// Nothing to advertise either way: v2 moved fs and terminal out of
 				// client capabilities entirely, and receiving `subagent_update` is a
 				// baseline v2 requirement rather than a capability.
-				capabilities: {},
+				capabilities: { _meta: AIR_CLIENT_META },
 				// Do not advertise fs/terminal: the agent falls back to its own
 				// Read/Edit/Bash tools, which run headless in the workspace.
 				clientCapabilities: {
 					fs: { readTextFile: false, writeTextFile: false },
 					terminal: false,
+					_meta: AIR_CLIENT_META,
 				},
 			});
 
@@ -393,14 +507,17 @@ export class AcpAdapter implements HarnessAdapter {
 					methodId: this.options.authMethodId,
 				});
 			let response: unknown;
+			let resumed = false;
 			if (startOptions.resume) {
 				this.replaying = true;
+				this.loadingSessionId = startOptions.resume.harnessSessionId;
 				try {
 					response = await startupRequest("session/load", {
 						sessionId: startOptions.resume.harnessSessionId,
 						cwd: startOptions.cwd,
 						mcpServers: [],
 					});
+					resumed = true;
 				} catch (loadError) {
 					if (startOptions.strictResume) throw loadError;
 					// An agent that was started but never prompted has a session id and
@@ -420,6 +537,7 @@ export class AcpAdapter implements HarnessAdapter {
 					});
 				} finally {
 					this.replaying = false;
+					this.loadingSessionId = null;
 					// Nothing follows the replay, so the last item it opened has no
 					// later turn to flush it.
 					this.flushOpenText();
@@ -466,7 +584,11 @@ export class AcpAdapter implements HarnessAdapter {
 					: {}),
 			});
 			this.handleConfigOptions(response);
-			this.applyStartSelections(startOptions);
+			this.applyStartSelections(
+				startOptions,
+				parsed.success ? parsed.data.modes : undefined,
+				resumed,
+			);
 
 			const queued = this.queuedPrompts.splice(0, this.queuedPrompts.length);
 			for (const content of queued) await this.runTurn(content);
@@ -479,6 +601,7 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private async runTurn(content: UserContent[]): Promise<void> {
+		await this.selectionsApplied();
 		const client = this.client;
 		if (!client || !this.sessionId) return;
 		const turnId = this.mintId();
@@ -552,6 +675,43 @@ export class AcpAdapter implements HarnessAdapter {
 			return;
 		}
 
+		switch (variant) {
+			case "async_task_spawned":
+				this.handleAsyncTaskSpawned(outer.data.update);
+				return;
+			case "async_task_progress":
+				this.handleAsyncTaskProgress(outer.data.update);
+				return;
+			case "async_task_state_update":
+				this.handleAsyncTaskState(outer.data.update);
+				return;
+			case "subagent_spawned":
+				this.handleSubagentSpawned(outer.data.update);
+				return;
+			case "subagent_state_update":
+				this.handleSubagentState(outer.data.update);
+				return;
+			case "subagent_update":
+				this.handleSubagentUpdate(outer.data.update);
+				return;
+			case "session_info_update": {
+				if (this.isForeignSession(outer.data.sessionId)) return;
+				const info = acpSessionInfoUpdateSchema.safeParse(outer.data.update);
+				if (info.success && info.data.title)
+					this.emitSession({ title: info.data.title });
+				return;
+			}
+		}
+
+		if (
+			this.isForeignSession(outer.data.sessionId) ||
+			this.subagents.has(outer.data.sessionId) ||
+			this.finishedSubagents.has(outer.data.sessionId)
+		) {
+			this.handleSubagentActivity(outer.data.sessionId, outer.data.update);
+			return;
+		}
+
 		const turnId = this.resolveTurnId();
 
 		switch (variant) {
@@ -606,12 +766,14 @@ export class AcpAdapter implements HarnessAdapter {
 			case "state_update":
 				this.handleStateUpdate(outer.data.update);
 				return;
-			case "subagent_update":
-				this.handleSubagentUpdate(outer.data.update);
-				return;
 			default:
 				return;
 		}
+	}
+
+	private isForeignSession(sessionId: string): boolean {
+		const own = this.sessionId ?? this.loadingSessionId;
+		return own !== null && sessionId !== own;
 	}
 
 	private messageIdOf(raw: unknown): string | null {
@@ -691,7 +853,8 @@ export class AcpAdapter implements HarnessAdapter {
 		this.openText = next;
 		// A user message has no text field to stream into, so it is recorded
 		// once, whole, when it flushes.
-		if (kind !== "user_message") this.emitItem(this.textItem(next), turnId);
+		if (kind !== "user_message")
+			this.emitItem(this.textItem(next, "open"), turnId);
 		return next;
 	}
 
@@ -722,14 +885,14 @@ export class AcpAdapter implements HarnessAdapter {
 				text: open.text,
 				startedAtMs: open.startedAtMs,
 			});
-		this.emitItem(this.textItem(open), open.turnId);
+		this.emitItem(this.textItem(open, "flushed"), open.turnId);
 	}
 
-	private textItem(open: OpenText): Item {
+	private textItem(open: OpenText, state: "open" | "flushed"): Item {
 		const base = {
 			id: open.itemId,
 			startedAtMs: open.startedAtMs,
-			completedAtMs: this.now(),
+			...(state === "flushed" ? { completedAtMs: this.now() } : {}),
 		};
 		switch (open.kind) {
 			case "agent_message":
@@ -751,6 +914,13 @@ export class AcpAdapter implements HarnessAdapter {
 		this.flushOpenText();
 		const update = parsed.data;
 		const prior = this.toolCalls.get(update.toolCallId);
+		if (
+			!prior &&
+			!update.title &&
+			update.status !== "failed" &&
+			isSubagentControlCall(raw)
+		)
+			return;
 		// Patch semantics in both versions: an omitted field leaves the stored
 		// value alone, and v2 added null to clear it.
 		const content =
@@ -910,16 +1080,117 @@ export class AcpAdapter implements HarnessAdapter {
 	private handleSubagentUpdate(raw: unknown): void {
 		const parsed = acpSubagentUpdateSchema.safeParse(raw);
 		if (!parsed.success) return;
-		const { sessionId, title, description } = parsed.data;
-		// Only the first update for a child announces it; the rest patch metadata
-		// this view does not show.
-		if (this.subagents.has(sessionId)) return;
-		this.subagents.add(sessionId);
-		const name = title ?? sessionId;
-		this.emitNotice(
-			"info",
-			description ? `Subagent ${name}: ${description}` : `Subagent ${name}`,
+		const { sessionId, title, description, state } = parsed.data;
+		if (this.finishedSubagents.has(sessionId)) return;
+		if (!this.subagents.has(sessionId)) {
+			this.startSubagent(sessionId, title, description);
+		}
+		if (state && isTerminalAirState(state.state)) {
+			this.finishSubagent(sessionId, state.state);
+		}
+	}
+
+	private handleSubagentSpawned(raw: unknown): void {
+		const parsed = airSubagentSpawnedSchema.safeParse(raw);
+		if (!parsed.success) return;
+		const { subagentSessionId, name, task } = parsed.data;
+		if (
+			this.subagents.has(subagentSessionId) ||
+			this.finishedSubagents.has(subagentSessionId)
+		)
+			return;
+		this.startSubagent(subagentSessionId, name, task);
+	}
+
+	private handleSubagentState(raw: unknown): void {
+		const parsed = airSubagentStateSchema.safeParse(raw);
+		if (!parsed.success || !isTerminalAirState(parsed.data.state)) return;
+		this.finishSubagent(parsed.data.subagentSessionId, parsed.data.state);
+	}
+
+	private startSubagent(
+		sessionId: string,
+		name: string | null | undefined,
+		task: string | null | undefined,
+	): void {
+		this.flushOpenText();
+		const title = name || task || "";
+		const startedAtMs = this.nextStartMs();
+		const item: ToolCall = {
+			id: `subagent:${sessionId}`,
+			kind: "tool_call",
+			title,
+			toolKind: "think",
+			toolName: "subagent",
+			status: "running",
+			content: task ? [{ type: "text", text: task }] : [],
+			startedAtMs,
+			subagent: true,
+		};
+		const turnId = this.resolveTurnId();
+		this.subagents.set(sessionId, { item, turnId });
+		this.emitItem(item, turnId);
+		this.backgroundTasks.start({
+			id: item.id,
+			kind: "subagent",
+			name: title,
+			canStop: false,
+			startedAtMs,
+		});
+	}
+
+	private finishSubagent(sessionId: string, state: string): void {
+		const run = this.subagents.get(sessionId);
+		if (!run) return;
+		this.subagents.delete(sessionId);
+		this.finishedSubagents.add(sessionId);
+		this.backgroundTasks.end(run.item.id);
+		this.emitItem(
+			{
+				...run.item,
+				status:
+					state === "failed" || state === "disconnected"
+						? "failed"
+						: state === "cancelled" || state === "stopped"
+							? "canceled"
+							: "completed",
+				completedAtMs: this.now(),
+			},
+			run.turnId,
 		);
+	}
+
+	private handleSubagentActivity(sessionId: string, raw: unknown): void {
+		const run = this.subagents.get(sessionId);
+		const update = acpToolCallUpdateSchema.safeParse(raw);
+		if (!run || !update.success || !update.data.title) return;
+		this.backgroundTasks.update(run.item.id, { detail: update.data.title });
+	}
+
+	private handleAsyncTaskSpawned(raw: unknown): void {
+		const parsed = airAsyncTaskSpawnedSchema.safeParse(raw);
+		if (!parsed.success) return;
+		const { asyncTaskId, name, description, canStop } = parsed.data;
+		this.backgroundTasks.start({
+			id: asyncTaskId,
+			kind: "process",
+			name: name || description || "",
+			canStop: canStop ?? false,
+			startedAtMs: this.now(),
+		});
+	}
+
+	private handleAsyncTaskProgress(raw: unknown): void {
+		const parsed = airAsyncTaskProgressSchema.safeParse(raw);
+		if (!parsed.success) return;
+		const { asyncTaskId, summary } = parsed.data;
+		if (summary) this.backgroundTasks.update(asyncTaskId, { detail: summary });
+	}
+
+	private handleAsyncTaskState(raw: unknown): void {
+		const parsed = airAsyncTaskStateSchema.safeParse(raw);
+		if (!parsed.success || !isTerminalAirState(parsed.data.state)) return;
+		this.backgroundTasks.end(parsed.data.asyncTaskId);
 	}
 
 	private handleConfigOptions(raw: unknown): void {
@@ -958,10 +1229,24 @@ export class AcpAdapter implements HarnessAdapter {
 		});
 	}
 
-	private applyStartSelections(startOptions: HarnessStartOptions): void {
+	private startModeId(
+		startOptions: HarnessStartOptions,
+		resumed: boolean,
+	): string | undefined {
+		if (startOptions.modeId === AGENT_DEFAULT_MODE) return undefined;
+		if (startOptions.modeId) return startOptions.modeId;
+		return resumed ? undefined : this.options.defaultModeId;
+	}
+
+	private applyStartSelections(
+		startOptions: HarnessStartOptions,
+		sessionModes: AcpSessionModes | undefined,
+		resumed: boolean,
+	): void {
+		const modeId = this.startModeId(startOptions, resumed);
 		for (const [category, value] of [
 			["model", startOptions.modelId],
-			["mode", startOptions.modeId],
+			["mode", modeId],
 		] as const) {
 			const option = this.configOptions.find(
 				(entry) => entry.category === category,
@@ -974,6 +1259,14 @@ export class AcpAdapter implements HarnessAdapter {
 			) {
 				this.setConfigOption(option.id, value);
 			}
+		}
+		if (
+			modeId &&
+			!this.modeConfigId &&
+			sessionModes?.currentModeId !== modeId &&
+			sessionModes?.availableModes?.some((mode) => mode.id === modeId)
+		) {
+			this.setMode(modeId);
 		}
 	}
 
@@ -1039,6 +1332,7 @@ export class AcpAdapter implements HarnessAdapter {
 			options: parsed.data.options.map((option) => ({
 				optionId: option.optionId,
 				label: option.name,
+				...(isApprovalOptionKind(option.kind) ? { kind: option.kind } : {}),
 			})),
 		};
 		this.pendingApprovals.set(approvalId, {
@@ -1126,6 +1420,10 @@ export class AcpAdapter implements HarnessAdapter {
 	private handleExit(code: number | null): void {
 		if (this.disposed) return;
 		this.stalePendingApprovals();
+		for (const sessionId of [...this.subagents.keys()]) {
+			this.finishSubagent(sessionId, "failed");
+		}
+		this.backgroundTasks.clear();
 		this.emitNotice("error", `acp agent exited (code ${code ?? "null"})`);
 		this.emitSession({ status: "dead" });
 		this.queue.close();
@@ -1211,6 +1509,7 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private emitSession(session: Partial<SessionState>): void {
+		if (session.modeId) this.modeId = session.modeId;
 		this.emit({ kind: "session", session });
 	}
 

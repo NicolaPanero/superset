@@ -22,11 +22,13 @@ export type {
 	PromptInputAttachment,
 	PromptInputCommand,
 	PromptInputDictation,
+	PromptInputHandle,
 	PromptInputProps,
 	PromptInputSubmitPayload,
 } from "./types";
 
 export function PromptInput({
+	ref,
 	placeholder = i18n._(
 		msg({
 			message: "Do anything",
@@ -36,6 +38,7 @@ export function PromptInput({
 	commands,
 	dictation,
 	status = "ready",
+	submitWhileStreaming = false,
 	placement = "top",
 	toolbar,
 	toolbarEnd,
@@ -43,9 +46,16 @@ export function PromptInput({
 	onChange,
 	onSubmit,
 	onStop,
+	header,
+	onAddFiles,
+	allowEmptySubmit = false,
+	clearOnSubmit = true,
+	hideSubmit = false,
+	autoFocus = false,
 	onMentionHighlight,
 	onAttachmentClick,
 	onChipClick,
+	history,
 	className,
 }: PromptInputProps) {
 	const [initialConfig] = useState<InitialConfigType>(() => ({
@@ -60,11 +70,13 @@ export function PromptInput({
 		<div className={className}>
 			<LexicalRoot initialConfig={initialConfig}>
 				<ComposerBody
+					ref={ref}
 					placeholder={placeholder}
 					mentionProviders={mentionProviders}
 					commands={commands}
 					dictation={dictation}
 					status={status}
+					submitWhileStreaming={submitWhileStreaming}
 					placement={placement}
 					toolbar={toolbar}
 					toolbarEnd={toolbarEnd}
@@ -72,9 +84,16 @@ export function PromptInput({
 					onChange={onChange}
 					onSubmit={onSubmit}
 					onStop={onStop}
+					header={header}
+					onAddFiles={onAddFiles}
+					allowEmptySubmit={allowEmptySubmit}
+					clearOnSubmit={clearOnSubmit}
+					hideSubmit={hideSubmit}
+					autoFocus={autoFocus}
 					onMentionHighlight={onMentionHighlight}
 					onAttachmentClick={onAttachmentClick}
 					onChipClick={onChipClick}
+					history={history}
 				/>
 			</LexicalRoot>
 		</div>
