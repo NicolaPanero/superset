@@ -16469,6 +16469,9 @@ msgstr "이 자동화에는 아직 지시문이 없습니다. 실행하기 전�
 msgid "This automation is in another organization"
 msgstr "이 자동화는 다른 조직에 있습니다"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "이 빌드는 자동으로 업데이트되지 않습니다. 업데이트하려면 소스에서 다시 빌드하세요."
+
 msgid "This cannot be undone."
 msgstr "되돌릴 수 없습니다."
 

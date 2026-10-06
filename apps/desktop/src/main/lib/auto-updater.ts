@@ -58,6 +58,9 @@ function isPrereleaseBuild(): boolean {
 
 const IS_PRERELEASE = isPrereleaseBuild();
 const IS_AUTO_UPDATE_PLATFORM = PLATFORM.IS_MAC || PLATFORM.IS_LINUX;
+// Set by fork builds: the official feed would replace them on update.
+const AUTO_UPDATE_DISABLED_AT_BUILD =
+	process.env.SUPERSET_AUTO_UPDATE === "disabled";
 
 // Use explicit feed URLs to ensure we always fetch platform-specific manifests
 // (for example latest-mac.yml and latest-linux.yml) from the correct release.
@@ -220,7 +223,11 @@ export function dismissUpdate(): void {
 }
 
 export function checkForUpdates(): void {
-	if (env.NODE_ENV === "development" || !IS_AUTO_UPDATE_PLATFORM) {
+	if (
+		env.NODE_ENV === "development" ||
+		!IS_AUTO_UPDATE_PLATFORM ||
+		AUTO_UPDATE_DISABLED_AT_BUILD
+	) {
 		return;
 	}
 	if (isUpdateCheckDisabledByEnvironment()) {
@@ -274,6 +281,20 @@ export function checkForUpdatesInteractive(): void {
 			message: i18n._(
 				msg({
 					message: "Auto-updates are only available on macOS and Linux.",
+				}),
+			),
+		});
+		return;
+	}
+
+	if (AUTO_UPDATE_DISABLED_AT_BUILD) {
+		dialog.showMessageBox({
+			type: "info",
+			title: i18n._(msg({ message: "Updates" })),
+			message: i18n._(
+				msg({
+					message:
+						"This build does not update itself. Rebuild it from its source to update.",
 				}),
 			),
 		});
@@ -437,7 +458,11 @@ export function simulateError(): void {
 }
 
 export function setupAutoUpdater(): void {
-	if (env.NODE_ENV === "development" || !IS_AUTO_UPDATE_PLATFORM) {
+	if (
+		env.NODE_ENV === "development" ||
+		!IS_AUTO_UPDATE_PLATFORM ||
+		AUTO_UPDATE_DISABLED_AT_BUILD
+	) {
 		return;
 	}
 

@@ -16469,6 +16469,9 @@ msgstr "このオートメーションにはまだ指示がありません。実
 msgid "This automation is in another organization"
 msgstr "このオートメーションは別の組織にあります"
 
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "このビルドは自動更新されません。更新するにはソースから再ビルドしてください。"
+
 msgid "This cannot be undone."
 msgstr "この操作は元に戻せません。"
 
