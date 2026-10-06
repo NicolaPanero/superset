@@ -36,7 +36,7 @@ export function ExperimentalSettings({
 	visibleItems,
 }: ExperimentalSettingsProps) {
 	const { t } = useLingui();
-	const acpChatEnabled = useSettings((state) => state.acpChatEnabled === true);
+	const acpChatEnabled = useSettings((state) => state.acpChatEnabled !== false);
 	const updateSettings = useSettings((state) => state.update);
 	const searchQuery = useSettingsSearchQuery();
 	const showSupersetV2 = isItemVisible(
