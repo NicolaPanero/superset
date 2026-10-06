@@ -28,6 +28,11 @@ export const acpInitializeResponseSchema = z.looseObject({
 	agentCapabilities: z.looseObject({}).optional(),
 	capabilities: z.looseObject({}).optional(),
 	authMethods: z.array(z.unknown()).optional(),
+	_meta: z
+		.looseObject({
+			steering: z.looseObject({ supported: z.boolean().optional() }).optional(),
+		})
+		.optional(),
 });
 export type AcpInitializeResponse = z.infer<typeof acpInitializeResponseSchema>;
 
@@ -45,6 +50,16 @@ export const acpNewSessionResponseSchema = z.looseObject({
 
 export const acpPromptResponseSchema = z.looseObject({
 	stopReason: z.string(),
+});
+
+export const acpUsageUpdateSchema = z.looseObject({
+	cost: z.unknown().optional(),
+});
+
+export const ACP_STEERING_METHOD = "_session/steering";
+
+export const acpSteeringResponseSchema = z.looseObject({
+	outcome: z.string(),
 });
 
 // --- session/update variants -------------------------------------------------

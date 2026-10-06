@@ -30,7 +30,7 @@ interface RightPaneAreaProps {
 	contextMenuActions: ContextMenuActionConfig<PaneViewerData>[];
 	onBeforeCloseTab: (tab: Tab<PaneViewerData>) => boolean | Promise<boolean>;
 	onInteractionStateChange?: (state: WorkspaceInteractionState) => void;
-	runButton: ReactNode;
+	workspaceControls: ReactNode;
 	isExpanded: boolean;
 	onToggleExpanded: () => void;
 	onMergeIntoCenter: () => void;
@@ -46,7 +46,7 @@ export function RightPaneArea({
 	contextMenuActions,
 	onBeforeCloseTab,
 	onInteractionStateChange,
-	runButton,
+	workspaceControls,
 	isExpanded,
 	onToggleExpanded,
 	onMergeIntoCenter,
@@ -72,8 +72,7 @@ export function RightPaneArea({
 				<RightPaneAddMenu onAdd={onAdd} isChatEnabled={isChatEnabled} />
 			)}
 			renderTabBarTrailing={() => (
-				<div className="flex items-center gap-1">
-					{runButton}
+				<div className="flex items-center gap-1 pr-1">
 					<RightPaneHeaderButton
 						label={t({ message: "Merge into center" })}
 						onClick={onMergeIntoCenter}
@@ -94,7 +93,8 @@ export function RightPaneArea({
 							<LuMaximize2 className="size-4" strokeWidth={1.5} />
 						)}
 					</RightPaneHeaderButton>
-					<RightSidebarToggle />
+					{workspaceControls}
+					<RightSidebarToggle compact />
 					{showWindowControls && <WindowControlsInset />}
 				</div>
 			)}

@@ -29,6 +29,9 @@ msgstr "。{0}はまだStripeサブスクリプションとしてモデル化さ
 msgid ". Each card shows the canonical import path — click it to copy. Reach for these before writing anything custom."
 msgstr "です。各カードには正規のインポートパスが表示されます — クリックするとコピーできます。独自に何かを書く前に、まずこれらを使ってください。"
 
+msgid "...and many more!"
+msgstr "…ほか多数！"
+
 msgid "./"
 msgstr "./"
 
@@ -83,9 +86,6 @@ msgstr "({aliveCount}件実行中)"
 
 msgid "(Coming Soon)"
 msgstr "(近日公開)"
-
-msgid "(disabled)"
-msgstr "(無効)"
 
 msgid "(edited)"
 msgstr "（編集済み）"
@@ -387,8 +387,8 @@ msgid "{0} Documentation"
 msgstr "{0}ドキュメント"
 
 #. placeholder {0}: displayName(variables.name)
-#. placeholder {0}: plugin.interface.displayName
 #. placeholder {0}: skill.name
+#. placeholder {0}: variables.name
 msgid "{0} enabled"
 msgstr "{0}を有効化"
 
@@ -413,6 +413,10 @@ msgstr "{0}をインストールしました"
 #. placeholder {1}: i18n._( HOTKEYS[pendingConflict.conflictId].label, )
 msgid "{0} is already assigned to \"{1}\"."
 msgstr "{0}はすでに「{1}」に割り当てられています。"
+
+#. placeholder {0}: params?.key
+msgid "{0} is already used for tasks in this organization."
+msgstr "{0} はこの組織のタスクですでに使われています。"
 
 #. placeholder {0}: params?.repoFullName
 msgid "{0} is not a repository the GitHub App is installed on"
@@ -1456,6 +1460,9 @@ msgstr "トークン単位で課金される別プロファイルです。キー
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "スキル、プラグイン、MCPサーバー、設定を共有する別プロファイルです。"
 
+msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
+msgstr "タスクキーは英字で始まる 1〜5 文字の英数字です。"
+
 msgid "a teammate"
 msgstr "チームメンバー"
 
@@ -1702,6 +1709,12 @@ msgstr "写真やファイルを追加"
 
 msgid "Add project"
 msgstr "プロジェクトを追加"
+
+msgid "Add Project from Folder"
+msgstr "フォルダからプロジェクトを追加"
+
+msgid "Add Project from Folder..."
+msgstr "フォルダからプロジェクトを追加..."
 
 msgid "Add prompt e.g. look for crashes in $sentry"
 msgstr "プロンプトを追加 例: $sentryでクラッシュを探す"
@@ -2023,6 +2036,9 @@ msgstr "すべてのデータは{ACCOUNT_DELETION_GRACE_DAYS}日後に完全に�
 
 msgid "All open terminal sessions will be killed and any running host-services will be stopped. Use “Close Superset” instead if you want services to keep running for the next launch."
 msgstr "開いているターミナルセッションはすべて終了し、実行中のhost-serviceも停止します。次回の起動までサービスを実行し続けたい場合は、「Supersetを閉じる」を使用してください。"
+
+msgid "All pages"
+msgstr "すべてのページ"
 
 msgid "All plans"
 msgstr "すべてのプラン"
@@ -2466,6 +2482,9 @@ msgstr "変更を依頼"
 msgid "Ask to make changes, @mention files, run /commands"
 msgstr "変更を依頼、@でファイルをメンション、/でコマンドを実行"
 
+msgid "Ask what your agents are up to, or tell one what to do next."
+msgstr "エージェントの様子を聞いたり、次にやることを指示したりできます。"
+
 msgid "Asks before edits and commands"
 msgstr "編集とコマンドの前に確認"
 
@@ -2772,6 +2791,9 @@ msgstr "ページ"
 
 msgid "Back to the leaderboard"
 msgstr "リーダーボードに戻る"
+
+msgid "Backed by"
+msgstr "支援者"
 
 msgid "Background"
 msgstr "背景"
@@ -3437,6 +3459,12 @@ msgstr "ホストを確認中…"
 
 msgid "Checking out a PR requires a project"
 msgstr "PRのチェックアウトにはプロジェクトが必要です"
+
+msgid "Checking pull requests in {what}"
+msgstr "{what} のプルリクエストを確認中"
+
+msgid "Checking workspaces"
+msgstr "ワークスペースを確認中"
 
 msgid "Checking..."
 msgstr "確認中..."
@@ -4902,6 +4930,9 @@ msgstr "以前のメッセージを読み込めませんでした。再試行"
 msgid "Couldn't load issues: {msg}"
 msgstr "Issueを読み込めませんでした: {msg}"
 
+msgid "Couldn't load pages"
+msgstr "ページを読み込めませんでした"
+
 msgid "Couldn't load pull requests: {msg}"
 msgstr "プルリクエストを読み込めませんでした: {msg}"
 
@@ -5021,6 +5052,9 @@ msgstr "クラウドワークスペースを開始できませんでした"
 
 msgid "Couldn't start design mode on this page"
 msgstr "このページでデザインモードを開始できませんでした"
+
+msgid "Couldn't start voice mode"
+msgstr "音声モードを開始できませんでした"
 
 msgid "Couldn't start workspace"
 msgstr "ワークスペースを開始できませんでした"
@@ -5260,6 +5294,12 @@ msgstr "作成中"
 msgctxt "file change"
 msgid "Creating"
 msgstr "作成中"
+
+msgid "Creating a task"
+msgstr "タスクを作成中"
+
+msgid "Creating a workspace"
+msgstr "ワークスペースを作成中"
 
 msgid "Creating PR..."
 msgstr "PRを作成中…"
@@ -5869,9 +5909,6 @@ msgstr "無効"
 msgid "Disabled toggle"
 msgstr "無効なトグル"
 
-msgid "Disabling keeps a plugin installed but removes its servers from your agents. Changes take effect in new agent sessions."
-msgstr "無効にするとプラグインはインストールされたまま、サーバーだけがエージェントから取り除かれます。変更は新しいエージェントセッションから有効になります。"
-
 msgid "Discard"
 msgstr "破棄"
 
@@ -6384,6 +6421,15 @@ msgstr "リモートアクセスを有効にし、Supersetを起動したまま�
 msgid "Enable skill"
 msgstr "スキルを有効にする"
 
+msgid "End voice session"
+msgstr "音声セッションを終了"
+
+msgid "Ended"
+msgstr "終了しました"
+
+msgid "Ending the call"
+msgstr "通話を終了中"
+
 msgid "Engineering deep-dives and launches."
 msgstr "技術の深掘りとリリース情報。"
 
@@ -6578,6 +6624,9 @@ msgstr "プロジェクトを展開"
 msgid "Expand thread"
 msgstr "スレッドを展開"
 
+msgid "Expand voice"
+msgstr "音声を展開"
+
 msgid "Expand workspace"
 msgstr "ワークスペースを展開"
 
@@ -6629,6 +6678,9 @@ msgstr "外部エディタ"
 
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
+
+msgid "Extra high"
+msgstr "最高"
 
 msgid "Extra small"
 msgstr "極小"
@@ -7558,6 +7610,9 @@ msgstr "移動元"
 msgid "from {price}/user/mo"
 msgstr "{price}/ユーザー/月〜"
 
+msgid "From a hackathon project to the workspace for parallel coding agents."
+msgstr "ハッカソンのプロジェクトから、並列コーディングエージェントのためのワークスペースへ。"
+
 msgid "From a visit to a download to an account to a paying organization."
 msgstr "訪問からダウンロード、アカウント、有料組織へ。"
 
@@ -8113,6 +8168,9 @@ msgstr "ティアの仕組み →"
 msgid "How to install {name} in Superset"
 msgstr "Supersetに{name}をインストールする方法"
 
+msgid "How we build it, in long form."
+msgstr "どう作っているかを詳しく。"
+
 msgid "How your agents sign in inside cloud workspaces. Other people connect their own subscriptions or API keys; on this machine each agent keeps using the login already on it."
 msgstr "クラウドワークスペース内でエージェントがどうサインインするかの設定です。ほかの人は自分のサブスクリプションやAPIキーを接続します。このマシンでは、各エージェントはすでにあるログインをそのまま使い続けます。"
 
@@ -8446,9 +8504,6 @@ msgstr "Superset GitHub Appをインストールしてリポジトリを接続�
 msgid "Install, authorize, and scope MCP servers across all your workspaces from one place, with centralized OAuth."
 msgstr "すべてのワークスペースにまたがるMCPサーバーのインストール、認可、スコープ設定を1か所で。OAuthも一元管理します。"
 
-msgid "Installed"
-msgstr "インストール済み"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceHasInstalls"
 msgstr "インストール済みのプラグインが {name} 由来です: {plugins}。先に削除してください。"
@@ -8485,6 +8540,9 @@ msgstr "内部"
 
 msgid "Internet Disconnected"
 msgstr "インターネットが切断されています"
+
+msgid "Interrupt"
+msgstr "中断"
 
 msgid "Interrupted"
 msgstr "中断されました"
@@ -9126,6 +9184,9 @@ msgstr "ホスト上のワークスペースの一覧、作成、更新、削除
 msgid "List, get, create, update, and delete tasks; track status."
 msgstr "タスクの一覧、取得、作成、更新、削除と、ステータスの追跡ができます。"
 
+msgid "Listening"
+msgstr "聞き取り中"
+
 msgid "Listening agents"
 msgstr "コメントを受け取るエージェント"
 
@@ -9134,6 +9195,9 @@ msgstr "チャンネルメッセージと新しいチャンネルを待ち受け
 
 msgid "Listening status unavailable"
 msgstr "コメント受信状態を確認できません"
+
+msgid "Listing sessions in {what}"
+msgstr "{what} のセッションを一覧中"
 
 msgid "live"
 msgstr "ライブ"
@@ -9330,11 +9394,23 @@ msgstr "長時間にわたる信頼性がしきい値を超えます。18時に�
 msgid "Long-hover shortcut-only tooltip; its chip style is now the TooltipContent default"
 msgstr "長めのホバーでショートカットだけを出すtooltip。そのチップスタイルが現在のTooltipContentのデフォルトです"
 
+msgid "Looking at {what}"
+msgstr "{what} を確認中"
+
+msgid "Looking at tasks"
+msgstr "タスクを確認中"
+
 msgid "Looking for a mobile simulator…"
 msgstr "モバイルシミュレーターを検索中…"
 
 msgid "Looking for installed browsers…"
 msgstr "インストール済みブラウザを検索中…"
+
+msgid "Looking for pages"
+msgstr "ページを検索中"
+
+msgid "Looking up a workspace"
+msgstr "ワークスペースを検索中"
 
 msgid "Looks good"
 msgstr "良さそう"
@@ -9415,9 +9491,6 @@ msgstr "プランを管理"
 
 msgid "Manage plan on the web"
 msgstr "プランはWebで管理"
-
-msgid "Manage plugins"
-msgstr "プラグインを管理"
 
 msgid "Manage sessions"
 msgstr "セッションを管理"
@@ -9655,6 +9728,9 @@ msgctxt "workspaces I created"
 msgid "Mine"
 msgstr "自分"
 
+msgid "Minimal"
+msgstr "最小"
+
 msgid "Minimal reasoning effort"
 msgstr "最小限の推論"
 
@@ -9865,8 +9941,14 @@ msgstr "複数のプロジェクトがこのリポジトリ({0})を使用して�
 msgid "Multiple projects use this repository ({0}). Open the project you want from settings to set it up on this device."
 msgstr "複数のプロジェクトがこのリポジトリ({0})を使用しています。このデバイスでセットアップするには、設定から目的のプロジェクトを開いてください。"
 
+msgid "Mute"
+msgstr "ミュート"
+
 msgid "Mute notifications"
 msgstr "通知をミュート"
+
+msgid "Muted"
+msgstr "ミュート中"
 
 msgid "My Agent"
 msgstr "マイエージェント"
@@ -10168,8 +10250,8 @@ msgstr "次のスライド"
 msgid "Next Tab"
 msgstr "次のタブ"
 
-msgid "Next Tab (Alt)"
-msgstr "次のタブ (Alt)"
+msgid "Next Tab (Second Shortcut)"
+msgstr "次のタブ (2つ目のショートカット)"
 
 msgid "Next Workspace"
 msgstr "次のワークスペース"
@@ -10469,6 +10551,9 @@ msgstr "一致するモデルがありません"
 
 msgid "No matching org members."
 msgstr "一致する組織メンバーがいません。"
+
+msgid "No matching pages"
+msgstr "一致するページはありません"
 
 msgid "No members yet"
 msgstr "メンバーはまだいません"
@@ -10889,9 +10974,6 @@ msgstr "まだ何もありません。"
 msgid "Nothing here."
 msgstr "何もありません。"
 
-msgid "Nothing installed yet."
-msgstr "まだ何もインストールされていません。"
-
 msgid "Nothing is running. Archive it and create a new one."
 msgstr "何も実行されていません。アーカイブして新しく作成してください。"
 
@@ -11178,9 +11260,6 @@ msgstr "プルリクエストを開くと、レビュー状態、チェック、
 msgid "Open actions menu"
 msgstr "アクションメニューを開く"
 
-msgid "Open an existing project folder"
-msgstr "既存のプロジェクトフォルダを開く"
-
 msgid "Open anyway"
 msgstr "それでも開く"
 
@@ -11282,9 +11361,6 @@ msgid "Open in Any IDE"
 msgstr "好きなIDEで開く"
 
 msgid "Open in app"
-msgstr "アプリで開く"
-
-msgid "Open in App"
 msgstr "アプリで開く"
 
 msgid "Open in browser"
@@ -11469,9 +11545,6 @@ msgstr "オープンなプルリクエスト"
 msgid "Open recent"
 msgstr "最近使った項目を開く"
 
-msgid "Open Repo..."
-msgstr "リポジトリを開く..."
-
 msgid "Open roles"
 msgstr "募集中のポジション"
 
@@ -11556,14 +11629,14 @@ msgstr "実行のワークスペースを開く"
 msgid "open the task in a workspace"
 msgstr "タスクをワークスペースで開く"
 
+msgid "Open the workspace in the app picked in the Open In menu (VS Code, Cursor, etc.)"
+msgstr "「開く」メニューで選んだアプリ (VS Code、Cursorなど) でワークスペースを開く"
+
 msgid "Open this run's workspace"
 msgstr "この実行のワークスペースを開く"
 
 msgid "Open workspace"
 msgstr "ワークスペースを開く"
-
-msgid "Open workspace in external app (Cursor, VS Code, etc.)"
-msgstr "ワークスペースを外部アプリ (Cursor、VS Codeなど) で開く"
 
 msgid "OpenAI rejected this API key."
 msgstr "OpenAIがこのAPIキーを拒否しました。"
@@ -11573,6 +11646,9 @@ msgstr "オープン"
 
 msgid "opened PR #841 for review"
 msgstr "レビュー用にPR #841を作成"
+
+msgid "Opening {what}"
+msgstr "{what} を開いています"
 
 msgid "Opening files"
 msgstr "ファイルを開く"
@@ -11724,6 +11800,9 @@ msgstr "他のチームメンバー"
 
 msgid "Other ways to reach us"
 msgstr "その他の連絡方法"
+
+msgid "Our $11M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
+msgstr "1,100万ドルのシードラウンドは Union Square Ventures が主導し、Y Combinator、Paul Graham、そして私たちが尊敬する創業者たちが参加しています。"
 
 msgid "Our read as of August 2026, based on our own team and the teams we watch closely. F3 is mostly open. F4 is mostly closed. That gap is the work."
 msgstr "2026年8月時点の当社の見立てです。自チームと、近くで見ているチームの実態にもとづいています。F3はほぼ通過済み、F4はほぼ未通過。この差が、これからの仕事です。"
@@ -12037,6 +12116,9 @@ msgstr "別の要素を選ぶ"
 msgid "Pick a different element (esc)"
 msgstr "別の要素を選ぶ (esc)"
 
+msgid "Pick a folder on disk and add it as a project"
+msgstr "ディスク上のフォルダを選んでプロジェクトとして追加する"
+
 msgid "Pick a folder…"
 msgstr "フォルダを選択…"
 
@@ -12276,6 +12358,9 @@ msgstr "環境設定"
 msgid "Prefix"
 msgstr "プレフィックス"
 
+msgid "Prefix of this team's task IDs. Changing it renames every task in the team."
+msgstr "このチームのタスク ID の接頭辞です。変更すると、チーム内のすべてのタスクの ID が変わります。"
+
 msgid "Preparing"
 msgstr "準備中"
 
@@ -12345,8 +12430,8 @@ msgstr "前のスライド"
 msgid "Previous Tab"
 msgstr "前のタブ"
 
-msgid "Previous Tab (Alt)"
-msgstr "前のタブ (Alt)"
+msgid "Previous Tab (Second Shortcut)"
+msgstr "前のタブ (2つ目のショートカット)"
 
 msgid "Previous Workspace"
 msgstr "前のワークスペース"
@@ -12773,6 +12858,15 @@ msgstr "並列コーディングエージェントのガイドを読む"
 msgid "Read the setup guide"
 msgstr "セットアップガイドを読む"
 
+msgid "Read the source and every pull request."
+msgstr "ソースコードとすべてのプルリクエストを読む。"
+
+msgid "Reading {what}"
+msgstr "{what} を読み取り中"
+
+msgid "Reading the page"
+msgstr "ページを読み込み中"
+
 msgid "Reading usage…"
 msgstr "使用量を取得中…"
 
@@ -12869,6 +12963,9 @@ msgstr "再接続中"
 
 msgid "Reconnecting…"
 msgstr "再接続中…"
+
+msgid "Reconnecting… your conversation is kept."
+msgstr "再接続中… 会話は保持されます。"
 
 msgid "Red"
 msgstr "赤"
@@ -13431,6 +13528,9 @@ msgstr "1件のホストサービスを再起動しました"
 
 msgid "Restarting"
 msgstr "再起動中"
+
+msgid "Restarting {what}"
+msgstr "{what} を再起動中"
 
 msgid "Restarting agents on {accountLabel}."
 msgstr "{accountLabel}でエージェントを再起動しています。"
@@ -14183,6 +14283,9 @@ msgstr "AIエディタからコーディングエージェント、クラウド�
 msgid "See how Superset compares to other tools"
 msgstr "Supersetと他ツールの比較を見る"
 
+msgid "See how we work"
+msgstr "私たちの働き方を見る"
+
 msgid "See how your agent usage compares. Explore the models behind each profile."
 msgstr "エージェントの使用量を他の開発者と比較できます。各プロフィールで使われているモデルを確認しましょう。"
 
@@ -14398,6 +14501,9 @@ msgstr "チャットに送る({draftCount})"
 
 msgid "Sending"
 msgstr "送信中"
+
+msgid "Sending a message to {what}"
+msgstr "{what} にメッセージを送信中"
 
 msgid "Sending..."
 msgstr "送信中..."
@@ -15104,14 +15210,23 @@ msgstr "スパムまたは詐欺"
 msgid "Sparse checkout"
 msgstr "スパースチェックアウト"
 
+msgid "Speaking"
+msgstr "話し中"
+
 msgid "Specific"
 msgstr "指定のみ"
+
+msgid "Speed"
+msgstr "速度"
 
 msgid "Spend"
 msgstr "支出"
 
 msgid "Split"
 msgstr "分割"
+
+msgid "Split Along Longer Side"
+msgstr "長い辺に沿って分割"
 
 msgid "Split button mirrors desktop's OpenInButton; picker trigger mirrors PickerTrigger"
 msgstr "分割ボタンはデスクトップのOpenInButtonに対応し、ピッカーのトリガーはPickerTriggerに対応します"
@@ -15133,9 +15248,6 @@ msgstr "分割ペイン"
 
 msgid "Split Pane"
 msgstr "分割ペイン"
-
-msgid "Split Pane Auto"
-msgstr "ペインを自動分割"
 
 msgid "Split Right"
 msgstr "右に分割"
@@ -15172,6 +15284,9 @@ msgstr "モバイルシミュレーターで分割"
 
 msgid "Split with New Browser"
 msgstr "新規ブラウザで分割"
+
+msgid "Split with Sandbox Desktop"
+msgstr "サンドボックスのデスクトップで分割"
 
 msgid "Squash & Merge"
 msgstr "スカッシュしてマージ"
@@ -15316,6 +15431,9 @@ msgstr "タブバーの+から開始できます。"
 msgid "Start or stop the workspace run command"
 msgstr "ワークスペースの実行コマンドを開始または停止する"
 
+msgid "Start voice mode"
+msgstr "音声モードを開始"
+
 msgid "Start with the work."
 msgstr "仕事から始める。"
 
@@ -15339,6 +15457,9 @@ msgstr "起動中"
 
 msgid "Starting {agentLabel}"
 msgstr "{agentLabel}を起動中"
+
+msgid "Starting an agent in {what}"
+msgstr "{what} でエージェントを起動中"
 
 msgid "Starting cloud workspace"
 msgstr "クラウドワークスペースを開始中"
@@ -15442,6 +15563,9 @@ msgstr "ワークスペースの実行コマンドを停止"
 
 msgid "stopped"
 msgstr "停止"
+
+msgid "Stopping the agent in {what}"
+msgstr "{what} のエージェントを停止中"
 
 msgid "Strikethrough"
 msgstr "取り消し線"
@@ -15923,6 +16047,9 @@ msgstr "タスク"
 msgid "Task ID copied"
 msgstr "タスク ID をコピーしました"
 
+msgid "Task key"
+msgstr "タスクキー"
+
 msgid "Task Launch"
 msgstr "タスク起動"
 
@@ -16247,12 +16374,6 @@ msgstr "次のフォルダはgitリポジトリではありません。初期化
 msgid "The forecast"
 msgstr "予測"
 
-msgid "The founders"
-msgstr "創業者"
-
-msgid "The founders at the hackathon where Superset started <0>|</0> YC HQ, November 2025"
-msgstr "Supersetが生まれたハッカソンでの創業者たち<0>|</0>YC本社、2025年11月"
-
 msgid "The full core loop (import a repo, run an agent, review the diff) now works signed out and offline."
 msgstr "中核のループ(リポジトリのインポート、エージェントの実行、差分のレビュー)がサインアウト状態やオフラインでも動くようになりました。"
 
@@ -16421,9 +16542,6 @@ msgstr "クラウドワークスペースの起動元となる出発点 — ベ�
 msgid "The Superset desktop app is available for macOS and Linux."
 msgstr "Supersetデスクトップアプリは macOS と Linux で利用できます。"
 
-msgid "The Superset founders at a hackathon, YC HQ San Francisco"
-msgstr "ハッカソンでのSupersetの創業者たち、サンフランシスコのYC本社"
-
 msgid "The Superset host service for {organization} stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "{organization}のSupersetホストサービスが予期せず停止し ({cause})、自動的に再起動できませんでした。"
 
@@ -16435,6 +16553,9 @@ msgstr "サイトの外でプロダクトを運ぶ場所: リポジトリ、リ�
 
 msgid "the target host"
 msgstr "対象ホスト"
+
+msgid "The team"
+msgstr "チーム"
 
 msgid "The team invitation has either expired or doesn't exist. Request a new link from the team owner or check the URL to make sure it is entered correctly."
 msgstr "チームの招待は期限切れか、存在しません。チームのオーナーに新しいリンクを依頼するか、URLが正しく入力されているか確認してください。"
@@ -16819,6 +16940,9 @@ msgstr "ステージされたすべての変更をステージから外して元
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "ステージ済みの変更をすべてステージ解除して元に戻します。ステージ済みの新規ファイルは削除されます。元に戻せません。"
 
+msgid "This workspace"
+msgstr "このワークスペース"
+
 msgid "This workspace has no project to branch from"
 msgstr "このワークスペースには分岐元のプロジェクトがありません"
 
@@ -16901,6 +17025,9 @@ msgid "Toggle plan"
 msgstr "プランの表示を切り替え"
 
 msgid "Toggle right sidebar"
+msgstr "右サイドバーを切り替え"
+
+msgid "Toggle Right Sidebar"
 msgstr "右サイドバーを切り替え"
 
 msgid "Toggle Scripts Bar"
@@ -17257,10 +17384,6 @@ msgstr "選択したワークスペースをグループ解除"
 msgid "Unified view"
 msgstr "統合表示"
 
-#. placeholder {0}: plugin.interface.displayName
-msgid "Uninstall {0}"
-msgstr "{0}をアンインストール"
-
 msgid "Uninstall failed"
 msgstr "アンインストールに失敗しました"
 
@@ -17340,6 +17463,9 @@ msgstr "ユーザー数無制限"
 
 msgid "Unlink task"
 msgstr "タスクのリンクを解除"
+
+msgid "Unmute"
+msgstr "ミュート解除"
 
 msgid "Unmute notifications"
 msgstr "通知のミュートを解除"
@@ -17782,6 +17908,15 @@ msgstr "訪問者からダウンロード、アカウントへ"
 msgid "Visitors whose session began on a link an assistant gave them. This is the number an AEO effort should move."
 msgstr "アシスタントが示したリンクからセッションを開始した訪問者。AEO の取り組みが動かすべき数字です。"
 
+msgid "Voice"
+msgstr "音声"
+
+msgid "Voice ran into a problem. Try again."
+msgstr "音声モードで問題が発生しました。もう一度お試しください。"
+
+msgid "Voice settings"
+msgstr "音声設定"
+
 msgid "Volume"
 msgstr "音量"
 
@@ -17834,6 +17969,9 @@ msgstr "ウォッチャー"
 
 msgid "Wayfinding and disclosure"
 msgstr "案内と情報の開示"
+
+msgid "We build in public, so you can see how we work before you talk to us."
+msgstr "私たちはオープンに開発しています。話す前に、私たちの働き方を見てください。"
 
 msgid "We couldn't charge {amountDue}. Update your payment method to keep this plan."
 msgstr "{amountDue}を請求できませんでした。このプランを維持するには支払い方法を更新してください。"
@@ -18025,8 +18163,8 @@ msgstr "ページに何を表示しますか?"
 msgid "What should we build next?"
 msgstr "次は何を作りますか?"
 
-msgid "What Superset is, who builds it, and who it's for. A San Francisco team of three ex-YC CTOs building the workspace for parallel coding agents."
-msgstr "Supersetとは何か、誰が作っていて、誰のためのものか。並列コーディングエージェントのためのワークスペースを作る、元YCのCTO3人によるサンフランシスコのチーム。"
+msgid "What Superset is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
+msgstr "Supersetとは何か、誰が作っていて、誰のためのものか。並列コーディングエージェントのためのワークスペースを作る、元YCのCTO3人が率いるサンフランシスコのチーム。"
 
 msgid "What the content is doing: which pages sessions start on, and how much is being published."
 msgstr "コンテンツの状況: セッションがどのページから始まるか、どれだけ公開されているか。"
@@ -18034,11 +18172,20 @@ msgstr "コンテンツの状況: セッションがどのページから始ま�
 msgid "What these were written against is no longer on the page, so they have no pin."
 msgstr "これらが書かれた対象はページ上に存在しないため、ピンがありません。"
 
+msgid "What we believe"
+msgstr "私たちが大切にしていること"
+
+msgid "What we ship, every week."
+msgstr "毎週リリースしているもの。"
+
 msgid "What We're Building"
 msgstr "いま作っているもの"
 
 msgid "What we're building now and next."
 msgstr "いま作っているものと、次に作るもの。"
+
+msgid "What we've shipped"
+msgstr "これまでのリリース"
 
 msgid "What would you like to build with Superset in the cloud?"
 msgstr "クラウド上のSupersetで何を作りたいですか？"

@@ -492,6 +492,90 @@ export const FIRST_PARTY_MANIFESTS = {
 			}
 		]
 	} as const,
+	"neon": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "neon",
+		"version": "1.0.0",
+		"description": "Work with your Neon Postgres: inspect projects and branches, read schemas, and run SQL.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"neon",
+			"postgres",
+			"database",
+			"sql",
+			"branches"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "Neon",
+					"category": "Data & APIs",
+					"icon": "neon"
+				},
+				"connector": {
+					"slug": "neon_mcp"
+				},
+				"bind": {
+					"headers": {
+						"Authorization": "Bearer ${config.access_token}"
+					}
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.neon.tech/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
+	"posthog": {
+		"$schema": "https://superset.sh/schemas/plugin/1.0.0.json",
+		"name": "posthog",
+		"version": "1.0.0",
+		"description": "Ask PostHog about your product: query events and insights, look up people, and check feature flags.",
+		"author": {
+			"name": "Superset",
+			"url": "https://superset.sh"
+		},
+		"homepage": "https://docs.superset.sh",
+		"repository": "https://github.com/superset-sh/superset",
+		"license": "MIT",
+		"keywords": [
+			"posthog",
+			"analytics",
+			"events",
+			"feature-flags",
+			"product"
+		],
+		"extensions": {
+			"superset": {
+				"interface": {
+					"displayName": "PostHog",
+					"category": "Data & APIs",
+					"icon": "posthog"
+				},
+				"connector": {
+					"slug": "posthog_mcp"
+				},
+				"bind": {
+					"headers": {
+						"Authorization": "Bearer ${config.access_token}"
+					}
+				},
+				"mcp": {
+					"type": "streamable-http",
+					"url": "https://mcp.posthog.com/mcp"
+				}
+			}
+		},
+		"skills": []
+	} as const,
 } as const;
 
 export type FirstPartyPluginName = keyof typeof FIRST_PARTY_MANIFESTS;
