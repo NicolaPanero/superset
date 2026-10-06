@@ -12,7 +12,7 @@ import {
 } from "../../../workers/tasks/usage";
 import { protectedProcedure, queryProcedure, router } from "../../index";
 import { offLoop } from "../../off-loop";
-import { listAccountAliases, setAccountAlias } from "./account-aliases";
+import { setAccountAlias } from "./account-aliases";
 import {
 	provisionClaudeAccount,
 	provisionCodexAccount,
@@ -28,6 +28,7 @@ import {
 	getDefaultAccountSelections,
 	setDefaultAccountSelection,
 } from "./default-account";
+import { forkUsageProcedures } from "./fork-procedures";
 import { fetchGrokAccounts } from "./grok-quota";
 import { countAgentPrsByDay } from "./history/agent-prs";
 import { fetchOpencodeAccounts } from "./opencode-quota";
@@ -86,42 +87,7 @@ export const leaderboardPayloadInput = z.object({
 });
 
 export const usageRouter = router({
-	accountAliases: protectedProcedure.query(({ ctx }) =>
-		listAccountAliases(ctx.db),
-	),
-	setAccountAlias: protectedProcedure
-		.input(
-			z.object({
-				agent: z.enum(["claude", "codex"]),
-				selection: z.string().min(1).max(4096).nullable(),
-				label: z.string().trim().max(64).nullable(),
-			}),
-		)
-		.mutation(async ({ ctx, input }) => {
-			// Alias removal stays available after a profile disappears externally.
-			if (input.label?.trim() && input.selection !== null) {
-				const profiles =
-					input.agent === "claude"
-						? (await discoverClaudeProfiles()).map(
-								(profile) => profile.configDir,
-							)
-						: (await discoverCodexHomes()).slice(1).map((home) => home.home);
-				if (!profiles.includes(input.selection))
-					throw new TRPCError({
-						code: "BAD_REQUEST",
-						message: "account_selection_unavailable",
-					});
-			}
-			try {
-				setAccountAlias(ctx.db, input.agent, input.selection, input.label);
-			} catch {
-				throw new TRPCError({
-					code: "BAD_REQUEST",
-					message: "account_alias_unavailable",
-				});
-			}
-			return { success: true as const };
-		}),
+	...forkUsageProcedures,
 	sessionAccount: queryProcedure
 		.input(
 			z.object({
