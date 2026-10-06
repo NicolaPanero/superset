@@ -50,6 +50,7 @@ import { installDevRunnerExit } from "./lib/dev-runner-exit";
 import { resolveDevWorkspaceName } from "./lib/dev-workspace-name";
 import { setWorkspaceDockIcon } from "./lib/dock-icon";
 import { loadWebviewBrowserExtension } from "./lib/extensions";
+import { setupForkUpdates } from "./lib/fork-updates";
 import { getHostServiceCoordinator } from "./lib/host-service-coordinator";
 import { resolveAppLocale } from "./lib/language";
 import { localDb } from "./lib/local-db";
@@ -636,6 +637,7 @@ if (!gotTheLock) {
 			restoreWindows,
 		);
 		setupAutoUpdater();
+		setupForkUpdates();
 		initTray();
 		startResourceJournal();
 

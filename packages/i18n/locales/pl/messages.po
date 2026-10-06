@@ -1426,6 +1426,9 @@ msgstr "Spojrzenie na to, co jest w toku, co przyjdzie dalej i dokąd zmierza {c
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "Większość zmian produkcyjnych scala się bez czytania diffa przez człowieka."
 
+msgid "A new build of this Superset fork is available."
+msgstr "Dostępna jest nowa kompilacja tego forka Superset."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Do kontynuowania wymagana jest nowa wersja Superset. Zaktualizuj do najnowszej wersji."
 
@@ -8477,6 +8480,9 @@ msgstr "Zainstaluj i uruchom ponownie"
 msgid "Install & Restart"
 msgstr "Zainstaluj i uruchom ponownie"
 
+msgid "Install and restart"
+msgstr "Zainstaluj i uruchom ponownie"
+
 msgid "Install failed"
 msgstr "Instalacja nie powiodła się"
 
@@ -8510,6 +8516,9 @@ msgstr "Zainstalowane wtyczki pochodzą z {name}: {plugins}. Najpierw je usuń."
 
 msgid "Installed via"
 msgstr "Zainstalowano przez"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "Zainstalowana: {installed}. Najnowsza: {latest}. Ustawienia i dane zostaną zachowane."
 
 msgid "Installing..."
 msgstr "Instalowanie..."

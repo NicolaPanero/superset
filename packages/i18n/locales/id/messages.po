@@ -1426,6 +1426,9 @@ msgstr "Sekilas tentang apa yang sedang berjalan, apa yang akan datang, dan ke m
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "Mayoritas perubahan produksi di-merge tanpa ada manusia yang membaca diff-nya."
 
+msgid "A new build of this Superset fork is available."
+msgstr "Build baru dari fork Superset ini tersedia."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Versi baru Superset diperlukan untuk melanjutkan. Silakan perbarui ke versi terbaru."
 
@@ -8477,6 +8480,9 @@ msgstr "Instal & mulai ulang"
 msgid "Install & Restart"
 msgstr "Pasang & Mulai Ulang"
 
+msgid "Install and restart"
+msgstr "Pasang dan mulai ulang"
+
 msgid "Install failed"
 msgstr "Pemasangan gagal"
 
@@ -8510,6 +8516,9 @@ msgstr "Plugin yang terpasang berasal dari {name}: {plugins}. Hapus dulu."
 
 msgid "Installed via"
 msgstr "Diinstal melalui"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "Terpasang: {installed}. Terbaru: {latest}. Pengaturan dan data tetap tersimpan."
 
 msgid "Installing..."
 msgstr "Memasang..."

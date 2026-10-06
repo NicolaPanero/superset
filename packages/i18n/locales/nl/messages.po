@@ -1426,6 +1426,9 @@ msgstr "Een blik op wat er loopt, wat er hierna komt en waar {company} naartoe g
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "Een meerderheid van de productiewijzigingen merget zonder dat een mens de diff leest."
 
+msgid "A new build of this Superset fork is available."
+msgstr "Er is een nieuwe build van deze Superset-fork beschikbaar."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Er is een nieuwe versie van Superset nodig om verder te gaan. Werk bij naar de nieuwste versie."
 
@@ -8477,6 +8480,9 @@ msgstr "Installeren en herstarten"
 msgid "Install & Restart"
 msgstr "Installeren en herstarten"
 
+msgid "Install and restart"
+msgstr "Installeren en opnieuw starten"
+
 msgid "Install failed"
 msgstr "Installeren mislukt"
 
@@ -8510,6 +8516,9 @@ msgstr "Geïnstalleerde plugins komen uit {name}: {plugins}. Verwijder ze eerst.
 
 msgid "Installed via"
 msgstr "Geïnstalleerd via"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "Geïnstalleerd: {installed}. Nieuwste: {latest}. Instellingen en gegevens blijven behouden."
 
 msgid "Installing..."
 msgstr "Installeren..."
