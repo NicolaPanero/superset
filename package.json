@@ -51,6 +51,8 @@
 		"check:versions": "bun scripts/release/check-versions.ts",
 		"check:plugins": "bun scripts/check-plugins.ts",
 		"check:i18n": "bun run --cwd packages/i18n check",
+		"fork:sync": "bash scripts/fork/sync-upstream.sh --checks",
+		"fork:install": "bash scripts/fork/install-desktop.sh",
 		"typecheck:release": "tsc -p scripts/release/tsconfig.json",
 		"test:release": "bun test scripts/release",
 		"db:push": "bun run --cwd packages/db push",
