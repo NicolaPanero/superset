@@ -120,8 +120,17 @@ per annullarla).
 Il workflow `.github/workflows/fork-sync-upstream.yml` fa lo stesso ogni notte
 su GitHub: aggiorna `main`, fonde upstream in `nicola` se i controlli passano,
 altrimenti apre una issue con l'etichetta `upstream-sync`. Per attivarlo:
-`nicola` deve essere il branch predefinito del fork, le Actions devono essere
-abilitate e i workflow ereditati da upstream (deploy, release, CI) disattivati.
+
+1. `nicola` come branch predefinito del fork.
+2. Un token GitHub fine-grained solo per questo repository, con permessi
+   **Contents**, **Workflows** e **Issues** in scrittura, salvato come secret
+   `FORK_SYNC_TOKEN`. Il token automatico delle Actions non può pubblicare
+   modifiche ai file in `.github/workflows`, che upstream cambia spesso.
+3. Actions abilitate, con i workflow ereditati da upstream (deploy, release,
+   CI) disattivati.
+
+Per lo stesso motivo, un push manuale con la GitHub CLI richiede il permesso
+`workflow`: `gh auth refresh -s workflow`.
 
 ## Limiti noti
 
