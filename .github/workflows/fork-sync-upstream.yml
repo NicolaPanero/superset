@@ -18,7 +18,7 @@ jobs:
     if: github.repository_owner != 'superset-sh'
     runs-on: ubuntu-latest
     env:
-      INTEGRATION_BRANCH: nicola
+      INTEGRATION_BRANCH: fork/main
     steps:
       - name: Check out the integration branch
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1

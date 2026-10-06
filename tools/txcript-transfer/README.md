@@ -25,7 +25,7 @@ It returns a fresh native targetSessionId, reference, cwd, messageCount and
 warnings. `capabilities` returns declared and verified adapters separately.
 Errors contain fixed codes, never transcript text or credentials.
 
-Engine `0.14.4-nicola.3` has verified Claude Code, Codex, Cursor CLI, Grok
+Engine `0.14.4-fork.3` has verified Claude Code, Codex, Cursor CLI, Grok
 Build and OpenCode adapters on macOS arm64. All 20 cross-agent directions
 passed real native resumes using dedicated multi-turn read/edit/shell
 fixtures. Assertions check persisted targets, cwd, unmodified source

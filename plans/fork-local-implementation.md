@@ -1,4 +1,4 @@
-# Superset Nicola — primo ciclo di implementazione
+# Superset fork — primo ciclo di implementazione
 
 Data: 3 ottobre 2026. Scope: solo l'incarico iniziale del §65 del nuovo piano.
 
@@ -19,7 +19,7 @@ lossless. In questo ciclo non sono stati sviluppati provider di prodotto,
 UI definitiva, lineage o auto-switch.
 
 Il report architetturale completo è in
-[`nicola-local-architecture.md`](nicola-local-architecture.md).
+[`fork-local-architecture.md`](fork-local-architecture.md).
 
 ## Repository e istruzioni
 
@@ -28,8 +28,7 @@ Il report architetturale completo è in
 - `origin`: `https://github.com/NicolaPanero/superset.git`.
 - `upstream`: `https://github.com/superset-sh/superset.git`.
 - `main` non modificato; lavoro preparatorio in
-  `feature/txcript-native-handoff`. `nicola-local` non viene usato come branch
-  di sviluppo. Non sono state pubblicate PR o issue.
+  `feature/txcript-native-handoff`. Non sono state pubblicate PR o issue.
 - Letti AGENTS root/desktop/host-service/trpc, istruzioni di sviluppo e
   contributo, setup locale, regole di compatibilità tRPC e verifica CDP.
 - Nessuna modifica alle migrazioni server, alle API cloud o al codice UI.
@@ -74,7 +73,7 @@ L'app di sviluppo è stata osservata sul renderer `http://localhost:3025`,
 API `http://localhost:3021`, CDP 9442 e dati in `superset-dev-data` del clone.
 La sessione locale è risultata autenticata con organizzazione attiva. È stata
 catturata una schermata baseline. Nessun pacchetto è stato pubblicato o
-installato in Applications. Il nome e l'identità “Superset Nicola” appartengono
+installato in Applications. Il nome e l'identità “Superset fork” appartengono
 alla futura fase packaging; la baseline conserva quelli upstream.
 
 ### CLI disponibili

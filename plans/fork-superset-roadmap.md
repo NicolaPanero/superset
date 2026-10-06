@@ -1,8 +1,8 @@
-# Nicola Superset local handoff roadmap
+# Superset fork local handoff roadmap
 
 Historical preparation snapshot. Superseded on 2026-10-03 by
-[nicola-local-implementation.md](nicola-local-implementation.md) and
-[nicola-local-architecture.md](nicola-local-architecture.md), following the
+[fork-local-implementation.md](fork-local-implementation.md) and
+[fork-local-architecture.md](fork-local-architecture.md), following the
 new five-agent local plan. Unchecked items and environment statements below
 describe the earlier preparation phase, not the current project status.
 
