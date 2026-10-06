@@ -4348,9 +4348,6 @@ msgstr "Publikovaný nebo aktualizovaný obsah"
 msgid "Context"
 msgstr "Kontext"
 
-msgid "Context Handoff"
-msgstr "Předání kontextu"
-
 msgid "Context Menu"
 msgstr "Kontextová nabídka"
 
@@ -9909,9 +9906,6 @@ msgstr "Nativní předání"
 
 msgid "Native handoff complete"
 msgstr "Nativní předání dokončeno"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "Nativní předání se nezdařilo. Zkuste to znovu nebo zvolte předání kontextu."
 
 msgid "Native handoff failed. You can retry."
 msgstr "Nativní předání se nezdařilo. Zkuste to znovu."

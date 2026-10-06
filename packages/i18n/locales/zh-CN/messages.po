@@ -4348,9 +4348,6 @@ msgstr "已发布或更新的内容"
 msgid "Context"
 msgstr "上下文"
 
-msgid "Context Handoff"
-msgstr "上下文交接"
-
 msgid "Context Menu"
 msgstr "右键菜单"
 
@@ -9909,9 +9906,6 @@ msgstr "原生会话交接"
 
 msgid "Native handoff complete"
 msgstr "原生交接已完成"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "原生会话交接失败。你可以重试或选择上下文交接。"
 
 msgid "Native handoff failed. You can retry."
 msgstr "原生会话交接失败。你可以重试。"

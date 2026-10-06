@@ -4348,9 +4348,6 @@ msgstr "발행 또는 업데이트된 콘텐츠"
 msgid "Context"
 msgstr "컨텍스트"
 
-msgid "Context Handoff"
-msgstr "컨텍스트 전달"
-
 msgid "Context Menu"
 msgstr "컨텍스트 메뉴"
 
@@ -9909,9 +9906,6 @@ msgstr "네이티브 세션 전달"
 
 msgid "Native handoff complete"
 msgstr "네이티브 인계 완료"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하거나 컨텍스트 전달을 선택하세요."
 
 msgid "Native handoff failed. You can retry."
 msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하세요."

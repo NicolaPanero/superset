@@ -4348,9 +4348,6 @@ msgstr "Yayınlanan veya güncellenen içerik"
 msgid "Context"
 msgstr "Bağlam"
 
-msgid "Context Handoff"
-msgstr "Bağlam aktarımı"
-
 msgid "Context Menu"
 msgstr "Bağlam menüsü"
 
@@ -9909,9 +9906,6 @@ msgstr "Yerel oturum aktarımı"
 
 msgid "Native handoff complete"
 msgstr "Yerel aktarım tamamlandı"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "Yerel oturum aktarımı başarısız oldu. Yeniden deneyin veya bağlam aktarımını seçin."
 
 msgid "Native handoff failed. You can retry."
 msgstr "Yerel oturum aktarımı başarısız oldu. Yeniden deneyin."
