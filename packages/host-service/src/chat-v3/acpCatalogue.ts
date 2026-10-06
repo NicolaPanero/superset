@@ -9,6 +9,8 @@ export type AcpHarness = {
 	minVersion: string;
 	authMethodId?: string;
 	upgrade?: string;
+	/** The agent's own id for its unrestricted mode; chats start in it. */
+	fullAccessModeId?: string;
 	note: string;
 } & AcpTranslator;
 
@@ -23,6 +25,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		adapter: "@agentclientprotocol/claude-agent-acp",
 		executableEnv: "CLAUDE_CODE_EXECUTABLE",
 		upgrade: "npm i -g @anthropic-ai/claude-code@latest",
+		fullAccessModeId: "bypassPermissions",
 		note: "2.1.226 verified against adapter 0.85.0: session/new returns the same modes and configOptions as 2.1.286.",
 	},
 	"codex-acp": {
@@ -33,6 +36,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		adapter: "@agentclientprotocol/codex-acp",
 		executableEnv: "CODEX_PATH",
 		upgrade: "npm i -g @openai/codex@latest",
+		fullAccessModeId: "agent-full-access",
 		note: "0.159.0 verified against adapter 2.1.0; the adapter drives the installed Codex app-server.",
 	},
 	"gemini-acp": {

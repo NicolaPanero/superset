@@ -58,7 +58,11 @@ export interface TerminalPaneData {
 		mimeType: string;
 	}>;
 	chatModelId?: string;
+	/** A model picked from the curated catalog, whose id the agent may not share. */
+	chatModelLabel?: string;
 	chatModeId?: string;
+	chatTitle?: string;
+	cliTitle?: string;
 }
 
 export interface BrowserPaneData {
@@ -118,6 +122,18 @@ export interface MobilePaneData {
 	kind: "mobile";
 }
 
+export interface FilesPaneData {
+	kind: "files";
+}
+
+export interface ChangesListPaneData {
+	kind: "changes-list";
+}
+
+export interface ReviewPaneData {
+	kind: "review";
+}
+
 /**
  * Pointer to one subagent's transcript. The transcript itself is fetched
  * from the host on every read; only this pointer is persisted.
@@ -162,4 +178,7 @@ export type PaneViewerData =
 	| PagePaneData
 	| DesktopPaneData
 	| MobilePaneData
+	| FilesPaneData
+	| ChangesListPaneData
+	| ReviewPaneData
 	| SubagentPaneData;

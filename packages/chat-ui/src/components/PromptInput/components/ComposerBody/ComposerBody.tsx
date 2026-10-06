@@ -26,6 +26,7 @@ import {
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND,
 	KEY_ENTER_COMMAND,
+	KEY_ESCAPE_COMMAND,
 	type LexicalNode,
 	PASTE_COMMAND,
 } from "lexical";
@@ -37,7 +38,14 @@ import {
 	SquareIcon,
 	XIcon,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { useComposerDropZone } from "../../../ComposerDropZone";
 import { useDictation } from "../../hooks/useDictation";
@@ -54,6 +62,7 @@ import type {
 	PromptInputAttachment,
 	PromptInputProps,
 } from "../../types";
+import { registerHistoryNavigation } from "../../utils/historyNavigation";
 import { matchToken } from "../../utils/matchToken";
 import { rankCommands } from "../../utils/rankCommands";
 import {
@@ -79,7 +88,10 @@ function matchCommandToken(text: string) {
 }
 
 export type ComposerBodyProps = Required<
-	Pick<PromptInputProps, "placeholder" | "status" | "placement">
+	Pick<
+		PromptInputProps,
+		"placeholder" | "status" | "submitWhileStreaming" | "placement"
+	>
 > &
 	Pick<
 		PromptInputProps,
@@ -95,6 +107,14 @@ export type ComposerBodyProps = Required<
 		| "onMentionHighlight"
 		| "onAttachmentClick"
 		| "onChipClick"
+		| "ref"
+		| "header"
+		| "onAddFiles"
+		| "allowEmptySubmit"
+		| "clearOnSubmit"
+		| "hideSubmit"
+		| "autoFocus"
+		| "history"
 	>;
 
 function $insertChipAtSelection(chip: ComposerChip) {
@@ -132,6 +152,7 @@ export function ComposerBody({
 	commands,
 	dictation,
 	status,
+	submitWhileStreaming,
 	placement,
 	toolbar,
 	toolbarEnd,
@@ -142,9 +163,45 @@ export function ComposerBody({
 	onMentionHighlight,
 	onAttachmentClick,
 	onChipClick,
+	ref,
+	header,
+	onAddFiles,
+	allowEmptySubmit,
+	clearOnSubmit,
+	hideSubmit,
+	autoFocus,
+	history,
 }: ComposerBodyProps) {
 	const { t } = useLingui();
 	const [editor] = useLexicalComposerContext();
+	const focusAtEnd = useCallback(() => {
+		editor.update(() => $getRoot().selectEnd());
+		editor.focus();
+	}, [editor]);
+	useImperativeHandle(
+		ref,
+		() => ({
+			appendText(text: string) {
+				editor.update(() => {
+					const root = $getRoot();
+					const separator = root.getTextContent().trim() === "" ? "" : "\n";
+					root.selectEnd();
+					const selection = $getSelection();
+					if ($isRangeSelection(selection)) {
+						selection.insertRawText(`${separator}${text}`);
+					}
+				});
+				editor.focus();
+			},
+			openFileDialog() {
+				fileInputRef.current?.click();
+			},
+			focus() {
+				focusAtEnd();
+			},
+		}),
+		[editor, focusAtEnd],
+	);
 	const [attachments, setAttachments] = useState<PromptInputAttachment[]>([]);
 	const [isEmpty, setIsEmpty] = useState(true);
 	const [dragging, setDragging] = useState(false);
@@ -159,17 +216,41 @@ export function ComposerBody({
 	const rootRef = useRef<HTMLDivElement>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	// Lexical command listeners register once; this ref bridges them to live React state.
-	const stateRef = useRef({ attachments, onChipClick, onSubmit, status });
-	stateRef.current = { attachments, onChipClick, onSubmit, status };
+	const stateRef = useRef({
+		attachments,
+		onChipClick,
+		onStop,
+		onSubmit,
+		status,
+		submitWhileStreaming,
+		allowEmptySubmit,
+		clearOnSubmit,
+		history,
+	});
+	stateRef.current = {
+		attachments,
+		onChipClick,
+		onStop,
+		onSubmit,
+		status,
+		submitWhileStreaming,
+		allowEmptySubmit,
+		clearOnSubmit,
+		history,
+	};
+	const historyNavigationRef = useRef<{ reset: () => void } | null>(null);
 
 	// A draft the host had stored. Read once: after mount the editor is the
 	// only writer, and re-applying would fight what is being typed.
 	const seeded = useRef(false);
 	useEffect(() => {
-		if (seeded.current || !defaultValue) return;
+		if (seeded.current) return;
 		seeded.current = true;
+		if (!defaultValue) return;
 		editor.update(() => {
-			$getRoot().selectEnd();
+			const root = $getRoot();
+			if (root.getTextContent() !== "") return;
+			root.selectEnd();
 			const selection = $getSelection();
 			if ($isRangeSelection(selection)) selection.insertText(defaultValue);
 		});
@@ -189,6 +270,10 @@ export function ComposerBody({
 	const addFiles = (files: FileList | File[]) => {
 		const incoming = Array.from(files);
 		if (incoming.length === 0) return;
+		if (onAddFiles) {
+			onAddFiles(incoming);
+			return;
+		}
 		setAttachments((previous) => [
 			...previous,
 			...incoming.map((file) => ({
@@ -310,8 +395,12 @@ export function ComposerBody({
 		if (attachment.previewUrl) URL.revokeObjectURL(attachment.previewUrl);
 	};
 
-	const submit = () => {
-		if (stateRef.current.status === "streaming") return;
+	const submit = ({ steer = false }: { steer?: boolean } = {}) => {
+		if (
+			stateRef.current.status === "streaming" &&
+			!stateRef.current.submitWhileStreaming
+		)
+			return;
 		const { text, mentions } = editor.getEditorState().read(() => ({
 			text: $getRoot().getTextContent().trim(),
 			mentions: $collectChips(),
@@ -319,8 +408,12 @@ export function ComposerBody({
 		const files = stateRef.current.attachments.map(
 			(attachment) => attachment.file,
 		);
-		if (!text && files.length === 0) return;
-		stateRef.current.onSubmit?.({ text, files, mentions });
+		if (!text && files.length === 0 && !stateRef.current.allowEmptySubmit) {
+			return;
+		}
+		stateRef.current.onSubmit?.({ text, files, mentions, steer });
+		historyNavigationRef.current?.reset();
+		if (!stateRef.current.clearOnSubmit) return;
 		editor.update(() => $getRoot().clear());
 		setAttachments((previous) => {
 			for (const attachment of previous) releaseAttachment(attachment);
@@ -357,9 +450,28 @@ export function ComposerBody({
 		const unregisterEnter = editor.registerCommand<KeyboardEvent | null>(
 			KEY_ENTER_COMMAND,
 			(event) => {
-				if (event?.shiftKey) return false;
+				if (event?.shiftKey || event?.isComposing || event?.keyCode === 229)
+					return false;
 				event?.preventDefault();
-				submitRef.current();
+				submitRef.current({
+					steer: Boolean(event?.metaKey || event?.ctrlKey),
+				});
+				return true;
+			},
+			COMMAND_PRIORITY_LOW,
+		);
+		const historyNavigation = registerHistoryNavigation(
+			editor,
+			() => stateRef.current.history ?? [],
+		);
+		historyNavigationRef.current = historyNavigation;
+		const unregisterEscape = editor.registerCommand<KeyboardEvent | null>(
+			KEY_ESCAPE_COMMAND,
+			(event) => {
+				const { status, onStop } = stateRef.current;
+				if (status !== "streaming" || !onStop) return false;
+				event?.preventDefault();
+				onStop();
 				return true;
 			},
 			COMMAND_PRIORITY_LOW,
@@ -437,6 +549,8 @@ export function ComposerBody({
 		return () => {
 			unregisterText();
 			unregisterEnter();
+			historyNavigation.unregister();
+			unregisterEscape();
 			unregisterDrop();
 			unregisterPaste();
 			unregisterClick();
@@ -548,7 +662,11 @@ export function ComposerBody({
 		return () => document.removeEventListener("pointerdown", onPointerDown);
 	}, []);
 
-	const canSend = !isEmpty || attachments.length > 0;
+	const canSend = allowEmptySubmit || !isEmpty || attachments.length > 0;
+
+	useEffect(() => {
+		if (autoFocus) focusAtEnd();
+	}, [autoFocus, focusAtEnd]);
 
 	return (
 		// biome-ignore lint/a11y/noStaticElementInteractions: drag-and-drop target; keyboard users attach via the file picker button
@@ -625,6 +743,7 @@ export function ComposerBody({
 					<Trans>Drop to attach</Trans>
 				</span>
 			</div>
+			{header}
 			<AttachmentPills
 				attachments={attachments}
 				onAttachmentClick={onAttachmentClick}
@@ -649,9 +768,14 @@ export function ComposerBody({
 			/>
 			<div className="relative px-4 pt-3.5 pb-1">
 				<PlainTextPlugin
-					contentEditable={<ContentEditable className="prompt-input-editor" />}
+					contentEditable={
+						<ContentEditable
+							className="prompt-input-editor"
+							spellCheck={false}
+						/>
+					}
 					placeholder={
-						<span className="pointer-events-none absolute top-3.5 left-4 text-sm text-muted-foreground/70">
+						<span className="pointer-events-none absolute top-3.5 left-4 text-sm leading-[1.625] text-muted-foreground/70">
 							{placeholder}
 						</span>
 					}
@@ -754,9 +878,9 @@ export function ComposerBody({
 								message: "Retry dictation",
 							})}
 							onClick={() => void dictationSession.retry()}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
 						>
-							<RefreshCcwIcon className="size-4" />
+							<RefreshCcwIcon className="size-3.5" />
 						</button>
 						<button
 							type="button"
@@ -764,9 +888,9 @@ export function ComposerBody({
 								message: "Discard recording",
 							})}
 							onClick={dictationSession.cancel}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 						>
-							<XIcon className="size-4" />
+							<XIcon className="size-3.5" />
 						</button>
 						<button
 							type="button"
@@ -774,9 +898,9 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-8 shrink-0 cursor-not-allowed items-center justify-center rounded-lg bg-secondary text-muted-foreground"
+							className="flex size-[26px] shrink-0 cursor-not-allowed items-center justify-center rounded-md bg-secondary text-muted-foreground"
 						>
-							<ArrowUpIcon className="size-4.5" />
+							<ArrowUpIcon className="size-4" />
 						</button>
 					</>
 				) : dictationSession.status !== "idle" ? (
@@ -792,9 +916,9 @@ export function ComposerBody({
 							})}
 							disabled={dictationSession.status === "transcribing"}
 							onClick={() => void dictationSession.finish()}
-							className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80 disabled:cursor-default disabled:opacity-50"
+							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80 disabled:cursor-default disabled:opacity-50"
 						>
-							<SquareIcon className="size-3.5 fill-current" />
+							<SquareIcon className="size-3 fill-current" />
 						</button>
 						<button
 							type="button"
@@ -802,9 +926,9 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-8 shrink-0 cursor-not-allowed items-center justify-center rounded-lg bg-secondary text-muted-foreground"
+							className="flex size-[26px] shrink-0 cursor-not-allowed items-center justify-center rounded-md bg-secondary text-muted-foreground"
 						>
-							<ArrowUpIcon className="size-4.5" />
+							<ArrowUpIcon className="size-4" />
 						</button>
 					</>
 				) : (
@@ -822,21 +946,22 @@ export function ComposerBody({
 									setBrowseOpen(false);
 									void dictationSession.start();
 								}}
-								className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+								className="flex size-[26px] cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 							>
-								<MicIcon className="size-4.5" />
+								<MicIcon className="size-4" />
 							</button>
 						)}
-						{status === "streaming" ? (
+						{hideSubmit ? null : status === "streaming" &&
+							!(submitWhileStreaming && canSend) ? (
 							<button
 								type="button"
 								aria-label={t({
 									message: "Stop response",
 								})}
 								onClick={onStop}
-								className="flex size-8 cursor-pointer items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+								className="flex size-[26px] cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
 							>
-								<SquareIcon className="size-3.5 fill-current" />
+								<SquareIcon className="size-3 fill-current" />
 							</button>
 						) : (
 							<button
@@ -845,15 +970,15 @@ export function ComposerBody({
 									message: "Send message",
 								})}
 								disabled={!canSend}
-								onClick={submit}
+								onClick={() => submit()}
 								className={cn(
-									"flex size-8 items-center justify-center rounded-lg transition-colors",
+									"flex size-[26px] items-center justify-center rounded-md transition-colors",
 									canSend
 										? "cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90"
 										: "cursor-not-allowed bg-secondary text-muted-foreground",
 								)}
 							>
-								<ArrowUpIcon className="size-4.5" />
+								<ArrowUpIcon className="size-4" />
 							</button>
 						)}
 					</>

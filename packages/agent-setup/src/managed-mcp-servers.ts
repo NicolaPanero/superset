@@ -254,8 +254,8 @@ function syncClaudeMcpServers(
 	console.log("[agent-setup] Updated Claude mcpServers");
 }
 
-const CODEX_MARKER_START = "# >>> superset managed mcp servers >>>";
-const CODEX_MARKER_END = "# <<< superset managed mcp servers <<<";
+export const CODEX_MARKER_START = "# >>> superset managed mcp servers >>>";
+export const CODEX_MARKER_END = "# <<< superset managed mcp servers <<<";
 
 function tomlString(value: string): string {
 	return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;

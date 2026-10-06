@@ -158,4 +158,19 @@ describe("desiredPluginMcpServers", () => {
 		]);
 		expect(desired).toEqual({});
 	});
+
+	test("an absent marketplace is the first-party one", () => {
+		const desired = desiredPluginMcpServers([{ name: "linear" }]);
+		expect(Object.keys(desired)).toEqual(["linear"]);
+		expect((desired.linear as { url: string }).url).toContain(
+			"/mcp/plugins/superset/linear",
+		);
+	});
+
+	test("another marketplace's same-named plugin is not served Superset's", () => {
+		const desired = desiredPluginMcpServers([
+			{ name: "linear", marketplace: "acme" },
+		]);
+		expect(desired).toEqual({});
+	});
 });

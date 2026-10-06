@@ -27,7 +27,7 @@ jobs:
   boot-twice:
     name: Boot twice
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -64,6 +64,12 @@ jobs:
           CDN_R2_BUCKET: ${{ secrets.CDN_R2_BUCKET }}
           CDN_URL: ${{ secrets.CDN_URL }}
         run: bun run build --dry
+
+      # Keeps the builder's layers on a persistent disk between runs.
+      - name: Set up the Docker builder
+        uses: useblacksmith/setup-docker-builder@19215110ab936351210feebdfa5b440b4493e184 # v2.2.0
+        with:
+          cache-key: sandbox-image
 
       - name: Build the image locally
         working-directory: packages/sandbox

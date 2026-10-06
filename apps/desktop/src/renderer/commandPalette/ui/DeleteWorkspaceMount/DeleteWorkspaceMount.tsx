@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useArchivingCloudWorkspaceIds } from "renderer/hooks/useArchivingCloudWorkspaceIds";
 import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { DashboardSidebarDeleteDialog } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/components/DashboardSidebarDeleteDialog";
 import { useArchiveCloudWorkspace } from "renderer/routes/_authenticated/_dashboard/hooks/useArchiveCloudWorkspace";
@@ -23,9 +24,12 @@ export function DeleteWorkspaceMount() {
 	const close = useDeleteWorkspaceIntent((s) => s.close);
 	const { removeWorkspaceFromSidebar } = useDashboardSidebarState();
 	const { workspaces: cloudWorkspaces = [] } = useCloudWorkspaces();
+	const archiving = useArchivingCloudWorkspaceIds();
 	const archive = useArchiveCloudWorkspace();
 	const cloudTarget =
-		target && cloudWorkspaces.some((row) => row.id === target.workspaceId)
+		target &&
+		(archiving.includes(target.workspaceId) ||
+			cloudWorkspaces.some((row) => row.id === target.workspaceId))
 			? target
 			: null;
 

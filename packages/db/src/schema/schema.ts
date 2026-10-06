@@ -177,7 +177,7 @@ export const taskStatuses = pgTable(
 export type InsertTaskStatus = typeof taskStatuses.$inferInsert;
 export type SelectTaskStatus = typeof taskStatuses.$inferSelect;
 
-/** Task slugs are `<key>-<number>`. One counter per organization, on its oldest team, until tasks can choose a team. */
+/** Task slugs are `<key>-<number>`, with one counter per team. */
 export const taskSequences = pgTable(
 	"task_sequences",
 	{
@@ -191,7 +191,10 @@ export const taskSequences = pgTable(
 		lastNumber: integer("last_number").notNull().default(0),
 	},
 	(table) => [
-		unique("task_sequences_organization_unique").on(table.organizationId),
+		unique("task_sequences_organization_key_unique").on(
+			table.organizationId,
+			table.key,
+		),
 	],
 );
 
@@ -201,7 +204,7 @@ export const tasks = pgTable(
 		id: uuid().primaryKey().defaultRandom(),
 
 		// Core fields
-		/** Leave out on insert: the tasks_assign_number trigger sets slug, team_id and number. */
+		/** Leave out on insert: the tasks_assign_number trigger sets slug and number, and team_id when it is left out. */
 		slug: text().notNull().default(sql`NULL`),
 		title: text().notNull(),
 		description: text(),

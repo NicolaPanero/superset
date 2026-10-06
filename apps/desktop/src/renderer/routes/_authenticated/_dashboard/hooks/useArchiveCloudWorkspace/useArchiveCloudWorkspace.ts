@@ -5,6 +5,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { createElement, useState } from "react";
 import { LuArchive } from "react-icons/lu";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useArchivingCloudWorkspaceIds } from "renderer/hooks/useArchivingCloudWorkspaceIds";
 import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useNavigateAwayFromWorkspace } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/hooks/useNavigateAwayFromWorkspace";
@@ -27,6 +28,7 @@ export function useArchiveCloudWorkspace() {
 	const { navigateAwayFromWorkspace } = useNavigateAwayFromWorkspace();
 	const unarchive = useUnarchiveCloudWorkspace();
 	const [undoable, setUndoable] = useState<ArchivedWorkspace | null>(null);
+	const archiving = useArchivingCloudWorkspaceIds();
 	const { mutateAsync } = cloudTrpc.cloudWorkspace.delete.useMutation({
 		onMutate: async ({ id }) =>
 			organizationId
@@ -43,11 +45,13 @@ export function useArchiveCloudWorkspace() {
 			context?.rollback();
 			toast.error(errorMessage(error));
 		},
-		onSettled: (_data, _error, { id }) => {
-			void utils.cloudWorkspace.list.invalidate();
-			void utils.cloudWorkspace.get.invalidate({ id });
-			void utils.cloudWorkspace.activity.invalidate({ id });
-		},
+		// Awaited so the row stays hidden until a list without it lands.
+		onSettled: (_data, _error, { id }) =>
+			Promise.all([
+				utils.cloudWorkspace.list.invalidate(),
+				utils.cloudWorkspace.get.invalidate({ id }),
+				utils.cloudWorkspace.activity.invalidate({ id }),
+			]),
 	});
 
 	const clearUndoable = (id: string) =>
@@ -92,6 +96,7 @@ export function useArchiveCloudWorkspace() {
 	};
 
 	return ({ id, name }: { id: string; name: string }) => {
+		if (archiving.includes(id)) return;
 		const target = navigateAwayFromWorkspace(id);
 		// Unarchive only succeeds once the row is archived, so the undo waits
 		// for the server.

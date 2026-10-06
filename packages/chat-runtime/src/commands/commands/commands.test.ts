@@ -43,6 +43,25 @@ function createSession(runtime: ChatRuntime, scopeId = "workspace-1") {
 }
 
 describe("chat commands", () => {
+	test("closeSession reports the session's workspace once its agent stops", async () => {
+		const { harnesses } = fakeHarnessRegistry(SCRIPT);
+		const scopes: string[] = [];
+		const runtime = createTestRuntime({
+			harnesses,
+			onSessionChanged: ({ scopeId }) => {
+				scopes.push(scopeId);
+			},
+		});
+		const created = createSession(runtime, "workspace-2");
+		scopes.length = 0;
+
+		await runtime.commands.closeSession({ sessionId: created.sessionId });
+		await runtime.commands.closeSession({ sessionId: created.sessionId });
+
+		expect(scopes).toEqual(["workspace-2"]);
+		await runtime.dispose();
+	});
+
 	test("createSession opens a journal and starts the harness", async () => {
 		const { runtime, adapterCount } = newRuntime();
 		const created = createSession(runtime);

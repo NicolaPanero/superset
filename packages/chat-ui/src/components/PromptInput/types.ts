@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, Ref } from "react";
 
 export type ComposerChip = {
 	label: string;
@@ -79,6 +79,7 @@ export type PromptInputSubmitPayload = {
 	text: string;
 	files: File[];
 	mentions: ComposerChip[];
+	steer: boolean;
 };
 
 export type PromptInputDictationError = {
@@ -93,11 +94,19 @@ export type PromptInputDictation = {
 	onError?(error: PromptInputDictationError): void;
 };
 
+export type PromptInputHandle = {
+	appendText(text: string): void;
+	openFileDialog(): void;
+	focus(): void;
+};
+
 export type PromptInputProps = {
+	ref?: Ref<PromptInputHandle>;
 	placeholder?: string;
 	mentionProviders: ComposerMentionProvider[];
 	commands: PromptInputCommand[];
 	status?: "ready" | "streaming";
+	submitWhileStreaming?: boolean;
 	placement?: "top" | "bottom";
 	// Enables the mic button; the app owns speech-to-text.
 	dictation?: PromptInputDictation;
@@ -110,8 +119,15 @@ export type PromptInputProps = {
 	onChange?: (text: string) => void;
 	onSubmit?: (payload: PromptInputSubmitPayload) => void;
 	onStop?: () => void;
+	header?: ReactNode;
+	onAddFiles?: (files: File[]) => void;
+	allowEmptySubmit?: boolean;
+	clearOnSubmit?: boolean;
+	hideSubmit?: boolean;
+	autoFocus?: boolean;
 	onMentionHighlight?: (entry: ComposerMentionEntry | null) => void;
 	onAttachmentClick?: (attachment: PromptInputAttachment) => void;
 	onChipClick?: (chip: ComposerChip) => void;
+	history?: string[];
 	className?: string;
 };

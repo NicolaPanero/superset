@@ -66,7 +66,7 @@ jobs:
 
   deploy-api:
     name: Deploy API to Vercel
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: production
     needs: deploy-database
 
@@ -86,11 +86,15 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
-        run: npm install --global vercel@$VERCEL_CLI_VERSION
+        run: bun add --global vercel@$VERCEL_CLI_VERSION
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: apps/api/.next/cache
+          key: next-api-${{ github.sha }}
+          restore-keys: next-api-
 
       - name: Build and Deploy API
         env:
@@ -271,7 +275,7 @@ jobs:
 
   deploy-web:
     name: Deploy Web to Vercel
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: production
     needs: deploy-database
 
@@ -291,11 +295,15 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
-        run: npm install --global vercel@$VERCEL_CLI_VERSION
+        run: bun add --global vercel@$VERCEL_CLI_VERSION
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: apps/web/.next/cache
+          key: next-web-${{ github.sha }}
+          restore-keys: next-web-
 
       - name: Build and Deploy Web
         env:
@@ -369,7 +377,7 @@ jobs:
 
   deploy-marketing:
     name: Deploy Marketing to Vercel
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: production
     needs: deploy-database
 
@@ -389,11 +397,15 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
-        run: npm install --global vercel@$VERCEL_CLI_VERSION
+        run: bun add --global vercel@$VERCEL_CLI_VERSION
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: apps/marketing/.next/cache
+          key: next-marketing-${{ github.sha }}
+          restore-keys: next-marketing-
 
       - name: Build and Deploy Marketing
         env:
@@ -458,7 +470,7 @@ jobs:
 
   deploy-admin:
     name: Deploy Admin to Vercel
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: production
     needs: deploy-database
 
@@ -478,11 +490,15 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
-        run: npm install --global vercel@$VERCEL_CLI_VERSION
+        run: bun add --global vercel@$VERCEL_CLI_VERSION
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: apps/admin/.next/cache
+          key: next-admin-${{ github.sha }}
+          restore-keys: next-admin-
 
       - name: Build and Deploy Admin
         env:
@@ -745,7 +761,7 @@ jobs:
 
   deploy-docs:
     name: Deploy Docs to Vercel
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: production
     needs: deploy-database
 
@@ -765,11 +781,15 @@ jobs:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ steps.setup-bun.outputs.bun-revision }}-${{ hashFiles('bun.lock') }}
 
-      - name: Install dependencies
-        run: bun install --frozen --ignore-scripts
-
       - name: Install Vercel CLI
-        run: npm install --global vercel@$VERCEL_CLI_VERSION
+        run: bun add --global vercel@$VERCEL_CLI_VERSION
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: apps/docs/.next/cache
+          key: next-docs-${{ github.sha }}
+          restore-keys: next-docs-
 
       - name: Build and Deploy Docs
         env:

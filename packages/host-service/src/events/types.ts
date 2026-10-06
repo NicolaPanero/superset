@@ -239,6 +239,13 @@ export interface PageWatchChangedMessage {
 	occurredAt: number;
 }
 
+/** A chat session in the workspace was created, changed, stopped or removed; refetch `listSessions`. */
+export interface ChatSessionsChangedMessage {
+	type: "chat:sessions-changed";
+	workspaceId: string;
+	occurredAt: number;
+}
+
 export type ServerMessage =
 	| FsEventsMessage
 	| GitChangedMessage
@@ -252,6 +259,7 @@ export type ServerMessage =
 	| ProjectChangedMessage
 	| TagFoldersChangedMessage
 	| PageWatchChangedMessage
+	| ChatSessionsChangedMessage
 	| EventBusErrorMessage;
 
 /**
