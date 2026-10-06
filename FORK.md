@@ -117,20 +117,46 @@ modificati dal fork. Codici di uscita: `2` conflitti nel codice, `3` controlli
 falliti dopo la fusione (la fusione resta locale: `git reset --hard ORIG_HEAD`
 per annullarla).
 
-Il workflow `.github/workflows/fork-sync-upstream.yml` fa lo stesso ogni notte
-su GitHub: aggiorna `main`, fonde upstream in `fork/main` se i controlli passano,
-altrimenti apre una issue con l'etichetta `upstream-sync`. Per attivarlo:
+### Sincronizzazione automatica sul Mac (consigliata)
 
-1. `fork/main` come branch predefinito del fork.
-2. Un token GitHub fine-grained solo per questo repository, con permessi
-   **Contents**, **Workflows** e **Issues** in scrittura, salvato come secret
-   `FORK_SYNC_TOKEN`. Il token automatico delle Actions non può pubblicare
-   modifiche ai file in `.github/workflows`, che upstream cambia spesso.
-3. Actions abilitate, con i workflow ereditati da upstream (deploy, release,
-   CI) disattivati.
+```bash
+scripts/fork/sync-schedule.sh install 09:30
+```
 
-Per lo stesso motivo, un push manuale con la GitHub CLI richiede il permesso
-`workflow`: `gh auth refresh -s workflow`.
+Installa un LaunchAgent che ogni giorno all'ora indicata esegue `fork:sync` in
+un worktree dedicato (`~/.superset-fork/sync`), quindi non tocca il checkout in
+cui lavori. Usa il login della GitHub CLI (serve il permesso `workflow`:
+`gh auth refresh -s workflow`) per aggiornare `main` e `fork/main`. Se la
+sincronizzazione non riesce mostra una notifica e apre una issue sul fork. Log
+in `~/.superset-fork/sync.log`; `scripts/fork/sync-schedule.sh run` la esegue
+subito, `uninstall` la rimuove. Il Mac deve essere acceso all'ora indicata.
+
+### Sincronizzazione su GitHub (alternativa)
+
+Il workflow `.github/workflows/fork-sync-upstream.yml` fa lo stesso su GitHub,
+anche a Mac spento. Richiede un token fine-grained solo per questo repository,
+con permessi **Contents**, **Workflows** e **Issues** in scrittura, salvato come
+secret `FORK_SYNC_TOKEN` (il token automatico delle Actions non può pubblicare
+modifiche ai file in `.github/workflows`, che upstream cambia spesso), e le
+Actions abilitate con i workflow ereditati da upstream disattivati.
+
+## Separazione da upstream
+
+Per ridurre i conflitti, il codice del fork sta in file propri e i file di
+upstream ricevono solo agganci brevi:
+
+- tabelle del database in `packages/host-service/src/db/fork-schema.ts`, create
+  da `ensureForkTables`: lo schema e il journal delle migrazioni restano quelli
+  di upstream;
+- procedure tRPC in `agents/fork-procedures.ts` e `usage/fork-procedures.ts`,
+  incluse con una riga nei router di upstream;
+- passaggio nativo e storico in `TerminalNativeHandoffMenu`,
+  `AcpChatHandoffMenu` e `ForkHandoffMenus`; il menu di upstream resta
+  invariato;
+- voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
+  `AcpChatSetting`, rinomina account in `AccountRenameDialog`.
+
+Nuove funzioni del fork vanno scritte allo stesso modo.
 
 ## Limiti noti
 

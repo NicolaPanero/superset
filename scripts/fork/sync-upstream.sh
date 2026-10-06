@@ -7,6 +7,8 @@
 #           the workspaces the fork changes
 # --push    push the merged branch (and main as a mirror of upstream)
 #
+# FORK_SYNC_BRANCH sets the branch --push updates (default: the current one).
+#
 # Exit codes: 0 merged or up to date, 2 conflicts, 3 checks failed.
 set -euo pipefail
 
@@ -26,6 +28,7 @@ done
 
 cd "$(git rev-parse --show-toplevel)"
 branch="$(git symbolic-ref --short HEAD)"
+target="${FORK_SYNC_BRANCH:-$branch}"
 if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
 	echo "working tree has uncommitted changes; commit or stash them first" >&2
 	exit 1
@@ -85,6 +88,6 @@ if $run_checks; then
 fi
 
 if $push; then
-	git push origin "HEAD:$branch"
+	git push origin "HEAD:$target"
 fi
-echo "merged upstream/main into $branch"
+echo "merged upstream/main into $target"
