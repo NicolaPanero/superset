@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← リーダーボードに戻る"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ {continuedIn} で継続"
+
+msgid "→ from {chain}"
+msgstr "→ {chain} から"
+
 msgid "↑ update"
 msgstr "↑ 更新"
 
@@ -4419,6 +4425,12 @@ msgstr "Googleで続行"
 
 msgid "Continue with…"
 msgstr "別のエージェントで続行…"
+
+msgid "Continued from {chain}"
+msgstr "{chain} から継続"
+
+msgid "Continued in {continuedIn}"
+msgstr "{continuedIn} で継続"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "エージェントセッションを継続するには、ワークスペースをピン留めする必要があります"
@@ -16668,6 +16680,9 @@ msgstr "このビルドは自動更新されません。更新するにはソー
 
 msgid "This cannot be undone."
 msgstr "この操作は元に戻せません。"
+
+msgid "This chat"
+msgstr "このチャット"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "このチャットのエージェントは停止しており、再開できません。"

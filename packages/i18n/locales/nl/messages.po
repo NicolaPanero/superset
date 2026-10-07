@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Terug naar ranglijst"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ voortgezet in {continuedIn}"
+
+msgid "→ from {chain}"
+msgstr "→ van {chain}"
+
 msgid "↑ update"
 msgstr "↑ update"
 
@@ -4419,6 +4425,12 @@ msgstr "Doorgaan met Google"
 
 msgid "Continue with…"
 msgstr "Doorgaan met…"
+
+msgid "Continued from {chain}"
+msgstr "Voortgezet vanuit {chain}"
+
+msgid "Continued in {continuedIn}"
+msgstr "Voortgezet in {continuedIn}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Een agentsessie voortzetten vereist een vastgezette workspace"
@@ -16668,6 +16680,9 @@ msgstr "Deze build werkt zichzelf niet bij. Bouw hem opnieuw vanuit de broncode 
 
 msgid "This cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
+
+msgid "This chat"
+msgstr "Deze chat"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "De agent van deze chat is gestopt en kan niet worden hervat."

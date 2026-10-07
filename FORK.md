@@ -35,11 +35,15 @@ modifica le sessioni già aperte.
   Grok e OpenCode, in tutte le 20 direzioni.
   - Dal terminale: icona **Continue or fork session → Continue with another
     agent… → Native Handoff**.
+  - Dalla chat, selettore del modello: scegliendo il modello di un altro
+    agente, la conversazione passa in modo nativo **nella stessa scheda**.
+    Così tornare a un agente già usato non lascia chat vecchie aperte.
   - Dalla chat: icona **Continue with another agent** (robot) nell'intestazione.
-    Si sceglie agente, account e dove aprire la nuova chat.
+    Si sceglie agente, account e dove aprirla: **This chat** (stessa scheda,
+    predefinito), nuova scheda o pannello affiancato.
 - **Contesto**: il nuovo agente riceve come primo messaggio un riassunto della
-  conversazione. Dal terminale: **Context Handoff**. Dalla chat: il selettore
-  del modello di upstream permette di scegliere il modello di un altro agente.
+  conversazione. Dal terminale: **Context Handoff**. Dalla chat è il ripiego
+  automatico quando il passaggio nativo non è possibile.
 
 La sessione di partenza non viene modificata. Permessi, server MCP, credenziali
 e ragionamento interno del modello non vengono trasferiti.
@@ -49,6 +53,8 @@ e ragionamento interno del modello non vengono trasferiti.
 Ogni passaggio nativo registra sorgente e destinazione in un database locale.
 Dal menu del terminale si vedono le conversazioni collegate, anche dopo un
 riavvio, e si possono riaprire o continuare con un altro agente.
+Nell'intestazione di una chat ACP un'etichetta mostra da dove arriva
+(`→ from Claude → Cursor Agent`) o dove è proseguita, come in Zed.
 
 ### Pannello Agents
 
@@ -158,6 +164,11 @@ upstream ricevono solo agganci brevi:
 - passaggio nativo e storico in `TerminalNativeHandoffMenu`,
   `AcpChatHandoffMenu` e `ForkHandoffMenus`; il menu di upstream resta
   invariato;
+- cambio di agente dal selettore del modello in `useForkAgentSwitch`, passato
+  alla chat con la prop `onForkSwitchAgent`: il gestore di upstream resta
+  invariato e fa da ripiego; etichetta di provenienza in `ChatLineageLabel`;
+- scelta di configurazione e account per l'host in
+  `chat-v3/forkLaunchChoices.ts`;
 - voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
   `AcpChatSetting`, rinomina account in `AccountRenameDialog`.
 - avviso di aggiornamento in `apps/desktop/src/main/lib/fork-updates.ts`,

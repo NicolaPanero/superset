@@ -1,12 +1,18 @@
-import type { TerminalPaneData } from "../../../../../../../../types";
+import type { RendererContext } from "@superset/panes";
+import type {
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../../../../../../../types";
 import type {
 	CreateNewAgentSession,
 	OpenAgentChat,
 } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { AcpChatHandoffMenu } from "../AcpChatHandoffMenu";
+import { ChatLineageLabel } from "../ChatLineageLabel";
 import { TerminalNativeHandoffMenu } from "../TerminalNativeHandoffMenu";
 
 export interface ForkHandoffMenusProps {
+	ctx: RendererContext<PaneViewerData>;
 	paneData: TerminalPaneData;
 	openAgentChat: OpenAgentChat;
 	createNewAgentSession: CreateNewAgentSession;
@@ -23,11 +29,15 @@ export function ForkHandoffMenus({
 	fork: ForkHandoffMenusProps;
 }) {
 	return fork.paneData.agentSurface === "acp" ? (
-		<AcpChatHandoffMenu
-			workspaceId={workspaceId}
-			data={fork.paneData}
-			onOpenAgentChat={fork.openAgentChat}
-		/>
+		<>
+			<ChatLineageLabel workspaceId={workspaceId} agent={fork.paneData.agent} />
+			<AcpChatHandoffMenu
+				ctx={fork.ctx}
+				workspaceId={workspaceId}
+				data={fork.paneData}
+				onOpenAgentChat={fork.openAgentChat}
+			/>
+		</>
 	) : (
 		<TerminalNativeHandoffMenu
 			workspaceId={workspaceId}

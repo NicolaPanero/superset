@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Quay lại bảng xếp hạng"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ tiếp tục trong {continuedIn}"
+
+msgid "→ from {chain}"
+msgstr "→ từ {chain}"
+
 msgid "↑ update"
 msgstr "↑ cập nhật"
 
@@ -4419,6 +4425,12 @@ msgstr "Tiếp tục với Google"
 
 msgid "Continue with…"
 msgstr "Tiếp tục với…"
+
+msgid "Continued from {chain}"
+msgstr "Tiếp tục từ {chain}"
+
+msgid "Continued in {continuedIn}"
+msgstr "Tiếp tục trong {continuedIn}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Để tiếp tục phiên agent, cần ghim một workspace"
@@ -16668,6 +16680,9 @@ msgstr "Bản dựng này không tự cập nhật. Hãy dựng lại từ mã n
 
 msgid "This cannot be undone."
 msgstr "Không thể hoàn tác."
+
+msgid "This chat"
+msgstr "Cuộc trò chuyện này"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "Tác nhân của cuộc trò chuyện này đã dừng và không thể tiếp tục."

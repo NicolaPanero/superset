@@ -13,6 +13,7 @@ import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
 import type { ChatForkTarget } from "../../../ChatSession/types";
 import { isUnrestrictedMode } from "../../../ChatSession/utils/isUnrestrictedMode";
+import type { ForkSwitchAgent } from "../../hooks/useForkAgentSwitch";
 import { useForkChat } from "../../hooks/useForkChat";
 import { readSavedChatMode } from "../../utils/savedChatMode";
 import { AcpChatPending } from "./components/AcpChatPending";
@@ -31,7 +32,8 @@ export function AcpChatPane({
 	onOpenFile,
 	onModeChange,
 	onSessionCreated,
-	onSwitchAgent,
+	onSwitchAgent: upstreamSwitchAgent,
+	onForkSwitchAgent,
 	pendingFirstPrompt,
 	sessionId,
 	terminalId,
@@ -54,6 +56,7 @@ export function AcpChatPane({
 	onModeChange?: (modeId: string) => void;
 	onSessionInfo: (info: { harnessSessionId?: string; title?: string }) => void;
 	onOpenFile?: OpenFile;
+	onForkSwitchAgent?: ForkSwitchAgent;
 	onSwitchAgent?: (target: {
 		presetId: string;
 		label: string;
@@ -68,6 +71,11 @@ export function AcpChatPane({
 	modeId?: string;
 }) {
 	const { t } = useLingui();
+	const onSwitchAgent =
+		upstreamSwitchAgent && onForkSwitchAgent
+			? (target: Parameters<typeof upstreamSwitchAgent>[0]) =>
+					onForkSwitchAgent(target, upstreamSwitchAgent)
+			: upstreamSwitchAgent;
 	const { client, wiring } = useSessionClient(sessionId);
 	const { forkToWorktree, canForkToWorktree } = useForkChat(workspaceId);
 	const { hostUrl } = useWorkspaceClient();

@@ -1,0 +1,1 @@
+export { ChatLineageLabel } from "./ChatLineageLabel";
