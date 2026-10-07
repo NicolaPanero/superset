@@ -1,4 +1,4 @@
-# Superset — fork di Nicola
+# Superset fork
 
 Fork personale di [superset-sh/superset](https://github.com/superset-sh/superset).
 Aggiunge una chat unica per gli agenti (ACP), il passaggio nativo di una
@@ -11,8 +11,8 @@ girano sul Mac.
 | Branch | Contenuto |
 |---|---|
 | `main` | Copia esatta di `superset-sh/superset` `main`. Nessun commit del fork. |
-| `nicola` | Branch di integrazione: upstream più tutte le funzioni del fork. È quello da usare. |
-| `feature/*` | Storico dei singoli sviluppi, già fusi in `nicola`. |
+| `fork/main` | Branch di integrazione: upstream più tutte le funzioni del fork. È quello da usare. |
+| `feature/*` | Storico dei singoli sviluppi, già fusi in `fork/main`. |
 
 ## Funzioni aggiunte
 
@@ -106,7 +106,7 @@ bun scripts/build-txcript-transfer.ts
 ## Restare allineati con upstream
 
 ```bash
-git switch nicola
+git switch fork/main
 bun run fork:sync
 ```
 
@@ -118,10 +118,10 @@ falliti dopo la fusione (la fusione resta locale: `git reset --hard ORIG_HEAD`
 per annullarla).
 
 Il workflow `.github/workflows/fork-sync-upstream.yml` fa lo stesso ogni notte
-su GitHub: aggiorna `main`, fonde upstream in `nicola` se i controlli passano,
+su GitHub: aggiorna `main`, fonde upstream in `fork/main` se i controlli passano,
 altrimenti apre una issue con l'etichetta `upstream-sync`. Per attivarlo:
 
-1. `nicola` come branch predefinito del fork.
+1. `fork/main` come branch predefinito del fork.
 2. Un token GitHub fine-grained solo per questo repository, con permessi
    **Contents**, **Workflows** e **Issues** in scrittura, salvato come secret
    `FORK_SYNC_TOKEN`. Il token automatico delle Actions non può pubblicare

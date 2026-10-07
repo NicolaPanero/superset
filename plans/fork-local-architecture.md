@@ -1,4 +1,4 @@
-# Superset Nicola — architettura locale osservata
+# Superset fork — architettura locale osservata
 
 Audit del 3 ottobre 2026. Baseline: Superset desktop 1.35.0, commit
 `b8c5ad799e1f2f626cc0daab3d970de87bb9b950`.
