@@ -7,6 +7,8 @@ import { runMigrations } from "@superset/shared/sqlite-migrations";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import type { HostDb } from "../db";
+import * as forkSchema from "../db/fork-schema";
+import { ensureForkTables } from "../db/fork-tables";
 import * as schema from "../db/schema";
 import { type LineageNodeInput, LocalLineageStore } from "./lineage";
 
@@ -23,6 +25,7 @@ function open(path = ":memory:") {
 	connections.push(sqlite);
 	const db = drizzle(sqlite, { schema });
 	runMigrations(db, resolve(import.meta.dir, "../../drizzle"));
+	ensureForkTables(sqlite);
 	sqlite.exec("PRAGMA foreign_keys=ON");
 	return db as unknown as HostDb;
 }
@@ -88,7 +91,9 @@ describe("local native lineage", () => {
 		expect(rows).toHaveLength(3);
 		expect(rows[1]?.source.id).toBe(rows[2]?.source.id);
 		expect(rows[0]?.source.id).toBe(rows[2]?.target.id);
-		expect(db.select().from(schema.sessionLineageNodes).all()).toHaveLength(4);
+		expect(db.select().from(forkSchema.sessionLineageNodes).all()).toHaveLength(
+			4,
+		);
 	});
 
 	test("retains the original configuration and account affinity when a node becomes a parent", () => {
@@ -179,7 +184,9 @@ describe("local native lineage", () => {
 		expect(() =>
 			store.record({ ...input, target: node("codex", "other") }),
 		).toThrow("lineage_transfer_conflict");
-		expect(db.select().from(schema.sessionLineageNodes).all()).toHaveLength(2);
+		expect(db.select().from(forkSchema.sessionLineageNodes).all()).toHaveLength(
+			2,
+		);
 		expect(store.list("workspace", 100).items).toHaveLength(1);
 	});
 
@@ -241,10 +248,10 @@ describe("local native lineage", () => {
 			.where(eq(schema.workspaces.id, "workspace"))
 			.run();
 		expect(
-			reopened.select().from(schema.sessionLineageNodes).all(),
+			reopened.select().from(forkSchema.sessionLineageNodes).all(),
 		).toHaveLength(0);
 		expect(
-			reopened.select().from(schema.sessionLineageEdges).all(),
+			reopened.select().from(forkSchema.sessionLineageEdges).all(),
 		).toHaveLength(0);
 	});
 });

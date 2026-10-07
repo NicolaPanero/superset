@@ -1,6 +1,6 @@
 import { and, count, eq } from "drizzle-orm";
 import type { HostDb } from "../../../db";
-import { agentAccountAliases } from "../../../db/schema";
+import { agentAccountAliases } from "../../../db/fork-schema";
 
 const MAX_ALIASES = 128;
 type ManagedAgent = "claude" | "codex";

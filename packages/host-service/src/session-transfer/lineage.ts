@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { and, desc, eq, lt, or } from "drizzle-orm";
 import type { HostDb } from "../db";
-import { sessionLineageEdges, sessionLineageNodes } from "../db/schema";
+import { sessionLineageEdges, sessionLineageNodes } from "../db/fork-schema";
 
 export type LineageNode = typeof sessionLineageNodes.$inferSelect;
 export type LineageNodeInput = Omit<
