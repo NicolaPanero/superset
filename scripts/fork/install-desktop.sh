@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
-# Build this fork's desktop app against the production Superset services and
-# install it in /Applications, with the txcript transfer helper in ~/.superset.
+# Build this fork's desktop app from this checkout, against the production
+# Superset services and with the txcript transfer helper inside, and install it
+# in /Applications. Released builds come from the fork-release workflow.
 #
-#   scripts/fork/install-desktop.sh [--skip-helper]
-#
-# Fork builds do not update themselves: run this again after pulling.
+#   scripts/fork/install-desktop.sh
 set -euo pipefail
 
-skip_helper=false
-[[ "${1:-}" == "--skip-helper" ]] && skip_helper=true
-
 root="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
-for tool in bun git; do
+for tool in bun git cargo; do
 	command -v "$tool" >/dev/null || {
 		echo "$tool is required (see README, Fork section)" >&2
 		exit 1
@@ -23,19 +19,12 @@ if pgrep -f "/Applications/Superset.app/Contents/MacOS/" >/dev/null; then
 	exit 1
 fi
 
-if ! $skip_helper; then
-	command -v cargo >/dev/null || {
-		echo "cargo is required to build the txcript helper (or pass --skip-helper)" >&2
-		exit 1
-	}
-	# The installed app reads the helper from the default Superset home.
-	(cd "$root" && env -u SUPERSET_HOME_DIR bun scripts/build-txcript-transfer.ts)
-fi
-
 # An empty env file keeps the local development .env (localhost services) out
 # of the build, so the app uses the production defaults.
 env_file="$(mktemp)"
-trap 'rm -f "$env_file"' EXIT
+helper_home="$(mktemp -d)"
+trap 'rm -rf "$env_file" "$helper_home"' EXIT
+(cd "$root" && SUPERSET_HOME_DIR="$helper_home" bun scripts/build-txcript-transfer.ts)
 
 cd "$root/apps/desktop"
 # A Superset terminal exports its workspace name; built in, it would rename
@@ -43,6 +32,7 @@ cd "$root/apps/desktop"
 export SUPERSET_ENV_FILE="$env_file" SUPERSET_AUTO_UPDATE=disabled \
 	SUPERSET_WORKSPACE_NAME=superset
 env -u SUPERSET_HOME_DIR bun run prebuild
+install -m 755 "$helper_home/bin/txcript-transfer" dist/resources/bin/txcript-transfer
 CSC_IDENTITY_AUTO_DISCOVERY=false env -u SUPERSET_HOME_DIR \
 	bunx electron-builder --config electron-builder.ts --publish never --dir
 

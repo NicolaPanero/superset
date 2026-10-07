@@ -78,8 +78,9 @@ Su un Mac Apple Silicon, dall'ultima release del fork:
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Installa `/Applications/Superset.app` e il convertitore txcript in
-`~/.superset/bin`. Impostazioni e dati restano (stanno in `~/.superset` e
+Installa `/Applications/Superset.app`, che contiene anche il convertitore
+txcript (`Contents/Resources/resources/bin/txcript-transfer`), così app e
+convertitore hanno sempre la stessa versione. Impostazioni e dati restano (stanno in `~/.superset` e
 `~/Library/Application Support/Superset`), quindi aggiornare equivale a
 reinstallare. L'app non è notarizzata: installata con il comando si apre
 normalmente; scaricata dal browser va aperta una volta da Impostazioni di
@@ -91,8 +92,8 @@ con esso. L'aggiornamento automatico di upstream è spento, perché riporterebbe
 l'app alla versione ufficiale. Al suo posto l'app controlla le release del fork
 ogni 6 ore e propone "Installa e riavvia", che esegue lo script sopra.
 
-Per compilare e installare dal checkout locale (serve anche Rust per il
-convertitore): `bun run fork:install`. L'app precedente resta in
+Per compilare e installare dal checkout locale, sempre con il convertitore
+incluso (serve anche Rust): `bun run fork:install`. L'app precedente resta in
 `~/.superset/previous-app`.
 
 ## Sviluppo
@@ -114,7 +115,7 @@ bun scripts/build-txcript-transfer.ts
 | Workflow | Quando | Cosa fa |
 |---|---|---|
 | `fork-sync-upstream.yml` | ogni giorno alle 05:17 UTC, o a mano | Allinea `main` a upstream. Fonde in `fork/main` l'ultima release stabile di upstream (tag `desktop-v*`), esegue lint, `check:i18n` e il typecheck dei pacchetti modificati dal fork, e solo se passano fa il push. Tiene disattivati i workflow ereditati da upstream. |
-| `fork-release.yml` | dopo ogni sincronizzazione, o a mano | Se `fork/main` ha un commit senza release, compila l'app su un runner macOS (firma ad-hoc) e il convertitore txcript, e li pubblica come release `desktop-vX.Y.Z-fork.<commit>`. |
+| `fork-release.yml` | dopo ogni sincronizzazione, o a mano | Se `fork/main` ha un commit senza release, compila su un runner macOS il convertitore txcript e l'app che lo contiene (firma ad-hoc), e la pubblica come release `desktop-vX.Y.Z-fork.<commit>`. |
 
 Se un'esecuzione fallisce GitHub manda una mail. Una sincronizzazione fallita
 (conflitti o controlli rossi) non pubblica nulla: si risolve a mano con lo

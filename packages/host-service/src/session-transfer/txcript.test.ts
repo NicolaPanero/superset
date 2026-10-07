@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { runHelper } from "./txcript";
+import { runHelper, txcriptHelperPath } from "./txcript";
 
 describe("conversion helper lifecycle", () => {
 	it("runs native import in the requested workspace directory", async () => {
@@ -86,5 +86,18 @@ describe("conversion helper lifecycle", () => {
 			controller.abort();
 			await rm(directory, { recursive: true, force: true });
 		}
+	});
+});
+
+describe("txcriptHelperPath", () => {
+	it("prefers the helper in the app bundle and falls back to the Superset home", () => {
+		const exec = "/Applications/Superset.app/Contents/MacOS/Superset";
+		const bundled =
+			"/Applications/Superset.app/Contents/Resources/resources/bin/txcript-transfer";
+		expect(txcriptHelperPath(exec, (path) => path === bundled)).toBe(bundled);
+		expect(txcriptHelperPath(exec, () => false)).toEndWith(
+			"/bin/txcript-transfer",
+		);
+		expect(txcriptHelperPath(exec, () => false)).not.toBe(bundled);
 	});
 });
