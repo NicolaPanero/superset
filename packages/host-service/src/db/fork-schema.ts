@@ -86,3 +86,25 @@ export const sessionLineageEdges = sqliteTable(
 		index("session_lineage_edges_target_idx").on(table.targetNodeId),
 	],
 );
+
+/** ACP chats whose pane was closed; they keep running and can be reopened. */
+export const backgroundChats = sqliteTable(
+	"background_chats",
+	{
+		terminalId: text("terminal_id").primaryKey(),
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		title: text().notNull(),
+		paneData: text("pane_data", { mode: "json" })
+			.notNull()
+			.$type<Record<string, unknown>>(),
+		parkedAt: integer("parked_at").notNull(),
+	},
+	(table) => [
+		index("background_chats_workspace_idx").on(
+			table.workspaceId,
+			table.parkedAt,
+		),
+	],
+);
