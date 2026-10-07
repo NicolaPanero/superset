@@ -2,9 +2,9 @@ import { chmod, copyFile, mkdir, rename, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 
-// Tag v0.14.4-fork.3 of the owner's txcript fork: official txcript at
+// Tag v0.14.4-fork.5 of the owner's txcript fork: official txcript at
 // 8cd3b0e plus the fixes this fork needs (see FORK.md there).
-const revision = "0d56ce01510fd1bc125ef77d3e9034441d70f812";
+const revision = "de5efb3afae24fe1079719cbac1382950886ded7";
 const repository = "https://github.com/NicolaPanero/txcript.git";
 const repoRoot = resolve(import.meta.dir, "..");
 const cache = join(repoRoot, ".cache/txcript-transfer", revision);
@@ -52,7 +52,7 @@ const details = JSON.parse(capability.stdout.toString());
 if (
 	capability.exitCode !== 0 ||
 	details.protocolVersion !== 1 ||
-	details.engineVersion !== "0.14.4-fork.3" ||
+	details.engineVersion !== "0.14.4-fork.5" ||
 	!details.conversionOnly
 )
 	throw new Error("Invalid transfer helper");
