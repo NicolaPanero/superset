@@ -25,21 +25,11 @@ import {
 import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
-import { ACP_HARNESSES } from "../../../chat-v3/acpCatalogue";
-import { acpDefaultModel } from "../../../chat-v3/acpDefaultModel";
-import { acpHarnessFactory } from "../../../chat-v3/acpHarnesses";
-import { resolveAgentCli } from "../../../chat-v3/agentCli";
-import { buildChatAgentEnv } from "../../../chat-v3/agentEnv";
-import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
 import type { HostDb } from "../../../db";
 import { workspaces } from "../../../db/schema";
-import { defaultNativeStore } from "../../../session-transfer/stores";
-import { waitForTerminalBaseEnv } from "../../../terminal/env";
 import {
 	createTerminalSessionInternal,
-	isLiveTerminalSession,
 	sendAgentMessage,
-	sessionHasRunningProcess,
 } from "../../../terminal/terminal";
 import type { TerminalAgentStore } from "../../../terminal-agents";
 import {
@@ -52,34 +42,9 @@ import type { HostServiceContext } from "../../../types";
 import { protectedProcedure, router } from "../../index";
 import { resolveAttachmentPath } from "../attachments/storage";
 import { toTerminalSessionError } from "../terminal/errors";
-import { listAccountAliases } from "../usage/account-aliases";
-import { validateSessionAccount } from "../usage/session-account/session-account";
 import { seedAgentFolderTrust } from "../workspace-creation/shared/seed-agent-trust";
-import { agentAccountOptions, selectedAccountEnv } from "./account-selection";
-
-// Runtime launch details are deliberately labelled as launch choices, not as
-// the active model (a CLI can change models later). Missing/evicted data is unknown.
-const launchDetails = new Map<
-	string,
-	{
-		workspaceId: string;
-		agent: string;
-		configId: string;
-		label: string;
-		model: string | null;
-	}
->();
-
-export function terminalLaunchConfigId(
-	workspaceId: string,
-	terminalId: string,
-	agent: string,
-) {
-	const details = launchDetails.get(terminalId);
-	return details?.workspaceId === workspaceId && details.agent === agent
-		? details.configId
-		: undefined;
-}
+import { applyForkLaunchChoices, recordLaunchDetails } from "./fork-launch";
+import { forkAgentProcedures } from "./fork-procedures";
 
 /**
  * Build a shell command string that runs the resolved agent config with the
@@ -551,28 +516,7 @@ async function runTerminalAgent(
 	}
 
 	bindResumedSession(ctx, input, result.terminalId);
-	const config =
-		input.launchSnapshot?.config ?? resolveHostAgentConfig(ctx.db, input.agent);
-	if (config) {
-		const support = getAgentModelSupport(config.presetId);
-		const flagIndex = support?.modelFlag
-			? config.args.lastIndexOf(support.modelFlag)
-			: -1;
-		const configuredModel =
-			flagIndex >= 0 ? config.args[flagIndex + 1] : undefined;
-		launchDetails.set(result.terminalId, {
-			workspaceId: input.workspaceId,
-			agent: config.presetId,
-			configId: config.id,
-			label,
-			model: input.model ?? configuredModel ?? null,
-		});
-		while (launchDetails.size > 1024) {
-			const oldest = launchDetails.keys().next().value;
-			if (oldest) launchDetails.delete(oldest);
-		}
-	}
-
+	recordLaunchDetails(ctx.db, input, result.terminalId, label);
 	return {
 		kind: "terminal",
 		sessionId: result.terminalId,
@@ -700,37 +644,7 @@ export async function runAgentInWorkspace(
 			message: `Workspace ${input.workspaceId} not found on this host — it may have been deleted.`,
 		});
 	}
-	if (input.accountSelection !== undefined) {
-		await waitForTerminalBaseEnv();
-		const config = resolveHostAgentConfig(ctx.db, input.agent);
-		if (!config)
-			throw new TRPCError({
-				code: "NOT_FOUND",
-				message: "account_selection_unavailable",
-			});
-		const env = await selectedAccountEnv(
-			config,
-			agentLaunchEnv(ctx.db, config),
-			input.accountSelection,
-		);
-		input = { ...input, launchSnapshot: { config, env } };
-	}
-	// CLI identity applies to plain launches as well as native handoffs.
-	const launchConfig =
-		input.launchSnapshot?.config ?? resolveHostAgentConfig(ctx.db, input.agent);
-	if (launchConfig?.presetId === "cursor-agent") {
-		input = {
-			...input,
-			launchSnapshot: {
-				config: launchConfig,
-				env: {
-					...(input.launchSnapshot?.env ??
-						agentLaunchEnv(ctx.db, launchConfig)),
-					CURSOR_AGENT: "1",
-				},
-			},
-		};
-	}
+	input = await applyForkLaunchChoices(ctx.db, input);
 	// Ahead of the launch path: continuing costs no pty and no trust seeding.
 	const continued = await continueTerminalAgent(ctx, input);
 	if (continued) return continued;
@@ -757,236 +671,8 @@ export async function runAgentInWorkspace(
 	return runTerminalAgent(ctx, input);
 }
 
-/**
- * Open bindings whose agent has already quit. An agent that exits before its
- * first hook (Claude's folder trust prompt) never reports an end.
- */
-export function exitedAgentTerminalIds(
-	bindings: Array<{ terminalId: string; endedAt?: number }>,
-	isLive: (terminalId: string) => boolean,
-	isRunning: (terminalId: string) => boolean,
-): string[] {
-	return bindings
-		.filter(
-			(binding) =>
-				!binding.endedAt &&
-				isLive(binding.terminalId) &&
-				!isRunning(binding.terminalId),
-		)
-		.map((binding) => binding.terminalId);
-}
-
 export const agentsRouter = router({
-	prepareCursorSurface: protectedProcedure
-		.input(
-			z.object({
-				workspaceId: z.string().uuid(),
-				configId: z.string().min(1),
-				sessionId: z.string().uuid(),
-				from: z.enum(["cli", "acp"]),
-			}),
-		)
-		.mutation(async ({ ctx, input }) => {
-			const workspace = ctx.db
-				.select()
-				.from(workspaces)
-				.where(
-					and(
-						eq(workspaces.id, input.workspaceId),
-						isNull(workspaces.archivedAt),
-					),
-				)
-				.get();
-			const config = resolveHostAgentConfig(ctx.db, input.configId);
-			if (!workspace || !config || config.presetId !== "cursor-agent")
-				throw new TRPCError({
-					code: "NOT_FOUND",
-					message: "agent_config_unavailable",
-				});
-			defaultNativeStore("cursor-agent", agentLaunchEnv(ctx.db, config));
-			if (
-				ctx.terminalAgentStore
-					.listByWorkspace(input.workspaceId)
-					.some(
-						(b) =>
-							b.agentId === "cursor-agent" &&
-							b.agentSessionId === input.sessionId &&
-							!b.endedAt,
-					)
-			)
-				throw new TRPCError({
-					code: "PRECONDITION_FAILED",
-					message: "source_session_running",
-				});
-			await bridgeCursorSession({
-				cwd: workspace.worktreePath,
-				sessionId: input.sessionId,
-				from: input.from,
-			});
-			return { sessionId: input.sessionId };
-		}),
-	prepareAcpLaunch: protectedProcedure
-		.input(
-			z.object({
-				workspaceId: z.string().uuid(),
-				configId: z.string().min(1),
-				accountSelection: z.string().min(1).nullable().optional(),
-				sourceTerminalId: z.string().optional(),
-			}),
-		)
-		.mutation(async ({ ctx, input }) => {
-			const source = input.sourceTerminalId
-				? ctx.terminalAgentStore
-						.listByWorkspace(input.workspaceId)
-						.find((b) => b.terminalId === input.sourceTerminalId && !b.endedAt)
-				: undefined;
-			if (input.sourceTerminalId && !source)
-				throw new TRPCError({
-					code: "PRECONDITION_FAILED",
-					message: "source_session_unavailable",
-				});
-			const config = resolveHostAgentConfig(
-				ctx.db,
-				source
-					? (terminalLaunchConfigId(
-							input.workspaceId,
-							source.terminalId,
-							source.agentId,
-						) ?? input.configId)
-					: input.configId,
-			);
-			let selection = input.accountSelection;
-			if (
-				source &&
-				(source.agentId === "claude" || source.agentId === "codex")
-			) {
-				if (
-					!source.account ||
-					source.account.credentialKind !== "subscription" ||
-					!(await validateSessionAccount(source.account))
-				)
-					throw new TRPCError({
-						code: "PRECONDITION_FAILED",
-						message: "source_account_unverified",
-					});
-				selection = source.account.selection;
-			}
-			const workspace = ctx.db
-				.select()
-				.from(workspaces)
-				.where(
-					and(
-						eq(workspaces.id, input.workspaceId),
-						isNull(workspaces.archivedAt),
-					),
-				)
-				.get();
-			if (!config || !workspace)
-				throw new TRPCError({
-					code: "NOT_FOUND",
-					message: "agent_config_unavailable",
-				});
-			const harness = Object.entries(ACP_HARNESSES).find(
-				([, entry]) => entry.binary === config.presetId,
-			)?.[0];
-			if (!harness || !acpHarnessFactory(harness, ctx.db))
-				throw new TRPCError({
-					code: "PRECONDITION_FAILED",
-					message: "acp_unavailable",
-				});
-			const launch = {
-				db: ctx.db,
-				cwd: workspace.worktreePath,
-				workspaceId: input.workspaceId,
-				agentConfigId: config.id,
-				accountSelection: selection,
-			};
-			let env = await buildChatAgentEnv(launch);
-			let accountSelection = selection;
-			if (
-				accountSelection === undefined &&
-				(config.presetId === "claude" || config.presetId === "codex")
-			) {
-				const path =
-					env[
-						config.presetId === "claude" ? "CLAUDE_CONFIG_DIR" : "CODEX_HOME"
-					] || null;
-				const options = await agentAccountOptions(config.presetId);
-				accountSelection = options.some((v) => v.selection === path)
-					? path
-					: null;
-				if (
-					path &&
-					!options.some((v) => v.selection === path) &&
-					config.presetId === "claude"
-				)
-					throw new TRPCError({
-						code: "PRECONDITION_FAILED",
-						message: "account_selection_unavailable",
-					});
-				env = await buildChatAgentEnv({ ...launch, accountSelection });
-			}
-			const entry = ACP_HARNESSES[harness];
-			if (!entry)
-				throw new TRPCError({
-					code: "PRECONDITION_FAILED",
-					message: "acp_unavailable",
-				});
-			await resolveAgentCli({
-				binary: entry.binary,
-				minVersion: entry.minVersion,
-				upgrade: entry.upgrade,
-				env: async () => env,
-			});
-			return {
-				agentConfigId: config.id,
-				accountSelection,
-				harness,
-				defaultModelId: await acpDefaultModel(config.presetId),
-			};
-		}),
-	accountOptions: protectedProcedure
-		.input(z.object({ agent: z.string().min(1) }))
-		.query(async ({ ctx, input }) => {
-			const aliases = listAccountAliases(ctx.db);
-			return (await agentAccountOptions(input.agent)).map((option) => {
-				const alias =
-					aliases.find(
-						(alias) =>
-							alias.agent === input.agent &&
-							alias.selection === option.selection,
-					)?.label ?? null;
-				return { ...option, alias, label: alias ?? option.label };
-			});
-		}),
-	launchDetails: protectedProcedure
-		.input(z.object({ workspaceId: z.string().uuid() }))
-		.query(({ ctx, input }) =>
-			ctx.terminalAgentStore
-				.listByWorkspace(input.workspaceId)
-				.flatMap((binding) => {
-					const details = launchDetails.get(binding.terminalId);
-					return details?.workspaceId === input.workspaceId &&
-						details.agent === binding.agentId
-						? [
-								{
-									terminalId: binding.terminalId,
-									label: details.label,
-									model: details.model,
-								},
-							]
-						: [];
-				}),
-		),
-	exitedAgentTerminals: protectedProcedure
-		.input(z.object({ workspaceId: z.string().uuid() }))
-		.query(({ ctx, input }) =>
-			exitedAgentTerminalIds(
-				ctx.terminalAgentStore.listByWorkspace(input.workspaceId),
-				isLiveTerminalSession,
-				(terminalId) => sessionHasRunningProcess(terminalId, input.workspaceId),
-			),
-		),
+	...forkAgentProcedures,
 	run: protectedProcedure
 		.input(
 			z.object({

@@ -45,8 +45,8 @@ import {
 	type AgentRunInput,
 	type AgentRunResult,
 	runAgentInWorkspace,
-	terminalLaunchConfigId,
 } from "../agents/agents";
+import { terminalLaunchConfigId } from "../agents/fork-launch";
 import { toTerminalSessionError } from "../terminal/errors";
 
 type Prepared = {
