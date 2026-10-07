@@ -4,19 +4,11 @@ import { i18n } from "@superset/i18n";
 import { errorMessage } from "@superset/i18n/errors";
 import { Button } from "@superset/ui/button";
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@superset/ui/dialog";
-import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
-import { Input } from "@superset/ui/input";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { useEffect, useRef, useState } from "react";
@@ -36,7 +28,6 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import { useAgentAccountAliases } from "renderer/hooks/host-service/useAgentAccountAliases";
 import type {
 	UsageAccount,
 	UsageQuotaWindow,
@@ -52,6 +43,7 @@ import { useRestartAgentSessions } from "../../hooks/useRestartAgentSessions";
 import { useSetDefaultUsageAccount } from "../../hooks/useSetDefaultUsageAccount";
 import { LeaderboardCard } from "../LeaderboardCard";
 import { UsageHistorySection } from "../UsageHistorySection";
+import { useAccountRename } from "./components/AccountRenameDialog";
 import type { SwitchSignInTarget } from "./components/AddAccountDialog";
 import { AddAccountDialog } from "./components/AddAccountDialog";
 import { RemoveAccountDialog } from "./components/RemoveAccountDialog";
@@ -398,9 +390,7 @@ export function UsageView({
 	const focusedOnce = useRef<string | null>(null);
 	const { t } = useLingui();
 	const quotaQuery = useHostUsageQuota(hostUrl);
-	const aliases = useAgentAccountAliases(hostUrl);
-	const [renameTarget, setRenameTarget] = useState<UsageAccount | null>(null);
-	const [renameLabel, setRenameLabel] = useState("");
+	const rename = useAccountRename(hostUrl);
 	const setDefault = useSetDefaultUsageAccount(hostUrl);
 	const removeAccount = useRemoveUsageAccount(hostUrl);
 	const isDark = useIsDarkTheme();
@@ -661,27 +651,8 @@ export function UsageView({
 												isManagedAgent(agent) && agentAccounts.length > 1
 											}
 											hideEmails={hideEmails}
-											alias={
-												aliases.data?.find(
-													(alias) =>
-														alias.agent === account.agent &&
-														alias.selection === account.selection,
-												)?.label
-											}
-											onRename={
-												isManagedAgent(account.agent) && aliases.isSuccess
-													? () => {
-															setRenameTarget(account);
-															setRenameLabel(
-																aliases.data?.find(
-																	(alias) =>
-																		alias.agent === account.agent &&
-																		alias.selection === account.selection,
-																)?.label ?? "",
-															);
-														}
-													: undefined
-											}
+											alias={rename.aliasFor(account)}
+											onRename={rename.onRename(account)}
 										/>
 									</div>
 								))}
@@ -753,62 +724,7 @@ export function UsageView({
 				}}
 			/>
 
-			<Dialog
-				open={renameTarget !== null}
-				onOpenChange={(open) => {
-					if (!open && !aliases.rename.isPending) setRenameTarget(null);
-				}}
-			>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>
-							<Trans>Rename account</Trans>
-						</DialogTitle>
-						<DialogDescription>
-							<Trans>
-								Saved on this host. Leave empty to use the original name.
-							</Trans>
-						</DialogDescription>
-					</DialogHeader>
-					<form
-						onSubmit={(event) => {
-							event.preventDefault();
-							if (
-								!renameTarget ||
-								!isManagedAgent(renameTarget.agent) ||
-								aliases.rename.isPending
-							)
-								return;
-							aliases.rename.mutate(
-								{
-									agent: renameTarget.agent,
-									selection: renameTarget.selection,
-									label: renameLabel || null,
-								},
-								{
-									onSuccess: () => setRenameTarget(null),
-									onError: () =>
-										toast.error(
-											t({ message: "Could not rename this account." }),
-										),
-								},
-							);
-						}}
-						className="space-y-4"
-					>
-						<Input
-							aria-label={t({ message: "Account name" })}
-							value={renameLabel}
-							onChange={(event) => setRenameLabel(event.target.value)}
-							maxLength={64}
-							disabled={aliases.rename.isPending}
-						/>
-						<Button type="submit" disabled={aliases.rename.isPending}>
-							<Trans>Save</Trans>
-						</Button>
-					</form>
-				</DialogContent>
-			</Dialog>
+			{rename.dialog}
 			{accountsOnly && (
 				<p className="text-xs text-muted-foreground">
 					<Trans>
