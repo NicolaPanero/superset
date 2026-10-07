@@ -1,6 +1,8 @@
 # Builds this fork for Apple Silicon Macs and publishes it as a GitHub release
-# whenever fork/main has a commit without a release yet. It runs after each
-# sync and on demand.
+# whenever fork/main has a commit without a release yet, or NicolaPanero/txcript
+# has a newer release than the one bundled (the release name ends with its
+# fork number, `-tx<N>`). It runs after each sync, when txcript publishes a
+# release, and on demand.
 #
 # The app is ad-hoc signed (no Apple Developer ID) and keeps the official app
 # identity, so sign-in and data work as with upstream's build; it replaces an
@@ -35,6 +37,7 @@ jobs:
       sha: ${{ steps.find.outputs.sha }}
       version: ${{ steps.find.outputs.version }}
       tag: ${{ steps.find.outputs.tag }}
+      txcript_tag: ${{ steps.find.outputs.txcript_tag }}
       build: ${{ steps.find.outputs.build }}
     steps:
       - name: Find the commit to build
@@ -46,16 +49,18 @@ jobs:
           sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/fork/main" --jq .sha)
           version=$(gh api "repos/$GITHUB_REPOSITORY/contents/apps/desktop/package.json?ref=$sha" --jq .content |
             base64 -d | jq -r .version)
-          tag="desktop-v${version}-fork.${sha:0:7}"
+          txcript_tag=$(gh api repos/NicolaPanero/txcript/releases/latest --jq .tag_name)
+          tag="desktop-v${version}-fork.${sha:0:7}-tx${txcript_tag##*-fork.}"
           build=true
           if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             build=false
           fi
-          echo "fork/main at $sha (Superset $version): tag $tag, build=$build"
+          echo "fork/main at $sha (Superset $version), txcript $txcript_tag: tag $tag, build=$build"
           {
             echo "sha=$sha"
             echo "version=$version"
             echo "tag=$tag"
+            echo "txcript_tag=$txcript_tag"
             echo "build=$build"
           } >> "$GITHUB_OUTPUT"
 
@@ -86,7 +91,10 @@ jobs:
           bun run --filter=@superset/i18n build
           cd apps/desktop && bun run install:deps
 
-      - name: Build the txcript transfer helper
+      - name: Install the txcript transfer helper
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TXCRIPT_TAG: ${{ needs.check.outputs.txcript_tag }}
         run: SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
 
       - name: Build the app

@@ -118,7 +118,9 @@ sviluppo separati, imposta `SUPERSET_HOME_DIR` nel `.env` della radice.
 Il convertitore usato da Superset è il fork di txcript
 [NicolaPanero/txcript](https://github.com/NicolaPanero/txcript) (vedi
 `tools/txcript-transfer/README.md`), lo stesso incluso in Zed Fork. Le
-correzioni si fanno lì; dopo aver cambiato la revisione nello script:
+correzioni si fanno lì e si pubblicano come nuova release del fork (vedi il
+suo `FORK.md`); le build di Superset prendono l'ultima da sole. Per
+installare in locale l'ultima release:
 
 ```bash
 bun scripts/build-txcript-transfer.ts
@@ -129,7 +131,7 @@ bun scripts/build-txcript-transfer.ts
 | Workflow | Quando | Cosa fa |
 |---|---|---|
 | `fork-sync-upstream.yml` | ogni giorno alle 05:17 UTC, o a mano | Allinea `main` a upstream. Fonde in `fork/main` l'ultima release stabile di upstream (tag `desktop-v*`), esegue lint, `check:i18n` e il typecheck dei pacchetti modificati dal fork, e solo se passano fa il push. Tiene disattivati i workflow ereditati da upstream. |
-| `fork-release.yml` | dopo ogni sincronizzazione, o a mano | Se `fork/main` ha un commit senza release, compila su un runner macOS il convertitore txcript e l'app che lo contiene (firma ad-hoc), e la pubblica come release `desktop-vX.Y.Z-fork.<commit>`. |
+| `fork-release.yml` | dopo ogni sincronizzazione, quando esce una release del fork di txcript, o a mano | Se `fork/main` ha un commit senza release, o il fork di txcript ha una release più nuova di quella inclusa, scarica il convertitore dall'ultima release di txcript, compila su un runner macOS l'app che lo contiene (firma ad-hoc) e la pubblica come release `desktop-vX.Y.Z-fork.<commit>-tx<N>`. |
 
 Se un'esecuzione fallisce GitHub manda una mail. Una sincronizzazione fallita
 (conflitti o controlli rossi) non pubblica nulla: si risolve a mano con lo
@@ -195,6 +197,6 @@ Nuove funzioni del fork vanno scritte allo stesso modo.
 - Il fallback automatico dell'account quando una quota finisce non c'è ancora.
 - Le sessioni di Cursor IDE non sono supportate, solo Cursor CLI.
 - "Apri figlia" nello storico riapre nel terminale anche una sessione nata in chat.
-- Il fork di txcript è legato a una revisione fissa di txcript ufficiale.
+- Il fork di txcript parte da una revisione fissa di txcript ufficiale.
 - Login Microsoft, Jira e Bitbucket richiedono un backend proprio e non sono
   iniziati.
