@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { isAbsolute, join, relative } from "node:path";
+import { dirname, isAbsolute, join, relative } from "node:path";
 import { z } from "zod";
 import type {
 	SessionTransferProvider,
@@ -34,7 +35,24 @@ const resultSchema = engine.extend({
 	warnings: z.array(z.string().max(1000)).max(20),
 });
 
-export function txcriptHelperPath(): string {
+/**
+ * The helper shipped in the app bundle (Contents/Resources/resources/bin, next
+ * to the bundled CLI) wins, so app and engine versions always match; a
+ * development checkout uses the one built into the Superset home.
+ */
+export function txcriptHelperPath(
+	execPath = process.execPath,
+	exists: (path: string) => boolean = existsSync,
+): string {
+	const bundled = join(
+		dirname(execPath),
+		"..",
+		"Resources",
+		"resources",
+		"bin",
+		"txcript-transfer",
+	);
+	if (exists(bundled)) return bundled;
 	return join(
 		process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset"),
 		"bin",

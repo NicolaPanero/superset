@@ -87,9 +87,7 @@ jobs:
           cd apps/desktop && bun run install:deps
 
       - name: Build the txcript transfer helper
-        run: |
-          SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
-          cp "$RUNNER_TEMP/helper/bin/txcript-transfer" "$RUNNER_TEMP/txcript-transfer-arm64"
+        run: SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
 
       - name: Build the app
         working-directory: apps/desktop
@@ -97,6 +95,8 @@ jobs:
           : > "$RUNNER_TEMP/empty.env"
           export SUPERSET_ENV_FILE="$RUNNER_TEMP/empty.env"
           bun run prebuild
+          # Shipped next to the bundled CLI; the host-service looks there first.
+          install -m 755 "$RUNNER_TEMP/helper/bin/txcript-transfer" dist/resources/bin/txcript-transfer
           bunx electron-builder --config electron-builder.ts --publish never --mac zip --arm64
           zip=$(ls release/*-arm64-mac.zip | head -n 1)
           mv "$zip" "$RUNNER_TEMP/Superset-fork-arm64.zip"
@@ -125,7 +125,6 @@ jobs:
           gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag 2>/dev/null || true
           gh release create "$TAG" \
             "$RUNNER_TEMP/Superset-fork-arm64.zip" \
-            "$RUNNER_TEMP/txcript-transfer-arm64" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$SHA" \
             --title "Superset fork ${VERSION} (${SHA:0:7})" \
