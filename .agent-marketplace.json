@@ -116,6 +116,26 @@
 			"category": "communication",
 			"source": "./plugins/superhuman",
 			"version": "1.0.0"
+		},
+		{
+			"name": "neon",
+			"description": "Work with your Neon Postgres: inspect projects and branches, read schemas, and run SQL.",
+			"author": {
+				"name": "Superset"
+			},
+			"category": "data & apis",
+			"source": "./plugins/neon",
+			"version": "1.0.0"
+		},
+		{
+			"name": "posthog",
+			"description": "Ask PostHog about your product: query events and insights, look up people, and check feature flags.",
+			"author": {
+				"name": "Superset"
+			},
+			"category": "data & apis",
+			"source": "./plugins/posthog",
+			"version": "1.0.0"
 		}
 	],
 	"featured": ["github", "linear"],

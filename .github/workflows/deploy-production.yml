@@ -183,7 +183,7 @@ jobs:
           SANDBOX_GATE_SECRET: ${{ secrets.SANDBOX_GATE_SECRET }}
           SANDBOX_GATE_ORIGIN: ${{ secrets.SANDBOX_GATE_ORIGIN }}
           SENTRY_DSN_SANDBOX: ${{ secrets.SENTRY_DSN_SANDBOX }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SERVER_OPENAI_API_KEY: ${{ secrets.SERVER_OPENAI_API_KEY }}
           GH_APP_SLUG: ${{ secrets.GH_APP_SLUG }}
         run: |
           vercel pull --yes --environment=production --token=$VERCEL_TOKEN
@@ -270,7 +270,7 @@ jobs:
             --env SANDBOX_GATE_SECRET=$SANDBOX_GATE_SECRET \
             --env SANDBOX_GATE_ORIGIN=$SANDBOX_GATE_ORIGIN \
             --env SENTRY_DSN_SANDBOX=$SENTRY_DSN_SANDBOX \
-            --env OPENAI_API_KEY=$OPENAI_API_KEY \
+            --env SERVER_OPENAI_API_KEY=$SERVER_OPENAI_API_KEY \
             --env GH_APP_SLUG=$GH_APP_SLUG
 
   deploy-web:

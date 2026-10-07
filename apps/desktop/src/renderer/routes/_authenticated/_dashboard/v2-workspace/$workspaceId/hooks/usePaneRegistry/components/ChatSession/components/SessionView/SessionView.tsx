@@ -230,12 +230,13 @@ export function SessionView({
 			),
 		[sendPrompt, runningTurnId],
 	);
+	const awaitingBackground = sessionState?.awaitingBackground === true;
 	const onCancelTurn = useMemo(
 		() =>
-			runningTurnId
+			runningTurnId && !awaitingBackground
 				? () => void cancelTurn(runningTurnId, { pauseQueue: true })
 				: null,
-		[runningTurnId, cancelTurn],
+		[runningTurnId, awaitingBackground, cancelTurn],
 	);
 	const promptQueue = useMemo(
 		() => ({

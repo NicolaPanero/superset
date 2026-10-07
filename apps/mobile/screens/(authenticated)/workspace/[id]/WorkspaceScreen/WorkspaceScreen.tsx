@@ -40,6 +40,7 @@ import {
 	hostServiceUrl,
 } from "@/lib/host-service/client";
 import { posthog } from "@/lib/posthog";
+import { useVoiceActive } from "@/lib/voice/voiceStore";
 import {
 	getHostTerminalsQueryKey,
 	useHostTerminals,
@@ -182,6 +183,9 @@ export function WorkspaceScreen() {
 		id ? state.tabByWorkspace[id] : undefined,
 	);
 	const tabsHydrated = useLastSessionTabStore((state) => state.hasHydrated);
+	useEffect(() => {
+		if (params.tab) setPickedTerminalId(null);
+	}, [params.tab]);
 	const activeTerminalId = useMemo(() => {
 		// Nothing to resolve against until AsyncStorage answers (~165ms cold):
 		// picking the first row now attaches a stream to the wrong session and
@@ -773,6 +777,7 @@ export function WorkspaceScreen() {
 		}
 		wasWaking.current = sandboxWaking;
 	}, [sandboxWaking, invalidateTerminals, queryClient]);
+	const voiceActive = useVoiceActive();
 	const showComposer =
 		activeTerminalId !== null &&
 		host !== null &&
@@ -1132,7 +1137,7 @@ export function WorkspaceScreen() {
 				)}
 			</View>
 
-			{showComposer ? (
+			{showComposer && !voiceActive ? (
 				<TerminalComposer
 					workspaceId={id}
 					allowAttachments={activeRow?.agentId != null}

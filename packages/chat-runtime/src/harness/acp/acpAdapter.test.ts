@@ -33,6 +33,10 @@ class FakeAcpAgent {
 	holdSelections = false;
 	rejectSelections = false;
 	private heldSelections: number[] = [];
+	/** Advertise `_session/steering` and answer it with this outcome. */
+	steeringOutcome: string | null = null;
+	/** Leave session/prompt unanswered, as a turn still running does. */
+	holdPrompts = false;
 	private handlers!: AcpTransportHandlers;
 
 	transport(handlers: AcpTransportHandlers): AcpTransport {
@@ -102,6 +106,9 @@ class FakeAcpAgent {
 		queueMicrotask(() => {
 			if (frame.method === "initialize") {
 				this.respond(frame.id as number, {
+					...(this.steeringOutcome
+						? { _meta: { steering: { supported: true } } }
+						: {}),
 					protocolVersion: this.protocolVersion,
 					capabilities: {
 						promptCapabilities: { image: true },
@@ -186,6 +193,10 @@ class FakeAcpAgent {
 				}
 				// ACP returns null after replaying history; adapter keeps the id.
 				this.respond(frame.id as number, null);
+			} else if (frame.method === "_session/steering") {
+				this.respond(frame.id as number, { outcome: this.steeringOutcome });
+			} else if (frame.method === "session/prompt" && this.holdPrompts) {
+				return;
 			} else if (frame.method === "session/prompt") {
 				this.notify("sess-1", {
 					sessionUpdate: "agent_message_chunk",
@@ -323,6 +334,61 @@ describe("AcpAdapter", () => {
 			"session/prompt",
 		]);
 
+		await adapter.dispose();
+	});
+
+	it("steers a prompt into the running turn when the agent advertises it", async () => {
+		const agent = new FakeAcpAgent();
+		agent.steeringOutcome = "injected";
+		agent.holdPrompts = true;
+		const { adapter } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+
+		expect(adapter.canSteer()).toBe(true);
+		expect(await adapter.steer([{ type: "text", text: "and this" }])).toBe(
+			true,
+		);
+		expect(agent.sent.at(-1)).toMatchObject({
+			method: "_session/steering",
+			params: {
+				sessionId: "sess-1",
+				prompt: [{ type: "text", text: "and this" }],
+				_meta: { steering: { idleBehavior: "promptRequired" } },
+			},
+		});
+		await adapter.dispose();
+	});
+
+	it("does not steer an agent that does not advertise it", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdPrompts = true;
+		const { adapter } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+
+		expect(adapter.canSteer()).toBe(false);
+		expect(await adapter.steer([{ type: "text", text: "and this" }])).toBe(
+			false,
+		);
+		expect(agent.sent.map((f) => f.method)).not.toContain("_session/steering");
+		await adapter.dispose();
+	});
+
+	it("reports a steer the agent hands back as not taken", async () => {
+		const agent = new FakeAcpAgent();
+		agent.steeringOutcome = "promptRequired";
+		agent.holdPrompts = true;
+		const { adapter } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+
+		expect(await adapter.steer([{ type: "text", text: "and this" }])).toBe(
+			false,
+		);
 		await adapter.dispose();
 	});
 
@@ -1272,6 +1338,158 @@ describe("AcpAdapter on protocol v2", () => {
 		);
 		expect(lists).toEqual([["bun run dev"], []]);
 
+		await adapter.dispose();
+	});
+
+	it("reports a running turn as awaiting background work once the agent's cycle ends", async () => {
+		const agent = new FakeAcpAgent();
+		agent.steeringOutcome = "injected";
+		agent.holdPrompts = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "spawn a helper" }]);
+		await flush();
+		const awaiting = () =>
+			sessionsOf(events)
+				.filter((session) => session.awaitingBackground !== undefined)
+				.map((session) => session.awaitingBackground);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Helper",
+			task: "Help",
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "Launched." },
+		});
+		await flush();
+		expect(awaiting()).toEqual([]);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "usage_update",
+			used: 10,
+			size: 100,
+			cost: { amount: 0.01, currency: "USD" },
+		});
+		await flush();
+		expect(awaiting()).toEqual([true]);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "Answering you." },
+		});
+		await flush();
+		expect(awaiting()).toEqual([true, false]);
+
+		await adapter.dispose();
+	});
+
+	it("treats a steered turn as working until the steered reply streams", async () => {
+		const agent = new FakeAcpAgent();
+		agent.steeringOutcome = "injected";
+		agent.holdPrompts = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "spawn a helper" }]);
+		await flush();
+		const awaiting = () =>
+			sessionsOf(events)
+				.filter((session) => session.awaitingBackground !== undefined)
+				.map((session) => session.awaitingBackground);
+		const cycleEnds = () =>
+			agent.notify("sess-1", {
+				sessionUpdate: "usage_update",
+				used: 10,
+				size: 100,
+				cost: { amount: 0.01, currency: "USD" },
+			});
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Helper",
+			task: "Help",
+		});
+		cycleEnds();
+		await flush();
+		expect(awaiting()).toEqual([true]);
+
+		await adapter.steer([{ type: "text", text: "and this" }]);
+		expect(awaiting()).toEqual([true, false]);
+
+		cycleEnds();
+		await flush();
+		expect(awaiting()).toEqual([true, false]);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "Answer." },
+		});
+		cycleEnds();
+		await flush();
+		expect(awaiting()).toEqual([true, false, true]);
+
+		await adapter.dispose();
+	});
+
+	it("does not count a background task left over from an earlier turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.steeringOutcome = "injected";
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "start the dev server" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "task-1",
+			name: "bun run dev",
+			canStop: true,
+		});
+		await flush();
+
+		agent.holdPrompts = true;
+		adapter.prompt([{ type: "text", text: "now something else" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "usage_update",
+			used: 10,
+			size: 100,
+			cost: { amount: 0.01, currency: "USD" },
+		});
+		await flush();
+
+		expect(
+			sessionsOf(events).some((session) => session.awaitingBackground),
+		).toBe(false);
+		await adapter.dispose();
+	});
+
+	it("never reports awaiting background work for an agent that cannot steer", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdPrompts = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "spawn a helper" }]);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Helper",
+			task: "Help",
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "usage_update",
+			used: 10,
+			size: 100,
+			cost: { amount: 0.01, currency: "USD" },
+		});
+		await flush();
+
+		expect(
+			sessionsOf(events).some((session) => session.awaitingBackground),
+		).toBe(false);
 		await adapter.dispose();
 	});
 

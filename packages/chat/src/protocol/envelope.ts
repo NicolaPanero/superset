@@ -73,6 +73,7 @@ export const sessionStateSchema = z.looseObject({
 	queuePaused: z.boolean().optional(),
 	queueControls: z.boolean().optional(),
 	backgroundTasks: z.array(backgroundTaskSchema).optional(),
+	awaitingBackground: z.boolean().optional(),
 });
 export type SessionState = z.infer<typeof sessionStateSchema>;
 

@@ -124,6 +124,8 @@ export const FEATURE_FLAGS = {
 	MOBILE_LAUNCH: "mobile-launch",
 	/** Gates access to Cloud features (environment variables, sandboxes). */
 	CLOUD_ACCESS: "cloud-access",
+	/** Allowlist for mobile voice mode: shows the entry and authorizes `voice.createSession`. */
+	MOBILE_VOICE_MODE: "mobile-voice-mode",
 	/** When enabled, blocks remote agent execution on the desktop (e.g., for enterprise orgs). */
 	DISABLE_REMOTE_AGENT: "disable-remote-agent",
 	/**

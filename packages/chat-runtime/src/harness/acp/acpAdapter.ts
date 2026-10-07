@@ -42,6 +42,7 @@ import type {
 import { AcpRpcClient, spawnAcpTransport } from "./rpcClient";
 import type { AcpConfigSelectOption } from "./wire";
 import {
+	ACP_STEERING_METHOD,
 	type AcpContentBlock,
 	type AcpToolCallContent,
 	acpAvailableCommandsUpdateSchema,
@@ -58,9 +59,11 @@ import {
 	acpSessionNotificationSchema,
 	acpSessionUpdateSchema,
 	acpStateUpdateSchema,
+	acpSteeringResponseSchema,
 	acpSubagentUpdateSchema,
 	acpToolCallContentChunkSchema,
 	acpToolCallUpdateSchema,
+	acpUsageUpdateSchema,
 } from "./wire";
 
 /**
@@ -204,6 +207,18 @@ const APPROVAL_OPTION_KINDS = new Set([
 	"reject_always",
 ]);
 
+const MAIN_AGENT_ACTIVITY = new Set([
+	"agent_message_chunk",
+	"agent_thought_chunk",
+	"agent_message",
+	"agent_thought",
+	"tool_call",
+	"tool_call_update",
+	"tool_call_content_chunk",
+	"plan",
+	"plan_update",
+]);
+
 function isApprovalOptionKind(
 	kind: string | undefined,
 ): kind is "allow_once" | "allow_always" | "reject_once" | "reject_always" {
@@ -242,6 +257,11 @@ export class AcpAdapter implements HarnessAdapter {
 	/** What `initialize` settled on; v2 features stay dark below it. */
 	private negotiatedVersion = 1;
 	private agentCapabilities: Record<string, unknown> = {};
+	private supportsSteering = false;
+	private cycleEnded = false;
+	private steeredCyclePending = false;
+	private readonly backgroundTaskTurns = new Map<string, string | undefined>();
+	private awaitingBackground = false;
 	/** The v2 config option that stands in for v1's session mode, once seen. */
 	private modeConfigId: string | null = null;
 	private modeId: string | undefined;
@@ -253,7 +273,19 @@ export class AcpAdapter implements HarnessAdapter {
 
 	constructor(private readonly options: AcpAdapterOptions) {
 		this.backgroundTasks = new BackgroundTasks(
-			(tasks) => this.emitSession({ backgroundTasks: tasks }),
+			(tasks) => {
+				const live = new Set(tasks.map((task) => task.id));
+				for (const id of this.backgroundTaskTurns.keys()) {
+					if (!live.has(id)) this.backgroundTaskTurns.delete(id);
+				}
+				for (const id of live) {
+					if (!this.backgroundTaskTurns.has(id)) {
+						this.backgroundTaskTurns.set(id, this.currentTurn?.id);
+					}
+				}
+				this.emitSession({ backgroundTasks: tasks });
+				this.syncAwaitingBackground();
+			},
 			(taskId, detail) =>
 				this.emit({
 					kind: "delta",
@@ -275,6 +307,28 @@ export class AcpAdapter implements HarnessAdapter {
 			return;
 		}
 		void this.runTurn(content);
+	}
+
+	canSteer(): boolean {
+		return this.supportsSteering && this.currentTurn?.status === "running";
+	}
+
+	async steer(content: UserContent[]): Promise<boolean> {
+		const client = this.client;
+		const sessionId = this.sessionId;
+		if (!client || !sessionId || !this.canSteer()) return false;
+		const response = await client.request(ACP_STEERING_METHOD, {
+			sessionId,
+			prompt: await this.toAcpPrompt(content),
+			_meta: { steering: { idleBehavior: "promptRequired" } },
+		});
+		const outcome = acpSteeringResponseSchema.safeParse(response).data?.outcome;
+		if (outcome === "injected") {
+			this.steeredCyclePending = true;
+			this.cycleEnded = false;
+			this.syncAwaitingBackground();
+		}
+		return outcome === "injected" || outcome === "startedNewTurn";
 	}
 
 	cancelTurn(): void {
@@ -500,6 +554,8 @@ export class AcpAdapter implements HarnessAdapter {
 					negotiated.data.capabilities ??
 					negotiated.data.agentCapabilities ??
 					{};
+				this.supportsSteering =
+					negotiated.data._meta?.steering?.supported === true;
 			}
 
 			if (this.options.authMethodId)
@@ -710,6 +766,26 @@ export class AcpAdapter implements HarnessAdapter {
 		) {
 			this.handleSubagentActivity(outer.data.sessionId, outer.data.update);
 			return;
+		}
+
+		if (variant === "usage_update") {
+			const usage = acpUsageUpdateSchema.safeParse(outer.data.update);
+			if (
+				usage.success &&
+				usage.data.cost !== undefined &&
+				!this.steeredCyclePending
+			) {
+				this.cycleEnded = true;
+				this.syncAwaitingBackground();
+			}
+			return;
+		}
+		if (MAIN_AGENT_ACTIVITY.has(variant)) {
+			this.steeredCyclePending = false;
+			if (this.cycleEnded) {
+				this.cycleEnded = false;
+				this.syncAwaitingBackground();
+			}
 		}
 
 		const turnId = this.resolveTurnId();
@@ -1483,8 +1559,24 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private emitTurn(turn: Turn): void {
+		if (turn.status !== "running" || turn.id !== this.currentTurn?.id) {
+			this.cycleEnded = false;
+			this.steeredCyclePending = false;
+		}
 		this.currentTurn = turn;
 		this.emit({ kind: "turn", turn });
+		this.syncAwaitingBackground();
+	}
+
+	private syncAwaitingBackground(): void {
+		const awaiting =
+			this.supportsSteering &&
+			this.currentTurn?.status === "running" &&
+			this.cycleEnded &&
+			[...this.backgroundTaskTurns.values()].includes(this.currentTurn.id);
+		if (awaiting === this.awaitingBackground) return;
+		this.awaitingBackground = awaiting;
+		this.emitSession({ awaitingBackground: awaiting });
 	}
 
 	private emitItem(item: Item, turnId: string): void {

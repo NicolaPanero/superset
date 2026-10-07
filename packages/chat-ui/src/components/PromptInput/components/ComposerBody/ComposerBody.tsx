@@ -76,6 +76,21 @@ import { ContextButton } from "../ContextButton";
 import { DictationBar } from "../DictationBar";
 import { MentionMenu } from "../MentionMenu";
 
+const FOOTER_BUTTON_CLASS =
+	"flex size-[26px] shrink-0 items-center justify-center rounded-full transition-colors";
+const GHOST_FOOTER_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-pointer text-muted-foreground hover:bg-accent hover:text-foreground",
+);
+const FILLED_FOOTER_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-pointer bg-secondary text-secondary-foreground hover:bg-secondary/80",
+);
+const INACTIVE_SEND_BUTTON_CLASS = cn(
+	FOOTER_BUTTON_CLASS,
+	"cursor-not-allowed bg-secondary text-muted-foreground",
+);
+
 // Slash commands only trigger while the "/token" is the entire message.
 function matchCommandToken(text: string) {
 	const match = /^\/([^/\r\n]*)$/.exec(text);
@@ -878,7 +893,7 @@ export function ComposerBody({
 								message: "Retry dictation",
 							})}
 							onClick={() => void dictationSession.retry()}
-							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+							className={FILLED_FOOTER_BUTTON_CLASS}
 						>
 							<RefreshCcwIcon className="size-3.5" />
 						</button>
@@ -888,7 +903,7 @@ export function ComposerBody({
 								message: "Discard recording",
 							})}
 							onClick={dictationSession.cancel}
-							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+							className={GHOST_FOOTER_BUTTON_CLASS}
 						>
 							<XIcon className="size-3.5" />
 						</button>
@@ -898,7 +913,7 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-[26px] shrink-0 cursor-not-allowed items-center justify-center rounded-md bg-secondary text-muted-foreground"
+							className={INACTIVE_SEND_BUTTON_CLASS}
 						>
 							<ArrowUpIcon className="size-4" />
 						</button>
@@ -916,7 +931,10 @@ export function ComposerBody({
 							})}
 							disabled={dictationSession.status === "transcribing"}
 							onClick={() => void dictationSession.finish()}
-							className="flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80 disabled:cursor-default disabled:opacity-50"
+							className={cn(
+								FILLED_FOOTER_BUTTON_CLASS,
+								"disabled:cursor-default disabled:opacity-50",
+							)}
 						>
 							<SquareIcon className="size-3 fill-current" />
 						</button>
@@ -926,7 +944,7 @@ export function ComposerBody({
 								message: "Send message",
 							})}
 							disabled
-							className="flex size-[26px] shrink-0 cursor-not-allowed items-center justify-center rounded-md bg-secondary text-muted-foreground"
+							className={INACTIVE_SEND_BUTTON_CLASS}
 						>
 							<ArrowUpIcon className="size-4" />
 						</button>
@@ -946,7 +964,7 @@ export function ComposerBody({
 									setBrowseOpen(false);
 									void dictationSession.start();
 								}}
-								className="flex size-[26px] cursor-pointer items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+								className={GHOST_FOOTER_BUTTON_CLASS}
 							>
 								<MicIcon className="size-4" />
 							</button>
@@ -959,7 +977,7 @@ export function ComposerBody({
 									message: "Stop response",
 								})}
 								onClick={onStop}
-								className="flex size-[26px] cursor-pointer items-center justify-center rounded-md bg-secondary text-secondary-foreground transition-colors hover:bg-secondary/80"
+								className={FILLED_FOOTER_BUTTON_CLASS}
 							>
 								<SquareIcon className="size-3 fill-current" />
 							</button>
@@ -971,12 +989,14 @@ export function ComposerBody({
 								})}
 								disabled={!canSend}
 								onClick={() => submit()}
-								className={cn(
-									"flex size-[26px] items-center justify-center rounded-md transition-colors",
+								className={
 									canSend
-										? "cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90"
-										: "cursor-not-allowed bg-secondary text-muted-foreground",
-								)}
+										? cn(
+												FOOTER_BUTTON_CLASS,
+												"cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90",
+											)
+										: INACTIVE_SEND_BUTTON_CLASS
+								}
 							>
 								<ArrowUpIcon className="size-4" />
 							</button>

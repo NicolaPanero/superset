@@ -13,7 +13,7 @@ import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import {
 	Circle,
-	FileDiff,
+	Files,
 	FileText,
 	FolderTree,
 	GitCompareArrows,
@@ -99,6 +99,7 @@ import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
 import { PagePaneTitle } from "./components/PagePaneTitle";
+import { PagesListPane } from "./components/PagesListPane";
 import { PullRequestPane } from "./components/PullRequestPane";
 import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/components/PullRequestPaneHeaderExtras";
 import { ReviewPane } from "./components/ReviewPane";
@@ -768,8 +769,8 @@ export function usePaneRegistry({
 				),
 			},
 			"changes-list": {
-				getIcon: () => <FileDiff className="size-3.5" />,
-				getTitle: () => t({ message: "Changes" }),
+				getIcon: () => <Files className="size-3.5" />,
+				getTitle: () => t({ message: "Files changed" }),
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<ChangesListPane context={ctx} workspaceId={workspaceId} />
 				),
@@ -779,6 +780,18 @@ export function usePaneRegistry({
 				getTitle: () => t({ message: "Review" }),
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<ReviewPane context={ctx} workspaceId={workspaceId} />
+				),
+			},
+			"pages-list": {
+				getIcon: () => <FileText className="size-3.5" />,
+				getTitle: () => t({ message: "Pages" }),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => (
+					<PagesListPane
+						context={ctx}
+						workspaceId={workspaceId}
+						onCreateNewAgentSession={createNewAgentSession}
+						onFocusAgentTerminal={focusAgentTerminal}
+					/>
 				),
 			},
 			mobile: {
