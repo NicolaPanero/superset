@@ -1,0 +1,133 @@
+# Builds this fork for Apple Silicon Macs and publishes it as a GitHub release
+# whenever fork/main has a commit without a release yet. It runs after each
+# sync and on demand.
+#
+# The app is ad-hoc signed (no Apple Developer ID) and keeps the official app
+# identity, so sign-in and data work as with upstream's build; it replaces an
+# official Superset rather than living next to it. Upstream's updater is off:
+# the app checks this repository's releases and runs scripts/fork/install.sh.
+
+name: Fork - build release
+
+on:
+  workflow_run:
+    workflows: ["Fork - sync with upstream"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Build even if fork/main's commit already has a release
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fork-release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.repository == 'NicolaPanero/superset'
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.find.outputs.sha }}
+      version: ${{ steps.find.outputs.version }}
+      tag: ${{ steps.find.outputs.tag }}
+      build: ${{ steps.find.outputs.build }}
+    steps:
+      - name: Find the commit to build
+        id: find
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force || false }}
+        run: |
+          sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/fork/main" --jq .sha)
+          version=$(gh api "repos/$GITHUB_REPOSITORY/contents/apps/desktop/package.json?ref=$sha" --jq .content |
+            base64 -d | jq -r .version)
+          tag="desktop-v${version}-fork.${sha:0:7}"
+          build=true
+          if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            build=false
+          fi
+          echo "fork/main at $sha (Superset $version): tag $tag, build=$build"
+          {
+            echo "sha=$sha"
+            echo "version=$version"
+            echo "tag=$tag"
+            echo "build=$build"
+          } >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: check
+    if: needs.check.outputs.build == 'true'
+    runs-on: macos-15
+    timeout-minutes: 120
+    env:
+      SUPERSET_AUTO_UPDATE: disabled
+      SUPERSET_FORK_RELEASE: ${{ needs.check.outputs.tag }}
+      SUPERSET_FORK_REPOSITORY: ${{ github.repository }}
+      SUPERSET_WORKSPACE_NAME: superset
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ needs.check.outputs.sha }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+
+      - name: Install dependencies
+        run: |
+          bun install --frozen --ignore-scripts
+          bun run --filter=@superset/i18n build
+          cd apps/desktop && bun run install:deps
+
+      - name: Build the txcript transfer helper
+        run: |
+          SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
+          cp "$RUNNER_TEMP/helper/bin/txcript-transfer" "$RUNNER_TEMP/txcript-transfer-arm64"
+
+      - name: Build the app
+        working-directory: apps/desktop
+        run: |
+          : > "$RUNNER_TEMP/empty.env"
+          export SUPERSET_ENV_FILE="$RUNNER_TEMP/empty.env"
+          bun run prebuild
+          bunx electron-builder --config electron-builder.ts --publish never --mac zip --arm64
+          zip=$(ls release/*-arm64-mac.zip | head -n 1)
+          mv "$zip" "$RUNNER_TEMP/Superset-fork-arm64.zip"
+          ls -lh "$RUNNER_TEMP/Superset-fork-arm64.zip"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.check.outputs.tag }}
+          SHA: ${{ needs.check.outputs.sha }}
+          VERSION: ${{ needs.check.outputs.version }}
+        run: |
+          cat > "$RUNNER_TEMP/notes.md" <<EOF
+          Superset ${VERSION} with this fork's changes, from \`fork/main\` at ${SHA}.
+
+          Install or update on an Apple Silicon Mac (settings and data are kept):
+
+          \`\`\`sh
+          curl -fsSL https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/fork/main/scripts/fork/install.sh | sh
+          \`\`\`
+
+          The app isn't notarized. Installed with the command above it opens
+          normally; downloaded with a browser, open it once from System
+          Settings → Privacy & Security → "Open Anyway".
+          EOF
+          gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$TAG" \
+            "$RUNNER_TEMP/Superset-fork-arm64.zip" \
+            "$RUNNER_TEMP/txcript-transfer-arm64" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$SHA" \
+            --title "Superset fork ${VERSION} (${SHA:0:7})" \
+            --notes-file "$RUNNER_TEMP/notes.md" \
+            --latest

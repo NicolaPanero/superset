@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Merge superset-sh/superset main into the current fork branch.
+# Merge an upstream superset-sh/superset release into the current fork branch.
 #
-#   scripts/fork/sync-upstream.sh [--checks] [--push]
+#   scripts/fork/sync-upstream.sh [--checks] [--push] [REF]
 #
+# REF       what to merge; default: the newest desktop release tag (desktop-v*).
+#           Pass upstream/main to follow upstream's development branch instead.
 # --checks  install dependencies, then run lint, check:i18n and typecheck of
 #           the workspaces the fork changes
-# --push    push the merged branch (and main as a mirror of upstream)
+# --push    push the merged branch
 #
 # FORK_SYNC_BRANCH sets the branch --push updates (default: the current one).
 #
@@ -15,14 +17,16 @@ set -euo pipefail
 UPSTREAM_URL="https://github.com/superset-sh/superset.git"
 run_checks=false
 push=false
+ref=""
 for arg in "$@"; do
 	case "$arg" in
 	--checks) run_checks=true ;;
 	--push) push=true ;;
-	*)
+	-*)
 		echo "unknown option: $arg" >&2
 		exit 64
 		;;
+	*) ref="$arg" ;;
 	esac
 done
 
@@ -36,20 +40,26 @@ fi
 
 git remote get-url upstream >/dev/null 2>&1 || git remote add upstream "$UPSTREAM_URL"
 git fetch --quiet upstream main
-
-if $push; then
-	# `main` stays an exact mirror; a fork commit on it is a mistake to surface.
-	git push origin upstream/main:refs/heads/main
+if [[ -z "$ref" ]]; then
+	ref="$(git ls-remote --tags --refs upstream 'desktop-v*' |
+		sed 's#.*refs/tags/##' | grep -E '^desktop-v[0-9]+\.[0-9]+\.[0-9]+$' |
+		sort -V | tail -n 1)"
+	[[ -n "$ref" ]] || {
+		echo "no desktop release tag found upstream" >&2
+		exit 1
+	}
+	git fetch --quiet --no-tags upstream "refs/tags/$ref:refs/tags/$ref"
 fi
+echo "upstream ref: $ref"
 
-if git merge-base --is-ancestor upstream/main HEAD; then
-	echo "$branch already contains upstream/main"
+if git merge-base --is-ancestor "$ref" HEAD; then
+	echo "$branch already contains $ref"
 	exit 0
 fi
 
-behind="$(git rev-list --count HEAD..upstream/main)"
-echo "merging $behind upstream commits into $branch"
-if ! git merge --no-edit --no-ff upstream/main >/dev/null; then
+behind="$(git rev-list --count "HEAD..$ref")"
+echo "merging $behind upstream commits ($ref) into $branch"
+if ! git merge --no-edit --no-ff "$ref" >/dev/null; then
 	conflicts="$(git diff --name-only --diff-filter=U)"
 	# Catalogs conflict whenever both sides add strings; their entries are
 	# independent, so they are joined and then regenerated from the source.
@@ -82,7 +92,7 @@ if $run_checks; then
 			--filter=@superset/chat --filter=@superset/agent-setup &&
 		bun run check:i18n &&
 		git diff --exit-code --stat HEAD -- packages/i18n/locales; }; then
-		echo "checks failed after merging upstream" >&2
+		echo "checks failed after merging $ref" >&2
 		exit 3
 	fi
 fi
@@ -90,4 +100,4 @@ fi
 if $push; then
 	git push origin "HEAD:$target"
 fi
-echo "merged upstream/main into $target"
+echo "merged $ref into $target"

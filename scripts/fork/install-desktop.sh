@@ -38,7 +38,10 @@ env_file="$(mktemp)"
 trap 'rm -f "$env_file"' EXIT
 
 cd "$root/apps/desktop"
-export SUPERSET_ENV_FILE="$env_file" SUPERSET_AUTO_UPDATE=disabled
+# A Superset terminal exports its workspace name; built in, it would rename
+# the data folder and the sign-in URL scheme.
+export SUPERSET_ENV_FILE="$env_file" SUPERSET_AUTO_UPDATE=disabled \
+	SUPERSET_WORKSPACE_NAME=superset
 env -u SUPERSET_HOME_DIR bun run prebuild
 CSC_IDENTITY_AUTO_DISCOVERY=false env -u SUPERSET_HOME_DIR \
 	bunx electron-builder --config electron-builder.ts --publish never --dir
