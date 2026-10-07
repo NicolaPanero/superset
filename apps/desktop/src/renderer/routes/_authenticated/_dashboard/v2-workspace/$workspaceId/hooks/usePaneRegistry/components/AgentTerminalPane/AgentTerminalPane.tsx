@@ -9,6 +9,7 @@ import { TerminalPane } from "../TerminalPane";
 import { AcpChatPane } from "./components/AcpChatPane";
 import { AcpChatPending } from "./components/AcpChatPane/components/AcpChatPending";
 import { useAgentSurface } from "./hooks/useAgentSurface";
+import { useForkAgentSwitch } from "./hooks/useForkAgentSwitch";
 import { saveChatMode } from "./utils/savedChatMode";
 
 /**
@@ -29,6 +30,7 @@ export function AgentTerminalPane({
 }) {
 	const data = ctx.pane.data as TerminalPaneData;
 	const { surface } = useAgentSurface(workspaceId, data);
+	const { onForkSwitchAgent } = useForkAgentSwitch(workspaceId, ctx, data);
 
 	// Unmounted, not hidden: its pty is stopped on the chat surface, and a
 	// mounted TerminalPane would auto-resume the agent straight back into it.
@@ -88,6 +90,7 @@ export function AgentTerminalPane({
 						...(retitled ? { chatTitle: title } : {}),
 					});
 				}}
+				onForkSwitchAgent={onForkSwitchAgent}
 				onSwitchAgent={({ presetId, label, model, modeId, handoffPrompt }) => {
 					ctx.actions.setTitle(label);
 					const {

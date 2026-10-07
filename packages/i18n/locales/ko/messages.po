@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← 리더보드로 돌아가기"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ {continuedIn}에서 계속"
+
+msgid "→ from {chain}"
+msgstr "→ {chain}에서"
+
 msgid "↑ update"
 msgstr "↑ 업데이트"
 
@@ -4419,6 +4425,12 @@ msgstr "Google로 계속하기"
 
 msgid "Continue with…"
 msgstr "다른 에이전트로 계속…"
+
+msgid "Continued from {chain}"
+msgstr "{chain}에서 이어짐"
+
+msgid "Continued in {continuedIn}"
+msgstr "{continuedIn}에서 계속"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "에이전트 세션을 계속하려면 고정된 워크스페이스가 필요합니다"
@@ -16668,6 +16680,9 @@ msgstr "이 빌드는 자동으로 업데이트되지 않습니다. 업데이트
 
 msgid "This cannot be undone."
 msgstr "되돌릴 수 없습니다."
+
+msgid "This chat"
+msgstr "이 채팅"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "이 채팅의 에이전트가 중지되어 이어갈 수 없습니다."

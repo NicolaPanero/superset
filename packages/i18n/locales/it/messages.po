@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Torna alla classifica"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ proseguita in {continuedIn}"
+
+msgid "→ from {chain}"
+msgstr "→ da {chain}"
+
 msgid "↑ update"
 msgstr "↑ aggiorna"
 
@@ -4419,6 +4425,12 @@ msgstr "Continua con Google"
 
 msgid "Continue with…"
 msgstr "Continua con…"
+
+msgid "Continued from {chain}"
+msgstr "Proseguita da {chain}"
+
+msgid "Continued in {continuedIn}"
+msgstr "Proseguita in {continuedIn}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuare una sessione dell'agente richiede un workspace fissato"
@@ -16668,6 +16680,9 @@ msgstr "Questa build non si aggiorna da sola. Per aggiornarla, ricompilala dal c
 
 msgid "This cannot be undone."
 msgstr "L'operazione non può essere annullata."
+
+msgid "This chat"
+msgstr "Questa chat"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "L'agente di questa chat si è fermato e non può essere ripreso."

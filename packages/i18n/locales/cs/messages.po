@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Zpět na žebříček"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ pokračuje v {continuedIn}"
+
+msgid "→ from {chain}"
+msgstr "→ z {chain}"
+
 msgid "↑ update"
 msgstr "↑ aktualizovat"
 
@@ -4419,6 +4425,12 @@ msgstr "Pokračovat přes Google"
 
 msgid "Continue with…"
 msgstr "Pokračovat s…"
+
+msgid "Continued from {chain}"
+msgstr "Pokračování z {chain}"
+
+msgid "Continued in {continuedIn}"
+msgstr "Pokračuje v {continuedIn}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
@@ -16668,6 +16680,9 @@ msgstr "Tato sestavení se samo neaktualizuje. Pro aktualizaci ho znovu sestavte
 
 msgid "This cannot be undone."
 msgstr "Nelze vrátit zpět."
+
+msgid "This chat"
+msgstr "Tento chat"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "Agent tohoto chatu byl zastaven a nelze jej obnovit."

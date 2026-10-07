@@ -1180,6 +1180,12 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← 返回排行榜"
 
+msgid "→ continued in {continuedIn}"
+msgstr "→ 已在 {continuedIn} 中繼續"
+
+msgid "→ from {chain}"
+msgstr "→ 來自 {chain}"
+
 msgid "↑ update"
 msgstr "↑ 更新"
 
@@ -4419,6 +4425,12 @@ msgstr "使用Google繼續"
 
 msgid "Continue with…"
 msgstr "繼續使用…"
+
+msgid "Continued from {chain}"
+msgstr "繼續自 {chain}"
+
+msgid "Continued in {continuedIn}"
+msgstr "已在 {continuedIn} 中繼續"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "繼續代理程式工作階段需要已釘選的工作區"
@@ -16668,6 +16680,9 @@ msgstr "此版本不會自動更新。如需更新，請從原始碼重新建置
 
 msgid "This cannot be undone."
 msgstr "此操作無法復原。"
+
+msgid "This chat"
+msgstr "此聊天"
 
 msgid "This chat's agent has stopped and can't be resumed."
 msgstr "此聊天的代理已停止，無法繼續。"

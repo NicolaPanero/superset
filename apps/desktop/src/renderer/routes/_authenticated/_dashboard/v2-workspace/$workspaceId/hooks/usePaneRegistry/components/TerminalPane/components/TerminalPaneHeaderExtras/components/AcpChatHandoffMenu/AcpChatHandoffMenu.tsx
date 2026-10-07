@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { RendererContext } from "@superset/panes";
 import { Button } from "@superset/ui/button";
 import {
 	Dialog,
@@ -20,39 +21,46 @@ import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useQuery } from "@tanstack/react-query";
-import { Bot, PanelRight, SquareStack } from "lucide-react";
+import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
-import type { TerminalPaneData } from "../../../../../../../../types";
+import type {
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../../../../../../../types";
 import type { OpenAgentChat } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
+import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
 
-type Placement = "split-pane" | "new-tab";
+type Placement = "this-chat" | "split-pane" | "new-tab";
 
 const CONFIGURED_ACCOUNT = "__configured_account__";
 const SYSTEM_ACCOUNT = "__system_account__";
 
 export function AcpChatHandoffMenu({
+	ctx,
 	workspaceId,
 	data,
 	onOpenAgentChat,
 }: {
+	ctx: RendererContext<PaneViewerData>;
 	workspaceId: string;
 	data: TerminalPaneData;
 	onOpenAgentChat: OpenAgentChat;
 }) {
 	const { t } = useLingui();
+	const { switchInPlace } = useForkAgentSwitch(workspaceId, ctx, data);
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const wiring = useChatWiring();
 	const [open, setOpen] = useState(false);
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
-	const [placement, setPlacement] = useState<Placement>("new-tab");
+	const [placement, setPlacement] = useState<Placement>("this-chat");
 	const [transferId, setTransferId] = useState(() => crypto.randomUUID());
 	const [stage, setStage] = useState<"converting" | "launching" | null>(null);
 	const [failed, setFailed] = useState(false);
@@ -126,6 +134,27 @@ export function AcpChatHandoffMenu({
 
 	const start = async () => {
 		if (!target || !sourceSessionId) return;
+		const accountSelection =
+			managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
+				? account === SYSTEM_ACCOUNT
+					? null
+					: account
+				: undefined;
+		if (placement === "this-chat") {
+			setOpen(false);
+			const switched = await switchInPlace({
+				presetId: target.presetId,
+				label: target.label,
+				model: null,
+				modeId: undefined,
+				handoffPrompt: null,
+				configId: target.id,
+				...(accountSelection !== undefined ? { accountSelection } : {}),
+			});
+			if (!switched)
+				toast.error(t({ message: "Native handoff failed. You can retry." }));
+			return;
+		}
 		const run = ++runSequence.current;
 		setFailed(false);
 		setStage("converting");
@@ -142,7 +171,11 @@ export function AcpChatHandoffMenu({
 				workspaceId,
 				transferId,
 				sourceTerminalId: data.terminalId,
-				sourceConfigId: data.acpAgentConfigId ?? sourcePreset,
+				sourceConfigId:
+					configs.find((config) => config.id === data.acpAgentConfigId)
+						?.presetId === sourcePreset
+						? (data.acpAgentConfigId ?? sourcePreset)
+						: sourcePreset,
 				sourceSessionId,
 				...(data.acpAccountSelection !== undefined
 					? { sourceAccountSelection: data.acpAccountSelection }
@@ -330,7 +363,17 @@ export function AcpChatHandoffMenu({
 							<Label>
 								<Trans>Open session in</Trans>
 							</Label>
-							<div className="grid grid-cols-2 gap-2" role="radiogroup">
+							<div className="grid grid-cols-3 gap-2" role="radiogroup">
+								<Button
+									type="button"
+									variant={placement === "this-chat" ? "secondary" : "outline"}
+									onClick={() => setPlacement("this-chat")}
+									aria-pressed={placement === "this-chat"}
+									disabled={stage !== null}
+								>
+									<MessageSquare />
+									<Trans>This chat</Trans>
+								</Button>
 								<Button
 									type="button"
 									variant={placement === "split-pane" ? "secondary" : "outline"}

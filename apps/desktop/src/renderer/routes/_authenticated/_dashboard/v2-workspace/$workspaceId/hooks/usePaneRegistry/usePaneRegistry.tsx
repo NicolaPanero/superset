@@ -494,6 +494,7 @@ export function usePaneRegistry({
 							workspaceId={workspaceId}
 							terminalId={terminalId}
 							fork={{
+								ctx,
 								paneData: data,
 								openAgentChat,
 								createNewAgentSession,
