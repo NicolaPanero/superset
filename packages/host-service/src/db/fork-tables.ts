@@ -38,6 +38,15 @@ CREATE TABLE IF NOT EXISTS \`session_lineage_edges\` (
 CREATE INDEX IF NOT EXISTS \`session_lineage_edges_workspace_idx\` ON \`session_lineage_edges\` (\`organization_id\`,\`workspace_id\`,\`created_at\`,\`id\`);
 CREATE INDEX IF NOT EXISTS \`session_lineage_edges_source_idx\` ON \`session_lineage_edges\` (\`source_node_id\`);
 CREATE INDEX IF NOT EXISTS \`session_lineage_edges_target_idx\` ON \`session_lineage_edges\` (\`target_node_id\`);
+CREATE TABLE IF NOT EXISTS \`background_chats\` (
+	\`terminal_id\` text PRIMARY KEY NOT NULL,
+	\`workspace_id\` text NOT NULL,
+	\`title\` text NOT NULL,
+	\`pane_data\` text NOT NULL,
+	\`parked_at\` integer NOT NULL,
+	FOREIGN KEY (\`workspace_id\`) REFERENCES \`workspaces\`(\`id\`) ON UPDATE no action ON DELETE cascade
+);
+CREATE INDEX IF NOT EXISTS \`background_chats_workspace_idx\` ON \`background_chats\` (\`workspace_id\`,\`parked_at\`);
 `;
 
 /** Creates the tables in fork-schema.ts. Runs after upstream migrations. */

@@ -24,6 +24,13 @@ terminale resta a un clic: il selettore **CLI / CHAT** nell'intestazione del
 pannello riprende la stessa sessione nell'altra vista. Se ACP non è
 disponibile per un agente, si apre il terminale.
 
+Chiudere la scheda di una chat non ferma l'agente, come succede a un
+terminale lasciato in esecuzione: la chat compare in **Background chats** nel
+menu attività dell'area di lavoro (icona accanto a **Agents**) e nel badge
+agenti sotto l'area di lavoro nella barra laterale. Un clic la riapre in vista
+chat, con tutta la cronologia, anche dopo un riavvio dell'app. Il pulsante di
+stop la chiude davvero. Si tengono al massimo 20 chat per area di lavoro.
+
 L'interruttore è in **Impostazioni → Experimental → ACP chat**. Cambiarlo non
 modifica le sessioni già aperte.
 
@@ -167,6 +174,10 @@ upstream ricevono solo agganci brevi:
 - cambio di agente dal selettore del modello in `useForkAgentSwitch`, passato
   alla chat con la prop `onForkSwitchAgent`: il gestore di upstream resta
   invariato e fa da ripiego; etichetta di provenienza in `ChatLineageLabel`;
+- chat in background: tabella `background_chats` in `fork-schema.ts`,
+  procedure in `agents/fork-background-chats.ts`, hook
+  `useForkBackgroundChats` e `useForkFocusChatLink`, gruppo
+  `ForkBackgroundChatsGroup` nel menu attività;
 - scelta di configurazione e account per l'host in
   `chat-v3/forkLaunchChoices.ts`;
 - voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in

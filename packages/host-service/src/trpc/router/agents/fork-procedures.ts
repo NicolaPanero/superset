@@ -21,6 +21,7 @@ import { protectedProcedure } from "../../index";
 import { listAccountAliases } from "../usage/account-aliases";
 import { validateSessionAccount } from "../usage/session-account/session-account";
 import { agentAccountOptions } from "./account-selection";
+import { forkBackgroundChatProcedures } from "./fork-background-chats";
 import {
 	exitedAgentTerminalIds,
 	launchDetails,
@@ -239,4 +240,5 @@ export const forkAgentProcedures = {
 				(terminalId) => sessionHasRunningProcess(terminalId, input.workspaceId),
 			),
 		),
+	...forkBackgroundChatProcedures,
 };

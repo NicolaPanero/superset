@@ -49,6 +49,7 @@ import { useCreatePendingMigratedTerminals } from "./hooks/useCreatePendingMigra
 import { useDefaultContextMenuActions } from "./hooks/useDefaultContextMenuActions";
 import { useDefaultPaneActions } from "./hooks/useDefaultPaneActions";
 import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
+import { useForkFocusChatLink } from "./hooks/useForkFocusChatLink";
 import { usePaneAreaMoveActions } from "./hooks/usePaneAreaMoveActions";
 import { usePaneRegistry } from "./hooks/usePaneRegistry";
 import { renderBrowserTabIcon } from "./hooks/usePaneRegistry/components/BrowserPane";
@@ -224,6 +225,7 @@ function V2WorkspaceContent() {
 		matchedPresets,
 		resolvePresetCommands,
 	});
+	useForkFocusChatLink(store, workspaceId, terminalId, focusRequestId);
 	useConsumeAutomationRunLink({
 		store,
 		workspaceId,

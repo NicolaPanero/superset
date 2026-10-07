@@ -19,6 +19,7 @@ import {
 	focusOrAddTerminalPane,
 	focusTerminalPane,
 } from "../../utils/focusTerminalPane";
+import { useForkBackgroundChats } from "../useForkBackgroundChats";
 
 export interface CreateNewAgentSessionInput {
 	nativeTerminal?: boolean;
@@ -227,11 +228,13 @@ export function useAgentSessionLauncher({
 		],
 	);
 
+	const { reopenParked } = useForkBackgroundChats(workspaceId);
 	const focusAgentTerminal = useCallback(
 		(terminalId: string) => {
+			if (reopenParked(store, terminalId)) return;
 			focusOrAddTerminalPane(store, terminalId);
 		},
-		[store],
+		[store, reopenParked],
 	);
 
 	return { createNewAgentSession, openAgentChat, focusAgentTerminal };

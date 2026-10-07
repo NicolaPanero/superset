@@ -76,6 +76,7 @@ import {
 } from "../../utils/focusTerminalPane";
 import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
+import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
 import {
@@ -181,6 +182,7 @@ export function usePaneRegistry({
 	const workspaceId = workspace.id;
 	const isChatV3Enabled = useFeatureFlagEnabled(FEATURE_FLAGS.CHAT_V3) ?? false;
 	const agentSurface = useAgentSurfaceSwitch(workspaceId);
+	const { park: parkChat } = useForkBackgroundChats(workspaceId);
 	const host = useWorkspaceHostTarget(workspaceId);
 	const desktopUrl =
 		host.status === "ready" && host.kind === "sandbox" ? host.desktopUrl : null;
@@ -435,7 +437,7 @@ export function usePaneRegistry({
 					// chat opened from the launcher — never started, and asking the
 					// host to kill an id it has never seen only logs a failure.
 					if (surface === "acp") {
-						if (acpSessionId) void agentSurface.stopChat(acpSessionId);
+						if (acpSessionId) void parkChat(pane);
 						return;
 					}
 					const firstClosed = closedPanes.find(
@@ -992,6 +994,7 @@ export function usePaneRegistry({
 			workspaceId,
 			isChatV3Enabled,
 			agentSurface,
+			parkChat,
 			clearWorkspaceRunTerminal,
 			clearShortcut,
 			scrollToBottomShortcut,
