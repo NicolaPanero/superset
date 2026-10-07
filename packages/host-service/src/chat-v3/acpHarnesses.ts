@@ -4,12 +4,12 @@ import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
 import type { HostDb } from "../db";
-import { resolveHostAgentConfig } from "../terminal-agents/agent-config";
 import { resolveAttachmentPath } from "../trpc/router/attachments/storage";
 import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
+import { forkLaunchChoices } from "./forkLaunchChoices";
 
 async function resolveAttachment(attachmentId: string) {
 	const resolved = resolveAttachmentPath(attachmentId);
@@ -64,24 +64,11 @@ export function acpHarnessFactory(
 							db,
 							cwd: options.cwd,
 							workspaceId: options.scopeId,
-							agentConfigId: options.agentConfigId,
-							accountSelection: options.accountSelection,
+							...forkLaunchChoices(db, harness, options),
 							terminalId: options.terminalId,
 						}),
 				});
 				const env = cli.env;
-				const config = options.agentConfigId
-					? resolveHostAgentConfig(db, options.agentConfigId)
-					: null;
-				const expected = Object.entries(ACP_HARNESSES).find(
-					([id]) => id === harness,
-				)?.[1]?.binary;
-				if (
-					config &&
-					config.presetId !== expected &&
-					!(harness === "claude-acp" && config.presetId === "claude")
-				)
-					throw new Error("agent_config_mismatch");
 				if (!adapterEntry) {
 					return { command: cli.command, args: entry.args, env };
 				}
