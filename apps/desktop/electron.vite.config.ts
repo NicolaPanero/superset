@@ -110,6 +110,14 @@ export default defineConfig({
 				process.env.SUPERSET_AUTO_UPDATE,
 				"",
 			),
+			"process.env.SUPERSET_FORK_RELEASE": defineEnv(
+				process.env.SUPERSET_FORK_RELEASE,
+				"",
+			),
+			"process.env.SUPERSET_FORK_REPOSITORY": defineEnv(
+				process.env.SUPERSET_FORK_REPOSITORY,
+				"",
+			),
 			// Must match renderer for analytics in main process
 			"process.env.NEXT_PUBLIC_POSTHOG_KEY": defineEnv(
 				process.env.NEXT_PUBLIC_POSTHOG_KEY,

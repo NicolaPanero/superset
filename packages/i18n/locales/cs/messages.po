@@ -1426,6 +1426,9 @@ msgstr "Pohled na to, co je rozpracované, co přijde dál a kam {company} smě�
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "Většina produkčních změn se sloučí, aniž by kdokoli četl diff."
 
+msgid "A new build of this Superset fork is available."
+msgstr "Je k dispozici nové sestavení tohoto forku Supersetu."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Pro pokračování je potřeba novější verze Superset. Aktualizujte prosím na nejnovější verzi."
 
@@ -8477,6 +8480,9 @@ msgstr "Nainstalovat a restartovat"
 msgid "Install & Restart"
 msgstr "Nainstalovat a restartovat"
 
+msgid "Install and restart"
+msgstr "Nainstalovat a restartovat"
+
 msgid "Install failed"
 msgstr "Instalace selhala"
 
@@ -8510,6 +8516,9 @@ msgstr "Nainstalované pluginy pocházejí z {name}: {plugins}. Nejprve je odebe
 
 msgid "Installed via"
 msgstr "Nainstalováno přes"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "Nainstalováno: {installed}. Nejnovější: {latest}. Nastavení a data zůstanou zachována."
 
 msgid "Installing..."
 msgstr "Instaluji..."

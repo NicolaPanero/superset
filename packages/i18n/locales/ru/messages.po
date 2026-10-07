@@ -1426,6 +1426,9 @@ msgstr "Взгляд на то, что в работе, что дальше и �
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "Большинство продакшен-изменений сливается без того, чтобы человек читал diff."
 
+msgid "A new build of this Superset fork is available."
+msgstr "Доступна новая сборка этого форка Superset."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "Чтобы продолжить, нужна новая версия Superset. Обновитесь до последней версии."
 
@@ -8477,6 +8480,9 @@ msgstr "Установить и перезапустить"
 msgid "Install & Restart"
 msgstr "Установить и перезапустить"
 
+msgid "Install and restart"
+msgstr "Установить и перезапустить"
+
 msgid "Install failed"
 msgstr "Не удалось установить"
 
@@ -8510,6 +8516,9 @@ msgstr "Установленные плагины получены из {name}: 
 
 msgid "Installed via"
 msgstr "Установлено через"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "Установлено: {installed}. Последняя: {latest}. Настройки и данные сохранятся."
 
 msgid "Installing..."
 msgstr "Установка..."

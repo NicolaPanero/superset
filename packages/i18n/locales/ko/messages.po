@@ -1426,6 +1426,9 @@ msgstr "진행 중인 작업, 다음 순서, 그리고 {company}이(가) 향하�
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "프로덕션 변경의 과반이 사람이 차이를 읽지 않은 채 머지됩니다."
 
+msgid "A new build of this Superset fork is available."
+msgstr "이 Superset 포크의 새 빌드를 사용할 수 있습니다."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "계속하려면 새 버전의 Superset이 필요합니다. 최신 버전으로 업데이트해 주세요."
 
@@ -8477,6 +8480,9 @@ msgstr "설치 후 재시작"
 msgid "Install & Restart"
 msgstr "설치 후 재시작"
 
+msgid "Install and restart"
+msgstr "설치 후 다시 시작"
+
 msgid "Install failed"
 msgstr "설치 실패"
 
@@ -8510,6 +8516,9 @@ msgstr "설치된 플러그인이 {name}에서 왔습니다: {plugins}. 먼저 �
 
 msgid "Installed via"
 msgstr "설치 경로"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "설치됨: {installed}. 최신: {latest}. 설정과 데이터는 유지됩니다."
 
 msgid "Installing..."
 msgstr "설치 중..."

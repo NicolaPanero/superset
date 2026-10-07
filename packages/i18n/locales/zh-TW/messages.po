@@ -1426,6 +1426,9 @@ msgstr "看看有什麼正在進行、接下來做什麼，以及{company}要走
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "多數生產變更在無人閱讀差異的情況下合併。"
 
+msgid "A new build of this Superset fork is available."
+msgstr "此 Superset 分支有新的建置版本。"
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "需要新版本的Superset才能繼續。請更新到最新版本。"
 
@@ -8477,6 +8480,9 @@ msgstr "安裝並重啟"
 msgid "Install & Restart"
 msgstr "安裝並重啟"
 
+msgid "Install and restart"
+msgstr "安裝並重新啟動"
+
 msgid "Install failed"
 msgstr "安裝失敗"
 
@@ -8510,6 +8516,9 @@ msgstr "已安裝的外掛來自 {name}：{plugins}。請先移除它們。"
 
 msgid "Installed via"
 msgstr "安裝方式"
+
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "已安裝：{installed}。最新：{latest}。設定和資料會保留。"
 
 msgid "Installing..."
 msgstr "正在安裝..."
