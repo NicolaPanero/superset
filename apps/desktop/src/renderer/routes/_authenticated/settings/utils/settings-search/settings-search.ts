@@ -3,8 +3,14 @@ import {
 	type IntegrationProvider,
 } from "@superset/shared/integrations";
 import type { SettingsSection } from "renderer/stores/settings-state";
+import {
+	FORK_SETTING_ITEM_ID,
+	FORK_SETTING_ITEM_VARIANT,
+	FORK_SETTINGS_ITEMS,
+} from "./fork-settings-items";
 
 export const SETTING_ITEM_ID = {
+	...FORK_SETTING_ITEM_ID,
 	MOBILE_APP: "mobile-app",
 	ACCOUNT_PROFILE: "account-profile",
 	ACCOUNT_SIGNOUT: "account-signout",
@@ -33,7 +39,6 @@ export const SETTING_ITEM_ID = {
 	RINGTONES_NOTIFICATION: "ringtones-notification",
 
 	USAGE_TOKENS: "usage-tokens",
-	LOCAL_AGENT_ACCOUNTS: "local-agent-accounts",
 	USAGE_RESOURCES: "usage-resources",
 
 	KEYBOARD_SHORTCUTS: "keyboard-shortcuts",
@@ -75,7 +80,6 @@ export const SETTING_ITEM_ID = {
 	EXPERIMENTAL_SUPERSET_V2: "experimental-superset-v2",
 	EXPERIMENTAL_V1_MIGRATION: "experimental-v1-migration",
 	EXPERIMENTAL_INLINE_WORKSPACE_PORTS: "experimental-inline-workspace-ports",
-	EXPERIMENTAL_ACP_CHAT: "experimental-acp-chat",
 	EXPERIMENTAL_WORKSPACE_AGENTS: "experimental-workspace-agents",
 	EXPERIMENTAL_WAIT_FOR_SETUP_BEFORE_AGENT:
 		"experimental-wait-for-setup-before-agent",
@@ -157,6 +161,7 @@ const INTEGRATION_ITEM_VARIANTS = Object.fromEntries(
 
 export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	...INTEGRATION_ITEM_VARIANTS,
+	...FORK_SETTING_ITEM_VARIANT,
 
 	[SETTING_ITEM_ID.ACCOUNT_PROFILE]: "shared",
 	[SETTING_ITEM_ID.ACCOUNT_SIGNOUT]: "shared",
@@ -184,7 +189,6 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.RINGTONES_NOTIFICATION]: "shared",
 
 	[SETTING_ITEM_ID.USAGE_TOKENS]: "shared",
-	[SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS]: "v2",
 	[SETTING_ITEM_ID.USAGE_RESOURCES]: "shared",
 
 	[SETTING_ITEM_ID.KEYBOARD_SHORTCUTS]: "shared",
@@ -231,7 +235,6 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.EXPERIMENTAL_SUPERSET_V2]: "shared",
 	[SETTING_ITEM_ID.EXPERIMENTAL_V1_MIGRATION]: "v2",
 	[SETTING_ITEM_ID.EXPERIMENTAL_INLINE_WORKSPACE_PORTS]: "v2",
-	[SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT]: "v2",
 	[SETTING_ITEM_ID.EXPERIMENTAL_WORKSPACE_AGENTS]: "v2",
 	// Gates both the v1 renderer launch and the v2 host-side launch.
 	[SETTING_ITEM_ID.EXPERIMENTAL_WAIT_FOR_SETUP_BEFORE_AGENT]: "shared",
@@ -342,6 +345,7 @@ const INTEGRATION_SEARCH_ITEMS: SettingsItem[] = INTEGRATIONS.map(
 );
 
 export const SETTINGS_ITEMS: SettingsItem[] = [
+	...FORK_SETTINGS_ITEMS,
 	{
 		id: SETTING_ITEM_ID.MOBILE_APP,
 		section: "mobile",
@@ -717,24 +721,6 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 			"claude",
 			"account",
 			"history",
-		],
-	},
-	{
-		id: SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS,
-		section: "localAgentAccounts",
-		title: "Local agent accounts",
-		description:
-			"Choose local CLI accounts, rename profiles and view provider quotas",
-		keywords: [
-			"accounts",
-			"claude",
-			"codex",
-			"local",
-			"quota",
-			"profile",
-			"login",
-			"rename",
-			"default",
 		],
 	},
 	{
@@ -1440,24 +1426,6 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 			"dev server",
 			"toggle",
 			"switch",
-		],
-	},
-	{
-		id: SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT,
-		section: "experimental",
-		title: "ACP chat",
-		description: "Open new supported agents in a shared chat interface",
-		keywords: [
-			"acp",
-			"chat",
-			"agent",
-			"claude",
-			"codex",
-			"cursor",
-			"grok",
-			"opencode",
-			"terminal",
-			"toggle",
 		],
 	},
 	{
