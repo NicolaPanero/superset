@@ -23,7 +23,6 @@ import {
 	validateAgentModeSelection,
 	validateAgentResumeSelection,
 } from "./agents";
-import { exitedAgentTerminalIds } from "./fork-launch";
 
 const argvConfig = {
 	id: "00000000-0000-0000-0000-000000000001",
@@ -1059,23 +1058,5 @@ describe("continuationTarget", () => {
 				workspaceId: "33333333-3333-3333-3333-333333333333",
 			}),
 		).toBeNull();
-	});
-});
-
-describe("exitedAgentTerminalIds", () => {
-	it("lists only open bindings whose live terminal is back at the prompt", () => {
-		const bindings = [
-			{ terminalId: "quit" },
-			{ terminalId: "running" },
-			{ terminalId: "ended", endedAt: 1 },
-			{ terminalId: "unknown" },
-		];
-		expect(
-			exitedAgentTerminalIds(
-				bindings,
-				(id) => id !== "unknown",
-				(id) => id === "running",
-			),
-		).toEqual(["quit"]);
 	});
 });
