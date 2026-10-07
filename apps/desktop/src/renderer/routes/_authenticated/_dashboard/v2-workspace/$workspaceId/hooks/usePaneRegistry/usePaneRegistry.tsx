@@ -492,8 +492,11 @@ export function usePaneRegistry({
 						<TerminalPaneHeaderExtras
 							workspaceId={workspaceId}
 							terminalId={terminalId}
-							paneData={data}
-							onOpenAgentChat={openAgentChat}
+							fork={{
+								paneData: data,
+								openAgentChat,
+								createNewAgentSession,
+							}}
 							terminalInstanceId={ctx.pane.id}
 							onNewShell={() =>
 								replaceEndedTerminal({

@@ -4348,9 +4348,6 @@ msgstr "Опубликованный или обновлённый контен�
 msgid "Context"
 msgstr "Контекст"
 
-msgid "Context Handoff"
-msgstr "Передача контекста"
-
 msgid "Context Menu"
 msgstr "Контекстное меню"
 
@@ -9909,9 +9906,6 @@ msgstr "Нативная передача"
 
 msgid "Native handoff complete"
 msgstr "Нативная передача завершена"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "Нативная передача не удалась. Повторите попытку или выберите передачу контекста."
 
 msgid "Native handoff failed. You can retry."
 msgstr "Нативная передача не удалась. Повторите попытку."

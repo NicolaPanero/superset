@@ -4348,9 +4348,6 @@ msgstr "Contenido publicado o actualizado"
 msgid "Context"
 msgstr "Contexto"
 
-msgid "Context Handoff"
-msgstr "Transferencia de contexto"
-
 msgid "Context Menu"
 msgstr "Menú contextual"
 
@@ -9909,9 +9906,6 @@ msgstr "Transferencia nativa"
 
 msgid "Native handoff complete"
 msgstr "Transferencia nativa completada"
-
-msgid "Native handoff failed. You can retry or choose Context Handoff."
-msgstr "La transferencia nativa falló. Puedes reintentar o elegir la transferencia de contexto."
 
 msgid "Native handoff failed. You can retry."
 msgstr "La transferencia nativa falló. Puedes reintentar."
