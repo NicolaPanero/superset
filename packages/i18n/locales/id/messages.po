@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Kembali ke papan peringkat"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ dilanjutkan di {continuedIn}"
-
-msgid "→ from {chain}"
-msgstr "→ dari {chain}"
-
 msgid "↑ update"
 msgstr "↑ perbarui"
 
@@ -4440,11 +4434,8 @@ msgstr "Lanjutkan dengan Google"
 msgid "Continue with…"
 msgstr "Lanjutkan dengan…"
 
-msgid "Continued from {chain}"
-msgstr "Dilanjutkan dari {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "Dilanjutkan di {continuedIn}"
+msgid "Continued from {source}"
+msgstr "Dilanjutkan dari {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Melanjutkan sesi agen memerlukan ruang kerja yang disematkan"
@@ -16678,6 +16669,9 @@ msgstr "Agen ini tidak bisa berjalan di workspace cloud"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."
+
+msgid "This agent received the whole conversation so far."
+msgstr "Agen ini menerima seluruh percakapan sejauh ini."
 
 msgid "This also:"
 msgstr "Ini juga akan:"

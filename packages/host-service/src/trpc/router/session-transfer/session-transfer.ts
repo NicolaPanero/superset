@@ -7,6 +7,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
 import { workspaces } from "../../../db/schema";
+import { chatProvenance } from "../../../session-transfer/chatProvenance";
 import { TransferJobs } from "../../../session-transfer/jobs";
 import {
 	type LineageNode,
@@ -574,6 +575,21 @@ export const sessionTransferRouter = router({
 				input.workspaceId,
 				input.limit ?? 50,
 				input.cursor,
+			),
+		),
+	chatProvenance: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				agent: z.string().min(1),
+				sessionId: z.string().min(1),
+			}),
+		)
+		.query(({ ctx, input }) =>
+			chatProvenance(
+				new LocalLineageStore(ctx.db, ctx.organizationId),
+				input.workspaceId,
+				input,
 			),
 		),
 	prepareResume: protectedProcedure

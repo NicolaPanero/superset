@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← リーダーボードに戻る"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ {continuedIn} で継続"
-
-msgid "→ from {chain}"
-msgstr "→ {chain} から"
-
 msgid "↑ update"
 msgstr "↑ 更新"
 
@@ -4440,11 +4434,8 @@ msgstr "Googleで続行"
 msgid "Continue with…"
 msgstr "別のエージェントで続行…"
 
-msgid "Continued from {chain}"
-msgstr "{chain} から継続"
-
-msgid "Continued in {continuedIn}"
-msgstr "{continuedIn} で継続"
+msgid "Continued from {source}"
+msgstr "{source} から継続"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "エージェントセッションを継続するには、ワークスペースをピン留めする必要があります"
@@ -16678,6 +16669,9 @@ msgstr "このエージェントはクラウドワークスペースで実行で
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "選択したデバイスにこのエージェントは存在しません(エージェントがリセットされた可能性があります)。新しいエージェントを選ぶまで実行は失敗します。"
+
+msgid "This agent received the whole conversation so far."
+msgstr "このエージェントはこれまでの会話をすべて受け取りました。"
 
 msgid "This also:"
 msgstr "さらに次の処理も行われます:"

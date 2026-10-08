@@ -8,7 +8,6 @@ import type {
 	OpenAgentChat,
 } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { AcpChatHandoffMenu } from "../AcpChatHandoffMenu";
-import { ChatLineageLabel } from "../ChatLineageLabel";
 import { TerminalNativeHandoffMenu } from "../TerminalNativeHandoffMenu";
 
 export interface ForkHandoffMenusProps {
@@ -29,15 +28,12 @@ export function ForkHandoffMenus({
 	fork: ForkHandoffMenusProps;
 }) {
 	return fork.paneData.agentSurface === "acp" ? (
-		<>
-			<ChatLineageLabel workspaceId={workspaceId} agent={fork.paneData.agent} />
-			<AcpChatHandoffMenu
-				ctx={fork.ctx}
-				workspaceId={workspaceId}
-				data={fork.paneData}
-				onOpenAgentChat={fork.openAgentChat}
-			/>
-		</>
+		<AcpChatHandoffMenu
+			ctx={fork.ctx}
+			workspaceId={workspaceId}
+			data={fork.paneData}
+			onOpenAgentChat={fork.openAgentChat}
+		/>
 	) : (
 		<TerminalNativeHandoffMenu
 			workspaceId={workspaceId}

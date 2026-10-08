@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← 返回排行榜"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ 已在 {continuedIn} 中繼續"
-
-msgid "→ from {chain}"
-msgstr "→ 來自 {chain}"
-
 msgid "↑ update"
 msgstr "↑ 更新"
 
@@ -4440,11 +4434,8 @@ msgstr "使用Google繼續"
 msgid "Continue with…"
 msgstr "繼續使用…"
 
-msgid "Continued from {chain}"
-msgstr "繼續自 {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "已在 {continuedIn} 中繼續"
+msgid "Continued from {source}"
+msgstr "延續自 {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "繼續代理程式工作階段需要已釘選的工作區"
@@ -16678,6 +16669,9 @@ msgstr "此代理程式無法在雲端工作區中執行"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所選裝置上已不存在這個代理程式（它的代理程式可能被重置過）。在你選擇新的代理程式之前，執行都會失敗。"
+
+msgid "This agent received the whole conversation so far."
+msgstr "此代理已收到目前為止的完整對話。"
 
 msgid "This also:"
 msgstr "同時還會："

@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← 返回排行榜"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ 已在 {continuedIn} 中继续"
-
-msgid "→ from {chain}"
-msgstr "→ 来自 {chain}"
-
 msgid "↑ update"
 msgstr "↑ 更新"
 
@@ -4440,11 +4434,8 @@ msgstr "使用Google继续"
 msgid "Continue with…"
 msgstr "继续使用…"
 
-msgid "Continued from {chain}"
-msgstr "继续自 {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "已在 {continuedIn} 中继续"
+msgid "Continued from {source}"
+msgstr "继续自 {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "继续智能体会话需要固定的工作区"
@@ -16678,6 +16669,9 @@ msgstr "此智能体无法在云端工作区中运行"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所选设备上已不存在这个智能体（它的智能体可能被重置过）。在你选择新的智能体之前，运行都会失败。"
+
+msgid "This agent received the whole conversation so far."
+msgstr "此代理已收到目前为止的完整对话。"
 
 msgid "This also:"
 msgstr "同时还会："

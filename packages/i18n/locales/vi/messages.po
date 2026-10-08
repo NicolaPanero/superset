@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Quay lại bảng xếp hạng"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ tiếp tục trong {continuedIn}"
-
-msgid "→ from {chain}"
-msgstr "→ từ {chain}"
-
 msgid "↑ update"
 msgstr "↑ cập nhật"
 
@@ -4440,11 +4434,8 @@ msgstr "Tiếp tục với Google"
 msgid "Continue with…"
 msgstr "Tiếp tục với…"
 
-msgid "Continued from {chain}"
-msgstr "Tiếp tục từ {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "Tiếp tục trong {continuedIn}"
+msgid "Continued from {source}"
+msgstr "Tiếp tục từ {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Để tiếp tục phiên agent, cần ghim một workspace"
@@ -16678,6 +16669,9 @@ msgstr "Agent này không thể chạy trong workspace cloud"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."
+
+msgid "This agent received the whole conversation so far."
+msgstr "Tác tử này đã nhận toàn bộ cuộc trò chuyện cho đến nay."
 
 msgid "This also:"
 msgstr "Thao tác này cũng sẽ:"
