@@ -75,11 +75,9 @@ chat scelta. L'elenco viene da `txcript list --json`: l'app include la riga di
 comando di txcript come `resources/bin/txcript-cli`, dalla stessa release del
 convertitore.
 
-### Storico dei passaggi
+### Provenienza delle chat
 
 Ogni passaggio nativo registra sorgente e destinazione in un database locale.
-Dal menu del terminale si vedono le conversazioni collegate, anche dopo un
-riavvio, e si possono riaprire o continuare con un altro agente.
 In cima a una chat nata da un passaggio nativo un avviso dice da quale agente
 e account arriva (per esempio "Continued from Claude · btcore@…"), come in
 Zed.
@@ -224,7 +222,7 @@ upstream ricevono solo agganci brevi:
   di upstream;
 - procedure tRPC in `agents/fork-procedures.ts` e `usage/fork-procedures.ts`,
   incluse con una riga nei router di upstream;
-- passaggio nativo e storico in `TerminalNativeHandoffMenu`,
+- passaggio nativo in `TerminalNativeHandoffMenu`,
   `AcpChatHandoffMenu` e `ForkHandoffMenus`; il menu di upstream resta
   invariato;
 - cambio di agente dal selettore del modello in `useForkAgentSwitch`, passato
@@ -263,7 +261,6 @@ Nuove funzioni del fork vanno scritte allo stesso modo.
   chat aperta solo per Claude.
 - Il fallback automatico dell'account quando una quota finisce non c'è ancora.
 - Le sessioni di Cursor IDE non sono supportate, solo Cursor CLI.
-- "Apri figlia" nello storico riapre nel terminale anche una sessione nata in chat.
 - Il fork di txcript parte da una revisione fissa di txcript ufficiale.
 - Login Microsoft, Jira e Bitbucket richiedono un backend proprio e non sono
   iniziati.

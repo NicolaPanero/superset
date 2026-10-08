@@ -4443,9 +4443,6 @@ msgstr "GitHubで続行"
 msgid "Continue with Google"
 msgstr "Googleで続行"
 
-msgid "Continue with…"
-msgstr "別のエージェントで続行…"
-
 msgid "Continued from {source}"
 msgstr "{source} から継続"
 
@@ -4472,9 +4469,6 @@ msgstr "会話"
 
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "このワークスペースでエージェント間を移動した会話です。"
 
 msgid "Conversion"
 msgstr "コンバージョン"
@@ -4980,9 +4974,6 @@ msgstr "レビューコメントを読み込めませんでした"
 msgid "Couldn't load runs"
 msgstr "実行履歴を読み込めませんでした"
 
-msgid "Couldn't load session lineage."
-msgstr "セッションの履歴を読み込めませんでした。"
-
 msgid "Couldn't load this run's payload."
 msgstr "この実行のペイロードを読み込めませんでした。"
 
@@ -5029,9 +5020,6 @@ msgstr "ローカルのサインインを削除できませんでした"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "エージェントをターミナルで再度開けませんでした"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "このセッションを再度開けませんでした。エージェント設定とネイティブセッションがまだ存在するか確認してください。"
 
 msgid "Couldn't restart terminals"
 msgstr "ターミナルを再起動できませんでした"
@@ -10632,9 +10620,6 @@ msgstr "ここで利用できるモバイルシミュレーターがありませ
 msgid "No name on file"
 msgstr "登録された名前はありません"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "このワークスペースにはまだネイティブ引き継ぎの記録がありません。"
-
 msgid "No open issues found."
 msgstr "オープンなIssueが見つかりません。"
 
@@ -14604,9 +14589,6 @@ msgstr "セッションの詳細"
 
 msgid "Session ended"
 msgstr "セッション終了"
-
-msgid "Session lineage"
-msgstr "セッションの履歴"
 
 msgid "Session name"
 msgstr "セッション名"

@@ -4443,9 +4443,6 @@ msgstr "使用GitHub继续"
 msgid "Continue with Google"
 msgstr "使用Google继续"
 
-msgid "Continue with…"
-msgstr "继续使用…"
-
 msgid "Continued from {source}"
 msgstr "继续自 {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "对话"
 
 msgid "Conversation · Message"
 msgstr "对话 · 消息"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "在此工作区中于代理之间移交的对话。"
 
 msgid "Conversion"
 msgstr "转化"
@@ -4980,9 +4974,6 @@ msgstr "无法加载审查评论"
 msgid "Couldn't load runs"
 msgstr "无法加载运行记录"
 
-msgid "Couldn't load session lineage."
-msgstr "无法加载会话历史。"
-
 msgid "Couldn't load this run's payload."
 msgstr "无法加载此次运行的负载。"
 
@@ -5029,9 +5020,6 @@ msgstr "无法移除本地登录"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "无法在终端中重新打开该智能体"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "无法重新打开此会话。请检查其智能体配置和原生会话是否仍然存在。"
 
 msgid "Couldn't restart terminals"
 msgstr "无法重启终端"
@@ -10632,9 +10620,6 @@ msgstr "此处没有可用的移动模拟器。需要支持 Limrun 的云沙箱�
 msgid "No name on file"
 msgstr "未登记姓名"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "此工作区尚未记录任何原生交接。"
-
 msgid "No open issues found."
 msgstr "未找到打开的议题。"
 
@@ -14604,9 +14589,6 @@ msgstr "会话详情"
 
 msgid "Session ended"
 msgstr "会话已结束"
-
-msgid "Session lineage"
-msgstr "会话历史"
 
 msgid "Session name"
 msgstr "会话名称"

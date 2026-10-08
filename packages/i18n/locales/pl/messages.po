@@ -4443,9 +4443,6 @@ msgstr "Kontynuuj z GitHub"
 msgid "Continue with Google"
 msgstr "Kontynuuj z Google"
 
-msgid "Continue with…"
-msgstr "Kontynuuj z…"
-
 msgid "Continued from {source}"
 msgstr "Kontynuacja z {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Rozmowa"
 
 msgid "Conversation · Message"
 msgstr "Rozmowa · Wiadomość"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Rozmowy przeniesione między agentami w tym obszarze roboczym."
 
 msgid "Conversion"
 msgstr "Konwersja"
@@ -4980,9 +4974,6 @@ msgstr "Nie udało się wczytać komentarzy przeglądu"
 msgid "Couldn't load runs"
 msgstr "Nie udało się wczytać uruchomień"
 
-msgid "Couldn't load session lineage."
-msgstr "Nie udało się wczytać historii sesji."
-
 msgid "Couldn't load this run's payload."
 msgstr "Nie udało się wczytać ładunku tego uruchomienia."
 
@@ -5029,9 +5020,6 @@ msgstr "Nie udało się usunąć lokalnego logowania"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Nie udało się ponownie otworzyć agenta w terminalu"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Nie udało się ponownie otworzyć tej sesji. Sprawdź, czy konfiguracja agenta i natywna sesja nadal istnieją."
 
 msgid "Couldn't restart terminals"
 msgstr "Nie udało się zrestartować terminali"
@@ -10632,9 +10620,6 @@ msgstr "Brak dostępnego symulatora mobilnego. Wymagana jest piaskownica w chmur
 msgid "No name on file"
 msgstr "Brak zapisanej nazwy"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "W tym workspace nie zapisano jeszcze żadnych natywnych przekazań."
-
 msgid "No open issues found."
 msgstr "Nie znaleziono otwartych zgłoszeń."
 
@@ -14604,9 +14589,6 @@ msgstr "Szczegóły sesji"
 
 msgid "Session ended"
 msgstr "Sesja zakończona"
-
-msgid "Session lineage"
-msgstr "Historia sesji"
 
 msgid "Session name"
 msgstr "Nazwa sesji"

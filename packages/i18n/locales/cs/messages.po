@@ -4443,9 +4443,6 @@ msgstr "Pokračovat přes GitHub"
 msgid "Continue with Google"
 msgstr "Pokračovat přes Google"
 
-msgid "Continue with…"
-msgstr "Pokračovat s…"
-
 msgid "Continued from {source}"
 msgstr "Pokračování z {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Konverzace"
 
 msgid "Conversation · Message"
 msgstr "Konverzace · Zpráva"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Konverzace přesunuté mezi agenty v tomto pracovním prostoru."
 
 msgid "Conversion"
 msgstr "Konverze"
@@ -4980,9 +4974,6 @@ msgstr "Nepodařilo se načíst komentáře k revizi"
 msgid "Couldn't load runs"
 msgstr "Běhy se nepodařilo načíst"
 
-msgid "Couldn't load session lineage."
-msgstr "Nepodařilo se načíst historii relací."
-
 msgid "Couldn't load this run's payload."
 msgstr "Data tohoto běhu se nepodařilo načíst."
 
@@ -5029,9 +5020,6 @@ msgstr "Nepodařilo se odebrat místní přihlášení"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Agenta se nepodařilo znovu otevřít v terminálu"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Nepodařilo se znovu otevřít tuto relaci. Ověřte, že konfigurace agenta a nativní relace stále existují."
 
 msgid "Couldn't restart terminals"
 msgstr "Nepodařilo se restartovat terminály"
@@ -10632,9 +10620,6 @@ msgstr "Zde není k dispozici žádný mobilní simulátor. Je potřeba cloudov�
 msgid "No name on file"
 msgstr "Není uloženo žádné jméno"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "V tomto workspace zatím nejsou zaznamenána žádná nativní předání."
-
 msgid "No open issues found."
 msgstr "Nenalezeny žádné otevřené issues."
 
@@ -14604,9 +14589,6 @@ msgstr "Podrobnosti relace"
 
 msgid "Session ended"
 msgstr "Relace skončila"
-
-msgid "Session lineage"
-msgstr "Historie relací"
 
 msgid "Session name"
 msgstr "Název relace"

@@ -19,13 +19,12 @@ import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminal
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { CreateNewAgentSession } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
-import { TerminalSessionLineage } from "./components/TerminalSessionLineage";
 
 type Placement = "split-pane" | "new-tab";
 
 /**
- * Native handoff of a terminal agent session with txcript, plus the local
- * lineage of earlier handoffs. Context handoff and forks stay in upstream's
+ * Native handoff of a terminal agent session with txcript. Context handoff
+ * and forks stay in upstream's
  * TerminalSessionHandoffMenu.
  */
 export function TerminalNativeHandoffMenu({
@@ -95,17 +94,7 @@ export function TerminalNativeHandoffMenu({
 		setOpen(true);
 	};
 
-	const lineage = capabilities?.lineageAvailable ? (
-		<TerminalSessionLineage
-			workspaceId={workspaceId}
-			onCreateNewAgentSession={onCreateNewAgentSession}
-			onContinueSession={(id) => {
-				setPlacement("new-tab");
-				openFor(id);
-			}}
-		/>
-	) : null;
-	if (!binding && !open) return lineage;
+	if (!binding && !open) return null;
 
 	const start = async () => {
 		if (!target || !binding) return;
@@ -165,7 +154,6 @@ export function TerminalNativeHandoffMenu({
 
 	return (
 		<>
-			{lineage}
 			{binding && (
 				<Tooltip>
 					<TooltipTrigger asChild>

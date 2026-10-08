@@ -4443,9 +4443,6 @@ msgstr "Continue with GitHub"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
-msgid "Continue with…"
-msgstr "Continue with…"
-
 msgid "Continued from {source}"
 msgstr "Continued from {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Conversation"
 
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Conversations moved between agents in this workspace."
 
 msgid "Conversion"
 msgstr "Conversion"
@@ -4980,9 +4974,6 @@ msgstr "Couldn't load review comments"
 msgid "Couldn't load runs"
 msgstr "Couldn't load runs"
 
-msgid "Couldn't load session lineage."
-msgstr "Couldn't load session lineage."
-
 msgid "Couldn't load this run's payload."
 msgstr "Couldn't load this run's payload."
 
@@ -5029,9 +5020,6 @@ msgstr "Couldn't remove the local sign-in"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Couldn't reopen the agent in a terminal"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Couldn't reopen this session. Check that its agent configuration and native session still exist."
 
 msgid "Couldn't restart terminals"
 msgstr "Couldn't restart terminals"
@@ -10632,9 +10620,6 @@ msgstr "No mobile simulator available here. This needs either a Limrun-enabled c
 msgid "No name on file"
 msgstr "No name on file"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "No native handoffs recorded in this workspace yet."
-
 msgid "No open issues found."
 msgstr "No open issues found."
 
@@ -14604,9 +14589,6 @@ msgstr "Session details"
 
 msgid "Session ended"
 msgstr "Session ended"
-
-msgid "Session lineage"
-msgstr "Session lineage"
 
 msgid "Session name"
 msgstr "Session name"

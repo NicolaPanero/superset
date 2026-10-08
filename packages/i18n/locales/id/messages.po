@@ -4443,9 +4443,6 @@ msgstr "Lanjutkan dengan GitHub"
 msgid "Continue with Google"
 msgstr "Lanjutkan dengan Google"
 
-msgid "Continue with…"
-msgstr "Lanjutkan dengan…"
-
 msgid "Continued from {source}"
 msgstr "Dilanjutkan dari {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Percakapan"
 
 msgid "Conversation · Message"
 msgstr "Percakapan · Pesan"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Percakapan yang dipindahkan antar agen di workspace ini."
 
 msgid "Conversion"
 msgstr "Konversi"
@@ -4980,9 +4974,6 @@ msgstr "Tidak bisa memuat komentar review"
 msgid "Couldn't load runs"
 msgstr "Tidak dapat memuat run"
 
-msgid "Couldn't load session lineage."
-msgstr "Tidak dapat memuat riwayat sesi."
-
 msgid "Couldn't load this run's payload."
 msgstr "Tidak dapat memuat payload run ini."
 
@@ -5029,9 +5020,6 @@ msgstr "Tidak bisa menghapus sesi masuk lokal"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Tidak dapat membuka kembali agen di terminal"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Tidak dapat membuka kembali sesi ini. Pastikan konfigurasi agen dan sesi native masih ada."
 
 msgid "Couldn't restart terminals"
 msgstr "Tidak bisa memulai ulang terminal"
@@ -10632,9 +10620,6 @@ msgstr "Tidak ada simulator seluler yang tersedia di sini. Diperlukan sandbox cl
 msgid "No name on file"
 msgstr "Tidak ada nama tersimpan"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Belum ada handoff native yang tercatat di workspace ini."
-
 msgid "No open issues found."
 msgstr "Tidak ada issue terbuka."
 
@@ -14604,9 +14589,6 @@ msgstr "Detail sesi"
 
 msgid "Session ended"
 msgstr "Sesi berakhir"
-
-msgid "Session lineage"
-msgstr "Riwayat sesi"
 
 msgid "Session name"
 msgstr "Nama sesi"

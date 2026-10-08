@@ -4443,9 +4443,6 @@ msgstr "Tiếp tục với GitHub"
 msgid "Continue with Google"
 msgstr "Tiếp tục với Google"
 
-msgid "Continue with…"
-msgstr "Tiếp tục với…"
-
 msgid "Continued from {source}"
 msgstr "Tiếp tục từ {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Cuộc thảo luận"
 
 msgid "Conversation · Message"
 msgstr "Hội thoại · Tin nhắn"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Các cuộc trò chuyện đã chuyển giữa các tác tử trong workspace này."
 
 msgid "Conversion"
 msgstr "Chuyển đổi"
@@ -4980,9 +4974,6 @@ msgstr "Không thể tải bình luận review"
 msgid "Couldn't load runs"
 msgstr "Không thể tải các lần chạy"
 
-msgid "Couldn't load session lineage."
-msgstr "Không thể tải lịch sử phiên."
-
 msgid "Couldn't load this run's payload."
 msgstr "Không thể tải payload của lần chạy này."
 
@@ -5029,9 +5020,6 @@ msgstr "Không thể xóa phiên đăng nhập cục bộ"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Không thể mở lại tác nhân trong terminal"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Không thể mở lại phiên này. Hãy kiểm tra xem cấu hình tác nhân và phiên gốc còn tồn tại hay không."
 
 msgid "Couldn't restart terminals"
 msgstr "Không thể khởi động lại terminal"
@@ -10632,9 +10620,6 @@ msgstr "Không có trình giả lập di động nào khả dụng ở đây. C�
 msgid "No name on file"
 msgstr "Chưa có tên nào được lưu"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Chưa có lần chuyển phiên gốc nào được ghi trong workspace này."
-
 msgid "No open issues found."
 msgstr "Không có issue nào đang mở."
 
@@ -14604,9 +14589,6 @@ msgstr "Chi tiết phiên"
 
 msgid "Session ended"
 msgstr "Phiên đã kết thúc"
-
-msgid "Session lineage"
-msgstr "Lịch sử phiên"
 
 msgid "Session name"
 msgstr "Tên phiên"
