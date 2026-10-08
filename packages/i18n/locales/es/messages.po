@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Volver a la clasificación"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ continúa en {continuedIn}"
-
-msgid "→ from {chain}"
-msgstr "→ desde {chain}"
-
 msgid "↑ update"
 msgstr "↑ actualizar"
 
@@ -4440,11 +4434,8 @@ msgstr "Continuar con Google"
 msgid "Continue with…"
 msgstr "Continuar con…"
 
-msgid "Continued from {chain}"
-msgstr "Continúa desde {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "Continúa en {continuedIn}"
+msgid "Continued from {source}"
+msgstr "Continuado desde {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuar una sesión de agente requiere un espacio de trabajo fijado"
@@ -16678,6 +16669,9 @@ msgstr "Este agente no puede ejecutarse en un espacio de trabajo en la nube"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Este agente ya no existe en el dispositivo seleccionado (puede que sus agentes se hayan restablecido). Las ejecuciones fallarán hasta que elijas uno nuevo."
+
+msgid "This agent received the whole conversation so far."
+msgstr "Este agente recibió toda la conversación hasta ahora."
 
 msgid "This also:"
 msgstr "Esto también:"

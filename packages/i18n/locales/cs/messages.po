@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Zpět na žebříček"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ pokračuje v {continuedIn}"
-
-msgid "→ from {chain}"
-msgstr "→ z {chain}"
-
 msgid "↑ update"
 msgstr "↑ aktualizovat"
 
@@ -4440,11 +4434,8 @@ msgstr "Pokračovat přes Google"
 msgid "Continue with…"
 msgstr "Pokračovat s…"
 
-msgid "Continued from {chain}"
-msgstr "Pokračování z {chain}"
-
-msgid "Continued in {continuedIn}"
-msgstr "Pokračuje v {continuedIn}"
+msgid "Continued from {source}"
+msgstr "Pokračování z {source}"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
@@ -16678,6 +16669,9 @@ msgstr "Tento agent nemůže běžet v cloudovém pracovním prostoru"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
+
+msgid "This agent received the whole conversation so far."
+msgstr "Tento agent obdržel celou dosavadní konverzaci."
 
 msgid "This also:"
 msgstr "Zároveň:"

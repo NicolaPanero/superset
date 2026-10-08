@@ -60,8 +60,9 @@ e ragionamento interno del modello non vengono trasferiti.
 Ogni passaggio nativo registra sorgente e destinazione in un database locale.
 Dal menu del terminale si vedono le conversazioni collegate, anche dopo un
 riavvio, e si possono riaprire o continuare con un altro agente.
-Nell'intestazione di una chat ACP un'etichetta mostra da dove arriva
-(`→ from Claude → Cursor Agent`) o dove è proseguita, come in Zed.
+In cima a una chat nata da un passaggio nativo un avviso dice da quale agente
+e account arriva (per esempio "Continued from Claude · btcore@…"), come in
+Zed.
 
 ### Pannello Agents
 
@@ -184,12 +185,13 @@ upstream ricevono solo agganci brevi:
   invariato;
 - cambio di agente dal selettore del modello in `useForkAgentSwitch`, passato
   alla chat con la prop `onForkSwitchAgent`: il gestore di upstream resta
-  invariato e fa da ripiego; etichetta di provenienza in `ChatLineageLabel`;
+  invariato e fa da ripiego; avviso di provenienza in `ForkChatProvenance` (una riga in `Transcript.tsx`),
+  dati da `sessionTransfer.chatProvenance`;
 - chat in background: tabella `background_chats` in `fork-schema.ts`,
   procedure in `agents/fork-background-chats.ts`, hook
   `useForkBackgroundChats` e `useForkFocusChatLink`, gruppo
   `ForkBackgroundChatsGroup` nel menu attività;
-- cambio di account in chat: `ForkAccountSwitch` e il suo hook, contesto
+- cambio di account in chat: `ForkChatExtras` e `useForkAccountSwitch`, contesto
   `ForkAccountSwitchProvider`, `ForkAccountMenu` e `ForkAccountBadge` nel
   selettore (due righe in `ModelPicker.tsx`), procedura in
   `agents/fork-chat-account.ts`, copia della sessione in

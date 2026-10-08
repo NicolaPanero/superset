@@ -29,6 +29,7 @@ import {
 	CHAT_SCROLLER_GUTTER_CLASSNAME,
 } from "../../constants";
 import type { ChatForkTarget } from "../../types";
+import { ForkChatProvenance } from "./components/ForkChatProvenance";
 import { TurnGroupSection } from "./components/TurnGroupSection";
 import { useLoadOlderOnReach } from "./hooks/useLoadOlderOnReach";
 import { useScrollAnchorKey } from "./hooks/useScrollAnchorKey";
@@ -236,6 +237,7 @@ export function Transcript({
 						)}
 					</div>
 				)}
+				{!hasOlder && <ForkChatProvenance className={CHAT_COLUMN_CLASSNAME} />}
 				<MessageScroller.Content
 					className={cn(
 						CHAT_COLUMN_CLASSNAME,

@@ -35,7 +35,7 @@ import type {
 import type { OpenAgentChat } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
-import { useForkAccountSwitch } from "../../../../../ForkAccountSwitch/hooks/useForkAccountSwitch";
+import { useForkAccountSwitch } from "../../../../../ForkChatExtras/hooks/useForkAccountSwitch";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 

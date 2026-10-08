@@ -1184,12 +1184,6 @@ msgstr "© {year} Superset Inc."
 msgid "← Back to leaderboard"
 msgstr "← Lider tablosuna dön"
 
-msgid "→ continued in {continuedIn}"
-msgstr "→ {continuedIn} içinde devam etti"
-
-msgid "→ from {chain}"
-msgstr "→ {chain} kaynaklı"
-
 msgid "↑ update"
 msgstr "↑ güncelle"
 
@@ -4440,11 +4434,8 @@ msgstr "Google ile devam et"
 msgid "Continue with…"
 msgstr "Şununla devam et…"
 
-msgid "Continued from {chain}"
-msgstr "{chain} üzerinden devam ediyor"
-
-msgid "Continued in {continuedIn}"
-msgstr "{continuedIn} içinde devam etti"
+msgid "Continued from {source}"
+msgstr "{source} üzerinden devam ediyor"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Bir aracı oturumunu sürdürmek için sabitlenmiş bir çalışma alanı gerekir"
@@ -16678,6 +16669,9 @@ msgstr "Bu ajan bir bulut çalışma alanında çalışamaz"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Bu ajan seçili cihazda artık yok (ajanları sıfırlanmış olabilir). Yeni bir tane seçene kadar çalıştırmalar başarısız olacak."
+
+msgid "This agent received the whole conversation so far."
+msgstr "Bu ajan şimdiye kadarki konuşmanın tamamını aldı."
 
 msgid "This also:"
 msgstr "Ayrıca:"
