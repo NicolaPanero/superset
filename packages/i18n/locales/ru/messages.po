@@ -3398,6 +3398,9 @@ msgstr "Канал создан"
 msgid "Chat"
 msgstr "Чат"
 
+msgid "Chat imported"
+msgstr "Чат импортирован"
+
 msgid "Chat is being reworked"
 msgstr "Чат перерабатывается"
 
@@ -3416,6 +3419,9 @@ msgstr "Поверхности чата: сообщения, рассужден�
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Чаты, начатые вне Superset в папке этого рабочего пространства, например в терминале или в Zed. Выберите один, чтобы продолжить его здесь."
 
 msgid "Check again"
 msgstr "Проверить снова"
@@ -4415,6 +4421,9 @@ msgstr "Перейти к {0}"
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
+msgid "Continue with"
+msgstr "Продолжить с"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "Продолжить с {0}"
@@ -4930,6 +4939,9 @@ msgstr "Не удалось отменить непроиндексирован�
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Не удалось завершить удаление рабочих областей"
 
+msgid "Couldn't import the chat"
+msgstr "Не удалось импортировать чат"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Не удалось загрузить настройки агента: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Не удалось подключиться к этому облачн�
 
 msgid "Couldn't reach workspace"
 msgstr "Не удалось подключиться к рабочей области"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Не удалось прочитать чаты на этом Mac."
 
 msgid "Couldn't read this terminal's context."
 msgstr "Не удалось прочитать контекст этого терминала."
@@ -8295,6 +8310,9 @@ msgstr "Выдаёт себя за другого"
 msgid "Import"
 msgstr "Импортировать"
 
+msgid "Import a chat"
+msgstr "Импорт чата"
+
 msgid "import a folder"
 msgstr "импортировать папку"
 
@@ -8312,6 +8330,9 @@ msgstr "Импортировать все"
 
 msgid "Import all worktrees"
 msgstr "Импортировать все worktree"
+
+msgid "Import chat"
+msgstr "Импортировать чат"
 
 msgid "Import cookies and passwords…"
 msgstr "Импортировать cookies и пароли…"
@@ -8408,6 +8429,9 @@ msgstr "В работе"
 
 msgid "In Progress"
 msgstr "В работе"
+
+msgid "In Superset"
+msgstr "В Superset"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "В приложении Superset откройте <0>Настройки → Внешний вид → Тема</0>."
@@ -10388,6 +10412,9 @@ msgstr "В этой ветке пока нет изменений."
 
 msgid "No changes to display."
 msgstr "Нет изменений для показа."
+
+msgid "No chats found in this folder."
+msgstr "В этой папке чаты не найдены."
 
 msgid "No checks"
 msgstr "Без проверок"
@@ -14141,6 +14168,9 @@ msgstr "Поиск по имени ключа..."
 msgid "Search changed files"
 msgstr "Поиск изменённых файлов"
 
+msgid "Search chats"
+msgstr "Поиск чатов"
+
 msgid "Search developers"
 msgstr "Поиск разработчиков"
 
@@ -16692,6 +16722,9 @@ msgstr "У этой автоматизации ещё нет инструкци�
 msgid "This automation is in another organization"
 msgstr "Эта автоматизация находится в другой организации"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Эта сборка пока не умеет искать чаты. Обновите Superset, чтобы пользоваться этим."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Эта сборка не обновляется сама. Чтобы обновить её, пересоберите её из исходного кода."
 
@@ -17558,6 +17591,9 @@ msgstr "Неподдерживаемый элемент «{0}»"
 
 msgid "Untitled"
 msgstr "Без названия"
+
+msgid "Untitled chat"
+msgstr "Чат без названия"
 
 msgid "Untitled Page"
 msgstr "Страница без названия"

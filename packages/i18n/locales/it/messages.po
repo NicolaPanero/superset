@@ -3398,6 +3398,9 @@ msgstr "Canale creato"
 msgid "Chat"
 msgstr "Chat"
 
+msgid "Chat imported"
+msgstr "Chat importata"
+
 msgid "Chat is being reworked"
 msgstr "La chat è in fase di rifacimento"
 
@@ -3416,6 +3419,9 @@ msgstr "Superfici della chat: messaggi, ragionamento, suggerimenti"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Chat avviate fuori da Superset nella cartella di quest'area di lavoro, per esempio in un terminale o in Zed. Scegline una per continuarla qui."
 
 msgid "Check again"
 msgstr "Controlla di nuovo"
@@ -4415,6 +4421,9 @@ msgstr "Continua su {0}"
 msgid "Continue update"
 msgstr "Continua l'aggiornamento"
 
+msgid "Continue with"
+msgstr "Continua con"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "Continua con {0}"
@@ -4930,6 +4939,9 @@ msgstr "Impossibile scartare le modifiche non in stage"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Impossibile completare l'eliminazione dei workspace"
 
+msgid "Couldn't import the chat"
+msgstr "Impossibile importare la chat"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Impossibile caricare le impostazioni degli agenti: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Impossibile raggiungere questo workspace cloud. Potrebbe essere ancora i
 
 msgid "Couldn't reach workspace"
 msgstr "Impossibile raggiungere il workspace"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Impossibile leggere le chat su questo Mac."
 
 msgid "Couldn't read this terminal's context."
 msgstr "Impossibile leggere il contesto di questo terminale."
@@ -8295,6 +8310,9 @@ msgstr "Si spaccia per qualcun altro"
 msgid "Import"
 msgstr "Importa"
 
+msgid "Import a chat"
+msgstr "Importa una chat"
+
 msgid "import a folder"
 msgstr "importare una cartella"
 
@@ -8312,6 +8330,9 @@ msgstr "Importa tutti"
 
 msgid "Import all worktrees"
 msgstr "Importa tutti i worktree"
+
+msgid "Import chat"
+msgstr "Importa chat"
 
 msgid "Import cookies and passwords…"
 msgstr "Importa cookie e password…"
@@ -8408,6 +8429,9 @@ msgstr "In corso"
 
 msgid "In Progress"
 msgstr "In corso"
+
+msgid "In Superset"
+msgstr "In Superset"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Nell'app desktop di Superset, apri <0>Impostazioni → Aspetto → Tema</0>."
@@ -10388,6 +10412,9 @@ msgstr "Ancora nessuna modifica su questo branch."
 
 msgid "No changes to display."
 msgstr "Nessuna modifica da mostrare."
+
+msgid "No chats found in this folder."
+msgstr "Nessuna chat trovata in questa cartella."
 
 msgid "No checks"
 msgstr "Nessun controllo"
@@ -14141,6 +14168,9 @@ msgstr "Cerca per nome della chiave..."
 msgid "Search changed files"
 msgstr "Cerca file modificati"
 
+msgid "Search chats"
+msgstr "Cerca chat"
+
 msgid "Search developers"
 msgstr "Cerca sviluppatori"
 
@@ -16692,6 +16722,9 @@ msgstr "Questa automazione non ha ancora istruzioni. Scrivi un prompt nelle sue 
 msgid "This automation is in another organization"
 msgstr "Questa automazione si trova in un'altra organizzazione"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Questa versione non sa ancora cercare le chat. Aggiorna Superset per usarla."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Questa build non si aggiorna da sola. Per aggiornarla, ricompilala dal codice sorgente."
 
@@ -17558,6 +17591,9 @@ msgstr "Elemento non supportato \"{0}\""
 
 msgid "Untitled"
 msgstr "Senza titolo"
+
+msgid "Untitled chat"
+msgstr "Chat senza titolo"
 
 msgid "Untitled Page"
 msgstr "Pagina senza titolo"

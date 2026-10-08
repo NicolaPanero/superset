@@ -8,6 +8,11 @@ import { z } from "zod";
 import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
 import { workspaces } from "../../../db/schema";
 import { chatProvenance } from "../../../session-transfer/chatProvenance";
+import {
+	listExternalSessions,
+	runTxcriptCli,
+	txcriptCliPath,
+} from "../../../session-transfer/externalSessions";
 import { TransferJobs } from "../../../session-transfer/jobs";
 import {
 	type LineageNode,
@@ -49,6 +54,7 @@ import {
 } from "../agents/agents";
 import { terminalLaunchConfigId } from "../agents/fork-launch";
 import { toTerminalSessionError } from "../terminal/errors";
+import { discoverClaudeProfiles, discoverCodexHomes } from "../usage/profiles";
 
 type Prepared = {
 	result?: Extract<TransferResult, { mode: "native" }>;
@@ -425,6 +431,8 @@ export const sessionTransferRouter = router({
 				targetConfigId: z.string().min(1),
 				targetAccountSelection: z.string().min(1).nullable().optional(),
 				targetTerminalId: z.string().uuid(),
+				/** A session started outside Superset, so never opened as a chat. */
+				sourceExternal: z.boolean().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -492,7 +500,7 @@ export const sessionTransferRouter = router({
 						} else {
 							// Cursor keeps ACP chats apart from its CLI store, which is
 							// the one the converter reads.
-							if (sourceAgent === "cursor-agent")
+							if (sourceAgent === "cursor-agent" && !input.sourceExternal)
 								await bridgeCursorSession({
 									cwd: workspace.worktreePath,
 									sessionId: input.sourceSessionId,
@@ -577,6 +585,57 @@ export const sessionTransferRouter = router({
 				input.cursor,
 			),
 		),
+	externalSessions: protectedProcedure
+		.input(z.object({ workspaceId: z.string().uuid() }))
+		.query(async ({ ctx, input }) => {
+			const workspace = ctx.db
+				.select()
+				.from(workspaces)
+				.where(
+					and(
+						eq(workspaces.id, input.workspaceId),
+						isNull(workspaces.archivedAt),
+					),
+				)
+				.get();
+			if (!workspace)
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "workspace_unavailable",
+				});
+			const cwd = await realpath(workspace.worktreePath);
+			const sessions = await listExternalSessions({
+				cwd,
+				claudeProfiles: (await discoverClaudeProfiles()).map(
+					(profile) => profile.configDir,
+				),
+				codexHomes: (await discoverCodexHomes())
+					.slice(1)
+					.map((home) => home.home),
+				run: runTxcriptCli(txcriptCliPath()),
+			}).catch((error: Error) => {
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message: error.message,
+				});
+			});
+			const known = new Set<string>();
+			for (const binding of ctx.terminalAgentStore.listByWorkspace(
+				input.workspaceId,
+			))
+				if (binding.agentSessionId)
+					known.add(`${binding.agentId}:${binding.agentSessionId}`);
+			for (const edge of new LocalLineageStore(ctx.db, ctx.organizationId).list(
+				input.workspaceId,
+				100,
+			).items)
+				for (const node of [edge.source, edge.target])
+					known.add(`${node.agent}:${node.sessionId}`);
+			return sessions.map((session) => ({
+				...session,
+				inSuperset: known.has(`${session.agent}:${session.sessionId}`),
+			}));
+		}),
 	chatProvenance: protectedProcedure
 		.input(
 			z.object({

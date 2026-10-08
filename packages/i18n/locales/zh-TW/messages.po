@@ -3398,6 +3398,9 @@ msgstr "頻道已建立"
 msgid "Chat"
 msgstr "聊天"
 
+msgid "Chat imported"
+msgstr "已匯入聊天"
+
 msgid "Chat is being reworked"
 msgstr "聊天功能正在重做"
 
@@ -3416,6 +3419,9 @@ msgstr "聊天介面：訊息、推理、建議"
 
 msgid "Chat v3"
 msgstr "聊天v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "在此工作區資料夾中於 Superset 之外（例如終端機或 Zed）開始的聊天。選擇一個即可在這裡繼續。"
 
 msgid "Check again"
 msgstr "重新檢查"
@@ -4415,6 +4421,9 @@ msgstr "繼續前往 {0}"
 msgid "Continue update"
 msgstr "繼續更新"
 
+msgid "Continue with"
+msgstr "繼續使用"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "使用{0}繼續"
@@ -4930,6 +4939,9 @@ msgstr "無法放棄未暫存的更改"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "沒能完成工作區的刪除"
 
+msgid "Couldn't import the chat"
+msgstr "無法匯入聊天"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "無法載入代理程式設定：{0}"
@@ -4996,6 +5008,9 @@ msgstr "無法連線到此雲端工作區。它可能仍在喚醒中——請重
 
 msgid "Couldn't reach workspace"
 msgstr "無法連線到工作區"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "無法讀取這台 Mac 上的聊天。"
 
 msgid "Couldn't read this terminal's context."
 msgstr "無法讀取這個終端的上下文。"
@@ -8295,6 +8310,9 @@ msgstr "冒充他人"
 msgid "Import"
 msgstr "匯入"
 
+msgid "Import a chat"
+msgstr "匯入聊天"
+
 msgid "import a folder"
 msgstr "匯入資料夾"
 
@@ -8312,6 +8330,9 @@ msgstr "全部匯入"
 
 msgid "Import all worktrees"
 msgstr "匯入所有worktree"
+
+msgid "Import chat"
+msgstr "匯入聊天"
 
 msgid "Import cookies and passwords…"
 msgstr "匯入cookie和密碼…"
@@ -8408,6 +8429,9 @@ msgstr "進行中"
 
 msgid "In Progress"
 msgstr "進行中"
+
+msgid "In Superset"
+msgstr "已在 Superset 中"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "在Superset桌面應用程式中開啟<0>設定 → 外觀 → 主題</0>。"
@@ -10388,6 +10412,9 @@ msgstr "此分支上還沒有改動。"
 
 msgid "No changes to display."
 msgstr "沒有可顯示的改動。"
+
+msgid "No chats found in this folder."
+msgstr "此資料夾中沒有聊天。"
 
 msgid "No checks"
 msgstr "無檢查"
@@ -14141,6 +14168,9 @@ msgstr "依鍵名搜尋..."
 msgid "Search changed files"
 msgstr "搜尋更改的檔案"
 
+msgid "Search chats"
+msgstr "搜尋聊天"
+
 msgid "Search developers"
 msgstr "搜尋開發者"
 
@@ -16692,6 +16722,9 @@ msgstr "此自動化尚未有指示。請先在設定中撰寫提示，再執行
 msgid "This automation is in another organization"
 msgstr "此自動化位於其他組織"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "此版本尚無法搜尋聊天。請更新 Superset 後使用。"
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "此版本不會自動更新。如需更新，請從原始碼重新建置。"
 
@@ -17558,6 +17591,9 @@ msgstr "不支援的專案「{0}」"
 
 msgid "Untitled"
 msgstr "未命名"
+
+msgid "Untitled chat"
+msgstr "未命名聊天"
 
 msgid "Untitled Page"
 msgstr "未命名頁面"

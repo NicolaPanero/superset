@@ -16,6 +16,8 @@ import { join } from "node:path";
 // latest release is installed unless TXCRIPT_TAG names one.
 const repository = "NicolaPanero/txcript";
 const asset = "superset-transfer-aarch64-apple-darwin.tar.gz";
+// txcript's own CLI lists the sessions on this Mac for "Import chat".
+const cliAsset = "txcript-aarch64-apple-darwin.tar.gz";
 const targetHome =
 	process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset");
 
@@ -49,9 +51,15 @@ if (!/^v\d+\.\d+\.\d+-fork\.\d+$/.test(tag))
 const base = `https://github.com/${repository}/releases/download/${tag}`;
 const archive = (await download(`${base}/${asset}`)) as Buffer;
 const sums = ((await download(`${base}/SHA256SUMS`)) as Buffer).toString();
-const sha256 = createHash("sha256").update(archive).digest("hex");
-if (!sums.split("\n").some((line) => line.trim() === `${sha256}  ${asset}`))
-	throw new Error(`${asset} of ${tag} does not match SHA256SUMS`);
+function verify(name: string, data: Buffer) {
+	const digest = createHash("sha256").update(data).digest("hex");
+	if (!sums.split("\n").some((line) => line.trim() === `${digest}  ${name}`))
+		throw new Error(`${name} of ${tag} does not match SHA256SUMS`);
+	return digest;
+}
+const sha256 = verify(asset, archive);
+const cliArchive = (await download(`${base}/${cliAsset}`)) as Buffer;
+verify(cliAsset, cliArchive);
 
 const work = await mkdtemp(join(tmpdir(), "superset-transfer-"));
 try {
@@ -89,6 +97,30 @@ try {
 		),
 	);
 	console.log(`Installed transfer helper ${tag}: ${output}`);
+
+	await writeFile(join(work, cliAsset), cliArchive);
+	const cliExtract = Bun.spawnSync(["tar", "-xzf", cliAsset], {
+		cwd: work,
+		stderr: "inherit",
+	});
+	if (cliExtract.exitCode !== 0)
+		throw new Error(`Could not extract ${cliAsset}`);
+	const cli = join(work, "txcript");
+	const listing = Bun.spawnSync(
+		[cli, "list", "--json", "-n", "1", "--cwd", work],
+		{ stdout: "pipe", stderr: "inherit" },
+	);
+	if (
+		listing.exitCode !== 0 ||
+		!Array.isArray(JSON.parse(listing.stdout.toString()))
+	)
+		throw new Error("txcript CLI cannot list sessions as JSON");
+	const cliOutput = join(targetHome, "bin", "txcript-cli");
+	const cliTemporary = `${cliOutput}.${crypto.randomUUID()}.tmp`;
+	await copyFile(cli, cliTemporary);
+	await chmod(cliTemporary, 0o700);
+	await rename(cliTemporary, cliOutput);
+	console.log(`Installed txcript CLI ${tag}: ${cliOutput}`);
 } finally {
 	await rm(work, { recursive: true, force: true });
 }

@@ -3398,6 +3398,9 @@ msgstr "チャンネル作成"
 msgid "Chat"
 msgstr "チャット"
 
+msgid "Chat imported"
+msgstr "チャットをインポートしました"
+
 msgid "Chat is being reworked"
 msgstr "チャットは再構築中です"
 
@@ -3416,6 +3419,9 @@ msgstr "チャットの構成要素: メッセージ、推論、提案"
 
 msgid "Chat v3"
 msgstr "チャットv3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "このワークスペースのフォルダーで Superset の外（ターミナルや Zed など）で始めたチャットです。1つ選ぶとここで続けられます。"
 
 msgid "Check again"
 msgstr "再確認"
@@ -4415,6 +4421,9 @@ msgstr "{0} に進む"
 msgid "Continue update"
 msgstr "更新を続行"
 
+msgid "Continue with"
+msgstr "続行するエージェント"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "{0}で続行"
@@ -4930,6 +4939,9 @@ msgstr "未ステージの変更を破棄できませんでした"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "ワークスペースの削除を完了できませんでした"
 
+msgid "Couldn't import the chat"
+msgstr "チャットをインポートできませんでした"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "エージェント設定を読み込めませんでした: {0}"
@@ -4996,6 +5008,9 @@ msgstr "このクラウドワークスペースに接続できませんでした
 
 msgid "Couldn't reach workspace"
 msgstr "ワークスペースに接続できませんでした"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "この Mac のチャットを読み取れませんでした。"
 
 msgid "Couldn't read this terminal's context."
 msgstr "このターミナルのコンテキストを読み取れませんでした。"
@@ -8295,6 +8310,9 @@ msgstr "他人へのなりすまし"
 msgid "Import"
 msgstr "インポート"
 
+msgid "Import a chat"
+msgstr "チャットをインポート"
+
 msgid "import a folder"
 msgstr "フォルダをインポートする"
 
@@ -8312,6 +8330,9 @@ msgstr "すべてインポート"
 
 msgid "Import all worktrees"
 msgstr "すべてのワークツリーをインポート"
+
+msgid "Import chat"
+msgstr "チャットをインポート"
 
 msgid "Import cookies and passwords…"
 msgstr "Cookieとパスワードをインポート…"
@@ -8408,6 +8429,9 @@ msgstr "進行中"
 
 msgid "In Progress"
 msgstr "進行中"
+
+msgid "In Superset"
+msgstr "Superset 内"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Supersetデスクトップアプリで<0>設定 → 外観 → テーマ</0>を開きます。"
@@ -10388,6 +10412,9 @@ msgstr "このブランチにはまだ変更がありません。"
 
 msgid "No changes to display."
 msgstr "表示する変更がありません。"
+
+msgid "No chats found in this folder."
+msgstr "このフォルダーにチャットはありません。"
 
 msgid "No checks"
 msgstr "チェックなし"
@@ -14141,6 +14168,9 @@ msgstr "キー名で検索..."
 msgid "Search changed files"
 msgstr "変更されたファイルを検索"
 
+msgid "Search chats"
+msgstr "チャットを検索"
+
 msgid "Search developers"
 msgstr "開発者を検索"
 
@@ -16692,6 +16722,9 @@ msgstr "このオートメーションにはまだ指示がありません。実
 msgid "This automation is in another organization"
 msgstr "このオートメーションは別の組織にあります"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "このビルドはまだチャットを検索できません。使うには Superset を更新してください。"
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "このビルドは自動更新されません。更新するにはソースから再ビルドしてください。"
 
@@ -17558,6 +17591,9 @@ msgstr "未対応のアイテム「{0}」"
 
 msgid "Untitled"
 msgstr "無題"
+
+msgid "Untitled chat"
+msgstr "無題のチャット"
 
 msgid "Untitled Page"
 msgstr "無題のページ"

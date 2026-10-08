@@ -33,6 +33,7 @@ export SUPERSET_ENV_FILE="$env_file" SUPERSET_AUTO_UPDATE=disabled \
 	SUPERSET_WORKSPACE_NAME=superset
 env -u SUPERSET_HOME_DIR bun run prebuild
 install -m 755 "$helper_home/bin/txcript-transfer" dist/resources/bin/txcript-transfer
+install -m 755 "$helper_home/bin/txcript-cli" dist/resources/bin/txcript-cli
 CSC_IDENTITY_AUTO_DISCOVERY=false env -u SUPERSET_HOME_DIR \
 	bunx electron-builder --config electron-builder.ts --publish never --dir
 

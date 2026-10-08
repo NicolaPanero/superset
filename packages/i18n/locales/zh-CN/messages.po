@@ -3398,6 +3398,9 @@ msgstr "频道已创建"
 msgid "Chat"
 msgstr "聊天"
 
+msgid "Chat imported"
+msgstr "已导入聊天"
+
 msgid "Chat is being reworked"
 msgstr "聊天功能正在重做"
 
@@ -3416,6 +3419,9 @@ msgstr "聊天界面：消息、推理、建议"
 
 msgid "Chat v3"
 msgstr "聊天v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "在此工作区文件夹中于 Superset 之外（例如终端或 Zed）开始的聊天。选择一个即可在这里继续。"
 
 msgid "Check again"
 msgstr "重新检查"
@@ -4415,6 +4421,9 @@ msgstr "继续前往 {0}"
 msgid "Continue update"
 msgstr "继续更新"
 
+msgid "Continue with"
+msgstr "继续使用"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "使用{0}继续"
@@ -4930,6 +4939,9 @@ msgstr "无法放弃未暂存的更改"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "没能完成工作区的删除"
 
+msgid "Couldn't import the chat"
+msgstr "无法导入聊天"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "无法加载智能体设置：{0}"
@@ -4996,6 +5008,9 @@ msgstr "无法连接到此云工作区。它可能仍在唤醒中——请重试
 
 msgid "Couldn't reach workspace"
 msgstr "无法连接到工作区"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "无法读取此 Mac 上的聊天。"
 
 msgid "Couldn't read this terminal's context."
 msgstr "无法读取该终端的上下文。"
@@ -8295,6 +8310,9 @@ msgstr "冒充他人"
 msgid "Import"
 msgstr "导入"
 
+msgid "Import a chat"
+msgstr "导入聊天"
+
 msgid "import a folder"
 msgstr "导入文件夹"
 
@@ -8312,6 +8330,9 @@ msgstr "全部导入"
 
 msgid "Import all worktrees"
 msgstr "导入所有worktree"
+
+msgid "Import chat"
+msgstr "导入聊天"
 
 msgid "Import cookies and passwords…"
 msgstr "导入cookie和密码…"
@@ -8408,6 +8429,9 @@ msgstr "进行中"
 
 msgid "In Progress"
 msgstr "进行中"
+
+msgid "In Superset"
+msgstr "已在 Superset 中"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "在Superset桌面应用中打开<0>设置 → 外观 → 主题</0>。"
@@ -10388,6 +10412,9 @@ msgstr "此分支上还没有改动。"
 
 msgid "No changes to display."
 msgstr "没有可显示的改动。"
+
+msgid "No chats found in this folder."
+msgstr "此文件夹中没有聊天。"
 
 msgid "No checks"
 msgstr "无检查"
@@ -14141,6 +14168,9 @@ msgstr "按键名搜索..."
 msgid "Search changed files"
 msgstr "搜索更改的文件"
 
+msgid "Search chats"
+msgstr "搜索聊天"
+
 msgid "Search developers"
 msgstr "搜索开发者"
 
@@ -16692,6 +16722,9 @@ msgstr "此自动化尚无指令。请先在设置中编写提示词，然后再
 msgid "This automation is in another organization"
 msgstr "此自动化位于其他组织"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "此版本尚不能搜索聊天。请更新 Superset 后使用。"
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "此版本不会自动更新。如需更新，请从源代码重新构建。"
 
@@ -17558,6 +17591,9 @@ msgstr "不支持的项目“{0}”"
 
 msgid "Untitled"
 msgstr "未命名"
+
+msgid "Untitled chat"
+msgstr "未命名聊天"
 
 msgid "Untitled Page"
 msgstr "未命名页面"
