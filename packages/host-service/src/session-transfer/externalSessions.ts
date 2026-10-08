@@ -20,7 +20,10 @@ export interface ExternalSession {
 	agent: ExternalAgent;
 	sessionId: string;
 	title: string | null;
+	/** The first prompt, for chats without a title. */
+	preview: string | null;
 	timestamp: string;
+	updatedAt: string | null;
 	cwd: string | null;
 	gitBranch: string | null;
 	model: string | null;
@@ -34,6 +37,8 @@ const listedSchema = z.array(
 		id: z.string().min(1),
 		timestamp: z.string(),
 		title: z.string().nullable().optional(),
+		preview: z.string().nullable().optional(),
+		updated_at: z.string().nullable().optional(),
 		cwd: z.string().nullable().optional(),
 		git_branch: z.string().nullable().optional(),
 		model: z.string().nullable().optional(),
@@ -104,7 +109,7 @@ export async function listExternalSessions({
 	codexHomes,
 	run,
 	baseEnv = process.env,
-	limit = 300,
+	limit = 80,
 }: {
 	cwd: string;
 	claudeProfiles: string[];
@@ -133,13 +138,20 @@ export async function listExternalSessions({
 	];
 	const seen = new Set<string>();
 	const sessions: ExternalSession[] = [];
+	// `--preview` reads every listed chat; txcript before fork.8 lacks it.
+	let preview = true;
+	const list = async (scan: (typeof scans)[number]) => {
+		const args = ["list", "--json", "--cwd", cwd, "-n", String(limit)];
+		if (preview)
+			try {
+				return await run([...args, "--preview", ...scan.args], scan.env);
+			} catch {
+				preview = false;
+			}
+		return run([...args, ...scan.args], scan.env);
+	};
 	for (const scan of scans) {
-		const listed = listedSchema.parse(
-			await run(
-				["list", "--json", "--cwd", cwd, "-n", String(limit), ...scan.args],
-				scan.env,
-			),
-		);
+		const listed = listedSchema.parse(await list(scan));
 		for (const entry of listed) {
 			const agent =
 				AGENT_BY_HARNESS[entry.harness as keyof typeof AGENT_BY_HARNESS];
@@ -150,7 +162,9 @@ export async function listExternalSessions({
 				agent,
 				sessionId: entry.id,
 				title: entry.title?.trim() || null,
+				preview: entry.preview?.trim() || null,
 				timestamp: entry.timestamp,
+				updatedAt: entry.updated_at ?? null,
 				cwd: entry.cwd ?? null,
 				gitBranch: entry.git_branch ?? null,
 				model: entry.model ?? null,
@@ -159,5 +173,7 @@ export async function listExternalSessions({
 			});
 		}
 	}
-	return sessions.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+	const recency = (session: ExternalSession) =>
+		Date.parse(session.updatedAt ?? session.timestamp);
+	return sessions.sort((a, b) => recency(b) - recency(a));
 }
