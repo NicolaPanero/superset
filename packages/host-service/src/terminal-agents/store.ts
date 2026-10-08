@@ -265,6 +265,7 @@ export class TerminalAgentStore extends EventEmitter {
 			lastEventAt: input.occurredAt,
 			lastEventType: input.eventType,
 			chatSessionId: input.chatSessionId,
+			account: input.account ?? (sameSession ? prior.account : undefined),
 			...(prior?.chatSessionId === input.chatSessionId
 				? {
 						...(prior.backgroundTasks

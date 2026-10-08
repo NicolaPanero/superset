@@ -16,8 +16,10 @@ import {
 import type { AgentLifecycleEventType } from "../events";
 import { chatPortTerminalIds, portManager } from "../ports/port-manager";
 import { fanOutAgentLifecycle } from "../trpc/router/notifications/fan-out-agent-lifecycle";
+import type { SessionAccount } from "../trpc/router/usage/session-account/session-account";
 import type { HostServiceContext } from "../types";
 import { ACP_HARNESSES } from "./acpCatalogue";
+import { chatSessionAccount } from "./forkChatAccount";
 
 const LIFECYCLE_BY_STATUS: Partial<
 	Record<SessionStatus, AgentLifecycleEventType>
@@ -43,6 +45,7 @@ type BoundChat = {
 	queuedPrompts: number;
 	pid?: number;
 	established?: true;
+	account?: SessionAccount;
 };
 
 function sameTasks(
@@ -65,6 +68,7 @@ function sameTasks(
 
 export type ChatAgentBridge = LiveSessionObserver & {
 	spawned(sessionId: string, pid: number): void;
+	launched?(sessionId: string, env: NodeJS.ProcessEnv): void;
 };
 
 export function agentIdForHarness(
@@ -125,6 +129,7 @@ export function createChatAgentBridge(
 			agentId: chat.agentId,
 			agentSessionId: chat.agentSessionId,
 			chatSessionId: chat.sessionId,
+			account: chat.account,
 			occurredAt,
 		});
 
@@ -184,6 +189,16 @@ export function createChatAgentBridge(
 			chatPortTerminalIds.add(chat.terminalId);
 			portManager.upsertSession(chat.terminalId, chat.workspaceId, null);
 			attach(chat);
+		},
+
+		launched(sessionId, env) {
+			const chat = chats.get(sessionId);
+			if (!chat) return;
+			void chatSessionAccount(chat.agentId, env).then((account) => {
+				if (!account || current(sessionId) !== chat) return;
+				chat.account = account;
+				attach(chat);
+			});
 		},
 
 		spawned(sessionId, pid) {

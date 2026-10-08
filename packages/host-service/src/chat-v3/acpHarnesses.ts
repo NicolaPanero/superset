@@ -69,6 +69,7 @@ export function acpHarnessFactory(
 						}),
 				});
 				const env = cli.env;
+				agents?.launched?.(options.sessionId, env);
 				if (!adapterEntry) {
 					return { command: cli.command, args: entry.args, env };
 				}
