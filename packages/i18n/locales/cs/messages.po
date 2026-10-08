@@ -1753,6 +1753,9 @@ msgstr "Doplň testy pro nejrizikovější netestovaný kód…"
 msgid "Add tests where they're missing"
 msgstr "Doplnit testy tam, kde chybí"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "Chcete-li v chatu pokračovat, přidejte tuto složku jako pracovní prostor"
+
 msgid "Add this label"
 msgstr "Přidat tento štítek"
 
@@ -3420,8 +3423,8 @@ msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 msgid "Chat v3"
 msgstr "Chat v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "Chaty zahájené mimo Superset ve složce tohoto pracovního prostoru, například v terminálu nebo v Zedu. Vyberte jeden a pokračujte v něm zde."
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "Chaty zahájené mimo Superset ve složkách tohoto projektu, například v terminálu nebo v Zedu. Vyberte jeden a pokračujte v něm."
 
 msgid "Check again"
 msgstr "Zkontrolovat znovu"
@@ -10413,8 +10416,8 @@ msgstr "V této větvi zatím nejsou žádné změny."
 msgid "No changes to display."
 msgstr "Žádné změny k zobrazení."
 
-msgid "No chats found in this folder."
-msgstr "V této složce nebyly nalezeny žádné chaty."
+msgid "No chats found in this project."
+msgstr "V tomto projektu nebyly nalezeny žádné chaty."
 
 msgid "No checks"
 msgstr "Žádné kontroly"
@@ -11732,6 +11735,9 @@ msgstr "Otevírám worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Otevře cloudový pracovní prostor, kde agent nainstaluje vše, co projekt potřebuje, a zapíše jeho .superset/config.json"
+
+msgid "Opens in the workspace of its folder"
+msgstr "Otevře se v pracovním prostoru své složky"
 
 msgid "Operator"
 msgstr "Operátor"

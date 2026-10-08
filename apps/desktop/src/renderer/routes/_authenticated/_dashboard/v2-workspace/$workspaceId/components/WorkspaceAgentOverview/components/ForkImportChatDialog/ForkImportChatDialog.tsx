@@ -22,7 +22,8 @@ import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { ChevronDown, Search } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
 	getPresetIcon,
@@ -31,6 +32,7 @@ import {
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { acpHarnessForPreset } from "renderer/lib/acpHarness";
+import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import type { StoreApi } from "zustand/vanilla";
 import { useAgentSessionLauncher } from "../../../../hooks/useAgentSessionLauncher";
 import type { PaneViewerData } from "../../../../types";
@@ -47,8 +49,15 @@ type ExternalSession = {
 	gitBranch: string | null;
 	model: string | null;
 	accountSelection: string | null;
+	cwd: string | null;
+	folder: string;
+	/** The Superset workspace of the folder it ran in, if there is one. */
+	workspaceId: string | null;
 	inSuperset: boolean;
 };
+
+/** Agents whose sessions resume from any folder once Superset puts them there. */
+const PORTABLE = new Set(["claude", "codex"]);
 
 function accountName(selection: string | null) {
 	if (!selection) return null;
@@ -75,6 +84,7 @@ export function ForkImportChatDialog({
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const { openAgentChat } = useAgentSessionLauncher({ workspaceId, store });
+	const navigate = useNavigate();
 	const [query, setQuery] = useState("");
 	const [agentFilter, setAgentFilter] = useState(ALL);
 	const [busy, setBusy] = useState<string | null>(null);
@@ -94,6 +104,9 @@ export function ForkImportChatDialog({
 		workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const { mutateAsync: prepareFromChat } =
 		workspaceTrpc.sessionTransfer.prepareFromChat.useMutation();
+	const { mutateAsync: bringClaudeChat } =
+		workspaceTrpc.sessionTransfer.bringClaudeChat.useMutation();
+	const { mutateAsync: parkChat } = workspaceTrpc.agents.parkChat.useMutation();
 
 	const sessions = (listing.data ?? []) as ExternalSession[];
 	const chatConfig = (presetId: string) =>
@@ -124,37 +137,107 @@ export function ForkImportChatDialog({
 	const labelFor = (presetId: string) =>
 		chatConfig(presetId)?.label ?? presetId;
 
+	/** Where a chat opens: its own folder's workspace, else this one. */
+	const homeOf = (session: ExternalSession) =>
+		session.workspaceId ?? workspaceId;
+	const canOpen = (session: ExternalSession) =>
+		session.workspaceId !== null || PORTABLE.has(session.agent);
+
+	/** Opens a chat in another workspace by handing it over as a background chat. */
+	const openThere = async (
+		home: string,
+		paneData: {
+			terminalId: string;
+			agentId: string;
+			sessionId: string;
+			configId: string;
+			accountSelection?: string | null;
+		},
+		title: string,
+	) => {
+		await parkChat({
+			workspaceId: home,
+			terminalId: paneData.terminalId,
+			title,
+			paneData: {
+				terminalId: paneData.terminalId,
+				agentSurface: "acp",
+				agent: { id: paneData.agentId, sessionId: paneData.sessionId },
+				acpAgentConfigId: paneData.configId,
+				...(paneData.accountSelection !== undefined
+					? { acpAccountSelection: paneData.accountSelection }
+					: {}),
+			},
+		});
+		await navigateToV2Workspace(home, navigate, {
+			search: {
+				terminalId: paneData.terminalId,
+				focusRequestId: crypto.randomUUID(),
+			},
+		});
+	};
+
 	const run = async (session: ExternalSession, targetPresetId: string) => {
 		const key = `${session.agent}:${session.sessionId}`;
 		const target = chatConfig(targetPresetId);
 		const source = chatConfig(session.agent);
 		if (!target) return;
 		const managed = session.agent === "claude" || session.agent === "codex";
+		const home = homeOf(session);
+		const here = home === workspaceId;
+		const title = session.title ?? session.preview ?? labelFor(targetPresetId);
 		setBusy(key);
 		try {
 			if (targetPresetId === session.agent) {
 				if (session.agent === "cursor-agent")
 					await prepareCursorSurface({
-						workspaceId,
+						workspaceId: home,
 						configId: target.id,
 						sessionId: session.sessionId,
 						from: "cli",
 					});
-				const opened = await openAgentChat({
-					configId: target.id,
-					placement: "new-tab",
-					resumeSessionId: session.sessionId,
-					...(managed ? { accountSelection: session.accountSelection } : {}),
-				});
-				if (!opened) throw new Error("chat_unavailable");
+				if (
+					session.workspaceId === null &&
+					session.agent === "claude" &&
+					session.cwd
+				)
+					await bringClaudeChat({
+						workspaceId,
+						sessionId: session.sessionId,
+						accountSelection: session.accountSelection,
+						sourceCwd: session.cwd,
+					});
+				const account = managed
+					? { accountSelection: session.accountSelection }
+					: {};
+				if (here) {
+					const opened = await openAgentChat({
+						configId: target.id,
+						placement: "new-tab",
+						resumeSessionId: session.sessionId,
+						...account,
+					});
+					if (!opened) throw new Error("chat_unavailable");
+				} else
+					await openThere(
+						home,
+						{
+							terminalId: crypto.randomUUID(),
+							agentId: session.agent,
+							sessionId: session.sessionId,
+							configId: target.id,
+							...account,
+						},
+						title,
+					);
 			} else {
 				const launch = await prepareAcpLaunch({
-					workspaceId,
+					workspaceId: home,
 					configId: target.id,
 				});
 				const targetTerminalId = crypto.randomUUID();
 				const transfer = await prepareFromChat({
-					workspaceId,
+					workspaceId: home,
 					transferId: crypto.randomUUID(),
 					sourceTerminalId: crypto.randomUUID(),
 					sourceConfigId: source?.id ?? session.agent,
@@ -169,14 +252,27 @@ export function ForkImportChatDialog({
 					targetTerminalId,
 					sourceExternal: true,
 				});
-				const opened = await openAgentChat({
-					configId: launch.agentConfigId,
-					accountSelection: launch.accountSelection,
-					placement: "new-tab",
-					resumeSessionId: transfer.targetSessionId,
-					terminalId: targetTerminalId,
-				});
-				if (!opened) throw new Error("chat_unavailable");
+				if (here) {
+					const opened = await openAgentChat({
+						configId: launch.agentConfigId,
+						accountSelection: launch.accountSelection,
+						placement: "new-tab",
+						resumeSessionId: transfer.targetSessionId,
+						terminalId: targetTerminalId,
+					});
+					if (!opened) throw new Error("chat_unavailable");
+				} else
+					await openThere(
+						home,
+						{
+							terminalId: targetTerminalId,
+							agentId: targetPresetId,
+							sessionId: transfer.targetSessionId,
+							configId: launch.agentConfigId,
+							accountSelection: launch.accountSelection,
+						},
+						title,
+					);
 			}
 			toast.success(t({ message: "Chat imported" }), {
 				description: session.title ?? session.preview ?? undefined,
@@ -203,8 +299,8 @@ export function ForkImportChatDialog({
 					</DialogTitle>
 					<DialogDescription>
 						<Trans>
-							Chats started outside Superset in this workspace's folder, for
-							example in a terminal or in Zed. Pick one to continue it here.
+							Chats started outside Superset in this project's folders, for
+							example in a terminal or in Zed. Pick one to continue it.
 						</Trans>
 					</DialogDescription>
 				</DialogHeader>
@@ -266,7 +362,7 @@ export function ForkImportChatDialog({
 						</p>
 					) : visible.length === 0 ? (
 						<p className="py-10 text-center text-muted-foreground text-sm">
-							<Trans>No chats found in this folder.</Trans>
+							<Trans>No chats found in this project.</Trans>
 						</p>
 					) : (
 						<ul className="flex flex-col gap-1">
@@ -280,9 +376,12 @@ export function ForkImportChatDialog({
 										acpHarnessForPreset(config.presetId) &&
 										config.resumeArgs?.length &&
 										verified(config.presetId) &&
-										verified(session.agent),
+										verified(session.agent) &&
+										session.workspaceId !== null,
 								);
-								const canContinue = Boolean(chatConfig(session.agent));
+								const canContinue =
+									Boolean(chatConfig(session.agent)) && canOpen(session);
+								const elsewhere = homeOf(session) !== workspaceId;
 								return (
 									<li
 										className="group flex items-center gap-3 rounded-lg px-2.5 py-2 hover:bg-foreground/[0.04]"
@@ -314,6 +413,9 @@ export function ForkImportChatDialog({
 													session.model,
 													session.gitBranch,
 													account,
+													elsewhere || session.workspaceId === null
+														? session.folder.split("/").at(-1)
+														: null,
 													session.sessionId.slice(0, 8),
 												]
 													.filter(Boolean)
@@ -331,12 +433,28 @@ export function ForkImportChatDialog({
 												disabled={busy !== null || !canContinue}
 												onClick={() => void run(session, session.agent)}
 												size="sm"
+												title={
+													!canOpen(session)
+														? t({
+																message:
+																	"Add this folder as a workspace to continue the chat",
+															})
+														: elsewhere
+															? t({
+																	message:
+																		"Opens in the workspace of its folder",
+																})
+															: undefined
+												}
 												variant="secondary"
 											>
 												{busy === key ? (
 													<Spinner className="size-3.5" />
 												) : (
-													<Trans>Continue</Trans>
+													<>
+														<Trans>Continue</Trans>
+														{elsewhere && <ArrowUpRight className="size-3.5" />}
+													</>
 												)}
 											</Button>
 											{others.length > 0 && (

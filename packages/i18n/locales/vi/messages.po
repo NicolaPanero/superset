@@ -1753,6 +1753,9 @@ msgstr "Thêm test cho phần code rủi ro nhất chưa được test…"
 msgid "Add tests where they're missing"
 msgstr "Thêm test ở những chỗ còn thiếu"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "Thêm thư mục này làm workspace để tiếp tục cuộc trò chuyện"
+
 msgid "Add this label"
 msgstr "Thêm nhãn này"
 
@@ -3420,8 +3423,8 @@ msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 msgid "Chat v3"
 msgstr "Chat v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "Các cuộc trò chuyện bắt đầu bên ngoài Superset trong thư mục của workspace này, ví dụ trong terminal hoặc Zed. Chọn một để tiếp tục tại đây."
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "Các cuộc trò chuyện bắt đầu bên ngoài Superset trong các thư mục của dự án này, ví dụ trong terminal hoặc Zed. Chọn một để tiếp tục."
 
 msgid "Check again"
 msgstr "Kiểm tra lại"
@@ -10413,8 +10416,8 @@ msgstr "Chưa có thay đổi nào trên nhánh này."
 msgid "No changes to display."
 msgstr "Không có thay đổi nào để hiển thị."
 
-msgid "No chats found in this folder."
-msgstr "Không tìm thấy cuộc trò chuyện nào trong thư mục này."
+msgid "No chats found in this project."
+msgstr "Không tìm thấy cuộc trò chuyện nào trong dự án này."
 
 msgid "No checks"
 msgstr "Không có check"
@@ -11732,6 +11735,9 @@ msgstr "Đang mở worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Mở một workspace cloud để agent cài đặt những gì dự án cần và ghi .superset/config.json của nó"
+
+msgid "Opens in the workspace of its folder"
+msgstr "Mở trong workspace của thư mục chứa nó"
 
 msgid "Operator"
 msgstr "Người vận hành"

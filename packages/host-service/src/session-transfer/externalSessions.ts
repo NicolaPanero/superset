@@ -1,5 +1,6 @@
 import { execFile } from "node:child_process";
 import { existsSync } from "node:fs";
+import { realpath } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { z } from "zod";
@@ -105,6 +106,7 @@ export function runTxcriptCli(binary: string): RunCli {
  */
 export async function listExternalSessions({
 	cwd,
+	folders = [cwd],
 	claudeProfiles,
 	codexHomes,
 	run,
@@ -112,6 +114,8 @@ export async function listExternalSessions({
 	limit = 80,
 }: {
 	cwd: string;
+	/** The project's folders; txcript before fork.8 only reads `cwd`. */
+	folders?: string[];
 	claudeProfiles: string[];
 	codexHomes: string[];
 	run: RunCli;
@@ -138,20 +142,33 @@ export async function listExternalSessions({
 	];
 	const seen = new Set<string>();
 	const sessions: ExternalSession[] = [];
-	// `--preview` reads every listed chat; txcript before fork.8 lacks it.
-	let preview = true;
+	// `--under` and `--preview` arrived together in txcript fork.8.
+	let current = true;
 	const list = async (scan: (typeof scans)[number]) => {
-		const args = ["list", "--json", "--cwd", cwd, "-n", String(limit)];
-		if (preview)
+		const args = ["list", "--json", "-n", String(limit)];
+		if (current)
 			try {
-				return await run([...args, "--preview", ...scan.args], scan.env);
+				return await run(
+					[
+						...args,
+						...folders.flatMap((folder) => ["--under", folder]),
+						"--preview",
+						...scan.args,
+					],
+					scan.env,
+				);
 			} catch {
-				preview = false;
+				current = false;
 			}
-		return run([...args, ...scan.args], scan.env);
+		return run([...args, "--cwd", cwd, ...scan.args], scan.env);
 	};
-	for (const scan of scans) {
-		const listed = listedSchema.parse(await list(scan));
+	// The first scan settles which flags the CLI takes; the rest run at once.
+	const [first, ...rest] = scans;
+	const results = first
+		? [await list(first), ...(await Promise.all(rest.map(list)))]
+		: [];
+	for (const [index, scan] of scans.entries()) {
+		const listed = listedSchema.parse(results[index]);
 		for (const entry of listed) {
 			const agent =
 				AGENT_BY_HARNESS[entry.harness as keyof typeof AGENT_BY_HARNESS];
@@ -176,4 +193,41 @@ export async function listExternalSessions({
 	const recency = (session: ExternalSession) =>
 		Date.parse(session.updatedAt ?? session.timestamp);
 	return sessions.sort((a, b) => recency(b) - recency(a));
+}
+
+/** The folders of a repository: its main checkout and every worktree. */
+export async function projectFolders(cwd: string): Promise<string[]> {
+	const listed = await new Promise<string>((resolve) => {
+		execFile(
+			"git",
+			["worktree", "list", "--porcelain"],
+			{ cwd, timeout: 10_000 },
+			(error, stdout) => resolve(error ? "" : stdout),
+		);
+	});
+	const folders = new Set([cwd]);
+	for (const line of listed.split("\n"))
+		if (line.startsWith("worktree "))
+			folders.add(
+				await realpath(line.slice("worktree ".length)).catch(() =>
+					line.slice("worktree ".length),
+				),
+			);
+	return [...folders];
+}
+
+/** The folder a session ran in: the deepest one holding its cwd. */
+export function folderOf(
+	sessionCwd: string | null,
+	folders: string[],
+): string | null {
+	if (!sessionCwd) return null;
+	return (
+		folders
+			.filter(
+				(folder) =>
+					sessionCwd === folder || sessionCwd.startsWith(`${folder}/`),
+			)
+			.sort((a, b) => b.length - a.length)[0] ?? null
+	);
 }

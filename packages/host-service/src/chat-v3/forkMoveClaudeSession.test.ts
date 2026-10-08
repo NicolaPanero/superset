@@ -9,7 +9,11 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { moveClaudeSession } from "./forkMoveClaudeSession";
+import { claudeProjectDirName } from "../terminal-agents/harness-sessions/claude";
+import {
+	copyClaudeSessionToFolder,
+	moveClaudeSession,
+} from "./forkMoveClaudeSession";
 
 const SESSION = "11111111-2222-4333-8444-555555555555";
 const roots: string[] = [];
@@ -69,5 +73,35 @@ describe("moveClaudeSession", () => {
 				targetDir: work,
 			}),
 		).toEqual({ moved: false, reason: "same_account" });
+	});
+});
+
+describe("copyClaudeSessionToFolder", () => {
+	test("copies a session from another folder into this folder's project", async () => {
+		const root = mkdtempSync(join(tmpdir(), "move-claude-"));
+		roots.push(root);
+		const from = join(root, "projects", claudeProjectDirName("/repo/main"));
+		mkdirSync(from, { recursive: true });
+		writeFileSync(join(from, `${SESSION}.jsonl`), "chat");
+
+		expect(
+			await copyClaudeSessionToFolder({
+				sessionId: SESSION,
+				configDir: root,
+				fromCwd: "/repo/main",
+				toCwd: "/repo/feature",
+			}),
+		).toBe(true);
+		expect(
+			readFileSync(
+				join(
+					root,
+					"projects",
+					claudeProjectDirName("/repo/feature"),
+					`${SESSION}.jsonl`,
+				),
+				"utf8",
+			),
+		).toBe("chat");
 	});
 });

@@ -59,7 +59,12 @@ e ragionamento interno del modello non vengono trasferiti.
 
 Nel pannello **Agents** il pulsante **Import chat** elenca le chat di Claude,
 Codex, Cursor CLI, Grok e OpenCode avviate fuori da Superset (in un terminale,
-in Zed…) nella cartella dell'area di lavoro, da tutti gli account del Mac. Si
+in Zed…) in tutto il progetto, cioè la cartella principale e ogni worktree
+(`git worktree list`), da tutti gli account del Mac, come "Find Chat…" di Zed.
+Una chat di un'altra cartella si apre nell'area di lavoro Superset di quella
+cartella (Superset ci passa, con la chat aperta); se la cartella non ha
+un'area di lavoro, Claude e Codex la riprendono in quella corrente (per Claude
+la sessione viene copiata nella cartella giusta), gli altri agenti no. Si
 cerca per titolo, modello o branch e si filtra per agente; le chat già note a
 Superset hanno l'etichetta "In Superset". **Continue** apre la chat scelta
 come chat ACP dello stesso agente (con l'account che la contiene); la freccia

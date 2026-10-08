@@ -6,10 +6,13 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
+import { copyClaudeSessionToFolder } from "../../../chat-v3/forkMoveClaudeSession";
 import { workspaces } from "../../../db/schema";
 import { chatProvenance } from "../../../session-transfer/chatProvenance";
 import {
+	folderOf,
 	listExternalSessions,
+	projectFolders,
 	runTxcriptCli,
 	txcriptCliPath,
 } from "../../../session-transfer/externalSessions";
@@ -46,7 +49,10 @@ import { codexSessionFiles } from "../../../terminal-agents/harness-sessions/cod
 import { getTerminalAgentBinding } from "../../../terminal-agents/persistence";
 import { isTrustedTranscriptPath } from "../../../terminal-agents/transcript-path";
 import { protectedProcedure, router } from "../../index";
-import { selectedAccountEnv } from "../agents/account-selection";
+import {
+	agentAccountOptions,
+	selectedAccountEnv,
+} from "../agents/account-selection";
 import {
 	type AgentRunInput,
 	type AgentRunResult,
@@ -604,8 +610,10 @@ export const sessionTransferRouter = router({
 					message: "workspace_unavailable",
 				});
 			const cwd = await realpath(workspace.worktreePath);
+			const folders = await projectFolders(cwd);
 			const sessions = await listExternalSessions({
 				cwd,
+				folders,
 				claudeProfiles: (await discoverClaudeProfiles()).map(
 					(profile) => profile.configDir,
 				),
@@ -631,10 +639,63 @@ export const sessionTransferRouter = router({
 			).items)
 				for (const node of [edge.source, edge.target])
 					known.add(`${node.agent}:${node.sessionId}`);
-			return sessions.map((session) => ({
-				...session,
-				inSuperset: known.has(`${session.agent}:${session.sessionId}`),
-			}));
+			const workspaceByFolder = new Map<string, string>();
+			for (const row of ctx.db
+				.select({ id: workspaces.id, path: workspaces.worktreePath })
+				.from(workspaces)
+				.where(isNull(workspaces.archivedAt))
+				.all()) {
+				const path = await realpath(row.path).catch(() => null);
+				if (path && folders.includes(path) && !workspaceByFolder.has(path))
+					workspaceByFolder.set(path, row.id);
+			}
+			workspaceByFolder.set(cwd, input.workspaceId);
+			return sessions.map((session) => {
+				const folder = folderOf(session.cwd, folders) ?? cwd;
+				return {
+					...session,
+					folder,
+					workspaceId: workspaceByFolder.get(folder) ?? null,
+					inSuperset: known.has(`${session.agent}:${session.sessionId}`),
+				};
+			});
+		}),
+	bringClaudeChat: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				sessionId: z.string().uuid(),
+				accountSelection: z.string().nullable(),
+				sourceCwd: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const workspace = ctx.db
+				.select()
+				.from(workspaces)
+				.where(
+					and(
+						eq(workspaces.id, input.workspaceId),
+						isNull(workspaces.archivedAt),
+					),
+				)
+				.get();
+			const options = await agentAccountOptions("claude");
+			if (
+				!workspace ||
+				!options.some((option) => option.selection === input.accountSelection)
+			)
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: "session_unavailable",
+				});
+			await copyClaudeSessionToFolder({
+				sessionId: input.sessionId,
+				configDir: input.accountSelection ?? join(homedir(), ".claude"),
+				fromCwd: input.sourceCwd,
+				toCwd: await realpath(workspace.worktreePath),
+			});
+			return { sessionId: input.sessionId };
 		}),
 	chatProvenance: protectedProcedure
 		.input(

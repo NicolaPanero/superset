@@ -1753,6 +1753,9 @@ msgstr "テストのない危険なコードにテストを追加…"
 msgid "Add tests where they're missing"
 msgstr "テストが不足している箇所に追加"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "チャットを続けるには、このフォルダーをワークスペースとして追加してください"
+
 msgid "Add this label"
 msgstr "このラベルを追加"
 
@@ -3420,8 +3423,8 @@ msgstr "チャットの構成要素: メッセージ、推論、提案"
 msgid "Chat v3"
 msgstr "チャットv3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "このワークスペースのフォルダーで Superset の外（ターミナルや Zed など）で始めたチャットです。1つ選ぶとここで続けられます。"
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "このプロジェクトのフォルダーで Superset の外（ターミナルや Zed など）で始めたチャットです。1つ選ぶと続けられます。"
 
 msgid "Check again"
 msgstr "再確認"
@@ -10413,8 +10416,8 @@ msgstr "このブランチにはまだ変更がありません。"
 msgid "No changes to display."
 msgstr "表示する変更がありません。"
 
-msgid "No chats found in this folder."
-msgstr "このフォルダーにチャットはありません。"
+msgid "No chats found in this project."
+msgstr "このプロジェクトにチャットはありません。"
 
 msgid "No checks"
 msgstr "チェックなし"
@@ -11732,6 +11735,9 @@ msgstr "ワークツリーを開いています..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "クラウドワークスペースを開き、エージェントがプロジェクトに必要なものをインストールして .superset/config.json を書き込みます"
+
+msgid "Opens in the workspace of its folder"
+msgstr "そのフォルダーのワークスペースで開きます"
 
 msgid "Operator"
 msgstr "オペレーター"
