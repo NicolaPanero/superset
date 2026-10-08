@@ -32,6 +32,7 @@ function layout() {
 	mkdirSync(join(fromProfile, "Local Storage"), { recursive: true });
 	mkdirSync(join(fromProfile, "Cache"), { recursive: true });
 	writeFileSync(join(fromProfile, "Local Storage", "state"), "tabs");
+	writeFileSync(join(fromProfile, "Local Storage", "000003.log"), "newest");
 	return {
 		fromHome,
 		toHome: join(root, ".superset-fork"),
@@ -51,6 +52,12 @@ describe("copyForkData", () => {
 		expect(
 			readFileSync(join(paths.toProfile, "Local Storage", "state"), "utf8"),
 		).toBe("tabs");
+		expect(
+			readFileSync(
+				join(paths.toProfile, "Local Storage", "000003.log"),
+				"utf8",
+			),
+		).toBe("newest");
 		for (const left of [
 			join(paths.toHome, "worktrees"),
 			join(paths.toHome, "auth-token.enc"),
@@ -67,5 +74,27 @@ describe("copyForkData", () => {
 		writeFileSync(join(paths.fromHome, "local.db"), "newer");
 		expect(copyForkData(paths)).toBe(false);
 		expect(readFileSync(join(paths.toHome, "local.db"), "utf8")).toBe("db");
+	});
+
+	test("redoes a copy an earlier launch skipped, keeping what that launch made", () => {
+		const paths = layout();
+		mkdirSync(paths.toHome, { recursive: true });
+		writeFileSync(join(paths.toHome, "daemon.log"), "early");
+		mkdirSync(join(paths.toProfile, "Local Storage"), { recursive: true });
+		writeFileSync(join(paths.toProfile, "Local Storage", "state"), "empty");
+
+		expect(copyForkData(paths)).toBe(true);
+		expect(
+			readFileSync(join(paths.toProfile, "Local Storage", "state"), "utf8"),
+		).toBe("tabs");
+		expect(readFileSync(join(paths.toHome, "local.db"), "utf8")).toBe("db");
+	});
+
+	test("never replaces a home already in use", () => {
+		const paths = layout();
+		mkdirSync(paths.toHome, { recursive: true });
+		writeFileSync(join(paths.toHome, "local.db"), "mine");
+		expect(copyForkData(paths)).toBe(false);
+		expect(readFileSync(join(paths.toHome, "local.db"), "utf8")).toBe("mine");
 	});
 });

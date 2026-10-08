@@ -1,4 +1,10 @@
-import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import {
+	cpSync,
+	existsSync,
+	mkdirSync,
+	renameSync,
+	writeFileSync,
+} from "node:fs";
 import { homedir } from "node:os";
 import { basename, join } from "node:path";
 
@@ -25,13 +31,13 @@ const SKIPPED_PROFILE = new Set([
 	"sentry",
 ]);
 
-function skipped(path: string, names: Set<string>) {
+function skipped(path: string, names: Set<string>, logs: boolean) {
 	const name = basename(path);
 	return (
 		names.has(name) ||
 		name.endsWith(".sock") ||
 		name.endsWith(".pid") ||
-		name.endsWith(".log")
+		(logs && name.endsWith(".log"))
 	);
 }
 
@@ -52,15 +58,23 @@ export function copyForkData({
 	fromProfile: string;
 	toProfile: string;
 }): boolean {
-	if (existsSync(toHome) || !existsSync(fromHome)) return false;
+	if (!existsSync(fromHome) || existsSync(join(toHome, MARKER))) return false;
+	// A home holding a database has been used for real: never replace it.
+	if (existsSync(join(toHome, "local.db"))) return false;
+	const stamp = Date.now();
+	// Folders an earlier launch created before this copy ran are kept aside.
+	if (existsSync(toHome)) renameSync(toHome, `${toHome}.before-copy-${stamp}`);
+	if (existsSync(toProfile))
+		renameSync(toProfile, `${toProfile}.before-copy-${stamp}`);
 	cpSync(fromHome, toHome, {
 		recursive: true,
-		filter: (source) => !skipped(source, SKIPPED_HOME),
+		filter: (source) => !skipped(source, SKIPPED_HOME, true),
 	});
-	if (existsSync(fromProfile) && !existsSync(toProfile))
+	if (existsSync(fromProfile))
 		cpSync(fromProfile, toProfile, {
 			recursive: true,
-			filter: (source) => !skipped(source, SKIPPED_PROFILE),
+			// LevelDB keeps its newest writes in *.log files: they are data here.
+			filter: (source) => !skipped(source, SKIPPED_PROFILE, false),
 		});
 	mkdirSync(toHome, { recursive: true });
 	writeFileSync(join(toHome, MARKER), `${fromHome}\n`);
@@ -72,7 +86,12 @@ export function copyForkDataOnFirstLaunch(
 	appData: string,
 	productName: string,
 ) {
-	if (homeDirName !== ".superset-fork" || process.env.SUPERSET_HOME_DIR) return;
+	if (homeDirName !== ".superset-fork") return;
+	// Launched from Superset (its terminal, its updater), the fork inherits
+	// the official home; that one is never the fork's.
+	if (process.env.SUPERSET_HOME_DIR === join(homedir(), ".superset"))
+		delete process.env.SUPERSET_HOME_DIR;
+	if (process.env.SUPERSET_HOME_DIR) return;
 	try {
 		if (
 			copyForkData({

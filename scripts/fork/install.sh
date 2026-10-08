@@ -91,5 +91,7 @@ for legacy in "/Applications/Superset.app" "$HOME/Applications/Superset.app"; do
 done
 
 if [ "$relaunch" = true ]; then
-    open "$destination/$app_name"
+    # The updater runs inside the old app; its Superset variables would point
+    # the new one at the old data folder.
+    env -u SUPERSET_HOME_DIR -u SUPERSET_WORKSPACE_NAME open "$destination/$app_name"
 fi
