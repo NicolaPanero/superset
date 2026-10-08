@@ -2,6 +2,24 @@ import { describe, expect, test } from "bun:test";
 import { listExternalSessions, type RunCli } from "./externalSessions";
 
 describe("listExternalSessions", () => {
+	test("lists without previews when the CLI predates them", async () => {
+		const run: RunCli = async (args) => {
+			if (args.includes("--preview")) throw new Error("session_list_failed");
+			return [
+				{ harness: "codex", id: "x1", timestamp: "2026-01-01T00:00:00Z" },
+			];
+		};
+		const sessions = await listExternalSessions({
+			cwd: "/repo",
+			claudeProfiles: [],
+			codexHomes: [],
+			run,
+		});
+		expect(sessions.map((s) => [s.sessionId, s.preview])).toEqual([
+			["x1", null],
+		]);
+	});
+
 	test("scans each login once and keeps the first copy of a session", async () => {
 		const calls: { args: string[]; claude?: string }[] = [];
 		const run: RunCli = async (args, env) => {

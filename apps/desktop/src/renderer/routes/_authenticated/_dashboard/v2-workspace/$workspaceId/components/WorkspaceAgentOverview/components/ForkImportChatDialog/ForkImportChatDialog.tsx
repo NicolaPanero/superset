@@ -41,7 +41,9 @@ type ExternalSession = {
 	agent: string;
 	sessionId: string;
 	title: string | null;
+	preview: string | null;
 	timestamp: string;
+	updatedAt: string | null;
 	gitBranch: string | null;
 	model: string | null;
 	accountSelection: string | null;
@@ -113,7 +115,7 @@ export function ForkImportChatDialog({
 				(session) =>
 					(agentFilter === ALL || session.agent === agentFilter) &&
 					(!needle ||
-						`${session.title ?? ""} ${session.model ?? ""} ${session.gitBranch ?? ""} ${session.sessionId}`
+						`${session.title ?? ""} ${session.preview ?? ""} ${session.model ?? ""} ${session.gitBranch ?? ""} ${session.sessionId}`
 							.toLowerCase()
 							.includes(needle)),
 			),
@@ -177,7 +179,7 @@ export function ForkImportChatDialog({
 				if (!opened) throw new Error("chat_unavailable");
 			}
 			toast.success(t({ message: "Chat imported" }), {
-				description: session.title ?? undefined,
+				description: session.title ?? session.preview ?? undefined,
 			});
 			onOpenChange(false);
 			onImported();
@@ -293,14 +295,21 @@ export function ForkImportChatDialog({
 											<p
 												className={cn(
 													"truncate text-sm",
-													!session.title && "text-muted-foreground",
+													!session.title &&
+														!session.preview &&
+														"text-muted-foreground",
 												)}
+												title={session.preview ?? undefined}
 											>
-												{session.title ?? <Trans>Untitled chat</Trans>}
+												{session.title ?? session.preview ?? (
+													<Trans>Untitled chat</Trans>
+												)}
 											</p>
 											<p className="truncate text-muted-foreground text-xs">
 												{[
-													formatRelativeTime(new Date(session.timestamp)),
+													formatRelativeTime(
+														new Date(session.updatedAt ?? session.timestamp),
+													),
 													labelFor(session.agent),
 													session.model,
 													session.gitBranch,
