@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} pending"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} accounts"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0} actions"
@@ -3406,6 +3410,10 @@ msgstr "Chat is being reworked"
 msgid "Chat Launch"
 msgstr "Chat Launch"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat moved to {0}"
+
 msgid "Chat session not found"
 msgstr "Chat session not found"
 
@@ -3531,6 +3539,9 @@ msgstr "Choose accounts manually. New agents use the default account unless thei
 
 msgid "Choose agent"
 msgstr "Choose agent"
+
+msgid "Choose an account"
+msgstr "Choose an account"
 
 msgid "Choose an existing repo folder"
 msgstr "Choose an existing repo folder"
@@ -5082,6 +5093,9 @@ msgstr "Couldn't stop the background task"
 
 msgid "Couldn't stop the chat"
 msgstr "Couldn't stop the chat"
+
+msgid "Couldn't switch account"
+msgstr "Couldn't switch account"
 
 msgid "Couldn't unstage changes"
 msgstr "Couldn't unstage changes"
@@ -9932,6 +9946,9 @@ msgstr "Most of software history"
 
 msgid "Move {count} to Group"
 msgstr "Move {count} to Group"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Move this chat to another account. The conversation stays here and continues with that account's quota."
 
 msgid "Move to Center"
 msgstr "Move to Center"
@@ -16328,6 +16345,9 @@ msgstr "The automation's owner can't use cloud workspaces in this organization a
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "The best agent will change.<0/>Your workflow shouldn't."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "The chat keeps its history and continues on the account you pick, with that account's quota."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "The cloud workspace should have started but didn't answer in time. The next run tries again."

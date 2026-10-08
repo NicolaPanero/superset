@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} ausstehend"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0}-Konten"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Aktionen für {0}"
@@ -3406,6 +3410,10 @@ msgstr "Chat wird überarbeitet"
 msgid "Chat Launch"
 msgstr "Chat-Start"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat zu {0} verschoben"
+
 msgid "Chat session not found"
 msgstr "Chat-Sitzung nicht gefunden"
 
@@ -3531,6 +3539,9 @@ msgstr "Wähle Konten manuell. Neue Agenten verwenden das Standardkonto, sofern 
 
 msgid "Choose agent"
 msgstr "Agent wählen"
+
+msgid "Choose an account"
+msgstr "Konto auswählen"
 
 msgid "Choose an existing repo folder"
 msgstr "Vorhandenen Repo-Ordner wählen"
@@ -5082,6 +5093,9 @@ msgstr "Die Hintergrundaufgabe konnte nicht gestoppt werden"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat konnte nicht gestoppt werden"
+
+msgid "Couldn't switch account"
+msgstr "Konto konnte nicht gewechselt werden"
 
 msgid "Couldn't unstage changes"
 msgstr "Stagen konnte nicht aufgehoben werden"
@@ -9932,6 +9946,9 @@ msgstr "Der Großteil der Softwaregeschichte"
 
 msgid "Move {count} to Group"
 msgstr "{count} in Gruppe verschieben"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Verschiebt diesen Chat zu einem anderen Konto. Die Unterhaltung bleibt hier und läuft mit dem Kontingent dieses Kontos weiter."
 
 msgid "Move to Center"
 msgstr "In die Mitte verschieben"
@@ -16328,6 +16345,9 @@ msgstr "Der Eigentümer der Automatisierung kann in dieser Organisation keine Cl
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Der beste Agent wird wechseln.<0/>Dein Workflow nicht."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Der Chat behält seinen Verlauf und läuft auf dem gewählten Konto mit dessen Kontingent weiter."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Der Cloud-Arbeitsbereich hätte starten sollen, hat aber nicht rechtzeitig geantwortet. Der nächste Lauf versucht es erneut."

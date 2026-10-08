@@ -35,6 +35,7 @@ import type {
 import type { OpenAgentChat } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
+import { useForkAccountSwitch } from "../../../../../ForkAccountSwitch/hooks/useForkAccountSwitch";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 
@@ -54,6 +55,7 @@ export function AcpChatHandoffMenu({
 }) {
 	const { t } = useLingui();
 	const { switchInPlace } = useForkAgentSwitch(workspaceId, ctx, data);
+	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const wiring = useChatWiring();
@@ -94,14 +96,21 @@ export function AcpChatHandoffMenu({
 				capabilities?.adapters.find((adapter) => adapter.agent === preset)
 					?.verified,
 		);
+	// The chat's own agent is a target only to move it to another account.
+	const sameAgentConfig = accountSwitcher
+		? (configs.find((config) => config.id === data.acpAgentConfigId) ??
+			configs.find((config) => config.presetId === sourcePreset))
+		: undefined;
 	const targets = configs.filter(
 		(config) =>
-			config.presetId !== sourcePreset &&
-			acpHarnessForPreset(config.presetId) &&
-			config.resumeArgs?.length &&
-			verified(config.presetId),
+			config === sameAgentConfig ||
+			(config.presetId !== sourcePreset &&
+				acpHarnessForPreset(config.presetId) &&
+				config.resumeArgs?.length &&
+				verified(config.presetId)),
 	);
 	const target = targets.find((config) => config.id === targetConfigId);
+	const sameAgent = target !== undefined && target === sameAgentConfig;
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
 	const options = useQuery({
 		queryKey: ["agent-launch-account-options", hostUrl, target?.presetId],
@@ -117,9 +126,23 @@ export function AcpChatHandoffMenu({
 	});
 	const status = stored?.session?.status;
 	const busy = status === "running" || status === "awaiting_input";
-	const available = Boolean(
-		capabilities?.nativeAvailable && sourceSessionId && verified(sourcePreset),
-	);
+	const available =
+		sameAgent ||
+		Boolean(
+			capabilities?.nativeAvailable &&
+				sourceSessionId &&
+				verified(sourcePreset),
+		);
+	const pickedSelection =
+		account === CONFIGURED_ACCOUNT
+			? undefined
+			: account === SYSTEM_ACCOUNT
+				? null
+				: account;
+	const accountMissing =
+		sameAgent &&
+		(pickedSelection === undefined ||
+			pickedSelection === accountSwitcher?.current);
 	if (!sourcePreset) return null;
 	const sourceLabel =
 		configs.find(
@@ -133,6 +156,11 @@ export function AcpChatHandoffMenu({
 	};
 
 	const start = async () => {
+		if (sameAgent && accountSwitcher && pickedSelection !== undefined) {
+			setOpen(false);
+			accountSwitcher.onSwitch(pickedSelection);
+			return;
+		}
 		if (!target || !sourceSessionId) return;
 		const accountSelection =
 			managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
@@ -266,10 +294,17 @@ export function AcpChatHandoffMenu({
 							<Trans>Continue with another agent</Trans>
 						</DialogTitle>
 						<DialogDescription>
-							<Trans>
-								Create a resumable session with the conversation history.
-								Permissions and credentials stay with the target agent.
-							</Trans>
+							{sameAgent ? (
+								<Trans>
+									Move this chat to another account. The conversation stays here
+									and continues with that account's quota.
+								</Trans>
+							) : (
+								<Trans>
+									Create a resumable session with the conversation history.
+									Permissions and credentials stay with the target agent.
+								</Trans>
+							)}
 						</DialogDescription>
 					</DialogHeader>
 					<div className="flex flex-col gap-4 py-1">
@@ -306,6 +341,7 @@ export function AcpChatHandoffMenu({
 								onValueChange={(id) => {
 									setTargetConfigId(id);
 									setAccount(CONFIGURED_ACCOUNT);
+									if (id === sameAgentConfig?.id) setPlacement("this-chat");
 									reset();
 								}}
 								disabled={stage !== null || targets.length === 0}
@@ -319,32 +355,47 @@ export function AcpChatHandoffMenu({
 									<Trans>Account</Trans>
 								</Label>
 								<Select
-									value={account}
+									value={
+										sameAgent && account === CONFIGURED_ACCOUNT ? "" : account
+									}
 									onValueChange={(value) => {
 										setAccount(value);
 										reset();
 									}}
 									disabled={stage !== null || !options.isSuccess}
 								>
-									<SelectTrigger aria-label={t({ message: "Account" })}>
-										<SelectValue />
+									<SelectTrigger
+										aria-label={t({ message: "Account" })}
+										className="w-full"
+									>
+										<SelectValue
+											placeholder={t({ message: "Choose an account" })}
+										/>
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value={CONFIGURED_ACCOUNT}>
-											<Trans>Configured account</Trans>
-										</SelectItem>
-										{options.data?.map((option) => (
-											<SelectItem
-												key={option.selection ?? SYSTEM_ACCOUNT}
-												value={option.selection ?? SYSTEM_ACCOUNT}
-											>
-												{option.selection === null && !option.alias ? (
-													<Trans>System default</Trans>
-												) : (
-													option.label
-												)}
+										{!sameAgent && (
+											<SelectItem value={CONFIGURED_ACCOUNT}>
+												<Trans>Configured account</Trans>
 											</SelectItem>
-										))}
+										)}
+										{options.data
+											?.filter(
+												(option) =>
+													!sameAgent ||
+													option.selection !== accountSwitcher?.current,
+											)
+											.map((option) => (
+												<SelectItem
+													key={option.selection ?? SYSTEM_ACCOUNT}
+													value={option.selection ?? SYSTEM_ACCOUNT}
+												>
+													{option.selection === null && !option.alias ? (
+														<Trans>System default</Trans>
+													) : (
+														option.label
+													)}
+												</SelectItem>
+											))}
 									</SelectContent>
 								</Select>
 							</div>
@@ -379,7 +430,7 @@ export function AcpChatHandoffMenu({
 									variant={placement === "split-pane" ? "secondary" : "outline"}
 									onClick={() => setPlacement("split-pane")}
 									aria-pressed={placement === "split-pane"}
-									disabled={stage !== null}
+									disabled={stage !== null || sameAgent}
 								>
 									<PanelRight />
 									<Trans>Split pane</Trans>
@@ -389,7 +440,7 @@ export function AcpChatHandoffMenu({
 									variant={placement === "new-tab" ? "secondary" : "outline"}
 									onClick={() => setPlacement("new-tab")}
 									aria-pressed={placement === "new-tab"}
-									disabled={stage !== null}
+									disabled={stage !== null || sameAgent}
 								>
 									<SquareStack />
 									<Trans>New tab</Trans>
@@ -415,7 +466,13 @@ export function AcpChatHandoffMenu({
 						</Button>
 						<Button
 							onClick={start}
-							disabled={stage !== null || !available || busy || !target}
+							disabled={
+								stage !== null ||
+								!available ||
+								busy ||
+								!target ||
+								accountMissing
+							}
 						>
 							{stage === "converting" ? (
 								<Trans>Converting…</Trans>

@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} in attesa"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Account {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Azioni di {0}"
@@ -3406,6 +3410,10 @@ msgstr "La chat è in fase di rifacimento"
 msgid "Chat Launch"
 msgstr "Avvio in chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat spostata su {0}"
+
 msgid "Chat session not found"
 msgstr "Sessione di chat non trovata"
 
@@ -3531,6 +3539,9 @@ msgstr "Scegli gli account manualmente. I nuovi agenti usano l’account predefi
 
 msgid "Choose agent"
 msgstr "Scegli l'agente"
+
+msgid "Choose an account"
+msgstr "Scegli un account"
 
 msgid "Choose an existing repo folder"
 msgstr "Scegli una cartella di repo esistente"
@@ -5082,6 +5093,9 @@ msgstr "Impossibile interrompere l'attività in background"
 
 msgid "Couldn't stop the chat"
 msgstr "Non è stato possibile arrestare la chat"
+
+msgid "Couldn't switch account"
+msgstr "Impossibile cambiare account"
 
 msgid "Couldn't unstage changes"
 msgstr "Impossibile togliere le modifiche dallo stage"
@@ -9932,6 +9946,9 @@ msgstr "Quasi tutta la storia del software"
 
 msgid "Move {count} to Group"
 msgstr "Sposta {count} in un gruppo"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Sposta questa chat su un altro account. La conversazione resta qui e continua con la quota di quell'account."
 
 msgid "Move to Center"
 msgstr "Sposta al centro"
@@ -16328,6 +16345,9 @@ msgstr "Il proprietario dell'automazione non può più usare i workspace cloud i
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Il miglior agente cambierà.<0/>Il tuo flusso di lavoro no."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "La chat mantiene la cronologia e continua sull'account scelto, con la quota di quell'account."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Il workspace cloud avrebbe dovuto avviarsi, ma non ha risposto in tempo. La prossima esecuzione riproverà."

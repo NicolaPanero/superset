@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} pendente"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Contas do {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Ações de {0}"
@@ -3406,6 +3410,10 @@ msgstr "O chat está sendo refeito"
 msgid "Chat Launch"
 msgstr "Execução no chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat movido para {0}"
+
 msgid "Chat session not found"
 msgstr "Sessão de chat não encontrada"
 
@@ -3531,6 +3539,9 @@ msgstr "Escolha as contas manualmente. Novos agentes usam a conta padrão, salvo
 
 msgid "Choose agent"
 msgstr "Escolher agente"
+
+msgid "Choose an account"
+msgstr "Escolha uma conta"
 
 msgid "Choose an existing repo folder"
 msgstr "Escolha uma pasta de repositório existente"
@@ -5082,6 +5093,9 @@ msgstr "Não foi possível parar a tarefa em segundo plano"
 
 msgid "Couldn't stop the chat"
 msgstr "Não foi possível parar o chat"
+
+msgid "Couldn't switch account"
+msgstr "Não foi possível trocar de conta"
 
 msgid "Couldn't unstage changes"
 msgstr "Não foi possível remover as alterações do stage"
@@ -9932,6 +9946,9 @@ msgstr "Quase toda a história do software"
 
 msgid "Move {count} to Group"
 msgstr "Mover {count} para um grupo"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Move este chat para outra conta. A conversa continua aqui, com a cota dessa conta."
 
 msgid "Move to Center"
 msgstr "Mover para o centro"
@@ -16328,6 +16345,9 @@ msgstr "O proprietário da automação não pode mais usar áreas de trabalho na
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "O melhor agente vai mudar.<0/>Seu fluxo de trabalho, não."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "O chat mantém o histórico e continua na conta escolhida, com a cota dessa conta."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "A área de trabalho na nuvem deveria ter iniciado, mas não respondeu a tempo. A próxima execução tentará novamente."

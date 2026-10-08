@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} đang chờ"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Tài khoản {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Hành động {0}"
@@ -3406,6 +3410,10 @@ msgstr "Chat đang được làm lại"
 msgid "Chat Launch"
 msgstr "Khởi chạy chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Đã chuyển cuộc trò chuyện sang {0}"
+
 msgid "Chat session not found"
 msgstr "Không tìm thấy phiên chat"
 
@@ -3531,6 +3539,9 @@ msgstr "Chọn tài khoản thủ công. Tác nhân mới dùng tài khoản m�
 
 msgid "Choose agent"
 msgstr "Chọn agent"
+
+msgid "Choose an account"
+msgstr "Chọn tài khoản"
 
 msgid "Choose an existing repo folder"
 msgstr "Chọn một thư mục repo có sẵn"
@@ -5082,6 +5093,9 @@ msgstr "Không thể dừng tác vụ nền"
 
 msgid "Couldn't stop the chat"
 msgstr "Không thể dừng trò chuyện"
+
+msgid "Couldn't switch account"
+msgstr "Không thể chuyển tài khoản"
 
 msgid "Couldn't unstage changes"
 msgstr "Không thể bỏ stage các thay đổi"
@@ -9932,6 +9946,9 @@ msgstr "Gần như suốt lịch sử phần mềm"
 
 msgid "Move {count} to Group"
 msgstr "Chuyển {count} vào nhóm"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Chuyển cuộc trò chuyện này sang tài khoản khác. Cuộc trò chuyện vẫn ở đây và tiếp tục với hạn mức của tài khoản đó."
 
 msgid "Move to Center"
 msgstr "Chuyển vào giữa"
@@ -16328,6 +16345,9 @@ msgstr "Chủ sở hữu của tự động hóa không còn dùng được work
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agent tốt nhất sẽ thay đổi.<0/>Quy trình của bạn thì không."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Cuộc trò chuyện giữ lịch sử và tiếp tục trên tài khoản bạn chọn, với hạn mức của tài khoản đó."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."

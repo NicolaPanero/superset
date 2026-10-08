@@ -357,6 +357,10 @@ msgstr "{0}{actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1}待更新"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} 账户"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0}的操作"
@@ -3406,6 +3410,10 @@ msgstr "聊天功能正在重做"
 msgid "Chat Launch"
 msgstr "聊天启动"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "聊天已移至 {0}"
+
 msgid "Chat session not found"
 msgstr "未找到聊天会话"
 
@@ -3531,6 +3539,9 @@ msgstr "手动选择账户。新智能体使用默认账户，除非配置或启
 
 msgid "Choose agent"
 msgstr "选择智能体"
+
+msgid "Choose an account"
+msgstr "选择账户"
 
 msgid "Choose an existing repo folder"
 msgstr "选择已有的仓库文件夹"
@@ -5082,6 +5093,9 @@ msgstr "无法停止后台任务"
 
 msgid "Couldn't stop the chat"
 msgstr "无法停止聊天"
+
+msgid "Couldn't switch account"
+msgstr "无法切换账户"
 
 msgid "Couldn't unstage changes"
 msgstr "无法取消暂存更改"
@@ -9932,6 +9946,9 @@ msgstr "软件史的大部分时间"
 
 msgid "Move {count} to Group"
 msgstr "将{count}个移动到分组"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "将此聊天移至另一个账户。对话保留在这里，并使用该账户的额度继续。"
 
 msgid "Move to Center"
 msgstr "移到中间"
@@ -16328,6 +16345,9 @@ msgstr "该自动化的所有者已无法在此组织中使用云端工作区。
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的智能体会变。<0/>你的工作流不该变。"
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "聊天会保留历史记录，并在你选择的账户上以该账户的额度继续。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "云端工作区本应已启动，但没有及时响应。下次运行时会重试。"

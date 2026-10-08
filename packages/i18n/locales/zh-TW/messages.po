@@ -357,6 +357,10 @@ msgstr "{0}{actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1}待更新"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} 帳號"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0}的操作"
@@ -3406,6 +3410,10 @@ msgstr "聊天功能正在重做"
 msgid "Chat Launch"
 msgstr "聊天啟動"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "聊天已移至 {0}"
+
 msgid "Chat session not found"
 msgstr "未找到聊天會話"
 
@@ -3531,6 +3539,9 @@ msgstr "手動選擇帳戶。新的代理使用預設帳戶，除非設定或啟
 
 msgid "Choose agent"
 msgstr "選擇代理程式"
+
+msgid "Choose an account"
+msgstr "選擇帳號"
 
 msgid "Choose an existing repo folder"
 msgstr "選擇已有的儲存庫資料夾"
@@ -5082,6 +5093,9 @@ msgstr "無法停止背景工作"
 
 msgid "Couldn't stop the chat"
 msgstr "無法停止聊天"
+
+msgid "Couldn't switch account"
+msgstr "無法切換帳號"
 
 msgid "Couldn't unstage changes"
 msgstr "無法取消暫存更改"
@@ -9932,6 +9946,9 @@ msgstr "軟體史的大部分時間"
 
 msgid "Move {count} to Group"
 msgstr "將{count}個移動到群組"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "將此聊天移至另一個帳號。對話保留在這裡，並以該帳號的額度繼續。"
 
 msgid "Move to Center"
 msgstr "移到中間"
@@ -16328,6 +16345,9 @@ msgstr "此自動化的擁有者已無法在此組織中使用雲端工作區。
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的代理程式會變。<0/>你的工作流不該變。"
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "聊天會保留歷史紀錄，並在你選擇的帳號上以該帳號的額度繼續。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "雲端工作區應該已經啟動，但沒有及時回應。下次執行時會重試。"

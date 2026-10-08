@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "čeká {0} → {1}"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Účty {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Akce {0}"
@@ -3406,6 +3410,10 @@ msgstr "Chat se předělává"
 msgid "Chat Launch"
 msgstr "Spuštění chatu"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat přesunut na {0}"
+
 msgid "Chat session not found"
 msgstr "Relace chatu nenalezena"
 
@@ -3531,6 +3539,9 @@ msgstr "Účty vybírejte ručně. Noví agenti používají výchozí účet, p
 
 msgid "Choose agent"
 msgstr "Vyberte agenta"
+
+msgid "Choose an account"
+msgstr "Vyberte účet"
 
 msgid "Choose an existing repo folder"
 msgstr "Vyberte složku s existujícím repozitářem"
@@ -5082,6 +5093,9 @@ msgstr "Úlohu na pozadí se nepodařilo zastavit"
 
 msgid "Couldn't stop the chat"
 msgstr "Chat se nepodařilo zastavit"
+
+msgid "Couldn't switch account"
+msgstr "Účet se nepodařilo přepnout"
 
 msgid "Couldn't unstage changes"
 msgstr "Nepodařilo se zrušit přípravu změn"
@@ -9932,6 +9946,9 @@ msgstr "Většina historie softwaru"
 
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Přesune tento chat na jiný účet. Konverzace zůstane zde a pokračuje s kvótou daného účtu."
 
 msgid "Move to Center"
 msgstr "Přesunout do středu"
@@ -16328,6 +16345,9 @@ msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudo
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Chat si ponechá historii a pokračuje na vybraném účtu s jeho kvótou."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Cloudový pracovní prostor se měl spustit, ale neodpověděl včas. Další běh to zkusí znovu."

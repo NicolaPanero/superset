@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} in behandeling"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0}-accounts"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Acties voor {0}"
@@ -3406,6 +3410,10 @@ msgstr "Chat wordt herbouwd"
 msgid "Chat Launch"
 msgstr "Start via chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat verplaatst naar {0}"
+
 msgid "Chat session not found"
 msgstr "Chatsessie niet gevonden"
 
@@ -3531,6 +3539,9 @@ msgstr "Kies accounts handmatig. Nieuwe agents gebruiken het standaardaccount te
 
 msgid "Choose agent"
 msgstr "Kies agent"
+
+msgid "Choose an account"
+msgstr "Kies een account"
 
 msgid "Choose an existing repo folder"
 msgstr "Kies een bestaande repo-map"
@@ -5082,6 +5093,9 @@ msgstr "Kan de achtergrondtaak niet stoppen"
 
 msgid "Couldn't stop the chat"
 msgstr "Kon de chat niet stoppen"
+
+msgid "Couldn't switch account"
+msgstr "Kan niet van account wisselen"
 
 msgid "Couldn't unstage changes"
 msgstr "Kan wijzigingen niet unstagen"
@@ -9932,6 +9946,9 @@ msgstr "Het grootste deel van de softwaregeschiedenis"
 
 msgid "Move {count} to Group"
 msgstr "{count} naar groep verplaatsen"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Verplaatst deze chat naar een ander account. Het gesprek blijft hier en gaat verder met het quotum van dat account."
 
 msgid "Move to Center"
 msgstr "Naar het midden verplaatsen"
@@ -16328,6 +16345,9 @@ msgstr "De eigenaar van de automatisering kan in deze organisatie geen cloudwerk
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "De beste agent verandert.<0/>Jouw workflow niet."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "De chat behoudt zijn geschiedenis en gaat verder op het gekozen account, met het quotum van dat account."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "De cloudwerkruimte had gestart moeten zijn, maar reageerde niet op tijd. De volgende run probeert het opnieuw."
