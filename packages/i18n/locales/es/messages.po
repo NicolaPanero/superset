@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} pendiente"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Cuentas de {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Acciones de {0}"
@@ -3406,6 +3410,10 @@ msgstr "El chat se está rehaciendo"
 msgid "Chat Launch"
 msgstr "Lanzamiento de chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat movido a {0}"
+
 msgid "Chat session not found"
 msgstr "Sesión de chat no encontrada"
 
@@ -3531,6 +3539,9 @@ msgstr "Elige las cuentas manualmente. Los nuevos agentes usan la cuenta predete
 
 msgid "Choose agent"
 msgstr "Elegir agente"
+
+msgid "Choose an account"
+msgstr "Elige una cuenta"
 
 msgid "Choose an existing repo folder"
 msgstr "Elige una carpeta de repo existente"
@@ -5082,6 +5093,9 @@ msgstr "No se pudo detener la tarea en segundo plano"
 
 msgid "Couldn't stop the chat"
 msgstr "No se pudo detener el chat"
+
+msgid "Couldn't switch account"
+msgstr "No se pudo cambiar de cuenta"
 
 msgid "Couldn't unstage changes"
 msgstr "No se pudieron quitar los cambios de preparados"
@@ -9932,6 +9946,9 @@ msgstr "Casi toda la historia del software"
 
 msgid "Move {count} to Group"
 msgstr "Mover {count} a un grupo"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Mueve este chat a otra cuenta. La conversación se queda aquí y continúa con la cuota de esa cuenta."
 
 msgid "Move to Center"
 msgstr "Mover al centro"
@@ -16328,6 +16345,9 @@ msgstr "El propietario de la automatización ya no puede usar espacios de trabaj
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "El mejor agente cambiará.<0/>Tu flujo de trabajo, no."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "El chat conserva su historial y continúa en la cuenta que elijas, con la cuota de esa cuenta."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "El espacio de trabajo en la nube debería haberse iniciado, pero no respondió a tiempo. La próxima ejecución lo volverá a intentar."

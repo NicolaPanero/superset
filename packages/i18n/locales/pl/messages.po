@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} oczekuje"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Konta {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Akcje {0}"
@@ -3406,6 +3410,10 @@ msgstr "Czat jest przebudowywany"
 msgid "Chat Launch"
 msgstr "Uruchomienie czatu"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Czat przeniesiony na {0}"
+
 msgid "Chat session not found"
 msgstr "Nie znaleziono sesji czatu"
 
@@ -3531,6 +3539,9 @@ msgstr "Wybieraj konta ręcznie. Nowi agenci używają konta domyślnego, chyba 
 
 msgid "Choose agent"
 msgstr "Wybierz agenta"
+
+msgid "Choose an account"
+msgstr "Wybierz konto"
 
 msgid "Choose an existing repo folder"
 msgstr "Wybierz folder istniejącego repozytorium"
@@ -5082,6 +5093,9 @@ msgstr "Nie udało się zatrzymać zadania w tle"
 
 msgid "Couldn't stop the chat"
 msgstr "Nie udało się zatrzymać czatu"
+
+msgid "Couldn't switch account"
+msgstr "Nie udało się przełączyć konta"
 
 msgid "Couldn't unstage changes"
 msgstr "Nie udało się usunąć zmian z indeksu"
@@ -9932,6 +9946,9 @@ msgstr "Większość historii oprogramowania"
 
 msgid "Move {count} to Group"
 msgstr "Przenieś {count} do grupy"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Przenosi ten czat na inne konto. Rozmowa zostaje tutaj i jest kontynuowana w ramach limitu tego konta."
 
 msgid "Move to Center"
 msgstr "Przenieś na środek"
@@ -16328,6 +16345,9 @@ msgstr "Właściciel automatyzacji nie może już używać obszarów roboczych w
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Najlepszy agent się zmieni.<0/>Twój workflow nie musi."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Czat zachowuje historię i jest kontynuowany na wybranym koncie, w ramach jego limitu."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Obszar roboczy w chmurze powinien był się uruchomić, ale nie odpowiedział na czas. Następne uruchomienie spróbuje ponownie."

@@ -96,6 +96,7 @@ import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneH
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
+import { ForkAccountSwitch } from "./components/ForkAccountSwitch";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
@@ -529,12 +530,14 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<AgentTerminalPane
-						ctx={ctx}
-						onOpenFile={onOpenFile}
-						onRevealPath={onRevealPath}
-						workspaceId={workspaceId}
-					/>
+					<ForkAccountSwitch ctx={ctx} workspaceId={workspaceId}>
+						<AgentTerminalPane
+							ctx={ctx}
+							onOpenFile={onOpenFile}
+							onRevealPath={onRevealPath}
+							workspaceId={workspaceId}
+						/>
+					</ForkAccountSwitch>
 				),
 				contextMenuActions: (_ctx, defaults) => {
 					const terminalActions: ContextMenuActionConfig<PaneViewerData>[] = [

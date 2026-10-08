@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} bekliyor"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} hesapları"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0} eylemleri"
@@ -3406,6 +3410,10 @@ msgstr "Sohbet yeniden düzenleniyor"
 msgid "Chat Launch"
 msgstr "Sohbet başlatma"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Sohbet {0} hesabına taşındı"
+
 msgid "Chat session not found"
 msgstr "Sohbet oturumu bulunamadı"
 
@@ -3531,6 +3539,9 @@ msgstr "Hesapları elle seçin. Yapılandırma veya başlatma sırasında başka
 
 msgid "Choose agent"
 msgstr "Ajan seçin"
+
+msgid "Choose an account"
+msgstr "Bir hesap seçin"
 
 msgid "Choose an existing repo folder"
 msgstr "Mevcut bir depo klasörü seçin"
@@ -5082,6 +5093,9 @@ msgstr "Arka plan görevi durdurulamadı"
 
 msgid "Couldn't stop the chat"
 msgstr "Sohbet durdurulamadı"
+
+msgid "Couldn't switch account"
+msgstr "Hesap değiştirilemedi"
 
 msgid "Couldn't unstage changes"
 msgstr "Değişiklikler hazırlıktan çıkarılamadı"
@@ -9932,6 +9946,9 @@ msgstr "Yazılım tarihinin çoğu"
 
 msgid "Move {count} to Group"
 msgstr "{count} öğeyi gruba taşı"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Bu sohbeti başka bir hesaba taşır. Konuşma burada kalır ve o hesabın kotasıyla devam eder."
 
 msgid "Move to Center"
 msgstr "Ortaya taşı"
@@ -16328,6 +16345,9 @@ msgstr "Otomasyonun sahibi artık bu kuruluşta bulut çalışma alanlarını ku
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "En iyi ajan değişecek.<0/>İş akışınız değişmemeli."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Sohbet geçmişini korur ve seçtiğiniz hesapta, o hesabın kotasıyla devam eder."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Bulut çalışma alanının başlamış olması gerekiyordu ancak zamanında yanıt vermedi. Bir sonraki çalıştırma yeniden deneyecek."

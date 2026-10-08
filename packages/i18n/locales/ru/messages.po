@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} ожидается"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Аккаунты {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Действия {0}"
@@ -3406,6 +3410,10 @@ msgstr "Чат перерабатывается"
 msgid "Chat Launch"
 msgstr "Запуск в чате"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Чат перенесён в {0}"
+
 msgid "Chat session not found"
 msgstr "Сессия чата не найдена"
 
@@ -3531,6 +3539,9 @@ msgstr "Выбирайте учётные записи вручную. Новы�
 
 msgid "Choose agent"
 msgstr "Выберите агента"
+
+msgid "Choose an account"
+msgstr "Выберите аккаунт"
 
 msgid "Choose an existing repo folder"
 msgstr "Выберите папку существующего репозитория"
@@ -5082,6 +5093,9 @@ msgstr "Не удалось остановить фоновую задачу"
 
 msgid "Couldn't stop the chat"
 msgstr "Не удалось остановить чат"
+
+msgid "Couldn't switch account"
+msgstr "Не удалось сменить аккаунт"
 
 msgid "Couldn't unstage changes"
 msgstr "Не удалось снять индексацию"
@@ -9932,6 +9946,9 @@ msgstr "Почти вся история софта"
 
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Переносит этот чат в другой аккаунт. Разговор остаётся здесь и продолжается в рамках лимита этого аккаунта."
 
 msgid "Move to Center"
 msgstr "Переместить в центр"
@@ -16328,6 +16345,9 @@ msgstr "Владелец автоматизации больше не может
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Лучший агент будет меняться.<0/>Ваш процесс — нет."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Чат сохраняет историю и продолжается в выбранном аккаунте, в рамках его лимита."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Облачная рабочая область должна была запуститься, но не ответила вовремя. Следующий запуск попробует снова."

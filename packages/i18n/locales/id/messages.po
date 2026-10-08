@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} tertunda"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "Akun {0}"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "Aksi {0}"
@@ -3406,6 +3410,10 @@ msgstr "Chat sedang dirombak"
 msgid "Chat Launch"
 msgstr "Peluncuran Chat"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "Chat dipindahkan ke {0}"
+
 msgid "Chat session not found"
 msgstr "Sesi chat tidak ditemukan"
 
@@ -3531,6 +3539,9 @@ msgstr "Pilih akun secara manual. Agen baru memakai akun default kecuali konfigu
 
 msgid "Choose agent"
 msgstr "Pilih agen"
+
+msgid "Choose an account"
+msgstr "Pilih akun"
 
 msgid "Choose an existing repo folder"
 msgstr "Pilih folder repo yang sudah ada"
@@ -5082,6 +5093,9 @@ msgstr "Tidak dapat menghentikan tugas latar belakang"
 
 msgid "Couldn't stop the chat"
 msgstr "Tidak dapat menghentikan obrolan"
+
+msgid "Couldn't switch account"
+msgstr "Tidak dapat mengganti akun"
 
 msgid "Couldn't unstage changes"
 msgstr "Tidak bisa meng-unstage perubahan"
@@ -9932,6 +9946,9 @@ msgstr "Sebagian besar sejarah perangkat lunak"
 
 msgid "Move {count} to Group"
 msgstr "Pindahkan {count} ke Grup"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "Pindahkan chat ini ke akun lain. Percakapan tetap di sini dan berlanjut dengan kuota akun tersebut."
 
 msgid "Move to Center"
 msgstr "Pindahkan ke tengah"
@@ -16328,6 +16345,9 @@ msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di o
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "Chat tetap menyimpan riwayatnya dan berlanjut di akun yang Anda pilih, dengan kuota akun tersebut."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud seharusnya sudah berjalan, tetapi tidak merespons tepat waktu. Run berikutnya akan mencoba lagi."

@@ -357,6 +357,10 @@ msgstr "{0}が{actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} 保留中"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} のアカウント"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0}の操作"
@@ -3406,6 +3410,10 @@ msgstr "チャットは再構築中です"
 msgid "Chat Launch"
 msgstr "チャット起動"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "チャットを {0} に移動しました"
+
 msgid "Chat session not found"
 msgstr "チャットセッションが見つかりません"
 
@@ -3531,6 +3539,9 @@ msgstr "アカウントを手動で選択します。設定または起動時に
 
 msgid "Choose agent"
 msgstr "エージェントを選択"
+
+msgid "Choose an account"
+msgstr "アカウントを選択"
 
 msgid "Choose an existing repo folder"
 msgstr "既存のリポジトリフォルダを選択"
@@ -5082,6 +5093,9 @@ msgstr "バックグラウンドタスクを停止できませんでした"
 
 msgid "Couldn't stop the chat"
 msgstr "チャットを停止できませんでした"
+
+msgid "Couldn't switch account"
+msgstr "アカウントを切り替えられませんでした"
 
 msgid "Couldn't unstage changes"
 msgstr "変更をステージ解除できませんでした"
@@ -9932,6 +9946,9 @@ msgstr "ソフトウェアの歴史のほとんど"
 
 msgid "Move {count} to Group"
 msgstr "{count}件をグループへ移動"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "このチャットを別のアカウントに移動します。会話はここに残り、そのアカウントの使用枠で続きます。"
 
 msgid "Move to Center"
 msgstr "中央に移動"
@@ -16328,6 +16345,9 @@ msgstr "このオートメーションの所有者は、この組織でクラウ
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最良のエージェントは変わります。<0/>ワークフローは変わるべきではありません。"
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "チャットは履歴を保ったまま、選んだアカウントとその使用枠で続きます。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "クラウドワークスペースは起動しているはずですが、時間内に応答がありませんでした。次回の実行で再試行します。"

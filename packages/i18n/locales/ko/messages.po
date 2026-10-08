@@ -357,6 +357,10 @@ msgstr "{0} {actorVerb}"
 msgid "{0} → {1} pending"
 msgstr "{0} → {1} 대기 중"
 
+#. placeholder {0}: switcher.agentLabel
+msgid "{0} accounts"
+msgstr "{0} 계정"
+
 #. placeholder {0}: skill.name
 msgid "{0} actions"
 msgstr "{0} 작업"
@@ -3406,6 +3410,10 @@ msgstr "채팅을 개편하는 중입니다"
 msgid "Chat Launch"
 msgstr "채팅 실행"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "채팅을 {0}(으)로 옮겼습니다"
+
 msgid "Chat session not found"
 msgstr "채팅 세션을 찾을 수 없습니다"
 
@@ -3531,6 +3539,9 @@ msgstr "계정을 수동으로 선택합니다. 구성이나 시작 설정에서
 
 msgid "Choose agent"
 msgstr "에이전트 선택"
+
+msgid "Choose an account"
+msgstr "계정 선택"
 
 msgid "Choose an existing repo folder"
 msgstr "기존 리포지토리 폴더 선택"
@@ -5082,6 +5093,9 @@ msgstr "백그라운드 작업을 중지할 수 없습니다"
 
 msgid "Couldn't stop the chat"
 msgstr "채팅을 중지할 수 없습니다"
+
+msgid "Couldn't switch account"
+msgstr "계정을 전환할 수 없습니다"
 
 msgid "Couldn't unstage changes"
 msgstr "스테이징을 해제하지 못했습니다"
@@ -9932,6 +9946,9 @@ msgstr "소프트웨어 역사의 대부분"
 
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
+
+msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgstr "이 채팅을 다른 계정으로 옮깁니다. 대화는 여기 그대로 남고 해당 계정의 사용량으로 계속됩니다."
 
 msgid "Move to Center"
 msgstr "가운데로 이동"
@@ -16328,6 +16345,9 @@ msgstr "자동화 소유자가 더 이상 이 조직에서 클라우드 워크�
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "최고의 에이전트는 바뀝니다.<0/>워크플로는 그럴 필요 없습니다."
+
+msgid "The chat keeps its history and continues on the account you pick, with that account's quota."
+msgstr "채팅 기록은 유지되며, 선택한 계정과 그 계정의 사용량으로 계속됩니다."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시간에 응답하지 않았습니다. 다음 실행에서 다시 시도합니다."

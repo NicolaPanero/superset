@@ -77,6 +77,14 @@ quote, nomi personalizzati e aggiunta di nuovi account. L'account si sceglie
 per ogni avvio, in chat o nel terminale, senza cambiare quello predefinito.
 Gli altri agenti usano il login del loro CLI.
 
+In una chat Claude il selettore del modello ha la voce **Account**: elenca i
+login con email, piano e consumi, e la pillola del selettore mostra le
+iniziali dell'account in uso. Sceglierne un altro sposta la conversazione su
+quell'account nella stessa scheda, con tutta la cronologia (la sessione viene
+copiata nella cartella dell'account scelto). Lo stesso si fa dall'icona robot,
+scegliendo Claude come destinazione. L'icona dei consumi nell'intestazione
+della chat mostra l'account in uso.
+
 ### Altre correzioni per gli agenti
 
 - Cursor: la conversazione resta la stessa passando tra terminale e chat, e le
@@ -181,6 +189,12 @@ upstream ricevono solo agganci brevi:
   procedure in `agents/fork-background-chats.ts`, hook
   `useForkBackgroundChats` e `useForkFocusChatLink`, gruppo
   `ForkBackgroundChatsGroup` nel menu attività;
+- cambio di account in chat: `ForkAccountSwitch` e il suo hook, contesto
+  `ForkAccountSwitchProvider`, `ForkAccountMenu` e `ForkAccountBadge` nel
+  selettore (due righe in `ModelPicker.tsx`), procedura in
+  `agents/fork-chat-account.ts`, copia della sessione in
+  `chat-v3/forkMoveClaudeSession.ts`, account della chat in
+  `chat-v3/forkChatAccount.ts`;
 - scelta di configurazione e account per l'host in
   `chat-v3/forkLaunchChoices.ts`;
 - voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
@@ -193,7 +207,8 @@ Nuove funzioni del fork vanno scritte allo stesso modo.
 
 ## Limiti noti
 
-- Scelta dell'account solo per Claude e Codex.
+- Scelta dell'account solo per Claude e Codex; il cambio di account dentro una
+  chat aperta solo per Claude.
 - Il fallback automatico dell'account quando una quota finisce non c'è ancora.
 - Le sessioni di Cursor IDE non sono supportate, solo Cursor CLI.
 - "Apri figlia" nello storico riapre nel terminale anche una sessione nata in chat.
