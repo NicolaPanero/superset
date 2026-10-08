@@ -1,5 +1,6 @@
 import { cp, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { claudeProjectDirName } from "../terminal-agents/harness-sessions/claude";
 
 export type MoveClaudeSessionResult =
 	| { moved: true; from: string }
@@ -47,4 +48,41 @@ export async function moveClaudeSession({
 	)
 		await cp(sidecar, join(to, sessionId), { recursive: true });
 	return { moved: true, from: newest.dir };
+}
+
+/**
+ * Copies a Claude Code session started in another folder of the project into
+ * this folder's project directory, where a resume in this folder looks.
+ */
+export async function copyClaudeSessionToFolder({
+	sessionId,
+	configDir,
+	fromCwd,
+	toCwd,
+}: {
+	sessionId: string;
+	configDir: string;
+	fromCwd: string;
+	toCwd: string;
+}): Promise<boolean> {
+	const from = join(configDir, "projects", claudeProjectDirName(fromCwd));
+	const to = join(configDir, "projects", claudeProjectDirName(toCwd));
+	if (from === to) return false;
+	const file = `${sessionId}.jsonl`;
+	if (
+		!(await stat(join(from, file)).then(
+			(info) => info.isFile(),
+			() => false,
+		))
+	)
+		return false;
+	await cp(join(from, file), join(to, file));
+	if (
+		await stat(join(from, sessionId)).then(
+			(info) => info.isDirectory(),
+			() => false,
+		)
+	)
+		await cp(join(from, sessionId), join(to, sessionId), { recursive: true });
+	return true;
 }

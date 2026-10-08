@@ -1753,6 +1753,9 @@ msgstr "給風險最高又沒測試的程式碼補上測試…"
 msgid "Add tests where they're missing"
 msgstr "給缺測試的地方補測試"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "將此資料夾加入為工作區即可繼續該聊天"
+
 msgid "Add this label"
 msgstr "新增此標籤"
 
@@ -3420,8 +3423,8 @@ msgstr "聊天介面：訊息、推理、建議"
 msgid "Chat v3"
 msgstr "聊天v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "在此工作區資料夾中於 Superset 之外（例如終端機或 Zed）開始的聊天。選擇一個即可在這裡繼續。"
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "在此專案資料夾中於 Superset 之外（例如終端機或 Zed）開始的聊天。選擇一個即可繼續。"
 
 msgid "Check again"
 msgstr "重新檢查"
@@ -10413,8 +10416,8 @@ msgstr "此分支上還沒有改動。"
 msgid "No changes to display."
 msgstr "沒有可顯示的改動。"
 
-msgid "No chats found in this folder."
-msgstr "此資料夾中沒有聊天。"
+msgid "No chats found in this project."
+msgstr "此專案中沒有聊天。"
 
 msgid "No checks"
 msgstr "無檢查"
@@ -11732,6 +11735,9 @@ msgstr "正在開啟worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "開啟雲端工作區，由代理安裝專案所需內容並寫入其 .superset/config.json"
+
+msgid "Opens in the workspace of its folder"
+msgstr "在其資料夾所在的工作區中開啟"
 
 msgid "Operator"
 msgstr "操作員"

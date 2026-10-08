@@ -1753,6 +1753,9 @@ msgstr "Adicione testes para o código sem testes mais arriscado…"
 msgid "Add tests where they're missing"
 msgstr "Adicionar testes onde faltam"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "Adicione esta pasta como workspace para continuar o chat"
+
 msgid "Add this label"
 msgstr "Adicionar este rótulo"
 
@@ -3420,8 +3423,8 @@ msgstr "Superfícies de chat: mensagens, raciocínio, sugestões"
 msgid "Chat v3"
 msgstr "Chat v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "Chats iniciados fora do Superset na pasta deste workspace, por exemplo em um terminal ou no Zed. Escolha um para continuar aqui."
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "Chats iniciados fora do Superset nas pastas deste projeto, por exemplo em um terminal ou no Zed. Escolha um para continuar."
 
 msgid "Check again"
 msgstr "Verificar novamente"
@@ -10413,8 +10416,8 @@ msgstr "Nenhuma alteração nesta branch ainda."
 msgid "No changes to display."
 msgstr "Nenhuma alteração para exibir."
 
-msgid "No chats found in this folder."
-msgstr "Nenhum chat encontrado nesta pasta."
+msgid "No chats found in this project."
+msgstr "Nenhum chat encontrado neste projeto."
 
 msgid "No checks"
 msgstr "Sem verificações"
@@ -11732,6 +11735,9 @@ msgstr "Abrindo worktree..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Abre uma área de trabalho na nuvem onde um agente instala o que o projeto precisa e escreve seu .superset/config.json"
+
+msgid "Opens in the workspace of its folder"
+msgstr "Abre no workspace da pasta dele"
 
 msgid "Operator"
 msgstr "Operador"

@@ -1753,6 +1753,9 @@ msgstr "Test edilmemiş en riskli kod için test ekle…"
 msgid "Add tests where they're missing"
 msgstr "Eksik olan yerlere test ekle"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "Sohbete devam etmek için bu klasörü çalışma alanı olarak ekleyin"
+
 msgid "Add this label"
 msgstr "Bu etiketi ekle"
 
@@ -3420,8 +3423,8 @@ msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
 msgid "Chat v3"
 msgstr "Chat v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "Bu çalışma alanının klasöründe Superset dışında, örneğin bir terminalde ya da Zed'de başlatılan sohbetler. Burada devam etmek için birini seçin."
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "Bu projenin klasörlerinde Superset dışında, örneğin bir terminalde ya da Zed'de başlatılan sohbetler. Devam etmek için birini seçin."
 
 msgid "Check again"
 msgstr "Yeniden denetle"
@@ -10413,8 +10416,8 @@ msgstr "Bu dalda henüz değişiklik yok."
 msgid "No changes to display."
 msgstr "Gösterilecek değişiklik yok."
 
-msgid "No chats found in this folder."
-msgstr "Bu klasörde sohbet bulunamadı."
+msgid "No chats found in this project."
+msgstr "Bu projede sohbet bulunamadı."
 
 msgid "No checks"
 msgstr "Kontrol yok"
@@ -11732,6 +11735,9 @@ msgstr "Worktree açılıyor..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "Bir ajanın projenin ihtiyaç duyduklarını kurup .superset/config.json dosyasını yazdığı bir bulut çalışma alanı açar"
+
+msgid "Opens in the workspace of its folder"
+msgstr "Kendi klasörünün çalışma alanında açılır"
 
 msgid "Operator"
 msgstr "Operatör"

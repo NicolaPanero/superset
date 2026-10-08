@@ -1753,6 +1753,9 @@ msgstr "테스트가 없는 가장 위험한 코드에 테스트 추가…"
 msgid "Add tests where they're missing"
 msgstr "빠진 테스트 추가하기"
 
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "채팅을 이어가려면 이 폴더를 워크스페이스로 추가하세요"
+
 msgid "Add this label"
 msgstr "이 라벨 추가"
 
@@ -3420,8 +3423,8 @@ msgstr "채팅 화면: 메시지, 추론, 제안"
 msgid "Chat v3"
 msgstr "Chat v3"
 
-msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
-msgstr "이 워크스페이스 폴더에서 Superset 밖(예: 터미널이나 Zed)에서 시작한 채팅입니다. 하나를 골라 여기서 이어가세요."
+msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
+msgstr "이 프로젝트 폴더에서 Superset 밖(예: 터미널이나 Zed)에서 시작한 채팅입니다. 하나를 골라 이어가세요."
 
 msgid "Check again"
 msgstr "다시 확인"
@@ -10413,8 +10416,8 @@ msgstr "아직 이 브랜치에 변경 사항이 없습니다."
 msgid "No changes to display."
 msgstr "표시할 변경 사항이 없습니다."
 
-msgid "No chats found in this folder."
-msgstr "이 폴더에서 채팅을 찾지 못했습니다."
+msgid "No chats found in this project."
+msgstr "이 프로젝트에서 채팅을 찾지 못했습니다."
 
 msgid "No checks"
 msgstr "검사 없음"
@@ -11732,6 +11735,9 @@ msgstr "worktree를 여는 중..."
 
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "에이전트가 프로젝트에 필요한 것을 설치하고 .superset/config.json을 작성하는 클라우드 워크스페이스를 엽니다"
+
+msgid "Opens in the workspace of its folder"
+msgstr "해당 폴더의 워크스페이스에서 열립니다"
 
 msgid "Operator"
 msgstr "작업자"

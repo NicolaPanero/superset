@@ -1,10 +1,16 @@
 import { describe, expect, test } from "bun:test";
-import { listExternalSessions, type RunCli } from "./externalSessions";
+import {
+	folderOf,
+	listExternalSessions,
+	type RunCli,
+} from "./externalSessions";
 
 describe("listExternalSessions", () => {
-	test("lists without previews when the CLI predates them", async () => {
+	test("reads only the workspace folder when the CLI predates --under", async () => {
+		const seen: string[][] = [];
 		const run: RunCli = async (args) => {
-			if (args.includes("--preview")) throw new Error("session_list_failed");
+			seen.push(args);
+			if (args.includes("--under")) throw new Error("session_list_failed");
 			return [
 				{ harness: "codex", id: "x1", timestamp: "2026-01-01T00:00:00Z" },
 			];
@@ -72,5 +78,16 @@ describe("listExternalSessions", () => {
 			["claude", "shared", null, null],
 			["cursor-agent", "c1", null, null],
 		]);
+	});
+});
+
+describe("folderOf", () => {
+	test("picks the deepest project folder holding the session", () => {
+		const folders = ["/repo", "/repo/.wt/feature", "/other"];
+		expect(folderOf("/repo/.wt/feature/src", folders)).toBe(
+			"/repo/.wt/feature",
+		);
+		expect(folderOf("/repo/src", folders)).toBe("/repo");
+		expect(folderOf("/repository", folders)).toBeNull();
 	});
 });
