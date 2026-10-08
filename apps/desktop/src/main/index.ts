@@ -1,3 +1,5 @@
+// Before any import that opens ~/.superset-fork.
+import "./lib/fork-data-migration/run";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";

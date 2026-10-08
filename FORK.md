@@ -120,23 +120,40 @@ Su un Mac Apple Silicon, dall'ultima release del fork:
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Installa `/Applications/Superset.app`, che contiene anche il convertitore
-txcript (`Contents/Resources/resources/bin/txcript-transfer`), così app e
-convertitore hanno sempre la stessa versione. Impostazioni e dati restano (stanno in `~/.superset` e
-`~/Library/Application Support/Superset`), quindi aggiornare equivale a
-reinstallare. L'app non è notarizzata: installata con il comando si apre
-normalmente; scaricata dal browser va aperta una volta da Impostazioni di
-Sistema → Privacy e sicurezza → "Apri comunque".
+Installa `/Applications/Superset Fork.app`, che contiene anche il convertitore
+txcript (`Contents/Resources/resources/bin/txcript-transfer`) e la sua riga di
+comando (`txcript-cli`), così app e txcript hanno sempre la stessa versione.
+L'app non è notarizzata: installata con il comando si apre normalmente;
+scaricata dal browser va aperta una volta da Impostazioni di Sistema → Privacy
+e sicurezza → "Apri comunque".
 
-Il fork mantiene l'identità dell'app ufficiale, così login e dati funzionano
-come con la build di upstream: **sostituisce** Superset ufficiale, non convive
-con esso. L'aggiornamento automatico di upstream è spento, perché riporterebbe
-l'app alla versione ufficiale. Al suo posto l'app controlla le release del fork
-ogni 6 ore e propone "Installa e riavvia", che esegue lo script sopra.
+**Superset Fork convive con Superset ufficiale**, come Zed Fork con Zed: ha nome,
+identificativo, schema di login (`superset-fork://`), cartelle dei dati
+(`~/.superset-fork` e `~/Library/Application Support/Superset Fork`) e porta
+locale per gli hook (51742) propri. Tutto questo deriva da
+`SUPERSET_WORKSPACE_NAME=fork` alla build (`apps/desktop/fork-identity.ts`).
+Aggiornare equivale a reinstallare: impostazioni e dati restano.
 
-Per compilare e installare dal checkout locale, sempre con il convertitore
-incluso (serve anche Rust): `bun run fork:install`. L'app precedente resta in
-`~/.superset/previous-app`.
+Passaggio dalle build precedenti, installate come `Superset.app`:
+
+- lo script installa `Superset Fork.app` e sposta nel Cestino la vecchia
+  `Superset.app` solo se è una build del fork (contiene il convertitore); un
+  Superset ufficiale non viene toccato;
+- al primo avvio Superset Fork copia una volta i dati di `~/.superset` (aree
+  di lavoro, impostazioni, chat, storico, nomi degli account) e le schede
+  aperte. Le cartelle `worktrees` restano dove sono. Il login va rifatto una
+  volta, perché il token è legato alla voce del portachiavi dell'altra app.
+
+Il cloud riconosce il computer dall'id della macchina, uguale per le due app:
+usandole insieme con lo stesso account, il cloud le vede come lo stesso host.
+
+L'aggiornamento automatico di upstream è spento. Al suo posto l'app controlla
+le release del fork ogni 6 ore e propone "Installa e riavvia", che esegue lo
+script sopra.
+
+Per compilare e installare dal checkout locale, con txcript incluso:
+`bun run fork:install`. L'app precedente resta in
+`~/.superset-fork/previous-app`.
 
 ## Sviluppo
 
@@ -224,6 +241,9 @@ upstream ricevono solo agganci brevi:
   `chat-v3/forkLaunchChoices.ts`;
 - voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
   `AcpChatSetting`, rinomina account in `AccountRenameDialog`.
+- identità separata in `apps/desktop/fork-identity.ts` (tre righe in
+  `electron-builder.ts`) e copia dei dati al primo avvio in
+  `main/lib/fork-data-migration` (primo import di `main/index.ts`);
 - avviso di aggiornamento in `apps/desktop/src/main/lib/fork-updates.ts`,
   avviato con una riga accanto all'aggiornamento automatico di upstream;
 - automatismi in `.github/workflows/fork-*.yml` e `scripts/fork/`.
