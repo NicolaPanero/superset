@@ -4473,6 +4473,9 @@ msgstr "Percakapan"
 msgid "Conversation · Message"
 msgstr "Percakapan · Pesan"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Percakapan yang dipindahkan antar agen di workspace ini."
+
 msgid "Conversion"
 msgstr "Konversi"
 
@@ -9366,9 +9369,6 @@ msgstr "Memuat repositori..."
 msgid "Loading review..."
 msgstr "Memuat review..."
 
-msgid "Loading session lineage…"
-msgstr "Memuat riwayat sesi…"
-
 msgid "Loading terminal scripts..."
 msgstr "Memuat skrip terminal..."
 
@@ -10042,9 +10042,6 @@ msgstr "Beri namespace untuk branch baru di proyek ini. Bawaannya mengikuti peng
 msgid "Naming instructions"
 msgstr "Instruksi penamaan"
 
-msgid "Native Handoff"
-msgstr "Transfer sesi asli"
-
 msgid "Native handoff complete"
 msgstr "Handoff native selesai"
 
@@ -10053,9 +10050,6 @@ msgstr "Transfer sesi asli gagal. Coba lagi."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Transfer sesi asli tidak tersedia untuk pasangan agen atau host ini."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Handoff native disimpan secara lokal. Setiap sesi dapat memiliki beberapa sesi turunan."
 
 msgid "Native PR reviews"
 msgstr "Review PR native"
@@ -11352,9 +11346,6 @@ msgstr "Buka Perubahan"
 msgid "Open Chat v3"
 msgstr "Buka Chat v3"
 
-msgid "Open child"
-msgstr "Buka turunan"
-
 msgid "Open Command Palette"
 msgstr "Buka Command Palette"
 
@@ -11559,9 +11550,6 @@ msgstr "Buka di GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Buka Halaman di Browser Bawaan"
 
-msgid "Open parent"
-msgstr "Buka induk"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Buka PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Membuka file"
 
 msgid "Opening folders"
 msgstr "Membuka folder"
-
-msgid "Opening native session…"
-msgstr "Membuka sesi native…"
 
 msgid "Opening pages"
 msgstr "Membuka halaman"

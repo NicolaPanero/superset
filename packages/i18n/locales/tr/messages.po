@@ -4473,6 +4473,9 @@ msgstr "Konuşma"
 msgid "Conversation · Message"
 msgstr "Konuşma · Mesaj"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Bu çalışma alanında ajanlar arasında taşınan konuşmalar."
+
 msgid "Conversion"
 msgstr "Dönüşüm"
 
@@ -9366,9 +9369,6 @@ msgstr "Depolar yükleniyor..."
 msgid "Loading review..."
 msgstr "İnceleme yükleniyor..."
 
-msgid "Loading session lineage…"
-msgstr "Oturum geçmişi yükleniyor…"
-
 msgid "Loading terminal scripts..."
 msgstr "Terminal betikleri yükleniyor..."
 
@@ -10042,9 +10042,6 @@ msgstr "Bu projedeki yeni dalları bir ad alanına alın. Varsayılan olarak hos
 msgid "Naming instructions"
 msgstr "Adlandırma yönergeleri"
 
-msgid "Native Handoff"
-msgstr "Yerel oturum aktarımı"
-
 msgid "Native handoff complete"
 msgstr "Yerel aktarım tamamlandı"
 
@@ -10053,9 +10050,6 @@ msgstr "Yerel oturum aktarımı başarısız oldu. Yeniden deneyin."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Yerel oturum aktarımı bu ajan çifti veya bu ana makine için kullanılamıyor."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Yerel aktarımlar cihazda kaydedilir. Her oturumun birden fazla alt oturumu olabilir."
 
 msgid "Native PR reviews"
 msgstr "Yerel PR incelemeleri"
@@ -11352,9 +11346,6 @@ msgstr "Değişiklikleri aç"
 msgid "Open Chat v3"
 msgstr "Chat v3'ü aç"
 
-msgid "Open child"
-msgstr "Alt oturumu aç"
-
 msgid "Open Command Palette"
 msgstr "Komut paletini aç"
 
@@ -11559,9 +11550,6 @@ msgstr "GitHub'da aç"
 msgid "Open Page in Default Browser"
 msgstr "Sayfayı varsayılan tarayıcıda aç"
 
-msgid "Open parent"
-msgstr "Üst oturumu aç"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} aç"
@@ -11717,9 +11705,6 @@ msgstr "Dosyaları açma"
 
 msgid "Opening folders"
 msgstr "Klasörleri açma"
-
-msgid "Opening native session…"
-msgstr "Yerel oturum açılıyor…"
 
 msgid "Opening pages"
 msgstr "Sayfaları açma"

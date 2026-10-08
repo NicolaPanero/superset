@@ -4473,6 +4473,9 @@ msgstr "대화"
 msgid "Conversation · Message"
 msgstr "대화 · 메시지"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "이 워크스페이스에서 에이전트 간에 옮겨진 대화입니다."
+
 msgid "Conversion"
 msgstr "전환"
 
@@ -9366,9 +9369,6 @@ msgstr "리포지토리를 불러오는 중..."
 msgid "Loading review..."
 msgstr "리뷰를 불러오는 중..."
 
-msgid "Loading session lineage…"
-msgstr "세션 기록 불러오는 중…"
-
 msgid "Loading terminal scripts..."
 msgstr "터미널 스크립트를 불러오는 중..."
 
@@ -10042,9 +10042,6 @@ msgstr "이 프로젝트의 새 브랜치에 네임스페이스를 붙입니다.
 msgid "Naming instructions"
 msgstr "이름 지정 지침"
 
-msgid "Native Handoff"
-msgstr "네이티브 세션 전달"
-
 msgid "Native handoff complete"
 msgstr "네이티브 인계 완료"
 
@@ -10053,9 +10050,6 @@ msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하세요
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "이 에이전트 조합 또는 호스트에서는 네이티브 세션 전달을 사용할 수 없습니다."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "네이티브 인계가 로컬에 저장됩니다. 각 세션에는 여러 하위 세션이 있을 수 있습니다."
 
 msgid "Native PR reviews"
 msgstr "네이티브 PR 리뷰"
@@ -11352,9 +11346,6 @@ msgstr "변경 열기"
 msgid "Open Chat v3"
 msgstr "Chat v3 열기"
 
-msgid "Open child"
-msgstr "하위 세션 열기"
-
 msgid "Open Command Palette"
 msgstr "명령 팔레트 열기"
 
@@ -11559,9 +11550,6 @@ msgstr "GitHub에서 열기"
 msgid "Open Page in Default Browser"
 msgstr "기본 브라우저에서 페이지 열기"
 
-msgid "Open parent"
-msgstr "상위 세션 열기"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} 열기"
@@ -11717,9 +11705,6 @@ msgstr "파일 열기"
 
 msgid "Opening folders"
 msgstr "폴더 열기"
-
-msgid "Opening native session…"
-msgstr "네이티브 세션 여는 중…"
 
 msgid "Opening pages"
 msgstr "페이지 열기"

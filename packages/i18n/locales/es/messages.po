@@ -4473,6 +4473,9 @@ msgstr "Conversación"
 msgid "Conversation · Message"
 msgstr "Conversación · Mensaje"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Conversaciones movidas entre agentes en este espacio de trabajo."
+
 msgid "Conversion"
 msgstr "Conversión"
 
@@ -9366,9 +9369,6 @@ msgstr "Cargando los repositorios..."
 msgid "Loading review..."
 msgstr "Cargando la revisión..."
 
-msgid "Loading session lineage…"
-msgstr "Cargando el historial de sesiones…"
-
 msgid "Loading terminal scripts..."
 msgstr "Cargando los scripts de terminal..."
 
@@ -10042,9 +10042,6 @@ msgstr "Agrupa las ramas nuevas de este proyecto bajo un espacio de nombres. Por
 msgid "Naming instructions"
 msgstr "Instrucciones de nombres"
 
-msgid "Native Handoff"
-msgstr "Transferencia nativa"
-
 msgid "Native handoff complete"
 msgstr "Transferencia nativa completada"
 
@@ -10053,9 +10050,6 @@ msgstr "La transferencia nativa falló. Puedes reintentar."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "La transferencia nativa no está disponible para esta pareja de agentes o este host."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Transferencias nativas guardadas localmente. Cada sesión puede tener varias sesiones hijas."
 
 msgid "Native PR reviews"
 msgstr "Revisiones de PR nativas"
@@ -11352,9 +11346,6 @@ msgstr "Abrir cambios"
 msgid "Open Chat v3"
 msgstr "Abrir Chat v3"
 
-msgid "Open child"
-msgstr "Abrir hija"
-
 msgid "Open Command Palette"
 msgstr "Abrir la paleta de comandos"
 
@@ -11559,9 +11550,6 @@ msgstr "Abrir en GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Abrir la página en el navegador predeterminado"
 
-msgid "Open parent"
-msgstr "Abrir padre"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Abrir PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Abrir archivos"
 
 msgid "Opening folders"
 msgstr "Abrir carpetas"
-
-msgid "Opening native session…"
-msgstr "Abriendo la sesión nativa…"
 
 msgid "Opening pages"
 msgstr "Abrir páginas"

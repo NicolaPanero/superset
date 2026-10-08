@@ -4473,6 +4473,9 @@ msgstr "Gesprek"
 msgid "Conversation · Message"
 msgstr "Gesprek · Bericht"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Gesprekken die in deze workspace tussen agents zijn verplaatst."
+
 msgid "Conversion"
 msgstr "Conversie"
 
@@ -9366,9 +9369,6 @@ msgstr "Repository's laden..."
 msgid "Loading review..."
 msgstr "Review laden..."
 
-msgid "Loading session lineage…"
-msgstr "Sessiegeschiedenis laden…"
-
 msgid "Loading terminal scripts..."
 msgstr "Terminalscripts laden..."
 
@@ -10042,9 +10042,6 @@ msgstr "Geef nieuwe branches van dit project een eigen naamruimte. Standaard gel
 msgid "Naming instructions"
 msgstr "Naamgevingsinstructies"
 
-msgid "Native Handoff"
-msgstr "Native overdracht"
-
 msgid "Native handoff complete"
 msgstr "Native overdracht voltooid"
 
@@ -10053,9 +10050,6 @@ msgstr "De native overdracht is mislukt. Probeer opnieuw."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Native overdracht is niet beschikbaar voor dit agentenpaar of deze host."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Native overdrachten worden lokaal opgeslagen. Elke sessie kan meerdere vervolgsessies hebben."
 
 msgid "Native PR reviews"
 msgstr "Native PR-reviews"
@@ -11352,9 +11346,6 @@ msgstr "Wijzigingen openen"
 msgid "Open Chat v3"
 msgstr "Chat v3 openen"
 
-msgid "Open child"
-msgstr "Vervolgsessie openen"
-
 msgid "Open Command Palette"
 msgstr "Opdrachtenpalet openen"
 
@@ -11559,9 +11550,6 @@ msgstr "Openen op GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Pagina openen in standaardbrowser"
 
-msgid "Open parent"
-msgstr "Bovenliggende sessie openen"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} openen"
@@ -11717,9 +11705,6 @@ msgstr "Bestanden openen"
 
 msgid "Opening folders"
 msgstr "Mappen openen"
-
-msgid "Opening native session…"
-msgstr "Native sessie openen…"
 
 msgid "Opening pages"
 msgstr "Pagina's openen"

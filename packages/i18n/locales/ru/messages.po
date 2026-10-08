@@ -4473,6 +4473,9 @@ msgstr "Диалог"
 msgid "Conversation · Message"
 msgstr "Диалог · сообщение"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Разговоры, перенесённые между агентами в этом рабочем пространстве."
+
 msgid "Conversion"
 msgstr "Конверсия"
 
@@ -9366,9 +9369,6 @@ msgstr "Загрузка репозиториев..."
 msgid "Loading review..."
 msgstr "Загрузка ревью..."
 
-msgid "Loading session lineage…"
-msgstr "Загрузка истории сеансов…"
-
 msgid "Loading terminal scripts..."
 msgstr "Загрузка скриптов терминала..."
 
@@ -10042,9 +10042,6 @@ msgstr "Пространство имён для новых веток этог�
 msgid "Naming instructions"
 msgstr "Правила именования"
 
-msgid "Native Handoff"
-msgstr "Нативная передача"
-
 msgid "Native handoff complete"
 msgstr "Нативная передача завершена"
 
@@ -10053,9 +10050,6 @@ msgstr "Нативная передача не удалась. Повторит�
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Нативная передача недоступна для этой пары агентов или этого хоста."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Нативные передачи сохраняются локально. У каждого сеанса может быть несколько дочерних сеансов."
 
 msgid "Native PR reviews"
 msgstr "Нативное ревью PR"
@@ -11352,9 +11346,6 @@ msgstr "Открыть изменения"
 msgid "Open Chat v3"
 msgstr "Открыть Chat v3"
 
-msgid "Open child"
-msgstr "Открыть дочерний сеанс"
-
 msgid "Open Command Palette"
 msgstr "Открыть палитру команд"
 
@@ -11559,9 +11550,6 @@ msgstr "Открыть на GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Открыть страницу в браузере по умолчанию"
 
-msgid "Open parent"
-msgstr "Открыть родительский сеанс"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Открыть PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Открытие файлов"
 
 msgid "Opening folders"
 msgstr "Открытие папок"
-
-msgid "Opening native session…"
-msgstr "Открытие нативного сеанса…"
 
 msgid "Opening pages"
 msgstr "Открытие страниц"

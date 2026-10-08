@@ -4473,6 +4473,9 @@ msgstr "Rozmowa"
 msgid "Conversation · Message"
 msgstr "Rozmowa · Wiadomość"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Rozmowy przeniesione między agentami w tym obszarze roboczym."
+
 msgid "Conversion"
 msgstr "Konwersja"
 
@@ -9366,9 +9369,6 @@ msgstr "Wczytywanie repozytoriów..."
 msgid "Loading review..."
 msgstr "Wczytywanie przeglądu..."
 
-msgid "Loading session lineage…"
-msgstr "Wczytywanie historii sesji…"
-
 msgid "Loading terminal scripts..."
 msgstr "Wczytywanie skryptów terminala..."
 
@@ -10042,9 +10042,6 @@ msgstr "Nadaj przestrzeń nazw nowym gałęziom tego projektu. Domyślnie używa
 msgid "Naming instructions"
 msgstr "Instrukcje nazewnictwa"
 
-msgid "Native Handoff"
-msgstr "Przekazanie natywne"
-
 msgid "Native handoff complete"
 msgstr "Przekazanie natywne zakończone"
 
@@ -10053,9 +10050,6 @@ msgstr "Przekazanie natywne nie powiodło się. Spróbuj ponownie."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Przekazanie natywne nie jest dostępne dla tej pary agentów lub tego hosta."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Natywne przekazania zapisane lokalnie. Każda sesja może mieć wiele sesji potomnych."
 
 msgid "Native PR reviews"
 msgstr "Natywne przeglądy PR"
@@ -11352,9 +11346,6 @@ msgstr "Otwórz zmiany"
 msgid "Open Chat v3"
 msgstr "Otwórz czat v3"
 
-msgid "Open child"
-msgstr "Otwórz sesję potomną"
-
 msgid "Open Command Palette"
 msgstr "Otwórz paletę poleceń"
 
@@ -11559,9 +11550,6 @@ msgstr "Otwórz na GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Otwórz stronę w domyślnej przeglądarce"
 
-msgid "Open parent"
-msgstr "Otwórz sesję nadrzędną"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Otwórz PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Otwieranie plików"
 
 msgid "Opening folders"
 msgstr "Otwieranie folderów"
-
-msgid "Opening native session…"
-msgstr "Otwieranie natywnej sesji…"
 
 msgid "Opening pages"
 msgstr "Otwieranie stron"

@@ -4473,6 +4473,9 @@ msgstr "Cuộc thảo luận"
 msgid "Conversation · Message"
 msgstr "Hội thoại · Tin nhắn"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Các cuộc trò chuyện đã chuyển giữa các tác tử trong workspace này."
+
 msgid "Conversion"
 msgstr "Chuyển đổi"
 
@@ -9366,9 +9369,6 @@ msgstr "Đang tải repository..."
 msgid "Loading review..."
 msgstr "Đang tải review..."
 
-msgid "Loading session lineage…"
-msgstr "Đang tải lịch sử phiên…"
-
 msgid "Loading terminal scripts..."
 msgstr "Đang tải script terminal..."
 
@@ -10042,9 +10042,6 @@ msgstr "Đặt không gian tên cho nhánh mới của dự án này. Mặc đ�
 msgid "Naming instructions"
 msgstr "Hướng dẫn đặt tên"
 
-msgid "Native Handoff"
-msgstr "Chuyển phiên gốc"
-
 msgid "Native handoff complete"
 msgstr "Đã hoàn tất chuyển giao gốc"
 
@@ -10053,9 +10050,6 @@ msgstr "Chuyển phiên gốc thất bại. Bạn có thể thử lại."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Chuyển phiên gốc không khả dụng cho cặp tác tử hoặc máy chủ này."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Các lần chuyển phiên gốc được lưu cục bộ. Mỗi phiên có thể có nhiều phiên con."
 
 msgid "Native PR reviews"
 msgstr "Review PR ngay trong ứng dụng"
@@ -11352,9 +11346,6 @@ msgstr "Mở thay đổi"
 msgid "Open Chat v3"
 msgstr "Mở Chat v3"
 
-msgid "Open child"
-msgstr "Mở phiên con"
-
 msgid "Open Command Palette"
 msgstr "Mở bảng lệnh"
 
@@ -11559,9 +11550,6 @@ msgstr "Mở trên GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Mở trang trong trình duyệt mặc định"
 
-msgid "Open parent"
-msgstr "Mở phiên cha"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Mở PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Mở tệp"
 
 msgid "Opening folders"
 msgstr "Mở thư mục"
-
-msgid "Opening native session…"
-msgstr "Đang mở phiên gốc…"
 
 msgid "Opening pages"
 msgstr "Mở trang"

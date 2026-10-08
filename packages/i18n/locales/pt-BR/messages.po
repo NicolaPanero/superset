@@ -4473,6 +4473,9 @@ msgstr "Conversa"
 msgid "Conversation · Message"
 msgstr "Conversa · Mensagem"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Conversas movidas entre agentes neste workspace."
+
 msgid "Conversion"
 msgstr "Conversão"
 
@@ -9366,9 +9369,6 @@ msgstr "Carregando os repositórios..."
 msgid "Loading review..."
 msgstr "Carregando a revisão..."
 
-msgid "Loading session lineage…"
-msgstr "Carregando histórico de sessões…"
-
 msgid "Loading terminal scripts..."
 msgstr "Carregando os scripts de terminal..."
 
@@ -10042,9 +10042,6 @@ msgstr "Define um namespace para as novas branches deste projeto. Por padrão, u
 msgid "Naming instructions"
 msgstr "Instruções de nomenclatura"
 
-msgid "Native Handoff"
-msgstr "Transferência nativa"
-
 msgid "Native handoff complete"
 msgstr "Transferência nativa concluída"
 
@@ -10053,9 +10050,6 @@ msgstr "A transferência nativa falhou. Tente novamente."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "A transferência nativa não está disponível para este par de agentes ou este host."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Transferências nativas salvas localmente. Cada sessão pode ter várias sessões filhas."
 
 msgid "Native PR reviews"
 msgstr "Revisões de PR nativas"
@@ -11352,9 +11346,6 @@ msgstr "Abrir alterações"
 msgid "Open Chat v3"
 msgstr "Abrir o Chat v3"
 
-msgid "Open child"
-msgstr "Abrir filha"
-
 msgid "Open Command Palette"
 msgstr "Abrir a paleta de comandos"
 
@@ -11559,9 +11550,6 @@ msgstr "Abrir no GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Abrir a página no navegador padrão"
 
-msgid "Open parent"
-msgstr "Abrir pai"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Abrir PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Abertura de arquivos"
 
 msgid "Opening folders"
 msgstr "Abertura de pastas"
-
-msgid "Opening native session…"
-msgstr "Abrindo sessão nativa…"
 
 msgid "Opening pages"
 msgstr "Abertura de páginas"

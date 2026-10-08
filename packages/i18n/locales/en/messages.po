@@ -4473,6 +4473,9 @@ msgstr "Conversation"
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Conversations moved between agents in this workspace."
+
 msgid "Conversion"
 msgstr "Conversion"
 
@@ -9366,9 +9369,6 @@ msgstr "Loading repositories..."
 msgid "Loading review..."
 msgstr "Loading review..."
 
-msgid "Loading session lineage…"
-msgstr "Loading session lineage…"
-
 msgid "Loading terminal scripts..."
 msgstr "Loading terminal scripts..."
 
@@ -10042,9 +10042,6 @@ msgstr "Namespace new branches for this project. Defaults to the host-wide Git s
 msgid "Naming instructions"
 msgstr "Naming instructions"
 
-msgid "Native Handoff"
-msgstr "Native Handoff"
-
 msgid "Native handoff complete"
 msgstr "Native handoff complete"
 
@@ -10053,9 +10050,6 @@ msgstr "Native handoff failed. You can retry."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Native handoff is unavailable for this agent pair or host."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Native handoffs saved locally. Each session can have several children."
 
 msgid "Native PR reviews"
 msgstr "Native PR reviews"
@@ -11352,9 +11346,6 @@ msgstr "Open Changes"
 msgid "Open Chat v3"
 msgstr "Open Chat v3"
 
-msgid "Open child"
-msgstr "Open child"
-
 msgid "Open Command Palette"
 msgstr "Open Command Palette"
 
@@ -11559,9 +11550,6 @@ msgstr "Open on GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Open Page in Default Browser"
 
-msgid "Open parent"
-msgstr "Open parent"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Open PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Opening files"
 
 msgid "Opening folders"
 msgstr "Opening folders"
-
-msgid "Opening native session…"
-msgstr "Opening native session…"
 
 msgid "Opening pages"
 msgstr "Opening pages"
