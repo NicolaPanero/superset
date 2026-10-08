@@ -1,8 +1,9 @@
 # Local native transfer engine
 
-This fork builds txcript (Apache-2.0) from
-[NicolaPanero/txcript](https://github.com/NicolaPanero/txcript), tag
-`v0.14.4-fork.5`: the official library at commit
+This fork uses txcript (Apache-2.0) from
+[NicolaPanero/txcript](https://github.com/NicolaPanero/txcript), whose
+`v<version>-fork.<n>` releases publish this helper prebuilt for Apple Silicon:
+the official library at commit
 `8cd3b0e63f797b1531a14197f41a0e9eeedec8c6` plus fixes for structured Codex
 tool outputs and Codex's AGENTS.md prelude, Cursor's active transcript,
 resumable graph and message order, and OpenCode's tool-result pairing, and a
@@ -10,17 +11,20 @@ conversion-only example with a bounded JSON
 protocol. The same build serves NicolaPanero/zed. Agent file formats
 remain in the official library. No second codec exists in Superset.
 
-With Rust 1.96 and Bun 1.3.14 on PATH, run from the repository root:
+With Bun 1.3.14 on PATH, run from the repository root:
 
 ```sh
 bun run scripts/build-txcript-transfer.ts
 ```
 
-The script downloads the pinned public source, builds the
-helper and installs it under `$SUPERSET_HOME_DIR/bin/txcript-transfer`.
+The script downloads the helper from the fork's latest release (or the one
+`TXCRIPT_TAG` names), checks it against the release's SHA256SUMS and its
+reported engine version, and installs it under
+`$SUPERSET_HOME_DIR/bin/txcript-transfer`.
 Bun loads the local development `.env`; check its SUPERSET_HOME_DIR first.
 Without it, the destination is `~/.superset`. It does not replace the user's
-`txcript` executable. Source/build caches are ignored under `.cache/`.
+`txcript` executable. Fixes to the helper or the engine go to the fork; a new
+release reaches the app's next build without changes here.
 
 Protocol version 1 accepts one JSON request on stdin: sourceAgent,
 sourceSessionId, sourceRoot, sourceReference, targetAgent, targetRoot, cwd.
