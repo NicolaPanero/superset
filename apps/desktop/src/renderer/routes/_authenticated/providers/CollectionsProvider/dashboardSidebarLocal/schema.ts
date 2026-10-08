@@ -505,7 +505,7 @@ export const v2UserPreferencesSchema = z.object({
 	rightSidebarWidth: z.number().default(340),
 	rightPaneAreaWidth: z.number().optional(),
 	deleteLocalBranch: z.boolean().default(false),
-	showPresetsBar: z.boolean().default(true),
+	showPresetsBar: z.boolean().default(false),
 	changesViewMode: changesViewModeSchema.default("folders"),
 	// Ordering of the dashboard sidebar's Projects list; manual = drag order.
 	sidebarProjectSortMode: persistedSidebarProjectSortModeSchema,
@@ -545,7 +545,7 @@ export const DEFAULT_V2_USER_PREFERENCES: V2UserPreferencesRow = {
 	rightSidebarTab: "changes",
 	rightSidebarWidth: 340,
 	deleteLocalBranch: false,
-	showPresetsBar: true,
+	showPresetsBar: false,
 	changesViewMode: "folders",
 	sidebarProjectSortMode: "manual",
 	hiddenBuiltinPresetIds: [],

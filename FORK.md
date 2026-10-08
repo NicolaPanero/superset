@@ -86,6 +86,13 @@ copiata nella cartella dell'account scelto). Lo stesso si fa dall'icona robot,
 scegliendo Claude come destinazione. L'icona dei consumi nell'intestazione
 della chat mostra l'account in uso.
 
+### Barra degli script nascosta
+
+Nelle nuove installazioni la barra con i pulsanti degli agenti sopra le schede
+parte nascosta. Si riattiva dal menu **+** delle schede → **Show Scripts Bar**.
+Chi aveva già una scelta salvata la mantiene. È l'unico valore predefinito
+cambiato in un file di upstream (`dashboardSidebarLocal/schema.ts`, due righe).
+
 ### Altre correzioni per gli agenti
 
 - Cursor: la conversazione resta la stessa passando tra terminale e chat, e le
