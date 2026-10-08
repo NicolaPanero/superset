@@ -105,6 +105,7 @@ jobs:
           bun run prebuild
           # Shipped next to the bundled CLI; the host-service looks there first.
           install -m 755 "$RUNNER_TEMP/helper/bin/txcript-transfer" dist/resources/bin/txcript-transfer
+          install -m 755 "$RUNNER_TEMP/helper/bin/txcript-cli" dist/resources/bin/txcript-cli
           bunx electron-builder --config electron-builder.ts --publish never --mac zip --arm64
           zip=$(ls release/*-arm64-mac.zip | head -n 1)
           mv "$zip" "$RUNNER_TEMP/Superset-fork-arm64.zip"

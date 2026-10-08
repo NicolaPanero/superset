@@ -55,6 +55,19 @@ modifica le sessioni già aperte.
 La sessione di partenza non viene modificata. Permessi, server MCP, credenziali
 e ragionamento interno del modello non vengono trasferiti.
 
+### Importare una chat nata fuori da Superset
+
+Nel pannello **Agents** il pulsante **Import chat** elenca le chat di Claude,
+Codex, Cursor CLI, Grok e OpenCode avviate fuori da Superset (in un terminale,
+in Zed…) nella cartella dell'area di lavoro, da tutti gli account del Mac. Si
+cerca per titolo, modello o branch e si filtra per agente; le chat già note a
+Superset hanno l'etichetta "In Superset". **Continue** apre la chat scelta
+come chat ACP dello stesso agente (con l'account che la contiene); la freccia
+accanto la converte in modo nativo verso un altro agente. Si importa solo la
+chat scelta. L'elenco viene da `txcript list --json`: l'app include la riga di
+comando di txcript come `resources/bin/txcript-cli`, dalla stessa release del
+convertitore.
+
 ### Storico dei passaggi
 
 Ogni passaggio nativo registra sorgente e destinazione in un database locale.
@@ -194,6 +207,9 @@ upstream ricevono solo agganci brevi:
   alla chat con la prop `onForkSwitchAgent`: il gestore di upstream resta
   invariato e fa da ripiego; avviso di provenienza in `ForkChatProvenance` (una riga in `Transcript.tsx`),
   dati da `sessionTransfer.chatProvenance`;
+- import di chat esterne: `ForkImportChatDialog` nel pannello Agents,
+  procedura `sessionTransfer.externalSessions` con
+  `session-transfer/externalSessions.ts`;
 - chat in background: tabella `background_chats` in `fork-schema.ts`,
   procedure in `agents/fork-background-chats.ts`, hook
   `useForkBackgroundChats` e `useForkFocusChatLink`, gruppo

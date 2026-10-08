@@ -3398,6 +3398,9 @@ msgstr "Channel dibuat"
 msgid "Chat"
 msgstr "Chat"
 
+msgid "Chat imported"
+msgstr "Chat diimpor"
+
 msgid "Chat is being reworked"
 msgstr "Chat sedang dirombak"
 
@@ -3416,6 +3419,9 @@ msgstr "Permukaan chat: pesan, penalaran, saran"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Chat yang dimulai di luar Superset di folder workspace ini, misalnya di terminal atau di Zed. Pilih satu untuk melanjutkannya di sini."
 
 msgid "Check again"
 msgstr "Periksa lagi"
@@ -4415,6 +4421,9 @@ msgstr "Lanjutkan ke {0}"
 msgid "Continue update"
 msgstr "Lanjutkan pembaruan"
 
+msgid "Continue with"
+msgstr "Lanjutkan dengan"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "Lanjutkan dengan {0}"
@@ -4930,6 +4939,9 @@ msgstr "Tidak bisa membuang perubahan yang belum di-stage"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Tidak bisa menyelesaikan penghapusan workspace"
 
+msgid "Couldn't import the chat"
+msgstr "Tidak dapat mengimpor chat"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Tidak bisa memuat pengaturan agen: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Tidak bisa menjangkau workspace cloud ini. Mungkin masih dibangunkan —
 
 msgid "Couldn't reach workspace"
 msgstr "Tidak bisa menjangkau workspace"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Tidak dapat membaca chat di Mac ini."
 
 msgid "Couldn't read this terminal's context."
 msgstr "Konteks terminal ini tidak bisa dibaca."
@@ -8295,6 +8310,9 @@ msgstr "Menyamar sebagai orang lain"
 msgid "Import"
 msgstr "Impor"
 
+msgid "Import a chat"
+msgstr "Impor chat"
+
 msgid "import a folder"
 msgstr "mengimpor folder"
 
@@ -8312,6 +8330,9 @@ msgstr "Impor semua"
 
 msgid "Import all worktrees"
 msgstr "Impor semua worktree"
+
+msgid "Import chat"
+msgstr "Impor chat"
 
 msgid "Import cookies and passwords…"
 msgstr "Impor cookie dan kata sandi…"
@@ -8408,6 +8429,9 @@ msgstr "Sedang berjalan"
 
 msgid "In Progress"
 msgstr "Sedang berjalan"
+
+msgid "In Superset"
+msgstr "Di Superset"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Di aplikasi desktop Superset, buka <0>Pengaturan → Tampilan → Tema</0>."
@@ -10388,6 +10412,9 @@ msgstr "Belum ada perubahan di branch ini."
 
 msgid "No changes to display."
 msgstr "Tidak ada perubahan untuk ditampilkan."
+
+msgid "No chats found in this folder."
+msgstr "Tidak ada chat di folder ini."
 
 msgid "No checks"
 msgstr "Tidak ada check"
@@ -14141,6 +14168,9 @@ msgstr "Cari berdasarkan nama kunci..."
 msgid "Search changed files"
 msgstr "Cari file yang berubah"
 
+msgid "Search chats"
+msgstr "Cari chat"
+
 msgid "Search developers"
 msgstr "Cari pengembang"
 
@@ -16692,6 +16722,9 @@ msgstr "Otomatisasi ini belum memiliki instruksi. Tulis prompt di pengaturannya 
 msgid "This automation is in another organization"
 msgstr "Otomatisasi ini berada di organisasi lain"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Build ini belum bisa mencari chat. Perbarui Superset untuk menggunakannya."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Build ini tidak memperbarui dirinya sendiri. Bangun ulang dari kode sumbernya untuk memperbarui."
 
@@ -17558,6 +17591,9 @@ msgstr "Item tidak didukung \"{0}\""
 
 msgid "Untitled"
 msgstr "Tanpa judul"
+
+msgid "Untitled chat"
+msgstr "Chat tanpa judul"
 
 msgid "Untitled Page"
 msgstr "Halaman Tanpa Judul"

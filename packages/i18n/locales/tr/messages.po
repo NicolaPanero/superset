@@ -3398,6 +3398,9 @@ msgstr "Kanal oluşturuldu"
 msgid "Chat"
 msgstr "Sohbet"
 
+msgid "Chat imported"
+msgstr "Sohbet içe aktarıldı"
+
 msgid "Chat is being reworked"
 msgstr "Sohbet yeniden düzenleniyor"
 
@@ -3416,6 +3419,9 @@ msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Bu çalışma alanının klasöründe Superset dışında, örneğin bir terminalde ya da Zed'de başlatılan sohbetler. Burada devam etmek için birini seçin."
 
 msgid "Check again"
 msgstr "Yeniden denetle"
@@ -4415,6 +4421,9 @@ msgstr "{0} adresine devam et"
 msgid "Continue update"
 msgstr "Güncellemeye devam et"
 
+msgid "Continue with"
+msgstr "Şununla devam et"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "{0} ile devam et"
@@ -4930,6 +4939,9 @@ msgstr "Hazırlanmamış değişiklikler atılamadı"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Çalışma alanlarını silme işlemi tamamlanamadı"
 
+msgid "Couldn't import the chat"
+msgstr "Sohbet içe aktarılamadı"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Ajan ayarları yüklenemedi: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Bu bulut çalışma alanına ulaşılamadı. Hâlâ uyandırılıyor ola
 
 msgid "Couldn't reach workspace"
 msgstr "Çalışma alanına ulaşılamadı"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Bu Mac'teki sohbetler okunamadı."
 
 msgid "Couldn't read this terminal's context."
 msgstr "Bu terminalin bağlamı okunamadı."
@@ -8295,6 +8310,9 @@ msgstr "Başkasının kimliğine bürünüyor"
 msgid "Import"
 msgstr "İçe aktar"
 
+msgid "Import a chat"
+msgstr "Sohbet içe aktar"
+
 msgid "import a folder"
 msgstr "klasör içe aktarma"
 
@@ -8312,6 +8330,9 @@ msgstr "Tümünü içe aktar"
 
 msgid "Import all worktrees"
 msgstr "Tüm worktree'leri içe aktar"
+
+msgid "Import chat"
+msgstr "Sohbeti içe aktar"
 
 msgid "Import cookies and passwords…"
 msgstr "Çerezleri ve parolaları içe aktar…"
@@ -8408,6 +8429,9 @@ msgstr "Devam ediyor"
 
 msgid "In Progress"
 msgstr "Devam ediyor"
+
+msgid "In Superset"
+msgstr "Superset'te"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Superset masaüstü uygulamasında <0>Ayarlar → Görünüm → Tema</0> bölümünü açın."
@@ -10388,6 +10412,9 @@ msgstr "Bu dalda henüz değişiklik yok."
 
 msgid "No changes to display."
 msgstr "Gösterilecek değişiklik yok."
+
+msgid "No chats found in this folder."
+msgstr "Bu klasörde sohbet bulunamadı."
 
 msgid "No checks"
 msgstr "Kontrol yok"
@@ -14141,6 +14168,9 @@ msgstr "Anahtar adına göre ara..."
 msgid "Search changed files"
 msgstr "Değişen dosyaları ara"
 
+msgid "Search chats"
+msgstr "Sohbetlerde ara"
+
 msgid "Search developers"
 msgstr "Geliştirici ara"
 
@@ -16692,6 +16722,9 @@ msgstr "Bu otomasyonun henüz talimatı yok. Çalıştırmadan önce ayarlarınd
 msgid "This automation is in another organization"
 msgstr "Bu otomasyon başka bir kuruluşta"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Bu sürüm henüz sohbet arayamıyor. Kullanmak için Superset'i güncelleyin."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Bu derleme kendini güncellemez. Güncellemek için kaynak koddan yeniden derleyin."
 
@@ -17558,6 +17591,9 @@ msgstr "Desteklenmeyen öğe \"{0}\""
 
 msgid "Untitled"
 msgstr "Adsız"
+
+msgid "Untitled chat"
+msgstr "Başlıksız sohbet"
 
 msgid "Untitled Page"
 msgstr "Adsız sayfa"

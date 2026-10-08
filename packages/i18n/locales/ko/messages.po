@@ -3398,6 +3398,9 @@ msgstr "채널 생성됨"
 msgid "Chat"
 msgstr "채팅"
 
+msgid "Chat imported"
+msgstr "채팅을 가져왔습니다"
+
 msgid "Chat is being reworked"
 msgstr "채팅을 개편하는 중입니다"
 
@@ -3416,6 +3419,9 @@ msgstr "채팅 화면: 메시지, 추론, 제안"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "이 워크스페이스 폴더에서 Superset 밖(예: 터미널이나 Zed)에서 시작한 채팅입니다. 하나를 골라 여기서 이어가세요."
 
 msgid "Check again"
 msgstr "다시 확인"
@@ -4415,6 +4421,9 @@ msgstr "{0}(으)로 계속"
 msgid "Continue update"
 msgstr "업데이트 계속"
 
+msgid "Continue with"
+msgstr "다음으로 계속"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "{0}(으)로 계속하기"
@@ -4930,6 +4939,9 @@ msgstr "스테이징되지 않은 변경 사항을 버리지 못했습니다"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "워크스페이스 삭제를 끝내지 못했습니다"
 
+msgid "Couldn't import the chat"
+msgstr "채팅을 가져올 수 없습니다"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "에이전트 설정을 불러오지 못했습니다: {0}"
@@ -4996,6 +5008,9 @@ msgstr "이 클라우드 워크스페이스에 연결하지 못했습니다. 아
 
 msgid "Couldn't reach workspace"
 msgstr "워크스페이스에 연결하지 못했습니다"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "이 Mac의 채팅을 읽을 수 없습니다."
 
 msgid "Couldn't read this terminal's context."
 msgstr "이 터미널의 컨텍스트를 읽을 수 없습니다."
@@ -8295,6 +8310,9 @@ msgstr "타인 사칭"
 msgid "Import"
 msgstr "가져오기"
 
+msgid "Import a chat"
+msgstr "채팅 가져오기"
+
 msgid "import a folder"
 msgstr "폴더를 가져올"
 
@@ -8312,6 +8330,9 @@ msgstr "모두 가져오기"
 
 msgid "Import all worktrees"
 msgstr "worktree 모두 가져오기"
+
+msgid "Import chat"
+msgstr "채팅 가져오기"
 
 msgid "Import cookies and passwords…"
 msgstr "쿠키와 비밀번호 가져오기…"
@@ -8408,6 +8429,9 @@ msgstr "진행 중"
 
 msgid "In Progress"
 msgstr "진행 중"
+
+msgid "In Superset"
+msgstr "Superset에 있음"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Superset 데스크톱 앱에서 <0>설정 → 모양 → 테마</0>를 여세요."
@@ -10388,6 +10412,9 @@ msgstr "아직 이 브랜치에 변경 사항이 없습니다."
 
 msgid "No changes to display."
 msgstr "표시할 변경 사항이 없습니다."
+
+msgid "No chats found in this folder."
+msgstr "이 폴더에서 채팅을 찾지 못했습니다."
 
 msgid "No checks"
 msgstr "검사 없음"
@@ -14141,6 +14168,9 @@ msgstr "키 이름으로 검색..."
 msgid "Search changed files"
 msgstr "변경된 파일 검색"
 
+msgid "Search chats"
+msgstr "채팅 검색"
+
 msgid "Search developers"
 msgstr "개발자 검색"
 
@@ -16692,6 +16722,9 @@ msgstr "이 자동화에는 아직 지시문이 없습니다. 실행하기 전�
 msgid "This automation is in another organization"
 msgstr "이 자동화는 다른 조직에 있습니다"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "이 빌드는 아직 채팅을 검색할 수 없습니다. 사용하려면 Superset을 업데이트하세요."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "이 빌드는 자동으로 업데이트되지 않습니다. 업데이트하려면 소스에서 다시 빌드하세요."
 
@@ -17558,6 +17591,9 @@ msgstr "지원하지 않는 항목 \"{0}\""
 
 msgid "Untitled"
 msgstr "제목 없음"
+
+msgid "Untitled chat"
+msgstr "제목 없는 채팅"
 
 msgid "Untitled Page"
 msgstr "제목 없는 페이지"

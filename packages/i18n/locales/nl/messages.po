@@ -3398,6 +3398,9 @@ msgstr "Kanaal aangemaakt"
 msgid "Chat"
 msgstr "Chat"
 
+msgid "Chat imported"
+msgstr "Chat geïmporteerd"
+
 msgid "Chat is being reworked"
 msgstr "Chat wordt herbouwd"
 
@@ -3416,6 +3419,9 @@ msgstr "Chatoppervlakken: berichten, redeneren, suggesties"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Chats die buiten Superset in de map van deze workspace zijn gestart, bijvoorbeeld in een terminal of in Zed. Kies er een om hier verder te gaan."
 
 msgid "Check again"
 msgstr "Opnieuw controleren"
@@ -4415,6 +4421,9 @@ msgstr "Doorgaan naar {0}"
 msgid "Continue update"
 msgstr "Doorgaan met update"
 
+msgid "Continue with"
+msgstr "Doorgaan met"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "Doorgaan met {0}"
@@ -4930,6 +4939,9 @@ msgstr "Kan niet-gestagede wijzigingen niet verwerpen"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Kon het verwijderen van werkruimtes niet afronden"
 
+msgid "Couldn't import the chat"
+msgstr "Kan de chat niet importeren"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Kan agentinstellingen niet laden: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Kan deze cloudwerkruimte niet bereiken. Mogelijk wordt deze nog gewekt �
 
 msgid "Couldn't reach workspace"
 msgstr "Kan werkruimte niet bereiken"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Kan de chats op deze Mac niet lezen."
 
 msgid "Couldn't read this terminal's context."
 msgstr "De context van deze terminal kon niet worden gelezen."
@@ -8295,6 +8310,9 @@ msgstr "Doet zich voor als iemand anders"
 msgid "Import"
 msgstr "Importeren"
 
+msgid "Import a chat"
+msgstr "Een chat importeren"
+
 msgid "import a folder"
 msgstr "een map importeren"
 
@@ -8312,6 +8330,9 @@ msgstr "Alles importeren"
 
 msgid "Import all worktrees"
 msgstr "Alle worktrees importeren"
+
+msgid "Import chat"
+msgstr "Chat importeren"
 
 msgid "Import cookies and passwords…"
 msgstr "Cookies en wachtwoorden importeren…"
@@ -8408,6 +8429,9 @@ msgstr "Bezig"
 
 msgid "In Progress"
 msgstr "Bezig"
+
+msgid "In Superset"
+msgstr "In Superset"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Open in de Superset-desktopapp <0>Instellingen → Uiterlijk → Thema</0>."
@@ -10388,6 +10412,9 @@ msgstr "Nog geen wijzigingen op deze branch."
 
 msgid "No changes to display."
 msgstr "Geen wijzigingen om te tonen."
+
+msgid "No chats found in this folder."
+msgstr "Geen chats gevonden in deze map."
 
 msgid "No checks"
 msgstr "Geen checks"
@@ -14141,6 +14168,9 @@ msgstr "Zoeken op sleutelnaam..."
 msgid "Search changed files"
 msgstr "Gewijzigde bestanden zoeken"
 
+msgid "Search chats"
+msgstr "Chats zoeken"
+
 msgid "Search developers"
 msgstr "Ontwikkelaars zoeken"
 
@@ -16692,6 +16722,9 @@ msgstr "Deze automatisering heeft nog geen instructies. Schrijf een prompt in de
 msgid "This automation is in another organization"
 msgstr "Deze automatisering staat in een andere organisatie"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Deze build kan nog geen chats zoeken. Werk Superset bij om het te gebruiken."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Deze build werkt zichzelf niet bij. Bouw hem opnieuw vanuit de broncode om bij te werken."
 
@@ -17558,6 +17591,9 @@ msgstr "Niet-ondersteund item \"{0}\""
 
 msgid "Untitled"
 msgstr "Naamloos"
+
+msgid "Untitled chat"
+msgstr "Naamloze chat"
 
 msgid "Untitled Page"
 msgstr "Naamloze pagina"

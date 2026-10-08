@@ -19,7 +19,7 @@ import {
 } from "@superset/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Bot, Plus } from "lucide-react";
+import { Bot, History, Plus } from "lucide-react";
 import { useRef, useState } from "react";
 import {
 	getPresetIcon,
@@ -41,6 +41,7 @@ import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher/
 import { useChatWiring } from "../../hooks/usePaneRegistry/components/ChatSession/hooks/useSessionClient";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import { AcpOverviewSession } from "./components/AcpOverviewSession";
+import { ForkImportChatDialog } from "./components/ForkImportChatDialog";
 
 const PEERS = [
 	{ id: "claude", label: "Claude Code" },
@@ -158,6 +159,7 @@ export function WorkspaceAgentOverview({
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const [open, setOpen] = useState(false);
 	const [launchOpen, setLaunchOpen] = useState(false);
+	const [importOpen, setImportOpen] = useState(false);
 	const [configId, setConfigId] = useState<string>();
 	const [model, setModel] = useState<string | null>(null);
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
@@ -314,6 +316,14 @@ export function WorkspaceAgentOverview({
 						>
 							<Plus className="size-4" />
 							<Trans>New agent</Trans>
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => setImportOpen(true)}
+						>
+							<History className="size-4" />
+							<Trans>Import chat</Trans>
 						</Button>
 						<Button variant="outline" size="sm" asChild>
 							<Link
@@ -503,6 +513,13 @@ export function WorkspaceAgentOverview({
 					</Button>
 				</DialogContent>
 			</Dialog>
+			<ForkImportChatDialog
+				open={importOpen}
+				onOpenChange={setImportOpen}
+				onImported={() => setOpen(false)}
+				store={store}
+				workspaceId={workspaceId}
+			/>
 		</>
 	);
 }

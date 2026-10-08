@@ -3398,6 +3398,9 @@ msgstr "Kênh được tạo"
 msgid "Chat"
 msgstr "Chat"
 
+msgid "Chat imported"
+msgstr "Đã nhập cuộc trò chuyện"
+
 msgid "Chat is being reworked"
 msgstr "Chat đang được làm lại"
 
@@ -3416,6 +3419,9 @@ msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 
 msgid "Chat v3"
 msgstr "Chat v3"
+
+msgid "Chats started outside Superset in this workspace's folder, for example in a terminal or in Zed. Pick one to continue it here."
+msgstr "Các cuộc trò chuyện bắt đầu bên ngoài Superset trong thư mục của workspace này, ví dụ trong terminal hoặc Zed. Chọn một để tiếp tục tại đây."
 
 msgid "Check again"
 msgstr "Kiểm tra lại"
@@ -4415,6 +4421,9 @@ msgstr "Tiếp tục đến {0}"
 msgid "Continue update"
 msgstr "Tiếp tục cập nhật"
 
+msgid "Continue with"
+msgstr "Tiếp tục với"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "Tiếp tục với {0}"
@@ -4930,6 +4939,9 @@ msgstr "Không thể bỏ các thay đổi chưa stage"
 msgid "Couldn’t finish deleting workspaces"
 msgstr "Không xóa xong các workspace"
 
+msgid "Couldn't import the chat"
+msgstr "Không thể nhập cuộc trò chuyện"
+
 #. placeholder {0}: configsQuery.error instanceof Error ? configsQuery.error.message : hostServiceUnavailableMessage
 msgid "Couldn't load agent settings: {0}"
 msgstr "Không thể tải cài đặt agent: {0}"
@@ -4996,6 +5008,9 @@ msgstr "Không kết nối được với không gian làm việc đám mây nà
 
 msgid "Couldn't reach workspace"
 msgstr "Không kết nối được workspace"
+
+msgid "Couldn't read the chats on this Mac."
+msgstr "Không thể đọc các cuộc trò chuyện trên máy Mac này."
 
 msgid "Couldn't read this terminal's context."
 msgstr "Không đọc được ngữ cảnh của terminal này."
@@ -8295,6 +8310,9 @@ msgstr "Mạo danh người khác"
 msgid "Import"
 msgstr "Nhập"
 
+msgid "Import a chat"
+msgstr "Nhập một cuộc trò chuyện"
+
 msgid "import a folder"
 msgstr "nhập một thư mục"
 
@@ -8312,6 +8330,9 @@ msgstr "Nhập tất cả"
 
 msgid "Import all worktrees"
 msgstr "Nhập tất cả worktree"
+
+msgid "Import chat"
+msgstr "Nhập cuộc trò chuyện"
 
 msgid "Import cookies and passwords…"
 msgstr "Nhập cookie và mật khẩu…"
@@ -8408,6 +8429,9 @@ msgstr "Đang thực hiện"
 
 msgid "In Progress"
 msgstr "Đang thực hiện"
+
+msgid "In Superset"
+msgstr "Trong Superset"
 
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Trong ứng dụng Superset trên máy tính, mở <0>Cài đặt → Giao diện → Chủ đề</0>."
@@ -10388,6 +10412,9 @@ msgstr "Chưa có thay đổi nào trên nhánh này."
 
 msgid "No changes to display."
 msgstr "Không có thay đổi nào để hiển thị."
+
+msgid "No chats found in this folder."
+msgstr "Không tìm thấy cuộc trò chuyện nào trong thư mục này."
 
 msgid "No checks"
 msgstr "Không có check"
@@ -14141,6 +14168,9 @@ msgstr "Tìm theo tên khóa..."
 msgid "Search changed files"
 msgstr "Tìm tệp đã thay đổi"
 
+msgid "Search chats"
+msgstr "Tìm cuộc trò chuyện"
+
 msgid "Search developers"
 msgstr "Tìm nhà phát triển"
 
@@ -16692,6 +16722,9 @@ msgstr "Tự động hóa này chưa có hướng dẫn. Hãy viết một promp
 msgid "This automation is in another organization"
 msgstr "Tự động hóa này nằm trong một tổ chức khác"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "Bản dựng này chưa thể tìm cuộc trò chuyện. Hãy cập nhật Superset để dùng."
+
 msgid "This build does not update itself. Rebuild it from its source to update."
 msgstr "Bản dựng này không tự cập nhật. Hãy dựng lại từ mã nguồn để cập nhật."
 
@@ -17558,6 +17591,9 @@ msgstr "Mục không được hỗ trợ \"{0}\""
 
 msgid "Untitled"
 msgstr "Không tiêu đề"
+
+msgid "Untitled chat"
+msgstr "Cuộc trò chuyện không tên"
 
 msgid "Untitled Page"
 msgstr "Trang chưa đặt tên"
