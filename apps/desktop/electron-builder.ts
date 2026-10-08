@@ -6,6 +6,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Configuration } from "electron-builder";
+import { forkIdentity } from "./fork-identity";
 import pkg from "./package.json";
 import {
 	packagedAsarUnpackGlobs,
@@ -14,7 +15,8 @@ import {
 
 const currentYear = new Date().getFullYear();
 const author = pkg.author?.name ?? pkg.author;
-const productName = pkg.productName;
+const identity = forkIdentity(pkg.productName);
+const productName = identity.productName;
 const macIconPath = join(pkg.resources, "build/icons/icon.icns");
 const linuxIconPath = join(pkg.resources, "build/icons");
 const winIconPath = join(pkg.resources, "build/icons/icon.ico");
@@ -24,8 +26,9 @@ const dmgBackgroundPath = join(
 );
 
 const config: Configuration = {
-	appId: "com.superset.desktop",
+	appId: identity.appId,
 	productName,
+	extraMetadata: { productName },
 	copyright: `Copyright © ${currentYear} — ${author}`,
 	electronVersion: pkg.devDependencies.electron.replace(/^\^/, ""),
 
@@ -148,7 +151,7 @@ const config: Configuration = {
 	// Deep linking protocol
 	protocols: {
 		name: productName,
-		schemes: ["superset"],
+		schemes: [identity.scheme],
 	},
 
 	// Linux

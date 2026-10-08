@@ -4,9 +4,11 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 #
-# Settings and data live outside the app (~/.superset and
-# ~/Library/Application Support/Superset), so updating keeps them. The app
-# carries its txcript transfer helper. Downloading with curl leaves the app
+# Installs as "Superset Fork.app", beside an official Superset. Settings and
+# data live outside the app (~/.superset-fork and ~/Library/Application
+# Support/Superset Fork), so updating keeps them. An earlier fork build
+# installed as "Superset.app" is moved to the Trash; an official Superset is
+# never touched. The app carries its txcript helpers. Downloading with curl leaves the app
 # without macOS's quarantine flag, so it opens without the "unidentified
 # developer" prompt even though it isn't notarized.
 #
@@ -18,7 +20,7 @@ set -eu
 
 repo="NicolaPanero/superset"
 app_asset="Superset-fork-arm64.zip"
-app_name="Superset.app"
+app_name="Superset Fork.app"
 wait_pid=""
 relaunch=false
 
@@ -50,8 +52,13 @@ echo "Downloading $app_url"
 curl -fL --progress-bar "$app_url" -o "$work/$app_asset"
 ditto -x -k "$work/$app_asset" "$work/app"
 if [ ! -d "$work/app/$app_name" ]; then
-    echo "The download has no $app_name." >&2
-    exit 1
+    # Releases built before the rename still ship "Superset.app".
+    if [ -d "$work/app/Superset.app" ]; then
+        app_name="Superset.app"
+    else
+        echo "The download has no $app_name." >&2
+        exit 1
+    fi
 fi
 
 if [ -n "$wait_pid" ]; then
@@ -70,6 +77,18 @@ rm -rf "$destination/$app_name"
 mv "$work/app/$app_name" "$destination/$app_name"
 xattr -dr com.apple.quarantine "$destination/$app_name" 2>/dev/null || true
 echo "Installed $destination/$app_name"
+
+# Earlier fork builds took the official name; only they carry the helper.
+for legacy in "/Applications/Superset.app" "$HOME/Applications/Superset.app"; do
+    if [ "$app_name" != "Superset.app" ] && [ -x "$legacy/Contents/Resources/resources/bin/txcript-transfer" ]; then
+        trashed="$HOME/.Trash/Superset (old fork) $(date +%Y%m%d-%H%M%S).app"
+        if mv "$legacy" "$trashed" 2>/dev/null; then
+            echo "Moved the earlier fork build $legacy to the Trash"
+        else
+            echo "Could not move $legacy to the Trash; remove it by hand." >&2
+        fi
+    fi
+done
 
 if [ "$relaunch" = true ]; then
     open "$destination/$app_name"

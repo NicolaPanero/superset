@@ -4,10 +4,11 @@
 # fork number, `-tx<N>`). It runs after each sync, when txcript publishes a
 # release, and on demand.
 #
-# The app is ad-hoc signed (no Apple Developer ID) and keeps the official app
-# identity, so sign-in and data work as with upstream's build; it replaces an
-# official Superset rather than living next to it. Upstream's updater is off:
-# the app checks this repository's releases and runs scripts/fork/install.sh.
+# The app is ad-hoc signed (no Apple Developer ID) and installs as "Superset
+# Fork" beside an official Superset: its own bundle id, sign-in scheme
+# (superset-fork), data folder (~/.superset-fork) and local hook port (see
+# apps/desktop/fork-identity.ts). Upstream's updater is off: the app checks
+# this repository's releases and runs scripts/fork/install.sh.
 
 name: Fork - build release
 
@@ -73,7 +74,8 @@ jobs:
       SUPERSET_AUTO_UPDATE: disabled
       SUPERSET_FORK_RELEASE: ${{ needs.check.outputs.tag }}
       SUPERSET_FORK_REPOSITORY: ${{ github.repository }}
-      SUPERSET_WORKSPACE_NAME: superset
+      SUPERSET_WORKSPACE_NAME: fork
+      DESKTOP_NOTIFICATIONS_PORT: "51742"
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
