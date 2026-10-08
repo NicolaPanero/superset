@@ -2,10 +2,11 @@
 
 This fork builds txcript (Apache-2.0) from
 [NicolaPanero/txcript](https://github.com/NicolaPanero/txcript), tag
-`v0.14.4-fork.3`: the official library at commit
+`v0.14.4-fork.5`: the official library at commit
 `8cd3b0e63f797b1531a14197f41a0e9eeedec8c6` plus fixes for structured Codex
-tool outputs, Cursor's active transcript and resumable graph, and OpenCode's
-tool-result pairing, and a conversion-only example with a bounded JSON
+tool outputs and Codex's AGENTS.md prelude, Cursor's active transcript,
+resumable graph and message order, and OpenCode's tool-result pairing, and a
+conversion-only example with a bounded JSON
 protocol. The same build serves NicolaPanero/zed. Agent file formats
 remain in the official library. No second codec exists in Superset.
 
@@ -27,7 +28,7 @@ It returns a fresh native targetSessionId, reference, cwd, messageCount and
 warnings. `capabilities` returns declared and verified adapters separately.
 Errors contain fixed codes, never transcript text or credentials.
 
-Engine `0.14.4-fork.3` has verified Claude Code, Codex, Cursor CLI, Grok
+Engine `0.14.4-fork.5` has verified Claude Code, Codex, Cursor CLI, Grok
 Build and OpenCode adapters on macOS arm64. All 20 cross-agent directions
 passed real native resumes using dedicated multi-turn read/edit/shell
 fixtures. Assertions check persisted targets, cwd, unmodified source

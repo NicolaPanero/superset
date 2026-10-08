@@ -16,7 +16,7 @@ import {
 
 const engine = z.object({
 	protocolVersion: z.literal(1),
-	engineVersion: z.literal("0.14.4-fork.3"),
+	engineVersion: z.literal("0.14.4-fork.5"),
 });
 const capabilitiesSchema = engine.extend({
 	conversionOnly: z.literal(true),
