@@ -225,7 +225,13 @@ function V2WorkspaceContent() {
 		matchedPresets,
 		resolvePresetCommands,
 	});
-	useForkFocusChatLink(store, workspaceId, terminalId, focusRequestId);
+	useForkFocusChatLink(
+		store,
+		workspaceId,
+		terminalId,
+		focusRequestId,
+		isLayoutReady,
+	);
 	useConsumeAutomationRunLink({
 		store,
 		workspaceId,
