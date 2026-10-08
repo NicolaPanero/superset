@@ -115,9 +115,10 @@ incluso (serve anche Rust): `bun run fork:install`. L'app precedente resta in
 `DEVELOPMENT.md`. Il database locale richiede PostgreSQL 18. Per usare dati di
 sviluppo separati, imposta `SUPERSET_HOME_DIR` nel `.env` della radice.
 
-Il convertitore usato da Superset è txcript con la patch
-`tools/txcript-transfer/native-transfer.patch` (vedi il README in quella
-cartella). Dopo una modifica alla patch:
+Il convertitore usato da Superset è il fork di txcript
+[NicolaPanero/txcript](https://github.com/NicolaPanero/txcript) (vedi
+`tools/txcript-transfer/README.md`), lo stesso incluso in Zed Fork. Le
+correzioni si fanno lì; dopo aver cambiato la revisione nello script:
 
 ```bash
 bun scripts/build-txcript-transfer.ts
@@ -194,6 +195,6 @@ Nuove funzioni del fork vanno scritte allo stesso modo.
 - Il fallback automatico dell'account quando una quota finisce non c'è ancora.
 - Le sessioni di Cursor IDE non sono supportate, solo Cursor CLI.
 - "Apri figlia" nello storico riapre nel terminale anche una sessione nata in chat.
-- La patch di txcript è legata a una revisione fissa di txcript.
+- Il fork di txcript è legato a una revisione fissa di txcript ufficiale.
 - Login Microsoft, Jira e Bitbucket richiedono un backend proprio e non sono
   iniziati.

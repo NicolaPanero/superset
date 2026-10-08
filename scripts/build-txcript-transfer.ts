@@ -1,20 +1,13 @@
-import { createHash } from "node:crypto";
 import { chmod, copyFile, mkdir, rename, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 
-const revision = "8cd3b0e63f797b1531a14197f41a0e9eeedec8c6";
-const repository = "https://github.com/skillsynchq/txcript.git";
+// Tag v0.14.4-fork.3 of the owner's txcript fork: official txcript at
+// 8cd3b0e plus the fixes this fork needs (see FORK.md there).
+const revision = "0d56ce01510fd1bc125ef77d3e9034441d70f812";
+const repository = "https://github.com/NicolaPanero/txcript.git";
 const repoRoot = resolve(import.meta.dir, "..");
-const patch = join(repoRoot, "tools/txcript-transfer/native-transfer.patch");
-const digest = createHash("sha256")
-	.update(Buffer.from(await Bun.file(patch).arrayBuffer()))
-	.digest("hex");
-const cache = join(
-	repoRoot,
-	".cache/txcript-transfer",
-	`${revision}-${digest.slice(0, 12)}`,
-);
+const cache = join(repoRoot, ".cache/txcript-transfer", revision);
 const targetHome =
 	process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset");
 
@@ -29,15 +22,11 @@ function run(args: string[], cwd = repoRoot) {
 }
 
 run(["cargo", "--version"]);
-if (!(await Bun.file(join(cache, ".superset-patched")).exists())) {
+if (!(await Bun.file(join(cache, ".git/HEAD")).exists())) {
 	await mkdir(cache, { recursive: true });
-	if (!(await Bun.file(join(cache, ".git/HEAD")).exists()))
-		run(["git", "clone", "--no-checkout", repository, cache]);
-	run(["git", "checkout", "--detach", revision], cache);
-	run(["git", "apply", "--check", patch], cache);
-	run(["git", "apply", patch], cache);
-	await writeFile(join(cache, ".superset-patched"), digest);
+	run(["git", "clone", "--no-checkout", repository, cache]);
 }
+run(["git", "checkout", "--detach", revision], cache);
 run(
 	[
 		"cargo",
@@ -79,7 +68,6 @@ await writeFile(
 		{
 			repository,
 			revision,
-			patchSha256: digest,
 			engineVersion: details.engineVersion,
 		},
 		null,
