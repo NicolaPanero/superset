@@ -4,6 +4,7 @@ import {
 	mkdtempSync,
 	readFileSync,
 	rmSync,
+	symlinkSync,
 	utimesSync,
 	writeFileSync,
 } from "node:fs";
@@ -70,6 +71,25 @@ describe("moveClaudeSession", () => {
 			await moveClaudeSession({
 				sessionId: SESSION,
 				configDirs: [work, home],
+				targetDir: work,
+			}),
+		).toEqual({ moved: false, reason: "same_account" });
+	});
+});
+
+describe("moveClaudeSession with shared projects", () => {
+	test("does nothing when both logins share one projects folder", async () => {
+		const root = mkdtempSync(join(tmpdir(), "move-claude-"));
+		roots.push(root);
+		const home = login(root, "home", "chat", 2);
+		const work = join(root, "work");
+		mkdirSync(work);
+		symlinkSync(join(home, "projects"), join(work, "projects"));
+
+		expect(
+			await moveClaudeSession({
+				sessionId: SESSION,
+				configDirs: [home, work],
 				targetDir: work,
 			}),
 		).toEqual({ moved: false, reason: "same_account" });
