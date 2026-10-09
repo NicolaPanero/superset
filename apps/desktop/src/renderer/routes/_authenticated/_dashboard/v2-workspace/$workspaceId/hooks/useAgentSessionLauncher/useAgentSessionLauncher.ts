@@ -6,13 +6,13 @@ import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
 import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import {
 	useV2AgentConfigs,
 	v2AgentConfigsQueryOptions,
 } from "renderer/hooks/useV2AgentConfigs";
+import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import type { StoreApi } from "zustand/vanilla";
 import type {
@@ -28,7 +28,7 @@ import { useForkBackgroundChats } from "../useForkBackgroundChats";
 
 export interface CreateNewAgentSessionInput {
 	nativeTerminal?: boolean;
-	accountConfirmed?: boolean;
+	accountValidated?: boolean;
 	accountSelection?: string | null;
 	configId: string;
 	placement: "split-pane" | "new-tab";
@@ -90,8 +90,8 @@ export function useAgentSessionLauncher({
 			const presetId = config?.presetId;
 			if (!presetId || !acpHarnessForPreset(presetId)) return null;
 			if (
-				!input.accountConfirmed &&
-				!(await confirmAccountLaunch({
+				!input.accountValidated &&
+				!(await validateAccountLaunch({
 					hostUrl,
 					agent: config.id,
 					provider: presetId,
@@ -168,7 +168,7 @@ export function useAgentSessionLauncher({
 			const config = configs.find((entry) => entry.id === input.configId);
 			if (
 				!config ||
-				!(await confirmAccountLaunch({
+				!(await validateAccountLaunch({
 					hostUrl,
 					agent: config.id,
 					provider: config.presetId,
@@ -177,7 +177,7 @@ export function useAgentSessionLauncher({
 				}))
 			)
 				return null;
-			input = { ...input, accountConfirmed: true };
+			input = { ...input, accountValidated: true };
 			if (
 				!input.nativeTerminal &&
 				!input.forkSessionId &&

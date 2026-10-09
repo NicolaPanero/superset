@@ -3486,9 +3486,6 @@ msgstr "Nie znaleziono sesji czatu"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Powierzchnie czatu: wiadomości, rozumowanie, sugestie"
 
-msgid "Check account before starting"
-msgstr "Sprawdź konto przed uruchomieniem"
-
 msgid "Check again"
 msgstr "Sprawdź ponownie"
 
@@ -3611,9 +3608,6 @@ msgstr "Wybierz konto"
 
 msgid "Choose an existing repo folder"
 msgstr "Wybierz folder istniejącego repozytorium"
-
-msgid "Choose another account"
-msgstr "Wybierz inne konto"
 
 msgid "Choose app"
 msgstr "Wybierz aplikację"
@@ -9150,6 +9144,9 @@ msgstr "Ostatni dzień każdego miesiąca"
 
 msgid "Last day of each month at {time}"
 msgstr "Ostatni dzień każdego miesiąca o {time}"
+
+msgid "Last known"
+msgstr "Ostatni odczyt"
 
 msgid "Last run"
 msgstr "Ostatnie uruchomienie"
@@ -15694,9 +15691,6 @@ msgstr "Dodaj plik do indeksu"
 msgid "Staged"
 msgstr "Zaindeksowane"
 
-msgid "Stale"
-msgstr "Nieaktualne"
-
 msgid "Standard action strip for pane headers"
 msgstr "Standardowy pasek akcji dla nagłówków paneli"
 
@@ -15778,9 +15772,6 @@ msgstr "Uruchamiaj agentów, śledź ich na żywo i przeglądaj diff z telefonu.
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Uruchom agenta lub terminal, aby zacząć pracę w tym obszarze roboczym."
-
-msgid "Start anyway"
-msgstr "Uruchom mimo to"
 
 msgid "Start browsing"
 msgstr "Zacznij przeglądać"
@@ -17043,9 +17034,6 @@ msgstr "To konto {plugin} zostało już połączone przez {owner}. Poproś o wcz
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "To konto {plugin} jest już połączone z inną organizacją Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "To konto może generować opłaty lub nie można sprawdzić dostępnego limitu. Wybierz inne konto, odśwież użycie lub kontynuuj to uruchomienie."
 
 msgid "This action is irreversible."
 msgstr "Tej operacji nie można cofnąć."

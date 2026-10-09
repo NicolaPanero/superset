@@ -3486,9 +3486,6 @@ msgstr "Không tìm thấy phiên chat"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 
-msgid "Check account before starting"
-msgstr "Kiểm tra tài khoản trước khi bắt đầu"
-
 msgid "Check again"
 msgstr "Kiểm tra lại"
 
@@ -3611,9 +3608,6 @@ msgstr "Chọn tài khoản"
 
 msgid "Choose an existing repo folder"
 msgstr "Chọn một thư mục repo có sẵn"
-
-msgid "Choose another account"
-msgstr "Chọn tài khoản khác"
 
 msgid "Choose app"
 msgstr "Chọn ứng dụng"
@@ -9150,6 +9144,9 @@ msgstr "Ngày cuối mỗi tháng"
 
 msgid "Last day of each month at {time}"
 msgstr "Ngày cuối mỗi tháng lúc {time}"
+
+msgid "Last known"
+msgstr "Lần đọc gần nhất"
 
 msgid "Last run"
 msgstr "Chạy lần cuối"
@@ -15694,9 +15691,6 @@ msgstr "Stage tệp"
 msgid "Staged"
 msgstr "Đã stage"
 
-msgid "Stale"
-msgstr "Dữ liệu cũ"
-
 msgid "Standard action strip for pane headers"
 msgstr "Dải hành động chuẩn cho tiêu đề khung"
 
@@ -15778,9 +15772,6 @@ msgstr "Khởi chạy agent, theo dõi trực tiếp và xem xét diff từ đi�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Hãy khởi động một agent hoặc terminal để bắt đầu làm việc trong workspace này."
-
-msgid "Start anyway"
-msgstr "Vẫn bắt đầu"
 
 msgid "Start browsing"
 msgstr "Bắt đầu duyệt web"
@@ -17043,9 +17034,6 @@ msgstr "Tài khoản {plugin} này đã được {owner} kết nối. Hãy đề
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Tài khoản {plugin} này đã được một tổ chức Superset khác kết nối."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Tài khoản này có thể phát sinh phí hoặc không thể xác minh hạn mức còn lại. Chọn tài khoản khác, làm mới mức sử dụng hoặc tiếp tục lần khởi chạy này."
 
 msgid "This action is irreversible."
 msgstr "Không thể hoàn tác thao tác này."

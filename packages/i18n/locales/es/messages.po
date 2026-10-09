@@ -3486,9 +3486,6 @@ msgstr "Sesión de chat no encontrada"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Superficies de chat: mensajes, razonamiento, sugerencias"
 
-msgid "Check account before starting"
-msgstr "Verificar la cuenta antes de iniciar"
-
 msgid "Check again"
 msgstr "Volver a comprobar"
 
@@ -3611,9 +3608,6 @@ msgstr "Elige una cuenta"
 
 msgid "Choose an existing repo folder"
 msgstr "Elige una carpeta de repo existente"
-
-msgid "Choose another account"
-msgstr "Elegir otra cuenta"
 
 msgid "Choose app"
 msgstr "Elegir app"
@@ -9150,6 +9144,9 @@ msgstr "El último día de cada mes"
 
 msgid "Last day of each month at {time}"
 msgstr "El último día de cada mes a las {time}"
+
+msgid "Last known"
+msgstr "Última lectura"
 
 msgid "Last run"
 msgstr "Última ejecución"
@@ -15694,9 +15691,6 @@ msgstr "Preparar archivo"
 msgid "Staged"
 msgstr "Preparados"
 
-msgid "Stale"
-msgstr "Datos antiguos"
-
 msgid "Standard action strip for pane headers"
 msgstr "Tira de acciones estándar para los encabezados de panel"
 
@@ -15778,9 +15772,6 @@ msgstr "Inicia agentes, síguelos en directo y revisa el diff desde tu móvil. T
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Inicia un agente o un terminal para empezar a trabajar en este espacio de trabajo."
-
-msgid "Start anyway"
-msgstr "Iniciar de todos modos"
 
 msgid "Start browsing"
 msgstr "Empezar a navegar"
@@ -17043,9 +17034,6 @@ msgstr "{owner} ya conectó esta cuenta de {plugin}. Pídele que la desconecte p
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Esta cuenta de {plugin} ya está conectada por otra organización de Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Esta cuenta puede generar cargos o no se puede verificar su cuota disponible. Elige otra cuenta, actualiza el uso o continúa para este inicio."
 
 msgid "This action is irreversible."
 msgstr "Esta acción es irreversible."

@@ -6,10 +6,10 @@ import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useMemo, useState } from "react";
-import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
@@ -27,7 +27,6 @@ const GENERAL_WINDOWS = ["five_hour", "seven_day", "primary", "secondary"];
 export function useForkAccountSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
-	chooseOther?: () => void,
 ): ForkAccountSwitcher | undefined {
 	const { t } = useLingui();
 	const data = ctx.pane.data as TerminalPaneData;
@@ -92,12 +91,11 @@ export function useForkAccountSwitch(
 		if (switching || selection === current) return;
 		if (
 			!hostUrl ||
-			!(await confirmAccountLaunch({
+			!(await validateAccountLaunch({
 				hostUrl,
 				agent: data.acpAgentConfigId ?? "claude",
 				provider: "claude",
 				selection,
-				chooseOther,
 			}))
 		)
 			return;

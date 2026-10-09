@@ -3486,9 +3486,6 @@ msgstr "Chatsessie niet gevonden"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chatoppervlakken: berichten, redeneren, suggesties"
 
-msgid "Check account before starting"
-msgstr "Account controleren voor de start"
-
 msgid "Check again"
 msgstr "Opnieuw controleren"
 
@@ -3611,9 +3608,6 @@ msgstr "Kies een account"
 
 msgid "Choose an existing repo folder"
 msgstr "Kies een bestaande repo-map"
-
-msgid "Choose another account"
-msgstr "Ander account kiezen"
 
 msgid "Choose app"
 msgstr "Kies app"
@@ -9150,6 +9144,9 @@ msgstr "Laatste dag van elke maand"
 
 msgid "Last day of each month at {time}"
 msgstr "Laatste dag van elke maand om {time}"
+
+msgid "Last known"
+msgstr "Laatste meting"
 
 msgid "Last run"
 msgstr "Laatste run"
@@ -15694,9 +15691,6 @@ msgstr "Bestand stagen"
 msgid "Staged"
 msgstr "Gestaged"
 
-msgid "Stale"
-msgstr "Verouderd"
-
 msgid "Standard action strip for pane headers"
 msgstr "Standaard actiebalk voor paneelkoppen"
 
@@ -15778,9 +15772,6 @@ msgstr "Start agents, volg ze live en review de diff vanaf je telefoon. Je code 
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Start een agent of een terminal om in deze werkruimte te werken."
-
-msgid "Start anyway"
-msgstr "Toch starten"
 
 msgid "Start browsing"
 msgstr "Begin met browsen"
@@ -17043,9 +17034,6 @@ msgstr "Dit {plugin}-account is al verbonden door {owner}. Vraag om het eerst lo
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Dit {plugin}-account is al verbonden door een andere Superset-organisatie."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Dit account kan kosten veroorzaken of het beschikbare quotum kan niet worden gecontroleerd. Kies een ander account, vernieuw het gebruik of ga verder voor deze start."
 
 msgid "This action is irreversible."
 msgstr "Deze actie kan niet worden teruggedraaid."

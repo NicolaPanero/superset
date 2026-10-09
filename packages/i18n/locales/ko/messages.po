@@ -3486,9 +3486,6 @@ msgstr "채팅 세션을 찾을 수 없습니다"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "채팅 화면: 메시지, 추론, 제안"
 
-msgid "Check account before starting"
-msgstr "시작 전 계정 확인"
-
 msgid "Check again"
 msgstr "다시 확인"
 
@@ -3611,9 +3608,6 @@ msgstr "계정 선택"
 
 msgid "Choose an existing repo folder"
 msgstr "기존 리포지토리 폴더 선택"
-
-msgid "Choose another account"
-msgstr "다른 계정 선택"
 
 msgid "Choose app"
 msgstr "앱 선택"
@@ -9150,6 +9144,9 @@ msgstr "매월 마지막 날"
 
 msgid "Last day of each month at {time}"
 msgstr "매월 마지막 날 {time}"
+
+msgid "Last known"
+msgstr "마지막 확인값"
 
 msgid "Last run"
 msgstr "마지막 실행"
@@ -15694,9 +15691,6 @@ msgstr "파일 스테이징"
 msgid "Staged"
 msgstr "스테이징됨"
 
-msgid "Stale"
-msgstr "오래된 데이터"
-
 msgid "Standard action strip for pane headers"
 msgstr "패널 헤더용 표준 동작 스트립"
 
@@ -15778,9 +15772,6 @@ msgstr "휴대폰에서 에이전트를 시작하고, 실시간으로 따라가�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "에이전트나 터미널을 시작해 이 워크스페이스에서 작업을 시작하세요."
-
-msgid "Start anyway"
-msgstr "계속 시작"
 
 msgid "Start browsing"
 msgstr "탐색 시작"
@@ -17043,9 +17034,6 @@ msgstr "이 {plugin} 계정은 이미 {owner}님이 연결했습니다. 먼저 �
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "이 {plugin} 계정은 이미 다른 Superset 조직에 연결되어 있습니다."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "이 계정은 요금이 발생할 수 있거나 사용 가능한 한도를 확인할 수 없습니다. 다른 계정을 선택하거나 사용량을 새로 고치거나 이번 실행을 계속하세요."
 
 msgid "This action is irreversible."
 msgstr "이 동작은 되돌릴 수 없습니다."

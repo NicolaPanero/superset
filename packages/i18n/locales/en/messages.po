@@ -3486,9 +3486,6 @@ msgstr "Chat session not found"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chat surfaces: messages, reasoning, suggestions"
 
-msgid "Check account before starting"
-msgstr "Check account before starting"
-
 msgid "Check again"
 msgstr "Check again"
 
@@ -3611,9 +3608,6 @@ msgstr "Choose an account"
 
 msgid "Choose an existing repo folder"
 msgstr "Choose an existing repo folder"
-
-msgid "Choose another account"
-msgstr "Choose another account"
 
 msgid "Choose app"
 msgstr "Choose app"
@@ -9150,6 +9144,9 @@ msgstr "Last day of each month"
 
 msgid "Last day of each month at {time}"
 msgstr "Last day of each month at {time}"
+
+msgid "Last known"
+msgstr "Last known"
 
 msgid "Last run"
 msgstr "Last run"
@@ -15694,9 +15691,6 @@ msgstr "Stage file"
 msgid "Staged"
 msgstr "Staged"
 
-msgid "Stale"
-msgstr "Stale"
-
 msgid "Standard action strip for pane headers"
 msgstr "Standard action strip for pane headers"
 
@@ -15778,9 +15772,6 @@ msgstr "Start agents, follow them live, and review the diff from your phone. You
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Start an agent or a terminal to begin working in this workspace."
-
-msgid "Start anyway"
-msgstr "Start anyway"
 
 msgid "Start browsing"
 msgstr "Start browsing"
@@ -17043,9 +17034,6 @@ msgstr "This {plugin} account is already connected by {owner}. Ask them to disco
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "This {plugin} account is already connected by another Superset organization."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
 
 msgid "This action is irreversible."
 msgstr "This action is irreversible."

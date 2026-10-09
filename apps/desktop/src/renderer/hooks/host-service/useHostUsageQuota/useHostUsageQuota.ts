@@ -1,4 +1,9 @@
 import type { AppRouter } from "@superset/host-service";
+import {
+	ACCOUNT_QUOTA_CACHE_MS,
+	ACCOUNT_QUOTA_POLL_MS,
+	ACCOUNT_QUOTA_PROVIDER_MS,
+} from "@superset/shared/fork-account-usage";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useCallback, useEffect, useMemo } from "react";
@@ -9,16 +14,9 @@ export type UsageAccount = RouterOutputs["usage"]["quota"][number];
 export type UsageQuotaWindow = UsageAccount["windows"][number];
 
 export const HOST_USAGE_QUOTA_QUERY_KEY = ["host-usage-quota"] as const;
-const USAGE_REFETCH_INTERVAL_MS = 5 * 60_000;
 const USAGE_CACHE_MS = 24 * 60 * 60_000;
 const recoveries = new Map<string, number>();
 
-/**
- * Subscription quota for every AI CLI login on the given host. The host
- * caches upstream responses for ~5 min (faster polling gets the endpoint
- * 429-blacklisted), so the poll here mostly re-reads that cache; `refresh`
- * bypasses it for an explicit user-initiated update.
- */
 export function useHostUsageQuota(hostUrl: string | null) {
 	const queryClient = useQueryClient();
 	const queryKey = useMemo(
@@ -33,14 +31,21 @@ export function useHostUsageQuota(hostUrl: string | null) {
 			if (!hostUrl) return [] as UsageAccount[];
 			return getHostServiceClientByUrl(hostUrl).usage.quota.query();
 		},
-		refetchInterval: USAGE_REFETCH_INTERVAL_MS,
-		staleTime: USAGE_REFETCH_INTERVAL_MS,
+		refetchInterval: ACCOUNT_QUOTA_POLL_MS,
+		staleTime: ACCOUNT_QUOTA_CACHE_MS,
+		refetchOnMount: "always",
+		refetchOnWindowFocus: "always",
 		// Keep the last accounts visible when returning after a long absence.
 		gcTime: USAGE_CACHE_MS,
 	});
 
 	useEffect(() => {
-		if (!hostUrl || !query.data || document.visibilityState === "hidden")
+		if (
+			!hostUrl ||
+			!query.data ||
+			!query.dataUpdatedAt ||
+			document.visibilityState === "hidden"
+		)
 			return;
 		const candidates = query.data.filter(
 			(account) =>
@@ -49,7 +54,7 @@ export function useHostUsageQuota(hostUrl: string | null) {
 					account.status === "token_expired"),
 		);
 		for (const [key, at] of recoveries)
-			if (Date.now() - at >= USAGE_REFETCH_INTERVAL_MS) recoveries.delete(key);
+			if (Date.now() - at >= ACCOUNT_QUOTA_PROVIDER_MS) recoveries.delete(key);
 		const pending = candidates.filter((account) => {
 			const key = `${hostUrl}:${account.agent}:${account.selection ?? ""}`;
 			if (recoveries.has(key) || recoveries.size >= 128) return false;
@@ -82,7 +87,7 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		return () => {
 			cancelled = true;
 		};
-	}, [hostUrl, query.data, queryClient, queryKey]);
+	}, [hostUrl, query.data, query.dataUpdatedAt, queryClient, queryKey]);
 
 	const refresh = useCallback(async () => {
 		if (!hostUrl) return;

@@ -3486,9 +3486,6 @@ msgstr "Sohbet oturumu bulunamadı"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
 
-msgid "Check account before starting"
-msgstr "Başlatmadan önce hesabı doğrula"
-
 msgid "Check again"
 msgstr "Yeniden denetle"
 
@@ -3611,9 +3608,6 @@ msgstr "Bir hesap seçin"
 
 msgid "Choose an existing repo folder"
 msgstr "Mevcut bir depo klasörü seçin"
-
-msgid "Choose another account"
-msgstr "Başka hesap seç"
 
 msgid "Choose app"
 msgstr "Uygulama seç"
@@ -9150,6 +9144,9 @@ msgstr "Her ayın son günü"
 
 msgid "Last day of each month at {time}"
 msgstr "Her ayın son günü saat {time}"
+
+msgid "Last known"
+msgstr "Son okuma"
 
 msgid "Last run"
 msgstr "Son çalıştırma"
@@ -15694,9 +15691,6 @@ msgstr "Dosyayı hazırla"
 msgid "Staged"
 msgstr "Hazırlanmış"
 
-msgid "Stale"
-msgstr "Eski veriler"
-
 msgid "Standard action strip for pane headers"
 msgstr "Bölme başlıkları için standart eylem şeridi"
 
@@ -15778,9 +15772,6 @@ msgstr "Telefonunuzdan ajanları başlatın, canlı takip edin ve diff'i inceley
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Bu çalışma alanında çalışmaya başlamak için bir ajan veya terminal başlatın."
-
-msgid "Start anyway"
-msgstr "Yine de başlat"
 
 msgid "Start browsing"
 msgstr "Taramaya başlayın"
@@ -17043,9 +17034,6 @@ msgstr "Bu {plugin} hesabını zaten {owner} bağlamış. Önce bağlantıyı ke
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Bu {plugin} hesabı zaten başka bir Superset kuruluşuna bağlı."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Bu hesap ücretlendirmeye neden olabilir veya kullanılabilir kotası doğrulanamıyor. Başka bir hesap seçin, kullanımı yenileyin ya da bu başlatma için devam edin."
 
 msgid "This action is irreversible."
 msgstr "Bu işlem geri alınamaz."

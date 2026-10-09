@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { ACCOUNT_QUOTA_PROVIDER_MS } from "@superset/shared/fork-account-usage";
 
 interface FetchResponse {
 	headers: { get(name: string): string | null; has(name: string): boolean };
@@ -9,7 +10,7 @@ interface FetchResponse {
 	arrayBuffer(): Promise<ArrayBuffer>;
 	clone(): FetchResponse;
 }
-const TTL = 5 * 60_000;
+const TTL = ACCOUNT_QUOTA_PROVIDER_MS;
 const entries = new Map<
 	string,
 	{ until: number; credentialKey: string; promise: Promise<FetchResponse> }
@@ -29,7 +30,7 @@ export async function quotaFetch(
 	identity?: string,
 ): Promise<FetchResponse> {
 	const credentialKey = createHash("sha256")
-		.update(JSON.stringify(init.headers))
+		.update(JSON.stringify(init.headers ?? {}))
 		.digest("hex");
 	const key = createHash("sha256")
 		.update(url + (identity ?? credentialKey))

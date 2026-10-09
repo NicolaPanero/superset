@@ -52,7 +52,10 @@ export function ForkAccountPicker({
 			<DropdownMenu
 				modal={false}
 				open={account.pickerOpen}
-				onOpenChange={account.setPickerOpen}
+				onOpenChange={(open) => {
+					account.setPickerOpen(open);
+					if (open) void account.quota.refresh().catch(() => {});
+				}}
 			>
 				<DropdownMenuTrigger
 					data-fork-account-picker

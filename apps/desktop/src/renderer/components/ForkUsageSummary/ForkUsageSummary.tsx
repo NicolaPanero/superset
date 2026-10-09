@@ -29,7 +29,10 @@ export function ForkUsageSummary({
 		) : state.reason === "exhausted" ? (
 			<Trans>Quota exhausted</Trans>
 		) : state.reason === "stale" ? (
-			<Trans>Stale</Trans>
+			<>
+				{remaining && <>{remaining} · </>}
+				<Trans>Last known</Trans>
+			</>
 		) : state.reason === "unknown" ? (
 			<Trans>Unverified</Trans>
 		) : (

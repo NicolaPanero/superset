@@ -3486,9 +3486,6 @@ msgstr "未找到聊天会话"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "聊天界面：消息、推理、建议"
 
-msgid "Check account before starting"
-msgstr "启动前检查账户"
-
 msgid "Check again"
 msgstr "重新检查"
 
@@ -3611,9 +3608,6 @@ msgstr "选择账户"
 
 msgid "Choose an existing repo folder"
 msgstr "选择已有的仓库文件夹"
-
-msgid "Choose another account"
-msgstr "选择其他账户"
 
 msgid "Choose app"
 msgstr "选择应用"
@@ -9150,6 +9144,9 @@ msgstr "每月最后一天"
 
 msgid "Last day of each month at {time}"
 msgstr "每月最后一天{time}"
+
+msgid "Last known"
+msgstr "上次读取"
 
 msgid "Last run"
 msgstr "上次运行"
@@ -15694,9 +15691,6 @@ msgstr "暂存文件"
 msgid "Staged"
 msgstr "已暂存"
 
-msgid "Stale"
-msgstr "数据已过时"
-
 msgid "Standard action strip for pane headers"
 msgstr "面板标题栏的标准操作条"
 
@@ -15778,9 +15772,6 @@ msgstr "在手机上启动智能体、实时跟进并审查差异。你的代码
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "启动一个智能体或终端，开始在此工作区中工作。"
-
-msgid "Start anyway"
-msgstr "仍然启动"
 
 msgid "Start browsing"
 msgstr "开始浏览"
@@ -17043,9 +17034,6 @@ msgstr "该 {plugin} 账户已由 {owner} 连接。请先请其断开连接。"
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "该 {plugin} 账户已被另一个 Superset 组织连接。"
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "此账户可能产生费用，或无法验证其可用配额。请选择其他账户、刷新使用情况，或继续本次启动。"
 
 msgid "This action is irreversible."
 msgstr "此操作不可逆。"

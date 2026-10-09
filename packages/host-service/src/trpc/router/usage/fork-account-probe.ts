@@ -46,6 +46,7 @@ export function claudeProbe(
 	env: Record<string, string>,
 	timeoutMs = 15_000,
 	spawn = spawnPty,
+	inputDelayMs = 300,
 ) {
 	return new Promise<void>((resolve, reject) => {
 		const pty = spawn(
@@ -66,10 +67,15 @@ export function claudeProbe(
 				"",
 				"--allowed-tools",
 				"",
-				"--no-session-persistence",
 			],
 			{ cwd, env, cols: 120, rows: 40, name: "xterm-256color" },
 		);
+		let inputTimer: ReturnType<typeof setTimeout> | undefined;
+		const writeWhenReady = (value: string) => {
+			inputTimer = setTimeout(() => {
+				if (!done) pty.write(value);
+			}, inputDelayMs);
+		};
 		let output = "",
 			sent = false,
 			trusted = false,
@@ -78,6 +84,7 @@ export function claudeProbe(
 			if (done) return;
 			done = true;
 			clearTimeout(timer);
+			clearTimeout(inputTimer);
 			pty.kill("SIGKILL");
 			error ? reject(error) : resolve();
 		};
@@ -92,24 +99,25 @@ export function claudeProbe(
 					new RegExp(`${String.fromCharCode(27)}\\[[0-9;?]*[a-zA-Z]`, "g"),
 					"",
 				);
-			if (!trusted && /trust this folder|Yes, I trust/i.test(output)) {
+			const compactOutput = output.replace(/\s/g, "");
+			if (!trusted && /trustthisfolder|Yes,Itrust/i.test(compactOutput)) {
 				trusted = true;
-				pty.write("\r");
+				writeWhenReady(/❯No,exit/i.test(compactOutput) ? "\x1b[B\r" : "\r");
 				output = "";
 				return;
 			}
-			if (!sent && /for shortcuts|Try "/.test(output)) {
+			if (!sent && /forshortcuts|Try"/.test(compactOutput)) {
 				sent = true;
-				pty.write("/usage\r");
+				writeWhenReady("/usage\r");
 				output = "";
 				return;
 			}
 			if (
 				sent &&
-				/Current session|Current week|Resets|Usage limit/i.test(output)
+				/Currentsession|Currentweek|Resets|Usagelimit/i.test(compactOutput)
 			)
 				finish();
-			if (/Please log in|Not logged in|Run \/login/i.test(output))
+			if (/Pleaselogin|Notloggedin|Run\/login/i.test(compactOutput))
 				finish(new Error("probe_login_required"));
 		});
 		pty.onExit(() => finish(new Error("probe_exited")));

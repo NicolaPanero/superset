@@ -21,8 +21,10 @@ test("Claude recovery sends only the usage command with hooks and MCP disabled",
 			},
 		};
 	}) as unknown as typeof NativeSpawn;
-	await claudeProbe("/test-only-probe", {}, 1000, spawn);
+	await claudeProbe("/test-only-probe", {}, 1000, spawn, 0);
 	expect(writes).toEqual(["/usage\r"]);
+	expect(args).not.toContain("--no-session-persistence");
+	expect(args).not.toContain("--print");
 	expect(args).toContain("--strict-mcp-config");
 	expect(args).toContain('{"mcpServers":{}}');
 	expect(args).toContain(
@@ -51,4 +53,29 @@ test("only two recovery operations run at once", async () => {
 	releases.shift()?.();
 	await Promise.all([b, c]);
 	expect(peak).toBe(2);
+});
+
+test("Claude recovery handles the current trust screen without sending a model prompt", async () => {
+	const writes: string[] = [];
+	let onData: ((chunk: string) => void) | undefined;
+	const spawn = (() => {
+		queueMicrotask(() => onData?.("❯No,exit\r\nYes,Itrustthisfolder"));
+		return {
+			onData: (fn: typeof onData) => {
+				onData = fn;
+			},
+			onExit: () => {},
+			kill: () => {},
+			write: (value: string) => {
+				writes.push(value);
+				queueMicrotask(() =>
+					onData?.(
+						value === "\x1b[B\r" ? "?forshortcuts" : "Currentsession:42%",
+					),
+				);
+			},
+		};
+	}) as unknown as typeof NativeSpawn;
+	await claudeProbe("/test-only-probe", {}, 1000, spawn, 0);
+	expect(writes).toEqual(["\x1b[B\r", "/usage\r"]);
 });

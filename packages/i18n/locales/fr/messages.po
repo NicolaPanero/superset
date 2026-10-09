@@ -3486,9 +3486,6 @@ msgstr "Session de chat introuvable"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Surfaces de chat : messages, raisonnement, suggestions"
 
-msgid "Check account before starting"
-msgstr "Vérifier le compte avant de démarrer"
-
 msgid "Check again"
 msgstr "Vérifier à nouveau"
 
@@ -3611,9 +3608,6 @@ msgstr "Choisir un compte"
 
 msgid "Choose an existing repo folder"
 msgstr "Choisir un dossier de dépôt existant"
-
-msgid "Choose another account"
-msgstr "Choisir un autre compte"
 
 msgid "Choose app"
 msgstr "Choisir une application"
@@ -9150,6 +9144,9 @@ msgstr "Dernier jour de chaque mois"
 
 msgid "Last day of each month at {time}"
 msgstr "Dernier jour de chaque mois à {time}"
+
+msgid "Last known"
+msgstr "Dernière lecture"
 
 msgid "Last run"
 msgstr "Dernière exécution"
@@ -15694,9 +15691,6 @@ msgstr "Indexer le fichier"
 msgid "Staged"
 msgstr "Indexés"
 
-msgid "Stale"
-msgstr "Données anciennes"
-
 msgid "Standard action strip for pane headers"
 msgstr "Barre d'actions standard pour les en-têtes de volet"
 
@@ -15778,9 +15772,6 @@ msgstr "Lancez des agents, suivez-les en direct et relisez le diff depuis votre 
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Démarrez un agent ou un terminal pour commencer à travailler dans cet espace de travail."
-
-msgid "Start anyway"
-msgstr "Démarrer quand même"
 
 msgid "Start browsing"
 msgstr "Commencer à naviguer"
@@ -17043,9 +17034,6 @@ msgstr "Ce compte {plugin} est déjà connecté par {owner}. Demandez-lui de le 
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Ce compte {plugin} est déjà connecté par une autre organisation Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Ce compte peut entraîner des frais ou son quota disponible ne peut pas être vérifié. Choisissez un autre compte, actualisez l’utilisation ou continuez pour ce lancement."
 
 msgid "This action is irreversible."
 msgstr "Cette action est irréversible."

@@ -3486,9 +3486,6 @@ msgstr "Сессия чата не найдена"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Поверхности чата: сообщения, рассуждения, подсказки"
 
-msgid "Check account before starting"
-msgstr "Проверить аккаунт перед запуском"
-
 msgid "Check again"
 msgstr "Проверить снова"
 
@@ -3611,9 +3608,6 @@ msgstr "Выберите аккаунт"
 
 msgid "Choose an existing repo folder"
 msgstr "Выберите папку существующего репозитория"
-
-msgid "Choose another account"
-msgstr "Выбрать другой аккаунт"
 
 msgid "Choose app"
 msgstr "Выберите приложение"
@@ -9150,6 +9144,9 @@ msgstr "В последний день каждого месяца"
 
 msgid "Last day of each month at {time}"
 msgstr "В последний день каждого месяца в {time}"
+
+msgid "Last known"
+msgstr "Последние данные"
 
 msgid "Last run"
 msgstr "Последний запуск"
@@ -15694,9 +15691,6 @@ msgstr "Проиндексировать файл"
 msgid "Staged"
 msgstr "Проиндексировано"
 
-msgid "Stale"
-msgstr "Устаревшие данные"
-
 msgid "Standard action strip for pane headers"
 msgstr "Стандартная полоса действий для заголовков панелей"
 
@@ -15778,9 +15772,6 @@ msgstr "Запускайте агентов, следите за ними в р�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Запустите агента или терминал, чтобы начать работу в этой рабочей области."
-
-msgid "Start anyway"
-msgstr "Всё равно запустить"
 
 msgid "Start browsing"
 msgstr "Начните просмотр"
@@ -17043,9 +17034,6 @@ msgstr "Аккаунт {plugin} уже подключил(а) {owner}. Попр�
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Этот аккаунт {plugin} уже подключён другой организацией Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Этот аккаунт может повлечь расходы, либо его доступную квоту невозможно проверить. Выберите другой аккаунт, обновите данные или продолжите этот запуск."
 
 msgid "This action is irreversible."
 msgstr "Это действие необратимо."
