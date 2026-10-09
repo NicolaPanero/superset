@@ -394,7 +394,7 @@ export async function createPlatformWindow({
 	const workspaceName = isDev ? resolveDevWorkspaceName() : undefined;
 	const windowTitle = workspaceName
 		? `${productName} — ${workspaceName}`
-		: productName;
+		: app.getName();
 
 	const window = createWindow({
 		id: "main",

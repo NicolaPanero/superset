@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { formatAge } from "@superset/i18n/format";
 import type { WorkspaceStore } from "@superset/panes";
+import { toast } from "@superset/ui/sonner";
 import { Spinner } from "@superset/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
@@ -31,13 +32,15 @@ export function ForkBackgroundChatsGroup({
 
 	const handleStop = (chat: BackgroundChat) => {
 		setStopping((current) => new Set(current).add(chat.terminalId));
-		void stop(chat).finally(() =>
-			setStopping((current) => {
-				const next = new Set(current);
-				next.delete(chat.terminalId);
-				return next;
-			}),
-		);
+		void stop(chat)
+			.catch(() => toast.error(t({ message: "Couldn't stop the chat" })))
+			.finally(() =>
+				setStopping((current) => {
+					const next = new Set(current);
+					next.delete(chat.terminalId);
+					return next;
+				}),
+			);
 	};
 
 	return (

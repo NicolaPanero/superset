@@ -1,10 +1,15 @@
 import { createContext, type ReactNode, useContext, useMemo } from "react";
+import type { ModifierEvent } from "renderer/lib/clickPolicy";
 import type { OpenFile } from "../../../../../../types";
+
+export type OpenPage = (url: string, event: ModifierEvent) => void;
 
 export type ChatPaneActions = {
 	/** Absent where the chat has no workspace to open files into. */
 	openFile?: OpenFile | undefined;
 	workspaceId?: string | undefined;
+	/** Absent where the chat has no workspace to open pages into. */
+	openPage?: OpenPage | undefined;
 };
 
 const ChatPaneActionsContext = createContext<ChatPaneActions>({});
@@ -18,10 +23,11 @@ export function ChatPaneActionsProvider({
 	children,
 	openFile,
 	workspaceId,
+	openPage,
 }: ChatPaneActions & { children: ReactNode }) {
 	const value = useMemo<ChatPaneActions>(
-		() => ({ openFile, workspaceId }),
-		[openFile, workspaceId],
+		() => ({ openFile, workspaceId, openPage }),
+		[openFile, workspaceId, openPage],
 	);
 	return (
 		<ChatPaneActionsContext.Provider value={value}>

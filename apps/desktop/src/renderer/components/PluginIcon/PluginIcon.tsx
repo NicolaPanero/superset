@@ -4,6 +4,7 @@ import type { IconType } from "react-icons";
 import { FaGithub } from "react-icons/fa";
 import { LuBookOpen, LuDrama, LuPuzzle } from "react-icons/lu";
 import {
+	SiGooglecalendar,
 	SiGooglechrome,
 	SiGoogledocs,
 	SiGooglesheets,
@@ -59,6 +60,7 @@ const PLUGIN_ICONS: Record<string, { icon: IconType; color?: string }> = {
 	context7: { icon: LuBookOpen },
 	playwright: { icon: LuDrama, color: "#2EAD33" },
 	"chrome-devtools": { icon: SiGooglechrome, color: "#4285F4" },
+	"google-calendar": { icon: SiGooglecalendar, color: "#4285F4" },
 	"google-docs": { icon: SiGoogledocs, color: "#4285F4" },
 	"google-sheets": { icon: SiGooglesheets, color: "#0F9D58" },
 	vercel: { icon: SiVercel },

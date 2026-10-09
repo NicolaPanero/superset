@@ -1,266 +1,136 @@
-# Superset fork
+# Superset++
 
-Fork personale di [superset-sh/superset](https://github.com/superset-sh/superset).
-Aggiunge una chat unica per gli agenti (ACP), il passaggio nativo di una
-conversazione da un agente all'altro e la gestione locale degli account. Usa i
-servizi ufficiali di Superset (login, sincronizzazione): tutte le aggiunte
-girano sul Mac.
+Fork personale di [superset-sh/superset](https://github.com/superset-sh/superset),
+basato sulla release stabile desktop **1.37.0**. Usa i servizi ufficiali per
+login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
-## Branch
+## Uso quotidiano
 
-| Branch | Contenuto |
-|---|---|
-| `main` | Copia esatta di `superset-sh/superset` `main`. Nessun commit del fork. |
-| `fork/main` | Branch di integrazione: l'ultima release stabile di upstream più tutte le funzioni del fork. È quello da usare e da cui si compila. |
-| `feature/*` | Storico dei singoli sviluppi, già fusi in `fork/main`. |
+- **Agente · Account** nell’intestazione della chat apre un unico pannello
+  per scegliere l’agente, il suo account e dove continuare: nella stessa
+  chat, in una nuova scheda o in un pannello affiancato.
+- Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
+  e le sue opzioni. Non cambia agente o account.
+- **Trova una chat** nel pannello Agents cerca per titolo, modello o branch
+  nei depositi locali di Claude, Codex, Cursor CLI, Grok e OpenCode, in tutti
+  gli account e nelle cartelle del progetto, inclusi i worktree. Se la chat
+  è già collegata a Superset, la riapre e la mette a fuoco.
+- **CLI / CHAT** riprende la stessa sessione nell’altra vista, conservando
+  l’account effettivo e la configurazione. L’adattatore uscente viene fermato
+  prima di avviare quello nuovo: la cronologia ha un solo processo scrittore.
+- Chiudere il pannello mantiene la chat in **Background chats**. Il comando
+  **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
+  Restano al massimo 20 chat in background per area di lavoro.
 
-## Funzioni aggiunte
+## Cosa è ufficiale e cosa mantiene il fork
 
-### Chat ACP come vista predefinita
+| Funzione | Base ufficiale 1.37 | Estensione Superset++ |
+|---|---|---|
+| Chat ACP e CLI/CHAT | Pannelli, protocolli, ripresa e passaggio tra viste | Account/configurazione persistenti e ponte Cursor CLI/ACP |
+| Ripresa e fork dello stesso agente | Azioni ufficiali | Conservazione dei profili nelle operazioni locali |
+| Modelli e opzioni della chat | Selettore ufficiale | Solo modelli dell’agente corrente; agente/account nell’intestazione |
+| Cambio tra agenti diversi | Passaggio del contesto | Conversione dei formati nativi tramite txcript e provenienza locale |
+| Chat locali | Sessioni collegate all’host | Ricerca nei depositi nativi, deduplicazione per deposito e riapertura delle chat collegate |
+| Account | Identità e consumi ufficiali | Profili locali per avvio e trasferimento; cambio account Claude nella chat |
 
-Claude, Codex, Cursor Agent, Grok Build, OpenCode e Pi si aprono in una chat
-grafica comune, collegata a ogni agente con l'Agent Client Protocol. Il
-terminale resta a un clic: il selettore **CLI / CHAT** nell'intestazione del
-pannello riprende la stessa sessione nell'altra vista. Se ACP non è
-disponibile per un agente, si apre il terminale.
+La chat ACP e il passaggio CLI/CHAT non sono stati introdotti dal fork.
+L’integrazione riutilizza i nuovi pannelli `chat-v3` ufficiali; un piccolo
+adattatore in `ForkChatExtras/utils/forkChatContext` collega le estensioni
+locali ai loro dati senza mantenere una seconda implementazione del pannello.
 
-Chiudere la scheda di una chat non ferma l'agente, come succede a un
-terminale lasciato in esecuzione: la chat compare in **Background chats** nel
-menu attività dell'area di lavoro (icona accanto a **Agents**) e nel badge
-agenti sotto l'area di lavoro nella barra laterale. Un clic la riapre in vista
-chat, con tutta la cronologia, anche dopo un riavvio dell'app. Aprendo un'area di
-lavoro senza schede, Superset riapre da solo la sua chat in background più
-recente: cliccare l'area di lavoro nella barra laterale riporta alla chat. Il pulsante di
-stop la chiude davvero. Si tengono al massimo 20 chat per area di lavoro.
+## Trasferimenti
 
-L'interruttore è in **Impostazioni → Experimental → ACP chat**. Cambiarlo non
-modifica le sessioni già aperte.
+Il trasferimento **nativo** converte la sessione verso Claude, Codex, Cursor
+CLI, Grok o OpenCode, nelle 20 direzioni supportate dal motore. Mantiene
+messaggi, chiamate agli strumenti e risultati compatibili con la destinazione.
+La sorgente viene conservata; ogni passaggio registra agente, configurazione,
+account e sessione in un database locale. Un avviso mostra la provenienza.
 
-### Passaggio tra agenti
+Se il trasferimento nativo non è disponibile o fallisce, il pannello resta
+aperto e propone **Continua con il contesto**. Serve una scelta esplicita.
+Questo trasferimento invia soltanto i messaggi visibili e può omettere storia
+precedente: conserva il limite ufficiale di **36.000 caratteri** del contesto.
+Quel limite non si applica alla conversione nativa di txcript. La ricerca
+non fonde copie indipendenti in account diversi: l’identità comprende agente,
+percorso canonico del deposito e ID nativo; gli alias dello stesso deposito
+vengono unificati conservando la versione più recente.
 
-- **Nativo (txcript)**: converte la sessione nel formato dell'agente di
-  destinazione e la apre come sessione sua, con tutta la cronologia (messaggi,
-  chiamate agli strumenti e risultati). Funziona tra Claude, Codex, Cursor CLI,
-  Grok e OpenCode, in tutte le 20 direzioni.
-  - Dal terminale: icona **Continue or fork session → Continue with another
-    agent… → Native Handoff**.
-  - Dalla chat, selettore del modello: scegliendo il modello di un altro
-    agente, la conversazione passa in modo nativo **nella stessa scheda**.
-    Così tornare a un agente già usato non lascia chat vecchie aperte.
-  - Dalla chat: icona **Continue with another agent** (robot) nell'intestazione.
-    Si sceglie agente, account e dove aprirla: **This chat** (stessa scheda,
-    predefinito), nuova scheda o pannello affiancato.
-- **Contesto**: il nuovo agente riceve come primo messaggio un riassunto della
-  conversazione. Dal terminale: **Context Handoff**. Dalla chat è il ripiego
-  automatico quando il passaggio nativo non è possibile.
+Permessi, server MCP, credenziali e ragionamento interno del modello non
+vengono trasferiti. Sono supportate le sessioni di Cursor CLI, non Cursor IDE.
+L’account per avvio si sceglie per Claude e Codex; il cambio di account dentro
+una chat aperta è disponibile per Claude. Non esiste un cambio automatico di
+account quando finisce la quota.
 
-La sessione di partenza non viene modificata. Permessi, server MCP, credenziali
-e ragionamento interno del modello non vengono trasferiti.
+## Installazione e compatibilità dei dati
 
-### Importare una chat nata fuori da Superset
-
-Nel pannello **Agents** il pulsante **Import chat** elenca le chat di Claude,
-Codex, Cursor CLI, Grok e OpenCode avviate fuori da Superset (in un terminale,
-in Zed…) in tutto il progetto, cioè la cartella principale e ogni worktree
-(`git worktree list`), da tutti gli account del Mac, come "Find Chat…" di Zed.
-Una chat di un'altra cartella si apre nell'area di lavoro Superset di quella
-cartella (Superset ci passa, con la chat aperta); se la cartella non ha
-un'area di lavoro, Claude e Codex la riprendono in quella corrente (per Claude
-la sessione viene copiata nella cartella giusta), gli altri agenti no. Si
-cerca per titolo, modello o branch e si filtra per agente; le chat già note a
-Superset hanno l'etichetta "In Superset". **Continue** apre la chat scelta
-come chat ACP dello stesso agente (con l'account che la contiene); la freccia
-accanto la converte in modo nativo verso un altro agente. Si importa solo la
-chat scelta. L'elenco viene da `txcript list --json`: l'app include la riga di
-comando di txcript come `resources/bin/txcript-cli`, dalla stessa release del
-convertitore.
-
-### Provenienza delle chat
-
-Ogni passaggio nativo registra sorgente e destinazione in un database locale.
-In cima a una chat nata da un passaggio nativo un avviso dice da quale agente
-e account arriva (per esempio "Continued from Claude · btcore@…"), come in
-Zed.
-
-### Pannello Agents
-
-Il pulsante **Agents** nella barra delle schede mostra, per i cinque agenti, le
-sessioni aperte con stato, modello di avvio e account effettivo, e apre nuovi
-agenti scegliendo modello e account. Un agente uscito senza segnalarlo (per
-esempio al prompt "trust this folder" di Claude) non viene mostrato.
-
-### Account locali (Claude e Codex)
-
-**Impostazioni → Local agent accounts** mostra i login trovati sul Mac, con
-quote, nomi personalizzati e aggiunta di nuovi account. L'account si sceglie
-per ogni avvio, in chat o nel terminale, senza cambiare quello predefinito.
-Gli altri agenti usano il login del loro CLI.
-
-In una chat Claude il selettore del modello ha la voce **Account**: elenca i
-login con email, piano e consumi, e la pillola del selettore mostra le
-iniziali dell'account in uso. Sceglierne un altro sposta la conversazione su
-quell'account nella stessa scheda, con tutta la cronologia (la sessione viene
-copiata nella cartella dell'account scelto). Lo stesso si fa dall'icona robot,
-scegliendo Claude come destinazione. L'icona dei consumi nell'intestazione
-della chat mostra l'account in uso.
-
-### Barra degli script nascosta
-
-Nelle nuove installazioni la barra con i pulsanti degli agenti sopra le schede
-parte nascosta. Si riattiva dal menu **+** delle schede → **Show Scripts Bar**.
-Chi aveva già una scelta salvata la mantiene. È l'unico valore predefinito
-cambiato in un file di upstream (`dashboardSidebarLocal/schema.ts`, due righe).
-
-### Altre correzioni per gli agenti
-
-- Cursor: la conversazione resta la stessa passando tra terminale e chat, e le
-  domande e i piani di Cursor compaiono in chat come richieste da approvare.
-- Grok e OpenCode in chat partono sul modello predefinito del loro CLI.
-
-## Installare l'app
-
-Su un Mac Apple Silicon, dall'ultima release del fork:
-
-```bash
+```sh
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Installa `/Applications/Superset Fork.app`, che contiene anche il convertitore
-txcript (`Contents/Resources/resources/bin/txcript-transfer`) e la sua riga di
-comando (`txcript-cli`), così app e txcript hanno sempre la stessa versione.
-L'app non è notarizzata: installata con il comando si apre normalmente;
-scaricata dal browser va aperta una volta da Impostazioni di Sistema → Privacy
-e sicurezza → "Apri comunque".
+L’app si chiama **Superset++.app** e convive con Superset ufficiale.
+Il nome visibile cambia; restano invariati bundle ID, schema `superset-fork://`,
+porta locale 51742 e cartelle `~/.superset-fork` e
+`~/Library/Application Support/Superset Fork`. Chat, impostazioni e login
+del fork precedente continuano a usare gli stessi dati. Le vecchie build
+del fork vengono rimosse dal percorso delle applicazioni; lo script locale
+ne mantiene una copia in `~/.superset-fork/previous-app`.
 
-**Superset Fork convive con Superset ufficiale**, come Zed Fork con Zed: ha nome,
-identificativo, schema di login (`superset-fork://`), cartelle dei dati
-(`~/.superset-fork` e `~/Library/Application Support/Superset Fork`) e porta
-locale per gli hook (51742) propri. Tutto questo deriva da
-`SUPERSET_WORKSPACE_NAME=fork` alla build (`apps/desktop/fork-identity.ts`).
-Aggiornare equivale a reinstallare: impostazioni e dati restano.
+La build include `txcript-transfer` e `txcript-cli` della stessa release.
+Il nome dell’asset `Superset-fork-arm64.zip` resta stabile per compatibilità
+con l’aggiornatore. La firma è ad-hoc, senza notarizzazione Apple.
+Il primo passaggio da un vecchio fork installato come Superset copia una
+volta i dati ufficiali senza sovrascrivere quelli esistenti; i worktree
+restano dove sono. Il login può richiedere una nuova autenticazione.
 
-Passaggio dalle build precedenti, installate come `Superset.app`:
+Per compilare e installare dal checkout: `bun run fork:install`.
+La compilazione usa i servizi di produzione e richiede che l’app precedente
+sia chiusa. L’aggiornatore ufficiale è disabilitato; quello del fork controlla
+le release ogni sei ore e propone l’installazione con riavvio.
 
-- lo script installa `Superset Fork.app` e sposta nel Cestino la vecchia
-  `Superset.app` solo se è una build del fork (contiene il convertitore); un
-  Superset ufficiale non viene toccato;
-- al primo avvio Superset Fork copia una volta i dati di `~/.superset` (aree
-  di lavoro, impostazioni, chat, storico, nomi degli account) e le schede
-  aperte. Le cartelle `worktrees` restano dove sono. Il login va rifatto una
-  volta, perché il token è legato alla voce del portachiavi dell'altra app.
+## Branch, motore e aggiornamenti
 
-Il cloud riconosce il computer dall'id della macchina, uguale per le due app:
-usandole insieme con lo stesso account, il cloud le vede come lo stesso host.
+- `main` segue senza modifiche `superset-sh/superset`.
+- `fork/main` integra le release stabili `desktop-v*` e le estensioni locali.
+- `feature/*` conserva lo storico degli sviluppi già integrati.
 
-L'aggiornamento automatico di upstream è spento. Al suo posto l'app controlla
-le release del fork ogni 6 ore e propone "Installa e riavvia", che esegue lo
-script sopra.
+Il terzo progetto è [NicolaPanero/txcript](https://github.com/NicolaPanero/txcript).
+La versione validata è fissata in `scripts/fork/txcript-version.json`; nuove
+release del motore non vengono adottate implicitamente. Aggiornare il file,
+eseguire i controlli e solo allora creare una build. Per installare il
+motore fissato localmente: `bun scripts/build-txcript-transfer.ts`.
+Zed è stato dismesso: la pubblicazione di txcript avvia soltanto il workflow
+Superset. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
 
-Per compilare e installare dal checkout locale, con txcript incluso:
-`bun run fork:install`. L'app precedente resta in
-`~/.superset-fork/previous-app`.
+`fork-sync-upstream.yml` segue quotidianamente le release stabili e verifica
+lint, traduzioni e tipi prima del push. `fork-release.yml` costruisce solo
+commit non ancora pubblicati, usando il motore fissato; controlla traduzioni,
+tipi e test del fork prima di impacchettare e pubblicare. Un conflitto di
+sincronizzazione richiede risoluzione manuale e non pubblica una build.
+Per sincronizzare localmente: `bun run fork:sync` su `fork/main`.
 
-## Sviluppo
+## Riduzione dei conflitti
 
-`bun run dev:desktop` avvia l'app con i servizi locali descritti in
-`DEVELOPMENT.md`. Il database locale richiede PostgreSQL 18. Per usare dati di
-sviluppo separati, imposta `SUPERSET_HOME_DIR` nel `.env` della radice.
+Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
 
-Il convertitore usato da Superset è il fork di txcript
-[NicolaPanero/txcript](https://github.com/NicolaPanero/txcript) (vedi
-`tools/txcript-transfer/README.md`), lo stesso incluso in Zed Fork. Le
-correzioni si fanno lì e si pubblicano come nuova release del fork (vedi il
-suo `FORK.md`); le build di Superset prendono l'ultima da sole. Per
-installare in locale l'ultima release:
+- `fork-schema.ts` e `ensureForkTables` per i dati locali; niente modifiche
+  al journal delle migrazioni ufficiali.
+- Procedure additive in `agents/fork-*.ts`, `usage/fork-procedures.ts` e
+  `session-transfer`; i contratti tRPC esistenti rimangono compatibili.
+- `ForkChatExtras`, `AcpChatHandoffMenu` e `ForkHandoffMenus` per le azioni
+  specifiche; selettore del modello e pannello chat restano quelli ufficiali.
+- `useForkBackgroundChats` e `ForkImportChatDialog` per gestione e ricerca
+  delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
+- `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e
+  `scripts/fork/` per identità, dati e distribuzione.
 
-```bash
-bun scripts/build-txcript-transfer.ts
-```
+Quando upstream assorbe una funzione, confrontare comportamento, profili e
+cronologia prima di rimuovere l’estensione. Il trasferimento nativo, il ponte
+Cursor e l’affinità degli account restano funzioni del fork.
 
-## Automatismi su GitHub
+## Verifiche
 
-| Workflow | Quando | Cosa fa |
-|---|---|---|
-| `fork-sync-upstream.yml` | ogni giorno alle 05:17 UTC, o a mano | Allinea `main` a upstream. Fonde in `fork/main` l'ultima release stabile di upstream (tag `desktop-v*`), esegue lint, `check:i18n` e il typecheck dei pacchetti modificati dal fork, e solo se passano fa il push. Tiene disattivati i workflow ereditati da upstream. |
-| `fork-release.yml` | dopo ogni sincronizzazione, quando esce una release del fork di txcript, o a mano | Se `fork/main` ha un commit senza release, o il fork di txcript ha una release più nuova di quella inclusa, scarica il convertitore dall'ultima release di txcript, compila su un runner macOS l'app che lo contiene (firma ad-hoc) e la pubblica come release `desktop-vX.Y.Z-fork.<commit>-tx<N>`. |
-
-Se un'esecuzione fallisce GitHub manda una mail. Una sincronizzazione fallita
-(conflitti o controlli rossi) non pubblica nulla: si risolve a mano con lo
-script locale.
-
-`main` e `fork/main` sono protetti: niente force-push né cancellazione, anche
-per l'amministratore; i push normali restano permessi.
-
-Il token automatico delle Actions non può pubblicare modifiche ai file in
-`.github/workflows`, che upstream cambia spesso. Per quelle serve il secret
-`FORK_SYNC_TOKEN`: un token fine-grained limitato a questo repository, con
-permessi **Contents** e **Workflows** in scrittura. Va rinnovato alla
-scadenza: quando scade, la sincronizzazione fallisce e arriva la mail.
-
-### Sincronizzare a mano
-
-```bash
-git switch fork/main
-bun run fork:sync
-```
-
-`fork:sync` fonde l'ultima release stabile di upstream nel branch corrente
-(`bash scripts/fork/sync-upstream.sh --checks upstream/main` segue invece il
-`main` di sviluppo). Risolve da solo i conflitti dei cataloghi di traduzione
-(serve `msgcat`, pacchetto `gettext`) e poi esegue gli stessi controlli del
-workflow. Codici di uscita: `2` conflitti nel codice, `3` controlli falliti
-dopo la fusione (la fusione resta locale: `git reset --hard ORIG_HEAD` per
-annullarla).
-
-## Separazione da upstream
-
-Per ridurre i conflitti, il codice del fork sta in file propri e i file di
-upstream ricevono solo agganci brevi:
-
-- tabelle del database in `packages/host-service/src/db/fork-schema.ts`, create
-  da `ensureForkTables`: lo schema e il journal delle migrazioni restano quelli
-  di upstream;
-- procedure tRPC in `agents/fork-procedures.ts` e `usage/fork-procedures.ts`,
-  incluse con una riga nei router di upstream;
-- passaggio nativo in `TerminalNativeHandoffMenu`,
-  `AcpChatHandoffMenu` e `ForkHandoffMenus`; il menu di upstream resta
-  invariato;
-- cambio di agente dal selettore del modello in `useForkAgentSwitch`, passato
-  alla chat con la prop `onForkSwitchAgent`: il gestore di upstream resta
-  invariato e fa da ripiego; avviso di provenienza in `ForkChatProvenance` (una riga in `Transcript.tsx`),
-  dati da `sessionTransfer.chatProvenance`;
-- import di chat esterne: `ForkImportChatDialog` nel pannello Agents,
-  procedura `sessionTransfer.externalSessions` con
-  `session-transfer/externalSessions.ts`;
-- chat in background: tabella `background_chats` in `fork-schema.ts`,
-  procedure in `agents/fork-background-chats.ts`, hook
-  `useForkBackgroundChats` e `useForkFocusChatLink`, gruppo
-  `ForkBackgroundChatsGroup` nel menu attività;
-- cambio di account in chat: `ForkChatExtras` e `useForkAccountSwitch`, contesto
-  `ForkAccountSwitchProvider`, `ForkAccountMenu` e `ForkAccountBadge` nel
-  selettore (due righe in `ModelPicker.tsx`), procedura in
-  `agents/fork-chat-account.ts`, copia della sessione in
-  `chat-v3/forkMoveClaudeSession.ts`, account della chat in
-  `chat-v3/forkChatAccount.ts`;
-- scelta di configurazione e account per l'host in
-  `chat-v3/forkLaunchChoices.ts`;
-- voci delle impostazioni in `fork-settings-items.ts`, interruttore ACP in
-  `AcpChatSetting`, rinomina account in `AccountRenameDialog`.
-- identità separata in `apps/desktop/fork-identity.ts` (tre righe in
-  `electron-builder.ts`) e copia dei dati al primo avvio in
-  `main/lib/fork-data-migration` (primo import di `main/index.ts`);
-- avviso di aggiornamento in `apps/desktop/src/main/lib/fork-updates.ts`,
-  avviato con una riga accanto all'aggiornamento automatico di upstream;
-- automatismi in `.github/workflows/fork-*.yml` e `scripts/fork/`.
-
-Nuove funzioni del fork vanno scritte allo stesso modo.
-
-## Limiti noti
-
-- Scelta dell'account solo per Claude e Codex; il cambio di account dentro una
-  chat aperta solo per Claude.
-- Il fallback automatico dell'account quando una quota finisce non c'è ancora.
-- Le sessioni di Cursor IDE non sono supportate, solo Cursor CLI.
-- Il fork di txcript parte da una revisione fissa di txcript ufficiale.
-- Login Microsoft, Jira e Bitbucket richiedono un backend proprio e non sono
-  iniziati.
+I test del fork coprono conversioni, annullamento del helper, isolamento dei
+profili, ripresa, account, ponte Cursor, chat in background e contesto
+esplicito con paginazione e troncamento. `bun run check:i18n` richiede tutte
+le traduzioni delle 17 lingue. Il typecheck riguarda desktop e host-service.
+Una prova manuale con gli agenti reali resta distinta da questi controlli.

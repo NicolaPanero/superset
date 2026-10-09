@@ -1,13 +1,18 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
-import type { RendererContext } from "@superset/panes";
+import type { CreatePaneInput, RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo } from "react";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
 import { terminalRuntimeRegistry } from "renderer/lib/terminal/terminal-runtime-registry";
-import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
+import type {
+	ChatPaneData,
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../../../../../types";
+import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
 export type AgentSurface = "cli" | "acp";
@@ -20,19 +25,16 @@ export type AgentIdentity = {
 
 export type AgentSurfaceSwitch = {
 	/**
-	 * Moves an agent terminal between its surfaces, stopping the process behind
-	 * the one being left: two live processes on one session transcript would
-	 * both be writing it. `agent` comes from the caller's own binding read.
+	 * Replaces an agent's terminal pane with its chat pane, or the reverse,
+	 * stopping the process behind the one being left: two live processes on one
+	 * session transcript would both be writing it.
 	 */
 	switchSurface(
 		ctx: RendererContext<PaneViewerData>,
 		surface: AgentSurface,
 		agent: AgentIdentity | undefined,
 	): Promise<void>;
-	/**
-	 * For a pane closing on the ACP surface, whose adapter nothing else stops.
-	 * Resolves false when the adapter is still running.
-	 */
+	/** Resolves false when the adapter is still running. */
 	stopChat(sessionId: string): Promise<boolean>;
 };
 
@@ -48,11 +50,13 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 
 	const stopChat = useCallback(
 		async (sessionId: string) => {
+			const reopen = markChatSessionClosed(sessionId);
 			try {
 				await wiring.transport.closeSession({ sessionId });
 				return true;
 			} catch (error) {
 				console.warn("[acp-chat] could not stop the chat session", error);
+				reopen();
 				return false;
 			}
 		},
@@ -65,11 +69,20 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 			surface: AgentSurface,
 			agent: AgentIdentity | undefined,
 		) => {
-			const data = ctx.pane.data as TerminalPaneData;
-			if ((data.agentSurface ?? "cli") === surface) return;
+			const replaceWith = (newPane: CreatePaneInput<PaneViewerData>) => {
+				const state = ctx.store.getState();
+				state.setPanePinned({ paneId: ctx.pane.id, pinned: false });
+				state.replacePane({
+					tabId: ctx.tab.id,
+					paneId: ctx.pane.id,
+					newPane: { ...newPane, pinned: ctx.pane.pinned },
+				});
+			};
 
 			if (surface === "acp") {
-				if (!agent) return;
+				if (ctx.pane.kind !== "terminal" || !agent) return;
+				const data = ctx.pane.data as TerminalPaneData;
+				const { terminalId } = data;
 				let launch: Awaited<ReturnType<typeof prepareAcpLaunch.mutateAsync>>;
 				try {
 					launch = await prepareAcpLaunch.mutateAsync({
@@ -106,36 +119,50 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 							sessionId: agent.sessionId,
 							from: "cli",
 						});
-					ctx.actions.updateData({
-						...data,
-						agentSurface: "acp",
-						agent,
-						acpAgentConfigId: launch.agentConfigId,
-						acpAccountSelection: launch.accountSelection,
-					});
 				} catch (error) {
-					// Put the pane back rather than run a chat over a live pty: both
-					// would drive the one agent session.
 					console.warn("[acp-chat] could not stop the terminal", error);
-					ctx.actions.updateData({ ...data, agentSurface: "cli", agent });
+
 					toast.error(t({ message: "ACP chat is unavailable" }), {
 						description: errorMessage(error, t({ message: "Unknown error" })),
 					});
+					return;
 				}
+				replaceWith({
+					kind: "chat-v3",
+					...(ctx.pane.titleOverride
+						? { titleOverride: ctx.pane.titleOverride }
+						: {}),
+					data: {
+						terminalId,
+						sessionId: null,
+						agent,
+						acpAgentConfigId: launch.agentConfigId,
+						acpAccountSelection: launch.accountSelection,
+					} satisfies ChatPaneData,
+				});
 				return;
 			}
 
+			if (ctx.pane.kind !== "chat-v3") return;
+			const data = ctx.pane.data as ChatPaneData;
 			const resumeFrom = data.agent;
-			if (!resumeFrom) {
-				ctx.actions.updateData({ ...data, agentSurface: "cli" });
+			if (!resumeFrom) return;
+
+			let launch: Awaited<ReturnType<typeof prepareAcpLaunch.mutateAsync>>;
+			try {
+				launch = await prepareAcpLaunch.mutateAsync({
+					workspaceId,
+					configId: data.acpAgentConfigId ?? resumeFrom.id,
+					accountSelection: data.acpAccountSelection,
+					sourceTerminalId: data.terminalId,
+				});
+			} catch (error) {
+				toast.error(t({ message: "Couldn't reopen the agent in a terminal" }), {
+					description: errorMessage(error, t({ message: "Unknown error" })),
+				});
 				return;
 			}
-
-			// Before the launch, not after: the pty resumes the same agent session
-			// the adapter still has open, and two processes on one session is what
-			// this whole switch exists to avoid. A chat that would not stop keeps
-			// the pane where it is rather than racing the terminal against it.
-			if (data.acpSessionId && !(await stopChat(data.acpSessionId))) {
+			if (data.sessionId && !(await stopChat(data.sessionId))) {
 				toast.error(t({ message: "Couldn't stop the chat" }));
 				return;
 			}
@@ -144,18 +171,16 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				if (resumeFrom.id === "cursor-agent" && resumeFrom.sessionId)
 					await prepareCursorSurface.mutateAsync({
 						workspaceId,
-						configId: data.acpAgentConfigId ?? resumeFrom.id,
+						configId: launch.agentConfigId,
 						sessionId: resumeFrom.sessionId,
 						from: "acp",
 					});
 				const result = await runAgent.mutateAsync({
 					workspaceId,
 					colors: terminalQueryColors(appearance.theme),
-					agent: data.acpAgentConfigId ?? resumeFrom.id,
-					accountSelection: data.acpAccountSelection,
+					agent: launch.agentConfigId,
+					accountSelection: launch.accountSelection,
 					prompt: "",
-					// A chat the launcher opened may not have run a turn yet, so
-					// there is no agent session to resume into the terminal.
 					...(resumeFrom.sessionId
 						? { resumeSessionId: resumeFrom.sessionId }
 						: {}),
@@ -166,18 +191,11 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					);
 					return;
 				}
-				// `updateData` replaces the pane's data rather than merging into it,
-				// so the surface has to be written again here: dropped, it derives
-				// back to the chat for a chat-capable agent and the terminal this
-				// just launched is unmounted before it draws. `acpSessionId` is kept
-				// so toggling back resumes that chat instead of starting a new one.
-				ctx.actions.updateData({
-					...data,
-					agentSurface: "cli",
-					terminalId: result.sessionId,
-					cliTitle: result.label,
+				replaceWith({
+					kind: "terminal",
+					titleOverride: result.label,
+					data: { terminalId: result.sessionId } satisfies TerminalPaneData,
 				});
-				ctx.actions.setTitle(result.label);
 			} catch (error) {
 				toast.error(t({ message: "Couldn't reopen the agent in a terminal" }), {
 					description: errorMessage(error, t({ message: "Unknown error" })),

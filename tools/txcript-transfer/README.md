@@ -8,7 +8,7 @@ the official library at commit
 tool outputs and Codex's AGENTS.md prelude, Cursor's active transcript,
 resumable graph and message order, and OpenCode's tool-result pairing, and a
 conversion-only example with a bounded JSON
-protocol. The same build serves NicolaPanero/zed. Agent file formats
+protocol. Zed is retired; release dispatches now target Superset only. Agent file formats
 remain in the official library. No second codec exists in Superset.
 
 With Bun 1.3.14 on PATH, run from the repository root:
@@ -17,14 +17,14 @@ With Bun 1.3.14 on PATH, run from the repository root:
 bun run scripts/build-txcript-transfer.ts
 ```
 
-The script downloads the helper from the fork's latest release (or the one
-`TXCRIPT_TAG` names), checks it against the release's SHA256SUMS and its
+The script downloads the helper from the release pinned in `scripts/fork/txcript-version.json` (or an explicit
+`TXCRIPT_TAG` override), checks it against the release's SHA256SUMS and its
 reported engine version, and installs it under
 `$SUPERSET_HOME_DIR/bin/txcript-transfer`.
 Bun loads the local development `.env`; check its SUPERSET_HOME_DIR first.
 Without it, the destination is `~/.superset`. It does not replace the user's
 `txcript` executable. Fixes to the helper or the engine go to the fork; a new
-release reaches the app's next build without changes here.
+release is adopted only after updating the pin and validating the fork.
 
 Protocol version 1 accepts one JSON request on stdin: sourceAgent,
 sourceSessionId, sourceRoot, sourceReference, targetAgent, targetRoot, cwd.

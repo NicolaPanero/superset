@@ -1,21 +1,22 @@
-import { Trans } from "@lingui/react/macro";
 import type { RendererContext } from "@superset/panes";
+import { useEffect } from "react";
 import type {
+	ChatPaneData,
 	OpenFile,
 	PaneViewerData,
+	TerminalPaneData,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
-import type { TerminalPaneData } from "../../../../types";
 import { TerminalPane } from "../TerminalPane";
-import { AcpChatPane } from "./components/AcpChatPane";
-import { AcpChatPending } from "./components/AcpChatPane/components/AcpChatPending";
-import { useAgentSurface } from "./hooks/useAgentSurface";
-import { useForkAgentSwitch } from "./hooks/useForkAgentSwitch";
-import { saveChatMode } from "./utils/savedChatMode";
+
+type ChatOnTerminalPaneData = TerminalPaneData &
+	Omit<ChatPaneData, "sessionId"> & {
+		agentSurface?: "cli" | "acp";
+		acpSessionId?: string | null;
+	};
 
 /**
- * A terminal pane, shown on whichever surface its agent calls for. The choice
- * needs the agent binding, which is a hook, so it lives here rather than in the
- * pane registry's render callback.
+ * Chats used to be shown on the terminal pane. A layout saved then still holds
+ * them there, so each one moves to its own chat pane the first time it renders.
  */
 export function AgentTerminalPane({
 	ctx,
@@ -28,104 +29,42 @@ export function AgentTerminalPane({
 	onOpenFile: OpenFile;
 	onRevealPath: (path: string) => void;
 }) {
-	const data = ctx.pane.data as TerminalPaneData;
-	const { surface } = useAgentSurface(workspaceId, data);
-	const { onForkSwitchAgent } = useForkAgentSwitch(workspaceId, ctx, data);
+	const data = ctx.pane.data as ChatOnTerminalPaneData;
+	const isSavedChat = data.agentSurface === "acp";
 
-	// Unmounted, not hidden: its pty is stopped on the chat surface, and a
-	// mounted TerminalPane would auto-resume the agent straight back into it.
-	if (surface === "acp") {
-		if (!data.agent) {
-			return (
-				<AcpChatPending>
-					<Trans>Opening the chat…</Trans>
-				</AcpChatPending>
-			);
-		}
-		return (
-			<AcpChatPane
-				key={`${data.terminalId}:${data.agent.id}`}
-				agent={data.agent}
-				isActive={ctx.isActive}
-				onFirstPromptSent={() => {
-					if (
-						data.pendingPrompt === undefined &&
-						data.pendingAttachments === undefined
-					)
-						return;
-					const {
-						pendingPrompt: _sent,
-						pendingAttachments: _attached,
-						...rest
-					} = data;
-					ctx.actions.updateData(rest);
-				}}
-				pendingFirstPrompt={
-					data.pendingPrompt || data.pendingAttachments?.length
-						? [
-								...(data.pendingPrompt
-									? [{ type: "text" as const, text: data.pendingPrompt }]
-									: []),
-								...(data.pendingAttachments ?? []).map((attachment) => ({
-									type: "attachment" as const,
-									...attachment,
-								})),
-							]
-						: null
-				}
-				agentConfigId={data.acpAgentConfigId}
-				accountSelection={data.acpAccountSelection}
-				modelId={data.chatModelId}
-				modelLabel={data.chatModelLabel}
-				modeId={data.chatModeId}
-				onSessionInfo={({ harnessSessionId, title }) => {
-					const rebound = harnessSessionId !== undefined && data.agent;
-					const retitled = title !== undefined && title !== data.chatTitle;
-					if (!rebound && !retitled) return;
-					ctx.actions.updateData({
-						...data,
-						...(rebound
-							? { agent: { ...rebound, sessionId: harnessSessionId } }
-							: {}),
-						...(retitled ? { chatTitle: title } : {}),
-					});
-				}}
-				onForkSwitchAgent={onForkSwitchAgent}
-				onSwitchAgent={({ presetId, label, model, modeId, handoffPrompt }) => {
-					ctx.actions.setTitle(label);
-					const {
-						acpSessionId: _session,
-						chatModelId: _model,
-						chatModelLabel: _modelLabel,
-						chatModeId: _mode,
-						pendingPrompt: _prompt,
-						pendingAttachments: _attachments,
-						...rest
-					} = data;
-					ctx.actions.updateData({
-						...rest,
-						agent: { id: presetId },
-						...(model
-							? { chatModelId: model.id, chatModelLabel: model.label }
-							: {}),
-						...(modeId ? { chatModeId: modeId } : {}),
-						...(handoffPrompt ? { pendingPrompt: handoffPrompt } : {}),
-					});
-				}}
-				onModeChange={(chatModeId) => {
-					if (data.agent) saveChatMode(data.agent.id, chatModeId);
-					ctx.actions.updateData({ ...data, chatModeId });
-				}}
-				onSessionCreated={(acpSessionId) =>
-					ctx.actions.updateData({ ...data, acpSessionId })
-				}
-				onOpenFile={onOpenFile}
-				sessionId={data.acpSessionId ?? null}
-				terminalId={data.terminalId}
-				workspaceId={workspaceId}
-			/>
-		);
-	}
+	useEffect(() => {
+		if (!isSavedChat) return;
+		const {
+			agentSurface: _surface,
+			acpSessionId,
+			createOnAttach: _create,
+			...chat
+		} = data;
+		const state = ctx.store.getState();
+		state.setPanePinned({ paneId: ctx.pane.id, pinned: false });
+		state.replacePane({
+			tabId: ctx.tab.id,
+			paneId: ctx.pane.id,
+			newPane: {
+				kind: "chat-v3",
+				pinned: ctx.pane.pinned,
+				...(ctx.pane.titleOverride
+					? { titleOverride: ctx.pane.titleOverride }
+					: {}),
+				data: { ...chat, sessionId: acpSessionId ?? null } as ChatPaneData,
+			},
+		});
+	}, [
+		isSavedChat,
+		data,
+		ctx.store,
+		ctx.tab.id,
+		ctx.pane.id,
+		ctx.pane.titleOverride,
+		ctx.pane.pinned,
+	]);
+
+	if (isSavedChat) return null;
 
 	return (
 		<TerminalPane

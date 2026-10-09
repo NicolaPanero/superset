@@ -1,4 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import { mkdir, mkdtemp, realpath, rm, symlink } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import {
 	folderOf,
 	listExternalSessions,
@@ -26,7 +29,7 @@ describe("listExternalSessions", () => {
 		]);
 	});
 
-	test("scans each login once and keeps the first copy of a session", async () => {
+	test("keeps independent account copies of a session", async () => {
 		const calls: { args: string[]; claude?: string }[] = [];
 		const run: RunCli = async (args, env) => {
 			calls.push({ args, claude: env.CLAUDE_CONFIG_DIR });
@@ -76,6 +79,7 @@ describe("listExternalSessions", () => {
 		).toEqual([
 			["claude", "work-only", "/work", "Fix"],
 			["claude", "shared", null, null],
+			["claude", "shared", "/work", null],
 			["cursor-agent", "c1", null, null],
 		]);
 	});
@@ -90,4 +94,58 @@ describe("folderOf", () => {
 		expect(folderOf("/repo/src", folders)).toBe("/repo");
 		expect(folderOf("/repository", folders)).toBeNull();
 	});
+});
+
+test("default Codex scan and session identity use the effective CODEX_HOME", async () => {
+	const sessions = await listExternalSessions({
+		cwd: "/repo",
+		claudeProfiles: [],
+		codexHomes: [],
+		baseEnv: { HOME: "/home", CODEX_HOME: "/account" },
+		run: async (_args, env) => {
+			expect(env.CODEX_HOME).toBe("/account");
+			return [
+				{ harness: "codex", id: "same", timestamp: "2026-10-09T00:00:00Z" },
+			];
+		},
+	});
+	expect(sessions[0]?.storeRoot).toBe("/account/sessions");
+	expect(sessions[0]?.accountSelection).toBeNull();
+});
+
+test("aliases of one session store collapse to the latest recorded version", async () => {
+	const base = await mkdtemp(join(tmpdir(), "superset-session-identity-"));
+	try {
+		await mkdir(join(base, "original", "projects"), { recursive: true });
+		await symlink(join(base, "original"), join(base, "alias"));
+		const sessions = await listExternalSessions({
+			cwd: "/repo",
+			claudeProfiles: [join(base, "original"), join(base, "alias")],
+			codexHomes: [],
+			baseEnv: { HOME: base },
+			run: async (_args, env) =>
+				!env.CLAUDE_CONFIG_DIR
+					? []
+					: [
+							{
+								harness: "claude_code",
+								id: "same",
+								timestamp: "2026-10-08T00:00:00Z",
+								updated_at: env.CLAUDE_CONFIG_DIR.endsWith("alias")
+									? "2026-10-09T00:00:00Z"
+									: "2026-10-08T00:00:00Z",
+								title: env.CLAUDE_CONFIG_DIR.endsWith("alias")
+									? "Latest"
+									: "Earlier",
+							},
+						],
+		});
+		expect(sessions).toHaveLength(1);
+		expect(sessions[0]?.title).toBe("Latest");
+		expect(sessions[0]?.storeRoot).toBe(
+			await realpath(join(base, "original", "projects")),
+		);
+	} finally {
+		await rm(base, { recursive: true, force: true });
+	}
 });

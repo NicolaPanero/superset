@@ -69,6 +69,7 @@ function sameTasks(
 export type ChatAgentBridge = LiveSessionObserver & {
 	spawned(sessionId: string, pid: number): void;
 	launched?(sessionId: string, env: NodeJS.ProcessEnv): void;
+	accountCaptured(sessionId: string, account: SessionAccount): void;
 };
 
 export function agentIdForHarness(
@@ -129,7 +130,7 @@ export function createChatAgentBridge(
 			agentId: chat.agentId,
 			agentSessionId: chat.agentSessionId,
 			chatSessionId: chat.sessionId,
-			account: chat.account,
+			...(chat.account ? { account: chat.account } : {}),
 			occurredAt,
 		});
 
@@ -207,6 +208,13 @@ export function createChatAgentBridge(
 			const chat = current(sessionId);
 			if (!chat) return;
 			portManager.upsertSession(chat.terminalId, chat.workspaceId, pid);
+		},
+
+		accountCaptured(sessionId, account) {
+			const chat = chats.get(sessionId);
+			if (!chat) return;
+			chat.account = account;
+			if (current(sessionId)) attach(chat);
 		},
 
 		published(envelope: Envelope, session: LiveSession) {

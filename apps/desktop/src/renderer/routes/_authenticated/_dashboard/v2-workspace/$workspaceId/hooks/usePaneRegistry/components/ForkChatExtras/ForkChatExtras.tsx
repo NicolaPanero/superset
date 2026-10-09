@@ -5,6 +5,7 @@ import { ForkAccountSwitchProvider } from "../ChatSession/providers/ForkAccountS
 import { ForkChatProvenanceProvider } from "../ChatSession/providers/ForkChatProvenanceProvider";
 import { useChatProvenance } from "./hooks/useChatProvenance";
 import { useForkAccountSwitch } from "./hooks/useForkAccountSwitch";
+import { forkChatContext } from "./utils/forkChatContext/forkChatContext";
 
 /** The fork's additions to an agent chat: its account menu and its origin. */
 export function ForkChatExtras({
@@ -16,10 +17,11 @@ export function ForkChatExtras({
 	workspaceId: string;
 	children: ReactNode;
 }) {
-	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
+	const fork = forkChatContext(ctx);
+	const accountSwitcher = useForkAccountSwitch(workspaceId, fork);
 	const provenance = useChatProvenance(
 		workspaceId,
-		ctx.pane.data as TerminalPaneData,
+		fork.pane.data as TerminalPaneData,
 	);
 	return (
 		<ForkAccountSwitchProvider value={accountSwitcher}>

@@ -10,6 +10,7 @@ import { copyClaudeSessionToFolder } from "../../../chat-v3/forkMoveClaudeSessio
 import { workspaces } from "../../../db/schema";
 import { chatProvenance } from "../../../session-transfer/chatProvenance";
 import {
+	externalSessionStore,
 	folderOf,
 	listExternalSessions,
 	projectFolders,
@@ -611,15 +612,16 @@ export const sessionTransferRouter = router({
 				});
 			const cwd = await realpath(workspace.worktreePath);
 			const folders = await projectFolders(cwd);
+			const codexHomes = await discoverCodexHomes();
+			const baseEnv = { ...process.env, CODEX_HOME: codexHomes[0]?.home };
 			const sessions = await listExternalSessions({
 				cwd,
 				folders,
 				claudeProfiles: (await discoverClaudeProfiles()).map(
 					(profile) => profile.configDir,
 				),
-				codexHomes: (await discoverCodexHomes())
-					.slice(1)
-					.map((home) => home.home),
+				codexHomes: codexHomes.slice(1).map((home) => home.home),
+				baseEnv,
 				run: runTxcriptCli(txcriptCliPath()),
 			}).catch((error: Error) => {
 				throw new TRPCError({
@@ -628,17 +630,12 @@ export const sessionTransferRouter = router({
 				});
 			});
 			const known = new Set<string>();
-			for (const binding of ctx.terminalAgentStore.listByWorkspace(
-				input.workspaceId,
-			))
-				if (binding.agentSessionId)
-					known.add(`${binding.agentId}:${binding.agentSessionId}`);
 			for (const edge of new LocalLineageStore(ctx.db, ctx.organizationId).list(
 				input.workspaceId,
 				100,
 			).items)
 				for (const node of [edge.source, edge.target])
-					known.add(`${node.agent}:${node.sessionId}`);
+					known.add(`${node.agent}:${node.storeRoot}:${node.sessionId}`);
 			const workspaceByFolder = new Map<string, string>();
 			for (const row of ctx.db
 				.select({ id: workspaces.id, path: workspaces.worktreePath })
@@ -650,13 +647,43 @@ export const sessionTransferRouter = router({
 					workspaceByFolder.set(path, row.id);
 			}
 			workspaceByFolder.set(cwd, input.workspaceId);
+			const active = new Map<string, string>();
+			for (const workspaceId of new Set(workspaceByFolder.values())) {
+				for (const binding of ctx.terminalAgentStore.listByWorkspace(
+					workspaceId,
+				)) {
+					if (
+						!binding.agentSessionId ||
+						binding.endedAt ||
+						!isVerifiedNativeAgent(binding.agentId)
+					)
+						continue;
+					const managed =
+						binding.agentId === "claude" || binding.agentId === "codex";
+					if (managed && !binding.account) continue;
+					const store = await externalSessionStore(
+						binding.agentId,
+						binding.account?.selection ?? null,
+						baseEnv,
+					);
+					const key = `${binding.agentId}:${store}:${binding.agentSessionId}`;
+					active.set(key, binding.terminalId);
+					known.add(key);
+				}
+			}
 			return sessions.map((session) => {
 				const folder = folderOf(session.cwd, folders) ?? cwd;
 				return {
 					...session,
 					folder,
 					workspaceId: workspaceByFolder.get(folder) ?? null,
-					inSuperset: known.has(`${session.agent}:${session.sessionId}`),
+					inSuperset: known.has(
+						`${session.agent}:${session.storeRoot}:${session.sessionId}`,
+					),
+					terminalId:
+						active.get(
+							`${session.agent}:${session.storeRoot}:${session.sessionId}`,
+						) ?? null,
 				};
 			});
 		}),

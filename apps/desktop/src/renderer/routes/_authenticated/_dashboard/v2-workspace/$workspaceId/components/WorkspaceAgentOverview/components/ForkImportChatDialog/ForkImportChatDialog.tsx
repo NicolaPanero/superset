@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { acpHarnessForPreset } from "@superset/chat/core";
 import { errorMessage } from "@superset/i18n/errors";
 import { formatRelativeTime } from "@superset/i18n/format";
 import type { WorkspaceStore } from "@superset/panes";
@@ -31,7 +32,6 @@ import {
 } from "renderer/assets/app-icons/preset-icons";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
-import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import type { StoreApi } from "zustand/vanilla";
 import { useAgentSessionLauncher } from "../../../../hooks/useAgentSessionLauncher";
@@ -54,6 +54,8 @@ type ExternalSession = {
 	/** The Superset workspace of the folder it ran in, if there is one. */
 	workspaceId: string | null;
 	inSuperset: boolean;
+	terminalId?: string | null;
+	storeRoot?: string;
 };
 
 /** Agents whose sessions resume from any folder once Superset puts them there. */
@@ -83,7 +85,10 @@ export function ForkImportChatDialog({
 	const dark = useIsDarkTheme();
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
-	const { openAgentChat } = useAgentSessionLauncher({ workspaceId, store });
+	const { openAgentChat, focusAgentTerminal } = useAgentSessionLauncher({
+		workspaceId,
+		store,
+	});
 	const navigate = useNavigate();
 	const [query, setQuery] = useState("");
 	const [agentFilter, setAgentFilter] = useState(ALL);
@@ -178,7 +183,7 @@ export function ForkImportChatDialog({
 	};
 
 	const run = async (session: ExternalSession, targetPresetId: string) => {
-		const key = `${session.agent}:${session.sessionId}`;
+		const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
 		const target = chatConfig(targetPresetId);
 		const source = chatConfig(session.agent);
 		if (!target) return;
@@ -188,6 +193,19 @@ export function ForkImportChatDialog({
 		const title = session.title ?? session.preview ?? labelFor(targetPresetId);
 		setBusy(key);
 		try {
+			if (targetPresetId === session.agent && session.terminalId) {
+				if (here) focusAgentTerminal(session.terminalId);
+				else
+					await navigateToV2Workspace(home, navigate, {
+						search: {
+							terminalId: session.terminalId,
+							focusRequestId: crypto.randomUUID(),
+						},
+					});
+				onOpenChange(false);
+				onImported();
+				return;
+			}
 			if (targetPresetId === session.agent) {
 				if (session.agent === "cursor-agent")
 					await prepareCursorSurface({
@@ -295,7 +313,7 @@ export function ForkImportChatDialog({
 			<DialogContent className="flex max-h-[85vh] flex-col gap-4 sm:max-w-2xl">
 				<DialogHeader>
 					<DialogTitle>
-						<Trans>Import a chat</Trans>
+						<Trans>Find a chat</Trans>
 					</DialogTitle>
 					<DialogDescription>
 						<Trans>
@@ -367,7 +385,7 @@ export function ForkImportChatDialog({
 					) : (
 						<ul className="flex flex-col gap-1">
 							{visible.map((session) => {
-								const key = `${session.agent}:${session.sessionId}`;
+								const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
 								const icon = getPresetIcon(session.agent, dark);
 								const account = accountName(session.accountSelection);
 								const others = configs.filter(

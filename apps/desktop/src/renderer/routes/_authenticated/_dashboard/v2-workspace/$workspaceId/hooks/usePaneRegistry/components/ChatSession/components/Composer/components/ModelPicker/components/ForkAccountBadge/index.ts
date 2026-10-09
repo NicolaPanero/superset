@@ -1,1 +1,0 @@
-export { ForkAccountBadge } from "./ForkAccountBadge";
