@@ -3480,9 +3480,6 @@ msgstr "Relace chatu nenalezena"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "Chaty zahájené mimo Superset ve složkách tohoto projektu, například v terminálu nebo v Zedu. Vyberte jeden a pokračujte v něm."
-
 msgid "Check again"
 msgstr "Zkontrolovat znovu"
 
@@ -7546,6 +7543,9 @@ msgstr "Najít na stránce"
 
 msgid "Find in Terminal"
 msgstr "Najít v terminálu"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "Najděte místní chaty v tomto projektu a jeho účtech. Otevřete existující chat nebo pokračujte v chatu zahájeném v terminálu."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "Najde nedávno změněný kód se slabým pokrytím a pořádně ho otestuje."

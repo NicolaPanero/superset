@@ -3,6 +3,7 @@ import { errorMessage } from "@superset/i18n/errors";
 import type { CreatePaneInput, RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
@@ -12,7 +13,11 @@ import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "../../../../../../types";
-import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
+import {
+	markChatSessionClosed,
+	markChatSessionOpened,
+} from "../../../../../../utils/closedChatSessions";
+import { markChatStopped } from "../../../../../../utils/forkChatCloseIntent/forkChatCloseIntent";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
 export type AgentSurface = "cli" | "acp";
@@ -41,6 +46,7 @@ export type AgentSurfaceSwitch = {
 export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 	const { t } = useLingui();
 	const wiring = useChatWiring();
+	const queryClient = useQueryClient();
 	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const prepareCursorSurface =
 		workspaceTrpc.agents.prepareCursorSurface.useMutation();
@@ -167,6 +173,7 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				return;
 			}
 
+			let replaced = false;
 			try {
 				if (resumeFrom.id === "cursor-agent" && resumeFrom.sessionId)
 					await prepareCursorSurface.mutateAsync({
@@ -191,18 +198,28 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 					);
 					return;
 				}
+				markChatStopped(data.terminalId);
 				replaceWith({
 					kind: "terminal",
 					titleOverride: result.label,
 					data: { terminalId: result.sessionId } satisfies TerminalPaneData,
 				});
+				replaced = true;
 			} catch (error) {
 				toast.error(t({ message: "Couldn't reopen the agent in a terminal" }), {
 					description: errorMessage(error, t({ message: "Unknown error" })),
 				});
+			} finally {
+				if (!replaced && data.sessionId) {
+					markChatSessionOpened(data.sessionId);
+					void queryClient.invalidateQueries({
+						queryKey: ["acp-chat-session", data.sessionId],
+					});
+				}
 			}
 		},
 		[
+			queryClient,
 			prepareAcpLaunch,
 			prepareCursorSurface,
 			killTerminal,

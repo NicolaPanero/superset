@@ -1,24 +1,30 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type { TerminalPaneData } from "../../../../types";
 
 export function AcpOverviewSession({
 	agent,
+	workspaceId,
 	data,
 	hostUrl,
 	status,
 	onOpen,
 }: {
 	agent: string;
+	workspaceId: string;
 	data: TerminalPaneData;
 	hostUrl: string | null;
 	status: string;
 	onOpen: () => void;
 }) {
 	const { t } = useLingui();
-	const selection = data.acpAccountSelection;
+	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
+	const selection = binding?.account
+		? binding.account.selection
+		: data.acpAccountSelection;
 	const options = useQuery({
 		queryKey: ["agent-launch-account-options", hostUrl, agent],
 		enabled: !!hostUrl && selection !== undefined,
@@ -33,12 +39,14 @@ export function AcpOverviewSession({
 	});
 	const option = options.data?.find((o) => o.selection === selection);
 	const accountLabel =
-		selection === undefined
+		option?.alias ??
+		binding?.account?.email ??
+		(selection === undefined
 			? t({ message: "Managed by the CLI" })
-			: (option?.alias ??
+			: (option?.label ??
 				(selection === null
 					? t({ message: "System default" })
-					: (option?.label ?? t({ message: "Selected account" }))));
+					: t({ message: "Selected account" }))));
 	const label =
 		status === "closed"
 			? t({ message: "Closed" })
@@ -55,7 +63,7 @@ export function AcpOverviewSession({
 			data-agent-session={data.terminalId}
 		>
 			<p className="font-medium">
-				{label} · <Trans>ACP chat</Trans>
+				{label} · <Trans>Chat</Trans>
 			</p>
 			<p className="break-words">
 				<Trans>Launch model</Trans>:{" "}

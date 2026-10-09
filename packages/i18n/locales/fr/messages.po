@@ -3480,9 +3480,6 @@ msgstr "Session de chat introuvable"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Surfaces de chat : messages, raisonnement, suggestions"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "Chats commencés hors de Superset dans les dossiers de ce projet, par exemple dans un terminal ou dans Zed. Choisissez-en un pour le poursuivre."
-
 msgid "Check again"
 msgstr "Vérifier à nouveau"
 
@@ -7546,6 +7543,9 @@ msgstr "Rechercher dans la page"
 
 msgid "Find in Terminal"
 msgstr "Rechercher dans le terminal"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "Recherchez les chats locaux de ce projet et de ses comptes. Ouvrez un chat existant ou poursuivez un chat commencé dans un terminal."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "Trouver le code récemment modifié dont la couverture est faible et le tester correctement."

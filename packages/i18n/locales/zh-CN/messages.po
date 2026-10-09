@@ -3480,9 +3480,6 @@ msgstr "未找到聊天会话"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "聊天界面：消息、推理、建议"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "在此项目文件夹中于 Superset 之外（例如终端或 Zed）开始的聊天。选择一个即可继续。"
-
 msgid "Check again"
 msgstr "重新检查"
 
@@ -7546,6 +7543,9 @@ msgstr "在页面中查找"
 
 msgid "Find in Terminal"
 msgstr "在终端中查找"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "查找此项目及其账户中的本地聊天。打开现有聊天，或继续在终端中开始的聊天。"
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "找出最近改动过、覆盖率薄弱的代码，好好补上测试。"

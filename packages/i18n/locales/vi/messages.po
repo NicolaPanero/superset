@@ -3480,9 +3480,6 @@ msgstr "Không tìm thấy phiên chat"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "Các cuộc trò chuyện bắt đầu bên ngoài Superset trong các thư mục của dự án này, ví dụ trong terminal hoặc Zed. Chọn một để tiếp tục."
-
 msgid "Check again"
 msgstr "Kiểm tra lại"
 
@@ -7546,6 +7543,9 @@ msgstr "Tìm trong trang"
 
 msgid "Find in Terminal"
 msgstr "Tìm trong terminal"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "Tìm các cuộc trò chuyện cục bộ trong dự án này và các tài khoản của dự án. Mở một cuộc trò chuyện hiện có hoặc tiếp tục cuộc trò chuyện đã bắt đầu trong terminal."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "Tìm code vừa thay đổi có coverage yếu và viết test đàng hoàng."

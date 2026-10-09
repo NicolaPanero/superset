@@ -3480,9 +3480,6 @@ msgstr "Sesi chat tidak ditemukan"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Permukaan chat: pesan, penalaran, saran"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "Chat yang dimulai di luar Superset di folder proyek ini, misalnya di terminal atau di Zed. Pilih satu untuk melanjutkannya."
-
 msgid "Check again"
 msgstr "Periksa lagi"
 
@@ -7546,6 +7543,9 @@ msgstr "Cari di halaman"
 
 msgid "Find in Terminal"
 msgstr "Cari di Terminal"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "Temukan chat lokal di proyek ini dan akun-akunnya. Buka chat yang sudah ada atau lanjutkan chat yang dimulai di terminal."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "Cari kode yang baru berubah dengan cakupan tes lemah dan uji dengan benar."

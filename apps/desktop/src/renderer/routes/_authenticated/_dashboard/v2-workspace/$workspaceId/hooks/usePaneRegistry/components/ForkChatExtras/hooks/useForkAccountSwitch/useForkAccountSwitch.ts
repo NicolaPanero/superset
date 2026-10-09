@@ -9,6 +9,7 @@ import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
+import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 import type {
 	ForkAccountChoice,
@@ -87,6 +88,9 @@ export function useForkAccountSwitch(
 		if (switching || selection === current) return;
 		const target = accounts.find((account) => account.selection === selection);
 		const { acpSessionId, ...rest } = data;
+		const restoreRecovery = acpSessionId
+			? markChatSessionClosed(acpSessionId)
+			: () => {};
 		setSwitching(true);
 		// No agent while moving, so the closed chat does not resume itself.
 		ctx.actions.updateData({ ...rest, agent: undefined });
@@ -104,6 +108,7 @@ export function useForkAccountSwitch(
 				t({ message: `Chat moved to ${target?.name ?? selection ?? ""}` }),
 			);
 		} catch (error) {
+			restoreRecovery();
 			ctx.actions.updateData(data);
 			toast.error(t({ message: "Couldn't switch account" }), {
 				description: errorMessage(error, t({ message: "Unknown error" })),

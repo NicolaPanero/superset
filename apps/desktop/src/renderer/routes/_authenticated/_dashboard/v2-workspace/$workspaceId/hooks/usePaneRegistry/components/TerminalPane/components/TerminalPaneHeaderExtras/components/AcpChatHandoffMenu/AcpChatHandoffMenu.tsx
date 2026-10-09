@@ -21,7 +21,7 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
@@ -33,6 +33,7 @@ import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "../../../../../../../../types";
+import { markChatSessionClosed } from "../../../../../../../../utils/closedChatSessions";
 import type { OpenAgentChat } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
@@ -65,6 +66,7 @@ export function AcpChatHandoffMenu({
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const wiring = useChatWiring();
+	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
@@ -284,6 +286,7 @@ export function AcpChatHandoffMenu({
 		if (!target || !chatSessionId || busy || stage) return;
 		const run = ++runSequence.current;
 		setStage("converting");
+		let restoreRecovery: (() => void) | undefined;
 		try {
 			const prompt = await contextHandoff(
 				wiring.transport,
@@ -300,6 +303,7 @@ export function AcpChatHandoffMenu({
 			if (run !== runSequence.current) return;
 			setStage("launching");
 			if (placement === "this-chat") {
+				restoreRecovery = markChatSessionClosed(chatSessionId);
 				await wiring.transport.closeSession({ sessionId: chatSessionId });
 				ctx.actions.updateData({
 					terminalId: data.terminalId,
@@ -322,6 +326,10 @@ export function AcpChatHandoffMenu({
 			setOpen(false);
 		} catch (error) {
 			console.warn("[acp-chat] context handoff failed", error);
+			restoreRecovery?.();
+			void queryClient.invalidateQueries({
+				queryKey: ["acp-chat-session", chatSessionId],
+			});
 			if (run === runSequence.current) setFailed(true);
 		} finally {
 			if (run === runSequence.current) setStage(null);
@@ -339,6 +347,7 @@ export function AcpChatHandoffMenu({
 							reset();
 							setTargetConfigId(sameAgentConfig?.id ?? "");
 							setAccount(CONFIGURED_ACCOUNT);
+							setPlacement("this-chat");
 							setOpen(true);
 						}}
 						className="flex min-w-0 items-center gap-1 rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -350,19 +359,26 @@ export function AcpChatHandoffMenu({
 					</button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
-					<Trans>Continue with another agent</Trans>
+					<Trans>Agent</Trans> · <Trans>Account</Trans>
 				</TooltipContent>
 			</Tooltip>
 			<Dialog
 				open={open}
 				onOpenChange={(next) => {
-					if (!next && stage !== "launching") setOpen(false);
+					if (next || stage === "launching") return;
+					if (stage === "converting") {
+						++runSequence.current;
+						cancelTransfer.mutate({ transferId });
+						setStage(null);
+						setTransferId(crypto.randomUUID());
+					}
+					setOpen(false);
 				}}
 			>
 				<DialogContent className="sm:max-w-md">
 					<DialogHeader>
 						<DialogTitle>
-							<Trans>Continue with another agent</Trans>
+							<Trans>Agent</Trans> · <Trans>Account</Trans>
 						</DialogTitle>
 						<DialogDescription>
 							{sameAgent ? (
@@ -379,7 +395,7 @@ export function AcpChatHandoffMenu({
 						</DialogDescription>
 					</DialogHeader>
 					<div className="flex flex-col gap-4 py-1">
-						{!available && (
+						{target && !available && (
 							<p className="text-muted-foreground text-xs">
 								<Trans>
 									Native handoff is unavailable for this agent pair or host.
@@ -475,11 +491,19 @@ export function AcpChatHandoffMenu({
 							<dt className="text-muted-foreground">
 								<Trans>Source</Trans>
 							</dt>
-							<dd>{sourceLabel}</dd>
-							<dt className="mt-2 text-muted-foreground">
-								<Trans>Session</Trans>
-							</dt>
-							<dd className="break-all font-mono">{sourceSessionId ?? "—"}</dd>
+							<dd className="break-words">
+								{sourceLabel} · {currentAccount}
+							</dd>
+							<dd className="mt-2">
+								<details>
+									<summary className="cursor-pointer text-muted-foreground">
+										<Trans>Session</Trans>
+									</summary>
+									<code className="mt-1 block break-all">
+										{sourceSessionId ?? "—"}
+									</code>
+								</details>
+							</dd>
 						</dl>
 						<div className="flex flex-col gap-2">
 							<Label>

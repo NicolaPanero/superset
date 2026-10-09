@@ -7,7 +7,10 @@ import type {
 	PaneViewerData,
 	TerminalPaneData,
 } from "../../types";
-import { markChatSessionClosed } from "../../utils/closedChatSessions";
+import {
+	markChatSessionClosed,
+	markChatSessionOpened,
+} from "../../utils/closedChatSessions";
 import { findTerminalPaneLocation } from "../../utils/focusTerminalPane";
 import { useChatWiring } from "../usePaneRegistry/components/ChatSession/hooks/useSessionClient";
 
@@ -89,6 +92,8 @@ export function useForkBackgroundChats(workspaceId: string) {
 	const reopen = useCallback(
 		(store: StoreApi<WorkspaceStore<PaneViewerData>>, chat: BackgroundChat) => {
 			if (findTerminalPaneLocation(store.getState(), chat.terminalId)) return;
+			if (chat.paneData.acpSessionId)
+				markChatSessionOpened(chat.paneData.acpSessionId);
 			store.getState().addTab({
 				panes: [
 					{

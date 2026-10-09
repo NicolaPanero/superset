@@ -5,6 +5,8 @@
 name: Fork - build release
 
 on:
+  push:
+    branches: ["fork/main"]
   workflow_run:
     workflows: ["Fork - sync with upstream"]
     types: [completed]
@@ -14,6 +16,10 @@ on:
         description: Build even if fork/main's commit already has a release
         type: boolean
         default: false
+
+defaults:
+  run:
+    shell: bash
 
 permissions:
   contents: write

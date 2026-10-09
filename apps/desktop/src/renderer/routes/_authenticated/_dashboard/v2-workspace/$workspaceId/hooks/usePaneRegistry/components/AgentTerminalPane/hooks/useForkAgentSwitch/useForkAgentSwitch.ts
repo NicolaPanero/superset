@@ -8,6 +8,7 @@ import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminal
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
+import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
 export interface AgentSwitchTarget {
@@ -81,9 +82,9 @@ export function useForkAgentSwitch(
 				pendingAttachments: _attachments,
 				...rest
 			} = data;
-			ctx.actions.setTitle(target.label);
-			// No agent while converting, so the closed chat does not resume itself.
-			ctx.actions.updateData({ ...rest, agent: undefined });
+			const restoreRecovery = data.acpSessionId
+				? markChatSessionClosed(data.acpSessionId)
+				: () => {};
 			try {
 				if (data.acpSessionId)
 					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
@@ -121,12 +122,14 @@ export function useForkAgentSwitch(
 					...(target.model ? { chatModelLabel: target.model.label } : {}),
 					...(target.modeId ? { chatModeId: target.modeId } : {}),
 				});
+				ctx.actions.setTitle(target.label);
 				toast.success(t({ message: "Native handoff complete" }), {
 					description: `${source.id} → ${target.label}`,
 				});
 				return true;
 			} catch (error) {
 				console.warn("[acp-chat] native agent switch failed", error);
+				restoreRecovery();
 				ctx.actions.updateData(data);
 				return false;
 			}
