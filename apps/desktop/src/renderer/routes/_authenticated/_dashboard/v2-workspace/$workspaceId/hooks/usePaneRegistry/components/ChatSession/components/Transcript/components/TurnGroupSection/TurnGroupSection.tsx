@@ -2,6 +2,7 @@ import type { OutboxEntry, SessionSnapshot } from "@superset/chat/core";
 import { displayText } from "@superset/chat/core";
 import type {
 	ApprovalRequest,
+	AvailableCommand,
 	Decision,
 	Item,
 	UserMessage,
@@ -57,6 +58,7 @@ export type TurnGroupSectionProps = {
 	onDiscardPrompt: (clientId: string) => void;
 	onFork?: ((target: ChatForkTarget) => void) | undefined;
 	canForkToWorktree?: boolean;
+	commands?: ReadonlyMap<string, AvailableCommand> | undefined;
 };
 
 /**
@@ -67,6 +69,7 @@ export type TurnGroupSectionProps = {
  */
 export function TurnGroupSection({
 	canForkToWorktree,
+	commands,
 	lastReply,
 	isEntryCollapsed,
 	onDiscardPrompt,
@@ -93,6 +96,7 @@ export function TurnGroupSection({
 						afterTarget={row.afterTarget}
 						approvalTarget={approvalTarget(snapshot, row.item)}
 						canForkToWorktree={canForkToWorktree}
+						commands={commands}
 						lastReply={lastReply}
 						harness={harness}
 						item={row.item}
@@ -107,6 +111,7 @@ export function TurnGroupSection({
 		case "outbox":
 			return (
 				<ItemRow
+					commands={commands}
 					harness={harness}
 					item={outboxMessage(row.entry)}
 					onRespond={onRespond}

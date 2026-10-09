@@ -9930,6 +9930,9 @@ msgstr "MCP-beheer"
 msgid "MCP Server"
 msgstr "MCP-server"
 
+msgid "MCP Server Commands"
+msgstr "MCP-servercommando's"
+
 msgid "Mean"
 msgstr "Gemiddelde"
 
@@ -18105,6 +18108,9 @@ msgstr "Onbekend account"
 
 msgid "Unknown author"
 msgstr "Onbekende auteur"
+
+msgid "Unknown command /{name}"
+msgstr "Onbekend commando /{name}"
 
 msgid "Unknown device"
 msgstr "Onbekend apparaat"

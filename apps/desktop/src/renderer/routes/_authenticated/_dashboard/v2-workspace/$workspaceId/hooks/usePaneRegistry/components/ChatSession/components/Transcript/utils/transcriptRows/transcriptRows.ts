@@ -20,6 +20,7 @@ export type TranscriptRow =
 			groupStart: boolean;
 			startedAtMs: number;
 			completedAtMs: number | undefined;
+			running: boolean;
 	  }
 	| {
 			kind: "item";
@@ -78,6 +79,7 @@ export function transcriptRows(
 				groupStart,
 				startedAtMs: turn.startedAtMs,
 				completedAtMs: turn.completedAtMs,
+				running: turn.status === "running",
 			});
 		};
 		const turnSettled = turn !== null && turn.status !== "running";
@@ -124,11 +126,9 @@ export function transcriptRows(
 				key: toolRunKey(group.turnId, entry.items, index),
 				groupStart,
 				items,
-				defaultCollapsed:
-					(turnSettled ||
-						(index < group.entries.length - 1 &&
-							!items.some((tool) => tool.status === "running"))) &&
-					!items.some((tool) => pendingApprovalTargets.has(tool.id)),
+				defaultCollapsed: !items.some((tool) =>
+					pendingApprovalTargets.has(tool.id),
+				),
 				...(pages.length > 0 ? { pages } : {}),
 			});
 		});

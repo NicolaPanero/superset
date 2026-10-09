@@ -140,6 +140,10 @@ export const acpAvailableCommandsUpdateSchema = z.looseObject({
 				.looseObject({ hint: z.string().optional() })
 				.nullable()
 				.optional(),
+			_meta: z
+				.looseObject({ command_category: z.unknown().optional() })
+				.nullable()
+				.optional(),
 		}),
 	),
 });

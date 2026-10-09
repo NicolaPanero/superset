@@ -9930,6 +9930,9 @@ msgstr "Správce MCP"
 msgid "MCP Server"
 msgstr "MCP server"
 
+msgid "MCP Server Commands"
+msgstr "Příkazy MCP serveru"
+
 msgid "Mean"
 msgstr "Průměr"
 
@@ -18105,6 +18108,9 @@ msgstr "Neznámý účet"
 
 msgid "Unknown author"
 msgstr "Neznámý autor"
+
+msgid "Unknown command /{name}"
+msgstr "Neznámý příkaz /{name}"
 
 msgid "Unknown device"
 msgstr "Neznámé zařízení"
