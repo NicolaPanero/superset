@@ -28,7 +28,9 @@ Chiudere la scheda di una chat non ferma l'agente, come succede a un
 terminale lasciato in esecuzione: la chat compare in **Background chats** nel
 menu attività dell'area di lavoro (icona accanto a **Agents**) e nel badge
 agenti sotto l'area di lavoro nella barra laterale. Un clic la riapre in vista
-chat, con tutta la cronologia, anche dopo un riavvio dell'app. Il pulsante di
+chat, con tutta la cronologia, anche dopo un riavvio dell'app. Aprendo un'area di
+lavoro senza schede, Superset riapre da solo la sua chat in background più
+recente: cliccare l'area di lavoro nella barra laterale riporta alla chat. Il pulsante di
 stop la chiude davvero. Si tengono al massimo 20 chat per area di lavoro.
 
 L'interruttore è in **Impostazioni → Experimental → ACP chat**. Cambiarlo non

@@ -20,7 +20,7 @@ export interface BackgroundChat {
 export function useForkBackgroundChats(workspaceId: string) {
 	const wiring = useChatWiring();
 	const utils = workspaceTrpc.useUtils();
-	const { data } = workspaceTrpc.agents.parkedChats.useQuery(
+	const { data, isSuccess: loaded } = workspaceTrpc.agents.parkedChats.useQuery(
 		{ workspaceId },
 		{ refetchOnWindowFocus: false },
 	);
@@ -113,5 +113,5 @@ export function useForkBackgroundChats(workspaceId: string) {
 		[closeChat, unparkAsync, refresh],
 	);
 
-	return { chats, park, reopen, reopenParked, stop };
+	return { chats, loaded, park, reopen, reopenParked, stop };
 }
