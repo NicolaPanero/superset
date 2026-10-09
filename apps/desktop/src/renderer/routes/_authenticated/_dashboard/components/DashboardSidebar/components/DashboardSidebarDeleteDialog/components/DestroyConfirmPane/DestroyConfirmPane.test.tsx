@@ -168,3 +168,78 @@ test("opening from an agent input focuses the native action without intercepting
 		input.remove();
 	}
 });
+
+test("a remembered branch preference applies only after an eligible preview and survives protected workspaces", () => {
+	const onDeleteBranchChange = mock(() => {});
+	const props = {
+		open: true,
+		onOpenChange: () => {},
+		workspaceName: "temporary",
+		deleteBranch: true,
+		onDeleteBranchChange,
+		hasChanges: false,
+		hasUnpushedCommits: false,
+		canConfirm: true,
+		blockingReason: null,
+		onConfirm: () => {},
+		confirmLabel: "Delete",
+	};
+	const page = () => within(document.body);
+	const view = render(<DestroyConfirmPane {...props} />);
+	expect(page().queryByRole("checkbox")).toBeNull();
+	view.rerender(
+		<DestroyConfirmPane
+			{...props}
+			branchDeletion={{
+				branch: "new-branch",
+				eligible: true,
+				reason: "created",
+			}}
+		/>,
+	);
+	expect(page().getByRole("checkbox").getAttribute("aria-checked")).toBe(
+		"true",
+	);
+	expect(page().getByText("new-branch")).toBeTruthy();
+	view.rerender(
+		<DestroyConfirmPane
+			{...props}
+			branchDeletion={{
+				branch: "imported",
+				eligible: false,
+				reason: "unverified",
+			}}
+		/>,
+	);
+	expect(page().queryByRole("checkbox")).toBeNull();
+	expect(page().getByText("Branch preserved")).toBeTruthy();
+	view.rerender(
+		<DestroyConfirmPane
+			{...props}
+			sharesProjectCheckout
+			branchDeletion={{
+				branch: "main",
+				eligible: false,
+				reason: "project_checkout",
+			}}
+		/>,
+	);
+	expect(page().queryByRole("checkbox")).toBeNull();
+	expect(
+		page().getByText("Branch and project files will be preserved."),
+	).toBeTruthy();
+	view.rerender(
+		<DestroyConfirmPane
+			{...props}
+			branchDeletion={{
+				branch: "another-new-branch",
+				eligible: true,
+				reason: "created",
+			}}
+		/>,
+	);
+	expect(page().getByRole("checkbox").getAttribute("aria-checked")).toBe(
+		"true",
+	);
+	expect(onDeleteBranchChange).not.toHaveBeenCalled();
+});

@@ -219,7 +219,15 @@ export function useBulkWorkspaceDelete({
 						inspections.get(workspace.id)?.status !== "ready",
 					destroy: (workspace, force) =>
 						destroyWorkspaceAtHost(targetFor(workspace), {
-							deleteBranch: preferences.deleteLocalBranch,
+							deleteBranch:
+								preferences.deleteLocalBranch &&
+								(() => {
+									const inspection = inspections.get(workspace.id);
+									return (
+										inspection?.status === "ready" &&
+										inspection.preview.branchDeletion?.eligible === true
+									);
+								})(),
 							force,
 							skipTeardown,
 						}),
@@ -364,6 +372,11 @@ export function useBulkWorkspaceDelete({
 	}, [execute, failures]);
 
 	return {
+		branchDeletions: [...inspections.values()].flatMap((inspection) =>
+			inspection.status === "ready" && inspection.preview.branchDeletion
+				? [inspection.preview.branchDeletion]
+				: [],
+		),
 		phase,
 		close,
 		handleOpenChange,

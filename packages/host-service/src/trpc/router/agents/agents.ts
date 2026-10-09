@@ -699,7 +699,7 @@ function continueChatAgent(
 	};
 }
 
-function launchChatAgent(
+export function launchChatAgent(
 	ctx: Pick<HostServiceContext, "db" | "runtime">,
 	input: AgentRunInput,
 	cwd: string,
@@ -714,6 +714,10 @@ function launchChatAgent(
 		commandId: crypto.randomUUID(),
 		scopeId: input.workspaceId,
 		harness: target.harness,
+		agentConfigId:
+			input.launchSnapshot?.config.id ??
+			resolveHostAgentConfig(ctx.db, input.agent)?.id,
+		accountSelection: input.accountSelection,
 		cwd,
 		terminalId,
 		...(input.model ? { modelId: input.model } : {}),

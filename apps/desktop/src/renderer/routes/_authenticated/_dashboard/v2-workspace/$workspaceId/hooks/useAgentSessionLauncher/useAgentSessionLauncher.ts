@@ -6,6 +6,7 @@ import { toast } from "@superset/ui/sonner";
 import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
 import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useTerminalAppearance } from "renderer/hooks/useTerminalAppearance";
 import {
@@ -27,6 +28,7 @@ import { useForkBackgroundChats } from "../useForkBackgroundChats";
 
 export interface CreateNewAgentSessionInput {
 	nativeTerminal?: boolean;
+	accountConfirmed?: boolean;
 	accountSelection?: string | null;
 	configId: string;
 	placement: "split-pane" | "new-tab";
@@ -87,6 +89,17 @@ export function useAgentSessionLauncher({
 				configs.find((entry) => entry.presetId === input.presetId);
 			const presetId = config?.presetId;
 			if (!presetId || !acpHarnessForPreset(presetId)) return null;
+			if (
+				!input.accountConfirmed &&
+				!(await confirmAccountLaunch({
+					hostUrl,
+					agent: config.id,
+					provider: presetId,
+					selection: input.accountSelection,
+					model: input.modelId,
+				}))
+			)
+				return null;
 			let launch: Awaited<ReturnType<typeof prepareAcpLaunch.mutateAsync>>;
 			try {
 				launch = await prepareAcpLaunch.mutateAsync({
@@ -149,6 +162,22 @@ export function useAgentSessionLauncher({
 
 	const createNewAgentSession = useCallback<CreateNewAgentSession>(
 		async (input) => {
+			const configs = await queryClient
+				.ensureQueryData(v2AgentConfigsQueryOptions(hostUrl))
+				.catch(() => agentConfigs ?? []);
+			const config = configs.find((entry) => entry.id === input.configId);
+			if (
+				!config ||
+				!(await confirmAccountLaunch({
+					hostUrl,
+					agent: config.id,
+					provider: config.presetId,
+					selection: input.accountSelection,
+					model: input.modelId,
+				}))
+			)
+				return null;
+			input = { ...input, accountConfirmed: true };
 			if (
 				!input.nativeTerminal &&
 				!input.forkSessionId &&
@@ -235,6 +264,9 @@ export function useAgentSessionLauncher({
 			t,
 			appearance.theme,
 			openAgentChat,
+			hostUrl,
+			queryClient,
+			agentConfigs,
 		],
 	);
 

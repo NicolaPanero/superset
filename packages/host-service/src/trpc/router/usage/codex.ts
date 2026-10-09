@@ -4,9 +4,11 @@
  * Read-only: we never refresh the token (see claude.ts for why).
  */
 
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { quotaFetch, quotaResponseTiming } from "./fork-quota-fetch";
 import { type CodexHome, discoverCodexHomes } from "./profiles";
 import type {
 	UsageAccount,
@@ -74,7 +76,7 @@ function toWindow(
 	return {
 		id,
 		label,
-		usedPercent: Math.max(0, Math.round(window.used_percent)),
+		usedPercent: Math.max(0, window.used_percent),
 		resetsAt,
 	};
 }
@@ -112,15 +114,7 @@ export async function fetchCodexAccounts(): Promise<UsageAccount[]> {
 			fetchCodexAccountForHome(home, home.home === defaultHome),
 		),
 	);
-	// Dedupe by account email — one login used from several homes is one
-	// account; keep the first (default home wins).
-	const seen = new Set<string>();
-	return accounts.flat().filter((account) => {
-		const key = account.email ?? account.accountKey;
-		if (seen.has(key)) return false;
-		seen.add(key);
-		return true;
-	});
+	return accounts.flat();
 }
 
 /** What the ChatGPT usage endpoint says about one access token. */
@@ -131,6 +125,8 @@ export interface CodexSubscriptionQuota {
 	statusDetail: string | null;
 	windows: UsageQuotaWindow[];
 	creditsBalance: number | null;
+	fetchedAt?: Date;
+	retryAt?: Date;
 }
 
 export const CODEX_EXPIRED_TOKEN_DETAIL =
@@ -143,6 +139,7 @@ export const CODEX_EXPIRED_TOKEN_DETAIL =
 export async function fetchCodexSubscriptionQuota(
 	accessToken: string,
 	accountId?: string,
+	identity?: string,
 ): Promise<CodexSubscriptionQuota> {
 	const empty = { email: null, plan: null, windows: [], creditsBalance: null };
 	try {
@@ -150,14 +147,19 @@ export async function fetchCodexSubscriptionQuota(
 			Authorization: `Bearer ${accessToken}`,
 		};
 		if (accountId) headers["chatgpt-account-id"] = accountId;
-		const response = await fetch(CODEX_USAGE_URL, {
-			headers,
-			signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-		});
+		const response = await quotaFetch(
+			CODEX_USAGE_URL,
+			{
+				headers,
+				signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+			},
+			identity,
+		);
 
 		if (response.status === 401 || response.status === 403) {
 			return {
 				...empty,
+				...quotaResponseTiming(response),
 				status: "token_expired",
 				statusDetail: CODEX_EXPIRED_TOKEN_DETAIL,
 			};
@@ -165,6 +167,7 @@ export async function fetchCodexSubscriptionQuota(
 		if (!response.ok) {
 			return {
 				...empty,
+				...quotaResponseTiming(response),
 				status: "unavailable",
 				statusDetail: `Usage endpoint returned ${response.status}.`,
 			};
@@ -174,6 +177,7 @@ export async function fetchCodexSubscriptionQuota(
 		const windows = mapWindows(usage);
 		const balance = Number.parseFloat(usage.credits?.balance ?? "");
 		return {
+			...quotaResponseTiming(response),
 			email: usage.email ?? null,
 			plan: usage.plan_type ?? null,
 			status: windows.length > 0 ? "ok" : "unavailable",
@@ -239,6 +243,15 @@ async function fetchCodexAccountForHome(
 	const quota = await fetchCodexSubscriptionQuota(
 		accessToken,
 		auth.tokens?.account_id,
+		`codex:${codexHome}`,
 	);
-	return [{ ...base, ...quota }];
+	return [
+		{
+			...base,
+			...quota,
+			identityFingerprint: createHash("sha256")
+				.update(accessToken)
+				.digest("hex"),
+		},
+	];
 }

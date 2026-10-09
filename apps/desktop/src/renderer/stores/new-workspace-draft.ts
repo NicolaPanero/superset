@@ -33,6 +33,7 @@ export interface DraftAttachment {
 export type WorkspaceCheckout = "worktree" | "local";
 
 export interface NewWorkspaceDraft {
+	forkAccountChoice?: { key: string; selection: string | null };
 	selectedProjectId: string | null;
 	/** Explicit "No project" (session) choice — distinct from not-yet-selected. */
 	isSession: boolean;

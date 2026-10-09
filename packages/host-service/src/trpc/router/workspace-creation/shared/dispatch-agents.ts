@@ -10,6 +10,7 @@ export const agentLaunchSchema = z
 		model: z.string().optional(),
 		effort: z.string().optional(),
 		mode: z.string().optional(),
+		accountSelection: z.string().min(1).max(4096).nullable().optional(),
 		surface: z.enum(["terminal", "chat"]).optional(),
 	})
 	.refine(
@@ -39,6 +40,7 @@ export async function dispatchSugarAgents(
 					model: entry.model,
 					effort: entry.effort,
 					mode: entry.mode,
+					accountSelection: entry.accountSelection,
 					surface: entry.surface,
 				});
 				return { ok: true as const, ...result };

@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} z {total}"
 
+msgid "{remaining} available"
+msgstr "K dispozici: {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "před {seconds} s"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} obnoveno na výchozí"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Nahrává se # soubor…} few {Nahrávají se # soubory…} many {Nahrává se # souboru…} other {Nahrává se # souborů…}}"
-
-msgid "{used} used"
-msgstr "Využito {used}"
 
 msgid "{waiting} Waiting"
 msgstr "Čeká: {waiting}"
@@ -3010,6 +3010,9 @@ msgstr "Větev"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Větev „{0}“ není na tomto zařízení ani na {1}. Obnovit lze jen odeslané commity."
 
+msgid "Branch and project files will be preserved."
+msgstr "Větev a soubory projektu budou zachovány."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Chování větví u nových pracovních prostorů na tomto zařízení. Projekty si prefix mohou nastavit samostatně."
 
@@ -3042,6 +3045,9 @@ msgstr "Prefix větve"
 
 msgid "Branch Prefix"
 msgstr "Předpona větve"
+
+msgid "Branch preserved"
+msgstr "Větev zachována"
 
 msgid "Branch renamed to {newName}"
 msgstr "Větev přejmenována na {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Relace chatu nenalezena"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 
+msgid "Check account before starting"
+msgstr "Ověřit účet před spuštěním"
+
 msgid "Check again"
 msgstr "Zkontrolovat znovu"
 
@@ -3602,6 +3611,9 @@ msgstr "Vyberte účet"
 
 msgid "Choose an existing repo folder"
 msgstr "Vyberte složku s existujícím repozitářem"
+
+msgid "Choose another account"
+msgstr "Vybrat jiný účet"
 
 msgid "Choose app"
 msgstr "Vyberte aplikaci"
@@ -5506,6 +5518,9 @@ msgstr "Kreativní manažer, Valid"
 msgid "Credentials stay on the server"
 msgstr "Přihlašovací údaje zůstávají na serveru"
 
+msgid "Credits"
+msgstr "Kredity"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Komponenty napříč funkcemi mimo packages/ui — podívejte se sem, než budete stavět novou"
 
@@ -6858,6 +6873,9 @@ msgstr "Velmi vysoké"
 
 msgid "Extra small"
 msgstr "Velmi malé"
+
+msgid "Extra usage"
+msgstr "Využití navíc"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "Brána F4 · {F4_GATE_SHARE} %"
@@ -13077,6 +13095,9 @@ msgstr "Úplně ukončit Superset"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Nejprve zdrojový prohlížeč ukončete, aby se jeho přihlášení uložila na disk. Budete požádáni o povolení přístupu ke Klíčence."
 
+msgid "Quota exhausted"
+msgstr "Kvóta vyčerpána"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Připojit znovu"
 msgid "Reconnect {name}"
 msgstr "Znovu připojit {name}"
 
+msgid "Reconnect account"
+msgstr "Znovu připojit účet"
+
 msgid "Reconnect Google"
 msgstr "Připojit Google znovu"
 
@@ -13308,9 +13332,6 @@ msgstr "Obnovit pull requesty"
 
 msgid "Refresh repositories"
 msgstr "Obnovit repozitáře"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Obnoví se při příštím spuštění Claude Code."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Obnoví se při příštím spuštění OpenCode."
@@ -15673,6 +15694,9 @@ msgstr "Připravit soubor"
 msgid "Staged"
 msgstr "Připravené"
 
+msgid "Stale"
+msgstr "Zastaralé"
+
 msgid "Standard action strip for pane headers"
 msgstr "Standardní pruh akcí pro záhlaví panelů"
 
@@ -15754,6 +15778,9 @@ msgstr "Spouštějte agenty, sledujte je živě a kontrolujte diff z telefonu. V
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Spusťte agenta nebo terminál a začněte v tomto pracovním prostoru pracovat."
+
+msgid "Start anyway"
+msgstr "Přesto spustit"
 
 msgid "Start browsing"
 msgstr "Začněte prohlížet"
@@ -17017,6 +17044,9 @@ msgstr "Účet {plugin} už připojil(a) {owner}. Požádejte ho/ji, aby ho nejp
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Tento účet {plugin} už je připojený k jiné organizaci Supersetu."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Tento účet může způsobit poplatky nebo nelze ověřit jeho dostupnou kvótu. Vyberte jiný účet, obnovte využití nebo pokračujte v tomto spuštění."
+
 msgid "This action is irreversible."
 msgstr "Tuto akci nelze vrátit zpět."
 
@@ -17953,6 +17983,9 @@ msgstr "Skript bez názvu"
 
 msgid "Untitled workspace"
 msgstr "Pracovní prostor bez názvu"
+
+msgid "Unverified"
+msgstr "Neověřeno"
 
 msgid "Up next"
 msgstr "Další na řadě"

@@ -8,12 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, CircleHelp, Loader2, Zap } from "lucide-react";
 import { useState } from "react";
+import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useNow } from "renderer/hooks/useNow";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
-import { formatResetLabel } from "renderer/utils/usage/formatResetIn";
 import { UsageProgressRing } from "./components/UsageProgressRing";
 import { getAccountUsageState } from "./utils/getAccountUsageState";
 
@@ -141,45 +141,11 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 				{status && (
 					<p className="mt-3 text-xs text-muted-foreground">{status}</p>
 				)}
-				{(state === "ready" || state === "stale") &&
-					account?.windows.map((window) => {
-						const used = formatPercent(window.usedPercent / 100);
-						return (
-							<div key={window.id} className="mt-4">
-								<div className="flex justify-between gap-3 text-xs">
-									<span>{window.label}</span>
-									<span className="shrink-0 tabular-nums">
-										<Trans>{used} used</Trans>
-									</span>
-								</div>
-								<div className="mt-2 h-1 overflow-hidden rounded-full bg-muted">
-									<div
-										className={cn(
-											"h-full rounded-full",
-											state === "stale"
-												? "bg-muted-foreground"
-												: window.usedPercent >= 90
-													? "bg-red-500"
-													: window.usedPercent >= 70
-														? "bg-amber-500"
-														: "bg-primary",
-										)}
-										style={{
-											width: `${Math.min(100, Math.max(0, window.usedPercent))}%`,
-										}}
-									/>
-								</div>
-								<p className="mt-1 text-[11px] text-muted-foreground">
-									{window.resetsAt &&
-									new Date(window.resetsAt).getTime() > now.getTime() ? (
-										formatResetLabel(new Date(window.resetsAt), now)
-									) : (
-										<Trans>Reset time unavailable</Trans>
-									)}
-								</p>
-							</div>
-						);
-					})}
+				{account && (
+					<div className="mt-3">
+						<ForkUsageSummary account={account} />
+					</div>
+				)}
 				{account?.credentialKind === "subscription" && (
 					<p className="mt-4 border-t pt-3 text-[11px] text-muted-foreground">
 						<Trans>Shared across sessions using this login.</Trans>

@@ -315,6 +315,7 @@ export const createDeleteProcedures = () => {
 							await deleteLocalBranch({
 								mainRepoPath: project.mainRepoPath,
 								branch: workspace.branch,
+								workspaceId: input.id,
 							});
 						} catch (error) {
 							console.error(

@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} içinden {received}"
 
+msgid "{remaining} available"
+msgstr "{remaining} kullanılabilir"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}sn önce"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} varsayılanlara geri yüklendi"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# dosya yükleniyor…}}"
-
-msgid "{used} used"
-msgstr "{used} kullanıldı"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} bekliyor"
@@ -3010,6 +3010,9 @@ msgstr "Dal"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "\"{0}\" dalı bu cihazda da {1} üzerinde de yok. Yalnızca gönderilmiş commit'ler geri yüklenebilir."
 
+msgid "Branch and project files will be preserved."
+msgstr "Dal ve proje dosyaları korunacak."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Bu cihazdaki yeni çalışma alanları için dal davranışı. Projeler ön eki tek tek geçersiz kılabilir."
 
@@ -3042,6 +3045,9 @@ msgstr "Dal ön eki"
 
 msgid "Branch Prefix"
 msgstr "Dal öneki"
+
+msgid "Branch preserved"
+msgstr "Dal korundu"
 
 msgid "Branch renamed to {newName}"
 msgstr "Dal {newName} olarak yeniden adlandırıldı"
@@ -3480,6 +3486,9 @@ msgstr "Sohbet oturumu bulunamadı"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
 
+msgid "Check account before starting"
+msgstr "Başlatmadan önce hesabı doğrula"
+
 msgid "Check again"
 msgstr "Yeniden denetle"
 
@@ -3602,6 +3611,9 @@ msgstr "Bir hesap seçin"
 
 msgid "Choose an existing repo folder"
 msgstr "Mevcut bir depo klasörü seçin"
+
+msgid "Choose another account"
+msgstr "Başka hesap seç"
 
 msgid "Choose app"
 msgstr "Uygulama seç"
@@ -5506,6 +5518,9 @@ msgstr "Kreatif Yönetici, Valid"
 msgid "Credentials stay on the server"
 msgstr "Kimlik bilgileri sunucuda kalır"
 
+msgid "Credits"
+msgstr "Krediler"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "packages/ui dışında yaşayan, özellikler arası bileşenler — yenisini geliştirmeden önce buraya bakın"
 
@@ -6858,6 +6873,9 @@ msgstr "Çok yüksek"
 
 msgid "Extra small"
 msgstr "Çok küçük"
+
+msgid "Extra usage"
+msgstr "Ek kullanım"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4 eşiği · %{F4_GATE_SHARE}"
@@ -13077,6 +13095,9 @@ msgstr "Superset'ten tamamen çık"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Oturum bilgilerinin diske kaydedilmesi için önce kaynak tarayıcıdan çıkın. Anahtar Zinciri erişimine izin vermeniz istenecek."
 
+msgid "Quota exhausted"
+msgstr "Kota tükendi"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Yeniden bağlan"
 msgid "Reconnect {name}"
 msgstr "{name} hesabını yeniden bağla"
 
+msgid "Reconnect account"
+msgstr "Hesabı yeniden bağla"
+
 msgid "Reconnect Google"
 msgstr "Google'a yeniden bağlan"
 
@@ -13308,9 +13332,6 @@ msgstr "Pull request'leri yenile"
 
 msgid "Refresh repositories"
 msgstr "Depoları yenile"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Claude Code bir sonraki çalıştığında yenilenir."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "OpenCode bir sonraki çalıştığında yenilenir."
@@ -15673,6 +15694,9 @@ msgstr "Dosyayı hazırla"
 msgid "Staged"
 msgstr "Hazırlanmış"
 
+msgid "Stale"
+msgstr "Eski veriler"
+
 msgid "Standard action strip for pane headers"
 msgstr "Bölme başlıkları için standart eylem şeridi"
 
@@ -15754,6 +15778,9 @@ msgstr "Telefonunuzdan ajanları başlatın, canlı takip edin ve diff'i inceley
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Bu çalışma alanında çalışmaya başlamak için bir ajan veya terminal başlatın."
+
+msgid "Start anyway"
+msgstr "Yine de başlat"
 
 msgid "Start browsing"
 msgstr "Taramaya başlayın"
@@ -17017,6 +17044,9 @@ msgstr "Bu {plugin} hesabını zaten {owner} bağlamış. Önce bağlantıyı ke
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Bu {plugin} hesabı zaten başka bir Superset kuruluşuna bağlı."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Bu hesap ücretlendirmeye neden olabilir veya kullanılabilir kotası doğrulanamıyor. Başka bir hesap seçin, kullanımı yenileyin ya da bu başlatma için devam edin."
+
 msgid "This action is irreversible."
 msgstr "Bu işlem geri alınamaz."
 
@@ -17953,6 +17983,9 @@ msgstr "Adsız betik"
 
 msgid "Untitled workspace"
 msgstr "Adsız çalışma alanı"
+
+msgid "Unverified"
+msgstr "Doğrulanmadı"
 
 msgid "Up next"
 msgstr "Sırada"

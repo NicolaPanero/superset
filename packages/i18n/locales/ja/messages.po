@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
+msgid "{remaining} available"
+msgstr "残り {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
-
-msgid "{used} used"
-msgstr "{used} 使用済み"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}件待機中"
@@ -3010,6 +3010,9 @@ msgstr "ブランチ"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "ブランチ「{0}」はこのデバイスにも {1} にもありません。復元できるのはプッシュ済みのコミットだけです。"
 
+msgid "Branch and project files will be preserved."
+msgstr "ブランチとプロジェクトのファイルは保持されます。"
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "このデバイスの新規ワークスペースのブランチ動作。プレフィックスはプロジェクトごとに上書きできます。"
 
@@ -3042,6 +3045,9 @@ msgstr "ブランチプレフィックス"
 
 msgid "Branch Prefix"
 msgstr "ブランチの接頭辞"
+
+msgid "Branch preserved"
+msgstr "ブランチを保持"
 
 msgid "Branch renamed to {newName}"
 msgstr "ブランチ名を{newName}に変更しました"
@@ -3480,6 +3486,9 @@ msgstr "チャットセッションが見つかりません"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "チャットの構成要素: メッセージ、推論、提案"
 
+msgid "Check account before starting"
+msgstr "開始前にアカウントを確認"
+
 msgid "Check again"
 msgstr "再確認"
 
@@ -3602,6 +3611,9 @@ msgstr "アカウントを選択"
 
 msgid "Choose an existing repo folder"
 msgstr "既存のリポジトリフォルダを選択"
+
+msgid "Choose another account"
+msgstr "別のアカウントを選択"
 
 msgid "Choose app"
 msgstr "アプリを選択"
@@ -5506,6 +5518,9 @@ msgstr "クリエイティブマネージャー、Valid"
 msgid "Credentials stay on the server"
 msgstr "認証情報はサーバー上に保持されます"
 
+msgid "Credits"
+msgstr "クレジット"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "packages/uiの外にある機能横断のコンポーネント — 新しく作る前にここを確認してください"
 
@@ -6858,6 +6873,9 @@ msgstr "最高"
 
 msgid "Extra small"
 msgstr "極小"
+
+msgid "Extra usage"
+msgstr "追加使用量"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4ゲート · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Supersetを完全に終了"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "ログイン情報をディスクに保存させるため、先に元のブラウザを終了してください。キーチェーンへのアクセス許可を求められます。"
 
+msgid "Quota exhausted"
+msgstr "使用枠を使い切りました"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "再接続"
 msgid "Reconnect {name}"
 msgstr "{name} を再接続"
 
+msgid "Reconnect account"
+msgstr "アカウントを再接続"
+
 msgid "Reconnect Google"
 msgstr "Googleを再接続"
 
@@ -13308,9 +13332,6 @@ msgstr "プルリクエストを更新"
 
 msgid "Refresh repositories"
 msgstr "リポジトリを更新"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "次に Claude Code を実行すると更新されます。"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "次に OpenCode を実行すると更新されます。"
@@ -15673,6 +15694,9 @@ msgstr "ファイルをステージ"
 msgid "Staged"
 msgstr "ステージ済み"
 
+msgid "Stale"
+msgstr "古いデータ"
+
 msgid "Standard action strip for pane headers"
 msgstr "ペインヘッダー用の標準アクションストリップ"
 
@@ -15754,6 +15778,9 @@ msgstr "スマートフォンからエージェントを起動し、ライブで
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "エージェントかターミナルを開始して、このワークスペースでの作業を始めましょう。"
+
+msgid "Start anyway"
+msgstr "このまま開始"
 
 msgid "Start browsing"
 msgstr "ブラウジングを開始"
@@ -17017,6 +17044,9 @@ msgstr "この {plugin} アカウントはすでに {owner} が接続してい�
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "この {plugin} アカウントはすでに別の Superset 組織が接続しています。"
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "このアカウントでは料金が発生する可能性があるか、残りの使用枠を確認できません。別のアカウントを選択するか、使用状況を更新するか、今回の起動を続行してください。"
+
 msgid "This action is irreversible."
 msgstr "この操作は元に戻せません。"
 
@@ -17953,6 +17983,9 @@ msgstr "無題のスクリプト"
 
 msgid "Untitled workspace"
 msgstr "無題のワークスペース"
+
+msgid "Unverified"
+msgstr "未確認"
 
 msgid "Up next"
 msgstr "次の実行"

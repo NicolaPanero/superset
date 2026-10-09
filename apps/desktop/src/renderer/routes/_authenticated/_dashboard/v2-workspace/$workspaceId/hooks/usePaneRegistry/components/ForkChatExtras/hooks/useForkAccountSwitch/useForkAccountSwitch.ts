@@ -2,9 +2,11 @@ import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { RendererContext } from "@superset/panes";
 import { AGENT_IDENTITY_LABELS } from "@superset/shared/agent-catalog";
+import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useMemo, useState } from "react";
+import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
@@ -25,6 +27,7 @@ const GENERAL_WINDOWS = ["five_hour", "seven_day", "primary", "secondary"];
 export function useForkAccountSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
+	chooseOther?: () => void,
 ): ForkAccountSwitcher | undefined {
 	const { t } = useLingui();
 	const data = ctx.pane.data as TerminalPaneData;
@@ -70,9 +73,10 @@ export function useForkAccountSwitch(
 					email: usage?.email ?? null,
 					plan: usage?.plan ?? null,
 					isSystemDefault,
-					usage: tightest
-						? { label: tightest.label, usedPercent: tightest.usedPercent }
-						: null,
+					usage:
+						accountQuotaState(usage).reason === "ready" && tightest
+							? { label: tightest.label, usedPercent: tightest.usedPercent }
+							: null,
 				};
 			}),
 		[options, quota.data, t],
@@ -86,6 +90,17 @@ export function useForkAccountSwitch(
 
 	const onSwitch = async (selection: string | null) => {
 		if (switching || selection === current) return;
+		if (
+			!hostUrl ||
+			!(await confirmAccountLaunch({
+				hostUrl,
+				agent: data.acpAgentConfigId ?? "claude",
+				provider: "claude",
+				selection,
+				chooseOther,
+			}))
+		)
+			return;
 		const target = accounts.find((account) => account.selection === selection);
 		const { acpSessionId, ...rest } = data;
 		const restoreRecovery = acpSessionId

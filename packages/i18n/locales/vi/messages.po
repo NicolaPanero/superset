@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} trên {total}"
 
+msgid "{remaining} available"
+msgstr "Còn {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "{seconds} giây trước"
 
@@ -1131,9 +1134,6 @@ msgstr "Đã khôi phục {updatedLabel} về mặc định"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Đang tải lên # tệp…}}"
-
-msgid "{used} used"
-msgstr "Đã dùng {used}"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} đang chờ"
@@ -3010,6 +3010,9 @@ msgstr "Nhánh"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Nhánh \"{0}\" không có trên thiết bị này hay trên {1}. Chỉ có thể khôi phục các commit đã được đẩy lên."
 
+msgid "Branch and project files will be preserved."
+msgstr "Nhánh và các tệp dự án sẽ được giữ lại."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Hành vi nhánh cho workspace mới trên thiết bị này. Từng dự án có thể ghi đè tiền tố riêng."
 
@@ -3042,6 +3045,9 @@ msgstr "Tiền tố nhánh"
 
 msgid "Branch Prefix"
 msgstr "Tiền tố nhánh"
+
+msgid "Branch preserved"
+msgstr "Nhánh được giữ lại"
 
 msgid "Branch renamed to {newName}"
 msgstr "Đã đổi tên nhánh thành {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Không tìm thấy phiên chat"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 
+msgid "Check account before starting"
+msgstr "Kiểm tra tài khoản trước khi bắt đầu"
+
 msgid "Check again"
 msgstr "Kiểm tra lại"
 
@@ -3602,6 +3611,9 @@ msgstr "Chọn tài khoản"
 
 msgid "Choose an existing repo folder"
 msgstr "Chọn một thư mục repo có sẵn"
+
+msgid "Choose another account"
+msgstr "Chọn tài khoản khác"
 
 msgid "Choose app"
 msgstr "Chọn ứng dụng"
@@ -5506,6 +5518,9 @@ msgstr "Quản lý sáng tạo, Valid"
 msgid "Credentials stay on the server"
 msgstr "Thông tin xác thực được giữ trên máy chủ"
 
+msgid "Credits"
+msgstr "Tín dụng"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Các component dùng chung nhiều tính năng, nằm ngoài packages/ui — hãy xem ở đây trước khi dựng cái mới"
 
@@ -6858,6 +6873,9 @@ msgstr "Rất cao"
 
 msgid "Extra small"
 msgstr "Rất nhỏ"
+
+msgid "Extra usage"
+msgstr "Mức sử dụng bổ sung"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "Cổng F4 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Thoát hẳn Superset"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Thoát trình duyệt nguồn trước để thông tin đăng nhập được lưu xuống đĩa. Bạn sẽ được hỏi cho phép truy cập Keychain."
 
+msgid "Quota exhausted"
+msgstr "Đã hết hạn mức"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Kết nối lại"
 msgid "Reconnect {name}"
 msgstr "Kết nối lại {name}"
 
+msgid "Reconnect account"
+msgstr "Kết nối lại tài khoản"
+
 msgid "Reconnect Google"
 msgstr "Kết nối lại Google"
 
@@ -13308,9 +13332,6 @@ msgstr "Làm mới pull request"
 
 msgid "Refresh repositories"
 msgstr "Làm mới repository"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Làm mới khi Claude Code chạy lần tiếp theo."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Làm mới khi OpenCode chạy lần tiếp theo."
@@ -15673,6 +15694,9 @@ msgstr "Stage tệp"
 msgid "Staged"
 msgstr "Đã stage"
 
+msgid "Stale"
+msgstr "Dữ liệu cũ"
+
 msgid "Standard action strip for pane headers"
 msgstr "Dải hành động chuẩn cho tiêu đề khung"
 
@@ -15754,6 +15778,9 @@ msgstr "Khởi chạy agent, theo dõi trực tiếp và xem xét diff từ đi�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Hãy khởi động một agent hoặc terminal để bắt đầu làm việc trong workspace này."
+
+msgid "Start anyway"
+msgstr "Vẫn bắt đầu"
 
 msgid "Start browsing"
 msgstr "Bắt đầu duyệt web"
@@ -17017,6 +17044,9 @@ msgstr "Tài khoản {plugin} này đã được {owner} kết nối. Hãy đề
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Tài khoản {plugin} này đã được một tổ chức Superset khác kết nối."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Tài khoản này có thể phát sinh phí hoặc không thể xác minh hạn mức còn lại. Chọn tài khoản khác, làm mới mức sử dụng hoặc tiếp tục lần khởi chạy này."
+
 msgid "This action is irreversible."
 msgstr "Không thể hoàn tác thao tác này."
 
@@ -17953,6 +17983,9 @@ msgstr "Script chưa đặt tên"
 
 msgid "Untitled workspace"
 msgstr "Workspace không tên"
+
+msgid "Unverified"
+msgstr "Chưa xác minh"
 
 msgid "Up next"
 msgstr "Sắp tới"

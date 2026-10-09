@@ -270,7 +270,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -283,7 +283,7 @@ describe("workspaceCleanup.inspect", () => {
 		const ctx = makeCtx({});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -321,7 +321,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -337,7 +337,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -907,7 +907,7 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		}
 	});
 
-	test("branch delete failure is reported as a warning after the local commit point", async () => {
+	test("an unverified branch is retained after the local commit point", async () => {
 		const ctx = makeCtx({
 			workspace: {
 				id: "ws-1",
@@ -930,9 +930,7 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		expect(result.success).toBe(true);
 		expect(result.worktreeRemoved).toBe(true);
 		expect(result.branchDeleted).toBe(false);
-		expect(result.warnings).toContain(
-			"Failed to delete branch feature: branch delete boom",
-		);
+		expect(result.warnings).toContain("Branch preserved: feature (unverified)");
 	});
 
 	test("worktree-removal timeout carries its phase into the reported error", async () => {

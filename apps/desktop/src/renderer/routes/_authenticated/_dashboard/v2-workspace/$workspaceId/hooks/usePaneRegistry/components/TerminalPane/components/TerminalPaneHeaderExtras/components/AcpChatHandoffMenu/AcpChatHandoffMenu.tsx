@@ -25,6 +25,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
+import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
+import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
+import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
@@ -62,12 +65,15 @@ export function AcpChatHandoffMenu({
 	const sourceSelection = binding?.account
 		? binding.account.selection
 		: data.acpAccountSelection;
-	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
+
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const wiring = useChatWiring();
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
+	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx, () =>
+		setOpen(true),
+	);
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
 	const [placement, setPlacement] = useState<Placement>("this-chat");
@@ -118,6 +124,7 @@ export function AcpChatHandoffMenu({
 	const target = targets.find((config) => config.id === targetConfigId);
 	const sameAgent = target !== undefined && target === sameAgentConfig;
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
+	const quota = useHostUsageQuota(open && managed ? hostUrl : null);
 	const options = useQuery({
 		queryKey: ["agent-launch-account-options", hostUrl, target?.presetId],
 		enabled: open && managed && !!hostUrl,
@@ -176,6 +183,17 @@ export function AcpChatHandoffMenu({
 					? null
 					: account
 				: undefined;
+		if (
+			placement === "this-chat" &&
+			hostUrl &&
+			!(await confirmAccountLaunch({
+				hostUrl,
+				agent: target.id,
+				provider: target.presetId,
+				selection: accountSelection,
+			}))
+		)
+			return;
 		if (placement === "this-chat") {
 			const run = ++runSequence.current;
 			setStage("converting");
@@ -302,6 +320,17 @@ export function AcpChatHandoffMenu({
 			});
 			if (run !== runSequence.current) return;
 			setStage("launching");
+			if (
+				placement === "this-chat" &&
+				hostUrl &&
+				!(await confirmAccountLaunch({
+					hostUrl,
+					agent: target.id,
+					provider: target.presetId,
+					selection: selected,
+				}))
+			)
+				return;
 			if (placement === "this-chat") {
 				restoreRecovery = markChatSessionClosed(chatSessionId);
 				await wiring.transport.closeSession({ sessionId: chatSessionId });
@@ -479,12 +508,31 @@ export function AcpChatHandoffMenu({
 													{option.selection === null && !option.alias ? (
 														<Trans>System default</Trans>
 													) : (
-														option.label
+														(option.alias ?? option.label)
 													)}
+													<span className="ml-2">
+														<ForkUsageSummary
+															compact
+															account={quota.data?.find(
+																(row) =>
+																	row.agent === target?.presetId &&
+																	row.selection === option.selection,
+															)}
+														/>
+													</span>
 												</SelectItem>
 											))}
 									</SelectContent>
 								</Select>
+								<ForkUsageSummary
+									account={quota.data?.find(
+										(row) =>
+											row.agent === target?.presetId &&
+											(pickedSelection === undefined
+												? row.isDefault
+												: row.selection === pickedSelection),
+									)}
+								/>
 							</div>
 						)}
 						<dl className="rounded-md border bg-muted/30 p-3 text-xs">

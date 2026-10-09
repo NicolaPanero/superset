@@ -87,6 +87,8 @@ export function useDestroyDialogState({
 	}, [open, hostTarget.status, inspect]);
 
 	const preview = inspectState.status === "ready" ? inspectState.preview : null;
+	const eligibleDelete =
+		deleteBranch && preview?.branchDeletion?.eligible === true;
 
 	const handleOpenChange = useCallback(
 		(next: boolean) => {
@@ -129,7 +131,11 @@ export function useDestroyDialogState({
 			try {
 				let result: DestroyWorkspaceSuccess;
 				try {
-					result = await destroy({ deleteBranch, force, skipTeardown });
+					result = await destroy({
+						deleteBranch: eligibleDelete,
+						force,
+						skipTeardown,
+					});
 				} catch (firstErr) {
 					const e = firstErr as DestroyWorkspaceError;
 					// Silent force-retry on the dirty-worktree race: preflight said
@@ -140,7 +146,11 @@ export function useDestroyDialogState({
 					// different CONFLICT cause; retrying just races the same
 					// guard).
 					if (e.kind === "conflict" && !force) {
-						result = await destroy({ deleteBranch, force: true, skipTeardown });
+						result = await destroy({
+							deleteBranch: eligibleDelete,
+							force: true,
+							skipTeardown,
+						});
 					} else {
 						throw firstErr;
 					}
@@ -178,7 +188,7 @@ export function useDestroyDialogState({
 		},
 		[
 			destroy,
-			deleteBranch,
+			eligibleDelete,
 			workspaceName,
 			workspaceId,
 			onOpenChange,
@@ -193,11 +203,13 @@ export function useDestroyDialogState({
 	return {
 		deleteBranch,
 		setDeleteBranch,
+		branchDeletion: preview?.branchDeletion,
 		hasChanges: preview?.hasChanges ?? false,
 		hasUnpushedCommits: preview?.hasUnpushedCommits ?? false,
 		sharesProjectCheckout:
 			preview?.canDelete === true && preview.sharesProjectCheckout === true,
-		canConfirm: preview ? preview.canDelete : true,
+		canConfirm:
+			inspectState.status !== "loading" && (preview ? preview.canDelete : true),
 		blockingReason: preview && !preview.canDelete ? preview.reason : null,
 		isCheckingStatus: open && inspectState.status === "loading",
 		error,

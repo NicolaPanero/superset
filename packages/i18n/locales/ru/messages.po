@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} из {total}"
 
+msgid "{remaining} available"
+msgstr "Доступно: {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "{seconds} с назад"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} восстановлен к значениям по ум�
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Загрузка # файла…} few {Загрузка # файлов…} many {Загрузка # файлов…} other {Загрузка # файла…}}"
-
-msgid "{used} used"
-msgstr "Использовано {used}"
 
 msgid "{waiting} Waiting"
 msgstr "Ожидают: {waiting}"
@@ -3010,6 +3010,9 @@ msgstr "Ветка"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Ветки «{0}» нет ни на этом устройстве, ни на {1}. Восстановить можно только отправленные коммиты."
 
+msgid "Branch and project files will be preserved."
+msgstr "Ветка и файлы проекта будут сохранены."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Поведение веток для новых рабочих областей на этом устройстве. Проекты могут переопределять префикс по отдельности."
 
@@ -3042,6 +3045,9 @@ msgstr "Префикс ветки"
 
 msgid "Branch Prefix"
 msgstr "Префикс ветки"
+
+msgid "Branch preserved"
+msgstr "Ветка сохранена"
 
 msgid "Branch renamed to {newName}"
 msgstr "Ветка переименована в {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Сессия чата не найдена"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Поверхности чата: сообщения, рассуждения, подсказки"
 
+msgid "Check account before starting"
+msgstr "Проверить аккаунт перед запуском"
+
 msgid "Check again"
 msgstr "Проверить снова"
 
@@ -3602,6 +3611,9 @@ msgstr "Выберите аккаунт"
 
 msgid "Choose an existing repo folder"
 msgstr "Выберите папку существующего репозитория"
+
+msgid "Choose another account"
+msgstr "Выбрать другой аккаунт"
 
 msgid "Choose app"
 msgstr "Выберите приложение"
@@ -5506,6 +5518,9 @@ msgstr "Креативный менеджер, Valid"
 msgid "Credentials stay on the server"
 msgstr "Учётные данные остаются на сервере"
 
+msgid "Credits"
+msgstr "Кредиты"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Кросс-функциональные компоненты вне packages/ui — загляните сюда, прежде чем делать новый"
 
@@ -6858,6 +6873,9 @@ msgstr "Очень высокий"
 
 msgid "Extra small"
 msgstr "Очень маленький"
+
+msgid "Extra usage"
+msgstr "Дополнительное использование"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "Шлюз F4 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Полностью выйти из Superset"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Сначала закройте исходный браузер, чтобы его логины сохранились на диск. Потребуется разрешить доступ к Keychain."
 
+msgid "Quota exhausted"
+msgstr "Квота исчерпана"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Переподключить"
 msgid "Reconnect {name}"
 msgstr "Переподключить {name}"
 
+msgid "Reconnect account"
+msgstr "Подключить аккаунт повторно"
+
 msgid "Reconnect Google"
 msgstr "Переподключить Google"
 
@@ -13308,9 +13332,6 @@ msgstr "Обновить пул-реквесты"
 
 msgid "Refresh repositories"
 msgstr "Обновить репозитории"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Обновится при следующем запуске Claude Code."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Обновится при следующем запуске OpenCode."
@@ -15673,6 +15694,9 @@ msgstr "Проиндексировать файл"
 msgid "Staged"
 msgstr "Проиндексировано"
 
+msgid "Stale"
+msgstr "Устаревшие данные"
+
 msgid "Standard action strip for pane headers"
 msgstr "Стандартная полоса действий для заголовков панелей"
 
@@ -15754,6 +15778,9 @@ msgstr "Запускайте агентов, следите за ними в р�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Запустите агента или терминал, чтобы начать работу в этой рабочей области."
+
+msgid "Start anyway"
+msgstr "Всё равно запустить"
 
 msgid "Start browsing"
 msgstr "Начните просмотр"
@@ -17017,6 +17044,9 @@ msgstr "Аккаунт {plugin} уже подключил(а) {owner}. Попр�
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Этот аккаунт {plugin} уже подключён другой организацией Superset."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Этот аккаунт может повлечь расходы, либо его доступную квоту невозможно проверить. Выберите другой аккаунт, обновите данные или продолжите этот запуск."
+
 msgid "This action is irreversible."
 msgstr "Это действие необратимо."
 
@@ -17953,6 +17983,9 @@ msgstr "Скрипт без названия"
 
 msgid "Untitled workspace"
 msgstr "Рабочая область без названия"
+
+msgid "Unverified"
+msgstr "Не проверено"
 
 msgid "Up next"
 msgstr "Далее"

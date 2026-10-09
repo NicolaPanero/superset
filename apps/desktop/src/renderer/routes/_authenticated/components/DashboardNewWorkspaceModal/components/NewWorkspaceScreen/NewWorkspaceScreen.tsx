@@ -44,6 +44,10 @@ import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
 import { AgentSelect } from "renderer/components/AgentSelect";
+import {
+	ForkAccountPicker,
+	useForkCreationAccount,
+} from "renderer/components/ForkAccountPicker";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -583,6 +587,13 @@ export function NewWorkspaceScreen({
 		linkedPR: draft.linkedPR,
 		linkedIssues: draft.linkedIssues,
 	});
+	const forkAccount = useForkCreationAccount(
+		draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl,
+		selectedAgent,
+		selectedPresetId,
+		selectedModel,
+		resetKey,
+	);
 	const { submitWorkspace: createWorkspace, isCreating } = useSubmitWorkspace(
 		projectId,
 		selectedAgent,
@@ -592,6 +603,7 @@ export function NewWorkspaceScreen({
 		modeSupport ? selectedMode : null,
 		uploadAttachments,
 		promptContext,
+		forkAccount,
 	);
 
 	const { otherHosts } = useWorkspaceHostOptions();
@@ -896,7 +908,7 @@ export function NewWorkspaceScreen({
 						placeholder={promptPlaceholder}
 						ref={composerRef}
 						toolbar={
-							<div className="flex min-w-0 items-center gap-1.5">
+							<div className="flex min-w-0 flex-wrap items-center gap-1.5">
 								<AgentSelect<WorkspaceCreateAgent>
 									agents={v2Agents}
 									value={selectedAgent}
@@ -905,13 +917,18 @@ export function NewWorkspaceScreen({
 									})}
 									onValueChange={setSelectedAgent}
 									onBeforeConfigureAgents={closeModal}
-									triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
+									triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
 									iconClassName="size-3 object-contain"
 									allowNone
 									noneLabel={t({
 										message: "No agent",
 									})}
 									noneValue="none"
+								/>
+								<ForkAccountPicker
+									account={forkAccount}
+									provider={selectedPresetId}
+									model={selectedModel ?? undefined}
 								/>
 								{modelSupport && (
 									<AgentModelSelect
@@ -921,7 +938,7 @@ export function NewWorkspaceScreen({
 										defaultLabel={t({
 											message: "Default model",
 										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
+										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
 									/>
 								)}
 								{effortSupport && effortOptions.length > 0 && (
@@ -932,7 +949,7 @@ export function NewWorkspaceScreen({
 										defaultLabel={t({
 											message: "Default effort",
 										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
+										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
 									/>
 								)}
 								{modeSupport && (
@@ -943,7 +960,7 @@ export function NewWorkspaceScreen({
 										defaultLabel={t({
 											message: "Direct mode",
 										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
+										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
 									/>
 								)}
 							</div>

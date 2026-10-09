@@ -384,6 +384,10 @@
 		"./page-storage-ticket": {
 			"types": "./src/page-storage-ticket.ts",
 			"default": "./src/page-storage-ticket.ts"
+		},
+		"./fork-account-usage": {
+			"types": "./src/fork-account-usage.ts",
+			"default": "./src/fork-account-usage.ts"
 		}
 	},
 	"scripts": {

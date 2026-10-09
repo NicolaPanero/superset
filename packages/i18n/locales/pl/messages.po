@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} z {total}"
 
+msgid "{remaining} available"
+msgstr "Dostępne: {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "{seconds} s temu"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} przywrócono do ustawień domyślnych"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Przesyłanie # pliku…} few {Przesyłanie # plików…} many {Przesyłanie # plików…} other {Przesyłanie # pliku…}}"
-
-msgid "{used} used"
-msgstr "Wykorzystano {used}"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} oczekuje"
@@ -3010,6 +3010,9 @@ msgstr "Gałąź"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Gałęzi „{0}” nie ma na tym urządzeniu ani na {1}. Można przywrócić tylko wypchnięte commity."
 
+msgid "Branch and project files will be preserved."
+msgstr "Branch i pliki projektu zostaną zachowane."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Zachowanie gałęzi dla nowych obszarów roboczych na tym urządzeniu. Projekty mogą nadpisać prefiks osobno."
 
@@ -3042,6 +3045,9 @@ msgstr "Prefiks gałęzi"
 
 msgid "Branch Prefix"
 msgstr "Prefiks gałęzi"
+
+msgid "Branch preserved"
+msgstr "Branch zachowany"
 
 msgid "Branch renamed to {newName}"
 msgstr "Nazwę gałęzi zmieniono na {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Nie znaleziono sesji czatu"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Powierzchnie czatu: wiadomości, rozumowanie, sugestie"
 
+msgid "Check account before starting"
+msgstr "Sprawdź konto przed uruchomieniem"
+
 msgid "Check again"
 msgstr "Sprawdź ponownie"
 
@@ -3602,6 +3611,9 @@ msgstr "Wybierz konto"
 
 msgid "Choose an existing repo folder"
 msgstr "Wybierz folder istniejącego repozytorium"
+
+msgid "Choose another account"
+msgstr "Wybierz inne konto"
 
 msgid "Choose app"
 msgstr "Wybierz aplikację"
@@ -5506,6 +5518,9 @@ msgstr "Menedżer kreatywny, Valid"
 msgid "Credentials stay on the server"
 msgstr "Poświadczenia pozostają na serwerze"
 
+msgid "Credits"
+msgstr "Kredyty"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Komponenty międzyfunkcyjne spoza packages/ui — sprawdź tutaj, zanim zbudujesz nowy"
 
@@ -6858,6 +6873,9 @@ msgstr "Bardzo wysoki"
 
 msgid "Extra small"
 msgstr "Bardzo mały"
+
+msgid "Extra usage"
+msgstr "Dodatkowe użycie"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "Bramka F4 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Zakończ Superset całkowicie"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Najpierw zamknij źródłową przeglądarkę, aby jej dane logowania zapisały się na dysku. Pojawi się prośba o dostęp do Keychain."
 
+msgid "Quota exhausted"
+msgstr "Limit wyczerpany"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Połącz ponownie"
 msgid "Reconnect {name}"
 msgstr "Połącz ponownie {name}"
 
+msgid "Reconnect account"
+msgstr "Połącz konto ponownie"
+
 msgid "Reconnect Google"
 msgstr "Połącz Google ponownie"
 
@@ -13308,9 +13332,6 @@ msgstr "Odśwież pull requesty"
 
 msgid "Refresh repositories"
 msgstr "Odśwież repozytoria"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Odświeży się przy następnym uruchomieniu Claude Code."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Odświeży się przy następnym uruchomieniu OpenCode."
@@ -15673,6 +15694,9 @@ msgstr "Dodaj plik do indeksu"
 msgid "Staged"
 msgstr "Zaindeksowane"
 
+msgid "Stale"
+msgstr "Nieaktualne"
+
 msgid "Standard action strip for pane headers"
 msgstr "Standardowy pasek akcji dla nagłówków paneli"
 
@@ -15754,6 +15778,9 @@ msgstr "Uruchamiaj agentów, śledź ich na żywo i przeglądaj diff z telefonu.
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Uruchom agenta lub terminal, aby zacząć pracę w tym obszarze roboczym."
+
+msgid "Start anyway"
+msgstr "Uruchom mimo to"
 
 msgid "Start browsing"
 msgstr "Zacznij przeglądać"
@@ -17017,6 +17044,9 @@ msgstr "To konto {plugin} zostało już połączone przez {owner}. Poproś o wcz
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "To konto {plugin} jest już połączone z inną organizacją Superset."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "To konto może generować opłaty lub nie można sprawdzić dostępnego limitu. Wybierz inne konto, odśwież użycie lub kontynuuj to uruchomienie."
+
 msgid "This action is irreversible."
 msgstr "Tej operacji nie można cofnąć."
 
@@ -17953,6 +17983,9 @@ msgstr "Skrypt bez nazwy"
 
 msgid "Untitled workspace"
 msgstr "Obszar roboczy bez tytułu"
+
+msgid "Unverified"
+msgstr "Niezweryfikowane"
 
 msgid "Up next"
 msgstr "Następne"

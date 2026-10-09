@@ -99,4 +99,7 @@ export interface UsageAccount {
 	/** Whether newly launched agents use this account (host-wide default). */
 	isDefault: boolean;
 	fetchedAt: Date;
+	retryAt?: Date;
+	identityFingerprint?: string;
+	lastSuccessfulAt?: Date;
 }

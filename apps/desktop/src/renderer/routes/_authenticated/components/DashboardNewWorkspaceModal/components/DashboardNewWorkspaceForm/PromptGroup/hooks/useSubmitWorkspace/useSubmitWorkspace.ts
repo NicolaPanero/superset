@@ -32,6 +32,10 @@ export function useSubmitWorkspace(
 	selectedMode: string | null,
 	uploadAttachments: UseUploadAttachmentsApi,
 	promptContext: NewWorkspacePromptContextApi,
+	accountLaunch?: {
+		selection?: string | null;
+		confirm: () => Promise<boolean>;
+	},
 ) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
@@ -177,6 +181,7 @@ export function useSubmitWorkspace(
 								model: selectedModel ?? undefined,
 								effort: selectedEffort ?? undefined,
 								mode: selectedMode ?? undefined,
+								accountSelection: accountLaunch?.selection,
 							}
 						: {}),
 				});
@@ -246,6 +251,8 @@ export function useSubmitWorkspace(
 			wantAgent &&
 			Boolean(acpHarnessForPreset(selectedPresetId)) &&
 			(await awaitAcpChatEnabled());
+		if (wantAgent && accountLaunch && !(await accountLaunch.confirm())) return;
+
 		const agents = wantAgent
 			? [
 					{
@@ -255,6 +262,7 @@ export function useSubmitWorkspace(
 						model: selectedModel ?? undefined,
 						effort: openAsChat ? undefined : (selectedEffort ?? undefined),
 						mode: selectedMode ?? undefined,
+						accountSelection: accountLaunch?.selection,
 						...(openAsChat ? { surface: "chat" as const } : {}),
 					},
 				]
@@ -358,6 +366,7 @@ export function useSubmitWorkspace(
 		});
 	}, [
 		activeOrganizationId,
+		accountLaunch,
 		awaitAcpChatEnabled,
 		selectedPresetId,
 		closeAndResetDraft,

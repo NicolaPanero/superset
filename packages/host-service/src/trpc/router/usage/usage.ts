@@ -17,21 +17,16 @@ import {
 	provisionClaudeAccount,
 	provisionCodexAccount,
 } from "./account-provisioning";
-import { fetchAgyAccounts } from "./agy-quota";
-import {
-	fetchClaudeAccounts,
-	readClaudeLoginFingerprint,
-	readDefaultLoginEmail,
-} from "./claude";
-import { fetchCodexAccounts } from "./codex";
+
+import { readClaudeLoginFingerprint, readDefaultLoginEmail } from "./claude";
+
 import {
 	getDefaultAccountSelections,
 	setDefaultAccountSelection,
 } from "./default-account";
 import { forkUsageProcedures } from "./fork-procedures";
-import { fetchGrokAccounts } from "./grok-quota";
+import { getQuota, invalidateQuota } from "./fork-quota-cache";
 import { countAgentPrsByDay } from "./history/agent-prs";
-import { fetchOpencodeAccounts } from "./opencode-quota";
 import { removeClaudeProfile, removeCodexHome } from "./profile-remove";
 import {
 	discoverClaudeProfiles,
@@ -39,48 +34,6 @@ import {
 	readCodexProfileKind,
 } from "./profiles";
 import { validateSessionAccount } from "./session-account/session-account";
-import type { UsageAccount } from "./types";
-
-/**
- * Agent quota endpoints are undocumented and rate-limit-sensitive, so
- * results are cached briefly and concurrent callers share one in-flight
- * request. The cached promise is evicted on rejection so a failure does not
- * replay for the whole TTL.
- */
-// >=5 min: Anthropic 429-blacklists faster pollers of the oauth/usage
-// endpoint (ccusage deprecated its live gauge over this; CodexBar #30930).
-const QUOTA_CACHE_TTL_MS = 5 * 60 * 1000;
-
-let cachedQuota: { promise: Promise<UsageAccount[]>; cachedAt: number } | null =
-	null;
-
-function loadAccounts(): Promise<UsageAccount[]> {
-	return Promise.all([
-		fetchClaudeAccounts(),
-		fetchCodexAccounts(),
-		fetchGrokAccounts(),
-		fetchAgyAccounts(),
-		fetchOpencodeAccounts(),
-	]).then((groups) => groups.flat());
-}
-
-function getQuota(forceRefresh: boolean): Promise<UsageAccount[]> {
-	if (
-		!forceRefresh &&
-		cachedQuota &&
-		Date.now() - cachedQuota.cachedAt < QUOTA_CACHE_TTL_MS
-	) {
-		return cachedQuota.promise;
-	}
-
-	const promise = loadAccounts();
-	const entry = { promise, cachedAt: Date.now() };
-	cachedQuota = entry;
-	promise.catch(() => {
-		if (cachedQuota === entry) cachedQuota = null;
-	});
-	return promise;
-}
 
 export const leaderboardPayloadInput = z.object({
 	days: z.number().int().min(1).max(MAX_BACKFILL_DAYS),
@@ -125,15 +78,17 @@ export const usageRouter = router({
 			// isDefault is applied per query, not cached with the quota: changing
 			// the default must reflect immediately without re-hitting providers.
 			const defaults = getDefaultAccountSelections(ctx.db);
-			return accounts.map((account) => ({
-				...account,
-				isDefault:
-					account.agent === "claude"
-						? account.selection === defaults.claudeConfigDir
-						: account.agent === "codex"
-							? account.selection === defaults.codexHome
-							: false,
-			}));
+			return accounts.map(
+				({ identityFingerprint: _identityFingerprint, ...account }) => ({
+					...account,
+					isDefault:
+						account.agent === "claude"
+							? account.selection === defaults.claudeConfigDir
+							: account.agent === "codex"
+								? account.selection === defaults.codexHome
+								: false,
+				}),
+			);
 		}),
 
 	/**
@@ -285,7 +240,7 @@ export const usageRouter = router({
 			}
 			// The quota cache still lists the removed account; drop it so the
 			// next query re-discovers.
-			cachedQuota = null;
+			invalidateQuota();
 			setAccountAlias(ctx.db, input.agent, input.selection, null);
 			return { success: true as const };
 		}),

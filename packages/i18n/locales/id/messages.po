@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} dari {total}"
 
+msgid "{remaining} available"
+msgstr "{remaining} tersedia"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} dipulihkan ke setelan bawaan"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Mengunggah # file…}}"
-
-msgid "{used} used"
-msgstr "{used} terpakai"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} Menunggu"
@@ -3010,6 +3010,9 @@ msgstr "Branch"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Branch \"{0}\" tidak ada di perangkat ini maupun di {1}. Hanya commit yang sudah di-push yang bisa dipulihkan."
 
+msgid "Branch and project files will be preserved."
+msgstr "Branch dan file proyek akan dipertahankan."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Perilaku branch untuk workspace baru di perangkat ini. Tiap proyek bisa menimpa prefix-nya sendiri."
 
@@ -3042,6 +3045,9 @@ msgstr "Prefix branch"
 
 msgid "Branch Prefix"
 msgstr "Awalan Cabang"
+
+msgid "Branch preserved"
+msgstr "Branch dipertahankan"
 
 msgid "Branch renamed to {newName}"
 msgstr "Nama branch diganti menjadi {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Sesi chat tidak ditemukan"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Permukaan chat: pesan, penalaran, saran"
 
+msgid "Check account before starting"
+msgstr "Periksa akun sebelum memulai"
+
 msgid "Check again"
 msgstr "Periksa lagi"
 
@@ -3602,6 +3611,9 @@ msgstr "Pilih akun"
 
 msgid "Choose an existing repo folder"
 msgstr "Pilih folder repo yang sudah ada"
+
+msgid "Choose another account"
+msgstr "Pilih akun lain"
 
 msgid "Choose app"
 msgstr "Pilih aplikasi"
@@ -5506,6 +5518,9 @@ msgstr "Manajer Kreatif, Valid"
 msgid "Credentials stay on the server"
 msgstr "Kredensial tetap di server"
 
+msgid "Credits"
+msgstr "Kredit"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Komponen lintas fitur yang berada di luar packages/ui — cek di sini sebelum membuat yang baru"
 
@@ -6858,6 +6873,9 @@ msgstr "Sangat tinggi"
 
 msgid "Extra small"
 msgstr "Ekstra kecil"
+
+msgid "Extra usage"
+msgstr "Penggunaan tambahan"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "Gerbang F4 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Keluar dari Superset Sepenuhnya"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Tutup dulu browser sumbernya agar login-nya tersimpan ke disk. Anda akan diminta mengizinkan akses Keychain."
 
+msgid "Quota exhausted"
+msgstr "Kuota habis"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Hubungkan ulang"
 msgid "Reconnect {name}"
 msgstr "Hubungkan ulang {name}"
 
+msgid "Reconnect account"
+msgstr "Hubungkan ulang akun"
+
 msgid "Reconnect Google"
 msgstr "Hubungkan ulang Google"
 
@@ -13308,9 +13332,6 @@ msgstr "Segarkan pull request"
 
 msgid "Refresh repositories"
 msgstr "Segarkan repositori"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Diperbarui saat Claude Code berikutnya dijalankan."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Diperbarui saat OpenCode berikutnya dijalankan."
@@ -15673,6 +15694,9 @@ msgstr "Stage file"
 msgid "Staged"
 msgstr "Sudah di-stage"
 
+msgid "Stale"
+msgstr "Data lama"
+
 msgid "Standard action strip for pane headers"
 msgstr "Strip aksi standar untuk header panel"
 
@@ -15754,6 +15778,9 @@ msgstr "Mulai agen, ikuti secara langsung, dan tinjau diff dari ponsel Anda. Kod
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Mulai sebuah agen atau terminal untuk mulai bekerja di workspace ini."
+
+msgid "Start anyway"
+msgstr "Tetap mulai"
 
 msgid "Start browsing"
 msgstr "Mulai menjelajah"
@@ -17017,6 +17044,9 @@ msgstr "Akun {plugin} ini sudah dihubungkan oleh {owner}. Minta dia memutuskanny
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Akun {plugin} ini sudah dihubungkan oleh organisasi Superset lain."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Akun ini mungkin menimbulkan biaya atau kuota yang tersedia tidak dapat diverifikasi. Pilih akun lain, perbarui penggunaan, atau lanjutkan untuk peluncuran ini."
+
 msgid "This action is irreversible."
 msgstr "Tindakan ini tidak bisa dibatalkan."
 
@@ -17953,6 +17983,9 @@ msgstr "Skrip tanpa judul"
 
 msgid "Untitled workspace"
 msgstr "Workspace tanpa judul"
+
+msgid "Unverified"
+msgstr "Belum diverifikasi"
 
 msgid "Up next"
 msgstr "Berikutnya"

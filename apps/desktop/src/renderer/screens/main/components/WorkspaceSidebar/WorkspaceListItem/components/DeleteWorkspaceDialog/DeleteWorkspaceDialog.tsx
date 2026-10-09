@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import {
 	AlertDialog,
@@ -8,11 +9,9 @@ import {
 	AlertDialogTitle,
 } from "@superset/ui/alert-dialog";
 import { Button } from "@superset/ui/button";
-import { Checkbox } from "@superset/ui/checkbox";
-import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import {
 	useCloseWorkspace,
@@ -49,12 +48,8 @@ export function DeleteWorkspaceDialog({
 		electronTrpc.settings.getDeleteLocalBranch.useQuery(undefined, {
 			enabled: open && !isBranch,
 		});
-	const [deleteLocalBranch, setDeleteLocalBranch] = useState<boolean | null>(
-		null,
-	);
 	const closeActionButtonRef = useRef<HTMLButtonElement | null>(null);
-	const deleteLocalBranchChecked =
-		deleteLocalBranch ?? deleteLocalBranchDefault ?? false;
+	const deleteLocalBranchChecked = deleteLocalBranchDefault ?? false;
 
 	const { data: gitStatusData, isLoading: isLoadingGitStatus } =
 		electronTrpc.workspaces.canDelete.useQuery(
@@ -118,12 +113,12 @@ export function DeleteWorkspaceDialog({
 			deleteFn: () =>
 				deleteWorkspace.mutateAsync({
 					id: workspaceId,
-					deleteLocalBranch: deleteLocalBranchChecked,
+					deleteLocalBranch: false,
 				}),
 			forceDeleteFn: () =>
 				deleteWorkspace.mutateAsync({
 					id: workspaceId,
-					deleteLocalBranch: deleteLocalBranchChecked,
+					deleteLocalBranch: false,
 					force: true,
 				}),
 		});
@@ -268,22 +263,8 @@ export function DeleteWorkspaceDialog({
 				)}
 
 				{!isLoading && canDelete && (
-					<div className="px-4 pb-2">
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id="delete-local-branch"
-								checked={deleteLocalBranchChecked}
-								onCheckedChange={(checked) =>
-									setDeleteLocalBranch(checked === true)
-								}
-							/>
-							<Label
-								htmlFor="delete-local-branch"
-								className="text-xs text-muted-foreground cursor-pointer select-none"
-							>
-								Also delete local branch
-							</Label>
-						</div>
+					<div className="px-4 pb-2 text-xs text-muted-foreground">
+						<Trans>Branch preserved</Trans>
 					</div>
 				)}
 
