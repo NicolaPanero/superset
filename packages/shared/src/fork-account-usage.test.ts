@@ -44,7 +44,14 @@ test("stale, missing, invalid and API data never suggest unused quota", () => {
 		accountQuotaState(
 			{
 				...account,
-				windows: [{ ...account.windows[0], usedPercent: Number.NaN }],
+				windows: [
+					{
+						id: "five_hour",
+						label: "Session",
+						usedPercent: Number.NaN,
+						resetsAt: null,
+					},
+				],
 			},
 			"opus",
 			now,

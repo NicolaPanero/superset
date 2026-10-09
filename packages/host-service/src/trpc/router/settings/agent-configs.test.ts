@@ -59,6 +59,13 @@ describe("agentConfigsRouter", () => {
 			const result = await caller.list();
 
 			expect(result.map((row) => row.presetId)).toEqual(DEFAULT_PRESET_IDS);
+			expect(result.slice(0, 5).map((row) => row.presetId)).toEqual([
+				"claude",
+				"codex",
+				"cursor-agent",
+				"opencode",
+				"amp",
+			]);
 			expect(result.map((row) => row.order)).toEqual(DEFAULT_PRESET_ORDERS);
 		});
 

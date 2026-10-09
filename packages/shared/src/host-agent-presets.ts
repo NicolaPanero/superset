@@ -1,5 +1,6 @@
 import type { PromptTransport } from "./agent-prompt-launch";
 import { BUILTIN_TERMINAL_AGENTS } from "./builtin-terminal-agents";
+import { orderForkDefaultAgentPresets } from "./fork-agent-order";
 
 export interface HostAgentPreset {
 	presetId: string;
@@ -75,7 +76,7 @@ function clonePreset(preset: HostAgentPreset): HostAgentPreset {
 }
 
 export function getDefaultSeedPresets(): HostAgentPreset[] {
-	return HOST_AGENT_PRESETS.map(clonePreset);
+	return orderForkDefaultAgentPresets(HOST_AGENT_PRESETS).map(clonePreset);
 }
 
 export function getPresetById(presetId: string): HostAgentPreset | undefined {
