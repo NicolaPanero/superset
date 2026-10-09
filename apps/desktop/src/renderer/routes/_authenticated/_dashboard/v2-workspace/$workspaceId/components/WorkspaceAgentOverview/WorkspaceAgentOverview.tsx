@@ -39,7 +39,11 @@ import { useStore } from "zustand";
 import type { StoreApi } from "zustand/vanilla";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher/useAgentSessionLauncher";
 import { useChatWiring } from "../../hooks/usePaneRegistry/components/ChatSession/hooks/useSessionClient";
-import type { PaneViewerData, TerminalPaneData } from "../../types";
+import type {
+	ChatPaneData,
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../types";
 import { AcpOverviewSession } from "./components/AcpOverviewSession";
 import { ForkImportChatDialog } from "./components/ForkImportChatDialog";
 
@@ -177,6 +181,19 @@ export function WorkspaceAgentOverview({
 	const tabs = useStore(store, (s) => s.tabs);
 	const chatPanes = tabs
 		.flatMap((tab) => Object.values(tab.panes))
+		.map((p) =>
+			p.kind === "chat-v3"
+				? {
+						...p,
+						kind: "terminal",
+						data: {
+							...p.data,
+							agentSurface: "acp",
+							acpSessionId: (p.data as ChatPaneData).sessionId,
+						},
+					}
+				: p,
+		)
 		.filter(
 			(p) =>
 				p.kind === "terminal" &&
@@ -323,7 +340,7 @@ export function WorkspaceAgentOverview({
 							onClick={() => setImportOpen(true)}
 						>
 							<History className="size-4" />
-							<Trans>Import chat</Trans>
+							<Trans>Find a chat</Trans>
 						</Button>
 						<Button variant="outline" size="sm" asChild>
 							<Link
@@ -341,6 +358,11 @@ export function WorkspaceAgentOverview({
 							const sessions = [...bindings.values()].filter(
 								(binding) =>
 									binding.agentId === peer.id &&
+									!chatPanes.some(
+										(p) =>
+											(p.data as TerminalPaneData).terminalId ===
+											binding.terminalId,
+									) &&
 									!binding.endedAt &&
 									!exited.data?.includes(binding.terminalId),
 							);

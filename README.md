@@ -15,12 +15,11 @@ Run Claude Code, Codex, or another CLI agent with terminals, code review, and br
 </div>
 
 > [!NOTE]
-> **Superset fork.** Rispetto a upstream aggiunge: chat ACP come vista
-> predefinita per Claude, Codex, Cursor, Grok e OpenCode; passaggio nativo
-> della conversazione tra agenti con txcript, dal terminale e dalla chat;
-> storico locale dei passaggi; pannello Agents; account locali di Claude e
-> Codex scelti a ogni avvio; sincronizzazione giornaliera con le release di
-> upstream e build pubblicate nelle Release del fork. Installazione su Mac
+> **Superset++.** Fork personale basato sulle release stabili ufficiali.
+> Aggiunge trasferimenti nativi tra agenti con txcript, scelta esplicita di
+> agente e account, ricerca delle chat locali e riapertura delle chat in
+> background. CLI/CHAT e la chat ACP derivano da upstream; il fork conserva
+> account e configurazioni e integra Cursor CLI/ACP. Installazione su Mac
 > Apple Silicon:
 > `curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh`.
 > Dettagli e limiti in [FORK.md](FORK.md).
@@ -262,7 +261,7 @@ No Neon account or third-party credentials are needed. `setup.local.sh` brings
 up a local Postgres + neon-proxy + Redis stack via Docker and seeds a dev account.
 Sign in with the **"Sign in as dev"** button (or `admin@local.test` / `supersetdev`).
 
-Prereqs: [Bun](https://bun.sh/) v1.4.2+ (pinned in `.bun-version`), `docker`, `jq`, and [`gh`](https://cli.github.com/) (`brew install jq gh`).
+Prereqs for building from source (to use Superset, [install the app](#install) instead): [Bun](https://bun.sh/) v1.4.2+ (pinned in `.bun-version`), `docker`, `jq`, and [`gh`](https://cli.github.com/) (`brew install jq gh`).
 
 See [**DEVELOPMENT.md**](./DEVELOPMENT.md) for the full guide: what the setup script does, manual setup against real services, common commands, troubleshooting, and how to build the desktop app. Contribution process lives in [**CONTRIBUTING.md**](./CONTRIBUTING.md).
 

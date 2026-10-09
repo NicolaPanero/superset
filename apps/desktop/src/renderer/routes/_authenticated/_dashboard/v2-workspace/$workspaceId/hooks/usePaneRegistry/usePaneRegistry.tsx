@@ -6,7 +6,6 @@ import type {
 	RendererContext,
 	WorkspaceStore,
 } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
@@ -24,7 +23,6 @@ import {
 	Monitor,
 	Smartphone,
 } from "lucide-react";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useMemo } from "react";
 import {
 	LuArrowDownToLine,
@@ -59,7 +57,7 @@ import {
 } from "../../state/fileDocumentStore";
 import {
 	type BrowserPaneData,
-	type ChatV3PaneData,
+	type ChatPaneData,
 	type CommentPaneData,
 	type DevtoolsPaneData,
 	type FilePaneData,
@@ -74,11 +72,16 @@ import {
 	findTerminalPaneLocation,
 	focusOrAddTerminalPane,
 } from "../../utils/focusTerminalPane";
+import {
+	consumeChatStopped,
+	markChatStopped,
+} from "../../utils/forkChatCloseIntent/forkChatCloseIntent";
 import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
 import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
+import { AccountUsage } from "./components/AccountUsage";
 import {
 	AgentSurfaceToggle,
 	AgentTerminalPane,
@@ -86,7 +89,7 @@ import {
 } from "./components/AgentTerminalPane";
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
 import { ChangesListPane } from "./components/ChangesListPane";
-import { ChatV3Pane } from "./components/ChatV3Pane";
+import { ChatPane } from "./components/ChatPane";
 import { CommentPane } from "./components/CommentPane";
 import { CommentPaneHeaderExtras } from "./components/CommentPane/components/CommentPaneHeaderExtras";
 import { CommentPaneTitle } from "./components/CommentPane/components/CommentPaneTitle";
@@ -97,6 +100,7 @@ import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
 import { ForkChatExtras } from "./components/ForkChatExtras";
+import { forkChatContext } from "./components/ForkChatExtras/utils/forkChatContext/forkChatContext";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
@@ -107,6 +111,7 @@ import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/compon
 import { ReviewPane } from "./components/ReviewPane";
 import { SubagentPane } from "./components/SubagentPane";
 import { TerminalPaneHeaderExtras } from "./components/TerminalPane/components/TerminalPaneHeaderExtras";
+import { ForkHandoffMenus } from "./components/TerminalPane/components/TerminalPaneHeaderExtras/components/ForkHandoffMenus";
 import { TerminalPaneIcon } from "./components/TerminalPane/components/TerminalPaneIcon";
 import { TerminalSessionDropdown } from "./components/TerminalPane/components/TerminalSessionDropdown";
 import { terminalContextMenuLinkStore } from "./components/TerminalPane/contextMenuLinkStore";
@@ -181,7 +186,6 @@ export function usePaneRegistry({
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
-	const isChatV3Enabled = useFeatureFlagEnabled(FEATURE_FLAGS.CHAT_V3) ?? false;
 	const agentSurface = useAgentSurfaceSwitch(workspaceId);
 	const { park: parkChat } = useForkBackgroundChats(workspaceId);
 	const host = useWorkspaceHostTarget(workspaceId);
@@ -387,14 +391,7 @@ export function usePaneRegistry({
 						message: "Terminal",
 					}),
 				titleSource: (pane) => {
-					const { terminalId, agentSurface, chatTitle } =
-						pane.data as TerminalPaneData;
-					if (agentSurface === "acp") {
-						return {
-							subscribe: () => () => {},
-							getSnapshot: () => chatTitle,
-						};
-					}
+					const { terminalId } = pane.data as TerminalPaneData;
 					const instanceId = pane.id;
 					return {
 						subscribe: (callback) =>
@@ -478,7 +475,10 @@ export function usePaneRegistry({
 							workspaceId={workspaceId}
 						/>
 						<AgentSurfaceToggle
-							data={ctx.pane.data as TerminalPaneData}
+							pane={{
+								kind: "terminal",
+								data: ctx.pane.data as TerminalPaneData,
+							}}
 							onChange={(surface, agent) =>
 								void agentSurface.switchSurface(ctx, surface, agent)
 							}
@@ -808,45 +808,103 @@ export function usePaneRegistry({
 					}),
 				renderPane: () => <MobilePane />,
 			},
-			...(isChatV3Enabled
-				? {
-						"chat-v3": {
-							getIcon: () => <MessageSquare className="size-3.5" />,
-							getTitle: () =>
-								t({
-									message: "Chat v3",
-								}),
-							renderPane: (ctx: RendererContext<PaneViewerData>) => {
-								const data = ctx.pane.data as ChatV3PaneData;
-								return (
-									<ChatV3Pane
-										isActive={ctx.isActive}
-										workspaceId={workspaceId}
-										onOpenFile={onOpenFile}
-										sessionId={data.sessionId}
-										onSessionIdChange={(id) =>
-											ctx.actions.updateData({ ...data, sessionId: id })
-										}
-									/>
-								);
-							},
-							contextMenuActions: (
-								_ctx: RendererContext<PaneViewerData>,
-								defaults: ContextMenuActionConfig<PaneViewerData>[],
-							) =>
-								defaults.map((d) =>
-									d.key === "close-pane"
-										? {
-												...d,
-												label: t({
-													message: "Close Chat",
-												}),
-											}
-										: d,
-								),
+			"chat-v3": {
+				getIcon: (ctx) => {
+					const { terminalId } = ctx.pane.data as ChatPaneData;
+					return (
+						<TerminalPaneIcon
+							workspaceId={workspaceId}
+							terminalId={terminalId}
+						/>
+					);
+				},
+				getTitle: () =>
+					t({
+						message: "Chat",
+					}),
+				titleSource: (pane) => {
+					const { chatTitle } = pane.data as ChatPaneData;
+					return {
+						subscribe: () => () => {},
+						getSnapshot: () => chatTitle,
+					};
+				},
+				onAfterClose: (pane) => {
+					const { terminalId } = pane.data as ChatPaneData;
+					if (consumeChatStopped(terminalId)) return;
+					if (
+						[store, ...(linkedStores ?? [])].some((candidate) =>
+							findTerminalPaneLocation(candidate.getState(), terminalId),
+						)
+					)
+						return;
+					void parkChat(pane);
+				},
+				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
+					const data = ctx.pane.data as ChatPaneData;
+					return (
+						<div className="flex items-center gap-1">
+							<ForkHandoffMenus
+								workspaceId={workspaceId}
+								terminalId={data.terminalId}
+								fork={{
+									ctx: forkChatContext(ctx),
+									paneData: forkChatContext(ctx).pane.data as TerminalPaneData,
+									openAgentChat,
+									createNewAgentSession,
+								}}
+							/>
+							<AccountUsage
+								key={`${workspaceId}:${data.terminalId}`}
+								workspaceId={workspaceId}
+								terminalId={data.terminalId}
+							/>
+							<AgentSurfaceToggle
+								pane={{ kind: "chat", data }}
+								onChange={(surface, agent) =>
+									void agentSurface.switchSurface(ctx, surface, agent)
+								}
+								workspaceId={workspaceId}
+							/>
+						</div>
+					);
+				},
+				renderPane: (ctx: RendererContext<PaneViewerData>) => (
+					<ForkChatExtras ctx={ctx} workspaceId={workspaceId}>
+						<ChatPane
+							ctx={ctx}
+							onOpenFile={onOpenFile}
+							workspaceId={workspaceId}
+						/>
+					</ForkChatExtras>
+				),
+				contextMenuActions: (
+					_ctx: RendererContext<PaneViewerData>,
+					defaults: ContextMenuActionConfig<PaneViewerData>[],
+				) => [
+					{
+						key: "stop-chat",
+						label: t({ message: "Stop" }),
+						onSelect: async (ctx: RendererContext<PaneViewerData>) => {
+							const data = ctx.pane.data as ChatPaneData;
+							if (
+								data.sessionId &&
+								!(await agentSurface.stopChat(data.sessionId))
+							)
+								return;
+							markChatStopped(data.terminalId);
+							ctx.store
+								.getState()
+								.closePane({ tabId: ctx.tab.id, paneId: ctx.pane.id });
 						},
-					}
-				: {}),
+					},
+					...defaults.map((d) =>
+						d.key === "close-pane"
+							? { ...d, label: t({ message: "Close Chat" }) }
+							: d,
+					),
+				],
+			},
 			comment: {
 				getIcon: (ctx: RendererContext<PaneViewerData>) => {
 					const data = ctx.pane.data as CommentPaneData;
@@ -995,7 +1053,6 @@ export function usePaneRegistry({
 			store,
 			linkedStores,
 			workspaceId,
-			isChatV3Enabled,
 			agentSurface,
 			parkChat,
 			clearWorkspaceRunTerminal,

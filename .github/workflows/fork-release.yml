@@ -1,14 +1,6 @@
-# Builds this fork for Apple Silicon Macs and publishes it as a GitHub release
-# whenever fork/main has a commit without a release yet, or NicolaPanero/txcript
-# has a newer release than the one bundled (the release name ends with its
-# fork number, `-tx<N>`). It runs after each sync, when txcript publishes a
-# release, and on demand.
-#
-# The app is ad-hoc signed (no Apple Developer ID) and installs as "Superset
-# Fork" beside an official Superset: its own bundle id, sign-in scheme
-# (superset-fork), data folder (~/.superset-fork) and local hook port (see
-# apps/desktop/fork-identity.ts). Upstream's updater is off: the app checks
-# this repository's releases and runs scripts/fork/install.sh.
+# Builds Superset++ from fork/main using the txcript version pinned in scripts/fork/txcript-version.json.
+# Upstream sync and txcript dispatches trigger validation; changing the pin is explicit.
+# Bundle id, login scheme, data paths and update asset names stay compatible with existing forks.
 
 name: Fork - build release
 
@@ -50,7 +42,7 @@ jobs:
           sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/fork/main" --jq .sha)
           version=$(gh api "repos/$GITHUB_REPOSITORY/contents/apps/desktop/package.json?ref=$sha" --jq .content |
             base64 -d | jq -r .version)
-          txcript_tag=$(gh api repos/NicolaPanero/txcript/releases/latest --jq .tag_name)
+          txcript_tag=$(gh api "repos/$GITHUB_REPOSITORY/contents/scripts/fork/txcript-version.json?ref=$sha" --jq .content | base64 -d | jq -r .tag)
           tag="desktop-v${version}-fork.${sha:0:7}-tx${txcript_tag##*-fork.}"
           build=true
           if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
@@ -92,6 +84,15 @@ jobs:
           bun install --frozen --ignore-scripts
           bun run --filter=@superset/i18n build
           cd apps/desktop && bun run install:deps
+
+      - name: Validate fork before packaging
+        run: |
+          bun run lint
+          bun run check:i18n
+          bun run --cwd packages/host-service typecheck
+          bun run --cwd apps/desktop typecheck
+          bun test packages/host-service/src/session-transfer packages/host-service/src/chat-v3/forkMoveClaudeSession.test.ts packages/host-service/src/chat-v3/forkLaunchChoices.test.ts packages/host-service/src/chat-v3/backgroundChats.test.ts packages/host-service/src/chat-v3/cursorSessionBridge/cursorSessionBridge.test.ts packages/host-service/src/trpc/router/agents/account-selection.test.ts packages/chat-runtime/src/harness/acp/cursorExtensions.test.ts
+          bun test 'apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ForkChatExtras/utils'
 
       - name: Install the txcript transfer helper
         env:
@@ -138,6 +139,6 @@ jobs:
             "$RUNNER_TEMP/Superset-fork-arm64.zip" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$SHA" \
-            --title "Superset fork ${VERSION} (${SHA:0:7})" \
+            --title "Superset++ ${VERSION} (${SHA:0:7})" \
             --notes-file "$RUNNER_TEMP/notes.md" \
             --latest

@@ -11,18 +11,14 @@ import {
 	LuFolderTree,
 	LuGitPullRequestArrow,
 } from "react-icons/lu";
-import { TbMessageCirclePlus, TbWorld } from "react-icons/tb";
+import { TbWorld } from "react-icons/tb";
 import type { RightPaneKind } from "../../types";
 
 interface RightPaneAddMenuProps {
 	onAdd: (kind: RightPaneKind) => void;
-	isChatEnabled: boolean;
 }
 
-export function RightPaneAddMenu({
-	onAdd,
-	isChatEnabled,
-}: RightPaneAddMenuProps) {
+export function RightPaneAddMenu({ onAdd }: RightPaneAddMenuProps) {
 	return (
 		<>
 			<DropdownMenuItem className="gap-2" onClick={() => onAdd("files")}>
@@ -62,14 +58,6 @@ export function RightPaneAddMenu({
 					<Trans>Browser</Trans>
 				</span>
 			</DropdownMenuItem>
-			{isChatEnabled && (
-				<DropdownMenuItem className="gap-2" onClick={() => onAdd("chat-v3")}>
-					<TbMessageCirclePlus className="size-4" />
-					<span>
-						<Trans>Chat v3</Trans>
-					</span>
-				</DropdownMenuItem>
-			)}
 			<DropdownMenuItem className="gap-2" onClick={() => onAdd("terminal")}>
 				<BsTerminalPlus className="size-4" />
 				<span>

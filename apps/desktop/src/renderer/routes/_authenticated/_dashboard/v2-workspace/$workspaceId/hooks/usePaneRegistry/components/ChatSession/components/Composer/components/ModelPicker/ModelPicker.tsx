@@ -21,8 +21,6 @@ import {
 	PILL_CHEVRON_CLASS,
 	PILL_TRIGGER_CLASS,
 } from "../../constants";
-import { ForkAccountBadge } from "./components/ForkAccountBadge";
-import { ForkAccountMenu } from "./components/ForkAccountMenu";
 import { ModelFlyout } from "./components/ModelFlyout";
 import type { AgentSwitcher } from "./types";
 
@@ -107,11 +105,11 @@ export function ModelPicker({
 						<img
 							alt=""
 							className="size-3.5 shrink-0 object-contain"
+							draggable={false}
 							src={agentIcon}
 						/>
 					) : null}
 					<span className="truncate">{pillLabel}</span>
-					<ForkAccountBadge />
 					{effortLabel ? (
 						<span className="shrink-0 text-muted-foreground">
 							{effortLabel}
@@ -183,7 +181,6 @@ export function ModelPicker({
 						</DropdownMenuSubContent>
 					</DropdownMenuSub>
 				))}
-				<ForkAccountMenu onPicked={() => setOpen(false)} />
 				{model || canSwitchAgent ? (
 					<DropdownMenuSub>
 						<DropdownMenuSubTrigger className={SUB_TRIGGER_CLASS}>
@@ -195,6 +192,7 @@ export function ModelPicker({
 									<img
 										alt=""
 										className="size-3.5 shrink-0 object-contain"
+										draggable={false}
 										src={agentIcon}
 									/>
 								) : null}

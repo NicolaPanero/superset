@@ -1,3 +1,4 @@
+import type { UserContent } from "@superset/chat/protocol";
 import type { AgentIdentityId } from "@superset/shared/agent-catalog";
 export interface FilePosition {
 	line: number;
@@ -110,8 +111,26 @@ export interface PagePaneData {
 	title?: string;
 }
 
-export interface ChatV3PaneData {
+export interface ChatPaneData {
+	acpAgentConfigId?: string;
+	acpAccountSelection?: string | null;
+	terminalId: string;
 	sessionId: string | null;
+	agent?: {
+		id: string;
+		sessionId?: string;
+	};
+	pendingPrompt?: string;
+	pendingAttachments?: Array<{
+		attachmentId: string;
+		name: string;
+		mimeType: string;
+	}>;
+	queuedPrompts?: UserContent[][];
+	chatModelId?: string;
+	chatModelLabel?: string;
+	chatModeId?: string;
+	chatTitle?: string;
 }
 
 export interface DesktopPaneData {
@@ -173,7 +192,7 @@ export type ConsumeSearch = (keys: WorkspaceSearchKey[]) => void;
 export type PaneViewerData =
 	| FilePaneData
 	| TerminalPaneData
-	| ChatV3PaneData
+	| ChatPaneData
 	| BrowserPaneData
 	| DevtoolsPaneData
 	| DiffPaneData

@@ -1,11 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
+import { acpHarnessForPreset } from "@superset/chat/core";
 import type { RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback } from "react";
+import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
-import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 
@@ -17,25 +18,21 @@ export interface AgentSwitchTarget {
 	handoffPrompt: string | null;
 	/** Fork-only: the exact config and account, from the handoff dialog. */
 	configId?: string;
+	transferId?: string;
 	accountSelection?: string | null;
 }
 
-export type ForkSwitchAgent = (
-	target: AgentSwitchTarget,
-	fallback: (target: AgentSwitchTarget) => void,
-) => void;
-
-/**
- * Switching a chat to another agent from the model picker carries the
- * conversation over natively with txcript, in the same pane, when both agents
- * support it. Otherwise upstream's handler hands it over as a context prompt.
- */
+/** Converts an explicit handoff in the current pane; failure leaves the source resumable. */
 export function useForkAgentSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
 	data: TerminalPaneData,
 ) {
 	const { t } = useLingui();
+	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
+	const sourceSelection = binding?.account
+		? binding.account.selection
+		: data.acpAccountSelection;
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const { data: capabilities } =
@@ -89,9 +86,7 @@ export function useForkAgentSwitch(
 			ctx.actions.updateData({ ...rest, agent: undefined });
 			try {
 				if (data.acpSessionId)
-					await wiring.transport
-						.closeSession({ sessionId: data.acpSessionId })
-						.catch(() => undefined);
+					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
 				const launch = await prepareAcpLaunch.mutateAsync({
 					workspaceId,
 					configId: targetConfig.id,
@@ -101,14 +96,14 @@ export function useForkAgentSwitch(
 				});
 				const transfer = await prepareFromChat.mutateAsync({
 					workspaceId,
-					transferId: crypto.randomUUID(),
+					transferId: target.transferId ?? crypto.randomUUID(),
 					sourceTerminalId: data.terminalId,
 					sourceConfigId: ownsSaved
 						? (data.acpAgentConfigId ?? source.id)
 						: source.id,
 					sourceSessionId: source.sessionId,
-					...(ownsSaved && data.acpAccountSelection !== undefined
-						? { sourceAccountSelection: data.acpAccountSelection }
+					...(sourceSelection !== undefined
+						? { sourceAccountSelection: sourceSelection }
 						: {}),
 					targetConfigId: launch.agentConfigId,
 					...(launch.accountSelection !== undefined
@@ -139,6 +134,7 @@ export function useForkAgentSwitch(
 		[
 			ctx,
 			data,
+			sourceSelection,
 			configs,
 			capabilities,
 			prepareAcpLaunch,
@@ -149,13 +145,5 @@ export function useForkAgentSwitch(
 		],
 	);
 
-	const onForkSwitchAgent = useCallback<ForkSwitchAgent>(
-		(target, fallback) => {
-			void switchNatively(target).then((switched) => {
-				if (!switched) fallback(target);
-			});
-		},
-		[switchNatively],
-	);
-	return { onForkSwitchAgent, switchInPlace: switchNatively };
+	return { switchInPlace: switchNatively };
 }

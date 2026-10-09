@@ -5,5 +5,4 @@ export type RightPaneKind =
 	| "review"
 	| "pages-list"
 	| "browser"
-	| "chat-v3"
 	| "terminal";

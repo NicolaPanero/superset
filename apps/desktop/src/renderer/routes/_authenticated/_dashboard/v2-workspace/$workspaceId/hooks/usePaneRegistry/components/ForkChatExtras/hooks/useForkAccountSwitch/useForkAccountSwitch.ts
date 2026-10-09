@@ -77,7 +77,7 @@ export function useForkAccountSwitch(
 		[options, quota.data, t],
 	);
 
-	if (!enabled || accounts.length < 2) return undefined;
+	if (!enabled || accounts.length < 1) return undefined;
 	const current =
 		binding?.account?.agent === "claude"
 			? binding.account.selection
@@ -92,9 +92,7 @@ export function useForkAccountSwitch(
 		ctx.actions.updateData({ ...rest, agent: undefined });
 		try {
 			if (acpSessionId)
-				await wiring.transport
-					.closeSession({ sessionId: acpSessionId })
-					.catch(() => undefined);
+				await wiring.transport.closeSession({ sessionId: acpSessionId });
 			if (data.agent?.sessionId)
 				await moveChat({
 					agent: "claude",
@@ -106,7 +104,7 @@ export function useForkAccountSwitch(
 				t({ message: `Chat moved to ${target?.name ?? selection ?? ""}` }),
 			);
 		} catch (error) {
-			ctx.actions.updateData({ ...rest });
+			ctx.actions.updateData(data);
 			toast.error(t({ message: "Couldn't switch account" }), {
 				description: errorMessage(error, t({ message: "Unknown error" })),
 			});

@@ -2,7 +2,12 @@ import type { Pane, WorkspaceStore } from "@superset/panes";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo } from "react";
 import type { StoreApi } from "zustand/vanilla";
-import type { PaneViewerData, TerminalPaneData } from "../../types";
+import type {
+	ChatPaneData,
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../types";
+import { markChatSessionClosed } from "../../utils/closedChatSessions";
 import { findTerminalPaneLocation } from "../../utils/focusTerminalPane";
 import { useChatWiring } from "../usePaneRegistry/components/ChatSession/hooks/useSessionClient";
 
@@ -54,6 +59,11 @@ export function useForkBackgroundChats(workspaceId: string) {
 				pendingAttachments: _attachments,
 				...paneData
 			} = pane.data as TerminalPaneData;
+			if (pane.kind === "chat-v3") {
+				paneData.acpSessionId = (pane.data as ChatPaneData).sessionId;
+				paneData.agentSurface = "acp";
+			}
+			if (paneData.acpSessionId) markChatSessionClosed(paneData.acpSessionId);
 			if (!paneData.acpSessionId && !paneData.agent?.sessionId) return;
 			try {
 				const { evicted } = await parkAsync({
@@ -78,12 +88,16 @@ export function useForkBackgroundChats(workspaceId: string) {
 
 	const reopen = useCallback(
 		(store: StoreApi<WorkspaceStore<PaneViewerData>>, chat: BackgroundChat) => {
+			if (findTerminalPaneLocation(store.getState(), chat.terminalId)) return;
 			store.getState().addTab({
 				panes: [
 					{
-						kind: "terminal",
+						kind: "chat-v3",
 						...(chat.title ? { titleOverride: chat.title } : {}),
-						data: chat.paneData,
+						data: {
+							...chat.paneData,
+							sessionId: chat.paneData.acpSessionId ?? null,
+						} as ChatPaneData,
 					},
 				],
 			});
@@ -106,11 +120,14 @@ export function useForkBackgroundChats(workspaceId: string) {
 
 	const stop = useCallback(
 		async (chat: BackgroundChat) => {
-			await closeChat(chat.paneData);
+			if (chat.paneData.acpSessionId)
+				await wiring.transport.closeSession({
+					sessionId: chat.paneData.acpSessionId,
+				});
 			await unparkAsync({ terminalId: chat.terminalId });
 			void refresh();
 		},
-		[closeChat, unparkAsync, refresh],
+		[wiring.transport, unparkAsync, refresh],
 	);
 
 	return { chats, loaded, park, reopen, reopenParked, stop };

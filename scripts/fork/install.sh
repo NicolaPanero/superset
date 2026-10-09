@@ -4,7 +4,7 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 #
-# Installs as "Superset Fork.app", beside an official Superset. Settings and
+# Installs as "Superset++.app", beside an official Superset. Settings and
 # data live outside the app (~/.superset-fork and ~/Library/Application
 # Support/Superset Fork), so updating keeps them. An earlier fork build
 # installed as "Superset.app" is moved to the Trash; an official Superset is
@@ -20,7 +20,7 @@ set -eu
 
 repo="NicolaPanero/superset"
 app_asset="Superset-fork-arm64.zip"
-app_name="Superset Fork.app"
+app_name="Superset++.app"
 wait_pid=""
 relaunch=false
 
@@ -53,7 +53,9 @@ curl -fL --progress-bar "$app_url" -o "$work/$app_asset"
 ditto -x -k "$work/$app_asset" "$work/app"
 if [ ! -d "$work/app/$app_name" ]; then
     # Releases built before the rename still ship "Superset.app".
-    if [ -d "$work/app/Superset.app" ]; then
+    if [ -d "$work/app/Superset Fork.app" ]; then
+        app_name="Superset Fork.app"
+    elif [ -d "$work/app/Superset.app" ]; then
         app_name="Superset.app"
     else
         echo "The download has no $app_name." >&2
@@ -79,8 +81,8 @@ xattr -dr com.apple.quarantine "$destination/$app_name" 2>/dev/null || true
 echo "Installed $destination/$app_name"
 
 # Earlier fork builds took the official name; only they carry the helper.
-for legacy in "/Applications/Superset.app" "$HOME/Applications/Superset.app"; do
-    if [ "$app_name" != "Superset.app" ] && [ -x "$legacy/Contents/Resources/resources/bin/txcript-transfer" ]; then
+for legacy in "/Applications/Superset.app" "$HOME/Applications/Superset.app" "/Applications/Superset Fork.app" "$HOME/Applications/Superset Fork.app"; do
+    if [ "$legacy" != "$destination/$app_name" ] && [ -x "$legacy/Contents/Resources/resources/bin/txcript-transfer" ]; then
         trashed="$HOME/.Trash/Superset (old fork) $(date +%Y%m%d-%H%M%S).app"
         if mv "$legacy" "$trashed" 2>/dev/null; then
             echo "Moved the earlier fork build $legacy to the Trash"

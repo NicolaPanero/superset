@@ -1,1 +1,0 @@
-export { AccountAvatar } from "./AccountAvatar";

@@ -4,6 +4,7 @@ import { realpath } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { z } from "zod";
+import { TRANSFER_AGENTS } from "./registry";
 
 /** txcript's harness ids, as Superset's agent presets know them. */
 const AGENT_BY_HARNESS = {
@@ -30,6 +31,7 @@ export interface ExternalSession {
 	model: string | null;
 	/** The login holding it, for Claude and Codex; null is the system default. */
 	accountSelection: string | null;
+	storeRoot?: string;
 }
 
 const listedSchema = z.array(
@@ -122,7 +124,7 @@ export async function listExternalSessions({
 	baseEnv?: NodeJS.ProcessEnv;
 	limit?: number;
 }): Promise<ExternalSession[]> {
-	const { CLAUDE_CONFIG_DIR: _claude, CODEX_HOME: _codex, ...env } = baseEnv;
+	const { CLAUDE_CONFIG_DIR: _claude, ...env } = baseEnv;
 	const scans: {
 		args: string[];
 		env: NodeJS.ProcessEnv;
@@ -140,8 +142,7 @@ export async function listExternalSessions({
 			selection: home,
 		})),
 	];
-	const seen = new Set<string>();
-	const sessions: ExternalSession[] = [];
+	const byIdentity = new Map<string, ExternalSession>();
 	// `--under` and `--preview` arrived together in txcript fork.8.
 	let current = true;
 	const list = async (scan: (typeof scans)[number]) => {
@@ -172,10 +173,21 @@ export async function listExternalSessions({
 		for (const entry of listed) {
 			const agent =
 				AGENT_BY_HARNESS[entry.harness as keyof typeof AGENT_BY_HARNESS];
-			const key = `${agent}:${entry.id}`;
-			if (!agent || seen.has(key)) continue;
-			seen.add(key);
-			sessions.push({
+			if (!agent) continue;
+			const selection =
+				agent === "claude" || agent === "codex" ? scan.selection : null;
+			const storeRoot = await externalSessionStore(agent, selection, baseEnv);
+			const key = `${agent}:${storeRoot}:${entry.id}`;
+			const previous = byIdentity.get(key);
+			const latest = entry.updated_at ?? entry.timestamp;
+			if (
+				previous &&
+				Date.parse(previous.updatedAt ?? previous.timestamp) >=
+					Date.parse(latest)
+			)
+				continue;
+			byIdentity.set(key, {
+				storeRoot,
 				agent,
 				sessionId: entry.id,
 				title: entry.title?.trim() || null,
@@ -192,7 +204,7 @@ export async function listExternalSessions({
 	}
 	const recency = (session: ExternalSession) =>
 		Date.parse(session.updatedAt ?? session.timestamp);
-	return sessions.sort((a, b) => recency(b) - recency(a));
+	return [...byIdentity.values()].sort((a, b) => recency(b) - recency(a));
 }
 
 /** The folders of a repository: its main checkout and every worktree. */
@@ -230,4 +242,18 @@ export function folderOf(
 			)
 			.sort((a, b) => b.length - a.length)[0] ?? null
 	);
+}
+
+export async function externalSessionStore(
+	agent: ExternalAgent,
+	selection: string | null,
+	env: NodeJS.ProcessEnv = process.env,
+): Promise<string> {
+	const adapter = TRANSFER_AGENTS[agent];
+	const profile =
+		selection ??
+		(agent === "codex" ? env.CODEX_HOME : undefined) ??
+		join(env.HOME || homedir(), adapter.home);
+	const store = join(profile, adapter.store);
+	return realpath(store).catch(() => store);
 }

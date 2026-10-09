@@ -10,10 +10,11 @@ import {
 } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
+import { tag as testedTag } from "./fork/txcript-version.json";
 
 // The transfer helper is published prebuilt by the owner's txcript fork
 // (official txcript plus the fixes Superset needs; see FORK.md there). The
-// latest release is installed unless TXCRIPT_TAG names one.
+// tested release is pinned unless TXCRIPT_TAG explicitly overrides it.
 const repository = "NicolaPanero/txcript";
 const asset = "superset-transfer-aarch64-apple-darwin.tar.gz";
 // txcript's own CLI lists the sessions on this Mac for "Import chat".
@@ -38,14 +39,7 @@ async function download(url: string, json = false) {
 	return json ? response.json() : Buffer.from(await response.arrayBuffer());
 }
 
-const tag: string =
-	process.env.TXCRIPT_TAG ||
-	(
-		(await download(
-			`https://api.github.com/repos/${repository}/releases/latest`,
-			true,
-		)) as { tag_name: string }
-	).tag_name;
+const tag: string = process.env.TXCRIPT_TAG || testedTag;
 if (!/^v\d+\.\d+\.\d+-fork\.\d+$/.test(tag))
 	throw new Error(`Unexpected txcript release ${tag}`);
 const base = `https://github.com/${repository}/releases/download/${tag}`;

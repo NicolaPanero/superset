@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { acpHarnessForPreset } from "@superset/chat/core";
 import type { RendererContext } from "@superset/panes";
 import { Button } from "@superset/ui/button";
 import {
@@ -24,9 +25,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
+import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
-import { acpHarnessForPreset } from "renderer/lib/acpHarness";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type {
 	PaneViewerData,
@@ -36,6 +37,7 @@ import type { OpenAgentChat } from "../../../../../../../useAgentSessionLauncher
 import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../../../../ForkChatExtras/hooks/useForkAccountSwitch";
+import { contextHandoff } from "../../../../../ForkChatExtras/utils/contextHandoff/contextHandoff";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 
@@ -55,6 +57,10 @@ export function AcpChatHandoffMenu({
 }) {
 	const { t } = useLingui();
 	const { switchInPlace } = useForkAgentSwitch(workspaceId, ctx, data);
+	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
+	const sourceSelection = binding?.account
+		? binding.account.selection
+		: data.acpAccountSelection;
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
@@ -105,9 +111,7 @@ export function AcpChatHandoffMenu({
 		(config) =>
 			config === sameAgentConfig ||
 			(config.presetId !== sourcePreset &&
-				acpHarnessForPreset(config.presetId) &&
-				config.resumeArgs?.length &&
-				verified(config.presetId)),
+				acpHarnessForPreset(config.presetId)),
 	);
 	const target = targets.find((config) => config.id === targetConfigId);
 	const sameAgent = target !== undefined && target === sameAgentConfig;
@@ -131,7 +135,9 @@ export function AcpChatHandoffMenu({
 		Boolean(
 			capabilities?.nativeAvailable &&
 				sourceSessionId &&
-				verified(sourcePreset),
+				verified(sourcePreset) &&
+				verified(target?.presetId) &&
+				target?.resumeArgs?.length,
 		);
 	const pickedSelection =
 		account === CONFIGURED_ACCOUNT
@@ -169,18 +175,24 @@ export function AcpChatHandoffMenu({
 					: account
 				: undefined;
 		if (placement === "this-chat") {
-			setOpen(false);
+			const run = ++runSequence.current;
+			setStage("converting");
+			setFailed(false);
 			const switched = await switchInPlace({
 				presetId: target.presetId,
 				label: target.label,
 				model: null,
 				modeId: undefined,
 				handoffPrompt: null,
+				transferId,
 				configId: target.id,
 				...(accountSelection !== undefined ? { accountSelection } : {}),
 			});
-			if (!switched)
-				toast.error(t({ message: "Native handoff failed. You can retry." }));
+			if (run !== runSequence.current) return;
+			setStage(null);
+			setTransferId(crypto.randomUUID());
+			if (switched) setOpen(false);
+			else setFailed(true);
 			return;
 		}
 		const run = ++runSequence.current;
@@ -205,8 +217,8 @@ export function AcpChatHandoffMenu({
 						? (data.acpAgentConfigId ?? sourcePreset)
 						: sourcePreset,
 				sourceSessionId,
-				...(data.acpAccountSelection !== undefined
-					? { sourceAccountSelection: data.acpAccountSelection }
+				...(sourceSelection !== undefined
+					? { sourceAccountSelection: sourceSelection }
 					: {}),
 				targetConfigId: launch.agentConfigId,
 				...(launch.accountSelection !== undefined
@@ -260,22 +272,81 @@ export function AcpChatHandoffMenu({
 		}
 	};
 
+	const currentAccount =
+		accountSwitcher?.accounts.find(
+			(choice) => choice.selection === accountSwitcher.current,
+		)?.name ??
+		binding?.account?.email ??
+		(data.acpAccountSelection
+			? data.acpAccountSelection.split("/").at(-1)
+			: t({ message: "System default" }));
+	const continueWithContext = async () => {
+		if (!target || !chatSessionId || busy || stage) return;
+		const run = ++runSequence.current;
+		setStage("converting");
+		try {
+			const prompt = await contextHandoff(
+				wiring.transport,
+				chatSessionId,
+				sourceLabel,
+			);
+			if (run !== runSequence.current) return;
+			const selected = managed ? pickedSelection : undefined;
+			const launch = await prepareAcpLaunch.mutateAsync({
+				workspaceId,
+				configId: target.id,
+				...(selected !== undefined ? { accountSelection: selected } : {}),
+			});
+			if (run !== runSequence.current) return;
+			setStage("launching");
+			if (placement === "this-chat") {
+				await wiring.transport.closeSession({ sessionId: chatSessionId });
+				ctx.actions.updateData({
+					terminalId: data.terminalId,
+					agentSurface: "acp",
+					agent: { id: target.presetId },
+					acpAgentConfigId: launch.agentConfigId,
+					acpAccountSelection: launch.accountSelection,
+					pendingPrompt: prompt,
+				});
+				ctx.actions.setTitle(target.label);
+			} else {
+				const opened = await onOpenAgentChat({
+					configId: launch.agentConfigId,
+					accountSelection: launch.accountSelection,
+					placement,
+					prompt,
+				});
+				if (!opened) throw new Error("chat_unavailable");
+			}
+			setOpen(false);
+		} catch (error) {
+			console.warn("[acp-chat] context handoff failed", error);
+			if (run === runSequence.current) setFailed(true);
+		} finally {
+			if (run === runSequence.current) setStage(null);
+		}
+	};
+
 	return (
 		<>
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<button
 						type="button"
-						aria-label={t({ message: "Continue with another agent" })}
+						aria-label={`${t({ message: "Agent" })} · ${t({ message: "Account" })}`}
 						onClick={() => {
 							reset();
-							setTargetConfigId("");
+							setTargetConfigId(sameAgentConfig?.id ?? "");
 							setAccount(CONFIGURED_ACCOUNT);
 							setOpen(true);
 						}}
-						className="hidden rounded p-1 text-muted-foreground/60 transition-colors hover:text-muted-foreground @min-[200px]/pane-header:block"
+						className="flex min-w-0 items-center gap-1 rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
 					>
-						<Bot className="size-3.5" />
+						<Bot className="size-3.5 shrink-0" />
+						<span className="max-w-28 truncate">{sourceLabel}</span>
+						<span aria-hidden="true">·</span>
+						<span className="max-w-28 truncate">{currentAccount}</span>
 					</button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
@@ -464,6 +535,23 @@ export function AcpChatHandoffMenu({
 						>
 							<Trans>Cancel</Trans>
 						</Button>
+						{target && !sameAgent && (failed || !available) && (
+							<div className="flex flex-col gap-2">
+								<p className="text-muted-foreground text-xs">
+									<Trans>
+										Context transfer includes only messages and may omit earlier
+										history.
+									</Trans>
+								</p>
+								<Button
+									variant="outline"
+									disabled={busy || stage !== null}
+									onClick={() => void continueWithContext()}
+								>
+									<Trans>Continue with context</Trans>
+								</Button>
+							</div>
+						)}
 						<Button
 							onClick={start}
 							disabled={
