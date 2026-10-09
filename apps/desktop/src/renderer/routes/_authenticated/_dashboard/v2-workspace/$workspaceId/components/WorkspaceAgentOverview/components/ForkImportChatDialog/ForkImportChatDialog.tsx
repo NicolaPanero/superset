@@ -24,7 +24,7 @@ import { Spinner } from "@superset/ui/spinner";
 import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
+import { ArrowUpRight, ChevronDown, RefreshCw, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
 	getPresetIcon,
@@ -67,7 +67,7 @@ function accountName(selection: string | null) {
 	return name.replace(/^\.(claude|codex)-?/, "") || name;
 }
 
-/** Chats started outside Superset in this folder; one click continues one here. */
+/** Finds local chats and reuses sessions already connected to Superset. */
 export function ForkImportChatDialog({
 	open,
 	onOpenChange,
@@ -133,7 +133,7 @@ export function ForkImportChatDialog({
 				(session) =>
 					(agentFilter === ALL || session.agent === agentFilter) &&
 					(!needle ||
-						`${session.title ?? ""} ${session.preview ?? ""} ${session.model ?? ""} ${session.gitBranch ?? ""} ${session.sessionId}`
+						`${session.title ?? ""} ${session.preview ?? ""} ${session.model ?? ""} ${session.gitBranch ?? ""} ${accountName(session.accountSelection) ?? ""} ${session.folder} ${session.sessionId}`
 							.toLowerCase()
 							.includes(needle)),
 			),
@@ -186,7 +186,6 @@ export function ForkImportChatDialog({
 		const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
 		const target = chatConfig(targetPresetId);
 		const source = chatConfig(session.agent);
-		if (!target) return;
 		const managed = session.agent === "claude" || session.agent === "codex";
 		const home = homeOf(session);
 		const here = home === workspaceId;
@@ -206,6 +205,7 @@ export function ForkImportChatDialog({
 				onImported();
 				return;
 			}
+			if (!target) return;
 			if (targetPresetId === session.agent) {
 				if (session.agent === "cursor-agent")
 					await prepareCursorSurface({
@@ -317,23 +317,42 @@ export function ForkImportChatDialog({
 					</DialogTitle>
 					<DialogDescription>
 						<Trans>
-							Chats started outside Superset in this project's folders, for
-							example in a terminal or in Zed. Pick one to continue it.
+							Find local chats across this project and its accounts. Open an
+							existing chat or continue one started in a terminal.
 						</Trans>
 					</DialogDescription>
 				</DialogHeader>
-				<div className="relative">
-					<Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
-					<Input
-						autoFocus
-						className="pl-8"
-						onChange={(event) => setQuery(event.target.value)}
-						placeholder={t({ message: "Search chats" })}
-						value={query}
-					/>
+				<div className="flex items-center gap-2">
+					<div className="relative min-w-0 flex-1">
+						<Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+						<Input
+							autoFocus
+							className="pl-8"
+							onChange={(event) => setQuery(event.target.value)}
+							aria-label={t({ message: "Search chats" })}
+							placeholder={t({ message: "Search chats" })}
+							value={query}
+						/>
+					</div>
+					<Button
+						type="button"
+						variant="outline"
+						size="icon"
+						aria-label={t({ message: "Refresh" })}
+						title={t({ message: "Refresh" })}
+						disabled={listing.isFetching || busy !== null}
+						onClick={() => void listing.refetch()}
+					>
+						<RefreshCw
+							className={cn("size-4", listing.isFetching && "animate-spin")}
+						/>
+					</Button>
 				</div>
 				{agents.length > 1 && (
-					<div className="flex flex-wrap gap-1.5" role="radiogroup">
+					<fieldset
+						className="flex flex-wrap gap-1.5"
+						aria-label={t({ message: "Agent" })}
+					>
 						{[ALL, ...agents].map((agent) => {
 							const icon = agent === ALL ? null : getPresetIcon(agent, dark);
 							const selected = agentFilter === agent;
@@ -361,7 +380,7 @@ export function ForkImportChatDialog({
 								</button>
 							);
 						})}
-					</div>
+					</fieldset>
 				)}
 				<div className="-mx-2 min-h-40 flex-1 overflow-y-auto px-2">
 					{listing.isPending ? (
@@ -379,9 +398,27 @@ export function ForkImportChatDialog({
 							)}
 						</p>
 					) : visible.length === 0 ? (
-						<p className="py-10 text-center text-muted-foreground text-sm">
-							<Trans>No chats found in this project.</Trans>
-						</p>
+						<div className="space-y-3 py-10 text-center text-muted-foreground text-sm">
+							<p>
+								{sessions.length > 0 ? (
+									<Trans>No results found.</Trans>
+								) : (
+									<Trans>No chats found in this project.</Trans>
+								)}
+							</p>
+							{(needle || agentFilter !== ALL) && (
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => {
+										setQuery("");
+										setAgentFilter(ALL);
+									}}
+								>
+									<Trans>Clear filters</Trans>
+								</Button>
+							)}
+						</div>
 					) : (
 						<ul className="flex flex-col gap-1">
 							{visible.map((session) => {
@@ -398,7 +435,8 @@ export function ForkImportChatDialog({
 										session.workspaceId !== null,
 								);
 								const canContinue =
-									Boolean(chatConfig(session.agent)) && canOpen(session);
+									Boolean(session.terminalId || chatConfig(session.agent)) &&
+									canOpen(session);
 								const elsewhere = homeOf(session) !== workspaceId;
 								return (
 									<li
@@ -470,7 +508,11 @@ export function ForkImportChatDialog({
 													<Spinner className="size-3.5" />
 												) : (
 													<>
-														<Trans>Continue</Trans>
+														{session.terminalId ? (
+															<Trans>Open</Trans>
+														) : (
+															<Trans>Continue</Trans>
+														)}
 														{elsewhere && <ArrowUpRight className="size-3.5" />}
 													</>
 												)}

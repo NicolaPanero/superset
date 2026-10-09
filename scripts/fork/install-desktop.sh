@@ -14,7 +14,7 @@ for tool in bun git cargo; do
 	}
 done
 
-if pgrep -f "/Applications/(Superset Fork|Superset\+\+).app/Contents/MacOS/" >/dev/null; then
+if pgrep -f '^/Applications/(Superset Fork|Superset\+\+)\.app/Contents/MacOS/(Superset Fork|Superset\+\+)( --|$)' >/dev/null; then
 	echo "Quit Superset++ or Superset Fork before installing." >&2
 	exit 1
 fi

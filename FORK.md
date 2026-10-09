@@ -102,7 +102,7 @@ Zed è stato dismesso: la pubblicazione di txcript avvia soltanto il workflow
 Superset. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
 
 `fork-sync-upstream.yml` segue quotidianamente le release stabili e verifica
-lint, traduzioni e tipi prima del push. `fork-release.yml` costruisce solo
+lint, traduzioni e tipi prima del push. `fork-release.yml` parte anche a ogni push su `fork/main` e costruisce solo
 commit non ancora pubblicati, usando il motore fissato; controlla traduzioni,
 tipi e test del fork prima di impacchettare e pubblicare. Un conflitto di
 sincronizzazione richiede risoluzione manuale e non pubblica una build.

@@ -3480,9 +3480,6 @@ msgstr "채팅 세션을 찾을 수 없습니다"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "채팅 화면: 메시지, 추론, 제안"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "이 프로젝트 폴더에서 Superset 밖(예: 터미널이나 Zed)에서 시작한 채팅입니다. 하나를 골라 이어가세요."
-
 msgid "Check again"
 msgstr "다시 확인"
 
@@ -7546,6 +7543,9 @@ msgstr "페이지에서 찾기"
 
 msgid "Find in Terminal"
 msgstr "터미널에서 찾기"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "이 프로젝트와 계정의 로컬 채팅을 찾으세요. 기존 채팅을 열거나 터미널에서 시작한 채팅을 계속하세요."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "최근 변경되었지만 커버리지가 낮은 코드를 찾아 제대로 테스트합니다."

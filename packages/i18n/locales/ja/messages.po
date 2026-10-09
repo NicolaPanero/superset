@@ -3480,9 +3480,6 @@ msgstr "チャットセッションが見つかりません"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "チャットの構成要素: メッセージ、推論、提案"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "このプロジェクトのフォルダーで Superset の外（ターミナルや Zed など）で始めたチャットです。1つ選ぶと続けられます。"
-
 msgid "Check again"
 msgstr "再確認"
 
@@ -7546,6 +7543,9 @@ msgstr "ページ内検索"
 
 msgid "Find in Terminal"
 msgstr "ターミナル内を検索"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "このプロジェクトとそのアカウントのローカルチャットを検索します。既存のチャットを開くか、ターミナルで開始したチャットを続けられます。"
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "最近変更されたカバレッジの薄いコードを見つけて、きちんとテストします。"

@@ -8,3 +8,7 @@ export function markChatSessionClosed(sessionId: string): () => void {
 export function isChatSessionClosed(sessionId: string): boolean {
 	return closed.has(sessionId);
 }
+
+export function markChatSessionOpened(sessionId: string): void {
+	closed.delete(sessionId);
+}

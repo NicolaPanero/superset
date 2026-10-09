@@ -3480,9 +3480,6 @@ msgstr "Sohbet oturumu bulunamadı"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
 
-msgid "Chats started outside Superset in this project's folders, for example in a terminal or in Zed. Pick one to continue it."
-msgstr "Bu projenin klasörlerinde Superset dışında, örneğin bir terminalde ya da Zed'de başlatılan sohbetler. Devam etmek için birini seçin."
-
 msgid "Check again"
 msgstr "Yeniden denetle"
 
@@ -7546,6 +7543,9 @@ msgstr "Sayfada bul"
 
 msgid "Find in Terminal"
 msgstr "Terminalde bul"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "Bu proje ve hesaplarındaki yerel sohbetleri bulun. Mevcut bir sohbeti açın veya terminalde başlatılan bir sohbete devam edin."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "Kapsamı zayıf olan, yakın zamanda değişmiş kodu bul ve düzgün test et."

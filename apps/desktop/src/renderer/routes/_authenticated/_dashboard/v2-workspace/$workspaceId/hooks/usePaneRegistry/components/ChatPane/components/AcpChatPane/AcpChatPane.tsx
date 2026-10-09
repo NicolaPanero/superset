@@ -13,6 +13,7 @@ import { useTerminalAgentBindings } from "renderer/hooks/host-service/useTermina
 import { useWorkspaceEvent } from "renderer/hooks/host-service/useWorkspaceEvent";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { OpenFile } from "../../../../../../types";
+import { isChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
 import type { OpenPage } from "../../../ChatSession/providers/ChatPaneActionsProvider";
@@ -356,12 +357,22 @@ export function AcpChatPane({
 				binding.endedAt === undefined,
 		);
 	const recoverable = Boolean(
-		(sessionStopped || sessionDead) && harness && !continuedInTerminal,
+		sessionId &&
+			!isChatSessionClosed(sessionId) &&
+			(sessionStopped || sessionDead) &&
+			harness &&
+			!continuedInTerminal,
 	);
 	const recoveries = useRef(0);
 	if (stored?.live && !sessionDead) recoveries.current = 0;
 	const recover = useCallback(() => {
-		if (!harness || !sessionId || recoveryInFlight.current) return;
+		if (
+			!harness ||
+			!sessionId ||
+			isChatSessionClosed(sessionId) ||
+			recoveryInFlight.current
+		)
+			return;
 		recoveryInFlight.current = true;
 		void wiring.transport
 			.closeSession({ sessionId })

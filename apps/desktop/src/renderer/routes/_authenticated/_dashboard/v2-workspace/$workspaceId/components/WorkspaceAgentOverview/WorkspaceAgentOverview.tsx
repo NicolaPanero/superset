@@ -395,6 +395,7 @@ export function WorkspaceAgentOverview({
 									{chatSessions.map(({ data, session }) => (
 										<AcpOverviewSession
 											key={data.terminalId}
+											workspaceId={workspaceId}
 											agent={peer.id}
 											data={data}
 											hostUrl={hostUrl}
