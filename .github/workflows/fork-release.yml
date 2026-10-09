@@ -76,7 +76,7 @@ jobs:
       DESKTOP_NOTIFICATIONS_PORT: "51742"
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1 (Node 24)
         with:
           ref: ${{ needs.check.outputs.sha }}
 
