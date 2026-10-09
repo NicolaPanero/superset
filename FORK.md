@@ -22,6 +22,45 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
 
+## Account prima dell’avvio e quote
+
+La creazione workspace propone accanto al provider l’account effettivo dell’host e
+la quota disponibile per il modello scelto. La scelta vale per quella creazione;
+cambiando host/provider o iniziando una nuova creazione torna il predefinito.
+**Suggerito** indica l’abbonamento con più quota verificata: la scelta resta manuale.
+Lo stesso riepilogo compare nel menu account, nelle intestazioni e in Usage.
+
+Le letture si condividono e si aggiornano ogni cinque minuti con la schermata
+visibile. Dati vecchi o mancanti restano segnalati; non equivalgono a quota libera.
+Il rinnovo passa dal CLI del profilo, senza richieste al modello, hook o MCP:
+Claude usa soltanto `/usage`, Codex soltanto le procedure RPC dell’account.
+Ogni verifica ha un limite di 15 secondi, al massimo due possono essere attive e
+ogni profilo viene verificato al massimo una volta ogni cinque minuti. Il backoff
+`Retry-After` si conserva anche se il CLI rinnova il token. L’ultima lettura riuscita
+resta sull’host per 24 ore, fino a 128 account, con la data originale e l’identità
+verificata. Non viene attribuita a un nuovo login nello stesso profilo.
+
+Prima di avviare Claude/Codex con quota esaurita, non verificata o fatturazione API,
+un dialogo propone **Scegli un altro account**, **Aggiorna**, **Avvia comunque**.
+La conferma vale per quell’operazione. Cursor/Grok continuano a usare i loro crediti.
+La scelta arriva a chat, CLI, avvio dopo il setup e naming. Una scelta mancante o
+incompatibile con credenziali imposte produce un errore prima della creazione.
+Il naming fallito deriva il titolo localmente. Le chat già aperte non vengono spostate.
+
+## Eliminazione workspace
+
+La preferenza globale **Elimina branch** rimane ricordata. La casella compare
+soltanto dopo un’anteprima che verifica il branch; mostra il suo nome esatto.
+Un workspace sulla cartella principale conserva sempre branch e file del progetto.
+
+Sono eliminabili solo branch nuovi creati con successo dal fork: la configurazione
+Git locale conserva l’ID del workspace creatore e il riferimento esatto. Le rinomine
+automatiche aggiornano questa provenienza. Branch preesistenti, importati, recuperati
+da remoto, condivisi o non verificabili restano conservati; nessun nome di branch
+attribuisce retroattivamente una provenienza. Il backend ricontrolla prima di
+eliminare e il flag `force` non aggira queste protezioni. Non elimina branch remoti.
+Nelle cancellazioni multiple la preferenza si applica solo ai branch idonei.
+
 ## Cosa è ufficiale e cosa mantiene il fork
 
 | Funzione | Base ufficiale 1.37 | Estensione Superset++ |

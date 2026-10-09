@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} van {total}"
 
+msgid "{remaining} available"
+msgstr "{remaining} beschikbaar"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}s geleden"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel} teruggezet naar standaardwaarden"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {# bestand uploaden…} other {# bestanden uploaden…}}"
-
-msgid "{used} used"
-msgstr "{used} gebruikt"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} wachten"
@@ -3010,6 +3010,9 @@ msgstr "Branch"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "Branch \"{0}\" staat niet op dit apparaat en ook niet op {1}. Alleen gepushte commits kunnen worden hersteld."
 
+msgid "Branch and project files will be preserved."
+msgstr "De branch en projectbestanden blijven behouden."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "Branchgedrag voor nieuwe werkruimtes op dit apparaat. Projecten kunnen de prefix apart overschrijven."
 
@@ -3042,6 +3045,9 @@ msgstr "Branchprefix"
 
 msgid "Branch Prefix"
 msgstr "Branchvoorvoegsel"
+
+msgid "Branch preserved"
+msgstr "Branch behouden"
 
 msgid "Branch renamed to {newName}"
 msgstr "Branch hernoemd naar {newName}"
@@ -3480,6 +3486,9 @@ msgstr "Chatsessie niet gevonden"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chatoppervlakken: berichten, redeneren, suggesties"
 
+msgid "Check account before starting"
+msgstr "Account controleren voor de start"
+
 msgid "Check again"
 msgstr "Opnieuw controleren"
 
@@ -3602,6 +3611,9 @@ msgstr "Kies een account"
 
 msgid "Choose an existing repo folder"
 msgstr "Kies een bestaande repo-map"
+
+msgid "Choose another account"
+msgstr "Ander account kiezen"
 
 msgid "Choose app"
 msgstr "Kies app"
@@ -5506,6 +5518,9 @@ msgstr "Creatief manager, Valid"
 msgid "Credentials stay on the server"
 msgstr "Inloggegevens blijven op de server"
 
+msgid "Credits"
+msgstr "Tegoed"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Componenten die over features heen worden gebruikt en buiten packages/ui staan — kijk hier voordat je een nieuwe bouwt"
 
@@ -6858,6 +6873,9 @@ msgstr "Zeer hoog"
 
 msgid "Extra small"
 msgstr "Extra klein"
+
+msgid "Extra usage"
+msgstr "Extra gebruik"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4-drempel · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Superset volledig afsluiten"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "Sluit eerst de bronbrowser af zodat de logins naar schijf worden weggeschreven. Er wordt om toegang tot de Sleutelhanger gevraagd."
 
+msgid "Quota exhausted"
+msgstr "Limiet bereikt"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "Opnieuw verbinden"
 msgid "Reconnect {name}"
 msgstr "{name} opnieuw verbinden"
 
+msgid "Reconnect account"
+msgstr "Account opnieuw verbinden"
+
 msgid "Reconnect Google"
 msgstr "Google opnieuw verbinden"
 
@@ -13308,9 +13332,6 @@ msgstr "Pull requests vernieuwen"
 
 msgid "Refresh repositories"
 msgstr "Repositories vernieuwen"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "Wordt vernieuwd zodra Claude Code opnieuw draait."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Wordt vernieuwd zodra OpenCode opnieuw draait."
@@ -15673,6 +15694,9 @@ msgstr "Bestand stagen"
 msgid "Staged"
 msgstr "Gestaged"
 
+msgid "Stale"
+msgstr "Verouderd"
+
 msgid "Standard action strip for pane headers"
 msgstr "Standaard actiebalk voor paneelkoppen"
 
@@ -15754,6 +15778,9 @@ msgstr "Start agents, volg ze live en review de diff vanaf je telefoon. Je code 
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Start een agent of een terminal om in deze werkruimte te werken."
+
+msgid "Start anyway"
+msgstr "Toch starten"
 
 msgid "Start browsing"
 msgstr "Begin met browsen"
@@ -17017,6 +17044,9 @@ msgstr "Dit {plugin}-account is al verbonden door {owner}. Vraag om het eerst lo
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Dit {plugin}-account is al verbonden door een andere Superset-organisatie."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "Dit account kan kosten veroorzaken of het beschikbare quotum kan niet worden gecontroleerd. Kies een ander account, vernieuw het gebruik of ga verder voor deze start."
+
 msgid "This action is irreversible."
 msgstr "Deze actie kan niet worden teruggedraaid."
 
@@ -17953,6 +17983,9 @@ msgstr "Naamloos script"
 
 msgid "Untitled workspace"
 msgstr "Naamloze werkruimte"
+
+msgid "Unverified"
+msgstr "Niet gecontroleerd"
 
 msgid "Up next"
 msgstr "Straks aan de beurt"

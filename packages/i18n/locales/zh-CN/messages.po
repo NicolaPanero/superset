@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
+msgid "{remaining} available"
+msgstr "剩余 {remaining}"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel}已恢复为默认值"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上传 # 个文件…}}"
-
-msgid "{used} used"
-msgstr "已使用 {used}"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}人等待"
@@ -3010,6 +3010,9 @@ msgstr "分支"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "分支“{0}”不在此设备上，也不在 {1} 上。只能恢复已推送的提交。"
 
+msgid "Branch and project files will be preserved."
+msgstr "将保留分支和项目文件。"
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "本设备上新建工作区的分支行为。项目可以单独覆盖前缀。"
 
@@ -3042,6 +3045,9 @@ msgstr "分支前缀"
 
 msgid "Branch Prefix"
 msgstr "分支前缀"
+
+msgid "Branch preserved"
+msgstr "分支已保留"
 
 msgid "Branch renamed to {newName}"
 msgstr "分支已重命名为{newName}"
@@ -3480,6 +3486,9 @@ msgstr "未找到聊天会话"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "聊天界面：消息、推理、建议"
 
+msgid "Check account before starting"
+msgstr "启动前检查账户"
+
 msgid "Check again"
 msgstr "重新检查"
 
@@ -3602,6 +3611,9 @@ msgstr "选择账户"
 
 msgid "Choose an existing repo folder"
 msgstr "选择已有的仓库文件夹"
+
+msgid "Choose another account"
+msgstr "选择其他账户"
 
 msgid "Choose app"
 msgstr "选择应用"
@@ -5506,6 +5518,9 @@ msgstr "创意经理，Valid"
 msgid "Credentials stay on the server"
 msgstr "凭据保留在服务器上"
 
+msgid "Credits"
+msgstr "额度"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "位于packages/ui之外的跨功能组件——新建组件之前先来这里看看"
 
@@ -6858,6 +6873,9 @@ msgstr "极高"
 
 msgid "Extra small"
 msgstr "超小"
+
+msgid "Extra usage"
+msgstr "额外使用量"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4关卡 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "完全退出Superset"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "请先退出源浏览器，让它把登录信息写入磁盘。系统会请求你允许访问钥匙串。"
 
+msgid "Quota exhausted"
+msgstr "配额已耗尽"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "重新连接"
 msgid "Reconnect {name}"
 msgstr "重新连接 {name}"
 
+msgid "Reconnect account"
+msgstr "重新连接账户"
+
 msgid "Reconnect Google"
 msgstr "重新连接Google"
 
@@ -13308,9 +13332,6 @@ msgstr "刷新拉取请求"
 
 msgid "Refresh repositories"
 msgstr "刷新仓库"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "下次运行 Claude Code 时刷新。"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "下次运行 OpenCode 时刷新。"
@@ -15673,6 +15694,9 @@ msgstr "暂存文件"
 msgid "Staged"
 msgstr "已暂存"
 
+msgid "Stale"
+msgstr "数据已过时"
+
 msgid "Standard action strip for pane headers"
 msgstr "面板标题栏的标准操作条"
 
@@ -15754,6 +15778,9 @@ msgstr "在手机上启动智能体、实时跟进并审查差异。你的代码
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "启动一个智能体或终端，开始在此工作区中工作。"
+
+msgid "Start anyway"
+msgstr "仍然启动"
 
 msgid "Start browsing"
 msgstr "开始浏览"
@@ -17017,6 +17044,9 @@ msgstr "该 {plugin} 账户已由 {owner} 连接。请先请其断开连接。"
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "该 {plugin} 账户已被另一个 Superset 组织连接。"
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "此账户可能产生费用，或无法验证其可用配额。请选择其他账户、刷新使用情况，或继续本次启动。"
+
 msgid "This action is irreversible."
 msgstr "此操作不可逆。"
 
@@ -17953,6 +17983,9 @@ msgstr "未命名脚本"
 
 msgid "Untitled workspace"
 msgstr "未命名工作区"
+
+msgid "Unverified"
+msgstr "未经验证"
 
 msgid "Up next"
 msgstr "即将运行"

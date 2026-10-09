@@ -36,6 +36,7 @@ import type { GitStatusSnapshotComputation } from "../../trpc/router/git/utils/g
 import { getGitStatusSnapshot } from "../../trpc/router/git/utils/git-status.ts";
 import type { GitStatusPartial } from "../../trpc/router/git/utils/git-status-partial/index.ts";
 import { getGitStatusPartial } from "../../trpc/router/git/utils/git-status-partial/index.ts";
+import { branchDeletionEligibility } from "../../trpc/router/workspace-cleanup/fork-branch-ownership";
 import { addBranchWorktree } from "../../trpc/router/workspace-creation/shared/add-branch-worktree.ts";
 import { listWorktreeBranches } from "../../trpc/router/workspace-creation/shared/branch-search.ts";
 import { enablePushAutoSetupRemote } from "../../trpc/router/workspace-creation/shared/git-config.ts";
@@ -405,11 +406,16 @@ export const gitWorktreeRemoveTask = defineWorkerTask<
 });
 
 export const gitDeleteBranchTask = defineWorkerTask<
-	{ repoPath: string; branch: string; gitEnv: GitTaskEnv },
+	{
+		repoPath: string;
+		branch: string;
+		gitEnv: GitTaskEnv;
+		workspaceId?: string;
+	},
 	{ deleted: boolean }
 >({
 	type: "git/deleteLocalBranch",
-	handler: async ({ repoPath, branch, gitEnv }) => {
+	handler: async ({ repoPath, branch, gitEnv, workspaceId }) => {
 		const git = createUserSimpleGit(repoPath, { env: gitEnv });
 		// `branch --list` exits 0 whether or not the branch exists (empty
 		// output when absent), so an absent ref — renamed, pruned, or never
@@ -417,6 +423,11 @@ export const gitDeleteBranchTask = defineWorkerTask<
 		// propagates instead of being misread as "already deleted".
 		const listed = await git.raw(["branch", "--list", branch]);
 		if (listed.trim().length === 0) return { deleted: false };
+		if (
+			!workspaceId ||
+			!(await branchDeletionEligibility(git, branch, workspaceId)).eligible
+		)
+			return { deleted: false };
 		await git.raw(["branch", "-D", branch]);
 		return { deleted: true };
 	},

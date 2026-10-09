@@ -21,6 +21,7 @@ import {
 } from "../../src/terminal/env";
 import { __resetSessionsForTesting } from "../../src/terminal/terminal";
 import { __setAccountShellForTesting } from "../../src/terminal/user-shell";
+import { recordCreatedBranch } from "../../src/trpc/router/workspace-cleanup/fork-branch-ownership";
 import { cloudFlows } from "../helpers/cloud-fakes";
 import { createTestHost } from "../helpers/createTestHost";
 import { createGitFixture } from "../helpers/git-fixture";
@@ -154,6 +155,11 @@ describe("workspaceCleanup.destroy integration", () => {
 	});
 
 	test("force=true removes a locked worktree whose directory still exists", async () => {
+		await recordCreatedBranch(
+			scenario.repo.git,
+			scenario.branch,
+			scenario.featureWorkspaceId,
+		);
 		await scenario.repo.git.raw(["worktree", "lock", scenario.worktreePath]);
 
 		const result = await scenario.host.trpc.workspaceCleanup.destroy.mutate({
@@ -300,6 +306,11 @@ describe("workspaceCleanup.destroy integration", () => {
 	});
 
 	test("deleteBranch=true also removes the branch after worktree teardown", async () => {
+		await recordCreatedBranch(
+			scenario.repo.git,
+			scenario.branch,
+			scenario.featureWorkspaceId,
+		);
 		const result = await scenario.host.trpc.workspaceCleanup.destroy.mutate({
 			workspaceId: scenario.featureWorkspaceId,
 			deleteBranch: true,
@@ -311,6 +322,11 @@ describe("workspaceCleanup.destroy integration", () => {
 	});
 
 	test("missing worktree is removed and can still delete the branch", async () => {
+		await recordCreatedBranch(
+			scenario.repo.git,
+			scenario.branch,
+			scenario.featureWorkspaceId,
+		);
 		rmSync(scenario.worktreePath, { recursive: true, force: true });
 
 		const result = await scenario.host.trpc.workspaceCleanup.destroy.mutate({
@@ -362,6 +378,11 @@ describe("workspaceCleanup.destroy integration", () => {
 	});
 
 	test("missing worktree that was locked is still removed without warnings", async () => {
+		await recordCreatedBranch(
+			scenario.repo.git,
+			scenario.branch,
+			scenario.featureWorkspaceId,
+		);
 		// A locked worktree whose dir was manually deleted is the scenario
 		// that breaks the substring-based error matcher: git says
 		// "fatal: cannot remove a locked working tree" and single `--force`
@@ -537,7 +558,12 @@ describe("workspaceCleanup.destroy integration", () => {
 		}
 	});
 
-	test("opted-in branch delete runs after the local commit point", async () => {
+	test("opted-in proven branch delete runs after the local commit point", async () => {
+		await recordCreatedBranch(
+			scenario.repo.git,
+			scenario.branch,
+			scenario.featureWorkspaceId,
+		);
 		const result = await scenario.host.trpc.workspaceCleanup.destroy.mutate({
 			workspaceId: scenario.featureWorkspaceId,
 			deleteBranch: true,

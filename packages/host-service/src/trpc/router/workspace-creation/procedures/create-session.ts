@@ -17,6 +17,7 @@ import {
 import { setWorkspaceNamingState } from "../../../../workspaces/workspace-naming-state";
 import { protectedProcedure } from "../../../index";
 import { validateAgentLaunchOptions } from "../../agents";
+import { applyForkLaunchChoices } from "../../agents/fork-launch";
 import { initEmptyRepo } from "../../project/utils/resolve-repo";
 import { startCommandTerminal } from "../shared/command-terminal";
 import {
@@ -74,6 +75,10 @@ export const createSession = protectedProcedure
 	.mutation(async ({ ctx, input }) => {
 		for (const launch of input.agents ?? []) {
 			validateAgentLaunchOptions(ctx.db, launch);
+			await applyForkLaunchChoices(ctx.db, {
+				...launch,
+				workspaceId: input.id ?? "pending",
+			});
 		}
 
 		// Idempotency: a retry carrying the same optimistic id must return the
@@ -177,6 +182,9 @@ export const createSession = protectedProcedure
 				attempts: 0,
 				branch: null,
 				agent: namingAgent ?? null,
+				accountSelection: input.agents?.find(
+					(launch) => launch.agent === namingAgent,
+				)?.accountSelection,
 			});
 			scheduleWorkspaceNaming(ctx, row.id);
 		}

@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
 import { mkdirSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -19,6 +19,7 @@ import {
 	chatContinuationTarget,
 	chatLaunchTarget,
 	continuationTarget,
+	launchChatAgent,
 	validateAgentEffortSelection,
 	validateAgentForkSelection,
 	validateAgentModelSelection,
@@ -1081,6 +1082,44 @@ describe("continuationTarget", () => {
 			label: "Claude",
 		});
 		expect(chatContinuationTarget(db, store, live("dead"), run)).toBeNull();
+	});
+
+	it("pins the chosen account and config before delivering the first chat prompt", () => {
+		const db = createTestDb();
+		seedClaude(db);
+		const createSession = mock((_input: unknown) => ({
+			sessionId: "selected-session",
+		}));
+		const prompt = mock((_input: unknown) => {});
+		const ctx = {
+			db,
+			runtime: {
+				chat: () => ({
+					live: { supports: () => true },
+					commands: { createSession, prompt },
+				}),
+			},
+		} as unknown as Parameters<typeof launchChatAgent>[0];
+		launchChatAgent(
+			ctx,
+			{
+				workspaceId,
+				agent: "claude",
+				surface: "chat",
+				prompt: "First prompt",
+				accountSelection: "/profiles/chosen",
+			},
+			"/temporary-repo",
+		);
+		expect(createSession.mock.calls[0]?.[0]).toMatchObject({
+			agentConfigId: "00000000-0000-0000-0000-00000000000a",
+			accountSelection: "/profiles/chosen",
+			scopeId: workspaceId,
+		});
+		expect(prompt.mock.calls[0]?.[0]).toMatchObject({
+			sessionId: "selected-session",
+			content: [{ type: "text", text: "First prompt" }],
+		});
 	});
 
 	it("launches a chat only when asked for one with an ACP harness", () => {

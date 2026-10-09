@@ -14,6 +14,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { quotaFetch, quotaResponseTiming } from "./fork-quota-fetch";
 import {
 	discoverClaudeProfiles,
 	keychainServicesForConfigDir,
@@ -320,8 +321,14 @@ async function discoverClaudeCredentials(): Promise<{
 
 	const byToken = new Map<string, ClaudeOauthCredential>();
 	for (const credential of [defaultCredential, ...explicit, ...profiled]) {
-		if (credential && !byToken.has(credential.accessToken)) {
-			byToken.set(credential.accessToken, credential);
+		if (
+			credential &&
+			!byToken.has(`${credential.selection ?? ""}:${credential.accessToken}`)
+		) {
+			byToken.set(
+				`${credential.selection ?? ""}:${credential.accessToken}`,
+				credential,
+			);
 		}
 	}
 	// Profiles with an identity but no readable credential (logged out, or a
@@ -342,6 +349,8 @@ interface ClaudeUsageResponse {
 	five_hour?: ClaudeUsageWindow;
 	seven_day?: ClaudeUsageWindow;
 	seven_day_sonnet?: ClaudeUsageWindow;
+	seven_day_opus?: ClaudeUsageWindow;
+	seven_day_haiku?: ClaudeUsageWindow;
 	limits?: Array<{
 		kind?: string;
 		percent?: number;
@@ -365,7 +374,7 @@ function toWindow(
 	return {
 		id,
 		label,
-		usedPercent: Math.max(0, Math.round(window.utilization)),
+		usedPercent: Math.max(0, window.utilization),
 		resetsAt: window.resets_at ? new Date(window.resets_at) : null,
 	};
 }
@@ -382,6 +391,13 @@ function mapWindows(usage: ClaudeUsageResponse): UsageQuotaWindow[] {
 		usage.seven_day_sonnet,
 	);
 	if (sonnet) windows.push(sonnet);
+	for (const [id, label, value] of [
+		["seven_day_opus", "Weekly · Opus", usage.seven_day_opus],
+		["seven_day_haiku", "Weekly · Haiku", usage.seven_day_haiku],
+	] as const) {
+		const window = toWindow(id, label, value);
+		if (window) windows.push(window);
+	}
 
 	for (const limit of usage.limits ?? []) {
 		if (limit.kind !== "weekly_scoped" || typeof limit.percent !== "number") {
@@ -394,7 +410,7 @@ function mapWindows(usage: ClaudeUsageResponse): UsageQuotaWindow[] {
 		windows.push({
 			id: `weekly_scoped:${modelName}`,
 			label,
-			usedPercent: Math.max(0, Math.round(limit.percent)),
+			usedPercent: Math.max(0, limit.percent),
 			resetsAt: limit.resets_at ? new Date(limit.resets_at) : null,
 		});
 	}
@@ -405,7 +421,7 @@ async function fetchClaudeProfileEmail(
 	accessToken: string,
 ): Promise<string | null> {
 	try {
-		const response = await fetch(CLAUDE_PROFILE_URL, {
+		const response = await quotaFetch(CLAUDE_PROFILE_URL, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				"anthropic-beta": CLAUDE_OAUTH_BETA_HEADER,
@@ -432,6 +448,8 @@ export interface ClaudeSubscriptionQuota {
 	statusDetail: string | null;
 	windows: UsageQuotaWindow[];
 	extraUsage: UsageAccount["extraUsage"];
+	fetchedAt?: Date;
+	retryAt?: Date;
 }
 
 /**
@@ -441,21 +459,27 @@ export interface ClaudeSubscriptionQuota {
  */
 export async function fetchClaudeSubscriptionQuota(
 	accessToken: string,
+	identity?: string,
 ): Promise<ClaudeSubscriptionQuota> {
 	try {
 		const [usageResponse, apiEmail] = await Promise.all([
-			fetch(CLAUDE_USAGE_URL, {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-					"anthropic-beta": CLAUDE_OAUTH_BETA_HEADER,
+			quotaFetch(
+				CLAUDE_USAGE_URL,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						"anthropic-beta": CLAUDE_OAUTH_BETA_HEADER,
+					},
+					signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
 				},
-				signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-			}),
+				identity,
+			),
 			fetchClaudeProfileEmail(accessToken),
 		]);
 
 		if (usageResponse.status === 401 || usageResponse.status === 403) {
 			return {
+				...quotaResponseTiming(usageResponse),
 				email: apiEmail,
 				status: "token_expired",
 				statusDetail: EXPIRED_TOKEN_DETAIL,
@@ -465,6 +489,7 @@ export async function fetchClaudeSubscriptionQuota(
 		}
 		if (!usageResponse.ok) {
 			return {
+				...quotaResponseTiming(usageResponse),
 				email: apiEmail,
 				status: "unavailable",
 				statusDetail: `Usage endpoint returned ${usageResponse.status}.`,
@@ -486,6 +511,7 @@ export async function fetchClaudeSubscriptionQuota(
 
 		if (windows.length === 0) {
 			return {
+				...quotaResponseTiming(usageResponse),
 				email: apiEmail,
 				status: "unavailable",
 				statusDetail:
@@ -496,6 +522,7 @@ export async function fetchClaudeSubscriptionQuota(
 		}
 
 		return {
+			...quotaResponseTiming(usageResponse),
 			email: apiEmail,
 			status: "ok",
 			statusDetail: null,
@@ -528,6 +555,9 @@ async function fetchClaudeAccount(
 		// Decorated per-query from host settings; the quota cache outlives it.
 		isDefault: false,
 		fetchedAt: new Date(),
+		identityFingerprint: createHash("sha256")
+			.update(credential.accessToken)
+			.digest("hex"),
 	};
 
 	const lapsed = classifyLapsedToken(credential);
@@ -543,8 +573,18 @@ async function fetchClaudeAccount(
 		};
 	}
 
-	const quota = await fetchClaudeSubscriptionQuota(credential.accessToken);
-	return { ...base, ...quota, email: quota.email ?? credential.email ?? null };
+	const quota = await fetchClaudeSubscriptionQuota(
+		credential.accessToken,
+		`claude:${credential.selection ?? "system"}`,
+	);
+	return {
+		...base,
+		...quota,
+		identityFingerprint: createHash("sha256")
+			.update(credential.accessToken)
+			.digest("hex"),
+		email: quota.email ?? credential.email ?? null,
+	};
 }
 
 export async function fetchClaudeAccounts(): Promise<UsageAccount[]> {

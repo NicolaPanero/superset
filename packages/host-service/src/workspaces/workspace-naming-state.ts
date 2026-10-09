@@ -8,6 +8,7 @@ export interface WorkspaceNamingState {
 	branch: string | null;
 	/** Agent whose headless CLI names it; null names from the prompt alone. */
 	agent: string | null;
+	accountSelection?: string | null;
 }
 
 // In memory only: a host restart drops naming still owed, and the workspace

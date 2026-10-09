@@ -28,16 +28,10 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
-import type {
-	UsageAccount,
-	UsageQuotaWindow,
-} from "renderer/hooks/host-service/useHostUsageQuota";
+import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
+import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
-import {
-	formatResetIn,
-	formatResetLabel,
-} from "renderer/utils/usage/formatResetIn";
 import { useRemoveUsageAccount } from "../../hooks/useRemoveUsageAccount";
 import { useRestartAgentSessions } from "../../hooks/useRestartAgentSessions";
 import { useSetDefaultUsageAccount } from "../../hooks/useSetDefaultUsageAccount";
@@ -71,39 +65,6 @@ const READ_ONLY_LOGIN_COMMANDS: Record<
 	agy: "agy",
 	opencode: "opencode auth login",
 };
-
-function meterColor(usedPercent: number): string {
-	if (usedPercent >= 90) return "bg-red-500";
-	if (usedPercent >= 70) return "bg-amber-500";
-	return "bg-primary";
-}
-
-/** One line per window: label · bar · % · reset. Density over ceremony. */
-function QuotaWindowRow({ window }: { window: UsageQuotaWindow }) {
-	const percent = Math.min(window.usedPercent, 100);
-	return (
-		<div className="grid grid-cols-[minmax(0,9rem)_1fr_2.5rem_5rem] items-center gap-2">
-			<span className="truncate text-[11px] text-muted-foreground">
-				{window.label}
-			</span>
-			<div className="h-1 w-full overflow-hidden rounded-full bg-muted">
-				<div
-					className={cn("h-full rounded-full", meterColor(window.usedPercent))}
-					style={{ width: `${Math.max(percent, 1)}%` }}
-				/>
-			</div>
-			<span className="text-right text-[11px] tabular-nums">
-				{window.usedPercent}%
-			</span>
-			<span
-				className="text-right text-[11px] text-muted-foreground tabular-nums"
-				title={window.resetsAt ? formatResetLabel(window.resetsAt) : undefined}
-			>
-				{window.resetsAt ? `↺ ${formatResetIn(window.resetsAt)}` : ""}
-			</span>
-		</div>
-	);
-}
 
 function creditsLine(account: UsageAccount): string | null {
 	if (account.creditsBalance !== null) {
@@ -286,18 +247,16 @@ function AccountCard({
 						</a>
 					)}
 				</div>
-			) : account.status === "ok" ? (
-				<div className="mt-2 flex flex-col gap-1.5">
-					{account.windows.map((window) => (
-						<QuotaWindowRow key={window.id} window={window} />
-					))}
+			) : account.windows.length > 0 ? (
+				<div className="mt-2">
+					<ForkUsageSummary account={account} />
 				</div>
 			) : account.status === "token_stale" ? (
 				<div className="mt-1.5 text-[11px] text-muted-foreground">
 					{account.agent === "opencode" ? (
 						<Trans>Refreshes when OpenCode next runs.</Trans>
 					) : (
-						<Trans>Refreshes when Claude Code next runs.</Trans>
+						<Trans>Unverified</Trans>
 					)}
 				</div>
 			) : expiredCommand !== null ? (

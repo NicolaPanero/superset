@@ -22,6 +22,7 @@ import type { HostDb } from "../../../../db";
 import { resolveHostAgentConfig } from "../../../../terminal-agents/agent-config";
 import type { HostServiceContext } from "../../../../types";
 import { updateLocalWorkspace } from "../../../../workspaces/local-workspace-store";
+import { namingAccountCommand } from "./fork-naming-account";
 import { listBranchNames } from "./list-branch-names";
 import { deduplicateBranchName } from "./sanitize-branch";
 
@@ -183,6 +184,7 @@ function buildAgentJsonInstructions(
  * runs the naming prompt headlessly with the agent's own credentials.
  */
 export interface WorkspaceNamingAgentContext {
+	accountSelection?: string | null;
 	db: HostDb;
 	agent: string;
 }
@@ -427,7 +429,7 @@ export async function generateWorkspaceNamesFromPrompt(
 		if (command) {
 			try {
 				const names = await generateNamesViaAgentCli(
-					command,
+					await namingAccountCommand(agentContext, command),
 					cleaned,
 					namingInstructions,
 					signal,

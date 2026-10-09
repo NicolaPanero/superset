@@ -55,7 +55,11 @@
 		"./router": {
 			"types": "./dist-types/trpc/router/router.d.ts"
 		},
-		"./package.json": "./package.json"
+		"./package.json": "./package.json",
+		"./fork-branch-ownership": {
+			"types": "./src/trpc/router/workspace-cleanup/fork-branch-ownership.ts",
+			"default": "./src/trpc/router/workspace-cleanup/fork-branch-ownership.ts"
+		}
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",

@@ -3,7 +3,11 @@ import { getBinDir } from "@superset/agent-setup";
 import { eq } from "drizzle-orm";
 import type { HostDb } from "../db";
 import { projects, workspaces } from "../db/schema";
-import { buildHostLaunchEnv, waitForTerminalBaseEnv } from "../terminal/env";
+import {
+	buildHostLaunchEnv,
+	getTerminalBaseEnv,
+	waitForTerminalBaseEnv,
+} from "../terminal/env";
 import {
 	agentLaunchEnv,
 	resolveHostAgentConfig,
@@ -95,6 +99,14 @@ export async function buildChatAgentEnv(options: {
 			...configEnv,
 		}),
 	);
+	for (const key of ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"]) {
+		const value =
+			configEnv[key] ??
+			(options.accountSelection === undefined
+				? getTerminalBaseEnv()[key]
+				: undefined);
+		if (value) result[key] = value;
+	}
 	if (config?.presetId === "claude" && options.accountSelection === null)
 		delete result.CLAUDE_CONFIG_DIR;
 	return result;

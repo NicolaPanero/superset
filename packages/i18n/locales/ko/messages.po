@@ -1049,6 +1049,9 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} 중 {received}"
 
+msgid "{remaining} available"
+msgstr "{remaining} 사용 가능"
+
 msgid "{seconds}s ago"
 msgstr "{seconds}초 전"
 
@@ -1131,9 +1134,6 @@ msgstr "{updatedLabel}이(가) 기본값으로 복원되었습니다"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {파일 #개 업로드 중…}}"
-
-msgid "{used} used"
-msgstr "{used} 사용됨"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}명 대기 중"
@@ -3010,6 +3010,9 @@ msgstr "브랜치"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "브랜치 \"{0}\"이(가) 이 기기에도 {1}에도 없습니다. 푸시한 커밋만 복원할 수 있습니다."
 
+msgid "Branch and project files will be preserved."
+msgstr "브랜치와 프로젝트 파일이 보존됩니다."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "이 기기에서 새 워크스페이스를 만들 때의 브랜치 동작입니다. 프로젝트별로 접두사를 따로 지정할 수 있습니다."
 
@@ -3042,6 +3045,9 @@ msgstr "브랜치 접두사"
 
 msgid "Branch Prefix"
 msgstr "브랜치 접두사"
+
+msgid "Branch preserved"
+msgstr "브랜치 보존"
 
 msgid "Branch renamed to {newName}"
 msgstr "브랜치 이름을 {newName}(으)로 변경했습니다"
@@ -3480,6 +3486,9 @@ msgstr "채팅 세션을 찾을 수 없습니다"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "채팅 화면: 메시지, 추론, 제안"
 
+msgid "Check account before starting"
+msgstr "시작 전 계정 확인"
+
 msgid "Check again"
 msgstr "다시 확인"
 
@@ -3602,6 +3611,9 @@ msgstr "계정 선택"
 
 msgid "Choose an existing repo folder"
 msgstr "기존 리포지토리 폴더 선택"
+
+msgid "Choose another account"
+msgstr "다른 계정 선택"
 
 msgid "Choose app"
 msgstr "앱 선택"
@@ -5506,6 +5518,9 @@ msgstr "크리에이티브 매니저, Valid"
 msgid "Credentials stay on the server"
 msgstr "자격 증명은 서버에 보관됩니다"
 
+msgid "Credits"
+msgstr "크레딧"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "packages/ui 밖에 있는 기능 공통 컴포넌트 — 새로 만들기 전에 여기를 확인하세요"
 
@@ -6858,6 +6873,9 @@ msgstr "매우 높음"
 
 msgid "Extra small"
 msgstr "아주 작음"
+
+msgid "Extra usage"
+msgstr "추가 사용량"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4 관문 · {F4_GATE_SHARE}%"
@@ -13077,6 +13095,9 @@ msgstr "Superset 완전히 종료"
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "로그인 정보가 디스크에 저장되도록 원본 브라우저를 먼저 종료하세요. 키체인 접근 허용을 요청받게 됩니다."
 
+msgid "Quota exhausted"
+msgstr "한도 소진"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13249,6 +13270,9 @@ msgstr "다시 연결"
 msgid "Reconnect {name}"
 msgstr "{name} 다시 연결"
 
+msgid "Reconnect account"
+msgstr "계정 다시 연결"
+
 msgid "Reconnect Google"
 msgstr "Google 다시 연결"
 
@@ -13308,9 +13332,6 @@ msgstr "풀 리퀘스트 새로 고침"
 
 msgid "Refresh repositories"
 msgstr "리포지토리 새로 고침"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "다음에 Claude Code를 실행하면 갱신됩니다."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "다음에 OpenCode를 실행하면 갱신됩니다."
@@ -15673,6 +15694,9 @@ msgstr "파일 스테이징"
 msgid "Staged"
 msgstr "스테이징됨"
 
+msgid "Stale"
+msgstr "오래된 데이터"
+
 msgid "Standard action strip for pane headers"
 msgstr "패널 헤더용 표준 동작 스트립"
 
@@ -15754,6 +15778,9 @@ msgstr "휴대폰에서 에이전트를 시작하고, 실시간으로 따라가�
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "에이전트나 터미널을 시작해 이 워크스페이스에서 작업을 시작하세요."
+
+msgid "Start anyway"
+msgstr "계속 시작"
 
 msgid "Start browsing"
 msgstr "탐색 시작"
@@ -17017,6 +17044,9 @@ msgstr "이 {plugin} 계정은 이미 {owner}님이 연결했습니다. 먼저 �
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "이 {plugin} 계정은 이미 다른 Superset 조직에 연결되어 있습니다."
 
+msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
+msgstr "이 계정은 요금이 발생할 수 있거나 사용 가능한 한도를 확인할 수 없습니다. 다른 계정을 선택하거나 사용량을 새로 고치거나 이번 실행을 계속하세요."
+
 msgid "This action is irreversible."
 msgstr "이 동작은 되돌릴 수 없습니다."
 
@@ -17953,6 +17983,9 @@ msgstr "제목 없는 스크립트"
 
 msgid "Untitled workspace"
 msgstr "제목 없는 워크스페이스"
+
+msgid "Unverified"
+msgstr "미확인"
 
 msgid "Up next"
 msgstr "다음 실행"

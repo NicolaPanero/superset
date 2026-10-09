@@ -4,6 +4,7 @@ import { statSync } from "node:fs";
 import { mkdir, rename } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { promisify } from "node:util";
+import { branchDeletionEligibility } from "@superset/host-service/fork-branch-ownership";
 import type { BranchPrefixMode } from "@superset/local-db";
 import { runWithPostCheckoutHookTolerance } from "@superset/shared/git-hook-tolerance";
 import {
@@ -794,10 +795,23 @@ export async function createWorktreeFromExistingBranch({
 export async function deleteLocalBranch({
 	mainRepoPath,
 	branch,
+	workspaceId,
 }: {
 	mainRepoPath: string;
 	branch: string;
+	workspaceId?: string;
 }): Promise<void> {
+	if (
+		!workspaceId ||
+		!(
+			await branchDeletionEligibility(
+				await getSimpleGitWithShellPath(mainRepoPath),
+				branch,
+				workspaceId,
+			)
+		).eligible
+	)
+		return;
 	try {
 		await execGitWithShellPath(["-C", mainRepoPath, "branch", "-D", branch], {
 			timeout: 10_000,

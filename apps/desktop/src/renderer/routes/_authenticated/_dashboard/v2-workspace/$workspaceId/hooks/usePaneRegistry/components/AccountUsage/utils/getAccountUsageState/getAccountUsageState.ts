@@ -1,3 +1,4 @@
+import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 
 interface Identity {
@@ -47,7 +48,7 @@ export function getAccountUsageState({
 	const stale =
 		account &&
 		(failed ||
-			now - new Date(account.fetchedAt).getTime() >= 10 * 60_000 ||
+			accountQuotaState(account, undefined, now).reason === "stale" ||
 			windows.some((w) => w.resetsAt && new Date(w.resetsAt).getTime() <= now));
 	const state = !supported
 		? "unavailable"
@@ -57,10 +58,10 @@ export function getAccountUsageState({
 				? "unverified"
 				: identity.credentialKind === "api_key"
 					? "api"
-					: !account || account.status !== "ok" || !tightest
-						? "unavailable"
-						: stale
-							? "stale"
+					: stale && tightest
+						? "stale"
+						: !account || account.status !== "ok" || !tightest
+							? "unavailable"
 							: "ready";
 	return { account, tightest, state };
 }

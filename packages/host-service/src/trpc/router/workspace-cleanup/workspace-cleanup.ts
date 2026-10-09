@@ -29,9 +29,46 @@ import { protectedProcedure, router } from "../../index";
 import { getHostWorktreeBaseDir } from "../settings/worktree-location";
 import { isInsideSessionsRoot } from "../workspace-creation/shared/session-paths";
 import { isInsideProjectWorktreesRoot } from "../workspace-creation/shared/worktree-paths";
+import {
+	type BranchDeletion,
+	branchDeletionEligibility,
+} from "./fork-branch-ownership";
 import { cleanupGitOps, isIndeterminateGitTaskFailure } from "./git-ops";
 import { isLocalCheckoutWorkspace } from "./is-local-checkout-workspace";
 import { removeDirectoryTree } from "./remove-directory-tree";
+
+async function inspectBranchDeletion(
+	ctx: HostServiceContext,
+	workspaceId: string,
+): Promise<BranchDeletion> {
+	const { local, project, sharesProjectCheckout } =
+		await isLocalCheckoutWorkspace(ctx, workspaceId);
+	const branch = local?.branch ?? null;
+	if (sharesProjectCheckout)
+		return { branch, eligible: false, reason: "project_checkout" };
+	if (!local || !project)
+		return { branch, eligible: false, reason: "unverified" };
+	try {
+		const shared = ctx.db.query.workspaces
+			.findMany({ where: isNull(workspaces.archivedAt) })
+			.sync()
+			.some(
+				(row) =>
+					row.id !== workspaceId &&
+					row.projectId === local.projectId &&
+					row.branch === branch,
+			);
+		if (shared) return { branch, eligible: false, reason: "shared" };
+		return await branchDeletionEligibility(
+			await ctx.git(project.repoPath),
+			branch,
+			workspaceId,
+			local.worktreePath,
+		);
+	} catch {
+		return { branch, eligible: false, reason: "unverified" };
+	}
+}
 
 /**
  * Process-local guard against concurrent destroys of the same workspace.
@@ -89,7 +126,7 @@ export interface DestroyWorkspaceInput {
  * `{ canDelete: false, reason: null }` as a no-op — it's an unrepresentable
  * combination at the type level.
  */
-type InspectResult =
+type InspectResult = { branchDeletion?: BranchDeletion } & (
 	| {
 			canDelete: true;
 			reason: null;
@@ -105,7 +142,8 @@ type InspectResult =
 			hasChanges: false;
 			hasUnpushedCommits: false;
 			sharesProjectCheckout: false;
-	  };
+	  }
+);
 
 export const workspaceCleanupRouter = router({
 	/**
@@ -128,10 +166,15 @@ export const workspaceCleanupRouter = router({
 				ctx,
 				input.workspaceId,
 			);
+			const branchDeletion = await inspectBranchDeletion(
+				ctx,
+				input.workspaceId,
+			);
 			// Nothing on disk goes away with a local workspace, so there is
 			// no uncommitted or unpushed work to warn about losing.
 			if (!local || sharesProjectCheckout) {
 				return {
+					branchDeletion,
 					canDelete: true,
 					reason: null,
 					hasChanges: false,
@@ -154,6 +197,7 @@ export const workspaceCleanupRouter = router({
 					signal,
 				);
 				return {
+					branchDeletion,
 					canDelete: true,
 					reason: null,
 					hasChanges: state.hasChanges,
@@ -162,6 +206,7 @@ export const workspaceCleanupRouter = router({
 				};
 			} catch {
 				return {
+					branchDeletion,
 					canDelete: true,
 					reason: null,
 					hasChanges: false,
@@ -659,12 +704,21 @@ async function runDestroyPhases(
 	// being mistaken for "already gone".
 	if (repoGitEnv && project && local?.branch && input.deleteBranch) {
 		try {
-			await cleanupGitOps.deleteLocalBranch({
-				repoPath: project.repoPath,
-				branch: local.branch,
-				gitEnv: repoGitEnv,
-			});
-			branchDeleted = true;
+			const eligibility = await inspectBranchDeletion(ctx, input.workspaceId);
+			if (!eligibility.eligible) {
+				warnings.push(
+					`Branch preserved: ${local.branch} (${eligibility.reason})`,
+				);
+			} else {
+				const result = await cleanupGitOps.deleteLocalBranch({
+					repoPath: project.repoPath,
+					branch: local.branch,
+					workspaceId: input.workspaceId,
+					gitEnv: repoGitEnv,
+				});
+				branchDeleted = result.deleted;
+				if (!result.deleted) warnings.push(`Branch preserved: ${local.branch}`);
+			}
 		} catch (err) {
 			const message = err instanceof Error ? err.message : String(err);
 			warnings.push(`Failed to delete branch ${local.branch}: ${message}`);
