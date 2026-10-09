@@ -3486,9 +3486,6 @@ msgstr "Relace chatu nenalezena"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 
-msgid "Check account before starting"
-msgstr "Ověřit účet před spuštěním"
-
 msgid "Check again"
 msgstr "Zkontrolovat znovu"
 
@@ -3611,9 +3608,6 @@ msgstr "Vyberte účet"
 
 msgid "Choose an existing repo folder"
 msgstr "Vyberte složku s existujícím repozitářem"
-
-msgid "Choose another account"
-msgstr "Vybrat jiný účet"
 
 msgid "Choose app"
 msgstr "Vyberte aplikaci"
@@ -9150,6 +9144,9 @@ msgstr "Poslední den v měsíci"
 
 msgid "Last day of each month at {time}"
 msgstr "Poslední den v měsíci v {time}"
+
+msgid "Last known"
+msgstr "Poslední údaje"
 
 msgid "Last run"
 msgstr "Poslední běh"
@@ -15694,9 +15691,6 @@ msgstr "Připravit soubor"
 msgid "Staged"
 msgstr "Připravené"
 
-msgid "Stale"
-msgstr "Zastaralé"
-
 msgid "Standard action strip for pane headers"
 msgstr "Standardní pruh akcí pro záhlaví panelů"
 
@@ -15778,9 +15772,6 @@ msgstr "Spouštějte agenty, sledujte je živě a kontrolujte diff z telefonu. V
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Spusťte agenta nebo terminál a začněte v tomto pracovním prostoru pracovat."
-
-msgid "Start anyway"
-msgstr "Přesto spustit"
 
 msgid "Start browsing"
 msgstr "Začněte prohlížet"
@@ -17043,9 +17034,6 @@ msgstr "Účet {plugin} už připojil(a) {owner}. Požádejte ho/ji, aby ho nejp
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Tento účet {plugin} už je připojený k jiné organizaci Supersetu."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Tento účet může způsobit poplatky nebo nelze ověřit jeho dostupnou kvótu. Vyberte jiný účet, obnovte využití nebo pokračujte v tomto spuštění."
 
 msgid "This action is irreversible."
 msgstr "Tuto akci nelze vrátit zpět."

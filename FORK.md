@@ -30,8 +30,9 @@ cambiando host/provider o iniziando una nuova creazione torna il predefinito.
 **Suggerito** indica l’abbonamento con più quota verificata: la scelta resta manuale.
 Lo stesso riepilogo compare nel menu account, nelle intestazioni e in Usage.
 
-Le letture si condividono e si aggiornano ogni cinque minuti con la schermata
-visibile. Dati vecchi o mancanti restano segnalati; non equivalgono a quota libera.
+La schermata controlla la cache condivisa all’apertura, al ritorno e ogni trenta
+secondi mentre è visibile. La cache dell’host dura quindici secondi; le richieste
+al provider restano distanziate di cinque minuti per account, con backoff su 429. Dati vecchi o mancanti restano segnalati; non equivalgono a quota libera.
 Il rinnovo passa dal CLI del profilo, senza richieste al modello, hook o MCP:
 Claude usa soltanto `/usage`, Codex soltanto le procedure RPC dell’account.
 Ogni verifica ha un limite di 15 secondi, al massimo due possono essere attive e
@@ -40,9 +41,11 @@ ogni profilo viene verificato al massimo una volta ogni cinque minuti. Il backof
 resta sull’host per 24 ore, fino a 128 account, con la data originale e l’identità
 verificata. Non viene attribuita a un nuovo login nello stesso profilo.
 
-Prima di avviare Claude/Codex con quota esaurita, non verificata o fatturazione API,
-un dialogo propone **Scegli un altro account**, **Aggiorna**, **Avvia comunque**.
-La conferma vale per quell’operazione. Cursor/Grok continuano a usare i loro crediti.
+Cambio account e avvio sono diretti: quota vecchia, esaurita o fatturazione API
+restano indicazioni nel selettore, senza dialoghi di conferma. **Ultima lettura**
+mostra la quota conservata con la sua data originale. Account mancanti o
+credenziali imposte incompatibili producono ancora un errore prima dell’avvio.
+Cursor/Grok continuano a usare i loro crediti.
 La scelta arriva a chat, CLI, avvio dopo il setup e naming. Una scelta mancante o
 incompatibile con credenziali imposte produce un errore prima della creazione.
 Il naming fallito deriva il titolo localmente. Le chat già aperte non vengono spostate.

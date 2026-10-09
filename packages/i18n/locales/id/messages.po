@@ -3486,9 +3486,6 @@ msgstr "Sesi chat tidak ditemukan"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Permukaan chat: pesan, penalaran, saran"
 
-msgid "Check account before starting"
-msgstr "Periksa akun sebelum memulai"
-
 msgid "Check again"
 msgstr "Periksa lagi"
 
@@ -3611,9 +3608,6 @@ msgstr "Pilih akun"
 
 msgid "Choose an existing repo folder"
 msgstr "Pilih folder repo yang sudah ada"
-
-msgid "Choose another account"
-msgstr "Pilih akun lain"
 
 msgid "Choose app"
 msgstr "Pilih aplikasi"
@@ -9150,6 +9144,9 @@ msgstr "Hari terakhir tiap bulan"
 
 msgid "Last day of each month at {time}"
 msgstr "Hari terakhir tiap bulan pukul {time}"
+
+msgid "Last known"
+msgstr "Pembacaan terakhir"
 
 msgid "Last run"
 msgstr "Run terakhir"
@@ -15694,9 +15691,6 @@ msgstr "Stage file"
 msgid "Staged"
 msgstr "Sudah di-stage"
 
-msgid "Stale"
-msgstr "Data lama"
-
 msgid "Standard action strip for pane headers"
 msgstr "Strip aksi standar untuk header panel"
 
@@ -15778,9 +15772,6 @@ msgstr "Mulai agen, ikuti secara langsung, dan tinjau diff dari ponsel Anda. Kod
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Mulai sebuah agen atau terminal untuk mulai bekerja di workspace ini."
-
-msgid "Start anyway"
-msgstr "Tetap mulai"
 
 msgid "Start browsing"
 msgstr "Mulai menjelajah"
@@ -17043,9 +17034,6 @@ msgstr "Akun {plugin} ini sudah dihubungkan oleh {owner}. Minta dia memutuskanny
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Akun {plugin} ini sudah dihubungkan oleh organisasi Superset lain."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Akun ini mungkin menimbulkan biaya atau kuota yang tersedia tidak dapat diverifikasi. Pilih akun lain, perbarui penggunaan, atau lanjutkan untuk peluncuran ini."
 
 msgid "This action is irreversible."
 msgstr "Tindakan ini tidak bisa dibatalkan."

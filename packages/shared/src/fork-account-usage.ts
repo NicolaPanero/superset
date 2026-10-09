@@ -1,4 +1,8 @@
-export const ACCOUNT_QUOTA_FRESH_MS = 5 * 60_000;
+export const ACCOUNT_QUOTA_POLL_MS = 30_000;
+export const ACCOUNT_QUOTA_CACHE_MS = 15_000;
+export const ACCOUNT_QUOTA_PROVIDER_MS = 5 * 60_000;
+// Allow a polling cycle and a bounded request before classifying a sample as old.
+export const ACCOUNT_QUOTA_FRESH_MS = ACCOUNT_QUOTA_PROVIDER_MS + 60_000;
 export interface AccountQuota {
 	agent: string;
 	credentialKind: string;
@@ -48,13 +52,14 @@ export function accountQuotaState(
 		usable && windows.length
 			? Math.max(...windows.map((window) => window.usedPercent))
 			: null;
-	const reason = stale
-		? ("stale" as const)
-		: used === null
+	const reason =
+		used === null
 			? ("unknown" as const)
-			: used >= 100
-				? ("exhausted" as const)
-				: ("ready" as const);
+			: stale
+				? ("stale" as const)
+				: used >= 100
+					? ("exhausted" as const)
+					: ("ready" as const);
 	return {
 		reason,
 		remaining: used === null ? null : Math.max(0, 100 - used),

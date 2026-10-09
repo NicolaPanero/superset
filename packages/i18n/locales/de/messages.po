@@ -3486,9 +3486,6 @@ msgstr "Chat-Sitzung nicht gefunden"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chat-Oberflächen: Nachrichten, Reasoning, Vorschläge"
 
-msgid "Check account before starting"
-msgstr "Konto vor dem Start prüfen"
-
 msgid "Check again"
 msgstr "Erneut prüfen"
 
@@ -3611,9 +3608,6 @@ msgstr "Konto auswählen"
 
 msgid "Choose an existing repo folder"
 msgstr "Vorhandenen Repo-Ordner wählen"
-
-msgid "Choose another account"
-msgstr "Anderes Konto wählen"
 
 msgid "Choose app"
 msgstr "App wählen"
@@ -9150,6 +9144,9 @@ msgstr "Am letzten Tag jedes Monats"
 
 msgid "Last day of each month at {time}"
 msgstr "Am letzten Tag jedes Monats um {time}"
+
+msgid "Last known"
+msgstr "Letzter Stand"
 
 msgid "Last run"
 msgstr "Letzte Ausführung"
@@ -15694,9 +15691,6 @@ msgstr "Datei stagen"
 msgid "Staged"
 msgstr "Gestaged"
 
-msgid "Stale"
-msgstr "Veraltet"
-
 msgid "Standard action strip for pane headers"
 msgstr "Standard-Aktionsleiste für Bereichs-Kopfzeilen"
 
@@ -15778,9 +15772,6 @@ msgstr "Agents starten, live verfolgen und den Diff vom Handy aus prüfen. Dein 
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Starte einen Agenten oder ein Terminal, um in diesem Arbeitsbereich zu arbeiten."
-
-msgid "Start anyway"
-msgstr "Trotzdem starten"
 
 msgid "Start browsing"
 msgstr "Losbrowsen"
@@ -17043,9 +17034,6 @@ msgstr "Das {plugin}-Konto wurde bereits von {owner} verbunden. Bitte sie oder i
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Dieses {plugin}-Konto ist bereits mit einer anderen Superset-Organisation verbunden."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Dieses Konto kann Kosten verursachen oder sein verfügbares Kontingent lässt sich nicht prüfen. Wähle ein anderes Konto, aktualisiere die Nutzung oder fahre für diesen Start fort."
 
 msgid "This action is irreversible."
 msgstr "Diese Aktion ist nicht umkehrbar."

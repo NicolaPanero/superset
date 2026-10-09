@@ -31,7 +31,7 @@ test("stale, missing, invalid and API data never suggest unused quota", () => {
 	expect(accountQuotaState(undefined, undefined, now).reason).toBe("unknown");
 	expect(
 		accountQuotaState(
-			{ ...account, fetchedAt: new Date(now - 300_000) },
+			{ ...account, fetchedAt: new Date(now - 360_000) },
 			"opus",
 			now,
 		).reason,
@@ -61,4 +61,45 @@ test("stale, missing, invalid and API data never suggest unused quota", () => {
 		accountQuotaState({ ...account, credentialKind: "api_key" }, undefined, now)
 			.reason,
 	).toBe("api");
+});
+
+test("a provider cache sample stays current through the next UI poll, but keeps its original age", () => {
+	expect(
+		accountQuotaState(
+			{ ...account, fetchedAt: new Date(now - 330_000) },
+			"opus",
+			now,
+		).reason,
+	).toBe("ready");
+	expect(
+		accountQuotaState(
+			{ ...account, fetchedAt: new Date(now - 360_000) },
+			"opus",
+			now,
+		).reason,
+	).toBe("stale");
+	expect(
+		accountQuotaState(
+			{ ...account, windows: [], status: "token_stale" },
+			"opus",
+			now,
+		).reason,
+	).toBe("unknown");
+	expect(
+		accountQuotaState(
+			{
+				...account,
+				windows: [
+					{
+						id: "five_hour",
+						label: "Session",
+						usedPercent: 20,
+						resetsAt: new Date(now - 1),
+					},
+				],
+			},
+			"opus",
+			now,
+		).reason,
+	).toBe("stale");
 });

@@ -3486,9 +3486,6 @@ msgstr "Sessione di chat non trovata"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Superfici della chat: messaggi, ragionamento, suggerimenti"
 
-msgid "Check account before starting"
-msgstr "Verifica l’account prima di iniziare"
-
 msgid "Check again"
 msgstr "Controlla di nuovo"
 
@@ -3611,9 +3608,6 @@ msgstr "Scegli un account"
 
 msgid "Choose an existing repo folder"
 msgstr "Scegli una cartella di repo esistente"
-
-msgid "Choose another account"
-msgstr "Scegli un altro account"
 
 msgid "Choose app"
 msgstr "Scegli l'app"
@@ -9150,6 +9144,9 @@ msgstr "L'ultimo giorno di ogni mese"
 
 msgid "Last day of each month at {time}"
 msgstr "L'ultimo giorno di ogni mese alle {time}"
+
+msgid "Last known"
+msgstr "Ultima lettura"
 
 msgid "Last run"
 msgstr "Ultima esecuzione"
@@ -15694,9 +15691,6 @@ msgstr "Aggiungi il file allo stage"
 msgid "Staged"
 msgstr "In stage"
 
-msgid "Stale"
-msgstr "Dati vecchi"
-
 msgid "Standard action strip for pane headers"
 msgstr "Barra di azioni standard per le intestazioni dei pannelli"
 
@@ -15778,9 +15772,6 @@ msgstr "Avvia gli agenti, seguili in tempo reale e rivedi il diff dal telefono. 
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Avvia un agente o un terminale per iniziare a lavorare in questo workspace."
-
-msgid "Start anyway"
-msgstr "Avvia comunque"
 
 msgid "Start browsing"
 msgstr "Inizia a navigare"
@@ -17043,9 +17034,6 @@ msgstr "Questo account {plugin} è già collegato da {owner}. Chiedi di scollega
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Questo account {plugin} è già collegato da un'altra organizzazione Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Questo account potrebbe comportare addebiti oppure la quota disponibile non è verificabile. Scegli un altro account, aggiorna l’utilizzo o continua per questo avvio."
 
 msgid "This action is irreversible."
 msgstr "L'operazione è irreversibile."

@@ -25,12 +25,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
-import { confirmAccountLaunch } from "renderer/components/ForkAccountLaunchDialog";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type {
 	PaneViewerData,
@@ -71,9 +71,7 @@ export function AcpChatHandoffMenu({
 	const wiring = useChatWiring();
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
-	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx, () =>
-		setOpen(true),
-	);
+	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
 	const [placement, setPlacement] = useState<Placement>("this-chat");
@@ -186,7 +184,7 @@ export function AcpChatHandoffMenu({
 		if (
 			placement === "this-chat" &&
 			hostUrl &&
-			!(await confirmAccountLaunch({
+			!(await validateAccountLaunch({
 				hostUrl,
 				agent: target.id,
 				provider: target.presetId,
@@ -323,7 +321,7 @@ export function AcpChatHandoffMenu({
 			if (
 				placement === "this-chat" &&
 				hostUrl &&
-				!(await confirmAccountLaunch({
+				!(await validateAccountLaunch({
 					hostUrl,
 					agent: target.id,
 					provider: target.presetId,

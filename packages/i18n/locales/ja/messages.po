@@ -3486,9 +3486,6 @@ msgstr "チャットセッションが見つかりません"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "チャットの構成要素: メッセージ、推論、提案"
 
-msgid "Check account before starting"
-msgstr "開始前にアカウントを確認"
-
 msgid "Check again"
 msgstr "再確認"
 
@@ -3611,9 +3608,6 @@ msgstr "アカウントを選択"
 
 msgid "Choose an existing repo folder"
 msgstr "既存のリポジトリフォルダを選択"
-
-msgid "Choose another account"
-msgstr "別のアカウントを選択"
 
 msgid "Choose app"
 msgstr "アプリを選択"
@@ -9150,6 +9144,9 @@ msgstr "毎月末日"
 
 msgid "Last day of each month at {time}"
 msgstr "毎月末日 {time}"
+
+msgid "Last known"
+msgstr "前回の取得値"
 
 msgid "Last run"
 msgstr "最終実行"
@@ -15694,9 +15691,6 @@ msgstr "ファイルをステージ"
 msgid "Staged"
 msgstr "ステージ済み"
 
-msgid "Stale"
-msgstr "古いデータ"
-
 msgid "Standard action strip for pane headers"
 msgstr "ペインヘッダー用の標準アクションストリップ"
 
@@ -15778,9 +15772,6 @@ msgstr "スマートフォンからエージェントを起動し、ライブで
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "エージェントかターミナルを開始して、このワークスペースでの作業を始めましょう。"
-
-msgid "Start anyway"
-msgstr "このまま開始"
 
 msgid "Start browsing"
 msgstr "ブラウジングを開始"
@@ -17043,9 +17034,6 @@ msgstr "この {plugin} アカウントはすでに {owner} が接続してい�
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "この {plugin} アカウントはすでに別の Superset 組織が接続しています。"
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "このアカウントでは料金が発生する可能性があるか、残りの使用枠を確認できません。別のアカウントを選択するか、使用状況を更新するか、今回の起動を続行してください。"
 
 msgid "This action is irreversible."
 msgstr "この操作は元に戻せません。"

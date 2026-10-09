@@ -3486,9 +3486,6 @@ msgstr "Sessão de chat não encontrada"
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Superfícies de chat: mensagens, raciocínio, sugestões"
 
-msgid "Check account before starting"
-msgstr "Verificar a conta antes de iniciar"
-
 msgid "Check again"
 msgstr "Verificar novamente"
 
@@ -3611,9 +3608,6 @@ msgstr "Escolha uma conta"
 
 msgid "Choose an existing repo folder"
 msgstr "Escolha uma pasta de repositório existente"
-
-msgid "Choose another account"
-msgstr "Escolher outra conta"
 
 msgid "Choose app"
 msgstr "Escolher app"
@@ -9150,6 +9144,9 @@ msgstr "Último dia de cada mês"
 
 msgid "Last day of each month at {time}"
 msgstr "Último dia de cada mês às {time}"
+
+msgid "Last known"
+msgstr "Última leitura"
 
 msgid "Last run"
 msgstr "Última execução"
@@ -15694,9 +15691,6 @@ msgstr "Adicionar arquivo ao stage"
 msgid "Staged"
 msgstr "No stage"
 
-msgid "Stale"
-msgstr "Dados antigos"
-
 msgid "Standard action strip for pane headers"
 msgstr "Faixa de ações padrão para cabeçalhos de painel"
 
@@ -15778,9 +15772,6 @@ msgstr "Inicie agentes, acompanhe-os ao vivo e revise o diff no seu celular. Seu
 
 msgid "Start an agent or a terminal to begin working in this workspace."
 msgstr "Inicie um agente ou um terminal para começar a trabalhar nesta área de trabalho."
-
-msgid "Start anyway"
-msgstr "Iniciar mesmo assim"
 
 msgid "Start browsing"
 msgstr "Comece a navegar"
@@ -17043,9 +17034,6 @@ msgstr "Esta conta do {plugin} já foi conectada por {owner}. Peça para descone
 
 msgid "This {plugin} account is already connected by another Superset organization."
 msgstr "Esta conta do {plugin} já está conectada por outra organização do Superset."
-
-msgid "This account may incur charges or its available quota cannot be verified. Choose another account, refresh usage, or continue for this launch."
-msgstr "Esta conta pode gerar cobranças ou sua cota disponível não pode ser verificada. Escolha outra conta, atualize o uso ou continue para esta inicialização."
 
 msgid "This action is irreversible."
 msgstr "Não dá para desfazer."

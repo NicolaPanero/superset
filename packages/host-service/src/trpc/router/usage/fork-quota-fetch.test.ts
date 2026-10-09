@@ -1,4 +1,4 @@
-import { expect, test } from "bun:test";
+import { expect, spyOn, test } from "bun:test";
 import {
 	quotaFetch,
 	quotaResponseTiming,
@@ -46,4 +46,32 @@ test("HTTP-date retry delays are preserved", () => {
 	const now = Date.parse("2026-10-09T12:00:00Z");
 	expect(retryAfterMs("Fri, 09 Oct 2026 12:30:00 GMT", now)).toBe(1800_000);
 	expect(retryAfterMs("10", now)).toBe(10_000);
+});
+
+test("frequent UI reads preserve the sample timestamp and fetch again after the provider interval", async () => {
+	let now = Date.parse("2026-10-09T12:00:00Z"),
+		calls = 0;
+	const clock = spyOn(Date, "now").mockImplementation(() => now);
+	const server = Bun.serve({
+		port: 0,
+		fetch: () => {
+			calls++;
+			return Response.json({ used: 40 });
+		},
+	});
+	try {
+		const url = `http://localhost:${server.port}/successful-quota`;
+		const first = quotaResponseTiming(await quotaFetch(url, {}));
+		now += 30_000;
+		const reused = quotaResponseTiming(await quotaFetch(url, {}));
+		expect(calls).toBe(1);
+		expect(reused.fetchedAt).toEqual(first.fetchedAt);
+		now += 270_000;
+		const fresh = quotaResponseTiming(await quotaFetch(url, {}));
+		expect(calls).toBe(2);
+		expect(fresh.fetchedAt.getTime() - first.fetchedAt.getTime()).toBe(300_000);
+	} finally {
+		clock.mockRestore();
+		await server.stop(true);
+	}
 });

@@ -1,6 +1,7 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { resolveSupersetHomeDir } from "@superset/agent-setup";
+import { ACCOUNT_QUOTA_CACHE_MS } from "@superset/shared/fork-account-usage";
 import { fetchAgyAccounts } from "./agy-quota";
 import { fetchClaudeAccounts } from "./claude";
 import { fetchCodexAccounts } from "./codex";
@@ -8,7 +9,7 @@ import { fetchGrokAccounts } from "./grok-quota";
 import { fetchOpencodeAccounts } from "./opencode-quota";
 import type { UsageAccount } from "./types";
 
-const TTL = 5 * 60_000;
+const TTL = ACCOUNT_QUOTA_CACHE_MS;
 const MAX_AGE = 24 * 60 * 60_000;
 let cached: { at: number; promise: Promise<UsageAccount[]> } | undefined;
 let inFlight: Promise<UsageAccount[]> | undefined;

@@ -1,10 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import {
-	cancelAccountLaunch,
-	confirmAccountLaunch,
-} from "renderer/components/ForkAccountLaunchDialog";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
+import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 
@@ -55,17 +52,12 @@ export function useForkCreationAccount(
 	const signature = `${key}:${selection}:${model}`;
 	const live = useRef(signature);
 	live.current = signature;
-	useEffect(() => {
-		if (live.current === signature) cancelAccountLaunch();
-	}, [signature]);
 	useEffect(
 		() => () => {
 			live.current = "unmounted";
-			cancelAccountLaunch();
 		},
 		[],
 	);
-	const chooseOther = () => setPickerOpen(true);
 	return {
 		hostUrl,
 		pickerOpen,
@@ -81,14 +73,13 @@ export function useForkCreationAccount(
 		confirm: () =>
 			!enabled || !hostUrl
 				? Promise.resolve(true)
-				: confirmAccountLaunch({
+				: validateAccountLaunch({
 						hostUrl,
 						agent,
 						provider: provider ?? "",
 						selection,
 						model: model ?? undefined,
 						isCurrent: () => live.current === signature,
-						chooseOther,
 					}),
 	};
 }
