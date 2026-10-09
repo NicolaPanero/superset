@@ -4473,6 +4473,9 @@ msgstr "会話"
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "このワークスペースでエージェント間を移動した会話です。"
+
 msgid "Conversion"
 msgstr "コンバージョン"
 
@@ -9366,9 +9369,6 @@ msgstr "リポジトリを読み込み中..."
 msgid "Loading review..."
 msgstr "レビューを読み込み中..."
 
-msgid "Loading session lineage…"
-msgstr "セッションの履歴を読み込み中…"
-
 msgid "Loading terminal scripts..."
 msgstr "ターミナルスクリプトを読み込み中..."
 
@@ -10042,9 +10042,6 @@ msgstr "このプロジェクトの新しいブランチに名前空間を付け
 msgid "Naming instructions"
 msgstr "命名指示"
 
-msgid "Native Handoff"
-msgstr "ネイティブセッションの引き継ぎ"
-
 msgid "Native handoff complete"
 msgstr "ネイティブ引き継ぎが完了しました"
 
@@ -10053,9 +10050,6 @@ msgstr "ネイティブセッションの引き継ぎに失敗しました。再
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "このエージェントの組み合わせ、またはホストではネイティブセッションの引き継ぎを利用できません。"
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "ネイティブ引き継ぎはローカルに保存されます。各セッションは複数の子セッションを持てます。"
 
 msgid "Native PR reviews"
 msgstr "ネイティブのPRレビュー"
@@ -11352,9 +11346,6 @@ msgstr "変更を開く"
 msgid "Open Chat v3"
 msgstr "チャットv3を開く"
 
-msgid "Open child"
-msgstr "子セッションを開く"
-
 msgid "Open Command Palette"
 msgstr "コマンドパレットを開く"
 
@@ -11559,9 +11550,6 @@ msgstr "GitHubで開く"
 msgid "Open Page in Default Browser"
 msgstr "ページを既定のブラウザで開く"
 
-msgid "Open parent"
-msgstr "親セッションを開く"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} を開く"
@@ -11717,9 +11705,6 @@ msgstr "ファイルを開く"
 
 msgid "Opening folders"
 msgstr "フォルダーを開く"
-
-msgid "Opening native session…"
-msgstr "ネイティブセッションを開いています…"
 
 msgid "Opening pages"
 msgstr "ページを開く"

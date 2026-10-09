@@ -4473,6 +4473,9 @@ msgstr "Unterhaltung"
 msgid "Conversation · Message"
 msgstr "Unterhaltung · Nachricht"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Unterhaltungen, die in diesem Workspace zwischen Agenten verschoben wurden."
+
 msgid "Conversion"
 msgstr "Konversion"
 
@@ -9366,9 +9369,6 @@ msgstr "Repositories werden geladen..."
 msgid "Loading review..."
 msgstr "Review wird geladen..."
 
-msgid "Loading session lineage…"
-msgstr "Sitzungsverlauf wird geladen…"
-
 msgid "Loading terminal scripts..."
 msgstr "Terminal-Skripte werden geladen..."
 
@@ -10042,9 +10042,6 @@ msgstr "Neue Branches für dieses Projekt in einem Namensraum bündeln. Standard
 msgid "Naming instructions"
 msgstr "Benennungsvorgaben"
 
-msgid "Native Handoff"
-msgstr "Native Übergabe"
-
 msgid "Native handoff complete"
 msgstr "Native Übergabe abgeschlossen"
 
@@ -10053,9 +10050,6 @@ msgstr "Die native Übergabe ist fehlgeschlagen. Versuchen Sie es erneut."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Die native Übergabe ist für dieses Agentenpaar oder diesen Host nicht verfügbar."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Lokal gespeicherte native Übergaben. Jede Sitzung kann mehrere Folgesitzungen haben."
 
 msgid "Native PR reviews"
 msgstr "Native PR-Reviews"
@@ -11352,9 +11346,6 @@ msgstr "Änderungen öffnen"
 msgid "Open Chat v3"
 msgstr "Chat v3 öffnen"
 
-msgid "Open child"
-msgstr "Folgesitzung öffnen"
-
 msgid "Open Command Palette"
 msgstr "Befehlspalette öffnen"
 
@@ -11559,9 +11550,6 @@ msgstr "Auf GitHub öffnen"
 msgid "Open Page in Default Browser"
 msgstr "Seite im Standardbrowser öffnen"
 
-msgid "Open parent"
-msgstr "Ursprungssitzung öffnen"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "PR #{0} öffnen"
@@ -11717,9 +11705,6 @@ msgstr "Dateien öffnen"
 
 msgid "Opening folders"
 msgstr "Ordner öffnen"
-
-msgid "Opening native session…"
-msgstr "Native Sitzung wird geöffnet…"
 
 msgid "Opening pages"
 msgstr "Seiten öffnen"

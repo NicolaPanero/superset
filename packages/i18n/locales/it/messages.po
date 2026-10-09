@@ -4473,6 +4473,9 @@ msgstr "Conversazione"
 msgid "Conversation · Message"
 msgstr "Conversazione · Messaggio"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Conversazioni passate tra agenti in quest'area di lavoro."
+
 msgid "Conversion"
 msgstr "Conversione"
 
@@ -9366,9 +9369,6 @@ msgstr "Caricamento dei repository..."
 msgid "Loading review..."
 msgstr "Caricamento della revisione..."
 
-msgid "Loading session lineage…"
-msgstr "Caricamento dello storico delle sessioni…"
-
 msgid "Loading terminal scripts..."
 msgstr "Caricamento degli script del terminale..."
 
@@ -10042,9 +10042,6 @@ msgstr "Assegna uno spazio dei nomi ai nuovi branch di questo progetto. Per impo
 msgid "Naming instructions"
 msgstr "Istruzioni di denominazione"
 
-msgid "Native Handoff"
-msgstr "Passaggio nativo"
-
 msgid "Native handoff complete"
 msgstr "Handoff nativo completato"
 
@@ -10053,9 +10050,6 @@ msgstr "Il passaggio nativo è fallito. Puoi riprovare."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Il passaggio nativo non è disponibile per questa coppia di agenti o questo host."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Passaggi nativi salvati localmente. Ogni sessione può avere più sessioni figlie."
 
 msgid "Native PR reviews"
 msgstr "Revisioni delle PR native"
@@ -11352,9 +11346,6 @@ msgstr "Apri le modifiche"
 msgid "Open Chat v3"
 msgstr "Apri Chat v3"
 
-msgid "Open child"
-msgstr "Apri figlia"
-
 msgid "Open Command Palette"
 msgstr "Apri la palette dei comandi"
 
@@ -11559,9 +11550,6 @@ msgstr "Apri su GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Apri la pagina nel browser predefinito"
 
-msgid "Open parent"
-msgstr "Apri padre"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Apri PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Apertura dei file"
 
 msgid "Opening folders"
 msgstr "Apertura delle cartelle"
-
-msgid "Opening native session…"
-msgstr "Apertura della sessione nativa…"
 
 msgid "Opening pages"
 msgstr "Apertura delle pagine"

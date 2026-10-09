@@ -4473,6 +4473,9 @@ msgstr "Konverzace"
 msgid "Conversation · Message"
 msgstr "Konverzace · Zpráva"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Konverzace přesunuté mezi agenty v tomto pracovním prostoru."
+
 msgid "Conversion"
 msgstr "Konverze"
 
@@ -9366,9 +9369,6 @@ msgstr "Načítám repozitáře..."
 msgid "Loading review..."
 msgstr "Načítám revizi..."
 
-msgid "Loading session lineage…"
-msgstr "Načítání historie relací…"
-
 msgid "Loading terminal scripts..."
 msgstr "Načítám terminálové skripty..."
 
@@ -10042,9 +10042,6 @@ msgstr "Zařaďte nové větve tohoto projektu pod jmenný prostor. Ve výchozí
 msgid "Naming instructions"
 msgstr "Pravidla pojmenování"
 
-msgid "Native Handoff"
-msgstr "Nativní předání"
-
 msgid "Native handoff complete"
 msgstr "Nativní předání dokončeno"
 
@@ -10053,9 +10050,6 @@ msgstr "Nativní předání se nezdařilo. Zkuste to znovu."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Nativní předání není pro tuto dvojici agentů nebo tento hostitel dostupné."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Nativní předání uložená lokálně. Každá relace může mít více potomků."
 
 msgid "Native PR reviews"
 msgstr "Nativní revize PR"
@@ -11352,9 +11346,6 @@ msgstr "Otevřít změny"
 msgid "Open Chat v3"
 msgstr "Otevřít Chat v3"
 
-msgid "Open child"
-msgstr "Otevřít potomka"
-
 msgid "Open Command Palette"
 msgstr "Otevřít paletu příkazů"
 
@@ -11559,9 +11550,6 @@ msgstr "Otevřít na GitHubu"
 msgid "Open Page in Default Browser"
 msgstr "Otevřít stránku ve výchozím prohlížeči"
 
-msgid "Open parent"
-msgstr "Otevřít rodiče"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Otevřít PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Otevírání souborů"
 
 msgid "Opening folders"
 msgstr "Otevírání složek"
-
-msgid "Opening native session…"
-msgstr "Otevírání nativní relace…"
 
 msgid "Opening pages"
 msgstr "Otevírání stránek"

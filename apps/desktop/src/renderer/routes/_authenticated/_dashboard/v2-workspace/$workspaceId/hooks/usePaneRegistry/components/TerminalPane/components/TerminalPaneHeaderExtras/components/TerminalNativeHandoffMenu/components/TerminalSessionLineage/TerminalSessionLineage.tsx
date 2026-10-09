@@ -8,11 +8,18 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@superset/ui/dialog";
+import { Spinner } from "@superset/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
+import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { History } from "lucide-react";
+import { ArrowRightLeft, History, TriangleAlert } from "lucide-react";
 import { useRef, useState } from "react";
+import {
+	getPresetIcon,
+	useIsDarkTheme,
+} from "renderer/assets/app-icons/preset-icons";
 import type { CreateNewAgentSession } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useAgentSessionLauncher/useAgentSessionLauncher";
+import { lineageRows } from "./utils/lineageRows";
 
 interface TerminalSessionLineageProps {
 	workspaceId: string;
@@ -27,6 +34,7 @@ export function TerminalSessionLineage({
 }: TerminalSessionLineageProps) {
 	const { t } = useLingui();
 	const { formatDateTime } = useFormat();
+	const dark = useIsDarkTheme();
 	const [open, setOpen] = useState(false);
 	const [busyNodeId, setBusyNodeId] = useState<string | null>(null);
 	const [failed, setFailed] = useState(false);
@@ -42,11 +50,7 @@ export function TerminalSessionLineage({
 		},
 	);
 	const edges = query.data?.pages.flatMap((page) => page.items) ?? [];
-	const groups = edges.filter(
-		(edge, index) =>
-			edges.findIndex((other) => other.sourceNodeId === edge.sourceNodeId) ===
-			index,
-	);
+	const conversations = lineageRows(edges);
 
 	const openSession = async (nodeId: string, continueSession = false) => {
 		setBusyNodeId(nodeId);
@@ -105,15 +109,14 @@ export function TerminalSessionLineage({
 					if (!busyNodeId) setOpen(next);
 				}}
 			>
-				<DialogContent className="sm:max-w-2xl">
+				<DialogContent className="sm:max-w-lg">
 					<DialogHeader>
 						<DialogTitle>
 							<Trans>Session lineage</Trans>
 						</DialogTitle>
 						<DialogDescription>
 							<Trans>
-								Native handoffs saved locally. Each session can have several
-								children.
+								Conversations moved between agents in this workspace.
 							</Trans>
 						</DialogDescription>
 					</DialogHeader>
@@ -135,109 +138,145 @@ export function TerminalSessionLineage({
 							</Button>
 						</div>
 					) : query.isLoading ? (
-						<p className="text-sm text-muted-foreground">
-							<Trans>Loading session lineage…</Trans>
-						</p>
+						<div className="flex h-24 items-center justify-center">
+							<Spinner className="size-4" />
+						</div>
 					) : edges.length === 0 ? (
-						<p className="text-sm text-muted-foreground">
+						<p className="py-6 text-center text-sm text-muted-foreground">
 							<Trans>No native handoffs recorded in this workspace yet.</Trans>
 						</p>
 					) : (
-						<div className="max-h-[60vh] overflow-y-auto space-y-4 pr-1">
-							{groups.map((group) => (
-								<section
-									key={group.sourceNodeId}
-									className="rounded-md border p-3"
+						<div className="-mx-1 max-h-[60vh] space-y-2 overflow-y-auto px-1">
+							{conversations.map((rows) => (
+								<ol
+									key={rows[0]?.nodeId}
+									className="rounded-lg border border-border/70 py-1"
 								>
-									<div className="flex flex-wrap items-start justify-between gap-2">
-										<div className="min-w-0 flex-1">
-											<p className="text-sm font-medium">
-												{group.source.label}
-											</p>
-											<code className="block break-all text-xs text-muted-foreground">
-												{group.source.sessionId}
-											</code>
-										</div>
-										<div className="flex gap-1">
-											<Button
-												size="sm"
-												variant="outline"
-												disabled={Boolean(busyNodeId)}
-												onClick={() => void openSession(group.sourceNodeId)}
+									{rows.map((row, index) => {
+										const icon = getPresetIcon(row.agent, dark);
+										const last = index === rows.length - 1;
+										const busy = busyNodeId === row.nodeId;
+										return (
+											<li
+												key={`${row.nodeId}:${index}`}
+												className="group relative flex h-9 items-center gap-2 pr-1.5"
+												style={{ paddingLeft: 12 + row.depth * 16 }}
 											>
-												<Trans>Open parent</Trans>
-											</Button>
-											<Button
-												size="sm"
-												variant="ghost"
-												disabled={Boolean(busyNodeId)}
-												onClick={() =>
-													void openSession(group.sourceNodeId, true)
-												}
-											>
-												<Trans>Continue with…</Trans>
-											</Button>
-										</div>
-									</div>
-									<ul className="ml-2 mt-3 space-y-3 border-l pl-4">
-										{edges
-											.filter(
-												(edge) => edge.sourceNodeId === group.sourceNodeId,
-											)
-											.map((edge) => (
-												<li key={edge.id} className="space-y-2">
-													<p className="text-xs text-muted-foreground">
-														<Trans>Native Handoff</Trans> ·{" "}
-														{formatDateTime(edge.createdAt)}
-													</p>
-													<div className="flex flex-wrap items-start justify-between gap-2">
-														<div className="min-w-0 flex-1">
-															<p className="text-sm font-medium">
-																{edge.target.label}
-															</p>
-															<code className="block break-all text-xs text-muted-foreground">
-																{edge.target.sessionId}
-															</code>
-														</div>
-														<div className="flex gap-1">
-															<Button
-																size="sm"
-																variant="outline"
-																disabled={Boolean(busyNodeId)}
-																onClick={() =>
-																	void openSession(edge.targetNodeId)
-																}
-															>
-																<Trans>Open child</Trans>
-															</Button>
-															<Button
-																size="sm"
-																variant="ghost"
-																disabled={Boolean(busyNodeId)}
-																onClick={() =>
-																	void openSession(edge.targetNodeId, true)
-																}
-															>
-																<Trans>Continue with…</Trans>
-															</Button>
-														</div>
-													</div>
-													{edge.warnings.length > 1 && (
-														<p className="text-xs text-muted-foreground">
+												{!last && (
+													<span
+														aria-hidden="true"
+														className="absolute top-6 bottom-[-12px] w-px bg-border"
+														style={{ left: 20 + row.depth * 16 }}
+													/>
+												)}
+												{icon ? (
+													<img
+														alt=""
+														className="relative size-4 shrink-0"
+														src={icon}
+													/>
+												) : (
+													<span className="relative size-4 shrink-0 rounded-full bg-muted" />
+												)}
+												<span className="shrink-0 text-sm">{row.label}</span>
+												<Tooltip>
+													<TooltipTrigger asChild>
+														<code className="min-w-0 truncate text-[11px] text-muted-foreground">
+															{row.sessionId.slice(0, 8)}
+														</code>
+													</TooltipTrigger>
+													<TooltipContent side="top">
+														<code>{row.sessionId}</code>
+													</TooltipContent>
+												</Tooltip>
+												{row.warning && (
+													<Tooltip>
+														<TooltipTrigger asChild>
+															<TriangleAlert
+																aria-label={t({
+																	message:
+																		"Some agent-specific metadata could not be transferred.",
+																})}
+																className="size-3 shrink-0 text-amber-500/80"
+															/>
+														</TooltipTrigger>
+														<TooltipContent side="top">
 															<Trans>
 																Some agent-specific metadata could not be
 																transferred.
 															</Trans>
-														</p>
+														</TooltipContent>
+													</Tooltip>
+												)}
+												{row.latest && (
+													<span className="shrink-0 rounded-full bg-foreground/[0.07] px-1.5 py-px text-[10px] text-muted-foreground">
+														<Trans>Latest</Trans>
+													</span>
+												)}
+												<span className="flex-1" />
+												{row.handedOverAt !== null && (
+													<span
+														className={cn(
+															"shrink-0 text-[11px] text-muted-foreground/80 tabular-nums",
+															!busy && "group-hover:hidden",
+															busy && "hidden",
+														)}
+													>
+														{formatDateTime(row.handedOverAt)}
+													</span>
+												)}
+												<span
+													className={cn(
+														"shrink-0 items-center gap-0.5",
+														busy ? "flex" : "hidden group-hover:flex",
 													)}
-												</li>
-											))}
-									</ul>
-								</section>
+												>
+													{busy ? (
+														<Spinner className="mx-2 size-3.5" />
+													) : (
+														<>
+															<Button
+																className="h-7 px-2 text-xs"
+																disabled={Boolean(busyNodeId)}
+																onClick={() => void openSession(row.nodeId)}
+																size="sm"
+																variant="ghost"
+															>
+																<Trans>Open</Trans>
+															</Button>
+															<Tooltip>
+																<TooltipTrigger asChild>
+																	<Button
+																		aria-label={t({
+																			message: "Continue with…",
+																		})}
+																		className="size-7 p-0"
+																		disabled={Boolean(busyNodeId)}
+																		onClick={() =>
+																			void openSession(row.nodeId, true)
+																		}
+																		size="sm"
+																		variant="ghost"
+																	>
+																		<ArrowRightLeft className="size-3.5" />
+																	</Button>
+																</TooltipTrigger>
+																<TooltipContent side="top">
+																	<Trans>Continue with…</Trans>
+																</TooltipContent>
+															</Tooltip>
+														</>
+													)}
+												</span>
+											</li>
+										);
+									})}
+								</ol>
 							))}
 							{query.hasNextPage && (
 								<Button
-									variant="outline"
+									className="w-full"
+									variant="ghost"
 									disabled={query.isFetchingNextPage}
 									onClick={() => void query.fetchNextPage()}
 								>
@@ -245,11 +284,6 @@ export function TerminalSessionLineage({
 								</Button>
 							)}
 						</div>
-					)}
-					{busyNodeId && (
-						<output className="text-sm text-muted-foreground">
-							<Trans>Opening native session…</Trans>
-						</output>
 					)}
 				</DialogContent>
 			</Dialog>

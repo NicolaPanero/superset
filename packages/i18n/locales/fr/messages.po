@@ -4473,6 +4473,9 @@ msgstr "Conversation"
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "Conversations déplacées entre agents dans cet espace de travail."
+
 msgid "Conversion"
 msgstr "Conversion"
 
@@ -9366,9 +9369,6 @@ msgstr "Chargement des dépôts..."
 msgid "Loading review..."
 msgstr "Chargement de la revue..."
 
-msgid "Loading session lineage…"
-msgstr "Chargement de l’historique des sessions…"
-
 msgid "Loading terminal scripts..."
 msgstr "Chargement des scripts de terminal..."
 
@@ -10042,9 +10042,6 @@ msgstr "Préfixe les nouvelles branches de ce projet. Par défaut, reprend le pa
 msgid "Naming instructions"
 msgstr "Instructions de nommage"
 
-msgid "Native Handoff"
-msgstr "Transfert natif"
-
 msgid "Native handoff complete"
 msgstr "Transfert natif terminé"
 
@@ -10053,9 +10050,6 @@ msgstr "Le transfert natif a échoué. Réessayez."
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "Le transfert natif est indisponible pour cette paire d’agents ou cet hôte."
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "Transferts natifs enregistrés localement. Chaque session peut avoir plusieurs sessions enfants."
 
 msgid "Native PR reviews"
 msgstr "Revues de pull requests natives"
@@ -11352,9 +11346,6 @@ msgstr "Ouvrir les modifications"
 msgid "Open Chat v3"
 msgstr "Ouvrir le chat v3"
 
-msgid "Open child"
-msgstr "Ouvrir l’enfant"
-
 msgid "Open Command Palette"
 msgstr "Ouvrir la palette de commandes"
 
@@ -11559,9 +11550,6 @@ msgstr "Ouvrir sur GitHub"
 msgid "Open Page in Default Browser"
 msgstr "Ouvrir la page dans le navigateur par défaut"
 
-msgid "Open parent"
-msgstr "Ouvrir le parent"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "Ouvrir la PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "Ouverture des fichiers"
 
 msgid "Opening folders"
 msgstr "Ouverture des dossiers"
-
-msgid "Opening native session…"
-msgstr "Ouverture de la session native…"
 
 msgid "Opening pages"
 msgstr "Ouverture des pages"

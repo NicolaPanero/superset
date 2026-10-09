@@ -4473,6 +4473,9 @@ msgstr "对话"
 msgid "Conversation · Message"
 msgstr "对话 · 消息"
 
+msgid "Conversations moved between agents in this workspace."
+msgstr "在此工作区中于代理之间移交的对话。"
+
 msgid "Conversion"
 msgstr "转化"
 
@@ -9366,9 +9369,6 @@ msgstr "正在加载仓库..."
 msgid "Loading review..."
 msgstr "正在加载评审..."
 
-msgid "Loading session lineage…"
-msgstr "正在加载会话历史…"
-
 msgid "Loading terminal scripts..."
 msgstr "正在加载终端脚本..."
 
@@ -10042,9 +10042,6 @@ msgstr "为此项目的新分支设置命名空间。默认使用主机全局的
 msgid "Naming instructions"
 msgstr "命名说明"
 
-msgid "Native Handoff"
-msgstr "原生会话交接"
-
 msgid "Native handoff complete"
 msgstr "原生交接已完成"
 
@@ -10053,9 +10050,6 @@ msgstr "原生会话交接失败。你可以重试。"
 
 msgid "Native handoff is unavailable for this agent pair or host."
 msgstr "此代理组合或主机不支持原生会话交接。"
-
-msgid "Native handoffs saved locally. Each session can have several children."
-msgstr "原生交接保存在本地。每个会话可以有多个子会话。"
 
 msgid "Native PR reviews"
 msgstr "原生PR审查"
@@ -11352,9 +11346,6 @@ msgstr "打开更改"
 msgid "Open Chat v3"
 msgstr "打开Chat v3"
 
-msgid "Open child"
-msgstr "打开子会话"
-
 msgid "Open Command Palette"
 msgstr "打开命令面板"
 
@@ -11559,9 +11550,6 @@ msgstr "在GitHub上打开"
 msgid "Open Page in Default Browser"
 msgstr "在默认浏览器中打开页面"
 
-msgid "Open parent"
-msgstr "打开父会话"
-
 #. placeholder {0}: pr.number
 msgid "Open PR #{0}"
 msgstr "打开PR #{0}"
@@ -11717,9 +11705,6 @@ msgstr "打开文件"
 
 msgid "Opening folders"
 msgstr "打开文件夹"
-
-msgid "Opening native session…"
-msgstr "正在打开原生会话…"
 
 msgid "Opening pages"
 msgstr "打开页面"
