@@ -1,4 +1,4 @@
-import { cp, readdir, stat } from "node:fs/promises";
+import { cp, readdir, realpath, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { claudeProjectDirName } from "../terminal-agents/harness-sessions/claude";
 
@@ -20,23 +20,36 @@ export async function moveClaudeSession({
 	configDirs: string[];
 	targetDir: string;
 }): Promise<MoveClaudeSessionResult> {
-	let newest: { dir: string; project: string; mtimeMs: number } | null = null;
-	for (const dir of new Set([...configDirs, targetDir])) {
-		const projects = join(dir, "projects");
+	// Logins can share one `projects` folder through a symlink.
+	const projectsOf = (dir: string) =>
+		realpath(join(dir, "projects")).catch(() => join(dir, "projects"));
+	const targetProjects = await projectsOf(targetDir);
+	let newest: {
+		dir: string;
+		projects: string;
+		project: string;
+		mtimeMs: number;
+	} | null = null;
+	const seen = new Set<string>();
+	for (const dir of [...configDirs, targetDir]) {
+		const projects = await projectsOf(dir);
+		if (seen.has(projects)) continue;
+		seen.add(projects);
 		const entries = await readdir(projects).catch(() => [] as string[]);
 		for (const project of entries) {
 			const file = await stat(join(projects, project, `${sessionId}.jsonl`))
 				.then((info) => (info.isFile() ? info : null))
 				.catch(() => null);
 			if (file && (!newest || file.mtimeMs > newest.mtimeMs))
-				newest = { dir, project, mtimeMs: file.mtimeMs };
+				newest = { dir, projects, project, mtimeMs: file.mtimeMs };
 		}
 	}
 	if (!newest) return { moved: false, reason: "session_not_found" };
-	if (newest.dir === targetDir) return { moved: false, reason: "same_account" };
+	if (newest.projects === targetProjects)
+		return { moved: false, reason: "same_account" };
 
-	const from = join(newest.dir, "projects", newest.project);
-	const to = join(targetDir, "projects", newest.project);
+	const from = join(newest.projects, newest.project);
+	const to = join(targetProjects, newest.project);
 	await cp(join(from, `${sessionId}.jsonl`), join(to, `${sessionId}.jsonl`));
 	// Subagent transcripts and large tool results live beside the session.
 	const sidecar = join(from, sessionId);
