@@ -4443,9 +4443,6 @@ msgstr "Continua con GitHub"
 msgid "Continue with Google"
 msgstr "Continua con Google"
 
-msgid "Continue with…"
-msgstr "Continua con…"
-
 msgid "Continued from {source}"
 msgstr "Continuata da {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Conversazione"
 
 msgid "Conversation · Message"
 msgstr "Conversazione · Messaggio"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Conversazioni passate tra agenti in quest'area di lavoro."
 
 msgid "Conversion"
 msgstr "Conversione"
@@ -4980,9 +4974,6 @@ msgstr "Impossibile caricare i commenti di revisione"
 msgid "Couldn't load runs"
 msgstr "Impossibile caricare le esecuzioni"
 
-msgid "Couldn't load session lineage."
-msgstr "Impossibile caricare lo storico delle sessioni."
-
 msgid "Couldn't load this run's payload."
 msgstr "Impossibile caricare il payload di questa esecuzione."
 
@@ -5029,9 +5020,6 @@ msgstr "Impossibile rimuovere l'accesso locale"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Non è stato possibile riaprire l'agente in un terminale"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Impossibile riaprire questa sessione. Verifica che la configurazione dell’agente e la sessione nativa esistano ancora."
 
 msgid "Couldn't restart terminals"
 msgstr "Impossibile riavviare i terminali"
@@ -10632,9 +10620,6 @@ msgstr "Nessun simulatore mobile disponibile qui. Serve un sandbox cloud compati
 msgid "No name on file"
 msgstr "Nessun nome registrato"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Nessun passaggio nativo registrato in questo workspace."
-
 msgid "No open issues found."
 msgstr "Nessuna issue aperta trovata."
 
@@ -14604,9 +14589,6 @@ msgstr "Dettagli della sessione"
 
 msgid "Session ended"
 msgstr "Sessione terminata"
-
-msgid "Session lineage"
-msgstr "Storico delle sessioni"
 
 msgid "Session name"
 msgstr "Nome della sessione"

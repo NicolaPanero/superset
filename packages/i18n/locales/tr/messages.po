@@ -4443,9 +4443,6 @@ msgstr "GitHub ile devam et"
 msgid "Continue with Google"
 msgstr "Google ile devam et"
 
-msgid "Continue with…"
-msgstr "Şununla devam et…"
-
 msgid "Continued from {source}"
 msgstr "{source} üzerinden devam ediyor"
 
@@ -4472,9 +4469,6 @@ msgstr "Konuşma"
 
 msgid "Conversation · Message"
 msgstr "Konuşma · Mesaj"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Bu çalışma alanında ajanlar arasında taşınan konuşmalar."
 
 msgid "Conversion"
 msgstr "Dönüşüm"
@@ -4980,9 +4974,6 @@ msgstr "İnceleme yorumları yüklenemedi"
 msgid "Couldn't load runs"
 msgstr "Çalıştırmalar yüklenemedi"
 
-msgid "Couldn't load session lineage."
-msgstr "Oturum geçmişi yüklenemedi."
-
 msgid "Couldn't load this run's payload."
 msgstr "Bu çalıştırmanın yükü yüklenemedi."
 
@@ -5029,9 +5020,6 @@ msgstr "Yerel oturum kaydı kaldırılamadı"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Aracı bir terminalde yeniden açamadık"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Bu oturum yeniden açılamadı. Ajan yapılandırmasının ve yerel oturumun hâlâ mevcut olduğunu kontrol edin."
 
 msgid "Couldn't restart terminals"
 msgstr "Terminaller yeniden başlatılamadı"
@@ -10632,9 +10620,6 @@ msgstr "Burada kullanılabilir bir mobil simülatör yok. Limrun destekli bir bu
 msgid "No name on file"
 msgstr "Kayıtlı ad yok"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Bu çalışma alanında henüz yerel aktarım kaydedilmedi."
-
 msgid "No open issues found."
 msgstr "Açık issue bulunamadı."
 
@@ -14604,9 +14589,6 @@ msgstr "Oturum ayrıntıları"
 
 msgid "Session ended"
 msgstr "Oturum sona erdi"
-
-msgid "Session lineage"
-msgstr "Oturum geçmişi"
 
 msgid "Session name"
 msgstr "Oturum adı"

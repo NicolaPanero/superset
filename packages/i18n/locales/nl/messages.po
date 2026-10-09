@@ -4443,9 +4443,6 @@ msgstr "Doorgaan met GitHub"
 msgid "Continue with Google"
 msgstr "Doorgaan met Google"
 
-msgid "Continue with…"
-msgstr "Doorgaan met…"
-
 msgid "Continued from {source}"
 msgstr "Voortgezet vanuit {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Gesprek"
 
 msgid "Conversation · Message"
 msgstr "Gesprek · Bericht"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Gesprekken die in deze workspace tussen agents zijn verplaatst."
 
 msgid "Conversion"
 msgstr "Conversie"
@@ -4980,9 +4974,6 @@ msgstr "Kan reviewopmerkingen niet laden"
 msgid "Couldn't load runs"
 msgstr "Kan runs niet laden"
 
-msgid "Couldn't load session lineage."
-msgstr "De sessiegeschiedenis kon niet worden geladen."
-
 msgid "Couldn't load this run's payload."
 msgstr "Kan de payload van deze run niet laden."
 
@@ -5029,9 +5020,6 @@ msgstr "Kan de lokale login niet verwijderen"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Kon de agent niet opnieuw in een terminal openen"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Deze sessie kon niet opnieuw worden geopend. Controleer of de agentconfiguratie en de native sessie nog bestaan."
 
 msgid "Couldn't restart terminals"
 msgstr "Kan terminals niet herstarten"
@@ -10632,9 +10620,6 @@ msgstr "Hier is geen mobiele simulator beschikbaar. Hiervoor is een Limrun-compa
 msgid "No name on file"
 msgstr "Geen naam bekend"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Er zijn nog geen native overdrachten vastgelegd in deze workspace."
-
 msgid "No open issues found."
 msgstr "Geen open issues gevonden."
 
@@ -14604,9 +14589,6 @@ msgstr "Sessiedetails"
 
 msgid "Session ended"
 msgstr "Sessie beëindigd"
-
-msgid "Session lineage"
-msgstr "Sessiegeschiedenis"
 
 msgid "Session name"
 msgstr "Sessienaam"

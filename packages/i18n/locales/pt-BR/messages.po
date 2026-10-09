@@ -4443,9 +4443,6 @@ msgstr "Continuar com o GitHub"
 msgid "Continue with Google"
 msgstr "Continuar com o Google"
 
-msgid "Continue with…"
-msgstr "Continuar com…"
-
 msgid "Continued from {source}"
 msgstr "Continuado de {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Conversa"
 
 msgid "Conversation · Message"
 msgstr "Conversa · Mensagem"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Conversas movidas entre agentes neste workspace."
 
 msgid "Conversion"
 msgstr "Conversão"
@@ -4980,9 +4974,6 @@ msgstr "Não foi possível carregar os comentários de revisão"
 msgid "Couldn't load runs"
 msgstr "Não foi possível carregar as execuções"
 
-msgid "Couldn't load session lineage."
-msgstr "Não foi possível carregar o histórico de sessões."
-
 msgid "Couldn't load this run's payload."
 msgstr "Não foi possível carregar a carga útil desta execução."
 
@@ -5029,9 +5020,6 @@ msgstr "Não foi possível remover o login local"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Não foi possível reabrir o agente em um terminal"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Não foi possível reabrir esta sessão. Verifique se a configuração do agente e a sessão nativa ainda existem."
 
 msgid "Couldn't restart terminals"
 msgstr "Não foi possível reiniciar os terminais"
@@ -10632,9 +10620,6 @@ msgstr "Nenhum simulador móvel disponível aqui. É necessário um sandbox na n
 msgid "No name on file"
 msgstr "Nenhum nome cadastrado"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Ainda não há transferências nativas registradas neste workspace."
-
 msgid "No open issues found."
 msgstr "Nenhuma issue aberta encontrada."
 
@@ -14604,9 +14589,6 @@ msgstr "Detalhes da sessão"
 
 msgid "Session ended"
 msgstr "Sessão encerrada"
-
-msgid "Session lineage"
-msgstr "Histórico de sessões"
 
 msgid "Session name"
 msgstr "Nome da sessão"

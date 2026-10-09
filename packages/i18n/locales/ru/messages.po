@@ -4443,9 +4443,6 @@ msgstr "Продолжить с GitHub"
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
 
-msgid "Continue with…"
-msgstr "Продолжить с…"
-
 msgid "Continued from {source}"
 msgstr "Продолжение из {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Диалог"
 
 msgid "Conversation · Message"
 msgstr "Диалог · сообщение"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Разговоры, перенесённые между агентами в этом рабочем пространстве."
 
 msgid "Conversion"
 msgstr "Конверсия"
@@ -4980,9 +4974,6 @@ msgstr "Не удалось загрузить комментарии ревью
 msgid "Couldn't load runs"
 msgstr "Не удалось загрузить запуски"
 
-msgid "Couldn't load session lineage."
-msgstr "Не удалось загрузить историю сеансов."
-
 msgid "Couldn't load this run's payload."
 msgstr "Не удалось загрузить полезную нагрузку этого запуска."
 
@@ -5029,9 +5020,6 @@ msgstr "Не удалось удалить локальный вход"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Не удалось снова открыть агента в терминале"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Не удалось снова открыть этот сеанс. Проверьте, что конфигурация агента и нативный сеанс всё ещё существуют."
 
 msgid "Couldn't restart terminals"
 msgstr "Не удалось перезапустить терминалы"
@@ -10632,9 +10620,6 @@ msgstr "Здесь нет доступного мобильного симуля
 msgid "No name on file"
 msgstr "Имя не указано"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "В этом workspace пока нет записанных нативных передач."
-
 msgid "No open issues found."
 msgstr "Открытых задач не найдено."
 
@@ -14604,9 +14589,6 @@ msgstr "Детали сессии"
 
 msgid "Session ended"
 msgstr "Сеанс завершён"
-
-msgid "Session lineage"
-msgstr "История сеансов"
 
 msgid "Session name"
 msgstr "Имя сессии"

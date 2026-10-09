@@ -4443,9 +4443,6 @@ msgstr "Continuer avec GitHub"
 msgid "Continue with Google"
 msgstr "Continuer avec Google"
 
-msgid "Continue with…"
-msgstr "Continuer avec…"
-
 msgid "Continued from {source}"
 msgstr "Suite de {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Conversation"
 
 msgid "Conversation · Message"
 msgstr "Conversation · Message"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Conversations déplacées entre agents dans cet espace de travail."
 
 msgid "Conversion"
 msgstr "Conversion"
@@ -4980,9 +4974,6 @@ msgstr "Impossible de charger les commentaires de revue"
 msgid "Couldn't load runs"
 msgstr "Impossible de charger les exécutions"
 
-msgid "Couldn't load session lineage."
-msgstr "Impossible de charger l’historique des sessions."
-
 msgid "Couldn't load this run's payload."
 msgstr "Impossible de charger la charge utile de cette exécution."
 
@@ -5029,9 +5020,6 @@ msgstr "Impossible de supprimer la connexion locale"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Impossible de réouvrir l'agent dans un terminal"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Impossible de rouvrir cette session. Vérifiez que la configuration de l’agent et la session native existent toujours."
 
 msgid "Couldn't restart terminals"
 msgstr "Impossible de redémarrer les terminaux"
@@ -10632,9 +10620,6 @@ msgstr "Aucun simulateur mobile disponible ici. Il faut un bac à sable cloud co
 msgid "No name on file"
 msgstr "Aucun nom enregistré"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "Aucun transfert natif enregistré dans ce workspace pour le moment."
-
 msgid "No open issues found."
 msgstr "Aucune issue ouverte trouvée."
 
@@ -14604,9 +14589,6 @@ msgstr "Détails de la session"
 
 msgid "Session ended"
 msgstr "Session terminée"
-
-msgid "Session lineage"
-msgstr "Historique des sessions"
 
 msgid "Session name"
 msgstr "Nom de la session"

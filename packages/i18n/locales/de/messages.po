@@ -4443,9 +4443,6 @@ msgstr "Mit GitHub fortfahren"
 msgid "Continue with Google"
 msgstr "Mit Google fortfahren"
 
-msgid "Continue with…"
-msgstr "Fortsetzen mit…"
-
 msgid "Continued from {source}"
 msgstr "Fortgesetzt von {source}"
 
@@ -4472,9 +4469,6 @@ msgstr "Unterhaltung"
 
 msgid "Conversation · Message"
 msgstr "Unterhaltung · Nachricht"
-
-msgid "Conversations moved between agents in this workspace."
-msgstr "Unterhaltungen, die in diesem Workspace zwischen Agenten verschoben wurden."
 
 msgid "Conversion"
 msgstr "Konversion"
@@ -4980,9 +4974,6 @@ msgstr "Review-Kommentare konnten nicht geladen werden"
 msgid "Couldn't load runs"
 msgstr "Ausführungen konnten nicht geladen werden"
 
-msgid "Couldn't load session lineage."
-msgstr "Der Sitzungsverlauf konnte nicht geladen werden."
-
 msgid "Couldn't load this run's payload."
 msgstr "Die Nutzlast dieser Ausführung konnte nicht geladen werden."
 
@@ -5029,9 +5020,6 @@ msgstr "Die lokale Anmeldung konnte nicht entfernt werden"
 
 msgid "Couldn't reopen the agent in a terminal"
 msgstr "Der Agent konnte nicht erneut im Terminal geöffnet werden"
-
-msgid "Couldn't reopen this session. Check that its agent configuration and native session still exist."
-msgstr "Diese Sitzung konnte nicht erneut geöffnet werden. Prüfe, ob ihre Agentenkonfiguration und native Sitzung noch vorhanden sind."
 
 msgid "Couldn't restart terminals"
 msgstr "Terminals konnten nicht neu gestartet werden"
@@ -10632,9 +10620,6 @@ msgstr "Hier ist kein mobiler Simulator verfügbar. Dafür ist entweder eine Lim
 msgid "No name on file"
 msgstr "Kein Name hinterlegt"
 
-msgid "No native handoffs recorded in this workspace yet."
-msgstr "In diesem Workspace wurden noch keine nativen Übergaben aufgezeichnet."
-
 msgid "No open issues found."
 msgstr "Keine offenen Issues gefunden."
 
@@ -14604,9 +14589,6 @@ msgstr "Sitzungsdetails"
 
 msgid "Session ended"
 msgstr "Sitzung beendet"
-
-msgid "Session lineage"
-msgstr "Sitzungsverlauf"
 
 msgid "Session name"
 msgstr "Sitzungsname"
