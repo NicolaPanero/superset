@@ -95,11 +95,13 @@ jobs:
         run: |
           bun run lint
           bun run check:i18n
+          bun run --cwd packages/shared typecheck
           bun run --cwd packages/host-service typecheck
           bun run --cwd apps/desktop typecheck
           bun test packages/host-service/src/session-transfer packages/host-service/src/chat-v3/forkMoveClaudeSession.test.ts packages/host-service/src/chat-v3/forkLaunchChoices.test.ts packages/host-service/src/chat-v3/backgroundChats.test.ts packages/host-service/src/chat-v3/cursorSessionBridge/cursorSessionBridge.test.ts packages/host-service/src/trpc/router/agents/account-selection.test.ts packages/chat-runtime/src/harness/acp/cursorExtensions.test.ts
           bun test 'apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ForkChatExtras/utils'
           bun test packages/shared/src/fork-account-usage.test.ts packages/host-service/src/trpc/router/usage/fork-quota-fetch.test.ts packages/host-service/src/trpc/router/usage/fork-quota-cache.test.ts packages/host-service/src/trpc/router/usage/fork-account-probe.test.ts packages/host-service/src/trpc/router/workspace-cleanup/fork-branch-ownership.test.ts
+          bun test --preload ./packages/host-service/test/setup-env.ts packages/shared/src/fork-agent-order.test.ts packages/host-service/src/trpc/router/settings/agent-configs.test.ts
           bun test --preload ./packages/host-service/test/setup-env.ts packages/host-service/test/integration/fork-account-branch.integration.test.ts
           bun test --preload ./packages/host-service/test/setup-env.ts packages/host-service/src/trpc/router/agents/agents.test.ts packages/host-service/src/trpc/router/workspace-creation/utils/workspace-naming-job.test.ts
 
