@@ -1863,9 +1863,6 @@ msgstr "对比main"
 msgid "Agent"
 msgstr "智能体"
 
-msgid "Agent accounts"
-msgstr "智能体账户"
-
 msgid "Agent commands"
 msgstr "智能体命令"
 
@@ -2775,9 +2772,6 @@ msgstr "平均排名 {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "等待{0}"
-
-msgid "Awaiting permission"
-msgstr "等待授权"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "等待回复 — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "无法移出队列"
 
 msgid "Could not list directory"
 msgstr "无法列出目录"
-
-msgid "Could not load agent configurations."
-msgstr "无法加载智能体配置。"
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "启动"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "在新功能、缺陷修复和重构上同时启动智能体，全部并行。状态一眼可见：哪些在干活、哪些被阻塞、哪些在等你。"
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "显示已知的启动选项。活动模型可能在 CLI 中改变。"
-
 msgid "Launch mode"
 msgstr "启动方式"
-
-msgid "Launch model"
-msgstr "启动模型"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "创建新工作区时启动此终端脚本。"
@@ -9758,9 +9743,6 @@ msgstr "管理组织的品牌形象和成员。"
 
 msgid "Managed"
 msgstr "托管"
-
-msgid "Managed by the CLI"
-msgstr "由 CLI 管理"
 
 msgid "Managed by your organization admin."
 msgstr "由你所在组织的管理员管理。"
@@ -10557,9 +10539,6 @@ msgstr "未选择活动组织"
 msgid "No active services"
 msgstr "没有活动的服务"
 
-msgid "No active sessions"
-msgstr "没有活动会话"
-
 msgid "No active terminal sessions"
 msgstr "没有活动的终端会话"
 
@@ -11213,9 +11192,6 @@ msgstr "不在此版本中"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "尚未接收到事件：Microsoft Graph拒绝了通知订阅。请检查应用的管理员同意和受保护API的审批，然后重新连接。"
 
-msgid "Not recorded"
-msgstr "未记录"
-
 msgid "Not reviewed by you"
 msgstr "你还没有审查"
 
@@ -11820,9 +11796,6 @@ msgstr "打开最近使用"
 
 msgid "Open roles"
 msgstr "空缺职位"
-
-msgid "Open session"
-msgstr "打开会话"
 
 msgid "Open session in"
 msgstr "会话打开位置"
@@ -14799,9 +14772,6 @@ msgstr "选择终端脚本目录"
 
 msgid "Select worktree location"
 msgstr "选择worktree位置"
-
-msgid "Selected account"
-msgstr "所选账户"
 
 msgid "Selected agent is not available on this host"
 msgstr "所选智能体在此主机上不可用"

@@ -1863,9 +1863,6 @@ msgstr "Terhadap Main"
 msgid "Agent"
 msgstr "Agen"
 
-msgid "Agent accounts"
-msgstr "Akun agen"
-
 msgid "Agent commands"
 msgstr "Perintah agen"
 
@@ -2775,9 +2772,6 @@ msgstr "posisi rata-rata {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "Menunggu {0}"
-
-msgid "Awaiting permission"
-msgstr "Menunggu izin"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Menunggu Balasan — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Tidak bisa keluar dari antrean"
 
 msgid "Could not list directory"
 msgstr "Tidak bisa menampilkan isi direktori"
-
-msgid "Could not load agent configurations."
-msgstr "Tidak dapat memuat konfigurasi agen."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Peluncuran"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Jalankan agen untuk fitur, perbaikan bug, dan refactor, semuanya paralel. Status sekilas menunjukkan agen mana yang bekerja, mana yang terhambat, dan mana yang menunggu Anda."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Pilihan saat mulai ditampilkan jika diketahui. Model aktif dapat berubah di dalam CLI."
-
 msgid "Launch mode"
 msgstr "Mode peluncuran"
-
-msgid "Launch model"
-msgstr "Model saat mulai"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Jalankan skrip terminal ini saat workspace baru dibuat."
@@ -9758,9 +9743,6 @@ msgstr "Kelola identitas dan anggota organisasi Anda."
 
 msgid "Managed"
 msgstr "Terkelola"
-
-msgid "Managed by the CLI"
-msgstr "Dikelola oleh CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Dikelola oleh admin organisasi Anda."
@@ -10557,9 +10539,6 @@ msgstr "Tidak ada organisasi aktif yang dipilih"
 msgid "No active services"
 msgstr "Tidak ada layanan aktif"
 
-msgid "No active sessions"
-msgstr "Tidak ada sesi aktif"
-
 msgid "No active terminal sessions"
 msgstr "Tidak ada sesi terminal aktif"
 
@@ -11213,9 +11192,6 @@ msgstr "Tidak ada di versi ini"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Belum menerima event: Microsoft Graph menolak langganan notifikasi. Periksa persetujuan admin aplikasi dan persetujuan protected API, lalu hubungkan ulang."
 
-msgid "Not recorded"
-msgstr "Tidak tercatat"
-
 msgid "Not reviewed by you"
 msgstr "Belum Anda review"
 
@@ -11820,9 +11796,6 @@ msgstr "Buka yang terbaru"
 
 msgid "Open roles"
 msgstr "Lowongan terbuka"
-
-msgid "Open session"
-msgstr "Buka sesi"
 
 msgid "Open session in"
 msgstr "Buka sesi di"
@@ -14799,9 +14772,6 @@ msgstr "Pilih direktori skrip terminal"
 
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"
-
-msgid "Selected account"
-msgstr "Akun yang dipilih"
 
 msgid "Selected agent is not available on this host"
 msgstr "Agen yang dipilih tidak tersedia di host ini"

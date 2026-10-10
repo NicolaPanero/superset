@@ -34,8 +34,8 @@ import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHos
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import type { StoreApi } from "zustand/vanilla";
-import { useAgentSessionLauncher } from "../../../../hooks/useAgentSessionLauncher";
-import type { PaneViewerData } from "../../../../types";
+import { useAgentSessionLauncher } from "../../hooks/useAgentSessionLauncher";
+import type { PaneViewerData } from "../../types";
 
 const ALL = "all";
 

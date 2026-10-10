@@ -113,12 +113,7 @@ export function AcpChatHandoffMenu({
 		? (configs.find((config) => config.id === data.acpAgentConfigId) ??
 			configs.find((config) => config.presetId === sourcePreset))
 		: undefined;
-	const targets = configs.filter(
-		(config) =>
-			config === sameAgentConfig ||
-			(config.presetId !== sourcePreset &&
-				acpHarnessForPreset(config.presetId)),
-	);
+	const targets = configs;
 	const target = targets.find((config) => config.id === targetConfigId);
 	const sameAgent = target !== undefined && target === sameAgentConfig;
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
@@ -447,7 +442,8 @@ export function AcpChatHandoffMenu({
 								agents={targets.map((config) => ({
 									id: config.id,
 									label: config.label,
-									iconId: config.presetId,
+									iconId: config.iconId ?? config.presetId,
+									disabled: !acpHarnessForPreset(config.presetId),
 									presetId: config.presetId,
 								}))}
 								value={targetConfigId}
@@ -498,28 +494,30 @@ export function AcpChatHandoffMenu({
 													!sameAgent ||
 													option.selection !== accountSwitcher?.current,
 											)
-											.map((option) => (
-												<SelectItem
-													key={option.selection ?? SYSTEM_ACCOUNT}
-													value={option.selection ?? SYSTEM_ACCOUNT}
-												>
-													{option.selection === null && !option.alias ? (
-														<Trans>System default</Trans>
-													) : (
-														(option.alias ?? option.label)
-													)}
-													<span className="ml-2">
-														<ForkUsageSummary
-															compact
-															account={quota.data?.find(
-																(row) =>
-																	row.agent === target?.presetId &&
-																	row.selection === option.selection,
-															)}
-														/>
-													</span>
-												</SelectItem>
-											))}
+											.map((option) => {
+												const usage = quota.data?.find(
+													(row) =>
+														row.agent === target?.presetId &&
+														row.selection === option.selection,
+												);
+												const label =
+													option.alias ?? usage?.email ?? option.label;
+												return (
+													<SelectItem
+														key={option.selection ?? SYSTEM_ACCOUNT}
+														value={option.selection ?? SYSTEM_ACCOUNT}
+													>
+														{label === "System default" ? (
+															<Trans>System default</Trans>
+														) : (
+															label
+														)}
+														<span className="ml-2">
+															<ForkUsageSummary compact account={usage} />
+														</span>
+													</SelectItem>
+												);
+											})}
 									</SelectContent>
 								</Select>
 								<ForkUsageSummary

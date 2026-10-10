@@ -20,6 +20,7 @@ const CONFIGURE_AGENTS_VALUE = "__configure_agents__";
 export interface AgentSelectAgent {
 	id: string;
 	label: string;
+	disabled?: boolean;
 	iconId?: string;
 	/** Host preset slug ("claude", "custom", …) — stable across hosts and DB re-seeds, unlike `id`. */
 	presetId?: string;
@@ -94,7 +95,11 @@ export function AgentSelect<T extends string>({
 				{agents.map((agent) => {
 					const icon = getPresetIcon(agent.iconId ?? agent.id, isDark);
 					return (
-						<SelectItem key={agent.id} value={agent.id}>
+						<SelectItem
+							key={agent.id}
+							value={agent.id}
+							disabled={agent.disabled}
+						>
 							<span className="flex items-center gap-2">
 								{icon && <img src={icon} alt="" className={iconClassName} />}
 								{agent.label}

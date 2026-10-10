@@ -1863,9 +1863,6 @@ msgstr "Ten opzichte van main"
 msgid "Agent"
 msgstr "Agent"
 
-msgid "Agent accounts"
-msgstr "Agentaccounts"
-
 msgid "Agent commands"
 msgstr "Agentcommando's"
 
@@ -2775,9 +2772,6 @@ msgstr "gem. positie {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "Wacht op {0}"
-
-msgid "Awaiting permission"
-msgstr "Wacht op toestemming"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Wacht op antwoord — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Kan de wachtrij niet verlaten"
 
 msgid "Could not list directory"
 msgstr "Kan map niet uitlezen"
-
-msgid "Could not load agent configurations."
-msgstr "Agentconfiguraties konden niet worden geladen."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Starten"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Start agents op features, bugfixes en refactors, allemaal parallel. In één oogopslag zie je welke agents werken, welke vastzitten en welke op jou wachten."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Bekende startkeuzes worden getoond. Het actieve model kan in de CLI veranderen."
-
 msgid "Launch mode"
 msgstr "Startmodus"
-
-msgid "Launch model"
-msgstr "Model bij start"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Start dit terminalscript wanneer er een nieuwe werkruimte wordt aangemaakt."
@@ -9758,9 +9743,6 @@ msgstr "Beheer de branding en leden van je organisatie."
 
 msgid "Managed"
 msgstr "Beheerd"
-
-msgid "Managed by the CLI"
-msgstr "Beheerd door de CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Beheerd door de beheerder van je organisatie."
@@ -10557,9 +10539,6 @@ msgstr "Geen actieve organisatie geselecteerd"
 msgid "No active services"
 msgstr "Geen actieve services"
 
-msgid "No active sessions"
-msgstr "Geen actieve sessies"
-
 msgid "No active terminal sessions"
 msgstr "Geen actieve terminalsessies"
 
@@ -11213,9 +11192,6 @@ msgstr "Niet in deze versie"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Er komen nog geen gebeurtenissen binnen: Microsoft Graph heeft de meldingsabonnementen geweigerd. Controleer de beheerderstoestemming en de goedkeuring van de beveiligde API van de app, en verbind opnieuw."
 
-msgid "Not recorded"
-msgstr "Niet vastgelegd"
-
 msgid "Not reviewed by you"
 msgstr "Niet door jou gereviewd"
 
@@ -11820,9 +11796,6 @@ msgstr "Recent openen"
 
 msgid "Open roles"
 msgstr "Openstaande vacatures"
-
-msgid "Open session"
-msgstr "Sessie openen"
 
 msgid "Open session in"
 msgstr "Sessie openen in"
@@ -14799,9 +14772,6 @@ msgstr "Map voor terminalscript kiezen"
 
 msgid "Select worktree location"
 msgstr "Locatie voor worktree kiezen"
-
-msgid "Selected account"
-msgstr "Geselecteerd account"
 
 msgid "Selected agent is not available on this host"
 msgstr "De gekozen agent is niet beschikbaar op deze host"

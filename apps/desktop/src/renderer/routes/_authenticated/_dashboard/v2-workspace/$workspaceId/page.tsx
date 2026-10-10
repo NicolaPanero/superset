@@ -28,13 +28,13 @@ import { useWorkspace } from "../providers/WorkspaceProvider";
 import { AddTabMenu } from "./components/AddTabMenu";
 import { ChangesControl } from "./components/ChangesControl";
 import { CloudWorkspaceTabBarControls } from "./components/CloudWorkspaceTabBarControls";
+import { ForkWorkspaceAgentActions } from "./components/ForkWorkspaceAgentActions";
 import { RightPaneArea, type RightPaneKind } from "./components/RightPaneArea";
 import { V2NotificationStatusIndicator } from "./components/V2NotificationStatusIndicator";
 import { V2PresetsBar } from "./components/V2PresetsBar";
 import { V2WorkspaceOpenInButton } from "./components/V2WorkspaceOpenInButton";
 import { V2WorkspaceRunButton } from "./components/V2WorkspaceRunButton";
 import { WorkspaceActivityMenu } from "./components/WorkspaceActivityMenu";
-import { WorkspaceAgentOverview } from "./components/WorkspaceAgentOverview";
 import { WorkspaceEmptyState } from "./components/WorkspaceEmptyState";
 import { WorkspaceMissingWorktreeState } from "./components/WorkspaceMissingWorktreeState";
 import { WorkspaceMoreMenu } from "./components/WorkspaceMoreMenu";
@@ -213,6 +213,7 @@ function V2WorkspaceContent() {
 		[store, rightStore],
 	);
 	const launcher = useV2TerminalLauncher();
+	const [forkLaunchOpen, setForkLaunchOpen] = useState(false);
 	const { createNewAgentSession, openAgentChat, focusAgentTerminal } =
 		useAgentSessionLauncher({ workspaceId, store });
 	const {
@@ -680,6 +681,7 @@ function V2WorkspaceContent() {
 								}
 								renderAddTabMenu={() => (
 									<AddTabMenu
+										onAddAgent={() => setForkLaunchOpen(true)}
 										onAddTerminal={addTerminalTab}
 										onAddBrowser={addBrowserTab}
 										onAddChanges={openChanges}
@@ -696,13 +698,14 @@ function V2WorkspaceContent() {
 											isRightPaneAreaEnabled && "pr-1",
 										)}
 									>
-										<WorkspaceAgentOverview
+										<ForkWorkspaceAgentActions
 											store={store}
 											key={workspaceId}
 											workspaceId={workspaceId}
 											workspaceName={workspace.name}
 											onCreateNewAgentSession={createNewAgentSession}
-											onFocusAgentTerminal={focusAgentTerminal}
+											launchOpen={forkLaunchOpen}
+											onLaunchOpenChange={setForkLaunchOpen}
 										/>
 										<CloudWorkspaceTabBarControls workspaceId={workspaceId} />
 										{activityMenu}

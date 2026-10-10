@@ -1863,9 +1863,6 @@ msgstr "main ile karşılaştır"
 msgid "Agent"
 msgstr "Ajan"
 
-msgid "Agent accounts"
-msgstr "Ajan hesapları"
-
 msgid "Agent commands"
 msgstr "Ajan komutları"
 
@@ -2775,9 +2772,6 @@ msgstr "ort. konum {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "{0} bekleniyor"
-
-msgid "Awaiting permission"
-msgstr "İzin bekleniyor"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Yanıt bekleniyor — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Kuyruktan çıkılamadı"
 
 msgid "Could not list directory"
 msgstr "Dizin listelenemedi"
-
-msgid "Could not load agent configurations."
-msgstr "Ajan yapılandırmaları yüklenemedi."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Başlatma"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Özellikler, hata düzeltmeleri ve yeniden düzenlemeler için ajanları paralel başlatın. Tek bakışta durum, hangi ajanların çalıştığını, hangilerinin engellendiğini ve hangilerinin sizi beklediğini gösterir."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Bilinen başlatma seçimleri gösterilir. Etkin model CLI içinde değişebilir."
-
 msgid "Launch mode"
 msgstr "Başlatma modu"
-
-msgid "Launch model"
-msgstr "Başlatma modeli"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Yeni bir çalışma alanı oluşturulduğunda bu terminal betiğini başlat."
@@ -9758,9 +9743,6 @@ msgstr "Kuruluşunuzun marka görünümünü ve üyelerini yönetin."
 
 msgid "Managed"
 msgstr "Yönetilen"
-
-msgid "Managed by the CLI"
-msgstr "CLI tarafından yönetilir"
 
 msgid "Managed by your organization admin."
 msgstr "Kuruluş yöneticiniz tarafından yönetiliyor."
@@ -10557,9 +10539,6 @@ msgstr "Etkin kuruluş seçilmedi"
 msgid "No active services"
 msgstr "Etkin hizmet yok"
 
-msgid "No active sessions"
-msgstr "Etkin oturum yok"
-
 msgid "No active terminal sessions"
 msgstr "Etkin terminal oturumu yok"
 
@@ -11213,9 +11192,6 @@ msgstr "Bu sürümde yok"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Henüz olay alınmıyor: Microsoft Graph bildirim aboneliklerini reddetti. Uygulamanın yönetici onayını ve korumalı API onayını kontrol edip yeniden bağlanın."
 
-msgid "Not recorded"
-msgstr "Kaydedilmedi"
-
 msgid "Not reviewed by you"
 msgstr "Sizin incelemediğiniz"
 
@@ -11820,9 +11796,6 @@ msgstr "Son kullanılanı aç"
 
 msgid "Open roles"
 msgstr "Açık pozisyonlar"
-
-msgid "Open session"
-msgstr "Oturumu aç"
 
 msgid "Open session in"
 msgstr "Oturumu şurada aç"
@@ -14799,9 +14772,6 @@ msgstr "Terminal betiği dizinini seçin"
 
 msgid "Select worktree location"
 msgstr "Worktree konumunu seçin"
-
-msgid "Selected account"
-msgstr "Seçilen hesap"
 
 msgid "Selected agent is not available on this host"
 msgstr "Seçili ajan bu host'ta kullanılamıyor"

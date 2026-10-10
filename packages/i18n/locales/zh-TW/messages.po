@@ -1863,9 +1863,6 @@ msgstr "對比main"
 msgid "Agent"
 msgstr "代理程式"
 
-msgid "Agent accounts"
-msgstr "代理帳戶"
-
 msgid "Agent commands"
 msgstr "代理程式指令"
 
@@ -2775,9 +2772,6 @@ msgstr "平均排名 {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "等待{0}"
-
-msgid "Awaiting permission"
-msgstr "等待授權"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "等待回覆 — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "無法移出佇列"
 
 msgid "Could not list directory"
 msgstr "無法列出目錄"
-
-msgid "Could not load agent configurations."
-msgstr "無法載入代理設定。"
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "啟動"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "在新功能、缺陷修復和重構上同時啟動代理程式，全部並行。狀態一眼可見：哪些在幹活、哪些被阻塞、哪些在等你。"
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "顯示已知的啟動選項。使用中的模型可能在 CLI 中變更。"
-
 msgid "Launch mode"
 msgstr "啟動方式"
-
-msgid "Launch model"
-msgstr "啟動模型"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "建立新工作區時啟動此終端指令碼。"
@@ -9758,9 +9743,6 @@ msgstr "管理組織的品牌形象和成員。"
 
 msgid "Managed"
 msgstr "託管"
-
-msgid "Managed by the CLI"
-msgstr "由 CLI 管理"
 
 msgid "Managed by your organization admin."
 msgstr "由你所在組織的管理員管理。"
@@ -10557,9 +10539,6 @@ msgstr "未選擇活動組織"
 msgid "No active services"
 msgstr "沒有活動的服務"
 
-msgid "No active sessions"
-msgstr "沒有作用中的工作階段"
-
 msgid "No active terminal sessions"
 msgstr "沒有活動的終端會話"
 
@@ -11213,9 +11192,6 @@ msgstr "不在此版本中"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "尚未接收到事件：Microsoft Graph拒絕了通知訂閱。請檢查應用的管理員同意和受保護API的審批，然後重新連線。"
 
-msgid "Not recorded"
-msgstr "未記錄"
-
 msgid "Not reviewed by you"
 msgstr "你還沒有審查"
 
@@ -11820,9 +11796,6 @@ msgstr "開啟最近使用"
 
 msgid "Open roles"
 msgstr "空缺職位"
-
-msgid "Open session"
-msgstr "開啟工作階段"
 
 msgid "Open session in"
 msgstr "會話開啟於"
@@ -14799,9 +14772,6 @@ msgstr "選擇終端指令碼目錄"
 
 msgid "Select worktree location"
 msgstr "選擇worktree位置"
-
-msgid "Selected account"
-msgstr "所選帳戶"
 
 msgid "Selected agent is not available on this host"
 msgstr "所選代理程式在此主機上不可用"

@@ -1863,9 +1863,6 @@ msgstr "main 기준"
 msgid "Agent"
 msgstr "에이전트"
 
-msgid "Agent accounts"
-msgstr "에이전트 계정"
-
 msgid "Agent commands"
 msgstr "에이전트 명령"
 
@@ -2775,9 +2772,6 @@ msgstr "평균 순위 {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "{0} 대기 중"
-
-msgid "Awaiting permission"
-msgstr "권한 대기 중"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "응답 대기 중 — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "대기열에서 나갈 수 없습니다"
 
 msgid "Could not list directory"
 msgstr "디렉터리를 나열할 수 없습니다"
-
-msgid "Could not load agent configurations."
-msgstr "에이전트 구성을 불러올 수 없습니다."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "실행"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "기능 개발, 버그 수정, 리팩터링에 에이전트를 병렬로 띄우세요. 어떤 에이전트가 작업 중이고, 막혀 있고, 응답을 기다리는지 한눈에 보입니다."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "알려진 시작 설정을 표시합니다. 활성 모델은 CLI에서 변경될 수 있습니다."
-
 msgid "Launch mode"
 msgstr "실행 방식"
-
-msgid "Launch model"
-msgstr "시작 모델"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "새 워크스페이스가 만들어질 때 이 터미널 스크립트를 실행합니다."
@@ -9758,9 +9743,6 @@ msgstr "조직의 브랜딩과 멤버를 관리합니다."
 
 msgid "Managed"
 msgstr "관리됨"
-
-msgid "Managed by the CLI"
-msgstr "CLI에서 관리"
 
 msgid "Managed by your organization admin."
 msgstr "조직 관리자가 관리합니다."
@@ -10557,9 +10539,6 @@ msgstr "선택된 활성 조직이 없습니다"
 msgid "No active services"
 msgstr "활성 서비스 없음"
 
-msgid "No active sessions"
-msgstr "활성 세션 없음"
-
 msgid "No active terminal sessions"
 msgstr "활성 터미널 세션 없음"
 
@@ -11213,9 +11192,6 @@ msgstr "이 버전에는 없음"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "아직 이벤트를 받지 못하고 있습니다. Microsoft Graph가 알림 구독을 거부했습니다. 앱의 관리자 동의와 보호된 API 승인을 확인한 뒤 다시 연결하세요."
 
-msgid "Not recorded"
-msgstr "기록되지 않음"
-
 msgid "Not reviewed by you"
 msgstr "내가 리뷰하지 않음"
 
@@ -11820,9 +11796,6 @@ msgstr "최근 항목 열기"
 
 msgid "Open roles"
 msgstr "채용 공고"
-
-msgid "Open session"
-msgstr "세션 열기"
 
 msgid "Open session in"
 msgstr "세션 열기 위치"
@@ -14799,9 +14772,6 @@ msgstr "터미널 스크립트 디렉터리 선택"
 
 msgid "Select worktree location"
 msgstr "worktree 위치 선택"
-
-msgid "Selected account"
-msgstr "선택한 계정"
 
 msgid "Selected agent is not available on this host"
 msgstr "선택한 에이전트를 이 호스트에서 사용할 수 없습니다"

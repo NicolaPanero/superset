@@ -1863,9 +1863,6 @@ msgstr "Frente a main"
 msgid "Agent"
 msgstr "Agente"
 
-msgid "Agent accounts"
-msgstr "Cuentas de agentes"
-
 msgid "Agent commands"
 msgstr "Comandos de agente"
 
@@ -2775,9 +2772,6 @@ msgstr "posición media {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "A la espera de {0}"
-
-msgid "Awaiting permission"
-msgstr "Esperando permiso"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Esperando respuesta — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "No se pudo salir de la cola"
 
 msgid "Could not list directory"
 msgstr "No se pudo listar el directorio"
-
-msgid "Could not load agent configurations."
-msgstr "No se pudieron cargar las configuraciones de agentes."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Lanzamiento"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Lanza agentes en funciones, correcciones de errores y refactorizaciones, todo en paralelo. El estado de un vistazo muestra qué agentes están trabajando, cuáles están bloqueados y cuáles te esperan."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Se muestran las opciones de inicio conocidas. El modelo activo puede cambiar dentro de la CLI."
-
 msgid "Launch mode"
 msgstr "Modo de apertura"
-
-msgid "Launch model"
-msgstr "Modelo de inicio"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Lanza este script de terminal cuando se cree un espacio de trabajo nuevo."
@@ -9758,9 +9743,6 @@ msgstr "Gestiona la imagen de marca y los miembros de tu organización."
 
 msgid "Managed"
 msgstr "Gestionada"
-
-msgid "Managed by the CLI"
-msgstr "Gestionado por la CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Lo gestiona el administrador de tu organización."
@@ -10557,9 +10539,6 @@ msgstr "No hay ninguna organización activa seleccionada"
 msgid "No active services"
 msgstr "No hay servicios activos"
 
-msgid "No active sessions"
-msgstr "No hay sesiones activas"
-
 msgid "No active terminal sessions"
 msgstr "No hay sesiones de terminal activas"
 
@@ -11213,9 +11192,6 @@ msgstr "No está en esta versión"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Aún no se reciben eventos: Microsoft Graph rechazó las suscripciones de notificaciones. Revisa el consentimiento de administrador de la app y la aprobación de API protegidas, y vuelve a conectarlo."
 
-msgid "Not recorded"
-msgstr "No registrado"
-
 msgid "Not reviewed by you"
 msgstr "No revisadas por ti"
 
@@ -11820,9 +11796,6 @@ msgstr "Abrir reciente"
 
 msgid "Open roles"
 msgstr "Vacantes"
-
-msgid "Open session"
-msgstr "Abrir sesión"
 
 msgid "Open session in"
 msgstr "Abrir sesión en"
@@ -14799,9 +14772,6 @@ msgstr "Seleccionar el directorio del script de terminal"
 
 msgid "Select worktree location"
 msgstr "Seleccionar la ubicación del worktree"
-
-msgid "Selected account"
-msgstr "Cuenta seleccionada"
 
 msgid "Selected agent is not available on this host"
 msgstr "El agente seleccionado no está disponible en este host"

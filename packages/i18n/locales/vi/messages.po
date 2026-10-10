@@ -1863,9 +1863,6 @@ msgstr "So với main"
 msgid "Agent"
 msgstr "Agent"
 
-msgid "Agent accounts"
-msgstr "Tài khoản tác nhân"
-
 msgid "Agent commands"
 msgstr "Lệnh của agent"
 
@@ -2775,9 +2772,6 @@ msgstr "vị trí trung bình {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "Đang chờ {0}"
-
-msgid "Awaiting permission"
-msgstr "Đang chờ quyền"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Đang chờ phản hồi — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Không thể rời hàng đợi"
 
 msgid "Could not list directory"
 msgstr "Không thể liệt kê thư mục"
-
-msgid "Could not load agent configurations."
-msgstr "Không thể tải cấu hình tác nhân."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Khởi chạy"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Khởi chạy agent cho tính năng, sửa lỗi và refactor, tất cả song song. Trạng thái hiển thị ngay cho biết agent nào đang làm, agent nào bị chặn và agent nào đang chờ bạn."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Các lựa chọn khởi chạy đã biết được hiển thị. Mô hình đang dùng có thể thay đổi trong CLI."
-
 msgid "Launch mode"
 msgstr "Chế độ chạy"
-
-msgid "Launch model"
-msgstr "Mô hình khi khởi chạy"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Chạy script terminal này khi tạo workspace mới."
@@ -9758,9 +9743,6 @@ msgstr "Quản lý nhận diện thương hiệu và thành viên của tổ ch�
 
 msgid "Managed"
 msgstr "Được quản lý"
-
-msgid "Managed by the CLI"
-msgstr "Do CLI quản lý"
 
 msgid "Managed by your organization admin."
 msgstr "Do admin tổ chức của bạn quản lý."
@@ -10557,9 +10539,6 @@ msgstr "Chưa chọn tổ chức hoạt động"
 msgid "No active services"
 msgstr "Không có dịch vụ nào đang chạy"
 
-msgid "No active sessions"
-msgstr "Không có phiên hoạt động"
-
 msgid "No active terminal sessions"
 msgstr "Không có phiên terminal nào đang chạy"
 
@@ -11213,9 +11192,6 @@ msgstr "Không có trong phiên bản này"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Chưa nhận được sự kiện: Microsoft Graph đã từ chối các đăng ký thông báo. Hãy kiểm tra phần cấp quyền quản trị và phê duyệt API bảo vệ của ứng dụng, rồi kết nối lại."
 
-msgid "Not recorded"
-msgstr "Chưa ghi nhận"
-
 msgid "Not reviewed by you"
 msgstr "Bạn chưa review"
 
@@ -11820,9 +11796,6 @@ msgstr "Mở gần đây"
 
 msgid "Open roles"
 msgstr "Vị trí đang tuyển"
-
-msgid "Open session"
-msgstr "Mở phiên"
 
 msgid "Open session in"
 msgstr "Mở phiên trong"
@@ -14799,9 +14772,6 @@ msgstr "Chọn thư mục cho script terminal"
 
 msgid "Select worktree location"
 msgstr "Chọn vị trí worktree"
-
-msgid "Selected account"
-msgstr "Tài khoản đã chọn"
 
 msgid "Selected agent is not available on this host"
 msgstr "Agent đã chọn không khả dụng trên host này"
