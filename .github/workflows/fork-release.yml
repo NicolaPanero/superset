@@ -103,6 +103,7 @@ jobs:
           bun test packages/shared/src/fork-account-usage.test.ts packages/host-service/src/trpc/router/usage/fork-quota-fetch.test.ts packages/host-service/src/trpc/router/usage/fork-quota-cache.test.ts packages/host-service/src/trpc/router/usage/fork-account-probe.test.ts packages/host-service/src/trpc/router/workspace-cleanup/fork-branch-ownership.test.ts
           bun test --preload ./packages/host-service/test/setup-env.ts packages/shared/src/fork-agent-order.test.ts packages/host-service/src/trpc/router/settings/agent-configs.test.ts
           bun test --preload ./packages/host-service/test/setup-env.ts packages/host-service/test/integration/fork-account-branch.integration.test.ts
+          bun test --isolate --preload ./packages/host-service/test/setup-env.ts packages/host-service/src/chat-v3/forkQuotaRecoveryAdapter.test.ts packages/host-service/test/integration/fork-quota-recovery.integration.test.ts
           bun test --preload ./packages/host-service/test/setup-env.ts packages/host-service/src/trpc/router/agents/agents.test.ts packages/host-service/src/trpc/router/workspace-creation/utils/workspace-naming-job.test.ts
 
       - name: Install the txcript transfer helper

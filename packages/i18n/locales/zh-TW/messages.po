@@ -2703,6 +2703,9 @@ msgstr "自動化任務"
 msgid "Automate workspace setup for {projectName}"
 msgstr "為{projectName}自動化工作區初始化"
 
+msgid "Automatic continuation"
+msgstr "自動繼續"
+
 msgid "Automation"
 msgstr "自動化"
 
@@ -4522,6 +4525,10 @@ msgstr "延續自 {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "繼續代理程式工作階段需要已釘選的工作區"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "正在使用 {0} 繼續…"
+
 msgid "continuing the last session"
 msgstr "繼續上一個工作階段"
 
@@ -5169,6 +5176,9 @@ msgstr "儲存失敗——編輯或點選別處以重試"
 
 msgid "Couldn't save — retrying…"
 msgstr "儲存失敗——正在重試…"
+
+msgid "Couldn't save continuation options"
+msgstr "無法儲存繼續選項"
 
 msgid "Couldn't save edits"
 msgstr "無法儲存編輯"
@@ -7696,6 +7706,9 @@ msgstr "如有帳單相關問題，請<0>聯絡我們</0>。"
 
 msgid "For teams that need more power"
 msgstr "面向需要更多能力的團隊"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "適用於此 Claude 聊天。保留對話和模型。僅使用配額已驗證的帳戶。"
 
 msgid "Force merge"
 msgstr "強制合併"
@@ -11328,6 +11341,9 @@ msgstr "離線/本地優先模式"
 
 msgid "Older"
 msgstr "更早"
+
+msgid "On"
+msgstr "開啟"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不會在這裡執行"
@@ -16278,6 +16294,9 @@ msgstr "切換到分頁8"
 msgid "Switch to Tab 9"
 msgstr "切換到分頁9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "配額用盡時切換至建議帳戶"
+
 msgid "Switch to Workspace 1"
 msgstr "切換到工作區1"
 
@@ -18347,6 +18366,9 @@ msgstr "音量"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "等待配額重設後繼續"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "請等待代理完成後再交接。"
 
@@ -18363,6 +18385,12 @@ msgstr "等待檢查"
 
 msgid "Waiting for it to connect…"
 msgstr "正在等待連線…"
+
+msgid "Waiting for quota"
+msgstr "正在等待配額"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "正在等待配額。停止將取消自動繼續。"
 
 msgid "Waiting for Review"
 msgstr "等待審查"

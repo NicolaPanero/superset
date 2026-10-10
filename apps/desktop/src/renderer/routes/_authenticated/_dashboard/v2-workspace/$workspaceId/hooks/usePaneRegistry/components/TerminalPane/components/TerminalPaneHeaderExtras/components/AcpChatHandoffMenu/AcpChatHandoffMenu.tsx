@@ -22,7 +22,14 @@ import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bot, MessageSquare, PanelRight, SquareStack } from "lucide-react";
+import {
+	Bot,
+	Clock3,
+	MessageSquare,
+	PanelRight,
+	Repeat2,
+	SquareStack,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
@@ -42,6 +49,7 @@ import { useForkAgentSwitch } from "../../../../../AgentTerminalPane/hooks/useFo
 import { useChatWiring } from "../../../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../../../../ForkChatExtras/hooks/useForkAccountSwitch";
 import { contextHandoff } from "../../../../../ForkChatExtras/utils/contextHandoff/contextHandoff";
+import { ForkQuotaRecoveryControls } from "./components/ForkQuotaRecoveryControls";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 
@@ -72,6 +80,17 @@ export function AcpChatHandoffMenu({
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
+	const recovery = workspaceTrpc.agents.quotaRecovery.useQuery(
+		{ workspaceId, terminalId: data.terminalId },
+		{
+			enabled: Boolean(accountSwitcher),
+			retry: false,
+			refetchInterval: (query) => (query.state.error ? false : 10_000),
+		},
+	);
+	const waitingForQuota = recovery.data?.phase === "waiting";
+	const autoContinue =
+		recovery.data?.switchAccounts || recovery.data?.resumeAtReset;
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
 	const [placement, setPlacement] = useState<Placement>("this-chat");
@@ -374,10 +393,22 @@ export function AcpChatHandoffMenu({
 						}}
 						className="flex min-w-0 items-center gap-1 rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
 					>
-						<Bot className="size-3.5 shrink-0" />
+						{waitingForQuota ? (
+							<Clock3 className="size-3.5 shrink-0" />
+						) : autoContinue ? (
+							<Repeat2 className="size-3.5 shrink-0" />
+						) : (
+							<Bot className="size-3.5 shrink-0" />
+						)}
 						<span className="max-w-28 truncate">{sourceLabel}</span>
 						<span aria-hidden="true">·</span>
-						<span className="max-w-28 truncate">{currentAccount}</span>
+						<span className="max-w-28 truncate">
+							{waitingForQuota ? (
+								<Trans>Waiting for quota</Trans>
+							) : (
+								currentAccount
+							)}
+						</span>
 					</button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
@@ -397,7 +428,7 @@ export function AcpChatHandoffMenu({
 					setOpen(false);
 				}}
 			>
-				<DialogContent className="sm:max-w-md">
+				<DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
 					<DialogHeader>
 						<DialogTitle>
 							<Trans>Agent</Trans> · <Trans>Account</Trans>
@@ -530,6 +561,13 @@ export function AcpChatHandoffMenu({
 									)}
 								/>
 							</div>
+						)}
+						{accountSwitcher && (
+							<ForkQuotaRecoveryControls
+								workspaceId={workspaceId}
+								terminalId={data.terminalId}
+								enabled={open}
+							/>
 						)}
 						<dl className="rounded-md border bg-muted/30 p-3 text-xs">
 							<dt className="text-muted-foreground">

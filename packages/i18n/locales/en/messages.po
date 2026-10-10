@@ -2703,6 +2703,9 @@ msgstr "Automate Tasks"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automate workspace setup for {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Automatic continuation"
+
 msgid "Automation"
 msgstr "Automation"
 
@@ -4522,6 +4525,10 @@ msgstr "Continued from {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuing an agent session requires a pinned workspace"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Continuing on {0}…"
+
 msgid "continuing the last session"
 msgstr "continuing the last session"
 
@@ -5169,6 +5176,9 @@ msgstr "Couldn't save — edit or click away to retry"
 
 msgid "Couldn't save — retrying…"
 msgstr "Couldn't save — retrying…"
+
+msgid "Couldn't save continuation options"
+msgstr "Couldn't save continuation options"
 
 msgid "Couldn't save edits"
 msgstr "Couldn't save edits"
@@ -7696,6 +7706,9 @@ msgstr "For questions about billing, <0>contact us</0>."
 
 msgid "For teams that need more power"
 msgstr "For teams that need more power"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
 
 msgid "Force merge"
 msgstr "Force merge"
@@ -11328,6 +11341,9 @@ msgstr "Offline / local-first mode"
 
 msgid "Older"
 msgstr "Older"
+
+msgid "On"
+msgstr "On"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "on {offScopeHostName} — won't run here"
@@ -16278,6 +16294,9 @@ msgstr "Switch to Tab 8"
 msgid "Switch to Tab 9"
 msgstr "Switch to Tab 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Switch to the suggested account when quota runs out"
+
 msgid "Switch to Workspace 1"
 msgstr "Switch to Workspace 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Wait and continue when quota resets"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Wait for the agent to finish before handing off."
 
@@ -18363,6 +18385,12 @@ msgstr "Waiting for Checks"
 
 msgid "Waiting for it to connect…"
 msgstr "Waiting for it to connect…"
+
+msgid "Waiting for quota"
+msgstr "Waiting for quota"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Waiting for quota. Stop cancels automatic continuation."
 
 msgid "Waiting for Review"
 msgstr "Waiting for Review"

@@ -2703,6 +2703,9 @@ msgstr "Automatizar tarefas"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatize a preparação das áreas de trabalho de {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Continuação automática"
+
 msgid "Automation"
 msgstr "Automação"
 
@@ -4522,6 +4525,10 @@ msgstr "Continuado de {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuar uma sessão de agente exige uma área de trabalho fixada"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Continuando com {0}…"
+
 msgid "continuing the last session"
 msgstr "continuando a última sessão"
 
@@ -5169,6 +5176,9 @@ msgstr "Não foi possível salvar — edite ou clique fora para tentar de novo"
 
 msgid "Couldn't save — retrying…"
 msgstr "Não foi possível salvar — tentando de novo…"
+
+msgid "Couldn't save continuation options"
+msgstr "Não foi possível salvar as opções de continuação"
 
 msgid "Couldn't save edits"
 msgstr "Não foi possível salvar as edições"
@@ -7696,6 +7706,9 @@ msgstr "Para dúvidas sobre faturamento, <0>fale com a gente</0>."
 
 msgid "For teams that need more power"
 msgstr "Para times que precisam de mais"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Para este chat do Claude. Mantém a conversa e o modelo. Usa apenas contas com cota verificada."
 
 msgid "Force merge"
 msgstr "Forçar merge"
@@ -11328,6 +11341,9 @@ msgstr "Modo offline / local-first"
 
 msgid "Older"
 msgstr "Mais antigo"
+
+msgid "On"
+msgstr "Ativada"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "em {offScopeHostName} — não vai rodar aqui"
@@ -16278,6 +16294,9 @@ msgstr "Ir para a aba 8"
 msgid "Switch to Tab 9"
 msgstr "Ir para a aba 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Mudar para a conta sugerida quando a cota acabar"
+
 msgid "Switch to Workspace 1"
 msgstr "Ir para a área de trabalho 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Aguardar a renovação da cota e continuar"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Aguarde o agente terminar antes de transferir."
 
@@ -18363,6 +18385,12 @@ msgstr "Aguardando as verificações"
 
 msgid "Waiting for it to connect…"
 msgstr "Aguardando a conexão…"
+
+msgid "Waiting for quota"
+msgstr "Aguardando cota"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Aguardando cota. Parar cancela a continuação automática."
 
 msgid "Waiting for Review"
 msgstr "Aguardando revisão"

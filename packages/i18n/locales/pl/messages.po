@@ -2703,6 +2703,9 @@ msgstr "Automatyzuj zadania"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Zautomatyzuj konfigurację obszaru roboczego dla {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Automatyczna kontynuacja"
+
 msgid "Automation"
 msgstr "Automatyzacja"
 
@@ -4522,6 +4525,10 @@ msgstr "Kontynuacja z {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Kontynuowanie sesji agenta wymaga przypiętego obszaru roboczego"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Kontynuowanie na koncie {0}…"
+
 msgid "continuing the last session"
 msgstr "kontynuując ostatnią sesję"
 
@@ -5169,6 +5176,9 @@ msgstr "Nie udało się zapisać — edytuj lub kliknij poza polem, aby ponowić
 
 msgid "Couldn't save — retrying…"
 msgstr "Nie udało się zapisać — ponawianie…"
+
+msgid "Couldn't save continuation options"
+msgstr "Nie udało się zapisać opcji kontynuacji"
 
 msgid "Couldn't save edits"
 msgstr "Nie udało się zapisać zmian"
@@ -7696,6 +7706,9 @@ msgstr "W sprawach rozliczeń <0>napisz do nas</0>."
 
 msgid "For teams that need more power"
 msgstr "Dla zespołów, które potrzebują więcej mocy"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Dla tego czatu Claude. Zachowuje rozmowę i model. Używa tylko kont ze zweryfikowanym limitem."
 
 msgid "Force merge"
 msgstr "Wymuś scalenie"
@@ -11328,6 +11341,9 @@ msgstr "Tryb offline / local-first"
 
 msgid "Older"
 msgstr "Starsze"
+
+msgid "On"
+msgstr "Włączona"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "na {offScopeHostName} — nie uruchomi się tutaj"
@@ -16278,6 +16294,9 @@ msgstr "Przełącz na kartę 8"
 msgid "Switch to Tab 9"
 msgstr "Przełącz na kartę 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Przełącz na sugerowane konto po wyczerpaniu limitu"
+
 msgid "Switch to Workspace 1"
 msgstr "Przełącz na obszar roboczy 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Głośność"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Poczekaj na odnowienie limitu i kontynuuj"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Przed przekazaniem poczekaj, aż agent skończy."
 
@@ -18363,6 +18385,12 @@ msgstr "Oczekiwanie na kontrole"
 
 msgid "Waiting for it to connect…"
 msgstr "Oczekiwanie na połączenie…"
+
+msgid "Waiting for quota"
+msgstr "Oczekiwanie na limit"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Oczekiwanie na limit. Zatrzymanie anuluje automatyczną kontynuację."
 
 msgid "Waiting for Review"
 msgstr "Oczekiwanie na przegląd"

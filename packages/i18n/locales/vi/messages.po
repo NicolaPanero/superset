@@ -2703,6 +2703,9 @@ msgstr "Tự động hóa tác vụ"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Tự động thiết lập workspace cho {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Tiếp tục tự động"
+
 msgid "Automation"
 msgstr "Tự động hóa"
 
@@ -4522,6 +4525,10 @@ msgstr "Tiếp tục từ {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Để tiếp tục phiên agent, cần ghim một workspace"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Đang tiếp tục với {0}…"
+
 msgid "continuing the last session"
 msgstr "tiếp tục phiên gần nhất"
 
@@ -5169,6 +5176,9 @@ msgstr "Không lưu được — hãy sửa hoặc nhấp ra ngoài để thử 
 
 msgid "Couldn't save — retrying…"
 msgstr "Không lưu được — đang thử lại…"
+
+msgid "Couldn't save continuation options"
+msgstr "Không thể lưu các tùy chọn tiếp tục"
 
 msgid "Couldn't save edits"
 msgstr "Không thể lưu chỉnh sửa"
@@ -7696,6 +7706,9 @@ msgstr "Nếu có thắc mắc về thanh toán, hãy <0>liên hệ với chúng
 
 msgid "For teams that need more power"
 msgstr "Dành cho đội cần nhiều sức mạnh hơn"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Cho cuộc trò chuyện Claude này. Giữ nguyên cuộc trò chuyện và mô hình. Chỉ dùng tài khoản có hạn mức đã xác minh."
 
 msgid "Force merge"
 msgstr "Merge cưỡng bức"
@@ -11328,6 +11341,9 @@ msgstr "Chế độ ngoại tuyến / ưu tiên cục bộ"
 
 msgid "Older"
 msgstr "Cũ hơn"
+
+msgid "On"
+msgstr "Bật"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "trên {offScopeHostName} — sẽ không chạy ở đây"
@@ -16278,6 +16294,9 @@ msgstr "Chuyển tới tab 8"
 msgid "Switch to Tab 9"
 msgstr "Chuyển tới tab 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Chuyển sang tài khoản được đề xuất khi hết hạn mức"
+
 msgid "Switch to Workspace 1"
 msgstr "Chuyển tới workspace 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Âm lượng"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Chờ hạn mức được đặt lại rồi tiếp tục"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Hãy đợi tác tử hoàn tất trước khi chuyển."
 
@@ -18363,6 +18385,12 @@ msgstr "Đang chờ check"
 
 msgid "Waiting for it to connect…"
 msgstr "Đang chờ kết nối…"
+
+msgid "Waiting for quota"
+msgstr "Đang chờ hạn mức"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Đang chờ hạn mức. Dừng sẽ hủy việc tiếp tục tự động."
 
 msgid "Waiting for Review"
 msgstr "Đang chờ review"

@@ -187,3 +187,11 @@ lo stesso percorso di avvio. Il passaggio tra agenti segue l’ordine e le icone
 delle impostazioni; gli agenti senza supporto chat sono visibili ma disabilitati.
 Pages conserva il flusso ufficiale: la pagina compare dopo la pubblicazione
 riuscita, mentre la chat usata per crearla rimane una sessione separata.
+
+### Continuazione automatica delle chat Claude
+
+Nel menu **Agent · Account**, la voce compatta **Continuazione automatica** offre due opzioni indipendenti per la singola chat, entrambe inizialmente disattivate: passare all’account suggerito quando la quota finisce e attendere il reset per riprendere. Il servizio host continua a gestirle anche quando la chat passa nelle sessioni in background. Le preferenze restano sull’host, con limite di 1.024 chat, scadenza di 30 giorni e rimozione quando viene eliminato il workspace.
+
+Il passaggio avviene dopo un errore effettivo di quota del CLI Claude, mai per una lettura vecchia o un normale errore 429. Sceglie un abbonamento con la maggiore quota recente verificata per il modello, escludendo gli account API, duplicati dello stesso login e profili già falliti prima del reset. La conversazione nativa viene copiata senza eliminare l’originale e ripresa rigorosamente con lo stesso identificativo, modello e modalità; viene inviata una continuazione, senza ripetere l’ultimo prompt. I messaggi già in coda aspettano il completamento del turno interrotto. Identità e abbonamento vengono ricontrollati prima della continuazione; credenziali imposte dalla configurazione impediscono il passaggio.
+
+L’attesa controlla la quota al reset e poi al massimo ogni cinque minuti, rispettando Retry-After e richiedendo una lettura riuscita successiva all’errore. Stop, un cambio di modello, la disattivazione delle opzioni o la chiusura effettiva della sessione annullano l’attesa. Non riparte autonomamente dopo un riavvio dell’host. L’attesa è limitata a 24 ore e a quattro riprese consecutive; un errore con tool in background attivi richiede intervento manuale per conservarli. La funzione riguarda le chat Claude integrate: i terminali mantengono i controlli nativi del CLI e gli altri agenti non cambiano account automaticamente.

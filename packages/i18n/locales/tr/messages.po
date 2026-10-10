@@ -2703,6 +2703,9 @@ msgstr "Görevleri otomatikleştirin"
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName} için çalışma alanı kurulumunu otomatikleştirin"
 
+msgid "Automatic continuation"
+msgstr "Otomatik devam"
+
 msgid "Automation"
 msgstr "Otomasyon"
 
@@ -4522,6 +4525,10 @@ msgstr "{source} üzerinden devam ediyor"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Bir aracı oturumunu sürdürmek için sabitlenmiş bir çalışma alanı gerekir"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "{0} hesabıyla devam ediliyor…"
+
 msgid "continuing the last session"
 msgstr "son oturumu sürdürerek"
 
@@ -5169,6 +5176,9 @@ msgstr "Kaydedilemedi — yeniden denemek için düzenleyin veya başka bir yere
 
 msgid "Couldn't save — retrying…"
 msgstr "Kaydedilemedi — yeniden deneniyor…"
+
+msgid "Couldn't save continuation options"
+msgstr "Devam seçenekleri kaydedilemedi"
 
 msgid "Couldn't save edits"
 msgstr "Düzenlemeler kaydedilemedi"
@@ -7696,6 +7706,9 @@ msgstr "Faturalandırmayla ilgili sorularınız için <0>bize ulaşın</0>."
 
 msgid "For teams that need more power"
 msgstr "Daha fazla güce ihtiyaç duyan takımlar için"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Bu Claude sohbeti için. Konuşmayı ve modeli korur. Yalnızca kotası doğrulanmış hesapları kullanır."
 
 msgid "Force merge"
 msgstr "Zorla birleştir"
@@ -11328,6 +11341,9 @@ msgstr "Çevrimdışı / yerel öncelikli mod"
 
 msgid "Older"
 msgstr "Daha eski"
+
+msgid "On"
+msgstr "Açık"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName} üzerinde — burada çalışmaz"
@@ -16278,6 +16294,9 @@ msgstr "8. sekmeye geç"
 msgid "Switch to Tab 9"
 msgstr "9. sekmeye geç"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Kota bittiğinde önerilen hesaba geç"
+
 msgid "Switch to Workspace 1"
 msgstr "1. çalışma alanına geç"
 
@@ -18347,6 +18366,9 @@ msgstr "Ses düzeyi"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Kota yenilenene kadar bekle ve devam et"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Aktarmadan önce ajanın bitirmesini bekleyin."
 
@@ -18363,6 +18385,12 @@ msgstr "Kontroller bekleniyor"
 
 msgid "Waiting for it to connect…"
 msgstr "Bağlanması bekleniyor…"
+
+msgid "Waiting for quota"
+msgstr "Kota bekleniyor"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Kota bekleniyor. Durdurmak otomatik devamı iptal eder."
 
 msgid "Waiting for Review"
 msgstr "İnceleme bekleniyor"

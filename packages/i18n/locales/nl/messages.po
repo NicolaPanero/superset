@@ -2703,6 +2703,9 @@ msgstr "Taken automatiseren"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatiseer het instellen van werkruimtes voor {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Automatisch doorgaan"
+
 msgid "Automation"
 msgstr "Automatisering"
 
@@ -4522,6 +4525,10 @@ msgstr "Voortgezet vanuit {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Een agentsessie voortzetten vereist een vastgezette workspace"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Doorgaan met {0}…"
+
 msgid "continuing the last session"
 msgstr "de laatste sessie voortzetten"
 
@@ -5169,6 +5176,9 @@ msgstr "Kan niet opslaan — bewerk of klik ernaast om opnieuw te proberen"
 
 msgid "Couldn't save — retrying…"
 msgstr "Kan niet opslaan — opnieuw proberen…"
+
+msgid "Couldn't save continuation options"
+msgstr "Kan de opties voor doorgaan niet opslaan"
 
 msgid "Couldn't save edits"
 msgstr "Kan bewerkingen niet opslaan"
@@ -7696,6 +7706,9 @@ msgstr "Voor vragen over facturering, <0>neem contact op</0>."
 
 msgid "For teams that need more power"
 msgstr "Voor teams die meer nodig hebben"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Voor deze Claude-chat. Behoudt het gesprek en model. Gebruikt alleen accounts met gecontroleerd quotum."
 
 msgid "Force merge"
 msgstr "Geforceerd mergen"
@@ -11328,6 +11341,9 @@ msgstr "Offline / local-first modus"
 
 msgid "Older"
 msgstr "Ouder"
+
+msgid "On"
+msgstr "Aan"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "op {offScopeHostName} — draait hier niet"
@@ -16278,6 +16294,9 @@ msgstr "Naar tabblad 8"
 msgid "Switch to Tab 9"
 msgstr "Naar tabblad 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Naar het voorgestelde account wisselen als het quotum op is"
+
 msgid "Switch to Workspace 1"
 msgstr "Naar werkruimte 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Wachten tot het quotum wordt vernieuwd en doorgaan"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Wacht tot de agent klaar is voordat u overdraagt."
 
@@ -18363,6 +18385,12 @@ msgstr "Wachten op checks"
 
 msgid "Waiting for it to connect…"
 msgstr "Wachten op verbinding…"
+
+msgid "Waiting for quota"
+msgstr "Wachten op quotum"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Wachten op quotum. Stoppen annuleert het automatisch doorgaan."
 
 msgid "Waiting for Review"
 msgstr "Wachten op review"

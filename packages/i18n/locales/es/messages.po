@@ -2703,6 +2703,9 @@ msgstr "Automatizar tareas"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatiza la preparación de espacios de trabajo para {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Continuación automática"
+
 msgid "Automation"
 msgstr "Automatización"
 
@@ -4522,6 +4525,10 @@ msgstr "Continuado desde {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuar una sesión de agente requiere un espacio de trabajo fijado"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Continuando con {0}…"
+
 msgid "continuing the last session"
 msgstr "continuando la última sesión"
 
@@ -5169,6 +5176,9 @@ msgstr "No se pudo guardar: edita o haz clic fuera para reintentarlo"
 
 msgid "Couldn't save — retrying…"
 msgstr "No se pudo guardar: reintentando…"
+
+msgid "Couldn't save continuation options"
+msgstr "No se pudieron guardar las opciones de continuación"
 
 msgid "Couldn't save edits"
 msgstr "No se pudieron guardar las ediciones"
@@ -7696,6 +7706,9 @@ msgstr "Si tienes dudas sobre la facturación, <0>contáctanos</0>."
 
 msgid "For teams that need more power"
 msgstr "Para equipos que necesitan más potencia"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Para este chat de Claude. Conserva la conversación y el modelo. Solo usa cuentas con cuota verificada."
 
 msgid "Force merge"
 msgstr "Forzar la fusión"
@@ -11328,6 +11341,9 @@ msgstr "Modo sin conexión / local primero"
 
 msgid "Older"
 msgstr "Más antiguo"
+
+msgid "On"
+msgstr "Activada"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "en {offScopeHostName}: no se ejecutará aquí"
@@ -16278,6 +16294,9 @@ msgstr "Ir a la pestaña 8"
 msgid "Switch to Tab 9"
 msgstr "Ir a la pestaña 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Cambiar a la cuenta sugerida cuando se agote la cuota"
+
 msgid "Switch to Workspace 1"
 msgstr "Ir al espacio de trabajo 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Volumen"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Esperar al reinicio de la cuota y continuar"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Espera a que el agente termine antes de transferir."
 
@@ -18363,6 +18385,12 @@ msgstr "Esperando las comprobaciones"
 
 msgid "Waiting for it to connect…"
 msgstr "Esperando a que se conecte…"
+
+msgid "Waiting for quota"
+msgstr "Esperando cuota"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Esperando cuota. Detener cancela la continuación automática."
 
 msgid "Waiting for Review"
 msgstr "Esperando la revisión"
