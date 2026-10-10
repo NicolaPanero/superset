@@ -2703,6 +2703,9 @@ msgstr "Automatizujte úkoly"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Zautomatizujte nastavení pracovního prostoru pro {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Automatické pokračování"
+
 msgid "Automation"
 msgstr "Automatizace"
 
@@ -4522,6 +4525,10 @@ msgstr "Pokračování z {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Pokračování s účtem {0}…"
+
 msgid "continuing the last session"
 msgstr "pokračováním v poslední relaci"
 
@@ -5169,6 +5176,9 @@ msgstr "Nepodařilo se uložit — upravte pole nebo klikněte jinam a zkuste to
 
 msgid "Couldn't save — retrying…"
 msgstr "Nepodařilo se uložit — zkouším znovu…"
+
+msgid "Couldn't save continuation options"
+msgstr "Možnosti pokračování nelze uložit"
 
 msgid "Couldn't save edits"
 msgstr "Nepodařilo se uložit úpravy"
@@ -7696,6 +7706,9 @@ msgstr "S dotazy k fakturaci se <0>ozvěte nám</0>."
 
 msgid "For teams that need more power"
 msgstr "Pro týmy, které potřebují víc"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Pro tento chat Claude. Zachová konverzaci a model. Používá pouze účty s ověřenou kvótou."
 
 msgid "Force merge"
 msgstr "Vynutit sloučení"
@@ -11328,6 +11341,9 @@ msgstr "Offline / local-first režim"
 
 msgid "Older"
 msgstr "Starší"
+
+msgid "On"
+msgstr "Zapnuto"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "na {offScopeHostName} — tady nepoběží"
@@ -16278,6 +16294,9 @@ msgstr "Přepnout na kartu 8"
 msgid "Switch to Tab 9"
 msgstr "Přepnout na kartu 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Po vyčerpání kvóty přepnout na doporučený účet"
+
 msgid "Switch to Workspace 1"
 msgstr "Přepnout na pracovní prostor 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Hlasitost"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Počkat na obnovení kvóty a pokračovat"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Před předáním počkejte, až agent dokončí práci."
 
@@ -18363,6 +18385,12 @@ msgstr "Čeká na kontroly"
 
 msgid "Waiting for it to connect…"
 msgstr "Čeká se na připojení…"
+
+msgid "Waiting for quota"
+msgstr "Čekání na kvótu"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Čekání na kvótu. Zastavení zruší automatické pokračování."
 
 msgid "Waiting for Review"
 msgstr "Čeká na revizi"

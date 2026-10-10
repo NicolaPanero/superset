@@ -2703,6 +2703,9 @@ msgstr "Автоматизируйте задачи"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Автоматизируйте настройку рабочих областей для {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Автоматическое продолжение"
+
 msgid "Automation"
 msgstr "Автоматизация"
 
@@ -4522,6 +4525,10 @@ msgstr "Продолжение из {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Для продолжения сессии агента нужно закреплённое рабочее пространство"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Продолжение с аккаунтом {0}…"
+
 msgid "continuing the last session"
 msgstr "продолжая последнюю сессию"
 
@@ -5169,6 +5176,9 @@ msgstr "Не удалось сохранить — измените или кл�
 
 msgid "Couldn't save — retrying…"
 msgstr "Не удалось сохранить — повторяем…"
+
+msgid "Couldn't save continuation options"
+msgstr "Не удалось сохранить настройки продолжения"
 
 msgid "Couldn't save edits"
 msgstr "Не удалось сохранить правки"
@@ -7696,6 +7706,9 @@ msgstr "По вопросам оплаты <0>напишите нам</0>."
 
 msgid "For teams that need more power"
 msgstr "Для команд, которым нужно больше"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Для этого чата Claude. Сохраняет разговор и модель. Использует только аккаунты с проверенной квотой."
 
 msgid "Force merge"
 msgstr "Принудительное слияние"
@@ -11328,6 +11341,9 @@ msgstr "Офлайн / local-first режим"
 
 msgid "Older"
 msgstr "Ранее"
+
+msgid "On"
+msgstr "Включено"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "на {offScopeHostName} — здесь не запустится"
@@ -16278,6 +16294,9 @@ msgstr "Перейти на вкладку 8"
 msgid "Switch to Tab 9"
 msgstr "Перейти на вкладку 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Перейти на рекомендуемый аккаунт, когда квота исчерпана"
+
 msgid "Switch to Workspace 1"
 msgstr "Перейти в рабочую область 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Громкость"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Дождаться обновления квоты и продолжить"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Перед передачей дождитесь, пока агент закончит."
 
@@ -18363,6 +18385,12 @@ msgstr "Ожидание проверок"
 
 msgid "Waiting for it to connect…"
 msgstr "Ожидание подключения…"
+
+msgid "Waiting for quota"
+msgstr "Ожидание квоты"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "Ожидание квоты. Остановка отменяет автоматическое продолжение."
 
 msgid "Waiting for Review"
 msgstr "Ожидание ревью"

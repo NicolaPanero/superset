@@ -16,6 +16,23 @@ import { workspaces } from "./schema.ts";
  */
 
 /** Local profile display names; credentials remain in the native CLI stores. */
+export const chatQuotaRecovery = sqliteTable(
+	"chat_quota_recovery",
+	{
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		terminalId: text("terminal_id").notNull(),
+		switchAccounts: integer("switch_accounts", { mode: "boolean" }).notNull(),
+		resumeAtReset: integer("resume_at_reset", { mode: "boolean" }).notNull(),
+		hasSelection: integer("has_selection", { mode: "boolean" }).notNull(),
+		nativeSessionId: text("native_session_id"),
+		accountSelection: text("account_selection"),
+		updatedAt: integer("updated_at").notNull(),
+	},
+	(table) => [primaryKey({ columns: [table.workspaceId, table.terminalId] })],
+);
+
 export const agentAccountAliases = sqliteTable(
 	"agent_account_aliases",
 	{

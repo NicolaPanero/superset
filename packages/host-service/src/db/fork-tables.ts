@@ -1,4 +1,10 @@
 const FORK_TABLES_SQL = `
+CREATE TABLE IF NOT EXISTS chat_quota_recovery (
+ workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+ terminal_id text NOT NULL, switch_accounts integer NOT NULL, resume_at_reset integer NOT NULL,
+ has_selection integer NOT NULL, native_session_id text, account_selection text, updated_at integer NOT NULL,
+ PRIMARY KEY(workspace_id,terminal_id)
+);
 CREATE TABLE IF NOT EXISTS \`agent_account_aliases\` (
 	\`agent\` text NOT NULL,
 	\`selection\` text NOT NULL,

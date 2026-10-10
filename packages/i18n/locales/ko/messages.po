@@ -2703,6 +2703,9 @@ msgstr "작업 자동화"
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName}의 워크스페이스 설정 자동화"
 
+msgid "Automatic continuation"
+msgstr "자동 계속"
+
 msgid "Automation"
 msgstr "자동화"
 
@@ -4522,6 +4525,10 @@ msgstr "{source}에서 이어짐"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "에이전트 세션을 계속하려면 고정된 워크스페이스가 필요합니다"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "{0} 계정으로 계속하는 중…"
+
 msgid "continuing the last session"
 msgstr "마지막 세션을 계속"
 
@@ -5169,6 +5176,9 @@ msgstr "저장하지 못했습니다 — 수정하거나 다른 곳을 클릭하
 
 msgid "Couldn't save — retrying…"
 msgstr "저장하지 못했습니다 — 다시 시도하는 중…"
+
+msgid "Couldn't save continuation options"
+msgstr "계속 옵션을 저장할 수 없습니다"
 
 msgid "Couldn't save edits"
 msgstr "편집을 저장하지 못했습니다"
@@ -7696,6 +7706,9 @@ msgstr "결제에 대한 문의는 <0>여기로 연락해 주세요</0>."
 
 msgid "For teams that need more power"
 msgstr "더 큰 성능이 필요한 팀용"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "이 Claude 채팅에 적용됩니다. 대화와 모델을 유지합니다. 한도가 확인된 계정만 사용합니다."
 
 msgid "Force merge"
 msgstr "강제 머지"
@@ -11328,6 +11341,9 @@ msgstr "오프라인 / 로컬 우선 모드"
 
 msgid "Older"
 msgstr "이전"
+
+msgid "On"
+msgstr "켜짐"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName}에 있음 — 여기서는 실행되지 않습니다"
@@ -16278,6 +16294,9 @@ msgstr "탭 8로 전환"
 msgid "Switch to Tab 9"
 msgstr "탭 9로 전환"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "한도가 소진되면 추천 계정으로 전환"
+
 msgid "Switch to Workspace 1"
 msgstr "워크스페이스 1로 전환"
 
@@ -18347,6 +18366,9 @@ msgstr "볼륨"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "한도가 초기화될 때까지 기다린 후 계속"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "전달하기 전에 에이전트가 끝날 때까지 기다리세요."
 
@@ -18363,6 +18385,12 @@ msgstr "검사 대기 중"
 
 msgid "Waiting for it to connect…"
 msgstr "연결을 기다리는 중…"
+
+msgid "Waiting for quota"
+msgstr "한도 대기 중"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "한도 대기 중입니다. 중지하면 자동 계속이 취소됩니다."
 
 msgid "Waiting for Review"
 msgstr "리뷰 대기 중"

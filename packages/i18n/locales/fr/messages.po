@@ -2703,6 +2703,9 @@ msgstr "Automatiser les tâches"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatiser la configuration des espaces de travail pour {projectName}"
 
+msgid "Automatic continuation"
+msgstr "Reprise automatique"
+
 msgid "Automation"
 msgstr "Automatisation"
 
@@ -4522,6 +4525,10 @@ msgstr "Suite de {source}"
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuer une session d'agent nécessite un espace de travail épinglé"
 
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "Reprise avec {0}…"
+
 msgid "continuing the last session"
 msgstr "en continuant la dernière session"
 
@@ -5169,6 +5176,9 @@ msgstr "Échec de l'enregistrement — modifiez ou cliquez ailleurs pour réessa
 
 msgid "Couldn't save — retrying…"
 msgstr "Échec de l'enregistrement — nouvelle tentative…"
+
+msgid "Couldn't save continuation options"
+msgstr "Impossible d’enregistrer les options de reprise"
 
 msgid "Couldn't save edits"
 msgstr "Impossible d'enregistrer les modifications"
@@ -7696,6 +7706,9 @@ msgstr "Pour toute question sur la facturation, <0>contactez-nous</0>."
 
 msgid "For teams that need more power"
 msgstr "Pour les équipes qui ont besoin de plus de puissance"
+
+msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
+msgstr "Pour ce chat Claude. Conserve la conversation et le modèle. Seuls les comptes dont le quota est vérifié sont utilisés."
 
 msgid "Force merge"
 msgstr "Forcer la fusion"
@@ -11328,6 +11341,9 @@ msgstr "Mode hors ligne / local d'abord"
 
 msgid "Older"
 msgstr "Plus ancien"
+
+msgid "On"
+msgstr "Activée"
 
 msgid "on {offScopeHostName} — won't run here"
 msgstr "sur {offScopeHostName} — ne s'exécutera pas ici"
@@ -16278,6 +16294,9 @@ msgstr "Passer à l'onglet 8"
 msgid "Switch to Tab 9"
 msgstr "Passer à l'onglet 9"
 
+msgid "Switch to the suggested account when quota runs out"
+msgstr "Passer au compte suggéré lorsque le quota est épuisé"
+
 msgid "Switch to Workspace 1"
 msgstr "Passer à l'espace de travail 1"
 
@@ -18347,6 +18366,9 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait and continue when quota resets"
+msgstr "Attendre le renouvellement du quota et reprendre"
+
 msgid "Wait for the agent to finish before handing off."
 msgstr "Attendez que l'agent ait terminé avant le transfert."
 
@@ -18363,6 +18385,12 @@ msgstr "En attente des vérifications"
 
 msgid "Waiting for it to connect…"
 msgstr "En attente de la connexion…"
+
+msgid "Waiting for quota"
+msgstr "En attente de quota"
+
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "En attente de quota. Arrêter annule la reprise automatique."
 
 msgid "Waiting for Review"
 msgstr "En attente de revue"

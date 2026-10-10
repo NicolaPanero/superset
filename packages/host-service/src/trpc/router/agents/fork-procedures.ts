@@ -28,6 +28,7 @@ import {
 	launchDetails,
 	terminalLaunchConfigId,
 } from "./fork-launch";
+import { forkQuotaRecoveryProcedures } from "./fork-quota-recovery";
 
 /** The fork's agent procedures, served under the `agents` router. */
 export const forkAgentProcedures = {
@@ -243,4 +244,5 @@ export const forkAgentProcedures = {
 		),
 	...forkBackgroundChatProcedures,
 	...forkChatAccountProcedures,
+	...forkQuotaRecoveryProcedures,
 };

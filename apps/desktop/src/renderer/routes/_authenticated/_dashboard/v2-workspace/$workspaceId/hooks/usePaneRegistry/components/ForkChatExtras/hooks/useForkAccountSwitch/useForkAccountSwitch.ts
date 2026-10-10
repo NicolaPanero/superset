@@ -117,6 +117,8 @@ export function useForkAccountSwitch(
 					agent: "claude",
 					sessionId: data.agent.sessionId,
 					targetSelection: selection,
+					workspaceId,
+					terminalId: data.terminalId,
 				});
 			ctx.actions.updateData({ ...rest, acpAccountSelection: selection });
 			toast.success(

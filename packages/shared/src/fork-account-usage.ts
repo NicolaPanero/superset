@@ -16,17 +16,9 @@ export interface AccountQuota {
 	}>;
 }
 
-export function accountQuotaState(
-	account: AccountQuota | undefined,
-	model?: string,
-	now = Date.now(),
-) {
-	if (!account)
-		return { reason: "unknown" as const, remaining: null, warning: false };
-	if (account.credentialKind === "api_key")
-		return { reason: "api" as const, remaining: null, warning: true };
+export function accountQuotaWindows(account: AccountQuota, model?: string) {
 	const general = new Set(["five_hour", "seven_day", "primary", "secondary"]);
-	const windows = account.windows.filter((window) => {
+	return account.windows.filter((window) => {
 		if (general.has(window.id)) return true;
 		if (!model) return true;
 		const name = `${window.id} ${window.label}`.toLowerCase();
@@ -37,6 +29,18 @@ export function accountQuotaState(
 			) || name.includes(chosen)
 		);
 	});
+}
+
+export function accountQuotaState(
+	account: AccountQuota | undefined,
+	model?: string,
+	now = Date.now(),
+) {
+	if (!account)
+		return { reason: "unknown" as const, remaining: null, warning: false };
+	if (account.credentialKind === "api_key")
+		return { reason: "api" as const, remaining: null, warning: true };
+	const windows = accountQuotaWindows(account, model);
 	const stale =
 		account.status !== "ok" ||
 		!Number.isFinite(account.fetchedAt.getTime()) ||
