@@ -5,7 +5,7 @@ import type {
 	HarnessAdapter,
 	HarnessStartOptions,
 } from "@superset/chat-runtime";
-import { EventQueue } from "@superset/chat-runtime";
+import { createAcpAdapter, EventQueue } from "@superset/chat-runtime";
 import type { SessionAccount } from "../trpc/router/usage/session-account/session-account";
 import type { UsageAccount } from "../trpc/router/usage/types";
 import {
@@ -91,7 +91,9 @@ class Worker implements HarnessAdapter {
 			},
 		});
 	}
-	fail(message = "session/prompt: You've hit your limit · resets 5pm") {
+	fail(
+		message = "session/prompt: Internal error: You've hit your limit · resets 5pm",
+	) {
 		this.queue.push({
 			kind: "turn",
 			turn: {
@@ -211,6 +213,68 @@ test("quota failure classification rejects transport, login, 429 and model prose
 		"context window full",
 	])
 		expect(isClaudeQuotaFailure(message)).toBe(false);
+});
+test("official ACP runtime preserves Claude JSON-RPC quota errors for recovery", async () => {
+	const events: AdapterEvent[] = [];
+	const adapter = createAcpAdapter({
+		command: "fake-claude-acp",
+		createTransport: (_options, handlers) => ({
+			close: async () => undefined,
+			send: (line) => {
+				const frame = JSON.parse(line) as { id?: number; method?: string };
+				if (frame.id === undefined || !frame.method) return;
+				queueMicrotask(() =>
+					handlers.onLine(
+						JSON.stringify({
+							jsonrpc: "2.0",
+							id: frame.id,
+							...(frame.method === "session/prompt"
+								? {
+										error: {
+											code: -32603,
+											message:
+												"Internal error: You've hit your limit · resets 5pm",
+										},
+									}
+								: {
+										result:
+											frame.method === "initialize"
+												? { protocolVersion: 1, agentCapabilities: {} }
+												: frame.method === "session/new"
+													? { sessionId: "native-id" }
+													: null,
+									}),
+						}),
+					),
+				);
+			},
+		}),
+	});
+	const pump = (async () => {
+		for await (const e of adapter.start({ cwd: "/tmp" })) events.push(e);
+	})();
+	try {
+		await until(() =>
+			events.some((e) => e.kind === "session" && e.session.status === "idle"),
+		);
+		adapter.prompt([{ type: "text", text: "test" }]);
+		await until(() =>
+			events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		const failure = events.find(
+			(e) => e.kind === "turn" && e.turn.status === "failed",
+		);
+		expect(failure?.kind === "turn" && failure.turn.error?.message).toBe(
+			"session/prompt: Internal error: You've hit your limit · resets 5pm",
+		);
+		expect(
+			failure?.kind === "turn" &&
+				isClaudeQuotaFailure(failure.turn.error?.message ?? ""),
+		).toBe(true);
+	} finally {
+		await adapter.dispose();
+		await pump;
+	}
 });
 test("suggested account excludes API, stale, duplicate logins, model exhaustion and blocked profiles", () => {
 	const rows = [

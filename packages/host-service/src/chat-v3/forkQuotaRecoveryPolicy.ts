@@ -7,7 +7,7 @@ import type { UsageAccount } from "../trpc/router/usage/types";
 // Claude SDK's synthetic usage-limit prefixes, accepted only on a failed
 // session/prompt round trip, never from model output or a tool's stderr.
 export function isClaudeQuotaFailure(message: string): boolean {
-	return /^(?:session\/prompt: )?(?:You've (?:hit|reached) your .*(?:limit|usage)|You're out of (?:usage credits|extra usage)|Your org is out of usage)/.test(
+	return /^(?:session\/prompt: )?(?:Internal error: )?(?:You've (?:hit|reached) your .*(?:limit|usage)|You're out of (?:usage credits|extra usage)|Your org is out of usage)/.test(
 		message,
 	);
 }
