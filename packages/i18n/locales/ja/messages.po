@@ -1863,9 +1863,6 @@ msgstr "mainとの比較"
 msgid "Agent"
 msgstr "エージェント"
 
-msgid "Agent accounts"
-msgstr "エージェントのアカウント"
-
 msgid "Agent commands"
 msgstr "エージェントコマンド"
 
@@ -2775,9 +2772,6 @@ msgstr "平均掲載順位 {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "{0}を待機中"
-
-msgid "Awaiting permission"
-msgstr "許可待ち"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "返信待ち — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "キューから抜けられませんでした"
 
 msgid "Could not list directory"
 msgstr "ディレクトリを一覧表示できませんでした"
-
-msgid "Could not load agent configurations."
-msgstr "エージェント設定を読み込めませんでした。"
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "起動"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "機能開発、バグ修正、リファクタリングにまたがってエージェントを並列に起動できます。どのエージェントが作業中で、どれがブロックされ、どれがあなたの返事を待っているかが一目で分かります。"
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "判明している起動時の選択を表示します。使用中のモデルはCLI内で変更される場合があります。"
-
 msgid "Launch mode"
 msgstr "起動モード"
-
-msgid "Launch model"
-msgstr "起動時のモデル"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "新しいワークスペースが作成されたときにこのターミナルスクリプトを起動します。"
@@ -9758,9 +9743,6 @@ msgstr "組織のブランディングとメンバーを管理します。"
 
 msgid "Managed"
 msgstr "管理対象"
-
-msgid "Managed by the CLI"
-msgstr "CLIが管理"
 
 msgid "Managed by your organization admin."
 msgstr "組織の管理者によって管理されています。"
@@ -10557,9 +10539,6 @@ msgstr "アクティブな組織が選択されていません"
 msgid "No active services"
 msgstr "アクティブなサービスはありません"
 
-msgid "No active sessions"
-msgstr "アクティブなセッションなし"
-
 msgid "No active terminal sessions"
 msgstr "アクティブなターミナルセッションはありません"
 
@@ -11213,9 +11192,6 @@ msgstr "このバージョンにはありません"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "まだイベントを受信していません: Microsoft Graphが通知サブスクリプションを拒否しました。アプリの管理者同意と保護されたAPIの承認を確認してから、再接続してください。"
 
-msgid "Not recorded"
-msgstr "未記録"
-
 msgid "Not reviewed by you"
 msgstr "自分がレビューしていない"
 
@@ -11820,9 +11796,6 @@ msgstr "最近使った項目を開く"
 
 msgid "Open roles"
 msgstr "募集中のポジション"
-
-msgid "Open session"
-msgstr "セッションを開く"
 
 msgid "Open session in"
 msgstr "セッションを開く場所"
@@ -14799,9 +14772,6 @@ msgstr "ターミナルスクリプトのディレクトリを選択"
 
 msgid "Select worktree location"
 msgstr "ワークツリーの場所を選択"
-
-msgid "Selected account"
-msgstr "選択したアカウント"
 
 msgid "Selected agent is not available on this host"
 msgstr "選択したエージェントはこのホストで利用できません"

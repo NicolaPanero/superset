@@ -29,6 +29,9 @@ la quota disponibile per il modello scelto. La scelta vale per quella creazione;
 cambiando host/provider o iniziando una nuova creazione torna il predefinito.
 **Suggerito** indica l’abbonamento con più quota verificata: la scelta resta manuale.
 Lo stesso riepilogo compare nel menu account, nelle intestazioni e in Usage.
+L’account nella cartella standard di Claude è mostrato con la sua email: selezionarlo
+usa proprio quel login, indipendentemente dal predefinito di Superset. Anche le
+chat importate senza configurazione agente conservano una scelta esplicita.
 
 La schermata controlla la cache condivisa all’apertura, al ritorno e ogni trenta
 secondi mentre è visibile. La cache dell’host dura quindici secondi; le richieste
@@ -176,3 +179,11 @@ profili, ripresa, account, ponte Cursor, chat in background e contesto
 esplicito con paginazione e troncamento. `bun run check:i18n` richiede tutte
 le traduzioni delle 17 lingue. Il typecheck riguarda desktop e host-service.
 Una prova manuale con gli agenti reali resta distinta da questi controlli.
+
+La voce **Agent** nel menu **+** delle schede avvia una nuova sessione; l’icona
+**Find a chat** nell’intestazione apre direttamente la ricerca delle chat. Le
+schede riepilogative del fork sono rimosse: creazione e importazione riusano
+lo stesso percorso di avvio. Il passaggio tra agenti segue l’ordine e le icone
+delle impostazioni; gli agenti senza supporto chat sono visibili ma disabilitati.
+Pages conserva il flusso ufficiale: la pagina compare dopo la pubblicazione
+riuscita, mentre la chat usata per crearla rimane una sessione separata.

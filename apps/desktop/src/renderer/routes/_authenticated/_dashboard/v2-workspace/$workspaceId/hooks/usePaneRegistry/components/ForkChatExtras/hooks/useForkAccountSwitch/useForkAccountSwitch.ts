@@ -68,7 +68,9 @@ export function useForkAccountSwitch(
 					name:
 						option.alias ??
 						usage?.email ??
-						(isSystemDefault ? t({ message: "System default" }) : option.label),
+						(option.label === "System default"
+							? t({ message: "System default" })
+							: option.label),
 					email: usage?.email ?? null,
 					plan: usage?.plan ?? null,
 					isSystemDefault,

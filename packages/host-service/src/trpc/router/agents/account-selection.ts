@@ -4,13 +4,17 @@ import { TRPCError } from "@trpc/server";
 import { pinNativeProfile } from "../../../session-transfer/registry";
 import { getTerminalBaseEnv } from "../../../terminal/env";
 import type { ResolvedHostAgentConfig } from "../../../terminal-agents/agent-config";
+import { readDefaultLoginEmail } from "../usage/claude";
 import { discoverClaudeProfiles, discoverCodexHomes } from "../usage/profiles";
 
 export async function agentAccountOptions(agent: string) {
 	if (agent === "claude") {
-		const profiles = await discoverClaudeProfiles();
+		const [profiles, email] = await Promise.all([
+			discoverClaudeProfiles(),
+			readDefaultLoginEmail(),
+		]);
 		return [
-			{ selection: null, label: "System default" },
+			{ selection: null, label: email ?? "System default" },
 			...profiles.map((profile) => ({
 				selection: profile.configDir,
 				label: profile.email ?? basename(profile.configDir),

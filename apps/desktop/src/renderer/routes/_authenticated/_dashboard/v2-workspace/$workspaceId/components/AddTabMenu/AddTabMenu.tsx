@@ -4,12 +4,14 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@superset/ui/dropdown-menu";
+import { Bot } from "lucide-react";
 import { BsTerminalPlus } from "react-icons/bs";
 import { LuGitCompareArrows } from "react-icons/lu";
 import { TbDeviceDesktop, TbWorld } from "react-icons/tb";
 import { HotkeyMenuShortcut } from "renderer/components/HotkeyMenuShortcut";
 
 interface AddTabMenuProps {
+	onAddAgent: () => void;
 	onAddTerminal: () => void;
 	onAddBrowser: () => void;
 	onAddChanges: () => void;
@@ -19,6 +21,7 @@ interface AddTabMenuProps {
 }
 
 export function AddTabMenu({
+	onAddAgent,
 	onAddTerminal,
 	onAddBrowser,
 	onAddChanges,
@@ -28,6 +31,10 @@ export function AddTabMenu({
 }: AddTabMenuProps) {
 	return (
 		<>
+			<DropdownMenuItem className="gap-2" onClick={onAddAgent}>
+				<Bot className="size-4" />
+				<Trans>Agent</Trans>
+			</DropdownMenuItem>
 			<DropdownMenuItem className="gap-2" onClick={onAddTerminal}>
 				<BsTerminalPlus className="size-4" />
 				<span>

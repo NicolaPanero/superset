@@ -67,7 +67,8 @@ export function ForkAccountPicker({
 							<Trans>API billing</Trans>
 						) : (
 							(selected?.option.alias ??
-							selected?.usage?.email ?? <Trans>Account</Trans>)
+							selected?.usage?.email ??
+							selected?.option.label ?? <Trans>Account</Trans>)
 						)}
 					</span>
 					{!account.forcedApi && (

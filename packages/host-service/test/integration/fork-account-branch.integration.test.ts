@@ -1,6 +1,19 @@
 import { expect, test } from "bun:test";
 import { randomUUID } from "node:crypto";
+import { buildChatAgentEnv } from "../../src/chat-v3/agentEnv";
+import { forkLaunchChoices } from "../../src/chat-v3/forkLaunchChoices";
+import {
+	getTerminalBaseEnv,
+	initTerminalBaseEnv,
+	resetTerminalBaseEnvForTests,
+} from "../../src/terminal/env";
+import { agentConfigsRouter } from "../../src/trpc/router/settings/agent-configs";
+import {
+	getDefaultAccountSelections,
+	setDefaultAccountSelection,
+} from "../../src/trpc/router/usage/default-account";
 import { recordCreatedBranch } from "../../src/trpc/router/workspace-cleanup/fork-branch-ownership";
+import type { HostServiceContext } from "../../src/types";
 import { createBasicScenario } from "../helpers/scenarios";
 
 test("new creations record provenance; existing branches and forced local deletes preserve commits", async () => {
@@ -101,6 +114,54 @@ test("a missing chosen account fails before workspace creation", async () => {
 		).rejects.toThrow();
 		expect((await scenario.repo.git.branchLocal()).all).toEqual(before);
 	} finally {
+		await scenario.dispose();
+	}
+});
+
+test("an imported chat can explicitly use the system login while another profile stays the host default", async () => {
+	const scenario = await createBasicScenario();
+	let previousEnv: Record<string, string> | undefined;
+	try {
+		previousEnv = getTerminalBaseEnv();
+	} catch {}
+	try {
+		initTerminalBaseEnv({ PATH: process.env.PATH ?? "/usr/bin:/bin" });
+		await agentConfigsRouter
+			.createCaller({
+				db: scenario.host.db,
+				isAuthenticated: true,
+			} as HostServiceContext)
+			.list();
+		setDefaultAccountSelection(
+			scenario.host.db,
+			"claude",
+			scenario.repo.repoPath,
+		);
+		const choices = forkLaunchChoices(scenario.host.db, "claude-acp", {
+			accountSelection: null,
+		});
+		const selected = await buildChatAgentEnv({
+			db: scenario.host.db,
+			cwd: scenario.repo.repoPath,
+			workspaceId: scenario.workspaceId,
+			...choices,
+		});
+		expect(selected.CLAUDE_CONFIG_DIR).toBeUndefined();
+		expect(selected.SUPERSET_PINNED_ACCOUNT_ENV).toBe("CLAUDE_CONFIG_DIR");
+		expect(selected.SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR).toBe("");
+		expect(getDefaultAccountSelections(scenario.host.db).claudeConfigDir).toBe(
+			scenario.repo.repoPath,
+		);
+		const ordinary = await buildChatAgentEnv({
+			db: scenario.host.db,
+			cwd: scenario.repo.repoPath,
+			workspaceId: scenario.workspaceId,
+			agentConfigId: choices.agentConfigId,
+		});
+		expect(ordinary.CLAUDE_CONFIG_DIR).toBe(scenario.repo.repoPath);
+	} finally {
+		if (previousEnv) initTerminalBaseEnv(previousEnv);
+		else resetTerminalBaseEnvForTests();
 		await scenario.dispose();
 	}
 });

@@ -1863,9 +1863,6 @@ msgstr "Proti main"
 msgid "Agent"
 msgstr "Agent"
 
-msgid "Agent accounts"
-msgstr "Účty agentů"
-
 msgid "Agent commands"
 msgstr "Příkazy agentů"
 
@@ -2775,9 +2772,6 @@ msgstr "prům. pozice {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "Čeká na {0}"
-
-msgid "Awaiting permission"
-msgstr "Čeká na oprávnění"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Čeká na odpověď — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Nepodařilo se opustit frontu"
 
 msgid "Could not list directory"
 msgstr "Nepodařilo se vypsat adresář"
-
-msgid "Could not load agent configurations."
-msgstr "Nepodařilo se načíst konfigurace agentů."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Spuštění"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Spouštějte agenty na funkce, opravy chyb i refaktory, všechno paralelně. Stav na první pohled ukáže, kteří agenti pracují, kteří jsou zablokovaní a kteří čekají na vás."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Volby spuštění se zobrazují, pokud jsou známé. Aktivní model se může v CLI změnit."
-
 msgid "Launch mode"
 msgstr "Režim spuštění"
-
-msgid "Launch model"
-msgstr "Model při spuštění"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Spustit tento terminálový skript při vytvoření nového pracovního prostoru."
@@ -9758,9 +9743,6 @@ msgstr "Spravujte vzhled a členy své organizace."
 
 msgid "Managed"
 msgstr "Spravováno"
-
-msgid "Managed by the CLI"
-msgstr "Spravováno v CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Spravuje správce vaší organizace."
@@ -10557,9 +10539,6 @@ msgstr "Není vybraná žádná aktivní organizace"
 msgid "No active services"
 msgstr "Žádné aktivní služby"
 
-msgid "No active sessions"
-msgstr "Žádné aktivní relace"
-
 msgid "No active terminal sessions"
 msgstr "Žádné aktivní relace terminálu"
 
@@ -11213,9 +11192,6 @@ msgstr "Není v této verzi"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "Zatím nepřicházejí žádné události: Microsoft Graph odmítl odběry oznámení. Zkontrolujte souhlas administrátora a schválení chráněného API, pak se připojte znovu."
 
-msgid "Not recorded"
-msgstr "Nezaznamenáno"
-
 msgid "Not reviewed by you"
 msgstr "Bez vaší revize"
 
@@ -11820,9 +11796,6 @@ msgstr "Otevřít nedávné"
 
 msgid "Open roles"
 msgstr "Otevřené pozice"
-
-msgid "Open session"
-msgstr "Otevřít relaci"
 
 msgid "Open session in"
 msgstr "Otevřít relaci v"
@@ -14799,9 +14772,6 @@ msgstr "Vyberte adresář terminálového skriptu"
 
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
-
-msgid "Selected account"
-msgstr "Vybraný účet"
 
 msgid "Selected agent is not available on this host"
 msgstr "Vybraný agent není na tomto hostu dostupný"

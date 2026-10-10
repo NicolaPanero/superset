@@ -14,11 +14,21 @@ export function forkLaunchChoices(
 	resolve: (
 		db: HostDb,
 		id: string,
-	) => { presetId: string } | null = resolveHostAgentConfig,
+	) => { id?: string; presetId: string } | null = resolveHostAgentConfig,
 ): { agentConfigId?: string; accountSelection?: string | null } {
-	if (!options.agentConfigId) return {};
-	const config = resolve(db, options.agentConfigId);
 	const expected = ACP_HARNESSES[harness]?.binary;
+	if (!options.agentConfigId) {
+		if (options.accountSelection === undefined) return {};
+		const config = expected ? resolve(db, expected) : null;
+		if (!config || config.presetId !== expected)
+			throw new Error("agent_config_unavailable");
+		return {
+			agentConfigId: config.id ?? expected,
+			accountSelection: options.accountSelection,
+		};
+	}
+	const config = resolve(db, options.agentConfigId);
+	if (!config) throw new Error("agent_config_unavailable");
 	const owned =
 		config &&
 		(config.presetId === expected ||

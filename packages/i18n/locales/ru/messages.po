@@ -1863,9 +1863,6 @@ msgstr "Против main"
 msgid "Agent"
 msgstr "Агент"
 
-msgid "Agent accounts"
-msgstr "Учётные записи агентов"
-
 msgid "Agent commands"
 msgstr "Команды агентов"
 
@@ -2775,9 +2772,6 @@ msgstr "средняя позиция {avgPosition}"
 #. placeholder {0}: requestedReviewers.join(", ")
 msgid "Awaiting {0}"
 msgstr "Ожидает {0}"
-
-msgid "Awaiting permission"
-msgstr "Ожидание разрешения"
 
 msgid "Awaiting Response — {workspaceName}"
 msgstr "Ожидает ответа — {workspaceName}"
@@ -4835,9 +4829,6 @@ msgstr "Не удалось выйти из очереди"
 
 msgid "Could not list directory"
 msgstr "Не удалось прочитать содержимое папки"
-
-msgid "Could not load agent configurations."
-msgstr "Не удалось загрузить настройки агентов."
 
 #. placeholder {0}: host.name
 msgid "Could not load agents from {0}"
@@ -9193,14 +9184,8 @@ msgstr "Запуск"
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Запускайте агентов на фичи, исправления багов и рефакторинги — все параллельно. Статус с одного взгляда показывает, кто работает, кто заблокирован, а кто ждёт вас."
 
-msgid "Launch choices are shown when known. The active model can change inside the CLI."
-msgstr "Известные параметры запуска отображаются. Активная модель может измениться в CLI."
-
 msgid "Launch mode"
 msgstr "Режим запуска"
-
-msgid "Launch model"
-msgstr "Модель при запуске"
 
 msgid "Launch this terminal script when a new workspace is created."
 msgstr "Запускать этот скрипт терминала при создании новой рабочей области."
@@ -9758,9 +9743,6 @@ msgstr "Управление брендингом и участниками ва
 
 msgid "Managed"
 msgstr "Управляемый"
-
-msgid "Managed by the CLI"
-msgstr "Управляется CLI"
 
 msgid "Managed by your organization admin."
 msgstr "Управляется администратором вашей организации."
@@ -10557,9 +10539,6 @@ msgstr "Активная организация не выбрана"
 msgid "No active services"
 msgstr "Нет активных служб"
 
-msgid "No active sessions"
-msgstr "Нет активных сеансов"
-
 msgid "No active terminal sessions"
 msgstr "Нет активных сессий терминала"
 
@@ -11213,9 +11192,6 @@ msgstr "Нет в этой версии"
 msgid "Not receiving events yet: Microsoft Graph refused the notification subscriptions. Check the app's admin consent and protected API approval, then reconnect."
 msgstr "События пока не приходят: Microsoft Graph отклонил подписки на уведомления. Проверьте согласие администратора и одобрение защищённого API, затем переподключитесь."
 
-msgid "Not recorded"
-msgstr "Не записано"
-
 msgid "Not reviewed by you"
 msgstr "Не проверено вами"
 
@@ -11820,9 +11796,6 @@ msgstr "Открыть недавние"
 
 msgid "Open roles"
 msgstr "Вакансии"
-
-msgid "Open session"
-msgstr "Открыть сеанс"
 
 msgid "Open session in"
 msgstr "Открыть сессию в"
@@ -14799,9 +14772,6 @@ msgstr "Выберите папку скрипта терминала"
 
 msgid "Select worktree location"
 msgstr "Выберите расположение worktree"
-
-msgid "Selected account"
-msgstr "Выбранный аккаунт"
 
 msgid "Selected agent is not available on this host"
 msgstr "Выбранный агент недоступен на этом хосте"
