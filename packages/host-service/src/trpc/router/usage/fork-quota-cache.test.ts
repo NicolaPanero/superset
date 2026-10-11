@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { reconcileQuota } from "./fork-quota-cache";
+import { includeClaudeSystemLogin, reconcileQuota } from "./fork-quota-cache";
 import type { UsageAccount } from "./types";
 
 const now = Date.now();
@@ -66,4 +66,36 @@ test("removed accounts, 24-hour snapshots and account overflow are discarded", (
 		)[0]?.windows,
 	).toEqual([]);
 	expect(snapshots.size).toBe(0);
+});
+
+test("a disconnected system login cannot inherit a named profile's identity or quota", () => {
+	const btcore = {
+		...account,
+		selection: "/profiles/btcore",
+		accountKey: "btcore",
+	};
+	const innovation = {
+		...account,
+		selection: "/profiles/innovation",
+		accountKey: "innovation",
+		email: "innovation@example.invalid",
+	};
+	const snapshots = new Map<string, UsageAccount>();
+	reconcileQuota([account], snapshots, now);
+	const result = reconcileQuota(
+		includeClaudeSystemLogin([btcore, innovation], now),
+		snapshots,
+		now,
+	);
+	expect(result[0]).toMatchObject({
+		selection: null,
+		email: null,
+		status: "signed_out",
+		windows: [],
+	});
+	expect(result.slice(1)).toMatchObject([btcore, innovation]);
+	expect([...snapshots.values()].some((row) => row.selection === null)).toBe(
+		false,
+	);
+	expect(includeClaudeSystemLogin([account], now)).toEqual([account]);
 });

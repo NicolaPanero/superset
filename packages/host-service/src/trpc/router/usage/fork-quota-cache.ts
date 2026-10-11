@@ -20,6 +20,37 @@ const key = (account: UsageAccount) =>
 const file = () =>
 	join(resolveSupersetHomeDir(), "fork", "quota-last-success.json");
 
+export function includeClaudeSystemLogin(
+	accounts: UsageAccount[],
+	now = Date.now(),
+): UsageAccount[] {
+	if (
+		accounts.some(
+			(account) => account.agent === "claude" && account.selection === null,
+		)
+	)
+		return accounts;
+	return [
+		{
+			agent: "claude",
+			credentialKind: "subscription",
+			accountKey: "claude:system",
+			sourceLabel: "~/.claude",
+			email: null,
+			plan: null,
+			status: "signed_out",
+			statusDetail: null,
+			windows: [],
+			creditsBalance: null,
+			extraUsage: null,
+			selection: null,
+			isDefault: false,
+			fetchedAt: new Date(now),
+		},
+		...accounts,
+	];
+}
+
 export function reconcileQuota(
 	accounts: UsageAccount[],
 	snapshots: Map<string, UsageAccount>,
@@ -87,7 +118,10 @@ async function load() {
 			fetchOpencodeAccounts(),
 		])
 	).flat();
-	const result = reconcileQuota(accounts, lastSuccess);
+	const result = reconcileQuota(
+		includeClaudeSystemLogin(accounts),
+		lastSuccess,
+	);
 	try {
 		await mkdir(join(resolveSupersetHomeDir(), "fork"), {
 			recursive: true,

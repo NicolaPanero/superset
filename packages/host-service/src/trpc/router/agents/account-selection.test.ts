@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { ResolvedHostAgentConfig } from "../../../terminal-agents/agent-config";
-import { selectedAccountEnv } from "./account-selection";
+import { agentAccountOptions, selectedAccountEnv } from "./account-selection";
 
 const config: ResolvedHostAgentConfig = {
 	id: "test",
@@ -95,4 +95,25 @@ describe("per-session account selection", () => {
 			}),
 		).rejects.toThrow("account_environment_override");
 	});
+});
+
+test("the system slot stays distinct from a named profile signed into the same email", async () => {
+	const options = await agentAccountOptions("claude", {
+		claudeProfiles: async () => [
+			{
+				configDir: "/profiles/btcore",
+				sourceLabel: "btcore",
+				email: "btcore@example.invalid",
+				credentialKind: "subscription",
+				loginFingerprint: null,
+				credentialsPath: "/profiles/btcore/.credentials.json",
+				keychainServices: [],
+			},
+		],
+		codexHomes: async () => [],
+	});
+	expect(options).toEqual([
+		{ selection: null, label: "System default" },
+		{ selection: "/profiles/btcore", label: "btcore@example.invalid" },
+	]);
 });

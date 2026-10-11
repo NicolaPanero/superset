@@ -24,7 +24,9 @@ export function ForkUsageSummary({
 			? null
 			: formatPercent(state.remaining / 100, { maximumFractionDigits: 1 });
 	const status =
-		state.reason === "api" ? (
+		account?.status === "signed_out" ? (
+			<Trans>Signed out</Trans>
+		) : state.reason === "api" ? (
 			<Trans>API billing</Trans>
 		) : state.reason === "exhausted" ? (
 			<Trans>Quota exhausted</Trans>
