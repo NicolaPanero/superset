@@ -57,8 +57,7 @@ export async function provisionSelectedAccounts(db: HostDb): Promise<void> {
 	syncDefaultAccountPointers(db);
 	const { claudeConfigDir, codexHome } = getDefaultAccountSelections(db);
 	const targets: Array<readonly [string, () => Promise<unknown>]> = [];
-	// A pointer at a vanished dir is skipped, not recreated: agent launches
-	// already fall back to the system-default login in that case.
+	// A vanished profile is not recreated; its selection stays pinned.
 	if (claudeConfigDir && existsSync(claudeConfigDir)) {
 		targets.push([
 			claudeConfigDir,

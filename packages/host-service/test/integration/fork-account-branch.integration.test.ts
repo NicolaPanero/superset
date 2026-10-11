@@ -152,13 +152,14 @@ test("an imported chat can explicitly use the system login while another profile
 		expect(getDefaultAccountSelections(scenario.host.db).claudeConfigDir).toBe(
 			scenario.repo.repoPath,
 		);
-		const ordinary = await buildChatAgentEnv({
-			db: scenario.host.db,
-			cwd: scenario.repo.repoPath,
-			workspaceId: scenario.workspaceId,
-			agentConfigId: choices.agentConfigId,
-		});
-		expect(ordinary.CLAUDE_CONFIG_DIR).toBe(scenario.repo.repoPath);
+		await expect(
+			buildChatAgentEnv({
+				db: scenario.host.db,
+				cwd: scenario.repo.repoPath,
+				workspaceId: scenario.workspaceId,
+				agentConfigId: choices.agentConfigId,
+			}),
+		).rejects.toThrow("Reconnect account");
 	} finally {
 		if (previousEnv) initTerminalBaseEnv(previousEnv);
 		else resetTerminalBaseEnvForTests();

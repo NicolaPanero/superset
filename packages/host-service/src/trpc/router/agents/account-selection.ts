@@ -4,7 +4,16 @@ import { TRPCError } from "@trpc/server";
 import { pinNativeProfile } from "../../../session-transfer/registry";
 import { getTerminalBaseEnv } from "../../../terminal/env";
 import type { ResolvedHostAgentConfig } from "../../../terminal-agents/agent-config";
+import { forkAccountRegistry } from "../usage/fork-account-registry";
+import { assertIsolatedAccount } from "../usage/fork-isolated-accounts";
 import { discoverClaudeProfiles, discoverCodexHomes } from "../usage/profiles";
+
+export interface AgentAccountOption {
+	selection: string | null;
+	label: string;
+	managed?: boolean;
+	reconnect?: boolean;
+}
 
 export async function agentAccountOptions(
 	agent: string,
@@ -12,7 +21,7 @@ export async function agentAccountOptions(
 		claudeProfiles: discoverClaudeProfiles,
 		codexHomes: discoverCodexHomes,
 	},
-) {
+): Promise<AgentAccountOption[]> {
 	if (agent === "claude") {
 		const profiles = await sources.claudeProfiles();
 		return [
@@ -48,6 +57,7 @@ export async function selectedAccountEnv(
 		// The application .env contains server API settings that do not reach
 		// native terminals. Validate against the actual preserved shell snapshot.
 		ambientEnv: getTerminalBaseEnv(),
+		validate: assertIsolatedAccount,
 	},
 ) {
 	const agent = config.presetId;
@@ -67,11 +77,21 @@ export async function selectedAccountEnv(
 			message: "account_environment_override",
 		});
 	const options = await dependencies.options(agent);
-	if (!options.some((option) => option.selection === selection))
+	if (
+		!options.some((option) => option.selection === selection) &&
+		!(
+			selection &&
+			forkAccountRegistry()
+				.list()
+				.some((row) => row.agent === agent && row.selection === selection)
+		)
+	)
 		throw new TRPCError({
 			code: "BAD_REQUEST",
 			message: "account_selection_unavailable",
 		});
+	if (selection && "validate" in dependencies)
+		await dependencies.validate(agent, selection);
 	// Codex's system default can be an ambient CODEX_HOME, not ~/.codex.
 	const profile =
 		selection ??

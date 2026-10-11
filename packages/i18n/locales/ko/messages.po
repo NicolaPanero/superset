@@ -3579,6 +3579,9 @@ msgstr "검사 통과"
 msgid "Checks Skipped"
 msgstr "검사 건너뜀"
 
+msgid "Choose a different profile name."
+msgstr "다른 프로필 이름을 선택하세요."
+
 msgid "Choose a fighter"
 msgstr "파이터 선택"
 
@@ -3737,6 +3740,9 @@ msgstr "CLI 기본값"
 
 msgid "CLI docs"
 msgstr "CLI 문서"
+
+msgid "CLI login"
+msgstr "CLI 로그인"
 
 msgid "CLI reference"
 msgstr "CLI 레퍼런스"
@@ -13253,6 +13259,10 @@ msgstr "권장 크기 256×256."
 msgid "Reconnect"
 msgstr "다시 연결"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "동일한 계정으로 {0}을 다시 연결하세요. 다른 프로필과 CLI 로그인은 별도로 유지됩니다."
+
 msgid "Reconnect {name}"
 msgstr "{name} 다시 연결"
 
@@ -15298,10 +15308,6 @@ msgstr "로그아웃"
 msgid "Sign out of this device"
 msgstr "이 기기에서 로그아웃"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "{0} 프로필을 다른 계정으로 로그인합니다. 다른 프로필, 시스템 기본값, 실행 중인 에이전트에는 영향을 주지 않습니다."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "시스템 기본 {0} 로그인을 다른 계정으로 바꿉니다. 이 머신의 현재 기본 로그인을 대체하며, 프로필과 실행 중인 에이전트에는 영향을 주지 않습니다."
@@ -17174,6 +17180,9 @@ msgstr "이 Linear 워크스페이스는 이미 {owner}이(가) 연결했습니�
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "이 Linear 워크스페이스는 이미 다른 Superset 조직이 연결했습니다."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "이 로그인은 CLI에서 변경한 내용을 따릅니다. Superset을 독립적으로 유지하려면 별도의 계정 프로필을 사용하세요."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "바이너리 파일로 보입니다. 텍스트로 열면 깨진 내용이 표시되거나, 파일이 크면 에디터가 멈출 수 있습니다."

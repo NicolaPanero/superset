@@ -3579,6 +3579,9 @@ msgstr "Kontroly prošly"
 msgid "Checks Skipped"
 msgstr "Kontroly přeskočeny"
 
+msgid "Choose a different profile name."
+msgstr "Zvolte jiný název profilu."
+
 msgid "Choose a fighter"
 msgstr "Vyberte bojovníka"
 
@@ -3737,6 +3740,9 @@ msgstr "Výchozí nastavení CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentace CLI"
+
+msgid "CLI login"
+msgstr "Přihlášení CLI"
 
 msgid "CLI reference"
 msgstr "Reference CLI"
@@ -13253,6 +13259,10 @@ msgstr "Doporučená velikost 256×256."
 msgid "Reconnect"
 msgstr "Připojit znovu"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Znovu připojte {0} pomocí stejného účtu. Ostatní profily a přihlášení CLI zůstávají oddělené."
+
 msgid "Reconnect {name}"
 msgstr "Znovu připojit {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "Odhlásit se"
 msgid "Sign out of this device"
 msgstr "Odhlásit se z tohoto zařízení"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Přihlaste profil {0} k jinému účtu. Ostatních profilů, systémově výchozího přihlášení ani běžících agentů se to nedotkne."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Přihlaste systémově výchozí přihlášení {0} k jinému účtu. Nahradí to současné výchozí přihlášení na tomto počítači; profilů ani běžících agentů se to nedotkne."
@@ -17174,6 +17180,9 @@ msgstr "Tento Linear workspace už připojil {owner}. Požádejte je, ať ho nej
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Tento Linear workspace už připojila jiná organizace Superset."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Toto přihlášení odráží změny provedené v CLI. Použijte samostatný profil účtu, aby Superset zůstal nezávislý."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Vypadá to na binární soubor. Otevření jako text může zobrazit nesmyslný výstup nebo u velkých souborů zamrznout editor."

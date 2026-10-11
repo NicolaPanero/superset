@@ -14,6 +14,8 @@ import {
 } from "../terminal-agents/agent-config";
 import { selectedAccountEnv } from "../trpc/router/agents/account-selection";
 import { resolveDefaultAccountTerminalEnv } from "../trpc/router/usage/default-account";
+import { assertIsolatedAccount } from "../trpc/router/usage/fork-isolated-accounts";
+import { ensureIsolatedDefault } from "../trpc/router/usage/fork-isolated-default";
 
 function workspacePaths(
 	db: HostDb,
@@ -68,6 +70,7 @@ export async function buildChatAgentEnv(options: {
 	agentConfigId?: string;
 	accountSelection?: string | null;
 	terminalId?: string;
+	preserveLegacyAccount?: boolean;
 }): Promise<Record<string, string>> {
 	await waitForTerminalBaseEnv();
 	const paths = workspacePaths(options.db, options.workspaceId);
@@ -76,7 +79,36 @@ export async function buildChatAgentEnv(options: {
 		: null;
 	if (options.agentConfigId && !config)
 		throw new Error("agent_config_unavailable");
+	if (
+		!options.preserveLegacyAccount &&
+		options.accountSelection === undefined &&
+		process.env.SUPERSET_HOST_RUN_MODE !== "sandbox" &&
+		(config?.presetId === "claude" || config?.presetId === "codex")
+	)
+		await ensureIsolatedDefault(options.db, config.presetId);
 	let configEnv = config ? agentLaunchEnv(options.db, config) : {};
+	if (
+		options.accountSelection === undefined &&
+		(config?.presetId === "claude" || config?.presetId === "codex")
+	) {
+		const profile =
+			configEnv[
+				config.presetId === "claude" ? "CLAUDE_CONFIG_DIR" : "CODEX_HOME"
+			];
+		if (profile) await assertIsolatedAccount(config.presetId, profile);
+		else if (
+			!options.preserveLegacyAccount &&
+			process.env.SUPERSET_HOST_RUN_MODE !== "sandbox" &&
+			![
+				"ANTHROPIC_API_KEY",
+				"ANTHROPIC_AUTH_TOKEN",
+				"CLAUDE_CODE_OAUTH_TOKEN",
+				"OPENAI_API_KEY",
+				"CODEX_API_KEY",
+			].some((key) => configEnv[key] || getTerminalBaseEnv()[key])
+		)
+			throw new Error("account_selection_unavailable");
+	}
 	if (options.accountSelection !== undefined) {
 		if (!config) throw new Error("agent_config_unavailable");
 		configEnv = await selectedAccountEnv(

@@ -15,6 +15,7 @@ import {
 	Select,
 	SelectContent,
 	SelectItem,
+	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
 } from "@superset/ui/select";
@@ -37,6 +38,7 @@ import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type {
@@ -144,6 +146,7 @@ export function AcpChatHandoffMenu({
 			hostUrl && target
 				? getHostServiceClientByUrl(hostUrl).agents.accountOptions.query({
 						agent: target.presetId,
+						isolated: true,
 					})
 				: [],
 		retry: false,
@@ -311,7 +314,7 @@ export function AcpChatHandoffMenu({
 		binding?.account?.email ??
 		(data.acpAccountSelection
 			? data.acpAccountSelection.split("/").at(-1)
-			: t({ message: "System default" }));
+			: t({ message: "CLI login" }));
 	const continueWithContext = async () => {
 		if (!target || !chatSessionId || busy || stage) return;
 		const run = ++runSequence.current;
@@ -531,22 +534,24 @@ export function AcpChatHandoffMenu({
 														row.agent === target?.presetId &&
 														row.selection === option.selection,
 												);
-												const label =
-													option.alias ?? usage?.email ?? option.label;
+												const label = forkAccountLabel(option, usage?.email);
 												return (
-													<SelectItem
-														key={option.selection ?? SYSTEM_ACCOUNT}
-														value={option.selection ?? SYSTEM_ACCOUNT}
-													>
-														{label === "System default" ? (
-															<Trans>System default</Trans>
-														) : (
-															label
-														)}
-														<span className="ml-2">
-															<ForkUsageSummary compact account={usage} />
-														</span>
-													</SelectItem>
+													<div key={option.selection ?? SYSTEM_ACCOUNT}>
+														{option.selection === null && <SelectSeparator />}
+														<SelectItem
+															key={option.selection ?? SYSTEM_ACCOUNT}
+															value={option.selection ?? SYSTEM_ACCOUNT}
+														>
+															{label === "System default" ? (
+																<Trans>System default</Trans>
+															) : (
+																label
+															)}
+															<span className="ml-2">
+																<ForkUsageSummary compact account={usage} />
+															</span>
+														</SelectItem>
+													</div>
 												);
 											})}
 									</SelectContent>

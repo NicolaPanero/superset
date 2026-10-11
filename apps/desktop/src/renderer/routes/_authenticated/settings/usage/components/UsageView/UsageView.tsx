@@ -28,6 +28,7 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
+import { ForkExternalAccount } from "renderer/components/ForkExternalAccount";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
@@ -167,6 +168,8 @@ function AccountCard({
 				>
 					{hideEmails && account.email ? (
 						<Trans>Email hidden</Trans>
+					) : isManagedAgent(account.agent) && account.selection === null ? (
+						t({ message: "CLI login" })
 					) : (
 						(alias ?? account.email ?? AGENT_LABELS[account.agent])
 					)}
@@ -211,7 +214,11 @@ function AccountCard({
 						<DropdownMenuContent align="end">
 							{onSwitchSignIn && (
 								<DropdownMenuItem onClick={onSwitchSignIn}>
-									<Trans>Switch sign-in…</Trans>
+									{account.selection === null ? (
+										<Trans>Switch sign-in…</Trans>
+									) : (
+										<Trans>Reconnect account</Trans>
+									)}
 								</DropdownMenuItem>
 							)}
 							{onRename && (
@@ -534,9 +541,12 @@ export function UsageView({
 			{/* Sections render before the first quota read lands so Add account is
 			    reachable straight away; each shows its own placeholder meanwhile. */}
 			{visibleQuotaAgents(accounts).map((agent) => {
-				const agentAccounts = accounts.filter(
-					(account) => account.agent === agent,
-				);
+				const agentAccounts = accounts
+					.filter((account) => account.agent === agent)
+					.toSorted(
+						(a, b) =>
+							Number(a.selection === null) - Number(b.selection === null),
+					);
 				const icon = getPresetIcon(agent, isDark);
 				return (
 					<section key={agent} className="flex flex-col gap-1.5">
@@ -587,32 +597,43 @@ export function UsageView({
 												"ring-2 ring-ring ring-offset-2 ring-offset-background",
 										)}
 									>
-										<AccountCard
-											account={account}
-											onMakeDefault={
-												isManagedAgent(account.agent)
-													? () => makeDefaultAccount(account)
-													: null
-											}
-											onSwitchSignIn={
-												isManagedAgent(account.agent)
-													? () => openSwitchSignIn(account)
-													: null
-											}
-											onRemove={
+										<ForkExternalAccount
+											external={
 												isManagedAgent(account.agent) &&
-												account.selection !== null
-													? () => setRemoveTarget(account)
-													: null
+												account.selection === null
 											}
-											isSwitching={setDefault.isPending}
-											selectable={
-												isManagedAgent(agent) && agentAccounts.length > 1
-											}
-											hideEmails={hideEmails}
-											alias={rename.aliasFor(account)}
-											onRename={rename.onRename(account)}
-										/>
+										>
+											<AccountCard
+												account={account}
+												onMakeDefault={
+													isManagedAgent(account.agent) &&
+													account.selection !== null
+														? () => makeDefaultAccount(account)
+														: null
+												}
+												onSwitchSignIn={
+													isManagedAgent(account.agent)
+														? () => openSwitchSignIn(account)
+														: null
+												}
+												onRemove={
+													isManagedAgent(account.agent) &&
+													account.selection !== null
+														? () => setRemoveTarget(account)
+														: null
+												}
+												isSwitching={setDefault.isPending}
+												selectable={
+													isManagedAgent(agent) &&
+													account.selection !== null &&
+													agentAccounts.filter((row) => row.selection !== null)
+														.length > 1
+												}
+												hideEmails={hideEmails}
+												alias={rename.aliasFor(account)}
+												onRename={rename.onRename(account)}
+											/>
+										</ForkExternalAccount>
 									</div>
 								))}
 							</div>

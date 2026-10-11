@@ -12,6 +12,8 @@ import { protectedProcedure } from "../../index";
 import { applyForkLaunchChoices } from "../agents/fork-launch";
 import { listAccountAliases, setAccountAlias } from "./account-aliases";
 import { probeAccount } from "./fork-account-probe";
+import { forkAccountRegistry } from "./fork-account-registry";
+import { ensureIsolatedDefault } from "./fork-isolated-default";
 import { discoverClaudeProfiles, discoverCodexHomes } from "./profiles";
 
 /** The fork's usage procedures, served under the `usage` router. */
@@ -30,6 +32,8 @@ export const forkUsageProcedures = {
 			z.object({
 				agent: z.string(),
 				selection: z.string().min(1).max(4096).nullable().optional(),
+				isolated: z.boolean().optional(),
+				validate: z.boolean().optional(),
 			}),
 		)
 		.query(async ({ ctx, input }) => {
@@ -40,6 +44,11 @@ export const forkUsageProcedures = {
 					code: "NOT_FOUND",
 					message: "account_selection_unavailable",
 				});
+			const defaultSelection =
+				input.isolated &&
+				(config.presetId === "claude" || config.presetId === "codex")
+					? await ensureIsolatedDefault(ctx.db, config.presetId)
+					: undefined;
 			const env = {
 				...getTerminalBaseEnv(),
 				...agentLaunchEnv(ctx.db, config),
@@ -55,14 +64,25 @@ export const forkUsageProcedures = {
 						? ["OPENAI_API_KEY", "CODEX_API_KEY"]
 						: [];
 			const environmentOverride = keys.some((key) => !!env[key]);
-			if (input.selection !== undefined)
+			const effectiveSelection =
+				input.selection !== undefined
+					? input.selection
+					: input.validate && !environmentOverride
+						? defaultSelection
+						: undefined;
+			if (effectiveSelection !== undefined)
 				await applyForkLaunchChoices(ctx.db, {
 					agent: input.agent,
 					workspaceId: "preflight",
 					prompt: "",
-					accountSelection: input.selection,
+					accountSelection: effectiveSelection,
 				});
-			return { provider: config.presetId, environmentOverride };
+			return {
+				provider: config.presetId,
+				environmentOverride,
+				defaultSelection,
+				isolationVersion: 1 as const,
+			};
 		}),
 	accountAliases: protectedProcedure.query(({ ctx }) =>
 		listAccountAliases(ctx.db),
@@ -84,7 +104,15 @@ export const forkUsageProcedures = {
 								(profile) => profile.configDir,
 							)
 						: (await discoverCodexHomes()).slice(1).map((home) => home.home);
-				if (!profiles.includes(input.selection))
+				if (
+					!profiles.includes(input.selection) &&
+					!forkAccountRegistry()
+						.list()
+						.some(
+							(row) =>
+								row.agent === input.agent && row.selection === input.selection,
+						)
+				)
 					throw new TRPCError({
 						code: "BAD_REQUEST",
 						message: "account_selection_unavailable",

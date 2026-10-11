@@ -3579,6 +3579,9 @@ msgstr "Проверки пройдены"
 msgid "Checks Skipped"
 msgstr "Проверки пропущены"
 
+msgid "Choose a different profile name."
+msgstr "Выберите другое имя профиля."
+
 msgid "Choose a fighter"
 msgstr "Выберите бойца"
 
@@ -3737,6 +3740,9 @@ msgstr "По умолчанию в CLI"
 
 msgid "CLI docs"
 msgstr "Документация CLI"
+
+msgid "CLI login"
+msgstr "Вход через CLI"
 
 msgid "CLI reference"
 msgstr "Справочник CLI"
@@ -13253,6 +13259,10 @@ msgstr "Рекомендуемый размер 256×256."
 msgid "Reconnect"
 msgstr "Переподключить"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Повторно подключите {0} с той же учётной записью. Другие профили и вход через CLI остаются независимыми."
+
 msgid "Reconnect {name}"
 msgstr "Переподключить {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "Выйти"
 msgid "Sign out of this device"
 msgstr "Выйти на этом устройстве"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Войдите профилем {0} в другой аккаунт. Другие профили, системный вход по умолчанию и работающие агенты не затрагиваются."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Войдите системным входом {0} по умолчанию в другой аккаунт. Это заменит текущий основной вход на этой машине; профили и работающие агенты не затрагиваются."
@@ -17174,6 +17180,9 @@ msgstr "Это рабочее пространство Linear уже подкл�
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Это рабочее пространство Linear уже подключено другой организацией Superset."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Этот вход отражает изменения в CLI. Используйте отдельный профиль учётной записи, чтобы Superset оставался независимым."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Похоже, это бинарный файл. Открытие его как текста может показать мусор или подвесить редактор на больших файлах."

@@ -11,6 +11,7 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
 import { useState } from "react";
+import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import {
 	AddAccountDialog,
 	type SwitchSignInTarget,
@@ -27,20 +28,27 @@ export function ForkAccountPicker({
 	provider: string | null;
 	model?: string;
 }) {
+	const [adding, setAdding] = useState(false);
 	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
 	if (!account.enabled) return null;
-	const choices = (account.options.data ?? []).map((option) => ({
-		option,
-		usage: account.quota.data?.find(
-			(row) => row.agent === provider && row.selection === option.selection,
-		),
-	}));
+	const choices = (account.options.data ?? [])
+		.toSorted(
+			(a, b) => Number(a.selection === null) - Number(b.selection === null),
+		)
+		.map((option) => ({
+			option,
+			usage: account.quota.data?.find(
+				(row) => row.agent === provider && row.selection === option.selection,
+			),
+		}));
 	const selected = choices.find(
 		(choice) => choice.option.selection === account.selection,
 	);
 	const suggested = choices
 		.filter(
-			(choice) => accountQuotaState(choice.usage, model).reason === "ready",
+			(choice) =>
+				choice.option.selection !== null &&
+				accountQuotaState(choice.usage, model).reason === "ready",
 		)
 		.sort(
 			(a, b) =>
@@ -65,10 +73,10 @@ export function ForkAccountPicker({
 					<span className="truncate">
 						{account.forcedApi ? (
 							<Trans>API billing</Trans>
+						) : selected ? (
+							forkAccountLabel(selected.option, selected.usage?.email)
 						) : (
-							(selected?.option.alias ??
-							selected?.usage?.email ??
-							selected?.option.label ?? <Trans>Account</Trans>)
+							<Trans>Choose an account</Trans>
 						)}
 					</span>
 					{!account.forcedApi && (
@@ -90,34 +98,37 @@ export function ForkAccountPicker({
 						<Trans>Account</Trans>
 					</DropdownMenuLabel>
 					{choices.map(({ option, usage }) => (
-						<DropdownMenuItem
-							key={option.selection ?? "system"}
-							onSelect={() => account.choose(option.selection)}
-							className="block cursor-pointer py-2"
-						>
-							<div className="flex items-center justify-between gap-3">
-								<span className="truncate font-medium">
-									{option.alias ?? usage?.email ?? option.label}
-								</span>
-								<span className="shrink-0 text-[10px] text-muted-foreground">
-									{usage?.isDefault && <Trans>Default</Trans>}
-									{suggested?.option.selection === option.selection && (
-										<>
-											{" "}
-											· <Trans>Suggested</Trans>
-										</>
-									)}
-									{account.selection === option.selection && " ✓"}
-								</span>
-							</div>
-							<ForkUsageSummary account={usage} model={model} />
-							{(usage?.status === "signed_out" ||
-								usage?.status === "token_expired") && (
-								<div className="mt-1 text-amber-500">
-									<Trans>Reconnect account</Trans>
+						<div key={option.selection ?? "system"}>
+							{option.selection === null && <DropdownMenuSeparator />}
+							<DropdownMenuItem
+								key={option.selection ?? "system"}
+								onSelect={() => account.choose(option.selection)}
+								className="block cursor-pointer py-2"
+							>
+								<div className="flex items-center justify-between gap-3">
+									<span className="truncate font-medium">
+										{forkAccountLabel(option, usage?.email)}
+									</span>
+									<span className="shrink-0 text-[10px] text-muted-foreground">
+										{usage?.isDefault && <Trans>Default</Trans>}
+										{suggested?.option.selection === option.selection && (
+											<>
+												{" "}
+												· <Trans>Suggested</Trans>
+											</>
+										)}
+										{account.selection === option.selection && " ✓"}
+									</span>
 								</div>
-							)}
-						</DropdownMenuItem>
+								<ForkUsageSummary account={usage} model={model} />
+								{(usage?.status === "signed_out" ||
+									usage?.status === "token_expired") && (
+									<div className="mt-1 text-amber-500">
+										<Trans>Reconnect account</Trans>
+									</div>
+								)}
+							</DropdownMenuItem>
+						</div>
 					))}
 					<DropdownMenuSeparator />
 					{selected?.usage &&
@@ -144,6 +155,9 @@ export function ForkAccountPicker({
 								<Trans>Reconnect account</Trans>
 							</DropdownMenuItem>
 						)}
+					<DropdownMenuItem onSelect={() => setAdding(true)}>
+						<Trans>Add account</Trans>
+					</DropdownMenuItem>
 					<DropdownMenuItem
 						onSelect={(event) => {
 							event.preventDefault();
@@ -156,28 +170,34 @@ export function ForkAccountPicker({
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-			{reconnect && (
-				<AddAccountDialog
-					open
-					hostUrl={account.hostUrl}
-					agent={reconnect.agent}
-					switchTarget={reconnect}
-					onOpenChange={(open) => {
-						if (!open) setReconnect(null);
-					}}
-					onAccountAdded={() => {
-						void account.quota
-							.refresh()
-							.catch((error) => toast.error(errorMessage(error)));
-						void account.options.refetch();
-					}}
-					onDefaultSwitched={() => {
-						void account.quota
-							.refresh()
-							.catch((error) => toast.error(errorMessage(error)));
-					}}
-				/>
-			)}
+			{(reconnect || adding) &&
+				(provider === "claude" || provider === "codex") && (
+					<AddAccountDialog
+						open
+						hostUrl={account.hostUrl}
+						agent={reconnect?.agent ?? provider}
+						switchTarget={reconnect}
+						onOpenChange={(open) => {
+							if (!open) {
+								setReconnect(null);
+								setAdding(false);
+							}
+						}}
+						onAccountAdded={() => {
+							void account.quota
+								.refresh()
+								.catch((error) => toast.error(errorMessage(error)));
+							void account.options.refetch();
+							void account.refreshDefault();
+						}}
+						onDefaultSwitched={() => {
+							void account.refreshDefault();
+							void account.quota
+								.refresh()
+								.catch((error) => toast.error(errorMessage(error)));
+						}}
+					/>
+				)}
 		</>
 	);
 }

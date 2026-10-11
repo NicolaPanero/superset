@@ -12,6 +12,7 @@ import {
 	Select,
 	SelectContent,
 	SelectItem,
+	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
 } from "@superset/ui/select";
@@ -23,6 +24,7 @@ import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher";
 
@@ -67,6 +69,7 @@ export function ForkNewAgentDialog({
 			hostUrl && selected
 				? getHostServiceClientByUrl(hostUrl).agents.accountOptions.query({
 						agent: selected.presetId,
+						isolated: true,
 					})
 				: [],
 		retry: false,
@@ -95,9 +98,16 @@ export function ForkNewAgentDialog({
 				prompt: "",
 
 				...(model ? { modelId: model } : {}),
-				...(managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
+				...(managed &&
+				options.isSuccess &&
+				(account !== CONFIGURED_ACCOUNT || defaultUsage?.selection)
 					? {
-							accountSelection: account === SYSTEM_ACCOUNT ? null : account,
+							accountSelection:
+								account === CONFIGURED_ACCOUNT
+									? defaultUsage?.selection
+									: account === SYSTEM_ACCOUNT
+										? null
+										: account,
 						}
 					: {}),
 			});
@@ -144,7 +154,11 @@ export function ForkNewAgentDialog({
 							<Trans>Account</Trans>
 						</p>
 						<Select
-							value={account}
+							value={
+								account === CONFIGURED_ACCOUNT && defaultUsage?.selection
+									? defaultUsage.selection
+									: account
+							}
 							onValueChange={setAccount}
 							disabled={busy || !options.isSuccess}
 						>
@@ -152,40 +166,41 @@ export function ForkNewAgentDialog({
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value={CONFIGURED_ACCOUNT}>
-									{defaultLabel ? (
-										<>
-											{defaultLabel} · <Trans>Default</Trans>
-										</>
-									) : (
-										<Trans>Configured account</Trans>
-									)}
-								</SelectItem>
+								{!defaultUsage?.selection && (
+									<SelectItem value={CONFIGURED_ACCOUNT}>
+										{defaultLabel ? (
+											<>
+												{defaultLabel} · <Trans>Default</Trans>
+											</>
+										) : (
+											<Trans>Configured account</Trans>
+										)}
+									</SelectItem>
+								)}
 								{options.data?.map((option) => {
 									const usage = quota.data?.find(
 										(row) =>
 											row.agent === selected?.presetId &&
 											row.selection === option.selection,
 									);
-									const label = option.alias ?? usage?.email ?? option.label;
+									const label = forkAccountLabel(option, usage?.email);
 									return (
-										<SelectItem
-											key={option.selection ?? SYSTEM_ACCOUNT}
-											value={option.selection ?? SYSTEM_ACCOUNT}
-										>
-											{label === "System default" ? (
-												<Trans>System default</Trans>
-											) : (
-												label
-											)}
-											<span className="ml-2">
-												<ForkUsageSummary
-													compact
-													account={usage}
-													model={model ?? undefined}
-												/>
-											</span>
-										</SelectItem>
+										<div key={option.selection ?? SYSTEM_ACCOUNT}>
+											{option.selection === null && <SelectSeparator />}
+											<SelectItem
+												key={option.selection ?? SYSTEM_ACCOUNT}
+												value={option.selection ?? SYSTEM_ACCOUNT}
+											>
+												{label}
+												<span className="ml-2">
+													<ForkUsageSummary
+														compact
+														account={usage}
+														model={model ?? undefined}
+													/>
+												</span>
+											</SelectItem>
+										</div>
 									);
 								})}
 							</SelectContent>

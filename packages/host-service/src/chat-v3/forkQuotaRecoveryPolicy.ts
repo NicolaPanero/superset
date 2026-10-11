@@ -29,6 +29,7 @@ export function suggestedRecoveryAccount(
 		.filter(
 			(a) =>
 				a.agent === "claude" &&
+				a.selection !== null &&
 				a.selection !== current &&
 				a.credentialKind === "subscription" &&
 				(!source?.email || a.email !== source.email) &&

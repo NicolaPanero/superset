@@ -162,7 +162,11 @@ elif [ -n "$SUPERSET_TERMINAL_ID" ] && [ -n "$SUPERSET_HOME_DIR" ] \\
   && { [ -z "\${${envVar}}" ] || [ "\${${envVar}}" = "\${SUPERSET_DEFAULT_${envVar}}" ]; } \\
   && [ -f ${pointer} ]; then
   superset_default_account="$(cat ${pointer} 2>/dev/null)"
-  if [ -n "$superset_default_account" ] && [ -d "$superset_default_account" ]; then
+  if [ -n "$superset_default_account" ]; then
+    if [ ! -d "$superset_default_account" ]; then
+      printf "%s\\n" "Superset: selected account is missing. Reconnect it or choose another account." >&2
+      exit 1
+    fi
     export ${envVar}="$superset_default_account"
     export SUPERSET_DEFAULT_${envVar}="$superset_default_account"
   else

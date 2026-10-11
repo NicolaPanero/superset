@@ -4,7 +4,7 @@ import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 
 /**
  * Points new agent launches at one of the discovered agent logins
- * (null selection = the system-default login). The host recomputes the
+ * in isolated profiles. The host recomputes the
  * `isDefault` flags per query, so a plain invalidate reflects the switch
  * without re-hitting agent quota endpoints.
  */
@@ -16,11 +16,15 @@ export function useSetDefaultUsageAccount(hostUrl: string | null) {
 			selection: string | null;
 		}) => {
 			if (!hostUrl) throw new Error("No host connection.");
-			return getHostServiceClientByUrl(hostUrl).usage.setDefaultAccount.mutate(
-				input,
-			);
+			return getHostServiceClientByUrl(hostUrl).usage.setDefaultAccount.mutate({
+				...input,
+				isolated: true,
+			});
 		},
 		onSuccess: () => {
+			void queryClient.invalidateQueries({
+				queryKey: ["fork-launch-account", hostUrl],
+			});
 			void queryClient.invalidateQueries({
 				queryKey: [...HOST_USAGE_QUOTA_QUERY_KEY, hostUrl],
 			});

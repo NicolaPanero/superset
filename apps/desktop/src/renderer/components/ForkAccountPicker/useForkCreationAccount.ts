@@ -22,6 +22,7 @@ export function useForkCreationAccount(
 			hostUrl && provider
 				? getHostServiceClientByUrl(hostUrl).agents.accountOptions.query({
 						agent: provider,
+						isolated: true,
 					})
 				: [],
 		staleTime: 5 * 60_000,
@@ -33,6 +34,7 @@ export function useForkCreationAccount(
 			hostUrl
 				? getHostServiceClientByUrl(hostUrl).usage.launchAccount.query({
 						agent,
+						isolated: true,
 					})
 				: null,
 		staleTime: 5 * 60_000,
@@ -46,9 +48,13 @@ export function useForkCreationAccount(
 			? undefined
 			: stored?.key === key
 				? stored.selection
-				: quota.data?.find(
-						(account) => account.agent === provider && account.isDefault,
-					)?.selection;
+				: (metadata.data.defaultSelection ??
+					quota.data?.find(
+						(account) =>
+							account.agent === provider &&
+							account.isDefault &&
+							account.selection !== null,
+					)?.selection);
 	const signature = `${key}:${selection}:${model}`;
 	const live = useRef(signature);
 	live.current = signature;
@@ -64,6 +70,7 @@ export function useForkCreationAccount(
 		setPickerOpen,
 		quota,
 		options,
+		refreshDefault: () => metadata.refetch(),
 		selection,
 		forcedApi: metadata.data?.environmentOverride ?? false,
 		enabled,

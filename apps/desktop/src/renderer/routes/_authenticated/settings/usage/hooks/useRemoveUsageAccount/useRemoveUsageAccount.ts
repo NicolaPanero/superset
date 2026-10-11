@@ -14,9 +14,10 @@ export function useRemoveUsageAccount(hostUrl: string | null) {
 			selection: string;
 		}) => {
 			if (!hostUrl) throw new Error("No host connection.");
-			return getHostServiceClientByUrl(hostUrl).usage.removeAccount.mutate(
-				input,
-			);
+			return getHostServiceClientByUrl(hostUrl).usage.removeAccount.mutate({
+				...input,
+				isolated: true,
+			});
 		},
 		onSuccess: () => {
 			void queryClient.invalidateQueries({

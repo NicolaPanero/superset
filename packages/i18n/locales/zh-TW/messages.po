@@ -3579,6 +3579,9 @@ msgstr "檢查通過"
 msgid "Checks Skipped"
 msgstr "檢查已跳過"
 
+msgid "Choose a different profile name."
+msgstr "請選擇其他設定檔名稱。"
+
 msgid "Choose a fighter"
 msgstr "選擇一名鬥士"
 
@@ -3737,6 +3740,9 @@ msgstr "CLI 預設值"
 
 msgid "CLI docs"
 msgstr "CLI文件"
+
+msgid "CLI login"
+msgstr "CLI 登入"
 
 msgid "CLI reference"
 msgstr "CLI 參考文件"
@@ -13253,6 +13259,10 @@ msgstr "推薦尺寸256×256。"
 msgid "Reconnect"
 msgstr "重新連線"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "使用同一帳戶重新連接 {0}。其他設定檔和 CLI 登入保持獨立。"
+
 msgid "Reconnect {name}"
 msgstr "重新連線 {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "登出"
 msgid "Sign out of this device"
 msgstr "在此裝置上登出"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "將{0}配置檔案切換到另一個帳戶。其他配置檔案、系統預設登入和執行中的代理程式不受影響。"
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "將系統預設的{0}登入切換到另一個帳戶。它會替換本機目前的預設登入；配置檔案和執行中的代理程式不受影響。"
@@ -17174,6 +17180,9 @@ msgstr "這個Linear工作區已被{owner}連線。請讓對方先斷開連線�
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "這個Linear工作區已被另一個Superset組織連線。"
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "此登入會跟隨 CLI 中的變更。請使用獨立的帳戶設定檔，讓 Superset 保持獨立。"
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "這看起來是二進位檔案。以文字方式開啟可能顯示亂碼，檔案較大時還可能讓編輯器卡死。"

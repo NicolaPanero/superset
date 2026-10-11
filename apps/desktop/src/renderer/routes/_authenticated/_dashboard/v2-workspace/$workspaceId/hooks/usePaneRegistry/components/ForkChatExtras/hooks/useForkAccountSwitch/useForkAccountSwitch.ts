@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
@@ -33,7 +34,7 @@ export function useForkAccountSwitch(
 	const enabled = data.agentSurface === "acp" && data.agent?.id === "claude";
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: options } = workspaceTrpc.agents.accountOptions.useQuery(
-		{ agent: "claude" },
+		{ agent: "claude", isolated: true },
 		{ enabled, staleTime: 60_000 },
 	);
 	const quota = useHostUsageQuota(enabled ? hostUrl : null);
@@ -65,12 +66,11 @@ export function useForkAccountSwitch(
 				const isSystemDefault = option.selection === null;
 				return {
 					selection: option.selection,
-					name:
-						option.alias ??
-						usage?.email ??
-						(option.label === "System default"
-							? t({ message: "System default" })
-							: option.label),
+					name: forkAccountLabel(
+						option,
+						usage?.email,
+						t({ message: "CLI login" }),
+					),
 					email: usage?.email ?? null,
 					plan: usage?.plan ?? null,
 					isSystemDefault,

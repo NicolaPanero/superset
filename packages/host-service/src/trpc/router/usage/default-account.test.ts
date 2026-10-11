@@ -122,6 +122,18 @@ describe("host-wide default account pointers", () => {
 		).toThrow();
 	});
 
+	it("retains a missing selected profile so neither provider falls back to the CLI login", () => {
+		const missing = join(home, "deleted-profile");
+		syncDefaultAccountPointer("claude", missing);
+		syncDefaultAccountPointer("codex", missing);
+		expect(
+			resolveDefaultAccountEnv(mockDb(undefined), "claude").CLAUDE_CONFIG_DIR,
+		).toBe(missing);
+		expect(
+			resolveDefaultAccountEnv(mockDb(undefined), "codex").CODEX_HOME,
+		).toBe(missing);
+	});
+
 	it("preserves a custom ambient Codex home beside an injected profile", () => {
 		const customDefault = join(home, "custom-codex");
 		const selected = join(home, ".codex-work");

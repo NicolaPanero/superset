@@ -29,6 +29,7 @@ const dependencies = {
 	],
 	canonical: async (path: string) => path,
 	ambientEnv: {},
+	validate: async () => {},
 };
 
 describe("per-session account selection", () => {

@@ -3579,6 +3579,9 @@ msgstr "As verificações passaram"
 msgid "Checks Skipped"
 msgstr "Verificações ignoradas"
 
+msgid "Choose a different profile name."
+msgstr "Escolha outro nome para o perfil."
+
 msgid "Choose a fighter"
 msgstr "Escolha um lutador"
 
@@ -3737,6 +3740,9 @@ msgstr "Padrão da CLI"
 
 msgid "CLI docs"
 msgstr "Documentação da CLI"
+
+msgid "CLI login"
+msgstr "Login do CLI"
 
 msgid "CLI reference"
 msgstr "Referência da CLI"
@@ -13253,6 +13259,10 @@ msgstr "Tamanho recomendado: 256×256."
 msgid "Reconnect"
 msgstr "Reconectar"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Reconecte {0} usando a mesma conta. Os outros perfis e o login do CLI permanecem separados."
+
 msgid "Reconnect {name}"
 msgstr "Reconectar {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "Sair"
 msgid "Sign out of this device"
 msgstr "Sair deste dispositivo"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Faz o perfil {0} entrar em outra conta. Outros perfis, o padrão do sistema e os agentes em execução não são afetados."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Faz o login padrão do sistema para {0} entrar em outra conta. Isso substitui o login padrão atual nesta máquina; perfis e agentes em execução não são afetados."
@@ -17174,6 +17180,9 @@ msgstr "Este workspace do Linear já está conectado por {owner}. Peça para ess
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Este workspace do Linear já está conectado a outra organização do Superset."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Este login acompanha as alterações feitas no CLI. Use um perfil de conta separado para manter o Superset independente."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Isto parece ser um arquivo binário. Abri-lo como texto pode mostrar caracteres estranhos ou travar o editor em arquivos grandes."

@@ -3579,6 +3579,9 @@ msgstr "Checks geslaagd"
 msgid "Checks Skipped"
 msgstr "Checks overgeslagen"
 
+msgid "Choose a different profile name."
+msgstr "Kies een andere profielnaam."
+
 msgid "Choose a fighter"
 msgstr "Kies een vechter"
 
@@ -3737,6 +3740,9 @@ msgstr "CLI-standaard"
 
 msgid "CLI docs"
 msgstr "CLI-docs"
+
+msgid "CLI login"
+msgstr "CLI-aanmelding"
 
 msgid "CLI reference"
 msgstr "CLI-referentie"
@@ -13253,6 +13259,10 @@ msgstr "Aanbevolen formaat 256×256."
 msgid "Reconnect"
 msgstr "Opnieuw verbinden"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Verbind {0} opnieuw met hetzelfde account. Andere profielen en de CLI-aanmelding blijven gescheiden."
+
 msgid "Reconnect {name}"
 msgstr "{name} opnieuw verbinden"
 
@@ -15298,10 +15308,6 @@ msgstr "Uitloggen"
 msgid "Sign out of this device"
 msgstr "Uitloggen op dit apparaat"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Log het {0}-profiel in op een ander account. Andere profielen, de systeemstandaard en draaiende agents blijven ongemoeid."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Log de systeemstandaard {0}-login in op een ander account. Die vervangt de huidige standaardlogin op deze machine; profielen en draaiende agents blijven ongemoeid."
@@ -17174,6 +17180,9 @@ msgstr "Deze Linear-werkruimte is al gekoppeld door {owner}. Vraag hen om eerst 
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Deze Linear-werkruimte is al gekoppeld door een andere Superset-organisatie."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Deze aanmelding volgt wijzigingen in de CLI. Gebruik een apart accountprofiel om Superset onafhankelijk te houden."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Dit lijkt een binair bestand. Als tekst openen kan onleesbare uitvoer geven of de editor bij grote bestanden laten vastlopen."

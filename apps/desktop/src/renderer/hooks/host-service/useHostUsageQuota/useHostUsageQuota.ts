@@ -29,7 +29,9 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		enabled: !!hostUrl,
 		queryFn: () => {
 			if (!hostUrl) return [] as UsageAccount[];
-			return getHostServiceClientByUrl(hostUrl).usage.quota.query();
+			return getHostServiceClientByUrl(hostUrl).usage.quota.query({
+				isolated: true,
+			});
 		},
 		refetchInterval: ACCOUNT_QUOTA_POLL_MS,
 		staleTime: ACCOUNT_QUOTA_CACHE_MS,
@@ -80,7 +82,10 @@ export function useHostUsageQuota(hostUrl: string | null) {
 					!results.some((result) => result?.status === "checked")
 				)
 					return;
-				const fresh = await client.usage.quota.query({ forceRefresh: true });
+				const fresh = await client.usage.quota.query({
+					forceRefresh: true,
+					isolated: true,
+				});
 				if (!cancelled) queryClient.setQueryData(queryKey, fresh);
 			})
 			.catch(() => {});
@@ -93,6 +98,7 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		if (!hostUrl) return;
 		const fresh = await getHostServiceClientByUrl(hostUrl).usage.quota.query({
 			forceRefresh: true,
+			isolated: true,
 		});
 		queryClient.setQueryData(queryKey, fresh);
 	}, [hostUrl, queryClient, queryKey]);

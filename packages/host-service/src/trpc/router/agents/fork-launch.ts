@@ -1,11 +1,15 @@
 import { getAgentModelSupport } from "@superset/shared/agent-models";
 import { TRPCError } from "@trpc/server";
 import type { HostDb } from "../../../db";
-import { waitForTerminalBaseEnv } from "../../../terminal/env";
+import {
+	getTerminalBaseEnv,
+	waitForTerminalBaseEnv,
+} from "../../../terminal/env";
 import {
 	agentLaunchEnv,
 	resolveHostAgentConfig,
 } from "../../../terminal-agents/agent-config";
+import { ensureIsolatedDefault } from "../usage/fork-isolated-default";
 import { selectedAccountEnv } from "./account-selection";
 import type { AgentRunInput } from "./agents";
 
@@ -68,6 +72,41 @@ export async function applyForkLaunchChoices(
 	db: HostDb,
 	input: AgentRunInput,
 ): Promise<AgentRunInput> {
+	if (
+		input.accountSelection === undefined &&
+		!input.launchSnapshot &&
+		!input.continueTerminalId &&
+		!input.resumeSessionId &&
+		!input.forkSessionId &&
+		process.env.SUPERSET_HOST_RUN_MODE !== "sandbox"
+	) {
+		const config = resolveHostAgentConfig(db, input.agent);
+		if (config?.presetId === "claude" || config?.presetId === "codex") {
+			await waitForTerminalBaseEnv();
+			const selection = await ensureIsolatedDefault(db, config.presetId);
+			const env = { ...getTerminalBaseEnv(), ...agentLaunchEnv(db, config) };
+			const keys =
+				config.presetId === "claude"
+					? [
+							"ANTHROPIC_API_KEY",
+							"ANTHROPIC_AUTH_TOKEN",
+							"CLAUDE_CODE_OAUTH_TOKEN",
+						]
+					: ["OPENAI_API_KEY", "CODEX_API_KEY"];
+			if (!keys.some((key) => env[key])) {
+				const profile =
+					config.env[
+						config.presetId === "claude" ? "CLAUDE_CONFIG_DIR" : "CODEX_HOME"
+					] || selection;
+				if (!profile)
+					throw new TRPCError({
+						code: "PRECONDITION_FAILED",
+						message: "account_selection_unavailable",
+					});
+				input = { ...input, accountSelection: profile };
+			}
+		}
+	}
 	if (input.accountSelection !== undefined) {
 		await waitForTerminalBaseEnv();
 		const config = resolveHostAgentConfig(db, input.agent);

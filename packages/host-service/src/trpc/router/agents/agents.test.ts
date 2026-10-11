@@ -630,7 +630,7 @@ describe("buildTerminalAgentLaunch default account env", () => {
 		);
 	});
 
-	it("skips injection when the selected profile dir no longer exists", () => {
+	it("keeps a missing selected profile pinned instead of falling back to the CLI login", () => {
 		const db = createTestDb();
 		seedClaude(db);
 		setDefaultAccountSelection(db, "claude", "/no/such/profile-dir");
@@ -639,7 +639,9 @@ describe("buildTerminalAgentLaunch default account env", () => {
 			agent: "claude",
 			prompt: "hi",
 		});
-		expect(launch.fullCommand).toBe("'claude' 'hi'");
+		expect(launch.fullCommand).toBe(
+			"CLAUDE_CONFIG_DIR='/no/such/profile-dir' SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR='/no/such/profile-dir' 'claude' 'hi'",
+		);
 	});
 
 	it("does not leak provider account env into other presets", () => {

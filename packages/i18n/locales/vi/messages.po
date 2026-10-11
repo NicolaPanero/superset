@@ -3579,6 +3579,9 @@ msgstr "Check đã qua"
 msgid "Checks Skipped"
 msgstr "Check đã bỏ qua"
 
+msgid "Choose a different profile name."
+msgstr "Chọn tên hồ sơ khác."
+
 msgid "Choose a fighter"
 msgstr "Chọn một đấu sĩ"
 
@@ -3737,6 +3740,9 @@ msgstr "Mặc định của CLI"
 
 msgid "CLI docs"
 msgstr "Tài liệu CLI"
+
+msgid "CLI login"
+msgstr "Đăng nhập CLI"
 
 msgid "CLI reference"
 msgstr "Tài liệu tham chiếu CLI"
@@ -13253,6 +13259,10 @@ msgstr "Kích thước khuyến nghị 256×256."
 msgid "Reconnect"
 msgstr "Kết nối lại"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Kết nối lại {0} bằng cùng tài khoản. Các hồ sơ khác và đăng nhập CLI vẫn tách biệt."
+
 msgid "Reconnect {name}"
 msgstr "Kết nối lại {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "Đăng xuất"
 msgid "Sign out of this device"
 msgstr "Đăng xuất khỏi thiết bị này"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Đăng nhập hồ sơ {0} bằng một tài khoản khác. Các hồ sơ khác, mặc định hệ thống và agent đang chạy không bị ảnh hưởng."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Đăng nhập lần đăng nhập {0} mặc định của hệ thống bằng một tài khoản khác. Nó thay cho lần đăng nhập mặc định hiện tại trên máy này; các hồ sơ và agent đang chạy không bị ảnh hưởng."
@@ -17174,6 +17180,9 @@ msgstr "Workspace Linear này đã được {owner} kết nối. Hãy nhờ họ
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Workspace Linear này đã được một tổ chức Superset khác kết nối."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Đăng nhập này phản ánh các thay đổi trong CLI. Hãy dùng hồ sơ tài khoản riêng để giữ Superset độc lập."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Đây có vẻ là tệp nhị phân. Mở dưới dạng văn bản có thể hiện ra ký tự lỗi hoặc làm treo trình soạn thảo với tệp lớn."

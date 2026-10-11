@@ -5,6 +5,7 @@ import { z } from "zod";
 import { moveClaudeSession } from "../../../chat-v3/forkMoveClaudeSession";
 import { writeRecovery } from "../../../chat-v3/forkQuotaRecoveryStore";
 import { protectedProcedure } from "../../index";
+import { assertIsolatedAccount } from "../usage/fork-isolated-accounts";
 import { discoverClaudeProfiles } from "../usage/profiles";
 import { agentAccountOptions } from "./account-selection";
 
@@ -21,6 +22,8 @@ export const forkChatAccountProcedures = {
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			if (input.targetSelection !== null)
+				await assertIsolatedAccount(input.agent, input.targetSelection);
 			const options = await agentAccountOptions(input.agent);
 			if (!options.some((option) => option.selection === input.targetSelection))
 				throw new TRPCError({

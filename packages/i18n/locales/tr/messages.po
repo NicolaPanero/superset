@@ -3579,6 +3579,9 @@ msgstr "Kontroller geçti"
 msgid "Checks Skipped"
 msgstr "Kontroller atlandı"
 
+msgid "Choose a different profile name."
+msgstr "Farklı bir profil adı seçin."
+
 msgid "Choose a fighter"
 msgstr "Bir dövüşçü seç"
 
@@ -3737,6 +3740,9 @@ msgstr "CLI varsayılanı"
 
 msgid "CLI docs"
 msgstr "CLI belgeleri"
+
+msgid "CLI login"
+msgstr "CLI oturumu"
 
 msgid "CLI reference"
 msgstr "CLI referansı"
@@ -13253,6 +13259,10 @@ msgstr "Önerilen boyut 256×256."
 msgid "Reconnect"
 msgstr "Yeniden bağlan"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "{0} hesabını aynı hesapla yeniden bağlayın. Diğer profiller ve CLI oturumu ayrı kalır."
+
 msgid "Reconnect {name}"
 msgstr "{name} hesabını yeniden bağla"
 
@@ -15298,10 +15308,6 @@ msgstr "Oturumu kapat"
 msgid "Sign out of this device"
 msgstr "Bu cihazda oturumu kapat"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "{0} profilini farklı bir hesaba geçirin. Diğer profiller, sistem varsayılanı ve çalışan ajanlar etkilenmez."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Sistem varsayılanı olan {0} oturumunu farklı bir hesaba geçirin. Bu makinedeki mevcut varsayılan oturumun yerini alır; profiller ve çalışan ajanlar etkilenmez."
@@ -17174,6 +17180,9 @@ msgstr "Bu Linear çalışma alanı {owner} tarafından zaten bağlanmış. Önc
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "Bu Linear çalışma alanı başka bir Superset kuruluşu tarafından zaten bağlanmış."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "Bu oturum CLI’de yapılan değişiklikleri takip eder. Superset’i bağımsız tutmak için ayrı bir hesap profili kullanın."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "Bu bir ikili dosyaya benziyor. Metin olarak açmak bozuk çıktı gösterebilir veya büyük dosyalarda düzenleyiciyi dondurabilir."

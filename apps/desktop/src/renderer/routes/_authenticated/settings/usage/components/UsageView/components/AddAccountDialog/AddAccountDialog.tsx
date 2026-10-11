@@ -110,10 +110,45 @@ export function AddAccountDialog({
 	const [copied, setCopied] = useState(false);
 	const [found, setFound] = useState<FoundLogin | null>(null);
 	const baselineRef = useRef<UsageLogins | null>(null);
+	const generationRef = useRef(0);
+	const contextRef = useRef<string | null>(null);
+	const preparingRef = useRef<number | null>(null);
 	const slug = slugify(name);
 
 	const loginsQuery = useHostUsageLogins(hostUrl, open && !found);
 	const setDefault = useSetDefaultUsageAccount(hostUrl);
+	const proposedSelection = `${loginsQuery.data?.homeDir}/.${agent}-${slug}`;
+	const duplicateName =
+		!switchTarget &&
+		Boolean(
+			loginsQuery.data?.isolatedProfiles?.some(
+				(profile) =>
+					profile.agent === agent && profile.selection === proposedSelection,
+			) ||
+				(agent === "claude"
+					? loginsQuery.data?.claude.some(
+							(profile) => profile.configDir === proposedSelection,
+						)
+					: loginsQuery.data?.codex.some(
+							(profile) => profile.home === proposedSelection,
+						)),
+		);
+
+	const loginContext = JSON.stringify([
+		open,
+		hostUrl,
+		agent,
+		slug,
+		switchTarget?.selection,
+		credentialKind,
+	]);
+	useEffect(() => {
+		contextRef.current = loginContext;
+		generationRef.current += 1;
+		return () => {
+			generationRef.current += 1;
+		};
+	}, [loginContext]);
 
 	// The first poll result after opening is the baseline; anything beyond it
 	// is the sign-in we are waiting for.
@@ -134,17 +169,25 @@ export function AddAccountDialog({
 			baselineRef.current = logins;
 			return;
 		}
-		if (found || (terminalAttempt > 0 && !commandSucceeded)) return;
+		const generation = generationRef.current;
+		if (
+			found ||
+			preparingRef.current === generation ||
+			(terminalAttempt > 0 && !commandSucceeded)
+		)
+			return;
 
-		const provisionProfile = (selection: string) => {
+		const provisionProfile = async (selection: string) => {
 			// Shares the default account's skills, plugins, MCP servers, and
 			// settings into the new profile dir — a bare login there would boot
 			// the CLI on an empty install (and, for Claude, into the first-boot
 			// wizard).
 			if (!hostUrl) return;
-			void getHostServiceClientByUrl(hostUrl)
-				.usage.prepareAccount.mutate({ agent, selection })
-				.catch(() => {});
+			await getHostServiceClientByUrl(hostUrl).usage.prepareAccount.mutate({
+				agent,
+				selection,
+				isolated: true,
+			});
 		};
 
 		const selection = switchTarget
@@ -159,9 +202,32 @@ export function AddAccountDialog({
 			commandSucceeded,
 		});
 		if (fresh) {
-			setFound(fresh);
-			onAccountAdded();
-			if (fresh.selection) provisionProfile(fresh.selection);
+			preparingRef.current = generation;
+			baselineRef.current = logins;
+			void (
+				fresh.selection ? provisionProfile(fresh.selection) : Promise.resolve()
+			)
+				.then(() => {
+					if (
+						generationRef.current !== generation ||
+						contextRef.current !== loginContext
+					)
+						return;
+					setFound(fresh);
+					onAccountAdded();
+				})
+				.catch(() => {
+					if (
+						generationRef.current !== generation ||
+						contextRef.current !== loginContext
+					)
+						return;
+					setCommandSucceeded(false);
+					toast.error(t({ message: "Reconnect account" }));
+				})
+				.finally(() => {
+					if (preparingRef.current === generation) preparingRef.current = null;
+				});
 		}
 	}, [
 		open,
@@ -175,6 +241,8 @@ export function AddAccountDialog({
 		terminalAttempt,
 		commandSucceeded,
 		slug,
+		t,
+		loginContext,
 	]);
 
 	const command = switchTarget
@@ -199,7 +267,7 @@ export function AddAccountDialog({
 					message: `Sign the system-default ${AGENT_LABELS[switchTarget.agent]} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected.`,
 				})
 			: t({
-					message: `Sign the ${switchTarget.label} profile into a different account. Other profiles, the system default, and running agents are unaffected.`,
+					message: `Reconnect ${switchTarget.label} using the same account. Other profiles and the CLI login stay separate.`,
 				})
 		: null;
 
@@ -282,7 +350,11 @@ export function AddAccountDialog({
 				<DialogHeader>
 					<DialogTitle>
 						{switchTarget ? (
-							<Trans>Switch sign-in</Trans>
+							switchTarget.selection === null ? (
+								<Trans>Switch sign-in</Trans>
+							) : (
+								<Trans>Reconnect account</Trans>
+							)
 						) : (
 							<Trans>Add {AGENT_LABELS[agent]} account</Trans>
 						)}
@@ -431,6 +503,11 @@ export function AddAccountDialog({
 								</div>
 							</div>
 						)}
+						{duplicateName && (
+							<p role="alert" className="text-xs text-muted-foreground">
+								<Trans>Choose a different profile name.</Trans>
+							</p>
+						)}
 						{terminalAttempt === 0 &&
 							(!canRunLocally || loginsQuery.isError) &&
 							loginStatus}
@@ -471,7 +548,7 @@ export function AddAccountDialog({
 								{canRunLocally && !terminalRunning && (
 									<Button
 										size="sm"
-										disabled={!loginsQuery.data}
+										disabled={!loginsQuery.data || duplicateName}
 										onClick={() => {
 											setCommandSucceeded(false);
 											setTerminalRunning(true);

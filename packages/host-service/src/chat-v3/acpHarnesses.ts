@@ -76,6 +76,7 @@ export function acpHarnessFactory(
 										accountSelection,
 									}),
 									terminalId: options.terminalId,
+									preserveLegacyAccount: !!options.resume,
 								}),
 						});
 						const env = cli.env;

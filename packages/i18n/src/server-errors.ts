@@ -14,6 +14,8 @@ export const serverErrorMessages: Record<
 	string,
 	(params?: Record<string, unknown>) => string
 > = {
+	"serverError.forkAccounts.reconnect": () =>
+		i18n._(msg({ message: "Reconnect account" })),
 	"serverError.agentCredential.anthropicRejectedKey": () =>
 		i18n._(
 			msg({

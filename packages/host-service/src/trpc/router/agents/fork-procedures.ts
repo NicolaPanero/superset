@@ -19,6 +19,8 @@ import {
 } from "../../../terminal-agents/agent-config";
 import { protectedProcedure } from "../../index";
 import { listAccountAliases } from "../usage/account-aliases";
+import { isolatedAccountOptions } from "../usage/fork-isolated-accounts";
+import { ensureIsolatedDefault } from "../usage/fork-isolated-default";
 import { validateSessionAccount } from "../usage/session-account/session-account";
 import { agentAccountOptions } from "./account-selection";
 import { forkBackgroundChatProcedures } from "./fork-background-chats";
@@ -201,10 +203,24 @@ export const forkAgentProcedures = {
 			};
 		}),
 	accountOptions: protectedProcedure
-		.input(z.object({ agent: z.string().min(1) }))
+		.input(
+			z.object({ agent: z.string().min(1), isolated: z.boolean().optional() }),
+		)
 		.query(async ({ ctx, input }) => {
 			const aliases = listAccountAliases(ctx.db);
-			return (await agentAccountOptions(input.agent)).map((option) => {
+			const options =
+				input.isolated && (input.agent === "claude" || input.agent === "codex")
+					? [
+							...(await isolatedAccountOptions(input.agent)),
+							{ selection: null, label: "CLI login", managed: false },
+						]
+					: await agentAccountOptions(input.agent);
+			if (
+				input.isolated &&
+				(input.agent === "claude" || input.agent === "codex")
+			)
+				await ensureIsolatedDefault(ctx.db, input.agent);
+			return options.map((option) => {
 				const alias =
 					aliases.find(
 						(alias) =>

@@ -3579,6 +3579,9 @@ msgstr "Checks passed"
 msgid "Checks Skipped"
 msgstr "Checks Skipped"
 
+msgid "Choose a different profile name."
+msgstr "Choose a different profile name."
+
 msgid "Choose a fighter"
 msgstr "Choose a fighter"
 
@@ -3737,6 +3740,9 @@ msgstr "CLI default"
 
 msgid "CLI docs"
 msgstr "CLI docs"
+
+msgid "CLI login"
+msgstr "CLI login"
 
 msgid "CLI reference"
 msgstr "CLI reference"
@@ -13253,6 +13259,10 @@ msgstr "Recommended size 256×256."
 msgid "Reconnect"
 msgstr "Reconnect"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+
 msgid "Reconnect {name}"
 msgstr "Reconnect {name}"
 
@@ -15298,10 +15308,6 @@ msgstr "Sign Out"
 msgid "Sign out of this device"
 msgstr "Sign out of this device"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
@@ -17174,6 +17180,9 @@ msgstr "This Linear workspace is already connected by {owner}. Ask them to disco
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "This Linear workspace is already connected by another Superset organization."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."

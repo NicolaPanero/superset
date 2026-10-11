@@ -213,10 +213,10 @@ describe("buildDefaultAccountResolver", () => {
 		).toBe("/tmp/spawn-time");
 	});
 
-	it("ignores a pointer at a vanished dir instead of booting signed out", () => {
+	it("refuses to launch on a vanished profile rather than using the CLI login", () => {
 		const { home } = makeHome("/tmp/deleted-profile-dir-that-is-gone");
-		expect(
+		expect(() =>
 			resolve({ SUPERSET_TERMINAL_ID: "t1", SUPERSET_HOME_DIR: home }),
-		).toBe("<unset>");
+		).toThrow("selected account is missing");
 	});
 });

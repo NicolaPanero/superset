@@ -3579,6 +3579,9 @@ msgstr "チェックが成功しました"
 msgid "Checks Skipped"
 msgstr "チェックをスキップ"
 
+msgid "Choose a different profile name."
+msgstr "別のプロファイル名を選択してください。"
+
 msgid "Choose a fighter"
 msgstr "ファイターを選ぶ"
 
@@ -3737,6 +3740,9 @@ msgstr "CLIのデフォルト"
 
 msgid "CLI docs"
 msgstr "CLIドキュメント"
+
+msgid "CLI login"
+msgstr "CLI のログイン"
 
 msgid "CLI reference"
 msgstr "CLIリファレンス"
@@ -13253,6 +13259,10 @@ msgstr "推奨サイズは256×256です。"
 msgid "Reconnect"
 msgstr "再接続"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "同じアカウントを使って {0} を再接続してください。他のプロファイルと CLI のログインは独立したままです。"
+
 msgid "Reconnect {name}"
 msgstr "{name} を再接続"
 
@@ -15298,10 +15308,6 @@ msgstr "サインアウト"
 msgid "Sign out of this device"
 msgstr "このデバイスからサインアウト"
 
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "{0}プロファイルを別のアカウントにサインインし直します。他のプロファイル、システムデフォルト、実行中のエージェントは影響を受けません。"
-
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
 msgstr "システムデフォルトの{0}ログインを別のアカウントにサインインし直します。このマシンの現在のデフォルトサインインが置き換わります。プロファイルと実行中のエージェントは影響を受けません。"
@@ -17174,6 +17180,9 @@ msgstr "このLinearワークスペースは{owner}がすでに接続してい�
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "このLinearワークスペースは別のSuperset組織がすでに接続しています。"
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "このログインは CLI で行われた変更に従います。Superset を独立させるには、専用のアカウントプロファイルを使用してください。"
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "バイナリファイルのようです。テキストとして開くと文字化けしたり、大きなファイルではエディタが固まる可能性があります。"
