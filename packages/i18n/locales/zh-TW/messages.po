@@ -16685,6 +16685,9 @@ msgstr "無法存取該地址"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "代理複製該對話，分支在此開啟"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "代理無法載入此對話。請檢查此聊天使用的帳戶，然後重試。"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "代理程式從工單一路負責到差異。人類審查結果，而不是擊鍵過程。注意力從寫程式碼轉向定義工作和判斷成果。一名工程師在隔離工作區裡同時跑好幾個代理程式。"
 

@@ -24,6 +24,7 @@ import { readSavedChatMode } from "../../utils/savedChatMode";
 import { AcpRecovery } from "./components/AcpRecovery";
 import { DraftChat } from "./components/DraftChat";
 import { createWhenReachable } from "./utils/createWhenReachable";
+import { forkRecoveryFailure } from "./utils/forkRecoveryFailure";
 import {
 	isChatCreateWatched,
 	sharedChatCreate,
@@ -382,10 +383,17 @@ export function AcpChatPane({
 	const { data: replacementState } = useQuery({
 		enabled: replacement !== null,
 		queryKey: ["acp-chat-replacement", replacement],
-		queryFn: () =>
-			replacement
-				? wiring.transport.getSession({ sessionId: replacement })
-				: Promise.resolve(null),
+		queryFn: async () => {
+			if (!replacement) return null;
+			const state = await wiring.transport.getSession({
+				sessionId: replacement,
+			});
+			const forkFailure =
+				state.session?.status === "dead"
+					? await forkRecoveryFailure(wiring.transport, replacement)
+					: null;
+			return { ...state, forkFailure };
+		},
 		refetchInterval: 500,
 		refetchIntervalInBackground: true,
 	});
@@ -400,8 +408,21 @@ export function AcpChatPane({
 		if (status === "dead") {
 			recoveryInFlight.current = false;
 			setReplacement(null);
+			const cause = replacementState?.forkFailure;
+			if (cause?.kind === "account" || cause?.kind === "missing")
+				recoveries.current = MAX_RECOVERIES;
 			setFailure(
-				t({ message: "The agent stopped while resuming the conversation." }),
+				cause?.kind === "account"
+					? t({ message: "Reconnect account" })
+					: cause?.kind === "missing"
+						? t({
+								message:
+									"The agent could not load this conversation. Check the account used for this chat, then retry.",
+							})
+						: (cause?.message ??
+							t({
+								message: "The agent stopped while resuming the conversation.",
+							})),
 			);
 			return;
 		}

@@ -16685,6 +16685,9 @@ msgstr "L'adresse est inaccessible"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "L'agent copie la conversation ; la branche s'ouvre ici"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "L’agent n’a pas pu charger cette conversation. Vérifiez le compte utilisé pour cette discussion, puis réessayez."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "L'agent prend en charge une tâche du ticket au diff. L'humain relit le résultat, pas les frappes au clavier. L'attention passe de l'écriture du code à la spécification du travail et à son évaluation. Un ingénieur fait tourner plusieurs agents à la fois dans des espaces de travail isolés."
 

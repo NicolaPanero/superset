@@ -42,9 +42,7 @@ export function AcpRecovery({
 				)}
 			</p>
 			{detail && (
-				<p className="max-w-lg font-mono text-[11px] text-muted-foreground/60">
-					{detail}
-				</p>
+				<p className="max-w-lg text-xs text-muted-foreground">{detail}</p>
 			)}
 			<div className="flex gap-2">
 				{onRetry && (

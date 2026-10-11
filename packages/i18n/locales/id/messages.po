@@ -16685,6 +16685,9 @@ msgstr "Alamatnya tidak bisa dijangkau"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Agen menyalin percakapan; cabang terbuka di sini"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "Agen tidak dapat memuat percakapan ini. Periksa akun yang digunakan untuk chat ini, lalu coba lagi."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agen memegang tugas dari tiket sampai diff. Manusia mereview hasilnya, bukan tiap ketukan tombolnya. Perhatian bergeser dari menulis kode ke menentukan pekerjaan dan menilainya. Satu engineer menjalankan beberapa agen sekaligus di workspace terisolasi."
 

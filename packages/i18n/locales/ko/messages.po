@@ -16685,6 +16685,9 @@ msgstr "이 주소에 연결할 수 없습니다"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "에이전트가 대화를 복사하고 분기는 여기서 열립니다"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "에이전트가 이 대화를 불러오지 못했습니다. 이 채팅에 사용한 계정을 확인한 후 다시 시도하세요."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "에이전트가 티켓부터 차이까지 작업을 맡습니다. 사람은 키 입력이 아니라 결과를 리뷰합니다. 관심은 코드를 쓰는 데서 일을 명세하고 판단하는 데로 옮겨 갑니다. 엔지니어 한 명이 격리된 워크스페이스에서 여러 에이전트를 동시에 돌립니다."
 

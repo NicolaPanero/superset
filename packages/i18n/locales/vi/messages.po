@@ -16685,6 +16685,9 @@ msgstr "Không tới được địa chỉ này"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Tác nhân sao chép hội thoại; nhánh mở tại đây"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "Tác nhân không thể tải cuộc trò chuyện này. Hãy kiểm tra tài khoản dùng cho cuộc trò chuyện rồi thử lại."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent làm chủ một tác vụ từ ticket đến diff. Con người review kết quả, không phải từng thao tác gõ. Sự chú ý dịch từ viết code sang đặc tả công việc và đánh giá nó. Một kỹ sư chạy nhiều agent cùng lúc trong các workspace tách biệt."
 

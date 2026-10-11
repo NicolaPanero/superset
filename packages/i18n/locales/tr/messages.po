@@ -16685,6 +16685,9 @@ msgstr "Adrese erişilemiyor"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Aracı konuşmayı kopyalar; çatal burada açılır"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "Aracı bu konuşmayı yükleyemedi. Bu sohbet için kullanılan hesabı kontrol edip yeniden deneyin."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Ajan, bir görevi biletten farka kadar sahiplenir. İnsan tuş vuruşlarını değil, sonucu inceler. Dikkat, kod yazmaktan işi tanımlamaya ve değerlendirmeye kayar. Bir mühendis, yalıtılmış çalışma alanlarında aynı anda birkaç ajan çalıştırır."
 

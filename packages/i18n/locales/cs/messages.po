@@ -16685,6 +16685,9 @@ msgstr "Adresa je nedostupná"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Agent zkopíruje konverzaci; větev se otevře zde"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "Agent nemohl načíst tuto konverzaci. Zkontrolujte účet použitý pro tento chat a zkuste to znovu."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Agent vlastní úkol od ticketu po diff. Člověk reviduje výsledek, ne úhozy. Pozornost se přesouvá od psaní kódu k zadávání práce a jejímu posuzování. Jeden inženýr běží několik agentů naráz v izolovaných pracovních prostorech."
 

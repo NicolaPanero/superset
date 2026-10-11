@@ -16685,6 +16685,9 @@ msgstr "无法访问该地址"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "智能体复制该对话，分支在此打开"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "代理无法加载此对话。请检查此聊天使用的账户，然后重试。"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "智能体从工单一路负责到差异。人类审查结果，而不是击键过程。注意力从写代码转向定义工作和判断成果。一名工程师在隔离工作区里同时跑好几个智能体。"
 

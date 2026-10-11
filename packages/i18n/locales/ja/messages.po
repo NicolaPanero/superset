@@ -16685,6 +16685,9 @@ msgstr "アドレスに到達できません"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "エージェントが会話を複製し、分岐はここで開きます"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "エージェントはこの会話を読み込めませんでした。このチャットで使用するアカウントを確認してから、再試行してください。"
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "エージェントがチケットから差分までタスクを引き受けます。人間はキー入力ではなく結果をレビューします。関心はコードを書くことから、作業を仕様化し判断することへ移ります。エンジニア1人が独立したワークスペースで複数のエージェントを同時に動かします。"
 

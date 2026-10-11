@@ -16685,6 +16685,9 @@ msgstr "Адрес недоступен"
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "Агент копирует разговор; ветвь откроется здесь"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "Агент не смог загрузить этот разговор. Проверьте учётную запись, используемую для этого чата, и повторите попытку."
+
 msgid "The agent owns a task from ticket to diff. The human reviews the result, not the keystrokes. Attention shifts from writing code to specifying work and judging it. One engineer runs several agents at once in isolated workspaces."
 msgstr "Агент ведёт задачу от тикета до diff. Человек проверяет результат, а не нажатия клавиш. Внимание смещается с написания кода на постановку задач и оценку результата. Один инженер ведёт несколько агентов одновременно в изолированных рабочих областях."
 
