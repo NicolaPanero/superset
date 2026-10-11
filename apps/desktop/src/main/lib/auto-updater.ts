@@ -22,6 +22,7 @@ import {
 	type AutoUpdateStatusEvent,
 } from "shared/auto-update";
 import { PLATFORM } from "shared/constants";
+import { checkForForkUpdatesInteractive } from "./fork-updates";
 
 // electron-updater's internal cache only self-invalidates when the remote
 // sha512 differs from cached metadata, so a corrupt cached download (e.g.
@@ -288,6 +289,7 @@ export function checkForUpdatesInteractive(): void {
 	}
 
 	if (AUTO_UPDATE_DISABLED_AT_BUILD) {
+		if (checkForForkUpdatesInteractive()) return;
 		dialog.showMessageBox({
 			type: "info",
 			title: i18n._(msg({ message: "Updates" })),
