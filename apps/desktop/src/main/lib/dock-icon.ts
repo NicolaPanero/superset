@@ -86,6 +86,10 @@ function getIconsDir(): string {
  */
 export function getIconPath(): string {
 	const dir = getIconsDir();
+	if (getWorkspaceName() === "fork") {
+		const forkIcon = join(dir, "../fork-icons/icon.png");
+		if (existsSync(forkIcon)) return forkIcon;
+	}
 
 	if (env.NODE_ENV === "development") {
 		const devIcon = join(dir, "icon-dev.png");

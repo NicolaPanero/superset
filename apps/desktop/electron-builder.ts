@@ -17,9 +17,11 @@ const currentYear = new Date().getFullYear();
 const author = pkg.author?.name ?? pkg.author;
 const identity = forkIdentity(pkg.productName);
 const productName = identity.productName;
-const macIconPath = join(pkg.resources, "build/icons/icon.icns");
-const linuxIconPath = join(pkg.resources, "build/icons");
-const winIconPath = join(pkg.resources, "build/icons/icon.ico");
+const iconDirectory =
+	identity.scheme === "superset-fork" ? "build/fork-icons" : "build/icons";
+const macIconPath = join(pkg.resources, iconDirectory, "icon.icns");
+const linuxIconPath = join(pkg.resources, iconDirectory);
+const winIconPath = join(pkg.resources, iconDirectory, "icon.ico");
 const dmgBackgroundPath = join(
 	pkg.resources,
 	"build/installer/background.tiff",
