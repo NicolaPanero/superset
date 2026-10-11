@@ -11,6 +11,7 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
 import { useState } from "react";
+import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import {
 	AddAccountDialog,
@@ -28,6 +29,7 @@ export function ForkAccountPicker({
 	provider: string | null;
 	model?: string;
 }) {
+	const menuDialog = useForkMenuDialog();
 	const [adding, setAdding] = useState(false);
 	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
 	if (!account.enabled) return null;
@@ -93,6 +95,7 @@ export function ForkAccountPicker({
 				<DropdownMenuContent
 					className="w-96 max-w-[calc(100vw-32px)] max-h-[60vh] overflow-auto"
 					align="start"
+					onCloseAutoFocus={menuDialog.onCloseAutoFocus}
 				>
 					<DropdownMenuLabel>
 						<Trans>Account</Trans>
@@ -138,24 +141,28 @@ export function ForkAccountPicker({
 						(provider === "claude" || provider === "codex") && (
 							<DropdownMenuItem
 								onSelect={() =>
-									setReconnect({
-										agent: provider,
-										credentialKind:
-											selected.usage?.credentialKind === "api_key"
-												? "api_key"
-												: "subscription",
-										selection: selected.option.selection,
-										label:
-											selected.option.alias ??
-											selected.usage?.email ??
-											selected.option.label,
-									})
+									menuDialog.afterClose(() =>
+										setReconnect({
+											agent: provider,
+											credentialKind:
+												selected.usage?.credentialKind === "api_key"
+													? "api_key"
+													: "subscription",
+											selection: selected.option.selection,
+											label:
+												selected.option.alias ??
+												selected.usage?.email ??
+												selected.option.label,
+										}),
+									)
 								}
 							>
 								<Trans>Reconnect account</Trans>
 							</DropdownMenuItem>
 						)}
-					<DropdownMenuItem onSelect={() => setAdding(true)}>
+					<DropdownMenuItem
+						onSelect={() => menuDialog.afterClose(() => setAdding(true))}
+					>
 						<Trans>Add account</Trans>
 					</DropdownMenuItem>
 					<DropdownMenuItem

@@ -33,6 +33,7 @@ import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
+import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { useRemoveUsageAccount } from "../../hooks/useRemoveUsageAccount";
 import { useRestartAgentSessions } from "../../hooks/useRestartAgentSessions";
 import { useSetDefaultUsageAccount } from "../../hooks/useSetDefaultUsageAccount";
@@ -120,6 +121,7 @@ function AccountCard({
 	onRename?: () => void;
 }) {
 	const { t } = useLingui();
+	const menuDialog = useForkMenuDialog();
 	const credits = creditsLine(account);
 	const { copyToClipboard, copied } = useCopyToClipboard();
 	const expiredCommand =
@@ -211,9 +213,14 @@ function AccountCard({
 								<LuEllipsis className="size-3" />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
+						<DropdownMenuContent
+							align="end"
+							onCloseAutoFocus={menuDialog.onCloseAutoFocus}
+						>
 							{onSwitchSignIn && (
-								<DropdownMenuItem onClick={onSwitchSignIn}>
+								<DropdownMenuItem
+									onSelect={() => menuDialog.afterClose(onSwitchSignIn)}
+								>
 									{account.selection === null ? (
 										<Trans>Switch sign-in…</Trans>
 									) : (
@@ -222,12 +229,17 @@ function AccountCard({
 								</DropdownMenuItem>
 							)}
 							{onRename && (
-								<DropdownMenuItem onClick={onRename}>
+								<DropdownMenuItem
+									onSelect={() => menuDialog.afterClose(onRename)}
+								>
 									<Trans>Rename account</Trans>
 								</DropdownMenuItem>
 							)}
 							{onRemove && (
-								<DropdownMenuItem variant="destructive" onClick={onRemove}>
+								<DropdownMenuItem
+									variant="destructive"
+									onSelect={() => menuDialog.afterClose(onRemove)}
+								>
 									<Trans>Remove…</Trans>
 								</DropdownMenuItem>
 							)}
