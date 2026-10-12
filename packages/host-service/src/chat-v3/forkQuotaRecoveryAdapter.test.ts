@@ -729,3 +729,280 @@ test("Stop during a replacement worker bootstrap prevents a delayed automatic pr
 		await f.close();
 	}
 });
+
+test("enabling account switching after a quota failure continues the current chat once", async () => {
+	const f = fixture({ switchAccounts: false, resumeAtReset: false });
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "original task" }]);
+		f.worker(0).fail();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		f.prefs.switchAccounts = true;
+		f.adapter.changed();
+		f.adapter.changed();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(f.moves).toEqual(["/b"]);
+		expect(f.worker(1).starts[0]).toMatchObject({
+			modelId: "sonnet",
+			modeId: "plan",
+			resume: { harnessSessionId: "native-id" },
+			strictResume: true,
+		});
+		expect(f.worker(1).prompts).toHaveLength(1);
+		expect(
+			f.events
+				.filter((e) => e.kind === "turn")
+				.every((e) => e.kind === "turn" && e.turn.id === "turn-1"),
+		).toBe(true);
+	} finally {
+		await f.close();
+	}
+});
+
+test("enabling reset wait after a quota failure waits then resumes without changing accounts", async () => {
+	let time = NOW,
+		calls = 0;
+	const waits: number[] = [];
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: false },
+		{
+			now: () => time,
+			quota: async () => [
+				quota(null, ++calls === 1 ? 100 : 10, {
+					fetchedAt: new Date(time),
+					windows: [
+						{
+							id: "five_hour",
+							label: "Session",
+							usedPercent: calls === 1 ? 100 : 10,
+							resetsAt: new Date(time + 300_000),
+						},
+					],
+				}),
+			],
+			wait: async (ms) => {
+				waits.push(ms);
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		f.prefs.resumeAtReset = true;
+		f.adapter.changed();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(waits).toEqual([300_000]);
+		expect(f.statuses.some((s) => s.phase === "waiting")).toBe(true);
+		expect(f.moves).toEqual([]);
+		expect(f.selected).toEqual([null]);
+	} finally {
+		await f.close();
+	}
+});
+
+test("late activation uses the original quota failure time when fresh quota is already available", async () => {
+	let time = NOW;
+	const waits: number[] = [];
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: false },
+		{
+			now: () => time,
+			quota: async () => [
+				quota(null, 10, {
+					fetchedAt: new Date(time),
+					windows: [
+						{
+							id: "five_hour",
+							label: "Session",
+							usedPercent: 10,
+							resetsAt: new Date(time + 300_000),
+						},
+					],
+				}),
+			],
+			wait: async (ms) => {
+				waits.push(ms);
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		time += 600_000;
+		f.prefs.resumeAtReset = true;
+		f.adapter.changed();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(waits).toEqual([]);
+		expect(f.moves).toEqual([]);
+	} finally {
+		await f.close();
+	}
+});
+
+test("late opt-in never resurrects a task after Stop, a new prompt, a model change, or an unrelated failure", async () => {
+	for (const action of ["stop", "prompt", "model", "other-error"]) {
+		const f = fixture({ switchAccounts: false, resumeAtReset: false });
+		try {
+			await until(() => f.events.length > 0);
+			f.adapter.prompt([{ type: "text", text: "task" }]);
+			f.worker(0).fail();
+			await until(() =>
+				f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+			);
+			if (action === "stop") f.adapter.cancelTurn();
+			if (action === "prompt")
+				f.adapter.prompt([{ type: "text", text: "new task" }]);
+			if (action === "model") f.adapter.setConfigOption("model", "opus");
+			if (action === "other-error") {
+				f.worker(0).fail("session/prompt: HTTP 429 rate_limit_error");
+				await until(() =>
+					f.events.some(
+						(e) => e.kind === "turn" && e.turn.error?.message.includes("429"),
+					),
+				);
+			}
+			f.prefs.switchAccounts = true;
+			f.adapter.changed();
+			for (let i = 0; i < 30; i++) await Promise.resolve();
+			expect(f.workers).toHaveLength(1);
+			expect(f.moves).toEqual([]);
+		} finally {
+			await f.close();
+		}
+	}
+});
+
+test("late opt-in is scoped to the captured account identity, native session and 24-hour expiry", async () => {
+	for (const action of ["identity", "native", "expiry"]) {
+		let time = NOW,
+			identity = "identity";
+		const f = fixture(
+			{ switchAccounts: false, resumeAtReset: false },
+			{
+				now: () => time,
+				account: () => ({
+					agent: "claude",
+					selection: null,
+					credentialKind: "subscription",
+					identity,
+				}),
+			},
+		);
+		try {
+			await until(() => f.events.length > 0);
+			f.adapter.prompt([{ type: "text", text: "task" }]);
+			f.worker(0).fail();
+			await until(() =>
+				f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+			);
+			if (action === "identity") identity = "another-login";
+			if (action === "expiry") time += 24 * 60 * 60_000;
+			if (action === "native") {
+				f.worker(0).queue.push({
+					kind: "session",
+					session: { harnessSessionId: "another-session" },
+				});
+				await until(() =>
+					f.events.some(
+						(e) =>
+							e.kind === "session" &&
+							e.session.harnessSessionId === "another-session",
+					),
+				);
+			}
+			f.prefs.switchAccounts = true;
+			f.adapter.changed();
+			for (let i = 0; i < 30; i++) await Promise.resolve();
+			expect(f.workers).toHaveLength(1);
+		} finally {
+			await f.close();
+		}
+	}
+});
+
+test("late activation reopens the interrupted turn in the real runtime and keeps later prompts queued", async () => {
+	const { createTestRuntime } = await import(
+		"../../../chat-runtime/src/testing/testRuntime"
+	);
+	const { randomUUID } = await import("node:crypto");
+	const workers: Worker[] = [];
+	const prefs = { switchAccounts: false, resumeAtReset: false };
+	let account: SessionAccount = {
+		agent: "claude",
+		selection: null,
+		credentialKind: "subscription",
+		identity: "identity",
+		email: "standard@example.test",
+	};
+	const adapter = new ForkQuotaRecoveryAdapter(
+		{
+			create: (selection) => {
+				account = {
+					...account,
+					selection: selection ?? null,
+					email: `${selection ?? "standard"}@example.test`,
+				};
+				const worker = new Worker();
+				workers.push(worker);
+				return worker;
+			},
+			settings: () => prefs,
+			account: () => account,
+			quota: async () => [quota(null, 100), quota("/b", 10)],
+			move: async () => {},
+			selected: () => {},
+			status: () => {},
+			now: () => NOW,
+		},
+		null,
+	);
+	const runtime = createTestRuntime({
+		harnesses: new Map([["claude-acp", () => adapter]]),
+	});
+	try {
+		const { sessionId } = runtime.commands.createSession({
+			commandId: randomUUID(),
+			scopeId: "workspace",
+			harness: "claude-acp",
+			cwd: "/tmp/repo",
+		});
+		await until(() => runtime.live.get(sessionId)?.state.status === "idle");
+		const send = (text: string) =>
+			runtime.commands.prompt({
+				commandId: randomUUID(),
+				sessionId,
+				clientId: text,
+				content: [{ type: "text", text }],
+			});
+		send("original");
+		await until(() => runtime.live.get(sessionId)?.turn?.status === "running");
+		workers[0]?.fail();
+		await until(() => runtime.live.get(sessionId)?.turn?.status === "failed");
+		prefs.switchAccounts = true;
+		adapter.changed();
+		await until(() => workers[1]?.prompts.length === 1);
+		await until(() => runtime.live.get(sessionId)?.turn?.status === "running");
+		expect(runtime.live.get(sessionId)?.turn?.id).toBe("turn-1");
+		expect(send("next task").queued).toBe(true);
+		expect(workers[0]?.prompts).toEqual([[{ type: "text", text: "original" }]]);
+		workers[1]?.finish();
+		await until(() => workers[1]?.prompts.length === 2);
+		expect(workers[1]?.prompts[1]).toEqual([
+			{ type: "text", text: "next task" },
+		]);
+	} finally {
+		await runtime.dispose();
+	}
+});

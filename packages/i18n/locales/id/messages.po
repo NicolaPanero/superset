@@ -2381,6 +2381,9 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Menu aplikasi"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Langsung berlaku untuk chat ini, meskipun kuotanya sudah habis. Tidak perlu mengganti agen atau akun."
+
 msgid "Applies to"
 msgstr "Berlaku untuk"
 
@@ -3374,6 +3377,9 @@ msgstr "Kesalahan Sertifikat"
 
 msgid "Chain of Thought"
 msgstr "Rantai Pemikiran"
+
+msgid "Change agent or account"
+msgstr "Ganti agen atau akun"
 
 msgid "Change assignee"
 msgstr "Ubah penerima tugas"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+klik"
 
 msgid "Current"
 msgstr "Saat ini"
+
+msgid "Current chat"
+msgstr "Chat saat ini"
 
 msgid "Current level"
 msgstr "Level saat ini"
@@ -7713,9 +7722,6 @@ msgstr "Untuk pertanyaan soal penagihan, <0>hubungi kami</0>."
 msgid "For teams that need more power"
 msgstr "Untuk tim yang butuh lebih banyak tenaga"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Untuk chat Claude ini. Mempertahankan percakapan dan model. Hanya memakai akun dengan kuota terverifikasi."
-
 msgid "Force merge"
 msgstr "Paksa merge"
 
@@ -9046,6 +9052,9 @@ msgstr "Tunggu saja"
 msgid "Keep working"
 msgstr "Lanjut bekerja"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Mempertahankan percakapan Claude dan model ini. Pergantian akun otomatis hanya menggunakan akun berlangganan dengan kuota terverifikasi."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "File baru dipertahankan — isinya berubah setelah dibuat"
 
@@ -9753,6 +9762,9 @@ msgstr "Kelola tugas dari percakapan Slack."
 
 msgid "Manage Terminal Scripts"
 msgstr "Kelola Skrip Terminal"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Kelola kelanjutan otomatis chat ini. Perubahan langsung disimpan."
 
 msgid "Manage your account settings"
 msgstr "Kelola pengaturan akun Anda"
@@ -13937,6 +13949,9 @@ msgstr "Argumen resume"
 
 msgid "Resume automation"
 msgstr "Lanjutkan otomatisasi"
+
+msgid "Resume this chat to activate these options."
+msgstr "Lanjutkan chat ini untuk mengaktifkan opsi ini."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

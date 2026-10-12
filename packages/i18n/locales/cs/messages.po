@@ -2381,6 +2381,9 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Nabídka aplikace"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Platí okamžitě pro tento chat, i když už vyčerpal kvótu. Není nutné měnit agenta ani účet."
+
 msgid "Applies to"
 msgstr "Platí pro"
 
@@ -3374,6 +3377,9 @@ msgstr "Chyba certifikátu"
 
 msgid "Chain of Thought"
 msgstr "Řetězec úvah"
+
+msgid "Change agent or account"
+msgstr "Změnit agenta nebo účet"
 
 msgid "Change assignee"
 msgstr "Změnit řešitele"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+kliknutí"
 
 msgid "Current"
 msgstr "Aktuální"
+
+msgid "Current chat"
+msgstr "Aktuální chat"
 
 msgid "Current level"
 msgstr "Aktuální úroveň"
@@ -7713,9 +7722,6 @@ msgstr "S dotazy k fakturaci se <0>ozvěte nám</0>."
 msgid "For teams that need more power"
 msgstr "Pro týmy, které potřebují víc"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Pro tento chat Claude. Zachová konverzaci a model. Používá pouze účty s ověřenou kvótou."
-
 msgid "Force merge"
 msgstr "Vynutit sloučení"
 
@@ -9046,6 +9052,9 @@ msgstr "Počkat dál"
 msgid "Keep working"
 msgstr "Pokračovat v práci"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Zachovává tuto konverzaci Claude a model. Automatické přepínání používá pouze účty s předplatným a ověřenou kvótou."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "Nový soubor byl zachován — po vytvoření se změnil"
 
@@ -9753,6 +9762,9 @@ msgstr "Spravujte úkoly z konverzací ve Slacku."
 
 msgid "Manage Terminal Scripts"
 msgstr "Spravovat terminálové skripty"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Spravujte automatické pokračování tohoto chatu. Změny se ukládají okamžitě."
 
 msgid "Manage your account settings"
 msgstr "Spravujte nastavení svého účtu"
@@ -13937,6 +13949,9 @@ msgstr "Argumenty pro pokračování"
 
 msgid "Resume automation"
 msgstr "Pokračovat v automatizaci"
+
+msgid "Resume this chat to activate these options."
+msgstr "Pokračujte v tomto chatu, aby se tyto možnosti aktivovaly."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

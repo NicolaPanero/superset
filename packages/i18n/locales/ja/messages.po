@@ -2381,6 +2381,9 @@ msgstr "Appleのロゴ"
 msgid "Application menu"
 msgstr "アプリケーションメニュー"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "利用枠をすでに使い切っていても、このチャットにすぐに適用されます。エージェントやアカウントを変更する必要はありません。"
+
 msgid "Applies to"
 msgstr "適用範囲"
 
@@ -3374,6 +3377,9 @@ msgstr "証明書エラー"
 
 msgid "Chain of Thought"
 msgstr "思考プロセス"
+
+msgid "Change agent or account"
+msgstr "エージェント・アカウント変更"
 
 msgid "Change assignee"
 msgstr "担当者を変更"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+クリック"
 
 msgid "Current"
 msgstr "現在"
+
+msgid "Current chat"
+msgstr "現在のチャット"
 
 msgid "Current level"
 msgstr "現在のレベル"
@@ -7713,9 +7722,6 @@ msgstr "請求に関するご質問は<0>お問い合わせ</0>ください。"
 msgid "For teams that need more power"
 msgstr "もっと力が必要なチーム向け"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "この Claude チャットに適用します。会話とモデルを保持します。使用枠を確認できたアカウントのみ使用します。"
-
 msgid "Force merge"
 msgstr "強制マージ"
 
@@ -9046,6 +9052,9 @@ msgstr "待ち続ける"
 msgid "Keep working"
 msgstr "作業を続ける"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "このClaudeの会話とモデルを維持します。自動切り替えには、利用枠が確認済みのサブスクリプションアカウントのみを使用します。"
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "新しいファイルを保持しました — 作成後に変更されています"
 
@@ -9753,6 +9762,9 @@ msgstr "Slackの会話からタスクを管理します。"
 
 msgid "Manage Terminal Scripts"
 msgstr "ターミナルスクリプトを管理"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "このチャットの自動継続を管理します。変更はすぐに保存されます。"
 
 msgid "Manage your account settings"
 msgstr "アカウント設定を管理"
@@ -13937,6 +13949,9 @@ msgstr "再開時の引数"
 
 msgid "Resume automation"
 msgstr "オートメーションを再開"
+
+msgid "Resume this chat to activate these options."
+msgstr "これらのオプションを有効にするには、このチャットを再開してください。"
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

@@ -3,6 +3,8 @@ import { randomUUID } from "node:crypto";
 import { eq } from "drizzle-orm";
 import {
 	readRecovery,
+	recoveryControllers,
+	recoveryKey,
 	writeRecovery,
 } from "../../src/chat-v3/forkQuotaRecoveryStore";
 import { workspaces } from "../../src/db/schema";
@@ -54,6 +56,37 @@ test("per-chat continuation persists independently, clears automatic selection a
 			readRecovery(host.db, workspaceId, input.terminalId),
 		).toBeUndefined();
 	} finally {
+		await scenario.dispose();
+	}
+});
+
+test("changing continuation options notifies the current live chat immediately without a handoff", async () => {
+	const scenario = await createBasicScenario();
+	const input = { workspaceId: scenario.workspaceId, terminalId: randomUUID() };
+	const key = recoveryKey(input.workspaceId, input.terminalId);
+	const snapshots: unknown[] = [];
+	recoveryControllers.set(key, {
+		status: { phase: "idle" },
+		changed: () =>
+			snapshots.push(
+				readRecovery(scenario.host.db, input.workspaceId, input.terminalId),
+			),
+	});
+	try {
+		await scenario.host.trpc.agents.setQuotaRecovery.mutate({
+			...input,
+			resumeAtReset: true,
+		});
+		expect(snapshots).toHaveLength(1);
+		expect(snapshots[0]).toMatchObject({
+			switchAccounts: false,
+			resumeAtReset: true,
+		});
+		expect(
+			await scenario.host.trpc.agents.quotaRecovery.query(input),
+		).toMatchObject({ switchAccounts: false, resumeAtReset: true });
+	} finally {
+		recoveryControllers.delete(key);
 		await scenario.dispose();
 	}
 });

@@ -9,10 +9,12 @@ export function ForkQuotaRecoveryControls({
 	workspaceId,
 	terminalId,
 	enabled,
+	sessionLive,
 }: {
 	workspaceId: string;
 	terminalId: string;
 	enabled: boolean;
+	sessionLive?: boolean;
 }) {
 	const { t } = useLingui(),
 		id = useId();
@@ -51,6 +53,16 @@ export function ForkQuotaRecoveryControls({
 					disabled={save.isPending}
 					aria-label={t({ message: "Automatic continuation" })}
 				>
+					<p className="text-xs text-muted-foreground">
+						{sessionLive === false ? (
+							<Trans>Resume this chat to activate these options.</Trans>
+						) : (
+							<Trans>
+								Applies immediately to this chat, even if its quota has already
+								run out. No agent or account change is required.
+							</Trans>
+						)}
+					</p>
 					<label
 						htmlFor={`${id}-switch`}
 						className="flex cursor-pointer items-center gap-2 text-sm"
@@ -79,8 +91,8 @@ export function ForkQuotaRecoveryControls({
 					</label>
 					<p className="text-xs text-muted-foreground">
 						<Trans>
-							For this Claude chat. Keeps the conversation and model. Only
-							accounts with verified quota are used.
+							Keeps this Claude conversation and model. Automatic account
+							switching uses only subscription accounts with verified quota.
 						</Trans>
 					</p>
 				</fieldset>

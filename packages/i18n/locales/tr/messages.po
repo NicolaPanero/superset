@@ -2381,6 +2381,9 @@ msgstr "Apple logosu"
 msgid "Application menu"
 msgstr "Uygulama menüsü"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Kota tükenmiş olsa bile bu sohbete hemen uygulanır. Aracı veya hesap değiştirmeniz gerekmez."
+
 msgid "Applies to"
 msgstr "Uygulanacak yer"
 
@@ -3374,6 +3377,9 @@ msgstr "Sertifika hatası"
 
 msgid "Chain of Thought"
 msgstr "Düşünce zinciri"
+
+msgid "Change agent or account"
+msgstr "Aracıyı veya hesabı değiştir"
 
 msgid "Change assignee"
 msgstr "Atananı değiştir"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+tık"
 
 msgid "Current"
 msgstr "Geçerli"
+
+msgid "Current chat"
+msgstr "Mevcut sohbet"
 
 msgid "Current level"
 msgstr "Mevcut düzey"
@@ -7713,9 +7722,6 @@ msgstr "Faturalandırmayla ilgili sorularınız için <0>bize ulaşın</0>."
 msgid "For teams that need more power"
 msgstr "Daha fazla güce ihtiyaç duyan takımlar için"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Bu Claude sohbeti için. Konuşmayı ve modeli korur. Yalnızca kotası doğrulanmış hesapları kullanır."
-
 msgid "Force merge"
 msgstr "Zorla birleştir"
 
@@ -9046,6 +9052,9 @@ msgstr "Beklemeye devam et"
 msgid "Keep working"
 msgstr "Çalışmaya devam et"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Bu Claude konuşmasını ve modeli korur. Otomatik hesap geçişi yalnızca kotası doğrulanmış abonelik hesaplarını kullanır."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "Yeni dosya korundu — oluşturulduktan sonra değişti"
 
@@ -9753,6 +9762,9 @@ msgstr "Görevleri Slack konuşmalarından yönetin."
 
 msgid "Manage Terminal Scripts"
 msgstr "Terminal betiklerini yönet"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Bu sohbetin otomatik devamını yönetin. Değişiklikler hemen kaydedilir."
 
 msgid "Manage your account settings"
 msgstr "Hesap ayarlarınızı yönetin"
@@ -13937,6 +13949,9 @@ msgstr "Sürdürme argümanları"
 
 msgid "Resume automation"
 msgstr "Otomasyonu sürdür"
+
+msgid "Resume this chat to activate these options."
+msgstr "Bu seçenekleri etkinleştirmek için bu sohbeti sürdürün."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

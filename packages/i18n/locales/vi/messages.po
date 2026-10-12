@@ -2381,6 +2381,9 @@ msgstr "Biểu trưng Apple"
 msgid "Application menu"
 msgstr "Menu ứng dụng"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Áp dụng ngay cho chat này, kể cả khi đã hết hạn mức. Không cần đổi tác nhân hoặc tài khoản."
+
 msgid "Applies to"
 msgstr "Áp dụng cho"
 
@@ -3374,6 +3377,9 @@ msgstr "Lỗi chứng chỉ"
 
 msgid "Chain of Thought"
 msgstr "Chuỗi suy luận"
+
+msgid "Change agent or account"
+msgstr "Đổi tác nhân hoặc tài khoản"
 
 msgid "Change assignee"
 msgstr "Đổi người phụ trách"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+nhấp"
 
 msgid "Current"
 msgstr "Hiện tại"
+
+msgid "Current chat"
+msgstr "Chat hiện tại"
 
 msgid "Current level"
 msgstr "Mức hiện tại"
@@ -7713,9 +7722,6 @@ msgstr "Nếu có thắc mắc về thanh toán, hãy <0>liên hệ với chúng
 msgid "For teams that need more power"
 msgstr "Dành cho đội cần nhiều sức mạnh hơn"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Cho cuộc trò chuyện Claude này. Giữ nguyên cuộc trò chuyện và mô hình. Chỉ dùng tài khoản có hạn mức đã xác minh."
-
 msgid "Force merge"
 msgstr "Merge cưỡng bức"
 
@@ -9046,6 +9052,9 @@ msgstr "Tiếp tục chờ"
 msgid "Keep working"
 msgstr "Tiếp tục làm"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Giữ cuộc trò chuyện Claude và mô hình này. Tự động chuyển chỉ dùng tài khoản thuê bao có hạn mức đã xác minh."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "Đã giữ tệp mới — nó đã thay đổi sau khi được tạo"
 
@@ -9753,6 +9762,9 @@ msgstr "Quản lý tác vụ từ hội thoại Slack."
 
 msgid "Manage Terminal Scripts"
 msgstr "Quản lý script terminal"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Quản lý việc tự động tiếp tục chat này. Thay đổi được lưu ngay."
 
 msgid "Manage your account settings"
 msgstr "Quản lý cài đặt tài khoản của bạn"
@@ -13937,6 +13949,9 @@ msgstr "Tham số resume"
 
 msgid "Resume automation"
 msgstr "Tiếp tục tự động hóa"
+
+msgid "Resume this chat to activate these options."
+msgstr "Tiếp tục chat này để kích hoạt các tùy chọn này."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"
