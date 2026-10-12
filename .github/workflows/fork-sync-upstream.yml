@@ -74,7 +74,7 @@ jobs:
 
       # Upstream's own workflows would run here too (and fail without its
       # secrets), including ones added later, so keep them switched off; only
-      # this fork's sync and release workflows stay on.
+      # this fork's sync, regression and release workflows stay on.
       - name: Keep upstream workflows disabled
         if: always()
         env:
@@ -82,7 +82,7 @@ jobs:
         run: |
           gh workflow list --repo "$GITHUB_REPOSITORY" --all --json path,state \
             --jq '.[] | select(.state == "active") | .path
-              | select(. != ".github/workflows/fork-sync-upstream.yml" and . != ".github/workflows/fork-release.yml")' |
+              | select(. != ".github/workflows/fork-sync-upstream.yml" and . != ".github/workflows/fork-release.yml" and . != ".github/workflows/fork-tests.yml")' |
           while read -r path; do
             gh workflow disable "$(basename "$path")" --repo "$GITHUB_REPOSITORY"
           done

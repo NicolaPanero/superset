@@ -17,7 +17,10 @@ export const HOST_USAGE_QUOTA_QUERY_KEY = ["host-usage-quota"] as const;
 const USAGE_CACHE_MS = 24 * 60 * 60_000;
 const recoveries = new Map<string, number>();
 
-export function useHostUsageQuota(hostUrl: string | null) {
+export function useHostUsageQuota(
+	hostUrl: string | null,
+	clientForHost = getHostServiceClientByUrl,
+) {
 	const queryClient = useQueryClient();
 	const queryKey = useMemo(
 		() => [...HOST_USAGE_QUOTA_QUERY_KEY, hostUrl] as const,
@@ -29,7 +32,7 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		enabled: !!hostUrl,
 		queryFn: () => {
 			if (!hostUrl) return [] as UsageAccount[];
-			return getHostServiceClientByUrl(hostUrl).usage.quota.query({
+			return clientForHost(hostUrl).usage.quota.query({
 				isolated: true,
 			});
 		},
@@ -65,7 +68,7 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		});
 		if (!pending.length) return;
 		let cancelled = false;
-		const client = getHostServiceClientByUrl(hostUrl);
+		const client = clientForHost(hostUrl);
 		Promise.all(
 			pending.map((account) =>
 				client.usage.verifyAccount
@@ -92,16 +95,23 @@ export function useHostUsageQuota(hostUrl: string | null) {
 		return () => {
 			cancelled = true;
 		};
-	}, [hostUrl, query.data, query.dataUpdatedAt, queryClient, queryKey]);
+	}, [
+		hostUrl,
+		query.data,
+		query.dataUpdatedAt,
+		queryClient,
+		queryKey,
+		clientForHost,
+	]);
 
 	const refresh = useCallback(async () => {
 		if (!hostUrl) return;
-		const fresh = await getHostServiceClientByUrl(hostUrl).usage.quota.query({
+		const fresh = await clientForHost(hostUrl).usage.quota.query({
 			forceRefresh: true,
 			isolated: true,
 		});
 		queryClient.setQueryData(queryKey, fresh);
-	}, [hostUrl, queryClient, queryKey]);
+	}, [hostUrl, queryClient, queryKey, clientForHost]);
 
 	return { ...query, refresh };
 }

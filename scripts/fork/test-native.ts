@@ -1,0 +1,40 @@
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+
+const root = resolve(import.meta.dir, "../..");
+const helper = resolve(
+	process.argv[2] ??
+		resolve(root, "apps/desktop/dist/resources/bin/txcript-transfer"),
+);
+if (!existsSync(helper))
+	throw new Error(
+		"Build or supply the pinned txcript-transfer helper before running native tests",
+	);
+const staging = mkdtempSync(join(tmpdir(), "fork-native-test-loader-"));
+try {
+	const preload = join(staging, "helper.ts");
+	writeFileSync(
+		preload,
+		`Reflect.set(globalThis,Symbol.for("superset.fork.testHelper"),${JSON.stringify(helper)});`,
+	);
+	const child = Bun.spawn(
+		[
+			process.execPath,
+			"test",
+			"--isolate",
+			"--preload",
+			resolve(root, "packages/host-service/test/setup-env.ts"),
+			"--preload",
+			preload,
+			resolve(
+				root,
+				"packages/host-service/src/session-transfer/fork-native-helper.native-test.ts",
+			),
+		],
+		{ cwd: root, stdout: "inherit", stderr: "inherit" },
+	);
+	process.exitCode = await child.exited;
+} finally {
+	rmSync(staging, { recursive: true, force: true });
+}
