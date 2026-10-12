@@ -7,6 +7,7 @@ import { fetchClaudeAccounts } from "./claude";
 import { fetchCodexAccounts } from "./codex";
 import { fetchGrokAccounts } from "./grok-quota";
 import { fetchOpencodeAccounts } from "./opencode-quota";
+import { readAccountIdentity } from "./session-account/session-account";
 import type { UsageAccount } from "./types";
 
 const TTL = ACCOUNT_QUOTA_CACHE_MS;
@@ -49,6 +50,32 @@ export function includeClaudeSystemLogin(
 		},
 		...accounts,
 	];
+}
+
+export async function bindQuotaProfileIdentity(
+	accounts: UsageAccount[],
+	identityFor = readAccountIdentity,
+) {
+	return Promise.all(
+		accounts.slice(0, 128).map(async (account) => {
+			if (
+				(account.agent !== "claude" && account.agent !== "codex") ||
+				account.credentialKind !== "subscription" ||
+				!account.selection ||
+				!account.identityFingerprint ||
+				account.status === "signed_out"
+			)
+				return account;
+			const identity = await identityFor(account.agent, account.selection);
+			if (!identity || (account.email && account.email !== identity.email))
+				return account;
+			return {
+				...account,
+				email: account.email ?? identity.email,
+				identityFingerprint: `profile:${identity.identity}`,
+			};
+		}),
+	);
 }
 
 export function reconcileQuota(
@@ -119,7 +146,7 @@ async function load() {
 		])
 	).flat();
 	const result = reconcileQuota(
-		includeClaudeSystemLogin(accounts),
+		await bindQuotaProfileIdentity(includeClaudeSystemLogin(accounts)),
 		lastSuccess,
 	);
 	try {

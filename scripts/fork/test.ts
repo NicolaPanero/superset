@@ -12,6 +12,7 @@ const suiteRoots = [
 ];
 const extra = [
 	"apps/desktop/fork-identity.test.ts",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/AccountUsage/utils/getAccountUsageState/getAccountUsageState.test.ts",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ForkChatExtras/utils",
 	"packages/host-service/src/session-transfer",
 	"packages/host-service/src/chat-v3/backgroundChats.test.ts",

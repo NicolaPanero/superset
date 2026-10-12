@@ -206,11 +206,32 @@ describe("isolated account profiles", () => {
 		const ready = await isolatedAccountOptions("claude", f.dependencies);
 		expect(
 			projectIsolatedQuota(
-				[external, changed],
+				[external, { ...changed, email: "work@example.invalid" }],
 				f.dependencies.registry.list(),
 				{ claude: ready, codex: [] },
 			)[1]?.windows,
 		).toEqual(changed.windows);
+	});
+
+	it("does not label another provider email's quota with the saved profile name", async () => {
+		const f = fixture();
+		const options = await isolatedAccountOptions("claude", f.dependencies);
+		const current = {
+			agent: "claude",
+			credentialKind: "subscription",
+			selection: f.profile.selection,
+			email: "another@example.invalid",
+			status: "ok",
+			windows: [{ id: "five_hour", usedPercent: 1 }],
+		} as UsageAccount;
+		const result = projectIsolatedQuota(
+			[current],
+			f.dependencies.registry.list(),
+			{ claude: options, codex: [] },
+		);
+		expect(result[0]?.email).toBe("work@example.invalid");
+		expect(result[0]?.windows).toEqual([]);
+		expect(result[0]?.status).toBe("signed_out");
 	});
 
 	it("uses an isolated subscription for the initial default and preserves the choice after logout", async () => {

@@ -1,11 +1,13 @@
 interface UsageProgressRingProps {
 	usedPercent?: number;
 	unavailable?: boolean;
+	lastKnown?: boolean;
 }
 
 export function UsageProgressRing({
 	usedPercent = 0,
 	unavailable = false,
+	lastKnown = false,
 }: UsageProgressRingProps) {
 	const percent = Number.isFinite(usedPercent)
 		? Math.min(100, Math.max(0, usedPercent))
@@ -19,7 +21,7 @@ export function UsageProgressRing({
 				stroke="currentColor"
 				strokeWidth="1.5"
 				opacity={unavailable ? 1 : 0.25}
-				strokeDasharray={unavailable ? "2 2" : undefined}
+				strokeDasharray={unavailable || lastKnown ? "2 2" : undefined}
 			/>
 			{!unavailable && percent > 0 && (
 				<circle
@@ -28,6 +30,7 @@ export function UsageProgressRing({
 					r="6"
 					stroke="currentColor"
 					strokeWidth="1.5"
+					opacity={lastKnown ? 0.65 : undefined}
 					pathLength="100"
 					strokeDasharray={`${percent} 100`}
 					transform="rotate(-90 8 8)"

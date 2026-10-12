@@ -59,10 +59,10 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 	if (!binding) return null;
 	const { account, state, tightest } = getAccountUsageState({
 		supported,
-		identity: identity.isError ? null : identity.data,
+		identity: identity.data,
 		accounts: quota.data ?? [],
 		loading: supported && (identity.isPending || quota.isPending),
-		failed: quota.isError,
+		failed: quota.isError || identity.isError,
 		now: now.getTime(),
 	});
 	const status =
@@ -73,16 +73,21 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 				: state === "unverified"
 					? t({ message: "Login unverified" })
 					: state === "stale"
-						? t({ message: "Usage is out of date" })
+						? t({ message: "Last known" })
 						: state === "unavailable"
 							? t({ message: "Usage unavailable." })
 							: null;
 	const percent = tightest ? formatPercent(tightest.usedPercent / 100) : "";
-	const summary = status ?? t({ message: `${percent} used` });
+	const usedLabel = t({ message: `${percent} used` });
+	const summary =
+		state === "stale" && tightest
+			? `${status} · ${usedLabel}`
+			: (status ?? usedLabel);
 	const title = t({ message: "Account usage" });
 	const Icon =
 		state === "loading" ? Loader2 : state === "api" ? Zap : CircleHelp;
-	const severity = state === "ready" && tightest ? tightest.usedPercent : 0;
+	const hasReading = (state === "ready" || state === "stale") && !!tightest;
+	const severity = hasReading && tightest ? tightest.usedPercent : 0;
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<Tooltip open={open ? false : undefined}>
@@ -102,8 +107,11 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 										: "text-muted-foreground/60 hover:text-muted-foreground",
 							)}
 						>
-							{state === "ready" && tightest ? (
-								<UsageProgressRing usedPercent={tightest.usedPercent} />
+							{hasReading && tightest ? (
+								<UsageProgressRing
+									usedPercent={tightest.usedPercent}
+									lastKnown={state === "stale"}
+								/>
 							) : state === "stale" || state === "unavailable" ? (
 								<UsageProgressRing unavailable />
 							) : (
