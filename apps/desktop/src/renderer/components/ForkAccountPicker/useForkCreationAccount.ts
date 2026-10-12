@@ -11,16 +11,17 @@ export function useForkCreationAccount(
 	provider: string | null,
 	model: string | null,
 	resetKey: number,
+	clientForHost = getHostServiceClientByUrl,
 ) {
 	const enabled = !!hostUrl && (provider === "claude" || provider === "codex");
-	const quota = useHostUsageQuota(enabled ? hostUrl : null);
+	const quota = useHostUsageQuota(enabled ? hostUrl : null, clientForHost);
 	const [pickerOpen, setPickerOpen] = useState(false);
 	const options = useQuery({
 		queryKey: ["fork-account-options", hostUrl, provider],
 		enabled,
 		queryFn: () =>
 			hostUrl && provider
-				? getHostServiceClientByUrl(hostUrl).agents.accountOptions.query({
+				? clientForHost(hostUrl).agents.accountOptions.query({
 						agent: provider,
 						isolated: true,
 					})
@@ -32,7 +33,7 @@ export function useForkCreationAccount(
 		enabled,
 		queryFn: () =>
 			hostUrl
-				? getHostServiceClientByUrl(hostUrl).usage.launchAccount.query({
+				? clientForHost(hostUrl).usage.launchAccount.query({
 						agent,
 						isolated: true,
 					})
@@ -43,6 +44,9 @@ export function useForkCreationAccount(
 	const stored = useNewWorkspaceDraftStore((state) => state.forkAccountChoice);
 	const update = useNewWorkspaceDraftStore((state) => state.updateDraft);
 	const key = `${hostUrl}:${provider}:${agent}:${resetKey}`;
+	useEffect(() => {
+		if (stored && stored.key !== key) update({ forkAccountChoice: undefined });
+	}, [key, stored, update]);
 	const selection =
 		!enabled || !metadata.data || metadata.data.environmentOverride
 			? undefined
@@ -80,13 +84,16 @@ export function useForkCreationAccount(
 		confirm: () =>
 			!enabled || !hostUrl
 				? Promise.resolve(true)
-				: validateAccountLaunch({
-						hostUrl,
-						agent,
-						provider: provider ?? "",
-						selection,
-						model: model ?? undefined,
-						isCurrent: () => live.current === signature,
-					}),
+				: validateAccountLaunch(
+						{
+							hostUrl,
+							agent,
+							provider: provider ?? "",
+							selection,
+							model: model ?? undefined,
+							isCurrent: () => live.current === signature,
+						},
+						clientForHost,
+					),
 	};
 }

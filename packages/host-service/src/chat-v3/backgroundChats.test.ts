@@ -15,6 +15,7 @@ afterEach(() => {
 
 function open() {
 	const sqlite = new Database(":memory:");
+	sqlite.exec("PRAGMA foreign_keys = ON");
 	connections.push(sqlite);
 	const db = drizzle(sqlite, { schema });
 	runMigrations(db, resolve(import.meta.dir, "../../drizzle"));
@@ -59,4 +60,56 @@ describe("background chats", () => {
 			"b",
 		]);
 	});
+});
+
+test("parking preserves the account, native chat, model and pending prompt payload", () => {
+	const db = open();
+	const paneData = {
+		terminalId: "a",
+		agentSurface: "acp",
+		acpAccountSelection: "/profiles/work",
+		acpAgentConfigId: "config",
+		acpSessionId: "runtime-id",
+		agent: { id: "claude", sessionId: "native-id" },
+		model: { id: "sonnet" },
+		pendingPrompt: [{ type: "text", text: "pending task" }],
+	};
+	parkChat(db, { ...chat("a"), paneData });
+	expect(listParkedChats(db, "ws")[0]?.paneData).toEqual(paneData);
+});
+test("the background limit belongs to each workspace independently", () => {
+	const db = open();
+	db.insert(schema.workspaces)
+		.values({
+			id: "other",
+			worktreePath: "/other",
+			branch: "main",
+			type: "session",
+		})
+		.run();
+	parkChat(db, { ...chat("other-pane"), workspaceId: "other" }, 1, 1);
+	parkChat(db, chat("a"), 2, 1);
+	parkChat(db, chat("b"), 3, 1);
+	expect(listParkedChats(db, "other").map((row) => row.terminalId)).toEqual([
+		"other-pane",
+	]);
+	expect(listParkedChats(db, "ws").map((row) => row.terminalId)).toEqual(["b"]);
+});
+test("deleting a workspace discards its parked panes without touching another workspace", () => {
+	const db = open();
+	db.insert(schema.workspaces)
+		.values({
+			id: "other",
+			worktreePath: "/other",
+			branch: "main",
+			type: "session",
+		})
+		.run();
+	parkChat(db, chat("a"));
+	parkChat(db, { ...chat("b"), workspaceId: "other" });
+	db.$client.prepare("DELETE FROM workspaces WHERE id = ?").run("ws");
+	expect(listParkedChats(db, "ws")).toEqual([]);
+	expect(listParkedChats(db, "other")).toHaveLength(1);
+	unparkChat(db, "does-not-exist");
+	expect(listParkedChats(db, "other")).toHaveLength(1);
 });

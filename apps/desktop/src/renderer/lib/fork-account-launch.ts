@@ -15,12 +15,13 @@ export interface AccountLaunchRequest {
 
 export async function validateAccountLaunch(
 	request: AccountLaunchRequest,
+	clientForHost = getHostServiceClientByUrl,
 ): Promise<boolean> {
 	if (request.isCurrent?.() === false) return false;
 	if (request.provider !== "claude" && request.provider !== "codex")
 		return true;
 	try {
-		const metadata = await getHostServiceClientByUrl(
+		const metadata = await clientForHost(
 			request.hostUrl,
 		).usage.launchAccount.query({
 			agent: request.agent,

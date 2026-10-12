@@ -283,3 +283,8 @@ profili, ripresa, account, ponte Cursor, chat in background e contesto
 esplicito con paginazione e troncamento. `bun run check:i18n` richiede tutte
 le traduzioni delle 17 lingue. Il typecheck riguarda desktop e host-service.
 Una prova manuale con gli agenti reali resta distinta da questi controlli.
+
+Esegui `bun run test:fork` per le regressioni desktop, unità/runtime e integrazioni
+host. La CI usa lo stesso comando e verifica separatamente il motore nativo
+prima di impacchettare. I test usano profili simulati, database e repository
+temporanei. Copertura, comandi e limiti in [docs/fork-testing.md](docs/fork-testing.md).
