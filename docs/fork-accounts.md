@@ -59,3 +59,5 @@ Account Usage details and Settings → Usage include a small reset action. It do
 - Claude's free-reset offer currently has no documented Claude Code interface equivalent. The action opens Claude's official Settings → Usage page and asks the user to check the account email in the browser. A reset applied there also restores the same account's Claude Code allowance; Superset++ does not infer offer counts or redeem it through undocumented browser endpoints.
 
 References: [Codex app-server](https://learn.chatgpt.com/docs/app-server), [Claude limit resets](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset).
+
+The macOS menu bar uses separate monochrome `forkIconTemplate.png` and `forkIconTemplate@2x.png` assets under `apps/desktop/src/resources/tray`, with the same central plus. macOS template rendering adapts them to light, dark and selected states; official builds keep their original tray icon. The adjacent SVG is the editable vector source.
