@@ -2381,6 +2381,9 @@ msgstr "Apple-logo"
 msgid "Application menu"
 msgstr "Toepassingsmenu"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Geldt meteen voor deze chat, ook als het quotum al op is. Je hoeft niet van agent of account te wisselen."
+
 msgid "Applies to"
 msgstr "Geldt voor"
 
@@ -3374,6 +3377,9 @@ msgstr "Certificaatfout"
 
 msgid "Chain of Thought"
 msgstr "Gedachtegang"
+
+msgid "Change agent or account"
+msgstr "Agent of account wijzigen"
 
 msgid "Change assignee"
 msgstr "Toegewezen persoon wijzigen"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+klik"
 
 msgid "Current"
 msgstr "Huidig"
+
+msgid "Current chat"
+msgstr "Huidige chat"
 
 msgid "Current level"
 msgstr "Huidig niveau"
@@ -7713,9 +7722,6 @@ msgstr "Voor vragen over facturering, <0>neem contact op</0>."
 msgid "For teams that need more power"
 msgstr "Voor teams die meer nodig hebben"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Voor deze Claude-chat. Behoudt het gesprek en model. Gebruikt alleen accounts met gecontroleerd quotum."
-
 msgid "Force merge"
 msgstr "Geforceerd mergen"
 
@@ -9046,6 +9052,9 @@ msgstr "Blijven wachten"
 msgid "Keep working"
 msgstr "Doorwerken"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Behoudt dit Claude-gesprek en het model. Automatisch wisselen gebruikt alleen abonnementsaccounts met een gecontroleerd quotum."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "Nieuw bestand behouden — het is na het aanmaken gewijzigd"
 
@@ -9753,6 +9762,9 @@ msgstr "Beheer taken vanuit Slack-gesprekken."
 
 msgid "Manage Terminal Scripts"
 msgstr "Terminalscripts beheren"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Beheer de automatische voortzetting van deze chat. Wijzigingen worden meteen opgeslagen."
 
 msgid "Manage your account settings"
 msgstr "Beheer je accountinstellingen"
@@ -13937,6 +13949,9 @@ msgstr "Resume-argumenten"
 
 msgid "Resume automation"
 msgstr "Automatisering hervatten"
+
+msgid "Resume this chat to activate these options."
+msgstr "Hervat deze chat om deze opties te activeren."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

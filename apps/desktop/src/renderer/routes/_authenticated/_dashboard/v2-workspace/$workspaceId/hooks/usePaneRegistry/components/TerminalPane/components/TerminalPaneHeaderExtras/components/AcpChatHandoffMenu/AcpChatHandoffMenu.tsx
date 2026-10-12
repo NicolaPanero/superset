@@ -20,6 +20,7 @@ import {
 	SelectValue,
 } from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@superset/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -81,6 +82,7 @@ export function AcpChatHandoffMenu({
 	const wiring = useChatWiring();
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
+	const [section, setSection] = useState("current-chat");
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const recovery = workspaceTrpc.agents.quotaRecovery.useQuery(
 		{ workspaceId, terminalId: data.terminalId },
@@ -138,7 +140,14 @@ export function AcpChatHandoffMenu({
 	const target = targets.find((config) => config.id === targetConfigId);
 	const sameAgent = target !== undefined && target === sameAgentConfig;
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
-	const quota = useHostUsageQuota(open && managed ? hostUrl : null);
+	const quota = useHostUsageQuota(
+		open &&
+			(managed ||
+				(section === "current-chat" &&
+					(data.agent?.id === "claude" || data.agent?.id === "codex")))
+			? hostUrl
+			: null,
+	);
 	const options = useQuery({
 		queryKey: ["agent-launch-account-options", hostUrl, target?.presetId],
 		enabled: open && managed && !!hostUrl,
@@ -389,6 +398,7 @@ export function AcpChatHandoffMenu({
 						aria-label={`${t({ message: "Agent" })} · ${t({ message: "Account" })}`}
 						onClick={() => {
 							reset();
+							setSection("current-chat");
 							setTargetConfigId(sameAgentConfig?.id ?? "");
 							setAccount(CONFIGURED_ACCOUNT);
 							setPlacement("this-chat");
@@ -437,7 +447,16 @@ export function AcpChatHandoffMenu({
 							<Trans>Agent</Trans> · <Trans>Account</Trans>
 						</DialogTitle>
 						<DialogDescription>
-							{sameAgent ? (
+							{section === "current-chat" ? (
+								accountSwitcher ? (
+									<Trans>
+										Manage this chat's automatic continuation. Changes are saved
+										immediately.
+									</Trans>
+								) : (
+									<Trans>Usage</Trans>
+								)
+							) : sameAgent ? (
 								<Trans>
 									Move this chat to another account. The conversation stays here
 									and continues with that account's quota.
@@ -450,238 +469,290 @@ export function AcpChatHandoffMenu({
 							)}
 						</DialogDescription>
 					</DialogHeader>
-					<div className="flex flex-col gap-4 py-1">
-						{target && !available && (
-							<p className="text-muted-foreground text-xs">
-								<Trans>
-									Native handoff is unavailable for this agent pair or host.
-								</Trans>
-							</p>
-						)}
-						{busy && (
-							<p className="text-muted-foreground text-xs">
-								<Trans>Wait for the agent to finish before handing off.</Trans>
-							</p>
-						)}
-						{failed && (
-							<p role="alert" className="text-destructive text-sm">
-								<Trans>Native handoff failed. You can retry.</Trans>
-							</p>
-						)}
-						<div className="flex flex-col gap-2">
-							<Label>
-								<Trans>Target agent</Trans>
-							</Label>
-							<AgentSelect
-								agents={targets.map((config) => ({
-									id: config.id,
-									label: config.label,
-									iconId: config.iconId ?? config.presetId,
-									disabled: !acpHarnessForPreset(config.presetId),
-									presetId: config.presetId,
-								}))}
-								value={targetConfigId}
-								placeholder={t({ message: "Select an agent" })}
-								onValueChange={(id) => {
-									setTargetConfigId(id);
-									setAccount(CONFIGURED_ACCOUNT);
-									if (id === sameAgentConfig?.id) setPlacement("this-chat");
-									reset();
-								}}
-								disabled={stage !== null || targets.length === 0}
-								triggerClassName="w-full"
-								onBeforeConfigureAgents={() => setOpen(false)}
+					<Tabs value={section} onValueChange={setSection} className="min-w-0">
+						<TabsList className="grid w-full grid-cols-2">
+							<TabsTrigger value="current-chat" disabled={stage !== null}>
+								<Trans>Current chat</Trans>
+							</TabsTrigger>
+							<TabsTrigger value="handoff" disabled={stage !== null}>
+								<Trans>Change agent or account</Trans>
+							</TabsTrigger>
+						</TabsList>
+						<TabsContent value="current-chat" className="space-y-4 pt-2">
+							<dl className="rounded-md border bg-muted/30 p-3 text-xs">
+								<dt className="text-muted-foreground">
+									<Trans>Current chat</Trans>
+								</dt>
+								<dd className="break-words">
+									{sourceLabel} · {currentAccount}
+								</dd>
+								<dd className="mt-2">
+									<details>
+										<summary className="cursor-pointer text-muted-foreground">
+											<Trans>Session</Trans>
+										</summary>
+										<code className="mt-1 block break-all">
+											{sourceSessionId ?? "—"}
+										</code>
+									</details>
+								</dd>
+							</dl>
+							<ForkUsageSummary
+								account={quota.data?.find(
+									(row) =>
+										row.agent === sourcePreset &&
+										(sourceSelection === undefined
+											? row.isDefault
+											: row.selection === sourceSelection),
+								)}
 							/>
-						</div>
-						{managed && (
-							<div className="flex flex-col gap-2">
-								<Label>
-									<Trans>Account</Trans>
-								</Label>
-								<Select
-									value={
-										sameAgent && account === CONFIGURED_ACCOUNT ? "" : account
-									}
-									onValueChange={(value) => {
-										setAccount(value);
-										reset();
-									}}
-									disabled={stage !== null || !options.isSuccess}
-								>
-									<SelectTrigger
-										aria-label={t({ message: "Account" })}
-										className="w-full"
-									>
-										<SelectValue
-											placeholder={t({ message: "Choose an account" })}
-										/>
-									</SelectTrigger>
-									<SelectContent>
-										{!sameAgent && (
-											<SelectItem value={CONFIGURED_ACCOUNT}>
-												<Trans>Configured account</Trans>
-											</SelectItem>
-										)}
-										{options.data
-											?.filter(
-												(option) =>
-													!sameAgent ||
-													option.selection !== accountSwitcher?.current,
-											)
-											.map((option) => {
-												const usage = quota.data?.find(
+							{accountSwitcher && (
+								<ForkQuotaRecoveryControls
+									workspaceId={workspaceId}
+									terminalId={data.terminalId}
+									enabled={open}
+									sessionLive={stored?.live}
+								/>
+							)}
+						</TabsContent>
+						<TabsContent value="handoff">
+							<div className="flex flex-col gap-4 py-1">
+								{target && !available && (
+									<p className="text-muted-foreground text-xs">
+										<Trans>
+											Native handoff is unavailable for this agent pair or host.
+										</Trans>
+									</p>
+								)}
+								{busy && (
+									<p className="text-muted-foreground text-xs">
+										<Trans>
+											Wait for the agent to finish before handing off.
+										</Trans>
+									</p>
+								)}
+								{failed && (
+									<p role="alert" className="text-destructive text-sm">
+										<Trans>Native handoff failed. You can retry.</Trans>
+									</p>
+								)}
+								<div className="flex flex-col gap-2">
+									<Label>
+										<Trans>Target agent</Trans>
+									</Label>
+									<AgentSelect
+										agents={targets.map((config) => ({
+											id: config.id,
+											label: config.label,
+											iconId: config.iconId ?? config.presetId,
+											disabled: !acpHarnessForPreset(config.presetId),
+											presetId: config.presetId,
+										}))}
+										value={targetConfigId}
+										placeholder={t({ message: "Select an agent" })}
+										onValueChange={(id) => {
+											setTargetConfigId(id);
+											setAccount(CONFIGURED_ACCOUNT);
+											if (id === sameAgentConfig?.id) setPlacement("this-chat");
+											reset();
+										}}
+										disabled={stage !== null || targets.length === 0}
+										triggerClassName="w-full"
+										onBeforeConfigureAgents={() => setOpen(false)}
+									/>
+								</div>
+								{managed && (
+									<div className="flex flex-col gap-2">
+										<Label>
+											<Trans>Account</Trans>
+										</Label>
+										<Select
+											value={
+												sameAgent && account === CONFIGURED_ACCOUNT
+													? ""
+													: account
+											}
+											onValueChange={(value) => {
+												setAccount(value);
+												reset();
+											}}
+											disabled={stage !== null || !options.isSuccess}
+										>
+											<SelectTrigger
+												aria-label={t({ message: "Account" })}
+												className="w-full"
+											>
+												<SelectValue
+													placeholder={t({ message: "Choose an account" })}
+												/>
+											</SelectTrigger>
+											<SelectContent>
+												{!sameAgent && (
+													<SelectItem value={CONFIGURED_ACCOUNT}>
+														<Trans>Configured account</Trans>
+													</SelectItem>
+												)}
+												{options.data
+													?.filter(
+														(option) =>
+															!sameAgent ||
+															option.selection !== accountSwitcher?.current,
+													)
+													.map((option) => {
+														const usage = quota.data?.find(
+															(row) =>
+																row.agent === target?.presetId &&
+																row.selection === option.selection,
+														);
+														const label = forkAccountLabel(
+															option,
+															usage?.email,
+														);
+														return (
+															<div key={option.selection ?? SYSTEM_ACCOUNT}>
+																{option.selection === null && (
+																	<SelectSeparator />
+																)}
+																<SelectItem
+																	key={option.selection ?? SYSTEM_ACCOUNT}
+																	value={option.selection ?? SYSTEM_ACCOUNT}
+																>
+																	{label === "System default" ? (
+																		<Trans>System default</Trans>
+																	) : (
+																		label
+																	)}
+																	<span className="ml-2">
+																		<ForkUsageSummary compact account={usage} />
+																	</span>
+																</SelectItem>
+															</div>
+														);
+													})}
+											</SelectContent>
+										</Select>
+										{!accountMissing && (
+											<ForkUsageSummary
+												account={quota.data?.find(
 													(row) =>
 														row.agent === target?.presetId &&
-														row.selection === option.selection,
-												);
-												const label = forkAccountLabel(option, usage?.email);
-												return (
-													<div key={option.selection ?? SYSTEM_ACCOUNT}>
-														{option.selection === null && <SelectSeparator />}
-														<SelectItem
-															key={option.selection ?? SYSTEM_ACCOUNT}
-															value={option.selection ?? SYSTEM_ACCOUNT}
-														>
-															{label === "System default" ? (
-																<Trans>System default</Trans>
-															) : (
-																label
-															)}
-															<span className="ml-2">
-																<ForkUsageSummary compact account={usage} />
-															</span>
-														</SelectItem>
-													</div>
-												);
-											})}
-									</SelectContent>
-								</Select>
-								<ForkUsageSummary
-									account={quota.data?.find(
-										(row) =>
-											row.agent === target?.presetId &&
-											(pickedSelection === undefined
-												? row.isDefault
-												: row.selection === pickedSelection),
-									)}
-								/>
+														(pickedSelection === undefined
+															? row.isDefault
+															: row.selection === pickedSelection),
+												)}
+											/>
+										)}
+									</div>
+								)}
+
+								{!sameAgent && (
+									<div className="flex flex-col gap-2">
+										<Label>
+											<Trans>Open session in</Trans>
+										</Label>
+										<div className="grid grid-cols-3 gap-2" role="radiogroup">
+											<Button
+												type="button"
+												variant={
+													placement === "this-chat" ? "secondary" : "outline"
+												}
+												onClick={() => setPlacement("this-chat")}
+												aria-pressed={placement === "this-chat"}
+												disabled={stage !== null}
+											>
+												<MessageSquare />
+												<Trans>This chat</Trans>
+											</Button>
+											<Button
+												type="button"
+												variant={
+													placement === "split-pane" ? "secondary" : "outline"
+												}
+												onClick={() => setPlacement("split-pane")}
+												aria-pressed={placement === "split-pane"}
+												disabled={stage !== null || sameAgent}
+											>
+												<PanelRight />
+												<Trans>Split pane</Trans>
+											</Button>
+											<Button
+												type="button"
+												variant={
+													placement === "new-tab" ? "secondary" : "outline"
+												}
+												onClick={() => setPlacement("new-tab")}
+												aria-pressed={placement === "new-tab"}
+												disabled={stage !== null || sameAgent}
+											>
+												<SquareStack />
+												<Trans>New tab</Trans>
+											</Button>
+										</div>
+									</div>
+								)}
 							</div>
-						)}
-						{accountSwitcher && (
-							<ForkQuotaRecoveryControls
-								workspaceId={workspaceId}
-								terminalId={data.terminalId}
-								enabled={open}
-							/>
-						)}
-						<dl className="rounded-md border bg-muted/30 p-3 text-xs">
-							<dt className="text-muted-foreground">
-								<Trans>Source</Trans>
-							</dt>
-							<dd className="break-words">
-								{sourceLabel} · {currentAccount}
-							</dd>
-							<dd className="mt-2">
-								<details>
-									<summary className="cursor-pointer text-muted-foreground">
-										<Trans>Session</Trans>
-									</summary>
-									<code className="mt-1 block break-all">
-										{sourceSessionId ?? "—"}
-									</code>
-								</details>
-							</dd>
-						</dl>
-						<div className="flex flex-col gap-2">
-							<Label>
-								<Trans>Open session in</Trans>
-							</Label>
-							<div className="grid grid-cols-3 gap-2" role="radiogroup">
-								<Button
-									type="button"
-									variant={placement === "this-chat" ? "secondary" : "outline"}
-									onClick={() => setPlacement("this-chat")}
-									aria-pressed={placement === "this-chat"}
-									disabled={stage !== null}
-								>
-									<MessageSquare />
-									<Trans>This chat</Trans>
-								</Button>
-								<Button
-									type="button"
-									variant={placement === "split-pane" ? "secondary" : "outline"}
-									onClick={() => setPlacement("split-pane")}
-									aria-pressed={placement === "split-pane"}
-									disabled={stage !== null || sameAgent}
-								>
-									<PanelRight />
-									<Trans>Split pane</Trans>
-								</Button>
-								<Button
-									type="button"
-									variant={placement === "new-tab" ? "secondary" : "outline"}
-									onClick={() => setPlacement("new-tab")}
-									aria-pressed={placement === "new-tab"}
-									disabled={stage !== null || sameAgent}
-								>
-									<SquareStack />
-									<Trans>New tab</Trans>
-								</Button>
-							</div>
-						</div>
-					</div>
-					<DialogFooter>
-						<Button
-							variant="ghost"
-							disabled={stage === "launching"}
-							onClick={() => {
-								if (stage === "converting") {
-									++runSequence.current;
-									cancelTransfer.mutate({ transferId });
-									setStage(null);
-									setTransferId(crypto.randomUUID());
-								}
-								setOpen(false);
-							}}
-						>
-							<Trans>Cancel</Trans>
-						</Button>
-						{target && !sameAgent && (failed || !available) && (
-							<div className="flex flex-col gap-2">
-								<p className="text-muted-foreground text-xs">
-									<Trans>
-										Context transfer includes only messages and may omit earlier
-										history.
-									</Trans>
-								</p>
-								<Button
-									variant="outline"
-									disabled={busy || stage !== null}
-									onClick={() => void continueWithContext()}
-								>
-									<Trans>Continue with context</Trans>
-								</Button>
-							</div>
-						)}
-						<Button
-							onClick={start}
-							disabled={
-								stage !== null ||
-								!available ||
-								busy ||
-								!target ||
-								accountMissing
-							}
-						>
-							{stage === "converting" ? (
-								<Trans>Converting…</Trans>
-							) : stage === "launching" ? (
-								<Trans>Launching…</Trans>
-							) : (
-								<Trans>Continue</Trans>
+						</TabsContent>
+					</Tabs>
+					{section === "current-chat" ? (
+						<DialogFooter>
+							<Button variant="outline" onClick={() => setOpen(false)}>
+								<Trans>Close</Trans>
+							</Button>
+						</DialogFooter>
+					) : (
+						<DialogFooter>
+							<Button
+								variant="ghost"
+								disabled={stage === "launching"}
+								onClick={() => {
+									if (stage === "converting") {
+										++runSequence.current;
+										cancelTransfer.mutate({ transferId });
+										setStage(null);
+										setTransferId(crypto.randomUUID());
+									}
+									setOpen(false);
+								}}
+							>
+								<Trans>Cancel</Trans>
+							</Button>
+							{target && !sameAgent && (failed || !available) && (
+								<div className="flex flex-col gap-2">
+									<p className="text-muted-foreground text-xs">
+										<Trans>
+											Context transfer includes only messages and may omit
+											earlier history.
+										</Trans>
+									</p>
+									<Button
+										variant="outline"
+										disabled={busy || stage !== null}
+										onClick={() => void continueWithContext()}
+									>
+										<Trans>Continue with context</Trans>
+									</Button>
+								</div>
 							)}
-						</Button>
-					</DialogFooter>
+							<Button
+								onClick={start}
+								disabled={
+									stage !== null ||
+									!available ||
+									busy ||
+									!target ||
+									accountMissing
+								}
+							>
+								{stage === "converting" ? (
+									<Trans>Converting…</Trans>
+								) : stage === "launching" ? (
+									<Trans>Launching…</Trans>
+								) : (
+									<Trans>Continue</Trans>
+								)}
+							</Button>
+						</DialogFooter>
+					)}
 				</DialogContent>
 			</Dialog>
 		</>

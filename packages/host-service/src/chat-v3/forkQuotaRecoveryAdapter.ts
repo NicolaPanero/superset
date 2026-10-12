@@ -75,6 +75,17 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 	private targetEmail?: string | null;
 	private unavailable = false;
 	private recoveryOption: keyof RecoverySettings = "switchAccounts";
+	// One failed turn, scoped to this live worker and its captured login. Never
+	// resurrect an old task after a new prompt, Stop, or a session/account change.
+	private quotaFailure?: {
+		turn: Turn;
+		at: number;
+		nativeId: string;
+		identity: string;
+		selection: string | null;
+	};
+	private recoveringQuota = false;
+	private waitingForQuota = false;
 	constructor(
 		private deps: RecoveryDependencies,
 		selection?: string | null,
@@ -94,7 +105,30 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		return this.deps.now?.() ?? Date.now();
 	}
 	changed() {
-		this.abort?.abort();
+		const failure = this.quotaFailure,
+			account = this.deps.account(),
+			settings = this.deps.settings();
+		if (this.waitingForQuota || !settings[this.recoveryOption])
+			this.abort?.abort();
+		if (
+			!failure ||
+			this.recoveringQuota ||
+			this.restarting ||
+			this.disposed ||
+			this.cancelled ||
+			(!settings.switchAccounts && !settings.resumeAtReset) ||
+			failure.nativeId !== this.nativeId ||
+			account?.identity !== failure.identity ||
+			account?.selection !== failure.selection ||
+			this.now() - failure.at >= 24 * 60 * 60_000
+		)
+			return;
+		this.quotaFailure = undefined;
+		void this.recover(failure.turn, failure.at, true).then((recovered) => {
+			if (recovered || this.disposed) return;
+			this.emit({ kind: "turn", turn: failure.turn });
+			this.queue.push({ kind: "session", session: { status: "idle" } });
+		});
 	}
 	private emit(event: AdapterEvent) {
 		if (this.heldTurn && event.kind === "turn")
@@ -115,6 +149,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			for await (const event of child.start(options)) {
 				if (this.disposed || child !== this.child) break;
 				if (event.kind === "session") {
+					if (event.session.status === "dead") this.quotaFailure = undefined;
 					this.nativeId = event.session.harnessSessionId ?? this.nativeId;
 					this.model = event.session.modelId ?? this.model;
 					this.mode = event.session.modeId ?? this.mode;
@@ -194,7 +229,23 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					event.turn.status === "failed" &&
 					isClaudeQuotaFailure(event.turn.error?.message ?? "")
 				) {
-					if (await this.recover(event.turn)) break;
+					const account = this.deps.account();
+					this.quotaFailure =
+						this.nativeId && account?.credentialKind === "subscription"
+							? {
+									turn: event.turn,
+									at: this.now(),
+									nativeId: this.nativeId,
+									identity: account.identity,
+									selection: account.selection,
+								}
+							: undefined;
+					if (await this.recover(event.turn)) {
+						this.quotaFailure = undefined;
+						break;
+					}
+				} else if (event.kind === "turn") {
+					this.quotaFailure = undefined;
 				}
 				this.emit(event);
 				if (event.kind === "turn" && event.turn.status !== "running") {
@@ -220,7 +271,26 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		this.restarting = false;
 		this.deps.status({ phase: "stopped" });
 	}
-	private async recover(turn: Turn): Promise<boolean> {
+	private async recover(
+		turn: Turn,
+		failureAt = this.now(),
+		alreadyFailed = false,
+	): Promise<boolean> {
+		if (this.recoveringQuota) return false;
+		this.recoveringQuota = true;
+		try {
+			return await this.recoverQuota(turn, failureAt, alreadyFailed);
+		} catch {
+			return false;
+		} finally {
+			this.recoveringQuota = false;
+		}
+	}
+	private async recoverQuota(
+		turn: Turn,
+		failureAt: number,
+		alreadyFailed: boolean,
+	): Promise<boolean> {
 		const settings = this.deps.settings(),
 			account = this.deps.account();
 		if (
@@ -234,17 +304,24 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		)
 			return false;
 		this.cancelled = false;
+		this.recoveryOption = settings.switchAccounts
+			? "switchAccounts"
+			: "resumeAtReset";
 		this.workerStopped = false;
-		this.failureAt = this.now();
+		this.failureAt = failureAt;
 		this.heldTurn ??= {
 			...turn,
 			status: "running",
 			completedAtMs: undefined,
 			error: undefined,
 		};
+		if (alreadyFailed) {
+			this.queue.push({ kind: "turn", turn: this.heldTurn });
+			this.queue.push({ kind: "session", session: { status: "running" } });
+		}
 		this.selection = account.selection;
 		const identity = account.identity;
-		const expires = this.now() + 24 * 60 * 60_000;
+		const expires = failureAt + 24 * 60 * 60_000;
 		this.abort = new AbortController();
 		try {
 			this.deps.status({ phase: "waiting" });
@@ -258,7 +335,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			if (failed)
 				this.blocked.set(
 					failed.accountKey,
-					recoveryResetAt(failed, this.now(), this.model),
+					recoveryResetAt(failed, failureAt, this.model),
 				);
 			while (!this.disposed && !this.cancelled && this.now() < expires) {
 				const prefs = this.deps.settings(),
@@ -375,7 +452,12 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 				);
 				if (nextCheckAt > expires) break;
 				this.deps.status({ phase: "waiting", nextCheckAt });
-				await (this.deps.wait ?? wait)(nextCheckAt - now, this.abort.signal);
+				this.waitingForQuota = true;
+				try {
+					await (this.deps.wait ?? wait)(nextCheckAt - now, this.abort.signal);
+				} finally {
+					this.waitingForQuota = false;
+				}
 				if (this.disposed) return true;
 				if (this.cancelled) break;
 				if (this.abort.signal.aborted) this.abort = new AbortController();
@@ -410,12 +492,15 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		return true;
 	}
 	prompt(content: UserContent[]) {
+		this.quotaFailure = undefined;
+		this.cancelled = false;
 		if (this.unavailable) throw new Error("source_account_unverified");
 		this.attempts = 0;
 		this.blocked.clear();
 		this.child.prompt(content);
 	}
 	cancelTurn() {
+		this.quotaFailure = undefined;
 		this.cancelled = true;
 		this.abort?.abort();
 		this.child.cancelTurn();
@@ -424,12 +509,14 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		this.child.respondToApproval(id, decision);
 	}
 	setMode(mode: string) {
+		this.quotaFailure = undefined;
 		this.cancelled = true;
 		this.mode = mode;
 		this.changed();
 		this.child.setMode(mode);
 	}
 	setConfigOption(id: string, value: string) {
+		this.quotaFailure = undefined;
 		this.cancelled = true;
 		this.changed();
 		this.child.setConfigOption?.(id, value);
@@ -447,6 +534,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		return this.child.stopBackgroundTask?.(id) ?? Promise.resolve(false);
 	}
 	async dispose() {
+		this.quotaFailure = undefined;
 		this.disposed = true;
 		this.abort?.abort();
 		await this.child.dispose();

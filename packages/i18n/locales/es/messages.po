@@ -2381,6 +2381,9 @@ msgstr "Logotipo de Apple"
 msgid "Application menu"
 msgstr "Menú de la aplicación"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "Se aplica inmediatamente a este chat, aunque su cuota ya se haya agotado. No hace falta cambiar de agente ni de cuenta."
+
 msgid "Applies to"
 msgstr "Se aplica a"
 
@@ -3374,6 +3377,9 @@ msgstr "Error de certificado"
 
 msgid "Chain of Thought"
 msgstr "Cadena de razonamiento"
+
+msgid "Change agent or account"
+msgstr "Cambiar agente o cuenta"
 
 msgid "Change assignee"
 msgstr "Cambiar responsable"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+clic"
 
 msgid "Current"
 msgstr "Actual"
+
+msgid "Current chat"
+msgstr "Chat actual"
 
 msgid "Current level"
 msgstr "Nivel actual"
@@ -7713,9 +7722,6 @@ msgstr "Si tienes dudas sobre la facturación, <0>contáctanos</0>."
 msgid "For teams that need more power"
 msgstr "Para equipos que necesitan más potencia"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "Para este chat de Claude. Conserva la conversación y el modelo. Solo usa cuentas con cuota verificada."
-
 msgid "Force merge"
 msgstr "Forzar la fusión"
 
@@ -9046,6 +9052,9 @@ msgstr "Seguir esperando"
 msgid "Keep working"
 msgstr "Seguir trabajando"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "Mantiene esta conversación de Claude y el modelo. El cambio automático utiliza solo cuentas de suscripción con cuota verificada."
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "Se conservó el archivo nuevo: cambió después de crearse"
 
@@ -9753,6 +9762,9 @@ msgstr "Gestiona tareas desde las conversaciones de Slack."
 
 msgid "Manage Terminal Scripts"
 msgstr "Gestionar los scripts de terminal"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "Gestiona la continuación automática de este chat. Los cambios se guardan inmediatamente."
 
 msgid "Manage your account settings"
 msgstr "Gestiona la configuración de tu cuenta"
@@ -13937,6 +13949,9 @@ msgstr "Argumentos de reanudación"
 
 msgid "Resume automation"
 msgstr "Reanudar la automatización"
+
+msgid "Resume this chat to activate these options."
+msgstr "Reanuda este chat para activar estas opciones."
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"

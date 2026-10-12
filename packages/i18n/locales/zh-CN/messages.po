@@ -2381,6 +2381,9 @@ msgstr "Apple 标志"
 msgid "Application menu"
 msgstr "应用程序菜单"
 
+msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
+msgstr "立即应用于此聊天，即使额度已用完。无需更换代理或账户。"
+
 msgid "Applies to"
 msgstr "适用于"
 
@@ -3374,6 +3377,9 @@ msgstr "证书错误"
 
 msgid "Chain of Thought"
 msgstr "思维链"
+
+msgid "Change agent or account"
+msgstr "更换代理或账户"
 
 msgid "Change assignee"
 msgstr "更改负责人"
@@ -5536,6 +5542,9 @@ msgstr "Ctrl+Shift+点击"
 
 msgid "Current"
 msgstr "当前"
+
+msgid "Current chat"
+msgstr "当前聊天"
 
 msgid "Current level"
 msgstr "当前等级"
@@ -7713,9 +7722,6 @@ msgstr "如有账单相关问题，请<0>联系我们</0>。"
 msgid "For teams that need more power"
 msgstr "面向需要更多能力的团队"
 
-msgid "For this Claude chat. Keeps the conversation and model. Only accounts with verified quota are used."
-msgstr "适用于此 Claude 聊天。保留对话和模型。仅使用配额已验证的账户。"
-
 msgid "Force merge"
 msgstr "强制合并"
 
@@ -9046,6 +9052,9 @@ msgstr "继续等待"
 msgid "Keep working"
 msgstr "继续工作"
 
+msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgstr "保留此 Claude 对话和模型。自动切换仅使用额度已验证的订阅账户。"
+
 msgid "Kept the new file — it changed after it was created"
 msgstr "已保留新文件 — 它在创建后发生了更改"
 
@@ -9753,6 +9762,9 @@ msgstr "在Slack对话中管理任务。"
 
 msgid "Manage Terminal Scripts"
 msgstr "管理终端脚本"
+
+msgid "Manage this chat's automatic continuation. Changes are saved immediately."
+msgstr "管理此聊天的自动继续功能。更改会立即保存。"
 
 msgid "Manage your account settings"
 msgstr "管理你的账户设置"
@@ -13937,6 +13949,9 @@ msgstr "恢复参数"
 
 msgid "Resume automation"
 msgstr "恢复自动化"
+
+msgid "Resume this chat to activate these options."
+msgstr "恢复此聊天以启用这些选项。"
 
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"
