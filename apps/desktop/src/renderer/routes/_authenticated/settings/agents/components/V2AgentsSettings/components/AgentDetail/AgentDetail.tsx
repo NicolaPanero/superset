@@ -39,6 +39,7 @@ import {
 	Section,
 } from "../AgentFormControls";
 import { AgentIconPicker } from "../AgentIconPicker";
+import { ForkAgentSetup } from "../ForkAgentSetup";
 
 interface AgentDetailProps {
 	config: HostAgentConfig;
@@ -56,6 +57,10 @@ export function AgentDetail({
 	const { t } = useLingui();
 	const hostService = useLocalHostService();
 	const { activeHostUrl } = hostService;
+	const guided =
+		config.presetId === "grok" || config.presetId === "cursor-agent";
+	const [advanced, setAdvanced] = useState(false);
+	const setupAgent = electronTrpc.settings.setupAgent.useMutation();
 	const isCustom = config.presetId === "custom";
 	const hasBundledDefault = getPresetById(config.presetId) !== undefined;
 	const isHooksSetupTarget = (AGENT_TYPES as readonly string[]).includes(
@@ -279,6 +284,18 @@ export function AgentDetail({
 			/>
 
 			<div className="space-y-6">
+				{guided && (
+					<ForkAgentSetup
+						key={`${activeHostUrl}:${config.id}`}
+						hostUrl={activeHostUrl}
+						config={config}
+						onChanged={(updated) => {
+							onChanged(updated);
+							setupAgent.mutate({ agentId: config.presetId });
+						}}
+						onAdvanced={() => setAdvanced(true)}
+					/>
+				)}
 				<Section
 					title={t({
 						message: "Label",
@@ -306,23 +323,35 @@ export function AgentDetail({
 					</Section>
 				) : null}
 
-				<AgentLaunchFields
-					idPrefix={config.id}
-					commandText={commandText}
-					onCommandTextChange={setCommandText}
-					onCommandBlur={handleCommandBlur}
-					promptArgsText={promptArgsText}
-					onPromptArgsTextChange={setPromptArgsText}
-					onPromptArgsBlur={handlePromptArgsBlur}
-					resumeArgsText={resumeArgsText}
-					onResumeArgsTextChange={setResumeArgsText}
-					onResumeArgsBlur={handleResumeArgsBlur}
-					forkArgsText={forkArgsText}
-					onForkArgsTextChange={setForkArgsText}
-					onForkArgsBlur={handleForkArgsBlur}
-					promptTransport={promptTransport}
-					onPromptTransportChange={handleTransportChange}
-				/>
+				{guided && (
+					<Button
+						variant="ghost"
+						size="sm"
+						aria-expanded={advanced}
+						onClick={() => setAdvanced(!advanced)}
+					>
+						<Trans>Advanced configuration</Trans>
+					</Button>
+				)}
+				{(!guided || advanced) && (
+					<AgentLaunchFields
+						idPrefix={config.id}
+						commandText={commandText}
+						onCommandTextChange={setCommandText}
+						onCommandBlur={handleCommandBlur}
+						promptArgsText={promptArgsText}
+						onPromptArgsTextChange={setPromptArgsText}
+						onPromptArgsBlur={handlePromptArgsBlur}
+						resumeArgsText={resumeArgsText}
+						onResumeArgsTextChange={setResumeArgsText}
+						onResumeArgsBlur={handleResumeArgsBlur}
+						forkArgsText={forkArgsText}
+						onForkArgsTextChange={setForkArgsText}
+						onForkArgsBlur={handleForkArgsBlur}
+						promptTransport={promptTransport}
+						onPromptTransportChange={handleTransportChange}
+					/>
+				)}
 
 				{isHooksSetupTarget ? (
 					<div className="pt-2">

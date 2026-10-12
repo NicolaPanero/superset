@@ -1845,6 +1845,9 @@ msgstr "v1 작업 공간을 가져온 해당 v2 프로젝트에 연결합니다.
 msgid "Advanced"
 msgstr "고급"
 
+msgid "Advanced configuration"
+msgstr "고급 설정"
+
 msgid "Advanced options"
 msgstr "고급 옵션"
 
@@ -1921,6 +1924,9 @@ msgid "Agent session started"
 msgstr "에이전트 세션을 시작했습니다"
 
 msgid "agent settings"
+msgstr "에이전트 설정"
+
+msgid "Agent setup"
 msgstr "에이전트 설정"
 
 msgid "Agents"
@@ -2342,6 +2348,9 @@ msgstr "API 과금"
 msgid "API key"
 msgstr "API 키"
 
+msgid "API key configured"
+msgstr "API 키 설정됨"
+
 msgid "API key generated"
 msgstr "API 키가 생성되었습니다"
 
@@ -2408,6 +2417,9 @@ msgstr "적용"
 msgctxt "job application"
 msgid "Apply"
 msgstr "지원"
+
+msgid "Apply recommended settings"
+msgstr "권장 설정 적용"
 
 msgid "Approve"
 msgstr "승인"
@@ -3489,6 +3501,9 @@ msgstr "채팅을 {0}(으)로 옮겼습니다"
 msgid "Chat session not found"
 msgstr "채팅 세션을 찾을 수 없습니다"
 
+msgid "Chat support not verified"
+msgstr "채팅 지원 미확인"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "채팅 화면: 메시지, 추론, 제안"
 
@@ -3515,6 +3530,9 @@ msgstr "리소스 확인"
 
 msgid "Check Resources"
 msgstr "리소스 확인"
+
+msgid "Check sign-in"
+msgstr "로그인 확인"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "초기화를 사용하기 전에 브라우저에서 계정 이메일을 확인하세요."
@@ -3587,6 +3605,9 @@ msgstr "검사 완료"
 
 msgid "Checks failed"
 msgstr "검사 실패"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "프롬프트를 보내지 않고 설치와 로컬 로그인을 확인합니다. API 키는 유료 요청으로 검증하지 않습니다."
 
 msgid "Checks passed"
 msgstr "검사 통과"
@@ -3758,6 +3779,9 @@ msgstr "CLI 문서"
 
 msgid "CLI login"
 msgstr "CLI 로그인"
+
+msgid "CLI not found"
+msgstr "CLI를 찾을 수 없음"
 
 msgid "CLI reference"
 msgstr "CLI 레퍼런스"
@@ -4207,6 +4231,9 @@ msgstr "기본 스타일과 비교함"
 
 msgid "complete"
 msgstr "종료"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "공식 CLI 절차를 완료한 뒤 이 창을 닫아 결과를 확인하세요."
 
 msgid "Completed"
 msgstr "완료"
@@ -8121,6 +8148,9 @@ msgstr "GTM 및 AI 자동화 아키텍트, Mistral AI"
 msgid "Guide"
 msgstr "가이드"
 
+msgid "Guided setup unavailable"
+msgstr "안내 설정을 사용할 수 없음"
+
 msgid "Guides"
 msgstr "가이드"
 
@@ -8308,6 +8338,9 @@ msgstr "이 조직에서 호스트를 찾을 수 없습니다"
 
 msgid "Host not found in this organization."
 msgstr "이 조직에서 호스트를 찾을 수 없습니다."
+
+msgid "Host offline"
+msgstr "호스트 오프라인"
 
 msgid "Host service"
 msgstr "호스트 서비스"
@@ -8757,6 +8790,9 @@ msgstr "설치 후 다시 시작"
 msgid "Install and run your first agent."
 msgstr "설치하고 첫 에이전트를 실행하세요."
 
+msgid "Install CLI"
+msgstr "CLI 설치"
+
 msgid "Install failed"
 msgstr "설치 실패"
 
@@ -8774,6 +8810,9 @@ msgstr "클라이언트에 Superset MCP 설치하기"
 
 msgid "Install the desktop app"
 msgstr "데스크톱 앱 설치"
+
+msgid "Install the official CLI, then check again."
+msgstr "공식 CLI를 설치한 뒤 다시 확인하세요."
 
 msgid "Install the plugin to connect"
 msgstr "연결하려면 플러그인을 설치하세요"
@@ -13240,6 +13279,9 @@ msgstr "사용량 읽는 중…"
 msgid "Reading your local usage…"
 msgstr "로컬 사용량을 읽는 중…"
 
+msgid "Ready"
+msgstr "준비됨"
+
 msgid "Ready for review"
 msgstr "리뷰 준비됨"
 
@@ -13306,6 +13348,9 @@ msgstr "최근 본 항목"
 
 msgid "Recents"
 msgstr "최근 항목"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "권장 설정은 실행 명령과 인수를 바꿉니다. 이름, 훅 및 다른 환경 설정은 유지됩니다. 새 실행에 적용됩니다."
 
 msgid "Recommended size 256×256."
 msgstr "권장 크기 256×256."
@@ -15058,6 +15103,9 @@ msgstr "설정 ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "설정 → 원격 액세스 → “릴레이를 통해 이 기기에 원격 액세스 허용”."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "설정이 적용되었습니다. 기존 채팅은 설정을 유지합니다."
+
 msgid "Settings..."
 msgstr "설정..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "설정"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "설정을 적용하지 못했습니다. 다시 확인하거나 고급 설정을 사용하세요."
 
 msgid "Setup script"
 msgstr "설정 스크립트"
@@ -15334,6 +15385,9 @@ msgstr "로컬 관리자로 로그인 (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "{0}에 로그인"
+
+msgid "Sign in to continue"
+msgstr "계속하려면 로그인하세요"
 
 msgid "Sign in to continue to Superset"
 msgstr "Superset을 계속 사용하려면 로그인하세요"
@@ -16775,6 +16829,12 @@ msgstr "자동화 소유자가 더 이상 이 조직에서 클라우드 워크�
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "최고의 에이전트는 바뀝니다.<0/>워크플로는 그럴 필요 없습니다."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI에 사용자 지정 모델 설정이 이미 있습니다. 고급 설정에서 수정하세요."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI가 채팅 지원을 확인하지 못했습니다. 터미널은 계속 사용할 수 있습니다."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시간에 응답하지 않았습니다. 다음 실행에서 다시 시도합니다."
 
@@ -18100,6 +18160,9 @@ msgstr "파일을 첨부하려면 이 컴퓨터에서 Superset을 업데이트�
 msgid "update the branch prefix"
 msgstr "브랜치 접두사를 업데이트할"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "안내 설정을 위해 이 호스트를 업데이트하거나 고급 설정을 사용하세요."
+
 msgid "Updated"
 msgstr "업데이트됨"
 
@@ -18185,6 +18248,9 @@ msgstr "무료 초기화를 사용하시겠습니까?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "워크스페이스 기준 상대 경로나 절대 경로 폴더를 사용하세요."
+
+msgid "Use an API key"
+msgstr "API 키 사용"
 
 msgid "Use another port"
 msgstr "다른 포트 사용"
@@ -18275,6 +18341,9 @@ msgstr "사용자를 찾을 수 없습니다"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "별도로 청구되는 xAI API를 사용합니다. 각자 자신의 키를 제공해야 합니다."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 시간 초과)"

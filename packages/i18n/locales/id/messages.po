@@ -1845,6 +1845,9 @@ msgstr "Gabungkan ruang kerja v1 ke proyek v2 terkait yang telah diimpor."
 msgid "Advanced"
 msgstr "Lanjutan"
 
+msgid "Advanced configuration"
+msgstr "Konfigurasi lanjutan"
+
 msgid "Advanced options"
 msgstr "Opsi lanjutan"
 
@@ -1922,6 +1925,9 @@ msgstr "Sesi agen dimulai"
 
 msgid "agent settings"
 msgstr "pengaturan agen"
+
+msgid "Agent setup"
+msgstr "Pengaturan agen"
 
 msgid "Agents"
 msgstr "Agen"
@@ -2342,6 +2348,9 @@ msgstr "Penagihan API"
 msgid "API key"
 msgstr "Kunci API"
 
+msgid "API key configured"
+msgstr "Kunci API dikonfigurasi"
+
 msgid "API key generated"
 msgstr "Kunci API dibuat"
 
@@ -2408,6 +2417,9 @@ msgstr "Terapkan"
 msgctxt "job application"
 msgid "Apply"
 msgstr "Lamar"
+
+msgid "Apply recommended settings"
+msgstr "Terapkan pengaturan yang disarankan"
 
 msgid "Approve"
 msgstr "Setujui"
@@ -3489,6 +3501,9 @@ msgstr "Chat dipindahkan ke {0}"
 msgid "Chat session not found"
 msgstr "Sesi chat tidak ditemukan"
 
+msgid "Chat support not verified"
+msgstr "Dukungan chat belum diverifikasi"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Permukaan chat: pesan, penalaran, saran"
 
@@ -3515,6 +3530,9 @@ msgstr "Periksa sumber daya"
 
 msgid "Check Resources"
 msgstr "Periksa Sumber Daya"
+
+msgid "Check sign-in"
+msgstr "Periksa login"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Periksa email akun di browser sebelum menggunakan reset."
@@ -3587,6 +3605,9 @@ msgstr "Check selesai"
 
 msgid "Checks failed"
 msgstr "Check gagal"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "Memeriksa instalasi dan login lokal tanpa mengirim prompt. Kunci API tidak divalidasi dengan permintaan berbayar."
 
 msgid "Checks passed"
 msgstr "Check lulus"
@@ -3758,6 +3779,9 @@ msgstr "Dokumentasi CLI"
 
 msgid "CLI login"
 msgstr "Login CLI"
+
+msgid "CLI not found"
+msgstr "CLI tidak ditemukan"
 
 msgid "CLI reference"
 msgstr "Referensi CLI"
@@ -4207,6 +4231,9 @@ msgstr "Dibandingkan dengan gaya bawaan"
 
 msgid "complete"
 msgstr "selesai"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "Selesaikan alur CLI resmi, lalu tutup jendela ini untuk memeriksa hasilnya."
 
 msgid "Completed"
 msgstr "Selesai"
@@ -8121,6 +8148,9 @@ msgstr "Arsitek GTM & Otomatisasi AI, Mistral AI"
 msgid "Guide"
 msgstr "Panduan"
 
+msgid "Guided setup unavailable"
+msgstr "Pengaturan terpandu tidak tersedia"
+
 msgid "Guides"
 msgstr "Panduan"
 
@@ -8308,6 +8338,9 @@ msgstr "Host tidak ditemukan di organisasi ini"
 
 msgid "Host not found in this organization."
 msgstr "Host tidak ditemukan di organisasi ini."
+
+msgid "Host offline"
+msgstr "Host offline"
 
 msgid "Host service"
 msgstr "Layanan host"
@@ -8757,6 +8790,9 @@ msgstr "Pasang dan mulai ulang"
 msgid "Install and run your first agent."
 msgstr "Instal dan jalankan agen pertama Anda."
 
+msgid "Install CLI"
+msgstr "Instal CLI"
+
 msgid "Install failed"
 msgstr "Pemasangan gagal"
 
@@ -8774,6 +8810,9 @@ msgstr "Pasang Superset MCP di klien Anda"
 
 msgid "Install the desktop app"
 msgstr "Pasang aplikasi desktop"
+
+msgid "Install the official CLI, then check again."
+msgstr "Instal CLI resmi, lalu periksa lagi."
 
 msgid "Install the plugin to connect"
 msgstr "Instal plugin untuk menghubungkan"
@@ -13240,6 +13279,9 @@ msgstr "Membaca penggunaan…"
 msgid "Reading your local usage…"
 msgstr "Membaca penggunaan lokal Anda…"
 
+msgid "Ready"
+msgstr "Siap"
+
 msgid "Ready for review"
 msgstr "Siap direview"
 
@@ -13306,6 +13348,9 @@ msgstr "Baru Dilihat"
 
 msgid "Recents"
 msgstr "Terbaru"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "Pengaturan yang disarankan mengganti perintah dan argumen peluncuran. Nama, hook, dan pengaturan lingkungan lainnya tetap dipertahankan. Berlaku untuk peluncuran baru."
 
 msgid "Recommended size 256×256."
 msgstr "Ukuran yang disarankan 256×256."
@@ -15058,6 +15103,9 @@ msgstr "Pengaturan ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Pengaturan → Akses Jarak Jauh → “Izinkan akses jarak jauh ke perangkat ini melalui relay”."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "Pengaturan diterapkan. Chat yang ada tetap menggunakan konfigurasinya."
+
 msgid "Settings..."
 msgstr "Pengaturan..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "Setup"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "Pengaturan tidak dapat diterapkan. Periksa lagi atau gunakan konfigurasi lanjutan."
 
 msgid "Setup script"
 msgstr "Skrip setup"
@@ -15334,6 +15385,9 @@ msgstr "Masuk sebagai Local Admin (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "Masuk ke {0}"
+
+msgid "Sign in to continue"
+msgstr "Login untuk melanjutkan"
 
 msgid "Sign in to continue to Superset"
 msgstr "Masuk untuk melanjutkan ke Superset"
@@ -16775,6 +16829,12 @@ msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di o
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI sudah memiliki pengaturan model khusus. Edit melalui konfigurasi lanjutan."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI tidak mengonfirmasi dukungan chat. Anda tetap dapat menggunakan terminal."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud seharusnya sudah berjalan, tetapi tidak merespons tepat waktu. Run berikutnya akan mencoba lagi."
 
@@ -18100,6 +18160,9 @@ msgstr "Perbarui Superset di mesin ini untuk melampirkan file"
 msgid "update the branch prefix"
 msgstr "memperbarui prefix branch"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "Perbarui host ini untuk pengaturan terpandu atau gunakan konfigurasi lanjutan."
+
 msgid "Updated"
 msgstr "Diperbarui"
 
@@ -18185,6 +18248,9 @@ msgstr "Gunakan reset gratis?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Pakai path relatif terhadap workspace atau folder absolut."
+
+msgid "Use an API key"
+msgstr "Gunakan kunci API"
 
 msgid "Use another port"
 msgstr "Gunakan port lain"
@@ -18275,6 +18341,9 @@ msgstr "Pengguna tidak ditemukan"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "Menggunakan API xAI dengan penagihan terpisah. Setiap orang memberikan kuncinya sendiri."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Memakai nama branch acak (pembuatan AI kehabisan waktu)"

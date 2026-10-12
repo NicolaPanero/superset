@@ -1845,6 +1845,9 @@ msgstr "v1ワークスペースをインポート済みのv2プロジェクト�
 msgid "Advanced"
 msgstr "詳細"
 
+msgid "Advanced configuration"
+msgstr "詳細設定"
+
 msgid "Advanced options"
 msgstr "詳細オプション"
 
@@ -1922,6 +1925,9 @@ msgstr "エージェントセッションを開始しました"
 
 msgid "agent settings"
 msgstr "エージェント設定"
+
+msgid "Agent setup"
+msgstr "エージェントの設定"
 
 msgid "Agents"
 msgstr "エージェント"
@@ -2342,6 +2348,9 @@ msgstr "API 課金"
 msgid "API key"
 msgstr "APIキー"
 
+msgid "API key configured"
+msgstr "APIキー設定済み"
+
 msgid "API key generated"
 msgstr "APIキーを生成しました"
 
@@ -2408,6 +2417,9 @@ msgstr "適用"
 msgctxt "job application"
 msgid "Apply"
 msgstr "応募"
+
+msgid "Apply recommended settings"
+msgstr "推奨設定を適用"
 
 msgid "Approve"
 msgstr "承認"
@@ -3489,6 +3501,9 @@ msgstr "チャットを {0} に移動しました"
 msgid "Chat session not found"
 msgstr "チャットセッションが見つかりません"
 
+msgid "Chat support not verified"
+msgstr "チャット対応未確認"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "チャットの構成要素: メッセージ、推論、提案"
 
@@ -3515,6 +3530,9 @@ msgstr "リソースを確認"
 
 msgid "Check Resources"
 msgstr "リソースを確認"
+
+msgid "Check sign-in"
+msgstr "ログインを確認"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "リセットを使用する前に、ブラウザーでアカウントのメールアドレスを確認してください。"
@@ -3587,6 +3605,9 @@ msgstr "チェック完了"
 
 msgid "Checks failed"
 msgstr "チェックが失敗しました"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "プロンプトを送信せずにインストールとローカルログインを確認します。APIキーの検証に有料リクエストは使用しません。"
 
 msgid "Checks passed"
 msgstr "チェックが成功しました"
@@ -3758,6 +3779,9 @@ msgstr "CLIドキュメント"
 
 msgid "CLI login"
 msgstr "CLI のログイン"
+
+msgid "CLI not found"
+msgstr "CLIが見つかりません"
 
 msgid "CLI reference"
 msgstr "CLIリファレンス"
@@ -4207,6 +4231,9 @@ msgstr "デフォルトスタイルと比較"
 
 msgid "complete"
 msgstr "終了"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "公式CLIの手順を完了してから、このウィンドウを閉じて結果を確認してください。"
 
 msgid "Completed"
 msgstr "完了"
@@ -8121,6 +8148,9 @@ msgstr "GTM・AI自動化アーキテクト、Mistral AI"
 msgid "Guide"
 msgstr "ガイド"
 
+msgid "Guided setup unavailable"
+msgstr "ガイド付き設定を利用できません"
+
 msgid "Guides"
 msgstr "ガイド"
 
@@ -8308,6 +8338,9 @@ msgstr "この組織にホストが見つかりません"
 
 msgid "Host not found in this organization."
 msgstr "この組織にホストが見つかりません。"
+
+msgid "Host offline"
+msgstr "ホストがオフライン"
 
 msgid "Host service"
 msgstr "ホストサービス"
@@ -8757,6 +8790,9 @@ msgstr "インストールして再起動"
 msgid "Install and run your first agent."
 msgstr "インストールして最初のエージェントを動かす。"
 
+msgid "Install CLI"
+msgstr "CLIをインストール"
+
 msgid "Install failed"
 msgstr "インストールに失敗しました"
 
@@ -8774,6 +8810,9 @@ msgstr "クライアントにSuperset MCPをインストール"
 
 msgid "Install the desktop app"
 msgstr "デスクトップアプリをインストール"
+
+msgid "Install the official CLI, then check again."
+msgstr "公式CLIをインストールして、もう一度確認してください。"
 
 msgid "Install the plugin to connect"
 msgstr "接続するにはプラグインをインストールしてください"
@@ -13240,6 +13279,9 @@ msgstr "使用量を取得中…"
 msgid "Reading your local usage…"
 msgstr "ローカルの使用量を読み取り中…"
 
+msgid "Ready"
+msgstr "準備完了"
+
 msgid "Ready for review"
 msgstr "レビュー可能"
 
@@ -13306,6 +13348,9 @@ msgstr "最近表示した項目"
 
 msgid "Recents"
 msgstr "最近"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "推奨設定は起動コマンドと引数を置き換えます。名前、フック、その他の環境設定は保持されます。新しい起動に適用されます。"
 
 msgid "Recommended size 256×256."
 msgstr "推奨サイズは256×256です。"
@@ -15058,6 +15103,9 @@ msgstr "設定 ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "設定 → リモートアクセス →「リレー経由でこのデバイスへのリモートアクセスを許可」。"
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "設定を適用しました。既存のチャットは設定を維持します。"
+
 msgid "Settings..."
 msgstr "設定..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "セットアップ"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "設定を適用できませんでした。再確認するか、詳細設定を使用してください。"
 
 msgid "Setup script"
 msgstr "セットアップスクリプト"
@@ -15334,6 +15385,9 @@ msgstr "ローカル管理者としてサインイン(開発用)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "{0}にサインイン"
+
+msgid "Sign in to continue"
+msgstr "ログインして続行"
 
 msgid "Sign in to continue to Superset"
 msgstr "サインインしてSupersetに進む"
@@ -16775,6 +16829,12 @@ msgstr "このオートメーションの所有者は、この組織でクラウ
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最良のエージェントは変わります。<0/>ワークフローは変わるべきではありません。"
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLIにはモデルのカスタム設定がすでにあります。詳細設定で編集してください。"
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLIがチャット対応を確認できませんでした。ターミナルは引き続き使用できます。"
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "クラウドワークスペースは起動しているはずですが、時間内に応答がありませんでした。次回の実行で再試行します。"
 
@@ -18100,6 +18160,9 @@ msgstr "ファイルを添付するには、このマシンでSupersetを更新�
 msgid "update the branch prefix"
 msgstr "ブランチのプレフィックスを更新する"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "ガイド付き設定を使用するにはホストを更新するか、詳細設定を使用してください。"
+
 msgid "Updated"
 msgstr "更新済み"
 
@@ -18185,6 +18248,9 @@ msgstr "無料リセットを使用しますか？"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "ワークスペースからの相対パスか絶対パスのフォルダを指定します。"
+
+msgid "Use an API key"
+msgstr "APIキーを使用"
 
 msgid "Use another port"
 msgstr "別のポートを使用"
@@ -18275,6 +18341,9 @@ msgstr "ユーザーが見つかりません"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "別途請求されるxAI APIを使用します。各自のキーを入力してください。"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "ランダムなブランチ名を使用します(AI生成がタイムアウトしました)"

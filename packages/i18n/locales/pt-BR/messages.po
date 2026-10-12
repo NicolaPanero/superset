@@ -1845,6 +1845,9 @@ msgstr "Vincule os espaços de trabalho v1 aos respectivos projetos v2 importado
 msgid "Advanced"
 msgstr "Avançado"
 
+msgid "Advanced configuration"
+msgstr "Configuração avançada"
+
 msgid "Advanced options"
 msgstr "Opções avançadas"
 
@@ -1922,6 +1925,9 @@ msgstr "Sessão de agente iniciada"
 
 msgid "agent settings"
 msgstr "configurações do agente"
+
+msgid "Agent setup"
+msgstr "Configurar agente"
 
 msgid "Agents"
 msgstr "Agentes"
@@ -2342,6 +2348,9 @@ msgstr "Cobrança de API"
 msgid "API key"
 msgstr "Chave de API"
 
+msgid "API key configured"
+msgstr "Chave de API configurada"
+
 msgid "API key generated"
 msgstr "Chave de API gerada"
 
@@ -2408,6 +2417,9 @@ msgstr "Aplicar"
 msgctxt "job application"
 msgid "Apply"
 msgstr "Candidatar-se"
+
+msgid "Apply recommended settings"
+msgstr "Aplicar configurações recomendadas"
 
 msgid "Approve"
 msgstr "Aprovar"
@@ -3489,6 +3501,9 @@ msgstr "Chat movido para {0}"
 msgid "Chat session not found"
 msgstr "Sessão de chat não encontrada"
 
+msgid "Chat support not verified"
+msgstr "Suporte a chat não verificado"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Superfícies de chat: mensagens, raciocínio, sugestões"
 
@@ -3515,6 +3530,9 @@ msgstr "Verificar recursos"
 
 msgid "Check Resources"
 msgstr "Verificar recursos"
+
+msgid "Check sign-in"
+msgstr "Verificar acesso"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Confira o e-mail da conta no navegador antes de usar uma redefinição."
@@ -3587,6 +3605,9 @@ msgstr "Verificações concluídas"
 
 msgid "Checks failed"
 msgstr "As verificações falharam"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "Verifica a instalação e o acesso local sem enviar um prompt. As chaves de API não são validadas por solicitações pagas."
 
 msgid "Checks passed"
 msgstr "As verificações passaram"
@@ -3758,6 +3779,9 @@ msgstr "Documentação da CLI"
 
 msgid "CLI login"
 msgstr "Login do CLI"
+
+msgid "CLI not found"
+msgstr "CLI não encontrado"
 
 msgid "CLI reference"
 msgstr "Referência da CLI"
@@ -4207,6 +4231,9 @@ msgstr "Comparado ao estilo padrão"
 
 msgid "complete"
 msgstr "concluída"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "Conclua o fluxo do CLI oficial e feche esta janela para verificar o resultado."
 
 msgid "Completed"
 msgstr "Concluída"
@@ -8121,6 +8148,9 @@ msgstr "Arquiteto de GTM e automação com IA, Mistral AI"
 msgid "Guide"
 msgstr "Guia"
 
+msgid "Guided setup unavailable"
+msgstr "Configuração guiada indisponível"
+
 msgid "Guides"
 msgstr "Guias"
 
@@ -8308,6 +8338,9 @@ msgstr "Host não encontrado nesta organização"
 
 msgid "Host not found in this organization."
 msgstr "Host não encontrado nesta organização."
+
+msgid "Host offline"
+msgstr "Host offline"
 
 msgid "Host service"
 msgstr "Serviço de host"
@@ -8757,6 +8790,9 @@ msgstr "Instalar e reiniciar"
 msgid "Install and run your first agent."
 msgstr "Instale e rode seu primeiro agente."
 
+msgid "Install CLI"
+msgstr "Instalar CLI"
+
 msgid "Install failed"
 msgstr "Falha na instalação"
 
@@ -8774,6 +8810,9 @@ msgstr "Instale o MCP do Superset no seu cliente"
 
 msgid "Install the desktop app"
 msgstr "Instale o app de desktop"
+
+msgid "Install the official CLI, then check again."
+msgstr "Instale o CLI oficial e verifique novamente."
 
 msgid "Install the plugin to connect"
 msgstr "Instale o plugin para conectar"
@@ -13240,6 +13279,9 @@ msgstr "Lendo o uso…"
 msgid "Reading your local usage…"
 msgstr "Lendo seu uso local…"
 
+msgid "Ready"
+msgstr "Pronto"
+
 msgid "Ready for review"
 msgstr "Pronta para revisão"
 
@@ -13306,6 +13348,9 @@ msgstr "Vistos recentemente"
 
 msgid "Recents"
 msgstr "Recentes"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "As configurações recomendadas substituem comandos e argumentos de inicialização. Nomes, hooks e outras configurações de ambiente são mantidos. Aplica-se a novas inicializações."
 
 msgid "Recommended size 256×256."
 msgstr "Tamanho recomendado: 256×256."
@@ -15058,6 +15103,9 @@ msgstr "Configurações ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Configurações → Acesso remoto → “Permitir acesso remoto a este dispositivo via relay”."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "Configurações aplicadas. Os chats existentes mantêm sua configuração."
+
 msgid "Settings..."
 msgstr "Configurações..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "Setup"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "Não foi possível aplicar a configuração. Verifique novamente ou use a configuração avançada."
 
 msgid "Setup script"
 msgstr "Script de setup"
@@ -15334,6 +15385,9 @@ msgstr "Entrar como Local Admin (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "Entre em {0}"
+
+msgid "Sign in to continue"
+msgstr "Entre para continuar"
 
 msgid "Sign in to continue to Superset"
 msgstr "Entre para continuar no Superset"
@@ -16775,6 +16829,12 @@ msgstr "O proprietário da automação não pode mais usar áreas de trabalho na
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "O melhor agente vai mudar.<0/>Seu fluxo de trabalho, não."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "O CLI já tem configurações personalizadas do modelo. Edite-as na configuração avançada."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "O CLI não confirmou o suporte a chat. Você pode continuar usando o terminal."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "A área de trabalho na nuvem deveria ter iniciado, mas não respondeu a tempo. A próxima execução tentará novamente."
 
@@ -18100,6 +18160,9 @@ msgstr "Atualize o Superset nesta máquina para anexar arquivos"
 msgid "update the branch prefix"
 msgstr "atualizar o prefixo da branch"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "Atualize este host para a configuração guiada ou use a configuração avançada."
+
 msgid "Updated"
 msgstr "Atualizado"
 
@@ -18185,6 +18248,9 @@ msgstr "Usar uma redefinição gratuita?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Use um caminho relativo à área de trabalho ou uma pasta absoluta."
+
+msgid "Use an API key"
+msgstr "Usar uma chave de API"
 
 msgid "Use another port"
 msgstr "Usar outra porta"
@@ -18275,6 +18341,9 @@ msgstr "Usuário não encontrado"
 
 msgid "user@example.com"
 msgstr "usuario@exemplo.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "Usa a API da xAI com cobrança separada. Cada pessoa fornece sua própria chave."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Usando nome de branch aleatório (a geração por IA expirou)"

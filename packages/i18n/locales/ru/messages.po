@@ -1845,6 +1845,9 @@ msgstr "Перенесите рабочие пространства v1 в со�
 msgid "Advanced"
 msgstr "Дополнительно"
 
+msgid "Advanced configuration"
+msgstr "Расширенная настройка"
+
 msgid "Advanced options"
 msgstr "Дополнительные параметры"
 
@@ -1922,6 +1925,9 @@ msgstr "Сессия агента запущена"
 
 msgid "agent settings"
 msgstr "настройки агента"
+
+msgid "Agent setup"
+msgstr "Настройка агента"
 
 msgid "Agents"
 msgstr "Агенты"
@@ -2342,6 +2348,9 @@ msgstr "Оплата API"
 msgid "API key"
 msgstr "Ключ API"
 
+msgid "API key configured"
+msgstr "Ключ API настроен"
+
 msgid "API key generated"
 msgstr "Ключ API создан"
 
@@ -2408,6 +2417,9 @@ msgstr "Применить"
 msgctxt "job application"
 msgid "Apply"
 msgstr "Откликнуться"
+
+msgid "Apply recommended settings"
+msgstr "Применить рекомендуемые настройки"
 
 msgid "Approve"
 msgstr "Одобрить"
@@ -3489,6 +3501,9 @@ msgstr "Чат перенесён в {0}"
 msgid "Chat session not found"
 msgstr "Сессия чата не найдена"
 
+msgid "Chat support not verified"
+msgstr "Поддержка чата не проверена"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Поверхности чата: сообщения, рассуждения, подсказки"
 
@@ -3515,6 +3530,9 @@ msgstr "Проверить ресурсы"
 
 msgid "Check Resources"
 msgstr "Проверить ресурсы"
+
+msgid "Check sign-in"
+msgstr "Проверить вход"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Перед использованием сброса проверьте адрес электронной почты аккаунта в браузере."
@@ -3587,6 +3605,9 @@ msgstr "Проверки завершены"
 
 msgid "Checks failed"
 msgstr "Проверки не пройдены"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "Проверяет установку и локальный вход без отправки промпта. Ключи API не проверяются платными запросами."
 
 msgid "Checks passed"
 msgstr "Проверки пройдены"
@@ -3758,6 +3779,9 @@ msgstr "Документация CLI"
 
 msgid "CLI login"
 msgstr "Вход через CLI"
+
+msgid "CLI not found"
+msgstr "CLI не найден"
 
 msgid "CLI reference"
 msgstr "Справочник CLI"
@@ -4207,6 +4231,9 @@ msgstr "Сравнили со стилем по умолчанию"
 
 msgid "complete"
 msgstr "завершён"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "Завершите процедуру официального CLI и закройте это окно, чтобы проверить результат."
 
 msgid "Completed"
 msgstr "Завершено"
@@ -8121,6 +8148,9 @@ msgstr "Архитектор GTM и ИИ-автоматизации, Mistral AI"
 msgid "Guide"
 msgstr "Руководство"
 
+msgid "Guided setup unavailable"
+msgstr "Пошаговая настройка недоступна"
+
 msgid "Guides"
 msgstr "Руководства"
 
@@ -8308,6 +8338,9 @@ msgstr "Хост не найден в этой организации"
 
 msgid "Host not found in this organization."
 msgstr "Хост не найден в этой организации."
+
+msgid "Host offline"
+msgstr "Хост не в сети"
 
 msgid "Host service"
 msgstr "Служба хоста"
@@ -8757,6 +8790,9 @@ msgstr "Установить и перезапустить"
 msgid "Install and run your first agent."
 msgstr "Установите и запустите первого агента."
 
+msgid "Install CLI"
+msgstr "Установить CLI"
+
 msgid "Install failed"
 msgstr "Не удалось установить"
 
@@ -8774,6 +8810,9 @@ msgstr "Установите Superset MCP в своём клиенте"
 
 msgid "Install the desktop app"
 msgstr "Установите десктопное приложение"
+
+msgid "Install the official CLI, then check again."
+msgstr "Установите официальный CLI и проверьте снова."
 
 msgid "Install the plugin to connect"
 msgstr "Установите плагин, чтобы подключиться"
@@ -13240,6 +13279,9 @@ msgstr "Чтение данных об использовании…"
 msgid "Reading your local usage…"
 msgstr "Чтение локальной статистики…"
 
+msgid "Ready"
+msgstr "Готово"
+
 msgid "Ready for review"
 msgstr "Готово к ревью"
 
@@ -13306,6 +13348,9 @@ msgstr "Недавно просмотренные"
 
 msgid "Recents"
 msgstr "Недавние"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "Рекомендуемые настройки заменяют команды и аргументы запуска. Имена, хуки и другие настройки окружения сохраняются. Применяется к новым запускам."
 
 msgid "Recommended size 256×256."
 msgstr "Рекомендуемый размер 256×256."
@@ -15058,6 +15103,9 @@ msgstr "Настройки ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Настройки → Удалённый доступ → «Разрешить удалённый доступ к этому устройству через реле»."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "Настройки применены. Существующие чаты сохраняют свою конфигурацию."
+
 msgid "Settings..."
 msgstr "Настройки..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "Установка"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "Не удалось применить настройки. Проверьте снова или используйте расширенные настройки."
 
 msgid "Setup script"
 msgstr "Скрипт установки"
@@ -15334,6 +15385,9 @@ msgstr "Войти как локальный админ (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "Войдите в {0}"
+
+msgid "Sign in to continue"
+msgstr "Войдите, чтобы продолжить"
 
 msgid "Sign in to continue to Superset"
 msgstr "Войдите, чтобы продолжить в Superset"
@@ -16775,6 +16829,12 @@ msgstr "Владелец автоматизации больше не может
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Лучший агент будет меняться.<0/>Ваш процесс — нет."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "В CLI уже есть собственные настройки модели. Измените их в расширенных настройках."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI не подтвердил поддержку чата. Можно продолжать пользоваться терминалом."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Облачная рабочая область должна была запуститься, но не ответила вовремя. Следующий запуск попробует снова."
 
@@ -18100,6 +18160,9 @@ msgstr "Обновите Superset на этой машине, чтобы при�
 msgid "update the branch prefix"
 msgstr "обновить префикс ветки"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "Обновите этот хост для пошаговой настройки или используйте расширенные настройки."
+
 msgid "Updated"
 msgstr "Обновлено"
 
@@ -18185,6 +18248,9 @@ msgstr "Использовать бесплатный сброс?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Укажите путь относительно рабочей области или абсолютную папку."
+
+msgid "Use an API key"
+msgstr "Использовать ключ API"
 
 msgid "Use another port"
 msgstr "Использовать другой порт"
@@ -18275,6 +18341,9 @@ msgstr "Пользователь не найден"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "Использует API xAI с отдельной оплатой. Каждый пользователь указывает свой ключ."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Используется случайное имя ветки (истекло время генерации AI)"

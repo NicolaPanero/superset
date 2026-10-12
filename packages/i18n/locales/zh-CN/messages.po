@@ -1845,6 +1845,9 @@ msgstr "将 v1 工作区迁入已导入的对应 v2 项目。"
 msgid "Advanced"
 msgstr "高级"
 
+msgid "Advanced configuration"
+msgstr "高级配置"
+
 msgid "Advanced options"
 msgstr "高级选项"
 
@@ -1922,6 +1925,9 @@ msgstr "智能体会话已开始"
 
 msgid "agent settings"
 msgstr "智能体设置"
+
+msgid "Agent setup"
+msgstr "配置智能体"
 
 msgid "Agents"
 msgstr "智能体"
@@ -2342,6 +2348,9 @@ msgstr "API 计费"
 msgid "API key"
 msgstr "API密钥"
 
+msgid "API key configured"
+msgstr "API 密钥已配置"
+
 msgid "API key generated"
 msgstr "API密钥已生成"
 
@@ -2408,6 +2417,9 @@ msgstr "应用"
 msgctxt "job application"
 msgid "Apply"
 msgstr "申请"
+
+msgid "Apply recommended settings"
+msgstr "应用推荐设置"
 
 msgid "Approve"
 msgstr "批准"
@@ -3489,6 +3501,9 @@ msgstr "聊天已移至 {0}"
 msgid "Chat session not found"
 msgstr "未找到聊天会话"
 
+msgid "Chat support not verified"
+msgstr "聊天支持尚未验证"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "聊天界面：消息、推理、建议"
 
@@ -3515,6 +3530,9 @@ msgstr "检查资源"
 
 msgid "Check Resources"
 msgstr "查看资源"
+
+msgid "Check sign-in"
+msgstr "检查登录"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "使用重置前，请在浏览器中确认账号的邮箱地址。"
@@ -3587,6 +3605,9 @@ msgstr "检查完成"
 
 msgid "Checks failed"
 msgstr "检查失败"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "检查安装和本地登录，不发送提示词。不使用付费请求验证 API 密钥。"
 
 msgid "Checks passed"
 msgstr "检查通过"
@@ -3758,6 +3779,9 @@ msgstr "CLI文档"
 
 msgid "CLI login"
 msgstr "CLI 登录"
+
+msgid "CLI not found"
+msgstr "未找到 CLI"
 
 msgid "CLI reference"
 msgstr "CLI 参考"
@@ -4207,6 +4231,9 @@ msgstr "与默认样式做了对比"
 
 msgid "complete"
 msgstr "已结束"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "完成官方 CLI 流程后关闭此窗口，检查结果。"
 
 msgid "Completed"
 msgstr "完成时间"
@@ -8121,6 +8148,9 @@ msgstr "GTM 与 AI 自动化架构师，Mistral AI"
 msgid "Guide"
 msgstr "指南"
 
+msgid "Guided setup unavailable"
+msgstr "引导配置不可用"
+
 msgid "Guides"
 msgstr "指南"
 
@@ -8308,6 +8338,9 @@ msgstr "在此组织中未找到该主机"
 
 msgid "Host not found in this organization."
 msgstr "在此组织中找不到该主机。"
+
+msgid "Host offline"
+msgstr "主机离线"
 
 msgid "Host service"
 msgstr "主机服务"
@@ -8757,6 +8790,9 @@ msgstr "安装并重启"
 msgid "Install and run your first agent."
 msgstr "安装并运行你的第一个智能体。"
 
+msgid "Install CLI"
+msgstr "安装 CLI"
+
 msgid "Install failed"
 msgstr "安装失败"
 
@@ -8774,6 +8810,9 @@ msgstr "在你的客户端里安装Superset MCP"
 
 msgid "Install the desktop app"
 msgstr "安装桌面应用"
+
+msgid "Install the official CLI, then check again."
+msgstr "安装官方 CLI 后再次检查。"
 
 msgid "Install the plugin to connect"
 msgstr "安装插件后即可连接"
@@ -13240,6 +13279,9 @@ msgstr "正在读取用量…"
 msgid "Reading your local usage…"
 msgstr "正在读取本地用量…"
 
+msgid "Ready"
+msgstr "就绪"
+
 msgid "Ready for review"
 msgstr "待审查"
 
@@ -13306,6 +13348,9 @@ msgstr "最近查看"
 
 msgid "Recents"
 msgstr "最近"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "推荐设置将替换启动命令和参数。名称、钩子和其他环境设置将保留。适用于新启动。"
 
 msgid "Recommended size 256×256."
 msgstr "推荐尺寸256×256。"
@@ -15058,6 +15103,9 @@ msgstr "设置（{settingsHotkey}）"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "设置 → 远程访问 → “允许通过中继远程访问本设备”。"
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "设置已应用。现有聊天保留原有配置。"
+
 msgid "Settings..."
 msgstr "设置..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "初始化"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "无法应用配置。请再次检查或使用高级配置。"
 
 msgid "Setup script"
 msgstr "设置脚本"
@@ -15334,6 +15385,9 @@ msgstr "以本地管理员身份登录（开发）"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "登录{0}"
+
+msgid "Sign in to continue"
+msgstr "登录后继续"
 
 msgid "Sign in to continue to Superset"
 msgstr "登录以继续使用Superset"
@@ -16775,6 +16829,12 @@ msgstr "该自动化的所有者已无法在此组织中使用云端工作区。
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI 已有自定义模型设置。请在高级配置中编辑。"
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI 未确认聊天支持。你可以继续使用终端。"
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "云端工作区本应已启动，但没有及时响应。下次运行时会重试。"
 
@@ -18100,6 +18160,9 @@ msgstr "请在这台机器上更新Superset以附加文件"
 msgid "update the branch prefix"
 msgstr "更新分支前缀"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "更新此主机以使用引导配置，或使用高级配置。"
+
 msgid "Updated"
 msgstr "已更新"
 
@@ -18185,6 +18248,9 @@ msgstr "使用一次免费重置？"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "使用相对于工作区的路径或绝对路径文件夹。"
+
+msgid "Use an API key"
+msgstr "使用 API 密钥"
 
 msgid "Use another port"
 msgstr "使用其他端口"
@@ -18275,6 +18341,9 @@ msgstr "未找到用户"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "使用单独计费的 xAI API。每个人需提供自己的密钥。"
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "使用随机分支名（AI生成超时）"

@@ -1845,6 +1845,9 @@ msgstr "Přiřaďte pracovní prostory v1 k odpovídajícím importovaným proje
 msgid "Advanced"
 msgstr "Pokročilé"
 
+msgid "Advanced configuration"
+msgstr "Pokročilá konfigurace"
+
 msgid "Advanced options"
 msgstr "Pokročilé možnosti"
 
@@ -1922,6 +1925,9 @@ msgstr "Relace agenta spuštěna"
 
 msgid "agent settings"
 msgstr "nastavení agenta"
+
+msgid "Agent setup"
+msgstr "Nastavení agenta"
 
 msgid "Agents"
 msgstr "Agenti"
@@ -2342,6 +2348,9 @@ msgstr "Fakturace API"
 msgid "API key"
 msgstr "API klíč"
 
+msgid "API key configured"
+msgstr "Klíč API nastaven"
+
 msgid "API key generated"
 msgstr "API klíč vygenerován"
 
@@ -2408,6 +2417,9 @@ msgstr "Použít"
 msgctxt "job application"
 msgid "Apply"
 msgstr "Přihlásit se"
+
+msgid "Apply recommended settings"
+msgstr "Použít doporučená nastavení"
 
 msgid "Approve"
 msgstr "Schválit"
@@ -3489,6 +3501,9 @@ msgstr "Chat přesunut na {0}"
 msgid "Chat session not found"
 msgstr "Relace chatu nenalezena"
 
+msgid "Chat support not verified"
+msgstr "Podpora chatu neověřena"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 
@@ -3515,6 +3530,9 @@ msgstr "Zkontrolovat prostředky"
 
 msgid "Check Resources"
 msgstr "Zkontrolovat prostředky"
+
+msgid "Check sign-in"
+msgstr "Zkontrolovat přihlášení"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Před použitím resetu zkontrolujte e-mail účtu v prohlížeči."
@@ -3587,6 +3605,9 @@ msgstr "Kontroly dokončeny"
 
 msgid "Checks failed"
 msgstr "Kontroly selhaly"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "Kontroluje instalaci a místní přihlášení bez odeslání promptu. Klíče API se neověřují placenými požadavky."
 
 msgid "Checks passed"
 msgstr "Kontroly prošly"
@@ -3758,6 +3779,9 @@ msgstr "Dokumentace CLI"
 
 msgid "CLI login"
 msgstr "Přihlášení CLI"
+
+msgid "CLI not found"
+msgstr "CLI nebylo nalezeno"
 
 msgid "CLI reference"
 msgstr "Reference CLI"
@@ -4207,6 +4231,9 @@ msgstr "Porovnáno s výchozím stylem"
 
 msgid "complete"
 msgstr "dokončeno"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "Dokončete postup oficiálního CLI a zavřete toto okno pro kontrolu výsledku."
 
 msgid "Completed"
 msgstr "Dokončeno"
@@ -8121,6 +8148,9 @@ msgstr "Architekt GTM a automatizace AI, Mistral AI"
 msgid "Guide"
 msgstr "Průvodce"
 
+msgid "Guided setup unavailable"
+msgstr "Průvodce nastavením není dostupný"
+
 msgid "Guides"
 msgstr "Průvodci"
 
@@ -8308,6 +8338,9 @@ msgstr "Host v této organizaci nenalezen"
 
 msgid "Host not found in this organization."
 msgstr "Host v této organizaci nenalezen."
+
+msgid "Host offline"
+msgstr "Hostitel je offline"
 
 msgid "Host service"
 msgstr "Služba hostitele"
@@ -8757,6 +8790,9 @@ msgstr "Nainstalovat a restartovat"
 msgid "Install and run your first agent."
 msgstr "Nainstalujte a spusťte svého prvního agenta."
 
+msgid "Install CLI"
+msgstr "Nainstalovat CLI"
+
 msgid "Install failed"
 msgstr "Instalace selhala"
 
@@ -8774,6 +8810,9 @@ msgstr "Nainstalujte Superset MCP do svého klienta"
 
 msgid "Install the desktop app"
 msgstr "Nainstalujte desktopovou aplikaci"
+
+msgid "Install the official CLI, then check again."
+msgstr "Nainstalujte oficiální CLI a zkontrolujte znovu."
 
 msgid "Install the plugin to connect"
 msgstr "Pro připojení nainstalujte plugin"
@@ -13240,6 +13279,9 @@ msgstr "Načítání využití…"
 msgid "Reading your local usage…"
 msgstr "Načítám vaše lokální využití…"
 
+msgid "Ready"
+msgstr "Připraveno"
+
 msgid "Ready for review"
 msgstr "Připraveno k revizi"
 
@@ -13306,6 +13348,9 @@ msgstr "Nedávno zobrazené"
 
 msgid "Recents"
 msgstr "Nedávné"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "Doporučená nastavení nahrazují příkazy a argumenty spuštění. Názvy, hooky a ostatní nastavení prostředí zůstávají zachovány. Platí pro nová spuštění."
 
 msgid "Recommended size 256×256."
 msgstr "Doporučená velikost 256×256."
@@ -15058,6 +15103,9 @@ msgstr "Nastavení ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Nastavení → Vzdálený přístup → „Povolit vzdálený přístup k tomuto zařízení přes relay“."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "Nastavení použito. Stávající chaty si ponechají svou konfiguraci."
+
 msgid "Settings..."
 msgstr "Nastavení..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "Setup"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "Nastavení se nepodařilo použít. Zkontrolujte znovu nebo použijte pokročilou konfiguraci."
 
 msgid "Setup script"
 msgstr "Setup skript"
@@ -15334,6 +15385,9 @@ msgstr "Přihlásit se jako Local Admin (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "Přihlaste se do {0}"
+
+msgid "Sign in to continue"
+msgstr "Pro pokračování se přihlaste"
 
 msgid "Sign in to continue to Superset"
 msgstr "Přihlaste se a pokračujte do Superset"
@@ -16775,6 +16829,12 @@ msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudo
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI již má vlastní nastavení modelu. Upravte je v pokročilé konfiguraci."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI nepotvrdilo podporu chatu. Terminál můžete používat dál."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Cloudový pracovní prostor se měl spustit, ale neodpověděl včas. Další běh to zkusí znovu."
 
@@ -18100,6 +18160,9 @@ msgstr "Aktualizujte na tomto počítači Superset, abyste mohli přikládat sou
 msgid "update the branch prefix"
 msgstr "aktualizovat prefix větve"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "Aktualizujte tohoto hostitele pro průvodce nastavením nebo použijte pokročilou konfiguraci."
+
 msgid "Updated"
 msgstr "Aktualizováno"
 
@@ -18185,6 +18248,9 @@ msgstr "Použít bezplatný reset?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Použijte cestu relativní k pracovnímu prostoru nebo absolutní složku."
+
+msgid "Use an API key"
+msgstr "Použít klíč API"
 
 msgid "Use another port"
 msgstr "Použít jiný port"
@@ -18275,6 +18341,9 @@ msgstr "Uživatel nenalezen"
 
 msgid "user@example.com"
 msgstr "uzivatel@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "Používá API xAI se samostatným účtováním. Každý zadává svůj vlastní klíč."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Použije se náhodný název větve (generování přes AI vypršelo)"

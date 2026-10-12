@@ -114,12 +114,13 @@ function meetsFloor(found: string, minVersion: string): boolean {
 
 export async function resolveAgentCli(options: {
 	binary: string;
+	command?: string;
 	minVersion: string;
 	upgrade?: string;
 	env: () => Promise<NodeJS.ProcessEnv>;
 }): Promise<AgentCli> {
 	const env = await options.env();
-	const command = agentCliCommand(options.binary, env);
+	const command = options.command ?? agentCliCommand(options.binary, env);
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {
 		throw new Error(agentCliUnsupported({ ...options, found }));
