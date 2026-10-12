@@ -3516,6 +3516,9 @@ msgstr "리소스 확인"
 msgid "Check Resources"
 msgstr "리소스 확인"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "초기화를 사용하기 전에 브라우저에서 계정 이메일을 확인하세요."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "저장하기 전에 렌더링된 프롬프트와 실행 결과를 확인하세요"
 
@@ -3542,6 +3545,9 @@ msgstr "에이전트 확인하는 중…"
 
 msgid "Checking environments…"
 msgstr "환경 확인 중…"
+
+msgid "Checking free resets…"
+msgstr "무료 초기화 확인 중…"
 
 msgid "Checking host…"
 msgstr "호스트 확인하는 중…"
@@ -4809,6 +4815,9 @@ msgstr "세션을 닫을 수 없습니다"
 
 msgid "Could not close the session"
 msgstr "세션을 닫지 못했습니다"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "초기화를 확인할 수 없습니다. 재시도 시 같은 요청을 사용합니다."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "{plugin}을(를) 연결하지 못했습니다. 다시 시도하세요."
@@ -6847,6 +6856,9 @@ msgstr "실험실"
 msgid "Expired"
 msgstr "만료됨"
 
+msgid "Expires {expiry}"
+msgstr "{expiry}에 만료"
+
 msgid "Explain how this repository works…"
 msgstr "이 리포지토리가 어떻게 동작하는지 설명…"
 
@@ -7818,6 +7830,9 @@ msgstr "무료"
 msgid "Free for everyone"
 msgstr "누구나 무료"
 
+msgid "Free resets: {formattedCount}"
+msgstr "무료 초기화: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "무료로 시작 · 신용카드 필요 없음"
 
@@ -8175,6 +8190,9 @@ msgstr "\"{0}\"을(를) 사이드바에서 숨겼습니다"
 
 msgid "Hidden"
 msgstr "숨김"
+
+msgid "Hidden email"
+msgstr "숨겨진 이메일"
 
 msgid "Hidden folders"
 msgstr "숨긴 폴더"
@@ -9772,6 +9790,9 @@ msgstr "플랜 관리"
 msgid "Manage plan on the web"
 msgstr "웹에서 플랜 관리"
 
+msgid "Manage resets on provider website"
+msgstr "제공업체 웹사이트에서 초기화 관리"
+
 msgid "Manage sessions"
 msgstr "세션 관리"
 
@@ -10991,6 +11012,9 @@ msgstr "리포지토리를 찾을 수 없습니다. GitHub App이 리포지토�
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "리포지토리가 없습니다. 통합에서 GitHub를 연결한 후 새로 고침하세요."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "초기화를 사용하지 않았습니다. 갱신된 사용 가능 여부를 확인하세요."
 
 msgid "No results"
 msgstr "결과 없음"
@@ -13740,6 +13764,9 @@ msgstr "에이전트를 초기화할"
 
 msgid "Reset all"
 msgstr "모두 초기화"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "초기화가 적용되었습니다. 사용량을 갱신하고 있습니다."
 
 msgid "Reset editor"
 msgstr "편집기 초기화"
@@ -17358,6 +17385,9 @@ msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므�
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므로 소유자로 남아야 합니다."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "이 계정의 모든 채팅에 적용되는 초기화를 한 번 사용합니다. 취소할 수 없습니다."
+
 msgid "This view hit an error"
 msgstr "이 화면에서 오류가 발생했습니다"
 
@@ -18150,6 +18180,9 @@ msgstr "사용량을 볼 수 없습니다."
 msgid "Use “{0}”"
 msgstr "“{0}” 사용"
 
+msgid "Use a free reset?"
+msgstr "무료 초기화를 사용하시겠습니까?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "워크스페이스 기준 상대 경로나 절대 경로 폴더를 사용하세요."
 
@@ -18173,6 +18206,9 @@ msgstr "새 에이전트에 사용"
 
 msgid "Use global default"
 msgstr "전역 기본값 사용"
+
+msgid "Use reset"
+msgstr "초기화 사용"
 
 msgid "Use Superset on mobile"
 msgstr "모바일에서 Superset 사용하기"

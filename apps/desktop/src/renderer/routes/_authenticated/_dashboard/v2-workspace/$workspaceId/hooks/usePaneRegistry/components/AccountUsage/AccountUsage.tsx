@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, CircleHelp, Loader2, Zap } from "lucide-react";
 import { useState } from "react";
+import { ForkAccountResets } from "renderer/components/ForkAccountResets";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
@@ -152,6 +153,7 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 				{account && (
 					<div className="mt-3">
 						<ForkUsageSummary account={account} />
+						<ForkAccountResets hostUrl={hostUrl} account={account} />
 					</div>
 				)}
 				{account?.credentialKind === "subscription" && (

@@ -3516,6 +3516,9 @@ msgstr "Check resources"
 msgid "Check Resources"
 msgstr "Check Resources"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Check the account email in your browser before using a reset."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Check the rendered prompt and launch output before saving"
 
@@ -3542,6 +3545,9 @@ msgstr "Checking agents…"
 
 msgid "Checking environments…"
 msgstr "Checking environments…"
+
+msgid "Checking free resets…"
+msgstr "Checking free resets…"
 
 msgid "Checking host…"
 msgstr "Checking host…"
@@ -4809,6 +4815,9 @@ msgstr "Could not close session"
 
 msgid "Could not close the session"
 msgstr "Could not close the session"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Could not confirm the reset. Retry uses the same request."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Could not connect {plugin}. Try again."
@@ -6847,6 +6856,9 @@ msgstr "Experimental"
 msgid "Expired"
 msgstr "Expired"
 
+msgid "Expires {expiry}"
+msgstr "Expires {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Explain how this repository works…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Free for everyone"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Free resets: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Free to start · No credit card required"
 
@@ -8175,6 +8190,9 @@ msgstr "Hid \"{0}\" from the sidebar"
 
 msgid "Hidden"
 msgstr "Hidden"
+
+msgid "Hidden email"
+msgstr "Hidden email"
 
 msgid "Hidden folders"
 msgstr "Hidden folders"
@@ -9772,6 +9790,9 @@ msgstr "Manage Plan"
 msgid "Manage plan on the web"
 msgstr "Manage plan on the web"
 
+msgid "Manage resets on provider website"
+msgstr "Manage resets on provider website"
+
 msgid "Manage sessions"
 msgstr "Manage sessions"
 
@@ -10991,6 +11012,9 @@ msgstr "No repositories found. Make sure your GitHub App has access to repositor
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "No repositories. Connect GitHub in Integrations, then refresh."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "No reset was used. Check the updated availability."
 
 msgid "No results"
 msgstr "No results"
@@ -13740,6 +13764,9 @@ msgstr "reset agents"
 
 msgid "Reset all"
 msgstr "Reset all"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Reset applied. Usage is being refreshed."
 
 msgid "Reset editor"
 msgstr "Reset editor"
@@ -17358,6 +17385,9 @@ msgstr "This user runs the host service for this device and can't be removed."
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "This user runs the host service for this device and must remain an owner."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "This uses one reset for this account, across its chats. It cannot be undone."
+
 msgid "This view hit an error"
 msgstr "This view hit an error"
 
@@ -18150,6 +18180,9 @@ msgstr "Usage unavailable."
 msgid "Use “{0}”"
 msgstr "Use “{0}”"
 
+msgid "Use a free reset?"
+msgstr "Use a free reset?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Use a workspace-relative path or an absolute folder."
 
@@ -18173,6 +18206,9 @@ msgstr "Use for new agents"
 
 msgid "Use global default"
 msgstr "Use global default"
+
+msgid "Use reset"
+msgstr "Use reset"
 
 msgid "Use Superset on mobile"
 msgstr "Use Superset on mobile"

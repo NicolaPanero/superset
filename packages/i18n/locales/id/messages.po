@@ -3516,6 +3516,9 @@ msgstr "Periksa sumber daya"
 msgid "Check Resources"
 msgstr "Periksa Sumber Daya"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Periksa email akun di browser sebelum menggunakan reset."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Periksa prompt yang dirender dan output peluncuran sebelum menyimpan"
 
@@ -3542,6 +3545,9 @@ msgstr "Memeriksa agen…"
 
 msgid "Checking environments…"
 msgstr "Memeriksa environment…"
+
+msgid "Checking free resets…"
+msgstr "Memeriksa reset gratis…"
 
 msgid "Checking host…"
 msgstr "Memeriksa host…"
@@ -4809,6 +4815,9 @@ msgstr "Tidak bisa menutup sesi"
 
 msgid "Could not close the session"
 msgstr "Tidak dapat menutup sesi"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Reset tidak dapat dikonfirmasi. Percobaan ulang menggunakan permintaan yang sama."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Tidak dapat menghubungkan {plugin}. Coba lagi."
@@ -6847,6 +6856,9 @@ msgstr "Eksperimental"
 msgid "Expired"
 msgstr "Kedaluwarsa"
 
+msgid "Expires {expiry}"
+msgstr "Kedaluwarsa {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Jelaskan cara kerja repositori ini…"
 
@@ -7818,6 +7830,9 @@ msgstr "Gratis"
 msgid "Free for everyone"
 msgstr "Gratis untuk semua orang"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Reset gratis: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Mulai gratis · Tidak perlu kartu kredit"
 
@@ -8175,6 +8190,9 @@ msgstr "\"{0}\" disembunyikan dari sidebar"
 
 msgid "Hidden"
 msgstr "Disembunyikan"
+
+msgid "Hidden email"
+msgstr "Email disembunyikan"
 
 msgid "Hidden folders"
 msgstr "Folder tersembunyi"
@@ -9772,6 +9790,9 @@ msgstr "Kelola Paket"
 msgid "Manage plan on the web"
 msgstr "Kelola paket lewat web"
 
+msgid "Manage resets on provider website"
+msgstr "Kelola reset di situs penyedia"
+
 msgid "Manage sessions"
 msgstr "Kelola sesi"
 
@@ -10991,6 +11012,9 @@ msgstr "Tidak ada repositori ditemukan. Pastikan GitHub App Anda punya akses ke 
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Tidak ada repositori. Hubungkan GitHub di Integrasi, lalu segarkan."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Tidak ada reset yang digunakan. Periksa ketersediaan terbaru."
 
 msgid "No results"
 msgstr "Tidak ada hasil"
@@ -13740,6 +13764,9 @@ msgstr "mereset agen"
 
 msgid "Reset all"
 msgstr "Reset semua"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Reset diterapkan. Penggunaan sedang diperbarui."
 
 msgid "Reset editor"
 msgstr "Reset editor"
@@ -17358,6 +17385,9 @@ msgstr "Pengguna ini menjalankan layanan host untuk perangkat ini dan tidak bisa
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Pengguna ini menjalankan layanan host untuk perangkat ini dan harus tetap menjadi pemilik."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Menggunakan satu reset untuk akun ini, di seluruh chatnya. Tindakan ini tidak dapat dibatalkan."
+
 msgid "This view hit an error"
 msgstr "Tampilan ini mengalami kesalahan"
 
@@ -18150,6 +18180,9 @@ msgstr "Penggunaan tidak tersedia."
 msgid "Use “{0}”"
 msgstr "Pakai “{0}”"
 
+msgid "Use a free reset?"
+msgstr "Gunakan reset gratis?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Pakai path relatif terhadap workspace atau folder absolut."
 
@@ -18173,6 +18206,9 @@ msgstr "Pakai untuk agen baru"
 
 msgid "Use global default"
 msgstr "Pakai bawaan global"
+
+msgid "Use reset"
+msgstr "Gunakan reset"
 
 msgid "Use Superset on mobile"
 msgstr "Gunakan Superset di ponsel"

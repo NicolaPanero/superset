@@ -3516,6 +3516,9 @@ msgstr "Kiểm tra tài nguyên"
 msgid "Check Resources"
 msgstr "Kiểm tra tài nguyên"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Kiểm tra email của tài khoản trong trình duyệt trước khi dùng lượt đặt lại."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Kiểm tra prompt đã dựng và kết quả khởi chạy trước khi lưu"
 
@@ -3542,6 +3545,9 @@ msgstr "Đang kiểm tra agent…"
 
 msgid "Checking environments…"
 msgstr "Đang kiểm tra môi trường…"
+
+msgid "Checking free resets…"
+msgstr "Đang kiểm tra lượt đặt lại miễn phí…"
 
 msgid "Checking host…"
 msgstr "Đang kiểm tra host…"
@@ -4809,6 +4815,9 @@ msgstr "Không thể đóng phiên"
 
 msgid "Could not close the session"
 msgstr "Không thể đóng phiên"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Không thể xác nhận lượt đặt lại. Thử lại sẽ dùng cùng một yêu cầu."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Không thể kết nối {plugin}. Vui lòng thử lại."
@@ -6847,6 +6856,9 @@ msgstr "Thử nghiệm"
 msgid "Expired"
 msgstr "Đã hết hạn"
 
+msgid "Expires {expiry}"
+msgstr "Hết hạn {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Giải thích repository này hoạt động thế nào…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Miễn phí cho tất cả"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Lượt đặt lại miễn phí: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Bắt đầu miễn phí · Không cần thẻ tín dụng"
 
@@ -8175,6 +8190,9 @@ msgstr "Đã ẩn \"{0}\" khỏi thanh bên"
 
 msgid "Hidden"
 msgstr "Đã ẩn"
+
+msgid "Hidden email"
+msgstr "Email đã ẩn"
 
 msgid "Hidden folders"
 msgstr "Thư mục đã ẩn"
@@ -9772,6 +9790,9 @@ msgstr "Quản lý gói"
 msgid "Manage plan on the web"
 msgstr "Quản lý gói trên web"
 
+msgid "Manage resets on provider website"
+msgstr "Quản lý lượt đặt lại trên trang web của nhà cung cấp"
+
 msgid "Manage sessions"
 msgstr "Quản lý phiên"
 
@@ -10991,6 +11012,9 @@ msgstr "Không tìm thấy repository nào. Hãy đảm bảo GitHub App của b
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Không có repository. Hãy kết nối GitHub trong Tích hợp rồi làm mới."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Chưa dùng lượt đặt lại nào. Kiểm tra tình trạng sẵn có đã cập nhật."
 
 msgid "No results"
 msgstr "Không có kết quả"
@@ -13740,6 +13764,9 @@ msgstr "đặt lại agent"
 
 msgid "Reset all"
 msgstr "Đặt lại tất cả"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Đã áp dụng lượt đặt lại. Đang cập nhật mức sử dụng."
 
 msgid "Reset editor"
 msgstr "Đặt lại trình soạn thảo"
@@ -17358,6 +17385,9 @@ msgstr "Người dùng này đang chạy dịch vụ host cho thiết bị này 
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Người dùng này đang chạy dịch vụ host cho thiết bị này nên phải giữ vai trò chủ sở hữu."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Dùng một lượt đặt lại cho tài khoản này, trên tất cả cuộc trò chuyện của tài khoản. Không thể hoàn tác."
+
 msgid "This view hit an error"
 msgstr "Khung hiển thị này gặp lỗi"
 
@@ -18150,6 +18180,9 @@ msgstr "Không có dữ liệu sử dụng."
 msgid "Use “{0}”"
 msgstr "Dùng “{0}”"
 
+msgid "Use a free reset?"
+msgstr "Dùng một lượt đặt lại miễn phí?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Dùng đường dẫn tương đối với workspace hoặc một thư mục tuyệt đối."
 
@@ -18173,6 +18206,9 @@ msgstr "Dùng cho agent mới"
 
 msgid "Use global default"
 msgstr "Dùng mặc định toàn cục"
+
+msgid "Use reset"
+msgstr "Dùng lượt đặt lại"
 
 msgid "Use Superset on mobile"
 msgstr "Dùng Superset trên điện thoại"

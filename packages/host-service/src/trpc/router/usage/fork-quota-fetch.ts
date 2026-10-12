@@ -82,3 +82,15 @@ export function quotaResponseTiming(response: FetchResponse) {
 			: {}),
 	};
 }
+
+export async function invalidateQuotaFetch(url: string, identity: string) {
+	const key = createHash("sha256")
+		.update(url + identity)
+		.digest("hex");
+	const entry = entries.get(key);
+	if (!entry) return;
+	try {
+		if ((await entry.promise).status === 429) return;
+	} catch {}
+	if (entries.get(key) === entry) entries.delete(key);
+}

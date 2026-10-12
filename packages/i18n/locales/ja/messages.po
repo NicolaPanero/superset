@@ -3516,6 +3516,9 @@ msgstr "リソースを確認"
 msgid "Check Resources"
 msgstr "リソースを確認"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "リセットを使用する前に、ブラウザーでアカウントのメールアドレスを確認してください。"
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "保存前にレンダリングされたプロンプトと起動出力を確認"
 
@@ -3542,6 +3545,9 @@ msgstr "エージェントを確認中…"
 
 msgid "Checking environments…"
 msgstr "環境を確認中…"
+
+msgid "Checking free resets…"
+msgstr "無料リセットを確認中…"
 
 msgid "Checking host…"
 msgstr "ホストを確認中…"
@@ -4809,6 +4815,9 @@ msgstr "セッションを終了できませんでした"
 
 msgid "Could not close the session"
 msgstr "セッションを閉じられませんでした"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "リセットを確認できませんでした。再試行では同じリクエストを使用します。"
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "{plugin} に接続できませんでした。もう一度お試しください。"
@@ -6847,6 +6856,9 @@ msgstr "実験的機能"
 msgid "Expired"
 msgstr "期限切れ"
 
+msgid "Expires {expiry}"
+msgstr "{expiry}に有効期限切れ"
+
 msgid "Explain how this repository works…"
 msgstr "このリポジトリの仕組みを説明…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "誰でも無料"
 
+msgid "Free resets: {formattedCount}"
+msgstr "無料リセット：{formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "無料で始められます · クレジットカード不要"
 
@@ -8175,6 +8190,9 @@ msgstr "「{0}」をサイドバーから非表示にしました"
 
 msgid "Hidden"
 msgstr "非表示"
+
+msgid "Hidden email"
+msgstr "非表示のメールアドレス"
 
 msgid "Hidden folders"
 msgstr "非表示のフォルダ"
@@ -9772,6 +9790,9 @@ msgstr "プランを管理"
 msgid "Manage plan on the web"
 msgstr "プランはWebで管理"
 
+msgid "Manage resets on provider website"
+msgstr "プロバイダーのサイトでリセットを管理"
+
 msgid "Manage sessions"
 msgstr "セッションを管理"
 
@@ -10991,6 +11012,9 @@ msgstr "リポジトリが見つかりません。GitHub Appにリポジトリ�
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "リポジトリがありません。「連携」で GitHub を接続してから更新してください。"
+
+msgid "No reset was used. Check the updated availability."
+msgstr "リセットは使用されていません。更新後の利用状況を確認してください。"
 
 msgid "No results"
 msgstr "結果がありません"
@@ -13740,6 +13764,9 @@ msgstr "エージェントをリセットする"
 
 msgid "Reset all"
 msgstr "すべてリセット"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "リセットを適用しました。使用量を更新中です。"
 
 msgid "Reset editor"
 msgstr "エディタをリセット"
@@ -17358,6 +17385,9 @@ msgstr "このユーザーはこのデバイスのホストサービスを実行
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "このユーザーはこのデバイスのホストサービスを実行しているため、オーナーのままである必要があります。"
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "このアカウントのすべてのチャットに適用されるリセットを1回使用します。取り消しはできません。"
+
 msgid "This view hit an error"
 msgstr "このビューでエラーが発生しました"
 
@@ -18150,6 +18180,9 @@ msgstr "使用量を取得できません。"
 msgid "Use “{0}”"
 msgstr "「{0}」を使用"
 
+msgid "Use a free reset?"
+msgstr "無料リセットを使用しますか？"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "ワークスペースからの相対パスか絶対パスのフォルダを指定します。"
 
@@ -18173,6 +18206,9 @@ msgstr "新規エージェントに使用"
 
 msgid "Use global default"
 msgstr "グローバルのデフォルトを使用"
+
+msgid "Use reset"
+msgstr "リセットを使用"
 
 msgid "Use Superset on mobile"
 msgstr "モバイルでSupersetを使う"

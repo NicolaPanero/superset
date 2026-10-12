@@ -3516,6 +3516,9 @@ msgstr "Vérifier les ressources"
 msgid "Check Resources"
 msgstr "Vérifier les ressources"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Vérifiez l’adresse e-mail du compte dans votre navigateur avant d’utiliser une réinitialisation."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Vérifiez le prompt rendu et la sortie de lancement avant d'enregistrer"
 
@@ -3542,6 +3545,9 @@ msgstr "Vérification des agents…"
 
 msgid "Checking environments…"
 msgstr "Vérification des environnements…"
+
+msgid "Checking free resets…"
+msgstr "Vérification des réinitialisations gratuites…"
 
 msgid "Checking host…"
 msgstr "Vérification de l'hôte…"
@@ -4809,6 +4815,9 @@ msgstr "Impossible de fermer la session"
 
 msgid "Could not close the session"
 msgstr "Impossible de fermer la session"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Impossible de confirmer la réinitialisation. Réessayer utilise la même demande."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Impossible de connecter {plugin}. Réessayez."
@@ -6847,6 +6856,9 @@ msgstr "Expérimental"
 msgid "Expired"
 msgstr "Expiré"
 
+msgid "Expires {expiry}"
+msgstr "Expire le {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Explique le fonctionnement de ce dépôt…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Gratuit pour tout le monde"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Réinitialisations gratuites : {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Commencez gratuitement · Aucune carte bancaire requise"
 
@@ -8175,6 +8190,9 @@ msgstr "« {0} » masqué de la barre latérale"
 
 msgid "Hidden"
 msgstr "Masqués"
+
+msgid "Hidden email"
+msgstr "E-mail masqué"
 
 msgid "Hidden folders"
 msgstr "Dossiers masqués"
@@ -9772,6 +9790,9 @@ msgstr "Gérer le forfait"
 msgid "Manage plan on the web"
 msgstr "Gérer le forfait sur le web"
 
+msgid "Manage resets on provider website"
+msgstr "Gérer les réinitialisations sur le site du fournisseur"
+
 msgid "Manage sessions"
 msgstr "Gérer les sessions"
 
@@ -10991,6 +11012,9 @@ msgstr "Aucun dépôt trouvé. Vérifiez que votre GitHub App a accès à des d�
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Aucun dépôt. Connectez GitHub dans Intégrations, puis actualisez."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Aucune réinitialisation utilisée. Vérifiez la disponibilité actualisée."
 
 msgid "No results"
 msgstr "Aucun résultat"
@@ -13740,6 +13764,9 @@ msgstr "réinitialiser les agents"
 
 msgid "Reset all"
 msgstr "Tout réinitialiser"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Réinitialisation appliquée. Actualisation de l’utilisation en cours."
 
 msgid "Reset editor"
 msgstr "Réinitialiser l'éditeur"
@@ -17358,6 +17385,9 @@ msgstr "Cet utilisateur exécute le service d'hôte de cet appareil et ne peut p
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Cet utilisateur exécute le service d'hôte de cet appareil et doit rester propriétaire."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Utilise une réinitialisation pour ce compte, pour toutes ses conversations. Cette action est irréversible."
+
 msgid "This view hit an error"
 msgstr "Cette vue a rencontré une erreur"
 
@@ -18150,6 +18180,9 @@ msgstr "Utilisation indisponible."
 msgid "Use “{0}”"
 msgstr "Utiliser « {0} »"
 
+msgid "Use a free reset?"
+msgstr "Utiliser une réinitialisation gratuite ?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Utilisez un chemin relatif à l'espace de travail ou un dossier absolu."
 
@@ -18173,6 +18206,9 @@ msgstr "Utiliser pour les nouveaux agents"
 
 msgid "Use global default"
 msgstr "Utiliser la valeur globale par défaut"
+
+msgid "Use reset"
+msgstr "Utiliser une réinitialisation"
 
 msgid "Use Superset on mobile"
 msgstr "Utiliser Superset sur mobile"

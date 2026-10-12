@@ -27,3 +27,38 @@ test("the new procedure rejects paths in place of a login identifier before acce
 		}),
 	).rejects.toMatchObject({ code: "BAD_REQUEST" });
 });
+
+test("reset discovery and redemption require host authentication", async () => {
+	const caller = usageRouter.createCaller({
+		isAuthenticated: false,
+	} as HostServiceContext);
+	await expect(
+		caller.accountResets({ selection: "/unused" }),
+	).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+	await expect(
+		caller.consumeAccountReset({
+			selection: "/unused",
+			expectedIdentity: "a".repeat(64),
+			idempotencyKey: "5c55a376-5263-41c5-a86c-3994ee645b48",
+		}),
+	).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+});
+test("a reset confirmation requires an isolated profile, identity and valid operation key", async () => {
+	const caller = usageRouter.createCaller({
+		isAuthenticated: true,
+	} as HostServiceContext);
+	await expect(
+		caller.consumeAccountReset({
+			selection: "",
+			expectedIdentity: "a".repeat(64),
+			idempotencyKey: "5c55a376-5263-41c5-a86c-3994ee645b48",
+		}),
+	).rejects.toMatchObject({ code: "BAD_REQUEST" });
+	await expect(
+		caller.consumeAccountReset({
+			selection: "/unused",
+			expectedIdentity: "short",
+			idempotencyKey: "5c55a376-5263-41c5-a86c-3994ee645b48",
+		}),
+	).rejects.toMatchObject({ code: "BAD_REQUEST" });
+});

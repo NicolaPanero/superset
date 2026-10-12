@@ -3516,6 +3516,9 @@ msgstr "Kaynakları denetle"
 msgid "Check Resources"
 msgstr "Kaynakları denetle"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Sıfırlamayı kullanmadan önce tarayıcınızda hesap e-postasını kontrol edin."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Kaydetmeden önce oluşturulan istemi ve başlatma çıktısını kontrol edin"
 
@@ -3542,6 +3545,9 @@ msgstr "Ajanlar denetleniyor…"
 
 msgid "Checking environments…"
 msgstr "Ortamlar kontrol ediliyor…"
+
+msgid "Checking free resets…"
+msgstr "Ücretsiz sıfırlamalar kontrol ediliyor…"
 
 msgid "Checking host…"
 msgstr "Host denetleniyor…"
@@ -4809,6 +4815,9 @@ msgstr "Oturum kapatılamadı"
 
 msgid "Could not close the session"
 msgstr "Oturum kapatılamadı"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Sıfırlama doğrulanamadı. Yeniden deneme aynı isteği kullanır."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "{plugin} bağlanamadı. Yeniden deneyin."
@@ -6847,6 +6856,9 @@ msgstr "Deneysel"
 msgid "Expired"
 msgstr "Süresi doldu"
 
+msgid "Expires {expiry}"
+msgstr "{expiry} tarihinde sona erer"
+
 msgid "Explain how this repository works…"
 msgstr "Bu deponun nasıl çalıştığını açıkla…"
 
@@ -7818,6 +7830,9 @@ msgstr "Ücretsiz"
 msgid "Free for everyone"
 msgstr "Herkes için ücretsiz"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Ücretsiz sıfırlamalar: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Ücretsiz başlayın · Kredi kartı gerekmez"
 
@@ -8175,6 +8190,9 @@ msgstr "\"{0}\" kenar çubuğundan gizlendi"
 
 msgid "Hidden"
 msgstr "Gizlenen"
+
+msgid "Hidden email"
+msgstr "Gizli e-posta"
 
 msgid "Hidden folders"
 msgstr "Gizli klasörler"
@@ -9772,6 +9790,9 @@ msgstr "Planı yönet"
 msgid "Manage plan on the web"
 msgstr "Planı web'den yönet"
 
+msgid "Manage resets on provider website"
+msgstr "Sağlayıcının web sitesinde sıfırlamaları yönet"
+
 msgid "Manage sessions"
 msgstr "Oturumları yönet"
 
@@ -10991,6 +11012,9 @@ msgstr "Depo bulunamadı. GitHub App'inizin depolara erişimi olduğundan emin o
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Depo yok. Entegrasyonlar'dan GitHub'ı bağlayın, sonra yenileyin."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Hiçbir sıfırlama kullanılmadı. Güncel kullanılabilirliği kontrol edin."
 
 msgid "No results"
 msgstr "Sonuç yok"
@@ -13740,6 +13764,9 @@ msgstr "ajanları sıfırlama"
 
 msgid "Reset all"
 msgstr "Tümünü sıfırla"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Sıfırlama uygulandı. Kullanım yenileniyor."
 
 msgid "Reset editor"
 msgstr "Düzenleyiciyi sıfırla"
@@ -17358,6 +17385,9 @@ msgstr "Bu kullanıcı bu cihazın host hizmetini çalıştırıyor ve kaldırı
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Bu kullanıcı bu cihazın host hizmetini çalıştırıyor ve sahip olarak kalmalı."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Bu hesabın tüm sohbetleri için bir sıfırlama kullanır. Geri alınamaz."
+
 msgid "This view hit an error"
 msgstr "Bu görünüm bir hatayla karşılaştı"
 
@@ -18150,6 +18180,9 @@ msgstr "Kullanım bilgisi yok."
 msgid "Use “{0}”"
 msgstr "“{0}” kullan"
 
+msgid "Use a free reset?"
+msgstr "Ücretsiz sıfırlama kullanılsın mı?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Çalışma alanına göreli bir yol ya da mutlak bir klasör kullanın."
 
@@ -18173,6 +18206,9 @@ msgstr "Yeni ajanlar için kullan"
 
 msgid "Use global default"
 msgstr "Genel varsayılanı kullan"
+
+msgid "Use reset"
+msgstr "Sıfırlamayı kullan"
 
 msgid "Use Superset on mobile"
 msgstr "Superset’i mobilde kullanın"

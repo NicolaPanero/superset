@@ -89,3 +89,5 @@ Quando un nuovo caso viene trovato nell’uso reale, aggiungere una regressione
 sul comportamento osservato e verificare che fallisca prima della correzione.
 Non aumentare attese o retry per far passare un test instabile. Se cambia il
 motore fissato, la suite nativa va eseguita prima di pubblicare.
+
+Free-reset regression coverage includes account/host scoping, shared discovery, unsupported hosts, explicit confirmation and cancel, stale identity rejection, expired credits, uncertain-response retries and host restarts, target-only quota invalidation, preserved 429 backoff, and a real fake-CLI subprocess that verifies profile isolation, hooks/MCP disabled, no model turns, timeout and temporary-directory cleanup. Tests never redeem provider resets or use real account credentials.

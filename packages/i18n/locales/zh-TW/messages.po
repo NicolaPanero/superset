@@ -3516,6 +3516,9 @@ msgstr "檢查資源"
 msgid "Check Resources"
 msgstr "檢視資源"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "使用重設前，請在瀏覽器中確認帳號的電子郵件地址。"
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "儲存前檢查渲染後的提示詞和啟動輸出"
 
@@ -3542,6 +3545,9 @@ msgstr "正在檢查代理程式…"
 
 msgid "Checking environments…"
 msgstr "正在檢查環境…"
+
+msgid "Checking free resets…"
+msgstr "正在檢查免費重設…"
 
 msgid "Checking host…"
 msgstr "正在檢查主機…"
@@ -4809,6 +4815,9 @@ msgstr "無法關閉會話"
 
 msgid "Could not close the session"
 msgstr "無法關閉會話"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "無法確認重設。重試將使用同一個請求。"
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "無法連線 {plugin}。請重試。"
@@ -6847,6 +6856,9 @@ msgstr "實驗功能"
 msgid "Expired"
 msgstr "已過期"
 
+msgid "Expires {expiry}"
+msgstr "{expiry}到期"
+
 msgid "Explain how this repository works…"
 msgstr "講講這個儲存庫是怎麼運作的…"
 
@@ -7818,6 +7830,9 @@ msgstr "免費版"
 msgid "Free for everyone"
 msgstr "對所有人免費"
 
+msgid "Free resets: {formattedCount}"
+msgstr "免費重設：{formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "免費開始 · 無需信用卡"
 
@@ -8175,6 +8190,9 @@ msgstr "已從側邊欄隱藏「{0}」"
 
 msgid "Hidden"
 msgstr "已隱藏"
+
+msgid "Hidden email"
+msgstr "隱藏的電子郵件"
 
 msgid "Hidden folders"
 msgstr "已隱藏的資料夾"
@@ -9772,6 +9790,9 @@ msgstr "管理方案"
 msgid "Manage plan on the web"
 msgstr "在網頁端管理方案"
 
+msgid "Manage resets on provider website"
+msgstr "在供應商網站管理重設"
+
 msgid "Manage sessions"
 msgstr "管理會話"
 
@@ -10991,6 +11012,9 @@ msgstr "未找到儲存庫。請確認你的GitHub App有權存取儲存庫。"
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "沒有儲存庫。請在「整合」中連結 GitHub，然後重新整理。"
+
+msgid "No reset was used. Check the updated availability."
+msgstr "未使用任何重設。請查看更新後的可用情況。"
 
 msgid "No results"
 msgstr "無結果"
@@ -13740,6 +13764,9 @@ msgstr "重置代理程式"
 
 msgid "Reset all"
 msgstr "全部重置"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "已套用重設。正在重新整理用量。"
 
 msgid "Reset editor"
 msgstr "重置編輯器"
@@ -17358,6 +17385,9 @@ msgstr "此使用者在此裝置上執行主機服務，無法被移除。"
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "此使用者在此裝置上執行主機服務，必須保持擁有者身份。"
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "將使用此帳號的一次重設，對其所有聊天生效。此操作無法復原。"
+
 msgid "This view hit an error"
 msgstr "此檢視出錯了"
 
@@ -18150,6 +18180,9 @@ msgstr "無法獲取用量。"
 msgid "Use “{0}”"
 msgstr "使用「{0}」"
 
+msgid "Use a free reset?"
+msgstr "使用一次免費重設？"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "使用相對於工作區的路徑或絕對路徑資料夾。"
 
@@ -18173,6 +18206,9 @@ msgstr "用於新代理程式"
 
 msgid "Use global default"
 msgstr "使用全域性預設值"
+
+msgid "Use reset"
+msgstr "使用重設"
 
 msgid "Use Superset on mobile"
 msgstr "在手機上使用 Superset"
