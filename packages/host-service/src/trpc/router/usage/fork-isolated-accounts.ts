@@ -166,7 +166,14 @@ export function projectIsolatedQuota(
 				account.selection === profile.selection &&
 				account.credentialKind === profile.credentialKind,
 		);
-		if (current && option && !option.reconnect) {
+		if (
+			current &&
+			option &&
+			!option.reconnect &&
+			(profile.credentialKind === "api_key" ||
+				!current.email ||
+				current.email === profile.email)
+		) {
 			result.push({ ...current, email: profile.email ?? current.email });
 			continue;
 		}

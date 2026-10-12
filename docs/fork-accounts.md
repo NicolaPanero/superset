@@ -39,3 +39,11 @@ cloud workspaces do not expose this machine’s local profiles.
 The application icon is packaged from `apps/desktop/src/resources/build/fork-icons`
 only for the fork identity. Official icons, bundle identities and data locations
 are unchanged by this icon customization.
+
+A profile's last successful quota is tied to its verified account identity, not
+the short-lived access token. Token renewal can therefore retain that reading
+when the provider is temporarily unavailable. A different identity, missing
+identity, signed-out profile, or changed provider email cannot inherit it.
+The pane keeps a dimmed progress ring for **Last known** usage, with a dashed
+track and the original timestamp. This does not mark the reading as fresh or
+make the account eligible for automatic continuation.
