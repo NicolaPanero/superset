@@ -2706,6 +2706,9 @@ msgstr "Автоматизируйте задачи"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Автоматизируйте настройку рабочих областей для {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Автоматически (адрес электронной почты)"
+
 msgid "Automatic continuation"
 msgstr "Автоматическое продолжение"
 
@@ -4837,6 +4840,9 @@ msgstr "Не удалось удалить эту страницу"
 msgid "Could not disconnect."
 msgstr "Не удалось отключить."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Не удалось завершить настройку аккаунта. Повторите попытку."
+
 msgid "Could not forget {domain}"
 msgstr "Не удалось забыть {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Введите родительскую папку на {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Введите путь на {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Введите имя профиля или обновите этот хост для автоматического именования."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Введите URL в строку поиска выше."
@@ -9271,6 +9280,12 @@ msgstr "Выйти и удалить"
 
 msgid "Leave comment mode"
 msgstr "Выйти из режима комментариев"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Оставьте пустым, чтобы после входа использовать вашу почту. Существующие папки профилей сохранят свои имена."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Оставьте пустым, чтобы использовать вашу почту. Папка профиля останется прежней."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Оставьте поле пустым, чтобы вернуть имя, которое сообщает терминал."
@@ -14346,9 +14361,6 @@ msgstr "Сохранено"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "«{0}» сохранено как окружение"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Сохранено на этом хосте. Оставьте пустым для исходного названия."
 
 msgid "Saved to Downloads"
 msgstr "Сохранено в «Загрузки»"

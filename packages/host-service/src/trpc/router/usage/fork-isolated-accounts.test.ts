@@ -63,6 +63,16 @@ function fixture() {
 }
 
 describe("isolated account profiles", () => {
+	it("does not adopt an automatic profile while the CLI sign-in is still pending", async () => {
+		const f = fixture();
+		f.profile.selection = join(
+			f.root,
+			".claude-superset-login-34c89ba6-f34e-41d4-b351-76f90b58a0d4",
+		);
+		expect(await isolatedAccountOptions("claude", f.dependencies)).toEqual([]);
+		expect(f.dependencies.registry.list()).toEqual([]);
+	});
+
 	it("remembers only identity metadata, survives restart and does not replace a profile with another login", async () => {
 		const f = fixture();
 		const before = await isolatedAccountOptions("claude", f.dependencies);

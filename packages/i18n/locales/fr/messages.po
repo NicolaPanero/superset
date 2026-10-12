@@ -2706,6 +2706,9 @@ msgstr "Automatiser les tâches"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatiser la configuration des espaces de travail pour {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automatique (adresse e-mail)"
+
 msgid "Automatic continuation"
 msgstr "Reprise automatique"
 
@@ -4837,6 +4840,9 @@ msgstr "Impossible de supprimer cette page"
 msgid "Could not disconnect."
 msgstr "Impossible de déconnecter."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Impossible de terminer la configuration du compte. Réessayez."
+
 msgid "Could not forget {domain}"
 msgstr "Impossible d'oublier {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Saisissez un répertoire parent sur {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Saisissez un chemin sur {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Saisissez un nom de profil ou mettez à jour cet hôte pour utiliser le nom automatique."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Saisissez une URL dans la barre de recherche ci-dessus."
@@ -9271,6 +9280,12 @@ msgstr "Quitter et supprimer"
 
 msgid "Leave comment mode"
 msgstr "Quitter le mode commentaire"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Laissez vide pour utiliser votre adresse e-mail après la connexion. Les dossiers des profils existants conservent leur nom."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Laissez vide pour utiliser votre adresse e-mail. Le dossier du profil reste inchangé."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Laissez vide pour revenir au nom indiqué par le terminal."
@@ -14346,9 +14361,6 @@ msgstr "Enregistré"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "« {0} » enregistré comme environnement"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Enregistré sur cet hôte. Laissez vide pour utiliser le nom d’origine."
 
 msgid "Saved to Downloads"
 msgstr "Enregistré dans Téléchargements"

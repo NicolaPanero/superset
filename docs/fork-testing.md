@@ -30,7 +30,7 @@ il comando fallisce invece di ometterla. I test vanno collocati accanto al codic
 | Area | Test unitari / componenti | Integrazioni |
 |---|---|---|
 | Account prima dell’avvio | Predefinito dell’host, scelta manuale, cambio modello, reset host/provider/nuova creazione, scelte pendenti obsolete | Profilo/configurazione prima del primo prompt, rifiuto prima di creare un workspace per account mancanti |
-| Profili isolati | Identità immutabile, CLI login separato, alias, account disconnessi, corruzione, permessi e limite del registro | Avvio importato con scelta esplicita mentre un altro profilo resta predefinito |
+| Profili isolati | Identità immutabile, CLI login separato, alias, nome automatico dalla mail, collisioni, retry e rollback del Portachiavi, account disconnessi, corruzione, permessi e limite del registro | Avvio importato con scelta esplicita mentre un altro profilo resta predefinito |
 | Quota condivisa | Limiti di sessione/settimana/modello, soglie senza arrotondare, letture vecchie, dati mancanti, API, richieste condivise | Cache e verifica CLI proprietario, `Retry-After`, esclusione di richieste al modello nei controlli d’uso |
 | Continuazione Claude | Suggerimento, reset, attivazione dopo il limite, Stop, cambio identità/modello, API escluse, errori e messaggi in coda | Runtime della chat, notifiche del router, preferenze indipendenti, persistenza, scadenza e limite di ritenzione |
 | Interfaccia | Chiusura menu prima del dialogo, ripristino focus, caselle salvate subito, rimontaggio, errori, host privi delle procedure | React + React Query + trasporto tRPC simulato; nessuna chiamata a un agente reale |

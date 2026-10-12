@@ -1,13 +1,16 @@
-import { realpath, stat } from "node:fs/promises";
 import { homedir } from "node:os";
-import { basename, join, resolve } from "node:path";
-import { resolveAmbientCodexHome } from "@superset/agent-setup";
+import { basename } from "node:path";
 import { userError } from "@superset/trpc/i18n-error";
+import { isPendingAccountSelection } from "./fork-account-naming";
 import {
 	type ForkAccountRegistry,
 	forkAccountRegistry,
 	type IsolatedAccount,
 } from "./fork-account-registry";
+import { independentProfile } from "./fork-profile-directory";
+
+export { independentProfile } from "./fork-profile-directory";
+
 import { getQuota } from "./fork-quota-cache";
 import { discoverClaudeProfiles, discoverCodexHomes } from "./profiles";
 import { readAccountIdentity } from "./session-account/session-account";
@@ -19,32 +22,6 @@ export interface IsolatedAccountOption {
 	managed: true;
 	reconnect: boolean;
 	credentialKind: IsolatedAccount["credentialKind"];
-}
-
-export async function independentProfile(
-	agent: IsolatedAccount["agent"],
-	selection: string,
-) {
-	try {
-		if (!(await stat(selection)).isDirectory()) return false;
-		const directory = await realpath(selection);
-		const external =
-			agent === "claude"
-				? [join(homedir(), ".claude"), join(homedir(), ".config", "claude")]
-				: [resolveAmbientCodexHome()];
-		for (const path of external)
-			if (directory === (await realpath(path).catch(() => resolve(path))))
-				return false;
-		for (const file of agent === "claude"
-			? [".claude.json", ".credentials.json"]
-			: ["auth.json"]) {
-			const target = await realpath(join(selection, file)).catch(() => null);
-			if (target && target !== join(directory, file)) return false;
-		}
-		return true;
-	} catch {
-		return false;
-	}
 }
 
 async function discovered(agent: IsolatedAccount["agent"]) {
@@ -70,7 +47,11 @@ export async function isolatedAccountOptions(
 ): Promise<IsolatedAccountOption[]> {
 	const profiles = await dependencies.discovered(agent);
 	for (const profile of profiles.slice(0, 128)) {
-		if (!(await dependencies.independent(agent, profile.selection))) continue;
+		if (
+			isPendingAccountSelection(profile.selection) ||
+			!(await dependencies.independent(agent, profile.selection))
+		)
+			continue;
 		const identity =
 			profile.credentialKind === "subscription"
 				? await dependencies.identity(agent, profile.selection)

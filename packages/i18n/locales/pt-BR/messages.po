@@ -2706,6 +2706,9 @@ msgstr "Automatizar tarefas"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatize a preparação das áreas de trabalho de {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automático (endereço de e-mail)"
+
 msgid "Automatic continuation"
 msgstr "Continuação automática"
 
@@ -4837,6 +4840,9 @@ msgstr "Não foi possível excluir esta página"
 msgid "Could not disconnect."
 msgstr "Não foi possível desconectar."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Não foi possível concluir a configuração da conta. Tente novamente."
+
 msgid "Could not forget {domain}"
 msgstr "Não foi possível esquecer {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Digite um diretório pai em {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Digite um caminho em {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Insira um nome de perfil ou atualize este host para usar o nome automático."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Digite uma URL na barra de busca acima."
@@ -9271,6 +9280,12 @@ msgstr "Sair e apagar"
 
 msgid "Leave comment mode"
 msgstr "Sair do modo de comentários"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Deixe vazio para usar seu e-mail após entrar. As pastas dos perfis existentes mantêm seus nomes."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Deixe vazio para usar seu e-mail. A pasta do perfil permanece igual."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Deixe em branco para voltar ao nome informado pelo terminal."
@@ -14346,9 +14361,6 @@ msgstr "Salvo"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" salvo como ambiente"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Salvo neste host. Deixe vazio para usar o nome original."
 
 msgid "Saved to Downloads"
 msgstr "Salvo em Downloads"

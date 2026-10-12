@@ -2706,6 +2706,9 @@ msgstr "自动化任务"
 msgid "Automate workspace setup for {projectName}"
 msgstr "为{projectName}自动化工作区初始化"
 
+msgid "Automatic (email address)"
+msgstr "自动（邮箱地址）"
+
 msgid "Automatic continuation"
 msgstr "自动继续"
 
@@ -4837,6 +4840,9 @@ msgstr "无法删除这个页面"
 msgid "Could not disconnect."
 msgstr "无法断开连接。"
 
+msgid "Could not finish account setup. Try again."
+msgstr "无法完成账号设置。请重试。"
+
 msgid "Could not forget {domain}"
 msgstr "无法忘记{domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "请输入{hostName}上的父目录"
 
 msgid "Enter a path on {hostName}"
 msgstr "请输入{hostName}上的路径"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "请输入配置名称，或更新此主机以使用自动命名。"
 
 msgid "Enter a URL into the search bar above."
 msgstr "在上方的搜索栏中输入URL。"
@@ -9271,6 +9280,12 @@ msgstr "退出并删除"
 
 msgid "Leave comment mode"
 msgstr "退出评论模式"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "留空可在登录后使用你的邮箱。现有配置文件夹将保留原名称。"
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "留空可使用你的邮箱。配置文件夹保持不变。"
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "留空即可恢复终端报告的名称。"
@@ -14346,9 +14361,6 @@ msgstr "已保存"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "已将“{0}”保存为环境"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "保存在此主机上。留空以使用原始名称。"
 
 msgid "Saved to Downloads"
 msgstr "已保存到“下载”文件夹"
