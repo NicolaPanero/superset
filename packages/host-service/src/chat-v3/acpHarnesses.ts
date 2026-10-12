@@ -4,12 +4,14 @@ import { dirname, join } from "node:path";
 import type { HarnessFactory } from "@superset/chat-runtime";
 import { createAcpAdapter } from "@superset/chat-runtime";
 import type { HostDb } from "../db";
+import { resolveHostAgentConfig } from "../terminal-agents/agent-config";
 import { resolveAttachmentPath } from "../trpc/router/attachments/storage";
 import { captureSessionAccount } from "../trpc/router/usage/session-account/session-account";
 import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
+import { forkConfiguredCli } from "./forkConfiguredCli";
 import { forkLaunchChoices } from "./forkLaunchChoices";
 import { forkQuotaRecoveryHarness } from "./forkQuotaRecoveryHarness";
 
@@ -62,7 +64,17 @@ export function acpHarnessFactory(
 						: {}),
 					onSpawn: (pid) => agents?.spawned(options.sessionId, pid),
 					launch: async () => {
+						const choices = forkLaunchChoices(db, harness, {
+							...options,
+							accountSelection,
+						});
+						const configured = forkConfiguredCli(
+							choices.agentConfigId
+								? resolveHostAgentConfig(db, choices.agentConfigId)
+								: null,
+						);
 						const cli = await resolveAgentCli({
+							command: configured.command,
 							binary: entry.binary,
 							minVersion: entry.minVersion,
 							upgrade: entry.upgrade,
@@ -104,7 +116,13 @@ export function acpHarnessFactory(
 							})
 							.catch(() => undefined);
 						if (!adapterEntry) {
-							return { command: cli.command, args: entry.args, env };
+							return {
+								command: cli.command,
+								args: configured.model
+									? ["--model", configured.model, ...entry.args]
+									: entry.args,
+								env,
+							};
 						}
 						if (!entry.executableEnv) {
 							throw new Error(

@@ -33,6 +33,46 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
 
+## Configurazione guidata di Grok e Cursor
+
+In **Settings → Agents**, la scheda di Grok o Cursor mostra uno stato compatto.
+**Configure** apre installazione, login e **Apply recommended settings**;
+**Advanced configuration** conserva i controlli manuali. Questa prima versione
+riguarda gli agenti configurati sull’host locale nella schermata v2. Gli host
+precedenti mantengono la configurazione manuale.
+
+Il controllo riconosce il CLI dal suo help, rileva anche le cartelle di
+installazione comuni e verifica ACP con il solo `initialize`, in una cartella
+temporanea: nessun login automatico, sessione nuova, prompt o richiesta al modello.
+Il comando generico `agent` viene considerato per Cursor solo se si identifica
+come Cursor. Le verifiche hanno timeout e vengono condivise dalla cache della UI.
+Il login e l’installazione si eseguono, dopo il click, nel terminale dell’app usando
+il CLI e l’installer ufficiali. Il terminale resta aperto fino alla chiusura manuale.
+
+Le impostazioni consigliate richiedono un’applicazione esplicita. Sostituiscono
+comando, argomenti, trasporto del prompt e opzioni di ripresa del singolo agente;
+conservano nome, icona, ordine, hook e le altre variabili. Non abilitano
+l’approvazione automatica degli strumenti. Una modifica intervenuta nel frattempo
+impedisce di applicare una vecchia anteprima. Le chat già aperte mantengono la
+propria configurazione; comando e modello scelti arrivano ai nuovi avvii CLI e ACP.
+
+Per Grok, **Use an API key** configura esplicitamente l’API xAI con fatturazione
+separata e modello selezionato. La chiave è nascosta durante l’inserimento,
+conservata nell’ambiente dell’agente sul database locale dell’host, come le
+impostazioni avanzate, e rimossa dal form dopo l’invio. Le procedure del setup
+restituiscono soltanto stato e conferma; i preset sincronizzati non includono
+`XAI_API_KEY`. Le impostazioni del CLI che impongono credenziali o endpoint di
+modello bloccano questo percorso per evitare override ambigui: restano modificabili
+manualmente. Applicare le impostazioni normali o fare login non rimuove le
+configurazioni API esistenti. **API key configured** indica presenza, non validità:
+la verifica non usa richieste a pagamento.
+
+Ogni persona installa il proprio CLI e collega il proprio account o chiave.
+L’esportazione di preset condivisibili rimane un passaggio successivo.
+Riferimenti: [Grok ACP](https://docs.x.ai/build/cli/headless-scripting),
+[Grok API e priorità delle credenziali](https://docs.x.ai/build/enterprise),
+[Cursor ACP](https://cursor.com/docs/cli/acp).
+
 ## Account prima dell’avvio e quote
 
 La creazione workspace propone accanto al provider l’account effettivo dell’host e

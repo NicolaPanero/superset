@@ -91,3 +91,14 @@ Non aumentare attese o retry per far passare un test instabile. Se cambia il
 motore fissato, la suite nativa va eseguita prima di pubblicare.
 
 Free-reset regression coverage includes account/host scoping, shared discovery, unsupported hosts, explicit confirmation and cancel, stale identity rejection, expired credits, uncertain-response retries and host restarts, target-only quota invalidation, preserved 429 backoff, and a real fake-CLI subprocess that verifies profile isolation, hooks/MCP disabled, no model turns, timeout and temporary-directory cleanup. Tests never redeem provider resets or use real account credentials.
+
+### Configurazione guidata Grok/Cursor
+
+La suite include riconoscimento del provider (anche quando `agent` è Grok),
+versioni calendar di Cursor, login scaduti, override nativi e privacy delle
+risposte. Un CLI simulato riceve soltanto `initialize` e verifica che la cartella
+temporanea sia rimossa. Le procedure reali operano su SQLite in memoria e
+verificano modifiche concorrenti, applicazione API esplicita e autenticazione.
+I test UI coprono il riepilogo compatto, host precedenti, scelta API, pulizia
+della chiave dal form, isolamento dell’host e popup di login stabile. Nessun test
+installa un CLI o usa chiavi, login o prompt reali.

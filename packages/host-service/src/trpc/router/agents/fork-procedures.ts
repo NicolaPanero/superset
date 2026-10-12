@@ -7,6 +7,7 @@ import { acpHarnessFactory } from "../../../chat-v3/acpHarnesses";
 import { resolveAgentCli } from "../../../chat-v3/agentCli";
 import { buildChatAgentEnv } from "../../../chat-v3/agentEnv";
 import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
+import { forkConfiguredCli } from "../../../chat-v3/forkConfiguredCli";
 import { workspaces } from "../../../db/schema";
 import { defaultNativeStore } from "../../../session-transfer/stores";
 import {
@@ -189,7 +190,9 @@ export const forkAgentProcedures = {
 					code: "PRECONDITION_FAILED",
 					message: "acp_unavailable",
 				});
+			const configured = forkConfiguredCli(config);
 			await resolveAgentCli({
+				command: configured.command,
 				binary: entry.binary,
 				minVersion: entry.minVersion,
 				upgrade: entry.upgrade,
@@ -199,7 +202,8 @@ export const forkAgentProcedures = {
 				agentConfigId: config.id,
 				accountSelection,
 				harness,
-				defaultModelId: await acpDefaultModel(config.presetId),
+				defaultModelId:
+					configured.model ?? (await acpDefaultModel(config.presetId)),
 			};
 		}),
 	accountOptions: protectedProcedure

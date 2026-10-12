@@ -1845,6 +1845,9 @@ msgstr "Chuyển không gian làm việc v1 vào dự án v2 tương ứng đã 
 msgid "Advanced"
 msgstr "Nâng cao"
 
+msgid "Advanced configuration"
+msgstr "Cấu hình nâng cao"
+
 msgid "Advanced options"
 msgstr "Tùy chọn nâng cao"
 
@@ -1922,6 +1925,9 @@ msgstr "Phiên agent đã bắt đầu"
 
 msgid "agent settings"
 msgstr "cài đặt agent"
+
+msgid "Agent setup"
+msgstr "Thiết lập tác nhân"
 
 msgid "Agents"
 msgstr "Agent"
@@ -2342,6 +2348,9 @@ msgstr "Thanh toán API"
 msgid "API key"
 msgstr "Khóa API"
 
+msgid "API key configured"
+msgstr "Đã cấu hình khóa API"
+
 msgid "API key generated"
 msgstr "Đã tạo khóa API"
 
@@ -2408,6 +2417,9 @@ msgstr "Áp dụng"
 msgctxt "job application"
 msgid "Apply"
 msgstr "Ứng tuyển"
+
+msgid "Apply recommended settings"
+msgstr "Áp dụng thiết lập đề xuất"
 
 msgid "Approve"
 msgstr "Duyệt"
@@ -3489,6 +3501,9 @@ msgstr "Đã chuyển cuộc trò chuyện sang {0}"
 msgid "Chat session not found"
 msgstr "Không tìm thấy phiên chat"
 
+msgid "Chat support not verified"
+msgstr "Chưa xác minh hỗ trợ trò chuyện"
+
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
 
@@ -3515,6 +3530,9 @@ msgstr "Kiểm tra tài nguyên"
 
 msgid "Check Resources"
 msgstr "Kiểm tra tài nguyên"
+
+msgid "Check sign-in"
+msgstr "Kiểm tra đăng nhập"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Kiểm tra email của tài khoản trong trình duyệt trước khi dùng lượt đặt lại."
@@ -3587,6 +3605,9 @@ msgstr "Check hoàn tất"
 
 msgid "Checks failed"
 msgstr "Check thất bại"
+
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "Kiểm tra cài đặt và đăng nhập cục bộ mà không gửi lời nhắc. Không xác thực khóa API bằng yêu cầu trả phí."
 
 msgid "Checks passed"
 msgstr "Check đã qua"
@@ -3758,6 +3779,9 @@ msgstr "Tài liệu CLI"
 
 msgid "CLI login"
 msgstr "Đăng nhập CLI"
+
+msgid "CLI not found"
+msgstr "Không tìm thấy CLI"
 
 msgid "CLI reference"
 msgstr "Tài liệu tham chiếu CLI"
@@ -4207,6 +4231,9 @@ msgstr "So sánh với kiểu mặc định"
 
 msgid "complete"
 msgstr "đã kết thúc"
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "Hoàn thành quy trình CLI chính thức rồi đóng cửa sổ này để kiểm tra kết quả."
 
 msgid "Completed"
 msgstr "Hoàn tất"
@@ -8121,6 +8148,9 @@ msgstr "Kiến trúc sư GTM & tự động hóa AI, Mistral AI"
 msgid "Guide"
 msgstr "Hướng dẫn"
 
+msgid "Guided setup unavailable"
+msgstr "Không có thiết lập hướng dẫn"
+
 msgid "Guides"
 msgstr "Hướng dẫn"
 
@@ -8308,6 +8338,9 @@ msgstr "Không tìm thấy host trong tổ chức này"
 
 msgid "Host not found in this organization."
 msgstr "Không tìm thấy host trong tổ chức này."
+
+msgid "Host offline"
+msgstr "Máy chủ ngoại tuyến"
 
 msgid "Host service"
 msgstr "Dịch vụ máy chủ"
@@ -8757,6 +8790,9 @@ msgstr "Cài đặt và khởi động lại"
 msgid "Install and run your first agent."
 msgstr "Cài đặt và chạy agent đầu tiên của bạn."
 
+msgid "Install CLI"
+msgstr "Cài đặt CLI"
+
 msgid "Install failed"
 msgstr "Cài đặt thất bại"
 
@@ -8774,6 +8810,9 @@ msgstr "Cài Superset MCP vào client của bạn"
 
 msgid "Install the desktop app"
 msgstr "Cài ứng dụng máy tính"
+
+msgid "Install the official CLI, then check again."
+msgstr "Cài đặt CLI chính thức rồi kiểm tra lại."
 
 msgid "Install the plugin to connect"
 msgstr "Cài đặt plugin để kết nối"
@@ -13240,6 +13279,9 @@ msgstr "Đang đọc mức sử dụng…"
 msgid "Reading your local usage…"
 msgstr "Đang đọc mức sử dụng cục bộ của bạn…"
 
+msgid "Ready"
+msgstr "Sẵn sàng"
+
 msgid "Ready for review"
 msgstr "Sẵn sàng review"
 
@@ -13306,6 +13348,9 @@ msgstr "Đã xem gần đây"
 
 msgid "Recents"
 msgstr "Gần đây"
+
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "Thiết lập đề xuất thay thế lệnh và đối số khởi chạy. Giữ nguyên tên, hook và các thiết lập môi trường khác. Áp dụng cho lần khởi chạy mới."
 
 msgid "Recommended size 256×256."
 msgstr "Kích thước khuyến nghị 256×256."
@@ -15058,6 +15103,9 @@ msgstr "Cài đặt ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "Cài đặt → Truy cập từ xa → “Cho phép truy cập từ xa vào thiết bị này qua relay”."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "Đã áp dụng thiết lập. Các cuộc trò chuyện hiện tại giữ nguyên cấu hình."
+
 msgid "Settings..."
 msgstr "Cài đặt..."
 
@@ -15066,6 +15114,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "Thiết lập"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "Không thể áp dụng thiết lập. Kiểm tra lại hoặc dùng cấu hình nâng cao."
 
 msgid "Setup script"
 msgstr "Script thiết lập"
@@ -15334,6 +15385,9 @@ msgstr "Đăng nhập với quyền Local Admin (dev)"
 #. placeholder {0}: activeOrganization?.name ?? t({ message: "this organization", })
 msgid "Sign in to {0}"
 msgstr "Đăng nhập vào {0}"
+
+msgid "Sign in to continue"
+msgstr "Đăng nhập để tiếp tục"
 
 msgid "Sign in to continue to Superset"
 msgstr "Đăng nhập để tiếp tục vào Superset"
@@ -16775,6 +16829,12 @@ msgstr "Chủ sở hữu của tự động hóa không còn dùng được work
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agent tốt nhất sẽ thay đổi.<0/>Quy trình của bạn thì không."
 
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI đã có thiết lập mô hình tùy chỉnh. Hãy chỉnh sửa trong cấu hình nâng cao."
+
+msgid "The CLI did not confirm chat support. You can keep using the terminal."
+msgstr "CLI chưa xác nhận hỗ trợ trò chuyện. Bạn vẫn có thể dùng terminal."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."
 
@@ -18100,6 +18160,9 @@ msgstr "Hãy cập nhật Superset trên máy này để đính kèm tệp"
 msgid "update the branch prefix"
 msgstr "cập nhật tiền tố nhánh"
 
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "Cập nhật máy chủ này để dùng thiết lập hướng dẫn hoặc dùng cấu hình nâng cao."
+
 msgid "Updated"
 msgstr "Đã cập nhật"
 
@@ -18185,6 +18248,9 @@ msgstr "Dùng một lượt đặt lại miễn phí?"
 
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Dùng đường dẫn tương đối với workspace hoặc một thư mục tuyệt đối."
+
+msgid "Use an API key"
+msgstr "Dùng khóa API"
 
 msgid "Use another port"
 msgstr "Dùng port khác"
@@ -18275,6 +18341,9 @@ msgstr "Không tìm thấy người dùng"
 
 msgid "user@example.com"
 msgstr "user@example.com"
+
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "Sử dụng API xAI với thanh toán riêng. Mỗi người cung cấp khóa của mình."
 
 msgid "Using random branch name (AI generation timed out)"
 msgstr "Dùng tên nhánh ngẫu nhiên (AI tạo tên bị quá thời gian)"
