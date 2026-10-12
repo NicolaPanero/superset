@@ -3516,6 +3516,9 @@ msgstr "Zkontrolovat prostředky"
 msgid "Check Resources"
 msgstr "Zkontrolovat prostředky"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Před použitím resetu zkontrolujte e-mail účtu v prohlížeči."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Před uložením zkontrolujte vykreslený prompt a výstup spuštění"
 
@@ -3542,6 +3545,9 @@ msgstr "Kontroluji agenty…"
 
 msgid "Checking environments…"
 msgstr "Kontrola prostředí…"
+
+msgid "Checking free resets…"
+msgstr "Kontrola bezplatných resetů…"
 
 msgid "Checking host…"
 msgstr "Kontroluji hosta…"
@@ -4809,6 +4815,9 @@ msgstr "Relaci se nepodařilo zavřít"
 
 msgid "Could not close the session"
 msgstr "Relaci se nepodařilo zavřít"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Reset se nepodařilo potvrdit. Opakovaný pokus použije stejný požadavek."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Nepodařilo se připojit {plugin}. Zkuste to znovu."
@@ -6847,6 +6856,9 @@ msgstr "Experimentální"
 msgid "Expired"
 msgstr "Vypršelo"
 
+msgid "Expires {expiry}"
+msgstr "Platnost vyprší {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Vysvětli, jak tento repozitář funguje…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Zdarma pro všechny"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Bezplatné resety: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Začněte zdarma · Kreditní karta není potřeba"
 
@@ -8175,6 +8190,9 @@ msgstr "„{0}“ skryto z postranního panelu"
 
 msgid "Hidden"
 msgstr "Skryté"
+
+msgid "Hidden email"
+msgstr "Skrytý e-mail"
 
 msgid "Hidden folders"
 msgstr "Skryté složky"
@@ -9772,6 +9790,9 @@ msgstr "Spravovat tarif"
 msgid "Manage plan on the web"
 msgstr "Správa tarifu na webu"
 
+msgid "Manage resets on provider website"
+msgstr "Spravovat resety na webu poskytovatele"
+
 msgid "Manage sessions"
 msgstr "Spravovat relace"
 
@@ -10991,6 +11012,9 @@ msgstr "Nenalezeny žádné repozitáře. Ověřte, že vaše GitHub App má k r
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Žádné repozitáře. Připojte GitHub v Integracích a poté obnovte."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Žádný reset nebyl použit. Zkontrolujte aktualizovanou dostupnost."
 
 msgid "No results"
 msgstr "Žádné výsledky"
@@ -13740,6 +13764,9 @@ msgstr "resetovat agenty"
 
 msgid "Reset all"
 msgstr "Obnovit vše"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Reset použit. Aktualizuje se využití."
 
 msgid "Reset editor"
 msgstr "Obnovit editor"
@@ -17358,6 +17385,9 @@ msgstr "Tento uživatel provozuje host service pro toto zařízení a nelze ho o
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Tento uživatel provozuje host service pro toto zařízení a musí zůstat vlastníkem."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Použije jeden reset pro tento účet ve všech jeho chatech. Nelze jej vrátit zpět."
+
 msgid "This view hit an error"
 msgstr "V tomto zobrazení došlo k chybě"
 
@@ -18150,6 +18180,9 @@ msgstr "Využití není dostupné."
 msgid "Use “{0}”"
 msgstr "Použít „{0}“"
 
+msgid "Use a free reset?"
+msgstr "Použít bezplatný reset?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Použijte cestu relativní k pracovnímu prostoru nebo absolutní složku."
 
@@ -18173,6 +18206,9 @@ msgstr "Použít pro nové agenty"
 
 msgid "Use global default"
 msgstr "Použít globální výchozí"
+
+msgid "Use reset"
+msgstr "Použít reset"
 
 msgid "Use Superset on mobile"
 msgstr "Používejte Superset na mobilu"

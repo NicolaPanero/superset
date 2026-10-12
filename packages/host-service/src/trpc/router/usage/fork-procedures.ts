@@ -14,12 +14,37 @@ import { listAccountAliases, setAccountAlias } from "./account-aliases";
 import { finishForkAccountLogin } from "./fork-account-naming";
 import { probeAccount } from "./fork-account-probe";
 import { forkAccountRegistry } from "./fork-account-registry";
+import { accountResetService } from "./fork-account-resets";
 import { ensureIsolatedDefault } from "./fork-isolated-default";
 import { invalidateQuota } from "./fork-quota-cache";
 import { discoverClaudeProfiles, discoverCodexHomes } from "./profiles";
 
 /** The fork's usage procedures, served under the `usage` router. */
 export const forkUsageProcedures = {
+	accountResets: protectedProcedure
+		.meta({ timeoutMs: 60_000 })
+		.input(z.object({ selection: z.string().min(1).max(4096) }))
+		.query(async ({ input }) => accountResetService.read(input.selection)),
+	consumeAccountReset: protectedProcedure
+		.meta({ timeoutMs: 60_000 })
+		.input(
+			z.object({
+				selection: z.string().min(1).max(4096),
+				expectedIdentity: z.string().length(64),
+				idempotencyKey: z.string().uuid(),
+				creditId: z.string().min(1).max(512).optional(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			try {
+				return await accountResetService.consume(input);
+			} catch {
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message: "reset_unavailable",
+				});
+			}
+		}),
 	finishAccountLogin: protectedProcedure
 		.meta({ timeoutMs: 30_000 })
 		.input(

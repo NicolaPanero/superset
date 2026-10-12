@@ -47,3 +47,15 @@ identity, signed-out profile, or changed provider email cannot inherit it.
 The pane keeps a dimmed progress ring for **Last known** usage, with a dashed
 track and the original timestamp. This does not mark the reading as fresh or
 make the account eligible for automatic continuation.
+
+## Free usage-limit resets
+
+Account Usage details and Settings → Usage include a small reset action. It does not change the account picker or automatic continuation preferences, and never redeems a reset automatically.
+
+- Codex uses the installed CLI's documented `account/rateLimits/read` and `account/rateLimitResetCredit/consume` app-server methods. Availability and expiry are shown only when verified; missing support is unknown, not zero. Older hosts or CLIs fall back to the provider's usage website.
+- Redemption requires an explicit confirmation and a registered, independent subscription profile. The host checks the profile identity and the CLI's account email before redeeming. API billing and mutable external logins cannot use the direct action.
+- Requests and five-minute caches are shared across visible views, with at most two account probes running together. No prompt, model turn, hook, or MCP call is used. The selected account's quota is refreshed after redemption; other account caches and `Retry-After` backoff remain intact.
+- Each logical redemption uses the same UUID on retries. A private host journal stores at most 128 operation records for 24 hours, with no credentials, to recover an uncertain result after a host restart. Successful, previously redeemed, unavailable-credit and ineligible-window responses remain distinct.
+- Claude's free-reset offer currently has no documented Claude Code interface equivalent. The action opens Claude's official Settings → Usage page and asks the user to check the account email in the browser. A reset applied there also restores the same account's Claude Code allowance; Superset++ does not infer offer counts or redeem it through undocumented browser endpoints.
+
+References: [Codex app-server](https://learn.chatgpt.com/docs/app-server), [Claude limit resets](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset).

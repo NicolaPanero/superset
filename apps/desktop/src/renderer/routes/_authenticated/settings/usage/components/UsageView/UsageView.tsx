@@ -28,6 +28,7 @@ import {
 	getPresetIcon,
 	useIsDarkTheme,
 } from "renderer/assets/app-icons/preset-icons";
+import { ForkAccountResets } from "renderer/components/ForkAccountResets";
 import { ForkExternalAccount } from "renderer/components/ForkExternalAccount";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
@@ -96,6 +97,7 @@ const DEFAULT_TITLE = msg({
 
 function AccountCard({
 	account,
+	hostUrl,
 	onMakeDefault,
 	onSwitchSignIn,
 	onRemove,
@@ -106,6 +108,7 @@ function AccountCard({
 	onRename,
 }: {
 	account: UsageAccount;
+	hostUrl: string | null;
 	onMakeDefault: (() => void) | null;
 	onSwitchSignIn: (() => void) | null;
 	/** Null on the system-default card — the main login is never removable. */
@@ -314,6 +317,11 @@ function AccountCard({
 					{account.statusDetail ?? <Trans>Usage unavailable.</Trans>}
 				</div>
 			)}
+			<ForkAccountResets
+				hostUrl={hostUrl}
+				account={account}
+				hideEmail={hideEmails}
+			/>
 			{/* The radio + accent border already mark the default when the cards
 			    read as a group; the footer label only carries it for a lone card. */}
 			{((!account.isDefault && onMakeDefault !== null) ||
@@ -616,6 +624,7 @@ export function UsageView({
 											}
 										>
 											<AccountCard
+												hostUrl={hostUrl}
 												account={account}
 												onMakeDefault={
 													isManagedAgent(account.agent) &&

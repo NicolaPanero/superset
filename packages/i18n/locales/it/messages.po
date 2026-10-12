@@ -3516,6 +3516,9 @@ msgstr "Controlla le risorse"
 msgid "Check Resources"
 msgstr "Controlla le risorse"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Controlla l’email dell’account nel browser prima di usare un reset."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Controlla il prompt generato e l'output di avvio prima di salvare"
 
@@ -3542,6 +3545,9 @@ msgstr "Verifica degli agenti…"
 
 msgid "Checking environments…"
 msgstr "Verifica degli ambienti…"
+
+msgid "Checking free resets…"
+msgstr "Verifica dei reset gratuiti…"
 
 msgid "Checking host…"
 msgstr "Verifica dell'host…"
@@ -4809,6 +4815,9 @@ msgstr "Impossibile chiudere la sessione"
 
 msgid "Could not close the session"
 msgstr "Impossibile chiudere la sessione"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Impossibile confermare il reset. Un nuovo tentativo riusa la stessa richiesta."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Impossibile connettere {plugin}. Riprova."
@@ -6847,6 +6856,9 @@ msgstr "Sperimentale"
 msgid "Expired"
 msgstr "Scaduto"
 
+msgid "Expires {expiry}"
+msgstr "Scade il {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Spiega come funziona questo repository…"
 
@@ -7818,6 +7830,9 @@ msgstr "Free"
 msgid "Free for everyone"
 msgstr "Gratis per tutti"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Reset gratuiti: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Inizia gratis · Nessuna carta di credito richiesta"
 
@@ -8175,6 +8190,9 @@ msgstr "\"{0}\" nascosto dalla barra laterale"
 
 msgid "Hidden"
 msgstr "Nascosti"
+
+msgid "Hidden email"
+msgstr "Email nascosta"
 
 msgid "Hidden folders"
 msgstr "Cartelle nascoste"
@@ -9772,6 +9790,9 @@ msgstr "Gestisci il piano"
 msgid "Manage plan on the web"
 msgstr "Gestisci il piano sul web"
 
+msgid "Manage resets on provider website"
+msgstr "Gestisci i reset sul sito del provider"
+
 msgid "Manage sessions"
 msgstr "Gestisci le sessioni"
 
@@ -10991,6 +11012,9 @@ msgstr "Nessun repository trovato. Assicurati che la tua GitHub App abbia access
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Nessun repository. Collega GitHub in Integrazioni, poi aggiorna."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Nessun reset utilizzato. Controlla la disponibilità aggiornata."
 
 msgid "No results"
 msgstr "Nessun risultato"
@@ -13740,6 +13764,9 @@ msgstr "reimpostare gli agenti"
 
 msgid "Reset all"
 msgstr "Reimposta tutto"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Reset applicato. Aggiornamento dei consumi in corso."
 
 msgid "Reset editor"
 msgstr "Reimposta l'editor"
@@ -17358,6 +17385,9 @@ msgstr "Questo utente esegue il servizio host per questo dispositivo e non può 
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Questo utente esegue il servizio host per questo dispositivo e deve restare proprietario."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Usa un reset per questo account, valido per tutte le sue chat. Non può essere annullato."
+
 msgid "This view hit an error"
 msgstr "Questa vista ha riscontrato un errore"
 
@@ -18150,6 +18180,9 @@ msgstr "Utilizzo non disponibile."
 msgid "Use “{0}”"
 msgstr "Usa “{0}”"
 
+msgid "Use a free reset?"
+msgstr "Usare un reset gratuito?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Usa un percorso relativo al workspace o una cartella assoluta."
 
@@ -18173,6 +18206,9 @@ msgstr "Usa per i nuovi agenti"
 
 msgid "Use global default"
 msgstr "Usa il valore predefinito globale"
+
+msgid "Use reset"
+msgstr "Usa reset"
 
 msgid "Use Superset on mobile"
 msgstr "Usa Superset sul cellulare"

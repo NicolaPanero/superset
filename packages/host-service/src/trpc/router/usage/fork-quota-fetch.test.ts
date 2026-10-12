@@ -1,5 +1,6 @@
 import { expect, spyOn, test } from "bun:test";
 import {
+	invalidateQuotaFetch,
 	quotaFetch,
 	quotaResponseTiming,
 	retryAfterMs,
@@ -24,6 +25,7 @@ test("concurrent and explicit refreshes share requests and respect Retry-After",
 			quotaFetch(url, init, "test-profile"),
 			quotaFetch(url, init, "test-profile"),
 		]);
+		await invalidateQuotaFetch(url, "test-profile");
 		const fresh = await quotaFetch(
 			url,
 			{ headers: { Authorization: "Bearer rotated-test-only" } },
@@ -72,6 +74,25 @@ test("frequent UI reads preserve the sample timestamp and fetch again after the 
 		expect(fresh.fetchedAt.getTime() - first.fetchedAt.getTime()).toBe(300_000);
 	} finally {
 		clock.mockRestore();
+		await server.stop(true);
+	}
+});
+
+test("a reset invalidates only its own cached quota, preserving other accounts", async () => {
+	let calls = 0;
+	const server = Bun.serve({
+		port: 0,
+		fetch: () => Response.json({ read: ++calls }),
+	});
+	try {
+		const url = `http://localhost:${server.port}/reset-quota`;
+		await quotaFetch(url, {}, "profile-a");
+		await quotaFetch(url, {}, "profile-b");
+		await invalidateQuotaFetch(url, "profile-a");
+		await quotaFetch(url, {}, "profile-a");
+		await quotaFetch(url, {}, "profile-b");
+		expect(calls).toBe(3);
+	} finally {
 		await server.stop(true);
 	}
 });

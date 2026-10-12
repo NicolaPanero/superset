@@ -3516,6 +3516,9 @@ msgstr "Проверить ресурсы"
 msgid "Check Resources"
 msgstr "Проверить ресурсы"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "Перед использованием сброса проверьте адрес электронной почты аккаунта в браузере."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Проверьте отрендеренный промпт и вывод запуска перед сохранением"
 
@@ -3542,6 +3545,9 @@ msgstr "Проверка агентов…"
 
 msgid "Checking environments…"
 msgstr "Проверка окружений…"
+
+msgid "Checking free resets…"
+msgstr "Проверка бесплатных сбросов…"
 
 msgid "Checking host…"
 msgstr "Проверка хоста…"
@@ -4809,6 +4815,9 @@ msgstr "Не удалось закрыть сессию"
 
 msgid "Could not close the session"
 msgstr "Не удалось закрыть сессию"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "Не удалось подтвердить сброс. Повторная попытка использует тот же запрос."
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "Не удалось подключить {plugin}. Попробуйте ещё раз."
@@ -6847,6 +6856,9 @@ msgstr "Экспериментальные"
 msgid "Expired"
 msgstr "Истёк"
 
+msgid "Expires {expiry}"
+msgstr "Истекает {expiry}"
+
 msgid "Explain how this repository works…"
 msgstr "Объясни, как устроен этот репозиторий…"
 
@@ -7818,6 +7830,9 @@ msgstr "Бесплатно"
 msgid "Free for everyone"
 msgstr "Бесплатно для всех"
 
+msgid "Free resets: {formattedCount}"
+msgstr "Бесплатные сбросы: {formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "Начните бесплатно · Кредитная карта не требуется"
 
@@ -8175,6 +8190,9 @@ msgstr "«{0}» скрыт с боковой панели"
 
 msgid "Hidden"
 msgstr "Скрытые"
+
+msgid "Hidden email"
+msgstr "Адрес электронной почты скрыт"
 
 msgid "Hidden folders"
 msgstr "Скрытые папки"
@@ -9772,6 +9790,9 @@ msgstr "Управление тарифом"
 msgid "Manage plan on the web"
 msgstr "Управление тарифом в веб-версии"
 
+msgid "Manage resets on provider website"
+msgstr "Управлять сбросами на сайте провайдера"
+
 msgid "Manage sessions"
 msgstr "Управление сессиями"
 
@@ -10991,6 +11012,9 @@ msgstr "Репозитории не найдены. Убедитесь, что �
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "Нет репозиториев. Подключите GitHub в разделе «Интеграции», затем обновите."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "Сброс не использован. Проверьте обновлённую доступность."
 
 msgid "No results"
 msgstr "Ничего не найдено"
@@ -13740,6 +13764,9 @@ msgstr "сбросить агентов"
 
 msgid "Reset all"
 msgstr "Сбросить всё"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "Сброс применён. Данные об использовании обновляются."
 
 msgid "Reset editor"
 msgstr "Сбросить редактор"
@@ -17358,6 +17385,9 @@ msgstr "Этот пользователь запускает службу хос
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Этот пользователь запускает службу хоста для этого устройства и должен остаться владельцем."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "Использует один сброс для этого аккаунта во всех его чатах. Отменить это действие нельзя."
+
 msgid "This view hit an error"
 msgstr "В этом представлении произошла ошибка"
 
@@ -18150,6 +18180,9 @@ msgstr "Данные об использовании недоступны."
 msgid "Use “{0}”"
 msgstr "Использовать «{0}»"
 
+msgid "Use a free reset?"
+msgstr "Использовать бесплатный сброс?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "Укажите путь относительно рабочей области или абсолютную папку."
 
@@ -18173,6 +18206,9 @@ msgstr "Использовать для новых агентов"
 
 msgid "Use global default"
 msgstr "Использовать общий по умолчанию"
+
+msgid "Use reset"
+msgstr "Использовать сброс"
 
 msgid "Use Superset on mobile"
 msgstr "Используйте Superset на телефоне"

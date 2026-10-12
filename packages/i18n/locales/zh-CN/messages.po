@@ -3516,6 +3516,9 @@ msgstr "检查资源"
 msgid "Check Resources"
 msgstr "查看资源"
 
+msgid "Check the account email in your browser before using a reset."
+msgstr "使用重置前，请在浏览器中确认账号的邮箱地址。"
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "保存前检查渲染后的提示词和启动输出"
 
@@ -3542,6 +3545,9 @@ msgstr "正在检查智能体…"
 
 msgid "Checking environments…"
 msgstr "正在检查环境…"
+
+msgid "Checking free resets…"
+msgstr "正在检查免费重置…"
 
 msgid "Checking host…"
 msgstr "正在检查主机…"
@@ -4809,6 +4815,9 @@ msgstr "无法关闭会话"
 
 msgid "Could not close the session"
 msgstr "无法关闭会话"
+
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "无法确认重置。重试将使用同一请求。"
 
 msgid "Could not connect {plugin}. Try again."
 msgstr "无法连接 {plugin}。请重试。"
@@ -6847,6 +6856,9 @@ msgstr "实验功能"
 msgid "Expired"
 msgstr "已过期"
 
+msgid "Expires {expiry}"
+msgstr "{expiry}到期"
+
 msgid "Explain how this repository works…"
 msgstr "讲讲这个仓库是怎么运作的…"
 
@@ -7818,6 +7830,9 @@ msgstr "免费版"
 msgid "Free for everyone"
 msgstr "对所有人免费"
 
+msgid "Free resets: {formattedCount}"
+msgstr "免费重置：{formattedCount}"
+
 msgid "Free to start · No credit card required"
 msgstr "免费开始 · 无需信用卡"
 
@@ -8175,6 +8190,9 @@ msgstr "已从侧边栏隐藏“{0}”"
 
 msgid "Hidden"
 msgstr "已隐藏"
+
+msgid "Hidden email"
+msgstr "隐藏的邮箱"
 
 msgid "Hidden folders"
 msgstr "已隐藏的文件夹"
@@ -9772,6 +9790,9 @@ msgstr "管理方案"
 msgid "Manage plan on the web"
 msgstr "在网页端管理方案"
 
+msgid "Manage resets on provider website"
+msgstr "在提供商网站管理重置"
+
 msgid "Manage sessions"
 msgstr "管理会话"
 
@@ -10991,6 +11012,9 @@ msgstr "未找到仓库。请确认你的GitHub App有权访问仓库。"
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "没有仓库。请在“集成”中连接 GitHub，然后刷新。"
+
+msgid "No reset was used. Check the updated availability."
+msgstr "未使用任何重置。请查看更新后的可用情况。"
 
 msgid "No results"
 msgstr "无结果"
@@ -13740,6 +13764,9 @@ msgstr "重置智能体"
 
 msgid "Reset all"
 msgstr "全部重置"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "已应用重置。正在刷新用量。"
 
 msgid "Reset editor"
 msgstr "重置编辑器"
@@ -17358,6 +17385,9 @@ msgstr "此用户在此设备上运行主机服务，无法被移除。"
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "此用户在此设备上运行主机服务，必须保持所有者身份。"
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "将使用此账号的一次重置，对其所有聊天生效。此操作无法撤销。"
+
 msgid "This view hit an error"
 msgstr "此视图出错了"
 
@@ -18150,6 +18180,9 @@ msgstr "无法获取用量。"
 msgid "Use “{0}”"
 msgstr "使用“{0}”"
 
+msgid "Use a free reset?"
+msgstr "使用一次免费重置？"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "使用相对于工作区的路径或绝对路径文件夹。"
 
@@ -18173,6 +18206,9 @@ msgstr "用于新智能体"
 
 msgid "Use global default"
 msgstr "使用全局默认值"
+
+msgid "Use reset"
+msgstr "使用重置"
 
 msgid "Use Superset on mobile"
 msgstr "在手机上使用 Superset"
