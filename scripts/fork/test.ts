@@ -3,6 +3,7 @@ import { relative, resolve } from "node:path";
 
 const root = resolve(import.meta.dir, "../..");
 const suiteRoots = [
+	"scripts/fork",
 	"apps/desktop/src",
 	"packages/shared/src",
 	"packages/host-service/src",

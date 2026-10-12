@@ -4843,6 +4843,9 @@ msgstr "No se pudo olvidar {domain}"
 msgid "Could not import from browser"
 msgstr "No se pudo importar desde el navegador"
 
+msgid "Could not install the update. Superset++ is still open. Try again from Check for Updates."
+msgstr "No se pudo instalar la actualización. Superset++ sigue abierto. Vuelve a intentarlo desde Buscar actualizaciones."
+
 msgid "Could not leave the queue"
 msgstr "No se pudo salir de la cola"
 
@@ -16720,6 +16723,9 @@ msgstr "La app se descarga gratis. Requiere iOS 26 o posterior y Superset Pro. A
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "La app está en {appVersion} pero conectada a un servicio de host iniciado por otra cosa, probablemente una CLI antigua u otra compilación de Superset. Reiniciar lo sustituye por la copia de esta app."
+
+msgid "The app will restart when the update is ready. Settings and data are kept."
+msgstr "La aplicación se reiniciará cuando la actualización esté lista. Se conservan los ajustes y los datos."
 
 msgid "The associated device isn't reachable right now"
 msgstr "El dispositivo asociado no está accesible ahora mismo"

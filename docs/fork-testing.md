@@ -37,6 +37,7 @@ il comando fallisce invece di ometterla. I test vanno collocati accanto al codic
 | Chat in background | Conservazione account, modello e sessione nativa; limite per workspace | Parcheggio, riapertura, isolamento workspace, autenticazione e cancellazione dei dati collegati |
 | Trasferimenti e CLI/CHAT | Configurazione/account salvati, contesto esplicito e troncato, provenienza, annullamento, helper e ponte Cursor | Lineage persistita, store selezionati e motore nativo fissato alla release |
 | Cancellazione workspace | Provenienza esatta, rinomina/copia dei riferimenti, branch condivisi | Repository Git temporanei: local checkout, file non committati, batch misti, controlli ripetuti dopo l’anteprima, `force` e riferimenti remoti conservati |
+| Installazione aggiornamenti | Download/errore/annullamento prima del riavvio, tag e checksum fissati, destinazione del bundle | Script su cartelle temporanee: sostituzione e rollback, mancata uscita, bundle errato e riavvio; comandi macOS e rete simulati in CI |
 | Distribuzione | Identità fork/ufficiale, copia dati senza sovrascrivere quelli in uso, release e aggiornamenti rimandati | Compilazione e packaging nel workflow di release |
 | Ordine agenti | Priorità iniziali e nuovi agenti senza alterare il catalogo | Configurazioni e ordine salvati nelle impostazioni |
 

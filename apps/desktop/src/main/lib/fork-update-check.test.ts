@@ -5,7 +5,7 @@ const installed = "desktop-v1.37.0-fork.abc1234";
 const newer = "desktop-v1.37.0-fork.def5678";
 
 function fixture(latestRelease = mock(async () => newer)) {
-	const offer = mock(async (_tag: string) => {});
+	const offer = mock(async (_tag: string) => true);
 	const upToDate = mock(async () => {});
 	const failed = mock(async (_error: unknown, _interactive: boolean) => {});
 	return {
@@ -66,8 +66,8 @@ describe("fork update checks", () => {
 		const f = fixture();
 		f.offer.mockImplementation(
 			() =>
-				new Promise<void>((done) => {
-					close = done;
+				new Promise<boolean>((done) => {
+					close = () => done(true);
 				}),
 		);
 		const first = f.check();
@@ -104,5 +104,16 @@ describe("fork update checks", () => {
 		f.latestRelease.mockResolvedValue(newer);
 		await f.check(true);
 		expect(f.offer).toHaveBeenCalledWith(newer);
+	});
+	it("reoffers an update after preparation fails or is cancelled", async () => {
+		const f = fixture();
+		f.offer.mockResolvedValue(false);
+		await f.check();
+		await f.check();
+		expect(f.offer).toHaveBeenCalledTimes(2);
+		f.offer.mockResolvedValue(true);
+		await f.check();
+		await f.check();
+		expect(f.offer).toHaveBeenCalledTimes(3);
 	});
 });

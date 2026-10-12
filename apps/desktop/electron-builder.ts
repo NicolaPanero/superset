@@ -63,6 +63,14 @@ const config: Configuration = {
 
 	// Extra resources placed outside asar archive (accessible via process.resourcesPath)
 	extraResources: [
+		...(identity.scheme === "superset-fork"
+			? [
+					{
+						from: "../../scripts/fork/install.sh",
+						to: "resources/fork/install.sh",
+					},
+				]
+			: []),
 		// Database migrations - must be outside asar for drizzle-orm to read
 		{
 			from: "dist/resources/migrations",
