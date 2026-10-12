@@ -34,6 +34,7 @@ import {
 } from "../../utils/findCompletedLogin";
 import { switchSignInCommand } from "../../utils/switchSignInCommand";
 import type { ManagedAgent } from "../../utils/visibleQuotaAgents";
+import { useForkAccountLogin } from "./hooks/useForkAccountLogin/useForkAccountLogin";
 
 type Agent = ManagedAgent;
 
@@ -53,12 +54,10 @@ export interface SwitchSignInTarget {
 }
 
 function slugify(name: string): string {
-	return (
-		name
-			.toLowerCase()
-			.replace(/[^a-z0-9-]+/g, "-")
-			.replace(/^-+|-+$/g, "") || "work"
-	);
+	return name
+		.toLowerCase()
+		.replace(/[^a-z0-9-]+/g, "-")
+		.replace(/^-+|-+$/g, "");
 }
 
 interface AddAccountDialogProps {
@@ -104,7 +103,8 @@ export function AddAccountDialog({
 	const agent = switchTarget?.agent ?? addAgent;
 	const billingId = useId();
 	const nameId = useId();
-	const [name, setName] = useState("work");
+	const [name, setName] = useState("");
+	const [loginId, setLoginId] = useState(() => crypto.randomUUID());
 	const [credentialKind, setCredentialKind] =
 		useState<AccountCredentialKind>("subscription");
 	const [copied, setCopied] = useState(false);
@@ -113,13 +113,48 @@ export function AddAccountDialog({
 	const generationRef = useRef(0);
 	const contextRef = useRef<string | null>(null);
 	const preparingRef = useRef<number | null>(null);
-	const slug = slugify(name);
+	const automaticName = !switchTarget && !name.trim();
+	const slug = automaticName ? `superset-login-${loginId}` : slugify(name);
+
+	useEffect(() => {
+		if (!open) setLoginId(crypto.randomUUID());
+	}, [open]);
 
 	const loginsQuery = useHostUsageLogins(hostUrl, open && !found);
 	const setDefault = useSetDefaultUsageAccount(hostUrl);
+	const automaticLogin = useForkAccountLogin({
+		hostUrl,
+		agent,
+		credentialKind,
+		loginId,
+		enabled:
+			open &&
+			automaticName &&
+			!found &&
+			loginsQuery.data?.profileNamingVersion === 1 &&
+			(!canRunLocally || commandSucceeded),
+	});
+	useEffect(() => {
+		if (!open || !automaticName || found) return;
+		if (automaticLogin.data) {
+			setFound(automaticLogin.data);
+			onAccountAdded();
+		} else if (automaticLogin.error) {
+			setCommandSucceeded(false);
+		}
+	}, [
+		open,
+		automaticName,
+		found,
+		automaticLogin.data,
+		automaticLogin.error,
+		onAccountAdded,
+	]);
+
 	const proposedSelection = `${loginsQuery.data?.homeDir}/.${agent}-${slug}`;
 	const duplicateName =
 		!switchTarget &&
+		!automaticName &&
 		Boolean(
 			loginsQuery.data?.isolatedProfiles?.some(
 				(profile) =>
@@ -133,6 +168,13 @@ export function AddAccountDialog({
 							(profile) => profile.home === proposedSelection,
 						)),
 		);
+
+	const invalidProfileName =
+		!switchTarget &&
+		!automaticName &&
+		(!slug || slug.startsWith("superset-login-"));
+	const unsupportedAutomaticName =
+		automaticName && loginsQuery.data?.profileNamingVersion !== 1;
 
 	const loginContext = JSON.stringify([
 		open,
@@ -161,10 +203,12 @@ export function AddAccountDialog({
 			setTerminalRunning(false);
 			setCommandSucceeded(false);
 			setCredentialKind("subscription");
+			setName("");
 			return;
 		}
+		if (automaticName) return;
 		const logins = loginsQuery.data;
-		if (!logins) return;
+		if (!logins || !loginsQuery.dataUpdatedAt) return;
 		if (!baselineRef.current) {
 			baselineRef.current = logins;
 			return;
@@ -232,6 +276,7 @@ export function AddAccountDialog({
 	}, [
 		open,
 		loginsQuery.data,
+		loginsQuery.dataUpdatedAt,
 		agent,
 		credentialKind,
 		switchTarget,
@@ -243,11 +288,17 @@ export function AddAccountDialog({
 		slug,
 		t,
 		loginContext,
+		automaticName,
 	]);
 
 	const command = switchTarget
 		? switchSignInCommand(switchTarget)
-		: addAccountCommand(agent, slug, credentialKind);
+		: addAccountCommand(
+				agent,
+				slug || "invalid",
+				credentialKind,
+				automaticName,
+			);
 	// Codex's API login takes the key at a terminal prompt; every other flow
 	// finishes in the browser.
 	const promptsForKey =
@@ -255,6 +306,7 @@ export function AddAccountDialog({
 		agent === "codex";
 
 	const copyCommand = () => {
+		if (duplicateName || invalidProfileName || unsupportedAutomaticName) return;
 		void navigator.clipboard.writeText(command).then(() => {
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2_000);
@@ -316,6 +368,9 @@ export function AddAccountDialog({
 					size="icon"
 					className="size-6 shrink-0"
 					onClick={copyCommand}
+					disabled={
+						duplicateName || invalidProfileName || unsupportedAutomaticName
+					}
 					aria-label={t({ message: "Copy command" })}
 				>
 					{copied ? (
@@ -338,6 +393,7 @@ export function AddAccountDialog({
 						className="-ml-2 -mt-1 w-fit text-muted-foreground"
 						onClick={() => {
 							baselineRef.current = loginsQuery.data ?? null;
+							if (automaticName) setLoginId(crypto.randomUUID());
 							setTerminalAttempt(0);
 							setTerminalRunning(false);
 							setCommandSucceeded(false);
@@ -425,12 +481,19 @@ export function AddAccountDialog({
 									</label>
 									<Input
 										id={nameId}
+										maxLength={64}
 										value={name}
 										onChange={(event) => setName(event.target.value)}
 										className="h-9 min-w-0 flex-1 text-sm"
-										placeholder="work"
+										placeholder={t({ message: "Automatic (email address)" })}
 									/>
 								</div>
+								<p className="text-xs text-muted-foreground">
+									<Trans>
+										Leave empty to use your email after sign-in. Existing
+										profile folders keep their names.
+									</Trans>
+								</p>
 								<div className="flex items-center gap-2">
 									<span className="w-24 shrink-0 text-sm text-muted-foreground">
 										<Trans>Billing</Trans>
@@ -469,7 +532,10 @@ export function AddAccountDialog({
 							</div>
 						)}
 
-						{!canRunLocally && commandDetails}
+						{!canRunLocally &&
+							!invalidProfileName &&
+							!unsupportedAutomaticName &&
+							commandDetails}
 
 						{canRunLocally && open && terminalAttempt > 0 && (
 							<div className="min-w-0 overflow-hidden rounded-lg border">
@@ -477,7 +543,8 @@ export function AddAccountDialog({
 									<div className="flex min-w-0 items-center gap-2 text-xs">
 										<LuTerminal className="size-3.5 shrink-0 text-muted-foreground" />
 										<span className="truncate font-medium">
-											{switchTarget?.label ?? name}
+											{switchTarget?.label ??
+												(name.trim() || AGENT_LABELS[agent])}
 										</span>
 										<span className="shrink-0 text-muted-foreground">
 											{(switchTarget?.credentialKind ?? credentialKind) ===
@@ -503,9 +570,27 @@ export function AddAccountDialog({
 								</div>
 							</div>
 						)}
-						{duplicateName && (
+						{(duplicateName ||
+							(!automaticName &&
+								!switchTarget &&
+								(!slug || slug.startsWith("superset-login-")))) && (
 							<p role="alert" className="text-xs text-muted-foreground">
 								<Trans>Choose a different profile name.</Trans>
+							</p>
+						)}
+						{automaticName &&
+							loginsQuery.data &&
+							loginsQuery.data.profileNamingVersion !== 1 && (
+								<p role="alert" className="text-xs text-muted-foreground">
+									<Trans>
+										Enter a profile name or update this host to use automatic
+										naming.
+									</Trans>
+								</p>
+							)}
+						{automaticName && automaticLogin.isError && (
+							<p role="alert" className="text-xs text-muted-foreground">
+								<Trans>Could not finish account setup. Try again.</Trans>
 							</p>
 						)}
 						{terminalAttempt === 0 &&
@@ -545,11 +630,31 @@ export function AddAccountDialog({
 								>
 									<Trans>Cancel</Trans>
 								</Button>
+								{!canRunLocally && automaticName && automaticLogin.isError && (
+									<Button
+										size="sm"
+										disabled={automaticLogin.isFetching}
+										onClick={() => void automaticLogin.refetch()}
+									>
+										<Trans>Try again</Trans>
+									</Button>
+								)}
 								{canRunLocally && !terminalRunning && (
 									<Button
 										size="sm"
-										disabled={!loginsQuery.data || duplicateName}
+										disabled={
+											!loginsQuery.data ||
+											duplicateName ||
+											invalidProfileName ||
+											unsupportedAutomaticName ||
+											commandSucceeded ||
+											automaticLogin.isFetching
+										}
 										onClick={() => {
+											if (automaticName && automaticLogin.isError) {
+												void automaticLogin.refetch();
+												return;
+											}
 											setCommandSucceeded(false);
 											setTerminalRunning(true);
 											setTerminalAttempt((attempt) => attempt + 1);

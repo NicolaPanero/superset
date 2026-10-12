@@ -2706,6 +2706,9 @@ msgstr "Aufgaben automatisieren"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Arbeitsbereich-Setup für {projectName} automatisieren"
 
+msgid "Automatic (email address)"
+msgstr "Automatisch (E-Mail-Adresse)"
+
 msgid "Automatic continuation"
 msgstr "Automatisch fortsetzen"
 
@@ -4837,6 +4840,9 @@ msgstr "Diese Seite konnte nicht gelöscht werden"
 msgid "Could not disconnect."
 msgstr "Trennen fehlgeschlagen."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Die Kontoeinrichtung konnte nicht abgeschlossen werden. Versuche es erneut."
+
 msgid "Could not forget {domain}"
 msgstr "{domain} konnte nicht vergessen werden"
 
@@ -6640,6 +6646,9 @@ msgstr "Gib ein übergeordnetes Verzeichnis auf {hostName} ein"
 
 msgid "Enter a path on {hostName}"
 msgstr "Gib einen Pfad auf {hostName} ein"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Gib einen Profilnamen ein oder aktualisiere diesen Host, um die automatische Benennung zu verwenden."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Gib oben in der Suchleiste eine URL ein."
@@ -9271,6 +9280,12 @@ msgstr "Austreten und löschen"
 
 msgid "Leave comment mode"
 msgstr "Kommentarmodus verlassen"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Leer lassen, um nach der Anmeldung deine E-Mail-Adresse zu verwenden. Bestehende Profilordner behalten ihre Namen."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Leer lassen, um deine E-Mail-Adresse zu verwenden. Der Profilordner bleibt unverändert."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Leer lassen, um zum Namen zurückzukehren, den das Terminal meldet."
@@ -14346,9 +14361,6 @@ msgstr "Gespeichert"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "„{0}“ als Umgebung gespeichert"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Auf diesem Host gespeichert. Leer lassen, um den ursprünglichen Namen zu verwenden."
 
 msgid "Saved to Downloads"
 msgstr "In Downloads gespeichert"

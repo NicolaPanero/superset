@@ -11,13 +11,29 @@ import {
 import { protectedProcedure } from "../../index";
 import { applyForkLaunchChoices } from "../agents/fork-launch";
 import { listAccountAliases, setAccountAlias } from "./account-aliases";
+import { finishForkAccountLogin } from "./fork-account-naming";
 import { probeAccount } from "./fork-account-probe";
 import { forkAccountRegistry } from "./fork-account-registry";
 import { ensureIsolatedDefault } from "./fork-isolated-default";
+import { invalidateQuota } from "./fork-quota-cache";
 import { discoverClaudeProfiles, discoverCodexHomes } from "./profiles";
 
 /** The fork's usage procedures, served under the `usage` router. */
 export const forkUsageProcedures = {
+	finishAccountLogin: protectedProcedure
+		.meta({ timeoutMs: 30_000 })
+		.input(
+			z.object({
+				agent: z.enum(["claude", "codex"]),
+				credentialKind: z.enum(["subscription", "api_key"]),
+				loginId: z.string().uuid(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const result = await finishForkAccountLogin(input);
+			if (result) invalidateQuota();
+			return result;
+		}),
 	verifyAccount: protectedProcedure
 		.meta({ timeoutMs: 60_000 })
 		.input(

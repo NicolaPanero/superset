@@ -2706,6 +2706,9 @@ msgstr "Automatyzuj zadania"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Zautomatyzuj konfigurację obszaru roboczego dla {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automatycznie (adres e-mail)"
+
 msgid "Automatic continuation"
 msgstr "Automatyczna kontynuacja"
 
@@ -4837,6 +4840,9 @@ msgstr "Nie udało się usunąć tej strony"
 msgid "Could not disconnect."
 msgstr "Nie udało się odłączyć."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Nie udało się ukończyć konfiguracji konta. Spróbuj ponownie."
+
 msgid "Could not forget {domain}"
 msgstr "Nie udało się zapomnieć {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Podaj katalog nadrzędny na {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Podaj ścieżkę na {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Wpisz nazwę profilu lub zaktualizuj tego hosta, aby używać automatycznej nazwy."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Wpisz adres URL w pasku wyszukiwania powyżej."
@@ -9271,6 +9280,12 @@ msgstr "Opuść i usuń"
 
 msgid "Leave comment mode"
 msgstr "Wyjdź z trybu komentarzy"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Pozostaw puste, aby po zalogowaniu użyć adresu e-mail. Istniejące foldery profili zachowują swoje nazwy."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Pozostaw puste, aby użyć adresu e-mail. Folder profilu pozostaje bez zmian."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Zostaw puste, aby wrócić do nazwy zgłaszanej przez terminal."
@@ -14346,9 +14361,6 @@ msgstr "Zapisano"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "Zapisano \"{0}\" jako środowisko"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Zapisane na tym hoście. Pozostaw puste, aby użyć oryginalnej nazwy."
 
 msgid "Saved to Downloads"
 msgstr "Zapisano w Pobranych"

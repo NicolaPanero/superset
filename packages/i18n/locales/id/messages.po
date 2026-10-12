@@ -2706,6 +2706,9 @@ msgstr "Otomatiskan Tugas"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Otomatiskan penyiapan workspace untuk {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Otomatis (alamat email)"
+
 msgid "Automatic continuation"
 msgstr "Kelanjutan otomatis"
 
@@ -4837,6 +4840,9 @@ msgstr "Tidak bisa menghapus halaman ini"
 msgid "Could not disconnect."
 msgstr "Tidak dapat memutuskan."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Tidak dapat menyelesaikan penyiapan akun. Coba lagi."
+
 msgid "Could not forget {domain}"
 msgstr "Tidak bisa melupakan {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Masukkan direktori induk di {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Masukkan sebuah path di {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Masukkan nama profil atau perbarui host ini untuk menggunakan penamaan otomatis."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Masukkan URL ke bilah pencarian di atas."
@@ -9271,6 +9280,12 @@ msgstr "Keluar dan hapus"
 
 msgid "Leave comment mode"
 msgstr "Keluar dari mode komentar"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Biarkan kosong untuk menggunakan email Anda setelah masuk. Folder profil yang sudah ada tetap menggunakan namanya."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Biarkan kosong untuk menggunakan email Anda. Folder profil tetap sama."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Kosongkan untuk kembali ke nama yang dilaporkan terminal."
@@ -14346,9 +14361,6 @@ msgstr "Tersimpan"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" disimpan sebagai environment"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Disimpan di host ini. Kosongkan untuk memakai nama asli."
 
 msgid "Saved to Downloads"
 msgstr "Disimpan ke Downloads"

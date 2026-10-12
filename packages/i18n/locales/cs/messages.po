@@ -2706,6 +2706,9 @@ msgstr "Automatizujte úkoly"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Zautomatizujte nastavení pracovního prostoru pro {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automaticky (e-mailová adresa)"
+
 msgid "Automatic continuation"
 msgstr "Automatické pokračování"
 
@@ -4837,6 +4840,9 @@ msgstr "Tuto stránku se nepodařilo smazat"
 msgid "Could not disconnect."
 msgstr "Odpojení se nezdařilo."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Nastavení účtu se nepodařilo dokončit. Zkuste to znovu."
+
 msgid "Could not forget {domain}"
 msgstr "Nepodařilo se zapomenout {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Zadejte nadřazený adresář na {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Zadejte cestu na {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Zadejte název profilu nebo aktualizujte tohoto hostitele pro automatické pojmenování."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Zadejte URL do vyhledávacího pole nahoře."
@@ -9271,6 +9280,12 @@ msgstr "Odejít a smazat"
 
 msgid "Leave comment mode"
 msgstr "Opustit režim komentářů"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Ponechte prázdné, aby se po přihlášení použil váš e-mail. Stávající složky profilů si ponechají své názvy."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Ponechte prázdné pro použití vašeho e-mailu. Složka profilu zůstane beze změny."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Nechte prázdné pro návrat k názvu, který hlásí terminál."
@@ -14346,9 +14361,6 @@ msgstr "Uloženo"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" uloženo jako prostředí"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Uloženo na tomto hostiteli. Pro původní název ponechte prázdné."
 
 msgid "Saved to Downloads"
 msgstr "Uloženo do Stažených souborů"

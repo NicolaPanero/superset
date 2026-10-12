@@ -2706,6 +2706,9 @@ msgstr "Görevleri otomatikleştirin"
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName} için çalışma alanı kurulumunu otomatikleştirin"
 
+msgid "Automatic (email address)"
+msgstr "Otomatik (e-posta adresi)"
+
 msgid "Automatic continuation"
 msgstr "Otomatik devam"
 
@@ -4837,6 +4840,9 @@ msgstr "Bu sayfa silinemedi"
 msgid "Could not disconnect."
 msgstr "Bağlantı kesilemedi."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Hesap kurulumu tamamlanamadı. Tekrar deneyin."
+
 msgid "Could not forget {domain}"
 msgstr "{domain} unutulamadı"
 
@@ -6640,6 +6646,9 @@ msgstr "{hostName} üzerinde bir üst dizin girin"
 
 msgid "Enter a path on {hostName}"
 msgstr "{hostName} üzerinde bir yol girin"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Bir profil adı girin veya otomatik adlandırmayı kullanmak için bu ana makineyi güncelleyin."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Yukarıdaki arama çubuğuna bir URL girin."
@@ -9271,6 +9280,12 @@ msgstr "Ayrıl ve sil"
 
 msgid "Leave comment mode"
 msgstr "Yorum modundan çık"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Oturum açtıktan sonra e-postanızı kullanmak için boş bırakın. Mevcut profil klasörleri adlarını korur."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "E-postanızı kullanmak için boş bırakın. Profil klasörü değişmez."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Terminalin bildirdiği ada dönmek için boş bırakın."
@@ -14346,9 +14361,6 @@ msgstr "Kaydedildi"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" ortam olarak kaydedildi"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Bu ana bilgisayara kaydedilir. Özgün adı kullanmak için boş bırakın."
 
 msgid "Saved to Downloads"
 msgstr "İndirilenler klasörüne kaydedildi"

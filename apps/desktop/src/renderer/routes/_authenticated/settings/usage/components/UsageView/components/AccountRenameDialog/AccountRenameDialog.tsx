@@ -44,7 +44,7 @@ export function useAccountRename(hostUrl: string | null): {
 					</DialogTitle>
 					<DialogDescription>
 						<Trans>
-							Saved on this host. Leave empty to use the original name.
+							Leave empty to use your email. The profile folder stays the same.
 						</Trans>
 					</DialogDescription>
 				</DialogHeader>

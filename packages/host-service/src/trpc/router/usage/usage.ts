@@ -150,8 +150,10 @@ export const usageRouter = router({
 			}),
 		);
 		const profileMetadata: {
+			profileNamingVersion?: number;
 			isolatedProfiles?: { agent: "claude" | "codex"; selection: string }[];
 		} = {
+			profileNamingVersion: 1,
 			isolatedProfiles: forkAccountRegistry()
 				.list()
 				.map(({ agent, selection }) => ({ agent, selection })),

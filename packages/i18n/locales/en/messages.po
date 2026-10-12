@@ -2706,6 +2706,9 @@ msgstr "Automate Tasks"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automate workspace setup for {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automatic (email address)"
+
 msgid "Automatic continuation"
 msgstr "Automatic continuation"
 
@@ -4837,6 +4840,9 @@ msgstr "Could not delete this page"
 msgid "Could not disconnect."
 msgstr "Could not disconnect."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Could not finish account setup. Try again."
+
 msgid "Could not forget {domain}"
 msgstr "Could not forget {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Enter a parent directory on {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Enter a path on {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Enter a profile name or update this host to use automatic naming."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Enter a URL into the search bar above."
@@ -9271,6 +9280,12 @@ msgstr "Leave and delete"
 
 msgid "Leave comment mode"
 msgstr "Leave comment mode"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Leave empty to use your email. The profile folder stays the same."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Leave it empty to go back to the name the terminal reports."
@@ -14346,9 +14361,6 @@ msgstr "Saved"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "Saved \"{0}\" as an environment"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Saved on this host. Leave empty to use the original name."
 
 msgid "Saved to Downloads"
 msgstr "Saved to Downloads"

@@ -2706,6 +2706,9 @@ msgstr "タスクを自動化"
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName}のワークスペースのセットアップを自動化"
 
+msgid "Automatic (email address)"
+msgstr "自動（メールアドレス）"
+
 msgid "Automatic continuation"
 msgstr "自動再開"
 
@@ -4837,6 +4840,9 @@ msgstr "このページを削除できませんでした"
 msgid "Could not disconnect."
 msgstr "接続を解除できませんでした。"
 
+msgid "Could not finish account setup. Try again."
+msgstr "アカウントの設定を完了できませんでした。もう一度お試しください。"
+
 msgid "Could not forget {domain}"
 msgstr "{domain}を削除できませんでした"
 
@@ -6640,6 +6646,9 @@ msgstr "{hostName}の親ディレクトリを入力してください"
 
 msgid "Enter a path on {hostName}"
 msgstr "{hostName}のパスを入力してください"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "プロファイル名を入力するか、このホストを更新して自動命名を使用してください。"
 
 msgid "Enter a URL into the search bar above."
 msgstr "上の検索バーにURLを入力してください。"
@@ -9271,6 +9280,12 @@ msgstr "退出して削除"
 
 msgid "Leave comment mode"
 msgstr "コメントモードを終了"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "空欄にすると、ログイン後にメールアドレスを使用します。既存のプロファイルフォルダーの名前は変わりません。"
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "空欄にするとメールアドレスを使用します。プロファイルフォルダーは変わりません。"
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "空欄にすると、ターミナルが報告する名前に戻ります。"
@@ -14346,9 +14361,6 @@ msgstr "保存済み"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "「{0}」を環境として保存しました"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "このホストに保存されます。元の名前を使う場合は空欄にしてください。"
 
 msgid "Saved to Downloads"
 msgstr "ダウンロードフォルダに保存しました"

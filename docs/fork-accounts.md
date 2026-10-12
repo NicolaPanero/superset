@@ -4,6 +4,19 @@ Add an account from the workspace account menu or Settings → Usage. Sign in wi
 the provider’s own CLI; each profile stores its own login. Superset++ does not
 copy credentials or refresh tokens from the external CLI login.
 
+The profile name is optional when adding an account on an updated fork host.
+Leave it empty to derive the folder name from the identity after the provider's
+login finishes: `b4b@siapcn.it` becomes `~/.claude-b4b-siapcn-it`. Codex follows
+the same rule. API logins without an email use a unique `api-…` name. A folder
+already in use or reserved by a disconnected profile gets a numeric suffix;
+no existing profile is overwritten. The temporary sign-in is not offered as an
+account until it is complete. On macOS the rename updates Claude's scoped
+Keychain service through `SecItemUpdate`, preserving credentials and permissions.
+Older hosts require an explicit name until updated.
+
+Renaming an existing account edits its display alias only. Clearing that alias
+restores the email label without moving its folder or affecting running chats.
+
 Existing independent named profiles are adopted at their current paths. The
 host keeps their first verified identity in bounded fork metadata, outside the
 official database schema. The named default stays selected even if the directory

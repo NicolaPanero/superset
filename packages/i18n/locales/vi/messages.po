@@ -2706,6 +2706,9 @@ msgstr "Tự động hóa tác vụ"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Tự động thiết lập workspace cho {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Tự động (địa chỉ email)"
+
 msgid "Automatic continuation"
 msgstr "Tiếp tục tự động"
 
@@ -4837,6 +4840,9 @@ msgstr "Không thể xóa trang này"
 msgid "Could not disconnect."
 msgstr "Không thể ngắt kết nối."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Không thể hoàn tất thiết lập tài khoản. Hãy thử lại."
+
 msgid "Could not forget {domain}"
 msgstr "Không thể quên {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Hãy nhập một thư mục cha trên {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Hãy nhập một đường dẫn trên {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Nhập tên hồ sơ hoặc cập nhật máy chủ này để dùng tên tự động."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Nhập một URL vào thanh tìm kiếm phía trên."
@@ -9271,6 +9280,12 @@ msgstr "Rời và xóa"
 
 msgid "Leave comment mode"
 msgstr "Thoát chế độ bình luận"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Để trống để dùng email của bạn sau khi đăng nhập. Các thư mục hồ sơ hiện có giữ nguyên tên."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Để trống để dùng email của bạn. Thư mục hồ sơ không thay đổi."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Để trống để quay lại tên do terminal báo cáo."
@@ -14346,9 +14361,6 @@ msgstr "Đã lưu"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "Đã lưu \"{0}\" thành một environment"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Được lưu trên máy chủ này. Để trống để dùng tên gốc."
 
 msgid "Saved to Downloads"
 msgstr "Đã lưu vào Downloads"

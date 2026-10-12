@@ -2706,6 +2706,9 @@ msgstr "Automatizza i task"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatizza la configurazione dei workspace per {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automatico (indirizzo email)"
+
 msgid "Automatic continuation"
 msgstr "Continuazione automatica"
 
@@ -4837,6 +4840,9 @@ msgstr "Impossibile eliminare questa pagina"
 msgid "Could not disconnect."
 msgstr "Impossibile disconnettere."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Impossibile completare la configurazione dell’account. Riprova."
+
 msgid "Could not forget {domain}"
 msgstr "Impossibile dimenticare {domain}"
 
@@ -6640,6 +6646,9 @@ msgstr "Inserisci una directory padre su {hostName}"
 
 msgid "Enter a path on {hostName}"
 msgstr "Inserisci un percorso su {hostName}"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Inserisci un nome per il profilo oppure aggiorna questo host per usare il nome automatico."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Inserisci un URL nella barra di ricerca qui sopra."
@@ -9271,6 +9280,12 @@ msgstr "Esci ed elimina"
 
 msgid "Leave comment mode"
 msgstr "Esci dalla modalità commento"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Lascia vuoto per usare la tua email dopo l’accesso. Le cartelle dei profili esistenti mantengono il loro nome."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Lascia vuoto per usare la tua email. La cartella del profilo resta invariata."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Lascialo vuoto per tornare al nome indicato dal terminale."
@@ -14346,9 +14361,6 @@ msgstr "Salvato"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" salvato come ambiente"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Salvato su questo host. Lascia vuoto per usare il nome originale."
 
 msgid "Saved to Downloads"
 msgstr "Salvata in Download"

@@ -2706,6 +2706,9 @@ msgstr "Taken automatiseren"
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatiseer het instellen van werkruimtes voor {projectName}"
 
+msgid "Automatic (email address)"
+msgstr "Automatisch (e-mailadres)"
+
 msgid "Automatic continuation"
 msgstr "Automatisch doorgaan"
 
@@ -4837,6 +4840,9 @@ msgstr "Kan deze pagina niet verwijderen"
 msgid "Could not disconnect."
 msgstr "Loskoppelen is mislukt."
 
+msgid "Could not finish account setup. Try again."
+msgstr "Het instellen van het account is niet voltooid. Probeer het opnieuw."
+
 msgid "Could not forget {domain}"
 msgstr "Kan {domain} niet vergeten"
 
@@ -6640,6 +6646,9 @@ msgstr "Voer een bovenliggende map op {hostName} in"
 
 msgid "Enter a path on {hostName}"
 msgstr "Voer een pad op {hostName} in"
+
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "Voer een profielnaam in of werk deze host bij om automatische naamgeving te gebruiken."
 
 msgid "Enter a URL into the search bar above."
 msgstr "Voer hierboven een URL in de zoekbalk in."
@@ -9271,6 +9280,12 @@ msgstr "Verlaten en verwijderen"
 
 msgid "Leave comment mode"
 msgstr "Opmerkingsmodus verlaten"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "Laat leeg om na het aanmelden je e-mailadres te gebruiken. Bestaande profielmappen behouden hun naam."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "Laat leeg om je e-mailadres te gebruiken. De profielmap blijft ongewijzigd."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "Laat leeg om terug te gaan naar de naam die de terminal doorgeeft."
@@ -14346,9 +14361,6 @@ msgstr "Opgeslagen"
 #. placeholder {0}: created?.name ?? name.trim()
 msgid "Saved \"{0}\" as an environment"
 msgstr "\"{0}\" opgeslagen als omgeving"
-
-msgid "Saved on this host. Leave empty to use the original name."
-msgstr "Op deze host opgeslagen. Laat leeg om de oorspronkelijke naam te gebruiken."
 
 msgid "Saved to Downloads"
 msgstr "Opgeslagen in Downloads"
