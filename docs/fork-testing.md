@@ -8,8 +8,9 @@ Dal checkout con dipendenze installate:
 bun run test:fork
 ```
 
-Il comando esegue separatamente i test desktop, unitari/runtime e di integrazione
-host. Usa `--isolate`, il preload che assegna una cartella Superset temporanea e
+Il comando compila prima i cataloghi Lingui, anche su un checkout pulito, poi
+esegue separatamente i test desktop, unitari/runtime e di integrazione host.
+Usa `--isolate`, il preload che assegna una cartella Superset temporanea e
 fixture senza credenziali reali. Al primo fallimento termina con un errore.
 
 Per vedere i file selezionati:

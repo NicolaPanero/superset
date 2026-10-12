@@ -68,6 +68,13 @@ if (process.argv.includes("--list")) {
 			`${group.name}: ${group.files.length} files\n${group.files.sort().join("\n")}`,
 		);
 } else {
+	const catalogBuild = Bun.spawn([process.execPath, "run", "compile"], {
+		cwd: resolve(root, "packages/i18n"),
+		stdout: "inherit",
+		stderr: "inherit",
+	});
+	const catalogCode = await catalogBuild.exited;
+	if (catalogCode !== 0) process.exit(catalogCode);
 	for (const group of groups) {
 		if (!group.files.length)
 			throw new Error(`Empty fork test group: ${group.name}`);
