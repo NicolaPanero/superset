@@ -4843,6 +4843,9 @@ msgstr "{domain}을(를) 잊지 못했습니다"
 msgid "Could not import from browser"
 msgstr "브라우저에서 가져오지 못했습니다"
 
+msgid "Could not install the update. Superset++ is still open. Try again from Check for Updates."
+msgstr "업데이트를 설치하지 못했습니다. Superset++는 계속 열려 있습니다. 업데이트 확인에서 다시 시도하세요."
+
 msgid "Could not leave the queue"
 msgstr "대기열에서 나갈 수 없습니다"
 
@@ -16720,6 +16723,9 @@ msgstr "앱은 무료로 다운로드할 수 있습니다. iOS 26 이상과 Supe
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "앱은 {appVersion}이지만 다른 것(오래된 CLI나 다른 Superset 빌드일 가능성)이 시작한 호스트 서비스에 연결되어 있습니다. 다시 시작하면 이 앱의 복사본으로 교체됩니다."
+
+msgid "The app will restart when the update is ready. Settings and data are kept."
+msgstr "업데이트가 준비되면 앱이 다시 시작됩니다. 설정과 데이터는 유지됩니다."
 
 msgid "The associated device isn't reachable right now"
 msgstr "연결된 기기에 지금 접근할 수 없습니다"

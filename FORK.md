@@ -229,7 +229,16 @@ non trasferisce automaticamente i suoi dati nell’app ufficiale.
 Le build pubblicate usano l’aggiornatore del fork: il primo controllo avviene
 circa un minuto dopo l’avvio, poi ogni sei ore. **Check for Updates** avvia una
 verifica manuale e ripropone anche una release rimandata con **Later**.
-L’installazione richiede un riavvio; quella ufficiale è disabilitata nel fork.
+Con **Install and restart**, l’app mostra una finestra di avanzamento e resta
+aperta finché download, checksum e preparazione del bundle non sono completati.
+Chiudere la finestra di avanzamento annulla la preparazione. Il riavvio ha un
+limite di attesa; un fallimento conserva il bundle precedente e permette di
+riprovare. L’installer usa la release mostrata, non una nuova release arrivata
+nel frattempo. Gli errori sono registrati in `~/Library/Logs/Superset++/fork-update.log`.
+L’aggiornamento ufficiale è disabilitato nel fork.
+
+Le build con il vecchio updater chiudono invece subito la finestra e scaricano
+in background: attendere qualche minuto prima di riaprire o interrompere l’app.
 
 ## Branch, motore e aggiornamenti
 

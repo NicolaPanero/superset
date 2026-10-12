@@ -3,7 +3,7 @@ import { newerForkRelease } from "./fork-release";
 interface ForkUpdateCheckOptions {
 	installed: string;
 	latestRelease: () => Promise<string>;
-	offer: (tag: string) => Promise<void>;
+	offer: (tag: string) => Promise<boolean>;
 	upToDate: () => Promise<void>;
 	failed: (error: unknown, interactive: boolean) => Promise<void>;
 }
@@ -24,8 +24,7 @@ export function createForkUpdateCheck(options: ForkUpdateCheckOptions) {
 				return;
 			}
 			if (!interactive && tag === offered) return;
-			await options.offer(tag);
-			offered = tag;
+			if ((await options.offer(tag)) !== false) offered = tag;
 		} catch (error) {
 			await options.failed(error, interactive);
 		}
