@@ -139,7 +139,7 @@ jobs:
       - name: Windows update and path regressions
         if: runner.os == 'Windows'
         run: |
-          bun test --isolate scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts
+          bun test --isolate scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts packages/host-service/src/session-transfer/fork-native-paths.test.ts
           cd apps/desktop
           bun test --isolate src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts
       - name: Compile app and bundle transfer tools

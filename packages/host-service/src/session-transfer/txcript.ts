@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { isAbsolute, relative } from "node:path";
+import { posix, win32 } from "node:path";
 import { z } from "zod";
 import { forkToolPath } from "./fork-tool-path";
 import type {
@@ -140,32 +140,48 @@ export function runHelper(
 	});
 }
 
+function windowsNativePath(path: string) {
+	if (path.startsWith("\\\\?\\UNC\\"))
+		return win32.normalize(`\\\\${path.slice(8)}`);
+	if (/^\\\\\?\\[a-z]:\\/i.test(path)) return win32.normalize(path.slice(4));
+	return win32.normalize(path);
+}
+
 export function parseNativeTransferResult(
 	raw: unknown,
 	input: TransferInput,
+	platform: NodeJS.Platform = process.platform,
 ): TransferResult {
 	const result = resultSchema.parse(raw);
-	const path = relative(input.targetRoot, result.reference);
+	const paths = platform === "win32" ? win32 : posix;
+	const normalize =
+		platform === "win32" ? windowsNativePath : (path: string) => path;
+	const reference = normalize(result.reference);
+	const cwd = normalize(result.cwd);
+	const targetRoot = normalize(input.targetRoot);
+	const path = paths.relative(targetRoot, reference);
 	if (
 		result.targetAgent !== TRANSFER_AGENTS[input.targetAgent].harness ||
 		(input.targetAgent === "opencode"
 			? !result.targetSessionId.startsWith("ses_") ||
-				result.reference !== input.targetRoot
+				paths.relative(targetRoot, reference) !== ""
 			: !z.string().uuid().safeParse(result.targetSessionId).success) ||
 		result.targetSessionId === input.sourceSessionId ||
-		result.cwd !== input.cwd ||
-		!isAbsolute(result.reference) ||
+		(platform === "win32"
+			? paths.relative(normalize(input.cwd), cwd) !== ""
+			: cwd !== input.cwd) ||
+		!paths.isAbsolute(reference) ||
 		path === ".." ||
-		path.startsWith("../") ||
-		isAbsolute(path)
+		path.startsWith(`..${paths.sep}`) ||
+		paths.isAbsolute(path)
 	) {
 		throw new Error("target_validation_failed");
 	}
 	return {
 		mode: "native",
 		targetSessionId: result.targetSessionId,
-		reference: result.reference,
-		cwd: result.cwd,
+		reference,
+		cwd,
 		messageCount: result.messageCount,
 		warnings: result.warnings,
 	};
