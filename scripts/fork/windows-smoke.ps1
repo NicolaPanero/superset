@@ -21,4 +21,6 @@ try {
     $script = Join-Path $installation "resources/resources/fork/install-windows.ps1"
     if (-not (Test-Path -LiteralPath $script)) { throw "Update helper missing" }
     & (Join-Path $PSScriptRoot "windows-updater-smoke.ps1") -Script $script
+    Remove-Item Env:ELECTRON_RUN_AS_NODE
+    & (Join-Path $PSScriptRoot "windows-startup-smoke.ps1") -Executable $executable
 } finally { Remove-Item Env:ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue }

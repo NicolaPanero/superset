@@ -80,7 +80,8 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
 - La build Windows installa e reinstalla il pacchetto in una cartella temporanea
   con spazi e Unicode, verifica SQLite, PTY, watcher e ast-grep nel runtime
   Electron installato e controlla attesa dell’uscita, argomenti NSIS e riavvio
-  dello script di aggiornamento con processi sintetici. Tutto avviene sul runner,
+  dello script di aggiornamento con processi sintetici. Avvia infine l’app
+  installata e verifica che apra una finestra con un profilo temporaneo. Tutto avviene sul runner,
   senza profili reali. Le due build devono riuscire prima della pubblicazione.
 - La sincronizzazione upstream conserva attivo anche il workflow di regressione.
 
