@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} dari {total}"
 
-msgid "{remaining} available"
-msgstr "{remaining} tersedia"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
 
@@ -1060,6 +1057,9 @@ msgstr "{selectedCount} dipilih"
 
 msgid "{share}% human"
 msgstr "{share}% manusia"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} terpakai"
 
 msgid "{shown} of {total}"
 msgstr "{shown} dari {total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Tetap hapus} other {Tetap hapus #}}"
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, other {# PR agen digabungkan}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} terpakai"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} dihentikan"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} dipulihkan ke setelan bawaan"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {Mengunggah # file…}}"
+
+msgid "{used} used"
+msgstr "{used} terpakai"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} Menunggu"
@@ -15001,6 +15007,12 @@ msgstr "Ketersediaan layanan dipublikasikan di <0>status.superset.sh</0>, dan do
 msgid "Session"
 msgstr "Sesi"
 
+msgid "Session ({hours}h)"
+msgstr "Sesi ({hours} jam)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Sesi ({hours} jam) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Sesi {0}"
@@ -18695,6 +18707,9 @@ msgstr "mingguan"
 
 msgid "Weekly"
 msgstr "Mingguan"
+
+msgid "Weekly · {scope}"
+msgstr "Mingguan · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Mingguan pukul {time}"

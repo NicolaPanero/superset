@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} z {total}"
 
-msgid "{remaining} available"
-msgstr "K dispozici: {remaining}"
-
 msgid "{seconds}s ago"
 msgstr "před {seconds} s"
 
@@ -1060,6 +1057,9 @@ msgstr "vybráno: {selectedCount}"
 
 msgid "{share}% human"
 msgstr "{share} % člověk"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} využito"
 
 msgid "{shown} of {total}"
 msgstr "{shown} z {total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Přesto smazat} few {Přesto smazat 
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, one {sloučen # PR agenta} few {sloučeny # PR agenta} many {sloučeno # PR agenta} other {sloučeno # PR agenta}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} využito"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} přerušeno"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} obnoveno na výchozí"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Nahrává se # soubor…} few {Nahrávají se # soubory…} many {Nahrává se # souboru…} other {Nahrává se # souborů…}}"
+
+msgid "{used} used"
+msgstr "{used} využito"
 
 msgid "{waiting} Waiting"
 msgstr "Čeká: {waiting}"
@@ -15001,6 +15007,12 @@ msgstr "Dostupnost služby zveřejňujeme na <0>status.superset.sh</0> a dokumen
 msgid "Session"
 msgstr "Relace"
 
+msgid "Session ({hours}h)"
+msgstr "Relace ({hours} h)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Relace ({hours} h) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Relace {0}"
@@ -18695,6 +18707,9 @@ msgstr "týdně"
 
 msgid "Weekly"
 msgstr "Týdně"
+
+msgid "Weekly · {scope}"
+msgstr "Týdně · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Týdně v {time}"

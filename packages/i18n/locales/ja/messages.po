@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
-msgid "{remaining} available"
-msgstr "残り {remaining}"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1060,6 +1057,9 @@ msgstr "{selectedCount}件選択中"
 
 msgid "{share}% human"
 msgstr "人間{share}%"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} 使用済み"
 
 msgid "{shown} of {total}"
 msgstr "{total}件中{shown}件"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {それでも削除} other {それで
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, other {#件のエージェントPRをマージ}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} 使用済み"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName}が中断されました"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel}をデフォルトに復元しました"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# 件のファイルをアップロード中…}}"
+
+msgid "{used} used"
+msgstr "{used} 使用済み"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}件待機中"
@@ -15001,6 +15007,12 @@ msgstr "サービスの稼働状況は<0>status.superset.sh</0>で、セキュ�
 msgid "Session"
 msgstr "セッション"
 
+msgid "Session ({hours}h)"
+msgstr "セッション（{hours}時間）"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "セッション（{hours}時間） · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "セッション {0}"
@@ -18695,6 +18707,9 @@ msgstr "毎週"
 
 msgid "Weekly"
 msgstr "毎週"
+
+msgid "Weekly · {scope}"
+msgstr "毎週 · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "毎週 {time}"

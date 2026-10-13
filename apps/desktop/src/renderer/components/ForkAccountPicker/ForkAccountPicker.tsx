@@ -70,7 +70,7 @@ export function ForkAccountPicker({
 				<DropdownMenuTrigger
 					data-fork-account-picker
 					disabled={!account.available || account.forcedApi}
-					className="flex h-[22px] min-w-0 max-w-[240px] shrink-0 whitespace-nowrap items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs"
+					className="flex h-[22px] min-w-0 max-w-[380px] shrink-0 whitespace-nowrap items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs"
 				>
 					<span className="truncate">
 						{account.forcedApi ? (
@@ -123,7 +123,9 @@ export function ForkAccountPicker({
 										{account.selection === option.selection && " ✓"}
 									</span>
 								</div>
-								<ForkUsageSummary account={usage} model={model} />
+								<div className="mt-1.5">
+									<ForkUsageSummary account={usage} model={model} />
+								</div>
 								{(usage?.status === "signed_out" ||
 									usage?.status === "token_expired") && (
 									<div className="mt-1 text-amber-500">

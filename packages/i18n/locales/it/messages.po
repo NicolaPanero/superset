@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} di {total}"
 
-msgid "{remaining} available"
-msgstr "{remaining} disponibile"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}s fa"
 
@@ -1060,6 +1057,9 @@ msgstr "{selectedCount} selezionati"
 
 msgid "{share}% human"
 msgstr "{share}% umano"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} usato"
 
 msgid "{shown} of {total}"
 msgstr "{shown} di {total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Elimina comunque} other {Elimina com
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, one {# PR dell'agente unita} other {# PR dell'agente unite}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} usato"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} interrotto"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} ripristinato ai valori predefiniti"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Caricamento di # file…} other {Caricamento di # file…}}"
+
+msgid "{used} used"
+msgstr "{used} usato"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} in attesa"
@@ -15001,6 +15007,12 @@ msgstr "La disponibilità del servizio è pubblicata su <0>status.superset.sh</0
 msgid "Session"
 msgstr "Sessione"
 
+msgid "Session ({hours}h)"
+msgstr "Sessione ({hours}h)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Sessione ({hours}h) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Sessione {0}"
@@ -18695,6 +18707,9 @@ msgstr "ogni settimana"
 
 msgid "Weekly"
 msgstr "Settimanale"
+
+msgid "Weekly · {scope}"
+msgstr "Settimanale · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Ogni settimana alle {time}"
