@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{total} içinden {received}"
 
-msgid "{remaining} available"
-msgstr "{remaining} kullanılabilir"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}sn önce"
 
@@ -1060,6 +1057,9 @@ msgstr "{selectedCount} seçildi"
 
 msgid "{share}% human"
 msgstr "%{share} insan"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} kullanıldı"
 
 msgid "{shown} of {total}"
 msgstr "{total} içinden {shown}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Yine de sil} other {Yine de # tanesi
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, one {# ajan PR'ı birleştirildi} other {# ajan PR'ı birleştirildi}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} kullanıldı"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} kesildi"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} varsayılanlara geri yüklendi"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {# dosya yükleniyor…}}"
+
+msgid "{used} used"
+msgstr "{used} kullanıldı"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} bekliyor"
@@ -15004,6 +15010,12 @@ msgstr "Hizmet durumu <0>status.superset.sh</0> adresinde, güvenlik ve uyumlulu
 msgid "Session"
 msgstr "Oturum"
 
+msgid "Session ({hours}h)"
+msgstr "Oturum ({hours} sa)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Oturum ({hours} sa) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Oturum {0}"
@@ -18704,6 +18716,9 @@ msgstr "haftalık"
 
 msgid "Weekly"
 msgstr "Haftalık"
+
+msgid "Weekly · {scope}"
+msgstr "Haftalık · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Her hafta saat {time}"

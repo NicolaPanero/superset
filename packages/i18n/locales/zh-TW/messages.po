@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received}/{total}"
 
-msgid "{remaining} available"
-msgstr "剩餘 {remaining}"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
@@ -1060,6 +1057,9 @@ msgstr "已選擇{selectedCount}項"
 
 msgid "{share}% human"
 msgstr "人類{share}%"
+
+msgid "{short}: {used} used"
+msgstr "{short}: 已用 {used}"
 
 msgid "{shown} of {total}"
 msgstr "{shown}/{total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {仍然刪除} other {仍然刪除#�
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, other {已合併 # 個智慧代理 PR}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: 已用 {used}"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName}已中斷"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel}已恢復為預設值"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, other {正在上傳 # 個檔案…}}"
+
+msgid "{used} used"
+msgstr "已用 {used}"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting}人等待"
@@ -15004,6 +15010,12 @@ msgstr "服務可用性發布在<0>status.superset.sh</0>，安全與合規文�
 msgid "Session"
 msgstr "會話"
 
+msgid "Session ({hours}h)"
+msgstr "會話（{hours} 小時）"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "會話（{hours} 小時） · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "會話{0}"
@@ -18704,6 +18716,9 @@ msgstr "每週"
 
 msgid "Weekly"
 msgstr "每週"
+
+msgid "Weekly · {scope}"
+msgstr "每週 · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "每週{time}"

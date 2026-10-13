@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} van {total}"
 
-msgid "{remaining} available"
-msgstr "{remaining} beschikbaar"
-
 msgid "{seconds}s ago"
 msgstr "{seconds}s geleden"
 
@@ -1060,6 +1057,9 @@ msgstr "{selectedCount} geselecteerd"
 
 msgid "{share}% human"
 msgstr "{share}% mens"
+
+msgid "{short}: {used} used"
+msgstr "{short}: {used} gebruikt"
 
 msgid "{shown} of {total}"
 msgstr "{shown} van {total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Toch verwijderen} other {Toch # verw
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, one {# agent-PR gemerged} other {# agent-PR's gemerged}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: {used} gebruikt"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} onderbroken"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} teruggezet naar standaardwaarden"
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {# bestand uploaden…} other {# bestanden uploaden…}}"
+
+msgid "{used} used"
+msgstr "{used} gebruikt"
 
 msgid "{waiting} Waiting"
 msgstr "{waiting} wachten"
@@ -15004,6 +15010,12 @@ msgstr "De beschikbaarheid van de dienst staat op <0>status.superset.sh</0> en d
 msgid "Session"
 msgstr "Sessie"
 
+msgid "Session ({hours}h)"
+msgstr "Sessie ({hours} u)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Sessie ({hours} u) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Sessie {0}"
@@ -18704,6 +18716,9 @@ msgstr "wekelijks"
 
 msgid "Weekly"
 msgstr "Wekelijks"
+
+msgid "Weekly · {scope}"
+msgstr "Wekelijks · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Wekelijks om {time}"

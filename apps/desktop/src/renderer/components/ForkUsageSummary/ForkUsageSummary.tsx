@@ -3,11 +3,23 @@ import {
 	formatCurrency,
 	formatDate,
 	formatNumber,
-	formatPercent,
 } from "@superset/i18n/format";
-import { accountQuotaState } from "@superset/shared/fork-account-usage";
+import {
+	accountQuotaState,
+	accountQuotaWindows,
+} from "@superset/shared/fork-account-usage";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 import { formatResetLabel } from "renderer/utils/usage/formatResetIn";
+import { UsageWindowChip } from "./components/UsageWindowChip";
+import { UsageWindowRow } from "./components/UsageWindowRow";
+
+const GENERAL_WINDOW_IDS = new Set([
+	"five_hour",
+	"seven_day",
+	"primary",
+	"secondary",
+]);
+const COMPACT_WINDOW_LIMIT = 2;
 
 export function ForkUsageSummary({
 	account,
@@ -19,10 +31,6 @@ export function ForkUsageSummary({
 	compact?: boolean;
 }) {
 	const state = accountQuotaState(account, model);
-	const remaining =
-		state.remaining === null
-			? null
-			: formatPercent(state.remaining / 100, { maximumFractionDigits: 1 });
 	const status =
 		account?.status === "signed_out" ? (
 			<Trans>Signed out</Trans>
@@ -31,23 +39,38 @@ export function ForkUsageSummary({
 		) : state.reason === "exhausted" ? (
 			<Trans>Quota exhausted</Trans>
 		) : state.reason === "stale" ? (
-			<>
-				{remaining && <>{remaining} · </>}
-				<Trans>Last known</Trans>
-			</>
+			<Trans>Last known</Trans>
 		) : state.reason === "unknown" ? (
 			<Trans>Unverified</Trans>
-		) : (
-			<Trans>{remaining} available</Trans>
+		) : null;
+	const statusClass = state.warning
+		? "text-amber-500"
+		: "text-muted-foreground";
+	const showsWindows =
+		!!account &&
+		account.status !== "signed_out" &&
+		state.reason !== "api" &&
+		state.reason !== "unknown";
+	const dimmed = state.reason === "stale";
+	if (compact) {
+		const modelWindows = account ? accountQuotaWindows(account, model) : [];
+		const general = modelWindows.filter((window) =>
+			GENERAL_WINDOW_IDS.has(window.id),
 		);
-	if (compact)
+		const chips = (general.length ? general : modelWindows).slice(
+			0,
+			COMPACT_WINDOW_LIMIT,
+		);
 		return (
-			<span
-				className={`shrink-0 whitespace-nowrap ${state.warning ? "text-amber-500" : "text-muted-foreground"}`}
-			>
-				{status}
+			<span className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap text-xs">
+				{status && <span className={statusClass}>{status}</span>}
+				{showsWindows &&
+					chips.map((window) => (
+						<UsageWindowChip key={window.id} window={window} dimmed={dimmed} />
+					))}
 			</span>
 		);
+	}
 	const date = account
 		? formatDate(account.fetchedAt, {
 				month: "short",
@@ -57,40 +80,24 @@ export function ForkUsageSummary({
 			})
 		: null;
 	return (
-		<div className="space-y-1 text-xs">
-			<div
-				className={`shrink-0 whitespace-nowrap ${state.warning ? "text-amber-500" : "text-muted-foreground"}`}
-			>
-				{status}
-			</div>
-			{account?.windows.map((window) => (
-				<div
-					key={window.id}
-					className="flex flex-wrap justify-between gap-x-3 text-muted-foreground"
-				>
-					<span>
-						{window.label} ·{" "}
-						{formatPercent(window.usedPercent / 100, {
-							maximumFractionDigits: 1,
-						})}
-					</span>
-					<span>
-						{window.resetsAt ? (
-							formatResetLabel(window.resetsAt, new Date())
-						) : (
-							<Trans>Reset time unavailable</Trans>
-						)}
-					</span>
+		<div className="space-y-2 text-xs">
+			{status && (
+				<div className={`shrink-0 whitespace-nowrap ${statusClass}`}>
+					{status}
 				</div>
-			))}
+			)}
+			{showsWindows &&
+				account?.windows.map((window) => (
+					<UsageWindowRow key={window.id} window={window} dimmed={dimmed} />
+				))}
 			{account?.creditsBalance !== null &&
 				account?.creditsBalance !== undefined && (
-					<div>
+					<div className="text-muted-foreground">
 						<Trans>Credits</Trans> · {formatNumber(account.creditsBalance)}
 					</div>
 				)}
 			{account?.extraUsage && (
-				<div>
+				<div className="text-muted-foreground">
 					<Trans>Extra usage</Trans> ·{" "}
 					{formatCurrency(account.extraUsage.usedCents / 100)} /{" "}
 					{formatCurrency(account.extraUsage.limitCents / 100)}

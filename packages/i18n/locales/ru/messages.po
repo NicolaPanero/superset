@@ -1049,9 +1049,6 @@ msgstr "{reason}"
 msgid "{received} of {total}"
 msgstr "{received} из {total}"
 
-msgid "{remaining} available"
-msgstr "Доступно: {remaining}"
-
 msgid "{seconds}s ago"
 msgstr "{seconds} с назад"
 
@@ -1060,6 +1057,9 @@ msgstr "Выбрано: {selectedCount}"
 
 msgid "{share}% human"
 msgstr "{share}% человека"
+
+msgid "{short}: {used} used"
+msgstr "{short}: использовано {used}"
 
 msgid "{shown} of {total}"
 msgstr "{shown} из {total}"
@@ -1102,6 +1102,9 @@ msgstr "{teardownFailureCount, plural, one {Всё равно удалить} fe
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, one {влит # PR агента} few {влито # PR агента} many {влито # PR агента} other {влито # PR агента}}"
 
+msgid "{title}: {used} used"
+msgstr "{title}: использовано {used}"
+
 msgid "{toolName} interrupted"
 msgstr "{toolName} прерван"
 
@@ -1134,6 +1137,9 @@ msgstr "{updatedLabel} восстановлен к значениям по ум�
 
 msgid "{uploading, plural, one {Uploading # file…} other {Uploading # files…}}"
 msgstr "{uploading, plural, one {Загрузка # файла…} few {Загрузка # файлов…} many {Загрузка # файлов…} other {Загрузка # файла…}}"
+
+msgid "{used} used"
+msgstr "использовано {used}"
 
 msgid "{waiting} Waiting"
 msgstr "Ожидают: {waiting}"
@@ -15004,6 +15010,12 @@ msgstr "Доступность сервиса публикуется на <0>sta
 msgid "Session"
 msgstr "Сессия"
 
+msgid "Session ({hours}h)"
+msgstr "Сессия ({hours} ч)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "Сессия ({hours} ч) · {scope}"
+
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
 msgstr "Сессия {0}"
@@ -18704,6 +18716,9 @@ msgstr "еженедельно"
 
 msgid "Weekly"
 msgstr "Еженедельно"
+
+msgid "Weekly · {scope}"
+msgstr "Еженедельно · {scope}"
 
 msgid "Weekly at {time}"
 msgstr "Еженедельно в {time}"
