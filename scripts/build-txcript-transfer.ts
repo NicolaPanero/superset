@@ -20,6 +20,10 @@ const repository = "NicolaPanero/txcript";
 const platform = txcriptAssets(process.platform, process.arch);
 const asset = `superset-transfer-${platform.target}.${platform.extension}`;
 const cliAsset = `txcript-${platform.target}.${platform.extension}`;
+const tar =
+	process.platform === "win32"
+		? join(process.env.SystemRoot || "C:\\Windows", "System32", "tar.exe")
+		: "tar";
 const targetHome =
 	process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset");
 
@@ -56,7 +60,7 @@ verify(cliAsset, cliArchive);
 const work = await mkdtemp(join(tmpdir(), "superset-transfer-"));
 try {
 	await writeFile(join(work, asset), archive);
-	const extract = Bun.spawnSync(["tar", "-xf", asset], {
+	const extract = Bun.spawnSync([tar, "-xf", asset], {
 		cwd: work,
 		stderr: "inherit",
 	});
@@ -95,7 +99,7 @@ try {
 	console.log(`Installed transfer helper ${tag}: ${output}`);
 
 	await writeFile(join(work, cliAsset), cliArchive);
-	const cliExtract = Bun.spawnSync(["tar", "-xf", cliAsset], {
+	const cliExtract = Bun.spawnSync([tar, "-xf", cliAsset], {
 		cwd: work,
 		stderr: "inherit",
 	});
