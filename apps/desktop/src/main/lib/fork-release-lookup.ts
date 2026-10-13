@@ -4,10 +4,12 @@ export function createForkReleaseLookup({
 	repository,
 	request = fetch,
 	now = Date.now,
+	platform = process.platform,
 }: {
 	repository: string;
 	request?: typeof fetch;
 	now?: () => number;
+	platform?: NodeJS.Platform;
 }) {
 	let cached: ForkInstallAsset | undefined;
 	let etag: string | null = null;
@@ -46,7 +48,7 @@ export function createForkReleaseLookup({
 		}
 		if (!response.ok)
 			throw new Error(`Fork release check: HTTP ${response.status}`);
-		cached = forkInstallAsset(await response.json(), repository);
+		cached = forkInstallAsset(await response.json(), repository, platform);
 		etag = response.headers.get("etag");
 		retryAt = 0;
 		return cached;

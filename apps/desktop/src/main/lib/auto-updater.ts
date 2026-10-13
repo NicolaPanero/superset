@@ -275,6 +275,7 @@ export function checkForUpdatesInteractive(): void {
 		});
 		return;
 	}
+	if (AUTO_UPDATE_DISABLED_AT_BUILD && checkForForkUpdatesInteractive()) return;
 	if (!IS_AUTO_UPDATE_PLATFORM) {
 		dialog.showMessageBox({
 			type: "info",
@@ -289,7 +290,6 @@ export function checkForUpdatesInteractive(): void {
 	}
 
 	if (AUTO_UPDATE_DISABLED_AT_BUILD) {
-		if (checkForForkUpdatesInteractive()) return;
 		dialog.showMessageBox({
 			type: "info",
 			title: i18n._(msg({ message: "Updates" })),

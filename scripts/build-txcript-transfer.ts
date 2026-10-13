@@ -10,20 +10,18 @@ import {
 } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
+import { txcriptAssets } from "./fork/txcript-assets";
 import { tag as testedTag } from "./fork/txcript-version.json";
 
 // The transfer helper is published prebuilt by the owner's txcript fork
 // (official txcript plus the fixes Superset needs; see FORK.md there). The
 // tested release is pinned unless TXCRIPT_TAG explicitly overrides it.
 const repository = "NicolaPanero/txcript";
-const asset = "superset-transfer-aarch64-apple-darwin.tar.gz";
-// txcript's own CLI lists the sessions on this Mac for "Import chat".
-const cliAsset = "txcript-aarch64-apple-darwin.tar.gz";
+const platform = txcriptAssets(process.platform, process.arch);
+const asset = `superset-transfer-${platform.target}.${platform.extension}`;
+const cliAsset = `txcript-${platform.target}.${platform.extension}`;
 const targetHome =
 	process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset");
-
-if (process.platform !== "darwin" || process.arch !== "arm64")
-	throw new Error("The prebuilt transfer helper is for Apple Silicon Macs");
 
 const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 async function download(url: string, json = false) {
@@ -58,12 +56,12 @@ verify(cliAsset, cliArchive);
 const work = await mkdtemp(join(tmpdir(), "superset-transfer-"));
 try {
 	await writeFile(join(work, asset), archive);
-	const extract = Bun.spawnSync(["tar", "-xzf", asset], {
+	const extract = Bun.spawnSync(["tar", "-xf", asset], {
 		cwd: work,
 		stderr: "inherit",
 	});
 	if (extract.exitCode !== 0) throw new Error(`Could not extract ${asset}`);
-	const binary = join(work, "superset-transfer");
+	const binary = join(work, `superset-transfer${platform.executable}`);
 	const capability = Bun.spawnSync([binary, "capabilities"], {
 		stdout: "pipe",
 		stderr: "inherit",
@@ -76,7 +74,11 @@ try {
 		!details.conversionOnly
 	)
 		throw new Error("Invalid transfer helper");
-	const output = join(targetHome, "bin", "txcript-transfer");
+	const output = join(
+		targetHome,
+		"bin",
+		`txcript-transfer${platform.executable}`,
+	);
 	await mkdir(join(targetHome, "bin"), { recursive: true });
 	const temporary = `${output}.${crypto.randomUUID()}.tmp`;
 	await copyFile(binary, temporary);
@@ -93,13 +95,13 @@ try {
 	console.log(`Installed transfer helper ${tag}: ${output}`);
 
 	await writeFile(join(work, cliAsset), cliArchive);
-	const cliExtract = Bun.spawnSync(["tar", "-xzf", cliAsset], {
+	const cliExtract = Bun.spawnSync(["tar", "-xf", cliAsset], {
 		cwd: work,
 		stderr: "inherit",
 	});
 	if (cliExtract.exitCode !== 0)
 		throw new Error(`Could not extract ${cliAsset}`);
-	const cli = join(work, "txcript");
+	const cli = join(work, `txcript${platform.executable}`);
 	const listing = Bun.spawnSync(
 		[cli, "list", "--json", "-n", "1", "--cwd", work],
 		{ stdout: "pipe", stderr: "inherit" },
@@ -109,7 +111,11 @@ try {
 		!Array.isArray(JSON.parse(listing.stdout.toString()))
 	)
 		throw new Error("txcript CLI cannot list sessions as JSON");
-	const cliOutput = join(targetHome, "bin", "txcript-cli");
+	const cliOutput = join(
+		targetHome,
+		"bin",
+		`txcript-cli${platform.executable}`,
+	);
 	const cliTemporary = `${cliOutput}.${crypto.randomUUID()}.tmp`;
 	await copyFile(cli, cliTemporary);
 	await chmod(cliTemporary, 0o700);

@@ -10,6 +10,7 @@ export interface ForkInstallAsset {
 export function forkInstallAsset(
 	body: unknown,
 	repository: string,
+	platform: NodeJS.Platform = process.platform,
 ): ForkInstallAsset {
 	if (!body || typeof body !== "object")
 		throw new Error("Invalid fork release");
@@ -21,10 +22,12 @@ export function forkInstallAsset(
 		!Array.isArray(release.assets)
 	)
 		throw new Error("Invalid fork release");
+	const name =
+		platform === "win32" ? "Superset-fork-x64.exe" : "Superset-fork-arm64.zip";
 	const asset = release.assets.find(
-		(entry: { name?: unknown }) => entry?.name === "Superset-fork-arm64.zip",
+		(entry: { name?: unknown }) => entry?.name === name,
 	);
-	const expected = `https://github.com/${repository}/releases/download/${tag}/Superset-fork-arm64.zip`;
+	const expected = `https://github.com/${repository}/releases/download/${tag}/${name}`;
 	if (
 		!asset ||
 		asset.browser_download_url !== expected ||

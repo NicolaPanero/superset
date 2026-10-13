@@ -94,10 +94,12 @@ describe("txcriptHelperPath", () => {
 		const exec = "/Applications/Superset.app/Contents/MacOS/Superset";
 		const bundled =
 			"/Applications/Superset.app/Contents/Resources/resources/bin/txcript-transfer";
-		expect(txcriptHelperPath(exec, (path) => path === bundled)).toBe(bundled);
-		expect(txcriptHelperPath(exec, () => false)).toEndWith(
+		expect(txcriptHelperPath(exec, (path) => path === bundled, "darwin")).toBe(
+			bundled,
+		);
+		expect(txcriptHelperPath(exec, () => false, "darwin")).toEndWith(
 			"/bin/txcript-transfer",
 		);
-		expect(txcriptHelperPath(exec, () => false)).not.toBe(bundled);
+		expect(txcriptHelperPath(exec, () => false, "darwin")).not.toBe(bundled);
 	});
 });

@@ -69,6 +69,10 @@ const config: Configuration = {
 						from: "../../scripts/fork/install.sh",
 						to: "resources/fork/install.sh",
 					},
+					{
+						from: "../../scripts/fork/install-windows.ps1",
+						to: "resources/fork/install-windows.ps1",
+					},
 				]
 			: []),
 		// Database migrations - must be outside asar for drizzle-orm to read

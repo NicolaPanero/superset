@@ -4,7 +4,11 @@ import { i18n } from "@superset/i18n";
 import { app, dialog, powerMonitor } from "electron";
 import log from "electron-log/main";
 import { env } from "main/env.main";
-import { exitImmediately, setSkipQuitConfirmation } from "main/index";
+import {
+	exitImmediately,
+	quitAppCompletely,
+	setSkipQuitConfirmation,
+} from "main/index";
 import { createForkReleaseLookup } from "./fork-release-lookup";
 import { createForkUpdateCheck } from "./fork-update-check";
 import {
@@ -16,6 +20,7 @@ import {
 import { forkUpdateNotices } from "./fork-update-notices";
 import { showForkUpdateProgress } from "./fork-update-progress";
 import { scheduleForkUpdateChecks } from "./fork-update-schedule";
+import { prepareWindowsForkInstaller } from "./fork-windows-update";
 
 // Set when the fork's release workflow builds the app.
 const FORK_RELEASE = process.env.SUPERSET_FORK_RELEASE ?? "";
@@ -46,23 +51,39 @@ function installAndRestart(tag: string): Promise<boolean> {
 			await restartPreparedForkUpdate({
 				signal: abort.signal,
 				prepare: () =>
-					prepareForkInstaller({
-						asset,
-						scriptPath: join(
-							process.resourcesPath,
-							"resources/fork/install.sh",
-						),
-						appPath: installedForkAppPath(process.execPath),
-						statePath: join(app.getPath("userData"), "fork-update"),
-						logPath,
-						signal: abort.signal,
-						parentPid: process.pid,
-					}),
+					process.platform === "win32"
+						? prepareWindowsForkInstaller({
+								asset,
+								scriptPath: join(
+									process.resourcesPath,
+									"resources/fork/install-windows.ps1",
+								),
+								executable: process.execPath,
+								statePath: join(app.getPath("userData"), "fork-update"),
+								logPath,
+								signal: abort.signal,
+								parentPid: process.pid,
+							})
+						: prepareForkInstaller({
+								asset,
+								scriptPath: join(
+									process.resourcesPath,
+									"resources/fork/install.sh",
+								),
+								appPath: installedForkAppPath(process.execPath),
+								statePath: join(app.getPath("userData"), "fork-update"),
+								logPath,
+								signal: abort.signal,
+								parentPid: process.pid,
+							}),
 				restart() {
 					progress?.close();
 					log.info("[fork-updates] installer ready; restarting", tag);
-					setSkipQuitConfirmation();
-					app.quit();
+					if (process.platform === "win32") quitAppCompletely();
+					else {
+						setSkipQuitConfirmation();
+						app.quit();
+					}
 				},
 				forceExit: exitImmediately,
 				scheduleExit(callback, delay) {
@@ -159,7 +180,8 @@ const check = createForkUpdateCheck({
 function canCheckForkUpdates(): boolean {
 	return (
 		env.NODE_ENV !== "development" &&
-		process.platform === "darwin" &&
+		((process.platform === "darwin" && process.arch === "arm64") ||
+			(process.platform === "win32" && process.arch === "x64")) &&
 		Boolean(FORK_RELEASE && FORK_REPOSITORY)
 	);
 }

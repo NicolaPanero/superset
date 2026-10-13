@@ -5,7 +5,10 @@ import { join, resolve } from "node:path";
 const root = resolve(import.meta.dir, "../..");
 const helper = resolve(
 	process.argv[2] ??
-		resolve(root, "apps/desktop/dist/resources/bin/txcript-transfer"),
+		resolve(
+			root,
+			`apps/desktop/dist/resources/bin/txcript-transfer${process.platform === "win32" ? ".exe" : ""}`,
+		),
 );
 if (!existsSync(helper))
 	throw new Error(

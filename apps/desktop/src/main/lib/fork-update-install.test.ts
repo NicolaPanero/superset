@@ -20,7 +20,7 @@ const body = {
 	],
 };
 test("an offer pins the archive and its digest to the exact fork release", () => {
-	expect(forkInstallAsset(body, repository)).toEqual({
+	expect(forkInstallAsset(body, repository, "darwin")).toEqual({
 		tag,
 		url,
 		sha256: "a".repeat(64),
@@ -34,6 +34,7 @@ test("an offer pins the archive and its digest to the exact fork release", () =>
 			forkInstallAsset(
 				{ ...body, assets: [{ ...body.assets[0], ...change }] },
 				repository,
+				"darwin",
 			),
 		).toThrow();
 });

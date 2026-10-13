@@ -1,5 +1,5 @@
 # Builds Superset++ from fork/main using the txcript version pinned in scripts/fork/txcript-version.json.
-# Upstream sync and txcript dispatches trigger validation; changing the pin is explicit.
+# Upstream sync triggers validation; changing the txcript pin is explicit.
 # Bundle id, login scheme, data paths and update asset names stay compatible with existing forks.
 
 name: Fork - build release
@@ -51,7 +51,7 @@ jobs:
           txcript_tag=$(gh api "repos/$GITHUB_REPOSITORY/contents/scripts/fork/txcript-version.json?ref=$sha" --jq .content | base64 -d | jq -r .tag)
           tag="desktop-v${version}-fork.${sha:0:7}-tx${txcript_tag##*-fork.}"
           build=true
-          if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+          if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft,assets --jq '.isDraft == false and ([.assets[].name] | contains(["Superset-fork-arm64.zip", "Superset-fork-x64.exe"]))' 2>/dev/null | grep -qx true; then
             build=false
           fi
           echo "fork/main at $sha (Superset $version), txcript $txcript_tag: tag $tag, build=$build"
@@ -63,10 +63,42 @@ jobs:
             echo "build=$build"
           } >> "$GITHUB_OUTPUT"
 
-  build:
+  validate:
     needs: check
     if: needs.check.outputs.build == 'true'
-    runs-on: macos-15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          ref: ${{ needs.check.outputs.sha }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen --ignore-scripts
+      - name: Validate fork before platform builds
+        run: |
+          bun run --filter=@superset/i18n build
+          bun run lint
+          bun run check:i18n
+          bun run --cwd packages/shared typecheck
+          bun run --cwd packages/host-service typecheck
+          bun run --cwd apps/desktop typecheck
+          bun run test:fork
+
+  build:
+    needs: [check, validate]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            platform: mac
+            suffix: ""
+          - os: windows-2022
+            platform: windows
+            suffix: .exe
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 120
     env:
       SUPERSET_AUTO_UPDATE: disabled
@@ -76,78 +108,99 @@ jobs:
       DESKTOP_NOTIFICATIONS_PORT: "51742"
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1 (Node 24)
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
           ref: ${{ needs.check.outputs.sha }}
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version-file: .bun-version
-
       - name: Install dependencies
         run: |
           bun install --frozen --ignore-scripts
           bun run --filter=@superset/i18n build
           cd apps/desktop && bun run install:deps
-
-      - name: Validate fork before packaging
-        run: |
-          bun run lint
-          bun run check:i18n
-          bun run --cwd packages/shared typecheck
-          bun run --cwd packages/host-service typecheck
-          bun run --cwd apps/desktop typecheck
-          bun run test:fork
-
-      - name: Install the txcript transfer helper
+      - name: Install the pinned native transfer tools
         env:
           GH_TOKEN: ${{ github.token }}
           TXCRIPT_TAG: ${{ needs.check.outputs.txcript_tag }}
-        run: SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
-
-      - name: Verify the pinned native transfer engine
-        run: bun run test:fork:native "$RUNNER_TEMP/helper/bin/txcript-transfer"
-
-      - name: Build the app
+        run: |
+          for attempt in $(seq 1 20); do
+            if gh release view "$TXCRIPT_TAG" --repo NicolaPanero/txcript >/dev/null 2>&1; then break; fi
+            if [ "$attempt" = 20 ]; then echo "Pinned helper release unavailable"; exit 1; fi
+            sleep 30
+          done
+          SUPERSET_HOME_DIR="$RUNNER_TEMP/helper" bun scripts/build-txcript-transfer.ts
+      - name: Verify all native conversion directions
+        run: bun run test:fork:native "$RUNNER_TEMP/helper/bin/txcript-transfer${{ matrix.suffix }}"
+      - name: Windows update and path regressions
+        if: runner.os == 'Windows'
+        run: |
+          bun test --isolate scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts
+          cd apps/desktop
+          bun test --isolate src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts
+      - name: Compile app and bundle transfer tools
         working-directory: apps/desktop
         run: |
           : > "$RUNNER_TEMP/empty.env"
           export SUPERSET_ENV_FILE="$RUNNER_TEMP/empty.env"
           bun run prebuild
-          # Shipped next to the bundled CLI; the host-service looks there first.
-          install -m 755 "$RUNNER_TEMP/helper/bin/txcript-transfer" dist/resources/bin/txcript-transfer
-          install -m 755 "$RUNNER_TEMP/helper/bin/txcript-cli" dist/resources/bin/txcript-cli
+          cp "$RUNNER_TEMP/helper/bin/txcript-transfer${{ matrix.suffix }}" "dist/resources/bin/txcript-transfer${{ matrix.suffix }}"
+          cp "$RUNNER_TEMP/helper/bin/txcript-cli${{ matrix.suffix }}" "dist/resources/bin/txcript-cli${{ matrix.suffix }}"
+      - name: Package macOS
+        if: runner.os == 'macOS'
+        working-directory: apps/desktop
+        run: |
           bunx electron-builder --config electron-builder.ts --publish never --mac zip --arm64
           zip=$(ls release/*-arm64-mac.zip | head -n 1)
-          mv "$zip" "$RUNNER_TEMP/Superset-fork-arm64.zip"
-          ls -lh "$RUNNER_TEMP/Superset-fork-arm64.zip"
+          mv "$zip" release/Superset-fork-arm64.zip
+      - name: Package Windows
+        if: runner.os == 'Windows'
+        working-directory: apps/desktop
+        run: bunx electron-builder --config fork-windows-builder.ts --publish never --win nsis --x64
+      - name: Verify installed Windows runtime and updater
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: ./scripts/fork/windows-smoke.ps1 -Installer "$env:GITHUB_WORKSPACE/apps/desktop/release/Superset-fork-x64.exe"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fork-${{ matrix.platform }}
+          path: |
+            apps/desktop/release/Superset-fork-arm64.zip
+            apps/desktop/release/Superset-fork-x64.exe
+          if-no-files-found: error
 
-      - name: Publish the release
+  publish:
+    needs: [check, build]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: fork-*
+          merge-multiple: true
+      - name: Publish both verified platforms together
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.check.outputs.tag }}
           SHA: ${{ needs.check.outputs.sha }}
           VERSION: ${{ needs.check.outputs.version }}
         run: |
-          cat > "$RUNNER_TEMP/notes.md" <<EOF
-          Superset ${VERSION} with this fork's changes, from \`fork/main\` at ${SHA}.
+          test -s Superset-fork-arm64.zip
+          test -s Superset-fork-x64.exe
+          cat > notes.md <<EOF
+          Superset++ ${VERSION}, from fork/main at ${SHA}.
 
-          Install or update on an Apple Silicon Mac (settings and data are kept):
+          - Mac Apple Silicon: Superset-fork-arm64.zip
+          - Windows x64: Superset-fork-x64.exe (per-user installer)
 
-          \`\`\`sh
-          curl -fsSL https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/fork/main/scripts/fork/install.sh | sh
-          \`\`\`
+          Both builds use this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Superset++ can coexist with the official app.
 
-          The app isn't notarized. Installed with the command above it opens
-          normally; downloaded with a browser, open it once from System
-          Settings → Privacy & Security → "Open Anyway".
+          The Windows installer is unsigned; Windows may show a publisher warning on the first installation. The Mac build is not notarized.
           EOF
-          gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag 2>/dev/null || true
-          gh release create "$TAG" \
-            "$RUNNER_TEMP/Superset-fork-arm64.zip" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$SHA" \
-            --title "Superset++ ${VERSION} (${SHA:0:7})" \
-            --notes-file "$RUNNER_TEMP/notes.md" \
-            --latest
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
+            test "$draft" = true || { echo "Published release preserved"; exit 0; }
+          else
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$SHA" --title "Superset++ ${VERSION} (${SHA:0:7})" --notes-file notes.md --draft
+          fi
+          gh release upload "$TAG" Superset-fork-arm64.zip Superset-fork-x64.exe --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest

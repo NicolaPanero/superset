@@ -245,7 +245,7 @@ per quella chat: vedi [Continuazione automatica](#continuazione-automatica-delle
 
 ### Verifiche delle conversioni
 
-Il motore validato è txcript `v0.14.4-fork.10`. Il contesto generato da Grok,
+Il motore validato è txcript `v0.14.4-fork.12`. Il contesto generato da Grok,
 i riepiloghi di sessione e i messaggi di ripresa automatica vengono distinti
 dai prompt dell’utente. Il contesto utile resta disponibile con un’etichetta
 esplicita, senza attribuirlo alla persona.
@@ -263,11 +263,21 @@ prove usano archivi temporanei ed eseguono il motore fissato prima della build.
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-La build pubblicata è per **macOS Apple Silicon**. Chiudi l’app prima di eseguire
+Le release includono **macOS Apple Silicon** e **Windows x64**. Su Mac chiudi l’app prima di eseguire
 lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
 
-L’app si chiama **Superset++.app**, usa l’icona con il **+** e convive con Superset
+Su Windows scarica `Superset-fork-x64.exe` dalla stessa release e aprilo.
+L’installazione è per utente, non richiede privilegi amministrativi e usa
+il nome Superset++, il protocollo `superset-fork://` e dati separati dal Superset
+ufficiale. Gli agenti e Git devono essere disponibili sul PC; l’installer include
+il CLI Superset e i due strumenti txcript nativi x64. L’installer Windows non
+è firmato e al primo avvio Windows può mostrare un avviso sull’editore.
+Gli aggiornamenti successivi arrivano dall’app, con gli stessi avvisi del Mac:
+il download viene verificato prima della chiusura, i servizi vengono arrestati,
+l’installer aggiorna lo stesso percorso e riapre l’app. Chat e profili sono conservati.
+
+L’app Mac si chiama **Superset++.app**, usa l’icona con il **+** e convive con Superset
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
 porta locale 51742 e cartelle `~/.superset-fork` e
 `~/Library/Application Support/Superset Fork`. Chat, impostazioni e login
@@ -321,13 +331,17 @@ La versione validata è fissata in `scripts/fork/txcript-version.json`; nuove
 release del motore non vengono adottate implicitamente. Aggiornare il file,
 eseguire i controlli e solo allora creare una build. Per installare il
 motore fissato localmente: `bun scripts/build-txcript-transfer.ts`.
-Zed è stato dismesso: la pubblicazione di txcript avvia soltanto il workflow
-Superset. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
+Zed è stato dismesso. La pubblicazione di txcript non cambia il motore usato
+da Superset++: serve aggiornare esplicitamente il pin. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
 
 `fork-sync-upstream.yml` segue quotidianamente le release stabili e verifica
 lint, traduzioni e tipi prima del push. `fork-release.yml` parte anche a ogni push su `fork/main` e costruisce solo
 commit non ancora pubblicati, usando il motore fissato; controlla traduzioni,
-tipi e test del fork prima di impacchettare e pubblicare. Un conflitto di
+tipi e test del fork prima di avviare le build Mac e Windows. Ogni piattaforma
+esegue le 20 conversioni native; Windows verifica anche l’installer NSIS, i moduli
+nativi nel runtime Electron installato e lo script di aggiornamento. La release
+viene pubblicata solo quando entrambe le piattaforme hanno superato i controlli,
+con tutti e due i download: una build fallita lascia disponibile la release precedente. Un conflitto di
 sincronizzazione richiede risoluzione manuale e non pubblica una build.
 Per sincronizzare localmente: `bun run fork:sync` su `fork/main`.
 

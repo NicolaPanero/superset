@@ -12,7 +12,7 @@ import {
 	writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { delimiter, isAbsolute, join, relative, resolve } from "node:path";
 import { tag } from "../../../../scripts/fork/txcript-version.json";
 import type { TransferAgent } from "./registry";
 import { runHelper, TxcriptTransferProvider } from "./txcript";
@@ -85,13 +85,13 @@ beforeAll(async () => {
 	const bin = directory("bin"),
 		dbPath = join(directory("opencode"), "opencode.db");
 	process.env.OPENCODE_DB = dbPath;
-	process.env.PATH = `${bin}:${previous.path ?? ""}`;
+	process.env.PATH = `${bin}${delimiter}${previous.path ?? ""}`;
 	const db = new Database(dbPath);
 	db.exec(
 		"CREATE TABLE session(id TEXT PRIMARY KEY,directory TEXT,title TEXT,version TEXT,time_created INTEGER,time_archived INTEGER,model TEXT,slug TEXT,time_updated INTEGER,parent_id TEXT);CREATE TABLE message(id TEXT PRIMARY KEY,session_id TEXT,time_created INTEGER,data TEXT);CREATE TABLE part(id TEXT PRIMARY KEY,message_id TEXT,session_id TEXT,data TEXT);",
 	);
 	db.close();
-	const importer = join(bin, "opencode");
+	const importer = join(bin, "opencode.ts");
 	writeFileSync(
 		importer,
 		`#!/usr/bin/env bun
@@ -106,7 +106,25 @@ for(const message of data.messages){db.run("INSERT INTO message(id,session_id,ti
 db.close();console.log("Imported session: "+info.id);
 `,
 	);
-	chmodSync(importer, 0o755);
+	if (process.platform === "win32") {
+		const compiled = Bun.spawnSync(
+			[
+				process.execPath,
+				"build",
+				importer,
+				"--compile",
+				"--outfile",
+				join(bin, "opencode.exe"),
+			],
+			{ stderr: "inherit" },
+		);
+		if (compiled.exitCode !== 0)
+			throw new Error("Cannot build isolated OpenCode importer");
+	} else {
+		const executable = join(bin, "opencode");
+		writeFileSync(executable, readFileSync(importer));
+		chmodSync(executable, 0o755);
+	}
 	const claudeRoot = directory("claude"),
 		id = randomUUID(),
 		reference = join(claudeRoot, `${id}.jsonl`);

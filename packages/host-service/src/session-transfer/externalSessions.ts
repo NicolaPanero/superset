@@ -2,8 +2,9 @@ import { execFile } from "node:child_process";
 import { existsSync } from "node:fs";
 import { realpath } from "node:fs/promises";
 import { homedir } from "node:os";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { z } from "zod";
+import { forkToolPath } from "./fork-tool-path";
 import { TRANSFER_AGENTS } from "./registry";
 
 /** txcript's harness ids, as Superset's agent presets know them. */
@@ -57,21 +58,9 @@ export type RunCli = (
 export function txcriptCliPath(
 	execPath = process.execPath,
 	exists: (path: string) => boolean = existsSync,
+	platform: NodeJS.Platform = process.platform,
 ): string {
-	const bundled = join(
-		dirname(execPath),
-		"..",
-		"Resources",
-		"resources",
-		"bin",
-		"txcript-cli",
-	);
-	if (exists(bundled)) return bundled;
-	return join(
-		process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset"),
-		"bin",
-		"txcript-cli",
-	);
+	return forkToolPath("txcript-cli", execPath, exists, platform);
 }
 
 export function runTxcriptCli(binary: string): RunCli {

@@ -1,8 +1,8 @@
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { homedir } from "node:os";
-import { dirname, isAbsolute, join, relative } from "node:path";
+import { isAbsolute, relative } from "node:path";
 import { z } from "zod";
+import { forkToolPath } from "./fork-tool-path";
 import type {
 	SessionTransferProvider,
 	TransferInput,
@@ -45,21 +45,9 @@ const resultSchema = engine.extend({
 export function txcriptHelperPath(
 	execPath = process.execPath,
 	exists: (path: string) => boolean = existsSync,
+	platform: NodeJS.Platform = process.platform,
 ): string {
-	const bundled = join(
-		dirname(execPath),
-		"..",
-		"Resources",
-		"resources",
-		"bin",
-		"txcript-transfer",
-	);
-	if (exists(bundled)) return bundled;
-	return join(
-		process.env.SUPERSET_HOME_DIR || join(homedir(), ".superset"),
-		"bin",
-		"txcript-transfer",
-	);
+	return forkToolPath("txcript-transfer", execPath, exists, platform);
 }
 
 export function runHelper(

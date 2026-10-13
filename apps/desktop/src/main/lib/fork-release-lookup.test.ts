@@ -31,6 +31,7 @@ test("conditional checks retain a verified asset on HTTP 304 and detect a change
 	);
 	const lookup = createForkReleaseLookup({
 		repository,
+		platform: "darwin",
 		request: request as unknown as typeof fetch,
 	});
 	const first = await lookup();
@@ -57,6 +58,7 @@ test.each([
 	);
 	const lookup = createForkReleaseLookup({
 		repository,
+		platform: "darwin",
 		request: request as unknown as typeof fetch,
 		now: () => clock,
 	});
@@ -75,6 +77,7 @@ test("an invalid archive never enters the cache, and a transient failure can ret
 	);
 	const lookup = createForkReleaseLookup({
 		repository,
+		platform: "darwin",
 		request: request as unknown as typeof fetch,
 	});
 	await expect(lookup()).rejects.toThrow("checksum");

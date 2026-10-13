@@ -45,7 +45,7 @@ il comando fallisce invece di ometterla. I test vanno collocati accanto al codic
 
 La suite aggiuntiva usa il binario `txcript-transfer` fissato in
 `scripts/fork/txcript-version.json`. È separata perché il binario distribuito
-è per Mac Apple Silicon e non è richiesto per i test veloci Linux.
+è per Mac Apple Silicon e Windows x64 e non è richiesto per i test veloci Linux.
 
 Con il helper già compilato nel checkout:
 
@@ -77,6 +77,11 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
   request verso quel branch e avvio manuale. Richiede solo lettura del repository.
 - **Fork - build release** esegue lo stesso comando prima del packaging e la
   suite nativa dopo il download del helper verificato. Un errore ferma la build.
+- La build Windows installa e reinstalla il pacchetto in una cartella temporanea
+  con spazi e Unicode, verifica SQLite, PTY, watcher e ast-grep nel runtime
+  Electron installato e controlla attesa dell’uscita, argomenti NSIS e riavvio
+  dello script di aggiornamento con processi sintetici. Tutto avviene sul runner,
+  senza profili reali. Le due build devono riuscire prima della pubblicazione.
 - La sincronizzazione upstream conserva attivo anche il workflow di regressione.
 
 Le suite non richiedono login, abbonamenti o richieste al modello. I test dei
