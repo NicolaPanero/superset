@@ -14,6 +14,7 @@ import {
 } from "renderer/hooks/useV2AgentConfigs";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { terminalQueryColors } from "renderer/lib/terminal/terminal-query-colors";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import type { StoreApi } from "zustand/vanilla";
 import type {
 	ChatPaneData,
@@ -108,10 +109,9 @@ export function useAgentSessionLauncher({
 					accountSelection: input.accountSelection,
 				});
 			} catch (error) {
-				toast.error(
-					t({ message: "ACP chat is unavailable. Opening the terminal." }),
-					{ description: errorMessage(error, t({ message: "Unknown error" })) },
-				);
+				toast.error(t({ message: "ACP chat is unavailable" }), {
+					description: errorMessage(error, t({ message: "Unknown error" })),
+				});
 				return null;
 			}
 			const state = store.getState();
@@ -187,6 +187,20 @@ export function useAgentSessionLauncher({
 				if (chat) return chat;
 			}
 
+			if (
+				!useForkCliOptionsStore.getState().showCliOptions &&
+				!input.nativeTerminal &&
+				!input.forkSessionId &&
+				!input.nativeTransferId
+			) {
+				toast.error(
+					t({
+						message:
+							"This agent cannot open a chat. Enable advanced CLI options to use it in a terminal.",
+					}),
+				);
+				return null;
+			}
 			try {
 				// Host pipeline bakes the prompt into the initialCommand using the
 				// agent's argv/stdin transport — no follow-up writeInput needed,

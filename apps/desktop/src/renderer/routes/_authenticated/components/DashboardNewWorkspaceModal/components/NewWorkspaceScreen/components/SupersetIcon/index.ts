@@ -1,1 +1,1 @@
-export { SupersetIcon } from "./SupersetIcon";
+export { ForkProductMark as SupersetIcon } from "renderer/components/ForkProductMark";

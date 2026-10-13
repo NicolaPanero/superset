@@ -107,3 +107,14 @@ verificano modifiche concorrenti, applicazione API esplicita e autenticazione.
 I test UI coprono il riepilogo compatto, host precedenti, scelta API, pulizia
 della chiave dal form, isolamento dell’host e popup di login stabile. Nessun test
 installa un CLI o usa chiavi, login o prompt reali.
+
+### Visibilità CLI e profili per le chat
+
+La suite del fork verifica il flag locale (nascosto per default), l'idratazione
+rigorosa di un singolo booleano, la comparsa e scomparsa dell'account esterno senza
+rimuovere i profili e la conservazione della preferenza ACP avanzata. I test di
+creazione verificano che Codex con il solo login CLI richieda Aggiungi account,
+che le scelte isolate siano conservate e che gli override API restino utilizzabili.
+La policy di continuazione automatica esclude il login esterno anche quando ha
+la quota migliore. Questi test vengono eseguiti prima della build tramite
+`bun run test:fork`; non effettuano login reali.

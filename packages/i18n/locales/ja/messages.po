@@ -1584,9 +1584,6 @@ msgstr "ACPチャット"
 msgid "ACP chat is unavailable"
 msgstr "ACPチャットは利用できません"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACPチャットは利用できません。ターミナルを開きます。"
-
 msgid "Acquisition"
 msgstr "獲得"
 
@@ -1687,6 +1684,9 @@ msgstr "公開したいエージェント設定ができたら、ここに追加
 
 msgid "Add agents…"
 msgstr "エージェントを追加…"
+
+msgid "Add an account to start chatting."
+msgstr "アカウントを追加してチャットを始めましょう。"
 
 msgid "add an agent"
 msgstr "エージェントを追加する"
@@ -1850,6 +1850,9 @@ msgstr "v1ワークスペースをインポート済みのv2プロジェクト�
 
 msgid "Advanced"
 msgstr "詳細"
+
+msgid "Advanced CLI options"
+msgstr "高度なCLIオプション"
 
 msgid "Advanced configuration"
 msgstr "詳細設定"
@@ -15238,6 +15241,9 @@ msgstr "すべての行を表示"
 msgid "Show checks"
 msgstr "チェックを表示"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "このデバイスでCLIログインのアカウントとCHAT/CLI切り替えを表示します。"
+
 msgid "Show closed"
 msgstr "クローズ済みも表示"
 
@@ -17176,6 +17182,9 @@ msgstr "このエージェントは会話を分岐できません"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "このエージェントはクラウドワークスペースで実行できません"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "このエージェントはチャットを開けません。ターミナルで使用するには高度なCLIオプションを有効にしてください。"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "選択したデバイスにこのエージェントは存在しません(エージェントがリセットされた可能性があります)。新しいエージェントを選ぶまで実行は失敗します。"

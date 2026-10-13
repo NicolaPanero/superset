@@ -11,6 +11,8 @@ import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminal
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
+import { visibleForkAccountOptions } from "renderer/lib/fork-account-visibility";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import { markChatSessionClosed } from "../../../../../../utils/closedChatSessions";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
@@ -29,6 +31,7 @@ export function useForkAccountSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
 ): ForkAccountSwitcher | undefined {
+	const showCliOptions = useForkCliOptions();
 	const { t } = useLingui();
 	const data = ctx.pane.data as TerminalPaneData;
 	const enabled = data.agentSurface === "acp" && data.agent?.id === "claude";
@@ -46,7 +49,7 @@ export function useForkAccountSwitch(
 
 	const accounts = useMemo<ForkAccountChoice[]>(
 		() =>
-			(options ?? []).map((option) => {
+			visibleForkAccountOptions(options ?? [], showCliOptions).map((option) => {
 				const usage = quota.data?.find(
 					(account) =>
 						account.agent === "claude" &&
@@ -80,7 +83,7 @@ export function useForkAccountSwitch(
 							: null,
 				};
 			}),
-		[options, quota.data, t],
+		[options, quota.data, t, showCliOptions],
 	);
 
 	if (!enabled || accounts.length < 1) return undefined;
@@ -90,7 +93,12 @@ export function useForkAccountSwitch(
 			: data.acpAccountSelection;
 
 	const onSwitch = async (selection: string | null) => {
-		if (switching || selection === current) return;
+		if (
+			switching ||
+			selection === current ||
+			(selection === null && !showCliOptions)
+		)
+			return;
 		if (
 			!hostUrl ||
 			!(await validateAccountLaunch({

@@ -20,12 +20,18 @@ import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
 import { AgentSelect } from "renderer/components/AgentSelect";
+import { ForkAccountEmptyState } from "renderer/components/ForkAccountEmptyState";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
+import {
+	forkLaunchAccountSelection,
+	visibleForkAccountOptions,
+} from "renderer/lib/fork-account-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher";
 
 const CONFIGURED_ACCOUNT = "__configured_account__";
@@ -45,6 +51,7 @@ export function ForkNewAgentDialog({
 	onCreateNewAgentSession: CreateNewAgentSession;
 }) {
 	const { t } = useLingui();
+	const showCliOptions = useForkCliOptions();
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const [configId, setConfigId] = useState<string>();
 	const [model, setModel] = useState<string | null>(null);
@@ -75,20 +82,51 @@ export function ForkNewAgentDialog({
 		retry: false,
 		staleTime: 30_000,
 	});
+	const metadata = useQuery({
+		queryKey: ["fork-launch-account", hostUrl, selected?.id],
+		enabled: open && managed && !!hostUrl && !!selected,
+		queryFn: () =>
+			hostUrl && selected
+				? getHostServiceClientByUrl(hostUrl).usage.launchAccount.query({
+						agent: selected.id,
+						isolated: true,
+					})
+				: null,
+		retry: false,
+		staleTime: 30_000,
+	});
+	const choices = visibleForkAccountOptions(options.data ?? [], showCliOptions);
 	const defaultUsage = quota.data?.find(
-		(row) => row.agent === selected?.presetId && row.isDefault,
+		(row) =>
+			row.agent === selected?.presetId &&
+			row.isDefault &&
+			(showCliOptions || row.selection !== null),
 	);
 	const defaultOption = options.data?.find(
 		(option) => option.selection === defaultUsage?.selection,
 	);
 	const defaultLabel = defaultOption?.alias ?? defaultUsage?.email;
+	const selection = forkLaunchAccountSelection(
+		account === CONFIGURED_ACCOUNT
+			? (metadata.data?.defaultSelection ?? defaultUsage?.selection)
+			: account === SYSTEM_ACCOUNT
+				? null
+				: account,
+		choices,
+		showCliOptions,
+	);
+	const accountMissing =
+		managed &&
+		!showCliOptions &&
+		!metadata.data?.environmentOverride &&
+		typeof selection !== "string";
 	const selectConfig = (id: string) => {
 		setConfigId(id);
 		setModel(null);
 		setAccount(CONFIGURED_ACCOUNT);
 	};
 	const launchSession = async () => {
-		if (!selected || launchLock.current) return;
+		if (!selected || accountMissing || launchLock.current) return;
 		launchLock.current = true;
 		setBusy(true);
 		try {
@@ -99,16 +137,9 @@ export function ForkNewAgentDialog({
 
 				...(model ? { modelId: model } : {}),
 				...(managed &&
-				options.isSuccess &&
-				(account !== CONFIGURED_ACCOUNT || defaultUsage?.selection)
-					? {
-							accountSelection:
-								account === CONFIGURED_ACCOUNT
-									? defaultUsage?.selection
-									: account === SYSTEM_ACCOUNT
-										? null
-										: account,
-						}
+				!metadata.data?.environmentOverride &&
+				selection !== undefined
+					? { accountSelection: selection }
 					: {}),
 			});
 			if (result) onOpenChange(false);
@@ -155,18 +186,22 @@ export function ForkNewAgentDialog({
 						</p>
 						<Select
 							value={
-								account === CONFIGURED_ACCOUNT && defaultUsage?.selection
-									? defaultUsage.selection
-									: account
+								showCliOptions
+									? account === CONFIGURED_ACCOUNT && defaultUsage?.selection
+										? defaultUsage.selection
+										: account
+									: (selection ?? "")
 							}
 							onValueChange={setAccount}
 							disabled={busy || !options.isSuccess}
 						>
 							<SelectTrigger aria-label={t({ message: "Account" })}>
-								<SelectValue />
+								<SelectValue
+									placeholder={t({ message: "Choose an account" })}
+								/>
 							</SelectTrigger>
 							<SelectContent>
-								{!defaultUsage?.selection && (
+								{showCliOptions && !defaultUsage?.selection && (
 									<SelectItem value={CONFIGURED_ACCOUNT}>
 										{defaultLabel ? (
 											<>
@@ -177,7 +212,7 @@ export function ForkNewAgentDialog({
 										)}
 									</SelectItem>
 								)}
-								{options.data?.map((option) => {
+								{choices.map((option) => {
 									const usage = quota.data?.find(
 										(row) =>
 											row.agent === selected?.presetId &&
@@ -205,6 +240,17 @@ export function ForkNewAgentDialog({
 								})}
 							</SelectContent>
 						</Select>
+						{options.isSuccess && accountMissing && selected && (
+							<ForkAccountEmptyState
+								hostUrl={hostUrl}
+								agent={selected.presetId as "claude" | "codex"}
+								onAccountAdded={() => {
+									void options.refetch();
+									void quota.refetch();
+									void metadata.refetch();
+								}}
+							/>
+						)}
 					</div>
 				)}
 				{models.length > 0 && (
@@ -229,7 +275,12 @@ export function ForkNewAgentDialog({
 				</div>
 				<Button
 					onClick={() => void launchSession()}
-					disabled={busy || !selected || (managed && !options.isSuccess)}
+					disabled={
+						busy ||
+						!selected ||
+						accountMissing ||
+						(managed && !options.isSuccess)
+					}
 				>
 					{busy ? <Trans>Starting…</Trans> : <Trans>Start</Trans>}
 				</Button>

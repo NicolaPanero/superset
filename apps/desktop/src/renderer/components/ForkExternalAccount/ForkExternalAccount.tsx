@@ -1,6 +1,8 @@
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
+
 export function ForkExternalAccount({
 	external,
 	children,
@@ -8,6 +10,8 @@ export function ForkExternalAccount({
 	external: boolean;
 	children: ReactNode;
 }) {
+	const showCliOptions = useForkCliOptions();
+	if (external && !showCliOptions) return null;
 	if (!external) return children;
 	return (
 		<details className="rounded-lg border border-dashed p-2.5 text-xs text-muted-foreground">

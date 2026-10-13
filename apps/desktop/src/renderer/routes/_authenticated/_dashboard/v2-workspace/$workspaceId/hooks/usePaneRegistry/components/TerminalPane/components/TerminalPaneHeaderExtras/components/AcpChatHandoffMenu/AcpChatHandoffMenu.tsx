@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { AgentSelect } from "renderer/components/AgentSelect";
+import { ForkAccountEmptyState } from "renderer/components/ForkAccountEmptyState";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
@@ -41,7 +42,12 @@ import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHos
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
+import {
+	forkLaunchAccountSelection,
+	visibleForkAccountOptions,
+} from "renderer/lib/fork-account-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import type {
 	PaneViewerData,
 	TerminalPaneData,
@@ -71,6 +77,7 @@ export function AcpChatHandoffMenu({
 	onOpenAgentChat: OpenAgentChat;
 }) {
 	const { t } = useLingui();
+	const showCliOptions = useForkCliOptions();
 	const { switchInPlace } = useForkAgentSwitch(workspaceId, ctx, data);
 	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
 	const sourceSelection = binding?.account
@@ -172,16 +179,51 @@ export function AcpChatHandoffMenu({
 				verified(target?.presetId) &&
 				target?.resumeArgs?.length,
 		);
-	const pickedSelection =
+	const choices = visibleForkAccountOptions(options.data ?? [], showCliOptions);
+	const configuredSelection = quota.data?.find(
+		(row) =>
+			row.agent === target?.presetId && row.isDefault && row.selection !== null,
+	)?.selection;
+	const metadata = useQuery({
+		queryKey: ["fork-launch-account", hostUrl, target?.id],
+		enabled: open && managed && !!hostUrl && !!target,
+		queryFn: () =>
+			hostUrl && target
+				? getHostServiceClientByUrl(hostUrl).usage.launchAccount.query({
+						agent: target.id,
+						isolated: true,
+					})
+				: null,
+		retry: false,
+		staleTime: 30_000,
+	});
+	const rawSelection =
 		account === CONFIGURED_ACCOUNT
 			? undefined
 			: account === SYSTEM_ACCOUNT
 				? null
 				: account;
+	const pickedSelection = metadata.data?.environmentOverride
+		? undefined
+		: forkLaunchAccountSelection(
+				rawSelection === undefined && !sameAgent && !showCliOptions
+					? configuredSelection
+					: rawSelection,
+				sameAgent
+					? choices.filter(
+							(option) => option.selection !== accountSwitcher?.current,
+						)
+					: choices,
+				showCliOptions,
+			);
 	const accountMissing =
-		sameAgent &&
-		(pickedSelection === undefined ||
-			pickedSelection === accountSwitcher?.current);
+		(managed &&
+			!showCliOptions &&
+			!metadata.data?.environmentOverride &&
+			typeof pickedSelection !== "string") ||
+		(sameAgent &&
+			(pickedSelection === undefined ||
+				pickedSelection === accountSwitcher?.current));
 	if (!sourcePreset) return null;
 	const sourceLabel =
 		configs.find(
@@ -195,18 +237,14 @@ export function AcpChatHandoffMenu({
 	};
 
 	const start = async () => {
+		if (accountMissing) return;
 		if (sameAgent && accountSwitcher && pickedSelection !== undefined) {
 			setOpen(false);
 			accountSwitcher.onSwitch(pickedSelection);
 			return;
 		}
 		if (!target || !sourceSessionId) return;
-		const accountSelection =
-			managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
-				? account === SYSTEM_ACCOUNT
-					? null
-					: account
-				: undefined;
+		const accountSelection = managed ? pickedSelection : undefined;
 		if (
 			placement === "this-chat" &&
 			hostUrl &&
@@ -246,8 +284,8 @@ export function AcpChatHandoffMenu({
 			const launch = await prepareAcpLaunch.mutateAsync({
 				workspaceId,
 				configId: target.id,
-				...(managed && options.isSuccess && account !== CONFIGURED_ACCOUNT
-					? { accountSelection: account === SYSTEM_ACCOUNT ? null : account }
+				...(managed && pickedSelection !== undefined
+					? { accountSelection: pickedSelection }
 					: {}),
 			});
 			const targetTerminalId = crypto.randomUUID();
@@ -323,9 +361,11 @@ export function AcpChatHandoffMenu({
 		binding?.account?.email ??
 		(data.acpAccountSelection
 			? data.acpAccountSelection.split("/").at(-1)
-			: t({ message: "CLI login" }));
+			: showCliOptions
+				? t({ message: "CLI login" })
+				: t({ message: "Account" }));
 	const continueWithContext = async () => {
-		if (!target || !chatSessionId || busy || stage) return;
+		if (!target || !chatSessionId || busy || stage || accountMissing) return;
 		const run = ++runSequence.current;
 		setStage("converting");
 		let restoreRecovery: (() => void) | undefined;
@@ -568,9 +608,11 @@ export function AcpChatHandoffMenu({
 										</Label>
 										<Select
 											value={
-												sameAgent && account === CONFIGURED_ACCOUNT
-													? ""
-													: account
+												showCliOptions
+													? sameAgent && account === CONFIGURED_ACCOUNT
+														? ""
+														: account
+													: (pickedSelection ?? "")
 											}
 											onValueChange={(value) => {
 												setAccount(value);
@@ -587,13 +629,13 @@ export function AcpChatHandoffMenu({
 												/>
 											</SelectTrigger>
 											<SelectContent>
-												{!sameAgent && (
+												{showCliOptions && !sameAgent && (
 													<SelectItem value={CONFIGURED_ACCOUNT}>
 														<Trans>Configured account</Trans>
 													</SelectItem>
 												)}
-												{options.data
-													?.filter(
+												{choices
+													.filter(
 														(option) =>
 															!sameAgent ||
 															option.selection !== accountSwitcher?.current,
@@ -631,6 +673,21 @@ export function AcpChatHandoffMenu({
 													})}
 											</SelectContent>
 										</Select>
+										{options.isSuccess &&
+											choices.length === 0 &&
+											target &&
+											!showCliOptions &&
+											!metadata.data?.environmentOverride && (
+												<ForkAccountEmptyState
+													hostUrl={hostUrl}
+													agent={target.presetId as "claude" | "codex"}
+													onAccountAdded={() => {
+														void options.refetch();
+														void quota.refetch();
+														void metadata.refetch();
+													}}
+												/>
+											)}
 										{!accountMissing && (
 											<ForkUsageSummary
 												account={quota.data?.find(

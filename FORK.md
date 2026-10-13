@@ -24,7 +24,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del
   progetto, inclusi i worktree. Se una chat è già collegata a Superset, la riapre
   e la mette a fuoco. Gli elenchi seguono l’ordine e le icone delle impostazioni.
-- **CLI / CHAT** riprende la stessa sessione nell’altra vista, conservando
+- **CLI / CHAT**, disponibile attivando le opzioni CLI avanzate, riprende la
+  stessa sessione nell’altra vista, conservando
   l’account effettivo e la configurazione. L’adattatore uscente viene fermato
   prima di avviare quello nuovo: la cronologia ha un solo processo scrittore.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
@@ -94,11 +95,19 @@ risulta disconnesso, rimane visibile: usa **Reconnect account** con la stessa
 identità oppure scegli un altro profilo. Per una nuova identità, aggiungi un
 nuovo profilo; le quote del vecchio account non vengono riutilizzate.
 
-La voce separata **CLI login** segue invece il login esterno corrente. È una
-scelta esplicita per l’avvio, non può diventare il predefinito di Superset++ ed
-è esclusa dagli account suggeriti per la continuazione automatica. Anche le
-chat importate senza configurazione agente conservano una scelta esplicita.
-Cambiare account per un nuovo avvio non sposta o arresta le chat già aperte.
+Il login esterno **CLI login** e il selettore **CHAT/CLI** sono nascosti per
+impostazione predefinita. Si possono ripristinare da **Impostazioni → Agents →
+Opzioni CLI avanzate**: è una preferenza locale di questo dispositivo.
+Quando l’opzione è disattivata, anche i menu di creazione e cambio account nella
+chat mostrano soltanto i profili separati. **CLI login** non viene mai suggerito né scelto dalla continuazione
+automatica, anche quando le opzioni avanzate sono attive.
+
+Per Claude e Codex, usare **Aggiungi account** per accedere in un profilo dedicato;
+il login già presente nel terminale non è sufficiente per una nuova chat con le
+opzioni avanzate disattivate. I profili, le credenziali e le sessioni già esistenti
+restano conservati; il terminale di sviluppo e quelli usati per il login rimangono
+disponibili. Le configurazioni che impongono credenziali API continuano a usare
+quelle credenziali senza richiedere un login in abbonamento.
 
 Gli host remoti richiedono il fork aggiornato per l’isolamento e la verifica
 dell’identità. I workspace cloud non espongono i profili locali del computer.

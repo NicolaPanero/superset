@@ -2,7 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
+import { forkLaunchAccountSelection } from "renderer/lib/fork-account-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 
 export function useForkCreationAccount(
@@ -13,6 +15,7 @@ export function useForkCreationAccount(
 	resetKey: number,
 	clientForHost = getHostServiceClientByUrl,
 ) {
+	const showCliOptions = useForkCliOptions();
 	const enabled = !!hostUrl && (provider === "claude" || provider === "codex");
 	const quota = useHostUsageQuota(enabled ? hostUrl : null, clientForHost);
 	const [pickerOpen, setPickerOpen] = useState(false);
@@ -47,7 +50,7 @@ export function useForkCreationAccount(
 	useEffect(() => {
 		if (stored && stored.key !== key) update({ forkAccountChoice: undefined });
 	}, [key, stored, update]);
-	const selection =
+	const rawSelection =
 		!enabled || !metadata.data || metadata.data.environmentOverride
 			? undefined
 			: stored?.key === key
@@ -59,6 +62,14 @@ export function useForkCreationAccount(
 							account.isDefault &&
 							account.selection !== null,
 					)?.selection);
+	const selection =
+		!enabled || metadata.data?.environmentOverride
+			? undefined
+			: forkLaunchAccountSelection(
+					rawSelection,
+					options.data ?? [],
+					showCliOptions,
+				);
 	const signature = `${key}:${selection}:${model}`;
 	const live = useRef(signature);
 	live.current = signature;
@@ -81,8 +92,17 @@ export function useForkCreationAccount(
 		available: !!metadata.data,
 		choose: (value: string | null) =>
 			update({ forkAccountChoice: { key, selection: value } }),
-		confirm: () =>
-			!enabled || !hostUrl
+		confirm: () => {
+			if (
+				enabled &&
+				!showCliOptions &&
+				!metadata.data?.environmentOverride &&
+				typeof selection !== "string"
+			) {
+				setPickerOpen(true);
+				return Promise.resolve(false);
+			}
+			return !enabled || !hostUrl
 				? Promise.resolve(true)
 				: validateAccountLaunch(
 						{
@@ -94,6 +114,7 @@ export function useForkCreationAccount(
 							isCurrent: () => live.current === signature,
 						},
 						clientForHost,
-					),
+					);
+		},
 	};
 }

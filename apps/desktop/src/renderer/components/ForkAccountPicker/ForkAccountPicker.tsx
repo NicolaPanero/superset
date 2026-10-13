@@ -13,10 +13,12 @@ import { toast } from "@superset/ui/sonner";
 import { useState } from "react";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
+import { visibleForkAccountOptions } from "renderer/lib/fork-account-visibility";
 import {
 	AddAccountDialog,
 	type SwitchSignInTarget,
 } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { ForkUsageSummary } from "../ForkUsageSummary";
 import type { useForkCreationAccount } from "./useForkCreationAccount";
 
@@ -30,10 +32,14 @@ export function ForkAccountPicker({
 	model?: string;
 }) {
 	const menuDialog = useForkMenuDialog();
+	const showCliOptions = useForkCliOptions();
 	const [adding, setAdding] = useState(false);
 	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
 	if (!account.enabled) return null;
-	const choices = (account.options.data ?? [])
+	const choices = visibleForkAccountOptions(
+		account.options.data ?? [],
+		showCliOptions,
+	)
 		.toSorted(
 			(a, b) => Number(a.selection === null) - Number(b.selection === null),
 		)
@@ -100,6 +106,11 @@ export function ForkAccountPicker({
 					<DropdownMenuLabel>
 						<Trans>Account</Trans>
 					</DropdownMenuLabel>
+					{account.options.isSuccess && choices.length === 0 && (
+						<p className="px-2 py-2 text-xs text-muted-foreground">
+							<Trans>Add an account to start chatting.</Trans>
+						</p>
+					)}
 					{choices.map(({ option, usage }) => (
 						<div key={option.selection ?? "system"}>
 							{option.selection === null && <DropdownMenuSeparator />}

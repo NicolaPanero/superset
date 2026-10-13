@@ -1584,9 +1584,6 @@ msgstr "ACP 聊天"
 msgid "ACP chat is unavailable"
 msgstr "ACP 聊天無法使用"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP 聊天無法使用。正在開啟終端機。"
-
 msgid "Acquisition"
 msgstr "獲客"
 
@@ -1687,6 +1684,9 @@ msgstr "以後想釋出代理程式配置時，可以加到這裡。"
 
 msgid "Add agents…"
 msgstr "新增代理程式…"
+
+msgid "Add an account to start chatting."
+msgstr "新增帳戶以開始聊天。"
 
 msgid "add an agent"
 msgstr "新增代理程式"
@@ -1850,6 +1850,9 @@ msgstr "將 v1 工作區遷入已匯入的對應 v2 專案。"
 
 msgid "Advanced"
 msgstr "進階"
+
+msgid "Advanced CLI options"
+msgstr "進階 CLI 選項"
 
 msgid "Advanced configuration"
 msgstr "進階設定"
@@ -15238,6 +15241,9 @@ msgstr "顯示所有行"
 msgid "Show checks"
 msgstr "顯示檢查"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "在此裝置上顯示 CLI 登入帳戶和 CHAT/CLI 切換按鈕。"
+
 msgid "Show closed"
 msgstr "顯示已關閉"
 
@@ -17176,6 +17182,9 @@ msgstr "此代理無法分叉對話"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "此代理程式無法在雲端工作區中執行"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "此代理無法開啟聊天。請啟用進階 CLI 選項以在終端機中使用它。"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所選裝置上已不存在這個代理程式（它的代理程式可能被重置過）。在你選擇新的代理程式之前，執行都會失敗。"

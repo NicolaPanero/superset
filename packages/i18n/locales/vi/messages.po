@@ -1584,9 +1584,6 @@ msgstr "Chat ACP"
 msgid "ACP chat is unavailable"
 msgstr "Chat ACP không khả dụng"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "Chat ACP không khả dụng. Đang mở cửa sổ dòng lệnh."
-
 msgid "Acquisition"
 msgstr "Thu hút"
 
@@ -1687,6 +1684,9 @@ msgstr "Thêm cấu hình agent vào đây khi bạn muốn công bố chúng."
 
 msgid "Add agents…"
 msgstr "Thêm agent…"
+
+msgid "Add an account to start chatting."
+msgstr "Thêm tài khoản để bắt đầu trò chuyện."
 
 msgid "add an agent"
 msgstr "thêm một agent"
@@ -1850,6 +1850,9 @@ msgstr "Chuyển không gian làm việc v1 vào dự án v2 tương ứng đã 
 
 msgid "Advanced"
 msgstr "Nâng cao"
+
+msgid "Advanced CLI options"
+msgstr "Tùy chọn CLI nâng cao"
 
 msgid "Advanced configuration"
 msgstr "Cấu hình nâng cao"
@@ -15238,6 +15241,9 @@ msgstr "Hiện tất cả các dòng"
 msgid "Show checks"
 msgstr "Hiện check"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Hiển thị tài khoản đăng nhập CLI và nút chuyển CHAT/CLI trên thiết bị này."
+
 msgid "Show closed"
 msgstr "Hiện issue đã đóng"
 
@@ -17176,6 +17182,9 @@ msgstr "Tác nhân này không thể tạo nhánh hội thoại"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Agent này không thể chạy trong workspace cloud"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Tác nhân này không thể mở trò chuyện. Bật tùy chọn CLI nâng cao để sử dụng trong terminal."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."

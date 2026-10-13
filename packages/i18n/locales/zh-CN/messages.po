@@ -1584,9 +1584,6 @@ msgstr "ACP 聊天"
 msgid "ACP chat is unavailable"
 msgstr "ACP 聊天不可用"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP 聊天不可用。正在打开终端。"
-
 msgid "Acquisition"
 msgstr "获客"
 
@@ -1687,6 +1684,9 @@ msgstr "以后想发布智能体配置时，可以加到这里。"
 
 msgid "Add agents…"
 msgstr "添加智能体…"
+
+msgid "Add an account to start chatting."
+msgstr "添加账户以开始聊天。"
 
 msgid "add an agent"
 msgstr "添加智能体"
@@ -1850,6 +1850,9 @@ msgstr "将 v1 工作区迁入已导入的对应 v2 项目。"
 
 msgid "Advanced"
 msgstr "高级"
+
+msgid "Advanced CLI options"
+msgstr "高级 CLI 选项"
 
 msgid "Advanced configuration"
 msgstr "高级配置"
@@ -15238,6 +15241,9 @@ msgstr "显示所有行"
 msgid "Show checks"
 msgstr "显示检查"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "在此设备上显示 CLI 登录账户和 CHAT/CLI 切换按钮。"
+
 msgid "Show closed"
 msgstr "显示已关闭"
 
@@ -17176,6 +17182,9 @@ msgstr "该智能体无法分叉对话"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "此智能体无法在云端工作区中运行"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "此智能体无法打开聊天。请启用高级 CLI 选项以在终端中使用它。"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所选设备上已不存在这个智能体（它的智能体可能被重置过）。在你选择新的智能体之前，运行都会失败。"

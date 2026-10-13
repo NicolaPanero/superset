@@ -35,6 +35,7 @@ import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useCopyToClipboard } from "renderer/hooks/useCopyToClipboard";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useRemoveUsageAccount } from "../../hooks/useRemoveUsageAccount";
 import { useRestartAgentSessions } from "../../hooks/useRestartAgentSessions";
 import { useSetDefaultUsageAccount } from "../../hooks/useSetDefaultUsageAccount";
@@ -393,7 +394,13 @@ export function UsageView({
 	const { countRestartCandidates, restartMutation } =
 		useRestartAgentSessions(hostUrl);
 
-	const accounts = quotaQuery.data ?? [];
+	const showCliOptions = useForkCliOptions();
+	const accounts = (quotaQuery.data ?? []).filter(
+		(account) =>
+			showCliOptions ||
+			!isManagedAgent(account.agent) ||
+			account.selection !== null,
+	);
 	useEffect(() => {
 		const key = `${hostUrl}:${focusedAgent}:${focusedAccountKey}`;
 		if (
