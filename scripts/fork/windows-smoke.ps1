@@ -9,8 +9,12 @@ try {
         if ($result.ExitCode -ne 0) { throw "NSIS installation failed: $($result.ExitCode)" }
     }
     $executable = Join-Path $installation "Superset++.exe"
-    & $executable (Join-Path $PSScriptRoot "windows-native-probe.cjs") $installation
-    if ($LASTEXITCODE -ne 0) { throw "Installed native runtime failed" }
+    $probeOutput = Join-Path $env:RUNNER_TEMP "windows-native-stdout.log"
+    $probeError = Join-Path $env:RUNNER_TEMP "windows-native-stderr.log"
+    $probeArguments = '"' + (Join-Path $PSScriptRoot "windows-native-probe.cjs") + '" "' + $installation + '"'
+    $probe = Start-Process -FilePath $executable -ArgumentList $probeArguments -Wait -PassThru -RedirectStandardOutput $probeOutput -RedirectStandardError $probeError
+    Get-Content $probeOutput,$probeError -Encoding UTF8
+    if ($probe.ExitCode -ne 0) { throw "Installed native runtime failed" }
     $bin = Join-Path $installation "resources/resources/bin"
     & (Join-Path $bin "txcript-transfer.exe") capabilities
     if ($LASTEXITCODE -ne 0) { throw "Installed conversion helper failed" }

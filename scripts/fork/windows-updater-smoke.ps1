@@ -40,7 +40,7 @@ try {
  if($updater.ExitCode -ne 0){throw (Get-Content $log -Raw)}
  $deadline = [DateTime]::UtcNow.AddSeconds(10)
  while (-not (Test-Path $env:FORK_UPDATE_RESTART)){if([DateTime]::UtcNow -gt $deadline){throw "App did not restart"}; Start-Sleep -Milliseconds 100}
- $arguments = Get-Content $env:FORK_UPDATE_ARGS -Raw
+ $arguments = Get-Content $env:FORK_UPDATE_ARGS -Raw -Encoding UTF8
  if(-not $arguments.EndsWith("/S /currentuser --updated /D=$application")) {throw "Wrong installer arguments: $arguments"}
  if(Test-Path $work){throw "Updater left staging behind"}
  Write-Host "Windows updater shutdown, Unicode installation arguments and restart OK"

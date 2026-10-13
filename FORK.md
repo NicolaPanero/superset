@@ -245,7 +245,7 @@ per quella chat: vedi [Continuazione automatica](#continuazione-automatica-delle
 
 ### Verifiche delle conversioni
 
-Il motore validato è txcript `v0.14.4-fork.12`. Il contesto generato da Grok,
+Il motore validato è txcript `v0.14.4-fork.14`. Il contesto generato da Grok,
 i riepiloghi di sessione e i messaggi di ripresa automatica vengono distinti
 dai prompt dell’utente. Il contesto utile resta disponibile con un’etichetta
 esplicita, senza attribuirlo alla persona.
