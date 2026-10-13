@@ -118,3 +118,14 @@ che le scelte isolate siano conservate e che gli override API restino utilizzabi
 La policy di continuazione automatica esclude il login esterno anche quando ha
 la quota migliore. Questi test vengono eseguiti prima della build tramite
 `bun run test:fork`; non effettuano login reali.
+
+### Avvisi di aggiornamento
+
+I test dell’aggiornatore coprono il controllo dopo un minuto e ogni 15 minuti,
+il ritorno in primo piano e il risveglio senza cicli di focus, la pulizia di
+listener e timer, le risposte GitHub 304/403/429 e i tentativi dopo errori.
+Una prova collega il checker, lo stato di notifica e il presenter della UI:
+controllo automatico, avviso, Later, nuova release e verifica manuale.
+Sono verificati anche la consegna ritardata al renderer, più finestre, i pulsanti
+accessibili e il tentativo di installazione dopo annullamento. Non viene eseguita
+alcuna installazione o richiesta a GitHub nei test.

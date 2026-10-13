@@ -1,40 +1,32 @@
 import { join } from "node:path";
 import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
-import { app, dialog } from "electron";
+import { app, dialog, powerMonitor } from "electron";
 import log from "electron-log/main";
 import { env } from "main/env.main";
 import { exitImmediately, setSkipQuitConfirmation } from "main/index";
+import { createForkReleaseLookup } from "./fork-release-lookup";
 import { createForkUpdateCheck } from "./fork-update-check";
 import {
 	type ForkInstallAsset,
-	forkInstallAsset,
 	installedForkAppPath,
 	prepareForkInstaller,
 	restartPreparedForkUpdate,
 } from "./fork-update-install";
+import { forkUpdateNotices } from "./fork-update-notices";
 import { showForkUpdateProgress } from "./fork-update-progress";
+import { scheduleForkUpdateChecks } from "./fork-update-schedule";
 
 // Set when the fork's release workflow builds the app.
 const FORK_RELEASE = process.env.SUPERSET_FORK_RELEASE ?? "";
 const FORK_REPOSITORY = process.env.SUPERSET_FORK_REPOSITORY ?? "";
-const CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
-const FIRST_CHECK_DELAY_MS = 60 * 1000;
 
 let availableAsset: ForkInstallAsset | undefined;
 let installing: Promise<boolean> | undefined;
 
+const lookupRelease = createForkReleaseLookup({ repository: FORK_REPOSITORY });
 async function latestRelease(): Promise<string> {
-	const response = await fetch(
-		`https://api.github.com/repos/${FORK_REPOSITORY}/releases/latest`,
-		{
-			headers: { Accept: "application/vnd.github+json" },
-			signal: AbortSignal.timeout(15_000),
-		},
-	);
-	if (!response.ok)
-		throw new Error(`Fork release check: HTTP ${response.status}`);
-	availableAsset = forkInstallAsset(await response.json(), FORK_REPOSITORY);
+	availableAsset = await lookupRelease();
 	return availableAsset.tag;
 }
 
@@ -129,7 +121,14 @@ async function offerUpdate(tag: string): Promise<boolean> {
 const check = createForkUpdateCheck({
 	installed: FORK_RELEASE,
 	latestRelease,
-	offer: offerUpdate,
+	async offer(tag, interactive) {
+		if (interactive) {
+			forkUpdateNotices.dismiss(forkUpdateNotices.get()?.tag ?? tag);
+			return offerUpdate(tag);
+		}
+		forkUpdateNotices.publish({ tag, installed: FORK_RELEASE });
+		return true;
+	},
 	async upToDate() {
 		await dialog.showMessageBox({
 			type: "info",
@@ -166,6 +165,7 @@ function canCheckForkUpdates(): boolean {
 }
 
 function runCheck(interactive = false): void {
+	if (installing) return;
 	void check(interactive).catch((error) =>
 		log.warn("[fork-updates] dialog failed", error),
 	);
@@ -177,10 +177,44 @@ export function checkForForkUpdatesInteractive(): boolean {
 	return true;
 }
 
+export async function installAvailableForkUpdate(
+	tag: string,
+): Promise<boolean> {
+	if (!canCheckForkUpdates() || availableAsset?.tag !== tag) return false;
+	const installed = await installAndRestart(tag);
+	if (installed) forkUpdateNotices.dismiss(tag);
+	return installed;
+}
+
 /** Offers this fork's newer GitHub releases; official updates are off in fork builds. */
 export function setupForkUpdates(): void {
 	if (!canCheckForkUpdates()) return;
 	log.info("[fork-updates] automatic checks enabled", FORK_RELEASE);
-	setTimeout(runCheck, FIRST_CHECK_DELAY_MS);
-	setInterval(runCheck, CHECK_INTERVAL_MS);
+	const dispose = scheduleForkUpdateChecks({
+		check: runCheck,
+		now: Date.now,
+		after(callback, delay) {
+			const timer = setTimeout(callback, delay);
+			timer.unref();
+			return () => clearTimeout(timer);
+		},
+		every(callback, delay) {
+			const timer = setInterval(callback, delay);
+			timer.unref();
+			return () => clearInterval(timer);
+		},
+		onFocus(callback) {
+			app.on("browser-window-focus", callback);
+			return () => {
+				app.off("browser-window-focus", callback);
+			};
+		},
+		onResume(callback) {
+			powerMonitor.on("resume", callback);
+			return () => {
+				powerMonitor.off("resume", callback);
+			};
+		},
+	});
+	app.once("will-quit", dispose);
 }

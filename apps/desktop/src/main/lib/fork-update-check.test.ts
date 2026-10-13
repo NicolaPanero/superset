@@ -58,7 +58,7 @@ describe("fork update checks", () => {
 		expect(f.upToDate).toHaveBeenCalledTimes(1);
 		f.latestRelease.mockResolvedValue(newer);
 		await f.check();
-		expect(f.offer).toHaveBeenCalledWith(newer);
+		expect(f.offer).toHaveBeenCalledWith(newer, false);
 	});
 
 	it("does not open another dialog while an offer is already visible", async () => {
@@ -103,7 +103,7 @@ describe("fork update checks", () => {
 		expect(f.upToDate).not.toHaveBeenCalled();
 		f.latestRelease.mockResolvedValue(newer);
 		await f.check(true);
-		expect(f.offer).toHaveBeenCalledWith(newer);
+		expect(f.offer).toHaveBeenCalledWith(newer, true);
 	});
 	it("reoffers an update after preparation fails or is cancelled", async () => {
 		const f = fixture();
