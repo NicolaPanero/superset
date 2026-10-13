@@ -5,6 +5,7 @@ import {
 	chmodSync,
 	mkdirSync,
 	mkdtempSync,
+	readdirSync,
 	readFileSync,
 	realpathSync,
 	rmSync,
@@ -14,7 +15,7 @@ import { tmpdir } from "node:os";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { tag } from "../../../../scripts/fork/txcript-version.json";
 import type { TransferAgent } from "./registry";
-import { TxcriptTransferProvider } from "./txcript";
+import { runHelper, TxcriptTransferProvider } from "./txcript";
 
 const helper = Reflect.get(
 	globalThis,
@@ -22,7 +23,8 @@ const helper = Reflect.get(
 ) as string | undefined;
 if (!helper)
 	throw new Error("Use bun run test:fork:native to supply the pinned helper");
-const provider = new TxcriptTransferProvider(helper);
+const nativeHelper = helper;
+const provider = new TxcriptTransferProvider(nativeHelper);
 const agents: TransferAgent[] = [
 	"claude",
 	"codex",
@@ -35,10 +37,16 @@ const sources = new Map<
 	{ root: string; reference: string; id: string }
 >();
 const text =
-	"Preserve all native context 日本語 · " +
+	"Preserve all native context 日本語 · Explain <user_info>example</user_info> · " +
 	"x".repeat(50000) +
 	" · end of message";
 const reply = "Synthetic assistant reply: keep conversation history.";
+const followup =
+	"Continue after the tool error without inventing a user prompt.";
+const runtimeContext =
+	"Completed previous work; next inspect the integration tests.";
+const failedOutput = "fixture command failed: permission denied";
+const structuredOutput = { files: ["a.ts", "b.ts"], count: 2 };
 let root: string, cwd: string;
 const previous = { path: process.env.PATH, db: process.env.OPENCODE_DB };
 function directory(name: string) {
@@ -102,35 +110,133 @@ db.close();console.log("Imported session: "+info.id);
 	const claudeRoot = directory("claude"),
 		id = randomUUID(),
 		reference = join(claudeRoot, `${id}.jsonl`);
+	const turns = [
+		{ role: "user", content: text },
+		{
+			role: "assistant",
+			content: [
+				{ type: "thinking", thinking: "Inspect the source before continuing" },
+				{ type: "text", text: reply },
+			],
+		},
+		{
+			role: "assistant",
+			content: [
+				{
+					type: "tool_use",
+					id: "read:fixture",
+					name: "Read",
+					input: { file_path: "a.ts" },
+				},
+				{
+					type: "tool_use",
+					id: "shell:fixture",
+					name: "Bash",
+					input: { command: "fixture-command" },
+				},
+			],
+		},
+		{
+			role: "user",
+			content: [
+				{
+					type: "tool_result",
+					tool_use_id: "read:fixture",
+					content: structuredOutput,
+				},
+				{
+					type: "tool_result",
+					tool_use_id: "shell:fixture",
+					content: failedOutput,
+					is_error: true,
+				},
+			],
+		},
+		{
+			role: "user",
+			content: [
+				{ type: "text", text: followup },
+				{
+					type: "image",
+					source: { type: "base64", media_type: "image/png", data: "UE5H" },
+				},
+			],
+		},
+		{
+			role: "assistant",
+			content: [{ type: "text", text: "Finished after the follow-up." }],
+		},
+	];
+	let parent: string | null = null;
+	const records = turns.map((message, index) => {
+		const uuid = randomUUID();
+		const record = {
+			type: message.role,
+			uuid,
+			parentUuid: parent,
+			sessionId: id,
+			cwd,
+			timestamp: new Date(Date.UTC(2026, 0, 1, 0, 0, index)).toISOString(),
+			message,
+		};
+		parent = uuid;
+		return record;
+	});
 	writeFileSync(
 		reference,
-		`${[
-			{
-				type: "user",
-				uuid: randomUUID(),
-				sessionId: id,
-				cwd,
-				timestamp: "2026-01-01T00:00:00Z",
-				message: { role: "user", content: text },
-			},
-			{
-				type: "assistant",
-				uuid: randomUUID(),
-				sessionId: id,
-				cwd,
-				timestamp: "2026-01-01T00:00:01Z",
-				message: {
-					role: "assistant",
-					content: [{ type: "text", text: reply }],
-				},
-			},
-		]
-			.map((value) => JSON.stringify(value))
-			.join("\n")}\n`,
+		`${records.map((value) => JSON.stringify(value)).join("\n")}\n`,
 	);
 	sources.set("claude", { root: claudeRoot, reference, id });
 	for (const agent of agents.filter((agent) => agent !== "claude")) {
 		const converted = await convert("claude", agent, `seed-${agent}`);
+		if (agent === "grok") {
+			const historyPath = join(converted.reference, "chat_history.jsonl");
+			const records = readFileSync(historyPath, "utf8")
+				.trim()
+				.split("\n")
+				.map((line) => JSON.parse(line));
+			records[0].content[0].text = `<user_info>OS: fixture</user_info>\n<rules>internal project rules</rules>\n${records[0].content[0].text}\n<system-reminder>runtime reminder</system-reminder>`;
+			records.unshift(
+				{
+					type: "user",
+					content: [
+						{
+							type: "text",
+							text: `<system-reminder>The following skills are available:\n${"- fixture-skill: synthetic description, /fixture/test/SKILL.md\n".repeat(800)}</system-reminder>\n<system-reminder>MCP servers connected: fixture-browser. Synthetic tool instructions.</system-reminder>`,
+						},
+					],
+				},
+				{
+					type: "user",
+					synthetic_reason: "project_instructions",
+					content: [
+						{
+							type: "text",
+							text: "This internal instruction is not a human prompt",
+						},
+					],
+				},
+				{
+					type: "user",
+					synthetic_reason: "compaction_meta",
+					content: [{ type: "text", text: runtimeContext }],
+				},
+				{
+					type: "user",
+					synthetic_reason: "auto_continue",
+					content: [
+						{
+							type: "text",
+							text: "This automatic restart is not a human prompt",
+						},
+					],
+				},
+			);
+			writeFileSync(
+				historyPath,
+				`${records.map((record) => JSON.stringify(record)).join("\n")}\n`,
+			);
+		}
 		sources.set(agent, {
 			root: target(agent, `seed-${agent}`),
 			reference: converted.reference,
@@ -195,4 +301,84 @@ for (const source of agents)
 			);
 			expect(body).toContain(text);
 			expect(body).toContain(reply);
+			const userTexts = records
+				.filter((record) => record.type === "user")
+				.flatMap((record) =>
+					typeof record.message?.content === "string"
+						? [record.message.content]
+						: (record.message?.content ?? [])
+								.filter((block: { type: string }) => block.type === "text")
+								.map((block: { text: string }) => block.text),
+				);
+			expect(userTexts).toEqual([text, followup]);
+			const blocks = records.flatMap((record) =>
+				Array.isArray(record.message?.content) ? record.message.content : [],
+			);
+			const calls = blocks.filter((block) => block.type === "tool_use");
+			const results = blocks.filter((block) => block.type === "tool_result");
+			expect(calls).toHaveLength(2);
+			expect(results).toHaveLength(2);
+			expect(new Set(calls.map((block) => block.id))).toEqual(
+				new Set(results.map((block) => block.tool_use_id)),
+			);
+			expect(
+				results.find((block) => block.content === failedOutput)?.is_error,
+			).toBe(true);
+			expect(JSON.stringify(results)).toContain("a.ts");
+			expect(
+				blocks.some(
+					(block) => block.type === "image" && block.source.data === "UE5H",
+				),
+			).toBe(true);
+			if (source === "grok") {
+				const context = records
+					.filter((record) => record.type === "assistant")
+					.flatMap((record) => record.message?.content ?? []);
+				expect(JSON.stringify(context)).toContain(runtimeContext);
+				expect(body).not.toContain("fixture-skill");
+				expect(body).not.toContain("MCP servers connected");
+			}
 		});
+
+for (const scenario of [
+	"source_id_mismatch",
+	"source_cwd_mismatch",
+	"source_incomplete",
+	"source_outside_store",
+] as const) {
+	test(`native helper refuses ${scenario} without creating a target session`, async () => {
+		const source = sources.get("claude");
+		if (!source) throw new Error("Missing native fixture");
+		const targetRoot = directory(`invalid-${scenario}`);
+		let sourceReference = source.reference;
+		if (scenario === "source_incomplete") {
+			sourceReference = join(source.root, "incomplete.jsonl");
+			writeFileSync(sourceReference, '{"type":"user"');
+		}
+		await expect(
+			runHelper(
+				nativeHelper,
+				[],
+				{
+					sourceAgent: "claude_code",
+					sourceSessionId:
+						scenario === "source_id_mismatch" ? randomUUID() : source.id,
+					sourceRoot:
+						scenario === "source_outside_store"
+							? directory("unrelated-source")
+							: source.root,
+					sourceReference,
+					targetAgent: "codex",
+					targetRoot,
+					cwd:
+						scenario === "source_cwd_mismatch"
+							? directory("unrelated-project")
+							: cwd,
+				},
+				undefined,
+				{ cwd },
+			),
+		).rejects.toThrow(scenario);
+		expect(readdirSync(targetRoot)).toEqual([]);
+	});
+}

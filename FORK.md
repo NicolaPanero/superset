@@ -234,6 +234,20 @@ una chat aperta è disponibile per Claude. Il cambio automatico per quota esauri
 è disponibile nelle chat Claude integrate, solo dopo aver attivato l’opzione
 per quella chat: vedi [Continuazione automatica](#continuazione-automatica-delle-chat-claude).
 
+### Verifiche delle conversioni
+
+Il motore validato è txcript `v0.14.4-fork.10`. Il contesto generato da Grok,
+i riepiloghi di sessione e i messaggi di ripresa automatica vengono distinti
+dai prompt dell’utente. Il contesto utile resta disponibile con un’etichetta
+esplicita, senza attribuirlo alla persona.
+
+I test nativi coprono tutte le 20 direzioni tra Claude Code, Codex, Cursor Agent,
+Grok e OpenCode, con prompt Unicode di oltre 50 KB, esempi di tag XML, testo
+di ragionamento, chiamate e risultati degli strumenti, errori dei comandi,
+risultati strutturati e immagini. Le sessioni incomplete, con ID errato o fuori
+dal deposito autorizzato non devono creare una chat di destinazione. Queste
+prove usano archivi temporanei ed eseguono il motore fissato prima della build.
+
 ## Installazione e compatibilità dei dati
 
 ```sh

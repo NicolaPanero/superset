@@ -61,8 +61,13 @@ bun run test:fork:native /percorso/al/txcript-transfer
 
 Verifica il protocollo e la versione, le 20 direzioni tra Claude, Codex, Cursor,
 Grok e OpenCode, il ritorno in un formato leggibile, il percorso di destinazione,
-la conservazione della sorgente e il contenuto Unicode oltre 36.000 caratteri.
-Usa conversazioni sintetiche e cartelle temporanee. Il motore e i codec sono
+la conservazione della sorgente e il contenuto Unicode oltre 50.000 caratteri.
+Controlla inoltre i ruoli dei messaggi, esempi di tag XML, contesto nativo Grok,
+riepiloghi e riprese automatiche, immagini, risultati strutturati e abbinamento
+tra chiamate e risultati degli strumenti, inclusi gli errori dei comandi.
+Quattro prove verificano che sorgenti incomplete, fuori dal deposito, con ID
+o cartella del progetto errati non creino una chat di destinazione.
+La suite comprende 25 test e usa conversazioni sintetiche e cartelle temporanee. Il motore e i codec sono
 reali; soltanto il comando `opencode import` è sostituito da un importatore
 SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato.
 

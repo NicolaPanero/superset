@@ -17,7 +17,7 @@ import {
 const engine = z.object({
 	protocolVersion: z.literal(1),
 	// Any release of the owner's txcript fork (`<version>-fork.<n>`); the app
-	// bundles the latest one.
+	// bundles its pinned and tested version.
 	engineVersion: z.string().regex(/^\d+\.\d+\.\d+-fork\.\d+$/),
 });
 const capabilitiesSchema = engine.extend({
