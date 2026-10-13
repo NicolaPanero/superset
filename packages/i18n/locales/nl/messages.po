@@ -1578,9 +1578,6 @@ msgstr "ACP-chat"
 msgid "ACP chat is unavailable"
 msgstr "ACP-chat is niet beschikbaar"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP-chat is niet beschikbaar. De terminal wordt geopend."
-
 msgid "Acquisition"
 msgstr "Acquisitie"
 
@@ -1681,6 +1678,9 @@ msgstr "Voeg hier later agentconfiguraties toe als je ze wilt publiceren."
 
 msgid "Add agents…"
 msgstr "Agents toevoegen…"
+
+msgid "Add an account to start chatting."
+msgstr "Voeg een account toe om te chatten."
 
 msgid "add an agent"
 msgstr "een agent toevoegen"
@@ -1844,6 +1844,9 @@ msgstr "Koppel v1-werkruimten aan hun geïmporteerde v2-project."
 
 msgid "Advanced"
 msgstr "Geavanceerd"
+
+msgid "Advanced CLI options"
+msgstr "Geavanceerde CLI-opties"
 
 msgid "Advanced configuration"
 msgstr "Geavanceerde configuratie"
@@ -15226,6 +15229,9 @@ msgstr "Alle regels tonen"
 msgid "Show checks"
 msgstr "Checks tonen"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Toon CLI-aanmeldaccounts en de CHAT/CLI-schakelaar op dit apparaat."
+
 msgid "Show closed"
 msgstr "Gesloten tonen"
 
@@ -17164,6 +17170,9 @@ msgstr "Deze agent kan een gesprek niet afsplitsen"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Deze agent kan niet in een cloudwerkruimte draaien"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Deze agent kan geen chat openen. Schakel de geavanceerde CLI-opties in om hem in een terminal te gebruiken."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Deze agent bestaat niet meer op het gekozen apparaat (de agents zijn mogelijk gereset). Runs mislukken totdat je een nieuwe kiest."

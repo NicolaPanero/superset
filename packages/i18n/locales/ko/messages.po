@@ -1578,9 +1578,6 @@ msgstr "ACP 채팅"
 msgid "ACP chat is unavailable"
 msgstr "ACP 채팅을 사용할 수 없습니다"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP 채팅을 사용할 수 없습니다. 터미널을 엽니다."
-
 msgid "Acquisition"
 msgstr "획득"
 
@@ -1681,6 +1678,9 @@ msgstr "나중에 공개하고 싶은 에이전트 설정을 여기에 추가하
 
 msgid "Add agents…"
 msgstr "에이전트 추가…"
+
+msgid "Add an account to start chatting."
+msgstr "채팅을 시작하려면 계정을 추가하세요."
 
 msgid "add an agent"
 msgstr "에이전트를 추가할"
@@ -1844,6 +1844,9 @@ msgstr "v1 작업 공간을 가져온 해당 v2 프로젝트에 연결합니다.
 
 msgid "Advanced"
 msgstr "고급"
+
+msgid "Advanced CLI options"
+msgstr "고급 CLI 옵션"
 
 msgid "Advanced configuration"
 msgstr "고급 설정"
@@ -15226,6 +15229,9 @@ msgstr "모든 줄 표시"
 msgid "Show checks"
 msgstr "검사 표시"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "이 기기에서 CLI 로그인 계정과 CHAT/CLI 전환 버튼을 표시합니다."
+
 msgid "Show closed"
 msgstr "닫힌 항목 표시"
 
@@ -17164,6 +17170,9 @@ msgstr "이 에이전트는 대화를 분기할 수 없습니다"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "이 에이전트는 클라우드 워크스페이스에서 실행할 수 없습니다"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "이 에이전트는 채팅을 열 수 없습니다. 터미널에서 사용하려면 고급 CLI 옵션을 활성화하세요."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "이 에이전트는 선택한 기기에 더 이상 존재하지 않습니다 (에이전트가 초기화되었을 수 있습니다). 새 에이전트를 선택할 때까지 실행이 실패합니다."

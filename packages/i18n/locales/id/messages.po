@@ -1578,9 +1578,6 @@ msgstr "Chat ACP"
 msgid "ACP chat is unavailable"
 msgstr "Chat ACP tidak tersedia"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "Chat ACP tidak tersedia. Membuka terminal."
-
 msgid "Acquisition"
 msgstr "Akuisisi"
 
@@ -1681,6 +1678,9 @@ msgstr "Tambahkan konfigurasi agen di sini nanti saat Anda ingin mempublikasikan
 
 msgid "Add agents…"
 msgstr "Tambah agen…"
+
+msgid "Add an account to start chatting."
+msgstr "Tambahkan akun untuk mulai mengobrol."
 
 msgid "add an agent"
 msgstr "menambah agen"
@@ -1844,6 +1844,9 @@ msgstr "Gabungkan ruang kerja v1 ke proyek v2 terkait yang telah diimpor."
 
 msgid "Advanced"
 msgstr "Lanjutan"
+
+msgid "Advanced CLI options"
+msgstr "Opsi CLI lanjutan"
 
 msgid "Advanced configuration"
 msgstr "Konfigurasi lanjutan"
@@ -15226,6 +15229,9 @@ msgstr "Tampilkan semua baris"
 msgid "Show checks"
 msgstr "Tampilkan check"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Tampilkan akun login CLI dan pengalih CHAT/CLI pada perangkat ini."
+
 msgid "Show closed"
 msgstr "Tampilkan yang ditutup"
 
@@ -17164,6 +17170,9 @@ msgstr "Agen ini tidak dapat mencabangkan percakapan"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Agen ini tidak bisa berjalan di workspace cloud"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Agen ini tidak dapat membuka chat. Aktifkan opsi CLI lanjutan untuk menggunakannya di terminal."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."

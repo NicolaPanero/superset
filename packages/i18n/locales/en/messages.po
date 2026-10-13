@@ -1578,9 +1578,6 @@ msgstr "ACP chat"
 msgid "ACP chat is unavailable"
 msgstr "ACP chat is unavailable"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP chat is unavailable. Opening the terminal."
-
 msgid "Acquisition"
 msgstr "Acquisition"
 
@@ -1681,6 +1678,9 @@ msgstr "Add agent configs here later when you want to publish them."
 
 msgid "Add agents…"
 msgstr "Add agents…"
+
+msgid "Add an account to start chatting."
+msgstr "Add an account to start chatting."
 
 msgid "add an agent"
 msgstr "add an agent"
@@ -1844,6 +1844,9 @@ msgstr "Adopt v1 workspaces under their imported v2 project."
 
 msgid "Advanced"
 msgstr "Advanced"
+
+msgid "Advanced CLI options"
+msgstr "Advanced CLI options"
 
 msgid "Advanced configuration"
 msgstr "Advanced configuration"
@@ -15226,6 +15229,9 @@ msgstr "Show all lines"
 msgid "Show checks"
 msgstr "Show checks"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Show CLI login accounts and the CHAT/CLI switch on this device."
+
 msgid "Show closed"
 msgstr "Show closed"
 
@@ -17164,6 +17170,9 @@ msgstr "This agent can't branch a conversation"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "This agent can't run in a cloud workspace"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."

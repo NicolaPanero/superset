@@ -1,11 +1,14 @@
 import { Trans } from "@lingui/react/macro";
 import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useSettings } from "renderer/stores/settings";
 
 export function AcpChatSetting() {
+	const showCliOptions = useForkCliOptions();
 	const acpChatEnabled = useSettings((state) => state.acpChatEnabled !== false);
 	const updateSettings = useSettings((state) => state.update);
+	if (!showCliOptions) return null;
 	return (
 		<div className="flex items-center justify-between gap-6">
 			<div className="min-w-0 flex-1 space-y-0.5">

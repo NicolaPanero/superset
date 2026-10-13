@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { cn } from "@superset/ui/utils";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { type AgentPane, useAgentSurface } from "../../hooks/useAgentSurface";
 import type {
 	AgentIdentity,
@@ -15,10 +16,11 @@ export function AgentSurfaceToggle({
 	pane: AgentPane;
 	onChange: (surface: AgentSurface, agent: AgentIdentity | undefined) => void;
 }) {
+	const showCliOptions = useForkCliOptions();
 	const { t } = useLingui();
 	const { agent, surface, switchable } = useAgentSurface(workspaceId, pane);
 
-	if (!switchable) return null;
+	if (!showCliOptions || !switchable) return null;
 
 	return (
 		<div className="flex items-center gap-px">

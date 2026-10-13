@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Bot } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ForkCliOptionsSetting } from "renderer/components/ForkCliOptionsSetting";
 import {
 	V2_AGENT_CONFIGS_QUERY_KEY as QUERY_KEY,
 	useV2AgentConfigs,
@@ -392,6 +393,7 @@ export function V2AgentsSettings({
 				) : (
 					<EmptyState />
 				)}
+				<ForkCliOptionsSetting />
 			</div>
 		</div>
 	);

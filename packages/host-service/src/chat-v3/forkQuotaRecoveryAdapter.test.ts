@@ -1006,3 +1006,24 @@ test("late activation reopens the interrupted turn in the real runtime and keeps
 		await runtime.dispose();
 	}
 });
+
+test("CLI login is never suggested even with the highest quota", () => {
+	const rows = [
+		quota("/current", 100),
+		quota(null, 0, { isDefault: true }),
+		quota("/isolated", 53),
+	];
+	expect(
+		suggestedRecoveryAccount(rows, "/current", undefined, new Map(), NOW)
+			?.selection,
+	).toBe("/isolated");
+	expect(
+		suggestedRecoveryAccount(
+			rows.slice(0, 2),
+			"/current",
+			undefined,
+			new Map(),
+			NOW,
+		),
+	).toBeUndefined();
+});

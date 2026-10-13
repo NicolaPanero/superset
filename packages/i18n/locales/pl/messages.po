@@ -1578,9 +1578,6 @@ msgstr "Czat ACP"
 msgid "ACP chat is unavailable"
 msgstr "Czat ACP jest niedostępny"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "Czat ACP jest niedostępny. Otwieranie terminala."
-
 msgid "Acquisition"
 msgstr "Pozyskiwanie"
 
@@ -1681,6 +1678,9 @@ msgstr "Dodaj tu konfiguracje agentów później, gdy zechcesz je opublikować."
 
 msgid "Add agents…"
 msgstr "Dodaj agentów…"
+
+msgid "Add an account to start chatting."
+msgstr "Dodaj konto, aby rozpocząć czat."
 
 msgid "add an agent"
 msgstr "dodać agenta"
@@ -1844,6 +1844,9 @@ msgstr "Przypisz obszary robocze v1 do odpowiednich zaimportowanych projektów v
 
 msgid "Advanced"
 msgstr "Zaawansowane"
+
+msgid "Advanced CLI options"
+msgstr "Zaawansowane opcje CLI"
 
 msgid "Advanced configuration"
 msgstr "Konfiguracja zaawansowana"
@@ -15226,6 +15229,9 @@ msgstr "Pokaż wszystkie wiersze"
 msgid "Show checks"
 msgstr "Pokaż kontrole"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Pokaż konta logowania CLI i przełącznik CHAT/CLI na tym urządzeniu."
+
 msgid "Show closed"
 msgstr "Pokaż zamknięte"
 
@@ -17164,6 +17170,9 @@ msgstr "Ten agent nie może rozgałęzić rozmowy"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Ten agent nie może działać w obszarze roboczym w chmurze"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Ten agent nie może otworzyć czatu. Włącz zaawansowane opcje CLI, aby używać go w terminalu."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Ten agent już nie istnieje na wybranym urządzeniu (jego agenci mogli zostać zresetowani). Uruchomienia będą kończyć się błędem, dopóki nie wybierzesz nowego."

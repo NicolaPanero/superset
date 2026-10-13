@@ -1578,9 +1578,6 @@ msgstr "Chat ACP"
 msgid "ACP chat is unavailable"
 msgstr "Chat ACP není dostupný"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "Chat ACP není dostupný. Otevírá se terminál."
-
 msgid "Acquisition"
 msgstr "Akvizice"
 
@@ -1681,6 +1678,9 @@ msgstr "Konfigurace agentů sem přidejte později, až je budete chtít zveřej
 
 msgid "Add agents…"
 msgstr "Přidat agenty…"
+
+msgid "Add an account to start chatting."
+msgstr "Přidejte účet a začněte chatovat."
 
 msgid "add an agent"
 msgstr "přidat agenta"
@@ -1844,6 +1844,9 @@ msgstr "Přiřaďte pracovní prostory v1 k odpovídajícím importovaným proje
 
 msgid "Advanced"
 msgstr "Pokročilé"
+
+msgid "Advanced CLI options"
+msgstr "Pokročilé možnosti CLI"
 
 msgid "Advanced configuration"
 msgstr "Pokročilá konfigurace"
@@ -15226,6 +15229,9 @@ msgstr "Zobrazit všechny řádky"
 msgid "Show checks"
 msgstr "Zobrazit kontroly"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Zobrazit přihlašovací účty CLI a přepínač CHAT/CLI na tomto zařízení."
+
 msgid "Show closed"
 msgstr "Zobrazit uzavřené"
 
@@ -17164,6 +17170,9 @@ msgstr "Tento agent neumí rozvětvit konverzaci"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Tento agent nemůže běžet v cloudovém pracovním prostoru"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Tento agent nemůže otevřít chat. Zapněte pokročilé možnosti CLI, abyste ho mohli používat v terminálu."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."

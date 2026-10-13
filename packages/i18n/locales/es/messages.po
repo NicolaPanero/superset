@@ -1578,9 +1578,6 @@ msgstr "Chat ACP"
 msgid "ACP chat is unavailable"
 msgstr "El chat ACP no está disponible"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "El chat ACP no está disponible. Abriendo el terminal."
-
 msgid "Acquisition"
 msgstr "Adquisición"
 
@@ -1681,6 +1678,9 @@ msgstr "Añade aquí configuraciones de agente más adelante, cuando quieras pub
 
 msgid "Add agents…"
 msgstr "Añadir agentes…"
+
+msgid "Add an account to start chatting."
+msgstr "Añade una cuenta para empezar a chatear."
 
 msgid "add an agent"
 msgstr "añadir un agente"
@@ -1844,6 +1844,9 @@ msgstr "Asocia los espacios de trabajo v1 a su proyecto v2 importado."
 
 msgid "Advanced"
 msgstr "Avanzado"
+
+msgid "Advanced CLI options"
+msgstr "Opciones avanzadas de CLI"
 
 msgid "Advanced configuration"
 msgstr "Configuración avanzada"
@@ -15226,6 +15229,9 @@ msgstr "Mostrar todas las líneas"
 msgid "Show checks"
 msgstr "Mostrar comprobaciones"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Muestra las cuentas de inicio de sesión CLI y el selector CHAT/CLI en este dispositivo."
+
 msgid "Show closed"
 msgstr "Mostrar cerrados"
 
@@ -17164,6 +17170,9 @@ msgstr "Este agente no puede bifurcar una conversación"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Este agente no puede ejecutarse en un espacio de trabajo en la nube"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Este agente no puede abrir un chat. Activa las opciones avanzadas de CLI para usarlo en un terminal."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Este agente ya no existe en el dispositivo seleccionado (puede que sus agentes se hayan restablecido). Las ejecuciones fallarán hasta que elijas uno nuevo."

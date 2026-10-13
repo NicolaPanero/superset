@@ -1578,9 +1578,6 @@ msgstr "Чат ACP"
 msgid "ACP chat is unavailable"
 msgstr "Чат ACP недоступен"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "Чат ACP недоступен. Открываем терминал."
-
 msgid "Acquisition"
 msgstr "Привлечение"
 
@@ -1681,6 +1678,9 @@ msgstr "Добавляйте сюда конфигурации агентов п
 
 msgid "Add agents…"
 msgstr "Добавить агентов…"
+
+msgid "Add an account to start chatting."
+msgstr "Добавьте аккаунт, чтобы начать общение."
 
 msgid "add an agent"
 msgstr "добавить агента"
@@ -1844,6 +1844,9 @@ msgstr "Перенесите рабочие пространства v1 в со�
 
 msgid "Advanced"
 msgstr "Дополнительно"
+
+msgid "Advanced CLI options"
+msgstr "Расширенные параметры CLI"
 
 msgid "Advanced configuration"
 msgstr "Расширенная настройка"
@@ -15226,6 +15229,9 @@ msgstr "Показать все строки"
 msgid "Show checks"
 msgstr "Показать проверки"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Показывать аккаунты входа CLI и переключатель CHAT/CLI на этом устройстве."
+
 msgid "Show closed"
 msgstr "Показать закрытые"
 
@@ -17164,6 +17170,9 @@ msgstr "Этот агент не может ответвить разговор"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Этот агент не может работать в облачной рабочей области"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Этот агент не может открыть чат. Включите расширенные параметры CLI, чтобы использовать его в терминале."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Этого агента больше нет на выбранном устройстве (возможно, его агенты были сброшены). Запуски будут падать, пока не выберете нового."

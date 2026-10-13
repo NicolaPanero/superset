@@ -1578,9 +1578,6 @@ msgstr "ACP sohbeti"
 msgid "ACP chat is unavailable"
 msgstr "ACP sohbeti kullanılamıyor"
 
-msgid "ACP chat is unavailable. Opening the terminal."
-msgstr "ACP sohbeti kullanılamıyor. Terminal açılıyor."
-
 msgid "Acquisition"
 msgstr "Edinme"
 
@@ -1681,6 +1678,9 @@ msgstr "Yayımlamak istediğinizde ajan yapılandırmalarını buraya ekleyin."
 
 msgid "Add agents…"
 msgstr "Ajan ekle…"
+
+msgid "Add an account to start chatting."
+msgstr "Sohbete başlamak için bir hesap ekleyin."
 
 msgid "add an agent"
 msgstr "ajan ekleme"
@@ -1844,6 +1844,9 @@ msgstr "v1 çalışma alanlarını içe aktarılan v2 projelerine bağlayın."
 
 msgid "Advanced"
 msgstr "Gelişmiş"
+
+msgid "Advanced CLI options"
+msgstr "Gelişmiş CLI seçenekleri"
 
 msgid "Advanced configuration"
 msgstr "Gelişmiş yapılandırma"
@@ -15226,6 +15229,9 @@ msgstr "Tüm satırları göster"
 msgid "Show checks"
 msgstr "Kontrolleri göster"
 
+msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
+msgstr "Bu cihazda CLI oturum açma hesaplarını ve CHAT/CLI geçişini gösterir."
+
 msgid "Show closed"
 msgstr "Kapalıları göster"
 
@@ -17164,6 +17170,9 @@ msgstr "Bu aracı bir konuşmayı çatallayamaz"
 
 msgid "This agent can't run in a cloud workspace"
 msgstr "Bu ajan bir bulut çalışma alanında çalışamaz"
+
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "Bu ajan sohbet açamıyor. Terminalde kullanmak için gelişmiş CLI seçeneklerini etkinleştirin."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Bu ajan seçili cihazda artık yok (ajanları sıfırlanmış olabilir). Yeni bir tane seçene kadar çalıştırmalar başarısız olacak."

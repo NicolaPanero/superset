@@ -1,17 +1,25 @@
 import { useCallback } from "react";
+import {
+	useForkCliOptions,
+	useForkCliOptionsStore,
+} from "renderer/stores/fork-cli-options";
 import { useSettings } from "renderer/stores/settings";
 
 export type AcpChatAvailability = "enabled" | "disabled" | "resolving";
 
 export function useAcpChatEnabled(): AcpChatAvailability {
-	return useSettings((state) => state.acpChatEnabled !== false)
-		? "enabled"
-		: "disabled";
+	const advanced = useForkCliOptions();
+	const enabled = useSettings((state) => state.acpChatEnabled !== false);
+	return !advanced || enabled ? "enabled" : "disabled";
 }
 
 export function useAwaitAcpChatEnabled(): () => Promise<boolean> {
 	return useCallback(
-		() => Promise.resolve(useSettings.getState().acpChatEnabled !== false),
+		() =>
+			Promise.resolve(
+				!useForkCliOptionsStore.getState().showCliOptions ||
+					useSettings.getState().acpChatEnabled !== false,
+			),
 		[],
 	);
 }
