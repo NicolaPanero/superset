@@ -21,15 +21,23 @@ if (process.platform !== "win32")
 const root = await mkdtemp(join(tmpdir(), "fork-logins-")),
 	bin = join(root, "bin"),
 	home = join(root, "home à ' test");
-const previous = {
-	path: process.env.PATH,
-	user: process.env.USERPROFILE,
-	fail: process.env.FORK_FAKE_LOGIN_FAIL,
-};
+const childEnvironment = { ...process.env };
+const originalPath =
+	Object.entries(process.env).find(
+		([key]) => key.toLowerCase() === "path",
+	)?.[1] || "";
+for (const key of Object.keys(childEnvironment))
+	if (
+		["path", "userprofile", "fork_fake_login_fail"].includes(key.toLowerCase())
+	)
+		delete childEnvironment[key];
+childEnvironment.Path = `${bin}${delimiter}${originalPath}`;
+childEnvironment.USERPROFILE = home;
 async function run(command: string, args: string[]) {
 	const child = Bun.spawn([command, ...args], {
 		stdout: "pipe",
 		stderr: "pipe",
+		env: childEnvironment,
 	});
 	const [code, stdout, stderr] = await Promise.all([
 		child.exited,
@@ -69,8 +77,6 @@ class Login {static int Main(string[] args) {
 	]);
 	assert.equal(compiled.code, 0, compiled.stderr + compiled.stdout);
 	await copyFile(join(bin, "claude.exe"), join(bin, "codex.exe"));
-	process.env.PATH = `${bin}${delimiter}${previous.path || ""}`;
-	process.env.USERPROFILE = home;
 	const powershell = join(
 		process.env.SystemRoot || "C:\\Windows",
 		"System32",
@@ -85,7 +91,7 @@ class Login {static int Main(string[] args) {
 		for (const agent of ["claude", "codex"] as const) {
 			const slug = `${shell === cmd ? "cmd" : "ps"}-${agent}`,
 				profile = join(home, `.${agent}-${slug}`);
-			delete process.env.FORK_FAKE_LOGIN_FAIL;
+			delete childEnvironment.FORK_FAKE_LOGIN_FAIL;
 			const successful = await run(
 				shell,
 				getCommandShellArgs(
@@ -109,7 +115,7 @@ class Login {static int Main(string[] args) {
 				await readFile(join(profile, "fixture-profile"), "utf8"),
 				profile,
 			);
-			process.env.FORK_FAKE_LOGIN_FAIL = "1";
+			childEnvironment.FORK_FAKE_LOGIN_FAIL = "1";
 			const failed = await run(
 				shell,
 				getCommandShellArgs(
@@ -129,7 +135,7 @@ class Login {static int Main(string[] args) {
 				),
 			);
 		}
-	delete process.env.FORK_FAKE_LOGIN_FAIL;
+	delete childEnvironment.FORK_FAKE_LOGIN_FAIL;
 	const readSecret =
 		"function Read-Host { param([string]$Prompt,[switch]$AsSecureString) ConvertTo-SecureString 'fixture-key' -AsPlainText -Force }\n";
 	const api = await run(
@@ -171,11 +177,5 @@ class Login {static int Main(string[] args) {
 		"Windows CMD and PowerShell isolated logins, failure markers and API stdin verified with fake CLIs",
 	);
 } finally {
-	if (previous.path === undefined) delete process.env.PATH;
-	else process.env.PATH = previous.path;
-	if (previous.user === undefined) delete process.env.USERPROFILE;
-	else process.env.USERPROFILE = previous.user;
-	if (previous.fail === undefined) delete process.env.FORK_FAKE_LOGIN_FAIL;
-	else process.env.FORK_FAKE_LOGIN_FAIL = previous.fail;
 	await rm(root, { recursive: true, force: true });
 }
