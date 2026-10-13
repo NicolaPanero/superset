@@ -82,7 +82,9 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
   Electron installato e controlla attesa dell’uscita, argomenti NSIS e riavvio
   dello script di aggiornamento con processi sintetici. Avvia infine l’app
   installata e verifica che apra una finestra con un profilo temporaneo. Tutto avviene sul runner,
-  senza profili reali. Le due build devono riuscire prima della pubblicazione.
+  senza profili reali. Un’ulteriore prova esegue l’aggiunta degli account Claude e
+  Codex da CMD e PowerShell con CLI simulati: verifica la cartella isolata, i
+  marker solo dopo successo e la chiave API su stdin senza login reali. Le due build devono riuscire prima della pubblicazione.
 - La sincronizzazione upstream conserva attivo anche il workflow di regressione.
 
 Le suite non richiedono login, abbonamenti o richieste al modello. I test dei

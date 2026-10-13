@@ -2,6 +2,7 @@ import {
 	type AccountCredentialKind,
 	apiBillingLoginCommand,
 } from "../apiBilling";
+import { windowsLoginCommand } from "../forkWindowsLogin/forkWindowsLogin";
 import type { ManagedAgent } from "../visibleQuotaAgents";
 
 /**
@@ -14,9 +15,19 @@ export function addAccountCommand(
 	slug: string,
 	credentialKind: AccountCredentialKind,
 	markCompleted = false,
+	platform?: string,
+	keyPrompt?: string,
 ): string {
 	if (!/^[a-z0-9][a-z0-9-]*$/.test(slug))
 		throw new Error("account_profile_name_invalid");
+	if (platform === "win32")
+		return windowsLoginCommand({
+			agent,
+			slug,
+			credentialKind,
+			markCompleted,
+			keyPrompt,
+		});
 	const dir =
 		agent === "claude" ? `"$HOME/.claude-${slug}"` : `"$HOME/.codex-${slug}"`;
 	const completed = markCompleted

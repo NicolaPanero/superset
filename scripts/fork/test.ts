@@ -4,6 +4,7 @@ import { relative, resolve } from "node:path";
 const root = resolve(import.meta.dir, "../..");
 const suiteRoots = [
 	"scripts/fork",
+	"packages/agent-setup/src",
 	"apps/desktop/src",
 	"packages/shared/src",
 	"packages/host-service/src",
@@ -11,6 +12,7 @@ const suiteRoots = [
 	"packages/chat-runtime/src",
 ];
 const extra = [
+	"packages/agent-setup/src/shell-wrappers.test.ts",
 	"apps/desktop/fork-identity.test.ts",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/AccountUsage/utils/getAccountUsageState/getAccountUsageState.test.ts",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ForkChatExtras/utils",

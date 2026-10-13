@@ -138,9 +138,12 @@ jobs:
       - name: Windows update and path regressions
         if: runner.os == 'Windows'
         run: |
-          bun test --isolate scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts packages/host-service/src/session-transfer/fork-native-paths.test.ts
+          bun test --isolate packages/agent-setup/src/fork-windows-shell.test.ts scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts packages/host-service/src/session-transfer/fork-native-paths.test.ts
           cd apps/desktop
-          bun test --isolate src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts
+          bun test --isolate src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts src/renderer/routes/_authenticated/settings/usage/components/UsageView/utils/forkWindowsLogin/forkWindowsLogin.test.ts
+      - name: Verify isolated account logins on Windows
+        if: runner.os == 'Windows'
+        run: bun scripts/fork/windows-login-smoke.ts
       - name: Rebuild Electron dependencies
         working-directory: apps/desktop
         run: bun run install:deps

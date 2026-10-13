@@ -3,6 +3,7 @@ import {
 	type AccountCredentialKind,
 	apiBillingLoginCommand,
 } from "../apiBilling";
+import { windowsLoginCommand } from "../forkWindowsLogin/forkWindowsLogin";
 import type { ManagedAgent } from "../visibleQuotaAgents";
 
 interface SwitchSignInLogin {
@@ -26,7 +27,12 @@ interface SwitchSignInLogin {
  * API login and rewrites the marker, which is also how the dialog notices
  * the re-login (the marker's mtime is the profile's fingerprint).
  */
-export function switchSignInCommand(login: SwitchSignInLogin): string {
+export function switchSignInCommand(
+	login: SwitchSignInLogin,
+	platform?: string,
+	keyPrompt?: string,
+): string {
+	if (platform === "win32") return windowsLoginCommand({ ...login, keyPrompt });
 	if (login.credentialKind === "api_key") {
 		// The system-default Codex home is wherever the CLI resolves it; the
 		// default Claude dir is never API-billed (discovery excludes ~/.claude).

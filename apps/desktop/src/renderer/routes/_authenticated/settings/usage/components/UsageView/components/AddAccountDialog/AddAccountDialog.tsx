@@ -20,6 +20,7 @@ import {
 	LuLoaderCircle,
 	LuTerminal,
 } from "react-icons/lu";
+import { useHostServiceInfo } from "renderer/hooks/host-service/useHostServiceInfo";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { CommandTerminal } from "renderer/routes/_authenticated/components/CommandTerminal";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider/LocalHostServiceProvider";
@@ -97,6 +98,10 @@ export function AddAccountDialog({
 	const { t } = useLingui();
 	const { activeHostUrl } = useLocalHostService();
 	const canRunLocally = !!hostUrl && hostUrl === activeHostUrl;
+	const hostInfo = useHostServiceInfo(hostUrl, open && !canRunLocally);
+	const commandPlatform = canRunLocally
+		? window.App?.platform
+		: hostInfo.data?.platform;
 	const [terminalAttempt, setTerminalAttempt] = useState(0);
 	const [terminalRunning, setTerminalRunning] = useState(false);
 	const [commandSucceeded, setCommandSucceeded] = useState(false);
@@ -292,12 +297,18 @@ export function AddAccountDialog({
 	]);
 
 	const command = switchTarget
-		? switchSignInCommand(switchTarget)
+		? switchSignInCommand(
+				switchTarget,
+				commandPlatform,
+				t({ message: "API key" }),
+			)
 		: addAccountCommand(
 				agent,
 				slug || "invalid",
 				credentialKind,
 				automaticName,
+				commandPlatform,
+				t({ message: "API key" }),
 			);
 	// Codex's API login takes the key at a terminal prompt; every other flow
 	// finishes in the browser.
