@@ -17,9 +17,25 @@ if (!existsSync(helper))
 const staging = mkdtempSync(join(tmpdir(), "fork-native-test-loader-"));
 try {
 	const preload = join(staging, "helper.ts");
+	const importer = join(staging, "opencode.exe");
+	if (process.platform === "win32") {
+		const compiled = Bun.spawnSync(
+			[
+				process.execPath,
+				"build",
+				resolve(root, "scripts/fork/opencode-fixture.ts"),
+				"--compile",
+				"--outfile",
+				importer,
+			],
+			{ stdout: "inherit", stderr: "inherit" },
+		);
+		if (compiled.exitCode !== 0)
+			throw new Error("Cannot compile isolated OpenCode importer");
+	}
 	writeFileSync(
 		preload,
-		`Reflect.set(globalThis,Symbol.for("superset.fork.testHelper"),${JSON.stringify(helper)});`,
+		`Reflect.set(globalThis,Symbol.for("superset.fork.testHelper"),${JSON.stringify(helper)});Reflect.set(globalThis,Symbol.for("superset.fork.testImporter"),${JSON.stringify(importer)});`,
 	);
 	const child = Bun.spawn(
 		[

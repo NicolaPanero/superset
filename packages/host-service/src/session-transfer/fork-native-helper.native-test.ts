@@ -3,6 +3,7 @@ import { afterAll, beforeAll, expect, test } from "bun:test";
 import { randomUUID } from "node:crypto";
 import {
 	chmodSync,
+	linkSync,
 	mkdirSync,
 	mkdtempSync,
 	readdirSync,
@@ -115,32 +116,18 @@ beforeAll(async () => {
 	const importer = join(bin, "opencode.ts");
 	writeFileSync(
 		importer,
-		`#!/usr/bin/env bun
-import {Database} from "bun:sqlite";
-import {readFileSync} from "node:fs";
-if(process.argv[2]!=="import")throw new Error("No login or agent commands allowed");
-const data=JSON.parse(readFileSync(process.argv[3],"utf8"));
-const db=new Database(process.env.OPENCODE_DB);
-const info=data.info;
-db.run("INSERT INTO session(id,directory,title,version,time_created,time_updated) VALUES(?,?,?,?,?,?)",[info.id,info.directory,info.title,info.version,info.time.created,info.time.updated]);
-for(const message of data.messages){db.run("INSERT INTO message(id,session_id,time_created,data) VALUES(?,?,?,?)",[message.info.id,info.id,message.info.time.created,JSON.stringify(message.info)]);for(const part of message.parts)db.run("INSERT INTO part(id,message_id,session_id,data) VALUES(?,?,?,?)",[part.id,message.info.id,info.id,JSON.stringify(part)]);}
-db.close();console.log("Imported session: "+info.id);
-`,
+		readFileSync(
+			join(import.meta.dir, "../../../../scripts/fork/opencode-fixture.ts"),
+		),
 	);
 	if (process.platform === "win32") {
-		const compiled = Bun.spawnSync(
-			[
-				process.execPath,
-				"build",
-				importer,
-				"--compile",
-				"--outfile",
-				join(bin, "opencode.exe"),
-			],
-			{ stderr: "inherit" },
-		);
-		if (compiled.exitCode !== 0)
-			throw new Error("Cannot build isolated OpenCode importer");
+		const binary = Reflect.get(
+			globalThis,
+			Symbol.for("superset.fork.testImporter"),
+		) as string | undefined;
+		if (!binary)
+			throw new Error("Missing precompiled isolated OpenCode importer");
+		linkSync(binary, join(bin, "opencode.exe"));
 	} else {
 		const executable = join(bin, "opencode");
 		writeFileSync(executable, readFileSync(importer));
