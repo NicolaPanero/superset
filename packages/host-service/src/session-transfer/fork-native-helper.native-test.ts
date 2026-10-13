@@ -24,7 +24,12 @@ const helper = Reflect.get(
 if (!helper)
 	throw new Error("Use bun run test:fork:native to supply the pinned helper");
 const nativeHelper = helper;
-const provider = new TxcriptTransferProvider(nativeHelper);
+let lastResult: unknown;
+const provider = new TxcriptTransferProvider(nativeHelper, async (...args) => {
+	const value = await runHelper(...args);
+	if (args[1].length === 0) lastResult = value;
+	return value;
+});
 const agents: TransferAgent[] = [
 	"claude",
 	"codex",
@@ -63,16 +68,32 @@ function target(agent: TransferAgent, name: string) {
 async function convert(source: TransferAgent, to: TransferAgent, name: string) {
 	const input = sources.get(source);
 	if (!input) throw new Error("missing fixture source");
-	const result = await provider.transfer({
-		sourceAgent: source,
-		sourceSessionId: input.id,
-		sourceTerminalId: "fixture",
-		sourceRoot: input.root,
-		sourceReference: input.reference,
-		targetAgent: to,
-		targetRoot: target(to, name),
-		cwd,
-	});
+	let result: Awaited<ReturnType<typeof provider.transfer>>;
+	try {
+		result = await provider.transfer({
+			sourceAgent: source,
+			sourceSessionId: input.id,
+			sourceTerminalId: "fixture",
+			sourceRoot: input.root,
+			sourceReference: input.reference,
+			targetAgent: to,
+			targetRoot: target(to, name),
+			cwd,
+		});
+	} catch (error) {
+		const raw = lastResult as Record<string, unknown> | undefined;
+		console.error("Synthetic conversion path diagnostic", {
+			source,
+			to,
+			targetRoot: target(to, name),
+			cwd,
+			reference: raw?.reference,
+			returnedCwd: raw?.cwd,
+			returnedAgent: raw?.targetAgent,
+		});
+		throw error;
+	}
+
 	if (result.mode !== "native")
 		throw new Error("native conversion unexpectedly used context");
 	return result;

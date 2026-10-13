@@ -122,7 +122,6 @@ jobs:
         run: |
           bun install --frozen --ignore-scripts
           bun run --filter=@superset/i18n build
-          cd apps/desktop && bun run install:deps
       - name: Install the pinned native transfer tools
         env:
           GH_TOKEN: ${{ github.token }}
@@ -142,6 +141,9 @@ jobs:
           bun test --isolate scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts packages/host-service/src/session-transfer/fork-native-paths.test.ts
           cd apps/desktop
           bun test --isolate src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts
+      - name: Rebuild Electron dependencies
+        working-directory: apps/desktop
+        run: bun run install:deps
       - name: Compile app and bundle transfer tools
         working-directory: apps/desktop
         run: |

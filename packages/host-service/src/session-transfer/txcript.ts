@@ -189,11 +189,14 @@ export function parseNativeTransferResult(
 
 export class TxcriptTransferProvider implements SessionTransferProvider {
 	readonly id = "native";
-	constructor(private readonly binary = txcriptHelperPath()) {}
+	constructor(
+		private readonly binary = txcriptHelperPath(),
+		private readonly run: typeof runHelper = runHelper,
+	) {}
 	async capabilities() {
 		try {
 			return capabilitiesSchema.parse(
-				await runHelper(this.binary, ["capabilities"]),
+				await this.run(this.binary, ["capabilities"]),
 			);
 		} catch {
 			return null;
@@ -221,7 +224,7 @@ export class TxcriptTransferProvider implements SessionTransferProvider {
 		if (!(await this.canTransfer(input.sourceAgent, input.targetAgent)))
 			throw new Error("native_unavailable");
 		return parseNativeTransferResult(
-			await runHelper(
+			await this.run(
 				this.binary,
 				[],
 				{
