@@ -201,8 +201,11 @@ export function useAgentSurfaceSwitch(workspaceId: string): AgentSurfaceSwitch {
 				markChatStopped(data.terminalId);
 				replaceWith({
 					kind: "terminal",
-					titleOverride: result.label,
-					data: { terminalId: result.sessionId } satisfies TerminalPaneData,
+					titleOverride: ctx.pane.titleOverride,
+					data: {
+						terminalId: result.sessionId,
+						cliTitle: data.chatTitle ?? result.label,
+					} satisfies TerminalPaneData,
 				});
 				replaced = true;
 			} catch (error) {

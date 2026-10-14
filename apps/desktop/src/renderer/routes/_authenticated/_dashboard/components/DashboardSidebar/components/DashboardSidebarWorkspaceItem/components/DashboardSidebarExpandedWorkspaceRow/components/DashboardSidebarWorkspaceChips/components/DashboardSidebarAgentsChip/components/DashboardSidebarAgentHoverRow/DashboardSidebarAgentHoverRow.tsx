@@ -24,11 +24,13 @@ const STATUS_TEXT_CLASS: Record<RunningAgentStatus, string> = {
 interface DashboardSidebarAgentHoverRowProps {
 	workspaceId: string;
 	agent: DashboardSidebarRunningAgent;
+	sessionTitle?: string;
 }
 
 export function DashboardSidebarAgentHoverRow({
 	workspaceId,
 	agent,
+	sessionTitle,
 }: DashboardSidebarAgentHoverRowProps) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
@@ -68,10 +70,13 @@ export function DashboardSidebarAgentHoverRow({
 				<button
 					type="button"
 					onClick={handleOpen}
+					title={sessionTitle ?? agent.label}
 					className="flex min-w-0 flex-1 items-center gap-1.5 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 				>
 					<DashboardSidebarAgentAvatar agent={agent} />
-					<span className="min-w-0 truncate text-xs">{agent.label}</span>
+					<span className="min-w-0 truncate text-xs">
+						{sessionTitle ?? agent.label}
+					</span>
 					{agent.subagents.length > 0 && (
 						<span className="shrink-0 text-[10px] text-muted-foreground">
 							+{agent.subagents.length}

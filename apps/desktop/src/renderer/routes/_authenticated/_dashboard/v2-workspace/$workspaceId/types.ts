@@ -114,6 +114,7 @@ export interface PagePaneData {
 }
 
 export interface ChatPaneData {
+	agentLabel?: string;
 	acpAgentConfigId?: string;
 	acpAccountSelection?: string | null;
 	terminalId: string;

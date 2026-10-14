@@ -119,8 +119,8 @@ export function useAgentSessionLauncher({
 			const label = config?.label;
 			const pane = {
 				kind: "chat-v3" as const,
-				...(label ? { titleOverride: label } : {}),
 				data: {
+					agentLabel: label,
 					terminalId,
 					sessionId: null,
 					acpAgentConfigId: launch.agentConfigId,
@@ -245,8 +245,7 @@ export function useAgentSessionLauncher({
 				const state = store.getState();
 				const pane = {
 					kind: "terminal" as const,
-					titleOverride: result.label,
-					data: { terminalId } as TerminalPaneData,
+					data: { terminalId, cliTitle: result.label } as TerminalPaneData,
 				};
 				if (input.placement === "split-pane" && state.activeTabId) {
 					state.addPane({ tabId: state.activeTabId, pane });

@@ -109,7 +109,7 @@ export function TerminalSessionDropdown({
 	const { t } = useLingui();
 	const [isOpen, setIsOpen] = useState(false);
 	const collections = useCollections();
-	const { terminalId } = context.pane.data as TerminalPaneData;
+	const { terminalId, cliTitle } = context.pane.data as TerminalPaneData;
 	const terminalInstanceId = context.pane.id;
 	const utils = workspaceTrpc.useUtils();
 	const killTerminalSession = workspaceTrpc.terminal.killSession.useMutation();
@@ -349,6 +349,7 @@ export function TerminalSessionDropdown({
 	const triggerTitle = getTerminalDisplayTitle({
 		titleOverride,
 		runtimeTitle: hostTitle,
+		sessionTitle: cliTitle,
 	});
 
 	return (

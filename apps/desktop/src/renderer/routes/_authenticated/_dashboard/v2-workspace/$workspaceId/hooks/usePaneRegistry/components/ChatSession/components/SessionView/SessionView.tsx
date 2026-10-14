@@ -93,7 +93,7 @@ export function SessionView({
 	/** Selected by name once the agent lists its models, before the first prompt goes out. */
 	preferredModelLabel?: string;
 	onPendingPromptsSent: () => void;
-	onSessionState?: (session: SessionState | null) => void;
+	onSessionState?: (session: SessionState | null, promptTitle?: string) => void;
 	/** The mode the user picked, so a resumed session can start in it again. */
 	onModeChange?: (modeId: string) => void;
 	/**
@@ -222,9 +222,10 @@ export function SessionView({
 	}, [held, pendingPrompts, session, onPendingPromptsSent, modelSettled]);
 
 	const sessionState = session.snapshot.session;
+	const promptTitle = rail.find((message) => message.role === "user")?.preview;
 	useEffect(() => {
-		onSessionState?.(sessionState ?? null);
-	}, [sessionState, onSessionState]);
+		onSessionState?.(sessionState ?? null, promptTitle);
+	}, [sessionState, promptTitle, onSessionState]);
 
 	const runningTurnId = useMemo(
 		() => findRunningTurnId(session.snapshot.turns),

@@ -419,10 +419,9 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Terminal",
-					}),
+				getTitle: (pane) =>
+					(pane.data as TerminalPaneData).cliTitle ??
+					t({ message: "Terminal" }),
 				titleSource: (pane) => {
 					const { terminalId } = pane.data as TerminalPaneData;
 					const instanceId = pane.id;
@@ -853,10 +852,8 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Chat",
-					}),
+				getTitle: (pane) =>
+					(pane.data as ChatPaneData).agentLabel ?? t({ message: "Chat" }),
 				titleSource: (pane) => {
 					const { chatTitle } = pane.data as ChatPaneData;
 					return {

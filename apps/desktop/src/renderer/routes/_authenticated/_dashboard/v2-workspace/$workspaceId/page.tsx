@@ -39,6 +39,7 @@ import { WorkspaceEmptyState } from "./components/WorkspaceEmptyState";
 import { WorkspaceMissingWorktreeState } from "./components/WorkspaceMissingWorktreeState";
 import { WorkspaceMoreMenu } from "./components/WorkspaceMoreMenu";
 import { WorkspaceSidebar } from "./components/WorkspaceSidebar";
+import { WorkspaceTabIcon } from "./components/WorkspaceTabIcon";
 import { useAgentSessionLauncher } from "./hooks/useAgentSessionLauncher";
 import { useAutoAdoptBackgroundSessions } from "./hooks/useAutoAdoptBackgroundSessions";
 import { useAutoAdoptChatSessions } from "./hooks/useAutoAdoptChatSessions";
@@ -53,7 +54,6 @@ import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
 import { useForkFocusChatLink } from "./hooks/useForkFocusChatLink";
 import { usePaneAreaMoveActions } from "./hooks/usePaneAreaMoveActions";
 import { usePaneRegistry } from "./hooks/usePaneRegistry";
-import { renderBrowserTabIcon } from "./hooks/usePaneRegistry/components/BrowserPane";
 import { usePullRequestPaneIntentOpener } from "./hooks/usePullRequestPaneIntentOpener";
 import { useRightPaneAreaExpansion } from "./hooks/useRightPaneAreaExpansion";
 import { useRightPaneAreaLifecycle } from "./hooks/useRightPaneAreaLifecycle";
@@ -683,7 +683,9 @@ function V2WorkspaceContent() {
 									paneActions={defaultPaneActions}
 									contextMenuActions={centerContextMenuActions}
 									onPaneError={reportRendererError}
-									renderTabIcon={renderBrowserTabIcon}
+									renderTabIcon={(tab) => (
+										<WorkspaceTabIcon tab={tab} workspaceId={workspaceId} />
+									)}
 									renderTabAccessory={(tab) => (
 										<V2NotificationStatusIndicator
 											sources={getV2NotificationSourcesForTab(tab)}
@@ -699,9 +701,11 @@ function V2WorkspaceContent() {
 											/>
 										) : null
 									}
-									renderAddTabMenu={() => (
+									renderAddTabMenu={({ afterClose }) => (
 										<AddTabMenu
-											onAddAgent={() => setForkLaunchOpen(true)}
+											onAddAgent={() =>
+												afterClose(() => setForkLaunchOpen(true))
+											}
 											onAddTerminal={addTerminalTab}
 											onAddBrowser={addBrowserTab}
 											onAddChanges={openChanges}

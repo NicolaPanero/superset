@@ -94,12 +94,10 @@ export function TerminalAgentAutoResume({
 			}
 			state.setPaneData({
 				paneId: ctx.pane.id,
-				data: { terminalId: resumedTerminalId } satisfies TerminalPaneData,
-			});
-			state.setPaneTitleOverride({
-				tabId: ctx.tab.id,
-				paneId: ctx.pane.id,
-				titleOverride: label,
+				data: {
+					terminalId: resumedTerminalId,
+					cliTitle: label,
+				} satisfies TerminalPaneData,
 			});
 			if (existing && existing.paneId !== ctx.pane.id) {
 				state.closePane(existing);
