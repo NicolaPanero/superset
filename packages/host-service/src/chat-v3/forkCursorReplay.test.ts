@@ -1,4 +1,4 @@
-import { expect, mock, test } from "bun:test";
+import { expect, test } from "bun:test";
 import type {
 	HarnessAdapter,
 	HarnessFactoryOptions,
@@ -6,21 +6,21 @@ import type {
 import type { HostDb } from "../db";
 
 const launches: Array<Record<string, unknown>> = [];
-const runtime = await import("@superset/chat-runtime");
-mock.module("@superset/chat-runtime", () => ({
-	...runtime,
-	createAcpAdapter: (options: Record<string, unknown>) => {
-		launches.push(options);
-		return {} as HarnessAdapter;
-	},
-}));
 const { acpHarnessFactory } = await import("./acpHarnesses");
 test.each([
 	"cursor-acp",
 	"grok-acp",
 	"gemini-acp",
 ])("%s applies its replay contract at the real factory boundary", (harness) => {
-	const factory = acpHarnessFactory(harness, {} as HostDb);
+	const factory = acpHarnessFactory(
+		harness,
+		{} as HostDb,
+		undefined,
+		(options) => {
+			launches.push({ ...options });
+			return {} as HarnessAdapter;
+		},
+	);
 	expect(factory).not.toBeNull();
 	factory?.({
 		scopeId: "workspace",

@@ -41,6 +41,7 @@ export function acpHarnessFactory(
 	harness: string,
 	db: HostDb,
 	agents?: ChatAgentBridge,
+	createAdapter: typeof createAcpAdapter = createAcpAdapter,
 ): HarnessFactory | null {
 	const entry = ACP_HARNESSES[harness];
 	if (!entry) return null;
@@ -60,7 +61,7 @@ export function acpHarnessFactory(
 			harness,
 			options,
 			(accountSelection, captured) =>
-				createAcpAdapter({
+				createAdapter({
 					command: entry.binary,
 					authMethodId:
 						harness === "gemini-acp" &&
