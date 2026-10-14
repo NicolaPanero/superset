@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { workspaces } from "../../../../db/schema";
+import { resolveFolderWorkspaceRoot } from "../../../../project-folders";
 import {
 	getPathState,
 	inaccessiblePathMessage,
@@ -14,7 +15,9 @@ export function resolveWorktreePath(
 	const workspace = ctx.db.query.workspaces
 		.findFirst({ where: eq(workspaces.id, workspaceId) })
 		.sync();
-	if (!workspace?.worktreePath) {
+	const worktreePath =
+		workspace?.worktreePath ?? resolveFolderWorkspaceRoot(ctx.db, workspaceId);
+	if (!worktreePath) {
 		throw new TRPCError({
 			code: "NOT_FOUND",
 			message: "Workspace not found",
@@ -23,19 +26,19 @@ export function resolveWorktreePath(
 	// A worktree deleted outside the app is a routine lifecycle state, not a
 	// bug — classify it here so simple-git's construct error can't escape any
 	// git.* procedure as a reportable 500.
-	const state = getPathState(workspace.worktreePath);
+	const state = getPathState(worktreePath);
 	if (state === "inaccessible") {
 		throw new TRPCError({
 			code: "FORBIDDEN",
-			message: inaccessiblePathMessage(workspace.worktreePath),
+			message: inaccessiblePathMessage(worktreePath),
 		});
 	}
 	if (state === "missing") {
 		throw new TRPCError({
 			code: "NOT_FOUND",
 			message: "Worktree no longer exists on disk",
-			cause: { kind: "WORKTREE_MISSING", worktreePath: workspace.worktreePath },
+			cause: { kind: "WORKTREE_MISSING", worktreePath },
 		});
 	}
-	return workspace.worktreePath;
+	return worktreePath;
 }

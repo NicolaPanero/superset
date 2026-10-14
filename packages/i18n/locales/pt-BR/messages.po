@@ -1664,6 +1664,9 @@ msgstr "Adicione um comentário…"
 msgid "Add a description…"
 msgstr "Adicione uma descrição…"
 
+msgid "Add a folder to the project"
+msgstr "Adicionar uma pasta ao projeto"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Adicione um script de execução de ciclo de vida nas Configurações do projeto ou marque um script de terminal como a execução da área de trabalho."
 
@@ -1735,6 +1738,12 @@ msgstr "Adicionar arquivos, apps e mais"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Adicionar arquivos, apps e mais (@)"
+
+msgid "Add folder"
+msgstr "Adicionar pasta"
+
+msgid "Add folder…"
+msgstr "Adicionar pasta…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "Navegador externo"
 msgid "External editor"
 msgstr "Editor externo"
 
+msgid "Extra folders"
+msgstr "Pastas extras"
+
 msgid "extra ${used} of ${limit}"
 msgstr "extra de US$ {used} de US$ {limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "Tornar padrão — abre novos terminais e agentes nesta conta."
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Confira se o dispositivo está ativo, online e com o Superset em execução."
 
+msgid "Main repository"
+msgstr "Repositório principal"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "Tornar o estilo de chip o padrão do TooltipContent"
 
@@ -10889,6 +10904,9 @@ msgstr "Nenhum arquivo encontrado"
 
 msgid "No files match the accepted types."
 msgstr "Nenhum arquivo é de um tipo aceito."
+
+msgid "No extra folders."
+msgstr "Nenhuma pasta extra."
 
 msgid "No files match your search"
 msgstr "Nenhum arquivo corresponde à sua busca"
@@ -12217,6 +12235,9 @@ msgstr "Outras pessoas do time"
 
 msgid "Other ways to reach us"
 msgstr "Outras formas de falar com a gente"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Outras pastas em que os agentes podem trabalhar e cujas alterações aparecem ao lado das deste projeto. Podem ser repositórios git ou pastas comuns."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Nossa rodada seed de US$ 11,5 milhões é liderada pela Union Square Ventures, com Y Combinator, Paul Graham e fundadores que admiramos."
@@ -13623,6 +13644,9 @@ msgstr "Remover da barra lateral"
 
 msgid "Remove from Sidebar"
 msgstr "Remover da barra lateral"
+
+msgid "Remove folder"
+msgstr "Remover pasta"
 
 msgid "Remove icon"
 msgstr "Remover ícone"
@@ -17450,6 +17474,12 @@ msgstr "Este host"
 msgid "This host has not reported a version yet."
 msgstr "Este host ainda não informou uma versão."
 
+msgid "This folder is not a git repository."
+msgstr "Esta pasta não é um repositório git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Esta pasta não existe mais no disco."
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Este host está atrás do app que você usa. Os workspaces ainda abrem, mas recursos mais novos podem falhar nele."
 
@@ -19245,6 +19275,9 @@ msgstr "Os worktrees são removidos do disco; as áreas de trabalho no checkout 
 
 msgid "Would you like to reassign it?"
 msgstr "Quer reatribuir?"
+
+msgid "Worktree per workspace"
+msgstr "Worktree por workspace"
 
 msgid "Wrap lines"
 msgstr "Quebrar linhas"

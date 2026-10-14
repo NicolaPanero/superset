@@ -1664,6 +1664,9 @@ msgstr "添加评论…"
 msgid "Add a description…"
 msgstr "添加描述…"
 
+msgid "Add a folder to the project"
+msgstr "向项目添加文件夹"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "在项目设置中添加生命周期运行脚本，或将某个终端脚本标记为工作区运行命令。"
 
@@ -1735,6 +1738,12 @@ msgstr "添加文件、应用等"
 
 msgid "Add files, apps, and more (@)"
 msgstr "添加文件、应用等（@）"
+
+msgid "Add folder"
+msgstr "添加文件夹"
+
+msgid "Add folder…"
+msgstr "添加文件夹…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "外部浏览器"
 msgid "External editor"
 msgstr "外部编辑器"
 
+msgid "Extra folders"
+msgstr "额外文件夹"
+
 msgid "extra ${used} of ${limit}"
 msgstr "额外用量${used}/${limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "设为默认——新终端和智能体将使用此账户启动。"
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "请确认设备未休眠、已联网且正在运行 Superset。"
 
+msgid "Main repository"
+msgstr "主仓库"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "把chip样式设为TooltipContent的默认样式"
 
@@ -10889,6 +10904,9 @@ msgstr "未找到文件"
 
 msgid "No files match the accepted types."
 msgstr "没有文件符合允许的类型。"
+
+msgid "No extra folders."
+msgstr "没有额外文件夹。"
 
 msgid "No files match your search"
 msgstr "没有与搜索匹配的文件"
@@ -12217,6 +12235,9 @@ msgstr "其他团队成员"
 
 msgid "Other ways to reach us"
 msgstr "其他联系方式"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "智能体可以在其中工作的其他文件夹，其更改会显示在此项目的更改旁边。可以是 git 仓库，也可以是普通文件夹。"
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "我们 1150 万美元的种子轮由 Union Square Ventures 领投，Y Combinator、Paul Graham 以及我们敬佩的创始人参投。"
@@ -13623,6 +13644,9 @@ msgstr "从侧边栏移除"
 
 msgid "Remove from Sidebar"
 msgstr "从侧边栏移除"
+
+msgid "Remove folder"
+msgstr "移除文件夹"
 
 msgid "Remove icon"
 msgstr "移除图标"
@@ -17450,6 +17474,12 @@ msgstr "此主机"
 msgid "This host has not reported a version yet."
 msgstr "此主机尚未报告版本。"
 
+msgid "This folder is not a git repository."
+msgstr "此文件夹不是 git 仓库。"
+
+msgid "This folder no longer exists on disk."
+msgstr "此文件夹在磁盘上已不存在。"
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "此主机落后于你正在使用的应用。工作区仍可打开，但较新的功能可能无法使用。"
 
@@ -19245,6 +19275,9 @@ msgstr "worktree 会从磁盘中删除；位于项目检出上的工作区仅会
 
 msgid "Would you like to reassign it?"
 msgstr "要重新分配吗？"
+
+msgid "Worktree per workspace"
+msgstr "每个工作区一个 worktree"
 
 msgid "Wrap lines"
 msgstr "自动换行"

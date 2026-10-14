@@ -132,17 +132,22 @@ export const createWindowRouter = () => {
 					.object({
 						title: z.string().optional(),
 						defaultPath: z.string().optional(),
+						multiple: z.boolean().optional(),
 					})
 					.optional(),
 			)
 			.mutation(async ({ ctx, input }) => {
 				const window = ctx.senderWindow;
 				if (!window) {
-					return { canceled: true, path: null };
+					return { canceled: true, path: null, paths: [] as string[] };
 				}
 
 				const result = await dialog.showOpenDialog(window, {
-					properties: ["openDirectory", "createDirectory"],
+					properties: [
+						"openDirectory",
+						"createDirectory",
+						...(input?.multiple ? (["multiSelections"] as const) : []),
+					],
 					title:
 						input?.title ??
 						i18n._(
@@ -154,10 +159,14 @@ export const createWindowRouter = () => {
 				});
 
 				if (result.canceled || result.filePaths.length === 0) {
-					return { canceled: true, path: null };
+					return { canceled: true, path: null, paths: [] as string[] };
 				}
 
-				return { canceled: false, path: result.filePaths[0] };
+				return {
+					canceled: false,
+					path: result.filePaths[0],
+					paths: result.filePaths,
+				};
 			}),
 
 		selectImageFile: publicProcedure.mutation(async ({ ctx }) => {

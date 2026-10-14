@@ -18,6 +18,7 @@ import { BranchPrefixSection } from "../BranchPrefixSection";
 import { IconUploadField } from "../IconUploadField";
 import { NameSection } from "../NameSection";
 import { NamingInstructionsSection } from "../NamingInstructionsSection";
+import { ProjectFoldersSection } from "../ProjectFoldersSection";
 import { RepositorySection } from "../RepositorySection";
 import { SparseCheckoutSection } from "../SparseCheckoutSection";
 import { WorktreeLocationSection } from "../WorktreeLocationSection";
@@ -253,6 +254,24 @@ export function V2ProjectSettingsBody({
 						</div>
 					)}
 				</SettingsSection>
+
+				{targetHostUrl && hostProject && !isRemoteTarget && (
+					<SettingsSection
+						title={t({
+							message: "Extra folders",
+						})}
+						description={t({
+							message:
+								"Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders.",
+						})}
+					>
+						<ProjectFoldersSection
+							key={`${projectId}:${targetHostId}`}
+							projectId={projectId}
+							hostUrl={targetHostUrl}
+						/>
+					</SettingsSection>
+				)}
 
 				{targetHostUrl && (
 					<SettingsSection

@@ -1664,6 +1664,9 @@ msgstr "Thêm bình luận…"
 msgid "Add a description…"
 msgstr "Thêm mô tả…"
 
+msgid "Add a folder to the project"
+msgstr "Thêm thư mục vào dự án"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Hãy thêm một script chạy vòng đời trong Cài đặt dự án hoặc đánh dấu một script terminal làm lệnh chạy của workspace."
 
@@ -1735,6 +1738,12 @@ msgstr "Thêm tệp, ứng dụng và hơn thế"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Thêm tệp, ứng dụng và hơn thế (@)"
+
+msgid "Add folder"
+msgstr "Thêm thư mục"
+
+msgid "Add folder…"
+msgstr "Thêm thư mục…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "Trình duyệt ngoài"
 msgid "External editor"
 msgstr "Trình soạn thảo ngoài"
 
+msgid "Extra folders"
+msgstr "Thư mục bổ sung"
+
 msgid "extra ${used} of ${limit}"
 msgstr "dùng thêm ${used} trên ${limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "Đặt làm mặc định — mở terminal và agent mới trên tài k
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Đảm bảo thiết bị không ở chế độ ngủ, có kết nối mạng và đang chạy Superset."
 
+msgid "Main repository"
+msgstr "Kho lưu trữ chính"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "Đặt kiểu chip làm mặc định cho TooltipContent"
 
@@ -10889,6 +10904,9 @@ msgstr "Không tìm thấy tệp nào"
 
 msgid "No files match the accepted types."
 msgstr "Không có tệp nào thuộc loại được chấp nhận."
+
+msgid "No extra folders."
+msgstr "Không có thư mục bổ sung."
 
 msgid "No files match your search"
 msgstr "Không có tệp nào khớp với tìm kiếm của bạn"
@@ -12217,6 +12235,9 @@ msgstr "Các thành viên khác"
 
 msgid "Other ways to reach us"
 msgstr "Các cách khác để liên hệ"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Các thư mục khác mà tác nhân có thể làm việc và thay đổi của chúng hiển thị cạnh thay đổi của dự án này. Có thể là kho git hoặc thư mục thông thường."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Vòng gọi vốn hạt giống 11,5 triệu USD của chúng tôi do Union Square Ventures dẫn dắt, cùng Y Combinator, Paul Graham và những nhà sáng lập mà chúng tôi ngưỡng mộ."
@@ -13623,6 +13644,9 @@ msgstr "Gỡ khỏi thanh bên"
 
 msgid "Remove from Sidebar"
 msgstr "Gỡ khỏi thanh bên"
+
+msgid "Remove folder"
+msgstr "Xóa thư mục"
 
 msgid "Remove icon"
 msgstr "Gỡ biểu tượng"
@@ -17450,6 +17474,12 @@ msgstr "Host này"
 msgid "This host has not reported a version yet."
 msgstr "Máy chủ này chưa báo cáo phiên bản."
 
+msgid "This folder is not a git repository."
+msgstr "Thư mục này không phải là kho git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Thư mục này không còn tồn tại trên đĩa."
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Máy chủ này cũ hơn ứng dụng bạn đang dùng. Workspace vẫn mở được nhưng các tính năng mới có thể lỗi."
 
@@ -19245,6 +19275,9 @@ msgstr "Các worktree bị xóa khỏi ổ đĩa; các workspace trên checkout 
 
 msgid "Would you like to reassign it?"
 msgstr "Bạn có muốn gán lại không?"
+
+msgid "Worktree per workspace"
+msgstr "Worktree cho mỗi workspace"
 
 msgid "Wrap lines"
 msgstr "Ngắt dòng"

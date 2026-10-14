@@ -1664,6 +1664,9 @@ msgstr "댓글 추가…"
 msgid "Add a description…"
 msgstr "설명 추가…"
 
+msgid "Add a folder to the project"
+msgstr "프로젝트에 폴더 추가"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "프로젝트 설정에서 라이프사이클 실행 스크립트를 추가하거나, 터미널 스크립트를 워크스페이스 실행으로 지정하세요."
 
@@ -1735,6 +1738,12 @@ msgstr "파일, 앱 등 추가"
 
 msgid "Add files, apps, and more (@)"
 msgstr "파일, 앱 등 추가 (@)"
+
+msgid "Add folder"
+msgstr "폴더 추가"
+
+msgid "Add folder…"
+msgstr "폴더 추가…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "외부 브라우저"
 msgid "External editor"
 msgstr "외부 편집기"
 
+msgid "Extra folders"
+msgstr "추가 폴더"
+
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
 
@@ -9888,6 +9900,9 @@ msgstr "기본값으로 설정 — 새 터미널과 에이전트를 이 계정�
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "기기가 절전 모드가 아니고 온라인 상태이며 Superset이 실행 중인지 확인해 주세요."
 
+msgid "Main repository"
+msgstr "메인 리포지토리"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "칩 스타일을 TooltipContent 기본값으로 만들기"
 
@@ -10889,6 +10904,9 @@ msgstr "파일을 찾을 수 없음"
 
 msgid "No files match the accepted types."
 msgstr "허용된 형식과 일치하는 파일이 없습니다."
+
+msgid "No extra folders."
+msgstr "추가 폴더가 없습니다."
 
 msgid "No files match your search"
 msgstr "검색과 일치하는 파일이 없습니다"
@@ -12217,6 +12235,9 @@ msgstr "다른 팀 멤버"
 
 msgid "Other ways to reach us"
 msgstr "다른 문의 방법"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "에이전트가 작업할 수 있고 변경 사항이 이 프로젝트의 변경 사항 옆에 표시되는 다른 폴더입니다. git 리포지토리이거나 일반 폴더일 수 있습니다."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "1,150만 달러 규모의 시드 라운드는 Union Square Ventures가 주도했으며, Y Combinator, Paul Graham, 그리고 우리가 존경하는 창업자들이 함께했습니다."
@@ -13623,6 +13644,9 @@ msgstr "사이드바에서 제거"
 
 msgid "Remove from Sidebar"
 msgstr "사이드바에서 제거"
+
+msgid "Remove folder"
+msgstr "폴더 제거"
 
 msgid "Remove icon"
 msgstr "아이콘 제거"
@@ -17450,6 +17474,12 @@ msgstr "이 호스트"
 msgid "This host has not reported a version yet."
 msgstr "이 호스트는 아직 버전을 보고하지 않았습니다."
 
+msgid "This folder is not a git repository."
+msgstr "이 폴더는 git 리포지토리가 아닙니다."
+
+msgid "This folder no longer exists on disk."
+msgstr "이 폴더는 더 이상 디스크에 없습니다."
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "이 호스트는 사용 중인 앱보다 뒤처져 있습니다. 워크스페이스는 여전히 열리지만 최신 기능은 실패할 수 있습니다."
 
@@ -19245,6 +19275,9 @@ msgstr "worktree는 디스크에서 제거되며, 프로젝트 체크아웃에 �
 
 msgid "Would you like to reassign it?"
 msgstr "다시 지정할까요?"
+
+msgid "Worktree per workspace"
+msgstr "워크스페이스별 worktree"
 
 msgid "Wrap lines"
 msgstr "줄 바꿈"

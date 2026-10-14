@@ -1664,6 +1664,9 @@ msgstr "Tambahkan komentar…"
 msgid "Add a description…"
 msgstr "Tambahkan deskripsi…"
 
+msgid "Add a folder to the project"
+msgstr "Tambahkan folder ke proyek"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Tambahkan skrip run lifecycle di Pengaturan Proyek atau tandai sebuah skrip terminal sebagai run workspace."
 
@@ -1735,6 +1738,12 @@ msgstr "Tambah file, aplikasi, dan lainnya"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Tambah file, aplikasi, dan lainnya (@)"
+
+msgid "Add folder"
+msgstr "Tambah folder"
+
+msgid "Add folder…"
+msgstr "Tambah folder…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "Browser Eksternal"
 msgid "External editor"
 msgstr "Editor eksternal"
 
+msgid "Extra folders"
+msgstr "Folder tambahan"
+
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "Jadikan bawaan — jalankan terminal dan agen baru dengan akun ini."
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Pastikan perangkat aktif, terhubung ke internet, dan menjalankan Superset."
 
+msgid "Main repository"
+msgstr "Repositori utama"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "Jadikan gaya chip sebagai bawaan TooltipContent"
 
@@ -10889,6 +10904,9 @@ msgstr "File tidak ditemukan"
 
 msgid "No files match the accepted types."
 msgstr "Tidak ada file yang cocok dengan tipe yang diterima."
+
+msgid "No extra folders."
+msgstr "Tidak ada folder tambahan."
 
 msgid "No files match your search"
 msgstr "Tidak ada file yang cocok dengan pencarian Anda"
@@ -12217,6 +12235,9 @@ msgstr "Anggota Tim Lainnya"
 
 msgid "Other ways to reach us"
 msgstr "Cara lain menghubungi kami"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Folder lain tempat agen dapat bekerja dan perubahannya ditampilkan di samping perubahan proyek ini. Bisa berupa repositori git atau folder biasa."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Putaran pendanaan awal kami senilai $11,5 juta dipimpin oleh Union Square Ventures, bersama Y Combinator, Paul Graham, dan para pendiri yang kami kagumi."
@@ -13623,6 +13644,9 @@ msgstr "Hapus dari sidebar"
 
 msgid "Remove from Sidebar"
 msgstr "Hapus dari Sidebar"
+
+msgid "Remove folder"
+msgstr "Hapus folder"
 
 msgid "Remove icon"
 msgstr "Hapus ikon"
@@ -17450,6 +17474,12 @@ msgstr "Host ini"
 msgid "This host has not reported a version yet."
 msgstr "Host ini belum melaporkan versi."
 
+msgid "This folder is not a git repository."
+msgstr "Folder ini bukan repositori git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Folder ini sudah tidak ada di disk."
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Host ini tertinggal dari aplikasi yang Anda gunakan. Workspace masih terbuka, tetapi fitur baru mungkin gagal di sana."
 
@@ -19245,6 +19275,9 @@ msgstr "Worktree dihapus dari disk; workspace di checkout proyek hanya ditutup. 
 
 msgid "Would you like to reassign it?"
 msgstr "Ingin menetapkannya ulang?"
+
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
 
 msgid "Wrap lines"
 msgstr "Bungkus baris"

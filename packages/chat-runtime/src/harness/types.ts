@@ -15,6 +15,8 @@ export type AdapterEvent =
 
 export type HarnessStartOptions = {
 	cwd: string;
+	/** Folders the agent may use besides `cwd`, when the harness supports it. */
+	additionalDirectories?: string[];
 	modeId?: string;
 	modelId?: string;
 	resume?: { harnessSessionId: string };

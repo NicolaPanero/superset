@@ -840,6 +840,7 @@ export class AcpAdapter implements HarnessAdapter {
 						{
 							sessionId: startOptions.resume.harnessSessionId,
 							cwd: startOptions.cwd,
+							...extraDirectories(startOptions),
 							mcpServers: [],
 						},
 						startupTimeoutMs,
@@ -862,7 +863,11 @@ export class AcpAdapter implements HarnessAdapter {
 					console.warn("[acp] session/load failed", loadError);
 					response = await client.request(
 						"session/new",
-						{ cwd: startOptions.cwd, mcpServers: [] },
+						{
+							cwd: startOptions.cwd,
+							...extraDirectories(startOptions),
+							mcpServers: [],
+						},
 						startupTimeoutMs,
 					);
 				} finally {
@@ -875,7 +880,11 @@ export class AcpAdapter implements HarnessAdapter {
 			} else {
 				response = await client.request(
 					"session/new",
-					{ cwd: startOptions.cwd, mcpServers: [] },
+					{
+						cwd: startOptions.cwd,
+						...extraDirectories(startOptions),
+						mcpServers: [],
+					},
 					startupTimeoutMs,
 				);
 			}
@@ -2199,6 +2208,11 @@ export class AcpAdapter implements HarnessAdapter {
 	private mintId(): string {
 		return (this.options.mintId ?? randomUUID)();
 	}
+}
+
+function extraDirectories(startOptions: HarnessStartOptions) {
+	const dirs = startOptions.additionalDirectories ?? [];
+	return dirs.length > 0 ? { additionalDirectories: dirs } : {};
 }
 
 export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {

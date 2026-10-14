@@ -1664,6 +1664,9 @@ msgstr "Yorum ekle…"
 msgid "Add a description…"
 msgstr "Açıklama ekleyin…"
 
+msgid "Add a folder to the project"
+msgstr "Projeye klasör ekle"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Proje Ayarları'nda bir yaşam döngüsü çalıştırma betiği ekleyin veya bir terminal betiğini çalışma alanı çalıştırması olarak işaretleyin."
 
@@ -1735,6 +1738,12 @@ msgstr "Dosya, uygulama ve daha fazlasını ekleyin"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Dosya, uygulama ve daha fazlasını ekleyin (@)"
+
+msgid "Add folder"
+msgstr "Klasör ekle"
+
+msgid "Add folder…"
+msgstr "Klasör ekle…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "Harici Tarayıcı"
 msgid "External editor"
 msgstr "Harici düzenleyici"
 
+msgid "Extra folders"
+msgstr "Ek klasörler"
+
 msgid "extra ${used} of ${limit}"
 msgstr "ek ${used}/${limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "Varsayılan yap — yeni terminalleri ve ajanları bu hesapta başlat."
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Cihazın uyanık, çevrimiçi ve Superset’in çalışır durumda olduğundan emin olun."
 
+msgid "Main repository"
+msgstr "Ana depo"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "Çip stilini TooltipContent varsayılanı yap"
 
@@ -10889,6 +10904,9 @@ msgstr "Dosya bulunamadı"
 
 msgid "No files match the accepted types."
 msgstr "Hiçbir dosya kabul edilen türlerle eşleşmiyor."
+
+msgid "No extra folders."
+msgstr "Ek klasör yok."
 
 msgid "No files match your search"
 msgstr "Aramanızla eşleşen dosya yok"
@@ -12217,6 +12235,9 @@ msgstr "Diğer takım üyeleri"
 
 msgid "Other ways to reach us"
 msgstr "Bize ulaşmanın diğer yolları"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Ajanların çalışabildiği ve değişiklikleri bu projenin değişikliklerinin yanında gösterilen diğer klasörler. Git depoları veya düz klasörler olabilir."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "11,5 milyon dolarlık tohum turumuza Union Square Ventures liderlik ediyor; Y Combinator, Paul Graham ve hayran olduğumuz kurucular da yer alıyor."
@@ -13623,6 +13644,9 @@ msgstr "Kenar çubuğundan kaldır"
 
 msgid "Remove from Sidebar"
 msgstr "Kenar çubuğundan kaldır"
+
+msgid "Remove folder"
+msgstr "Klasörü kaldır"
 
 msgid "Remove icon"
 msgstr "Simgeyi kaldır"
@@ -17450,6 +17474,12 @@ msgstr "Bu host"
 msgid "This host has not reported a version yet."
 msgstr "Bu ana makine henüz bir sürüm bildirmedi."
 
+msgid "This folder is not a git repository."
+msgstr "Bu klasör bir git deposu değil."
+
+msgid "This folder no longer exists on disk."
+msgstr "Bu klasör artık diskte yok."
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Bu ana makine kullandığınız uygulamanın gerisinde. Çalışma alanları hâlâ açılıyor ama yeni özellikler üzerinde çalışmayabilir."
 
@@ -19245,6 +19275,9 @@ msgstr "Worktree'ler diskten kaldırılır; projenin checkout'undaki çalışma 
 
 msgid "Would you like to reassign it?"
 msgstr "Yeniden atamak ister misiniz?"
+
+msgid "Worktree per workspace"
+msgstr "Çalışma alanı başına worktree"
 
 msgid "Wrap lines"
 msgstr "Satırları kaydır"

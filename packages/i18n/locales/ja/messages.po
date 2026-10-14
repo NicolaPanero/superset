@@ -1664,6 +1664,9 @@ msgstr "コメントを追加…"
 msgid "Add a description…"
 msgstr "説明を追加…"
 
+msgid "Add a folder to the project"
+msgstr "プロジェクトにフォルダを追加"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "プロジェクト設定でライフサイクルの実行スクリプトを追加するか、ターミナルスクリプトをワークスペース実行に指定してください。"
 
@@ -1735,6 +1738,12 @@ msgstr "ファイルやアプリなどを追加"
 
 msgid "Add files, apps, and more (@)"
 msgstr "ファイルやアプリなどを追加(@)"
+
+msgid "Add folder"
+msgstr "フォルダを追加"
+
+msgid "Add folder…"
+msgstr "フォルダを追加…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "外部ブラウザ"
 msgid "External editor"
 msgstr "外部エディタ"
 
+msgid "Extra folders"
+msgstr "追加フォルダ"
+
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
 
@@ -9888,6 +9900,9 @@ msgstr "デフォルトにする — 新しいターミナルとエージェン�
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "デバイスがスリープ状態ではなく、オンラインで Superset が起動していることを確認してください。"
 
+msgid "Main repository"
+msgstr "メインリポジトリ"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "チップスタイルをTooltipContentのデフォルトにする"
 
@@ -10889,6 +10904,9 @@ msgstr "ファイルが見つかりません"
 
 msgid "No files match the accepted types."
 msgstr "対応している形式のファイルがありません。"
+
+msgid "No extra folders."
+msgstr "追加フォルダはありません。"
 
 msgid "No files match your search"
 msgstr "検索に一致するファイルがありません"
@@ -12217,6 +12235,9 @@ msgstr "他のチームメンバー"
 
 msgid "Other ways to reach us"
 msgstr "その他の連絡方法"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "エージェントが作業できる他のフォルダで、その変更はこのプロジェクトの変更の横に表示されます。gitリポジトリでも通常のフォルダでも構いません。"
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "1,150万ドルのシードラウンドは Union Square Ventures が主導し、Y Combinator、Paul Graham、そして私たちが尊敬する創業者たちが参加しています。"
@@ -13623,6 +13644,9 @@ msgstr "サイドバーから削除"
 
 msgid "Remove from Sidebar"
 msgstr "サイドバーから削除"
+
+msgid "Remove folder"
+msgstr "フォルダを削除"
 
 msgid "Remove icon"
 msgstr "アイコンを削除"
@@ -17450,6 +17474,12 @@ msgstr "このホスト"
 msgid "This host has not reported a version yet."
 msgstr "このホストはまだバージョンを報告していません。"
 
+msgid "This folder is not a git repository."
+msgstr "このフォルダはgitリポジトリではありません。"
+
+msgid "This folder no longer exists on disk."
+msgstr "このフォルダはディスク上に存在しません。"
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "このホストは使用中のアプリより古いバージョンです。ワークスペースは開けますが、新しい機能は動作しない可能性があります。"
 
@@ -19245,6 +19275,9 @@ msgstr "ワークツリーはディスクから削除され、プロジェクト
 
 msgid "Would you like to reassign it?"
 msgstr "割り当て直しますか?"
+
+msgid "Worktree per workspace"
+msgstr "ワークスペースごとのワークツリー"
 
 msgid "Wrap lines"
 msgstr "行を折り返す"

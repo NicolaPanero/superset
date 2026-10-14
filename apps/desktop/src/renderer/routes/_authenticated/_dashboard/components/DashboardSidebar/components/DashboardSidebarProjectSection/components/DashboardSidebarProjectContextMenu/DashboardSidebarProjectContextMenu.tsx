@@ -20,6 +20,7 @@ import {
 	LuTrash2,
 } from "react-icons/lu";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
+import { AddFolderMenuItem } from "./components/AddFolderMenuItem";
 
 interface DashboardSidebarProjectContextMenuProps {
 	projectId: string;
@@ -64,6 +65,7 @@ export function DashboardSidebarProjectContextMenu({
 					<LuSettings className="size-4 mr-2" />
 					<Trans>Project Settings</Trans>
 				</ContextMenuItem>
+				<AddFolderMenuItem projectId={projectId} />
 				<ContextMenuItem onSelect={onCreateSection}>
 					<LuFolderPlus className="size-4 mr-2" />
 					<Trans>New group</Trans>

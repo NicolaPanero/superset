@@ -1664,6 +1664,9 @@ msgstr "新增留言…"
 msgid "Add a description…"
 msgstr "新增描述…"
 
+msgid "Add a folder to the project"
+msgstr "將資料夾加入專案"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "在專案設定中新增生命週期執行指令碼，或將某個終端指令碼標記為工作區執行命令。"
 
@@ -1735,6 +1738,12 @@ msgstr "新增檔案、應用等"
 
 msgid "Add files, apps, and more (@)"
 msgstr "新增檔案、應用等（@）"
+
+msgid "Add folder"
+msgstr "新增資料夾"
+
+msgid "Add folder…"
+msgstr "新增資料夾…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -6976,6 +6985,9 @@ msgstr "外部瀏覽器"
 msgid "External editor"
 msgstr "外部編輯器"
 
+msgid "Extra folders"
+msgstr "額外資料夾"
+
 msgid "extra ${used} of ${limit}"
 msgstr "額外用量${used}/${limit}"
 
@@ -9888,6 +9900,9 @@ msgstr "設為預設——新終端和代理程式將使用此帳戶啟動。"
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "請確認裝置未進入睡眠模式、已連上網路且正在執行 Superset。"
 
+msgid "Main repository"
+msgstr "主要儲存庫"
+
 msgid "Make the chip style the TooltipContent default"
 msgstr "把chip樣式設為TooltipContent的預設樣式"
 
@@ -10889,6 +10904,9 @@ msgstr "未找到檔案"
 
 msgid "No files match the accepted types."
 msgstr "沒有檔案符合允許的型別。"
+
+msgid "No extra folders."
+msgstr "沒有額外資料夾。"
 
 msgid "No files match your search"
 msgstr "沒有符合搜尋的檔案"
@@ -12217,6 +12235,9 @@ msgstr "其他團隊成員"
 
 msgid "Other ways to reach us"
 msgstr "其他聯絡方式"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "代理可以在其中工作的其他資料夾，其變更會顯示在此專案的變更旁邊。可以是 git 儲存庫，也可以是一般資料夾。"
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "我們 1,150 萬美元的種子輪由 Union Square Ventures 領投，Y Combinator、Paul Graham 以及我們敬佩的創辦人參與投資。"
@@ -13623,6 +13644,9 @@ msgstr "從側邊欄移除"
 
 msgid "Remove from Sidebar"
 msgstr "從側邊欄移除"
+
+msgid "Remove folder"
+msgstr "移除資料夾"
 
 msgid "Remove icon"
 msgstr "移除圖示"
@@ -17450,6 +17474,12 @@ msgstr "此主機"
 msgid "This host has not reported a version yet."
 msgstr "此主機尚未回報版本。"
 
+msgid "This folder is not a git repository."
+msgstr "此資料夾不是 git 儲存庫。"
+
+msgid "This folder no longer exists on disk."
+msgstr "此資料夾在磁碟上已不存在。"
+
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "此主機落後於你正在使用的應用程式。工作區仍可開啟，但較新的功能可能無法使用。"
 
@@ -19245,6 +19275,9 @@ msgstr "worktree 會從磁碟中移除；位於專案簽出上的工作區僅會
 
 msgid "Would you like to reassign it?"
 msgstr "要重新分配嗎？"
+
+msgid "Worktree per workspace"
+msgstr "每個工作區一個 worktree"
 
 msgid "Wrap lines"
 msgstr "自動換行"

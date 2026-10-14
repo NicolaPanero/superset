@@ -2,6 +2,7 @@ import type { FsWatchEvent } from "@superset/workspace-fs/host";
 import { and, eq, isNull } from "drizzle-orm";
 import type { HostDb } from "../db/index.ts";
 import { workspaces } from "../db/schema.ts";
+import { resolveFolderWorkspaceRoot } from "../project-folders/index.ts";
 import type { WorkspaceFilesystemManager } from "../runtime/filesystem/index.ts";
 import {
 	scanGitIgnoredDirectories as listGitIgnoredDirs,
@@ -360,8 +361,10 @@ export class GitWatcher {
 		// Not found / archived: nothing to attach right now. If the row appears
 		// later (e.g. `watchWorkspace` raced workspace creation), the 30s sweep
 		// retries any still-interested workspace that never attached.
-		if (!row) return;
-		await this.attachWatcher(workspaceId, row.worktreePath);
+		const worktreePath =
+			row?.worktreePath ?? resolveFolderWorkspaceRoot(this.db, workspaceId);
+		if (!worktreePath) return;
+		await this.attachWatcher(workspaceId, worktreePath);
 	}
 
 	private stopWatching(workspaceId: string): void {
@@ -670,13 +673,16 @@ export class GitWatcher {
 		// client unwatches or its socket closes — self-healing, unlike a
 		// leaked live watcher.
 		for (const id of [...this.watched.keys()]) {
-			if (!existingIds.has(id)) this.stopWatching(id);
+			if (existingIds.has(id)) continue;
+			if (resolveFolderWorkspaceRoot(this.db, id)) continue;
+			this.stopWatching(id);
 		}
 
 		// Retry attaching for still-interested workspaces that never attached.
 		for (const id of this.interest.keys()) {
 			if (this.watched.has(id)) continue;
-			const worktreePath = worktreePathById.get(id);
+			const worktreePath =
+				worktreePathById.get(id) ?? resolveFolderWorkspaceRoot(this.db, id);
 			if (!worktreePath) continue;
 			await this.attachWatcher(id, worktreePath);
 		}

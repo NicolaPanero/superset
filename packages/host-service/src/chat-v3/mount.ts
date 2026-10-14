@@ -28,6 +28,7 @@ import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
 import { createResolveCwd } from "./resolveCwd";
+import { withProjectFolders } from "./withProjectFolders";
 
 export const CHAT_V3_TRPC_PATH = "/chat-v3/trpc";
 export const CHAT_V3_STREAM_PATH = "/chat-v3/sessions/:sessionId/stream";
@@ -98,7 +99,9 @@ function harnessRegistry(
 		],
 		...acpHarnessEntries(db, agents),
 	];
-	return new Map(entries);
+	return new Map(
+		entries.map(([name, factory]) => [name, withProjectFolders(db, factory)]),
+	);
 }
 
 export type ChatV3Mount = {

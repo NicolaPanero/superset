@@ -51,6 +51,7 @@ export function useWorkspacePaneOpeners({
 		line?: number,
 		side?: DiffFocusSide,
 		changeKey?: string,
+		repoKey?: string,
 	) => void;
 	addTerminalTab: () => Promise<void>;
 	addBrowserTab: () => void;
@@ -69,6 +70,7 @@ export function useWorkspacePaneOpeners({
 			line?: number,
 			side?: DiffFocusSide,
 			changeKey?: string,
+			repoKey?: string,
 		) => {
 			const state = store.getState();
 			// Bump the tick on every request so repeat clicks re-scroll and a
@@ -86,6 +88,7 @@ export function useWorkspacePaneOpeners({
 							data: {
 								path: filePath,
 								changeKey,
+								repoKey,
 								collapsedFiles: [],
 								...focusFields,
 							} as DiffPaneData,
@@ -104,6 +107,7 @@ export function useWorkspacePaneOpeners({
 							...prev,
 							path: filePath,
 							changeKey,
+							repoKey,
 							// Only the navigated file's key can be pruned; without a
 							// change key we can't identify it, so leave the set intact.
 							collapsedFiles: changeKey
@@ -123,6 +127,7 @@ export function useWorkspacePaneOpeners({
 					data: {
 						path: filePath,
 						changeKey,
+						repoKey,
 						collapsedFiles: [],
 						...focusFields,
 					} as DiffPaneData,

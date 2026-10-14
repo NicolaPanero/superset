@@ -68,6 +68,7 @@ import { useV2WorkspacePaneLayout } from "./hooks/useV2WorkspacePaneLayout";
 import { useV2WorkspaceRun } from "./hooks/useV2WorkspaceRun";
 import { useWindowWidth } from "./hooks/useWindowWidth";
 import { useWorkspaceFileNavigation } from "./hooks/useWorkspaceFileNavigation";
+import { useWorkspaceFolders } from "./hooks/useWorkspaceFolders";
 import { useWorkspaceHotkeys } from "./hooks/useWorkspaceHotkeys";
 import { useWorkspacePaneOpeners } from "./hooks/useWorkspacePaneOpeners";
 import { useWorkspaceRightSidebarOpen } from "./hooks/useWorkspaceRightSidebarOpen";
@@ -574,7 +575,11 @@ function V2WorkspaceContent() {
 		isSandbox,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
+	// Run belongs to the main repo: it stays off while another repo is selected.
+	const { selected: selectedFolderRepo } = useWorkspaceFolders(workspaceId);
+	const isRunBlocked = selectedFolderRepo !== null && !workspaceRun.isRunning;
 	useHotkey("RUN_WORKSPACE_COMMAND", () => {
+		if (isRunBlocked) return;
 		void workspaceRun.toggleWorkspaceRun();
 	});
 
@@ -587,7 +592,7 @@ function V2WorkspaceContent() {
 			projectId={workspace.projectId}
 			definition={workspaceRun.definition}
 			isRunning={workspaceRun.isRunning}
-			isPending={workspaceRun.isPending}
+			isPending={workspaceRun.isPending || isRunBlocked}
 			canForceStop={workspaceRun.canForceStop}
 			onToggle={workspaceRun.toggleWorkspaceRun}
 			onForceStop={workspaceRun.forceStopWorkspaceRun}
@@ -612,7 +617,7 @@ function V2WorkspaceContent() {
 				projectId={workspace.projectId}
 				runDefinition={workspaceRun.definition}
 				isRunning={workspaceRun.isRunning}
-				isRunPending={workspaceRun.isPending}
+				isRunPending={workspaceRun.isPending || isRunBlocked}
 				canForceStop={workspaceRun.canForceStop}
 				onToggleRun={workspaceRun.toggleWorkspaceRun}
 				onForceStopRun={workspaceRun.forceStopWorkspaceRun}

@@ -17,6 +17,7 @@ import { pageWatchRouter } from "./page-watch";
 import { panesRouter } from "./panes";
 import { portsRouter } from "./ports";
 import { projectRouter } from "./project";
+import { projectFoldersRouter } from "./project-folders";
 import { pullRequestsRouter } from "./pull-requests";
 import { sandboxRouter } from "./sandbox";
 import { sessionTransferRouter } from "./session-transfer";
@@ -48,6 +49,7 @@ export const appRouter = router({
 	notifications: notificationsRouter,
 	pullRequests: pullRequestsRouter,
 	project: projectRouter,
+	projectFolders: projectFoldersRouter,
 	tagFolders: tagFoldersRouter,
 	pageWatch: pageWatchRouter,
 	panes: panesRouter,
