@@ -7,7 +7,12 @@ import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { bridgeCursorSession } from "../../../chat-v3/cursorSessionBridge/cursorSessionBridge";
 import { copyClaudeSessionToFolder } from "../../../chat-v3/forkMoveClaudeSession";
-import { workspaces } from "../../../db/schema";
+import type { HostDb } from "../../../db/db";
+import {
+	sessionLineageEdges,
+	sessionLineageNodes,
+} from "../../../db/fork-schema";
+import { projects, workspaces } from "../../../db/schema";
 import { chatProvenance } from "../../../session-transfer/chatProvenance";
 import {
 	externalSessionStore,
@@ -196,6 +201,50 @@ async function convertNative(
 		warnings: result.warnings,
 	});
 	return { result, lineageNodeId: edge.targetNodeId };
+}
+
+const earlierInput = z.object({
+	workspaceId: z.string().uuid(),
+	sessionId: z.string().min(1),
+});
+
+/** The chat an imported one was converted from, if the host recorded it. */
+function earlierSource(
+	ctx: { db: HostDb; organizationId: string },
+	input: z.infer<typeof earlierInput>,
+) {
+	const targets = ctx.db
+		.select()
+		.from(sessionLineageNodes)
+		.where(
+			and(
+				eq(sessionLineageNodes.organizationId, ctx.organizationId),
+				eq(sessionLineageNodes.workspaceId, input.workspaceId),
+				eq(sessionLineageNodes.sessionId, input.sessionId),
+			),
+		)
+		.all();
+	for (const target of targets) {
+		const edge = ctx.db
+			.select()
+			.from(sessionLineageEdges)
+			.where(
+				and(
+					eq(sessionLineageEdges.organizationId, ctx.organizationId),
+					eq(sessionLineageEdges.workspaceId, input.workspaceId),
+					eq(sessionLineageEdges.targetNodeId, target.id),
+				),
+			)
+			.get();
+		const source = edge
+			? new LocalLineageStore(ctx.db, ctx.organizationId).node(
+					input.workspaceId,
+					edge.sourceNodeId,
+				)
+			: undefined;
+		if (source) return source;
+	}
+	return undefined;
 }
 
 export const sessionTransferRouter = router({
@@ -592,25 +641,65 @@ export const sessionTransferRouter = router({
 				input.cursor,
 			),
 		),
-	externalSessions: protectedProcedure
-		.input(z.object({ workspaceId: z.string().uuid() }))
+	hasEarlierMessages: protectedProcedure
+		.input(earlierInput)
+		.query(({ ctx, input }) => earlierSource(ctx, input) !== undefined),
+	earlierMessages: protectedProcedure
+		.input(earlierInput)
 		.query(async ({ ctx, input }) => {
-			const workspace = ctx.db
-				.select()
-				.from(workspaces)
-				.where(
-					and(
-						eq(workspaces.id, input.workspaceId),
-						isNull(workspaces.archivedAt),
-					),
-				)
-				.get();
-			if (!workspace)
+			const source = earlierSource(ctx, input);
+			if (!source) return null;
+			return new TxcriptTransferProvider()
+				.history({
+					sourceAgent: source.agent,
+					sourceSessionId: source.sessionId,
+					sourceRoot: source.storeRoot,
+					sourceReference: source.reference,
+				})
+				.catch((error: Error) => {
+					throw new TRPCError({
+						code: "PRECONDITION_FAILED",
+						message: error.message,
+					});
+				});
+		}),
+	externalSessions: protectedProcedure
+		.input(
+			z
+				.object({
+					workspaceId: z.string().uuid().optional(),
+					projectId: z.string().min(1).optional(),
+				})
+				.refine((value) => value.workspaceId || value.projectId),
+		)
+		.query(async ({ ctx, input }) => {
+			const workspace = input.workspaceId
+				? ctx.db
+						.select()
+						.from(workspaces)
+						.where(
+							and(
+								eq(workspaces.id, input.workspaceId),
+								isNull(workspaces.archivedAt),
+							),
+						)
+						.get()
+				: undefined;
+			const project =
+				!input.workspaceId && input.projectId
+					? ctx.db
+							.select()
+							.from(projects)
+							.where(eq(projects.id, input.projectId))
+							.get()
+					: undefined;
+			const root = workspace?.worktreePath ?? project?.repoPath;
+			if (!root)
 				throw new TRPCError({
 					code: "NOT_FOUND",
 					message: "workspace_unavailable",
 				});
-			const cwd = await realpath(workspace.worktreePath);
+			const cwd = await realpath(root);
 			const folders = await projectFolders(cwd);
 			const codexHomes = await discoverCodexHomes();
 			const baseEnv = { ...process.env, CODEX_HOME: codexHomes[0]?.home };
@@ -630,10 +719,13 @@ export const sessionTransferRouter = router({
 				});
 			});
 			const known = new Set<string>();
-			for (const edge of new LocalLineageStore(ctx.db, ctx.organizationId).list(
-				input.workspaceId,
-				100,
-			).items)
+			const lineageItems = input.workspaceId
+				? new LocalLineageStore(ctx.db, ctx.organizationId).list(
+						input.workspaceId,
+						100,
+					).items
+				: [];
+			for (const edge of lineageItems)
 				for (const node of [edge.source, edge.target])
 					known.add(`${node.agent}:${node.storeRoot}:${node.sessionId}`);
 			const workspaceByFolder = new Map<string, string>();
@@ -646,7 +738,7 @@ export const sessionTransferRouter = router({
 				if (path && folders.includes(path) && !workspaceByFolder.has(path))
 					workspaceByFolder.set(path, row.id);
 			}
-			workspaceByFolder.set(cwd, input.workspaceId);
+			if (input.workspaceId) workspaceByFolder.set(cwd, input.workspaceId);
 			const active = new Map<string, string>();
 			for (const workspaceId of new Set(workspaceByFolder.values())) {
 				for (const binding of ctx.terminalAgentStore.listByWorkspace(
@@ -677,6 +769,7 @@ export const sessionTransferRouter = router({
 					...session,
 					folder,
 					workspaceId: workspaceByFolder.get(folder) ?? null,
+					inProjectRoot: folder === cwd,
 					inSuperset: known.has(
 						`${session.agent}:${session.storeRoot}:${session.sessionId}`,
 					),

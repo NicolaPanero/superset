@@ -34,6 +34,7 @@ import {
 	CHAT_COLUMN_CLASSNAME,
 	CHAT_SCROLLER_GUTTER_CLASSNAME,
 } from "../../constants";
+import type { EarlierMessages } from "../../hooks/useEarlierMessages";
 import type { ChatForkTarget } from "../../types";
 import { pageLinkFinder } from "../../utils/pageLinks";
 import { ForkChatProvenance } from "./components/ForkChatProvenance";
@@ -72,6 +73,7 @@ export type TranscriptProps = {
 	approvals: ApprovalRequest[];
 	outbox: OutboxEntry[];
 	hasOlder: boolean;
+	earlier?: EarlierMessages | undefined;
 	onLoadOlder: () => Promise<boolean>;
 	onRequestItemBodies: (itemIds: readonly string[]) => void;
 	onRespond: (approvalId: string, decision: Decision) => void;
@@ -105,6 +107,7 @@ function proseTopPadding(
 export function Transcript({
 	approvals,
 	canForkToWorktree,
+	earlier,
 	groups,
 	hasOlder,
 	isActive = false,
@@ -348,6 +351,35 @@ export function Transcript({
 							</Button>
 						) : (
 							olderPages.loading && <Spinner className="size-4" />
+						)}
+					</div>
+				)}
+				{!hasOlder && earlier && (earlier.available || earlier.truncated) && (
+					<div
+						className={cn(
+							CHAT_COLUMN_CLASSNAME,
+							"flex min-h-10 items-center justify-center pt-2",
+						)}
+					>
+						{earlier.available ? (
+							<Button
+								disabled={earlier.loading}
+								onClick={earlier.show}
+								size="sm"
+								variant="ghost"
+							>
+								{earlier.loading ? (
+									<Spinner className="size-4" />
+								) : earlier.failed ? (
+									<Trans>Couldn't load earlier messages. Retry</Trans>
+								) : (
+									<Trans>Show earlier messages</Trans>
+								)}
+							</Button>
+						) : (
+							<span className="text-muted-foreground text-xs">
+								<Trans>Older messages were left out to keep this short.</Trans>
+							</span>
 						)}
 					</div>
 				)}

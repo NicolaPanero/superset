@@ -11502,6 +11502,9 @@ msgstr "オフライン/ローカルファーストモード"
 msgid "Older"
 msgstr "それ以前"
 
+msgid "Older messages were left out to keep this short."
+msgstr "短くするため、古いメッセージは省略されました。"
+
 msgid "On"
 msgstr "オン"
 
@@ -15370,6 +15373,9 @@ msgstr "デバイスツールバーを表示"
 
 msgid "Show diff panel"
 msgstr "差分パネルを表示"
+
+msgid "Show earlier messages"
+msgstr "以前のメッセージを表示"
 
 msgid "Show emails"
 msgstr "メールを表示"

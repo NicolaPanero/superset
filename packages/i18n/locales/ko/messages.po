@@ -11502,6 +11502,9 @@ msgstr "오프라인 / 로컬 우선 모드"
 msgid "Older"
 msgstr "이전"
 
+msgid "Older messages were left out to keep this short."
+msgstr "간결하게 유지하려고 오래된 메시지는 생략했습니다."
+
 msgid "On"
 msgstr "켜짐"
 
@@ -15370,6 +15373,9 @@ msgstr "기기 툴바 표시"
 
 msgid "Show diff panel"
 msgstr "차이 패널 표시"
+
+msgid "Show earlier messages"
+msgstr "이전 메시지 표시"
 
 msgid "Show emails"
 msgstr "이메일 표시"

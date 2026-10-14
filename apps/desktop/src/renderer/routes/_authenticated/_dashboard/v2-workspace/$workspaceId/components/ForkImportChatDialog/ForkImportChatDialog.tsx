@@ -1,73 +1,27 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import { acpHarnessForPreset } from "@superset/chat/core";
 import { errorMessage } from "@superset/i18n/errors";
-import { formatRelativeTime } from "@superset/i18n/format";
 import type { WorkspaceStore } from "@superset/panes";
-import { Button } from "@superset/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-} from "@superset/ui/dialog";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuTrigger,
-} from "@superset/ui/dropdown-menu";
-import { Input } from "@superset/ui/input";
 import { toast } from "@superset/ui/sonner";
-import { Spinner } from "@superset/ui/spinner";
-import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowUpRight, ChevronDown, RefreshCw, Search } from "lucide-react";
-import { useMemo, useState } from "react";
-import {
-	getPresetIcon,
-	useIsDarkTheme,
-} from "renderer/assets/app-icons/preset-icons";
+import { useEffect, useRef, useState } from "react";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
+import {
+	type ExternalSession,
+	ForkChatSearchDialog,
+	sessionKey,
+} from "renderer/routes/_authenticated/components/ForkChatSearchDialog";
 import type { StoreApi } from "zustand/vanilla";
 import { useAgentSessionLauncher } from "../../hooks/useAgentSessionLauncher";
 import type { PaneViewerData } from "../../types";
 
-import { forkImportChoices } from "./forkImportChoices";
-
-const ALL = "all";
-
-type ExternalSession = {
-	agent: string;
-	sessionId: string;
-	title: string | null;
-	preview: string | null;
-	timestamp: string;
-	updatedAt: string | null;
-	gitBranch: string | null;
-	model: string | null;
-	accountSelection: string | null;
-	cwd: string | null;
-	folder: string;
-	/** The Superset workspace of the folder it ran in, if there is one. */
-	workspaceId: string | null;
-	inSuperset: boolean;
-	terminalId?: string | null;
-	storeRoot?: string;
+export type ForkResumeRequest = {
+	key: string;
+	configId: string;
 };
-
-/** Agents whose sessions resume from any folder once Superset puts them there. */
-const PORTABLE = new Set(["claude", "codex"]);
-
-function accountName(selection: string | null) {
-	if (!selection) return null;
-	const name = selection.split("/").filter(Boolean).at(-1) ?? selection;
-	return name.replace(/^\.(claude|codex)-?/, "") || name;
-}
 
 /** Finds local chats and reuses sessions already connected to Superset. */
 export function ForkImportChatDialog({
@@ -76,7 +30,11 @@ export function ForkImportChatDialog({
 	onImported,
 	store,
 	workspaceId,
+	resume,
+	onResumeConsumed,
 }: {
+	resume?: ForkResumeRequest;
+	onResumeConsumed?: () => void;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	onImported: () => void;
@@ -84,7 +42,6 @@ export function ForkImportChatDialog({
 	workspaceId: string;
 }) {
 	const { t } = useLingui();
-	const dark = useIsDarkTheme();
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const { openAgentChat, focusAgentTerminal } = useAgentSessionLauncher({
@@ -92,12 +49,10 @@ export function ForkImportChatDialog({
 		store,
 	});
 	const navigate = useNavigate();
-	const [query, setQuery] = useState("");
-	const [agentFilter, setAgentFilter] = useState(ALL);
 	const [busy, setBusy] = useState<string | null>(null);
 	const listing = workspaceTrpc.sessionTransfer.externalSessions.useQuery(
 		{ workspaceId },
-		{ enabled: open, retry: false, staleTime: 30_000 },
+		{ enabled: open || Boolean(resume), retry: false, staleTime: 30_000 },
 	);
 	const { data: capabilities } =
 		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
@@ -127,28 +82,9 @@ export function ForkImportChatDialog({
 				capabilities.adapters.find((adapter) => adapter.agent === presetId)
 					?.verified,
 		);
-	const agents = [...new Set(sessions.map((session) => session.agent))];
-	const needle = query.trim().toLowerCase();
-	const visible = useMemo(
-		() =>
-			sessions.filter(
-				(session) =>
-					(agentFilter === ALL || session.agent === agentFilter) &&
-					(!needle ||
-						`${session.title ?? ""} ${session.preview ?? ""} ${session.model ?? ""} ${session.gitBranch ?? ""} ${accountName(session.accountSelection) ?? ""} ${session.folder} ${session.sessionId}`
-							.toLowerCase()
-							.includes(needle)),
-			),
-		[sessions, agentFilter, needle],
-	);
-	const labelFor = (presetId: string) =>
-		chatConfig(presetId)?.label ?? presetId;
-
 	/** Where a chat opens: its own folder's workspace, else this one. */
 	const homeOf = (session: ExternalSession) =>
 		session.workspaceId ?? workspaceId;
-	const canOpen = (session: ExternalSession) =>
-		session.workspaceId !== null || PORTABLE.has(session.agent);
 
 	/** Opens a chat in another workspace by handing it over as a background chat. */
 	const openThere = async (
@@ -185,7 +121,7 @@ export function ForkImportChatDialog({
 	};
 
 	const run = async (session: ExternalSession, targetConfigId: string) => {
-		const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
+		const key = sessionKey(session);
 		const target = configs.find((config) => config.id === targetConfigId);
 		const targetPresetId = target?.presetId;
 		const source = chatConfig(session.agent);
@@ -314,288 +250,33 @@ export function ForkImportChatDialog({
 		}
 	};
 
-	const listError = listing.error?.message;
+	const resumed = useRef(false);
+	useEffect(() => {
+		if (!resume || resumed.current || !listing.data) return;
+		resumed.current = true;
+		const session = sessions.find((entry) => sessionKey(entry) === resume.key);
+		onResumeConsumed?.();
+		if (!session) {
+			toast.error(t({ message: "Couldn't import the chat" }));
+			return;
+		}
+		void run(session, resume.configId);
+	});
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="flex max-h-[85vh] flex-col gap-4 sm:max-w-2xl">
-				<DialogHeader>
-					<DialogTitle>
-						<Trans>Find a chat</Trans>
-					</DialogTitle>
-					<DialogDescription>
-						<Trans>
-							Find local chats across this project and its accounts. Open an
-							existing chat or continue one started in a terminal.
-						</Trans>
-					</DialogDescription>
-				</DialogHeader>
-				<div className="flex items-center gap-2">
-					<div className="relative min-w-0 flex-1">
-						<Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
-						<Input
-							autoFocus
-							className="pl-8"
-							onChange={(event) => setQuery(event.target.value)}
-							aria-label={t({ message: "Search chats" })}
-							placeholder={t({ message: "Search chats" })}
-							value={query}
-						/>
-					</div>
-					<Button
-						type="button"
-						variant="outline"
-						size="icon"
-						aria-label={t({ message: "Refresh" })}
-						title={t({ message: "Refresh" })}
-						disabled={listing.isFetching || busy !== null}
-						onClick={() => void listing.refetch()}
-					>
-						<RefreshCw
-							className={cn("size-4", listing.isFetching && "animate-spin")}
-						/>
-					</Button>
-				</div>
-				{agents.length > 1 && (
-					<fieldset
-						className="flex flex-wrap gap-1.5"
-						aria-label={t({ message: "Agent" })}
-					>
-						{[ALL, ...agents].map((agent) => {
-							const icon = agent === ALL ? null : getPresetIcon(agent, dark);
-							const selected = agentFilter === agent;
-							return (
-								<button
-									aria-pressed={selected}
-									className={cn(
-										"flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs transition-colors",
-										selected
-											? "border-foreground/20 bg-foreground/[0.08] text-foreground"
-											: "text-muted-foreground hover:bg-foreground/[0.05] hover:text-foreground",
-									)}
-									key={agent}
-									onClick={() => setAgentFilter(agent)}
-									type="button"
-								>
-									{icon ? <img alt="" className="size-3.5" src={icon} /> : null}
-									{agent === ALL ? <Trans>All</Trans> : labelFor(agent)}
-									<span className="text-muted-foreground/70 tabular-nums">
-										{agent === ALL
-											? sessions.length
-											: sessions.filter((session) => session.agent === agent)
-													.length}
-									</span>
-								</button>
-							);
-						})}
-					</fieldset>
-				)}
-				<div className="-mx-2 min-h-40 flex-1 overflow-y-auto px-2">
-					{listing.isPending ? (
-						<div className="flex h-40 items-center justify-center">
-							<Spinner className="size-4" />
-						</div>
-					) : listError ? (
-						<p className="py-10 text-center text-muted-foreground text-sm">
-							{listError === "session_list_unavailable" ? (
-								<Trans>
-									This build can't search chats yet. Update Superset to use it.
-								</Trans>
-							) : (
-								<Trans>Couldn't read the chats on this Mac.</Trans>
-							)}
-						</p>
-					) : visible.length === 0 ? (
-						<div className="space-y-3 py-10 text-center text-muted-foreground text-sm">
-							<p>
-								{sessions.length > 0 ? (
-									<Trans>No results found.</Trans>
-								) : (
-									<Trans>No chats found in this project.</Trans>
-								)}
-							</p>
-							{(needle || agentFilter !== ALL) && (
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => {
-										setQuery("");
-										setAgentFilter(ALL);
-									}}
-								>
-									<Trans>Clear filters</Trans>
-								</Button>
-							)}
-						</div>
-					) : (
-						<ul className="flex flex-col gap-1">
-							{visible.map((session) => {
-								const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
-								const icon = getPresetIcon(session.agent, dark);
-								const account = accountName(session.accountSelection);
-								const others = forkImportChoices(configs, {
-									sourceAgent: session.agent,
-									canOpen: canOpen(session),
-									hasWorkspace: session.workspaceId !== null,
-									verified,
-								});
-								const canContinue =
-									Boolean(session.terminalId || chatConfig(session.agent)) &&
-									canOpen(session);
-								const elsewhere = homeOf(session) !== workspaceId;
-								return (
-									<li
-										className="group flex items-center gap-3 rounded-lg px-2.5 py-2 hover:bg-foreground/[0.04]"
-										key={key}
-									>
-										{icon ? (
-											<img alt="" className="size-5 shrink-0" src={icon} />
-										) : null}
-										<div className="min-w-0 flex-1">
-											<p
-												className={cn(
-													"truncate text-sm",
-													!session.title &&
-														!session.preview &&
-														"text-muted-foreground",
-												)}
-												title={session.preview ?? undefined}
-											>
-												{session.title ?? session.preview ?? (
-													<Trans>Untitled chat</Trans>
-												)}
-											</p>
-											<p className="truncate text-muted-foreground text-xs">
-												{[
-													formatRelativeTime(
-														new Date(session.updatedAt ?? session.timestamp),
-													),
-													labelFor(session.agent),
-													session.model,
-													session.gitBranch,
-													account,
-													elsewhere || session.workspaceId === null
-														? session.folder.split("/").at(-1)
-														: null,
-													session.sessionId.slice(0, 8),
-												]
-													.filter(Boolean)
-													.join(" · ")}
-											</p>
-										</div>
-										{session.inSuperset && (
-											<span className="shrink-0 rounded-full bg-foreground/[0.07] px-2 py-0.5 text-[10px] text-muted-foreground">
-												<Trans>In Superset</Trans>
-											</span>
-										)}
-										<div className="flex shrink-0 items-center">
-											<Button
-												className={cn(others.length > 0 && "rounded-r-none")}
-												disabled={busy !== null || !canContinue}
-												onClick={() =>
-													void run(session, chatConfig(session.agent)?.id ?? "")
-												}
-												size="sm"
-												title={
-													!canOpen(session)
-														? t({
-																message:
-																	"Add this folder as a workspace to continue the chat",
-															})
-														: elsewhere
-															? t({
-																	message:
-																		"Opens in the workspace of its folder",
-																})
-															: undefined
-												}
-												variant="secondary"
-											>
-												{busy === key ? (
-													<Spinner className="size-3.5" />
-												) : (
-													<>
-														{session.terminalId ? (
-															<Trans>Open</Trans>
-														) : (
-															<Trans>Continue</Trans>
-														)}
-														{elsewhere && <ArrowUpRight className="size-3.5" />}
-													</>
-												)}
-											</Button>
-											{others.length > 0 && (
-												<DropdownMenu>
-													<DropdownMenuTrigger asChild>
-														<Button
-															aria-label={t({
-																message: "Continue with another agent",
-															})}
-															className="rounded-l-none border-l border-background/40 px-1.5"
-															disabled={busy !== null}
-															size="sm"
-															variant="secondary"
-														>
-															<ChevronDown className="size-3.5" />
-														</Button>
-													</DropdownMenuTrigger>
-													<DropdownMenuContent align="end">
-														<DropdownMenuLabel className="text-muted-foreground text-xs">
-															<Trans>Continue with</Trans>
-														</DropdownMenuLabel>
-														{others.map(({ config, unavailable }) => {
-															const otherIcon = getPresetIcon(
-																config.presetId,
-																dark,
-															);
-															return (
-																<DropdownMenuItem
-																	key={config.id}
-																	disabled={unavailable !== null}
-																	onSelect={() => void run(session, config.id)}
-																>
-																	{otherIcon ? (
-																		<img
-																			alt=""
-																			className="size-4"
-																			src={otherIcon}
-																		/>
-																	) : null}
-																	<span className="flex min-w-0 flex-col">
-																		<span>{config.label}</span>
-																		{unavailable && (
-																			<span className="text-xs text-muted-foreground">
-																				{unavailable === "chat"
-																					? t({
-																							message:
-																								"This agent can't be opened as a chat.",
-																						})
-																					: unavailable === "folder"
-																						? t({
-																								message:
-																									"Add this folder as a workspace to continue the chat",
-																							})
-																						: t({
-																								message:
-																									"Native handoff is unavailable for this agent pair or host.",
-																							})}
-																			</span>
-																		)}
-																	</span>
-																</DropdownMenuItem>
-															);
-														})}
-													</DropdownMenuContent>
-												</DropdownMenu>
-											)}
-										</div>
-									</li>
-								);
-							})}
-						</ul>
-					)}
-				</div>
-			</DialogContent>
-		</Dialog>
+		<ForkChatSearchDialog
+			open={open}
+			onOpenChange={onOpenChange}
+			sessions={sessions}
+			isPending={listing.isPending}
+			isFetching={listing.isFetching}
+			error={listing.error?.message}
+			onRefresh={() => void listing.refetch()}
+			configs={configs}
+			verified={verified}
+			busyKey={busy}
+			currentWorkspaceId={workspaceId}
+			onRun={run}
+		/>
 	);
 }

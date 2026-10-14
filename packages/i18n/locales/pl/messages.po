@@ -11502,6 +11502,9 @@ msgstr "Tryb offline / local-first"
 msgid "Older"
 msgstr "Starsze"
 
+msgid "Older messages were left out to keep this short."
+msgstr "Starsze wiadomości pominięto, aby skrócić rozmowę."
+
 msgid "On"
 msgstr "Włączona"
 
@@ -15370,6 +15373,9 @@ msgstr "Pokaż pasek urządzeń"
 
 msgid "Show diff panel"
 msgstr "Pokaż panel różnic"
+
+msgid "Show earlier messages"
+msgstr "Pokaż wcześniejsze wiadomości"
 
 msgid "Show emails"
 msgstr "Pokaż adresy e-mail"

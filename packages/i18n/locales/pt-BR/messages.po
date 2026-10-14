@@ -11502,6 +11502,9 @@ msgstr "Modo offline / local-first"
 msgid "Older"
 msgstr "Mais antigo"
 
+msgid "Older messages were left out to keep this short."
+msgstr "As mensagens mais antigas foram omitidas para abreviar."
+
 msgid "On"
 msgstr "Ativada"
 
@@ -15370,6 +15373,9 @@ msgstr "Mostrar a barra de dispositivos"
 
 msgid "Show diff panel"
 msgstr "Mostrar o painel de diff"
+
+msgid "Show earlier messages"
+msgstr "Mostrar mensagens anteriores"
 
 msgid "Show emails"
 msgstr "Mostrar e-mails"

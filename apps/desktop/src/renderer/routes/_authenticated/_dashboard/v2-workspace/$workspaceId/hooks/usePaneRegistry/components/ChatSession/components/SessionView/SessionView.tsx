@@ -25,6 +25,7 @@ import { toast } from "@superset/ui/sonner";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { OpenFile } from "../../../../../../types";
+import { useEarlierMessages } from "../../hooks/useEarlierMessages";
 import {
 	ChatPaneActionsProvider,
 	type OpenLink,
@@ -156,7 +157,16 @@ export function SessionView({
 		},
 		[draftKey],
 	);
-	const timeline = useTimeline(session.snapshot);
+	const earlier = useEarlierMessages(
+		workspaceId,
+		session.snapshot.session?.harnessSessionId,
+	);
+	const { withEarlier } = earlier;
+	const displaySnapshot = useMemo(
+		() => withEarlier(session.snapshot),
+		[withEarlier, session.snapshot],
+	);
+	const timeline = useTimeline(displaySnapshot);
 	const rail = useStableList(
 		useMemo(() => railMessages(timeline), [timeline]),
 		(previous, next) =>
@@ -233,7 +243,7 @@ export function SessionView({
 	const timelineRef = useRef(timeline);
 	timelineRef.current = timeline;
 	const snapshotRef = useRef(session.snapshot);
-	snapshotRef.current = session.snapshot;
+	snapshotRef.current = displaySnapshot;
 	const forkWithTranscript = useCallback(
 		(target: ChatForkTarget) =>
 			onFork?.(
@@ -381,7 +391,8 @@ export function SessionView({
 							onRespond={onRespond}
 							onRetryPrompt={session.retryPrompt}
 							outbox={session.outbox}
-							snapshot={session.snapshot}
+							snapshot={displaySnapshot}
+							earlier={earlier}
 						/>
 						{rail.length > 1 && (
 							<ChatHistorySidebarScroller

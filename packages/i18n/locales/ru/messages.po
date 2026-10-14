@@ -11502,6 +11502,9 @@ msgstr "Офлайн / local-first режим"
 msgid "Older"
 msgstr "Ранее"
 
+msgid "Older messages were left out to keep this short."
+msgstr "Более старые сообщения опущены для краткости."
+
 msgid "On"
 msgstr "Включено"
 
@@ -15370,6 +15373,9 @@ msgstr "Показать панель устройств"
 
 msgid "Show diff panel"
 msgstr "Показать панель diff"
+
+msgid "Show earlier messages"
+msgstr "Показать предыдущие сообщения"
 
 msgid "Show emails"
 msgstr "Показать email"

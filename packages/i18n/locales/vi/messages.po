@@ -11502,6 +11502,9 @@ msgstr "Chế độ ngoại tuyến / ưu tiên cục bộ"
 msgid "Older"
 msgstr "Cũ hơn"
 
+msgid "Older messages were left out to keep this short."
+msgstr "Các tin nhắn cũ hơn đã được lược bớt để gọn hơn."
+
 msgid "On"
 msgstr "Bật"
 
@@ -15370,6 +15373,9 @@ msgstr "Hiện thanh công cụ thiết bị"
 
 msgid "Show diff panel"
 msgstr "Hiện khung diff"
+
+msgid "Show earlier messages"
+msgstr "Hiện tin nhắn trước đó"
 
 msgid "Show emails"
 msgstr "Hiện email"

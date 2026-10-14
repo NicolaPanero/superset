@@ -11502,6 +11502,9 @@ msgstr "Offline / local-first režim"
 msgid "Older"
 msgstr "Starší"
 
+msgid "Older messages were left out to keep this short."
+msgstr "Starší zprávy byly vynechány, aby byl přehled stručný."
+
 msgid "On"
 msgstr "Zapnuto"
 
@@ -15370,6 +15373,9 @@ msgstr "Zobrazit panel zařízení"
 
 msgid "Show diff panel"
 msgstr "Zobrazit panel rozdílů"
+
+msgid "Show earlier messages"
+msgstr "Zobrazit dřívější zprávy"
 
 msgid "Show emails"
 msgstr "Zobrazit e-maily"

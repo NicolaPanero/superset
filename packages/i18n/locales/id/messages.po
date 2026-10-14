@@ -11502,6 +11502,9 @@ msgstr "Mode offline / local-first"
 msgid "Older"
 msgstr "Lebih lama"
 
+msgid "Older messages were left out to keep this short."
+msgstr "Pesan yang lebih lama dihilangkan agar singkat."
+
 msgid "On"
 msgstr "Aktif"
 
@@ -15370,6 +15373,9 @@ msgstr "Tampilkan toolbar perangkat"
 
 msgid "Show diff panel"
 msgstr "Tampilkan panel diff"
+
+msgid "Show earlier messages"
+msgstr "Tampilkan pesan sebelumnya"
 
 msgid "Show emails"
 msgstr "Tampilkan email"

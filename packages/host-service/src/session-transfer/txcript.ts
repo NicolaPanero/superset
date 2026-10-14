@@ -187,6 +187,30 @@ export function parseNativeTransferResult(
 	};
 }
 
+const historyBlockSchema = z.discriminatedUnion("type", [
+	z.object({ type: z.literal("text"), text: z.string() }),
+	z.object({ type: z.literal("thinking"), text: z.string() }),
+	z.object({
+		type: z.literal("tool"),
+		id: z.string(),
+		name: z.string(),
+		input: z.string(),
+		output: z.string(),
+		isError: z.boolean(),
+	}),
+]);
+const historySchema = engine.extend({
+	truncated: z.boolean(),
+	messages: z.array(
+		z.object({
+			role: z.enum(["user", "assistant"]),
+			timestampMs: z.number(),
+			blocks: z.array(historyBlockSchema),
+		}),
+	),
+});
+export type EarlierHistory = z.infer<typeof historySchema>;
+
 export class TxcriptTransferProvider implements SessionTransferProvider {
 	readonly id = "native";
 	constructor(
@@ -218,6 +242,19 @@ export class TxcriptTransferProvider implements SessionTransferProvider {
 				TRANSFER_AGENTS[source].harness,
 			) &&
 				capabilities.verifiedAdapters.includes(TRANSFER_AGENTS[target].harness),
+		);
+	}
+	async history(input: {
+		sourceAgent: TransferAgent;
+		sourceSessionId: string;
+		sourceRoot: string;
+		sourceReference: string;
+	}): Promise<EarlierHistory> {
+		return historySchema.parse(
+			await this.run(this.binary, ["history"], {
+				...input,
+				sourceAgent: TRANSFER_AGENTS[input.sourceAgent].harness,
+			}),
 		);
 	}
 	async transfer(input: TransferInput): Promise<TransferResult> {

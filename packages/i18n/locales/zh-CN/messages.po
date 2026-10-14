@@ -11502,6 +11502,9 @@ msgstr "离线/本地优先模式"
 msgid "Older"
 msgstr "更早"
 
+msgid "Older messages were left out to keep this short."
+msgstr "为保持简短，较早的消息已省略。"
+
 msgid "On"
 msgstr "开启"
 
@@ -15370,6 +15373,9 @@ msgstr "显示设备工具栏"
 
 msgid "Show diff panel"
 msgstr "显示差异面板"
+
+msgid "Show earlier messages"
+msgstr "显示之前的消息"
 
 msgid "Show emails"
 msgstr "显示邮箱"

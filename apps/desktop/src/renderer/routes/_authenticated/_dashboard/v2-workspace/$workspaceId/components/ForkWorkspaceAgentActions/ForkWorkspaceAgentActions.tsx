@@ -7,8 +7,23 @@ import { useEffect, useState } from "react";
 import type { StoreApi } from "zustand/vanilla";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher";
 import type { PaneViewerData } from "../../types";
-import { ForkImportChatDialog } from "../ForkImportChatDialog";
+import {
+	ForkImportChatDialog,
+	type ForkResumeRequest,
+} from "../ForkImportChatDialog";
 import { ForkNewAgentDialog } from "../ForkNewAgentDialog";
+
+function parseResume(raw: string | undefined): ForkResumeRequest | undefined {
+	if (!raw) return undefined;
+	try {
+		const value = JSON.parse(raw) as Partial<ForkResumeRequest>;
+		return typeof value.key === "string" && typeof value.configId === "string"
+			? { key: value.key, configId: value.configId }
+			: undefined;
+	} catch {
+		return undefined;
+	}
+}
 
 export function ForkWorkspaceAgentActions({
 	store,
@@ -18,6 +33,8 @@ export function ForkWorkspaceAgentActions({
 	onLaunchOpenChange,
 	onCreateNewAgentSession,
 	importRequested = false,
+	resumeChat,
+	onResumeConsumed,
 	onImportRequestConsumed,
 }: {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
@@ -25,6 +42,8 @@ export function ForkWorkspaceAgentActions({
 	workspaceName: string;
 	launchOpen: boolean;
 	importRequested?: boolean;
+	resumeChat?: string;
+	onResumeConsumed?: () => void;
 	onImportRequestConsumed?: () => void;
 	onLaunchOpenChange: (open: boolean) => void;
 	onCreateNewAgentSession: CreateNewAgentSession;
@@ -36,6 +55,7 @@ export function ForkWorkspaceAgentActions({
 		setImportOpen(true);
 		onImportRequestConsumed?.();
 	}, [importRequested, onImportRequestConsumed]);
+	const resume = parseResume(resumeChat);
 	return (
 		<>
 			<Tooltip>
@@ -69,6 +89,8 @@ export function ForkWorkspaceAgentActions({
 				onImported={() => setImportOpen(false)}
 				store={store}
 				workspaceId={workspaceId}
+				resume={resume}
+				onResumeConsumed={onResumeConsumed}
 			/>
 		</>
 	);

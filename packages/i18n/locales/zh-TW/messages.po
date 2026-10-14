@@ -11502,6 +11502,9 @@ msgstr "離線/本地優先模式"
 msgid "Older"
 msgstr "更早"
 
+msgid "Older messages were left out to keep this short."
+msgstr "為保持簡短，較早的訊息已省略。"
+
 msgid "On"
 msgstr "開啟"
 
@@ -15370,6 +15373,9 @@ msgstr "顯示裝置工具列"
 
 msgid "Show diff panel"
 msgstr "顯示差異面板"
+
+msgid "Show earlier messages"
+msgstr "顯示先前的訊息"
 
 msgid "Show emails"
 msgstr "顯示電子郵件"
