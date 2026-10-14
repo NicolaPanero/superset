@@ -196,3 +196,26 @@ test("a model credential override prevents entering a second ambiguous API key",
 		).disabled,
 	).toBe(true);
 });
+
+test("an inconclusive setup probe does not imply that only terminal mode is available", () => {
+	const f = fixture();
+	f.data.chat = false;
+	const view = render(
+		<ForkAgentSetup
+			config={{ ...config, presetId: "cursor-agent" }}
+			hostUrl="http://host"
+			onChanged={() => {}}
+			onAdvanced={() => {}}
+			useSetup={f.hook}
+		/>,
+	);
+	expect(view.getByText("CLI installed")).toBeDefined();
+	expect(view.queryByText("Chat support not verified")).toBeNull();
+	fireEvent.click(view.getByRole("button", { name: "Configure" }));
+	expect(
+		view.getByText("Chat support is checked when you open a chat."),
+	).toBeDefined();
+	expect(
+		view.getByRole("button", { name: "Apply recommended settings" }),
+	).toBeDefined();
+});

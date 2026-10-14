@@ -13,7 +13,7 @@ export type RecoveryStatus = {
 };
 export const recoveryControllers = new Map<
 	string,
-	{ status: RecoveryStatus; changed(): void }
+	{ agent?: "claude" | "codex"; status: RecoveryStatus; changed(): void }
 >();
 export const recoveryKey = (workspaceId: string, terminalId: string) =>
 	`${workspaceId}:${terminalId}`;

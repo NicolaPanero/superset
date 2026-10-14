@@ -2451,6 +2451,9 @@ msgstr "Approved"
 msgid "Approved review"
 msgstr "Approved review"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Approves tool actions automatically in this chat."
+
 msgid "Apps"
 msgstr "Apps"
 
@@ -2733,8 +2736,17 @@ msgstr "Automate workspace setup for {projectName}"
 msgid "Automatic (email address)"
 msgstr "Automatic (email address)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Automatic account switching needs isolated profiles for this agent."
+
 msgid "Automatic continuation"
 msgstr "Automatic continuation"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Automatic continuation is not supported on this host."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Automatic continuation needs verified quota and reset data for this chat."
 
 msgid "Automation"
 msgstr "Automation"
@@ -3513,8 +3525,8 @@ msgstr "Chat moved to {0}"
 msgid "Chat session not found"
 msgstr "Chat session not found"
 
-msgid "Chat support not verified"
-msgstr "Chat support not verified"
+msgid "Chat support is checked when you open a chat."
+msgstr "Chat support is checked when you open a chat."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chat surfaces: messages, reasoning, suggestions"
@@ -3788,6 +3800,9 @@ msgstr "CLI default"
 
 msgid "CLI docs"
 msgstr "CLI docs"
+
+msgid "CLI installed"
+msgstr "CLI installed"
 
 msgid "CLI login"
 msgstr "CLI login"
@@ -9133,8 +9148,8 @@ msgstr "Keep waiting"
 msgid "Keep working"
 msgstr "Keep working"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Kept the new file — it changed after it was created"
@@ -16850,11 +16865,11 @@ msgstr "The automation's owner can't use cloud workspaces in this organization a
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "The best agent will change.<0/>Your workflow shouldn't."
 
+msgid "The chat will open when the current response finishes."
+msgstr "The chat will open when the current response finishes."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "The CLI already has custom model settings. Edit them in advanced configuration."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "The CLI did not confirm chat support. You can keep using the terminal."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "The cloud workspace should have started but didn't answer in time. The next run tries again."

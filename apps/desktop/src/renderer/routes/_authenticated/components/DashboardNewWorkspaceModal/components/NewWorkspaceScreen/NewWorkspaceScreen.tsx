@@ -114,6 +114,7 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
+import { ForkImportFromHome } from "./components/ForkImportFromHome/ForkImportFromHome";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
 import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
@@ -761,6 +762,10 @@ export function NewWorkspaceScreen({
 								</TooltipContent>
 							</Tooltip>
 						)}
+						<ForkImportFromHome
+							hostUrl={draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl}
+							projectId={projectId}
+						/>
 						<PromptHistoryCommand
 							onSelect={applyPrompt}
 							tooltipLabel={t({

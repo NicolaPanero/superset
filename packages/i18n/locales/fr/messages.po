@@ -2451,6 +2451,9 @@ msgstr "Approuvée"
 msgid "Approved review"
 msgstr "Revue approuvée"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Approuve automatiquement les actions des outils dans ce chat."
+
 msgid "Apps"
 msgstr "Applications"
 
@@ -2733,8 +2736,17 @@ msgstr "Automatiser la configuration des espaces de travail pour {projectName}"
 msgid "Automatic (email address)"
 msgstr "Automatique (adresse e-mail)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Le changement automatique de compte nécessite des profils isolés pour cet agent."
+
 msgid "Automatic continuation"
 msgstr "Reprise automatique"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Cet hôte ne prend pas en charge la reprise automatique."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "La reprise automatique nécessite des données vérifiées sur le quota et sa réinitialisation pour ce chat."
 
 msgid "Automation"
 msgstr "Automatisation"
@@ -3513,8 +3525,8 @@ msgstr "Chat déplacé vers {0}"
 msgid "Chat session not found"
 msgstr "Session de chat introuvable"
 
-msgid "Chat support not verified"
-msgstr "Prise en charge du chat non vérifiée"
+msgid "Chat support is checked when you open a chat."
+msgstr "La prise en charge du chat est vérifiée lorsque vous ouvrez un chat."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Surfaces de chat : messages, raisonnement, suggestions"
@@ -3788,6 +3800,9 @@ msgstr "Valeur par défaut du CLI"
 
 msgid "CLI docs"
 msgstr "Docs de la CLI"
+
+msgid "CLI installed"
+msgstr "CLI installée"
 
 msgid "CLI login"
 msgstr "Connexion CLI"
@@ -9133,8 +9148,8 @@ msgstr "Continuer à attendre"
 msgid "Keep working"
 msgstr "Continuer à travailler"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Conserve cette conversation Claude et le modèle. Le changement automatique utilise uniquement des comptes avec abonnement et quota vérifié."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Conserve la conversation, le modèle et les permissions. Seuls les comptes avec abonnement et quota vérifié sont utilisés."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Nouveau fichier conservé — il a changé après sa création"
@@ -16850,11 +16865,11 @@ msgstr "Le propriétaire de l'automatisation ne peut plus utiliser d'espaces de 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Le meilleur agent changera.<0/>Pas votre façon de travailler."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Le chat s’ouvrira une fois la réponse en cours terminée."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "Le CLI possède déjà des paramètres de modèle personnalisés. Modifiez-les dans la configuration avancée."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "Le CLI n’a pas confirmé la prise en charge du chat. Vous pouvez continuer à utiliser le terminal."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "L'espace de travail cloud aurait dû démarrer, mais n'a pas répondu à temps. La prochaine exécution réessaiera."

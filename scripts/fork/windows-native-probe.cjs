@@ -49,7 +49,10 @@ async function probe() {
 		`Installed Electron native modules OK, ABI ${process.versions.modules}`,
 	);
 }
-probe().catch((error) => {
-	console.error(error);
-	process.exitCode = 1;
-});
+probe().then(
+	() => process.exit(0),
+	(error) => {
+		console.error(error);
+		process.exit(1);
+	},
+);

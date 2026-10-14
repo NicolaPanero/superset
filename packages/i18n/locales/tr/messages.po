@@ -2451,6 +2451,9 @@ msgstr "Onaylandı"
 msgid "Approved review"
 msgstr "Onaylanmış inceleme"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Bu sohbette araç işlemlerini otomatik olarak onaylar."
+
 msgid "Apps"
 msgstr "Uygulamalar"
 
@@ -2733,8 +2736,17 @@ msgstr "{projectName} için çalışma alanı kurulumunu otomatikleştirin"
 msgid "Automatic (email address)"
 msgstr "Otomatik (e-posta adresi)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Otomatik hesap değiştirme, bu ajan için yalıtılmış profiller gerektirir."
+
 msgid "Automatic continuation"
 msgstr "Otomatik devam"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Bu ana bilgisayar otomatik devamı desteklemiyor."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Otomatik devam, bu sohbet için doğrulanmış kota ve sıfırlama verileri gerektirir."
 
 msgid "Automation"
 msgstr "Otomasyon"
@@ -3513,8 +3525,8 @@ msgstr "Sohbet {0} hesabına taşındı"
 msgid "Chat session not found"
 msgstr "Sohbet oturumu bulunamadı"
 
-msgid "Chat support not verified"
-msgstr "Sohbet desteği doğrulanmadı"
+msgid "Chat support is checked when you open a chat."
+msgstr "Sohbet desteği bir sohbet açtığınızda kontrol edilir."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Sohbet yüzeyleri: mesajlar, akıl yürütme, öneriler"
@@ -3788,6 +3800,9 @@ msgstr "CLI varsayılanı"
 
 msgid "CLI docs"
 msgstr "CLI belgeleri"
+
+msgid "CLI installed"
+msgstr "CLI yüklü"
 
 msgid "CLI login"
 msgstr "CLI oturumu"
@@ -9133,8 +9148,8 @@ msgstr "Beklemeye devam et"
 msgid "Keep working"
 msgstr "Çalışmaya devam et"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Bu Claude konuşmasını ve modeli korur. Otomatik hesap geçişi yalnızca kotası doğrulanmış abonelik hesaplarını kullanır."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Bu konuşmayı, modeli ve izinleri korur. Yalnızca kotası doğrulanmış abonelik hesapları kullanılır."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Yeni dosya korundu — oluşturulduktan sonra değişti"
@@ -16850,11 +16865,11 @@ msgstr "Otomasyonun sahibi artık bu kuruluşta bulut çalışma alanlarını ku
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "En iyi ajan değişecek.<0/>İş akışınız değişmemeli."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Mevcut yanıt tamamlandığında sohbet açılacak."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI'de özel model ayarları zaten var. Bunları gelişmiş yapılandırmada düzenleyin."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI sohbet desteğini doğrulamadı. Terminali kullanmaya devam edebilirsiniz."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Bulut çalışma alanının başlamış olması gerekiyordu ancak zamanında yanıt vermedi. Bir sonraki çalıştırma yeniden deneyecek."

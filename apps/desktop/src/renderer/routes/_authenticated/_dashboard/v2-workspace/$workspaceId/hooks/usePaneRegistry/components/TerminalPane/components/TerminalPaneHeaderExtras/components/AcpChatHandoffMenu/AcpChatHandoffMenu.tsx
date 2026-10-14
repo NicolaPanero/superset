@@ -92,16 +92,18 @@ export function AcpChatHandoffMenu({
 	const [section, setSection] = useState("current-chat");
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const recovery = workspaceTrpc.agents.quotaRecovery.useQuery(
-		{ workspaceId, terminalId: data.terminalId },
+		{ workspaceId, terminalId: data.terminalId, agent: data.agent?.id },
 		{
-			enabled: Boolean(accountSwitcher),
+			enabled: data.agent?.id === "claude" || data.agent?.id === "codex",
 			retry: false,
 			refetchInterval: (query) => (query.state.error ? false : 10_000),
 		},
 	);
 	const waitingForQuota = recovery.data?.phase === "waiting";
 	const autoContinue =
-		recovery.data?.switchAccounts || recovery.data?.resumeAtReset;
+		(data.agent?.id === "claude" || data.agent?.id === "codex") &&
+		(recovery.data?.capabilities || data.agent?.id === "claude") &&
+		(recovery.data?.switchAccounts || recovery.data?.resumeAtReset);
 	const [targetConfigId, setTargetConfigId] = useState("");
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
 	const [placement, setPlacement] = useState<Placement>("this-chat");
@@ -488,7 +490,7 @@ export function AcpChatHandoffMenu({
 						</DialogTitle>
 						<DialogDescription>
 							{section === "current-chat" ? (
-								accountSwitcher ? (
+								sourcePreset === "claude" || sourcePreset === "codex" ? (
 									<Trans>
 										Manage this chat's automatic continuation. Changes are saved
 										immediately.
@@ -546,14 +548,13 @@ export function AcpChatHandoffMenu({
 											: row.selection === sourceSelection),
 								)}
 							/>
-							{accountSwitcher && (
-								<ForkQuotaRecoveryControls
-									workspaceId={workspaceId}
-									terminalId={data.terminalId}
-									enabled={open}
-									sessionLive={stored?.live}
-								/>
-							)}
+							<ForkQuotaRecoveryControls
+								workspaceId={workspaceId}
+								terminalId={data.terminalId}
+								enabled={open}
+								sessionLive={stored?.live}
+								agent={sourcePreset}
+							/>
 						</TabsContent>
 						<TabsContent value="handoff">
 							<div className="flex flex-col gap-4 py-1">

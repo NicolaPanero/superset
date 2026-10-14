@@ -37,6 +37,8 @@ import type { StoreApi } from "zustand/vanilla";
 import { useAgentSessionLauncher } from "../../hooks/useAgentSessionLauncher";
 import type { PaneViewerData } from "../../types";
 
+import { forkImportChoices } from "./forkImportChoices";
+
 const ALL = "all";
 
 type ExternalSession = {
@@ -182,17 +184,23 @@ export function ForkImportChatDialog({
 		});
 	};
 
-	const run = async (session: ExternalSession, targetPresetId: string) => {
+	const run = async (session: ExternalSession, targetConfigId: string) => {
 		const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
-		const target = chatConfig(targetPresetId);
+		const target = configs.find((config) => config.id === targetConfigId);
+		const targetPresetId = target?.presetId;
 		const source = chatConfig(session.agent);
 		const managed = session.agent === "claude" || session.agent === "codex";
 		const home = homeOf(session);
 		const here = home === workspaceId;
-		const title = session.title ?? session.preview ?? labelFor(targetPresetId);
+		const title =
+			session.title ?? session.preview ?? target?.label ?? session.agent;
 		setBusy(key);
 		try {
-			if (targetPresetId === session.agent && session.terminalId) {
+			if (
+				((targetPresetId === session.agent && target?.id === source?.id) ||
+					!targetConfigId) &&
+				session.terminalId
+			) {
 				if (here) focusAgentTerminal(session.terminalId);
 				else
 					await navigateToV2Workspace(home, navigate, {
@@ -205,7 +213,7 @@ export function ForkImportChatDialog({
 				onImported();
 				return;
 			}
-			if (!target) return;
+			if (!target || !targetPresetId) return;
 			if (targetPresetId === session.agent) {
 				if (session.agent === "cursor-agent")
 					await prepareCursorSurface({
@@ -425,15 +433,12 @@ export function ForkImportChatDialog({
 								const key = `${session.agent}:${session.storeRoot ?? session.accountSelection ?? "default"}:${session.sessionId}`;
 								const icon = getPresetIcon(session.agent, dark);
 								const account = accountName(session.accountSelection);
-								const others = configs.filter(
-									(config) =>
-										config.presetId !== session.agent &&
-										acpHarnessForPreset(config.presetId) &&
-										config.resumeArgs?.length &&
-										verified(config.presetId) &&
-										verified(session.agent) &&
-										session.workspaceId !== null,
-								);
+								const others = forkImportChoices(configs, {
+									sourceAgent: session.agent,
+									canOpen: canOpen(session),
+									hasWorkspace: session.workspaceId !== null,
+									verified,
+								});
 								const canContinue =
 									Boolean(session.terminalId || chatConfig(session.agent)) &&
 									canOpen(session);
@@ -487,7 +492,9 @@ export function ForkImportChatDialog({
 											<Button
 												className={cn(others.length > 0 && "rounded-r-none")}
 												disabled={busy !== null || !canContinue}
-												onClick={() => void run(session, session.agent)}
+												onClick={() =>
+													void run(session, chatConfig(session.agent)?.id ?? "")
+												}
 												size="sm"
 												title={
 													!canOpen(session)
@@ -536,7 +543,7 @@ export function ForkImportChatDialog({
 														<DropdownMenuLabel className="text-muted-foreground text-xs">
 															<Trans>Continue with</Trans>
 														</DropdownMenuLabel>
-														{others.map((config) => {
+														{others.map(({ config, unavailable }) => {
 															const otherIcon = getPresetIcon(
 																config.presetId,
 																dark,
@@ -544,9 +551,8 @@ export function ForkImportChatDialog({
 															return (
 																<DropdownMenuItem
 																	key={config.id}
-																	onSelect={() =>
-																		void run(session, config.presetId)
-																	}
+																	disabled={unavailable !== null}
+																	onSelect={() => void run(session, config.id)}
 																>
 																	{otherIcon ? (
 																		<img
@@ -555,7 +561,27 @@ export function ForkImportChatDialog({
 																			src={otherIcon}
 																		/>
 																	) : null}
-																	{config.label}
+																	<span className="flex min-w-0 flex-col">
+																		<span>{config.label}</span>
+																		{unavailable && (
+																			<span className="text-xs text-muted-foreground">
+																				{unavailable === "chat"
+																					? t({
+																							message:
+																								"This agent can't be opened as a chat.",
+																						})
+																					: unavailable === "folder"
+																						? t({
+																								message:
+																									"Add this folder as a workspace to continue the chat",
+																							})
+																						: t({
+																								message:
+																									"Native handoff is unavailable for this agent pair or host.",
+																							})}
+																			</span>
+																		)}
+																	</span>
 																</DropdownMenuItem>
 															);
 														})}

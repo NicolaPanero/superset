@@ -2451,6 +2451,9 @@ msgstr "承認"
 msgid "Approved review"
 msgstr "承認済みレビュー"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "このチャットではツールの操作を自動的に承認します。"
+
 msgid "Apps"
 msgstr "アプリ"
 
@@ -2733,8 +2736,17 @@ msgstr "{projectName}のワークスペースのセットアップを自動化"
 msgid "Automatic (email address)"
 msgstr "自動（メールアドレス）"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "アカウントの自動切り替えには、このエージェント用の独立したプロファイルが必要です。"
+
 msgid "Automatic continuation"
 msgstr "自動再開"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "このホストは自動再開に対応していません。"
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "自動再開には、このチャットの確認済みの利用枠とリセット情報が必要です。"
 
 msgid "Automation"
 msgstr "オートメーション"
@@ -3513,8 +3525,8 @@ msgstr "チャットを {0} に移動しました"
 msgid "Chat session not found"
 msgstr "チャットセッションが見つかりません"
 
-msgid "Chat support not verified"
-msgstr "チャット対応未確認"
+msgid "Chat support is checked when you open a chat."
+msgstr "チャットを開くときにチャット対応を確認します。"
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "チャットの構成要素: メッセージ、推論、提案"
@@ -3788,6 +3800,9 @@ msgstr "CLIのデフォルト"
 
 msgid "CLI docs"
 msgstr "CLIドキュメント"
+
+msgid "CLI installed"
+msgstr "CLI がインストールされています"
 
 msgid "CLI login"
 msgstr "CLI のログイン"
@@ -9133,8 +9148,8 @@ msgstr "待ち続ける"
 msgid "Keep working"
 msgstr "作業を続ける"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "このClaudeの会話とモデルを維持します。自動切り替えには、利用枠が確認済みのサブスクリプションアカウントのみを使用します。"
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "会話、モデル、権限を維持します。利用枠を確認できたサブスクリプションのアカウントのみ使用します。"
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "新しいファイルを保持しました — 作成後に変更されています"
@@ -16850,11 +16865,11 @@ msgstr "このオートメーションの所有者は、この組織でクラウ
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最良のエージェントは変わります。<0/>ワークフローは変わるべきではありません。"
 
+msgid "The chat will open when the current response finishes."
+msgstr "現在の応答が完了するとチャットが開きます。"
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLIにはモデルのカスタム設定がすでにあります。詳細設定で編集してください。"
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLIがチャット対応を確認できませんでした。ターミナルは引き続き使用できます。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "クラウドワークスペースは起動しているはずですが、時間内に応答がありませんでした。次回の実行で再試行します。"

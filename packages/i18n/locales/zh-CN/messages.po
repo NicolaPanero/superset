@@ -2451,6 +2451,9 @@ msgstr "已批准"
 msgid "Approved review"
 msgstr "审查已批准"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "自动批准此聊天中的工具操作。"
+
 msgid "Apps"
 msgstr "应用"
 
@@ -2733,8 +2736,17 @@ msgstr "为{projectName}自动化工作区初始化"
 msgid "Automatic (email address)"
 msgstr "自动（邮箱地址）"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "自动切换账户需要此代理的独立配置文件。"
+
 msgid "Automatic continuation"
 msgstr "自动继续"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "此主机不支持自动继续。"
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "自动继续需要此聊天的已验证额度和重置数据。"
 
 msgid "Automation"
 msgstr "自动化"
@@ -3513,8 +3525,8 @@ msgstr "聊天已移至 {0}"
 msgid "Chat session not found"
 msgstr "未找到聊天会话"
 
-msgid "Chat support not verified"
-msgstr "聊天支持尚未验证"
+msgid "Chat support is checked when you open a chat."
+msgstr "打开聊天时会检查聊天支持情况。"
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "聊天界面：消息、推理、建议"
@@ -3788,6 +3800,9 @@ msgstr "CLI 默认值"
 
 msgid "CLI docs"
 msgstr "CLI文档"
+
+msgid "CLI installed"
+msgstr "CLI 已安装"
 
 msgid "CLI login"
 msgstr "CLI 登录"
@@ -9133,8 +9148,8 @@ msgstr "继续等待"
 msgid "Keep working"
 msgstr "继续工作"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "保留此 Claude 对话和模型。自动切换仅使用额度已验证的订阅账户。"
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "保留此对话、模型和权限。仅使用额度已验证的订阅账户。"
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "已保留新文件 — 它在创建后发生了更改"
@@ -16850,11 +16865,11 @@ msgstr "该自动化的所有者已无法在此组织中使用云端工作区。
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 
+msgid "The chat will open when the current response finishes."
+msgstr "当前回复完成后将打开聊天。"
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI 已有自定义模型设置。请在高级配置中编辑。"
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI 未确认聊天支持。你可以继续使用终端。"
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "云端工作区本应已启动，但没有及时响应。下次运行时会重试。"

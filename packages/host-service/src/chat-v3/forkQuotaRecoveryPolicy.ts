@@ -1,3 +1,4 @@
+import type { Turn } from "@superset/chat/protocol";
 import {
 	accountQuotaState,
 	accountQuotaWindows,
@@ -12,23 +13,37 @@ export function isClaudeQuotaFailure(message: string): boolean {
 	);
 }
 
+export function isAccountQuotaFailure(
+	agent: string,
+	error: Turn["error"],
+): boolean {
+	if (agent === "claude") return isClaudeQuotaFailure(error?.message ?? "");
+	if (agent !== "codex") return false;
+	if (error?.providerCode !== undefined)
+		return error.providerCode === "usageLimitExceeded";
+	return /^(?:session\/prompt: )?(?:Internal error: )?You['’]ve hit your usage limit(?:[., ]|$)/.test(
+		error?.message ?? "",
+	);
+}
+
 export function suggestedRecoveryAccount(
 	accounts: UsageAccount[],
 	current: string | null,
 	model: string | undefined,
 	blocked: Map<string, number>,
 	now = Date.now(),
+	agent: "claude" | "codex" = "claude",
 ) {
 	const source = accounts.find(
 		(a) =>
-			a.agent === "claude" &&
+			a.agent === agent &&
 			a.selection === current &&
 			a.credentialKind === "subscription",
 	);
 	return accounts
 		.filter(
 			(a) =>
-				a.agent === "claude" &&
+				a.agent === agent &&
 				a.selection !== null &&
 				a.selection !== current &&
 				a.credentialKind === "subscription" &&

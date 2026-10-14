@@ -2451,6 +2451,9 @@ msgstr "Goedgekeurd"
 msgid "Approved review"
 msgstr "Goedgekeurde review"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Keurt acties van tools in deze chat automatisch goed."
+
 msgid "Apps"
 msgstr "Apps"
 
@@ -2733,8 +2736,17 @@ msgstr "Automatiseer het instellen van werkruimtes voor {projectName}"
 msgid "Automatic (email address)"
 msgstr "Automatisch (e-mailadres)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Automatisch van account wisselen vereist geïsoleerde profielen voor deze agent."
+
 msgid "Automatic continuation"
 msgstr "Automatisch doorgaan"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Deze host ondersteunt automatisch doorgaan niet."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Automatisch doorgaan vereist geverifieerde gegevens over het quotum en de reset voor deze chat."
 
 msgid "Automation"
 msgstr "Automatisering"
@@ -3513,8 +3525,8 @@ msgstr "Chat verplaatst naar {0}"
 msgid "Chat session not found"
 msgstr "Chatsessie niet gevonden"
 
-msgid "Chat support not verified"
-msgstr "Chatondersteuning niet geverifieerd"
+msgid "Chat support is checked when you open a chat."
+msgstr "Chatondersteuning wordt gecontroleerd wanneer je een chat opent."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Chatoppervlakken: berichten, redeneren, suggesties"
@@ -3788,6 +3800,9 @@ msgstr "CLI-standaard"
 
 msgid "CLI docs"
 msgstr "CLI-docs"
+
+msgid "CLI installed"
+msgstr "CLI geïnstalleerd"
 
 msgid "CLI login"
 msgstr "CLI-aanmelding"
@@ -9133,8 +9148,8 @@ msgstr "Blijven wachten"
 msgid "Keep working"
 msgstr "Doorwerken"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Behoudt dit Claude-gesprek en het model. Automatisch wisselen gebruikt alleen abonnementsaccounts met een gecontroleerd quotum."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Behoudt dit gesprek, model en machtigingen. Alleen abonnementsaccounts met een geverifieerd quotum worden gebruikt."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Nieuw bestand behouden — het is na het aanmaken gewijzigd"
@@ -16850,11 +16865,11 @@ msgstr "De eigenaar van de automatisering kan in deze organisatie geen cloudwerk
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "De beste agent verandert.<0/>Jouw workflow niet."
 
+msgid "The chat will open when the current response finishes."
+msgstr "De chat opent zodra het huidige antwoord klaar is."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "De CLI heeft al aangepaste modelinstellingen. Bewerk ze in de geavanceerde configuratie."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "De CLI heeft chatondersteuning niet bevestigd. Je kunt de terminal blijven gebruiken."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "De cloudwerkruimte had gestart moeten zijn, maar reageerde niet op tijd. De volgende run probeert het opnieuw."

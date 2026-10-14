@@ -13,6 +13,7 @@ import {
 	type RecoveryDependencies,
 } from "./forkQuotaRecoveryAdapter";
 import {
+	isAccountQuotaFailure,
 	isClaudeQuotaFailure,
 	suggestedRecoveryAccount,
 } from "./forkQuotaRecoveryPolicy";
@@ -93,13 +94,14 @@ class Worker implements HarnessAdapter {
 	}
 	fail(
 		message = "session/prompt: Internal error: You've hit your limit · resets 5pm",
+		providerCode?: string,
 	) {
 		this.queue.push({
 			kind: "turn",
 			turn: {
 				id: "turn-1",
 				status: "failed",
-				error: { message },
+				error: { message, ...(providerCode ? { providerCode } : {}) },
 				startedAtMs: NOW,
 				completedAtMs: NOW + 1,
 			},
@@ -143,7 +145,7 @@ function fixture(
 		moves: (string | null)[] = [],
 		selected: (string | null)[] = [];
 	let account: SessionAccount = {
-		agent: "claude",
+		agent: extra.agent ?? "claude",
 		selection: null,
 		credentialKind: "subscription",
 		identity: "identity",
@@ -163,7 +165,11 @@ function fixture(
 			},
 			settings: () => prefs,
 			account: () => account,
-			quota: async () => [quota(null, 100), quota("/a", 80), quota("/b", 15)],
+			quota: async () =>
+				[quota(null, 100), quota("/a", 80), quota("/b", 15)].map((row) => ({
+					...row,
+					agent: extra.agent ?? "claude",
+				})),
 			move: async (_id, target) => {
 				moves.push(target);
 			},
@@ -1026,4 +1032,217 @@ test("CLI login is never suggested even with the highest quota", () => {
 			NOW,
 		),
 	).toBeUndefined();
+});
+
+test("Codex rotation preserves session, model and Full access and never selects another provider", async () => {
+	const f = fixture(undefined, {
+		agent: "codex",
+		quota: async () => [
+			quota(null, 100, { agent: "codex" }),
+			quota("/claude", 0),
+			quota("/codex", 25, { agent: "codex" }),
+		],
+	});
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.setMode("superset-full-access");
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail("session/prompt: Internal error", "usageLimitExceeded");
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(f.moves).toEqual(["/codex"]);
+		expect(f.worker(1).starts[0]).toMatchObject({
+			resume: { harnessSessionId: "native-id" },
+			strictResume: true,
+			modelId: "sonnet",
+			modeId: "superset-full-access",
+		});
+		expect(
+			f.events.filter((e) => e.kind === "item" && e.item.id === "old"),
+		).toEqual([]);
+	} finally {
+		await f.close();
+	}
+});
+test("Codex wait can be enabled after quota failure, checks fresh quota and resumes on the same login", async () => {
+	let time = NOW;
+	let polls = 0;
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: false },
+		{
+			agent: "codex",
+			now: () => time,
+			quota: async () => [
+				quota(null, ++polls > 1 ? 10 : 100, {
+					agent: "codex",
+					fetchedAt: new Date(time),
+					windows: [
+						{
+							id: "primary",
+							label: "Session",
+							usedPercent: polls > 1 ? 10 : 100,
+							resetsAt: new Date(time + 300000),
+						},
+					],
+				}),
+			],
+			wait: async (ms) => {
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail("session/prompt: Internal error", "usageLimitExceeded");
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		f.prefs.resumeAtReset = true;
+		f.adapter.changed();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(polls).toBe(2);
+		expect(f.moves).toEqual([]);
+		expect(f.selected).toEqual([null]);
+	} finally {
+		await f.close();
+	}
+});
+test("Codex ignores rate limits, authentication, budget and context errors even if their text mentions a usage limit", () => {
+	for (const code of [
+		"rateLimitExceeded",
+		"unauthorized",
+		"sessionBudgetExceeded",
+		"contextWindowExceeded",
+	])
+		expect(
+			isAccountQuotaFailure("codex", {
+				message: "session/prompt: You've hit your usage limit.",
+				providerCode: code,
+			}),
+		).toBe(false);
+	for (const message of [
+		"session/prompt: You’ve hit your usage limit. Try again later.",
+		"session/prompt: Internal error: You've hit your usage limit.",
+	])
+		expect(isAccountQuotaFailure("codex", { message })).toBe(true);
+	expect(
+		isAccountQuotaFailure("grok", {
+			message: "You've hit your usage limit",
+			providerCode: "usageLimitExceeded",
+		}),
+	).toBe(false);
+	expect(
+		suggestedRecoveryAccount(
+			[
+				quota("/codex", 20, { agent: "codex" }),
+				quota(null, 0, { agent: "codex" }),
+				quota("/claude", 0),
+			],
+			null,
+			undefined,
+			new Map(),
+			NOW,
+			"codex",
+		)?.selection,
+	).toBe("/codex");
+});
+test("Codex Stop while waiting prevents a later reset from restarting the chat", async () => {
+	let release = () => {};
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: true },
+		{
+			agent: "codex",
+			quota: async () => [quota(null, 100, { agent: "codex" })],
+			wait: () =>
+				new Promise<void>((resolve) => {
+					release = resolve;
+				}),
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail("session/prompt: Internal error", "usageLimitExceeded");
+		await until(() => f.statuses.some((s) => s.nextCheckAt !== undefined));
+		f.adapter.cancelTurn();
+		release();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		expect(f.workers).toHaveLength(1);
+		expect(f.moves).toEqual([]);
+	} finally {
+		release();
+		await f.close();
+	}
+});
+test("Codex JSON-RPC error data survives the ACP runtime for quota recovery", async () => {
+	const events: AdapterEvent[] = [];
+	const adapter = createAcpAdapter({
+		command: "fake-codex-acp",
+		createTransport: (_options, handlers) => ({
+			close: async () => {},
+			send: (line) => {
+				const frame = JSON.parse(line);
+				if (frame.id === undefined || !frame.method) return;
+				queueMicrotask(() =>
+					handlers.onLine(
+						JSON.stringify({
+							jsonrpc: "2.0",
+							id: frame.id,
+							...(frame.method === "session/prompt"
+								? {
+										error: {
+											code: -32603,
+											message: "Internal error",
+											data: {
+												message:
+													"You’ve hit your usage limit. Try again later.",
+												codexErrorInfo: "usageLimitExceeded",
+											},
+										},
+									}
+								: {
+										result:
+											frame.method === "initialize"
+												? {
+														protocolVersion: 2,
+														info: { name: "Codex" },
+														capabilities: {},
+													}
+												: frame.method === "session/new"
+													? { sessionId: "native-id" }
+													: null,
+									}),
+						}),
+					),
+				);
+			},
+		}),
+	});
+	const pump = (async () => {
+		for await (const e of adapter.start({ cwd: "/tmp" })) events.push(e);
+	})();
+	try {
+		await until(() =>
+			events.some((e) => e.kind === "session" && e.session.status === "idle"),
+		);
+		adapter.prompt([{ type: "text", text: "task" }]);
+		await until(() =>
+			events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+		);
+		const event = events.find(
+			(e) => e.kind === "turn" && e.turn.status === "failed",
+		);
+		expect(event?.kind === "turn" && event.turn.error?.providerCode).toBe(
+			"usageLimitExceeded",
+		);
+		expect(
+			event?.kind === "turn" &&
+				isAccountQuotaFailure("codex", event.turn.error),
+		).toBe(true);
+	} finally {
+		await adapter.dispose();
+		await pump;
+	}
 });

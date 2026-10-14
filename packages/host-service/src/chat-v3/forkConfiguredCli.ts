@@ -5,7 +5,10 @@ export function forkConfiguredCli(
 ) {
 	if (
 		!config ||
-		(config.presetId !== "grok" && config.presetId !== "cursor-agent")
+		(config.presetId !== "grok" &&
+			config.presetId !== "cursor-agent" &&
+			config.presetId !== "gemini" &&
+			config.presetId !== "agy")
 	)
 		return {};
 	const index = config.args.indexOf("--model");
@@ -15,6 +18,6 @@ export function forkConfiguredCli(
 			: config.args.find((arg) => arg.startsWith("--model="))?.slice(8);
 	return {
 		command: isAbsolute(config.command) ? config.command : undefined,
-		model,
+		model: config.presetId === "agy" ? undefined : model,
 	};
 }

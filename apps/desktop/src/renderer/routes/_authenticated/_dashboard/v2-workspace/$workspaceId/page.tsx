@@ -82,6 +82,7 @@ import {
 import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 interface WorkspaceSearch {
+	importChat?: boolean;
 	terminalId?: string;
 	focusRequestId?: string;
 	/** Deep link from the sidebar's agents chip into a subagent transcript. */
@@ -110,6 +111,8 @@ export const Route = createFileRoute(
 )({
 	component: V2WorkspacePage,
 	validateSearch: (raw: Record<string, unknown>): WorkspaceSearch => ({
+		importChat:
+			raw.importChat === true || raw.importChat === "true" ? true : undefined,
 		terminalId: parseNonEmptyString(raw.terminalId),
 		focusRequestId: parseNonEmptyString(raw.focusRequestId),
 		...readSubagentSearch(raw),
@@ -150,6 +153,7 @@ function V2WorkspacePage() {
 
 function V2WorkspaceContent() {
 	const {
+		importChat,
 		terminalId,
 		focusRequestId,
 		subagentTerminalId,
@@ -699,6 +703,10 @@ function V2WorkspaceContent() {
 										)}
 									>
 										<ForkWorkspaceAgentActions
+											importRequested={importChat}
+											onImportRequestConsumed={() =>
+												consumeSearch(["importChat"])
+											}
 											store={store}
 											key={workspaceId}
 											workspaceId={workspaceId}

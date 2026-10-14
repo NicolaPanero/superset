@@ -11,6 +11,11 @@ import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
+import {
+	antigravityDistribution,
+	resolveAntigravityRuntime,
+} from "./forkAntigravityRuntime";
+import { chatAccountUsesApiCredentials } from "./forkChatAccount";
 import { forkConfiguredCli } from "./forkConfiguredCli";
 import { forkLaunchChoices } from "./forkLaunchChoices";
 import { forkQuotaRecoveryHarness } from "./forkQuotaRecoveryHarness";
@@ -56,7 +61,14 @@ export function acpHarnessFactory(
 			(accountSelection, captured) =>
 				createAcpAdapter({
 					command: entry.binary,
-					authMethodId: entry.authMethodId,
+					authMethodId:
+						harness === "gemini-acp" &&
+						options.agentConfigId &&
+						resolveHostAgentConfig(db, options.agentConfigId)?.env
+							.GEMINI_API_KEY
+							? "gemini-api-key"
+							: entry.authMethodId,
+					wholeUserMessageReplay: entry.wholeUserMessageReplay,
 					cwd: options.cwd,
 					resolveAttachment,
 					...(entry.fullAccessModeId
@@ -74,7 +86,11 @@ export function acpHarnessFactory(
 								: null,
 						);
 						const cli = await resolveAgentCli({
-							command: configured.command,
+							command:
+								entry.managedRuntime === "antigravity"
+									? (configured.command ?? (await resolveAntigravityRuntime()))
+									: configured.command,
+							verifyVersion: entry.managedRuntime !== "antigravity",
 							binary: entry.binary,
 							minVersion: entry.minVersion,
 							upgrade: entry.upgrade,
@@ -98,19 +114,11 @@ export function acpHarnessFactory(
 							(entry.binary === "codex"
 								? env.CODEX_HOME
 								: env.CLAUDE_CONFIG_DIR) ?? "",
-							Boolean(
-								entry.binary === "codex"
-									? env.OPENAI_API_KEY
-									: env.ANTHROPIC_API_KEY,
-							),
+							chatAccountUsesApiCredentials(entry.binary, env),
 						)
 							.then((account) => {
 								if (account) {
-									captured(
-										env.ANTHROPIC_AUTH_TOKEN || env.CLAUDE_CODE_OAUTH_TOKEN
-											? { ...account, credentialKind: "api_key" }
-											: account,
-									);
+									captured(account);
 									agents?.accountCaptured(options.sessionId, account);
 								}
 							})
@@ -120,7 +128,10 @@ export function acpHarnessFactory(
 								command: cli.command,
 								args: configured.model
 									? ["--model", configured.model, ...entry.args]
-									: entry.args,
+									: entry.managedRuntime === "antigravity"
+										? antigravityDistribution(process.platform, process.arch)
+												.args
+										: entry.args,
 								env,
 							};
 						}

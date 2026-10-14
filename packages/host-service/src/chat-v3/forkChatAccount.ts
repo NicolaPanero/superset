@@ -14,7 +14,26 @@ export function chatSessionAccount(
 			: agentId === "codex"
 				? env.CODEX_HOME
 				: undefined;
-	return captureSessionAccount(agentId, directory ?? "", false).catch(
-		() => undefined,
-	);
+	return captureSessionAccount(
+		agentId,
+		directory ?? "",
+		chatAccountUsesApiCredentials(agentId, env),
+	).catch(() => undefined);
+}
+
+export function chatAccountUsesApiCredentials(
+	agent: string,
+	env: NodeJS.ProcessEnv,
+): boolean {
+	const keys =
+		agent === "codex"
+			? ["OPENAI_API_KEY", "CODEX_API_KEY"]
+			: agent === "claude"
+				? [
+						"ANTHROPIC_API_KEY",
+						"ANTHROPIC_AUTH_TOKEN",
+						"CLAUDE_CODE_OAUTH_TOKEN",
+					]
+				: [];
+	return keys.some((key) => Boolean(env[key]));
 }

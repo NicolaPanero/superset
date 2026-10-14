@@ -4,6 +4,8 @@ type AcpTranslator =
 
 export type AcpHarness = {
 	registryId: string;
+	presetId?: string;
+	managedRuntime?: "antigravity";
 	binary: string;
 	args: string[];
 	minVersion: string;
@@ -11,6 +13,7 @@ export type AcpHarness = {
 	upgrade?: string;
 	/** The agent's own id for its unrestricted mode; chats start in it. */
 	fullAccessModeId?: string;
+	wholeUserMessageReplay?: boolean;
 	note: string;
 } & AcpTranslator;
 
@@ -40,12 +43,23 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		note: "0.159.0 verified against adapter 2.1.0; the adapter drives the installed Codex app-server.",
 	},
 	"gemini-acp": {
+		authMethodId: "oauth-personal",
 		registryId: "gemini",
 		binary: "gemini",
 		args: ["--acp"],
 		minVersion: "0.62.0",
 		upgrade: "npm i -g @google/gemini-cli@latest",
 		note: "Conservative. `--acp` replaced `--experimental-acp`, and the rename release is not pinned beyond being above 0.20.0, which defined only the experimental spelling. Sending `--acp` to a CLI that predates it prints usage and exits 0, which reads as a crash, so the floor errs high.",
+	},
+	"antigravity-acp": {
+		registryId: "antigravity-acp",
+		presetId: "agy",
+		binary: "agy_acp_server",
+		args: [],
+		minVersion: UNGATED_VERSION,
+		managedRuntime: "antigravity",
+		authMethodId: "oauth-personal",
+		note: "Official Google ACP server 1.3.0, fetched from the ACP registry's Google distribution. CLI agy storage is a different surface.",
 	},
 	"opencode-acp": {
 		registryId: "opencode",
@@ -56,6 +70,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		note: "1.15.5 verified: initialize reports OpenCode 1.15.5 and session/new returns a session with model options.",
 	},
 	"cursor-acp": {
+		wholeUserMessageReplay: true,
 		registryId: "cursor",
 		authMethodId: "cursor_login",
 		binary: "cursor-agent",
@@ -99,6 +114,10 @@ export function cliFloor(harness: string): {
 const ACP_HARNESS_BY_PRESET: Record<string, string> = {
 	claude: "claude-acp",
 	codex: "codex-acp",
+	gemini: "gemini-acp",
+	grok: "grok-acp",
+	"cursor-agent": "cursor-acp",
+	agy: "antigravity-acp",
 	opencode: "opencode-acp",
 	pi: "pi-acp",
 };

@@ -2451,6 +2451,9 @@ msgstr "Disetujui"
 msgid "Approved review"
 msgstr "Review disetujui"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Menyetujui tindakan alat secara otomatis dalam chat ini."
+
 msgid "Apps"
 msgstr "Aplikasi"
 
@@ -2733,8 +2736,17 @@ msgstr "Otomatiskan penyiapan workspace untuk {projectName}"
 msgid "Automatic (email address)"
 msgstr "Otomatis (alamat email)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Pergantian akun otomatis memerlukan profil terisolasi untuk agen ini."
+
 msgid "Automatic continuation"
 msgstr "Kelanjutan otomatis"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Host ini tidak mendukung kelanjutan otomatis."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Kelanjutan otomatis memerlukan data kuota dan reset yang terverifikasi untuk chat ini."
 
 msgid "Automation"
 msgstr "Otomatisasi"
@@ -3513,8 +3525,8 @@ msgstr "Chat dipindahkan ke {0}"
 msgid "Chat session not found"
 msgstr "Sesi chat tidak ditemukan"
 
-msgid "Chat support not verified"
-msgstr "Dukungan chat belum diverifikasi"
+msgid "Chat support is checked when you open a chat."
+msgstr "Dukungan chat diperiksa saat Anda membuka chat."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Permukaan chat: pesan, penalaran, saran"
@@ -3788,6 +3800,9 @@ msgstr "Default CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentasi CLI"
+
+msgid "CLI installed"
+msgstr "CLI terinstal"
 
 msgid "CLI login"
 msgstr "Login CLI"
@@ -9133,8 +9148,8 @@ msgstr "Tunggu saja"
 msgid "Keep working"
 msgstr "Lanjut bekerja"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Mempertahankan percakapan Claude dan model ini. Pergantian akun otomatis hanya menggunakan akun berlangganan dengan kuota terverifikasi."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Mempertahankan percakapan, model, dan izin ini. Hanya akun berlangganan dengan kuota terverifikasi yang digunakan."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "File baru dipertahankan — isinya berubah setelah dibuat"
@@ -16850,11 +16865,11 @@ msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di o
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Chat akan terbuka setelah respons saat ini selesai."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI sudah memiliki pengaturan model khusus. Edit melalui konfigurasi lanjutan."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI tidak mengonfirmasi dukungan chat. Anda tetap dapat menggunakan terminal."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud seharusnya sudah berjalan, tetapi tidak merespons tepat waktu. Run berikutnya akan mencoba lagi."

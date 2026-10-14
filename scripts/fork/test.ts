@@ -12,6 +12,8 @@ const suiteRoots = [
 	"packages/chat-runtime/src",
 ];
 const extra = [
+	"packages/chat/src/core/harness/harness.test.ts",
+	"packages/chat-runtime/src/harness/acp/acpAdapter.test.ts",
 	"packages/agent-setup/src/shell-wrappers.test.ts",
 	"apps/desktop/fork-identity.test.ts",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/AccountUsage/utils/getAccountUsageState/getAccountUsageState.test.ts",

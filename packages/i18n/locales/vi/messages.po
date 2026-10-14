@@ -2451,6 +2451,9 @@ msgstr "Đã duyệt"
 msgid "Approved review"
 msgstr "Review đã duyệt"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Tự động phê duyệt thao tác của công cụ trong cuộc trò chuyện này."
+
 msgid "Apps"
 msgstr "Ứng dụng"
 
@@ -2733,8 +2736,17 @@ msgstr "Tự động thiết lập workspace cho {projectName}"
 msgid "Automatic (email address)"
 msgstr "Tự động (địa chỉ email)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Chuyển tài khoản tự động cần hồ sơ riêng biệt cho tác tử này."
+
 msgid "Automatic continuation"
 msgstr "Tiếp tục tự động"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Máy chủ này không hỗ trợ tự động tiếp tục."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Tự động tiếp tục cần dữ liệu hạn mức và thời điểm đặt lại đã xác minh cho cuộc trò chuyện này."
 
 msgid "Automation"
 msgstr "Tự động hóa"
@@ -3513,8 +3525,8 @@ msgstr "Đã chuyển cuộc trò chuyện sang {0}"
 msgid "Chat session not found"
 msgstr "Không tìm thấy phiên chat"
 
-msgid "Chat support not verified"
-msgstr "Chưa xác minh hỗ trợ trò chuyện"
+msgid "Chat support is checked when you open a chat."
+msgstr "Khả năng hỗ trợ trò chuyện được kiểm tra khi bạn mở một cuộc trò chuyện."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Các bề mặt chat: tin nhắn, suy luận, gợi ý"
@@ -3788,6 +3800,9 @@ msgstr "Mặc định của CLI"
 
 msgid "CLI docs"
 msgstr "Tài liệu CLI"
+
+msgid "CLI installed"
+msgstr "CLI đã được cài đặt"
 
 msgid "CLI login"
 msgstr "Đăng nhập CLI"
@@ -9133,8 +9148,8 @@ msgstr "Tiếp tục chờ"
 msgid "Keep working"
 msgstr "Tiếp tục làm"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Giữ cuộc trò chuyện Claude và mô hình này. Tự động chuyển chỉ dùng tài khoản thuê bao có hạn mức đã xác minh."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Giữ nguyên cuộc trò chuyện, mô hình và quyền. Chỉ dùng tài khoản đăng ký có hạn mức đã xác minh."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Đã giữ tệp mới — nó đã thay đổi sau khi được tạo"
@@ -16850,11 +16865,11 @@ msgstr "Chủ sở hữu của tự động hóa không còn dùng được work
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agent tốt nhất sẽ thay đổi.<0/>Quy trình của bạn thì không."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Cuộc trò chuyện sẽ mở khi phản hồi hiện tại hoàn tất."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI đã có thiết lập mô hình tùy chỉnh. Hãy chỉnh sửa trong cấu hình nâng cao."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI chưa xác nhận hỗ trợ trò chuyện. Bạn vẫn có thể dùng terminal."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."

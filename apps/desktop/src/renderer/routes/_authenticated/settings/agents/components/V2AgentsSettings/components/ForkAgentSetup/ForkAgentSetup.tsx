@@ -56,7 +56,7 @@ export function ForkAgentSetup({
 				: !data?.command
 					? t({ message: "CLI not found" })
 					: !data.chat
-						? t({ message: "Chat support not verified" })
+						? t({ message: "CLI installed" })
 						: data.auth === "missing"
 							? t({ message: "Sign in to continue" })
 							: data.auth === "unknown"
@@ -150,10 +150,7 @@ export function ForkAgentSetup({
 							</p>
 							{!data.chat && (
 								<p className="text-muted-foreground">
-									<Trans>
-										The CLI did not confirm chat support. You can keep using the
-										terminal.
-									</Trans>
+									<Trans>Chat support is checked when you open a chat.</Trans>
 								</p>
 							)}
 							<div className="flex flex-wrap gap-2">

@@ -2451,6 +2451,9 @@ msgstr "Schváleno"
 msgid "Approved review"
 msgstr "Schválená revize"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Automaticky schvaluje akce nástrojů v tomto chatu."
+
 msgid "Apps"
 msgstr "Aplikace"
 
@@ -2733,8 +2736,17 @@ msgstr "Zautomatizujte nastavení pracovního prostoru pro {projectName}"
 msgid "Automatic (email address)"
 msgstr "Automaticky (e-mailová adresa)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Automatické přepínání účtů vyžaduje izolované profily pro tohoto agenta."
+
 msgid "Automatic continuation"
 msgstr "Automatické pokračování"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Tento host nepodporuje automatické pokračování."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Automatické pokračování vyžaduje ověřené údaje o kvótě a jejím obnovení pro tento chat."
 
 msgid "Automation"
 msgstr "Automatizace"
@@ -3513,8 +3525,8 @@ msgstr "Chat přesunut na {0}"
 msgid "Chat session not found"
 msgstr "Relace chatu nenalezena"
 
-msgid "Chat support not verified"
-msgstr "Podpora chatu neověřena"
+msgid "Chat support is checked when you open a chat."
+msgstr "Podpora chatu se ověřuje při otevření chatu."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Plochy chatu: zprávy, uvažování, návrhy"
@@ -3788,6 +3800,9 @@ msgstr "Výchozí nastavení CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentace CLI"
+
+msgid "CLI installed"
+msgstr "CLI nainstalováno"
 
 msgid "CLI login"
 msgstr "Přihlášení CLI"
@@ -9133,8 +9148,8 @@ msgstr "Počkat dál"
 msgid "Keep working"
 msgstr "Pokračovat v práci"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Zachovává tuto konverzaci Claude a model. Automatické přepínání používá pouze účty s předplatným a ověřenou kvótou."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Zachová konverzaci, model a oprávnění. Používá pouze účty s předplatným a ověřenou kvótou."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Nový soubor byl zachován — po vytvoření se změnil"
@@ -16850,11 +16865,11 @@ msgstr "Vlastník automatizace už v této organizaci nemůže používat cloudo
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Chat se otevře po dokončení aktuální odpovědi."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI již má vlastní nastavení modelu. Upravte je v pokročilé konfiguraci."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI nepotvrdilo podporu chatu. Terminál můžete používat dál."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Cloudový pracovní prostor se měl spustit, ale neodpověděl včas. Další běh to zkusí znovu."

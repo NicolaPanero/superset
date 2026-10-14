@@ -1,6 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import type { Item } from "@superset/chat/protocol";
-import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import {
+	AGENT_DEFAULT_MODE,
+	FULL_ACCESS_CHAT_MODE,
+	userMessageSchema,
+} from "@superset/chat/protocol";
 import type { AdapterEvent } from "../types";
 import { AcpAdapter, type AcpAdapterOptions } from "./acpAdapter";
 import { AIR_CLIENT_META } from "./air";
@@ -17,6 +21,7 @@ class FakeAcpAgent {
 	/** Answer session/load with "Resource not found", as a never-prompted
 	 * session does. */
 	loadFails = false;
+	replayUpdates: Array<Record<string, unknown>> | null = null;
 	/** What the agent answers `initialize` with; older agents answer 1. */
 	protocolVersion = 2;
 	/** Session capabilities advertised at initialize; both shipped agents fork. */
@@ -68,8 +73,7 @@ class FakeAcpAgent {
 	}
 
 	/** Ask the agent to request a permission mid-turn; returns the request id. */
-	requestPermission(sessionId: string, toolCallId: string): number {
-		const id = 9001;
+	requestPermission(sessionId: string, toolCallId: string, id = 9001): number {
 		this.deliver({
 			jsonrpc: "2.0",
 			id,
@@ -88,6 +92,10 @@ class FakeAcpAgent {
 
 	releaseSelections(): void {
 		for (const id of this.heldSelections.splice(0)) this.respond(id, null);
+	}
+
+	requestServer(method: string, params: unknown, id: number): void {
+		this.deliver({ jsonrpc: "2.0", id, method, params });
 	}
 
 	lastPermissionResponse(): Record<string, unknown> | undefined {
@@ -117,6 +125,8 @@ class FakeAcpAgent {
 							: {}),
 					},
 				});
+			} else if (frame.method === "authenticate") {
+				this.respond(frame.id as number, {});
 			} else if (frame.method === "session/new") {
 				this.respond(frame.id as number, {
 					sessionId: "sess-1",
@@ -167,6 +177,10 @@ class FakeAcpAgent {
 					sessionUpdate: "config_option_update",
 					configOptions: this.loadConfigOptions,
 				});
+				this.respond(frame.id as number, null);
+			} else if (frame.method === "session/load" && this.replayUpdates) {
+				const sessionId = (frame.params as { sessionId: string }).sessionId;
+				for (const update of this.replayUpdates) this.notify(sessionId, update);
 				this.respond(frame.id as number, null);
 			} else if (frame.method === "session/load") {
 				// A real agent replays the whole transcript — the user's turns
@@ -237,7 +251,10 @@ function startAdapter(
 	selections: { modelId?: string; modeId?: string } = {},
 	adapterOptions: Pick<
 		AcpAdapterOptions,
-		"defaultModeId" | "selectionWaitMs" | "backgroundDetailIntervalMs"
+		| "authMethodId"
+		| "defaultModeId"
+		| "selectionWaitMs"
+		| "backgroundDetailIntervalMs"
 	> = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
 	let counter = 0;
@@ -1294,6 +1311,7 @@ describe("AcpAdapter on protocol v2", () => {
 		expect(session?.availableModes).toEqual([
 			{ id: "plan", label: "Plan" },
 			{ id: "code", label: "Code" },
+			{ id: FULL_ACCESS_CHAT_MODE, label: "Full access" },
 		]);
 
 		adapter.setMode("code");
@@ -2186,4 +2204,461 @@ it("ends startup and closes an agent that never answers initialize", async () =>
 	).toBe(true);
 	expect(closed).toBe(1);
 	await adapter.dispose();
+});
+
+describe("v1 user replay boundaries", () => {
+	for (const whole of [true, false]) {
+		it(
+			whole
+				? "Cursor v1 replay keeps consecutive prompts separate"
+				: "other v1 replay retains streaming chunks of one prompt",
+			async () => {
+				const agent = new FakeAcpAgent();
+				agent.protocolVersion = 1;
+				agent.replayUpdates = [
+					{
+						sessionUpdate: "user_message_chunk",
+						content: { type: "text", text: "first " },
+					},
+					{
+						sessionUpdate: "user_message_chunk",
+						content: { type: "text", text: "second" },
+					},
+					{
+						sessionUpdate: "agent_message_chunk",
+						content: { type: "text", text: "reply" },
+					},
+				];
+				const adapter = new AcpAdapter({
+					command: "fake",
+					wholeUserMessageReplay: whole,
+					createTransport: (_opts, handlers) => agent.transport(handlers),
+				});
+				const events: AdapterEvent[] = [];
+				void collect(
+					adapter.start({
+						cwd: "/work",
+						resume: { harnessSessionId: "sess-1" },
+					}),
+					events,
+				);
+				await flush(40);
+				const users = events.filter(
+					(event) =>
+						event.kind === "item" && event.item.kind === "user_message",
+				);
+				const texts = users.map((event) =>
+					event.kind === "item" && event.item.kind === "user_message"
+						? userMessageSchema
+								.parse(event.item)
+								.content.filter((content) => content.type === "text")
+								.map((content) => (content.type === "text" ? content.text : ""))
+								.join("")
+						: "",
+				);
+				expect(texts).toEqual(whole ? ["first ", "second"] : ["first second"]);
+				if (whole) {
+					expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
+						users[1]?.kind === "item" && users[1].turnId,
+					);
+				}
+				await adapter.dispose();
+			},
+		);
+	}
+});
+
+it("keeps named v2 user prompts separate while joining chunks with the same identity", async () => {
+	const agent = new FakeAcpAgent();
+	agent.protocolVersion = 2;
+	agent.replayUpdates = [
+		{
+			sessionUpdate: "user_message_chunk",
+			messageId: "u1",
+			content: { type: "text", text: "o" },
+		},
+		{
+			sessionUpdate: "user_message_chunk",
+			messageId: "u1",
+			content: { type: "text", text: "ne" },
+		},
+		{
+			sessionUpdate: "user_message_chunk",
+			messageId: "u2",
+			content: { type: "text", text: "t" },
+		},
+		{
+			sessionUpdate: "user_message_chunk",
+			messageId: "u2",
+			content: { type: "text", text: "wo" },
+		},
+	];
+	const adapter = new AcpAdapter({
+		command: "fake",
+		createTransport: (_opts, handlers) => agent.transport(handlers),
+	});
+	const events: AdapterEvent[] = [];
+	void collect(
+		adapter.start({ cwd: "/work", resume: { harnessSessionId: "sess-1" } }),
+		events,
+	);
+	await flush(40);
+	const users = events.filter(
+		(event) => event.kind === "item" && event.item.kind === "user_message",
+	);
+	expect(
+		users.map((event) =>
+			event.kind === "item" && event.item.kind === "user_message"
+				? userMessageSchema
+						.parse(event.item)
+						.content.filter((content) => content.type === "text")
+						.map((content) => (content.type === "text" ? content.text : ""))
+						.join("")
+				: "",
+		),
+	).toEqual(["one", "two"]);
+	expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
+		users[1]?.kind === "item" && users[1].turnId,
+	);
+	await adapter.dispose();
+});
+
+it("keeps Cursor whole user replay boundaries even when protocol v2 is negotiated without message ids", async () => {
+	const agent = new FakeAcpAgent();
+	agent.protocolVersion = 2;
+	agent.replayUpdates = [
+		{
+			sessionUpdate: "user_message_chunk",
+			content: { type: "text", text: "first" },
+		},
+		{
+			sessionUpdate: "user_message_chunk",
+			content: { type: "text", text: "second" },
+		},
+	];
+	const adapter = new AcpAdapter({
+		command: "fake",
+		wholeUserMessageReplay: true,
+		createTransport: (_opts, handlers) => agent.transport(handlers),
+	});
+	const events: AdapterEvent[] = [];
+	void collect(
+		adapter.start({ cwd: "/work", resume: { harnessSessionId: "sess-1" } }),
+		events,
+	);
+	await flush(40);
+	const users = events.filter(
+		(event) => event.kind === "item" && event.item.kind === "user_message",
+	);
+	expect(users).toHaveLength(2);
+	expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
+		users[1]?.kind === "item" && users[1].turnId,
+	);
+	await adapter.dispose();
+});
+
+// Google's native agents authenticate over ACP before creating or restoring a chat.
+describe("Google subscription authentication", () => {
+	it.each([
+		undefined,
+		"google-history",
+	])("authenticates before opening %s", async (resume) => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			resume,
+			{},
+			{ authMethodId: "oauth-personal" },
+		);
+		await flush(24);
+		const auth = agent.sent.findIndex(
+			(frame) => frame.method === "authenticate",
+		);
+		const session = agent.sent.findIndex(
+			(frame) => frame.method === (resume ? "session/load" : "session/new"),
+		);
+		expect(auth).toBeGreaterThan(0);
+		expect(session).toBeGreaterThan(auth);
+		expect(agent.sent[auth]?.params).toEqual({ methodId: "oauth-personal" });
+		expect(events.some((event) => event.kind === "session")).toBe(true);
+		await adapter.dispose();
+	});
+});
+
+function cursorPermissionMode(
+	agent: FakeAcpAgent,
+	protocolVersion = 2,
+	current = "agent",
+) {
+	agent.protocolVersion = protocolVersion;
+	if (protocolVersion === 1)
+		agent.newSessionModes = {
+			currentModeId: current,
+			availableModes: [
+				{ id: "agent", name: "Agent" },
+				{ id: "ask", name: "Ask" },
+			],
+		};
+	else
+		agent.newSessionConfigOptions = [
+			{
+				configId: "mode",
+				name: "Mode",
+				type: "select",
+				category: "mode",
+				currentValue: current,
+				options: [
+					{ value: "agent", name: "Agent" },
+					{ value: "ask", name: "Ask" },
+				],
+			},
+		];
+}
+describe("per-chat Full access", () => {
+	it.each([
+		1, 2,
+	])("ACP %s adds full access without sending a made-up native mode", async (version) => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent, version);
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		expect(
+			sessionsOf(events)
+				.at(-1)
+				?.availableModes?.map((mode) => mode.id),
+		).toContain(FULL_ACCESS_CHAT_MODE);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		agent.requestPermission("sess-1", "tool-one", 9001);
+		agent.requestPermission("sess-1", "tool-two", 9002);
+		await flush(32);
+		for (const id of [9001, 9002])
+			expect(agent.sent.find((frame) => frame.id === id)?.result).toEqual({
+				outcome: { outcome: "selected", optionId: "allow" },
+			});
+		expect(
+			itemsOf(events).filter((item) => item.kind === "approval_request"),
+		).toHaveLength(0);
+		expect(
+			agent.sent.filter(
+				(frame) =>
+					frame.method === "session/set_mode" ||
+					frame.method === "session/set_config_option",
+			),
+		).toHaveLength(0);
+		expect(sessionsOf(events).at(-1)?.modeId).toBe(FULL_ACCESS_CHAT_MODE);
+		await adapter.dispose();
+	});
+	it("selecting full access also resolves a tool's pending Allow request", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent);
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		agent.requestPermission("sess-1", "already-blocked");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		expect(agent.lastPermissionResponse()?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "allow" },
+		});
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "approval_request")
+				.at(-1)?.status,
+		).toBe("answered");
+		await adapter.dispose();
+	});
+	it("Ask immediately restores tool approvals", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent);
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		adapter.setMode("ask");
+		await flush(32);
+		agent.requestPermission("sess-1", "manual-again");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(sessionsOf(events).at(-1)?.status).toBe("awaiting_input");
+		expect(
+			agent.sent.find((frame) => frame.method === "session/set_config_option")
+				?.params,
+		).toMatchObject({ value: "ask" });
+		await adapter.dispose();
+	});
+	it("full access moves Ask to the advertised tool mode before approving", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent, 2, "ask");
+		agent.holdSelections = true;
+		const { adapter } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		agent.requestPermission("sess-1", "pending-mode");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(
+			agent.sent.find((frame) => frame.method === "session/set_config_option")
+				?.params,
+		).toMatchObject({ value: "agent" });
+		agent.releaseSelections();
+		await flush(32);
+		expect(agent.lastPermissionResponse()?.result).toBeDefined();
+		await adapter.dispose();
+	});
+	it("failed native mode selection restores Ask without approving anything", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent, 2, "ask");
+		agent.rejectSelections = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		agent.requestPermission("sess-1", "after-rejection");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId)
+				.at(-1)?.modeId,
+		).toBe("ask");
+		await adapter.dispose();
+	});
+	it("a late Full access confirmation cannot override a later Ask choice", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent, 2, "ask");
+		agent.holdSelections = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush();
+		adapter.setMode("ask");
+		await flush();
+		agent.releaseSelections();
+		await flush(32);
+		agent.requestPermission("sess-1", "late-ack");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId)
+				.at(-1)?.modeId,
+		).toBe("ask");
+		expect(
+			agent.sent
+				.filter((frame) => frame.method === "session/set_config_option")
+				.map((frame) => (frame.params as { value: string }).value),
+		).toEqual(["agent", "ask"]);
+		await adapter.dispose();
+	});
+	it("a loaded native conversation restores the explicitly saved Full access choice", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent, "saved-native", {
+			modeId: FULL_ACCESS_CHAT_MODE,
+		});
+		await flush(40);
+		agent.requestPermission("saved-native", "restored");
+		await flush(32);
+		expect(agent.lastPermissionResponse()?.result).toBeDefined();
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId)
+				.at(-1)?.modeId,
+		).toBe(FULL_ACCESS_CHAT_MODE);
+		expect(agent.sent.some((frame) => frame.method === "session/new")).toBe(
+			false,
+		);
+		await adapter.dispose();
+	});
+	it("mode updates keep Full access active; requests from another conversation stay manual", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent);
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "config_option_update",
+			configOptions: [
+				{
+					configId: "mode",
+					name: "Mode",
+					type: "select",
+					category: "mode",
+					currentValue: "agent",
+					options: [
+						{ value: "agent", name: "Agent" },
+						{ value: "ask", name: "Ask" },
+					],
+				},
+			],
+		});
+		await flush();
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId)
+				.at(-1)?.modeId,
+		).toBe(FULL_ACCESS_CHAT_MODE);
+		agent.requestPermission("different-session", "foreign");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		await adapter.dispose();
+	});
+	it("Full access approves tools while actual questions still need an answer", async () => {
+		const agent = new FakeAcpAgent();
+		cursorPermissionMode(agent);
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		agent.requestPermission("sess-1", "tool");
+		agent.requestServer(
+			"cursor/ask_question",
+			{
+				toolCallId: "question",
+				questions: [
+					{
+						id: "q",
+						prompt: "Which branch?",
+						options: [{ id: "main", label: "main" }],
+					},
+				],
+			},
+			9501,
+		);
+		await flush();
+		adapter.setMode(FULL_ACCESS_CHAT_MODE);
+		await flush(32);
+		expect(agent.lastPermissionResponse()?.result).toBeDefined();
+		expect(agent.sent.find((frame) => frame.id === 9501)).toBeUndefined();
+		expect(sessionsOf(events).at(-1)?.status).toBe("awaiting_input");
+		await adapter.dispose();
+	});
+	it("uses the real bypass mode when the agent advertises it", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionModes = {
+			currentModeId: "default",
+			availableModes: [
+				{ id: "default", name: "Default" },
+				{ id: "yolo", name: "YOLO" },
+			],
+		};
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		adapter.setMode("yolo");
+		await flush(32);
+		expect(
+			agent.sent.find((frame) => frame.method === "session/set_mode")?.params,
+		).toMatchObject({ modeId: "yolo" });
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.availableModes)
+				.at(-1)
+				?.availableModes?.filter((mode) => mode.id === FULL_ACCESS_CHAT_MODE),
+		).toHaveLength(0);
+		agent.requestPermission("sess-1", "native-bypass");
+		await flush();
+		expect(agent.lastPermissionResponse()?.result).toBeDefined();
+		await adapter.dispose();
+	});
 });

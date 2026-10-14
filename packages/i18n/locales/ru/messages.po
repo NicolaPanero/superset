@@ -2451,6 +2451,9 @@ msgstr "Одобрено"
 msgid "Approved review"
 msgstr "Одобренное ревью"
 
+msgid "Approves tool actions automatically in this chat."
+msgstr "Автоматически одобряет действия инструментов в этом чате."
+
 msgid "Apps"
 msgstr "Приложения"
 
@@ -2733,8 +2736,17 @@ msgstr "Автоматизируйте настройку рабочих обл�
 msgid "Automatic (email address)"
 msgstr "Автоматически (адрес электронной почты)"
 
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "Для автоматического переключения аккаунтов нужны изолированные профили этого агента."
+
 msgid "Automatic continuation"
 msgstr "Автоматическое продолжение"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "Этот хост не поддерживает автоматическое продолжение."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "Для автоматического продолжения нужны проверенные данные о квоте и её сбросе для этого чата."
 
 msgid "Automation"
 msgstr "Автоматизация"
@@ -3513,8 +3525,8 @@ msgstr "Чат перенесён в {0}"
 msgid "Chat session not found"
 msgstr "Сессия чата не найдена"
 
-msgid "Chat support not verified"
-msgstr "Поддержка чата не проверена"
+msgid "Chat support is checked when you open a chat."
+msgstr "Поддержка чата проверяется при открытии чата."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "Поверхности чата: сообщения, рассуждения, подсказки"
@@ -3788,6 +3800,9 @@ msgstr "По умолчанию в CLI"
 
 msgid "CLI docs"
 msgstr "Документация CLI"
+
+msgid "CLI installed"
+msgstr "CLI установлен"
 
 msgid "CLI login"
 msgstr "Вход через CLI"
@@ -9133,8 +9148,8 @@ msgstr "Продолжить ждать"
 msgid "Keep working"
 msgstr "Продолжить работу"
 
-msgid "Keeps this Claude conversation and model. Automatic account switching uses only subscription accounts with verified quota."
-msgstr "Сохраняет этот разговор Claude и модель. Автоматическое переключение использует только аккаунты с подпиской и проверенной квотой."
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "Сохраняет разговор, модель и разрешения. Используются только аккаунты с подпиской и проверенной квотой."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "Новый файл сохранён — он изменился после создания"
@@ -16850,11 +16865,11 @@ msgstr "Владелец автоматизации больше не может
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Лучший агент будет меняться.<0/>Ваш процесс — нет."
 
+msgid "The chat will open when the current response finishes."
+msgstr "Чат откроется после завершения текущего ответа."
+
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "В CLI уже есть собственные настройки модели. Измените их в расширенных настройках."
-
-msgid "The CLI did not confirm chat support. You can keep using the terminal."
-msgstr "CLI не подтвердил поддержку чата. Можно продолжать пользоваться терминалом."
 
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Облачная рабочая область должна была запуститься, но не ответила вовремя. Следующий запуск попробует снова."

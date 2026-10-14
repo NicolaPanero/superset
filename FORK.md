@@ -135,7 +135,7 @@ La scelta arriva a chat, CLI, avvio dopo il setup e naming. Una scelta mancante 
 incompatibile con credenziali imposte produce un errore prima della creazione.
 Il naming fallito deriva il titolo localmente. Le chat già aperte non vengono spostate.
 
-## Continuazione automatica delle chat Claude
+## Continuazione automatica delle chat Claude e Codex
 
 Apri **Agent · Account → Chat corrente → Continuazione automatica**. Le due
 opzioni riguardano questa chat e sono entrambe inizialmente disattivate:
@@ -163,7 +163,7 @@ e vengono rimosse quando si elimina il workspace.
 
 ### Scelta dell’account e ripresa
 
-La continuazione interviene dopo un errore effettivo di quota del CLI Claude,
+La continuazione interviene dopo un errore effettivo di quota di Claude o Codex tramite ACP,
 mai per una lettura vecchia o un normale errore 429. Usa abbonamenti con quota
 recente verificata per il modello; esclude account API, login CLI esterno come
 destinazione, duplicati dello stesso login e profili già falliti prima del reset.
@@ -181,7 +181,7 @@ con un intervallo minimo di cinque minuti e rispetta `Retry-After`. Lo stato
 a 24 ore e quattro riprese consecutive. Tool in background attivi richiedono
 intervento manuale per conservarli.
 
-La funzione riguarda le chat Claude integrate. I terminali mantengono i controlli
+La funzione riguarda le chat Claude e Codex integrate. I terminali mantengono i controlli
 nativi del CLI; gli altri agenti non cambiano account automaticamente. Se la
 ripresa della conversazione fallisce per account o sessione non caricabile,
 la schermata di recupero mostra un’indicazione e interrompe i tentativi automatici
@@ -211,7 +211,7 @@ Nelle cancellazioni multiple la preferenza si applica solo ai branch idonei.
 | Cambio tra agenti diversi | Passaggio del contesto | Conversione dei formati nativi tramite txcript e provenienza locale |
 | Chat locali | Sessioni collegate all’host | Ricerca nei depositi nativi, deduplicazione per deposito e riapertura delle chat collegate |
 | Account | Identità e consumi ufficiali | Profili indipendenti, login CLI separato, scelta prima dell’avvio e cambio account Claude nella chat |
-| Quote e continuazione | Controlli nativi degli agenti | Riepilogo condiviso e continuazione opt-in delle chat Claude con cambio account o attesa del reset |
+| Quote e continuazione | Controlli nativi degli agenti | Riepilogo condiviso e continuazione opt-in delle chat Claude e Codex con cambio account o attesa del reset |
 | Eliminazione workspace | Gestione dei workspace e worktree | Verifica della provenienza e protezione dei branch locali, importati o condivisi |
 
 La chat ACP e il passaggio CLI/CHAT non sono stati introdotti dal fork.
@@ -245,10 +245,12 @@ per quella chat: vedi [Continuazione automatica](#continuazione-automatica-delle
 
 ### Verifiche delle conversioni
 
-Il motore validato è txcript `v0.14.4-fork.14`. Il contesto generato da Grok,
+Il motore validato è txcript `v0.14.4-fork.15`. Il contesto generato da Grok,
 i riepiloghi di sessione e i messaggi di ripresa automatica vengono distinti
-dai prompt dell’utente. Il contesto utile resta disponibile con un’etichetta
-esplicita, senza attribuirlo alla persona.
+dai prompt dell’utente. Il contesto utile resta disponibile senza attribuirlo alla persona.
+I riepiloghi Claude marcati `isCompactSummary` e il contesto di compattazione
+Grok mantengono il ruolo assistente nelle sei destinazioni testate. Il testo
+identico incollato da una persona resta invece un messaggio utente.
 
 I test nativi coprono tutte le 20 direzioni tra Claude Code, Codex, Cursor Agent,
 Grok e OpenCode, con prompt Unicode di oltre 50 KB, esempi di tag XML, testo
@@ -381,3 +383,115 @@ Esegui `bun run test:fork` per le regressioni desktop, unità/runtime e integraz
 host. La CI usa lo stesso comando e verifica separatamente il motore nativo
 prima di impacchettare. I test usano profili simulati, database e repository
 temporanei. Copertura, comandi e limiti in [docs/fork-testing.md](docs/fork-testing.md).
+
+
+### Gemini e Google Antigravity
+
+Entrambi compaiono come chat ACP quando sono presenti nelle impostazioni.
+Gemini usa il CLI ufficiale (`gemini --acp`) e il login Google; il profilo
+predefinito delle chat è separato dal login del terminale tramite
+`GEMINI_CLI_HOME`. Un valore esplicitamente configurato resta utilizzabile.
+
+Antigravity usa il [server ACP ufficiale Google](https://github.com/agentclientprotocol/registry/tree/main/antigravity-acp),
+fissato alla versione 1.3.0. Alla prima apertura viene scaricato da Google per
+la piattaforma corrente; gli avvii successivi usano la cache locale. Non viene
+avviato il CLI `agy` al posto del server ACP. Il login proposto è Google OAuth. Lo stato della chat è separato dal CLI
+tramite `GEMINI_HOME`; i comandi degli strumenti mantengono il loro `HOME`.
+
+I test automatici verificano registrazione, identità della configurazione,
+modelli Gemini, login ACP prima di apertura/ripresa, profilo Gemini separato,
+URL delle distribuzioni, cache concorrente e fallimenti dell'installazione.
+Il server Antigravity macOS arm64 è stato inoltre avviato in un ambiente
+isolato per verificare `initialize`, versione, login Google e ripresa delle
+sessioni, senza autenticare un account o inviare prompt.
+
+Le funzionalità di account gestiti, quota, reset e continuazione automatica
+non sono estese agli account Google. La continuazione automatica resta per
+Claude e Codex. Il codec Antigravity di txcript riguarda il deposito del CLI `agy`,
+non un deposito ACP verificato; Gemini non ha ancora un codec txcript.
+Per questo i due agenti sono visibili in “Continue with”, ma la conversione
+nativa verso di essi è disabilitata. Prima di abilitarla servono prove dei
+depositi ACP e un account Google per validare login, entitlement e ripresa.
+
+### Importazione dalla schermata iniziale
+
+Accanto alla cronologia dei prompt compare “Find a chat”, con un'icona di
+importazione distinta. Dopo aver scelto il progetto, apre la ricerca nel
+workspace locale già esistente oppure ne registra uno sul checkout del
+progetto, senza inviare prompt, avviare agenti o creare worktree. La ricerca
+copre anche le sessioni negli altri worktree del progetto.
+“Continue with” segue tutte le configurazioni e il loro ordine nelle
+impostazioni. Le configurazioni eliminate non vengono ripristinate attraverso
+preset impliciti; quelle senza conversione verificata restano visibili con
+la ragione dell'indisponibilità.
+
+
+### Modalità chat predefinita e sessioni salvate come terminale
+
+Con “Mostra CLI avanzate” disattivato, tutti gli agenti con un harness ACP
+partono come chat, anche alla creazione di un workspace. Grok e Cursor sono
+riconosciuti anche dal launcher host, oltre che dal selettore dell'interfaccia.
+Una sessione rimasta in modalità terminale viene ripresa come chat usando
+il suo ID nativo. Se sta rispondendo o aspettando un permesso, il passaggio
+attende la fine del turno. Una shell normale resta una shell.
+
+Un errore di conversione mostra un pulsante Retry; non provoca un nuovo agente
+né tentativi automatici continui. Riattivando le opzioni CLI avanzate è ancora
+possibile scegliere la modalità terminale.
+
+Il controllo guidato Grok/Cursor negozia ACP 1 e 2, con i nomi dei campi di
+entrambe le versioni, e invia solo `initialize`. Se il controllo non riesce a
+confermare la chat, le impostazioni mostrano “CLI installed” e spiegano che la
+compatibilità verrà verificata all'apertura. Questo esito non forza l'uso del
+terminale e non implica che una chat già funzionante sia incompatibile.
+
+
+### Full access nelle chat ACP
+
+Il menu delle modalità offre Full access anche per Cursor e per gli altri
+agenti ACP configurati. Quando l'agente espone un bypass nativo, viene usato
+quel modo. Negli altri casi la chat approva automaticamente le richieste di
+permesso degli strumenti, usando le opzioni effettivamente offerte dall'agente.
+Cursor viene portato in modalità Agent, se prima era in Ask.
+
+La scelta viene salvata insieme alla chat e alla preferenza dell'agente,
+come le altre modalità. Può essere attivata anche quando un comando aspetta
+Allow e può essere disattivata tornando alla modalità con conferme. Non
+modifica i file globali dei permessi del CLI. Restano validi i limiti del
+provider, del sandbox e del sistema operativo; le domande per chiarire il
+lavoro richiedono ancora una risposta.
+
+I test coprono ACP 1 e 2, ripresa delle sessioni, modalità native, richieste
+pendenti, cambio di modalità rifiutato o confermato in ritardo, aggiornamenti
+del modello/modalità e isolamento tra conversazioni. La modalità aggiunta
+alla chat non viene inviata al provider come un ID nativo inventato.
+
+
+### Continuazione automatica della chat corrente
+
+Current chat è disponibile per tutti gli agenti ACP. Le due opzioni sono
+separate: cambiare account quando la quota finisce, oppure aspettare il reset
+e riprendere sulla stessa sessione. Quando un agente o un host non supporta
+una delle opzioni, la sezione spiega il requisito mancante senza mostrare una
+spunta che non potrebbe funzionare.
+
+Claude e Codex supportano entrambe le opzioni. Possono essere abilitate anche
+dopo un errore di quota, finché la stessa chat è ancora attiva; Stop, un nuovo
+prompt o un cambio di modello annullano la ripresa del vecchio lavoro. Le
+quote devono essere recenti e verificate, gli account alternativi isolati e
+in abbonamento. Il login CLI e le chiavi API non vengono suggeriti come
+alternative. Quota esaurita, autenticazione fallita e rate limit temporaneo
+sono condizioni diverse: questi ultimi non attivano la rotazione.
+
+La ripresa mantiene sessione, modello e modalità dei permessi, compreso Full
+access. Per Codex viene copiata soltanto la cronologia del rollout nel profilo
+di destinazione; credenziali, configurazione e database dell'account non
+vengono copiati. Una cronologia di destinazione più recente o incompatibile
+interrompe la rotazione e lascia disponibile la chat originale. La ripresa
+usa strictResume, così un errore non genera silenziosamente una chat vuota.
+
+Cursor, Grok, OpenCode, Gemini, Antigravity e gli altri agenti mostrano per ora
+il requisito mancante. Le quote lette da altri store o provider non vengono
+attribuite automaticamente alla sessione ACP attuale. Gli host precedenti
+continuano a gestire Claude; Codex viene abilitato solo quando l'host espone
+esplicitamente le nuove capacità.

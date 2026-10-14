@@ -80,9 +80,10 @@ export async function probeSetupChat(
 					try {
 						const reply = JSON.parse(line);
 						if (reply.id === 1) {
-							const name = reply.result?.agentInfo?.name;
+							const name =
+								reply.result?.info?.name ?? reply.result?.agentInfo?.name;
 							finish(
-								reply.result?.protocolVersion === 1 &&
+								[1, 2].includes(reply.result?.protocolVersion) &&
 									typeof name === "string" &&
 									(agent === "grok" ? /grok/i : /cursor/i).test(name),
 							);
@@ -95,7 +96,7 @@ export async function probeSetupChat(
 				}
 			});
 			child.stdin.write(
-				`${JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: 1, clientCapabilities: {}, clientInfo: { name: "superset-setup", version: "1" } } })}\n`,
+				`${JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: 2, capabilities: {}, info: { name: "superset-setup", version: "1" }, clientCapabilities: {}, clientInfo: { name: "superset-setup", version: "1" } } })}\n`,
 			);
 		});
 	} finally {

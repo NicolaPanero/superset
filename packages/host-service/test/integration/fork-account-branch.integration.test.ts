@@ -166,3 +166,52 @@ test("an imported chat can explicitly use the system login while another profile
 		await scenario.dispose();
 	}
 });
+
+test.each([
+	"gemini",
+	"agy",
+])("%s chat uses a separate profile while tools keep the user's HOME", async (provider) => {
+	const scenario = await createBasicScenario();
+	let previousEnv: Record<string, string> | undefined;
+	try {
+		previousEnv = getTerminalBaseEnv();
+	} catch {}
+	try {
+		initTerminalBaseEnv({
+			PATH: process.env.PATH ?? "/usr/bin:/bin",
+			HOME: "/user/home",
+			GEMINI_CLI_HOME: "/terminal/login",
+		});
+		const configs = await agentConfigsRouter
+			.createCaller({
+				db: scenario.host.db,
+				isAuthenticated: true,
+			} as HostServiceContext)
+			.list();
+		const gemini = configs.find((c) => c.presetId === provider);
+		if (!gemini) throw new Error("missing Gemini config");
+		const environment = await buildChatAgentEnv({
+			db: scenario.host.db,
+			cwd: scenario.repo.repoPath,
+			workspaceId: scenario.workspaceId,
+			agentConfigId: gemini.id,
+		});
+		expect(
+			environment[provider === "gemini" ? "GEMINI_CLI_HOME" : "GEMINI_HOME"],
+		).not.toBe("/terminal/login");
+		expect(
+			environment[
+				provider === "gemini" ? "GEMINI_CLI_HOME" : "GEMINI_HOME"
+			]?.replaceAll("\\", "/"),
+		).toEndWith(
+			provider === "gemini"
+				? "/accounts/gemini/chat"
+				: "/accounts/antigravity/chat/.gemini",
+		);
+		expect(environment.HOME).toBe("/user/home");
+	} finally {
+		if (previousEnv) initTerminalBaseEnv(previousEnv);
+		else resetTerminalBaseEnvForTests();
+		await scenario.dispose();
+	}
+});

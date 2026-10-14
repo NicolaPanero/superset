@@ -12,7 +12,11 @@ import type {
 	Turn,
 	UserContent,
 } from "@superset/chat/protocol";
-import { AGENT_DEFAULT_MODE } from "@superset/chat/protocol";
+import {
+	AGENT_DEFAULT_MODE,
+	FULL_ACCESS_CHAT_MODE,
+	isFullAccessMode,
+} from "@superset/chat/protocol";
 import { BackgroundTasks } from "../backgroundTasks";
 import { EventQueue } from "../eventQueue";
 import type {
@@ -32,6 +36,12 @@ import {
 	isTerminalAirState,
 } from "./air";
 import { cursorApproval } from "./cursorExtensions";
+import {
+	fullAccessAllowOption,
+	fullAccessModes,
+	fullAccessNativeMode,
+} from "./forkFullAccess";
+import { forkPromptError } from "./forkPromptError";
 import type {
 	AcpNotification,
 	AcpServerRequest,
@@ -156,6 +166,8 @@ const SELECTION_WAIT_MS = 5000;
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
+	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
+	wholeUserMessageReplay?: boolean;
 	startupTimeoutMs?: number;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
 	/** Selected for a new session that asks for no mode, when the agent offers it. */
@@ -187,6 +199,7 @@ type PendingApproval = {
 	requestId: number | string;
 	turnId: string;
 	item: ApprovalRequest;
+	sessionId?: string;
 	respond?: (decision: Decision) => unknown;
 };
 
@@ -265,6 +278,11 @@ export class AcpAdapter implements HarnessAdapter {
 	/** The v2 config option that stands in for v1's session mode, once seen. */
 	private modeConfigId: string | null = null;
 	private modeId: string | undefined;
+	private nativeModeId: string | undefined;
+	private nativeModes: Array<{ id: string; label: string }> = [];
+	private clientFullAccess = false;
+	private autoApprovePermissions = false;
+	private modeChangeVersion = 0;
 	private readonly selectionsInFlight = new Set<Promise<void>>();
 	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
@@ -354,34 +372,99 @@ export class AcpAdapter implements HarnessAdapter {
 			},
 			pending.turnId,
 		);
-		this.emitSession({ status: "running" });
+		this.emitSession({
+			status: this.pendingApprovals.size ? "awaiting_input" : "running",
+		});
 	}
 
 	setMode(modeId: string): void {
-		const previous = this.modeId;
-		this.emitSession({ modeId });
-		if (!this.client || !this.sessionId) return;
-		// v2 dropped session/set_mode outright: a mode is a config option there,
-		// and `config_option_update` is what told us which one.
-		const pending =
-			this.negotiatedVersion >= 2 && this.modeConfigId
-				? this.client.request("session/set_config_option", {
-						sessionId: this.sessionId,
-						configId: this.modeConfigId,
-						type: "id",
-						value: modeId,
-					})
-				: this.client.request("session/set_mode", {
-						sessionId: this.sessionId,
-						modeId,
-					});
-		this.trackSelection(pending);
-		void pending.catch((error: Error) => {
-			if (previous && this.modeId === modeId) {
-				this.emitSession({ modeId: previous });
-			}
-			this.emitNotice("error", error.message);
+		const version = ++this.modeChangeVersion;
+		const previous = this.nativeModeId;
+		const clientFull = modeId === FULL_ACCESS_CHAT_MODE;
+		const target = clientFull
+			? fullAccessNativeMode(this.nativeModes, previous)
+			: modeId === AGENT_DEFAULT_MODE
+				? previous
+				: modeId;
+		if (clientFull && ["ask", "plan", "read-only"].includes(target ?? "")) {
+			this.emitNotice(
+				"error",
+				"This agent does not offer a mode that can run tools.",
+			);
+			return;
+		}
+		this.clientFullAccess = clientFull;
+		this.autoApprovePermissions = false;
+		this.emitSession({
+			modeId: clientFull
+				? FULL_ACCESS_CHAT_MODE
+				: (target ?? AGENT_DEFAULT_MODE),
+			availableModes: this.nativeModes,
 		});
+		const confirm = () => {
+			if (
+				version !== this.modeChangeVersion ||
+				this.modeId !==
+					(clientFull ? FULL_ACCESS_CHAT_MODE : (target ?? AGENT_DEFAULT_MODE))
+			)
+				return;
+			this.autoApprovePermissions = clientFull || isFullAccessMode(target);
+			if (this.autoApprovePermissions) this.approvePendingToolPermissions();
+		};
+		if (
+			!target ||
+			(target === previous && this.selectionsInFlight.size === 0)
+		) {
+			confirm();
+			return;
+		}
+		if (!this.client || !this.sessionId) return;
+		const pending = this.requestNativeMode(target);
+		this.trackSelection(pending);
+		void pending
+			.then((response) => {
+				if (version !== this.modeChangeVersion) return;
+				this.nativeModeId = target;
+				this.handleConfigOptions(response);
+				confirm();
+			})
+			.catch((error: Error) => {
+				if (
+					version === this.modeChangeVersion &&
+					this.modeId === (clientFull ? FULL_ACCESS_CHAT_MODE : target)
+				) {
+					this.clientFullAccess = false;
+					this.autoApprovePermissions = false;
+					this.emitSession({
+						modeId: previous ?? AGENT_DEFAULT_MODE,
+						availableModes: this.nativeModes,
+					});
+				}
+				this.emitNotice("error", error.message);
+			});
+	}
+
+	private requestNativeMode(modeId: string): Promise<unknown> {
+		if (!this.client || !this.sessionId) return Promise.resolve(undefined);
+		return this.modeConfigId
+			? this.client.request("session/set_config_option", {
+					sessionId: this.sessionId,
+					configId: this.modeConfigId,
+					...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
+					value: modeId,
+				})
+			: this.client.request("session/set_mode", {
+					sessionId: this.sessionId,
+					modeId,
+				});
+	}
+
+	private approvePendingToolPermissions(): void {
+		for (const [id, pending] of this.pendingApprovals) {
+			if (pending.respond || pending.sessionId !== this.sessionId) continue;
+			const optionId = fullAccessAllowOption(pending.item.options ?? []);
+			if (optionId) this.respondToApproval(id, { type: "option", optionId });
+		}
 	}
 
 	private trackSelection(request: Promise<unknown>): void {
@@ -416,6 +499,10 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	setConfigOption(configId: string, value: string): void {
+		if (configId === this.modeConfigId) {
+			this.setMode(value);
+			return;
+		}
 		const client = this.client;
 		const sessionId = this.sessionId;
 		if (!client || !sessionId) return;
@@ -685,7 +772,7 @@ export class AcpAdapter implements HarnessAdapter {
 			this.emitTurn({
 				id: turnId,
 				status: "failed",
-				error: { message: (error as Error).message },
+				error: forkPromptError(error),
 				startedAtMs: this.currentTurn?.startedAtMs ?? this.now(),
 				completedAtMs: this.now(),
 			});
@@ -710,7 +797,21 @@ export class AcpAdapter implements HarnessAdapter {
 		// whole replay lands in one group whose order comes down to item id.
 		if (variant === "user_message_chunk" || variant === "user_message") {
 			if (!this.replaying) return;
-			if (this.openText?.kind !== "user_message") {
+			const wholeReplayPrompt =
+				this.options.wholeUserMessageReplay === true &&
+				this.messageIdOf(outer.data.update) === null &&
+				variant === "user_message_chunk" &&
+				this.contentBlock(raw.content)?.type === "text";
+			const incomingMessageId = this.messageIdOf(outer.data.update);
+			const anotherNamedPrompt =
+				incomingMessageId !== null &&
+				this.openText?.kind === "user_message" &&
+				this.openText.messageId !== incomingMessageId;
+			if (
+				this.openText?.kind !== "user_message" ||
+				wholeReplayPrompt ||
+				anotherNamedPrompt
+			) {
 				this.flushOpenText();
 				// emitTurn leaves the history turn as `currentTurn`, which
 				// resolveTurnId answers with first — both have to go for the next
@@ -1321,6 +1422,11 @@ export class AcpAdapter implements HarnessAdapter {
 		resumed: boolean,
 	): void {
 		const modeId = this.startModeId(startOptions, resumed);
+		if (modeId === FULL_ACCESS_CHAT_MODE) this.setMode(modeId);
+		else if (isFullAccessMode(modeId) && modeId === this.nativeModeId) {
+			this.autoApprovePermissions = true;
+			this.approvePendingToolPermissions();
+		}
 		for (const [category, value] of [
 			["model", startOptions.modelId],
 			["mode", modeId],
@@ -1339,6 +1445,7 @@ export class AcpAdapter implements HarnessAdapter {
 		}
 		if (
 			modeId &&
+			modeId !== FULL_ACCESS_CHAT_MODE &&
 			!this.modeConfigId &&
 			sessionModes?.currentModeId !== modeId &&
 			sessionModes?.availableModes?.some((mode) => mode.id === modeId)
@@ -1396,6 +1503,18 @@ export class AcpAdapter implements HarnessAdapter {
 			);
 			return;
 		}
+		if (
+			this.autoApprovePermissions &&
+			parsed.data.sessionId === this.sessionId
+		) {
+			const optionId = fullAccessAllowOption(parsed.data.options);
+			if (optionId) {
+				this.client?.respond(request.id, {
+					outcome: { outcome: "selected", optionId },
+				});
+				return;
+			}
+		}
 		const turnId = this.resolveTurnId();
 		const targetItemId = parsed.data.toolCall?.toolCallId ?? null;
 		const approvalId = `approval:${targetItemId ?? this.mintId()}`;
@@ -1413,6 +1532,7 @@ export class AcpAdapter implements HarnessAdapter {
 			})),
 		};
 		this.pendingApprovals.set(approvalId, {
+			sessionId: parsed.data.sessionId,
 			requestId: request.id,
 			turnId,
 			item,
@@ -1602,6 +1722,26 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private emitSession(session: Partial<SessionState>): void {
+		if (session.availableModes)
+			this.nativeModes = session.availableModes.filter(
+				(mode) => mode.id !== FULL_ACCESS_CHAT_MODE,
+			);
+		if (session.modeId && session.modeId !== FULL_ACCESS_CHAT_MODE)
+			this.nativeModeId = session.modeId;
+		if (this.modeChangeVersion === 0 && isFullAccessMode(session.modeId))
+			this.autoApprovePermissions = true;
+		if (session.modeId && this.clientFullAccess)
+			session = { ...session, modeId: FULL_ACCESS_CHAT_MODE };
+		if (session.availableModes || (session.status === "idle" && !this.modeId)) {
+			session = {
+				...session,
+				availableModes: fullAccessModes(
+					this.nativeModes,
+					this.clientFullAccess,
+				),
+				modeId: session.modeId ?? this.modeId ?? AGENT_DEFAULT_MODE,
+			};
+		}
 		if (session.modeId) this.modeId = session.modeId;
 		this.emit({ kind: "session", session });
 	}

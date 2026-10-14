@@ -16,6 +16,8 @@ function fixture(
 		fail?: boolean;
 		oldHost?: boolean;
 		live?: boolean;
+		agent?: string;
+		capabilities?: { switchAccounts: boolean; resumeAtReset: boolean };
 	} = {},
 ) {
 	const state = {
@@ -23,6 +25,7 @@ function fixture(
 		switchAccounts: false,
 		resumeAtReset: false,
 		phase: "idle",
+		capabilities: options.capabilities,
 	};
 	const writes: unknown[] = [];
 	const queries = queryFixture();
@@ -79,6 +82,7 @@ function fixture(
 				terminalId="current-chat"
 				enabled
 				sessionLive={options.live ?? true}
+				agent={options.agent}
 			/>
 		</workspaceTrpc.Provider>
 	);
@@ -152,7 +156,10 @@ test.each([
 ])("unsupported hosts do not break the surrounding chat", async (options) => {
 	const f = fixture(options);
 	await flush();
-	expect(f.view.container.textContent).toBe("");
+	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.view.container.textContent).toContain(
+		"Automatic continuation is not supported on this host.",
+	);
 	expect(f.writes).toEqual([]);
 });
 test("a stopped chat explains that Resume is required before the options can act", async () => {
@@ -162,4 +169,60 @@ test("a stopped chat explains that Resume is required before the options can act
 		"Resume this chat to activate these options.",
 	);
 	expect(f.view.container.textContent).not.toContain("Applies immediately");
+});
+
+test("Codex shows both options and saves them to the current Codex chat", async () => {
+	const f = fixture({
+		agent: "codex",
+		capabilities: { switchAccounts: true, resumeAtReset: true },
+	});
+	await flush();
+	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	await flush();
+	expect(f.writes).toEqual([
+		{
+			workspaceId: "00000000-0000-0000-0000-000000000001",
+			terminalId: "current-chat",
+			agent: "codex",
+			resumeAtReset: true,
+		},
+	]);
+	expect(f.view.container.textContent).not.toContain("Claude conversation");
+});
+test("an older host never offers a Codex checkbox that it cannot execute", async () => {
+	const f = fixture({ agent: "codex" });
+	await flush();
+	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.writes).toEqual([]);
+});
+test.each([
+	"cursor-agent",
+	"grok",
+	"opencode",
+	"gemini",
+	"agy",
+	"custom",
+])("%s keeps Current chat explanations without nonfunctional checkboxes", async (agent) => {
+	const f = fixture({ agent });
+	await flush();
+	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.view.container.textContent).toContain(
+		"Automatic account switching needs isolated profiles",
+	);
+	expect(f.view.container.textContent).toContain(
+		"Automatic continuation needs verified quota",
+	);
+	expect(f.view.container.textContent).not.toContain("Applies immediately");
+	expect(f.writes).toEqual([]);
+});
+test("waiting and rotation are shown independently when a host only supports waiting", async () => {
+	const f = fixture({
+		agent: "codex",
+		capabilities: { switchAccounts: false, resumeAtReset: true },
+	});
+	await flush();
+	expect(f.view.queryAllByRole("checkbox")).toHaveLength(1);
+	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	await flush();
+	expect(f.state.resumeAtReset).toBe(true);
 });

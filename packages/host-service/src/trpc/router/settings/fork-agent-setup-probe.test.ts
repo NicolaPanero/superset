@@ -123,3 +123,35 @@ test("ACP check only initializes and cleans its temporary working directory", as
 		await rm(dir, { recursive: true, force: true });
 	}
 });
+
+test.each([
+	1, 2,
+])("guided setup accepts ACP %s using only initialize", async (protocolVersion) => {
+	const dir = await mkdtemp(join(tmpdir(), "fork-acp-version-"));
+	const fixture = join(dir, "probe.cjs");
+	const log = join(dir, "requests.jsonl");
+	await writeFile(
+		fixture,
+		`const fs=require('node:fs');require('node:readline').createInterface({input:process.stdin}).on('line',line=>{fs.appendFileSync(process.env.TEST_SETUP_LOG,line+'\\n');console.log(JSON.stringify({jsonrpc:'2.0',id:1,result:{protocolVersion:${protocolVersion},${protocolVersion === 2 ? "info" : "agentInfo"}:{name:'Cursor Agent'}}}));});`,
+	);
+	try {
+		expect(
+			await probeSetupChat(
+				process.execPath,
+				"cursor-agent",
+				{ ...process.env, TEST_SETUP_LOG: log },
+				[fixture],
+			),
+		).toBe(true);
+		const { readFile } = await import("node:fs/promises");
+		const rows = (await readFile(log, "utf8"))
+			.trim()
+			.split("\n")
+			.map((line) => JSON.parse(line));
+		expect(rows.map((row) => row.method)).toEqual(["initialize"]);
+		expect(rows[0].params.protocolVersion).toBe(2);
+		expect(rows[0].params.info.name).toBe("superset-setup");
+	} finally {
+		await rm(dir, { recursive: true, force: true });
+	}
+});

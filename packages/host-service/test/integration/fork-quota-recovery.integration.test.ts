@@ -90,3 +90,57 @@ test("changing continuation options notifies the current live chat immediately w
 		await scenario.dispose();
 	}
 });
+
+test("quota recovery advertises provider capabilities without changing legacy requests", async () => {
+	const scenario = await createBasicScenario();
+	try {
+		const input = {
+			workspaceId: scenario.workspaceId,
+			terminalId: randomUUID(),
+		};
+		expect(
+			(await scenario.host.trpc.agents.quotaRecovery.query(input)).supported,
+		).toBe(true);
+		for (const agent of ["claude", "codex"]) {
+			expect(
+				(
+					await scenario.host.trpc.agents.quotaRecovery.query({
+						...input,
+						agent,
+					})
+				).capabilities,
+			).toEqual({ switchAccounts: true, resumeAtReset: true });
+			await scenario.host.trpc.agents.setQuotaRecovery.mutate({
+				...input,
+				agent,
+				resumeAtReset: true,
+			});
+		}
+		for (const agent of [
+			"cursor-agent",
+			"grok",
+			"opencode",
+			"gemini",
+			"agy",
+			"custom",
+		]) {
+			expect(
+				(
+					await scenario.host.trpc.agents.quotaRecovery.query({
+						...input,
+						agent,
+					})
+				).capabilities,
+			).toEqual({ switchAccounts: false, resumeAtReset: false });
+			await expect(
+				scenario.host.trpc.agents.setQuotaRecovery.mutate({
+					...input,
+					agent,
+					switchAccounts: true,
+				}),
+			).rejects.toMatchObject({ data: { code: "PRECONDITION_FAILED" } });
+		}
+	} finally {
+		await scenario.dispose();
+	}
+});

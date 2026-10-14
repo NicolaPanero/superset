@@ -16,6 +16,7 @@ import {
 	validateSessionAccount,
 } from "../trpc/router/usage/session-account/session-account";
 import { moveClaudeSession } from "./forkMoveClaudeSession";
+import { moveCodexSession } from "./forkMoveCodexSession";
 import { ForkQuotaRecoveryAdapter } from "./forkQuotaRecoveryAdapter";
 import {
 	type RecoveryStatus,
@@ -34,8 +35,12 @@ export function forkQuotaRecoveryHarness(
 		captured: (account: SessionAccount) => void,
 	) => HarnessAdapter,
 ): HarnessAdapter {
-	if (harness !== "claude-acp" || !options.terminalId)
+	if (
+		(harness !== "claude-acp" && harness !== "codex-acp") ||
+		!options.terminalId
+	)
 		return worker(options.accountSelection, () => {});
+	const agent = harness === "codex-acp" ? "codex" : "claude";
 	let account: SessionAccount | undefined;
 	const create = (selection: string | null | undefined) =>
 		worker(selection, (value) => {
@@ -49,12 +54,18 @@ export function forkQuotaRecoveryHarness(
 			: options.accountSelection;
 	const terminalId = options.terminalId,
 		key = recoveryKey(options.scopeId, terminalId);
-	const controller = {
+	const controller: {
+		agent: SessionAccount["agent"];
+		status: RecoveryStatus;
+		changed(): void;
+	} = {
+		agent,
 		status: { phase: "idle" } as RecoveryStatus,
 		changed: () => adapter.changed(),
 	};
 	const adapter = new ForkQuotaRecoveryAdapter(
 		{
+			agent,
 			create,
 			settings: () =>
 				readRecovery(db, options.scopeId, terminalId) ?? {
@@ -63,16 +74,27 @@ export function forkQuotaRecoveryHarness(
 				},
 			account: () => account,
 			validate: async () =>
-				!!account && (await validateSessionAccount(account)),
+				!!account &&
+				account.agent === agent &&
+				(await validateSessionAccount(account)),
 			quota: async () => isolatedAccountQuota(await getQuota(true)),
 			move: async (sessionId, selection) => {
 				if (!account || !(await validateSessionAccount(account)))
 					throw new Error("source_account_unverified");
-				if (selection !== null)
-					await assertIsolatedAccount("claude", selection);
-				const dirs = await agentAccountOptions("claude");
+				if (selection !== null) await assertIsolatedAccount(agent, selection);
+				const dirs = await agentAccountOptions(agent);
 				if (!dirs.some((d) => d.selection === selection))
 					throw new Error("account_selection_unavailable");
+				if (agent === "codex") {
+					if (!account.directory || !selection)
+						throw new Error("account_selection_unavailable");
+					await moveCodexSession({
+						sessionId,
+						sourceDir: account.directory,
+						targetDir: selection,
+					});
+					return;
+				}
 				const systemDir = join(homedir(), ".claude");
 				const result = await moveClaudeSession({
 					sessionId,

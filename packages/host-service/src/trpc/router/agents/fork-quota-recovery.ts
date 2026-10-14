@@ -1,3 +1,4 @@
+import { chatRecoveryCapabilities } from "@superset/shared/fork-chat-recovery";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
@@ -14,6 +15,7 @@ import { protectedProcedure } from "../../index";
 const location = z.object({
 	workspaceId: z.string().uuid(),
 	terminalId: z.string().min(1).max(128),
+	agent: z.string().optional(),
 });
 function workspaceExists(db: HostDb, id: string) {
 	if (
@@ -34,6 +36,9 @@ export const forkQuotaRecoveryProcedures = {
 		);
 		return {
 			supported: true,
+			capabilities: chatRecoveryCapabilities(
+				input.agent ?? live?.agent ?? "claude",
+			),
 			switchAccounts: row?.switchAccounts ?? false,
 			resumeAtReset: row?.resumeAtReset ?? false,
 			...(live?.status ?? { phase: "idle" as const }),
@@ -49,6 +54,21 @@ export const forkQuotaRecoveryProcedures = {
 		)
 		.mutation(({ ctx, input }) => {
 			workspaceExists(ctx.db, input.workspaceId);
+			const live = recoveryControllers.get(
+				recoveryKey(input.workspaceId, input.terminalId),
+			);
+			const capabilities = chatRecoveryCapabilities(
+				live?.agent ?? input.agent ?? "claude",
+			);
+			if (
+				(input.agent && live?.agent && input.agent !== live.agent) ||
+				(input.switchAccounts && !capabilities.switchAccounts) ||
+				(input.resumeAtReset && !capabilities.resumeAtReset)
+			)
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message: "chat_quota_recovery_unavailable",
+				});
 			writeRecovery(ctx.db, input.workspaceId, input.terminalId, {
 				...(input.switchAccounts !== undefined
 					? { switchAccounts: input.switchAccounts }

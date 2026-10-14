@@ -1,4 +1,4 @@
-import { delimiter } from "node:path";
+import { delimiter, dirname, join } from "node:path";
 import { getBinDir } from "@superset/agent-setup";
 import { eq } from "drizzle-orm";
 import type { HostDb } from "../db";
@@ -117,6 +117,21 @@ export async function buildChatAgentEnv(options: {
 			options.accountSelection,
 		);
 	}
+	if (config?.presetId === "gemini" && !configEnv.GEMINI_CLI_HOME)
+		configEnv.GEMINI_CLI_HOME = join(
+			dirname(getBinDir()),
+			"accounts",
+			"gemini",
+			"chat",
+		);
+	if (config?.presetId === "agy" && !configEnv.GEMINI_HOME)
+		configEnv.GEMINI_HOME = join(
+			dirname(getBinDir()),
+			"accounts",
+			"antigravity",
+			"chat",
+			".gemini",
+		);
 	if (config?.presetId === "cursor-agent") configEnv.CURSOR_AGENT = "1";
 	const result = withoutAmbientKeys(
 		withSupersetBinFirst({

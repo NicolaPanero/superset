@@ -532,6 +532,7 @@ export function usePaneRegistry({
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<ForkChatExtras ctx={ctx} workspaceId={workspaceId}>
 						<AgentTerminalPane
+							onSwitchSurface={agentSurface.switchSurface}
 							ctx={ctx}
 							onOpenFile={onOpenFile}
 							onRevealPath={onRevealPath}

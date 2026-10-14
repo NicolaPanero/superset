@@ -1,9 +1,5 @@
-const UNRESTRICTED_MODE_IDS = new Set([
-	"bypassPermissions",
-	"full-access",
-	"agent-full-access",
-]);
+import { isFullAccessMode } from "@superset/chat/protocol";
 
 export function isUnrestrictedMode(modeId: string | undefined): boolean {
-	return modeId !== undefined && UNRESTRICTED_MODE_IDS.has(modeId);
+	return isFullAccessMode(modeId);
 }

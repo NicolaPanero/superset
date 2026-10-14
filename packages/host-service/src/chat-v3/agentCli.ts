@@ -117,10 +117,12 @@ export async function resolveAgentCli(options: {
 	command?: string;
 	minVersion: string;
 	upgrade?: string;
+	verifyVersion?: boolean;
 	env: () => Promise<NodeJS.ProcessEnv>;
 }): Promise<AgentCli> {
 	const env = await options.env();
 	const command = options.command ?? agentCliCommand(options.binary, env);
+	if (options.verifyVersion === false) return { command, env };
 	const found = await probeVersion(command, env);
 	if (!found || !meetsFloor(found, options.minVersion)) {
 		throw new Error(agentCliUnsupported({ ...options, found }));

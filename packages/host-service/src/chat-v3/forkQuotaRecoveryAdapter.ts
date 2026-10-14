@@ -9,7 +9,7 @@ import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import type { SessionAccount } from "../trpc/router/usage/session-account/session-account";
 import type { UsageAccount } from "../trpc/router/usage/types";
 import {
-	isClaudeQuotaFailure,
+	isAccountQuotaFailure,
 	recoveryResetAt,
 	suggestedRecoveryAccount,
 } from "./forkQuotaRecoveryPolicy";
@@ -19,6 +19,7 @@ import type {
 } from "./forkQuotaRecoveryStore";
 
 export type RecoveryDependencies = {
+	agent?: "claude" | "codex";
 	create(selection: string | null | undefined): HarnessAdapter;
 	settings(): RecoverySettings;
 	account(): SessionAccount | undefined;
@@ -184,6 +185,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 							if (
 								!account ||
 								account.credentialKind !== "subscription" ||
+								account.agent !== (this.deps.agent ?? "claude") ||
 								(this.targetEmail && account.email !== this.targetEmail)
 							) {
 								this.unavailable = true;
@@ -227,7 +229,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 				if (
 					event.kind === "turn" &&
 					event.turn.status === "failed" &&
-					isClaudeQuotaFailure(event.turn.error?.message ?? "")
+					isAccountQuotaFailure(this.deps.agent ?? "claude", event.turn.error)
 				) {
 					const account = this.deps.account();
 					this.quotaFailure =
@@ -298,6 +300,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			!this.nativeId ||
 			!account ||
 			account.credentialKind !== "subscription" ||
+			account.agent !== (this.deps.agent ?? "claude") ||
 			this.activeBackground ||
 			this.attempts >= 4 ||
 			this.disposed
@@ -328,7 +331,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			let rows = await this.deps.quota();
 			const failed = rows.find(
 				(a) =>
-					a.agent === "claude" &&
+					a.agent === (this.deps.agent ?? "claude") &&
 					a.selection === this.selection &&
 					a.credentialKind === "subscription",
 			);
@@ -360,11 +363,12 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 							this.model,
 							this.blocked,
 							now,
+							this.deps.agent ?? "claude",
 						)
 					: undefined;
 				const own = rows.find(
 					(a) =>
-						a.agent === "claude" &&
+						a.agent === (this.deps.agent ?? "claude") &&
 						a.selection === this.selection &&
 						a.credentialKind === "subscription",
 				);
@@ -423,7 +427,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					...rows
 						.filter(
 							(a) =>
-								a.agent === "claude" &&
+								a.agent === (this.deps.agent ?? "claude") &&
 								a.credentialKind === "subscription" &&
 								(prefs.switchAccounts || a.selection === this.selection),
 						)
@@ -434,7 +438,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					...rows
 						.filter(
 							(a) =>
-								a.agent === "claude" &&
+								a.agent === (this.deps.agent ?? "claude") &&
 								a.credentialKind === "subscription" &&
 								(prefs.switchAccounts || a.selection === this.selection),
 						)

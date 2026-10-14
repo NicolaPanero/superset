@@ -171,6 +171,7 @@ export interface SubagentPaneData {
 }
 
 export type WorkspaceSearchKey =
+	| "importChat"
 	| "terminalId"
 	| "focusRequestId"
 	| "subagentTerminalId"

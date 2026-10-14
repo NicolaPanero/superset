@@ -16,7 +16,8 @@ export function forkLaunchChoices(
 		id: string,
 	) => { id?: string; presetId: string } | null = resolveHostAgentConfig,
 ): { agentConfigId?: string; accountSelection?: string | null } {
-	const expected = ACP_HARNESSES[harness]?.binary;
+	const entry = ACP_HARNESSES[harness];
+	const expected = entry?.presetId ?? entry?.binary;
 	if (!options.agentConfigId) {
 		if (options.accountSelection === undefined) return {};
 		const config = expected ? resolve(db, expected) : null;

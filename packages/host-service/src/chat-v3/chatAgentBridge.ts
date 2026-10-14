@@ -76,6 +76,7 @@ export function agentIdForHarness(
 	harness: string,
 ): AgentIdentityId | undefined {
 	const binary =
+		ACP_HARNESSES[harness]?.presetId ??
 		ACP_HARNESSES[harness]?.binary ??
 		(harness === "claude-code" ? "claude" : harness);
 	return (AGENT_IDENTITY_IDS as readonly string[]).includes(binary)

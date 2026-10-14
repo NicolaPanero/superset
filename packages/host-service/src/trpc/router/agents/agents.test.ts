@@ -1142,3 +1142,60 @@ describe("continuationTarget", () => {
 		).toBeNull();
 	});
 });
+
+describe("fork new workspace chat routing", () => {
+	it.each([
+		"grok",
+		"cursor-agent",
+	])("%s honors the chat surface before any terminal starts", (presetId) => {
+		const workspaceId = crypto.randomUUID();
+		const db = createTestDb();
+		const configId = crypto.randomUUID();
+		db.insert(schema.hostAgentConfigs)
+			.values({
+				id: configId,
+				presetId,
+				label: presetId,
+				command: presetId,
+				argsJson: "[]",
+				promptTransport: "argv",
+				promptArgsJson: "[]",
+				resumeArgsJson: "[]",
+				forkArgsJson: "[]",
+				envJson: "{}",
+				displayOrder: 0,
+			})
+			.run();
+		const input = {
+			workspaceId,
+			agent: configId,
+			surface: "chat" as const,
+			prompt: "first prompt",
+		};
+		const harness = presetId === "grok" ? "grok-acp" : "cursor-acp";
+		expect(chatLaunchTarget(db, input)?.harness).toBe(harness);
+		const createSession = mock((_input: unknown) => ({
+			sessionId: "chat-session",
+		}));
+		const prompt = mock((_input: unknown) => {});
+		const ctx = {
+			db,
+			runtime: {
+				chat: () => ({
+					live: { supports: () => true },
+					commands: { createSession, prompt },
+				}),
+			},
+		} as unknown as Parameters<typeof launchChatAgent>[0];
+		expect(launchChatAgent(ctx, input, "/fixture")?.chatSessionId).toBe(
+			"chat-session",
+		);
+		expect(createSession.mock.calls[0]?.[0]).toMatchObject({
+			harness,
+			agentConfigId: configId,
+		});
+		expect(prompt.mock.calls[0]?.[0]).toMatchObject({
+			content: [{ type: "text", text: "first prompt" }],
+		});
+	});
+});

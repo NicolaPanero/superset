@@ -388,7 +388,8 @@
 		"./fork-account-usage": {
 			"types": "./src/fork-account-usage.ts",
 			"default": "./src/fork-account-usage.ts"
-		}
+		},
+		"./fork-chat-recovery": "./src/fork-chat-recovery.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
