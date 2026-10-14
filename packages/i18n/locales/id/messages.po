@@ -8622,6 +8622,9 @@ msgstr "Gambar terlalu besar (maks 10MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Pratinjau gambar {0}. Zoom dengan plus dan minus, geser dengan tombol panah, tekan 0 untuk reset."
 
+msgid "Image too large to show"
+msgstr "Gambar terlalu besar untuk ditampilkan"
+
 msgid "Images"
 msgstr "Gambar"
 
@@ -11513,9 +11516,6 @@ msgstr "Mode offline / local-first"
 
 msgid "Older"
 msgstr "Lebih lama"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Pesan yang lebih lama dihilangkan agar singkat."
 
 msgid "On"
 msgstr "Aktif"

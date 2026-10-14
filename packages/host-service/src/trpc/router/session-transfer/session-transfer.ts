@@ -645,7 +645,11 @@ export const sessionTransferRouter = router({
 		.input(earlierInput)
 		.query(({ ctx, input }) => earlierSource(ctx, input) !== undefined),
 	earlierMessages: protectedProcedure
-		.input(earlierInput)
+		.input(
+			earlierInput.extend({
+				before: z.number().int().nonnegative().optional(),
+			}),
+		)
 		.query(async ({ ctx, input }) => {
 			const source = earlierSource(ctx, input);
 			if (!source) return null;
@@ -655,6 +659,7 @@ export const sessionTransferRouter = router({
 					sourceSessionId: source.sessionId,
 					sourceRoot: source.storeRoot,
 					sourceReference: source.reference,
+					...(input.before !== undefined ? { before: input.before } : {}),
 				})
 				.catch((error: Error) => {
 					throw new TRPCError({

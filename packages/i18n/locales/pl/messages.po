@@ -8622,6 +8622,9 @@ msgstr "Obraz jest za duży (maks. 10 MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Podgląd obrazu {0}. Powiększaj plusem i minusem, przesuwaj strzałkami, naciśnij 0, aby zresetować."
 
+msgid "Image too large to show"
+msgstr "Obraz jest za duży, aby go wyświetlić"
+
 msgid "Images"
 msgstr "Obrazy"
 
@@ -11513,9 +11516,6 @@ msgstr "Tryb offline / local-first"
 
 msgid "Older"
 msgstr "Starsze"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Starsze wiadomości pominięto, aby skrócić rozmowę."
 
 msgid "On"
 msgstr "Włączona"

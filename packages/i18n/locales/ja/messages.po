@@ -8622,6 +8622,9 @@ msgstr "画像が大きすぎます(最大10MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}の画像プレビュー。プラスとマイナスでズーム、矢印キーで移動、0でリセットします。"
 
+msgid "Image too large to show"
+msgstr "画像が大きすぎるため表示できません"
+
 msgid "Images"
 msgstr "画像"
 
@@ -11513,9 +11516,6 @@ msgstr "オフライン/ローカルファーストモード"
 
 msgid "Older"
 msgstr "それ以前"
-
-msgid "Older messages were left out to keep this short."
-msgstr "短くするため、古いメッセージは省略されました。"
 
 msgid "On"
 msgstr "オン"

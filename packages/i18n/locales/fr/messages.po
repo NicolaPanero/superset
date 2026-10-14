@@ -8622,6 +8622,9 @@ msgstr "L'image est trop volumineuse (10 Mo max.)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Aperçu de l'image {0}. Zoomez avec plus et moins, déplacez-vous avec les flèches, appuyez sur 0 pour réinitialiser."
 
+msgid "Image too large to show"
+msgstr "Image trop volumineuse pour être affichée"
+
 msgid "Images"
 msgstr "Images"
 
@@ -11513,9 +11516,6 @@ msgstr "Mode hors ligne / local d'abord"
 
 msgid "Older"
 msgstr "Plus ancien"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Les messages plus anciens ont été omis pour rester concis."
 
 msgid "On"
 msgstr "Activée"

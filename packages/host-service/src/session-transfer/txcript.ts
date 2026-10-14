@@ -55,7 +55,7 @@ export function runHelper(
 	args: string[],
 	input?: unknown,
 	signal?: AbortSignal,
-	options?: { cwd: string },
+	options?: { cwd?: string; maxOutputBytes?: number },
 ): Promise<unknown> {
 	return new Promise((resolve, reject) => {
 		let settled = false;
@@ -99,7 +99,7 @@ export function runHelper(
 		function capture(chunk: Buffer, channel: "stdout" | "stderr") {
 			if (settled) return;
 			outputBytes += chunk.length;
-			if (outputBytes > 1024 * 1024) {
+			if (outputBytes > (options?.maxOutputBytes ?? 1024 * 1024)) {
 				stop("helper_output_too_large");
 				return;
 			}
@@ -187,6 +187,9 @@ export function parseNativeTransferResult(
 	};
 }
 
+/** A history page carries images; the helper keeps each page near 6 MB. */
+const HISTORY_OUTPUT_BYTES = 16 * 1024 * 1024;
+
 const historyBlockSchema = z.discriminatedUnion("type", [
 	z.object({ type: z.literal("text"), text: z.string() }),
 	z.object({ type: z.literal("thinking"), text: z.string() }),
@@ -198,11 +201,19 @@ const historyBlockSchema = z.discriminatedUnion("type", [
 		output: z.string(),
 		isError: z.boolean(),
 	}),
+	z.object({
+		type: z.literal("image"),
+		mediaType: z.string(),
+		data: z.string().optional(),
+		omitted: z.boolean().optional(),
+	}),
 ]);
 const historySchema = engine.extend({
 	truncated: z.boolean(),
+	nextBefore: z.number().int().nonnegative().nullable().optional(),
 	messages: z.array(
 		z.object({
+			index: z.number().int().nonnegative().optional(),
 			role: z.enum(["user", "assistant"]),
 			timestampMs: z.number(),
 			blocks: z.array(historyBlockSchema),
@@ -249,12 +260,19 @@ export class TxcriptTransferProvider implements SessionTransferProvider {
 		sourceSessionId: string;
 		sourceRoot: string;
 		sourceReference: string;
+		before?: number;
 	}): Promise<EarlierHistory> {
 		return historySchema.parse(
-			await this.run(this.binary, ["history"], {
-				...input,
-				sourceAgent: TRANSFER_AGENTS[input.sourceAgent].harness,
-			}),
+			await this.run(
+				this.binary,
+				["history"],
+				{
+					...input,
+					sourceAgent: TRANSFER_AGENTS[input.sourceAgent].harness,
+				},
+				undefined,
+				{ maxOutputBytes: HISTORY_OUTPUT_BYTES },
+			),
 		);
 	}
 	async transfer(input: TransferInput): Promise<TransferResult> {

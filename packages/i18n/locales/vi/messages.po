@@ -8622,6 +8622,9 @@ msgstr "Ảnh quá lớn (tối đa 10MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Xem trước ảnh của {0}. Thu phóng bằng phím cộng và trừ, di chuyển bằng phím mũi tên, nhấn 0 để đặt lại."
 
+msgid "Image too large to show"
+msgstr "Hình ảnh quá lớn để hiển thị"
+
 msgid "Images"
 msgstr "Hình ảnh"
 
@@ -11513,9 +11516,6 @@ msgstr "Chế độ ngoại tuyến / ưu tiên cục bộ"
 
 msgid "Older"
 msgstr "Cũ hơn"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Các tin nhắn cũ hơn đã được lược bớt để gọn hơn."
 
 msgid "On"
 msgstr "Bật"

@@ -8622,6 +8622,9 @@ msgstr "Görsel çok büyük (en fazla 10MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0} görsel önizlemesi. Artı ve eksi ile yakınlaştırın, ok tuşlarıyla kaydırın, sıfırlamak için 0 tuşuna basın."
 
+msgid "Image too large to show"
+msgstr "Görüntü gösterilemeyecek kadar büyük"
+
 msgid "Images"
 msgstr "Görseller"
 
@@ -11513,9 +11516,6 @@ msgstr "Çevrimdışı / yerel öncelikli mod"
 
 msgid "Older"
 msgstr "Daha eski"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Kısa tutmak için daha eski mesajlar çıkarıldı."
 
 msgid "On"
 msgstr "Açık"

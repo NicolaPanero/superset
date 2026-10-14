@@ -58,3 +58,26 @@ test("leaves out markup an agent injects under the user role", () => {
 		),
 	).toEqual([[{ type: "text", text: "what is <b>this</b>?" }]]);
 });
+
+test("keeps a user turn's images with its text and gives each page's items their own ids", () => {
+	const { items } = earlierHistory([
+		{
+			index: 40,
+			role: "user",
+			timestampMs: 1,
+			blocks: [
+				{ type: "text", text: "look" },
+				{ type: "image", mediaType: "image/png", data: "UE5H" },
+				{ type: "image", mediaType: "image/png", omitted: true },
+			],
+		},
+	]);
+	expect([...items.keys()]).toEqual(["earlier-40-prompt"]);
+	expect(items.get("earlier-40-prompt")?.item).toMatchObject({
+		content: [{ type: "text", text: "look" }],
+		earlierImages: [
+			{ mediaType: "image/png", data: "UE5H" },
+			{ mediaType: "image/png", data: undefined },
+		],
+	});
+});

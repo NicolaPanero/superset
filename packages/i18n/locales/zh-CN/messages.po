@@ -8622,6 +8622,9 @@ msgstr "图片过大（最大10MB）"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}的图片预览。用加号和减号缩放，用方向键平移，按0重置。"
 
+msgid "Image too large to show"
+msgstr "图片过大，无法显示"
+
 msgid "Images"
 msgstr "图片"
 
@@ -11513,9 +11516,6 @@ msgstr "离线/本地优先模式"
 
 msgid "Older"
 msgstr "更早"
-
-msgid "Older messages were left out to keep this short."
-msgstr "为保持简短，较早的消息已省略。"
 
 msgid "On"
 msgstr "开启"

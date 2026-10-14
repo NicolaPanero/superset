@@ -337,6 +337,9 @@ export function Transcript({
 					{ "--scrollbar-gutter": `${scrollbarGutter}px` } as CSSProperties
 				}
 			>
+				<div className="sticky top-0 z-10 bg-background">
+					<ForkChatProvenance className={CHAT_COLUMN_CLASSNAME} />
+				</div>
 				{hasOlder && (
 					<div
 						className={cn(
@@ -354,36 +357,29 @@ export function Transcript({
 						)}
 					</div>
 				)}
-				{!hasOlder && earlier && (earlier.available || earlier.truncated) && (
+				{!hasOlder && earlier?.available && (
 					<div
 						className={cn(
 							CHAT_COLUMN_CLASSNAME,
 							"flex min-h-10 items-center justify-center pt-2",
 						)}
 					>
-						{earlier.available ? (
-							<Button
-								disabled={earlier.loading}
-								onClick={earlier.show}
-								size="sm"
-								variant="ghost"
-							>
-								{earlier.loading ? (
-									<Spinner className="size-4" />
-								) : earlier.failed ? (
-									<Trans>Couldn't load earlier messages. Retry</Trans>
-								) : (
-									<Trans>Show earlier messages</Trans>
-								)}
-							</Button>
-						) : (
-							<span className="text-muted-foreground text-xs">
-								<Trans>Older messages were left out to keep this short.</Trans>
-							</span>
-						)}
+						<Button
+							disabled={earlier.loading}
+							onClick={earlier.show}
+							size="sm"
+							variant="ghost"
+						>
+							{earlier.loading ? (
+								<Spinner className="size-4" />
+							) : earlier.failed ? (
+								<Trans>Couldn't load earlier messages. Retry</Trans>
+							) : (
+								<Trans>Show earlier messages</Trans>
+							)}
+						</Button>
 					</div>
 				)}
-				{!hasOlder && <ForkChatProvenance className={CHAT_COLUMN_CLASSNAME} />}
 				<MessageScroller.Content
 					className={cn(
 						CHAT_COLUMN_CLASSNAME,

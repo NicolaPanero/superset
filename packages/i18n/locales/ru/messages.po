@@ -8622,6 +8622,9 @@ msgstr "Изображение слишком большое (макс. 10 МБ)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Предпросмотр изображения {0}. Масштаб — плюс и минус, панорама — стрелками, 0 — сброс."
 
+msgid "Image too large to show"
+msgstr "Изображение слишком большое для показа"
+
 msgid "Images"
 msgstr "Изображения"
 
@@ -11513,9 +11516,6 @@ msgstr "Офлайн / local-first режим"
 
 msgid "Older"
 msgstr "Ранее"
-
-msgid "Older messages were left out to keep this short."
-msgstr "Более старые сообщения опущены для краткости."
 
 msgid "On"
 msgstr "Включено"

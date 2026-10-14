@@ -8622,6 +8622,9 @@ msgstr "이미지가 너무 큽니다 (최대 10MB)"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}의 이미지 미리 보기입니다. 플러스와 마이너스로 확대/축소하고, 화살표 키로 이동하며, 0을 누르면 초기화됩니다."
 
+msgid "Image too large to show"
+msgstr "이미지가 너무 커서 표시할 수 없습니다"
+
 msgid "Images"
 msgstr "이미지"
 
@@ -11513,9 +11516,6 @@ msgstr "오프라인 / 로컬 우선 모드"
 
 msgid "Older"
 msgstr "이전"
-
-msgid "Older messages were left out to keep this short."
-msgstr "간결하게 유지하려고 오래된 메시지는 생략했습니다."
 
 msgid "On"
 msgstr "켜짐"
