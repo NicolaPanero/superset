@@ -17,8 +17,19 @@ try {
         Start-Sleep -Milliseconds 200
     } while ($true)
     $argsForInstaller = "/S /currentuser --updated /D=" + $update.directory
-    $installation = Start-Process -FilePath $update.installer -ArgumentList $argsForInstaller -Wait -PassThru
-    if ($installation.ExitCode -ne 0) { throw "Installer exited with code $($installation.ExitCode)" }
+    # Windows PowerShell 5.1 Start-Process appends a space to ArgumentList.
+    # NSIS /D must be last and keep the exact remainder as the installation path.
+    $installerStart = New-Object Diagnostics.ProcessStartInfo
+    $installerStart.FileName = $update.installer
+    $installerStart.Arguments = $argsForInstaller
+    $installerStart.UseShellExecute = $false
+    $installation = [Diagnostics.Process]::Start($installerStart)
+    try {
+        $installation.WaitForExit()
+        if ($installation.ExitCode -ne 0) { throw "Installer exited with code $($installation.ExitCode)" }
+    } finally {
+        $installation.Dispose()
+    }
     Start-Process -FilePath $update.executable
 } catch {
     $_ | Out-String | Add-Content -LiteralPath $update.log

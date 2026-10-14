@@ -156,6 +156,10 @@ jobs:
       - name: Verify Windows process checks before building
         if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
         run: bun test scripts/fork/fork-native-probe.test.ts
+      - name: Verify Windows updater handoff before building
+        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
+        shell: powershell
+        run: ./scripts/fork/windows-updater-smoke.ps1 -Script "$env:GITHUB_WORKSPACE/scripts/fork/install-windows.ps1"
       - name: Install dependencies
         if: steps.package-cache.outputs.cache-hit != 'true'
         run: |

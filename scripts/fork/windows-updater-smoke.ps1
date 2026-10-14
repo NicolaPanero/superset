@@ -24,6 +24,8 @@ $exe = Join-Path $application "Superset++.exe"
 Copy-Item $setup $exe
 $env:FORK_UPDATE_ARGS = Join-Path $root "arguments.txt"
 $env:FORK_UPDATE_RESTART = Join-Path $root "restarted.txt"
+# The source preflight and packaged-resource check run on the same runner.
+Remove-Item -LiteralPath $env:FORK_UPDATE_ARGS,$env:FORK_UPDATE_RESTART -Force -ErrorAction SilentlyContinue
 $parentProcess = Start-Process powershell.exe -ArgumentList '-NoProfile -NonInteractive -Command "Start-Sleep -Seconds 60"' -PassThru -WindowStyle Hidden
 $manifest = Join-Path $work "update.json"
 $status = Join-Path $work "status"
