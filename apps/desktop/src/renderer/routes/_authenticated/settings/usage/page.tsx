@@ -29,10 +29,5 @@ function UsagePage() {
 				replace
 			/>
 		);
-	return (
-		<UsageView
-			workspaceId={workspaceId}
-			hostUrl={workspaceId ? workspaceHostUrl : activeHostUrl}
-		/>
-	);
+	return <UsageView hostUrl={workspaceId ? workspaceHostUrl : activeHostUrl} />;
 }

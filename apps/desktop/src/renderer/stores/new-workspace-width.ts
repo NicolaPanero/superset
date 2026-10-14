@@ -2,12 +2,11 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 // Widths describe the composer box, excluding the surrounding page padding.
-export const NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH = 800;
 export const NEW_WORKSPACE_SCREEN_MIN_WIDTH = 520;
-export const NEW_WORKSPACE_SCREEN_MAX_WIDTH = 1080;
+export const NEW_WORKSPACE_SCREEN_MAX_WIDTH = 4096;
 
 interface NewWorkspaceWidthState {
-	/** User-resized screen composer width; null = default. */
+	/** User-resized screen composer width; null = as wide as the screen allows. */
 	screenWidth: number | null;
 	setScreenWidth: (width: number | null) => void;
 }

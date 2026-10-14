@@ -77,7 +77,7 @@ function buildInitialDraft(): NewWorkspaceDraft {
 		selectedProjectId: null,
 		isSession: false,
 		hostId: null,
-		checkout: "worktree",
+		checkout: "local",
 		environmentId: null,
 		prompt: "",
 		baseBranch: null,
@@ -143,7 +143,6 @@ export const useNewWorkspaceDraftStore = create<NewWorkspaceDraftState>(
 			set((state) => ({
 				...buildInitialDraft(),
 				hostId: state.hostId,
-				checkout: state.checkout,
 				environmentId: state.environmentId,
 				resetKey: state.resetKey + 1,
 			})),

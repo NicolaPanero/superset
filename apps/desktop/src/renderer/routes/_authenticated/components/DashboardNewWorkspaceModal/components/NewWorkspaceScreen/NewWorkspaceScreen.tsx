@@ -74,7 +74,6 @@ import { useLocalHostService } from "renderer/routes/_authenticated/providers/Lo
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
-	NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
 	NEW_WORKSPACE_SCREEN_MAX_WIDTH,
 	NEW_WORKSPACE_SCREEN_MIN_WIDTH,
 	useNewWorkspaceWidthStore,
@@ -800,7 +799,7 @@ export function NewWorkspaceScreen({
 				<div
 					className="relative flex w-full flex-col"
 					style={{
-						maxWidth: composerWidth ?? NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
+						maxWidth: composerWidth ?? "none",
 					}}
 				>
 					<AnimatePresence initial={false}>
@@ -1145,7 +1144,7 @@ export function NewWorkspaceScreen({
 						)}
 					</div>
 					<SymmetricResizeHandles
-						currentWidth={composerWidth ?? NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH}
+						currentWidth={composerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH}
 						minWidth={NEW_WORKSPACE_SCREEN_MIN_WIDTH}
 						maxWidth={NEW_WORKSPACE_SCREEN_MAX_WIDTH}
 						onWidthChange={setLiveComposerWidth}
