@@ -19,6 +19,16 @@ export type EarlierMessage = {
 	blocks: EarlierBlock[];
 };
 
+const AGENT_MARKUP =
+	/^<(external_\w+|environment_context|system-reminder|turn_aborted|user_action|permissions[^>]*|collaboration_mode|local-command-\w+|command-\w+)(\s[^>]*)?>[\s\S]*<\/\1>$/;
+const IMAGE_TAG = /^<\/?image\b[^>]*>$/;
+
+/** Text an agent injects under the user role; its own app does not show it. */
+export function isAgentMarkup(text: string): boolean {
+	const trimmed = text.trim();
+	return AGENT_MARKUP.test(trimmed) || IMAGE_TAG.test(trimmed);
+}
+
 const TOOL_KINDS: Record<string, ToolKind> = {
 	Read: "read",
 	Write: "edit",
@@ -49,6 +59,12 @@ export function earlierHistory(
 			});
 		}
 		for (const block of message.blocks) {
+			if (
+				message.role === "user" &&
+				block.type === "text" &&
+				isAgentMarkup(block.text)
+			)
+				continue;
 			const id = `earlier-${sequence++}`;
 			const startedAtMs = message.timestampMs;
 			if (block.type === "text" && message.role === "user")

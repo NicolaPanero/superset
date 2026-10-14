@@ -35,3 +35,26 @@ test("groups what follows a user message into its turn and pairs tool output", (
 		status: "failed",
 	});
 });
+
+test("leaves out markup an agent injects under the user role", () => {
+	const { items } = earlierHistory([
+		{
+			role: "user",
+			timestampMs: 1,
+			blocks: [
+				{
+					type: "text",
+					text: '<external_codex_apps_open_page>{"page_id":null}</external_codex_apps_open_page>',
+				},
+				{ type: "text", text: '<image name=[Image #1] path="/tmp/a.png">' },
+				{ type: "text", text: "</image>" },
+				{ type: "text", text: "what is <b>this</b>?" },
+			],
+		},
+	]);
+	expect(
+		[...items.values()].map(
+			(entry) => (entry.item as { content: unknown[] }).content,
+		),
+	).toEqual([[{ type: "text", text: "what is <b>this</b>?" }]]);
+});
