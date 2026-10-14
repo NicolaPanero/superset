@@ -10,6 +10,7 @@ import { captureSessionAccount } from "../trpc/router/usage/session-account/sess
 import { ACP_HARNESSES } from "./acpCatalogue";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
+import { storeAgentImage } from "./agentImages";
 import type { ChatAgentBridge } from "./chatAgentBridge";
 import {
 	antigravityDistribution,
@@ -71,6 +72,7 @@ export function acpHarnessFactory(
 					wholeUserMessageReplay: entry.wholeUserMessageReplay,
 					cwd: options.cwd,
 					resolveAttachment,
+					storeImage: storeAgentImage,
 					...(entry.fullAccessModeId
 						? { defaultModeId: entry.fullAccessModeId }
 						: {}),

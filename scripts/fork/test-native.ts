@@ -41,7 +41,6 @@ try {
 		[
 			process.execPath,
 			"test",
-			"--isolate",
 			"--preload",
 			resolve(root, "packages/host-service/test/setup-env.ts"),
 			"--preload",

@@ -1,17 +1,6 @@
-# Keeps this fork in step with superset-sh/superset, daily:
-#
-# - fast-forwards main, an exact mirror of upstream main;
-# - merges upstream's newest desktop release (desktop-v* tag) into fork/main,
-#   which carries this fork's changes, then runs lint, check:i18n and the
-#   typecheck of the workspaces the fork changes before pushing.
-#
-# A failed run makes GitHub email the account that owns this workflow:
-# merge conflicts or failed checks push nothing and need a hand merge with
-# scripts/fork/sync-upstream.sh. The release workflow builds what this pushes.
-#
-# GitHub's built-in token may not change files under .github/workflows, which
-# upstream edits often; a FORK_SYNC_TOKEN secret (fine-grained token with
-# Contents and Workflows write access to this repository) lifts that limit.
+# Keeps main as an upstream mirror and proposes published stable desktop releases.
+# fork/main changes only after an owner-controlled PR merge; that push starts the build.
+# FORK_SYNC_TOKEN needs Contents, Workflows and Pull requests write access.
 
 name: Fork - sync with upstream
 
@@ -23,16 +12,17 @@ on:
 permissions:
   contents: write
   actions: write
+  pull-requests: write
 
 concurrency:
   group: fork-sync-upstream
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   sync:
     if: github.repository == 'NicolaPanero/superset'
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
       - name: Mirror upstream main
         env:
@@ -41,7 +31,27 @@ jobs:
           gh api --method POST "repos/$GITHUB_REPOSITORY/merge-upstream" \
             -f branch=main --jq '"\(.merge_type): \(.message)"'
 
+      - name: Check whether a published release needs merging
+        id: upstream
+        env:
+          GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
+        run: |
+          tag=$(gh api --paginate 'repos/superset-sh/superset/releases?per_page=100' --jq '.[] | select(.draft == false and .prerelease == false) | .tag_name' |
+            grep -E '^desktop-v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          test -n "$tag"
+          sha=$(gh api "repos/superset-sh/superset/commits/$tag" --jq .sha)
+          status=$(gh api "repos/$GITHUB_REPOSITORY/compare/$sha...fork/main" --jq .status 2>/dev/null || true)
+          merge=true
+          if [ "$status" = ahead ] || [ "$status" = identical ]; then merge=false; fi
+          head="fork/sync-$tag"
+          existing=$(gh pr list --repo "$GITHUB_REPOSITORY" --base fork/main --head "$head" --state all --json url --jq '.[0].url // empty')
+          if [ -n "$existing" ]; then merge=false; echo "Release already proposed: $existing"; fi
+          echo "Published upstream release: $tag; comparison: $status; prepare=$merge"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "merge=$merge" >> "$GITHUB_OUTPUT"
+
       - name: Check out fork/main
+        if: steps.upstream.outputs.merge == 'true'
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1 (Node 24)
         with:
           ref: fork/main
@@ -49,28 +59,32 @@ jobs:
           token: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
 
       - name: Setup Bun
+        if: steps.upstream.outputs.merge == 'true'
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version-file: .bun-version
 
+      - name: Cache downloaded dependencies
+        if: steps.upstream.outputs.merge == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ hashFiles('.bun-version', 'bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-bun-
       - name: Install gettext
+        if: steps.upstream.outputs.merge == 'true'
         run: sudo apt-get install -y --no-install-recommends gettext
 
-      - name: Merge the newest upstream release
+      - name: Propose the published release for owner review
+        if: steps.upstream.outputs.merge == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
+          UPSTREAM_TAG: ${{ steps.upstream.outputs.tag }}
         run: |
-          git config user.name "Nicola Panero"
-          git config user.email "panero.nicola01.np@gmail.com"
-          set +e
-          bash scripts/fork/sync-upstream.sh --checks --push 2>&1 | tee sync.log
-          status=${PIPESTATUS[0]}
-          set -e
-          case "$status" in
-            0) ;;
-            2) echo "::error title=Upstream release conflicts with fork/main::Nothing was pushed. Merge it by hand with scripts/fork/sync-upstream.sh." ;;
-            3) echo "::error title=Checks failed after the upstream merge::Nothing was pushed. Run scripts/fork/sync-upstream.sh --checks locally." ;;
-            *) echo "::error title=Upstream sync failed::See the log of this run." ;;
-          esac
-          exit "$status"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          bash scripts/fork/prepare-upstream-pr.sh "$UPSTREAM_TAG"
 
       # Upstream's own workflows would run here too (and fail without its
       # secrets), including ones added later, so keep them switched off; only

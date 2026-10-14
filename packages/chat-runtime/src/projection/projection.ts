@@ -6,9 +6,9 @@ import { chatSessionsLocal } from "../db";
 export type SessionRowInsert = typeof chatSessionsLocal.$inferInsert;
 
 export type SessionProjection = {
-	harnessSessionId?: string | null;
 	status: SessionStatus;
 	title: string | null;
+	harnessSessionId: string | null;
 	queuedCount: number;
 	updatedAt: number;
 };
@@ -55,6 +55,17 @@ export function resetSessionForEpoch(
 		.run();
 }
 
+export function setHarnessSessionId(
+	db: ChatDb,
+	sessionId: string,
+	harnessSessionId: string | null,
+): void {
+	db.update(chatSessionsLocal)
+		.set({ harnessSessionId })
+		.where(eq(chatSessionsLocal.sessionId, sessionId))
+		.run();
+}
+
 export function removeSessionRow(db: ChatDb, sessionId: string): void {
 	db.delete(chatSessionsLocal)
 		.where(eq(chatSessionsLocal.sessionId, sessionId))
@@ -94,16 +105,5 @@ export class ChatSessionStore {
 			.where(eq(chatSessionsLocal.scopeId, scopeId))
 			.orderBy(desc(chatSessionsLocal.updatedAt))
 			.all();
-	}
-
-	setHarnessSessionId(
-		sessionId: string,
-		harnessSessionId: string | null,
-	): void {
-		this.db
-			.update(chatSessionsLocal)
-			.set({ harnessSessionId, updatedAt: Date.now() })
-			.where(eq(chatSessionsLocal.sessionId, sessionId))
-			.run();
 	}
 }

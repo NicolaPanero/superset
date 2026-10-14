@@ -12,6 +12,14 @@ const suiteRoots = [
 	"packages/chat-runtime/src",
 ];
 const extra = [
+	"packages/chat-runtime/src/harness/acp/rpcClient/rpcClient.test.ts",
+	"packages/chat-runtime/src/harness/acp/imageBlocks/imageBlocks.test.ts",
+	"packages/chat-runtime/src/harness/acp/imageDimensions/imageDimensions.test.ts",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/hooks/useUndoableChatClose/utils/closedChatBatches/closedChatBatches.test.ts",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/utils/transcriptFind",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/hooks/useTranscriptFind/useTranscriptFind.test.tsx",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/components/ApprovalRow/components/QuestionForm/utils/questionPages/questionPages.test.ts",
+
 	"packages/chat/src/core/harness/harness.test.ts",
 	"packages/chat-runtime/src/harness/acp/acpAdapter.test.ts",
 	"packages/agent-setup/src/shell-wrappers.test.ts",
@@ -74,13 +82,20 @@ if (process.argv.includes("--list")) {
 			`${group.name}: ${group.files.length} files\n${group.files.sort().join("\n")}`,
 		);
 } else {
-	const catalogBuild = Bun.spawn([process.execPath, "run", "compile"], {
-		cwd: resolve(root, "packages/i18n"),
-		stdout: "inherit",
-		stderr: "inherit",
-	});
-	const catalogCode = await catalogBuild.exited;
-	if (catalogCode !== 0) process.exit(catalogCode);
+	if (process.argv.includes("--catalogs-ready")) {
+		if (!existsSync(resolve(root, "packages/i18n/locales/en/messages.ts")))
+			throw new Error(
+				"Compile catalogs before running tests with --catalogs-ready",
+			);
+	} else {
+		const catalogBuild = Bun.spawn([process.execPath, "run", "compile"], {
+			cwd: resolve(root, "packages/i18n"),
+			stdout: "inherit",
+			stderr: "inherit",
+		});
+		const catalogCode = await catalogBuild.exited;
+		if (catalogCode !== 0) process.exit(catalogCode);
+	}
 	for (const group of groups) {
 		if (!group.files.length)
 			throw new Error(`Empty fork test group: ${group.name}`);
@@ -89,9 +104,14 @@ if (process.argv.includes("--list")) {
 		const command = [
 			process.execPath,
 			"test",
-			"--isolate",
 			"--preload",
 			resolve(root, "packages/host-service/test/setup-env.ts"),
+			...(group.name === "desktop"
+				? [
+						"--preload",
+						resolve(root, "apps/desktop/src/renderer/test-utils/fork-ui.tsx"),
+					]
+				: []),
 			...group.files.sort().map((file) => relative(cwd, resolve(root, file))),
 		];
 		const child = Bun.spawn(command, {

@@ -11,6 +11,7 @@ import { chatJournal } from "../../db";
 import {
 	readSessionRow,
 	removeSessionRow,
+	setHarnessSessionId,
 	writeSessionProjection,
 } from "../../projection";
 import { readSince } from "../../replay";
@@ -45,11 +46,13 @@ type SessionCache = {
 	queuedItemIds: Set<string>;
 	status: SessionStatus;
 	title: string | null;
+	harnessSessionId: string | null;
 };
 
 type NextProjection = {
 	status: SessionStatus;
 	title: string | null;
+	harnessSessionId: string | null;
 	queuedItemIds: Set<string>;
 };
 
@@ -87,6 +90,7 @@ export class ChatJournal {
 		const listingChanged =
 			next.status !== cache.status ||
 			next.title !== cache.title ||
+			next.harnessSessionId !== cache.harnessSessionId ||
 			next.queuedItemIds.size !== cache.queuedItemIds.size;
 
 		this.db.transaction(() => {
@@ -107,6 +111,7 @@ export class ChatJournal {
 					? { harnessSessionId: parsed.session.harnessSessionId }
 					: {}),
 				title: next.title,
+				harnessSessionId: next.harnessSessionId,
 				queuedCount: next.queuedItemIds.size,
 				updatedAt: ts,
 			});
@@ -115,6 +120,7 @@ export class ChatJournal {
 		cache.lastSeq = seq;
 		cache.status = next.status;
 		cache.title = next.title;
+		cache.harnessSessionId = next.harnessSessionId;
 		cache.queuedItemIds = next.queuedItemIds;
 		if (listingChanged) this.notify(sessionId, cache.scopeId, ts);
 
@@ -172,6 +178,8 @@ export class ChatJournal {
 			return {
 				status: event.session.status,
 				title: event.session.title ?? cache.title,
+				harnessSessionId:
+					event.session.harnessSessionId ?? cache.harnessSessionId,
 				queuedItemIds: cache.queuedItemIds,
 			};
 		}
@@ -183,12 +191,18 @@ export class ChatJournal {
 			} else {
 				queuedItemIds.delete(event.item.id);
 			}
-			return { status: cache.status, title: cache.title, queuedItemIds };
+			return {
+				status: cache.status,
+				title: cache.title,
+				harnessSessionId: cache.harnessSessionId,
+				queuedItemIds,
+			};
 		}
 
 		return {
 			status: cache.status,
 			title: cache.title,
+			harnessSessionId: cache.harnessSessionId,
 			queuedItemIds: cache.queuedItemIds,
 		};
 	}
@@ -212,12 +226,14 @@ export class ChatJournal {
 		let lastSeq = 0;
 		let status = row.status;
 		let title = row.title;
+		let harnessSessionId = row.harnessSessionId;
 		for (const envelope of replay.envelopes) {
 			lastSeq = envelope.cursor.seq;
 			const event = envelope.event;
 			if (event.type === "session") {
 				status = event.session.status;
 				title = event.session.title ?? title;
+				harnessSessionId = event.session.harnessSessionId ?? harnessSessionId;
 				continue;
 			}
 			if (event.type !== "item" || event.item.kind !== "user_message") continue;
@@ -228,6 +244,11 @@ export class ChatJournal {
 			}
 		}
 
+		// Rows written before the projection kept this id have it only in the journal.
+		if (harnessSessionId !== row.harnessSessionId) {
+			setHarnessSessionId(this.db, sessionId, harnessSessionId);
+		}
+
 		const cache: SessionCache = {
 			scopeId: row.scopeId,
 			epoch,
@@ -235,6 +256,7 @@ export class ChatJournal {
 			queuedItemIds,
 			status,
 			title,
+			harnessSessionId,
 		};
 		this.sessions.set(sessionId, cache);
 		return cache;

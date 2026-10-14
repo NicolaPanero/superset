@@ -17,12 +17,18 @@ Declaration emit for the router's type graph — the four packages the router ty
 | File | Change |
 |---|---|
 | `packages/host-service/tsconfig.types.json` | new — `emitDeclarationOnly` into `dist-types/` |
-| `packages/host-service/package.json` | `build:types` script; **types-only `./router` export** → `./dist-types/trpc/router/router.d.ts` |
+| `packages/host-service/package.json` | `build:types` script; **types-only `./router` export** → `./dist-types/host-service/src/trpc/router/router.d.ts` |
 | `packages/port-scanner/{tsconfig.types.json,package.json}` | same, **plus `exports.*.types` repointed from `src/*.ts` to `dist-types/*.d.ts`** (affects all consumers, not just mobile) |
 | `packages/pty-daemon/{tsconfig.types.json,package.json}` | same as port-scanner |
 | `packages/workspace-fs/{tsconfig.types.json,package.json}` | same as port-scanner |
 | `turbo.jsonc` | `build:types` task (`outputs: dist-types/**`); `typecheck.dependsOn` gains `^build:types` |
 | `.gitignore` | `dist-types` (artifacts are generated, never committed) |
+
+The host declaration project uses `packages/` as its source root because the
+chat runtime exports TypeScript source that the host imports. Declarations stay
+inside `host-service/dist-types/`, including the referenced sibling source graph;
+the router export follows the resulting nested path. Test files are excluded
+from declaration output and remain covered by normal typechecking and tests.
 
 Nameability shims — declaration emit can't reference unexported types (TS4023/TS2742),
 so these were exported solely for the emit:

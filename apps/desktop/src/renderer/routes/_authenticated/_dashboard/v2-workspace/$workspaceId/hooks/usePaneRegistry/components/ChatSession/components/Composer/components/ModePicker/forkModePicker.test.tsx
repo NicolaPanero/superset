@@ -23,7 +23,7 @@ test("Cursor's menu offers Full access alongside Agent and Ask", async () => {
 		code: "ArrowDown",
 	});
 	await flush();
-	const full = view.getByRole("menuitem", { name: "Full access" });
+	const full = view.getByRole("menuitem", { name: /Full access/ });
 	fireEvent.focus(full);
 	await flush();
 	expect(

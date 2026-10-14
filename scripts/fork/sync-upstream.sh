@@ -3,7 +3,7 @@
 #
 #   scripts/fork/sync-upstream.sh [--checks] [--push] [REF]
 #
-# REF       what to merge; default: the newest desktop release tag (desktop-v*).
+# REF       what to merge; default: the newest published stable desktop release (desktop-v*).
 #           Pass upstream/main to follow upstream's development branch instead.
 # --checks  install dependencies, then run lint, check:i18n and typecheck of
 #           the workspaces the fork changes
@@ -41,14 +41,17 @@ fi
 git remote get-url upstream >/dev/null 2>&1 || git remote add upstream "$UPSTREAM_URL"
 git fetch --quiet upstream main
 if [[ -z "$ref" ]]; then
-	ref="$(git ls-remote --tags --refs upstream 'desktop-v*' |
-		sed 's#.*refs/tags/##' | grep -E '^desktop-v[0-9]+\.[0-9]+\.[0-9]+$' |
-		sort -V | tail -n 1)"
+	ref="$(gh api --paginate 'repos/superset-sh/superset/releases?per_page=100' \
+        --jq '.[] | select(.draft == false and .prerelease == false) | .tag_name' |
+        grep -E '^desktop-v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
 	[[ -n "$ref" ]] || {
-		echo "no desktop release tag found upstream" >&2
+		echo "no published stable desktop release found upstream" >&2
 		exit 1
 	}
-	git fetch --quiet --no-tags upstream "refs/tags/$ref:refs/tags/$ref"
+fi
+# An explicit desktop tag must be fetched too (the workflow chooses it before checkout).
+if [[ "$ref" =~ ^desktop-v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+ git fetch --quiet --no-tags upstream "refs/tags/$ref:refs/tags/$ref"
 fi
 echo "upstream ref: $ref"
 
@@ -71,6 +74,8 @@ if ! git merge --no-edit --no-ff "$ref" >/dev/null; then
 			rm "$file.ours" "$file.theirs"
 			git add "$file"
 		done <<<"$conflicts"
+        # Only catalog conflicts need dependencies in the sync job; use the merged lockfile.
+        bun install --frozen --ignore-scripts >/dev/null
 		bun run check:i18n >/dev/null
 		git add packages/i18n/locales
 		git commit --no-edit >/dev/null
@@ -85,13 +90,7 @@ fi
 
 if $run_checks; then
 	bun install --frozen --ignore-scripts
-	# Only the workspaces the fork changes: a failure elsewhere is upstream's.
-	if ! { bun run lint &&
-		bunx turbo typecheck --filter=@superset/desktop \
-			--filter=@superset/host-service --filter=@superset/chat-runtime \
-			--filter=@superset/chat --filter=@superset/agent-setup &&
-		bun run check:i18n &&
-		git diff --exit-code --stat HEAD -- packages/i18n/locales; }; then
+	if ! bash scripts/fork/validate.sh; then
 		echo "checks failed after merging $ref" >&2
 		exit 3
 	fi

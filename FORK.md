@@ -1,7 +1,7 @@
 # Superset++
 
 Fork personale di [superset-sh/superset](https://github.com/superset-sh/superset),
-basato sulla release stabile desktop **1.37.0**. Usa i servizi ufficiali per
+basato sul tag desktop **1.38.0**. Usa i servizi ufficiali per
 login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 [Installazione](#installazione-e-compatibilità-dei-dati) ·
@@ -203,7 +203,7 @@ Nelle cancellazioni multiple la preferenza si applica solo ai branch idonei.
 
 ## Cosa è ufficiale e cosa mantiene il fork
 
-| Funzione | Base ufficiale 1.37 | Estensione Superset++ |
+| Funzione | Base ufficiale 1.38 | Estensione Superset++ |
 |---|---|---|
 | Chat ACP e CLI/CHAT | Pannelli, protocolli, ripresa e passaggio tra viste | Account/configurazione persistenti e ponte Cursor CLI/ACP |
 | Ripresa e fork dello stesso agente | Azioni ufficiali | Conservazione dei profili nelle operazioni locali |
@@ -336,16 +336,39 @@ motore fissato localmente: `bun scripts/build-txcript-transfer.ts`.
 Zed è stato dismesso. La pubblicazione di txcript non cambia il motore usato
 da Superset++: serve aggiornare esplicitamente il pin. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
 
-`fork-sync-upstream.yml` segue quotidianamente le release stabili e verifica
-lint, traduzioni e tipi prima del push. `fork-release.yml` parte anche a ogni push su `fork/main` e costruisce solo
-commit non ancora pubblicati, usando il motore fissato; controlla traduzioni,
+`fork-sync-upstream.yml` segue quotidianamente le release stabili pubblicate.
+Mantiene `main` come specchio ufficiale e propone ogni nuova release con una
+pull request da `fork/sync-desktop-v…` verso `fork/main`. Non aggiorna direttamente
+`fork/main` e non abilita il merge automatico. I controlli richiesti vengono
+eseguiti sulla pull request; il merge resta una tua decisione.
+I tag preparati prima della pubblicazione di una release non vengono proposti. `fork-release.yml` parte
+su ogni push a `fork/main` (anche se contiene più commit), oppure su avvio manuale, e costruisce solo
+commit non ancora pubblicati, usando il motore fissato. Un nuovo push annulla la
+build precedente: resta da completare soltanto quella dell’ultima revisione.
+Un minuto di attesa prima dei lavori costosi raggruppa i push ravvicinati.
+Le pull request usano il workflow di regressione; i push al branch usano la
+validazione della release, evitando due esecuzioni degli stessi test.
+I controlli completi della release possono essere riusati in un nuovo tentativo
+solo per il medesimo commit già validato. Download e helper fissati sono in cache;
+le prove native delle due piattaforme restano obbligatorie prima di memorizzare
+un pacchetto verificato. Se una piattaforma fallisce, un nuovo tentativo dello
+stesso commit può riusare l’archivio già verificato dell’altra piattaforma.
+L’opzione manuale `force` permette una ricompilazione completa.
+La conclusione del sync non avvia una build: solo il merge della proposta su
+`fork/main` avvia il workflow di release. Prima della pubblicazione viene verificato che il commit
+sia ancora l’ultimo di `fork/main`. Il workflow controlla traduzioni,
 tipi e test del fork prima di avviare le build Mac e Windows. Ogni piattaforma
 esegue le 20 conversioni native; Windows verifica anche l’installer NSIS, i moduli
 nativi nel runtime Electron installato e lo script di aggiornamento. La release
 viene pubblicata solo quando entrambe le piattaforme hanno superato i controlli,
-con tutti e due i download: una build fallita lascia disponibile la release precedente. Un conflitto di
-sincronizzazione richiede risoluzione manuale e non pubblica una build.
-Per sincronizzare localmente: `bun run fork:sync` su `fork/main`.
+con tutti e due i download: una build fallita lascia disponibile la release precedente.
+Se il merge upstream presenta conflitti, il sync apre una pull request in bozza
+che punta al commit ufficiale: va riconciliata con `fork/main` prima di completare
+il merge. Una proposta già aperta o chiusa non viene ricreata al controllo successivo.
+Se è fallita soltanto l’apertura della PR, il sync recupera il branch già creato
+senza sovrascrivere le correzioni manuali. `FORK_SYNC_TOKEN` deve consentire
+Contents, Workflows e Pull requests in scrittura.
+Per sincronizzare localmente: `bun run fork:sync` su un branch di lavoro.
 
 ## Riduzione dei conflitti
 

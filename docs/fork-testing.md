@@ -10,7 +10,8 @@ bun run test:fork
 
 Il comando compila prima i cataloghi Lingui, anche su un checkout pulito, poi
 esegue separatamente i test desktop, unitari/runtime e di integrazione host.
-Usa `--isolate`, il preload che assegna una cartella Superset temporanea e
+Ogni gruppo usa un solo processo, un DOM condiviso ripulito tra i test,
+il preload che assegna una cartella Superset temporanea e
 fixture senza credenziali reali. Al primo fallimento termina con un errore.
 
 Per vedere i file selezionati:
@@ -73,9 +74,17 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
 
 ## CI e release
 
-- **Fork - regression tests** esegue `test:fork` su push di `fork/main`, pull
-  request verso quel branch e avvio manuale. Richiede solo lettura del repository.
-- **Fork - build release** esegue lo stesso comando prima del packaging e la
+- **Fork - regression tests** esegue gli stessi controlli di `scripts/fork/validate.sh` sulle pull
+  request verso `fork/main` e avvio manuale. Richiede solo lettura del repository.
+- **Fork - build release** attende un minuto dopo un push, così quelli ravvicinati
+  vengono raggruppati prima di occupare i runner Mac/Windows. Annulla le esecuzioni superate da un nuovo push e
+  impedisce la pubblicazione di un commit che non è più l’ultimo di `fork/main`.
+  I test del workflow verificano entrambi i casi senza chiamare GitHub.
+  Controlli e pacchetti già verificati possono essere riusati sullo stesso
+  commit; una modifica al codice invalida la cache. La verifica del runtime
+  Windows legge il codice d’uscita tramite Bun, evitando il valore vuoto
+  restituito da `Start-Process` con output reindirizzato.
+  Esegue lo stesso comando prima del packaging e la
   suite nativa dopo il download del helper verificato. Un errore ferma la build.
 - La build Windows installa e reinstalla il pacchetto in una cartella temporanea
   con spazi e Unicode, verifica SQLite, PTY, watcher e ast-grep nel runtime
@@ -85,7 +94,11 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
   senza profili reali. Un’ulteriore prova esegue l’aggiunta degli account Claude e
   Codex da CMD e PowerShell con CLI simulati: verifica la cartella isolata, i
   marker solo dopo successo e la chiave API su stdin senza login reali. Le due build devono riuscire prima della pubblicazione.
-- La sincronizzazione upstream conserva attivo anche il workflow di regressione.
+- **Fork - sync with upstream** propone solo release stabili pubblicate tramite
+  pull request. Se trova conflitti apre una bozza; non aggiorna `fork/main` e
+  non avvia build. Le prove coprono proposta riuscita, conflitti, rilancio senza
+  duplicati, recupero senza sovrascrivere correzioni manuali e release già integrata.
+  Il token del sync deve avere permessi di scrittura anche sulle pull request.
 
 Le suite non richiedono login, abbonamenti o richieste al modello. I test dei
 reset usano orologi o attese simulate; le cancellazioni interessano solo fixture.

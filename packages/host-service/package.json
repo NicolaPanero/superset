@@ -1,6 +1,6 @@
 {
 	"name": "@superset/host-service",
-	"version": "1.37.0",
+	"version": "1.38.0",
 	"private": true,
 	"type": "module",
 	"exports": {
@@ -53,7 +53,7 @@
 			"default": "./src/trpc/router/attachments/index.ts"
 		},
 		"./router": {
-			"types": "./dist-types/trpc/router/router.d.ts"
+			"types": "./dist-types/host-service/src/trpc/router/router.d.ts"
 		},
 		"./package.json": "./package.json",
 		"./fork-branch-ownership": {
@@ -100,6 +100,7 @@
 		"@xterm/headless": "6.1.0-beta.302",
 		"better-sqlite3": "12.11.1",
 		"drizzle-orm": "0.45.2",
+		"entities": "7.0.1",
 		"hono": "4.13.7",
 		"mime-types": "3.0.2",
 		"node-pty": "1.2.0-beta.14",

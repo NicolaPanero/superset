@@ -16,19 +16,11 @@ try {
         Write-Host "Silent installation finished"
     }
     $executable = Join-Path $installation "Superset++.exe"
-    $probeOutput = Join-Path $env:RUNNER_TEMP "windows-native-stdout.log"
-    $probeError = Join-Path $env:RUNNER_TEMP "windows-native-stderr.log"
-    $probeArguments = '"' + (Join-Path $PSScriptRoot "windows-native-probe.cjs") + '" "' + $installation + '"'
     Write-Host "Checking installed Electron native modules"
-    $probe = Start-Process -FilePath $executable -ArgumentList $probeArguments -PassThru -RedirectStandardOutput $probeOutput -RedirectStandardError $probeError
-    if (-not $probe.WaitForExit(60000)) {
-        Get-Content $probeOutput,$probeError -Encoding UTF8 -ErrorAction SilentlyContinue
-        & taskkill.exe /PID $probe.Id /T /F
-        throw "Installed native runtime probe did not finish within one minute"
-    }
-    $probe.WaitForExit()
-    Get-Content $probeOutput,$probeError -Encoding UTF8
-    if ($probe.ExitCode -ne 0) { throw "Installed native runtime failed" }
+    # Read the exit code through Bun's child process API. Start-Process with
+    # redirected output can return a null ExitCode even after a successful exit.
+    & bun (Join-Path $PSScriptRoot "windows-native-smoke.ts") $executable (Join-Path $PSScriptRoot "windows-native-probe.cjs") $installation
+    if ($LASTEXITCODE -ne 0) { throw "Installed native runtime failed with exit code $LASTEXITCODE" }
     Write-Host "Checking installed conversion helpers and bundled CLI"
     $bin = Join-Path $installation "resources/resources/bin"
     & (Join-Path $bin "txcript-transfer.exe") capabilities
