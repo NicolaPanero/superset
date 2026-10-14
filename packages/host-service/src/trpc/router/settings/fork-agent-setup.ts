@@ -82,12 +82,14 @@ export function createForkAgentSetupRouter(inspect = inspectAgentSetup) {
 						...config.env,
 					})),
 					revision: setupRevision(row),
+					cursorApiKeySupported: config.presetId === "cursor-agent",
 				};
 			}),
 		configure: protectedProcedure
 			.input(
 				id.extend({
 					expectedCommand: z.string().min(1),
+					cursorApiKey: z.string().trim().min(1).max(8192).optional(),
 					expectedRevision: z.string().regex(/^[a-f0-9]{64}$/),
 					api: z
 						.object({
@@ -109,6 +111,11 @@ export function createForkAgentSetupRouter(inspect = inspectAgentSetup) {
 						code: "CONFLICT",
 						message: "agent_setup_changed",
 					});
+				if (input.cursorApiKey && config.presetId !== "cursor-agent")
+					throw new TRPCError({
+						code: "BAD_REQUEST",
+						message: "agent_setup_unavailable",
+					});
 				if (input.api && config.presetId !== "grok")
 					throw new TRPCError({
 						code: "BAD_REQUEST",
@@ -129,12 +136,17 @@ export function createForkAgentSetupRouter(inspect = inspectAgentSetup) {
 						code: "PRECONDITION_FAILED",
 						message: "agent_setup_model_credentials",
 					});
-				const patch = recommendedSetupPatch(
-					config.presetId,
-					probe.command,
-					config.env,
-					input.api,
-				);
+				const patch = input.cursorApiKey
+					? {
+							...config,
+							env: { ...config.env, CURSOR_API_KEY: input.cursorApiKey },
+						}
+					: recommendedSetupPatch(
+							config.presetId,
+							probe.command,
+							config.env,
+							input.api,
+						);
 				ctx.db.transaction((tx) => {
 					const current = tx
 						.select()

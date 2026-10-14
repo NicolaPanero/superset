@@ -13,7 +13,7 @@ const AGENT_ORDER: QuotaAgent[] = [
 	"opencode",
 ];
 
-export function isManagedAgent(agent: QuotaAgent): agent is ManagedAgent {
+export function isManagedAgent(agent: string): agent is ManagedAgent {
 	return agent === "claude" || agent === "codex";
 }
 

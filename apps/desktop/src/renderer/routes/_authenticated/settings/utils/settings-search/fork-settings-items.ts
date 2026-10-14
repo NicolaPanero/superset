@@ -19,13 +19,17 @@ export const FORK_SETTINGS_ITEMS: SettingsItem[] = [
 		section: "localAgentAccounts",
 		title: "Local agent accounts",
 		description:
-			"Choose local CLI accounts, rename profiles and view provider quotas",
+			"Manage local agent logins, API keys, profiles and provider quotas",
 		keywords: [
 			"accounts",
 			"claude",
 			"codex",
 			"local",
 			"quota",
+			"cursor",
+			"grok",
+			"opencode",
+			"api key",
 			"profile",
 			"login",
 			"rename",

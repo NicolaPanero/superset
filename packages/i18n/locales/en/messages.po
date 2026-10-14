@@ -2399,6 +2399,9 @@ msgstr "API keys"
 msgid "API Keys"
 msgstr "API Keys"
 
+msgid "API keys are not validated with a paid request."
+msgstr "API keys are not validated with a paid request."
+
 msgid "API-equivalent"
 msgstr "API-equivalent"
 
@@ -3672,9 +3675,6 @@ msgstr "Choose a project from GitHub issues before opening an issue."
 msgid "Choose a section."
 msgstr "Choose a section."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-
 msgid "Choose agent"
 msgstr "Choose agent"
 
@@ -3812,9 +3812,6 @@ msgstr "CLI default"
 
 msgid "CLI docs"
 msgstr "CLI docs"
-
-msgid "CLI installed"
-msgstr "CLI installed"
 
 msgid "CLI login"
 msgstr "CLI login"
@@ -5642,9 +5639,6 @@ msgstr "Current tab"
 
 msgid "Cursor"
 msgstr "Cursor"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
 
 msgid "Cursor blinking"
 msgstr "Cursor blinking"
@@ -9927,6 +9921,9 @@ msgstr "Manage integrations in the web app to connect and configure services."
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Manage logins, API keys and quota in Local agent accounts."
+
 msgid "Manage members"
 msgstr "Manage members"
 
@@ -13273,6 +13270,9 @@ msgstr "Quit the source browser first so its logins are saved to disk. You'll be
 msgid "Quota exhausted"
 msgstr "Quota exhausted"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Quota is shown when the provider supports it."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Reading usage…"
 
 msgid "Reading your local usage…"
 msgstr "Reading your local usage…"
-
-msgid "Ready"
-msgstr "Ready"
 
 msgid "Ready for review"
 msgstr "Ready for review"
@@ -15542,6 +15539,9 @@ msgstr "Sign in with GitHub"
 
 msgid "Sign in with Google"
 msgstr "Sign in with Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Sign in, set up API keys and check quota for your local agents."
 
 msgid "Sign out"
 msgstr "Sign out"

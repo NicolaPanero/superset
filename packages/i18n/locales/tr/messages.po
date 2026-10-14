@@ -2399,6 +2399,9 @@ msgstr "API anahtarları"
 msgid "API Keys"
 msgstr "API anahtarları"
 
+msgid "API keys are not validated with a paid request."
+msgstr "API anahtarları ücretli isteklerle doğrulanmaz."
+
 msgid "API-equivalent"
 msgstr "API eşdeğeri"
 
@@ -3672,9 +3675,6 @@ msgstr "Bir issue açmadan önce GitHub issue'ları bölümünden bir proje seç
 msgid "Choose a section."
 msgstr "Bir bölüm seçin."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Hesapları elle seçin. Yapılandırma veya başlatma sırasında başka bir hesap seçilmedikçe yeni ajanlar varsayılan hesabı kullanır."
-
 msgid "Choose agent"
 msgstr "Ajan seçin"
 
@@ -3812,9 +3812,6 @@ msgstr "CLI varsayılanı"
 
 msgid "CLI docs"
 msgstr "CLI belgeleri"
-
-msgid "CLI installed"
-msgstr "CLI yüklü"
 
 msgid "CLI login"
 msgstr "CLI oturumu"
@@ -5642,9 +5639,6 @@ msgstr "Geçerli sekme"
 
 msgid "Cursor"
 msgstr "İmleç"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent, Grok Build ve OpenCode hesapları kendi uygulamalarında yönetilir."
 
 msgid "Cursor blinking"
 msgstr "İmleç yanıp sönmesi"
@@ -9927,6 +9921,9 @@ msgstr "Hizmetleri bağlamak ve yapılandırmak için entegrasyonları web uygul
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "MCP sunucusu erişimi ve Claude Desktop veya Claude Code gibi harici entegrasyonlar için anahtarları yönetin. <0>Daha fazla bilgi<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Oturum açma bilgilerini, API anahtarlarını ve kotaları Yerel ajan hesapları bölümünde yönetin."
+
 msgid "Manage members"
 msgstr "Üyeleri yönet"
 
@@ -13273,6 +13270,9 @@ msgstr "Oturum bilgilerinin diske kaydedilmesi için önce kaynak tarayıcıdan 
 msgid "Quota exhausted"
 msgstr "Kota tükendi"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Sağlayıcı destekliyorsa kota gösterilir."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Kullanım okunuyor…"
 
 msgid "Reading your local usage…"
 msgstr "Yerel kullanımınız okunuyor…"
-
-msgid "Ready"
-msgstr "Hazır"
 
 msgid "Ready for review"
 msgstr "İncelemeye hazır"
@@ -15542,6 +15539,9 @@ msgstr "GitHub ile oturum aç"
 
 msgid "Sign in with Google"
 msgstr "Google ile oturum aç"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Oturum açın, API anahtarlarını ayarlayın ve yerel ajanlarınızın kotalarını kontrol edin."
 
 msgid "Sign out"
 msgstr "Oturumu kapat"

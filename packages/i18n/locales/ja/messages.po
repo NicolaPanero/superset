@@ -2399,6 +2399,9 @@ msgstr "APIキー"
 msgid "API Keys"
 msgstr "APIキー"
 
+msgid "API keys are not validated with a paid request."
+msgstr "API キーは有料リクエストでは検証されません。"
+
 msgid "API-equivalent"
 msgstr "API換算"
 
@@ -3672,9 +3675,6 @@ msgstr "issueを開く前に、GitHub issueでプロジェクトを選択して�
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "アカウントを手動で選択します。設定または起動時に別のアカウントを選ばない限り、新しいエージェントはデフォルトのアカウントを使用します。"
-
 msgid "Choose agent"
 msgstr "エージェントを選択"
 
@@ -3812,9 +3812,6 @@ msgstr "CLIのデフォルト"
 
 msgid "CLI docs"
 msgstr "CLIドキュメント"
-
-msgid "CLI installed"
-msgstr "CLI がインストールされています"
 
 msgid "CLI login"
 msgstr "CLI のログイン"
@@ -5642,9 +5639,6 @@ msgstr "現在のタブ"
 
 msgid "Cursor"
 msgstr "カーソル"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent、Grok Build、OpenCodeのアカウントは各アプリで管理されます。"
 
 msgid "Cursor blinking"
 msgstr "カーソルの点滅"
@@ -9927,6 +9921,9 @@ msgstr "Webアプリで連携を管理し、サービスを接続・設定しま
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "MCPサーバーアクセスやClaude Desktop・Claude Codeなどの外部連携用のキーを管理します。<0>詳細<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "ローカルエージェントアカウントでログイン、API キー、利用枠を管理します。"
+
 msgid "Manage members"
 msgstr "メンバーを管理"
 
@@ -13273,6 +13270,9 @@ msgstr "ログイン情報をディスクに保存させるため、先に元の
 msgid "Quota exhausted"
 msgstr "使用枠を使い切りました"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "プロバイダーが対応している場合に利用枠を表示します。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "使用量を取得中…"
 
 msgid "Reading your local usage…"
 msgstr "ローカルの使用量を読み取り中…"
-
-msgid "Ready"
-msgstr "準備完了"
 
 msgid "Ready for review"
 msgstr "レビュー可能"
@@ -15542,6 +15539,9 @@ msgstr "GitHubでサインイン"
 
 msgid "Sign in with Google"
 msgstr "Googleでサインイン"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "ローカルエージェントにログインし、API キーを設定して利用枠を確認します。"
 
 msgid "Sign out"
 msgstr "サインアウト"

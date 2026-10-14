@@ -22,6 +22,7 @@ export function ForkAgentSetup({
 	onAdvanced,
 	useSetup = useForkAgentSetup,
 	Terminal = CommandTerminal,
+	allowLocalLogin = true,
 }: {
 	hostUrl: string | null;
 	config: HostAgentConfig;
@@ -29,6 +30,7 @@ export function ForkAgentSetup({
 	onAdvanced: () => void;
 	useSetup?: typeof useForkAgentSetup;
 	Terminal?: typeof CommandTerminal;
+	allowLocalLogin?: boolean;
 }) {
 	const { t } = useLingui();
 	const fieldId = useId();
@@ -44,9 +46,7 @@ export function ForkAgentSetup({
 	const isGrok = config.presetId === "grok";
 	const busy = setup.apply.isPending || setup.isFetching;
 	const configured =
-		!!data?.command &&
-		data.chat &&
-		(data.auth === "api" || data.auth === "login");
+		!!data?.command && (data.auth === "api" || data.auth === "login");
 	const status = !hostUrl
 		? t({ message: "Host offline" })
 		: setup.isPending
@@ -55,15 +55,13 @@ export function ForkAgentSetup({
 				? t({ message: "Guided setup unavailable" })
 				: !data?.command
 					? t({ message: "CLI not found" })
-					: !data.chat
-						? t({ message: "CLI installed" })
-						: data.auth === "missing"
-							? t({ message: "Sign in to continue" })
-							: data.auth === "unknown"
-								? t({ message: "Check sign-in" })
-								: data.auth === "api"
-									? t({ message: "API key configured" })
-									: t({ message: "Ready" });
+					: data.auth === "missing"
+						? t({ message: "Sign in to continue" })
+						: data.auth === "unknown"
+							? t({ message: "Check sign-in" })
+							: data.auth === "api"
+								? t({ message: "API key configured" })
+								: t({ message: "Connected via subscription" });
 	const begin = (nextCommand: string) => {
 		setFailed(false);
 		setSaved(false);
@@ -137,7 +135,7 @@ export function ForkAgentSetup({
 							</p>
 							<Button
 								size="sm"
-								disabled={busy || !hostUrl}
+								disabled={busy || !hostUrl || !allowLocalLogin}
 								onClick={() => begin(installer)}
 							>
 								<Trans>Install CLI</Trans>
@@ -157,7 +155,7 @@ export function ForkAgentSetup({
 								<Button
 									size="sm"
 									variant="outline"
-									disabled={busy}
+									disabled={busy || !allowLocalLogin}
 									onClick={() =>
 										begin(
 											`${config.env.GROK_HOME && isGrok ? `GROK_HOME=${quoteShellToken(config.env.GROK_HOME)} ` : ""}${quoteShellToken(data.command as string)} login`,
@@ -166,7 +164,7 @@ export function ForkAgentSetup({
 								>
 									<Trans>Sign in</Trans>
 								</Button>
-								{isGrok && (
+								{(isGrok || data.cursorApiKeySupported) && (
 									<Button
 										size="sm"
 										variant="outline"
@@ -185,12 +183,18 @@ export function ForkAgentSetup({
 							{api && (
 								<div className="space-y-2 rounded-md bg-muted/40 p-3">
 									<p className="text-xs text-muted-foreground">
-										<Trans>
-											Uses the xAI API with separate billing. Each person
-											supplies their own key.
-										</Trans>
+										{isGrok ? (
+											<Trans>
+												Uses the xAI API with separate billing. Each person
+												supplies their own key.
+											</Trans>
+										) : (
+											<Trans>
+												API keys are not validated with a paid request.
+											</Trans>
+										)}
 									</p>
-									{data.modelOverrides ? (
+									{isGrok && data.modelOverrides ? (
 										<p className="text-xs">
 											<Trans>
 												The CLI already has custom model settings. Edit them in
@@ -214,19 +218,21 @@ export function ForkAgentSetup({
 													onChange={(event) => setKey(event.target.value)}
 												/>
 											</label>
-											<label
-												htmlFor={`${fieldId}-model`}
-												className="block space-y-1"
-											>
-												<span>
-													<Trans>Model</Trans>
-												</span>
-												<Input
-													id={`${fieldId}-model`}
-													value={model}
-													onChange={(event) => setModel(event.target.value)}
-												/>
-											</label>
+											{isGrok && (
+												<label
+													htmlFor={`${fieldId}-model`}
+													className="block space-y-1"
+												>
+													<span>
+														<Trans>Model</Trans>
+													</span>
+													<Input
+														id={`${fieldId}-model`}
+														value={model}
+														onChange={(event) => setModel(event.target.value)}
+													/>
+												</label>
+											)}
 										</>
 									)}
 								</div>
@@ -243,13 +249,20 @@ export function ForkAgentSetup({
 								disabled={
 									busy ||
 									(api &&
-										(data.modelOverrides ||
+										((isGrok && data.modelOverrides) ||
 											!key.trim() ||
-											!/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/.test(model.trim())))
+											(isGrok &&
+												!/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/.test(
+													model.trim(),
+												))))
 								}
 								onClick={save}
 							>
-								<Trans>Apply recommended settings</Trans>
+								{api && !isGrok ? (
+									<Trans>Save</Trans>
+								) : (
+									<Trans>Apply recommended settings</Trans>
+								)}
 							</Button>
 						</>
 					)}

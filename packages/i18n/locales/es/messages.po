@@ -2399,6 +2399,9 @@ msgstr "Claves de API"
 msgid "API Keys"
 msgstr "Claves de API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Las claves API no se validan mediante solicitudes de pago."
+
 msgid "API-equivalent"
 msgstr "equivalente en API"
 
@@ -3672,9 +3675,6 @@ msgstr "Elige un proyecto en Issues de GitHub antes de abrir un issue."
 msgid "Choose a section."
 msgstr "Elige una sección."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Elige las cuentas manualmente. Los nuevos agentes usan la cuenta predeterminada salvo que su configuración o inicio seleccionen otra."
-
 msgid "Choose agent"
 msgstr "Elegir agente"
 
@@ -3812,9 +3812,6 @@ msgstr "Predeterminado de CLI"
 
 msgid "CLI docs"
 msgstr "Documentación de la CLI"
-
-msgid "CLI installed"
-msgstr "CLI instalada"
 
 msgid "CLI login"
 msgstr "Inicio de sesión del CLI"
@@ -5642,9 +5639,6 @@ msgstr "Pestaña actual"
 
 msgid "Cursor"
 msgstr "Cursor"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Las cuentas de Cursor Agent, Grok Build y OpenCode se gestionan en sus propias aplicaciones."
 
 msgid "Cursor blinking"
 msgstr "Parpadeo del cursor"
@@ -9927,6 +9921,9 @@ msgstr "Gestiona las integraciones en la app web para conectar y configurar serv
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Gestiona las claves de acceso a servidores MCP y a integraciones externas como Claude Desktop o Claude Code. <0>Más información<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Gestiona inicios de sesión, claves API y cuotas en Cuentas de agentes locales."
+
 msgid "Manage members"
 msgstr "Gestionar miembros"
 
@@ -13273,6 +13270,9 @@ msgstr "Cerrar primero el navegador de origen para que sus inicios de sesión se
 msgid "Quota exhausted"
 msgstr "Cuota agotada"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "La cuota se muestra cuando el proveedor lo permite."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Leyendo el uso…"
 
 msgid "Reading your local usage…"
 msgstr "Leyendo el uso local…"
-
-msgid "Ready"
-msgstr "Listo"
 
 msgid "Ready for review"
 msgstr "Lista para revisión"
@@ -15542,6 +15539,9 @@ msgstr "Iniciar sesión con GitHub"
 
 msgid "Sign in with Google"
 msgstr "Iniciar sesión con Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Inicia sesión, configura claves API y consulta las cuotas de tus agentes locales."
 
 msgid "Sign out"
 msgstr "Cerrar sesión"

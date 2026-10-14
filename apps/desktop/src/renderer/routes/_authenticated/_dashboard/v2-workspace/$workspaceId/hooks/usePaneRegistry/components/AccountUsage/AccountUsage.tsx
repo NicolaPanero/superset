@@ -173,7 +173,7 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 							})()}
 					</span>
 					<Link
-						to="/settings/usage"
+						to="/settings/local-agent-accounts"
 						search={{
 							workspaceId,
 							accountKey: account?.accountKey,

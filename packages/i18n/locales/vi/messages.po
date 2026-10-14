@@ -2399,6 +2399,9 @@ msgstr "Khóa API"
 msgid "API Keys"
 msgstr "Khóa API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Khóa API không được xác thực bằng yêu cầu trả phí."
+
 msgid "API-equivalent"
 msgstr "quy đổi theo API"
 
@@ -3672,9 +3675,6 @@ msgstr "Chọn một dự án trong mục Issue GitHub trước khi mở một i
 msgid "Choose a section."
 msgstr "Chọn một mục."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Chọn tài khoản thủ công. Tác nhân mới dùng tài khoản mặc định trừ khi cấu hình hoặc lựa chọn khởi chạy chỉ định tài khoản khác."
-
 msgid "Choose agent"
 msgstr "Chọn agent"
 
@@ -3812,9 +3812,6 @@ msgstr "Mặc định của CLI"
 
 msgid "CLI docs"
 msgstr "Tài liệu CLI"
-
-msgid "CLI installed"
-msgstr "CLI đã được cài đặt"
 
 msgid "CLI login"
 msgstr "Đăng nhập CLI"
@@ -5642,9 +5639,6 @@ msgstr "Tab hiện tại"
 
 msgid "Cursor"
 msgstr "Con trỏ"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Tài khoản Cursor Agent, Grok Build và OpenCode được quản lý trong ứng dụng tương ứng."
 
 msgid "Cursor blinking"
 msgstr "Con trỏ nhấp nháy"
@@ -9927,6 +9921,9 @@ msgstr "Quản lý tích hợp trong ứng dụng web để kết nối và cấ
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Quản lý khóa để truy cập server MCP và các tích hợp bên ngoài như Claude Desktop hoặc Claude Code. <0>Tìm hiểu thêm<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Quản lý đăng nhập, khóa API và hạn mức trong Tài khoản tác nhân cục bộ."
+
 msgid "Manage members"
 msgstr "Quản lý thành viên"
 
@@ -13273,6 +13270,9 @@ msgstr "Thoát trình duyệt nguồn trước để thông tin đăng nhập đ
 msgid "Quota exhausted"
 msgstr "Đã hết hạn mức"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Hạn mức được hiển thị khi nhà cung cấp hỗ trợ."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Đang đọc mức sử dụng…"
 
 msgid "Reading your local usage…"
 msgstr "Đang đọc mức sử dụng cục bộ của bạn…"
-
-msgid "Ready"
-msgstr "Sẵn sàng"
 
 msgid "Ready for review"
 msgstr "Sẵn sàng review"
@@ -15542,6 +15539,9 @@ msgstr "Đăng nhập bằng GitHub"
 
 msgid "Sign in with Google"
 msgstr "Đăng nhập bằng Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Đăng nhập, thiết lập khóa API và kiểm tra hạn mức của các tác nhân cục bộ."
 
 msgid "Sign out"
 msgstr "Đăng xuất"

@@ -2399,6 +2399,9 @@ msgstr "Clés API"
 msgid "API Keys"
 msgstr "Clés API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Les clés API ne sont pas validées par une requête payante."
+
 msgid "API-equivalent"
 msgstr "équivalent API"
 
@@ -3672,9 +3675,6 @@ msgstr "Choisissez un projet dans Issues GitHub avant d'ouvrir une issue."
 msgid "Choose a section."
 msgstr "Choisissez une section."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Choisissez les comptes manuellement. Les nouveaux agents utilisent le compte par défaut, sauf si leur configuration ou leur lancement en choisit un autre."
-
 msgid "Choose agent"
 msgstr "Choisir un agent"
 
@@ -3812,9 +3812,6 @@ msgstr "Valeur par défaut du CLI"
 
 msgid "CLI docs"
 msgstr "Docs de la CLI"
-
-msgid "CLI installed"
-msgstr "CLI installée"
 
 msgid "CLI login"
 msgstr "Connexion CLI"
@@ -5642,9 +5639,6 @@ msgstr "Onglet actuel"
 
 msgid "Cursor"
 msgstr "Curseur"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Les comptes Cursor Agent, Grok Build et OpenCode sont gérés dans leurs propres applications."
 
 msgid "Cursor blinking"
 msgstr "Clignotement du curseur"
@@ -9927,6 +9921,9 @@ msgstr "Gérez les intégrations dans l'application web pour connecter et config
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Gérez les clés d'accès aux serveurs MCP et aux intégrations externes comme Claude Desktop ou Claude Code. <0>En savoir plus<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Gérez les connexions, clés API et quotas dans Comptes des agents locaux."
+
 msgid "Manage members"
 msgstr "Gérer les membres"
 
@@ -13273,6 +13270,9 @@ msgstr "Quittez d'abord le navigateur source pour que ses identifiants soient en
 msgid "Quota exhausted"
 msgstr "Quota épuisé"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Le quota est affiché si le fournisseur le permet."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Lecture de l'utilisation…"
 
 msgid "Reading your local usage…"
 msgstr "Lecture de votre utilisation locale…"
-
-msgid "Ready"
-msgstr "Prêt"
 
 msgid "Ready for review"
 msgstr "Prêt pour la revue"
@@ -15542,6 +15539,9 @@ msgstr "Se connecter avec GitHub"
 
 msgid "Sign in with Google"
 msgstr "Se connecter avec Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Connectez-vous, configurez les clés API et consultez les quotas de vos agents locaux."
 
 msgid "Sign out"
 msgstr "Se déconnecter"

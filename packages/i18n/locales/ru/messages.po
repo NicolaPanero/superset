@@ -2399,6 +2399,9 @@ msgstr "Ключи API"
 msgid "API Keys"
 msgstr "Ключи API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Ключи API не проверяются платными запросами."
+
 msgid "API-equivalent"
 msgstr "в эквиваленте API"
 
@@ -3672,9 +3675,6 @@ msgstr "Выберите проект в разделе задач GitHub, пр�
 msgid "Choose a section."
 msgstr "Выберите раздел."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Выбирайте учётные записи вручную. Новые агенты используют учётную запись по умолчанию, если при настройке или запуске не выбрана другая."
-
 msgid "Choose agent"
 msgstr "Выберите агента"
 
@@ -3812,9 +3812,6 @@ msgstr "По умолчанию в CLI"
 
 msgid "CLI docs"
 msgstr "Документация CLI"
-
-msgid "CLI installed"
-msgstr "CLI установлен"
 
 msgid "CLI login"
 msgstr "Вход через CLI"
@@ -5642,9 +5639,6 @@ msgstr "Текущая вкладка"
 
 msgid "Cursor"
 msgstr "Курсор"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Учётные записи Cursor Agent, Grok Build и OpenCode управляются в соответствующих приложениях."
 
 msgid "Cursor blinking"
 msgstr "Мигание курсора"
@@ -9927,6 +9921,9 @@ msgstr "Управляйте интеграциями в веб-приложен
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Управляйте ключами для доступа к серверу MCP и внешних интеграций вроде Claude Desktop или Claude Code. <0>Подробнее<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Управляйте входом, ключами API и квотами в разделе «Локальные аккаунты агентов»."
+
 msgid "Manage members"
 msgstr "Управление участниками"
 
@@ -13273,6 +13270,9 @@ msgstr "Сначала закройте исходный браузер, что�
 msgid "Quota exhausted"
 msgstr "Квота исчерпана"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Квота отображается, если провайдер поддерживает эту возможность."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Чтение данных об использовании…"
 
 msgid "Reading your local usage…"
 msgstr "Чтение локальной статистики…"
-
-msgid "Ready"
-msgstr "Готово"
 
 msgid "Ready for review"
 msgstr "Готово к ревью"
@@ -15542,6 +15539,9 @@ msgstr "Войти через GitHub"
 
 msgid "Sign in with Google"
 msgstr "Войти через Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Войдите, настройте ключи API и проверьте квоты локальных агентов."
 
 msgid "Sign out"
 msgstr "Выйти"

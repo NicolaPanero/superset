@@ -2399,6 +2399,9 @@ msgstr "API金鑰"
 msgid "API Keys"
 msgstr "API金鑰"
 
+msgid "API keys are not validated with a paid request."
+msgstr "不會透過付費請求驗證 API 金鑰。"
+
 msgid "API-equivalent"
 msgstr "按API價折算"
 
@@ -3672,9 +3675,6 @@ msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
 msgid "Choose a section."
 msgstr "選擇一個分區。"
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "手動選擇帳戶。新的代理使用預設帳戶，除非設定或啟動時選擇了其他帳戶。"
-
 msgid "Choose agent"
 msgstr "選擇代理程式"
 
@@ -3812,9 +3812,6 @@ msgstr "CLI 預設值"
 
 msgid "CLI docs"
 msgstr "CLI文件"
-
-msgid "CLI installed"
-msgstr "CLI 已安裝"
 
 msgid "CLI login"
 msgstr "CLI 登入"
@@ -5642,9 +5639,6 @@ msgstr "目前分頁"
 
 msgid "Cursor"
 msgstr "游標"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent、Grok Build 和 OpenCode 的帳戶在各自的應用程式中管理。"
 
 msgid "Cursor blinking"
 msgstr "游標閃爍"
@@ -9927,6 +9921,9 @@ msgstr "在網頁應用中管理整合，以連線和配置服務。"
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "管理用於MCP伺服器存取以及Claude Desktop、Claude Code等外部整合的金鑰。<0>瞭解更多<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "在本機代理帳戶中管理登入、API 金鑰和配額。"
+
 msgid "Manage members"
 msgstr "管理成員"
 
@@ -13273,6 +13270,9 @@ msgstr "請先退出源瀏覽器，讓它把登入資訊寫入磁碟。系統會
 msgid "Quota exhausted"
 msgstr "配額已耗盡"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "供應商支援時會顯示配額。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "正在讀取用量…"
 
 msgid "Reading your local usage…"
 msgstr "正在讀取本地用量…"
-
-msgid "Ready"
-msgstr "就緒"
 
 msgid "Ready for review"
 msgstr "待審查"
@@ -15542,6 +15539,9 @@ msgstr "使用GitHub登入"
 
 msgid "Sign in with Google"
 msgstr "使用Google登入"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "登入、設定 API 金鑰並查看本機代理的配額。"
 
 msgid "Sign out"
 msgstr "登出"

@@ -2399,6 +2399,9 @@ msgstr "API 키"
 msgid "API Keys"
 msgstr "API 키"
 
+msgid "API keys are not validated with a paid request."
+msgstr "API 키는 유료 요청으로 검증하지 않습니다."
+
 msgid "API-equivalent"
 msgstr "API 환산"
 
@@ -3672,9 +3675,6 @@ msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선�
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "계정을 수동으로 선택합니다. 구성이나 시작 설정에서 다른 계정을 선택하지 않으면 새 에이전트는 기본 계정을 사용합니다."
-
 msgid "Choose agent"
 msgstr "에이전트 선택"
 
@@ -3812,9 +3812,6 @@ msgstr "CLI 기본값"
 
 msgid "CLI docs"
 msgstr "CLI 문서"
-
-msgid "CLI installed"
-msgstr "CLI 설치됨"
 
 msgid "CLI login"
 msgstr "CLI 로그인"
@@ -5642,9 +5639,6 @@ msgstr "현재 탭"
 
 msgid "Cursor"
 msgstr "커서"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent, Grok Build 및 OpenCode 계정은 각 앱에서 관리합니다."
 
 msgid "Cursor blinking"
 msgstr "커서 깜박임"
@@ -9927,6 +9921,9 @@ msgstr "웹 앱에서 연동을 관리하며 서비스를 연결하고 설정할
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "MCP 서버 접근과 Claude Desktop, Claude Code 같은 외부 연동에 쓰는 키를 관리합니다. <0>자세히 알아보기<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "로컬 에이전트 계정에서 로그인, API 키 및 할당량을 관리하세요."
+
 msgid "Manage members"
 msgstr "멤버 관리"
 
@@ -13273,6 +13270,9 @@ msgstr "로그인 정보가 디스크에 저장되도록 원본 브라우저를 
 msgid "Quota exhausted"
 msgstr "한도 소진"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "공급자가 지원하는 경우 할당량이 표시됩니다."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "사용량 읽는 중…"
 
 msgid "Reading your local usage…"
 msgstr "로컬 사용량을 읽는 중…"
-
-msgid "Ready"
-msgstr "준비됨"
 
 msgid "Ready for review"
 msgstr "리뷰 준비됨"
@@ -15542,6 +15539,9 @@ msgstr "GitHub로 로그인"
 
 msgid "Sign in with Google"
 msgstr "Google로 로그인"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "로그인하고 API 키를 설정한 뒤 로컬 에이전트의 할당량을 확인하세요."
 
 msgid "Sign out"
 msgstr "로그아웃"

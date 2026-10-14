@@ -2399,6 +2399,9 @@ msgstr "API klíče"
 msgid "API Keys"
 msgstr "API klíče"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Klíče API se neověřují placenými požadavky."
+
 msgid "API-equivalent"
 msgstr "ekvivalent API"
 
@@ -3672,9 +3675,6 @@ msgstr "Než otevřete issue, vyberte projekt v sekci GitHub issues."
 msgid "Choose a section."
 msgstr "Vyberte sekci."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Účty vybírejte ručně. Noví agenti používají výchozí účet, pokud konfigurace nebo spuštění neurčí jiný."
-
 msgid "Choose agent"
 msgstr "Vyberte agenta"
 
@@ -3812,9 +3812,6 @@ msgstr "Výchozí nastavení CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentace CLI"
-
-msgid "CLI installed"
-msgstr "CLI nainstalováno"
 
 msgid "CLI login"
 msgstr "Přihlášení CLI"
@@ -5642,9 +5639,6 @@ msgstr "Aktuální karta"
 
 msgid "Cursor"
 msgstr "Kurzor"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Účty Cursor Agent, Grok Build a OpenCode se spravují v jejich vlastních aplikacích."
 
 msgid "Cursor blinking"
 msgstr "Blikání kurzoru"
@@ -9927,6 +9921,9 @@ msgstr "Integrace spravujte ve webové aplikaci, kde služby připojíte a nasta
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Spravujte klíče pro přístup k MCP serveru a externí integrace, jako je Claude Desktop nebo Claude Code. <0>Zjistit více<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Spravujte přihlášení, klíče API a kvóty v sekci Místní účty agentů."
+
 msgid "Manage members"
 msgstr "Spravovat členy"
 
@@ -13273,6 +13270,9 @@ msgstr "Nejprve zdrojový prohlížeč ukončete, aby se jeho přihlášení ulo
 msgid "Quota exhausted"
 msgstr "Kvóta vyčerpána"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Kvóta se zobrazuje, pokud ji poskytovatel podporuje."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Načítání využití…"
 
 msgid "Reading your local usage…"
 msgstr "Načítám vaše lokální využití…"
-
-msgid "Ready"
-msgstr "Připraveno"
 
 msgid "Ready for review"
 msgstr "Připraveno k revizi"
@@ -15542,6 +15539,9 @@ msgstr "Přihlásit se přes GitHub"
 
 msgid "Sign in with Google"
 msgstr "Přihlásit se přes Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Přihlaste se, nastavte klíče API a zkontrolujte kvóty místních agentů."
 
 msgid "Sign out"
 msgstr "Odhlásit se"

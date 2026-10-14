@@ -2399,6 +2399,9 @@ msgstr "Kunci API"
 msgid "API Keys"
 msgstr "Kunci API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Kunci API tidak divalidasi melalui permintaan berbayar."
+
 msgid "API-equivalent"
 msgstr "Setara API"
 
@@ -3672,9 +3675,6 @@ msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Pilih akun secara manual. Agen baru memakai akun default kecuali konfigurasi atau pilihan saat mulai menentukan akun lain."
-
 msgid "Choose agent"
 msgstr "Pilih agen"
 
@@ -3812,9 +3812,6 @@ msgstr "Default CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentasi CLI"
-
-msgid "CLI installed"
-msgstr "CLI terinstal"
 
 msgid "CLI login"
 msgstr "Login CLI"
@@ -5642,9 +5639,6 @@ msgstr "Tab saat ini"
 
 msgid "Cursor"
 msgstr "Kursor"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Akun Cursor Agent, Grok Build, dan OpenCode dikelola di aplikasi masing-masing."
 
 msgid "Cursor blinking"
 msgstr "Kursor berkedip"
@@ -9927,6 +9921,9 @@ msgstr "Kelola integrasi di aplikasi web untuk menghubungkan dan mengatur layana
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Kelola kunci untuk akses server MCP dan integrasi eksternal seperti Claude Desktop atau Claude Code. <0>Pelajari lebih lanjut<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Kelola login, kunci API, dan kuota di Akun agen lokal."
+
 msgid "Manage members"
 msgstr "Kelola anggota"
 
@@ -13273,6 +13270,9 @@ msgstr "Tutup dulu browser sumbernya agar login-nya tersimpan ke disk. Anda akan
 msgid "Quota exhausted"
 msgstr "Kuota habis"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Kuota ditampilkan jika penyedia mendukungnya."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Membaca penggunaan…"
 
 msgid "Reading your local usage…"
 msgstr "Membaca penggunaan lokal Anda…"
-
-msgid "Ready"
-msgstr "Siap"
 
 msgid "Ready for review"
 msgstr "Siap direview"
@@ -15542,6 +15539,9 @@ msgstr "Masuk dengan GitHub"
 
 msgid "Sign in with Google"
 msgstr "Masuk dengan Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Login, atur kunci API, dan periksa kuota agen lokal Anda."
 
 msgid "Sign out"
 msgstr "Keluar"

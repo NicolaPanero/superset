@@ -2399,6 +2399,9 @@ msgstr "Klucze API"
 msgid "API Keys"
 msgstr "Klucze API"
 
+msgid "API keys are not validated with a paid request."
+msgstr "Klucze API nie są weryfikowane płatnymi żądaniami."
+
 msgid "API-equivalent"
 msgstr "równowartość API"
 
@@ -3672,9 +3675,6 @@ msgstr "Wybierz projekt w Zgłoszeniach GitHub, zanim otworzysz zgłoszenie."
 msgid "Choose a section."
 msgstr "Wybierz sekcję."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Wybieraj konta ręcznie. Nowi agenci używają konta domyślnego, chyba że konfiguracja lub opcje uruchomienia wskazują inne."
-
 msgid "Choose agent"
 msgstr "Wybierz agenta"
 
@@ -3812,9 +3812,6 @@ msgstr "Domyślne ustawienie CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentacja CLI"
-
-msgid "CLI installed"
-msgstr "CLI zainstalowane"
 
 msgid "CLI login"
 msgstr "Logowanie CLI"
@@ -5642,9 +5639,6 @@ msgstr "Bieżąca karta"
 
 msgid "Cursor"
 msgstr "Kursor"
-
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Kontami Cursor Agent, Grok Build i OpenCode zarządza się w ich aplikacjach."
 
 msgid "Cursor blinking"
 msgstr "Miganie kursora"
@@ -9927,6 +9921,9 @@ msgstr "Integracjami zarządza się w aplikacji webowej — tam podłączysz i s
 msgid "Manage keys for MCP server access and external integrations like Claude Desktop or Claude Code. <0>Learn more<1/></0>"
 msgstr "Zarządzaj kluczami dostępu do serwerów MCP i zewnętrznych integracji, takich jak Claude Desktop czy Claude Code. <0>Dowiedz się więcej<1/></0>"
 
+msgid "Manage logins, API keys and quota in Local agent accounts."
+msgstr "Zarządzaj logowaniem, kluczami API i limitami w sekcji Lokalne konta agentów."
+
 msgid "Manage members"
 msgstr "Zarządzaj członkami"
 
@@ -13273,6 +13270,9 @@ msgstr "Najpierw zamknij źródłową przeglądarkę, aby jej dane logowania zap
 msgid "Quota exhausted"
 msgstr "Limit wyczerpany"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Limit jest wyświetlany, jeśli dostawca to obsługuje."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13371,9 +13371,6 @@ msgstr "Odczyt zużycia…"
 
 msgid "Reading your local usage…"
 msgstr "Odczytywanie lokalnego zużycia…"
-
-msgid "Ready"
-msgstr "Gotowe"
 
 msgid "Ready for review"
 msgstr "Gotowe do przeglądu"
@@ -15542,6 +15539,9 @@ msgstr "Zaloguj się przez GitHub"
 
 msgid "Sign in with Google"
 msgstr "Zaloguj się przez Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Zaloguj się, skonfiguruj klucze API i sprawdź limity lokalnych agentów."
 
 msgid "Sign out"
 msgstr "Wyloguj się"

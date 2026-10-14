@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Redirect } from "renderer/components/Redirect";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider/LocalHostServiceProvider";
 import { z } from "zod";
@@ -20,11 +21,18 @@ function UsagePage() {
 	const workspaceHostUrl = useWorkspaceHostUrl(workspaceId ?? null);
 	useRecordUsageSection("token");
 
+	if (accountKey || agent)
+		return (
+			<Redirect
+				to="/settings/local-agent-accounts"
+				search={{ workspaceId, accountKey, agent }}
+				replace
+			/>
+		);
 	return (
 		<UsageView
+			workspaceId={workspaceId}
 			hostUrl={workspaceId ? workspaceHostUrl : activeHostUrl}
-			focusedAccountKey={accountKey}
-			focusedAgent={agent}
 		/>
 	);
 }
