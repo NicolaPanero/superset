@@ -772,6 +772,7 @@ function V2WorkspaceContent() {
 									)}
 									renderEmptyState={() => (
 										<WorkspaceEmptyState
+											onOpenAgent={() => setForkLaunchOpen(true)}
 											onOpenBrowser={addBrowserTab}
 											onOpenChanges={openChanges}
 											onOpenQuickOpen={handleQuickOpen}
