@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
 import {
 	DEFAULT_TERMINAL_FONT_FAMILY,
+	DEFAULT_TERMINAL_FONT_SIZE,
 	NERD_FONT_FALLBACK_FAMILIES,
 	resolveTerminalAppearance,
 	sanitizeTerminalFontFamily,
@@ -126,6 +127,15 @@ describe("sanitizeTerminalFontFamily", () => {
 		);
 	});
 
+	test("preserves a chosen registered monospace font before its font file has loaded", () => {
+		restore = stubCanvas(() => proportionalWidths);
+		for (const family of ["SF Mono", "JetBrains Mono"]) {
+			expect(sanitizeTerminalFontFamily(family)).toBe(
+				`"${family}", ${nerdTail()}, monospace`,
+			);
+		}
+	});
+
 	test("appends nerd-font fallbacks and a monospace tail to a bare family", () => {
 		// The fallbacks keep PUA icons (eza --icons, starship) rendering when the
 		// chosen font lacks the glyphs; the generic tail keeps an uninstalled
@@ -209,13 +219,13 @@ describe("sanitizeTerminalFontFamily", () => {
 });
 
 describe("resolveTerminalAppearance", () => {
-	test("uses the bundled font and readable defaults when settings are unset", () => {
+	test("uses platform typography and readable defaults when settings are unset", () => {
 		const theme = { background: "#111111", foreground: "#eeeeee" };
 		expect(resolveTerminalAppearance(theme)).toEqual({
 			theme,
 			background: "#111111",
 			fontFamily: DEFAULT_TERMINAL_FONT_FAMILY,
-			fontSize: 14,
+			fontSize: DEFAULT_TERMINAL_FONT_SIZE,
 			lineHeight: 1.1,
 			letterSpacing: 0,
 			fontWeight: "normal",

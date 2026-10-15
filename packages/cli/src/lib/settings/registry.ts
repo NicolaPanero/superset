@@ -10,7 +10,10 @@ import {
 	TERMINAL_LINK_BEHAVIORS,
 } from "@superset/local-db/schema/zod";
 import { getForkEditorDefaults } from "@superset/shared/fork-editor-appearance";
-import { FORK_TERMINAL_DEFAULTS } from "@superset/shared/fork-terminal-appearance";
+import {
+	FORK_TERMINAL_DEFAULTS,
+	getForkTerminalDefaults,
+} from "@superset/shared/fork-terminal-appearance";
 import { RINGTONES } from "@superset/shared/ringtones";
 import {
 	FONT_FAMILY_MAX_LENGTH,
@@ -27,6 +30,7 @@ import {
 export type SettingValue = string | number | boolean;
 
 const editorDefaults = getForkEditorDefaults(process.platform);
+const terminalDefaults = getForkTerminalDefaults(process.platform);
 
 export type SettingsColumn = Exclude<keyof InsertSettings, "id"> & string;
 
@@ -259,7 +263,7 @@ export const SETTINGS: SettingDefinition[] = [
 		section: "terminal appearance",
 		...FONT_SIZE,
 		description: "Terminal font size in px (10-24, 0.5 steps)",
-		defaultValue: 14,
+		defaultValue: terminalDefaults.fontSize,
 	},
 	{
 		key: "terminalLineHeight",

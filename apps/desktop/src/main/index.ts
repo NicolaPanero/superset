@@ -435,6 +435,7 @@ protocol.registerSchemesAsPrivileged([
 			secure: true,
 			bypassCSP: true,
 			supportFetchAPI: true,
+			corsEnabled: true,
 		},
 	},
 ]);

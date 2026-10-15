@@ -1,4 +1,7 @@
-import { FORK_TERMINAL_DEFAULTS } from "@superset/shared/fork-terminal-appearance";
+import {
+	FORK_TERMINAL_DEFAULTS,
+	getForkTerminalDefaults,
+} from "@superset/shared/fork-terminal-appearance";
 import type { FontWeight, ITheme } from "@xterm/xterm";
 import { toXtermTheme } from "renderer/stores/theme/utils";
 import {
@@ -90,8 +93,12 @@ export const NERD_FONT_FALLBACK_FAMILIES = [
 	"Symbols Nerd Font",
 ] as const;
 
+const platformDefaults = getForkTerminalDefaults(
+	typeof navigator === "undefined" ? "" : navigator.platform,
+);
+
 export const DEFAULT_TERMINAL_FONT_FAMILIES = [
-	FORK_TERMINAL_DEFAULTS.fontFamily,
+	...new Set([platformDefaults.fontFamily, FORK_TERMINAL_DEFAULTS.fontFamily]),
 	...NERD_FONT_FALLBACK_FAMILIES,
 	"Menlo",
 	"Monaco",
@@ -103,7 +110,7 @@ export const DEFAULT_TERMINAL_FONT_FAMILY = serializeFontFamilyList([
 	...DEFAULT_TERMINAL_FONT_FAMILIES,
 ]);
 
-export const DEFAULT_TERMINAL_FONT_SIZE = 14;
+export const DEFAULT_TERMINAL_FONT_SIZE = platformDefaults.fontSize;
 export const DEFAULT_TERMINAL_LINE_HEIGHT = FORK_TERMINAL_DEFAULTS.lineHeight;
 export const DEFAULT_TERMINAL_LETTER_SPACING = 0;
 export const DEFAULT_TERMINAL_FONT_WEIGHT: FontWeight = "normal";
@@ -150,7 +157,12 @@ const monospaceCheckCache = new Map<string, boolean>();
  */
 function isFontFamilyMonospace(family: string): boolean {
 	const key = family.toLowerCase();
-	if (MONOSPACE_GENERIC_FAMILIES.has(key)) return true;
+	if (
+		MONOSPACE_GENERIC_FAMILIES.has(key) ||
+		key === "sf mono" ||
+		key === FORK_TERMINAL_DEFAULTS.fontFamily.toLowerCase()
+	)
+		return true;
 
 	const cached = monospaceCheckCache.get(key);
 	if (cached !== undefined) return cached;
