@@ -95,6 +95,11 @@ export function ForkCreationModelPicker({
 			pendingModel.current = model ? { agentId, model: model.id } : null;
 			onSelectAgent(agentId);
 		},
+		onBrowse: (agentId) => {
+			if (!agents.some((agent) => agent.id === agentId)) return;
+			pendingModel.current = null;
+			onSelectAgent(agentId);
+		},
 	};
 
 	return (

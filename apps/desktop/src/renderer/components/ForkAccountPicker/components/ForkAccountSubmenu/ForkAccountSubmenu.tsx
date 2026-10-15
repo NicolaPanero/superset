@@ -34,7 +34,7 @@ export function ForkAccountSubmenu({
 	contentClassName?: string;
 }) {
 	const { t } = useLingui();
-	const { selected } = useForkAccountChoices(account, provider, model);
+	const { choices, selected } = useForkAccountChoices(account, provider, model);
 	if (!account.enabled) return null;
 	const label = account.forcedApi
 		? t({ message: "API billing" })
@@ -42,6 +42,37 @@ export function ForkAccountSubmenu({
 			? forkAccountLabel(selected.option, selected.usage?.email)
 			: t({ message: "Choose an account" });
 	const quota = accountQuotaState(selected?.usage, model);
+	const summary = (
+		<>
+			<ForkAccountAvatar
+				label={selected ? label : null}
+				remaining={quota.remaining}
+			/>
+			<span className="shrink-0">
+				<Trans>Account</Trans>
+			</span>
+			<span className="min-w-0 flex-1 truncate text-right text-muted-foreground">
+				{label}
+			</span>
+			{quota.remaining !== null && (
+				<span
+					className={cn(
+						"shrink-0 text-[12px]",
+						TONE_TEXT[quotaTone(quota.remaining)],
+					)}
+				>
+					{formatPercent(quota.remaining / 100, { maximumFractionDigits: 0 })}
+				</span>
+			)}
+		</>
+	);
+	if (choices.length === 1 && selected) {
+		return (
+			<div className={cn("flex cursor-default items-center", className)}>
+				{summary}
+			</div>
+		);
+	}
 	return (
 		<DropdownMenuSub
 			onOpenChange={(open) => {
@@ -52,26 +83,7 @@ export function ForkAccountSubmenu({
 				className={className}
 				disabled={!account.available || account.forcedApi}
 			>
-				<ForkAccountAvatar
-					label={selected ? label : null}
-					remaining={quota.remaining}
-				/>
-				<span className="shrink-0">
-					<Trans>Account</Trans>
-				</span>
-				<span className="min-w-0 flex-1 truncate text-right text-muted-foreground">
-					{label}
-				</span>
-				{quota.remaining !== null && (
-					<span
-						className={cn(
-							"shrink-0 text-[12px]",
-							TONE_TEXT[quotaTone(quota.remaining)],
-						)}
-					>
-						{formatPercent(quota.remaining / 100, { maximumFractionDigits: 0 })}
-					</span>
-				)}
+				{summary}
 			</DropdownMenuSubTrigger>
 			{/* Portaled: the parent panel's backdrop-blur would otherwise clip it. */}
 			<DropdownMenuPortal>

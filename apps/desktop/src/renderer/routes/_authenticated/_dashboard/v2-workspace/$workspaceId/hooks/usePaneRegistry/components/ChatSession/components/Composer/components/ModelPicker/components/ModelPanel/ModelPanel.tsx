@@ -131,6 +131,7 @@ export function ModelPanel({
 		if (next === tab) return;
 		setTab(next);
 		setQuery("");
+		agentSwitcher?.onBrowse?.(next);
 	};
 	const cycleTab = (direction: 1 | -1) => {
 		const index = tabs.findIndex((entry) => entry.presetId === tab);
