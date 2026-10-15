@@ -1,11 +1,9 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import {
 	type AgentModelOption,
 	getAgentModelSupport,
 } from "@superset/shared/agent-models";
-import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
-import { LuBan, LuCheck } from "react-icons/lu";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import type { AgentSelectAgent } from "renderer/components/AgentSelect";
 import {
@@ -110,20 +108,8 @@ export function ForkCreationModelPicker({
 					onEffortChange(fromOptionValue(value));
 			}}
 			footer={
-				<div className="flex flex-col gap-px border-t p-1">
+				<div className="flex flex-col gap-px border-t p-1 empty:hidden">
 					{renderAccountItem?.(MENU_ROW_CLASS, MENU_PANEL_CLASS)}
-					<DropdownMenuItem
-						className={MENU_ROW_CLASS}
-						onSelect={() => onSelectAgent(NO_AGENT)}
-					>
-						<LuBan className="size-3.5 shrink-0 text-muted-foreground" />
-						<span className="min-w-0 flex-1 truncate">
-							<Trans>No agent</Trans>
-						</span>
-						{selectedAgent === NO_AGENT && (
-							<LuCheck className="size-3.5 shrink-0" />
-						)}
-					</DropdownMenuItem>
 				</div>
 			}
 		/>
