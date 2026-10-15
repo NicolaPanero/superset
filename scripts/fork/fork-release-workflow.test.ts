@@ -117,3 +117,31 @@ test("only the platform build restores packages, with exact commit and helper ke
 		),
 	).toBe(false);
 });
+
+test("release skips general checks only after cached or matching PR validation", () => {
+	const steps = workflow.jobs.validate?.steps ?? [];
+	for (const step of steps.filter((step) =>
+		step.run?.includes("validate.sh"),
+	)) {
+		expect(step.if).toContain(
+			"steps.validation-cache.outputs.cache-hit != 'true'",
+		);
+		expect(step.if).toContain(
+			"steps.pr-validation.outputs.validated != 'true'",
+		);
+	}
+	expect(steps.find((step) => step.id === "pr-validation")?.run).toBe(
+		"bash scripts/fork/reuse-pr-validation.sh",
+	);
+	const regression = Bun.YAML.parse(
+		readFileSync(join(root, ".github/workflows/fork-tests.yml"), "utf8"),
+	) as Workflow;
+	const prSteps = regression.jobs.regression?.steps ?? [];
+	const validate = prSteps.findIndex((step) =>
+		step.run?.includes("validate.sh"),
+	);
+	const record = prSteps.findIndex((step) => step.id === "tested-tree");
+	expect(validate).toBeGreaterThanOrEqual(0);
+	expect(record).toBeGreaterThan(validate);
+	expect(prSteps[record]?.run).toContain("HEAD^{tree}");
+});

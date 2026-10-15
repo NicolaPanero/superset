@@ -1,5 +1,5 @@
 # Builds Superset++ from fork/main using the txcript version pinned in scripts/fork/txcript-version.json.
-# Pushes to fork/main trigger validation; changing the txcript pin is explicit.
+# Pushes reuse successful PR validation for identical content; changing the txcript pin is explicit.
 # Bundle id, login scheme, data paths and update asset names stay compatible with existing forks.
 
 name: Fork - build release
@@ -74,6 +74,9 @@ jobs:
     if: needs.check.outputs.build == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
@@ -84,12 +87,18 @@ jobs:
         with:
           path: ${{ runner.temp }}/fork-validation
           key: fork-validated-ubuntu24-v1-${{ needs.check.outputs.sha }}
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+      - name: Reuse successful PR validation for identical content
+        id: pr-validation
         if: steps.validation-cache.outputs.cache-hit != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/fork/reuse-pr-validation.sh
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        if: steps.validation-cache.outputs.cache-hit != 'true' && steps.pr-validation.outputs.validated != 'true'
         with:
           bun-version-file: .bun-version
       - name: Cache downloaded dependencies
-        if: steps.validation-cache.outputs.cache-hit != 'true'
+        if: steps.validation-cache.outputs.cache-hit != 'true' && steps.pr-validation.outputs.validated != 'true'
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
@@ -97,11 +106,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-bun-
       - run: bun install --frozen --ignore-scripts
-        if: steps.validation-cache.outputs.cache-hit != 'true'
+        if: steps.validation-cache.outputs.cache-hit != 'true' && steps.pr-validation.outputs.validated != 'true'
       - name: Validate fork before platform builds
-        if: steps.validation-cache.outputs.cache-hit != 'true'
+        if: steps.validation-cache.outputs.cache-hit != 'true' && steps.pr-validation.outputs.validated != 'true'
         run: |
           bash scripts/fork/validate.sh
+      - name: Cache successful validation for this commit
+        if: steps.validation-cache.outputs.cache-hit != 'true'
+        run: |
           mkdir -p "$RUNNER_TEMP/fork-validation"
           echo '${{ needs.check.outputs.sha }}' > "$RUNNER_TEMP/fork-validation/passed"
 
