@@ -15,6 +15,7 @@ import {
 	markBootMounted,
 	reportBootError,
 } from "./lib/boot-errors";
+import { installForkImageContextMenu } from "./lib/fork-image-context-menu";
 import { sweepDeadPersistedKeys } from "./lib/persisted-keys";
 import { persistentHistory } from "./lib/persistent-hash-history";
 import { posthog } from "./lib/posthog";
@@ -31,6 +32,7 @@ initBootErrorHandling(rootElement);
 pruneExpiredTerminalState();
 // Keys from removed features otherwise live on user profiles forever.
 sweepDeadPersistedKeys();
+installForkImageContextMenu();
 
 const router = createRouter({
 	routeTree,
