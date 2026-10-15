@@ -1,0 +1,38 @@
+.fork-home-background {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	color: var(--foreground);
+	--fork-home-ember: #ff7a2f;
+	--fork-home-crest: #ffe0b0;
+}
+
+.light .fork-home-background {
+	--fork-home-ember: #d25611;
+	--fork-home-crest: #8f3a08;
+}
+
+.fork-home-background ~ header {
+	background-color: transparent;
+}
+
+.fork-home-brand {
+	width: 352px;
+	height: 192px;
+	pointer-events: none;
+}
+
+.fork-home-brand--compact {
+	width: 264px;
+	height: 144px;
+}
+
+@media (max-height: 720px) {
+	.fork-home-brand {
+		width: 264px;
+		height: 144px;
+	}
+}

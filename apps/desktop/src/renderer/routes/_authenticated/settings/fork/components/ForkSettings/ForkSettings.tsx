@@ -3,6 +3,7 @@ import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
 import { ForkCliOptionsSetting } from "renderer/components/ForkCliOptionsSetting";
 import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
+import { useForkHomeAppearance } from "renderer/stores/fork-home-appearance";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import {
 	getMatchingItemsForSection,
@@ -11,6 +12,8 @@ import {
 
 export function ForkSettings() {
 	const { hideProFeatures, setHideProFeatures } = useForkCliOptionsStore();
+	const { interactiveBackground, setInteractiveBackground } =
+		useForkHomeAppearance();
 	const query = useSettingsSearchQuery();
 	const matches = getMatchingItemsForSection(query, "fork");
 	return (
@@ -42,6 +45,32 @@ export function ForkSettings() {
 							aria-describedby="fork-hide-pro-description"
 							checked={hideProFeatures}
 							onCheckedChange={setHideProFeatures}
+						/>
+					</div>
+				)}
+				{matches.some(
+					(item) => item.id === SETTING_ITEM_ID.FORK_HOME_BACKGROUND,
+				) && (
+					<div className="flex items-center justify-between gap-4 border-t px-6 py-4">
+						<div className="space-y-1">
+							<Label htmlFor="fork-home-background">
+								<Trans>Interactive home background</Trans>
+							</Label>
+							<p
+								id="fork-home-background-description"
+								className="text-xs text-muted-foreground"
+							>
+								<Trans>
+									Show a character-based Superset logo and waves that respond to
+									clicks.
+								</Trans>
+							</p>
+						</div>
+						<Switch
+							id="fork-home-background"
+							aria-describedby="fork-home-background-description"
+							checked={interactiveBackground}
+							onCheckedChange={setInteractiveBackground}
 						/>
 					</div>
 				)}

@@ -1,1 +1,1 @@
-export { SupersetLogo } from "./SupersetLogo";
+export { ForkWordmark as SupersetLogo } from "renderer/components/ForkWordmark";

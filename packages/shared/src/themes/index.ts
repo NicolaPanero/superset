@@ -13,6 +13,7 @@ export {
 	vellumTheme,
 } from "./built-in";
 export { getEditorTheme } from "./editor-theme";
+export { isForkVSCodeEditorTheme } from "./fork-vscode-editor";
 export { parseThemeConfigFile, type ThemeConfigParseResult } from "./import";
 export type {
 	EditorColors,

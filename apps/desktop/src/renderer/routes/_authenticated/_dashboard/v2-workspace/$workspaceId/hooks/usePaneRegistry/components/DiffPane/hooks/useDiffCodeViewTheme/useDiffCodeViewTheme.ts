@@ -14,14 +14,14 @@ import {
 	getDiffViewerStyle,
 } from "renderer/screens/main/components/WorkspaceView/utils/code-theme";
 import { useSettings } from "renderer/stores/settings";
-import { useResolvedTheme, useTerminalTheme } from "renderer/stores/theme";
+import { useResolvedTheme } from "renderer/stores/theme";
+import { getEditorTheme } from "shared/themes";
 import type { DiffAnnotationMetadata } from "../useDiffAnnotations";
 
 export function useDiffCodeViewTheme() {
 	const diffStyle = useSettings((s) => s.diffStyle);
 	const expandUnchanged = useSettings((s) => s.expandUnchanged);
 	const activeTheme = useResolvedTheme();
-	const terminalTheme = useTerminalTheme();
 	const { data: fontSettings } = useQuery({
 		queryKey: FONT_SETTINGS_QUERY_KEY,
 		queryFn: () => electronTrpcClient.settings.getFontSettings.query(),
@@ -37,7 +37,7 @@ export function useDiffCodeViewTheme() {
 	const editorFontSize = Number.isFinite(parsedEditorFontSize)
 		? parsedEditorFontSize
 		: DEFAULT_CODE_EDITOR_FONT_SIZE;
-	const surfaceBg = terminalTheme?.background ?? "var(--background)";
+	const surfaceBg = getEditorTheme(activeTheme).colors.background;
 
 	const style = useMemo(
 		() =>

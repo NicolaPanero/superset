@@ -43,9 +43,7 @@ export function ForkUsageSummary({
 		) : state.reason === "unknown" ? (
 			<Trans>Unverified</Trans>
 		) : null;
-	const statusClass = state.warning
-		? "text-amber-500"
-		: "text-muted-foreground";
+	const statusClass = state.warning ? "text-warning" : "text-muted-foreground";
 	const showsWindows =
 		!!account &&
 		account.status !== "signed_out" &&
@@ -109,7 +107,7 @@ export function ForkUsageSummary({
 				</div>
 			)}
 			{account?.retryAt && account.retryAt > new Date() && (
-				<div className="text-amber-500">
+				<div className="text-warning">
 					{formatResetLabel(account.retryAt, new Date())}
 				</div>
 			)}

@@ -54,6 +54,7 @@ export class LiveSessionRegistry {
 
 		const observer = this.options.observer;
 		const session = new LiveSession({
+			launchOptions: options,
 			sessionId: options.sessionId,
 			scopeId: options.scopeId,
 			harness: options.harness,

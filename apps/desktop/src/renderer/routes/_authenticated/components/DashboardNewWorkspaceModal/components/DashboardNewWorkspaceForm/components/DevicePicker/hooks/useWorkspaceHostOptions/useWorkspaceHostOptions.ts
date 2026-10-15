@@ -10,6 +10,7 @@ import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId"
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 export interface WorkspaceHostOption {
 	id: string;
@@ -35,6 +36,7 @@ interface UseWorkspaceHostOptionsResult {
 
 export function useWorkspaceHostOptions(): UseWorkspaceHostOptionsResult {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const { data: session } = authClient.useSession();
 	const { machineId, activeHostUrl } = useLocalHostService();
 	const appVersion = useAppVersion();
@@ -75,7 +77,7 @@ export function useWorkspaceHostOptions(): UseWorkspaceHostOptionsResult {
 	const otherHosts = useMemo(
 		() =>
 			accessibleHosts
-				.filter((host) => host.machineId !== machineId)
+				.filter((host) => showProFeatures && host.machineId !== machineId)
 				.map((host) => ({
 					id: host.machineId,
 					name: host.name,
@@ -84,7 +86,7 @@ export function useWorkspaceHostOptions(): UseWorkspaceHostOptionsResult {
 					versionState: deriveHostVersionState(host.version, appVersion),
 				}))
 				.sort((a, b) => a.name.localeCompare(b.name)),
-		[accessibleHosts, machineId, appVersion],
+		[accessibleHosts, machineId, appVersion, showProFeatures],
 	);
 
 	// Always surface the local device, even if its host row hasn't loaded yet —

@@ -97,7 +97,7 @@ export function ForkAgentSetup({
 					{busy ? (
 						<Loader2 className="size-3.5 animate-spin" aria-hidden="true" />
 					) : configured ? (
-						<Check className="size-3.5 text-green-500" aria-hidden="true" />
+						<Check className="size-3.5 text-success" aria-hidden="true" />
 					) : null}
 					<span>{status}</span>
 					{data?.version && (

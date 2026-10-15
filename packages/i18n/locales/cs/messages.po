@@ -7894,6 +7894,9 @@ msgstr "Zapomenout {domain}"
 msgid "Fork args"
 msgstr "Argumenty pro fork"
 
+msgid "Fork from here"
+msgstr "Vytvořit větev odtud"
+
 msgid "Fork session"
 msgstr "Forkovat relaci"
 
@@ -8965,6 +8968,9 @@ msgstr "Interaktivní terminál agenta."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Interaktivní klienti se autorizují přes OAuth 2.1 ve vašem prohlížeči, v rozsahu vaší aktivní organizace. Pro bezobslužná prostředí a CI vygenerujte API klíč v Nastavení → API klíče v desktopové aplikaci a předejte ho jako Bearer token. Kompletní nastavení včetně konfigurace hlaviček pro Claude Code najdete v <0>dokumentaci k ověřování</0>."
+
+msgid "Interactive home background"
+msgstr "Interaktivní pozadí úvodní stránky"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Chcete Superset přinést do své organizace? Ozvěte se a společně najdeme nastavení, které vašemu týmu sedne."
@@ -10557,6 +10563,9 @@ msgstr "Noví agenti {providerLabel} použijí {accountLabel}."
 msgid "New agent"
 msgstr "Nový agent"
 
+msgid "New Agent"
+msgstr "Nový agent"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Nová spuštění agentů použijí tento účet. Běžícího agenta přepnete jeho novým spuštěním."
 
@@ -12075,6 +12084,9 @@ msgstr "Otevře panel Změny na nové kartě, nebo zaměří existující"
 
 msgid "Open the global command palette"
 msgstr "Otevřít globální paletu příkazů"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Otevřít dialog nového agenta v aktuálním workspacu"
 
 msgid "Open the new workspace modal"
 msgstr "Otevřít okno nového pracovního prostoru"
@@ -14182,6 +14194,9 @@ msgstr "Zkuste to znovu za pár sekund."
 msgid "Retrying…"
 msgstr "Zkouším znovu…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Vraťte se před tuto zprávu a vložte její text zpět do konceptu. Původní konverzace zůstane v historii. Soubory se nezmění, protože tento agent nenabízí obnovení souborů přes ACP."
+
 msgid "Return to dashboard"
 msgstr "Zpět na dashboard"
 
@@ -14290,6 +14305,15 @@ msgstr "Zneplatnit API klíč"
 
 msgid "Revoke key"
 msgstr "Zneplatnit klíč"
+
+msgid "Rewind chat only"
+msgstr "Vrátit zpět pouze chat"
+
+msgid "Rewind conversation?"
+msgstr "Vrátit konverzaci zpět?"
+
+msgid "Rewind from here"
+msgstr "Vrátit zpět odtud"
 
 msgid "Rewrote it and published version 2."
 msgstr "Přepsáno a publikována verze 2."
@@ -15361,6 +15385,9 @@ msgstr "Zkratka se už používá"
 
 msgid "Show"
 msgstr "Zobrazit"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Zobrazovat logo Superset složené ze znaků a vlny reagující na kliknutí."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Zobrazit před ukončením aplikace potvrzovací dialog"
@@ -17316,9 +17343,6 @@ msgstr "Worktree obsahuje necommitnuté úpravy z relace agenta."
 
 msgid "Theme"
 msgstr "Motiv"
-
-msgid "Theme default"
-msgstr "Výchozí podle motivu"
 
 msgid "Theme file too large"
 msgstr "Soubor motivu je příliš velký"

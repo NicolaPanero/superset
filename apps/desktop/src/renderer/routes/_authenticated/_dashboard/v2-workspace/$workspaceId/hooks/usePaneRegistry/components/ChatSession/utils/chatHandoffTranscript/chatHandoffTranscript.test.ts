@@ -57,6 +57,25 @@ describe("buildChatHandoffTranscript", () => {
 		},
 	] as unknown as TurnGroup[];
 
+	it("stops a worktree handoff at the selected user message", () => {
+		expect(
+			buildChatHandoffTranscript(
+				groups,
+				snapshotWith({ a1: "Done." }),
+				"Claude",
+				"u1",
+			),
+		).toBe("User: add a test");
+		expect(() =>
+			buildChatHandoffTranscript(
+				groups,
+				snapshotWith({ a1: "Done." }),
+				"Claude",
+				"missing",
+			),
+		).toThrow("not loaded");
+	});
+
 	it("names each speaker", () => {
 		const text = buildChatHandoffTranscript(
 			groups,

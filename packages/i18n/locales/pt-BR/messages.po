@@ -7894,6 +7894,9 @@ msgstr "Esquecer {domain}"
 msgid "Fork args"
 msgstr "Argumentos de fork"
 
+msgid "Fork from here"
+msgstr "Criar uma ramificação a partir daqui"
+
 msgid "Fork session"
 msgstr "Bifurcar sessão"
 
@@ -8965,6 +8968,9 @@ msgstr "Terminal interativo do agente."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Clientes interativos autorizam por OAuth 2.1 no navegador, no escopo da sua organização ativa. Para ambientes headless e CI, gere uma chave de API em Configurações → Chaves de API no app de desktop e passe-a como Bearer token. A configuração completa, incluindo os cabeçalhos para o Claude Code, está na <0>documentação de autenticação</0>."
+
+msgid "Interactive home background"
+msgstr "Fundo interativo da tela inicial"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Quer levar o Superset para a sua organização? Fale com a gente e montamos junto a configuração certa para o seu time."
@@ -10557,6 +10563,9 @@ msgstr "Os novos agentes {providerLabel} vão usar {accountLabel}."
 msgid "New agent"
 msgstr "Novo agente"
 
+msgid "New Agent"
+msgstr "Novo agente"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Novos agentes usam esta conta. Reinicie um agente em execução para trocar a conta dele."
 
@@ -12075,6 +12084,9 @@ msgstr "Abre o painel de alterações em uma nova aba ou foca o existente"
 
 msgid "Open the global command palette"
 msgstr "Abrir a paleta de comandos global"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Abrir a caixa de diálogo de novo agente no workspace atual"
 
 msgid "Open the new workspace modal"
 msgstr "Abrir a janela de nova área de trabalho"
@@ -14182,6 +14194,9 @@ msgstr "Tente de novo em alguns segundos."
 msgid "Retrying…"
 msgstr "Tentando de novo…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Volte ao ponto anterior a esta mensagem e coloque o texto dela de volta no rascunho. A conversa original permanece no histórico. Os arquivos não mudam porque este agente não oferece restauração de arquivos via ACP."
+
 msgid "Return to dashboard"
 msgstr "Voltar ao painel"
 
@@ -14290,6 +14305,15 @@ msgstr "Revogar chave de API"
 
 msgid "Revoke key"
 msgstr "Revogar chave"
+
+msgid "Rewind chat only"
+msgstr "Rebobinar apenas o chat"
+
+msgid "Rewind conversation?"
+msgstr "Rebobinar a conversa?"
+
+msgid "Rewind from here"
+msgstr "Rebobinar a partir daqui"
 
 msgid "Rewrote it and published version 2."
 msgstr "Reescrevi e publiquei a versão 2."
@@ -15361,6 +15385,9 @@ msgstr "Atalho já em uso"
 
 msgid "Show"
 msgstr "Mostrar"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Mostra o logotipo do Superset formado por caracteres e ondas que reagem aos cliques."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Mostra uma confirmação ao encerrar o app"
@@ -17316,9 +17343,6 @@ msgstr "A worktree tem edições sem commit feitas na sessão do agente."
 
 msgid "Theme"
 msgstr "Tema"
-
-msgid "Theme default"
-msgstr "Padrão do tema"
 
 msgid "Theme file too large"
 msgstr "Arquivo de tema grande demais"

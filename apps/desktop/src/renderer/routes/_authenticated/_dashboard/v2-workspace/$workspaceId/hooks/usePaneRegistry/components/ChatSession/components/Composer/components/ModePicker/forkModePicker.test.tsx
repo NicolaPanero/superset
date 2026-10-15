@@ -23,6 +23,7 @@ test("Cursor's menu offers Full access alongside Agent and Ask", async () => {
 		code: "ArrowDown",
 	});
 	await flush();
+	expect(view.queryByRole("menuitem", { name: /^Plan/ })).toBeNull();
 	const full = view.getByRole("menuitem", { name: /Full access/ });
 	fireEvent.focus(full);
 	await flush();
@@ -58,4 +59,47 @@ test("a native YOLO mode has the same Full access label", () => {
 		/>,
 	);
 	expect(view.getByRole("button", { name: "Full access" })).toBeDefined();
+});
+
+test("an advertised Plan mode is selectable beside permissions and shown in the composer", async () => {
+	let selected: string | undefined;
+	const view = render(
+		<ModePicker
+			currentModeId={FULL_ACCESS_CHAT_MODE}
+			modes={[
+				{ id: "default", label: "Default" },
+				{ id: "plan", label: "Plan" },
+				{ id: FULL_ACCESS_CHAT_MODE, label: "Full access" },
+			]}
+			onSelect={(id) => {
+				selected = id;
+			}}
+		/>,
+	);
+	fireEvent.keyDown(view.getByRole("button", { name: "Full access" }), {
+		key: "ArrowDown",
+		code: "ArrowDown",
+	});
+	await flush();
+	const plan = view.getByRole("menuitem", {
+		name: /Plan Read and plan without changing anything/,
+	});
+	fireEvent.click(plan);
+	await flush();
+	expect(selected).toBe("plan");
+	expect(view.getByRole("button", { name: "Plan" })).toBeDefined();
+});
+
+test("the picker is available when Plan is the only alternative to the current mode", () => {
+	const view = render(
+		<ModePicker
+			currentModeId="plan"
+			modes={[
+				{ id: "default", label: "Default" },
+				{ id: "plan", label: "Plan" },
+			]}
+			onSelect={() => {}}
+		/>,
+	);
+	expect(view.getByRole("button", { name: "Plan" })).toBeDefined();
 });

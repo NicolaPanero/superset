@@ -3,6 +3,7 @@ import { z } from "zod";
 const itemBaseFields = {
 	id: z.string().min(1),
 	parentItemId: z.string().min(1).optional(),
+	nativeMessageId: z.string().min(1).optional(),
 	startedAtMs: z.number(),
 	completedAtMs: z.number().optional(),
 };

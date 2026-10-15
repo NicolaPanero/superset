@@ -3,6 +3,7 @@ import type { SettingsItem, SettingVariant } from "./settings-search";
 export const FORK_SETTING_ITEM_ID = {
 	FORK_HIDE_CLI: "fork-hide-cli",
 	FORK_HIDE_PRO: "fork-hide-pro",
+	FORK_HOME_BACKGROUND: "fork-home-background",
 	LOCAL_AGENT_ACCOUNTS: "local-agent-accounts",
 	EXPERIMENTAL_ACP_CHAT: "experimental-acp-chat",
 } as const;
@@ -14,10 +15,28 @@ export const FORK_SETTING_ITEM_VARIANT: Record<
 	[FORK_SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS]: "v2",
 	[FORK_SETTING_ITEM_ID.FORK_HIDE_CLI]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_HIDE_PRO]: "shared",
+	[FORK_SETTING_ITEM_ID.FORK_HOME_BACKGROUND]: "v2",
 	[FORK_SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT]: "v2",
 };
 
 export const FORK_SETTINGS_ITEMS: SettingsItem[] = [
+	{
+		id: FORK_SETTING_ITEM_ID.FORK_HOME_BACKGROUND,
+		section: "fork",
+		title: "Interactive home background",
+		description:
+			"Show a character-based Superset logo and waves that respond to clicks.",
+		keywords: [
+			"fork",
+			"home",
+			"background",
+			"logo",
+			"characters",
+			"ascii",
+			"waves",
+			"animation",
+		],
+	},
 	{
 		id: FORK_SETTING_ITEM_ID.FORK_HIDE_CLI,
 		section: "fork",

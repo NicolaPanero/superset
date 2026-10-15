@@ -531,8 +531,11 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 	steer(content: UserContent[]) {
 		return this.child.steer?.(content) ?? Promise.resolve(false);
 	}
-	fork() {
-		return this.child.fork?.() ?? Promise.resolve(null);
+	forkOptions() {
+		return { accountSelection: this.selection };
+	}
+	fork(point?: { messageId: string }) {
+		return this.child.fork?.(point) ?? Promise.resolve(null);
 	}
 	stopBackgroundTask(id: string) {
 		return this.child.stopBackgroundTask?.(id) ?? Promise.resolve(false);

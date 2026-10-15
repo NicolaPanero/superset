@@ -7894,6 +7894,9 @@ msgstr "{domain} sitesini unut"
 msgid "Fork args"
 msgstr "Fork argümanları"
 
+msgid "Fork from here"
+msgstr "Buradan dallandır"
+
 msgid "Fork session"
 msgstr "Oturumu forkla"
 
@@ -8965,6 +8968,9 @@ msgstr "Etkileşimli ajan terminali."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Etkileşimli istemciler tarayıcınızda OAuth 2.1 üzerinden, etkin kuruluşunuzla sınırlı olarak yetkilendirilir. Başsız ortamlar ve CI için masaüstü uygulamasındaki Ayarlar → API Anahtarları bölümünden bir API anahtarı oluşturun ve bunun yerine Bearer token olarak iletin. Claude Code için başlık yapılandırması dahil tüm kurulum, <0>kimlik doğrulama belgelerinde</0> yer alıyor."
+
+msgid "Interactive home background"
+msgstr "Etkileşimli ana sayfa arka planı"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Superset'i kuruluşunuza getirmekle ilgileniyor musunuz? Bize ulaşın, takımınıza uygun kurulumu birlikte belirleyelim."
@@ -10557,6 +10563,9 @@ msgstr "Yeni {providerLabel} ajanları {accountLabel} hesabını kullanacak."
 msgid "New agent"
 msgstr "Yeni ajan"
 
+msgid "New Agent"
+msgstr "Yeni Ajan"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Yeni ajan başlatmaları bu hesabı kullanır. Değiştirmek için çalışan bir ajanı yeniden başlatın."
 
@@ -12075,6 +12084,9 @@ msgstr "Değişiklikler panelini yeni sekmede açar veya mevcut olana odaklanır
 
 msgid "Open the global command palette"
 msgstr "Genel komut paletini aç"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Geçerli workspace'te yeni ajan iletişim kutusunu aç"
 
 msgid "Open the new workspace modal"
 msgstr "Yeni çalışma alanı penceresini aç"
@@ -14182,6 +14194,9 @@ msgstr "Birkaç saniye sonra yeniden deneyin."
 msgid "Retrying…"
 msgstr "Yeniden deneniyor…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Bu mesajdan önceki noktaya dönün ve metnini taslağa geri koyun. Asıl konuşma geçmişte saklanır. Bu ajan ACP üzerinden dosya geri yükleme sunmadığından dosyalar değişmez."
+
 msgid "Return to dashboard"
 msgstr "Panoya dön"
 
@@ -14290,6 +14305,15 @@ msgstr "API anahtarını iptal et"
 
 msgid "Revoke key"
 msgstr "Anahtarı iptal et"
+
+msgid "Rewind chat only"
+msgstr "Yalnızca sohbeti geri sar"
+
+msgid "Rewind conversation?"
+msgstr "Konuşma geri sarılsın mı?"
+
+msgid "Rewind from here"
+msgstr "Buradan geri sar"
 
 msgid "Rewrote it and published version 2."
 msgstr "Yeniden yazdım ve sürüm 2'yi yayınladım."
@@ -15361,6 +15385,9 @@ msgstr "Kısayol zaten kullanımda"
 
 msgid "Show"
 msgstr "Göster"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Karakterlerden oluşan Superset logosunu ve tıklamalara tepki veren dalgaları gösterir."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Uygulamadan çıkarken onay penceresi göster"
@@ -17316,9 +17343,6 @@ msgstr "Worktree'de ajan oturumundan kalan commit'lenmemiş düzenlemeler var."
 
 msgid "Theme"
 msgstr "Tema"
-
-msgid "Theme default"
-msgstr "Tema varsayılanı"
 
 msgid "Theme file too large"
 msgstr "Tema dosyası çok büyük"

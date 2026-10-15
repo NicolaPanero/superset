@@ -129,6 +129,7 @@ export function DevicePicker({
 		: isCloud
 			? null
 			: (otherHosts.find((host) => host.id === hostId)?.isOnline ?? false);
+	if (!showProFeatures) return null;
 
 	return (
 		<DropdownMenu>

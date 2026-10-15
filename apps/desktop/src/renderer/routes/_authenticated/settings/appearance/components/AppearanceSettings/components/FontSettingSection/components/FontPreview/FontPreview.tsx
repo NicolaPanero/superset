@@ -4,8 +4,11 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
 	oneDark,
 	oneLight,
+	vs,
+	vscDarkPlus,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "renderer/stores";
+import { getEditorTheme, isForkVSCodeEditorTheme } from "shared/themes";
 import { FontNotFoundBanner } from "./components/FontNotFoundBanner";
 
 const CODE_PREVIEW = `// Strings, numbers, booleans & symbols
@@ -64,6 +67,15 @@ export function FontPreview({
 	const theme = useTheme();
 	const isDark = theme?.type !== "light";
 	const isTerminal = variant === "terminal";
+	const editorTheme = theme ? getEditorTheme(theme) : null;
+	const previewTheme =
+		theme && isForkVSCodeEditorTheme(theme)
+			? isDark
+				? vscDarkPlus
+				: vs
+			: isDark
+				? oneDark
+				: oneLight;
 	const fontFamilyStyle = fontFamily || undefined;
 	const cursorDimensions =
 		cursorStyle === "bar"
@@ -147,11 +159,21 @@ export function FontPreview({
 					</div>
 				</div>
 			) : (
-				<div className="flex h-56 overflow-hidden">
+				<div
+					className="flex h-56 overflow-hidden"
+					style={{
+						background: editorTheme?.colors.background,
+						color: editorTheme?.colors.foreground,
+					}}
+				>
 					<div
 						aria-hidden="true"
 						className="flex select-none flex-col border-r bg-muted/25 px-3 py-4 text-right text-muted-foreground/60"
-						style={typographyStyle}
+						style={{
+							...typographyStyle,
+							background: editorTheme?.colors.gutterBackground,
+							color: editorTheme?.colors.gutterForeground,
+						}}
 					>
 						{CODE_LINE_NUMBERS.map((lineNumber) => (
 							<span key={lineNumber}>{lineNumber}</span>
@@ -159,9 +181,7 @@ export function FontPreview({
 					</div>
 					<SyntaxHighlighter
 						language="typescript"
-						style={
-							(isDark ? oneDark : oneLight) as Record<string, CSSProperties>
-						}
+						style={previewTheme as Record<string, CSSProperties>}
 						customStyle={{
 							...typographyStyle,
 							flex: 1,

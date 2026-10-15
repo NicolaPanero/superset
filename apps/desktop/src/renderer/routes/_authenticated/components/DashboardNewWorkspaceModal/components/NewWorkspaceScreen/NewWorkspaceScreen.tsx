@@ -48,6 +48,10 @@ import {
 	ForkAccountPicker,
 	useForkCreationAccount,
 } from "renderer/components/ForkAccountPicker";
+import {
+	ForkHomeBackground,
+	ForkHomeBrand,
+} from "renderer/components/ForkHomeBackground";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -66,6 +70,7 @@ import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agen
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkHostId } from "renderer/lib/fork-host-visibility";
 import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unavailable";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
@@ -160,12 +165,17 @@ export function NewWorkspaceScreen({
 	const openInFinderMutation = electronTrpc.external.openInFinder.useMutation();
 	const {
 		closeModal,
-		draft,
+		draft: savedDraft,
 		updateDraft,
 		selectProject,
 		selectSession,
 		resetKey,
 	} = useDashboardNewWorkspaceDraft();
+	const hostId = useForkHostId(savedDraft.hostId);
+	const draft = useMemo(
+		() => ({ ...savedDraft, hostId }),
+		[savedDraft, hostId],
+	);
 	const attachments = useProviderAttachments();
 	const composerRef = useRef<PromptInputHandle>(null);
 	const addAttachments = useCallback(
@@ -340,7 +350,10 @@ export function NewWorkspaceScreen({
 	const [liveComposerWidth, setLiveComposerWidth] = useState<number | null>(
 		null,
 	);
-	const composerWidth = liveComposerWidth ?? storedComposerWidth;
+	const composerWidth = Math.min(
+		liveComposerWidth ?? storedComposerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+		NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+	);
 
 	// One suggestion per open. resetKey only bumps on resetDraft, so ordinary
 	// modal reopens roll their own counter; the tiptap Placeholder extension
@@ -720,6 +733,7 @@ export function NewWorkspaceScreen({
 			onDragOver={handleDragOver}
 			onDrop={handleDrop}
 		>
+			<ForkHomeBackground active={isOpen} />
 			<AnimatePresence>
 				{isDraggingFiles && (
 					<motion.div
@@ -789,7 +803,9 @@ export function NewWorkspaceScreen({
 				}
 			/>
 			<div className="flex flex-1 flex-col items-center justify-center gap-8">
-				<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				<ForkHomeBrand>
+					<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				</ForkHomeBrand>
 				<h1 className="text-center text-3xl font-medium text-foreground/90">
 					<Trans>What should we build next?</Trans>
 				</h1>
@@ -799,7 +815,7 @@ export function NewWorkspaceScreen({
 				<div
 					className="relative flex w-full flex-col"
 					style={{
-						maxWidth: composerWidth ?? "none",
+						maxWidth: composerWidth,
 					}}
 				>
 					<AnimatePresence initial={false}>
@@ -1144,7 +1160,7 @@ export function NewWorkspaceScreen({
 						)}
 					</div>
 					<SymmetricResizeHandles
-						currentWidth={composerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH}
+						currentWidth={composerWidth}
 						minWidth={NEW_WORKSPACE_SCREEN_MIN_WIDTH}
 						maxWidth={NEW_WORKSPACE_SCREEN_MAX_WIDTH}
 						onWidthChange={setLiveComposerWidth}

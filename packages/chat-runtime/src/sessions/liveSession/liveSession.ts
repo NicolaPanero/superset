@@ -14,8 +14,10 @@ import type {
 	HarnessStartOptions,
 } from "../../harness";
 import type { ChatJournal } from "../../journal";
+import type { HarnessFactoryOptions } from "../registry";
 
 export type LiveSessionOptions = {
+	launchOptions?: HarnessFactoryOptions;
 	sessionId: string;
 	scopeId: string;
 	harness: string;
@@ -271,8 +273,26 @@ export class LiveSession {
 		);
 	}
 
-	fork(): Promise<string | null> {
-		return this.options.adapter.fork?.() ?? Promise.resolve(null);
+	get launchOptions(): HarnessFactoryOptions | undefined {
+		return this.options.launchOptions
+			? {
+					...this.options.launchOptions,
+					...this.options.adapter.forkOptions?.(),
+				}
+			: undefined;
+	}
+	fork(point?: { messageId: string }): Promise<string | null> {
+		if (
+			point &&
+			(this.sessionState.status !== "idle" ||
+				this.currentTurn?.status === "running" ||
+				this.queuedCount > 0 ||
+				this.sessionState.backgroundTasks?.length)
+		)
+			throw new Error(
+				"Wait for the agent and queued work to finish before branching",
+			);
+		return this.options.adapter.fork?.(point) ?? Promise.resolve(null);
 	}
 
 	async dispose(): Promise<void> {

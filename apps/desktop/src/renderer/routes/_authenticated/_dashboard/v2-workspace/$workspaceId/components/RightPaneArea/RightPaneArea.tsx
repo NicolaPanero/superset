@@ -16,6 +16,7 @@ import { WindowControlsInset } from "renderer/routes/_authenticated/_dashboard/c
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
+import type { ForkPaneActions } from "../../hooks/useDefaultPaneActions/fork-pane-actions";
 import type { PaneViewerData } from "../../types";
 import { V2NotificationStatusIndicator } from "../V2NotificationStatusIndicator";
 import { WorkspaceTabIcon } from "../WorkspaceTabIcon";
@@ -27,7 +28,9 @@ import type { RightPaneKind } from "./types";
 interface RightPaneAreaProps {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	registry: PaneRegistry<PaneViewerData>;
-	paneActions: PaneActionConfig<PaneViewerData>[];
+	paneActions:
+		| PaneActionConfig<PaneViewerData>[]
+		| ForkPaneActions<PaneViewerData>;
 	contextMenuActions: ContextMenuActionConfig<PaneViewerData>[];
 	onBeforeCloseTab: (tab: Tab<PaneViewerData>) => boolean | Promise<boolean>;
 	onInteractionStateChange?: (state: WorkspaceInteractionState) => void;

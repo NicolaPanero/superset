@@ -1,5 +1,6 @@
 import { registerCustomTheme } from "@pierre/diffs";
 import type { DiffsThemeNames } from "@pierre/diffs/react";
+import { getForkShikiTheme } from "renderer/lib/fork-editor-syntax";
 import { getEditorTheme, type Theme } from "shared/themes";
 import { toHex, toHexAuto } from "shared/themes/utils";
 
@@ -22,6 +23,8 @@ function createDiffThemeName(theme: Theme): DiffsThemeNames {
 }
 
 function createShikiTheme(theme: Theme) {
+	const forkTheme = getForkShikiTheme(theme);
+	if (forkTheme) return { ...forkTheme, name: createDiffThemeName(theme) };
 	const editorTheme = getEditorTheme(theme);
 
 	return {

@@ -6,6 +6,7 @@ import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { cn } from "@superset/ui/utils";
 import { useRef } from "react";
+import type { ChatForkTarget } from "../../../../types";
 import { parseAttachmentTags } from "../../../../utils/attachmentTags";
 import { LEADING_COMMAND } from "../../../../utils/commandChip";
 import type { EarlierUserMessage } from "../../../../utils/earlierHistory";
@@ -14,6 +15,7 @@ import {
 	splitByElements,
 } from "../../../../utils/messageElements";
 import { AttachmentImage } from "../AttachmentImage";
+import { ForkMessageActions } from "../ForkMessageActions";
 import { UserMessageText } from "./components/UserMessageText";
 import { useFitsOneLine } from "./hooks/useFitsOneLine";
 
@@ -32,12 +34,22 @@ export type PendingPrompt = {
 };
 
 export function UserMessageRow({
+	onFork,
+	canForkInWorkspace,
+	forkFromHere,
+	onRewind,
+	canForkToWorktree,
 	commands,
 	harness,
 	item,
 	pending,
 }: {
 	item: UserMessage;
+	onRewind?: ((itemId: string) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
+	canForkInWorkspace?: boolean | undefined;
+	forkFromHere?: boolean | undefined;
+	canForkToWorktree?: boolean | undefined;
 	commands?: ReadonlyMap<string, AvailableCommand> | undefined;
 	/** Which harness spelled this turn; its reader decides what is bookkeeping. */
 	harness: string | undefined;
@@ -80,7 +92,7 @@ export function UserMessageRow({
 		),
 	];
 	return (
-		<Message className="pt-1.5 pb-5 pl-10" from="user">
+		<Message className="group/message pt-1.5 pb-5 pl-10" from="user">
 			{images.length + earlierImages.length > 0 && (
 				<div
 					className={cn(
@@ -140,6 +152,18 @@ export function UserMessageRow({
 						</div>
 					)}
 				</MessageContent>
+			)}
+			{!pending && !item.queued && (
+				<ForkMessageActions
+					canForkInWorkspace={canForkInWorkspace}
+					forkFromHere={forkFromHere}
+					onRewind={onRewind ? () => onRewind(item.id) : undefined}
+					className="self-end"
+					item={item}
+					text={text}
+					onFork={onFork}
+					canForkToWorktree={canForkToWorktree}
+				/>
 			)}
 			{pending?.failed && (
 				<div className="flex items-center gap-2 self-end">

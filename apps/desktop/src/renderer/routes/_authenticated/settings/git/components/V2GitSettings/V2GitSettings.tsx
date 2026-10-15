@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { useHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
+import { useForkHostId } from "renderer/lib/fork-host-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { getHostServiceUnavailableMessage } from "renderer/lib/host-service-unavailable";
 import { useWorkspaceHostOptions } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/components/DevicePicker/hooks/useWorkspaceHostOptions";
@@ -35,7 +36,8 @@ interface V2GitSettingsProps {
  * picker has selected. Per-host setting; the dropdown only appears when the
  * user has 2+ devices in this org.
  */
-export function V2GitSettings({ hostId }: V2GitSettingsProps) {
+export function V2GitSettings({ hostId: requestedHostId }: V2GitSettingsProps) {
+	const hostId = useForkHostId(requestedHostId);
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const hostService = useLocalHostService();

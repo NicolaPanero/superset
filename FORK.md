@@ -12,11 +12,37 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Uso quotidiano
 
+- **Settings → Fork → Interactive home background** attiva uno sfondo di
+  caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
+  e nella schermata di un workspace senza schede aperte.
+  A riposo onde grigie, lente e tenui nascono in punti casuali e si
+  allargano; muovendo il mouse se ne generano altre lungo il percorso. Ogni
+  click genera un’onda arancione dal profilo irregolare, con increspature
+  secondarie; i caratteri cambiano sulla cresta. Il logo Superset++ fa parte
+  dello sfondo: caratteri fermi e tenui che diventano arancio pieno dove passa
+  un’onda da click, seguendone la forma. Al massimo tre onde da click restano
+  attive insieme, con almeno 0,4 secondi fra un click e il successivo; un nuovo
+  click non cancella quelle in corso. Colori e contrasto seguono il tema scelto
+  in **Settings → Appearance**, chiaro, scuro o personalizzato. L’opzione è
+  attiva per impostazione predefinita; chi la disattiva mantiene la scelta su
+  questo dispositivo. Il disegno
+  avviene in WebGL2 sulla GPU, alla risoluzione nativa dello schermo e senza
+  librerie aggiuntive: 30 fotogrammi al secondo a riposo, 60 durante un’onda da
+  click, nessuno quando la finestra è inattiva. Senza WebGL2 la home resta
+  quella originale. Con **riduci movimento** mostra una composizione statica.
+  Pulsanti, campi e menu mantengono i propri click.
+- **Settings → Fork → Hide paid features** nasconde anche i selettori del
+  dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
+  In questa modalità la creazione, l’elenco dei workspace e le impostazioni
+  usano il computer locale, anche con una selezione remota salvata o in un link.
 - **Agent · Account** nell’intestazione apre due schede:
   **Chat corrente** mostra account, quota e opzioni di continuazione salvate subito;
   **Cambia agente o account** gestisce il cambio manuale con **Continue**.
   Il cambio account Claude mantiene la chat nello stesso pannello. Per un altro
   agente puoi scegliere la stessa chat, una nuova scheda o un pannello affiancato.
+- Nel selettore dei permessi della chat compare **Plan** quando l’agente
+  espone questa modalità. Usa la pianificazione nativa e disattiva le
+  approvazioni automatiche di **Full access**.
 - Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
   e le sue opzioni. Non cambia agente o account.
 - **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
@@ -31,8 +57,29 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
+- I messaggi utente mostrano ora, copia e diramazione al passaggio del mouse.
+  Con Claude e Codex, **Fork from here** riparte dal messaggio scelto:
+  se è un messaggio utente, ne rimette il testo nella bozza. **Rewind from here**
+  chiede conferma e riavvolge solo la chat; i file restano invariati.
+  La sessione originale resta nella cronologia e viene lasciata aperta se
+  la copia non si carica. Gli altri agenti mantengono il fork dell’intera sessione.
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
+- I terminali usano **SF Mono a 12 px** su macOS, caricato dal sistema come nel
+  Terminale nativo, con **JetBrains Mono** incluso come fallback. Windows e Linux
+  usano JetBrains Mono a 12 px. Interlinea 1,1 e contrasto minimo 3:1 sono comuni.
+  Il tema **Dark** usa la palette ANSI di VS Code, più satura di quella pastello.
+  Le preferenze salvate prevalgono;
+  font e valori restano modificabili in **Settings → Appearance → Terminal typography**.
+  Il font variabile normale e corsivo proviene da JetBrains Mono **v2.304**
+  ([sorgente](https://github.com/JetBrains/JetBrainsMono/tree/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/variable));
+  la licenza SIL OFL 1.1 è inclusa nelle risorse dell’app.
+- L’editor e i diff dei temi **Dark** e **Light** usano la palette **Dark+ / Light+**
+  di VS Code. La dimensione iniziale è 12 px su ogni sistema: Menlo su
+  macOS, Consolas su Windows, Droid Sans Mono su Linux con fallback
+  JetBrains Mono incluso. Le legature sono disattivate; tutte le preferenze restano
+  modificabili nelle impostazioni. CodeMirror mantiene il proprio parser:
+  la classificazione dei token può differire dal motore di VS Code.
 
 ## Configurazione guidata di Grok e Cursor
 
@@ -393,6 +440,21 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e
   `scripts/fork/` per identità, dati e distribuzione.
+- `ForkHomeBackground` (in `renderer/components`) e `fork-home-appearance.ts`
+  per lo sfondo opzionale: disegno, animazione, logo e stili restano nel
+  componente del fork. La home e la schermata vuota del workspace
+  (`WorkspaceEmptyState`) aggiungono solo il livello di sfondo e il contenitore
+  del logo; senza sfondo la schermata vuota mostra il logo `{+}` del fork.
+- `useForkPaneActions` nasconde la × di un pannello quando è l’unico della sua
+  scheda, perché la × della scheda fa già la stessa cosa; `page.tsx` e
+  `RightPaneArea.tsx` cambiano solo il passaggio delle azioni.
+- Barra delle schede e intestazioni dei pannelli senza sfondo proprio, con lo
+  stesso colore del contenuto: in `TabBar.tsx` e `PaneHeader.tsx` cambia solo la
+  classe del colore di sfondo.
+- `ForkWordmark` per la scritta **SUPERSET++** della schermata di avvio, con lo
+  stesso effetto di luce dell’originale, e della pagina di accesso.
+  `AuthProvider` cambia solo l’import; il logo della pagina di accesso arriva
+  dalla riga di export in `sign-in/components/SupersetLogo/index.ts`.
 
 Quando upstream assorbe una funzione, confrontare comportamento, profili e
 cronologia prima di rimuovere l’estensione. Il trasferimento nativo, il ponte

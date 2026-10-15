@@ -5,7 +5,7 @@ export function ForkProductMark({ className }: { className?: string }) {
 			viewBox="19.84 65.5 144.26 58.6"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			className={cn("text-[#eae8e6]", className)}
+			className={cn("text-muted-foreground", className)}
 			aria-label="Superset++"
 		>
 			<title>{"Superset++"}</title>

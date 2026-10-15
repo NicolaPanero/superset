@@ -18,6 +18,7 @@ import { Code2, RotateCcw, SquareTerminal } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { resolveEditorLineHeight } from "renderer/lib/editor-typography";
 import type { FontSettings } from "renderer/lib/font-settings";
+import { FORK_EDITOR_DEFAULTS } from "renderer/lib/fork-editor-appearance";
 import {
 	DEFAULT_TERMINAL_CURSOR_BLINK,
 	DEFAULT_TERMINAL_CURSOR_STYLE,
@@ -25,6 +26,7 @@ import {
 	DEFAULT_TERMINAL_FONT_SIZE,
 	DEFAULT_TERMINAL_LIGATURES,
 	DEFAULT_TERMINAL_LINE_HEIGHT,
+	DEFAULT_TERMINAL_MINIMUM_CONTRAST,
 } from "renderer/lib/terminal/appearance";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
 import {
@@ -56,7 +58,7 @@ const VARIANT_CONFIG = {
 		}),
 		defaultFamily: DEFAULT_CODE_EDITOR_FONT_FAMILY,
 		defaultSize: DEFAULT_CODE_EDITOR_FONT_SIZE,
-		defaultLineHeight: 1.5,
+		defaultLineHeight: FORK_EDITOR_DEFAULTS.lineHeight,
 		familyKey: "editorFontFamily",
 		sizeKey: "editorFontSize",
 		lineHeightKey: "editorLineHeight",
@@ -374,7 +376,9 @@ export function TypographySurfaceCard({
 						id={`${variant}-ligatures`}
 						checked={
 							settings[config.ligaturesKey] ??
-							(variant === "terminal" ? DEFAULT_TERMINAL_LIGATURES : true)
+							(variant === "terminal"
+								? DEFAULT_TERMINAL_LIGATURES
+								: FORK_EDITOR_DEFAULTS.ligatures)
 						}
 						onCheckedChange={(checked) =>
 							mutateSetting(config.ligaturesKey, checked)
@@ -402,8 +406,9 @@ export function TypographySurfaceCard({
 								</SelectTrigger>
 								<SelectContent>
 									<SelectItem value="default">
-										<Trans>Theme default</Trans>
+										<Trans>Default</Trans>
 									</SelectItem>
+									<SelectItem value="1">1:1</SelectItem>
 									<SelectItem value="3">3:1</SelectItem>
 									<SelectItem value="4.5">
 										<Trans>4.5:1 (AA)</Trans>
@@ -489,13 +494,17 @@ export function TypographySurfaceCard({
 					fontWeight={settings[config.fontWeightKey] ?? 400}
 					ligatures={
 						settings[config.ligaturesKey] ??
-						(variant === "terminal" ? DEFAULT_TERMINAL_LIGATURES : true)
+						(variant === "terminal"
+							? DEFAULT_TERMINAL_LIGATURES
+							: FORK_EDITOR_DEFAULTS.ligatures)
 					}
 					variant={variant}
 					isCustomFont={currentFamily !== null}
 					{...(variant === "terminal"
 						? {
-								minimumContrast: settings.terminalMinimumContrast,
+								minimumContrast:
+									settings.terminalMinimumContrast ??
+									DEFAULT_TERMINAL_MINIMUM_CONTRAST,
 								cursorStyle:
 									settings.terminalCursorStyle ?? DEFAULT_TERMINAL_CURSOR_STYLE,
 								cursorBlink:

@@ -34,8 +34,8 @@ export function UsageWindowChip({
 			<span
 				className={cn(
 					"min-w-[2.25rem] tabular-nums",
-					tone === "danger" && "text-red-500",
-					tone === "warning" && "text-amber-500",
+					tone === "danger" && "text-destructive",
+					tone === "warning" && "text-warning",
 					tone === "ok" && "text-muted-foreground",
 				)}
 			>

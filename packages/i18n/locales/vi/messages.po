@@ -7894,6 +7894,9 @@ msgstr "Quên {domain}"
 msgid "Fork args"
 msgstr "Tham số fork"
 
+msgid "Fork from here"
+msgstr "Tạo nhánh từ đây"
+
 msgid "Fork session"
 msgstr "Fork phiên"
 
@@ -8965,6 +8968,9 @@ msgstr "Terminal agent tương tác."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Client tương tác sẽ ủy quyền qua OAuth 2.1 trong trình duyệt, giới hạn theo tổ chức đang hoạt động của bạn. Với môi trường không giao diện và CI, hãy tạo khóa API trong Cài đặt → Khóa API ở ứng dụng máy tính và truyền nó dưới dạng Bearer token. Hướng dẫn thiết lập đầy đủ, kể cả cấu hình header cho Claude Code, có trong <0>tài liệu xác thực</0>."
+
+msgid "Interactive home background"
+msgstr "Nền trang chủ tương tác"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Muốn đưa Superset vào tổ chức của bạn? Hãy liên hệ và chúng tôi sẽ cùng bạn tìm thiết lập phù hợp cho đội ngũ."
@@ -10557,6 +10563,9 @@ msgstr "Các agent {providerLabel} mới sẽ dùng {accountLabel}."
 msgid "New agent"
 msgstr "Agent mới"
 
+msgid "New Agent"
+msgstr "Agent mới"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Các agent khởi chạy mới sẽ dùng tài khoản này. Khởi chạy lại agent đang chạy để đổi sang tài khoản này."
 
@@ -12075,6 +12084,9 @@ msgstr "Mở bảng thay đổi trong tab mới, hoặc chuyển tiêu điểm �
 
 msgid "Open the global command palette"
 msgstr "Mở bảng lệnh toàn cục"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Mở hộp thoại agent mới trong workspace hiện tại"
 
 msgid "Open the new workspace modal"
 msgstr "Mở hộp thoại tạo workspace mới"
@@ -14182,6 +14194,9 @@ msgstr "Thử lại sau vài giây."
 msgid "Retrying…"
 msgstr "Đang thử lại…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Quay lại trước tin nhắn này và đưa nội dung của nó về bản nháp. Cuộc trò chuyện gốc vẫn được giữ trong lịch sử. Các tệp không thay đổi vì tác tử này không hỗ trợ khôi phục tệp qua ACP."
+
 msgid "Return to dashboard"
 msgstr "Quay về dashboard"
 
@@ -14290,6 +14305,15 @@ msgstr "Thu hồi khóa API"
 
 msgid "Revoke key"
 msgstr "Thu hồi khóa"
+
+msgid "Rewind chat only"
+msgstr "Chỉ tua lại trò chuyện"
+
+msgid "Rewind conversation?"
+msgstr "Tua lại cuộc trò chuyện?"
+
+msgid "Rewind from here"
+msgstr "Tua lại từ đây"
 
 msgid "Rewrote it and published version 2."
 msgstr "Đã viết lại và xuất bản phiên bản 2."
@@ -15361,6 +15385,9 @@ msgstr "Phím tắt đã được dùng"
 
 msgid "Show"
 msgstr "Hiện"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Hiển thị biểu trưng Superset tạo từ các ký tự và các gợn sóng phản hồi khi nhấp."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Hiện hộp thoại xác nhận khi thoát ứng dụng"
@@ -17316,9 +17343,6 @@ msgstr "Worktree có các chỉnh sửa chưa commit từ phiên agent."
 
 msgid "Theme"
 msgstr "Theme"
-
-msgid "Theme default"
-msgstr "Mặc định của theme"
 
 msgid "Theme file too large"
 msgstr "Tệp theme quá lớn"

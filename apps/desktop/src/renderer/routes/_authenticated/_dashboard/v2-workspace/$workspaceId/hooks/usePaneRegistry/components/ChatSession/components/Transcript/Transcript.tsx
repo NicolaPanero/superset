@@ -77,8 +77,10 @@ export type TranscriptProps = {
 	onLoadOlder: () => Promise<boolean>;
 	onRequestItemBodies: (itemIds: readonly string[]) => void;
 	onRespond: (approvalId: string, decision: Decision) => void;
-	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
 	canForkToWorktree?: boolean;
+	onRewind?: ((itemId: string) => void) | undefined;
+	rewindableItemIds?: ReadonlySet<string> | undefined;
 	onRetryPrompt: (clientId: string) => void;
 	onDiscardPrompt: (clientId: string) => void;
 	/** The pane has focus, so ⌘F opens the find bar here. */
@@ -114,6 +116,8 @@ export function Transcript({
 	onCloseFind,
 	onDiscardPrompt,
 	onFork,
+	onRewind,
+	rewindableItemIds,
 	onLoadOlder,
 	onRequestItemBodies,
 	onRespond,
@@ -288,6 +292,8 @@ export function Transcript({
 				messageId={rowMessageId(row)}
 				onDiscardPrompt={onDiscardPrompt}
 				onFork={onFork}
+				onRewind={onRewind}
+				rewindableItemIds={rewindableItemIds}
 				onRespond={onRespond}
 				onRetryPrompt={onRetryPrompt}
 				onToggleEntry={onToggleEntry}

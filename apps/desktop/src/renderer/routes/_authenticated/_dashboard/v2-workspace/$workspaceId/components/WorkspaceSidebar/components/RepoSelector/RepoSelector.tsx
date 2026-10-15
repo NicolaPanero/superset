@@ -85,7 +85,12 @@ export function RepoSelector({ workspaceId }: RepoSelectorProps) {
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value={MAIN_REPO_VALUE}>{mainLabel}</SelectItem>
+					<SelectItem value={MAIN_REPO_VALUE}>
+						<span className="flex items-center gap-1.5">
+							{mainLabel}
+							<LuGitBranch className="size-3 text-muted-foreground" />
+						</span>
+					</SelectItem>
 					{folders.map((folder) => (
 						<SelectItem key={folder.id} value={folder.workspaceKey}>
 							<span className="flex items-center gap-1.5">

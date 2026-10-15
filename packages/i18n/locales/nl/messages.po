@@ -7894,6 +7894,9 @@ msgstr "{domain} vergeten"
 msgid "Fork args"
 msgstr "Fork-argumenten"
 
+msgid "Fork from here"
+msgstr "Vanaf hier vertakken"
+
 msgid "Fork session"
 msgstr "Sessie forken"
 
@@ -8965,6 +8968,9 @@ msgstr "Interactieve agentterminal."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Interactieve clients autoriseren via OAuth 2.1 in je browser, beperkt tot je actieve organisatie. Voor headless omgevingen en CI genereer je een API-sleutel bij Instellingen → API-sleutels in de desktop-app en geef je die mee als Bearer-token. De volledige opzet, inclusief headerconfiguratie voor Claude Code, staat in de <0>authenticatiedocumentatie</0>."
+
+msgid "Interactive home background"
+msgstr "Interactieve achtergrond op de startpagina"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Wil je Superset naar je organisatie brengen? Neem contact op, dan zoeken we samen de juiste opzet voor je team."
@@ -10557,6 +10563,9 @@ msgstr "Nieuwe {providerLabel}-agents gebruiken {accountLabel}."
 msgid "New agent"
 msgstr "Nieuwe agent"
 
+msgid "New Agent"
+msgstr "Nieuwe agent"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Nieuwe agentstarts gebruiken dit account. Herstart een draaiende agent om te wisselen."
 
@@ -12075,6 +12084,9 @@ msgstr "Opent het wijzigingenpaneel in een nieuw tabblad, of focust het bestaand
 
 msgid "Open the global command palette"
 msgstr "Het globale opdrachtenpalet openen"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Het dialoogvenster voor een nieuwe agent openen in de huidige workspace"
 
 msgid "Open the new workspace modal"
 msgstr "Het venster voor een nieuwe werkruimte openen"
@@ -14182,6 +14194,9 @@ msgstr "Probeer het over een paar seconden opnieuw."
 msgid "Retrying…"
 msgstr "Opnieuw proberen…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Ga terug naar het punt vóór dit bericht en zet de tekst terug in het concept. Het oorspronkelijke gesprek blijft in de geschiedenis. Bestanden blijven ongewijzigd omdat deze agent geen bestandsherstel via ACP biedt."
+
 msgid "Return to dashboard"
 msgstr "Terug naar dashboard"
 
@@ -14290,6 +14305,15 @@ msgstr "API-sleutel intrekken"
 
 msgid "Revoke key"
 msgstr "Sleutel intrekken"
+
+msgid "Rewind chat only"
+msgstr "Alleen chat terugzetten"
+
+msgid "Rewind conversation?"
+msgstr "Gesprek terugzetten?"
+
+msgid "Rewind from here"
+msgstr "Vanaf hier terugzetten"
 
 msgid "Rewrote it and published version 2."
 msgstr "Herschreven en versie 2 gepubliceerd."
@@ -15361,6 +15385,9 @@ msgstr "Sneltoets al in gebruik"
 
 msgid "Show"
 msgstr "Tonen"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Toon het Superset-logo opgebouwd uit tekens en golven die op klikken reageren."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Toon een bevestiging bij het afsluiten van de app"
@@ -17316,9 +17343,6 @@ msgstr "De worktree heeft niet-gecommitte wijzigingen uit de agentsessie."
 
 msgid "Theme"
 msgstr "Thema"
-
-msgid "Theme default"
-msgstr "Standaard van thema"
 
 msgid "Theme file too large"
 msgstr "Themabestand te groot"

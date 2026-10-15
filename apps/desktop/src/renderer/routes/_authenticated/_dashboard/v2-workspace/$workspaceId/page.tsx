@@ -50,6 +50,7 @@ import { useConsumeSubagentLink } from "./hooks/useConsumeSubagentLink";
 import { useCreatePendingMigratedTerminals } from "./hooks/useCreatePendingMigratedTerminals";
 import { useDefaultContextMenuActions } from "./hooks/useDefaultContextMenuActions";
 import { useDefaultPaneActions } from "./hooks/useDefaultPaneActions";
+import { useForkPaneActions } from "./hooks/useDefaultPaneActions/fork-pane-actions";
 import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
 import { useForkFocusChatLink } from "./hooks/useForkFocusChatLink";
 import { usePaneAreaMoveActions } from "./hooks/usePaneAreaMoveActions";
@@ -410,7 +411,9 @@ function V2WorkspaceContent() {
 		createNewAgentSession,
 	});
 
-	const defaultPaneActions = useDefaultPaneActions({ launcher });
+	const defaultPaneActions = useForkPaneActions(
+		useDefaultPaneActions({ launcher }),
+	);
 	const onBeforeCloseTab = useTabCloseGuard(store);
 	const onBeforeCloseRightTab = useTabCloseGuard(rightStore);
 	const lastActiveAreaRef = useRef<"center" | "right">("center");

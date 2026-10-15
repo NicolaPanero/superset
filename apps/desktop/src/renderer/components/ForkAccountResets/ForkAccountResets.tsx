@@ -167,7 +167,7 @@ export function ForkAccountResets({
 				</output>
 			)}
 			{visibleNotice === "error" && !open && (
-				<p role="alert" className="mt-1 text-amber-500">
+				<p role="alert" className="mt-1 text-warning">
 					<Trans>
 						Could not confirm the reset. Retry uses the same request.
 					</Trans>
@@ -221,7 +221,7 @@ export function ForkAccountResets({
 						)}
 					</div>
 					{visibleNotice === "error" && (
-						<p role="alert" className="text-xs text-amber-500">
+						<p role="alert" className="text-xs text-warning">
 							<Trans>
 								Could not confirm the reset. Retry uses the same request.
 							</Trans>

@@ -12,6 +12,10 @@ const suiteRoots = [
 	"packages/chat-runtime/src",
 ];
 const extra = [
+	"apps/desktop/src/renderer/lib/editor-typography.test.ts",
+	"packages/shared/src/themes/editor.test.ts",
+	"apps/desktop/src/renderer/lib/terminal/appearance/appearance.test.ts",
+	"apps/desktop/src/renderer/lib/terminal/font-settle.test.ts",
 	"packages/chat-runtime/src/harness/acp/rpcClient/rpcClient.test.ts",
 	"packages/chat-runtime/src/harness/acp/imageBlocks/imageBlocks.test.ts",
 	"packages/chat-runtime/src/harness/acp/imageDimensions/imageDimensions.test.ts",
@@ -20,6 +24,7 @@ const extra = [
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/hooks/useTranscriptFind/useTranscriptFind.test.tsx",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/components/ApprovalRow/components/QuestionForm/utils/questionPages/questionPages.test.ts",
 
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/utils/chatHandoffTranscript/chatHandoffTranscript.test.ts",
 	"packages/chat/src/core/harness/harness.test.ts",
 	"packages/chat-runtime/src/harness/acp/acpAdapter.test.ts",
 	"packages/agent-setup/src/shell-wrappers.test.ts",

@@ -168,7 +168,7 @@ export function AccountCard({
 					</span>
 				)}
 				{account.status !== "ok" && account.status !== "token_stale" && (
-					<span className="rounded bg-amber-500/15 px-1 text-[9px] font-medium uppercase tracking-wide text-amber-500">
+					<span className="rounded bg-warning/10 px-1 text-[9px] font-medium uppercase tracking-wide text-warning">
 						{account.status === "token_expired" ? (
 							<Trans>Sign-in expired</Trans>
 						) : account.status === "signed_out" ? (
@@ -281,7 +281,7 @@ export function AccountCard({
 					>
 						<span className="min-w-0 truncate">{expiredCommand}</span>
 						{copied ? (
-							<LuCheck className="size-2.5 shrink-0 text-green-500" />
+							<LuCheck className="size-2.5 shrink-0 text-success" />
 						) : (
 							<LuCopy className="size-2.5 shrink-0" />
 						)}
