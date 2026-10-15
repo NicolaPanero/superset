@@ -8969,6 +8969,9 @@ msgstr "可交互的智能体终端。"
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "交互式客户端通过浏览器中的OAuth 2.1授权，权限范围限于你当前的组织。无界面环境和CI则可在桌面应用的“设置 → API密钥”中生成API密钥，并作为Bearer令牌传入。完整配置（包括Claude Code的请求头设置）见<0>认证文档</0>。"
 
+msgid "Interactive home background"
+msgstr "交互式主页背景"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "想把Superset引入你的组织？联系我们，一起为你的团队找到合适的方案。"
 
@@ -15382,6 +15385,9 @@ msgstr "快捷键已被使用"
 
 msgid "Show"
 msgstr "显示"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "显示由字符组成的 Superset 标志和响应点击的波纹。"
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "退出应用时显示确认对话框"

@@ -8969,6 +8969,9 @@ msgstr "対話型のエージェントターミナル。"
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "対話型のクライアントはブラウザでOAuth 2.1により認可され、アクティブな組織にスコープされます。ヘッドレス環境やCIでは、デスクトップアプリの設定 → API KeysでAPIキーを発行し、Bearerトークンとして渡してください。Claude Code向けのヘッダー設定を含む詳しい手順は<0>認証のドキュメント</0>にあります。"
 
+msgid "Interactive home background"
+msgstr "ホームのインタラクティブな背景"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Supersetを組織に導入することをご検討中ですか?ご連絡いただければ、チームに最適な構成を一緒に検討します。"
 
@@ -15382,6 +15385,9 @@ msgstr "ショートカットは使用中です"
 
 msgid "Show"
 msgstr "表示"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "文字で描かれたSupersetロゴと、クリックに反応する波を表示します。"
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "アプリ終了時に確認ダイアログを表示"

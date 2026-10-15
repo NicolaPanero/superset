@@ -12,6 +12,13 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Uso quotidiano
 
+- **Settings → Fork → Interactive home background** attiva uno sfondo di
+  caratteri nella home di creazione dei workspace. Il logo Superset++ è composto
+  da caratteri fermi; i click sullo sfondo generano onde azzurre e turchesi.
+  L’opzione è disattivata inizialmente e resta salvata su questo dispositivo.
+  L’effetto usa Canvas 2D senza librerie aggiuntive, limita risoluzione e impulsi,
+  rallenta a riposo e si ferma quando la finestra è inattiva. Con **riduci movimento**
+  mostra una composizione statica. Pulsanti, campi e menu mantengono i propri click.
 - **Settings → Fork → Hide paid features** nasconde anche i selettori del
   dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
   In questa modalità la creazione, l’elenco dei workspace e le impostazioni
@@ -421,6 +428,9 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e
   `scripts/fork/` per identità, dati e distribuzione.
+- `ForkHomeBackground` e `fork-home-appearance.ts` per lo sfondo opzionale:
+  disegno, animazione, logo e stili restano nel componente del fork; la home
+  ufficiale aggiunge solo il livello di sfondo e il contenitore del logo.
 
 Quando upstream assorbe una funzione, confrontare comportamento, profili e
 cronologia prima di rimuovere l’estensione. Il trasferimento nativo, il ponte

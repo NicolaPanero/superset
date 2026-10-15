@@ -8969,6 +8969,9 @@ msgstr "Terminal agen interaktif."
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Klien interaktif memberi otorisasi lewat OAuth 2.1 di browser Anda, dibatasi pada organisasi aktif Anda. Untuk environment headless dan CI, buat kunci API dari Pengaturan → Kunci API di aplikasi desktop dan kirimkan sebagai Bearer token. Penyiapan lengkap, termasuk konfigurasi header untuk Claude Code, ada di <0>dokumentasi autentikasi</0>."
 
+msgid "Interactive home background"
+msgstr "Latar belakang beranda interaktif"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Tertarik membawa Superset ke organisasi Anda? Hubungi kami dan kami akan mencari penyiapan yang tepat untuk tim Anda."
 
@@ -15382,6 +15385,9 @@ msgstr "Pintasan sudah dipakai"
 
 msgid "Show"
 msgstr "Tampilkan"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Tampilkan logo Superset yang tersusun dari karakter dan gelombang yang merespons klik."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Tampilkan dialog konfirmasi saat keluar dari aplikasi"

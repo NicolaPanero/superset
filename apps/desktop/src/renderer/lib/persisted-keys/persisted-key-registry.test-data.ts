@@ -7,6 +7,10 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	readonly [file: string, keys: readonly string[]]
 > = [
 	["src/renderer/stores/fork-cli-options.ts", ["superset-fork-cli-options"]],
+	[
+		"src/renderer/stores/fork-home-appearance.ts",
+		["superset-fork-home-appearance"],
+	],
 	["src/renderer/stores/getting-started/store.ts", ["pro-getting-started-v1"]],
 	[
 		"src/renderer/routes/_authenticated/providers/CollectionsProvider/collections.ts",

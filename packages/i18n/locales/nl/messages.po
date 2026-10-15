@@ -8969,6 +8969,9 @@ msgstr "Interactieve agentterminal."
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Interactieve clients autoriseren via OAuth 2.1 in je browser, beperkt tot je actieve organisatie. Voor headless omgevingen en CI genereer je een API-sleutel bij Instellingen → API-sleutels in de desktop-app en geef je die mee als Bearer-token. De volledige opzet, inclusief headerconfiguratie voor Claude Code, staat in de <0>authenticatiedocumentatie</0>."
 
+msgid "Interactive home background"
+msgstr "Interactieve achtergrond op de startpagina"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Wil je Superset naar je organisatie brengen? Neem contact op, dan zoeken we samen de juiste opzet voor je team."
 
@@ -15382,6 +15385,9 @@ msgstr "Sneltoets al in gebruik"
 
 msgid "Show"
 msgstr "Tonen"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Toon het Superset-logo opgebouwd uit tekens en golven die op klikken reageren."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Toon een bevestiging bij het afsluiten van de app"

@@ -8969,6 +8969,9 @@ msgstr "Terminal agent tương tác."
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Client tương tác sẽ ủy quyền qua OAuth 2.1 trong trình duyệt, giới hạn theo tổ chức đang hoạt động của bạn. Với môi trường không giao diện và CI, hãy tạo khóa API trong Cài đặt → Khóa API ở ứng dụng máy tính và truyền nó dưới dạng Bearer token. Hướng dẫn thiết lập đầy đủ, kể cả cấu hình header cho Claude Code, có trong <0>tài liệu xác thực</0>."
 
+msgid "Interactive home background"
+msgstr "Nền trang chủ tương tác"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Muốn đưa Superset vào tổ chức của bạn? Hãy liên hệ và chúng tôi sẽ cùng bạn tìm thiết lập phù hợp cho đội ngũ."
 
@@ -15382,6 +15385,9 @@ msgstr "Phím tắt đã được dùng"
 
 msgid "Show"
 msgstr "Hiện"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Hiển thị biểu trưng Superset tạo từ các ký tự và các gợn sóng phản hồi khi nhấp."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Hiện hộp thoại xác nhận khi thoát ứng dụng"

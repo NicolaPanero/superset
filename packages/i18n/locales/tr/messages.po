@@ -8969,6 +8969,9 @@ msgstr "Etkileşimli ajan terminali."
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Etkileşimli istemciler tarayıcınızda OAuth 2.1 üzerinden, etkin kuruluşunuzla sınırlı olarak yetkilendirilir. Başsız ortamlar ve CI için masaüstü uygulamasındaki Ayarlar → API Anahtarları bölümünden bir API anahtarı oluşturun ve bunun yerine Bearer token olarak iletin. Claude Code için başlık yapılandırması dahil tüm kurulum, <0>kimlik doğrulama belgelerinde</0> yer alıyor."
 
+msgid "Interactive home background"
+msgstr "Etkileşimli ana sayfa arka planı"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Superset'i kuruluşunuza getirmekle ilgileniyor musunuz? Bize ulaşın, takımınıza uygun kurulumu birlikte belirleyelim."
 
@@ -15382,6 +15385,9 @@ msgstr "Kısayol zaten kullanımda"
 
 msgid "Show"
 msgstr "Göster"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Karakterlerden oluşan Superset logosunu ve tıklamalara tepki veren dalgaları gösterir."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Uygulamadan çıkarken onay penceresi göster"

@@ -8969,6 +8969,9 @@ msgstr "Terminal d'agent interactif."
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "Les clients interactifs s'autorisent via OAuth 2.1 dans votre navigateur, avec une portée limitée à votre organisation active. Pour les environnements sans interface et la CI, générez une clé d'API depuis Paramètres → Clés d'API dans l'application de bureau et transmettez-la comme jeton Bearer. La configuration complète, y compris celle des en-têtes pour Claude Code, se trouve dans la <0>documentation sur l'authentification</0>."
 
+msgid "Interactive home background"
+msgstr "Arrière-plan interactif de l’accueil"
+
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "Vous souhaitez déployer Superset dans votre organisation ? Contactez-nous et nous trouverons ensemble la configuration adaptée à votre équipe."
 
@@ -15382,6 +15385,9 @@ msgstr "Raccourci déjà utilisé"
 
 msgid "Show"
 msgstr "Afficher"
+
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "Afficher le logo Superset composé de caractères et des ondes qui réagissent aux clics."
 
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "Afficher une boîte de dialogue de confirmation à la fermeture de l'application"

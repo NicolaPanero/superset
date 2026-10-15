@@ -115,6 +115,10 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
+import {
+	ForkHomeBackground,
+	ForkHomeBrand,
+} from "./components/ForkHomeBackground";
 import { ForkImportFromHome } from "./components/ForkImportFromHome/ForkImportFromHome";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
@@ -729,6 +733,7 @@ export function NewWorkspaceScreen({
 			onDragOver={handleDragOver}
 			onDrop={handleDrop}
 		>
+			<ForkHomeBackground active={isOpen} />
 			<AnimatePresence>
 				{isDraggingFiles && (
 					<motion.div
@@ -798,7 +803,9 @@ export function NewWorkspaceScreen({
 				}
 			/>
 			<div className="flex flex-1 flex-col items-center justify-center gap-8">
-				<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				<ForkHomeBrand>
+					<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				</ForkHomeBrand>
 				<h1 className="text-center text-3xl font-medium text-foreground/90">
 					<Trans>What should we build next?</Trans>
 				</h1>
