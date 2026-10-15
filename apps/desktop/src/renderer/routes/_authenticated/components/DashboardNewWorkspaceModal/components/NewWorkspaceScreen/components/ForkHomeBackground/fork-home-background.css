@@ -13,8 +13,7 @@
 	width: clamp(180px, 24vw, 300px);
 	height: auto;
 	aspect-ratio: 8 / 5;
-	color: var(--foreground);
-	filter: drop-shadow(0 0 24px rgb(70 163 210 / 12%));
+	color: color-mix(in srgb, var(--foreground) 10%, #58b9f5);
 	pointer-events: none;
 }
 

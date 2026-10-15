@@ -6,37 +6,64 @@ const LOGO_PATHS = [
 	"M10 8h2v2h2v2h-2v2h-2v-2H8v-2h2V8Z",
 ];
 
-export function drawForkHomeLogo(canvas: HTMLCanvasElement) {
+export function createForkHomeLogo(canvas: HTMLCanvasElement) {
 	const context = canvas.getContext("2d");
-	if (!context) return;
+	const texture = document.createElement("canvas");
+	const ink = texture.getContext("2d");
+	const mask = document.createElement("canvas");
+	const maskContext = mask.getContext("2d");
+	if (!context || !ink || !maskContext) return;
 	const scale = Math.min(window.devicePixelRatio || 1, 2);
-	canvas.width = 320 * scale;
-	canvas.height = 200 * scale;
-	context.scale(scale, scale);
+	canvas.width = texture.width = 320 * scale;
+	canvas.height = texture.height = 200 * scale;
+	ink.scale(scale, scale);
 	const paths = LOGO_PATHS.map((path) => new Path2D(path));
-	const gradient = context.createLinearGradient(0, 0, 320, 160);
-	gradient.addColorStop(0, "#63b7ed");
-	gradient.addColorStop(0.5, getComputedStyle(canvas).color);
-	gradient.addColorStop(1, "#55c9bc");
-	context.fillStyle = gradient;
-	context.font = "8px Menlo, Consolas, monospace";
-	context.textAlign = "center";
-	context.textBaseline = "middle";
+	const gradient = ink.createLinearGradient(0, 0, 320, 200);
+	gradient.addColorStop(0, getComputedStyle(canvas).color);
+	gradient.addColorStop(1, "#57c6b9");
+	ink.fillStyle = gradient;
+	ink.font = "8px Menlo, Consolas, monospace";
+	ink.textAlign = "center";
+	ink.textBaseline = "middle";
 	const characters = "SUPERSET++01<>/{}";
 	for (let row = 0; row < 20; row++) {
 		for (let column = 0; column < 64; column++) {
 			const x = ((column + 0.5) / 64) * 22;
 			const y = 4 + ((row + 0.5) / 20) * 14;
-			if (
-				!paths.some((path) => context.isPointInPath(path, x * scale, y * scale))
-			)
+			if (!paths.some((path) => ink.isPointInPath(path, x * scale, y * scale)))
 				continue;
-			context.globalAlpha = 0.66 + ((column * 7 + row * 3) % 7) * 0.05;
-			context.fillText(
+			ink.fillText(
 				characters[(column + row * 3) % characters.length] ?? "+",
 				column * 5 + 2.5,
 				row * 10 + 5,
 			);
 		}
 	}
+	mask.width = 64;
+	mask.height = 20;
+	const pixels = maskContext.createImageData(mask.width, mask.height);
+	pixels.data.fill(255);
+	return {
+		paint(sample: (x: number, y: number) => number) {
+			for (let row = 0; row < mask.height; row++) {
+				for (let column = 0; column < mask.width; column++) {
+					pixels.data[(row * mask.width + column) * 4 + 3] =
+						(0.14 +
+							sample((column + 0.5) / mask.width, (row + 0.5) / mask.height) *
+								0.82) *
+						255;
+				}
+			}
+			maskContext.putImageData(pixels, 0, 0);
+			context.globalCompositeOperation = "source-over";
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.drawImage(texture, 0, 0);
+			context.globalCompositeOperation = "destination-in";
+			context.drawImage(mask, 0, 0, canvas.width, canvas.height);
+		},
+		dispose() {
+			texture.width = mask.width = 0;
+			texture.height = mask.height = 0;
+		},
+	};
 }

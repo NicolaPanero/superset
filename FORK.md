@@ -14,11 +14,15 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace. Il logo Superset++ è composto
-  da caratteri fermi; i click sullo sfondo generano onde azzurre e turchesi.
+  da caratteri fermi e tenui, dello stesso colore delle onde automatiche. I click
+  sullo sfondo generano onde più luminose che illuminano il logo al passaggio,
+  senza spostarne o cambiarne i caratteri. Gli impulsi si sommano nel campo
+  d’onde, così i click successivi non cancellano quelli precedenti.
   L’opzione è disattivata inizialmente e resta salvata su questo dispositivo.
-  L’effetto usa Canvas 2D senza librerie aggiuntive, limita risoluzione e impulsi,
-  rallenta a riposo e si ferma quando la finestra è inattiva. Con **riduci movimento**
-  mostra una composizione statica. Pulsanti, campi e menu mantengono i propri click.
+  L’effetto usa Canvas 2D senza librerie aggiuntive, con risoluzione e memoria
+  limitate. Le onde casuali restano animate a riposo; l’effetto si ferma quando
+  la finestra è inattiva. Con **riduci movimento** mostra una composizione
+  statica. Pulsanti, campi e menu mantengono i propri click.
 - **Settings → Fork → Hide paid features** nasconde anche i selettori del
   dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
   In questa modalità la creazione, l’elenco dei workspace e le impostazioni
