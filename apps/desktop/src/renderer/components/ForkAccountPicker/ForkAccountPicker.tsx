@@ -139,7 +139,7 @@ export function ForkAccountPicker({
 								</div>
 								{(usage?.status === "signed_out" ||
 									usage?.status === "token_expired") && (
-									<div className="mt-1 text-amber-500">
+									<div className="mt-1 text-warning">
 										<Trans>Reconnect account</Trans>
 									</div>
 								)}

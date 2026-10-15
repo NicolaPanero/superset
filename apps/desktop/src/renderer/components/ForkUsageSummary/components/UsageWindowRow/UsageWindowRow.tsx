@@ -61,8 +61,8 @@ export function UsageWindowRow({
 				<span
 					className={cn(
 						"w-[4.5rem] shrink-0 text-right tabular-nums",
-						tone === "danger" && "text-red-500",
-						tone === "warning" && "text-amber-500",
+						tone === "danger" && "text-destructive",
+						tone === "warning" && "text-warning",
 						tone === "ok" && "text-muted-foreground",
 					)}
 				>

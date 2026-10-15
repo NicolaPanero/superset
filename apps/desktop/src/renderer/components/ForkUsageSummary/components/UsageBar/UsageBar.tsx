@@ -3,8 +3,8 @@ import { usageTone } from "../../utils/parseUsageWindow";
 
 const FILL_CLASS = {
 	ok: "bg-primary",
-	warning: "bg-amber-500",
-	danger: "bg-red-500",
+	warning: "bg-warning",
+	danger: "bg-destructive",
 } as const;
 
 export function UsageBar({
