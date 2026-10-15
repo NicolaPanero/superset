@@ -4,6 +4,7 @@ import { V2WorkspacesBoard } from "./components/V2WorkspacesBoard";
 import { V2WorkspacesHeader } from "./components/V2WorkspacesHeader";
 import { V2WorkspacesList } from "./components/V2WorkspacesList";
 import { useAccessibleV2Workspaces } from "./hooks/useAccessibleV2Workspaces";
+import { useForkWorkspacesDeviceFilter } from "./hooks/useForkWorkspacesDeviceFilter";
 import {
 	DEVICE_FILTER_THIS_DEVICE,
 	useV2WorkspacesFilterStore,
@@ -89,9 +90,7 @@ function V2WorkspacesPage() {
 	const navigate = useNavigate({ from: Route.fullPath });
 
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
+	const deviceFilter = useForkWorkspacesDeviceFilter();
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
 	);

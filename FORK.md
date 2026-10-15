@@ -12,6 +12,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Uso quotidiano
 
+- **Settings → Fork → Hide paid features** nasconde anche i selettori del
+  dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
+  In questa modalità la creazione, l’elenco dei workspace e le impostazioni
+  usano il computer locale, anche con una selezione remota salvata o in un link.
 - **Agent · Account** nell’intestazione apre due schede:
   **Chat corrente** mostra account, quota e opzioni di continuazione salvate subito;
   **Cambia agente o account** gestisce il cambio manuale con **Continue**.

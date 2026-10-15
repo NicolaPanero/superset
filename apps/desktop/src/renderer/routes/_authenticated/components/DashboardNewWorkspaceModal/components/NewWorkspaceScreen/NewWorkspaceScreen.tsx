@@ -66,6 +66,7 @@ import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agen
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkHostId } from "renderer/lib/fork-host-visibility";
 import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unavailable";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
@@ -160,12 +161,17 @@ export function NewWorkspaceScreen({
 	const openInFinderMutation = electronTrpc.external.openInFinder.useMutation();
 	const {
 		closeModal,
-		draft,
+		draft: savedDraft,
 		updateDraft,
 		selectProject,
 		selectSession,
 		resetKey,
 	} = useDashboardNewWorkspaceDraft();
+	const hostId = useForkHostId(savedDraft.hostId);
+	const draft = useMemo(
+		() => ({ ...savedDraft, hostId }),
+		[savedDraft, hostId],
+	);
 	const attachments = useProviderAttachments();
 	const composerRef = useRef<PromptInputHandle>(null);
 	const addAttachments = useCallback(

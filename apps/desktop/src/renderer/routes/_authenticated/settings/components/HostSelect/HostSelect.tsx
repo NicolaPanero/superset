@@ -7,6 +7,7 @@ import {
 	SelectValue,
 } from "@superset/ui/select";
 import { HiOutlineComputerDesktop, HiOutlineServer } from "react-icons/hi2";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 export interface HostSelectOption {
 	id: string;
@@ -31,7 +32,9 @@ export function HostSelect({
 	className,
 }: HostSelectProps) {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const selected = options.find((option) => option.id === value);
+	if (!showProFeatures) return null;
 
 	return (
 		<Select value={value} onValueChange={onValueChange}>
