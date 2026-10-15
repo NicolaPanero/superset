@@ -164,7 +164,7 @@ step_setup_neon_branch() {
 # - 5000, 7000: macOS Control Center / AirPlay Receiver (Sonoma+). Cannot be
 #   freed without disabling AirPlay Receiver in System Settings, so we just
 #   route around them.
-# - Node/Next.js "unsafe ports" in our [3000, ...) allocation range. Next.js
+# - Node/Next.js "unsafe ports" that an allocation window could reach. Next.js
 #   refuses to start on these with errors like "Bad port: '5060' is reserved
 #   for sip" (see https://nextjs.org/docs/messages/reserved-port).
 #     3659  apple-sasl
@@ -203,7 +203,8 @@ assert_unique_ports() {
 allocate_port_base() {
   local alloc_file="$HOME/.superset/port-allocations.json"
   local lock_dir="$HOME/.superset/port-allocations.lock"
-  local start=3000
+  # Far from the 3000-30300 ports of other local docker stacks (btm-project)
+  local start=41000
   local range=20
 
   # Ensure directory and file exist
@@ -225,12 +226,12 @@ allocate_port_base() {
   fi
 
   if [ -n "$existing" ]; then
-    if port_base_is_safe "$existing" "$range"; then
+    if [ "$existing" -ge "$start" ] && port_base_is_safe "$existing" "$range"; then
       export SUPERSET_PORT_BASE="$existing"
       release_port_alloc_lock "$lock_dir"
       return 0
     fi
-    echo "  Existing port base $existing overlaps a reserved port (${SUPERSET_RESERVED_PORTS}); reallocating..."
+    echo "  Existing port base $existing is below $start or overlaps a reserved port (${SUPERSET_RESERVED_PORTS}); reallocating..."
     local tmp_file="${alloc_file}.tmp.$$"
     if ! jq --arg k "$key" 'del(.[$k])' "$alloc_file" > "$tmp_file"; then
       error "Failed to release stale port allocation"
@@ -437,7 +438,7 @@ step_setup_local_mcp() {
     return 1
   fi
 
-  local api_port="${API_PORT:-$((${SUPERSET_PORT_BASE:-3000} + 1))}"
+  local api_port="${API_PORT:-$((${SUPERSET_PORT_BASE:-41000} + 1))}"
   local local_url="http://localhost:${api_port}/api/v2/agent/mcp"
 
   # Add or update superset-local entry

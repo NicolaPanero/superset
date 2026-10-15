@@ -41,6 +41,12 @@ local_ensure_env() {
     success "Created .env from .env.local.example"
   else
     success ".env already exists — keeping its values; keys it lacks are seeded below"
+    # A manual re-run has no SUPERSET_WORKSPACE_NAME; keep the DB stack the
+    # workspace already uses instead of a new, empty one.
+    if [ -z "${SUPERSET_WORKSPACE_NAME:-}" ]; then
+      SUPERSET_WORKSPACE_NAME="$(sed -n 's/^SUPERSET_WORKSPACE_NAME="\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' .env | tail -1)"
+      [ -n "$SUPERSET_WORKSPACE_NAME" ] || unset SUPERSET_WORKSPACE_NAME
+    fi
   fi
   return 0
 }
