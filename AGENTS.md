@@ -272,3 +272,24 @@ review.
   // two kernels sharing a name but not a body would otherwise both run
   // whichever was compiled first. Same fix as 3833 on the Metal side.
 ```
+
+## Superset++ fork rules
+
+This checkout is the `NicolaPanero/superset` fork. `FORK.md` describes its features, branches
+and releases. These rules apply to every agent:
+
+- Work on a branch made from `fork/main` and open a PR to `fork/main`. Never commit or push to
+  `fork/main` or `main` directly; the owner reviews and merges. Each merge builds a release, so
+  put related changes in one PR.
+- Commits and PRs carry no `Co-authored-by` lines and no other AI attribution. Commit as
+  `Nicola Panero <panero.nicola01.np@gmail.com>`.
+- Several agents can share this checkout. Stage your own files by path, and never reset,
+  check out or delete changes you did not make.
+- Keep fork code in fork-owned files (`fork-*`, `scripts/fork/`, `FORK.md`) and keep the hooks
+  in upstream files small, as `FORK.md` ("Riduzione dei conflitti") explains.
+- Before a PR, run `bun run check:i18n` (all 17 locales translated), typecheck desktop and
+  host-service, and `bun run test:fork`. A plain `bun test` lacks the fork preloads and
+  shows false failures.
+- The transfer engine lives in `NicolaPanero/txcript` (branch `fork`, tags `v…-fork.N`). A
+  txcript release does not reach Superset until a PR updates
+  `scripts/fork/txcript-version.json`.
