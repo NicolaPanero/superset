@@ -13,16 +13,24 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 ## Uso quotidiano
 
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
-  caratteri nella home di creazione dei workspace. Il logo Superset++ è composto
-  da caratteri fermi e tenui, dello stesso colore delle onde automatiche. I click
-  sullo sfondo generano onde più luminose che illuminano il logo al passaggio,
-  senza spostarne o cambiarne i caratteri. Gli impulsi si sommano nel campo
-  d’onde, così i click successivi non cancellano quelli precedenti.
-  L’opzione è disattivata inizialmente e resta salvata su questo dispositivo.
-  L’effetto usa Canvas 2D senza librerie aggiuntive, con risoluzione e memoria
-  limitate. Le onde casuali restano animate a riposo; l’effetto si ferma quando
-  la finestra è inattiva. Con **riduci movimento** mostra una composizione
-  statica. Pulsanti, campi e menu mantengono i propri click.
+  caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
+  e nella schermata di un workspace senza schede aperte.
+  A riposo onde grigie, lente e tenui nascono in punti casuali e si
+  allargano; muovendo il mouse se ne generano altre lungo il percorso. Ogni
+  click genera un’onda arancione dal profilo irregolare, con increspature
+  secondarie; i caratteri cambiano sulla cresta. Il logo Superset++ fa parte
+  dello sfondo: caratteri fermi e tenui che diventano arancio pieno dove passa
+  un’onda da click, seguendone la forma. Al massimo tre onde da click restano
+  attive insieme, con almeno 0,4 secondi fra un click e il successivo; un nuovo
+  click non cancella quelle in corso. Colori e contrasto seguono il tema scelto
+  in **Settings → Appearance**, chiaro, scuro o personalizzato. L’opzione è
+  attiva per impostazione predefinita; chi la disattiva mantiene la scelta su
+  questo dispositivo. Il disegno
+  avviene in WebGL2 sulla GPU, alla risoluzione nativa dello schermo e senza
+  librerie aggiuntive: 30 fotogrammi al secondo a riposo, 60 durante un’onda da
+  click, nessuno quando la finestra è inattiva. Senza WebGL2 la home resta
+  quella originale. Con **riduci movimento** mostra una composizione statica.
+  Pulsanti, campi e menu mantengono i propri click.
 - **Settings → Fork → Hide paid features** nasconde anche i selettori del
   dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
   In questa modalità la creazione, l’elenco dei workspace e le impostazioni
@@ -432,9 +440,21 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e
   `scripts/fork/` per identità, dati e distribuzione.
-- `ForkHomeBackground` e `fork-home-appearance.ts` per lo sfondo opzionale:
-  disegno, animazione, logo e stili restano nel componente del fork; la home
-  ufficiale aggiunge solo il livello di sfondo e il contenitore del logo.
+- `ForkHomeBackground` (in `renderer/components`) e `fork-home-appearance.ts`
+  per lo sfondo opzionale: disegno, animazione, logo e stili restano nel
+  componente del fork. La home e la schermata vuota del workspace
+  (`WorkspaceEmptyState`) aggiungono solo il livello di sfondo e il contenitore
+  del logo; senza sfondo la schermata vuota mostra il logo `{+}` del fork.
+- `useForkPaneActions` nasconde la × di un pannello quando è l’unico della sua
+  scheda, perché la × della scheda fa già la stessa cosa; `page.tsx` e
+  `RightPaneArea.tsx` cambiano solo il passaggio delle azioni.
+- Barra delle schede e intestazioni dei pannelli senza sfondo proprio, con lo
+  stesso colore del contenuto: in `TabBar.tsx` e `PaneHeader.tsx` cambia solo la
+  classe del colore di sfondo.
+- `ForkWordmark` per la scritta **SUPERSET++** della schermata di avvio, con lo
+  stesso effetto di luce dell’originale, e della pagina di accesso.
+  `AuthProvider` cambia solo l’import; il logo della pagina di accesso arriva
+  dalla riga di export in `sign-in/components/SupersetLogo/index.ts`.
 
 Quando upstream assorbe una funzione, confrontare comportamento, profili e
 cronologia prima di rimuovere l’estensione. Il trasferimento nativo, il ponte
