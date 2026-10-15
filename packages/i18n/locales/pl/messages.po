@@ -7894,6 +7894,9 @@ msgstr "Zapomnij {domain}"
 msgid "Fork args"
 msgstr "Argumenty forka"
 
+msgid "Fork from here"
+msgstr "Utwórz odgałęzienie od tego miejsca"
+
 msgid "Fork session"
 msgstr "Forkuj sesję"
 
@@ -14182,6 +14185,9 @@ msgstr "Ponów za kilka sekund."
 msgid "Retrying…"
 msgstr "Ponawianie…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Wróć do momentu przed tą wiadomością i umieść jej tekst z powrotem w szkicu. Oryginalna rozmowa pozostanie w historii. Pliki nie zmienią się, ponieważ ten agent nie udostępnia przywracania plików przez ACP."
+
 msgid "Return to dashboard"
 msgstr "Wróć do panelu"
 
@@ -14290,6 +14296,15 @@ msgstr "Unieważnij klucz API"
 
 msgid "Revoke key"
 msgstr "Unieważnij klucz"
+
+msgid "Rewind chat only"
+msgstr "Cofnij tylko czat"
+
+msgid "Rewind conversation?"
+msgstr "Cofnąć rozmowę?"
+
+msgid "Rewind from here"
+msgstr "Cofnij od tego miejsca"
 
 msgid "Rewrote it and published version 2."
 msgstr "Przepisałem i opublikowałem wersję 2."

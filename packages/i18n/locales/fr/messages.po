@@ -7894,6 +7894,9 @@ msgstr "Oublier {domain}"
 msgid "Fork args"
 msgstr "Arguments de fork"
 
+msgid "Fork from here"
+msgstr "Créer une branche à partir d’ici"
+
 msgid "Fork session"
 msgstr "Forker la session"
 
@@ -14182,6 +14185,9 @@ msgstr "Réessayez dans quelques secondes."
 msgid "Retrying…"
 msgstr "Nouvelle tentative…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Revenez avant ce message et remettez son texte dans le brouillon. La conversation originale reste dans l’historique. Les fichiers restent inchangés, car cet agent ne propose pas leur restauration via ACP."
+
 msgid "Return to dashboard"
 msgstr "Retourner au tableau de bord"
 
@@ -14290,6 +14296,15 @@ msgstr "Révoquer la clé API"
 
 msgid "Revoke key"
 msgstr "Révoquer la clé"
+
+msgid "Rewind chat only"
+msgstr "Revenir en arrière dans le chat uniquement"
+
+msgid "Rewind conversation?"
+msgstr "Revenir en arrière dans la conversation ?"
+
+msgid "Rewind from here"
+msgstr "Revenir en arrière depuis ici"
 
 msgid "Rewrote it and published version 2."
 msgstr "Réécrit et publié en version 2."

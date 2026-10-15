@@ -7894,6 +7894,9 @@ msgstr "Forget {domain}"
 msgid "Fork args"
 msgstr "Fork args"
 
+msgid "Fork from here"
+msgstr "Fork from here"
+
 msgid "Fork session"
 msgstr "Fork session"
 
@@ -14182,6 +14185,9 @@ msgstr "Retry in a few seconds."
 msgid "Retrying…"
 msgstr "Retrying…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+
 msgid "Return to dashboard"
 msgstr "Return to dashboard"
 
@@ -14290,6 +14296,15 @@ msgstr "Revoke API key"
 
 msgid "Revoke key"
 msgstr "Revoke key"
+
+msgid "Rewind chat only"
+msgstr "Rewind chat only"
+
+msgid "Rewind conversation?"
+msgstr "Rewind conversation?"
+
+msgid "Rewind from here"
+msgstr "Rewind from here"
 
 msgid "Rewrote it and published version 2."
 msgstr "Rewrote it and published version 2."

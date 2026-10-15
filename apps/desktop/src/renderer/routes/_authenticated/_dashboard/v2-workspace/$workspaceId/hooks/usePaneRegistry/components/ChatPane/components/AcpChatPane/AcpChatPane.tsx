@@ -15,6 +15,7 @@ import { useWorkspaceEvent } from "renderer/hooks/host-service/useWorkspaceEvent
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { OpenFile } from "../../../../../../types";
 import { isChatSessionClosed } from "../../../../../../utils/closedChatSessions";
+import { prependToDraft } from "../../../ChatSession/components/Composer";
 import { SessionView } from "../../../ChatSession/components/SessionView";
 import { useSessionClient } from "../../../ChatSession/hooks/useSessionClient";
 import type {
@@ -225,56 +226,76 @@ export function AcpChatPane({
 		void start(harness, agentSessionId);
 	}, [sessionId, harness, agentSessionId, start]);
 
-	// Branching opens the copy in this pane; the agent keeps the original, so
-	// nothing is lost by following the fork. The agent copies the session whole
-	// — `session/fork` takes no truncation point — so where it was clicked from
-	// makes no difference to what the branch contains.
-	const forkHere = useCallback(() => {
-		if (!sessionId) return;
-		void wiring.transport
-			.forkSession({
-				commandId: crypto.randomUUID(),
-				sessionId,
-				workspaceId,
-			})
-			.then((forked) => {
-				if (forked) {
-					if (!mounted.current) {
-						void wiring.transport
-							.closeSession({ sessionId: forked.sessionId })
-							.catch(() => undefined);
-						return;
-					}
-					onSessionCreated(forked.sessionId);
-					void wiring.transport
-						.closeSession({ sessionId })
-						.catch((error: unknown) =>
-							console.warn(
-								"[acp-chat] could not close the branched-from chat",
-								error,
-							),
-						);
+	const forkReplacement = useRef<{
+		sourceId: string;
+		deadline: number;
+		draftText?: string;
+	} | null>(null);
+	const forkInFlight = useRef(false);
+	const [forking, setForking] = useState(false);
+	const forkHere = useCallback(
+		async (fromItemId?: string, draftText?: string) => {
+			if (!sessionId || forkInFlight.current || recoveryInFlight.current)
+				return;
+			forkInFlight.current = true;
+			setForking(true);
+			recoveryInFlight.current = true;
+			try {
+				const forked = await wiring.transport.forkSession({
+					commandId: crypto.randomUUID(),
+					sessionId,
+					workspaceId,
+					...(fromItemId ? { fromItemId } : {}),
+				});
+				if (!forked) {
+					recoveryInFlight.current = false;
+					toast.error(t({ message: "This agent can't branch a conversation" }));
 					return;
 				}
-				// The adapter declines rather than sending a `session/fork` an
-				// agent would reject, and a button that does nothing is worse
-				// than one that says why.
-				toast.error(t({ message: "This agent can't branch a conversation" }));
-			})
-			.catch((error: unknown) => {
+				if (!mounted.current) {
+					recoveryInFlight.current = false;
+					await wiring.transport.closeSession({ sessionId: forked.sessionId });
+					return;
+				}
+				forkReplacement.current = {
+					sourceId: sessionId,
+					deadline: Date.now() + REPLACEMENT_TIMEOUT_MS,
+					...(fromItemId && draftText ? { draftText } : {}),
+				};
+				setReplacement(forked.sessionId);
+			} catch (error) {
+				recoveryInFlight.current = false;
 				console.error("[acp-chat] fork failed", error);
 				toast.error(t({ message: "Couldn't branch the conversation" }));
-			});
-	}, [wiring.transport, sessionId, workspaceId, onSessionCreated, t]);
+			} finally {
+				forkInFlight.current = false;
+				if (mounted.current) setForking(false);
+			}
+		},
+		[wiring.transport, sessionId, workspaceId, t],
+	);
 
-	// A worktree of its own cannot resume this session — the agent keys its
-	// sessions to a project directory — so that branch is a fresh chat handed
-	// the conversation. Both live under one control because the user is
-	// choosing where the work continues, not which mechanism carries it.
+	useEffect(
+		() => () => {
+			if (replacement && forkReplacement.current) {
+				forkReplacement.current = null;
+				void wiring.transport
+					.closeSession({ sessionId: replacement })
+					.catch(() => undefined);
+			}
+		},
+		[replacement, wiring.transport],
+	);
+
 	const fork = useCallback(
-		(target: ChatForkTarget, transcript: string) => {
+		(
+			target: ChatForkTarget,
+			transcript: string,
+			fromItemId?: string,
+			draftText?: string,
+		) => {
 			if (target === "workspace") {
-				forkHere();
+				void forkHere(fromItemId, draftText);
 				return;
 			}
 			if (!agent) return;
@@ -442,12 +463,32 @@ export function AcpChatPane({
 	useEffect(() => {
 		if (!replacement) return;
 		const commit = () => {
+			const branched = forkReplacement.current;
+			forkReplacement.current = null;
+			if (branched?.draftText)
+				prependToDraft(`chat-v3-draft:${terminalId}`, branched.draftText);
 			recoveryInFlight.current = false;
 			onSessionCreated(replacement);
+			if (branched)
+				void wiring.transport
+					.closeSession({ sessionId: branched.sourceId })
+					.catch((error) =>
+						console.warn("[acp-chat] could not stop source session", error),
+					);
 			setReplacement(null);
 		};
 		const status = replacementState?.session?.status;
 		if (status === "dead") {
+			if (forkReplacement.current) {
+				forkReplacement.current = null;
+				recoveryInFlight.current = false;
+				setReplacement(null);
+				void wiring.transport
+					.closeSession({ sessionId: replacement })
+					.catch(() => undefined);
+				toast.error(t({ message: "Couldn't branch the conversation" }));
+				return;
+			}
 			recoveryInFlight.current = false;
 			setReplacement(null);
 			const cause = replacementState?.forkFailure;
@@ -472,10 +513,37 @@ export function AcpChatPane({
 			commit();
 			return;
 		}
-		const timer = setTimeout(commit, REPLACEMENT_TIMEOUT_MS);
+		const timer = setTimeout(
+			() => {
+				if (!forkReplacement.current) {
+					commit();
+					return;
+				}
+				forkReplacement.current = null;
+				recoveryInFlight.current = false;
+				setReplacement(null);
+				void wiring.transport
+					.closeSession({ sessionId: replacement })
+					.catch(() => undefined);
+				toast.error(t({ message: "Couldn't branch the conversation" }));
+			},
+			Math.max(
+				0,
+				(forkReplacement.current?.deadline ??
+					Date.now() + REPLACEMENT_TIMEOUT_MS) - Date.now(),
+			),
+		);
 		return () => clearTimeout(timer);
-	}, [replacement, replacementState, onSessionCreated, t]);
+	}, [
+		replacement,
+		replacementState,
+		onSessionCreated,
+		terminalId,
+		wiring.transport,
+		t,
+	]);
 	const recovering =
+		forking ||
 		replacement !== null ||
 		(recoverable && recoveries.current < MAX_RECOVERIES);
 	useEffect(() => {
@@ -582,6 +650,9 @@ export function AcpChatPane({
 			canForkToWorktree={canForkToWorktree}
 			isActive={isActive}
 			onFork={fork}
+			onRewind={(itemId, text) => {
+				void forkHere(itemId, text);
+			}}
 			openFile={onOpenFile}
 			openPage={onOpenPage}
 			openLink={onOpenLink}

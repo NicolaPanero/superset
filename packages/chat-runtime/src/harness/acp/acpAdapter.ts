@@ -204,6 +204,7 @@ function sessionMissing(error: unknown): boolean {
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
+	forkAtMessage?: boolean;
 	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
 	wholeUserMessageReplay?: boolean;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
@@ -722,12 +723,26 @@ export class AcpAdapter implements HarnessAdapter {
 	 * advertise it. The agent copies its own session; the caller decides what to
 	 * attach to the id that comes back.
 	 */
-	async fork(): Promise<string | null> {
+	async fork(point?: { messageId: string }): Promise<string | null> {
 		if (!this.client || !this.sessionId) return null;
 		if (!this.supportsSessionCapability("fork")) return null;
+		if (point && !this.options.forkAtMessage) return null;
 		const response = await this.client.request(
 			"session/fork",
-			{ sessionId: this.sessionId, cwd: this.cwd, mcpServers: [] },
+			{
+				sessionId: this.sessionId,
+				cwd: this.cwd,
+				mcpServers: [],
+				...(point
+					? {
+							_meta: {
+								jetbrains: {
+									air: { fork: { version: 1, messageId: point.messageId } },
+								},
+							},
+						}
+					: {}),
+			},
 			this.requestTimeoutMs(),
 		);
 		const parsed = acpNewSessionResponseSchema.safeParse(response);
@@ -913,6 +928,9 @@ export class AcpAdapter implements HarnessAdapter {
 			this.emitSession({
 				status: "idle",
 				harnessSessionId: this.sessionId,
+				forkAtMessage:
+					this.options.forkAtMessage === true &&
+					this.supportsSessionCapability("fork"),
 				...(parsed.success && parsed.data.modes?.currentModeId
 					? { modeId: parsed.data.modes.currentModeId }
 					: {}),
@@ -1298,6 +1316,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private textItem(open: OpenText, state: "open" | "flushed"): Item {
 		const base = {
 			id: open.itemId,
+			...(open.messageId ? { nativeMessageId: open.messageId } : {}),
 			startedAtMs: open.startedAtMs,
 			...(state === "flushed" ? { completedAtMs: this.now() } : {}),
 		};

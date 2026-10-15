@@ -7894,6 +7894,9 @@ msgstr "Lupakan {domain}"
 msgid "Fork args"
 msgstr "Argumen fork"
 
+msgid "Fork from here"
+msgstr "Buat cabang dari sini"
+
 msgid "Fork session"
 msgstr "Fork sesi"
 
@@ -14182,6 +14185,9 @@ msgstr "Coba lagi dalam beberapa detik."
 msgid "Retrying…"
 msgstr "Mencoba lagi…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Kembali ke sebelum pesan ini dan masukkan kembali teksnya ke draf. Percakapan asli tetap tersimpan dalam riwayat. Berkas tidak berubah karena agen ini tidak menyediakan pemulihan berkas melalui ACP."
+
 msgid "Return to dashboard"
 msgstr "Kembali ke dasbor"
 
@@ -14290,6 +14296,15 @@ msgstr "Cabut kunci API"
 
 msgid "Revoke key"
 msgstr "Cabut kunci"
+
+msgid "Rewind chat only"
+msgstr "Putar balik chat saja"
+
+msgid "Rewind conversation?"
+msgstr "Putar balik percakapan?"
+
+msgid "Rewind from here"
+msgstr "Putar balik dari sini"
 
 msgid "Rewrote it and published version 2."
 msgstr "Sudah ditulis ulang dan versi 2 diterbitkan."

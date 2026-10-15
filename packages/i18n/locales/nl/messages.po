@@ -7894,6 +7894,9 @@ msgstr "{domain} vergeten"
 msgid "Fork args"
 msgstr "Fork-argumenten"
 
+msgid "Fork from here"
+msgstr "Vanaf hier vertakken"
+
 msgid "Fork session"
 msgstr "Sessie forken"
 
@@ -14182,6 +14185,9 @@ msgstr "Probeer het over een paar seconden opnieuw."
 msgid "Retrying…"
 msgstr "Opnieuw proberen…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Ga terug naar het punt vóór dit bericht en zet de tekst terug in het concept. Het oorspronkelijke gesprek blijft in de geschiedenis. Bestanden blijven ongewijzigd omdat deze agent geen bestandsherstel via ACP biedt."
+
 msgid "Return to dashboard"
 msgstr "Terug naar dashboard"
 
@@ -14290,6 +14296,15 @@ msgstr "API-sleutel intrekken"
 
 msgid "Revoke key"
 msgstr "Sleutel intrekken"
+
+msgid "Rewind chat only"
+msgstr "Alleen chat terugzetten"
+
+msgid "Rewind conversation?"
+msgstr "Gesprek terugzetten?"
+
+msgid "Rewind from here"
+msgstr "Vanaf hier terugzetten"
 
 msgid "Rewrote it and published version 2."
 msgstr "Herschreven en versie 2 gepubliceerd."

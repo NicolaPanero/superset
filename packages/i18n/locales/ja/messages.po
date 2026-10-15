@@ -7894,6 +7894,9 @@ msgstr "{domain}を削除"
 msgid "Fork args"
 msgstr "フォーク引数"
 
+msgid "Fork from here"
+msgstr "ここから分岐"
+
 msgid "Fork session"
 msgstr "セッションをフォーク"
 
@@ -14182,6 +14185,9 @@ msgstr "数秒後に再試行してください。"
 msgid "Retrying…"
 msgstr "再試行中…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "このメッセージの直前に戻り、本文を下書きに戻します。元の会話は履歴に保存されます。このエージェントは ACP 経由のファイル復元に対応していないため、ファイルは変更されません。"
+
 msgid "Return to dashboard"
 msgstr "ダッシュボードに戻る"
 
@@ -14290,6 +14296,15 @@ msgstr "APIキーを取り消す"
 
 msgid "Revoke key"
 msgstr "キーを取り消す"
+
+msgid "Rewind chat only"
+msgstr "チャットのみ巻き戻す"
+
+msgid "Rewind conversation?"
+msgstr "会話を巻き戻しますか？"
+
+msgid "Rewind from here"
+msgstr "ここから巻き戻す"
 
 msgid "Rewrote it and published version 2."
 msgstr "書き直してバージョン2を公開しました。"

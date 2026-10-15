@@ -764,6 +764,46 @@ describe("AcpAdapter", () => {
 		await second.dispose();
 	});
 
+	it("sends an exact AIR fork point only for adapters configured to support it", async () => {
+		for (const supported of [true, false]) {
+			const agent = new FakeAcpAgent();
+			const adapter = new AcpAdapter({
+				command: "fake",
+				forkAtMessage: supported,
+				createTransport: (_opts, handlers) => agent.transport(handlers),
+			});
+			const events: AdapterEvent[] = [];
+			void collect(adapter.start({ cwd: "/work" }), events);
+			await flush(40);
+			expect(
+				events.some(
+					(event) =>
+						event.kind === "session" &&
+						event.session.forkAtMessage === supported,
+				),
+			).toBe(true);
+			expect(await adapter.fork({ messageId: "native:reply-1" })).toBe(
+				supported ? "sess-forked" : null,
+			);
+			const request = agent.sent.find(
+				(frame) => frame.method === "session/fork",
+			);
+			if (supported)
+				expect(request?.params).toEqual({
+					sessionId: "sess-1",
+					cwd: "/work",
+					mcpServers: [],
+					_meta: {
+						jetbrains: {
+							air: { fork: { version: 1, messageId: "native:reply-1" } },
+						},
+					},
+				});
+			else expect(request).toBeUndefined();
+			await adapter.dispose();
+		}
+	});
+
 	it("surfaces the agent's own slash commands", async () => {
 		const agent = new FakeAcpAgent();
 		const adapter = new AcpAdapter({

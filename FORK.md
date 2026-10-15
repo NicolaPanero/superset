@@ -31,6 +31,12 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
+- I messaggi utente mostrano ora, copia e diramazione al passaggio del mouse.
+  Con Claude e Codex, **Fork from here** riparte dal messaggio scelto:
+  se è un messaggio utente, ne rimette il testo nella bozza. **Rewind from here**
+  chiede conferma e riavvolge solo la chat; i file restano invariati.
+  La sessione originale resta nella cronologia e viene lasciata aperta se
+  la copia non si carica. Gli altri agenti mantengono il fork dell’intera sessione.
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
 

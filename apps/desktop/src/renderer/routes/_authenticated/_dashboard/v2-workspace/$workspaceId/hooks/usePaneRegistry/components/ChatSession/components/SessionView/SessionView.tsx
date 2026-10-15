@@ -4,6 +4,7 @@ import {
 	deriveQueuedPrompts,
 	runningTurnId as findRunningTurnId,
 	launchConfigSelections,
+	userMessageText,
 } from "@superset/chat/core";
 import type {
 	AvailableCommand,
@@ -11,6 +12,7 @@ import type {
 	SessionConfigOption,
 	SessionState,
 	UserContent,
+	UserMessage,
 } from "@superset/chat/protocol";
 import {
 	useApprovals,
@@ -43,6 +45,7 @@ import {
 	prependToDraft,
 } from "../Composer";
 import { ConnectionNotice } from "../ConnectionNotice";
+import { ForkRewindDialog } from "../ForkRewindDialog";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
 import { useStableList } from "./hooks/useStableList";
@@ -73,6 +76,7 @@ export function SessionView({
 	preferredModelLabel,
 	onPendingPromptsSent,
 	onFork,
+	onRewind,
 	onSessionState,
 	openFile,
 	openPage,
@@ -101,7 +105,15 @@ export function SessionView({
 	 * built here because only this view holds the timeline; a branch into
 	 * another worktree cannot resume the session and is told it instead.
 	 */
-	onFork?: ((target: ChatForkTarget, transcript: string) => void) | undefined;
+	onFork?:
+		| ((
+				target: ChatForkTarget,
+				transcript: string,
+				fromItemId?: string,
+				draftText?: string,
+		  ) => void)
+		| undefined;
+	onRewind?: ((fromItemId: string, draftText: string) => void) | undefined;
 	canForkToWorktree?: boolean;
 	/** Names the speaker in a handed-over transcript. */
 	agentLabel?: string;
@@ -245,18 +257,72 @@ export function SessionView({
 	timelineRef.current = timeline;
 	const snapshotRef = useRef(session.snapshot);
 	snapshotRef.current = displaySnapshot;
+
 	const forkWithTranscript = useCallback(
-		(target: ChatForkTarget) =>
+		(target: ChatForkTarget, fromItemId: string) => {
+			const snapshot = snapshotRef.current;
+			const item = snapshot.items.get(fromItemId)?.item;
 			onFork?.(
 				target,
-				buildChatHandoffTranscript(
-					timelineRef.current,
-					snapshotRef.current,
-					agentLabel ?? "Agent",
-				),
-			),
+				target === "worktree"
+					? buildChatHandoffTranscript(
+							timelineRef.current,
+							snapshot,
+							agentLabel ?? "Agent",
+							fromItemId,
+						)
+					: "",
+				snapshot.session?.forkAtMessage ? fromItemId : undefined,
+				item?.kind === "user_message"
+					? userMessageText(item as UserMessage)
+					: undefined,
+			);
+		},
 		[onFork, agentLabel],
 	);
+
+	const [rewindItemId, setRewindItemId] = useState<string | null>(null);
+
+	const rewindableItemIds = useMemo(() => {
+		const ids = new Set<string>();
+		if (
+			!session.snapshot.session?.forkAtMessage ||
+			session.snapshot.session.status !== "idle" ||
+			runningTurnId ||
+			held ||
+			session.outbox.length > 0 ||
+			queuedPrompts.length > 0 ||
+			session.snapshot.session.backgroundTasks?.length
+		)
+			return ids;
+		for (const group of timeline) {
+			const entry = group.entries.find(
+				(entry) => entry.kind === "item" && entry.item.kind === "user_message",
+			);
+			if (entry?.kind !== "item" || !session.snapshot.items.has(entry.item.id))
+				continue;
+			const item = entry.item as UserMessage;
+			if (!item.queued && item.content.every((part) => part.type === "text"))
+				ids.add(item.id);
+		}
+		return ids;
+	}, [
+		session.snapshot,
+		session.outbox.length,
+		runningTurnId,
+		held,
+		queuedPrompts.length,
+		timeline,
+	]);
+
+	const confirmRewind = useCallback(() => {
+		if (!rewindItemId || !rewindableItemIds.has(rewindItemId)) return;
+		const item = session.snapshot.items.get(rewindItemId)?.item;
+		if (item?.kind !== "user_message") return;
+		onRewind?.(rewindItemId, userMessageText(item as UserMessage));
+		setRewindItemId(null);
+	}, [rewindItemId, rewindableItemIds, session.snapshot.items, onRewind]);
+
 	const agentSwitcher = useMemo<AgentSwitcher | undefined>(
 		() =>
 			agentSwitch && {
@@ -360,6 +426,13 @@ export function SessionView({
 			openLink={openLink}
 			workspaceId={workspaceId}
 		>
+			<ForkRewindDialog
+				open={rewindItemId !== null}
+				onOpenChange={(open) => {
+					if (!open) setRewindItemId(null);
+				}}
+				onConfirm={confirmRewind}
+			/>
 			<ComposerDropZone className="flex h-full min-h-0 w-full min-w-0 flex-col">
 				{/* Only worth a row when it carries a control: the pane header above
 				    already names the agent, and harness/status/connection repeated
@@ -386,7 +459,17 @@ export function SessionView({
 							isActive={isActive}
 							onCloseFind={focusComposer}
 							onDiscardPrompt={session.discardPrompt}
-							onFork={onFork ? forkWithTranscript : undefined}
+							onFork={
+								onFork &&
+								!runningTurnId &&
+								!held &&
+								queuedPrompts.length === 0 &&
+								session.outbox.length === 0
+									? forkWithTranscript
+									: undefined
+							}
+							onRewind={onRewind ? setRewindItemId : undefined}
+							rewindableItemIds={rewindableItemIds}
 							onLoadOlder={loadOlder}
 							onRequestItemBodies={session.requestItemBodies}
 							onRespond={onRespond}

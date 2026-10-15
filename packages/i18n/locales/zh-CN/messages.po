@@ -7894,6 +7894,9 @@ msgstr "忘记{domain}"
 msgid "Fork args"
 msgstr "分叉参数"
 
+msgid "Fork from here"
+msgstr "从此处创建分支"
+
 msgid "Fork session"
 msgstr "分叉会话"
 
@@ -14182,6 +14185,9 @@ msgstr "请在几秒后重试。"
 msgid "Retrying…"
 msgstr "正在重试…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "返回到此消息之前，并将其文本放回草稿。原始对话保留在历史记录中。由于此智能体不支持通过 ACP 恢复文件，文件将保持不变。"
+
 msgid "Return to dashboard"
 msgstr "返回主页"
 
@@ -14290,6 +14296,15 @@ msgstr "吊销API密钥"
 
 msgid "Revoke key"
 msgstr "吊销密钥"
+
+msgid "Rewind chat only"
+msgstr "仅回退聊天"
+
+msgid "Rewind conversation?"
+msgstr "回退对话？"
+
+msgid "Rewind from here"
+msgstr "从此处回退"
 
 msgid "Rewrote it and published version 2."
 msgstr "已重写并发布版本 2。"

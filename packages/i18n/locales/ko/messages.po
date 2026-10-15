@@ -7894,6 +7894,9 @@ msgstr "{domain} 잊기"
 msgid "Fork args"
 msgstr "포크 인자"
 
+msgid "Fork from here"
+msgstr "여기서 분기"
+
 msgid "Fork session"
 msgstr "세션 포크"
 
@@ -14182,6 +14185,9 @@ msgstr "몇 초 후 다시 시도하세요."
 msgid "Retrying…"
 msgstr "다시 시도하는 중…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "이 메시지 이전으로 돌아가고 메시지 내용을 초안에 다시 넣습니다. 원래 대화는 기록에 보관됩니다. 이 에이전트는 ACP를 통한 파일 복원을 지원하지 않으므로 파일은 변경되지 않습니다."
+
 msgid "Return to dashboard"
 msgstr "대시보드로 돌아가기"
 
@@ -14290,6 +14296,15 @@ msgstr "API 키 해지"
 
 msgid "Revoke key"
 msgstr "키 해지"
+
+msgid "Rewind chat only"
+msgstr "채팅만 되돌리기"
+
+msgid "Rewind conversation?"
+msgstr "대화를 되돌릴까요?"
+
+msgid "Rewind from here"
+msgstr "여기서 되돌리기"
 
 msgid "Rewrote it and published version 2."
 msgstr "다시 작성하고 버전 2를 게시했습니다."

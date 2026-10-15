@@ -37,7 +37,8 @@ export interface HarnessAdapter {
 	 * Branch this session, returning the harness id of the copy. Absent, or
 	 * null, when the harness cannot: the agent has to advertise it.
 	 */
-	fork?(): Promise<string | null>;
+	fork?(point?: { messageId: string }): Promise<string | null>;
+	forkOptions?(): { accountSelection?: string | null };
 	stopBackgroundTask?(taskId: string): Promise<boolean>;
 	dispose(): Promise<void>;
 }

@@ -12,6 +12,7 @@ export function buildChatHandoffTranscript(
 	groups: TurnGroup[],
 	snapshot: SessionSnapshot,
 	agentLabel: string,
+	throughItemId?: string,
 ): string {
 	const lines: string[] = [];
 	for (const group of groups) {
@@ -21,13 +22,16 @@ export function buildChatHandoffTranscript(
 			if (item.kind === "user_message") {
 				const text = userMessageText(item as UserMessage).trim();
 				if (text) lines.push(`User: ${text}`);
+				if (item.id === throughItemId) return lines.join("\n\n");
 				continue;
 			}
 			if (item.kind === "agent_message") {
 				const text = displayText(snapshot, item.id).trim();
 				if (text) lines.push(`${agentLabel}: ${text}`);
+				if (item.id === throughItemId) return lines.join("\n\n");
 			}
 		}
 	}
+	if (throughItemId) throw new Error("The selected message is not loaded");
 	return lines.join("\n\n");
 }

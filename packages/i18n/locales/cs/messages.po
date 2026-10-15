@@ -7894,6 +7894,9 @@ msgstr "Zapomenout {domain}"
 msgid "Fork args"
 msgstr "Argumenty pro fork"
 
+msgid "Fork from here"
+msgstr "Vytvořit větev odtud"
+
 msgid "Fork session"
 msgstr "Forkovat relaci"
 
@@ -14182,6 +14185,9 @@ msgstr "Zkuste to znovu za pár sekund."
 msgid "Retrying…"
 msgstr "Zkouším znovu…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Vraťte se před tuto zprávu a vložte její text zpět do konceptu. Původní konverzace zůstane v historii. Soubory se nezmění, protože tento agent nenabízí obnovení souborů přes ACP."
+
 msgid "Return to dashboard"
 msgstr "Zpět na dashboard"
 
@@ -14290,6 +14296,15 @@ msgstr "Zneplatnit API klíč"
 
 msgid "Revoke key"
 msgstr "Zneplatnit klíč"
+
+msgid "Rewind chat only"
+msgstr "Vrátit zpět pouze chat"
+
+msgid "Rewind conversation?"
+msgstr "Vrátit konverzaci zpět?"
+
+msgid "Rewind from here"
+msgstr "Vrátit zpět odtud"
 
 msgid "Rewrote it and published version 2."
 msgstr "Přepsáno a publikována verze 2."

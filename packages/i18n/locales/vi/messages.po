@@ -7894,6 +7894,9 @@ msgstr "Quên {domain}"
 msgid "Fork args"
 msgstr "Tham số fork"
 
+msgid "Fork from here"
+msgstr "Tạo nhánh từ đây"
+
 msgid "Fork session"
 msgstr "Fork phiên"
 
@@ -14182,6 +14185,9 @@ msgstr "Thử lại sau vài giây."
 msgid "Retrying…"
 msgstr "Đang thử lại…"
 
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "Quay lại trước tin nhắn này và đưa nội dung của nó về bản nháp. Cuộc trò chuyện gốc vẫn được giữ trong lịch sử. Các tệp không thay đổi vì tác tử này không hỗ trợ khôi phục tệp qua ACP."
+
 msgid "Return to dashboard"
 msgstr "Quay về dashboard"
 
@@ -14290,6 +14296,15 @@ msgstr "Thu hồi khóa API"
 
 msgid "Revoke key"
 msgstr "Thu hồi khóa"
+
+msgid "Rewind chat only"
+msgstr "Chỉ tua lại trò chuyện"
+
+msgid "Rewind conversation?"
+msgstr "Tua lại cuộc trò chuyện?"
+
+msgid "Rewind from here"
+msgstr "Tua lại từ đây"
 
 msgid "Rewrote it and published version 2."
 msgstr "Đã viết lại và xuất bản phiên bản 2."
