@@ -58,7 +58,6 @@ export function ForkAccountPicker({
 						<ForkAccountAvatar
 							label={selected ? label : null}
 							remaining={quota.remaining}
-							warning={quota.warning}
 						/>
 					</DropdownMenuTrigger>
 				) : (

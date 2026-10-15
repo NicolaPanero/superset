@@ -1,5 +1,12 @@
 import { cn } from "@superset/ui/utils";
 import { forkAccountInitials } from "./forkAccountInitials";
+import { quotaTone } from "./quotaTone";
+
+const TONE_STROKE = {
+	ok: "stroke-success",
+	warning: "stroke-warning",
+	danger: "stroke-destructive",
+} as const;
 
 const RADIUS = 8.5;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -7,12 +14,10 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 export function ForkAccountAvatar({
 	label,
 	remaining,
-	warning,
 	className,
 }: {
 	label: string | null;
 	remaining: number | null;
-	warning: boolean;
 	className?: string;
 }) {
 	const fraction =
@@ -39,7 +44,7 @@ export function ForkAccountAvatar({
 				/>
 				{fraction !== null && (
 					<circle
-						className={warning ? "stroke-warning" : "stroke-success"}
+						className={TONE_STROKE[quotaTone(fraction * 100)]}
 						cx="10"
 						cy="10"
 						fill="none"

@@ -11,8 +11,14 @@ import { cn } from "@superset/ui/utils";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { useForkAccountChoices } from "../../useForkAccountChoices";
 import type { useForkCreationAccount } from "../../useForkCreationAccount";
-import { ForkAccountAvatar } from "../ForkAccountAvatar";
+import { ForkAccountAvatar, quotaTone } from "../ForkAccountAvatar";
 import { ForkAccountMenuItems } from "../ForkAccountMenuItems";
+
+const TONE_TEXT = {
+	ok: "text-success",
+	warning: "text-warning",
+	danger: "text-destructive",
+} as const;
 
 export function ForkAccountSubmenu({
 	account,
@@ -49,7 +55,6 @@ export function ForkAccountSubmenu({
 				<ForkAccountAvatar
 					label={selected ? label : null}
 					remaining={quota.remaining}
-					warning={quota.warning}
 				/>
 				<span className="shrink-0">
 					<Trans>Account</Trans>
@@ -61,7 +66,7 @@ export function ForkAccountSubmenu({
 					<span
 						className={cn(
 							"shrink-0 text-[12px]",
-							quota.warning ? "text-warning" : "text-success",
+							TONE_TEXT[quotaTone(quota.remaining)],
 						)}
 					>
 						{formatPercent(quota.remaining / 100, { maximumFractionDigits: 0 })}
