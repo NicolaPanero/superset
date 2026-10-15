@@ -328,14 +328,16 @@ export function useSubmitWorkspace(
 			usePromptHistoryStore.getState().recordPrompt(trimmedPrompt);
 		}
 
-		closeAndResetDraft();
 		const { completed } = submit({ hostId, snapshot });
-		void navigate({
+		// Navigation is a transition: the old screen stays up until the
+		// workspace route loads, so the draft is kept on it until then.
+		await navigate({
 			to: "/v2-workspace/$workspaceId",
 			params: { workspaceId },
 		}).catch((error) => {
 			console.error("[useSubmitWorkspace] failed to open workspace", error);
 		});
+		closeAndResetDraft();
 
 		const isViewingOptimisticWorkspace = () => {
 			const workspaceMatch = matchRoute({
