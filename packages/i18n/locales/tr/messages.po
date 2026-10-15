@@ -5358,6 +5358,9 @@ msgstr "Oluştur"
 msgid "Create \"{newLabel}\""
 msgstr "\"{newLabel}\" oluştur"
 
+msgid "Create & start"
+msgstr "Oluştur ve başlat"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Sağlayıcıda aynı konuşma bağlamına sahip yerel bir fork oluşturur. Özgün oturum değişmeden kalır."
 
@@ -6550,6 +6553,9 @@ msgstr "Her oturum kaldığı yerden devam eder."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Her yüzeyin kendi tipografisi vardır. Değişiklikler canlı önizlemelerde hemen görünür."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Her görev kendi çalışma alanını ve dalını alır. Ajan bir sohbette başlar."
 
 msgid "Early 2024"
 msgstr "2024 başı"
@@ -16074,6 +16080,9 @@ msgstr "Taramaya başlayın"
 
 msgid "Start building in two."
 msgstr "İki adımda geliştirmeye başlayın."
+
+msgid "Start chat"
+msgstr "Sohbeti başlat"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "iPhone veya iPad'inizden kodlama ajanlarını başlatın, canlı takip edin ve diff'i inceleyin. App Store'da mevcut; Android yakında geliyor."

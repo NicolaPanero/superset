@@ -5358,6 +5358,9 @@ msgstr "Erstellen"
 msgid "Create \"{newLabel}\""
 msgstr "„{newLabel}“ erstellen"
 
+msgid "Create & start"
+msgstr "Erstellen & starten"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Erstellt beim Anbieter einen nativen Fork mit demselben Gesprächskontext. Die ursprüngliche Sitzung bleibt unverändert."
 
@@ -6550,6 +6553,9 @@ msgstr "Jede Sitzung macht dort weiter, wo sie aufgehört hat."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Jede Oberfläche hat ihre eigene Typografie. Änderungen erscheinen sofort in den Live-Vorschauen."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Jede Aufgabe erhält einen eigenen Arbeitsbereich und Branch. Der Agent startet in einem Chat."
 
 msgid "Early 2024"
 msgstr "Anfang 2024"
@@ -16074,6 +16080,9 @@ msgstr "Losbrowsen"
 
 msgid "Start building in two."
 msgstr "In zwei Schritten loslegen."
+
+msgid "Start chat"
+msgstr "Chat starten"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Coding-Agents starten, live verfolgen und den Diff auf iPhone oder iPad prüfen. Im App Store erhältlich; Android folgt bald."

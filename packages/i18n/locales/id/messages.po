@@ -5358,6 +5358,9 @@ msgstr "Buat"
 msgid "Create \"{newLabel}\""
 msgstr "Buat \"{newLabel}\""
 
+msgid "Create & start"
+msgstr "Buat & mulai"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Membuat fork asli di penyedia dengan konteks percakapan yang sama. Sesi aslinya tidak berubah."
 
@@ -6550,6 +6553,9 @@ msgstr "Setiap sesi melanjutkan dari titik terakhir."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Tiap permukaan punya tipografinya sendiri. Perubahan langsung terlihat di pratinjau."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Setiap tugas mendapat workspace dan branch sendiri. Agen dimulai dalam chat."
 
 msgid "Early 2024"
 msgstr "Awal 2024"
@@ -16074,6 +16080,9 @@ msgstr "Mulai menjelajah"
 
 msgid "Start building in two."
 msgstr "Mulai membangun dalam dua."
+
+msgid "Start chat"
+msgstr "Mulai chat"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Mulai agen coding, ikuti secara langsung, dan tinjau diff dari iPhone atau iPad Anda. Tersedia di App Store; Android segera hadir."

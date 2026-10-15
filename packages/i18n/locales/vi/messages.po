@@ -5358,6 +5358,9 @@ msgstr "Tạo"
 msgid "Create \"{newLabel}\""
 msgstr "Tạo \"{newLabel}\""
 
+msgid "Create & start"
+msgstr "Tạo và bắt đầu"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Tạo một bản fork gốc ở nhà cung cấp với cùng ngữ cảnh hội thoại. Phiên ban đầu giữ nguyên."
 
@@ -6550,6 +6553,9 @@ msgstr "Mỗi phiên sẽ tiếp tục từ chỗ đang dở."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Mỗi bề mặt có kiểu chữ riêng. Thay đổi hiện ra ngay trong phần xem trước trực tiếp."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Mỗi tác vụ có workspace và nhánh riêng. Agent bắt đầu trong một cuộc chat."
 
 msgid "Early 2024"
 msgstr "Đầu 2024"
@@ -16074,6 +16080,9 @@ msgstr "Bắt đầu duyệt web"
 
 msgid "Start building in two."
 msgstr "Bắt đầu xây dựng trong hai bước."
+
+msgid "Start chat"
+msgstr "Bắt đầu chat"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Khởi chạy agent lập trình, theo dõi trực tiếp và xem xét diff từ iPhone hoặc iPad. Có trên App Store; Android sắp ra mắt."

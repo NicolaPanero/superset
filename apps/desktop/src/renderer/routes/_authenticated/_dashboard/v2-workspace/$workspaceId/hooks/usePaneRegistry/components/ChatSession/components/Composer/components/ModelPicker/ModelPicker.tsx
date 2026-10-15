@@ -10,7 +10,13 @@ import {
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { cn } from "@superset/ui/utils";
-import { type KeyboardEvent, useMemo, useRef, useState } from "react";
+import {
+	type KeyboardEvent,
+	type ReactNode,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { LuCheck, LuChevronDown } from "react-icons/lu";
 import {
 	getPresetIcon,
@@ -31,6 +37,8 @@ export type ModelPickerProps = {
 	configOptions: SessionConfigOption[];
 	onSelect: (configId: string, value: string) => void;
 	agentSwitcher?: AgentSwitcher;
+	emptyLabel?: string;
+	footer?: ReactNode;
 };
 
 const TRAIT_ROW_CLASS = cn(
@@ -54,6 +62,8 @@ function currentLabel(option: SessionConfigOption | undefined) {
 export function ModelPicker({
 	agentSwitcher,
 	configOptions,
+	emptyLabel,
+	footer,
 	onSelect,
 }: ModelPickerProps) {
 	const [open, setOpen] = useState(false);
@@ -81,7 +91,9 @@ export function ModelPicker({
 	const choose = (configId: string, value: string) =>
 		select(configId, value, () => onSelect(configId, value));
 	const agentIcon = agentSwitcher
-		? getPresetIcon(agentSwitcher.currentPresetId, isDark)
+		? (agentSwitcher.agents.find(
+				(agent) => agent.presetId === agentSwitcher.currentPresetId,
+			)?.icon ?? getPresetIcon(agentSwitcher.currentPresetId, isDark))
 		: undefined;
 	const model = options.find(
 		(option) => option.category === "model" && option.options.length > 0,
@@ -111,7 +123,8 @@ export function ModelPicker({
 		currentLabel(model) ??
 		model?.label ??
 		currentAgentLabel ??
-		settings[0]?.label;
+		settings[0]?.label ??
+		emptyLabel;
 	const pick = (option: SessionConfigOption, value: string) => {
 		if (value !== option.currentValue) choose(option.id, value);
 		setOpen(false);
@@ -242,6 +255,7 @@ export function ModelPicker({
 						))}
 					</div>
 				) : null}
+				{footer}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

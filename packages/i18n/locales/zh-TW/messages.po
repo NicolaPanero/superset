@@ -5358,6 +5358,9 @@ msgstr "建立"
 msgid "Create \"{newLabel}\""
 msgstr "建立「{newLabel}」"
 
+msgid "Create & start"
+msgstr "建立並開始"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "在供應商端建立具有相同對話上下文的原生分支。原本的會話維持不變。"
 
@@ -6550,6 +6553,9 @@ msgstr "每個會話都會從中斷處繼續。"
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "每個介面都有各自的排版設定。更改會立即體現在即時預覽中。"
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "每個任務都有獨立的工作區和分支。代理程式會在聊天中啟動。"
 
 msgid "Early 2024"
 msgstr "2024年初"
@@ -16074,6 +16080,9 @@ msgstr "開始瀏覽"
 
 msgid "Start building in two."
 msgstr "兩步開始建置。"
+
+msgid "Start chat"
+msgstr "開始聊天"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "在 iPhone 或 iPad 上啟動程式設計 agent、即時追蹤並審查差異。已在 App Store 上架；Android 版即將推出。"

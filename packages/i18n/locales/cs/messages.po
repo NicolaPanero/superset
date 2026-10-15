@@ -5358,6 +5358,9 @@ msgstr "Vytvořit"
 msgid "Create \"{newLabel}\""
 msgstr "Vytvořit „{newLabel}“"
 
+msgid "Create & start"
+msgstr "Vytvořit a spustit"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Vytvoří nativní fork u poskytovatele se stejným kontextem konverzace. Původní relace zůstane beze změny."
 
@@ -6550,6 +6553,9 @@ msgstr "Každá relace naváže tam, kde skončila."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Každá plocha má vlastní typografii. Změny se okamžitě projeví v živých náhledech."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Každý úkol dostane vlastní pracovní prostor a větev. Agent se spustí v chatu."
 
 msgid "Early 2024"
 msgstr "Zač. 2024"
@@ -16074,6 +16080,9 @@ msgstr "Začněte prohlížet"
 
 msgid "Start building in two."
 msgstr "Začněte stavět ve dvou."
+
+msgid "Start chat"
+msgstr "Zahájit chat"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Spouštějte kódovací agenty, sledujte je živě a kontrolujte diff z iPhonu nebo iPadu. K dispozici v App Storu; Android brzy."

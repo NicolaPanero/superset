@@ -52,7 +52,11 @@ export function ModelPanel({
 	const isDark = useIsDarkTheme();
 	const currentPresetId = agentSwitcher?.currentPresetId ?? "";
 	const [query, setQuery] = useState("");
-	const [tab, setTab] = useState(currentPresetId);
+	const [tab, setTab] = useState(() =>
+		agentSwitcher?.agents.some((agent) => agent.presetId === currentPresetId)
+			? currentPresetId
+			: (agentSwitcher?.agents[0]?.presetId ?? currentPresetId),
+	);
 	const { favorites, toggle } = useFavoriteModels();
 	const listRef = useRef<HTMLDivElement>(null);
 
@@ -236,7 +240,7 @@ export function ModelPanel({
 		<div className="flex min-h-0 flex-col" onKeyDownCapture={onPanelKeyDown}>
 			{tabs.length > 0 ? (
 				<div
-					className="flex shrink-0 items-center gap-0.5 border-b px-1.5 py-1.5"
+					className="flex shrink-0 items-center gap-0.5 overflow-x-auto border-b px-1.5 py-1.5 [scrollbar-width:none]"
 					role="tablist"
 				>
 					{tabs.map((entry) => {
@@ -244,7 +248,8 @@ export function ModelPanel({
 						const icon =
 							entry.presetId === FAVORITES_TAB
 								? null
-								: getPresetIcon(entry.presetId, isDark);
+								: (("icon" in entry ? entry.icon : undefined) ??
+									getPresetIcon(entry.presetId, isDark));
 						return (
 							<button
 								aria-label={entry.label}

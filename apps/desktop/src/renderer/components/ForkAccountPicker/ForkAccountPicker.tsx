@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import {
@@ -13,56 +13,42 @@ import { toast } from "@superset/ui/sonner";
 import { useState } from "react";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
-import { visibleForkAccountOptions } from "renderer/lib/fork-account-visibility";
 import {
 	AddAccountDialog,
 	type SwitchSignInTarget,
 } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
-import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { ForkUsageSummary } from "../ForkUsageSummary";
+import { ForkAccountAvatar } from "./components/ForkAccountAvatar";
+import { useForkAccountChoices } from "./useForkAccountChoices";
 import type { useForkCreationAccount } from "./useForkCreationAccount";
 
 export function ForkAccountPicker({
 	account,
 	provider,
 	model,
+	compact = false,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
 	model?: string;
+	compact?: boolean;
 }) {
+	const { t } = useLingui();
 	const menuDialog = useForkMenuDialog();
-	const showCliOptions = useForkCliOptions();
 	const [adding, setAdding] = useState(false);
 	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
-	if (!account.enabled) return null;
-	const choices = visibleForkAccountOptions(
-		account.options.data ?? [],
-		showCliOptions,
-	)
-		.toSorted(
-			(a, b) => Number(a.selection === null) - Number(b.selection === null),
-		)
-		.map((option) => ({
-			option,
-			usage: account.quota.data?.find(
-				(row) => row.agent === provider && row.selection === option.selection,
-			),
-		}));
-	const selected = choices.find(
-		(choice) => choice.option.selection === account.selection,
+	const { choices, selected, suggested } = useForkAccountChoices(
+		account,
+		provider,
+		model,
 	);
-	const suggested = choices
-		.filter(
-			(choice) =>
-				choice.option.selection !== null &&
-				accountQuotaState(choice.usage, model).reason === "ready",
-		)
-		.sort(
-			(a, b) =>
-				(accountQuotaState(b.usage, model).remaining ?? 0) -
-				(accountQuotaState(a.usage, model).remaining ?? 0),
-		)[0];
+	if (!account.enabled) return null;
+	const label = account.forcedApi
+		? t({ message: "API billing" })
+		: selected
+			? forkAccountLabel(selected.option, selected.usage?.email)
+			: t({ message: "Choose an account" });
+	const quota = accountQuotaState(selected?.usage, model);
 	return (
 		<>
 			<DropdownMenu
@@ -73,31 +59,39 @@ export function ForkAccountPicker({
 					if (open) void account.quota.refresh().catch(() => {});
 				}}
 			>
-				<DropdownMenuTrigger
-					data-fork-account-picker
-					disabled={!account.available || account.forcedApi}
-					className="flex h-[22px] min-w-0 max-w-[380px] shrink-0 whitespace-nowrap items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs"
-				>
-					<span className="truncate">
-						{account.forcedApi ? (
-							<Trans>API billing</Trans>
-						) : selected ? (
-							forkAccountLabel(selected.option, selected.usage?.email)
-						) : (
-							<Trans>Choose an account</Trans>
+				{compact ? (
+					<DropdownMenuTrigger
+						data-fork-account-picker
+						aria-label={label}
+						title={label}
+						disabled={!account.available || account.forcedApi}
+						className="flex h-7 shrink-0 cursor-pointer items-center rounded-lg px-1 outline-none transition-colors hover:bg-foreground/[0.07] focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-foreground/[0.07]"
+					>
+						<ForkAccountAvatar
+							label={selected ? label : null}
+							remaining={quota.remaining}
+							warning={quota.warning}
+						/>
+					</DropdownMenuTrigger>
+				) : (
+					<DropdownMenuTrigger
+						data-fork-account-picker
+						disabled={!account.available || account.forcedApi}
+						className="flex h-[22px] min-w-0 max-w-[380px] shrink-0 whitespace-nowrap items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs"
+					>
+						<span className="truncate">{label}</span>
+						{!account.forcedApi && (
+							<>
+								<span>·</span>
+								<ForkUsageSummary
+									account={selected?.usage}
+									model={model}
+									compact
+								/>
+							</>
 						)}
-					</span>
-					{!account.forcedApi && (
-						<>
-							<span>·</span>
-							<ForkUsageSummary
-								account={selected?.usage}
-								model={model}
-								compact
-							/>
-						</>
-					)}
-				</DropdownMenuTrigger>
+					</DropdownMenuTrigger>
+				)}
 				<DropdownMenuContent
 					className="w-96 max-w-[calc(100vw-32px)] max-h-[60vh] overflow-auto"
 					align="start"

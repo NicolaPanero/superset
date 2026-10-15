@@ -5358,6 +5358,9 @@ msgstr "만들기"
 msgid "Create \"{newLabel}\""
 msgstr "\"{newLabel}\" 만들기"
 
+msgid "Create & start"
+msgstr "만들고 시작"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "같은 대화 컨텍스트로 제공자의 네이티브 포크를 만듭니다. 원래 세션은 그대로 유지됩니다."
 
@@ -6550,6 +6553,9 @@ msgstr "각 세션은 중단된 지점부터 이어집니다."
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "각 화면마다 타이포그래피를 따로 설정합니다. 변경 사항은 실시간 미리보기에 바로 반영됩니다."
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "작업마다 전용 워크스페이스와 브랜치가 생깁니다. 에이전트는 채팅에서 시작합니다."
 
 msgid "Early 2024"
 msgstr "2024년 초"
@@ -16074,6 +16080,9 @@ msgstr "탐색 시작"
 
 msgid "Start building in two."
 msgstr "두 단계로 빌드를 시작하세요."
+
+msgid "Start chat"
+msgstr "채팅 시작"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "iPhone이나 iPad에서 코딩 에이전트를 시작하고, 실시간으로 따라가고, diff를 리뷰하세요. App Store에서 이용할 수 있으며 Android는 곧 출시됩니다."

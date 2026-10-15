@@ -1,6 +1,7 @@
 export type AgentChoice = {
 	presetId: string;
 	label: string;
+	icon?: string;
 	models: { id: string; label: string }[];
 };
 

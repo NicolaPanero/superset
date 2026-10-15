@@ -5358,6 +5358,9 @@ msgstr "作成"
 msgid "Create \"{newLabel}\""
 msgstr "「{newLabel}」を作成"
 
+msgid "Create & start"
+msgstr "作成して開始"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "同じ会話コンテキストを持つネイティブのフォークをプロバイダー側に作成します。元のセッションは変更されません。"
 
@@ -6550,6 +6553,9 @@ msgstr "各セッションは中断したところから再開します。"
 
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "サーフェスごとに独自のタイポグラフィがあります。変更はライブプレビューに即座に反映されます。"
+
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "タスクごとに専用のワークスペースとブランチが作成されます。エージェントはチャットで開始します。"
 
 msgid "Early 2024"
 msgstr "2024年前半"
@@ -16074,6 +16080,9 @@ msgstr "ブラウジングを開始"
 
 msgid "Start building in two."
 msgstr "ツーステップで開発を始めよう。"
+
+msgid "Start chat"
+msgstr "チャットを開始"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "iPhone や iPad からコーディングエージェントを起動し、ライブで見守り、差分をレビュー。App Store で配信中。Android 版は近日公開。"
