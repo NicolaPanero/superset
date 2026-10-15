@@ -295,11 +295,12 @@ async function flush(times = 8): Promise<void> {
 function startAdapter(
 	agent: FakeAcpAgent,
 	resume?: string,
-	selections: { modelId?: string; modeId?: string } = {},
+	selections: { modelId?: string; modeId?: string; cwd?: string } = {},
 	adapterOptions: Pick<
 		AcpAdapterOptions,
 		| "authMethodId"
 		| "defaultModeId"
+		| "forkPlanReadPermissions"
 		| "selectionWaitMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
@@ -3413,6 +3414,179 @@ describe("per-chat Full access", () => {
 		expect(agent.lastPermissionResponse()?.result).toEqual({
 			outcome: { outcome: "selected", optionId: "allow" },
 		});
+		await adapter.dispose();
+	});
+
+	it.each([
+		1, 2,
+	])("ACP %s Plan approves workspace reads once and keeps implementation approval manual", async (version) => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = version;
+		agent.newSessionModes = {
+			currentModeId: "plan",
+			availableModes: [
+				{ id: "plan", name: "Plan" },
+				{ id: "default", name: "Default" },
+				{ id: "bypassPermissions", name: "Full access" },
+			],
+		};
+		const cwd = process.cwd();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{ cwd, modeId: "plan" },
+			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+		);
+		await flush(32);
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "plan-read",
+			_meta: { claudeCode: { toolName: "Bash" } },
+		});
+		const ask = (
+			id: number,
+			toolCall: Record<string, unknown>,
+			sessionId = "sess-1",
+		) =>
+			agent.requestServer(
+				"session/request_permission",
+				{
+					sessionId,
+					toolCall,
+					options: [
+						{ optionId: "always", name: "Always", kind: "allow_always" },
+						{ optionId: "once", name: "Yes", kind: "allow_once" },
+					],
+				},
+				id,
+			);
+		const read = {
+			toolCallId: "plan-read",
+			rawInput: { command: `cd '${cwd}' && git status --short` },
+		};
+		ask(9100, read);
+		await flush();
+		expect(agent.responseTo(9100)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "once" },
+		});
+		expect(
+			itemsOf(events).filter((item) => item.kind === "approval_request"),
+		).toHaveLength(0);
+		ask(9101, { name: "ExitPlanMode", rawInput: {} });
+		ask(9102, { name: "Edit", rawInput: { file_path: `${cwd}/package.json` } });
+		ask(9103, read, "another-session");
+		await flush();
+		for (const id of [9101, 9102, 9103])
+			expect(agent.responseTo(id)).toBeUndefined();
+		adapter.setMode("default");
+		await flush(32);
+		ask(9104, read);
+		await flush();
+		expect(agent.responseTo(9104)).toBeUndefined();
+		await adapter.dispose();
+	});
+
+	it("Plan keeps another harness's read permissions manual", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionModes = { currentModeId: "plan", availableModes: [] };
+		const cwd = process.cwd();
+		const { adapter } = startAdapter(agent, undefined, { cwd, modeId: "plan" });
+		await flush(32);
+		agent.requestServer(
+			"session/request_permission",
+			{
+				sessionId: "sess-1",
+				toolCall: {
+					name: "Read",
+					rawInput: { file_path: `${cwd}/package.json` },
+				},
+				options: [{ optionId: "once", name: "Yes", kind: "allow_once" }],
+			},
+			9150,
+		);
+		await flush();
+		expect(agent.responseTo(9150)).toBeUndefined();
+		await adapter.dispose();
+	});
+
+	it("Plan does not inherit bypass approvals when Claude enters it through a native update", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionModes = {
+			currentModeId: "bypassPermissions",
+			availableModes: [],
+		};
+		const { adapter } = startAdapter(
+			agent,
+			undefined,
+			{ cwd: process.cwd() },
+			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+		);
+		await flush(32);
+		agent.notify("sess-1", {
+			sessionUpdate: "current_mode_update",
+			currentModeId: "plan",
+		});
+		agent.requestServer(
+			"session/request_permission",
+			{
+				sessionId: "sess-1",
+				toolCall: { name: "ExitPlanMode", rawInput: {} },
+				options: [
+					{ optionId: "implement", name: "Implement", kind: "allow_once" },
+				],
+			},
+			9200,
+		);
+		await flush();
+		expect(agent.responseTo(9200)).toBeUndefined();
+		await adapter.dispose();
+	});
+
+	it("Plan read approvals wait for mode confirmation and stay disabled after a rejected change", async () => {
+		const agent = new FakeAcpAgent();
+		agent.newSessionModes = { currentModeId: "default", availableModes: [] };
+		const cwd = process.cwd();
+		const { adapter } = startAdapter(
+			agent,
+			undefined,
+			{ cwd },
+			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+		);
+		await flush(32);
+		agent.holdSelections = true;
+		adapter.setMode("plan");
+		const ask = (id: number) =>
+			agent.requestServer(
+				"session/request_permission",
+				{
+					sessionId: "sess-1",
+					toolCall: {
+						name: "Read",
+						rawInput: { file_path: `${cwd}/package.json` },
+					},
+					options: [{ optionId: "once", name: "Yes", kind: "allow_once" }],
+				},
+				id,
+			);
+		ask(9300);
+		await flush();
+		expect(agent.responseTo(9300)).toBeUndefined();
+		agent.releaseSelections();
+		await flush(32);
+		ask(9301);
+		await flush();
+		expect(agent.responseTo(9301)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "once" },
+		});
+		agent.holdSelections = false;
+		adapter.setMode("default");
+		await flush(32);
+		agent.rejectSelections = true;
+		adapter.setMode("plan");
+		await flush(32);
+		ask(9302);
+		await flush();
+		expect(agent.responseTo(9302)).toBeUndefined();
 		await adapter.dispose();
 	});
 

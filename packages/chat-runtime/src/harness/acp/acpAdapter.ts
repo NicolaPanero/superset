@@ -44,6 +44,7 @@ import {
 	fullAccessModes,
 	fullAccessNativeMode,
 } from "./forkFullAccess";
+import { ForkPlanReadPermissions } from "./forkPlanReadPermissions";
 import { forkPromptError } from "./forkPromptError";
 import {
 	type AcpImageSource,
@@ -204,6 +205,7 @@ function sessionMissing(error: unknown): boolean {
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
+	forkPlanReadPermissions?: boolean;
 	forkAtMessage?: boolean;
 	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
 	wholeUserMessageReplay?: boolean;
@@ -1855,9 +1857,34 @@ export class AcpAdapter implements HarnessAdapter {
 		}
 		if (
 			this.autoApprovePermissions &&
+			this.modeId !== "plan" &&
 			parsed.data.sessionId === this.sessionId
 		) {
 			const optionId = fullAccessAllowOption(parsed.data.options);
+			if (optionId) {
+				this.client?.respond(request.id, {
+					outcome: { outcome: "selected", optionId },
+				});
+				return;
+			}
+		}
+		if (
+			this.options.forkPlanReadPermissions &&
+			this.modeId === "plan" &&
+			this.selectionsInFlight.size === 0 &&
+			parsed.data.sessionId === this.sessionId
+		) {
+			const call = parsed.data.toolCall;
+			const toolName =
+				call?.name ??
+				call?._meta?.claudeCode?.toolName ??
+				(call?.toolCallId
+					? this.toolCalls.get(call.toolCallId)?.toolName
+					: undefined);
+			const optionId = new ForkPlanReadPermissions(this.cwd).allowOption(
+				parsed.data,
+				toolName,
+			);
 			if (optionId) {
 				this.client?.respond(request.id, {
 					outcome: { outcome: "selected", optionId },

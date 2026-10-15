@@ -41,8 +41,15 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Il cambio account Claude mantiene la chat nello stesso pannello. Per un altro
   agente puoi scegliere la stessa chat, una nuova scheda o un pannello affiancato.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
-  espone questa modalità. Usa la pianificazione nativa e disattiva le
-  approvazioni automatiche di **Full access**.
+  espone questa modalità. Usa la pianificazione nativa. Per Claude approva
+  automaticamente le letture e le ricerche nel workspace e i comandi di
+  esplorazione riconosciuti, verificando anche pipe, concatenazioni e percorsi
+  reali. Le approvazioni valgono per una sola chiamata. Modifiche, uscita da
+  Plan, tool MCP, percorsi esterni e comandi non riconosciuti richiedono
+  conferma; le domande sulle scelte progettuali restano visibili.
+  Le letture shell con percorsi relativi devono iniziare con
+  `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
+  servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
 - Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
   e le sue opzioni. Non cambia agente o account.
 - **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**

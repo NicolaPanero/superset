@@ -63,6 +63,7 @@ export function acpHarnessFactory(
 			(accountSelection, captured) =>
 				createAdapter({
 					command: entry.binary,
+					forkPlanReadPermissions: harness === "claude-acp",
 					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
 					authMethodId:
 						harness === "gemini-acp" &&
