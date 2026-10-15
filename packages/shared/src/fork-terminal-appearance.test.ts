@@ -3,17 +3,17 @@ import { getForkTerminalDefaults } from "./fork-terminal-appearance";
 import { darkTheme } from "./themes/built-in";
 import { parseThemeConfigFile } from "./themes/import";
 
-test("matches native Mac terminal typography while keeping the bundled font on Windows and Linux", () => {
+test("uses 12px with the native Mac font and the bundled font on Windows and Linux", () => {
 	for (const platform of ["darwin", "MacIntel"]) {
 		expect(getForkTerminalDefaults(platform)).toMatchObject({
 			fontFamily: "SF Mono",
-			fontSize: 11,
+			fontSize: 12,
 		});
 	}
 	for (const platform of ["win32", "Win32", "linux"]) {
 		expect(getForkTerminalDefaults(platform)).toMatchObject({
 			fontFamily: "JetBrains Mono",
-			fontSize: 14,
+			fontSize: 12,
 		});
 	}
 });

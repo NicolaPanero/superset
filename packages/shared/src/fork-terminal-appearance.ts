@@ -9,6 +9,6 @@ export function getForkTerminalDefaults(platform: string) {
 	return {
 		...FORK_TERMINAL_DEFAULTS,
 		fontFamily: isMac ? "SF Mono" : FORK_TERMINAL_DEFAULTS.fontFamily,
-		fontSize: isMac ? 11 : 14,
+		fontSize: 12,
 	};
 }

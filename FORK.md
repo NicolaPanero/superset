@@ -46,9 +46,9 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   la copia non si carica. Gli altri agenti mantengono il fork dell’intera sessione.
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
-- I terminali usano **SF Mono a 11 px** su macOS, caricato dal sistema come nel
+- I terminali usano **SF Mono a 12 px** su macOS, caricato dal sistema come nel
   Terminale nativo, con **JetBrains Mono** incluso come fallback. Windows e Linux
-  usano JetBrains Mono a 14 px. Interlinea 1,1 e contrasto minimo 3:1 sono comuni.
+  usano JetBrains Mono a 12 px. Interlinea 1,1 e contrasto minimo 3:1 sono comuni.
   Il tema **Dark** usa la palette ANSI di VS Code, più satura di quella pastello.
   Le preferenze salvate prevalgono;
   font e valori restano modificabili in **Settings → Appearance → Terminal typography**.
