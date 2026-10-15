@@ -59,3 +59,28 @@ describe("appendLaunchesToPaneLayout", () => {
 		expect(state.tabs).toHaveLength(0);
 	});
 });
+
+it("background setup leaves commands and chained agents visible", () => {
+	const state = appendLaunchesToPaneLayout({
+		existing: undefined,
+		hideSetupTerminals: true,
+		terminals: [
+			{ terminalId: "setup", label: "Workspace Setup" },
+			{ terminalId: "command", label: "Command" },
+		],
+		agents: [],
+	});
+	expect(state.tabs.map((tab) => tab.titleOverride)).toEqual(["Command"]);
+	const chained = appendLaunchesToPaneLayout({
+		existing: state,
+		hideSetupTerminals: true,
+		terminals: [{ terminalId: "chained", label: "Workspace Setup" }],
+		agents: [
+			{ ok: true, kind: "terminal", sessionId: "chained", label: "Claude" },
+		],
+	});
+	expect(chained.tabs.map((tab) => tab.titleOverride)).toEqual([
+		"Command",
+		"Claude",
+	]);
+});

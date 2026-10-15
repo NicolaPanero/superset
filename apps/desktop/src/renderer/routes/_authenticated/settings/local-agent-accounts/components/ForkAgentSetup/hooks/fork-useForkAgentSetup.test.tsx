@@ -104,3 +104,62 @@ test("an old host's missing procedure is handled locally and cannot apply setup"
 		).rejects.toThrow("agent_setup_unavailable");
 	});
 });
+
+test("Cursor keys use the dedicated field and older hosts cannot silently discard them", async () => {
+	for (const supported of [true, false]) {
+		const f = queryFixture();
+		const calls: unknown[] = [];
+		const cursor = { ...config, presetId: "cursor-agent", env: {} };
+		const client = () => ({
+			settings: {
+				forkAgentSetup: {
+					inspect: {
+						query: async () => ({
+							command: "/provider/cursor-agent",
+							revision: "a".repeat(64),
+							cursorApiKeySupported: supported,
+						}),
+					},
+					configure: {
+						mutate: async (input: unknown) => {
+							calls.push(input);
+						},
+					},
+				},
+				agentConfigs: { list: { query: async () => [cursor] } },
+			},
+		});
+		const view = renderHook(
+			() =>
+				useForkAgentSetup(
+					"http://local",
+					cursor,
+					client as unknown as typeof getHostServiceClientByUrl,
+				),
+			{ wrapper: f.wrapper },
+		);
+		await flush();
+		if (supported) {
+			await act(async () => {
+				await view.result.current.apply.mutateAsync({
+					key: "cursor-key-fixture",
+					model: "unused",
+				});
+			});
+			expect(calls[0]).toMatchObject({ cursorApiKey: "cursor-key-fixture" });
+			expect(calls[0]).not.toHaveProperty("api");
+		} else {
+			await act(async () => {
+				await expect(
+					view.result.current.apply.mutateAsync({
+						key: "cursor-key-fixture",
+						model: "unused",
+					}),
+				).rejects.toThrow("agent_setup_unavailable");
+			});
+			expect(calls).toEqual([]);
+		}
+		view.unmount();
+		f.client.clear();
+	}
+});

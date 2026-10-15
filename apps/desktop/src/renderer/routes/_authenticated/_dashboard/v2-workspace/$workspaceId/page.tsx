@@ -39,6 +39,7 @@ import { WorkspaceEmptyState } from "./components/WorkspaceEmptyState";
 import { WorkspaceMissingWorktreeState } from "./components/WorkspaceMissingWorktreeState";
 import { WorkspaceMoreMenu } from "./components/WorkspaceMoreMenu";
 import { WorkspaceSidebar } from "./components/WorkspaceSidebar";
+import { WorkspaceTabIcon } from "./components/WorkspaceTabIcon";
 import { useAgentSessionLauncher } from "./hooks/useAgentSessionLauncher";
 import { useAutoAdoptBackgroundSessions } from "./hooks/useAutoAdoptBackgroundSessions";
 import { useAutoAdoptChatSessions } from "./hooks/useAutoAdoptChatSessions";
@@ -53,7 +54,6 @@ import { useDiffPaneTarget } from "./hooks/useDiffPaneTarget";
 import { useForkFocusChatLink } from "./hooks/useForkFocusChatLink";
 import { usePaneAreaMoveActions } from "./hooks/usePaneAreaMoveActions";
 import { usePaneRegistry } from "./hooks/usePaneRegistry";
-import { renderBrowserTabIcon } from "./hooks/usePaneRegistry/components/BrowserPane";
 import { usePullRequestPaneIntentOpener } from "./hooks/usePullRequestPaneIntentOpener";
 import { useRightPaneAreaExpansion } from "./hooks/useRightPaneAreaExpansion";
 import { useRightPaneAreaLifecycle } from "./hooks/useRightPaneAreaLifecycle";
@@ -68,6 +68,7 @@ import { useV2WorkspacePaneLayout } from "./hooks/useV2WorkspacePaneLayout";
 import { useV2WorkspaceRun } from "./hooks/useV2WorkspaceRun";
 import { useWindowWidth } from "./hooks/useWindowWidth";
 import { useWorkspaceFileNavigation } from "./hooks/useWorkspaceFileNavigation";
+import { useWorkspaceFolders } from "./hooks/useWorkspaceFolders";
 import { useWorkspaceHotkeys } from "./hooks/useWorkspaceHotkeys";
 import { useWorkspacePaneOpeners } from "./hooks/useWorkspacePaneOpeners";
 import { useWorkspaceRightSidebarOpen } from "./hooks/useWorkspaceRightSidebarOpen";
@@ -84,6 +85,7 @@ import type { V2WorkspaceUrlOpenTarget } from "./utils/openUrlInV2Workspace";
 
 interface WorkspaceSearch {
 	importChat?: boolean;
+	resumeChat?: string;
 	terminalId?: string;
 	focusRequestId?: string;
 	/** Deep link from the sidebar's agents chip into a subagent transcript. */
@@ -114,6 +116,7 @@ export const Route = createFileRoute(
 	validateSearch: (raw: Record<string, unknown>): WorkspaceSearch => ({
 		importChat:
 			raw.importChat === true || raw.importChat === "true" ? true : undefined,
+		resumeChat: parseNonEmptyString(raw.resumeChat),
 		terminalId: parseNonEmptyString(raw.terminalId),
 		focusRequestId: parseNonEmptyString(raw.focusRequestId),
 		...readSubagentSearch(raw),
@@ -155,6 +158,7 @@ function V2WorkspacePage() {
 function V2WorkspaceContent() {
 	const {
 		importChat,
+		resumeChat,
 		terminalId,
 		focusRequestId,
 		subagentTerminalId,
@@ -571,7 +575,11 @@ function V2WorkspaceContent() {
 		isSandbox,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
+	// Run belongs to the main repo: it stays off while another repo is selected.
+	const { selected: selectedFolderRepo } = useWorkspaceFolders(workspaceId);
+	const isRunBlocked = selectedFolderRepo !== null && !workspaceRun.isRunning;
 	useHotkey("RUN_WORKSPACE_COMMAND", () => {
+		if (isRunBlocked) return;
 		void workspaceRun.toggleWorkspaceRun();
 	});
 
@@ -584,7 +592,7 @@ function V2WorkspaceContent() {
 			projectId={workspace.projectId}
 			definition={workspaceRun.definition}
 			isRunning={workspaceRun.isRunning}
-			isPending={workspaceRun.isPending}
+			isPending={workspaceRun.isPending || isRunBlocked}
 			canForceStop={workspaceRun.canForceStop}
 			onToggle={workspaceRun.toggleWorkspaceRun}
 			onForceStop={workspaceRun.forceStopWorkspaceRun}
@@ -609,7 +617,7 @@ function V2WorkspaceContent() {
 				projectId={workspace.projectId}
 				runDefinition={workspaceRun.definition}
 				isRunning={workspaceRun.isRunning}
-				isRunPending={workspaceRun.isPending}
+				isRunPending={workspaceRun.isPending || isRunBlocked}
 				canForceStop={workspaceRun.canForceStop}
 				onToggleRun={workspaceRun.toggleWorkspaceRun}
 				onForceStopRun={workspaceRun.forceStopWorkspaceRun}
@@ -675,7 +683,9 @@ function V2WorkspaceContent() {
 									paneActions={defaultPaneActions}
 									contextMenuActions={centerContextMenuActions}
 									onPaneError={reportRendererError}
-									renderTabIcon={renderBrowserTabIcon}
+									renderTabIcon={(tab) => (
+										<WorkspaceTabIcon tab={tab} workspaceId={workspaceId} />
+									)}
 									renderTabAccessory={(tab) => (
 										<V2NotificationStatusIndicator
 											sources={getV2NotificationSourcesForTab(tab)}
@@ -691,9 +701,11 @@ function V2WorkspaceContent() {
 											/>
 										) : null
 									}
-									renderAddTabMenu={() => (
+									renderAddTabMenu={({ afterClose }) => (
 										<AddTabMenu
-											onAddAgent={() => setForkLaunchOpen(true)}
+											onAddAgent={() =>
+												afterClose(() => setForkLaunchOpen(true))
+											}
 											onAddTerminal={addTerminalTab}
 											onAddBrowser={addBrowserTab}
 											onAddChanges={openChanges}
@@ -711,6 +723,8 @@ function V2WorkspaceContent() {
 											)}
 										>
 											<ForkWorkspaceAgentActions
+												resumeChat={resumeChat}
+												onResumeConsumed={() => consumeSearch(["resumeChat"])}
 												importRequested={importChat}
 												onImportRequestConsumed={() =>
 													consumeSearch(["importChat"])

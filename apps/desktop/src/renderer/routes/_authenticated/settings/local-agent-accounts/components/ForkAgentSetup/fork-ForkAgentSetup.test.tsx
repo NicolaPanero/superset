@@ -28,6 +28,7 @@ function fixture() {
 		modelOverrides: false,
 		model: null,
 		revision: "a".repeat(64),
+		cursorApiKeySupported: true,
 	};
 	let isError = false;
 	const hook = () => ({
@@ -70,7 +71,7 @@ test("the default setup row stays compact and does not launch login or apply set
 			useSetup={f.hook}
 		/>,
 	);
-	expect(view.getByText("Ready")).toBeDefined();
+	expect(view.getByText("Connected via subscription")).toBeDefined();
 	expect(view.queryByRole("button", { name: "Sign in" })).toBeNull();
 	expect(f.actions).toEqual([]);
 	fireEvent.click(view.getByRole("button", { name: "Configure" }));
@@ -166,7 +167,7 @@ test("older hosts keep advanced settings available without claiming readiness", 
 		/>,
 	);
 	fireEvent.click(view.getByRole("button", { name: "Configure" }));
-	expect(view.queryByText("Ready")).toBeNull();
+	expect(view.queryByText("Connected via subscription")).toBeNull();
 	expect(
 		view.queryByRole("button", { name: "Apply recommended settings" }),
 	).toBeNull();
@@ -209,7 +210,7 @@ test("an inconclusive setup probe does not imply that only terminal mode is avai
 			useSetup={f.hook}
 		/>,
 	);
-	expect(view.getByText("CLI installed")).toBeDefined();
+	expect(view.getByText("Connected via subscription")).toBeDefined();
 	expect(view.queryByText("Chat support not verified")).toBeNull();
 	fireEvent.click(view.getByRole("button", { name: "Configure" }));
 	expect(
@@ -218,4 +219,65 @@ test("an inconclusive setup probe does not imply that only terminal mode is avai
 	expect(
 		view.getByRole("button", { name: "Apply recommended settings" }),
 	).toBeDefined();
+});
+
+test("Cursor offers a masked API key field without a Grok model field", async () => {
+	const f = fixture();
+	const view = render(
+		<ForkAgentSetup
+			config={{ ...config, presetId: "cursor-agent" }}
+			hostUrl="http://host"
+			onChanged={() => {}}
+			onAdvanced={() => {}}
+			useSetup={f.hook}
+		/>,
+	);
+	fireEvent.click(view.getByRole("button", { name: "Configure" }));
+	fireEvent.click(view.getByRole("button", { name: "Use an API key" }));
+	const input = view.getByLabelText("API key") as HTMLInputElement;
+	expect(input.type).toBe("password");
+	expect(view.queryByLabelText("Model")).toBeNull();
+	fireEvent.change(input, { target: { value: "cursor-fixture-key" } });
+	fireEvent.click(view.getByRole("button", { name: "Save" }));
+	await flush();
+	expect(f.actions).toContainEqual({
+		key: "cursor-fixture-key",
+		model: "grok-4.7",
+	});
+	expect(input.value).toBe("");
+});
+test("remote host setup never starts login on this computer", () => {
+	const f = fixture();
+	const view = render(
+		<ForkAgentSetup
+			config={config}
+			hostUrl="http://remote"
+			allowLocalLogin={false}
+			onChanged={() => {}}
+			onAdvanced={() => {}}
+			useSetup={f.hook}
+		/>,
+	);
+	fireEvent.click(view.getByRole("button", { name: "Configure" }));
+	expect(
+		(view.getByRole("button", { name: "Sign in" }) as HTMLButtonElement)
+			.disabled,
+	).toBe(true);
+});
+
+test("older hosts do not offer a Cursor key they would silently ignore", () => {
+	const f = fixture();
+	f.data.cursorApiKeySupported = false;
+	const view = render(
+		<ForkAgentSetup
+			config={{ ...config, presetId: "cursor-agent" }}
+			hostUrl="http://old-host"
+			onChanged={() => {}}
+			onAdvanced={() => {}}
+			useSetup={f.hook}
+		/>,
+	);
+	fireEvent.click(view.getByRole("button", { name: "Configure" }));
+	expect(view.queryByRole("button", { name: "Use an API key" })).toBeNull();
+	expect(view.getByRole("button", { name: "Sign in" })).toBeDefined();
 });

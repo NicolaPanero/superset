@@ -11,6 +11,7 @@ import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import {
 	SidebarCardSlot,
 	useHiringCard,
@@ -462,10 +463,12 @@ export function DashboardSidebar({
 												onWorkspaceHover={refreshWorkspacePullRequest}
 											/>
 										)}
-										<DashboardSidebarCloudSection
-											isCollapsed={isCollapsed}
-											onWorkspaceHover={refreshWorkspacePullRequest}
-										/>
+										<ForkProFeature>
+											<DashboardSidebarCloudSection
+												isCollapsed={isCollapsed}
+												onWorkspaceHover={refreshWorkspacePullRequest}
+											/>
+										</ForkProFeature>
 										<DashboardSidebarSessionsSection
 											sessionWorkspaces={sessionWorkspaces}
 											isCollapsed={isCollapsed}

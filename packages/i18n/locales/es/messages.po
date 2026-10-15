@@ -1664,6 +1664,9 @@ msgstr "Añade un comentario…"
 msgid "Add a description…"
 msgstr "Añade una descripción…"
 
+msgid "Add a folder to the project"
+msgstr "Añadir una carpeta al proyecto"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Añade un script de ejecución del ciclo de vida en la configuración del proyecto o marca un script de terminal como la ejecución del espacio de trabajo."
 
@@ -1735,6 +1738,12 @@ msgstr "Añadir archivos, apps y más"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Añadir archivos, apps y más (@)"
+
+msgid "Add folder"
+msgstr "Añadir carpeta"
+
+msgid "Add folder…"
+msgstr "Añadir carpeta…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Asocia los espacios de trabajo v1 a su proyecto v2 importado."
 
 msgid "Advanced"
 msgstr "Avanzado"
-
-msgid "Advanced CLI options"
-msgstr "Opciones avanzadas de CLI"
 
 msgid "Advanced configuration"
 msgstr "Configuración avanzada"
@@ -2398,6 +2404,9 @@ msgstr "Claves de API"
 
 msgid "API Keys"
 msgstr "Claves de API"
+
+msgid "API keys are not validated with a paid request."
+msgstr "Las claves API no se validan mediante solicitudes de pago."
 
 msgid "API-equivalent"
 msgstr "equivalente en API"
@@ -3672,9 +3681,6 @@ msgstr "Elige un proyecto en Issues de GitHub antes de abrir un issue."
 msgid "Choose a section."
 msgstr "Elige una sección."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Elige las cuentas manualmente. Los nuevos agentes usan la cuenta predeterminada salvo que su configuración o inicio seleccionen otra."
-
 msgid "Choose agent"
 msgstr "Elegir agente"
 
@@ -3812,9 +3818,6 @@ msgstr "Predeterminado de CLI"
 
 msgid "CLI docs"
 msgstr "Documentación de la CLI"
-
-msgid "CLI installed"
-msgstr "CLI instalada"
 
 msgid "CLI login"
 msgstr "Inicio de sesión del CLI"
@@ -5643,9 +5646,6 @@ msgstr "Pestaña actual"
 msgid "Cursor"
 msgstr "Cursor"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Las cuentas de Cursor Agent, Grok Build y OpenCode se gestionan en sus propias aplicaciones."
-
 msgid "Cursor blinking"
 msgstr "Parpadeo del cursor"
 
@@ -6985,6 +6985,9 @@ msgstr "Editor externo"
 msgid "extra ${used} of ${limit}"
 msgstr "extra: ${used} de ${limit}"
 
+msgid "Extra folders"
+msgstr "Carpetas adicionales"
+
 msgid "Extra high"
 msgstr "Muy alto"
 
@@ -7897,6 +7900,9 @@ msgstr "Bifurcar sesión"
 msgid "Fork session…"
 msgstr "Bifurcar sesión…"
 
+msgid "Fork Settings"
+msgstr "Configuración del fork"
+
 msgid "Fork to new chat"
 msgstr "Bifurcar a un chat nuevo"
 
@@ -8297,6 +8303,12 @@ msgstr "Ocultar"
 msgid "Hide checks"
 msgstr "Ocultar comprobaciones"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Oculta las cuentas de acceso CLI y el selector CHAT/CLI. Ejecuta la configuración del workspace en segundo plano."
+
+msgid "Hide CLI options"
+msgstr "Ocultar opciones CLI"
+
 msgid "Hide details"
 msgstr "Ocultar detalles"
 
@@ -8327,11 +8339,17 @@ msgstr "Ocultar de la barra lateral"
 msgid "Hide log"
 msgstr "Ocultar el log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Oculta las funciones de pago y las invitaciones a mejorar el plan en este dispositivo."
+
 msgid "Hide PR review comments"
 msgstr "Ocultar los comentarios de revisión de la PR"
 
 msgid "Hide Preview"
 msgstr "Ocultar vista previa"
+
+msgid "Hide Pro features"
+msgstr "Ocultar funciones Pro"
 
 msgid "Hide pull request list"
 msgstr "Ocultar la lista de pull requests"
@@ -8615,6 +8633,9 @@ msgstr "La imagen es demasiado grande (máx. 10 MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Vista previa de la imagen de {0}. Haz zoom con más y menos, desplázate con las flechas y pulsa 0 para restablecer."
+
+msgid "Image too large to show"
+msgstr "Imagen demasiado grande para mostrarla"
 
 msgid "Images"
 msgstr "Imágenes"
@@ -9882,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Principal"
 
+msgid "Main repository"
+msgstr "Repositorio principal"
+
 msgid "Make all panes equal size"
 msgstr "Igualar el tamaño de todos los paneles"
 
@@ -10883,6 +10907,9 @@ msgstr "Aún no hay entornos. Crea uno para iniciar un espacio de trabajo en la 
 
 msgid "No extended thinking"
 msgstr "Sin razonamiento extendido"
+
+msgid "No extra folders."
+msgstr "No hay carpetas adicionales."
 
 msgid "No failed runs."
 msgstr "Sin ejecuciones fallidas."
@@ -12209,6 +12236,9 @@ msgstr "Otras apps"
 msgid "Other devices"
 msgstr "Otros dispositivos"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Otras carpetas en las que los agentes pueden trabajar y cuyos cambios se muestran junto a los de este proyecto. Pueden ser repositorios git o carpetas normales."
+
 msgid "Other Hosts"
 msgstr "Otros hosts"
 
@@ -13270,6 +13300,9 @@ msgstr "Cerrar primero el navegador de origen para que sus inicios de sesión se
 msgid "Quota exhausted"
 msgstr "Cuota agotada"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "La cuota se muestra cuando el proveedor lo permite."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Leyendo el uso…"
 
 msgid "Reading your local usage…"
 msgstr "Leyendo el uso local…"
-
-msgid "Ready"
-msgstr "Listo"
 
 msgid "Ready for review"
 msgstr "Lista para revisión"
@@ -13614,6 +13644,9 @@ msgstr "¿Quitar {label}?"
 
 msgid "Remove attachment"
 msgstr "Quitar adjunto"
+
+msgid "Remove folder"
+msgstr "Quitar carpeta"
 
 msgid "Remove from favorites"
 msgstr "Quitar de favoritos"
@@ -15347,9 +15380,6 @@ msgstr "Mostrar todas las líneas"
 msgid "Show checks"
 msgstr "Mostrar comprobaciones"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Muestra las cuentas de inicio de sesión CLI y el selector CHAT/CLI en este dispositivo."
-
 msgid "Show closed"
 msgstr "Mostrar cerrados"
 
@@ -15370,6 +15400,9 @@ msgstr "Mostrar la barra de dispositivos"
 
 msgid "Show diff panel"
 msgstr "Mostrar el panel de diff"
+
+msgid "Show earlier messages"
+msgstr "Mostrar mensajes anteriores"
 
 msgid "Show emails"
 msgstr "Mostrar los correos"
@@ -15536,6 +15569,9 @@ msgstr "Iniciar sesión con GitHub"
 
 msgid "Sign in with Google"
 msgstr "Iniciar sesión con Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Inicia sesión, configura claves API y consulta las cuotas de tus agentes locales."
 
 msgid "Sign out"
 msgstr "Cerrar sesión"
@@ -17438,6 +17474,12 @@ msgstr "este archivo"
 msgid "This file is empty or was deleted."
 msgstr "Este archivo está vacío o fue eliminado."
 
+msgid "This folder is not a git repository."
+msgstr "Esta carpeta no es un repositorio git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Esta carpeta ya no existe en el disco."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Esta instalación de GitHub ya está conectada a otra organización de Superset. Desconéctala allí, o desinstala la GitHub App de Superset, y vuelve a intentarlo."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree abierto"
 
 msgid "Worktree out of sync"
 msgstr "Worktree desincronizado"
+
+msgid "Worktree per workspace"
+msgstr "Worktree por workspace"
 
 msgid "Worktrees"
 msgstr "Worktrees"

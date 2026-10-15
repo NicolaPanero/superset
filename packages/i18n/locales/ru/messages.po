@@ -1664,6 +1664,9 @@ msgstr "Добавьте комментарий…"
 msgid "Add a description…"
 msgstr "Добавьте описание…"
 
+msgid "Add a folder to the project"
+msgstr "Добавить папку в проект"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Добавьте скрипт запуска в настройках проекта или отметьте скрипт терминала как запуск рабочей области."
 
@@ -1735,6 +1738,12 @@ msgstr "Добавить файлы, приложения и другое"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Добавить файлы, приложения и другое (@)"
+
+msgid "Add folder"
+msgstr "Добавить папку"
+
+msgid "Add folder…"
+msgstr "Добавить папку…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Перенесите рабочие пространства v1 в со�
 
 msgid "Advanced"
 msgstr "Дополнительно"
-
-msgid "Advanced CLI options"
-msgstr "Расширенные параметры CLI"
 
 msgid "Advanced configuration"
 msgstr "Расширенная настройка"
@@ -2398,6 +2404,9 @@ msgstr "Ключи API"
 
 msgid "API Keys"
 msgstr "Ключи API"
+
+msgid "API keys are not validated with a paid request."
+msgstr "Ключи API не проверяются платными запросами."
 
 msgid "API-equivalent"
 msgstr "в эквиваленте API"
@@ -3672,9 +3681,6 @@ msgstr "Выберите проект в разделе задач GitHub, пр�
 msgid "Choose a section."
 msgstr "Выберите раздел."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Выбирайте учётные записи вручную. Новые агенты используют учётную запись по умолчанию, если при настройке или запуске не выбрана другая."
-
 msgid "Choose agent"
 msgstr "Выберите агента"
 
@@ -3812,9 +3818,6 @@ msgstr "По умолчанию в CLI"
 
 msgid "CLI docs"
 msgstr "Документация CLI"
-
-msgid "CLI installed"
-msgstr "CLI установлен"
 
 msgid "CLI login"
 msgstr "Вход через CLI"
@@ -5643,9 +5646,6 @@ msgstr "Текущая вкладка"
 msgid "Cursor"
 msgstr "Курсор"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Учётные записи Cursor Agent, Grok Build и OpenCode управляются в соответствующих приложениях."
-
 msgid "Cursor blinking"
 msgstr "Мигание курсора"
 
@@ -6985,6 +6985,9 @@ msgstr "Внешний редактор"
 msgid "extra ${used} of ${limit}"
 msgstr "сверх лимита ${used} из ${limit}"
 
+msgid "Extra folders"
+msgstr "Дополнительные папки"
+
 msgid "Extra high"
 msgstr "Очень высокий"
 
@@ -7897,6 +7900,9 @@ msgstr "Форкнуть сессию"
 msgid "Fork session…"
 msgstr "Форкнуть сессию…"
 
+msgid "Fork Settings"
+msgstr "Настройки форка"
+
 msgid "Fork to new chat"
 msgstr "Ответвить в новый чат"
 
@@ -8297,6 +8303,12 @@ msgstr "Скрыть"
 msgid "Hide checks"
 msgstr "Скрыть проверки"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Скройте учётные записи CLI и переключатель CHAT/CLI. Выполняйте настройку workspace в фоновом режиме."
+
+msgid "Hide CLI options"
+msgstr "Скрыть параметры CLI"
+
 msgid "Hide details"
 msgstr "Скрыть детали"
 
@@ -8327,11 +8339,17 @@ msgstr "Скрыть с боковой панели"
 msgid "Hide log"
 msgstr "Скрыть лог"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Скройте платные функции и предложения перейти на другой тариф на этом устройстве."
+
 msgid "Hide PR review comments"
 msgstr "Скрыть комментарии ревью PR"
 
 msgid "Hide Preview"
 msgstr "Скрыть предпросмотр"
+
+msgid "Hide Pro features"
+msgstr "Скрыть функции Pro"
 
 msgid "Hide pull request list"
 msgstr "Скрыть список пул-реквестов"
@@ -8615,6 +8633,9 @@ msgstr "Изображение слишком большое (макс. 10 МБ)
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Предпросмотр изображения {0}. Масштаб — плюс и минус, панорама — стрелками, 0 — сброс."
+
+msgid "Image too large to show"
+msgstr "Изображение слишком большое для показа"
 
 msgid "Images"
 msgstr "Изображения"
@@ -9882,6 +9903,9 @@ msgstr "Пурпурный"
 msgid "Main"
 msgstr "Основной"
 
+msgid "Main repository"
+msgstr "Основной репозиторий"
+
 msgid "Make all panes equal size"
 msgstr "Сделать все панели одинакового размера"
 
@@ -10883,6 +10907,9 @@ msgstr "Окружений пока нет. Создайте окружение,
 
 msgid "No extended thinking"
 msgstr "Без расширенного мышления"
+
+msgid "No extra folders."
+msgstr "Нет дополнительных папок."
 
 msgid "No failed runs."
 msgstr "Неудачных запусков нет."
@@ -12209,6 +12236,9 @@ msgstr "Другие приложения"
 msgid "Other devices"
 msgstr "Другие устройства"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Другие папки, в которых могут работать агенты и изменения в которых показываются рядом с изменениями этого проекта. Это могут быть git-репозитории или обычные папки."
+
 msgid "Other Hosts"
 msgstr "Другие хосты"
 
@@ -13270,6 +13300,9 @@ msgstr "Сначала закройте исходный браузер, что�
 msgid "Quota exhausted"
 msgstr "Квота исчерпана"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Квота отображается, если провайдер поддерживает эту возможность."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Чтение данных об использовании…"
 
 msgid "Reading your local usage…"
 msgstr "Чтение локальной статистики…"
-
-msgid "Ready"
-msgstr "Готово"
 
 msgid "Ready for review"
 msgstr "Готово к ревью"
@@ -13614,6 +13644,9 @@ msgstr "Удалить {label}?"
 
 msgid "Remove attachment"
 msgstr "Удалить вложение"
+
+msgid "Remove folder"
+msgstr "Удалить папку"
 
 msgid "Remove from favorites"
 msgstr "Удалить из избранного"
@@ -15347,9 +15380,6 @@ msgstr "Показать все строки"
 msgid "Show checks"
 msgstr "Показать проверки"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Показывать аккаунты входа CLI и переключатель CHAT/CLI на этом устройстве."
-
 msgid "Show closed"
 msgstr "Показать закрытые"
 
@@ -15370,6 +15400,9 @@ msgstr "Показать панель устройств"
 
 msgid "Show diff panel"
 msgstr "Показать панель diff"
+
+msgid "Show earlier messages"
+msgstr "Показать предыдущие сообщения"
 
 msgid "Show emails"
 msgstr "Показать email"
@@ -15536,6 +15569,9 @@ msgstr "Войти через GitHub"
 
 msgid "Sign in with Google"
 msgstr "Войти через Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Войдите, настройте ключи API и проверьте квоты локальных агентов."
 
 msgid "Sign out"
 msgstr "Выйти"
@@ -17438,6 +17474,12 @@ msgstr "этот файл"
 msgid "This file is empty or was deleted."
 msgstr "Файл пуст или удалён."
 
+msgid "This folder is not a git repository."
+msgstr "Эта папка не является git-репозиторием."
+
+msgid "This folder no longer exists on disk."
+msgstr "Эта папка больше не существует на диске."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Эта установка GitHub уже подключена к другой организации Superset. Отключите её там или удалите GitHub App Superset, затем повторите."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree открыт"
 
 msgid "Worktree out of sync"
 msgstr "Worktree рассинхронизирован"
+
+msgid "Worktree per workspace"
+msgstr "Worktree для каждого workspace"
 
 msgid "Worktrees"
 msgstr "Worktree"

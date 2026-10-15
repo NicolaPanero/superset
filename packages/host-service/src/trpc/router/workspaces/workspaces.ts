@@ -12,6 +12,7 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { projects, workspaces } from "../../../db/schema";
+import { provisionFolderWorktrees } from "../../../project-folders";
 import { createGitEnvResolver } from "../../../runtime/git";
 import { getGitAuthorName } from "../../../runtime/git/identity";
 import { resolveRef } from "../../../runtime/git/refs";
@@ -1356,6 +1357,15 @@ export const workspacesRouter = router({
 					console.warn(
 						"[workspaces.create] wait-for-setup chain unavailable, dispatching agent in parallel:",
 						err,
+					);
+				}
+			}
+
+			if (!alreadyExists) {
+				const failures = await provisionFolderWorktrees(ctx, workspaceRow.id);
+				for (const failure of failures) {
+					console.warn(
+						`[workspaces.create] extra folder stays shared: ${failure}`,
 					);
 				}
 			}

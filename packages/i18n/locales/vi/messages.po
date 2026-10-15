@@ -1664,6 +1664,9 @@ msgstr "Thêm bình luận…"
 msgid "Add a description…"
 msgstr "Thêm mô tả…"
 
+msgid "Add a folder to the project"
+msgstr "Thêm thư mục vào dự án"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Hãy thêm một script chạy vòng đời trong Cài đặt dự án hoặc đánh dấu một script terminal làm lệnh chạy của workspace."
 
@@ -1735,6 +1738,12 @@ msgstr "Thêm tệp, ứng dụng và hơn thế"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Thêm tệp, ứng dụng và hơn thế (@)"
+
+msgid "Add folder"
+msgstr "Thêm thư mục"
+
+msgid "Add folder…"
+msgstr "Thêm thư mục…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Chuyển không gian làm việc v1 vào dự án v2 tương ứng đã 
 
 msgid "Advanced"
 msgstr "Nâng cao"
-
-msgid "Advanced CLI options"
-msgstr "Tùy chọn CLI nâng cao"
 
 msgid "Advanced configuration"
 msgstr "Cấu hình nâng cao"
@@ -2398,6 +2404,9 @@ msgstr "Khóa API"
 
 msgid "API Keys"
 msgstr "Khóa API"
+
+msgid "API keys are not validated with a paid request."
+msgstr "Khóa API không được xác thực bằng yêu cầu trả phí."
 
 msgid "API-equivalent"
 msgstr "quy đổi theo API"
@@ -3672,9 +3681,6 @@ msgstr "Chọn một dự án trong mục Issue GitHub trước khi mở một i
 msgid "Choose a section."
 msgstr "Chọn một mục."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Chọn tài khoản thủ công. Tác nhân mới dùng tài khoản mặc định trừ khi cấu hình hoặc lựa chọn khởi chạy chỉ định tài khoản khác."
-
 msgid "Choose agent"
 msgstr "Chọn agent"
 
@@ -3812,9 +3818,6 @@ msgstr "Mặc định của CLI"
 
 msgid "CLI docs"
 msgstr "Tài liệu CLI"
-
-msgid "CLI installed"
-msgstr "CLI đã được cài đặt"
 
 msgid "CLI login"
 msgstr "Đăng nhập CLI"
@@ -5643,9 +5646,6 @@ msgstr "Tab hiện tại"
 msgid "Cursor"
 msgstr "Con trỏ"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Tài khoản Cursor Agent, Grok Build và OpenCode được quản lý trong ứng dụng tương ứng."
-
 msgid "Cursor blinking"
 msgstr "Con trỏ nhấp nháy"
 
@@ -6985,6 +6985,9 @@ msgstr "Trình soạn thảo ngoài"
 msgid "extra ${used} of ${limit}"
 msgstr "dùng thêm ${used} trên ${limit}"
 
+msgid "Extra folders"
+msgstr "Thư mục bổ sung"
+
 msgid "Extra high"
 msgstr "Rất cao"
 
@@ -7897,6 +7900,9 @@ msgstr "Fork phiên"
 msgid "Fork session…"
 msgstr "Fork phiên…"
 
+msgid "Fork Settings"
+msgstr "Cài đặt fork"
+
 msgid "Fork to new chat"
 msgstr "Tách sang cuộc trò chuyện mới"
 
@@ -8297,6 +8303,12 @@ msgstr "Ẩn"
 msgid "Hide checks"
 msgstr "Ẩn check"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Ẩn tài khoản đăng nhập CLI và bộ chuyển CHAT/CLI. Chạy thiết lập workspace trong nền."
+
+msgid "Hide CLI options"
+msgstr "Ẩn tùy chọn CLI"
+
 msgid "Hide details"
 msgstr "Ẩn chi tiết"
 
@@ -8327,11 +8339,17 @@ msgstr "Ẩn khỏi thanh bên"
 msgid "Hide log"
 msgstr "Ẩn log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Ẩn tính năng trả phí và lời mời nâng cấp gói trên thiết bị này."
+
 msgid "Hide PR review comments"
 msgstr "Ẩn bình luận review PR"
 
 msgid "Hide Preview"
 msgstr "Ẩn xem trước"
+
+msgid "Hide Pro features"
+msgstr "Ẩn tính năng Pro"
 
 msgid "Hide pull request list"
 msgstr "Ẩn danh sách pull request"
@@ -8615,6 +8633,9 @@ msgstr "Ảnh quá lớn (tối đa 10MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Xem trước ảnh của {0}. Thu phóng bằng phím cộng và trừ, di chuyển bằng phím mũi tên, nhấn 0 để đặt lại."
+
+msgid "Image too large to show"
+msgstr "Hình ảnh quá lớn để hiển thị"
 
 msgid "Images"
 msgstr "Hình ảnh"
@@ -9882,6 +9903,9 @@ msgstr "Đỏ tía"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Kho lưu trữ chính"
+
 msgid "Make all panes equal size"
 msgstr "Làm mọi khung bằng nhau"
 
@@ -10883,6 +10907,9 @@ msgstr "Chưa có environment nào. Tạo một cái để khởi động worksp
 
 msgid "No extended thinking"
 msgstr "Không suy nghĩ mở rộng"
+
+msgid "No extra folders."
+msgstr "Không có thư mục bổ sung."
 
 msgid "No failed runs."
 msgstr "Không có lần chạy thất bại."
@@ -12209,6 +12236,9 @@ msgstr "Ứng dụng khác"
 msgid "Other devices"
 msgstr "Thiết bị khác"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Các thư mục khác mà tác nhân có thể làm việc và thay đổi của chúng hiển thị cạnh thay đổi của dự án này. Có thể là kho git hoặc thư mục thông thường."
+
 msgid "Other Hosts"
 msgstr "Host khác"
 
@@ -13270,6 +13300,9 @@ msgstr "Thoát trình duyệt nguồn trước để thông tin đăng nhập đ
 msgid "Quota exhausted"
 msgstr "Đã hết hạn mức"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Hạn mức được hiển thị khi nhà cung cấp hỗ trợ."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Đang đọc mức sử dụng…"
 
 msgid "Reading your local usage…"
 msgstr "Đang đọc mức sử dụng cục bộ của bạn…"
-
-msgid "Ready"
-msgstr "Sẵn sàng"
 
 msgid "Ready for review"
 msgstr "Sẵn sàng review"
@@ -13614,6 +13644,9 @@ msgstr "Gỡ {label}?"
 
 msgid "Remove attachment"
 msgstr "Xóa tệp đính kèm"
+
+msgid "Remove folder"
+msgstr "Xóa thư mục"
 
 msgid "Remove from favorites"
 msgstr "Xóa khỏi mục yêu thích"
@@ -15347,9 +15380,6 @@ msgstr "Hiện tất cả các dòng"
 msgid "Show checks"
 msgstr "Hiện check"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Hiển thị tài khoản đăng nhập CLI và nút chuyển CHAT/CLI trên thiết bị này."
-
 msgid "Show closed"
 msgstr "Hiện issue đã đóng"
 
@@ -15370,6 +15400,9 @@ msgstr "Hiện thanh công cụ thiết bị"
 
 msgid "Show diff panel"
 msgstr "Hiện khung diff"
+
+msgid "Show earlier messages"
+msgstr "Hiện tin nhắn trước đó"
 
 msgid "Show emails"
 msgstr "Hiện email"
@@ -15536,6 +15569,9 @@ msgstr "Đăng nhập bằng GitHub"
 
 msgid "Sign in with Google"
 msgstr "Đăng nhập bằng Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Đăng nhập, thiết lập khóa API và kiểm tra hạn mức của các tác nhân cục bộ."
 
 msgid "Sign out"
 msgstr "Đăng xuất"
@@ -17438,6 +17474,12 @@ msgstr "tệp này"
 msgid "This file is empty or was deleted."
 msgstr "Tệp này rỗng hoặc đã bị xóa."
 
+msgid "This folder is not a git repository."
+msgstr "Thư mục này không phải là kho git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Thư mục này không còn tồn tại trên đĩa."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Bản cài đặt GitHub này đã kết nối với một tổ chức Superset khác. Hãy ngắt kết nối ở đó, hoặc gỡ Superset GitHub App, rồi thử lại."
 
@@ -19233,6 +19275,9 @@ msgstr "Đã mở worktree"
 
 msgid "Worktree out of sync"
 msgstr "Worktree không còn đồng bộ"
+
+msgid "Worktree per workspace"
+msgstr "Worktree cho mỗi workspace"
 
 msgid "Worktrees"
 msgstr "Worktree"

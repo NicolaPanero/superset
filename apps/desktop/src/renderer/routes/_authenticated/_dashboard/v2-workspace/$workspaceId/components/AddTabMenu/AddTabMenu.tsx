@@ -31,7 +31,7 @@ export function AddTabMenu({
 }: AddTabMenuProps) {
 	return (
 		<>
-			<DropdownMenuItem className="gap-2" onClick={onAddAgent}>
+			<DropdownMenuItem className="gap-2" onSelect={onAddAgent}>
 				<Bot className="size-4" />
 				<Trans>Agent</Trans>
 			</DropdownMenuItem>

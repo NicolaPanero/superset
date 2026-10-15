@@ -17,3 +17,20 @@ test("Grok API keys remain on the host instead of entering synced preset snapsho
 	expect(command).toContain("SETTING=kept");
 	expect(command).toContain("--model grok-4.7");
 });
+
+test("Cursor credentials never enter synced terminal preset snapshots", () => {
+	const command = getForkAgentSnapshotCommand({
+		presetId: "cursor-agent",
+		command: "cursor-agent",
+		args: [],
+		env: {
+			CURSOR_API_KEY: "cursor-secret",
+			CURSOR_AUTH_TOKEN: "token-secret",
+			SETTING: "kept",
+		},
+	});
+	expect(command).not.toContain("secret");
+	expect(command).not.toContain("CURSOR_API_KEY");
+	expect(command).not.toContain("CURSOR_AUTH_TOKEN");
+	expect(command).toContain("SETTING=kept");
+});

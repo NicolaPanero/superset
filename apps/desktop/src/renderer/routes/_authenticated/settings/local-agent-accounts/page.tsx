@@ -3,17 +3,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { z } from "zod";
-import { UsageView } from "../usage/components/UsageView";
+import { LocalAgentAccountsView } from "./components/LocalAgentAccountsView";
 
 export const Route = createFileRoute(
 	"/_authenticated/settings/local-agent-accounts/",
 )({
-	validateSearch: z.object({ workspaceId: z.string().optional() }),
+	validateSearch: z.object({
+		workspaceId: z.string().optional(),
+		accountKey: z.string().optional(),
+		agent: z.string().optional(),
+	}),
 	component: LocalAgentAccountsPage,
 });
 
 function LocalAgentAccountsPage() {
-	const { workspaceId } = Route.useSearch();
+	const { workspaceId, accountKey, agent } = Route.useSearch();
 	const { activeHostUrl } = useLocalHostService();
 	const workspaceHostUrl = useWorkspaceHostUrl(workspaceId ?? null);
 	return (
@@ -24,14 +28,17 @@ function LocalAgentAccountsPage() {
 				</h1>
 				<p className="text-sm text-muted-foreground">
 					<Trans>
-						Choose accounts manually. New agents use the default account unless
-						their configuration or launch selects another.
+						Sign in, set up API keys and check quota for your local agents.
 					</Trans>
 				</p>
+				<p className="text-xs text-muted-foreground">
+					<Trans>Quota is shown when the provider supports it.</Trans>
+				</p>
 			</div>
-			<UsageView
+			<LocalAgentAccountsView
 				hostUrl={workspaceId ? workspaceHostUrl : activeHostUrl}
-				accountsOnly
+				focusedAccountKey={accountKey}
+				focusedAgent={agent}
 			/>
 		</div>
 	);

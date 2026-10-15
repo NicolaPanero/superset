@@ -11,6 +11,7 @@ import {
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { usePresets } from "renderer/react-query/presets";
 import { requestTabClose } from "renderer/stores/editor-state/editorCoordinator";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useTabsStore } from "renderer/stores/tabs/store";
 import { useTabsWithPresets } from "renderer/stores/tabs/useTabsWithPresets";
 import {
@@ -29,7 +30,17 @@ import { GroupItem } from "./GroupItem";
 export function GroupStrip() {
 	const { workspaceId: activeWorkspaceId } = useParams({ strict: false });
 
-	const allTabs = useTabsStore((s) => s.tabs);
+	const storedTabs = useTabsStore((s) => s.tabs);
+	const showCliOptions = useForkCliOptions();
+	const allTabs = useMemo(
+		() =>
+			storedTabs.filter(
+				(tab) =>
+					showCliOptions ||
+					!(tab.isWorkspaceSetup ?? tab.name === "Workspace Setup"),
+			),
+		[storedTabs, showCliOptions],
+	);
 	const panes = useTabsStore((s) => s.panes);
 	const activeTabIds = useTabsStore((s) => s.activeTabIds);
 	const tabHistoryStacks = useTabsStore((s) => s.tabHistoryStacks);
@@ -161,10 +172,19 @@ export function GroupStrip() {
 	const handleReorderTabs = useCallback(
 		(fromIndex: number, toIndex: number) => {
 			if (activeWorkspaceId) {
-				reorderTabs(activeWorkspaceId, fromIndex, toIndex);
+				const storedWorkspaceTabs = storedTabs.filter(
+					(tab) => tab.workspaceId === activeWorkspaceId,
+				);
+				const from = storedWorkspaceTabs.findIndex(
+					(tab) => tab.id === tabs[fromIndex]?.id,
+				);
+				const to = storedWorkspaceTabs.findIndex(
+					(tab) => tab.id === tabs[toIndex]?.id,
+				);
+				if (from >= 0 && to >= 0) reorderTabs(activeWorkspaceId, from, to);
 			}
 		},
-		[activeWorkspaceId, reorderTabs],
+		[activeWorkspaceId, reorderTabs, storedTabs, tabs],
 	);
 
 	const checkIsLastPaneInTab = useCallback((paneId: string) => {

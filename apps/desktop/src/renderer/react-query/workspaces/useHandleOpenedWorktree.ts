@@ -18,6 +18,9 @@ export function useHandleOpenedWorktree() {
 	const navigate = useNavigate();
 	const utils = electronTrpc.useUtils();
 	const addTab = useTabsStore((state) => state.addTab);
+	const setTabWorkspaceSetup = useTabsStore(
+		(state) => state.setTabWorkspaceSetup,
+	);
 	const setTabAutoTitle = useTabsStore((state) => state.setTabAutoTitle);
 	const createOrAttach = useCreateOrAttachWithTheme();
 	const writeToTerminal = electronTrpc.terminal.write.useMutation();
@@ -31,6 +34,7 @@ export function useHandleOpenedWorktree() {
 				data,
 				addTab,
 				setTabAutoTitle,
+				setTabWorkspaceSetup,
 				createOrAttach: (input) => createOrAttach.mutateAsync(input),
 				writeToTerminal: (input) => writeToTerminal.mutateAsync(input),
 			});
@@ -56,6 +60,7 @@ export function useHandleOpenedWorktree() {
 			createOrAttach,
 			navigate,
 			setTabAutoTitle,
+			setTabWorkspaceSetup,
 			utils.projects.getRecents,
 			utils.workspaces,
 			writeToTerminal,

@@ -4,6 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, isNotNull, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { projects, workspaces } from "../../../db/schema";
+import { readFolderWorkspaceView } from "../../../project-folders";
 import { isMissingPath } from "../../../runtime/path-state";
 import {
 	getWorkspaceTags,
@@ -20,9 +21,10 @@ export const workspaceRouter = router({
 	get: protectedProcedure
 		.input(z.object({ id: z.string() }))
 		.query(({ ctx, input }) => {
-			const localWorkspace = ctx.db.query.workspaces
-				.findFirst({ where: eq(workspaces.id, input.id) })
-				.sync();
+			const localWorkspace =
+				ctx.db.query.workspaces
+					.findFirst({ where: eq(workspaces.id, input.id) })
+					.sync() ?? readFolderWorkspaceView(ctx.db, input.id);
 
 			if (!localWorkspace) {
 				throw new TRPCError({

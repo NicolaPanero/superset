@@ -7,12 +7,14 @@ import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import type { SidebarCardEntry } from "renderer/components/SidebarCardSlot/types";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useGettingStartedStore } from "renderer/stores/getting-started";
 import { GettingStartedChecklist } from "./components/GettingStartedChecklist";
 import { GETTING_STARTED_STEPS } from "./constants";
 
 export function useGettingStartedCard(): SidebarCardEntry | null {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const { tried, dismissed, dismiss, hasCompleted, complete } =
 		useGettingStartedStore();
 	const navigate = useNavigate();
@@ -21,7 +23,10 @@ export function useGettingStartedCard(): SidebarCardEntry | null {
 	const mobileFlag = useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_LAUNCH);
 	const mobileEnabled = mobileFlag === true;
 	const visible =
-		!dismissed && isReady && hasAccess(GATED_FEATURES.REMOTE_ACCESS);
+		showProFeatures &&
+		!dismissed &&
+		isReady &&
+		hasAccess(GATED_FEATURES.REMOTE_ACCESS);
 	const { data: remoteEnabled } =
 		electronTrpc.settings.getExposeHostServiceViaRelay.useQuery(undefined, {
 			enabled: visible,

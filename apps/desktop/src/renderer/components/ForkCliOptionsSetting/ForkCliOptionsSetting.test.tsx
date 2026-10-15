@@ -8,6 +8,7 @@ import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import { useSettings } from "renderer/stores/settings";
 import {
 	act,
+	cleanup,
 	fireEvent,
 	render,
 	renderHook,
@@ -15,6 +16,7 @@ import {
 import { ForkCliOptionsSetting } from "./ForkCliOptionsSetting";
 
 afterEach(() => {
+	cleanup();
 	useForkCliOptionsStore.getState().setShowCliOptions(false);
 	useSettings.getState().update("acpChatEnabled", true);
 });
@@ -32,12 +34,12 @@ test("the accessible local toggle reveals CLI login and hides it again without r
 	);
 	expect(view.queryByText("External profile")).toBeNull();
 	expect(view.getByText("Managed profile")).toBeTruthy();
-	const toggle = view.getByRole("switch", { name: "Advanced CLI options" });
+	const toggle = view.getByRole("switch", { name: "Hide CLI options" });
 	expect(toggle.getAttribute("aria-describedby")).toBe(
 		"fork-cli-options-description",
 	);
 	fireEvent.click(toggle);
-	expect(toggle.getAttribute("aria-checked")).toBe("true");
+	expect(toggle.getAttribute("aria-checked")).toBe("false");
 	expect(view.getByText("External profile")).toBeTruthy();
 	fireEvent.click(toggle);
 	expect(view.queryByText("External profile")).toBeNull();

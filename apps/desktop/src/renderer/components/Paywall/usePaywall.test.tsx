@@ -1,7 +1,16 @@
-import { afterAll, afterEach, describe, expect, mock, test } from "bun:test";
+import {
+	afterAll,
+	afterEach,
+	beforeEach,
+	describe,
+	expect,
+	mock,
+	test,
+} from "bun:test";
 import type { AppRouter } from "@superset/trpc";
 import type { TRPCLink } from "@trpc/client";
 import type { ReactNode } from "react";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -102,7 +111,9 @@ async function answerPlan(plan: ActivePlan) {
 
 const settle = () => act(async () => {});
 
+beforeEach(() => useForkCliOptionsStore.getState().setHideProFeatures(false));
 afterEach(() => {
+	useForkCliOptionsStore.getState().setHideProFeatures(true);
 	cleanup();
 	planRequestCount = 0;
 	unansweredPlanRequests.length = 0;
@@ -235,4 +246,14 @@ describe("whose plan the window is holding", () => {
 		expect(callback).not.toHaveBeenCalled();
 		expect(showPaywall).toHaveBeenCalledTimes(1);
 	});
+});
+
+test("hidden Pro features neither run an action nor open the paywall", async () => {
+	useForkCliOptionsStore.getState().setHideProFeatures(true);
+	const { result } = renderPaywall({ cachedPlan: proPlanFor(WINDOW_ORG) });
+	const callback = mock(() => {});
+	act(() => result.current.gateFeature("automations", callback));
+	await settle();
+	expect(callback).not.toHaveBeenCalled();
+	expect(showPaywall).not.toHaveBeenCalled();
 });

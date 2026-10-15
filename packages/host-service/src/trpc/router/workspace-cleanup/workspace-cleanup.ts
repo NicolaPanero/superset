@@ -5,6 +5,7 @@ import { eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { pullRequests, workspaces } from "../../../db/schema";
 import { invalidateLabelCache } from "../../../ports/static-ports";
+import { removeFolderWorktrees } from "../../../project-folders";
 import { isMissingPath } from "../../../runtime/path-state";
 import { coercePullRequestState } from "../../../runtime/pull-requests/utils/pull-request-mappers";
 import {
@@ -504,6 +505,8 @@ async function runDestroyPhases(
 		const message = err instanceof Error ? err.message : String(err);
 		warnings.push(`Failed to stop chat sessions: ${message}`);
 	}
+
+	warnings.push(...(await removeFolderWorktrees(ctx, input.workspaceId)));
 
 	// 3b. Worktree. Double-force unlocks the rare locked-worktree case and
 	//     clears stale metadata when the directory was manually removed.

@@ -14,10 +14,13 @@ export function AttachmentImage({
 	alt,
 	path,
 	type,
+	src: inlineSrc,
 }: {
 	path: string;
 	type: string;
 	alt?: string | undefined;
+	/** Image bytes as a data URL, when no file in the worktree holds them. */
+	src?: string | undefined;
 }) {
 	const { workspaceId } = useChatPaneActions();
 	const saveImageToDownloads = useSaveImageToDownloads();
@@ -38,7 +41,10 @@ export function AttachmentImage({
 			absolutePath,
 			maxBytes: MAX_THUMBNAIL_BYTES,
 		},
-		{ ...readOptions, enabled: Boolean(workspaceId && worktreePath) },
+		{
+			...readOptions,
+			enabled: Boolean(workspaceId && worktreePath && !inlineSrc),
+		},
 	);
 	const [unrenderable, setUnrenderable] = useState(false);
 	const [previewOpen, setPreviewOpen] = useState(false);
@@ -58,6 +64,16 @@ export function AttachmentImage({
 		},
 	);
 
+	if (inlineSrc && !unrenderable)
+		return (
+			<PreviewableImage
+				alt={alt}
+				filename={name}
+				onDownload={() => saveImageToDownloads(inlineSrc, name)}
+				onError={() => setUnrenderable(true)}
+				src={inlineSrc}
+			/>
+		);
 	if (
 		!workspaceId ||
 		thumbnail.isError ||

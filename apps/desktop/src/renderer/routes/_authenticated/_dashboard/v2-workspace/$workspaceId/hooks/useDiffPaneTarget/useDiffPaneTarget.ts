@@ -8,6 +8,8 @@ export interface DiffPaneTarget {
 	/** Worktree-relative path of the file the diff pane last navigated to. */
 	path: string;
 	changeKey?: string;
+	/** Extra project folder the diff belongs to; absent means the main repo. */
+	repoKey?: string;
 }
 
 /**
@@ -35,6 +37,11 @@ export function useDiffPaneTarget(
 		if (active?.pane.kind !== "diff") return undefined;
 		return (active.pane.data as DiffPaneData).changeKey;
 	});
+	const activeRepoKey = useStore(store, (state) => {
+		const active = state.getActivePane();
+		if (active?.pane.kind !== "diff") return undefined;
+		return (active.pane.data as DiffPaneData).repoKey;
+	});
 	const hasDiffPane = useStore(store, (state) =>
 		state.tabs.some((tab) =>
 			Object.values(tab.panes).some((pane) => pane.kind === "diff"),
@@ -48,9 +55,15 @@ export function useDiffPaneTarget(
 	useEffect(() => {
 		if (activeKind !== "diff") return;
 		setTarget(
-			activePath ? { path: activePath, changeKey: activeChangeKey } : undefined,
+			activePath
+				? {
+						path: activePath,
+						changeKey: activeChangeKey,
+						repoKey: activeRepoKey,
+					}
+				: undefined,
 		);
-	}, [activeKind, activePath, activeChangeKey]);
+	}, [activeKind, activePath, activeChangeKey, activeRepoKey]);
 	useEffect(() => {
 		if (!hasDiffPane) setTarget(undefined);
 	}, [hasDiffPane]);

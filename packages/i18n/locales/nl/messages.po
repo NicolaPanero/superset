@@ -1664,6 +1664,9 @@ msgstr "Voeg een reactie toe…"
 msgid "Add a description…"
 msgstr "Voeg een beschrijving toe…"
 
+msgid "Add a folder to the project"
+msgstr "Een map aan het project toevoegen"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Voeg een lifecycle-runscript toe in de projectinstellingen of markeer een terminalscript als de run van de werkruimte."
 
@@ -1735,6 +1738,12 @@ msgstr "Bestanden, apps en meer toevoegen"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Bestanden, apps en meer toevoegen (@)"
+
+msgid "Add folder"
+msgstr "Map toevoegen"
+
+msgid "Add folder…"
+msgstr "Map toevoegen…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Koppel v1-werkruimten aan hun geïmporteerde v2-project."
 
 msgid "Advanced"
 msgstr "Geavanceerd"
-
-msgid "Advanced CLI options"
-msgstr "Geavanceerde CLI-opties"
 
 msgid "Advanced configuration"
 msgstr "Geavanceerde configuratie"
@@ -2398,6 +2404,9 @@ msgstr "API-sleutels"
 
 msgid "API Keys"
 msgstr "API-sleutels"
+
+msgid "API keys are not validated with a paid request."
+msgstr "API-sleutels worden niet met betaalde verzoeken gecontroleerd."
 
 msgid "API-equivalent"
 msgstr "API-equivalent"
@@ -3672,9 +3681,6 @@ msgstr "Kies een project bij GitHub-issues voordat je een issue opent."
 msgid "Choose a section."
 msgstr "Kies een onderdeel."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Kies accounts handmatig. Nieuwe agents gebruiken het standaardaccount tenzij de configuratie of startkeuze een ander account bepaalt."
-
 msgid "Choose agent"
 msgstr "Kies agent"
 
@@ -3812,9 +3818,6 @@ msgstr "CLI-standaard"
 
 msgid "CLI docs"
 msgstr "CLI-docs"
-
-msgid "CLI installed"
-msgstr "CLI geïnstalleerd"
 
 msgid "CLI login"
 msgstr "CLI-aanmelding"
@@ -5643,9 +5646,6 @@ msgstr "Huidig tabblad"
 msgid "Cursor"
 msgstr "Cursor"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Accounts van Cursor Agent, Grok Build en OpenCode worden in hun eigen apps beheerd."
-
 msgid "Cursor blinking"
 msgstr "Knipperende cursor"
 
@@ -6985,6 +6985,9 @@ msgstr "Externe editor"
 msgid "extra ${used} of ${limit}"
 msgstr "extra ${used} van ${limit}"
 
+msgid "Extra folders"
+msgstr "Extra mappen"
+
 msgid "Extra high"
 msgstr "Zeer hoog"
 
@@ -7897,6 +7900,9 @@ msgstr "Sessie forken"
 msgid "Fork session…"
 msgstr "Sessie forken…"
 
+msgid "Fork Settings"
+msgstr "Fork-instellingen"
+
 msgid "Fork to new chat"
 msgstr "Forken naar nieuwe chat"
 
@@ -8297,6 +8303,12 @@ msgstr "Verbergen"
 msgid "Hide checks"
 msgstr "Checks verbergen"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Verberg CLI-inlogaccounts en de CHAT/CLI-schakelaar. Voer de workspace-instelling op de achtergrond uit."
+
+msgid "Hide CLI options"
+msgstr "CLI-opties verbergen"
+
 msgid "Hide details"
 msgstr "Details verbergen"
 
@@ -8327,11 +8339,17 @@ msgstr "Uit de zijbalk verbergen"
 msgid "Hide log"
 msgstr "Log verbergen"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Verberg betaalde functies en upgradeverzoeken op dit apparaat."
+
 msgid "Hide PR review comments"
 msgstr "PR-reviewopmerkingen verbergen"
 
 msgid "Hide Preview"
 msgstr "Preview verbergen"
+
+msgid "Hide Pro features"
+msgstr "Pro-functies verbergen"
 
 msgid "Hide pull request list"
 msgstr "Lijst met pull requests verbergen"
@@ -8615,6 +8633,9 @@ msgstr "Afbeelding is te groot (max. 10 MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Voorbeeld van afbeelding {0}. Zoom met plus en min, verschuif met de pijltoetsen, druk op 0 om te resetten."
+
+msgid "Image too large to show"
+msgstr "Afbeelding te groot om te tonen"
 
 msgid "Images"
 msgstr "Afbeeldingen"
@@ -9882,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Hoofdrepository"
+
 msgid "Make all panes equal size"
 msgstr "Alle panelen even groot maken"
 
@@ -10883,6 +10907,9 @@ msgstr "Nog geen omgevingen. Maak er een aan om er een cloudwerkruimte vanaf te 
 
 msgid "No extended thinking"
 msgstr "Geen uitgebreid nadenken"
+
+msgid "No extra folders."
+msgstr "Geen extra mappen."
 
 msgid "No failed runs."
 msgstr "Geen mislukte uitvoeringen."
@@ -12209,6 +12236,9 @@ msgstr "Andere apps"
 msgid "Other devices"
 msgstr "Andere apparaten"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Andere mappen waarin agents kunnen werken en waarvan de wijzigingen naast die van dit project worden getoond. Het kunnen git-repositories of gewone mappen zijn."
+
 msgid "Other Hosts"
 msgstr "Andere hosts"
 
@@ -13270,6 +13300,9 @@ msgstr "Sluit eerst de bronbrowser af zodat de logins naar schijf worden weggesc
 msgid "Quota exhausted"
 msgstr "Limiet bereikt"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Het quotum wordt getoond als de provider dit ondersteunt."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Gebruik wordt gelezen…"
 
 msgid "Reading your local usage…"
 msgstr "Je lokale gebruik wordt gelezen…"
-
-msgid "Ready"
-msgstr "Gereed"
 
 msgid "Ready for review"
 msgstr "Klaar voor review"
@@ -13614,6 +13644,9 @@ msgstr "{label} verwijderen?"
 
 msgid "Remove attachment"
 msgstr "Bijlage verwijderen"
+
+msgid "Remove folder"
+msgstr "Map verwijderen"
 
 msgid "Remove from favorites"
 msgstr "Verwijderen uit favorieten"
@@ -15347,9 +15380,6 @@ msgstr "Alle regels tonen"
 msgid "Show checks"
 msgstr "Checks tonen"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Toon CLI-aanmeldaccounts en de CHAT/CLI-schakelaar op dit apparaat."
-
 msgid "Show closed"
 msgstr "Gesloten tonen"
 
@@ -15370,6 +15400,9 @@ msgstr "Apparaatbalk tonen"
 
 msgid "Show diff panel"
 msgstr "Diff-paneel tonen"
+
+msgid "Show earlier messages"
+msgstr "Eerdere berichten tonen"
 
 msgid "Show emails"
 msgstr "E-mails tonen"
@@ -15536,6 +15569,9 @@ msgstr "Inloggen met GitHub"
 
 msgid "Sign in with Google"
 msgstr "Inloggen met Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Meld je aan, stel API-sleutels in en bekijk de quota van je lokale agents."
 
 msgid "Sign out"
 msgstr "Uitloggen"
@@ -17438,6 +17474,12 @@ msgstr "dit bestand"
 msgid "This file is empty or was deleted."
 msgstr "Dit bestand is leeg of is verwijderd."
 
+msgid "This folder is not a git repository."
+msgstr "Deze map is geen git-repository."
+
+msgid "This folder no longer exists on disk."
+msgstr "Deze map bestaat niet meer op schijf."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Deze GitHub-installatie is al gekoppeld aan een andere Superset-organisatie. Verbreek de verbinding daar of verwijder de Superset GitHub App, en probeer het opnieuw."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree geopend"
 
 msgid "Worktree out of sync"
 msgstr "Worktree niet in sync"
+
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
 
 msgid "Worktrees"
 msgstr "Worktrees"

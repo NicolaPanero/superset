@@ -1664,6 +1664,9 @@ msgstr "댓글 추가…"
 msgid "Add a description…"
 msgstr "설명 추가…"
 
+msgid "Add a folder to the project"
+msgstr "프로젝트에 폴더 추가"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "프로젝트 설정에서 라이프사이클 실행 스크립트를 추가하거나, 터미널 스크립트를 워크스페이스 실행으로 지정하세요."
 
@@ -1735,6 +1738,12 @@ msgstr "파일, 앱 등 추가"
 
 msgid "Add files, apps, and more (@)"
 msgstr "파일, 앱 등 추가 (@)"
+
+msgid "Add folder"
+msgstr "폴더 추가"
+
+msgid "Add folder…"
+msgstr "폴더 추가…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "v1 작업 공간을 가져온 해당 v2 프로젝트에 연결합니다.
 
 msgid "Advanced"
 msgstr "고급"
-
-msgid "Advanced CLI options"
-msgstr "고급 CLI 옵션"
 
 msgid "Advanced configuration"
 msgstr "고급 설정"
@@ -2398,6 +2404,9 @@ msgstr "API 키"
 
 msgid "API Keys"
 msgstr "API 키"
+
+msgid "API keys are not validated with a paid request."
+msgstr "API 키는 유료 요청으로 검증하지 않습니다."
 
 msgid "API-equivalent"
 msgstr "API 환산"
@@ -3672,9 +3681,6 @@ msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선�
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "계정을 수동으로 선택합니다. 구성이나 시작 설정에서 다른 계정을 선택하지 않으면 새 에이전트는 기본 계정을 사용합니다."
-
 msgid "Choose agent"
 msgstr "에이전트 선택"
 
@@ -3812,9 +3818,6 @@ msgstr "CLI 기본값"
 
 msgid "CLI docs"
 msgstr "CLI 문서"
-
-msgid "CLI installed"
-msgstr "CLI 설치됨"
 
 msgid "CLI login"
 msgstr "CLI 로그인"
@@ -5643,9 +5646,6 @@ msgstr "현재 탭"
 msgid "Cursor"
 msgstr "커서"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent, Grok Build 및 OpenCode 계정은 각 앱에서 관리합니다."
-
 msgid "Cursor blinking"
 msgstr "커서 깜박임"
 
@@ -6985,6 +6985,9 @@ msgstr "외부 편집기"
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
 
+msgid "Extra folders"
+msgstr "추가 폴더"
+
 msgid "Extra high"
 msgstr "매우 높음"
 
@@ -7897,6 +7900,9 @@ msgstr "세션 포크"
 msgid "Fork session…"
 msgstr "세션 포크…"
 
+msgid "Fork Settings"
+msgstr "포크 설정"
+
 msgid "Fork to new chat"
 msgstr "새 채팅으로 포크"
 
@@ -8297,6 +8303,12 @@ msgstr "숨기기"
 msgid "Hide checks"
 msgstr "검사 숨기기"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI 로그인 계정과 CHAT/CLI 전환을 숨깁니다. workspace 설정을 백그라운드에서 실행합니다."
+
+msgid "Hide CLI options"
+msgstr "CLI 옵션 숨기기"
+
 msgid "Hide details"
 msgstr "상세 정보 숨기기"
 
@@ -8327,11 +8339,17 @@ msgstr "사이드바에서 숨기기"
 msgid "Hide log"
 msgstr "로그 숨기기"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "이 기기에서 유료 기능과 업그레이드 안내를 숨깁니다."
+
 msgid "Hide PR review comments"
 msgstr "PR 리뷰 코멘트 숨기기"
 
 msgid "Hide Preview"
 msgstr "미리보기 숨기기"
+
+msgid "Hide Pro features"
+msgstr "Pro 기능 숨기기"
 
 msgid "Hide pull request list"
 msgstr "풀 리퀘스트 목록 숨기기"
@@ -8615,6 +8633,9 @@ msgstr "이미지가 너무 큽니다 (최대 10MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}의 이미지 미리 보기입니다. 플러스와 마이너스로 확대/축소하고, 화살표 키로 이동하며, 0을 누르면 초기화됩니다."
+
+msgid "Image too large to show"
+msgstr "이미지가 너무 커서 표시할 수 없습니다"
 
 msgid "Images"
 msgstr "이미지"
@@ -9882,6 +9903,9 @@ msgstr "자홍"
 msgid "Main"
 msgstr "메인"
 
+msgid "Main repository"
+msgstr "메인 리포지토리"
+
 msgid "Make all panes equal size"
 msgstr "모든 패널을 같은 크기로 맞춥니다"
 
@@ -10883,6 +10907,9 @@ msgstr "아직 환경이 없습니다. 하나를 만들어 클라우드 워크�
 
 msgid "No extended thinking"
 msgstr "확장 사고 없음"
+
+msgid "No extra folders."
+msgstr "추가 폴더가 없습니다."
 
 msgid "No failed runs."
 msgstr "실패한 실행이 없습니다."
@@ -12209,6 +12236,9 @@ msgstr "다른 앱"
 msgid "Other devices"
 msgstr "다른 기기"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "에이전트가 작업할 수 있고 변경 사항이 이 프로젝트의 변경 사항 옆에 표시되는 다른 폴더입니다. git 리포지토리이거나 일반 폴더일 수 있습니다."
+
 msgid "Other Hosts"
 msgstr "다른 호스트"
 
@@ -13270,6 +13300,9 @@ msgstr "로그인 정보가 디스크에 저장되도록 원본 브라우저를 
 msgid "Quota exhausted"
 msgstr "한도 소진"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "공급자가 지원하는 경우 할당량이 표시됩니다."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "사용량 읽는 중…"
 
 msgid "Reading your local usage…"
 msgstr "로컬 사용량을 읽는 중…"
-
-msgid "Ready"
-msgstr "준비됨"
 
 msgid "Ready for review"
 msgstr "리뷰 준비됨"
@@ -13614,6 +13644,9 @@ msgstr "{label}을(를) 제거할까요?"
 
 msgid "Remove attachment"
 msgstr "첨부 파일 제거"
+
+msgid "Remove folder"
+msgstr "폴더 제거"
 
 msgid "Remove from favorites"
 msgstr "즐겨찾기에서 제거"
@@ -15347,9 +15380,6 @@ msgstr "모든 줄 표시"
 msgid "Show checks"
 msgstr "검사 표시"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "이 기기에서 CLI 로그인 계정과 CHAT/CLI 전환 버튼을 표시합니다."
-
 msgid "Show closed"
 msgstr "닫힌 항목 표시"
 
@@ -15370,6 +15400,9 @@ msgstr "기기 툴바 표시"
 
 msgid "Show diff panel"
 msgstr "차이 패널 표시"
+
+msgid "Show earlier messages"
+msgstr "이전 메시지 표시"
 
 msgid "Show emails"
 msgstr "이메일 표시"
@@ -15536,6 +15569,9 @@ msgstr "GitHub로 로그인"
 
 msgid "Sign in with Google"
 msgstr "Google로 로그인"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "로그인하고 API 키를 설정한 뒤 로컬 에이전트의 할당량을 확인하세요."
 
 msgid "Sign out"
 msgstr "로그아웃"
@@ -17438,6 +17474,12 @@ msgstr "이 파일"
 msgid "This file is empty or was deleted."
 msgstr "이 파일은 비어 있거나 삭제되었습니다."
 
+msgid "This folder is not a git repository."
+msgstr "이 폴더는 git 리포지토리가 아닙니다."
+
+msgid "This folder no longer exists on disk."
+msgstr "이 폴더는 더 이상 디스크에 없습니다."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "이 GitHub 설치는 이미 다른 Superset 조직에 연결되어 있습니다. 해당 조직에서 연결을 해제하거나 Superset GitHub App을 제거한 뒤 다시 시도해 주세요."
 
@@ -19233,6 +19275,9 @@ msgstr "worktree를 열었습니다"
 
 msgid "Worktree out of sync"
 msgstr "worktree가 동기화되지 않음"
+
+msgid "Worktree per workspace"
+msgstr "워크스페이스별 worktree"
 
 msgid "Worktrees"
 msgstr "worktree"

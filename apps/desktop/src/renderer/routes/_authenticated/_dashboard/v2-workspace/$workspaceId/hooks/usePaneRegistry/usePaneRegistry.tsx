@@ -51,6 +51,7 @@ import { useCollections } from "renderer/routes/_authenticated/providers/Collect
 import { getV2NotificationSourcesForPane } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
 import { V2NotificationStatusIndicator } from "../../components/V2NotificationStatusIndicator";
+import { WorkspaceGitStatusProvider } from "../../providers/WorkspaceGitStatusProvider";
 import {
 	getDocument,
 	useSharedFileDocument,
@@ -60,6 +61,7 @@ import {
 	type ChatPaneData,
 	type CommentPaneData,
 	type DevtoolsPaneData,
+	type DiffPaneData,
 	type FilePaneData,
 	type PagePaneData,
 	type PaneViewerData,
@@ -82,6 +84,7 @@ import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
 import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
+import { useWorkspaceFolders } from "../useWorkspaceFolders";
 import { AccountUsage } from "./components/AccountUsage";
 import {
 	AgentSurfaceToggle,
@@ -186,6 +189,7 @@ export function usePaneRegistry({
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
+	const { workspaceKeyForPath } = useWorkspaceFolders(workspaceId);
 	const agentSurface = useAgentSurfaceSwitch(workspaceId);
 	const { park: parkChat } = useForkBackgroundChats(workspaceId);
 	const closeChatWithUndo = useUndoableChatClose({
@@ -270,15 +274,25 @@ export function usePaneRegistry({
 							filePath={data.filePath}
 							isActive={ctx.isActive}
 							pinned={Boolean(ctx.pane.pinned)}
-							workspaceId={workspaceId}
+							workspaceId={workspaceKeyForPath(data.filePath)}
 						/>
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<FilePane context={ctx} workspaceId={workspaceId} />
+					<FilePane
+						context={ctx}
+						workspaceId={workspaceKeyForPath(
+							(ctx.pane.data as FilePaneData).filePath,
+						)}
+					/>
 				),
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<FilePaneHeaderExtras context={ctx} workspaceId={workspaceId} />
+					<FilePaneHeaderExtras
+						context={ctx}
+						workspaceId={workspaceKeyForPath(
+							(ctx.pane.data as FilePaneData).filePath,
+						)}
+					/>
 				),
 				onHeaderClick: (ctx: RendererContext<PaneViewerData>) =>
 					ctx.actions.pin(),
@@ -359,16 +373,29 @@ export function usePaneRegistry({
 			diff: {
 				getIcon: () => <GitCompareArrows className="size-3.5" />,
 				getTitle: () => t({ message: "Changes" }),
-				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPane
-						context={ctx}
-						workspaceId={workspaceId}
-						onOpenFile={onOpenFile}
-						onCreateNewAgentSession={createNewAgentSession}
-					/>
-				),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => {
+					const { repoKey } = ctx.pane.data as DiffPaneData;
+					const pane = (
+						<DiffPane
+							context={ctx}
+							workspaceId={repoKey ?? workspaceId}
+							onOpenFile={onOpenFile}
+							onCreateNewAgentSession={createNewAgentSession}
+						/>
+					);
+					return repoKey ? (
+						<WorkspaceGitStatusProvider workspaceId={repoKey}>
+							{pane}
+						</WorkspaceGitStatusProvider>
+					) : (
+						pane
+					);
+				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPaneHeaderExtras workspaceId={workspaceId} store={ctx.store} />
+					<DiffPaneHeaderExtras
+						workspaceId={(ctx.pane.data as DiffPaneData).repoKey ?? workspaceId}
+						store={ctx.store}
+					/>
 				),
 				contextMenuActions: (_ctx, defaults) =>
 					defaults.map((d) =>
@@ -392,10 +419,9 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Terminal",
-					}),
+				getTitle: (pane) =>
+					(pane.data as TerminalPaneData).cliTitle ??
+					t({ message: "Terminal" }),
 				titleSource: (pane) => {
 					const { terminalId } = pane.data as TerminalPaneData;
 					const instanceId = pane.id;
@@ -826,10 +852,8 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Chat",
-					}),
+				getTitle: (pane) =>
+					(pane.data as ChatPaneData).agentLabel ?? t({ message: "Chat" }),
 				titleSource: (pane) => {
 					const { chatTitle } = pane.data as ChatPaneData;
 					return {
@@ -1062,6 +1086,7 @@ export function usePaneRegistry({
 			store,
 			linkedStores,
 			workspaceId,
+			workspaceKeyForPath,
 			agentSurface,
 			parkChat,
 			closeChatWithUndo,

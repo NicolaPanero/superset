@@ -1,1 +1,4 @@
-export { ForkImportChatDialog } from "./ForkImportChatDialog";
+export {
+	ForkImportChatDialog,
+	type ForkResumeRequest,
+} from "./ForkImportChatDialog";

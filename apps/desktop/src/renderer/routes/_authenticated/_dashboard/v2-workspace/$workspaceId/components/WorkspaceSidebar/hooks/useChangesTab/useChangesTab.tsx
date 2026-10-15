@@ -20,6 +20,8 @@ export interface SelectedDiffTarget {
 	path: string;
 	/** Disambiguates a path present in several sections (staged + unstaged). */
 	changeKey?: string;
+	/** Extra project folder the diff belongs to; absent means the main repo. */
+	repoKey?: string;
 }
 
 interface UseChangesTabParams {

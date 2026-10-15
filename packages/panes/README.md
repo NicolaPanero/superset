@@ -357,6 +357,6 @@ This is intentional — embedding a provider inside `Workspace` would conflict w
   registry={registry}
   renderTabAccessory={(tab) => ReactNode}   // custom UI in each tab (status dot, badge, etc.)
   renderEmptyState={() => ReactNode}        // shown when no tabs exist
-  renderAddTabMenu={() => ReactNode}        // dropdown content for "+" button in tab bar
+  renderAddTabMenu={({ afterClose }) => ReactNode} // queue dialog openings with afterClose(action)
 />
 ```

@@ -585,7 +585,7 @@ export function AcpChatPane({
 			openFile={onOpenFile}
 			openPage={onOpenPage}
 			openLink={onOpenLink}
-			onSessionState={(state) => {
+			onSessionState={(state, promptTitle) => {
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back
 				// to the CLI resumes an id that no longer exists.
@@ -596,7 +596,9 @@ export function AcpChatPane({
 					...(bound && bound !== agent?.sessionId
 						? { harnessSessionId: bound }
 						: {}),
-					...(state?.title ? { title: state.title } : {}),
+					...(state?.title || promptTitle
+						? { title: state?.title || promptTitle }
+						: {}),
 				});
 			}}
 			pendingPrompts={pendingPrompts}

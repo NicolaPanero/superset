@@ -1664,6 +1664,9 @@ msgstr "Přidat komentář…"
 msgid "Add a description…"
 msgstr "Přidejte popis…"
 
+msgid "Add a folder to the project"
+msgstr "Přidat složku do projektu"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Přidejte lifecycle run skript v nastavení projektu, nebo označte terminálový skript jako spuštění pracovního prostoru."
 
@@ -1735,6 +1738,12 @@ msgstr "Přidat soubory, aplikace a další"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Přidat soubory, aplikace a další (@)"
+
+msgid "Add folder"
+msgstr "Přidat složku"
+
+msgid "Add folder…"
+msgstr "Přidat složku…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Přiřaďte pracovní prostory v1 k odpovídajícím importovaným proje
 
 msgid "Advanced"
 msgstr "Pokročilé"
-
-msgid "Advanced CLI options"
-msgstr "Pokročilé možnosti CLI"
 
 msgid "Advanced configuration"
 msgstr "Pokročilá konfigurace"
@@ -2398,6 +2404,9 @@ msgstr "API klíče"
 
 msgid "API Keys"
 msgstr "API klíče"
+
+msgid "API keys are not validated with a paid request."
+msgstr "Klíče API se neověřují placenými požadavky."
 
 msgid "API-equivalent"
 msgstr "ekvivalent API"
@@ -3672,9 +3681,6 @@ msgstr "Než otevřete issue, vyberte projekt v sekci GitHub issues."
 msgid "Choose a section."
 msgstr "Vyberte sekci."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Účty vybírejte ručně. Noví agenti používají výchozí účet, pokud konfigurace nebo spuštění neurčí jiný."
-
 msgid "Choose agent"
 msgstr "Vyberte agenta"
 
@@ -3812,9 +3818,6 @@ msgstr "Výchozí nastavení CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentace CLI"
-
-msgid "CLI installed"
-msgstr "CLI nainstalováno"
 
 msgid "CLI login"
 msgstr "Přihlášení CLI"
@@ -5643,9 +5646,6 @@ msgstr "Aktuální karta"
 msgid "Cursor"
 msgstr "Kurzor"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Účty Cursor Agent, Grok Build a OpenCode se spravují v jejich vlastních aplikacích."
-
 msgid "Cursor blinking"
 msgstr "Blikání kurzoru"
 
@@ -6985,6 +6985,9 @@ msgstr "Externí editor"
 msgid "extra ${used} of ${limit}"
 msgstr "navíc {used} $ z {limit} $"
 
+msgid "Extra folders"
+msgstr "Další složky"
+
 msgid "Extra high"
 msgstr "Velmi vysoké"
 
@@ -7897,6 +7900,9 @@ msgstr "Forkovat relaci"
 msgid "Fork session…"
 msgstr "Forkovat relaci…"
 
+msgid "Fork Settings"
+msgstr "Nastavení forku"
+
 msgid "Fork to new chat"
 msgstr "Rozvětvit do nového chatu"
 
@@ -8297,6 +8303,12 @@ msgstr "Skrýt"
 msgid "Hide checks"
 msgstr "Skrýt kontroly"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Skryjte přihlašovací účty CLI a přepínač CHAT/CLI. Spouštějte nastavení workspace na pozadí."
+
+msgid "Hide CLI options"
+msgstr "Skrýt možnosti CLI"
+
 msgid "Hide details"
 msgstr "Skrýt podrobnosti"
 
@@ -8327,11 +8339,17 @@ msgstr "Skrýt z postranního panelu"
 msgid "Hide log"
 msgstr "Skrýt log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Skryjte placené funkce a výzvy k přechodu na vyšší tarif na tomto zařízení."
+
 msgid "Hide PR review comments"
 msgstr "Skrýt komentáře z revize PR"
 
 msgid "Hide Preview"
 msgstr "Skrýt náhled"
+
+msgid "Hide Pro features"
+msgstr "Skrýt funkce Pro"
 
 msgid "Hide pull request list"
 msgstr "Skrýt seznam pull requestů"
@@ -8615,6 +8633,9 @@ msgstr "Obrázek je příliš velký (max. 10 MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Náhled obrázku {0}. Přibližujte klávesami plus a minus, posouvejte šipkami, stiskem 0 vše obnovíte."
+
+msgid "Image too large to show"
+msgstr "Obrázek je příliš velký na zobrazení"
 
 msgid "Images"
 msgstr "Obrázky"
@@ -9882,6 +9903,9 @@ msgstr "Purpurová"
 msgid "Main"
 msgstr "Hlavní"
 
+msgid "Main repository"
+msgstr "Hlavní repozitář"
+
 msgid "Make all panes equal size"
 msgstr "Nastavit všem panelům stejnou velikost"
 
@@ -10883,6 +10907,9 @@ msgstr "Zatím žádná prostředí. Vytvořte jedno a spusťte z něj cloudový
 
 msgid "No extended thinking"
 msgstr "Bez rozšířeného přemýšlení"
+
+msgid "No extra folders."
+msgstr "Žádné další složky."
 
 msgid "No failed runs."
 msgstr "Žádná neúspěšná spuštění."
@@ -12209,6 +12236,9 @@ msgstr "Ostatní aplikace"
 msgid "Other devices"
 msgstr "Ostatní zařízení"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Další složky, ve kterých mohou agenti pracovat a jejichž změny se zobrazují vedle změn tohoto projektu. Může jít o repozitáře git nebo obyčejné složky."
+
 msgid "Other Hosts"
 msgstr "Ostatní hosty"
 
@@ -13270,6 +13300,9 @@ msgstr "Nejprve zdrojový prohlížeč ukončete, aby se jeho přihlášení ulo
 msgid "Quota exhausted"
 msgstr "Kvóta vyčerpána"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Kvóta se zobrazuje, pokud ji poskytovatel podporuje."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Načítání využití…"
 
 msgid "Reading your local usage…"
 msgstr "Načítám vaše lokální využití…"
-
-msgid "Ready"
-msgstr "Připraveno"
 
 msgid "Ready for review"
 msgstr "Připraveno k revizi"
@@ -13614,6 +13644,9 @@ msgstr "Odebrat {label}?"
 
 msgid "Remove attachment"
 msgstr "Odebrat přílohu"
+
+msgid "Remove folder"
+msgstr "Odebrat složku"
 
 msgid "Remove from favorites"
 msgstr "Odebrat z oblíbených"
@@ -15347,9 +15380,6 @@ msgstr "Zobrazit všechny řádky"
 msgid "Show checks"
 msgstr "Zobrazit kontroly"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Zobrazit přihlašovací účty CLI a přepínač CHAT/CLI na tomto zařízení."
-
 msgid "Show closed"
 msgstr "Zobrazit uzavřené"
 
@@ -15370,6 +15400,9 @@ msgstr "Zobrazit panel zařízení"
 
 msgid "Show diff panel"
 msgstr "Zobrazit panel rozdílů"
+
+msgid "Show earlier messages"
+msgstr "Zobrazit dřívější zprávy"
 
 msgid "Show emails"
 msgstr "Zobrazit e-maily"
@@ -15536,6 +15569,9 @@ msgstr "Přihlásit se přes GitHub"
 
 msgid "Sign in with Google"
 msgstr "Přihlásit se přes Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Přihlaste se, nastavte klíče API a zkontrolujte kvóty místních agentů."
 
 msgid "Sign out"
 msgstr "Odhlásit se"
@@ -17438,6 +17474,12 @@ msgstr "tento soubor"
 msgid "This file is empty or was deleted."
 msgstr "Tento soubor je prázdný nebo byl smazán."
 
+msgid "This folder is not a git repository."
+msgstr "Tato složka není repozitář git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Tato složka na disku již neexistuje."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Tato instalace GitHubu je už připojená k jiné organizaci Superset. Odpojte ji tam, nebo odinstalujte Superset GitHub App, a zkuste to znovu."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree otevřen"
 
 msgid "Worktree out of sync"
 msgstr "Worktree není synchronizovaný"
+
+msgid "Worktree per workspace"
+msgstr "Worktree na workspace"
 
 msgid "Worktrees"
 msgstr "Worktrees"

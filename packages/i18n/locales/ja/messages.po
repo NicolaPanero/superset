@@ -1664,6 +1664,9 @@ msgstr "コメントを追加…"
 msgid "Add a description…"
 msgstr "説明を追加…"
 
+msgid "Add a folder to the project"
+msgstr "プロジェクトにフォルダを追加"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "プロジェクト設定でライフサイクルの実行スクリプトを追加するか、ターミナルスクリプトをワークスペース実行に指定してください。"
 
@@ -1735,6 +1738,12 @@ msgstr "ファイルやアプリなどを追加"
 
 msgid "Add files, apps, and more (@)"
 msgstr "ファイルやアプリなどを追加(@)"
+
+msgid "Add folder"
+msgstr "フォルダを追加"
+
+msgid "Add folder…"
+msgstr "フォルダを追加…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "v1ワークスペースをインポート済みのv2プロジェクト�
 
 msgid "Advanced"
 msgstr "詳細"
-
-msgid "Advanced CLI options"
-msgstr "高度なCLIオプション"
 
 msgid "Advanced configuration"
 msgstr "詳細設定"
@@ -2398,6 +2404,9 @@ msgstr "APIキー"
 
 msgid "API Keys"
 msgstr "APIキー"
+
+msgid "API keys are not validated with a paid request."
+msgstr "API キーは有料リクエストでは検証されません。"
 
 msgid "API-equivalent"
 msgstr "API換算"
@@ -3672,9 +3681,6 @@ msgstr "issueを開く前に、GitHub issueでプロジェクトを選択して�
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "アカウントを手動で選択します。設定または起動時に別のアカウントを選ばない限り、新しいエージェントはデフォルトのアカウントを使用します。"
-
 msgid "Choose agent"
 msgstr "エージェントを選択"
 
@@ -3812,9 +3818,6 @@ msgstr "CLIのデフォルト"
 
 msgid "CLI docs"
 msgstr "CLIドキュメント"
-
-msgid "CLI installed"
-msgstr "CLI がインストールされています"
 
 msgid "CLI login"
 msgstr "CLI のログイン"
@@ -5643,9 +5646,6 @@ msgstr "現在のタブ"
 msgid "Cursor"
 msgstr "カーソル"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent、Grok Build、OpenCodeのアカウントは各アプリで管理されます。"
-
 msgid "Cursor blinking"
 msgstr "カーソルの点滅"
 
@@ -6985,6 +6985,9 @@ msgstr "外部エディタ"
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
 
+msgid "Extra folders"
+msgstr "追加フォルダ"
+
 msgid "Extra high"
 msgstr "最高"
 
@@ -7897,6 +7900,9 @@ msgstr "セッションをフォーク"
 msgid "Fork session…"
 msgstr "セッションをフォーク…"
 
+msgid "Fork Settings"
+msgstr "フォーク設定"
+
 msgid "Fork to new chat"
 msgstr "新しいチャットにフォーク"
 
@@ -8297,6 +8303,12 @@ msgstr "隠す"
 msgid "Hide checks"
 msgstr "チェックを隠す"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI ログインアカウントと CHAT/CLI 切り替えを非表示にします。workspace のセットアップをバックグラウンドで実行します。"
+
+msgid "Hide CLI options"
+msgstr "CLI オプションを非表示"
+
 msgid "Hide details"
 msgstr "詳細を隠す"
 
@@ -8327,11 +8339,17 @@ msgstr "サイドバーから非表示"
 msgid "Hide log"
 msgstr "ログを隠す"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "このデバイスで有料機能とアップグレードの案内を非表示にします。"
+
 msgid "Hide PR review comments"
 msgstr "PRレビューコメントを隠す"
 
 msgid "Hide Preview"
 msgstr "プレビューを隠す"
+
+msgid "Hide Pro features"
+msgstr "Pro 機能を非表示"
 
 msgid "Hide pull request list"
 msgstr "プルリクエスト一覧を隠す"
@@ -8615,6 +8633,9 @@ msgstr "画像が大きすぎます(最大10MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}の画像プレビュー。プラスとマイナスでズーム、矢印キーで移動、0でリセットします。"
+
+msgid "Image too large to show"
+msgstr "画像が大きすぎるため表示できません"
 
 msgid "Images"
 msgstr "画像"
@@ -9882,6 +9903,9 @@ msgstr "マゼンタ"
 msgid "Main"
 msgstr "メイン"
 
+msgid "Main repository"
+msgstr "メインリポジトリ"
+
 msgid "Make all panes equal size"
 msgstr "すべてのペインを同じサイズにする"
 
@@ -10883,6 +10907,9 @@ msgstr "環境はまだありません。作成すると、そこからクラウ
 
 msgid "No extended thinking"
 msgstr "拡張思考なし"
+
+msgid "No extra folders."
+msgstr "追加フォルダはありません。"
 
 msgid "No failed runs."
 msgstr "失敗した実行はありません。"
@@ -12209,6 +12236,9 @@ msgstr "他のアプリ"
 msgid "Other devices"
 msgstr "その他のデバイス"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "エージェントが作業できる他のフォルダで、その変更はこのプロジェクトの変更の横に表示されます。gitリポジトリでも通常のフォルダでも構いません。"
+
 msgid "Other Hosts"
 msgstr "その他のホスト"
 
@@ -13270,6 +13300,9 @@ msgstr "ログイン情報をディスクに保存させるため、先に元の
 msgid "Quota exhausted"
 msgstr "使用枠を使い切りました"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "プロバイダーが対応している場合に利用枠を表示します。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "使用量を取得中…"
 
 msgid "Reading your local usage…"
 msgstr "ローカルの使用量を読み取り中…"
-
-msgid "Ready"
-msgstr "準備完了"
 
 msgid "Ready for review"
 msgstr "レビュー可能"
@@ -13614,6 +13644,9 @@ msgstr "{label}を削除しますか?"
 
 msgid "Remove attachment"
 msgstr "添付ファイルを削除"
+
+msgid "Remove folder"
+msgstr "フォルダを削除"
 
 msgid "Remove from favorites"
 msgstr "お気に入りから削除"
@@ -15347,9 +15380,6 @@ msgstr "すべての行を表示"
 msgid "Show checks"
 msgstr "チェックを表示"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "このデバイスでCLIログインのアカウントとCHAT/CLI切り替えを表示します。"
-
 msgid "Show closed"
 msgstr "クローズ済みも表示"
 
@@ -15370,6 +15400,9 @@ msgstr "デバイスツールバーを表示"
 
 msgid "Show diff panel"
 msgstr "差分パネルを表示"
+
+msgid "Show earlier messages"
+msgstr "以前のメッセージを表示"
 
 msgid "Show emails"
 msgstr "メールを表示"
@@ -15536,6 +15569,9 @@ msgstr "GitHubでサインイン"
 
 msgid "Sign in with Google"
 msgstr "Googleでサインイン"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "ローカルエージェントにログインし、API キーを設定して利用枠を確認します。"
 
 msgid "Sign out"
 msgstr "サインアウト"
@@ -17438,6 +17474,12 @@ msgstr "このファイル"
 msgid "This file is empty or was deleted."
 msgstr "このファイルは空か、削除されています。"
 
+msgid "This folder is not a git repository."
+msgstr "このフォルダはgitリポジトリではありません。"
+
+msgid "This folder no longer exists on disk."
+msgstr "このフォルダはディスク上に存在しません。"
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "このGitHubインストールは別のSuperset組織にすでに接続されています。そちらで接続を解除するか、Superset GitHub Appをアンインストールしてから、もう一度お試しください。"
 
@@ -19233,6 +19275,9 @@ msgstr "ワークツリーを開きました"
 
 msgid "Worktree out of sync"
 msgstr "ワークツリーが同期していません"
+
+msgid "Worktree per workspace"
+msgstr "ワークスペースごとのワークツリー"
 
 msgid "Worktrees"
 msgstr "ワークツリー"

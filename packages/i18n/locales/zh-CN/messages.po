@@ -1664,6 +1664,9 @@ msgstr "添加评论…"
 msgid "Add a description…"
 msgstr "添加描述…"
 
+msgid "Add a folder to the project"
+msgstr "向项目添加文件夹"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "在项目设置中添加生命周期运行脚本，或将某个终端脚本标记为工作区运行命令。"
 
@@ -1735,6 +1738,12 @@ msgstr "添加文件、应用等"
 
 msgid "Add files, apps, and more (@)"
 msgstr "添加文件、应用等（@）"
+
+msgid "Add folder"
+msgstr "添加文件夹"
+
+msgid "Add folder…"
+msgstr "添加文件夹…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "将 v1 工作区迁入已导入的对应 v2 项目。"
 
 msgid "Advanced"
 msgstr "高级"
-
-msgid "Advanced CLI options"
-msgstr "高级 CLI 选项"
 
 msgid "Advanced configuration"
 msgstr "高级配置"
@@ -2398,6 +2404,9 @@ msgstr "API密钥"
 
 msgid "API Keys"
 msgstr "API密钥"
+
+msgid "API keys are not validated with a paid request."
+msgstr "不会通过付费请求验证 API 密钥。"
 
 msgid "API-equivalent"
 msgstr "按API价折算"
@@ -3672,9 +3681,6 @@ msgstr "打开议题前，请先在GitHub议题中选择一个项目。"
 msgid "Choose a section."
 msgstr "选择一个分区。"
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "手动选择账户。新智能体使用默认账户，除非配置或启动时选择了其他账户。"
-
 msgid "Choose agent"
 msgstr "选择智能体"
 
@@ -3812,9 +3818,6 @@ msgstr "CLI 默认值"
 
 msgid "CLI docs"
 msgstr "CLI文档"
-
-msgid "CLI installed"
-msgstr "CLI 已安装"
 
 msgid "CLI login"
 msgstr "CLI 登录"
@@ -5643,9 +5646,6 @@ msgstr "当前标签页"
 msgid "Cursor"
 msgstr "光标"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent、Grok Build 和 OpenCode 的账户在各自的应用中管理。"
-
 msgid "Cursor blinking"
 msgstr "光标闪烁"
 
@@ -6985,6 +6985,9 @@ msgstr "外部编辑器"
 msgid "extra ${used} of ${limit}"
 msgstr "额外用量${used}/${limit}"
 
+msgid "Extra folders"
+msgstr "额外文件夹"
+
 msgid "Extra high"
 msgstr "极高"
 
@@ -7897,6 +7900,9 @@ msgstr "分叉会话"
 msgid "Fork session…"
 msgstr "分叉会话…"
 
+msgid "Fork Settings"
+msgstr "Fork 设置"
+
 msgid "Fork to new chat"
 msgstr "分叉到新聊天"
 
@@ -8297,6 +8303,12 @@ msgstr "隐藏"
 msgid "Hide checks"
 msgstr "隐藏检查"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "隐藏 CLI 登录账户和 CHAT/CLI 切换按钮。在后台运行 workspace 设置。"
+
+msgid "Hide CLI options"
+msgstr "隐藏 CLI 选项"
+
 msgid "Hide details"
 msgstr "隐藏详情"
 
@@ -8327,11 +8339,17 @@ msgstr "从侧边栏隐藏"
 msgid "Hide log"
 msgstr "隐藏日志"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "在此设备上隐藏付费功能和升级提示。"
+
 msgid "Hide PR review comments"
 msgstr "隐藏PR审查评论"
 
 msgid "Hide Preview"
 msgstr "隐藏预览"
+
+msgid "Hide Pro features"
+msgstr "隐藏 Pro 功能"
 
 msgid "Hide pull request list"
 msgstr "隐藏拉取请求列表"
@@ -8615,6 +8633,9 @@ msgstr "图片过大（最大10MB）"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}的图片预览。用加号和减号缩放，用方向键平移，按0重置。"
+
+msgid "Image too large to show"
+msgstr "图片过大，无法显示"
 
 msgid "Images"
 msgstr "图片"
@@ -9882,6 +9903,9 @@ msgstr "品红"
 msgid "Main"
 msgstr "主进程"
 
+msgid "Main repository"
+msgstr "主仓库"
+
 msgid "Make all panes equal size"
 msgstr "使所有窗格大小相同"
 
@@ -10883,6 +10907,9 @@ msgstr "还没有环境。创建一个，以便基于它启动云端工作区。
 
 msgid "No extended thinking"
 msgstr "不使用扩展思考"
+
+msgid "No extra folders."
+msgstr "没有额外文件夹。"
 
 msgid "No failed runs."
 msgstr "没有失败的运行。"
@@ -12209,6 +12236,9 @@ msgstr "其他应用"
 msgid "Other devices"
 msgstr "其他设备"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "智能体可以在其中工作的其他文件夹，其更改会显示在此项目的更改旁边。可以是 git 仓库，也可以是普通文件夹。"
+
 msgid "Other Hosts"
 msgstr "其他主机"
 
@@ -13270,6 +13300,9 @@ msgstr "请先退出源浏览器，让它把登录信息写入磁盘。系统会
 msgid "Quota exhausted"
 msgstr "配额已耗尽"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "提供商支持时会显示配额。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "正在读取用量…"
 
 msgid "Reading your local usage…"
 msgstr "正在读取本地用量…"
-
-msgid "Ready"
-msgstr "就绪"
 
 msgid "Ready for review"
 msgstr "待审查"
@@ -13614,6 +13644,9 @@ msgstr "移除{label}？"
 
 msgid "Remove attachment"
 msgstr "移除附件"
+
+msgid "Remove folder"
+msgstr "移除文件夹"
 
 msgid "Remove from favorites"
 msgstr "从收藏中移除"
@@ -15347,9 +15380,6 @@ msgstr "显示所有行"
 msgid "Show checks"
 msgstr "显示检查"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "在此设备上显示 CLI 登录账户和 CHAT/CLI 切换按钮。"
-
 msgid "Show closed"
 msgstr "显示已关闭"
 
@@ -15370,6 +15400,9 @@ msgstr "显示设备工具栏"
 
 msgid "Show diff panel"
 msgstr "显示差异面板"
+
+msgid "Show earlier messages"
+msgstr "显示之前的消息"
 
 msgid "Show emails"
 msgstr "显示邮箱"
@@ -15536,6 +15569,9 @@ msgstr "使用GitHub登录"
 
 msgid "Sign in with Google"
 msgstr "使用Google登录"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "登录、设置 API 密钥并查看本地代理的配额。"
 
 msgid "Sign out"
 msgstr "退出登录"
@@ -17438,6 +17474,12 @@ msgstr "该文件"
 msgid "This file is empty or was deleted."
 msgstr "这个文件为空或已被删除。"
 
+msgid "This folder is not a git repository."
+msgstr "此文件夹不是 git 仓库。"
+
+msgid "This folder no longer exists on disk."
+msgstr "此文件夹在磁盘上已不存在。"
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "这个GitHub安装已连接到另一个Superset组织。请先在那里断开连接，或卸载Superset GitHub App，然后重试。"
 
@@ -19233,6 +19275,9 @@ msgstr "worktree已打开"
 
 msgid "Worktree out of sync"
 msgstr "worktree不同步"
+
+msgid "Worktree per workspace"
+msgstr "每个工作区一个 worktree"
 
 msgid "Worktrees"
 msgstr "Worktree"

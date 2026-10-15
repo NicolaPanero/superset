@@ -1664,6 +1664,9 @@ msgstr "Yorum ekle…"
 msgid "Add a description…"
 msgstr "Açıklama ekleyin…"
 
+msgid "Add a folder to the project"
+msgstr "Projeye klasör ekle"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Proje Ayarları'nda bir yaşam döngüsü çalıştırma betiği ekleyin veya bir terminal betiğini çalışma alanı çalıştırması olarak işaretleyin."
 
@@ -1735,6 +1738,12 @@ msgstr "Dosya, uygulama ve daha fazlasını ekleyin"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Dosya, uygulama ve daha fazlasını ekleyin (@)"
+
+msgid "Add folder"
+msgstr "Klasör ekle"
+
+msgid "Add folder…"
+msgstr "Klasör ekle…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "v1 çalışma alanlarını içe aktarılan v2 projelerine bağlayın."
 
 msgid "Advanced"
 msgstr "Gelişmiş"
-
-msgid "Advanced CLI options"
-msgstr "Gelişmiş CLI seçenekleri"
 
 msgid "Advanced configuration"
 msgstr "Gelişmiş yapılandırma"
@@ -2398,6 +2404,9 @@ msgstr "API anahtarları"
 
 msgid "API Keys"
 msgstr "API anahtarları"
+
+msgid "API keys are not validated with a paid request."
+msgstr "API anahtarları ücretli isteklerle doğrulanmaz."
 
 msgid "API-equivalent"
 msgstr "API eşdeğeri"
@@ -3672,9 +3681,6 @@ msgstr "Bir issue açmadan önce GitHub issue'ları bölümünden bir proje seç
 msgid "Choose a section."
 msgstr "Bir bölüm seçin."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Hesapları elle seçin. Yapılandırma veya başlatma sırasında başka bir hesap seçilmedikçe yeni ajanlar varsayılan hesabı kullanır."
-
 msgid "Choose agent"
 msgstr "Ajan seçin"
 
@@ -3812,9 +3818,6 @@ msgstr "CLI varsayılanı"
 
 msgid "CLI docs"
 msgstr "CLI belgeleri"
-
-msgid "CLI installed"
-msgstr "CLI yüklü"
 
 msgid "CLI login"
 msgstr "CLI oturumu"
@@ -5643,9 +5646,6 @@ msgstr "Geçerli sekme"
 msgid "Cursor"
 msgstr "İmleç"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Cursor Agent, Grok Build ve OpenCode hesapları kendi uygulamalarında yönetilir."
-
 msgid "Cursor blinking"
 msgstr "İmleç yanıp sönmesi"
 
@@ -6985,6 +6985,9 @@ msgstr "Harici düzenleyici"
 msgid "extra ${used} of ${limit}"
 msgstr "ek ${used}/${limit}"
 
+msgid "Extra folders"
+msgstr "Ek klasörler"
+
 msgid "Extra high"
 msgstr "Çok yüksek"
 
@@ -7897,6 +7900,9 @@ msgstr "Oturumu forkla"
 msgid "Fork session…"
 msgstr "Oturumu forkla…"
 
+msgid "Fork Settings"
+msgstr "Fork ayarları"
+
 msgid "Fork to new chat"
 msgstr "Yeni sohbete çatalla"
 
@@ -8297,6 +8303,12 @@ msgstr "Gizle"
 msgid "Hide checks"
 msgstr "Kontrolleri gizle"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI giriş hesaplarını ve CHAT/CLI geçişini gizleyin. Workspace kurulumunu arka planda çalıştırın."
+
+msgid "Hide CLI options"
+msgstr "CLI seçeneklerini gizle"
+
 msgid "Hide details"
 msgstr "Ayrıntıları gizle"
 
@@ -8327,11 +8339,17 @@ msgstr "Kenar çubuğundan gizle"
 msgid "Hide log"
 msgstr "Günlüğü gizle"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Bu cihazdaki ücretli özellikleri ve plan yükseltme istemlerini gizleyin."
+
 msgid "Hide PR review comments"
 msgstr "PR inceleme yorumlarını gizle"
 
 msgid "Hide Preview"
 msgstr "Önizlemeyi gizle"
+
+msgid "Hide Pro features"
+msgstr "Pro özelliklerini gizle"
 
 msgid "Hide pull request list"
 msgstr "Pull request listesini gizle"
@@ -8615,6 +8633,9 @@ msgstr "Görsel çok büyük (en fazla 10MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0} görsel önizlemesi. Artı ve eksi ile yakınlaştırın, ok tuşlarıyla kaydırın, sıfırlamak için 0 tuşuna basın."
+
+msgid "Image too large to show"
+msgstr "Görüntü gösterilemeyecek kadar büyük"
 
 msgid "Images"
 msgstr "Görseller"
@@ -9882,6 +9903,9 @@ msgstr "Macenta"
 msgid "Main"
 msgstr "Ana"
 
+msgid "Main repository"
+msgstr "Ana depo"
+
 msgid "Make all panes equal size"
 msgstr "Tüm bölmeleri eşit boyuta getir"
 
@@ -10883,6 +10907,9 @@ msgstr "Henüz ortam yok. Bir bulut çalışma alanını üzerinden başlatmak i
 
 msgid "No extended thinking"
 msgstr "Genişletilmiş düşünme yok"
+
+msgid "No extra folders."
+msgstr "Ek klasör yok."
 
 msgid "No failed runs."
 msgstr "Başarısız çalıştırma yok."
@@ -12209,6 +12236,9 @@ msgstr "Diğer uygulamalar"
 msgid "Other devices"
 msgstr "Diğer cihazlar"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Ajanların çalışabildiği ve değişiklikleri bu projenin değişikliklerinin yanında gösterilen diğer klasörler. Git depoları veya düz klasörler olabilir."
+
 msgid "Other Hosts"
 msgstr "Diğer host'lar"
 
@@ -13270,6 +13300,9 @@ msgstr "Oturum bilgilerinin diske kaydedilmesi için önce kaynak tarayıcıdan 
 msgid "Quota exhausted"
 msgstr "Kota tükendi"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Sağlayıcı destekliyorsa kota gösterilir."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Kullanım okunuyor…"
 
 msgid "Reading your local usage…"
 msgstr "Yerel kullanımınız okunuyor…"
-
-msgid "Ready"
-msgstr "Hazır"
 
 msgid "Ready for review"
 msgstr "İncelemeye hazır"
@@ -13614,6 +13644,9 @@ msgstr "{label} kaldırılsın mı?"
 
 msgid "Remove attachment"
 msgstr "Eki kaldır"
+
+msgid "Remove folder"
+msgstr "Klasörü kaldır"
 
 msgid "Remove from favorites"
 msgstr "Favorilerden kaldır"
@@ -15347,9 +15380,6 @@ msgstr "Tüm satırları göster"
 msgid "Show checks"
 msgstr "Kontrolleri göster"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Bu cihazda CLI oturum açma hesaplarını ve CHAT/CLI geçişini gösterir."
-
 msgid "Show closed"
 msgstr "Kapalıları göster"
 
@@ -15370,6 +15400,9 @@ msgstr "Cihaz araç çubuğunu göster"
 
 msgid "Show diff panel"
 msgstr "Fark panelini göster"
+
+msgid "Show earlier messages"
+msgstr "Önceki mesajları göster"
 
 msgid "Show emails"
 msgstr "E-postaları göster"
@@ -15536,6 +15569,9 @@ msgstr "GitHub ile oturum aç"
 
 msgid "Sign in with Google"
 msgstr "Google ile oturum aç"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Oturum açın, API anahtarlarını ayarlayın ve yerel ajanlarınızın kotalarını kontrol edin."
 
 msgid "Sign out"
 msgstr "Oturumu kapat"
@@ -17438,6 +17474,12 @@ msgstr "bu dosya"
 msgid "This file is empty or was deleted."
 msgstr "Bu dosya boş veya silinmiş."
 
+msgid "This folder is not a git repository."
+msgstr "Bu klasör bir git deposu değil."
+
+msgid "This folder no longer exists on disk."
+msgstr "Bu klasör artık diskte yok."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Bu GitHub kurulumu zaten başka bir Superset kuruluşuna bağlı. Oradaki bağlantıyı kesin veya Superset GitHub App'i kaldırın, sonra yeniden deneyin."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree açıldı"
 
 msgid "Worktree out of sync"
 msgstr "Worktree eşitlenmemiş"
+
+msgid "Worktree per workspace"
+msgstr "Çalışma alanı başına worktree"
 
 msgid "Worktrees"
 msgstr "Worktree'ler"

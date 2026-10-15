@@ -33,11 +33,19 @@ export function useForkAgentSetup(
 		mutationFn: async (api?: { key: string; model: string }) => {
 			if (!hostUrl || !query.data?.command)
 				throw new Error("agent_setup_unavailable");
+			if (
+				api &&
+				config.presetId === "cursor-agent" &&
+				!query.data.cursorApiKeySupported
+			)
+				throw new Error("agent_setup_unavailable");
 			await clientForHost(hostUrl).settings.forkAgentSetup.configure.mutate({
 				configId: config.id,
 				expectedCommand: query.data.command,
 				expectedRevision: query.data.revision,
-				api,
+				...(config.presetId === "cursor-agent"
+					? { cursorApiKey: api?.key }
+					: { api }),
 			});
 			const rows =
 				await clientForHost(hostUrl).settings.agentConfigs.list.query();

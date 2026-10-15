@@ -34,6 +34,13 @@ interface SettingsTab {
 
 const TABS: SettingsTab[] = [
 	{
+		id: "fork",
+		title: msg({ message: "Fork Settings" }),
+		path: "/settings/fork",
+		icon: GitBranchIcon,
+		keywords: ["fork", "cli", "pro", "setup", "background"],
+	},
+	{
 		id: "account",
 		title: msg({
 			message: "Account",

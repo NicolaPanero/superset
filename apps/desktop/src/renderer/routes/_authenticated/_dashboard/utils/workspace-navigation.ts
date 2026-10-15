@@ -80,6 +80,7 @@ export function parseSubagentSearch(
 
 export interface V2WorkspaceSearchParams extends SubagentLinkSearchParams {
 	importChat?: boolean;
+	resumeChat?: string;
 	terminalId?: string;
 	focusRequestId?: string;
 	openUrl?: string;

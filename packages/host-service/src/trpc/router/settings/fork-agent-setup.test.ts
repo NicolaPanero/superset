@@ -16,7 +16,7 @@ import type { SetupProbe } from "./fork-agent-setup-probe";
 
 afterEach(resetTerminalBaseEnvForTests);
 
-async function fixture() {
+async function fixture(presetId = "grok") {
 	initTerminalBaseEnv({ PATH: "/fake", HOME: "/fake" });
 	const sqlite = new Database(":memory:");
 	const db = drizzle(sqlite, { schema });
@@ -25,11 +25,11 @@ async function fixture() {
 	});
 	const ctx = { db, isAuthenticated: true } as unknown as HostServiceContext;
 	const agents = agentConfigsRouter.createCaller(ctx);
-	const grok = (await agents.list()).find((row) => row.presetId === "grok");
+	const grok = (await agents.list()).find((row) => row.presetId === presetId);
 	if (!grok) throw new Error("missing fixture");
 	let duringProbe = () => {};
 	const probe: SetupProbe = {
-		command: "/fake/grok",
+		command: `/fake/${presetId}`,
 		version: "1.0.50",
 		chat: true,
 		auth: "login",
@@ -166,6 +166,54 @@ test("setup rejects preset aliases, unsupported providers and unauthenticated ca
 		).rejects.toThrow("agent_setup_unavailable");
 		const unauth = f.router.createCaller({ ...f.ctx, isAuthenticated: false });
 		await expect(unauth.inspect({ configId: f.config.id })).rejects.toThrow();
+	} finally {
+		f.sqlite.close();
+	}
+});
+
+test("Cursor API setup stores only its key and preserves other environment settings", async () => {
+	const f = await fixture("cursor-agent");
+	try {
+		await f.agents.update({
+			id: f.config.id,
+			patch: { env: { SETTING: "kept" }, args: ["--model", "custom-model"] },
+		});
+		const before = await f.caller.inspect({ configId: f.config.id });
+		const result = await f.caller.configure({
+			configId: f.config.id,
+			expectedCommand: before.command as string,
+			expectedRevision: before.revision,
+			cursorApiKey: "cursor-secret-fixture",
+		});
+		expect(JSON.stringify(result)).not.toContain("cursor-secret-fixture");
+		const config = (await f.agents.list()).find(
+			(row) => row.id === f.config.id,
+		);
+		expect(config?.env).toEqual({
+			SETTING: "kept",
+			CURSOR_API_KEY: "cursor-secret-fixture",
+		});
+		expect(config?.args).toEqual(["--model", "custom-model"]);
+	} finally {
+		f.sqlite.close();
+	}
+});
+test("a Cursor key cannot be written into a Grok configuration", async () => {
+	const f = await fixture();
+	try {
+		const before = await f.caller.inspect({ configId: f.config.id });
+		await expect(
+			f.caller.configure({
+				configId: f.config.id,
+				expectedCommand: before.command as string,
+				expectedRevision: before.revision,
+				cursorApiKey: "fixture",
+			}),
+		).rejects.toThrow("agent_setup_unavailable");
+		expect(
+			(await f.agents.list()).find((row) => row.id === f.config.id)?.env
+				.CURSOR_API_KEY,
+		).toBeUndefined();
 	} finally {
 		f.sqlite.close();
 	}

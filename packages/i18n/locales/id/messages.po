@@ -1664,6 +1664,9 @@ msgstr "Tambahkan komentar…"
 msgid "Add a description…"
 msgstr "Tambahkan deskripsi…"
 
+msgid "Add a folder to the project"
+msgstr "Tambahkan folder ke proyek"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Tambahkan skrip run lifecycle di Pengaturan Proyek atau tandai sebuah skrip terminal sebagai run workspace."
 
@@ -1735,6 +1738,12 @@ msgstr "Tambah file, aplikasi, dan lainnya"
 
 msgid "Add files, apps, and more (@)"
 msgstr "Tambah file, aplikasi, dan lainnya (@)"
+
+msgid "Add folder"
+msgstr "Tambah folder"
+
+msgid "Add folder…"
+msgstr "Tambah folder…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1856,9 +1865,6 @@ msgstr "Gabungkan ruang kerja v1 ke proyek v2 terkait yang telah diimpor."
 
 msgid "Advanced"
 msgstr "Lanjutan"
-
-msgid "Advanced CLI options"
-msgstr "Opsi CLI lanjutan"
 
 msgid "Advanced configuration"
 msgstr "Konfigurasi lanjutan"
@@ -2398,6 +2404,9 @@ msgstr "Kunci API"
 
 msgid "API Keys"
 msgstr "Kunci API"
+
+msgid "API keys are not validated with a paid request."
+msgstr "Kunci API tidak divalidasi melalui permintaan berbayar."
 
 msgid "API-equivalent"
 msgstr "Setara API"
@@ -3672,9 +3681,6 @@ msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
 
-msgid "Choose accounts manually. New agents use the default account unless their configuration or launch selects another."
-msgstr "Pilih akun secara manual. Agen baru memakai akun default kecuali konfigurasi atau pilihan saat mulai menentukan akun lain."
-
 msgid "Choose agent"
 msgstr "Pilih agen"
 
@@ -3812,9 +3818,6 @@ msgstr "Default CLI"
 
 msgid "CLI docs"
 msgstr "Dokumentasi CLI"
-
-msgid "CLI installed"
-msgstr "CLI terinstal"
 
 msgid "CLI login"
 msgstr "Login CLI"
@@ -5643,9 +5646,6 @@ msgstr "Tab saat ini"
 msgid "Cursor"
 msgstr "Kursor"
 
-msgid "Cursor Agent, Grok Build and OpenCode accounts are managed in their own apps."
-msgstr "Akun Cursor Agent, Grok Build, dan OpenCode dikelola di aplikasi masing-masing."
-
 msgid "Cursor blinking"
 msgstr "Kursor berkedip"
 
@@ -6985,6 +6985,9 @@ msgstr "Editor eksternal"
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
 
+msgid "Extra folders"
+msgstr "Folder tambahan"
+
 msgid "Extra high"
 msgstr "Sangat tinggi"
 
@@ -7897,6 +7900,9 @@ msgstr "Fork sesi"
 msgid "Fork session…"
 msgstr "Fork sesi…"
 
+msgid "Fork Settings"
+msgstr "Pengaturan fork"
+
 msgid "Fork to new chat"
 msgstr "Cabangkan ke chat baru"
 
@@ -8297,6 +8303,12 @@ msgstr "Sembunyikan"
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Sembunyikan akun masuk CLI dan pengalih CHAT/CLI. Jalankan penyiapan workspace di latar belakang."
+
+msgid "Hide CLI options"
+msgstr "Sembunyikan opsi CLI"
+
 msgid "Hide details"
 msgstr "Sembunyikan detail"
 
@@ -8327,11 +8339,17 @@ msgstr "Sembunyikan dari Sidebar"
 msgid "Hide log"
 msgstr "Sembunyikan log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Sembunyikan fitur berbayar dan ajakan meningkatkan paket di perangkat ini."
+
 msgid "Hide PR review comments"
 msgstr "Sembunyikan komentar review PR"
 
 msgid "Hide Preview"
 msgstr "Sembunyikan Pratinjau"
+
+msgid "Hide Pro features"
+msgstr "Sembunyikan fitur Pro"
 
 msgid "Hide pull request list"
 msgstr "Sembunyikan daftar pull request"
@@ -8615,6 +8633,9 @@ msgstr "Gambar terlalu besar (maks 10MB)"
 #. placeholder {0}: getBaseName(filePath)
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "Pratinjau gambar {0}. Zoom dengan plus dan minus, geser dengan tombol panah, tekan 0 untuk reset."
+
+msgid "Image too large to show"
+msgstr "Gambar terlalu besar untuk ditampilkan"
 
 msgid "Images"
 msgstr "Gambar"
@@ -9882,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Repositori utama"
+
 msgid "Make all panes equal size"
 msgstr "Samakan ukuran semua panel"
 
@@ -10883,6 +10907,9 @@ msgstr "Belum ada environment. Buat satu untuk memulai workspace cloud darinya."
 
 msgid "No extended thinking"
 msgstr "Tanpa extended thinking"
+
+msgid "No extra folders."
+msgstr "Tidak ada folder tambahan."
 
 msgid "No failed runs."
 msgstr "Tidak ada eksekusi yang gagal."
@@ -12209,6 +12236,9 @@ msgstr "Aplikasi lain"
 msgid "Other devices"
 msgstr "Perangkat lain"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Folder lain tempat agen dapat bekerja dan perubahannya ditampilkan di samping perubahan proyek ini. Bisa berupa repositori git atau folder biasa."
+
 msgid "Other Hosts"
 msgstr "Host Lain"
 
@@ -13270,6 +13300,9 @@ msgstr "Tutup dulu browser sumbernya agar login-nya tersimpan ke disk. Anda akan
 msgid "Quota exhausted"
 msgstr "Kuota habis"
 
+msgid "Quota is shown when the provider supports it."
+msgstr "Kuota ditampilkan jika penyedia mendukungnya."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -13368,9 +13401,6 @@ msgstr "Membaca penggunaan…"
 
 msgid "Reading your local usage…"
 msgstr "Membaca penggunaan lokal Anda…"
-
-msgid "Ready"
-msgstr "Siap"
 
 msgid "Ready for review"
 msgstr "Siap direview"
@@ -13614,6 +13644,9 @@ msgstr "Hapus {label}?"
 
 msgid "Remove attachment"
 msgstr "Hapus lampiran"
+
+msgid "Remove folder"
+msgstr "Hapus folder"
 
 msgid "Remove from favorites"
 msgstr "Hapus dari favorit"
@@ -15347,9 +15380,6 @@ msgstr "Tampilkan semua baris"
 msgid "Show checks"
 msgstr "Tampilkan check"
 
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Tampilkan akun login CLI dan pengalih CHAT/CLI pada perangkat ini."
-
 msgid "Show closed"
 msgstr "Tampilkan yang ditutup"
 
@@ -15370,6 +15400,9 @@ msgstr "Tampilkan toolbar perangkat"
 
 msgid "Show diff panel"
 msgstr "Tampilkan panel diff"
+
+msgid "Show earlier messages"
+msgstr "Tampilkan pesan sebelumnya"
 
 msgid "Show emails"
 msgstr "Tampilkan email"
@@ -15536,6 +15569,9 @@ msgstr "Masuk dengan GitHub"
 
 msgid "Sign in with Google"
 msgstr "Masuk dengan Google"
+
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "Login, atur kunci API, dan periksa kuota agen lokal Anda."
 
 msgid "Sign out"
 msgstr "Keluar"
@@ -17438,6 +17474,12 @@ msgstr "file ini"
 msgid "This file is empty or was deleted."
 msgstr "File ini kosong atau sudah dihapus."
 
+msgid "This folder is not a git repository."
+msgstr "Folder ini bukan repositori git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Folder ini sudah tidak ada di disk."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Instalasi GitHub ini sudah terhubung ke organisasi Superset lain. Putuskan di sana, atau copot GitHub App Superset, lalu coba lagi."
 
@@ -19233,6 +19275,9 @@ msgstr "Worktree dibuka"
 
 msgid "Worktree out of sync"
 msgstr "Worktree tidak sinkron"
+
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
 
 msgid "Worktrees"
 msgstr "Worktree"

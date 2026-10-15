@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { GATED_FEATURES } from "renderer/components/Paywall/constants";
 
 const router = await import("@tanstack/react-router");
+let showProFeatures = true;
 let paid = true;
 let isReady = true;
 let dismissed = false;
@@ -54,6 +55,12 @@ mock.module("renderer/stores/getting-started", () => ({
 	}),
 }));
 
+const forkOptions = await import("renderer/stores/fork-cli-options");
+mock.module("renderer/stores/fork-cli-options", () => ({
+	...forkOptions,
+	useForkProFeatures: () => showProFeatures,
+}));
+
 const { useGettingStartedCard } = await import("../useGettingStartedCard");
 let card: ReturnType<typeof useGettingStartedCard>;
 function Probe() {
@@ -70,6 +77,7 @@ function props() {
 	).props;
 }
 beforeEach(() => {
+	showProFeatures = true;
 	paid = true;
 	isReady = true;
 	dismissed = false;
@@ -191,4 +199,10 @@ describe("Pro getting-started card", () => {
 		props().onStart(1);
 		expect(navigate).not.toHaveBeenCalled();
 	});
+});
+
+test("hides the checklist when Fork Settings hides Pro features", () => {
+	showProFeatures = false;
+	renderToStaticMarkup(<Probe />);
+	expect(card).toBeNull();
 });

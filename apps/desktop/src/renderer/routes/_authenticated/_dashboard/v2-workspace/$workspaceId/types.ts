@@ -82,6 +82,8 @@ export type DiffFocusSide = "deletions" | "additions";
 export interface DiffPaneData {
 	path: string;
 	changeKey?: string;
+	/** Extra project folder the diff belongs to; absent means the main repo. */
+	repoKey?: string;
 	collapsedFiles: string[];
 	/** Line to scroll to within `path`. `focusTick` bumps on each navigation
 	 *  request so it can take precedence over an older cached scroll state. */
@@ -112,6 +114,7 @@ export interface PagePaneData {
 }
 
 export interface ChatPaneData {
+	agentLabel?: string;
 	acpAgentConfigId?: string;
 	acpAccountSelection?: string | null;
 	terminalId: string;
@@ -172,6 +175,7 @@ export interface SubagentPaneData {
 
 export type WorkspaceSearchKey =
 	| "importChat"
+	| "resumeChat"
 	| "terminalId"
 	| "focusRequestId"
 	| "subagentTerminalId"

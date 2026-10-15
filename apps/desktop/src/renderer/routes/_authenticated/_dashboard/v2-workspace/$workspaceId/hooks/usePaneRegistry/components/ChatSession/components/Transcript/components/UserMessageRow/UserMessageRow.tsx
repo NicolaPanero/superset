@@ -8,6 +8,7 @@ import { cn } from "@superset/ui/utils";
 import { useRef } from "react";
 import { parseAttachmentTags } from "../../../../utils/attachmentTags";
 import { LEADING_COMMAND } from "../../../../utils/commandChip";
+import type { EarlierUserMessage } from "../../../../utils/earlierHistory";
 import {
 	type MessageSegment,
 	splitByElements,
@@ -64,6 +65,7 @@ export function UserMessageRow({
 	const images = attachments.filter((attachment) =>
 		attachment.type.startsWith("image/"),
 	);
+	const earlierImages = (item as EarlierUserMessage).earlierImages ?? [];
 	const files = [
 		...attachments
 			.filter((attachment) => !attachment.type.startsWith("image/"))
@@ -79,7 +81,7 @@ export function UserMessageRow({
 	];
 	return (
 		<Message className="pt-1.5 pb-5 pl-10" from="user">
-			{images.length > 0 && (
+			{images.length + earlierImages.length > 0 && (
 				<div
 					className={cn(
 						"ml-auto flex max-w-[min(100%,36rem)] flex-wrap justify-end gap-2 transition-opacity",
@@ -93,6 +95,22 @@ export function UserMessageRow({
 							type={image.type}
 						/>
 					))}
+					{earlierImages.map((image, index) =>
+						image.data ? (
+							<AttachmentImage
+								// biome-ignore lint/suspicious/noArrayIndexKey: an earlier turn's images never reorder
+								key={index}
+								path={`image-${index + 1}.${image.mediaType.split("/")[1] ?? "png"}`}
+								src={`data:${image.mediaType};base64,${image.data}`}
+								type={image.mediaType}
+							/>
+						) : (
+							// biome-ignore lint/suspicious/noArrayIndexKey: an earlier turn's images never reorder
+							<Badge key={index} variant="secondary">
+								<Trans>Image too large to show</Trans>
+							</Badge>
+						),
+					)}
 				</div>
 			)}
 			{(text || files.length > 0) && (
