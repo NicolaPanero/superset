@@ -73,3 +73,28 @@ test("the home background is opt-in, survives reload and appears in settings sea
 	fireEvent.click(toggle);
 	expect(useForkHomeAppearance.getState().interactiveBackground).toBe(false);
 });
+
+test("the background is on by default and an explicit off survives a reload", async () => {
+	const rehydrate = async (saved: string | null) => {
+		await act(async () => {
+			useForkHomeAppearance.setState({ interactiveBackground: true });
+			if (saved === null)
+				localStorage.removeItem("superset-fork-home-appearance");
+			else localStorage.setItem("superset-fork-home-appearance", saved);
+			await useForkHomeAppearance.persist.rehydrate();
+		});
+		return useForkHomeAppearance.getState().interactiveBackground;
+	};
+	const saved = localStorage.getItem("superset-fork-home-appearance");
+	try {
+		expect(await rehydrate(null)).toBe(true);
+		expect(await rehydrate("{}")).toBe(true);
+		expect(
+			await rehydrate(
+				JSON.stringify({ state: { interactiveBackground: false }, version: 0 }),
+			),
+		).toBe(false);
+	} finally {
+		await rehydrate(saved);
+	}
+});

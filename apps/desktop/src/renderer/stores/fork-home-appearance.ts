@@ -9,7 +9,7 @@ interface ForkHomeAppearance {
 export const useForkHomeAppearance = create<ForkHomeAppearance>()(
 	persist(
 		(set) => ({
-			interactiveBackground: false,
+			interactiveBackground: true,
 			setInteractiveBackground: (enabled) =>
 				set({ interactiveBackground: enabled }),
 		}),
@@ -22,7 +22,9 @@ export const useForkHomeAppearance = create<ForkHomeAppearance>()(
 					!!saved &&
 					typeof saved === "object" &&
 					"interactiveBackground" in saved &&
-					saved.interactiveBackground === true,
+					typeof saved.interactiveBackground === "boolean"
+						? saved.interactiveBackground
+						: current.interactiveBackground,
 			}),
 		},
 	),

@@ -48,6 +48,10 @@ import {
 	ForkAccountPicker,
 	useForkCreationAccount,
 } from "renderer/components/ForkAccountPicker";
+import {
+	ForkHomeBackground,
+	ForkHomeBrand,
+} from "renderer/components/ForkHomeBackground";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -115,10 +119,6 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
-import {
-	ForkHomeBackground,
-	ForkHomeBrand,
-} from "./components/ForkHomeBackground";
 import { ForkImportFromHome } from "./components/ForkImportFromHome/ForkImportFromHome";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";

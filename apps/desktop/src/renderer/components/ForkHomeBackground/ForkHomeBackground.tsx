@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useForkHomeAppearance } from "renderer/stores/fork-home-appearance";
 import "./fork-home-background.css";
+import { supportsForkHomeScene } from "./fork-home-support";
 
 export function ForkHomeBackground({ active }: { active: boolean }) {
 	const enabled = useForkHomeAppearance((state) => state.interactiveBackground);
@@ -20,7 +21,7 @@ export function ForkHomeBackground({ active }: { active: boolean }) {
 		};
 	}, [enabled, active]);
 
-	return enabled && active ? (
+	return enabled && active && supportsForkHomeScene() ? (
 		<canvas
 			ref={canvasRef}
 			className="fork-home-background"
