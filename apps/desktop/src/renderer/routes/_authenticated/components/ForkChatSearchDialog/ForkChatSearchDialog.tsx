@@ -221,7 +221,8 @@ export function ForkChatSearchDialog({
 								const others = forkImportChoices(configs, {
 									sourceAgent: session.agent,
 									canOpen: canOpen(session),
-									hasWorkspace: session.workspaceId !== null,
+									hasWorkspace:
+										session.workspaceId !== null || session.inProjectRoot,
 									verified,
 								});
 								const canContinue =
