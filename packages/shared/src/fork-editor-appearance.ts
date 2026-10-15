@@ -7,7 +7,7 @@ export function getForkEditorDefaults(platform: string) {
 			: isWindows
 				? 'Consolas, "Courier New", monospace'
 				: '"Droid Sans Mono", "JetBrains Mono", monospace',
-		fontSize: isMac ? 12 : 14,
+		fontSize: 12,
 		lineHeight: isMac ? 1.5 : 1.35,
 		ligatures: false,
 	} as const;

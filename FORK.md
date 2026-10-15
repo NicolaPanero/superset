@@ -56,8 +56,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   ([sorgente](https://github.com/JetBrains/JetBrainsMono/tree/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/variable));
   la licenza SIL OFL 1.1 è inclusa nelle risorse dell’app.
 - L’editor e i diff dei temi **Dark** e **Light** usano la palette **Dark+ / Light+**
-  di VS Code. I valori tipografici iniziali seguono il sistema: Menlo 12 px su
-  macOS, Consolas 14 px su Windows, Droid Sans Mono 14 px su Linux con fallback
+  di VS Code. La dimensione iniziale è 12 px su ogni sistema: Menlo su
+  macOS, Consolas su Windows, Droid Sans Mono su Linux con fallback
   JetBrains Mono incluso. Le legature sono disattivate; tutte le preferenze restano
   modificabili nelle impostazioni. CodeMirror mantiene il proprio parser:
   la classificazione dei token può differire dal motore di VS Code.

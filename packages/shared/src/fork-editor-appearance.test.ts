@@ -5,14 +5,14 @@ import { getEditorTheme } from "./themes/editor-theme";
 import { isForkVSCodeEditorTheme } from "./themes/fork-vscode-editor";
 
 describe("VS Code editor defaults", () => {
-	test("uses native platform fonts and sizes without confusing Darwin with Windows", () => {
+	test("uses native platform fonts at 12px without confusing Darwin with Windows", () => {
 		expect(getForkEditorDefaults("MacIntel")).toMatchObject({
 			fontSize: 12,
 			lineHeight: 1.5,
 		});
 		expect(getForkEditorDefaults("darwin").fontFamily).toStartWith("Menlo");
 		expect(getForkEditorDefaults("Win32")).toMatchObject({
-			fontSize: 14,
+			fontSize: 12,
 			lineHeight: 1.35,
 		});
 		expect(getForkEditorDefaults("win32").fontFamily).toStartWith("Consolas");
