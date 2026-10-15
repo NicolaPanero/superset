@@ -340,7 +340,10 @@ export function NewWorkspaceScreen({
 	const [liveComposerWidth, setLiveComposerWidth] = useState<number | null>(
 		null,
 	);
-	const composerWidth = liveComposerWidth ?? storedComposerWidth;
+	const composerWidth = Math.min(
+		liveComposerWidth ?? storedComposerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+		NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+	);
 
 	// One suggestion per open. resetKey only bumps on resetDraft, so ordinary
 	// modal reopens roll their own counter; the tiptap Placeholder extension
@@ -799,7 +802,7 @@ export function NewWorkspaceScreen({
 				<div
 					className="relative flex w-full flex-col"
 					style={{
-						maxWidth: composerWidth ?? "none",
+						maxWidth: composerWidth,
 					}}
 				>
 					<AnimatePresence initial={false}>
@@ -1144,7 +1147,7 @@ export function NewWorkspaceScreen({
 						)}
 					</div>
 					<SymmetricResizeHandles
-						currentWidth={composerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH}
+						currentWidth={composerWidth}
 						minWidth={NEW_WORKSPACE_SCREEN_MIN_WIDTH}
 						maxWidth={NEW_WORKSPACE_SCREEN_MAX_WIDTH}
 						onWidthChange={setLiveComposerWidth}
