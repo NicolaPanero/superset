@@ -10560,6 +10560,9 @@ msgstr "新的{providerLabel}智能体将使用{accountLabel}。"
 msgid "New agent"
 msgstr "新建智能体"
 
+msgid "New Agent"
+msgstr "新建智能体"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "新启动的智能体使用此账户。重新启动运行中的智能体才能切换。"
 
@@ -12078,6 +12081,9 @@ msgstr "在新标签页中打开更改面板，或聚焦现有面板"
 
 msgid "Open the global command palette"
 msgstr "打开全局命令面板"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "在当前工作区打开新建智能体对话框"
 
 msgid "Open the new workspace modal"
 msgstr "打开新建工作区弹窗"

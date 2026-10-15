@@ -10560,6 +10560,9 @@ msgstr "Yeni {providerLabel} ajanları {accountLabel} hesabını kullanacak."
 msgid "New agent"
 msgstr "Yeni ajan"
 
+msgid "New Agent"
+msgstr "Yeni Ajan"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Yeni ajan başlatmaları bu hesabı kullanır. Değiştirmek için çalışan bir ajanı yeniden başlatın."
 
@@ -12078,6 +12081,9 @@ msgstr "Değişiklikler panelini yeni sekmede açar veya mevcut olana odaklanır
 
 msgid "Open the global command palette"
 msgstr "Genel komut paletini aç"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Geçerli workspace'te yeni ajan iletişim kutusunu aç"
 
 msgid "Open the new workspace modal"
 msgstr "Yeni çalışma alanı penceresini aç"

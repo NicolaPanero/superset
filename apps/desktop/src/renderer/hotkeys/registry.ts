@@ -568,6 +568,18 @@ export const HOTKEYS_REGISTRY = {
 		label: msg({ message: "New Browser" }),
 		category: "Layout",
 	},
+	NEW_AGENT: {
+		key: {
+			mac: L("meta+shift+a"),
+			windows: L("ctrl+shift+alt+a"),
+			linux: L("ctrl+shift+alt+a"),
+		},
+		label: msg({ message: "New Agent" }),
+		category: "Chat",
+		description: msg({
+			message: "Open the new agent dialog in the current workspace",
+		}),
+	},
 	CLOSE_TERMINAL: {
 		key: {
 			mac: L("meta+w"),

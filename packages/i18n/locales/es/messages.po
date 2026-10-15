@@ -10560,6 +10560,9 @@ msgstr "Los agentes nuevos de {providerLabel} usarán {accountLabel}."
 msgid "New agent"
 msgstr "Nuevo agente"
 
+msgid "New Agent"
+msgstr "Nuevo agente"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Los agentes nuevos se lanzan con esta cuenta. Vuelve a lanzar un agente en marcha para cambiarla."
 
@@ -12078,6 +12081,9 @@ msgstr "Abre el panel de cambios en una pestaña nueva o enfoca el existente"
 
 msgid "Open the global command palette"
 msgstr "Abrir la paleta de comandos global"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Abrir el diálogo de nuevo agente en el workspace actual"
 
 msgid "Open the new workspace modal"
 msgstr "Abrir el modal de nuevo espacio de trabajo"

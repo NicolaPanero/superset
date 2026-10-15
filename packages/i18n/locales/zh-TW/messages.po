@@ -10560,6 +10560,9 @@ msgstr "新的{providerLabel}代理程式將使用{accountLabel}。"
 msgid "New agent"
 msgstr "新建代理程式"
 
+msgid "New Agent"
+msgstr "新建代理程式"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "新啟動的代理程式使用此帳戶。重新啟動執行中的代理程式才能切換。"
 
@@ -12078,6 +12081,9 @@ msgstr "在新分頁中開啟更改面板，或聚焦現有面板"
 
 msgid "Open the global command palette"
 msgstr "開啟全域性命令面板"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "在目前的工作區開啟新建代理程式對話框"
 
 msgid "Open the new workspace modal"
 msgstr "開啟新建工作區彈窗"

@@ -10560,6 +10560,9 @@ msgstr "Các agent {providerLabel} mới sẽ dùng {accountLabel}."
 msgid "New agent"
 msgstr "Agent mới"
 
+msgid "New Agent"
+msgstr "Agent mới"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "Các agent khởi chạy mới sẽ dùng tài khoản này. Khởi chạy lại agent đang chạy để đổi sang tài khoản này."
 
@@ -12078,6 +12081,9 @@ msgstr "Mở bảng thay đổi trong tab mới, hoặc chuyển tiêu điểm �
 
 msgid "Open the global command palette"
 msgstr "Mở bảng lệnh toàn cục"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "Mở hộp thoại agent mới trong workspace hiện tại"
 
 msgid "Open the new workspace modal"
 msgstr "Mở hộp thoại tạo workspace mới"

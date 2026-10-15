@@ -10560,6 +10560,9 @@ msgstr "새 {providerLabel} 에이전트는 {accountLabel}을(를) 사용합니�
 msgid "New agent"
 msgstr "새 에이전트"
 
+msgid "New Agent"
+msgstr "새 에이전트"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "새 에이전트는 이 계정으로 실행됩니다. 실행 중인 에이전트는 다시 실행해야 바뀝니다."
 
@@ -12078,6 +12081,9 @@ msgstr "변경 패널을 새 탭에서 열거나 기존 패널에 포커스합�
 
 msgid "Open the global command palette"
 msgstr "전역 명령 팔레트를 엽니다"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "현재 워크스페이스에서 새 에이전트 대화상자 열기"
 
 msgid "Open the new workspace modal"
 msgstr "새 워크스페이스 모달을 엽니다"

@@ -61,7 +61,7 @@ test.each([
 	const trigger = view.getByRole("button");
 	fireEvent.keyDown(trigger, { key: "ArrowDown", code: "ArrowDown" });
 	await flush();
-	const item = view.getByRole("menuitem", { name: "Agent" });
+	const item = view.getByRole("menuitem", { name: /^Agent/ });
 	const menu = view.getByRole("menu");
 	if (target === "keyboard") {
 		fireEvent.focus(item);

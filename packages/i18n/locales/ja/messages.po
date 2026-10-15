@@ -10560,6 +10560,9 @@ msgstr "新規の{providerLabel}エージェントは{accountLabel}を使用し�
 msgid "New agent"
 msgstr "新しいエージェント"
 
+msgid "New Agent"
+msgstr "新しいエージェント"
+
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
 msgstr "新規エージェントの起動でこのアカウントを使用します。実行中のエージェントを切り替えるには再起動してください。"
 
@@ -12078,6 +12081,9 @@ msgstr "変更ペインを新しいタブで開くか、既存のペインにフ
 
 msgid "Open the global command palette"
 msgstr "グローバルコマンドパレットを開く"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "現在のワークスペースで新しいエージェントのダイアログを開く"
 
 msgid "Open the new workspace modal"
 msgstr "新規ワークスペースのモーダルを開く"

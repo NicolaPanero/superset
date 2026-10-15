@@ -33,7 +33,10 @@ export function AddTabMenu({
 		<>
 			<DropdownMenuItem className="gap-2" onSelect={onAddAgent}>
 				<Bot className="size-4" />
-				<Trans>Agent</Trans>
+				<span>
+					<Trans>Agent</Trans>
+				</span>
+				<HotkeyMenuShortcut hotkeyId="NEW_AGENT" />
 			</DropdownMenuItem>
 			<DropdownMenuItem className="gap-2" onClick={onAddTerminal}>
 				<BsTerminalPlus className="size-4" />
