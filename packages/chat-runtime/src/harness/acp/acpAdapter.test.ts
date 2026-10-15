@@ -3350,6 +3350,72 @@ describe("per-chat Full access", () => {
 		expect(sessionsOf(events).at(-1)?.modeId).toBe(FULL_ACCESS_CHAT_MODE);
 		await adapter.dispose();
 	});
+	it.each([
+		1, 2,
+	])("ACP %s entering Plan stops automatic tool approvals while the native mode change is pending", async (version) => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = version;
+		const modes = [
+			{ id: "default", name: "Default" },
+			{ id: "plan", name: "Plan" },
+			{ id: "bypassPermissions", name: "Bypass permissions" },
+		];
+		if (version === 1)
+			agent.newSessionModes = {
+				currentModeId: "bypassPermissions",
+				availableModes: modes,
+			};
+		else
+			agent.newSessionConfigOptions = [
+				{
+					configId: "permission_mode",
+					name: "Mode",
+					type: "select",
+					category: "mode",
+					currentValue: "bypassPermissions",
+					options: modes.map((mode) => ({ value: mode.id, name: mode.name })),
+				},
+			];
+		const { adapter, events } = startAdapter(agent);
+		await flush(32);
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.availableModes)
+				.at(-1)?.availableModes,
+		).toContainEqual({ id: "plan", label: "Plan" });
+		agent.holdSelections = true;
+		adapter.setMode("plan");
+		await flush(32);
+		agent.requestPermission("sess-1", "plan-request");
+		await flush();
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(
+			sessionsOf(events)
+				.filter((session) => session.modeId)
+				.at(-1)?.modeId,
+		).toBe("plan");
+		const request = agent.sent.find(
+			(frame) =>
+				frame.method ===
+				(version === 1 ? "session/set_mode" : "session/set_config_option"),
+		);
+		expect(request?.params).toMatchObject(
+			version === 1
+				? { modeId: "plan" }
+				: { configId: "permission_mode", value: "plan" },
+		);
+		agent.releaseSelections();
+		await flush(32);
+		expect(agent.lastPermissionResponse()).toBeUndefined();
+		agent.holdSelections = false;
+		adapter.setMode("bypassPermissions");
+		await flush(32);
+		expect(agent.lastPermissionResponse()?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "allow" },
+		});
+		await adapter.dispose();
+	});
+
 	it("selecting full access also resolves a tool's pending Allow request", async () => {
 		const agent = new FakeAcpAgent();
 		cursorPermissionMode(agent);

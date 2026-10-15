@@ -17,6 +17,9 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   **Cambia agente o account** gestisce il cambio manuale con **Continue**.
   Il cambio account Claude mantiene la chat nello stesso pannello. Per un altro
   agente puoi scegliere la stessa chat, una nuova scheda o un pannello affiancato.
+- Nel selettore dei permessi della chat compare **Plan** quando l’agente
+  espone questa modalità. Usa la pianificazione nativa e disattiva le
+  approvazioni automatiche di **Full access**.
 - Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
   e le sue opzioni. Non cambia agente o account.
 - **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
