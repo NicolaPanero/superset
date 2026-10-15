@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./styles/bundled-fonts.css";
+import "./styles/fork-terminal-fonts/fork-terminal-fonts.css";
 import { initSentry } from "./lib/sentry";
 
 initSentry();

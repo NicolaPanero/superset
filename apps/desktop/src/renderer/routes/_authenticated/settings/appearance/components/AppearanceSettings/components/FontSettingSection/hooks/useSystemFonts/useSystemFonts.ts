@@ -1,3 +1,4 @@
+import { FORK_TERMINAL_DEFAULTS } from "@superset/shared/fork-terminal-appearance";
 import { useEffect, useState } from "react";
 
 export type FontCategory = "nerd" | "mono" | "other";
@@ -7,14 +8,12 @@ export interface FontInfo {
 	category: FontCategory;
 }
 
-/**
- * Fonts registered via @font-face that load from the OS at runtime
- * (not bundled in the app binary). Always shown in the dropdown on
- * supported platforms.
- */
-const REGISTERED_FONTS: FontInfo[] = navigator.platform.startsWith("Mac")
-	? [{ family: "SF Mono", category: "mono" }]
-	: [];
+const REGISTERED_FONTS: FontInfo[] = [
+	{ family: FORK_TERMINAL_DEFAULTS.fontFamily, category: "mono" },
+	...(navigator.platform.startsWith("Mac")
+		? [{ family: "SF Mono", category: "mono" } as const]
+		: []),
+];
 
 const WELL_KNOWN_NERD: string[] = [
 	"MesloLGM Nerd Font",
@@ -138,6 +137,11 @@ export function useSystemFonts() {
 		let cancelled = false;
 
 		async function loadFonts() {
+			await Promise.allSettled(
+				REGISTERED_FONTS.map(({ family }) =>
+					document.fonts.load(`16px "${family}"`),
+				),
+			);
 			await document.fonts.ready;
 
 			const result: FontInfo[] = [];

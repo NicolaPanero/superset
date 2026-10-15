@@ -182,6 +182,10 @@ export function CodeEditor({
 	});
 	const editorFontFamily = fontSettings?.editorFontFamily ?? undefined;
 	const editorFontSize = fontSettings?.editorFontSize ?? undefined;
+	const editorLineHeight = fontSettings?.editorLineHeight ?? undefined;
+	const editorLetterSpacing = fontSettings?.editorLetterSpacing ?? undefined;
+	const editorFontWeight = fontSettings?.editorFontWeight ?? undefined;
+	const editorLigatures = fontSettings?.editorLigatures ?? undefined;
 	const activeTheme = useResolvedTheme();
 
 	onChangeRef.current = onChange;
@@ -244,6 +248,10 @@ export function CodeEditor({
 						{
 							fontFamily: editorFontFamily,
 							fontSize: editorFontSize,
+							lineHeight: editorLineHeight,
+							letterSpacing: editorLetterSpacing,
+							fontWeight: editorFontWeight,
+							ligatures: editorLigatures,
 						},
 						fillHeight,
 					),
@@ -301,6 +309,10 @@ export function CodeEditor({
 					{
 						fontFamily: editorFontFamily,
 						fontSize: editorFontSize,
+						lineHeight: editorLineHeight,
+						letterSpacing: editorLetterSpacing,
+						fontWeight: editorFontWeight,
+						ligatures: editorLigatures,
 					},
 					fillHeight,
 				),
@@ -310,6 +322,10 @@ export function CodeEditor({
 		activeTheme,
 		editorFontFamily,
 		editorFontSize,
+		editorLineHeight,
+		editorLetterSpacing,
+		editorFontWeight,
+		editorLigatures,
 		fillHeight,
 		themeCompartment,
 	]);

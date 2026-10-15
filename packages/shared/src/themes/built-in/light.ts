@@ -1,3 +1,4 @@
+import { FORK_VSCODE_LIGHT_EDITOR } from "../fork-vscode-editor";
 import type { Theme } from "../types";
 
 /**
@@ -58,6 +59,7 @@ export const lightTheme: Theme = {
 		highlightForeground: "oklch(0.985 0 0)",
 	},
 
+	editor: FORK_VSCODE_LIGHT_EDITOR,
 	terminal: {
 		background: "#ffffff",
 		foreground: "#000000",

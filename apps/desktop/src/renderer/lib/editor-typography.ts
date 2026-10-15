@@ -1,16 +1,16 @@
-/** Preserve the legacy rounded 1.5x editor line height until an override exists. */
+import { FORK_EDITOR_DEFAULTS } from "./fork-editor-appearance";
+
 export function resolveEditorLineHeight(
 	fontSize: number,
 	lineHeight?: number,
 ): number {
 	return lineHeight == null
-		? Math.round(fontSize * 1.5)
+		? Math.round(fontSize * FORK_EDITOR_DEFAULTS.lineHeight)
 		: fontSize * lineHeight;
 }
 
 export function resolveFontVariantLigatures(
 	ligatures?: boolean,
-): "normal" | "none" | undefined {
-	if (ligatures == null) return undefined;
-	return ligatures ? "normal" : "none";
+): "normal" | "none" {
+	return (ligatures ?? FORK_EDITOR_DEFAULTS.ligatures) ? "normal" : "none";
 }

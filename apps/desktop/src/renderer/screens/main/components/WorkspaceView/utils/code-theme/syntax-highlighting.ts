@@ -1,6 +1,7 @@
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import type { Extension } from "@codemirror/state";
 import { tags } from "@lezer/highlight";
+import { getForkEditorSyntaxStyles } from "renderer/lib/fork-editor-syntax";
 import { getEditorTheme, type Theme } from "shared/themes";
 
 export function getCodeSyntaxHighlighting(theme: Theme): Extension {
@@ -65,6 +66,7 @@ export function getCodeSyntaxHighlighting(theme: Theme): Extension {
 				tag: [tags.invalid],
 				color: editorTheme.syntax.invalid,
 			},
+			...getForkEditorSyntaxStyles(theme),
 		]),
 	);
 }

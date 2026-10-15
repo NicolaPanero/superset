@@ -9,6 +9,8 @@ import {
 	NON_EDITOR_APPS,
 	TERMINAL_LINK_BEHAVIORS,
 } from "@superset/local-db/schema/zod";
+import { getForkEditorDefaults } from "@superset/shared/fork-editor-appearance";
+import { FORK_TERMINAL_DEFAULTS } from "@superset/shared/fork-terminal-appearance";
 import { RINGTONES } from "@superset/shared/ringtones";
 import {
 	FONT_FAMILY_MAX_LENGTH,
@@ -23,6 +25,8 @@ import {
 } from "@superset/shared/settings-constraints";
 
 export type SettingValue = string | number | boolean;
+
+const editorDefaults = getForkEditorDefaults(process.platform);
 
 export type SettingsColumn = Exclude<keyof InsertSettings, "id"> & string;
 
@@ -263,7 +267,7 @@ export const SETTINGS: SettingDefinition[] = [
 		section: "terminal appearance",
 		...LINE_HEIGHT,
 		description: "Terminal line height (1-2.5, 0.1 steps)",
-		defaultValue: 1,
+		defaultValue: FORK_TERMINAL_DEFAULTS.lineHeight,
 	},
 	{
 		key: "terminalLetterSpacing",
@@ -294,7 +298,7 @@ export const SETTINGS: SettingDefinition[] = [
 		section: "terminal appearance",
 		numberChoices: TERMINAL_MINIMUM_CONTRAST_CHOICES,
 		description: "Minimum terminal color contrast ratio (1, 3, 4.5, or 7)",
-		defaultValue: 1,
+		defaultValue: FORK_TERMINAL_DEFAULTS.minimumContrast,
 	},
 	{
 		key: "terminalCursorStyle",
@@ -326,7 +330,7 @@ export const SETTINGS: SettingDefinition[] = [
 		section: "editor appearance",
 		...FONT_SIZE,
 		description: "File editor font size in px (10-24, 0.5 steps)",
-		defaultValue: 13,
+		defaultValue: editorDefaults.fontSize,
 	},
 	{
 		key: "editorLineHeight",
@@ -334,7 +338,7 @@ export const SETTINGS: SettingDefinition[] = [
 		section: "editor appearance",
 		...LINE_HEIGHT,
 		description: "File editor line height (1-2.5, 0.1 steps)",
-		defaultValue: 1.5,
+		defaultValue: editorDefaults.lineHeight,
 	},
 	{
 		key: "editorLetterSpacing",
@@ -357,7 +361,7 @@ export const SETTINGS: SettingDefinition[] = [
 		type: "boolean",
 		section: "editor appearance",
 		description: "Enable file editor font ligatures",
-		defaultValue: true,
+		defaultValue: editorDefaults.ligatures,
 	},
 ];
 

@@ -209,18 +209,18 @@ describe("sanitizeTerminalFontFamily", () => {
 });
 
 describe("resolveTerminalAppearance", () => {
-	test("preserves the existing terminal rendering defaults", () => {
+	test("uses the bundled font and readable defaults when settings are unset", () => {
 		const theme = { background: "#111111", foreground: "#eeeeee" };
 		expect(resolveTerminalAppearance(theme)).toEqual({
 			theme,
 			background: "#111111",
 			fontFamily: DEFAULT_TERMINAL_FONT_FAMILY,
 			fontSize: 14,
-			lineHeight: 1,
+			lineHeight: 1.1,
 			letterSpacing: 0,
 			fontWeight: "normal",
 			ligatures: true,
-			minimumContrastRatio: 1,
+			minimumContrastRatio: 3,
 			cursorStyle: "block",
 			cursorBlink: true,
 		});
@@ -231,11 +231,11 @@ describe("resolveTerminalAppearance", () => {
 		const appearance = resolveTerminalAppearance(theme, {
 			terminalFontFamily: "monospace",
 			terminalFontSize: 15.5,
-			terminalLineHeight: 1.3,
+			terminalLineHeight: 1,
 			terminalLetterSpacing: 0.5,
 			terminalFontWeight: 500,
 			terminalLigatures: false,
-			terminalMinimumContrast: 4.5,
+			terminalMinimumContrast: 1,
 			terminalCursorStyle: "underline",
 			terminalCursorBlink: false,
 		});
@@ -243,11 +243,11 @@ describe("resolveTerminalAppearance", () => {
 		expect(appearance).toMatchObject({
 			fontFamily: `monospace, ${nerdTail()}`,
 			fontSize: 15.5,
-			lineHeight: 1.3,
+			lineHeight: 1,
 			letterSpacing: 0.5,
 			fontWeight: 500,
 			ligatures: false,
-			minimumContrastRatio: 4.5,
+			minimumContrastRatio: 1,
 			cursorStyle: "underline",
 			cursorBlink: false,
 		});

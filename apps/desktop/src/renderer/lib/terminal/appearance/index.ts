@@ -1,3 +1,4 @@
+import { FORK_TERMINAL_DEFAULTS } from "@superset/shared/fork-terminal-appearance";
 import type { FontWeight, ITheme } from "@xterm/xterm";
 import { toXtermTheme } from "renderer/stores/theme/utils";
 import {
@@ -90,7 +91,7 @@ export const NERD_FONT_FALLBACK_FAMILIES = [
 ] as const;
 
 export const DEFAULT_TERMINAL_FONT_FAMILIES = [
-	"JetBrains Mono",
+	FORK_TERMINAL_DEFAULTS.fontFamily,
 	...NERD_FONT_FALLBACK_FAMILIES,
 	"Menlo",
 	"Monaco",
@@ -103,11 +104,12 @@ export const DEFAULT_TERMINAL_FONT_FAMILY = serializeFontFamilyList([
 ]);
 
 export const DEFAULT_TERMINAL_FONT_SIZE = 14;
-export const DEFAULT_TERMINAL_LINE_HEIGHT = 1;
+export const DEFAULT_TERMINAL_LINE_HEIGHT = FORK_TERMINAL_DEFAULTS.lineHeight;
 export const DEFAULT_TERMINAL_LETTER_SPACING = 0;
 export const DEFAULT_TERMINAL_FONT_WEIGHT: FontWeight = "normal";
 export const DEFAULT_TERMINAL_LIGATURES = true;
-export const DEFAULT_TERMINAL_MINIMUM_CONTRAST = 1;
+export const DEFAULT_TERMINAL_MINIMUM_CONTRAST =
+	FORK_TERMINAL_DEFAULTS.minimumContrast;
 export const DEFAULT_TERMINAL_CURSOR_STYLE = "block" as const;
 export const DEFAULT_TERMINAL_CURSOR_BLINK = true;
 

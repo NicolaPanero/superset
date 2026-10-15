@@ -1,3 +1,4 @@
+import { FORK_VSCODE_DARK_EDITOR } from "../fork-vscode-editor";
 import type { Theme } from "../types";
 
 /**
@@ -106,9 +107,5 @@ export const darkTheme: Theme = {
 		brightWhite: "#ffffff",
 	},
 
-	editor: {
-		syntax: {
-			comment: "#a8a5a3",
-		},
-	},
+	editor: FORK_VSCODE_DARK_EDITOR,
 };
