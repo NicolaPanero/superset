@@ -38,8 +38,8 @@ import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
 import {
-	ForkAccountMenuItem,
 	ForkAccountPicker,
+	ForkAccountSubmenu,
 	useForkCreationAccount,
 } from "renderer/components/ForkAccountPicker";
 import {
@@ -1039,13 +1039,13 @@ export function NewWorkspaceScreen({
 									efforts={effortSupport ? effortOptions : []}
 									selectedEffort={selectedEffort}
 									onEffortChange={setSelectedEffort}
-									onBeforeConfigureAgents={closeModal}
-									renderAccountItem={(className) => (
-										<ForkAccountMenuItem
+									renderAccountItem={(rowClassName, panelClassName) => (
+										<ForkAccountSubmenu
 											account={forkAccount}
 											provider={selectedPresetId}
 											model={selectedModel ?? undefined}
-											className={className}
+											className={rowClassName}
+											contentClassName={panelClassName}
 										/>
 									)}
 								/>

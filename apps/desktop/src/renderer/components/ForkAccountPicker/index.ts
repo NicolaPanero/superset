@@ -1,3 +1,3 @@
-export { ForkAccountMenuItem } from "./components/ForkAccountMenuItem";
+export { ForkAccountSubmenu } from "./components/ForkAccountSubmenu";
 export { ForkAccountPicker } from "./ForkAccountPicker";
 export { useForkCreationAccount } from "./useForkCreationAccount";

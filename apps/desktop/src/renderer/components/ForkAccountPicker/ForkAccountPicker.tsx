@@ -1,24 +1,18 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
-import { useState } from "react";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
-import {
-	AddAccountDialog,
-	type SwitchSignInTarget,
-} from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
+import { AddAccountDialog } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
 import { ForkUsageSummary } from "../ForkUsageSummary";
 import { ForkAccountAvatar } from "./components/ForkAccountAvatar";
+import { ForkAccountMenuItems } from "./components/ForkAccountMenuItems";
 import { useForkAccountChoices } from "./useForkAccountChoices";
 import type { useForkCreationAccount } from "./useForkCreationAccount";
 
@@ -35,13 +29,7 @@ export function ForkAccountPicker({
 }) {
 	const { t } = useLingui();
 	const menuDialog = useForkMenuDialog();
-	const [adding, setAdding] = useState(false);
-	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
-	const { choices, selected, suggested } = useForkAccountChoices(
-		account,
-		provider,
-		model,
-	);
+	const { selected } = useForkAccountChoices(account, provider, model);
 	if (!account.enabled) return null;
 	const label = account.forcedApi
 		? t({ message: "API billing" })
@@ -97,104 +85,25 @@ export function ForkAccountPicker({
 					align="start"
 					onCloseAutoFocus={menuDialog.onCloseAutoFocus}
 				>
-					<DropdownMenuLabel>
-						<Trans>Account</Trans>
-					</DropdownMenuLabel>
-					{account.options.isSuccess && choices.length === 0 && (
-						<p className="px-2 py-2 text-xs text-muted-foreground">
-							<Trans>Add an account to start chatting.</Trans>
-						</p>
-					)}
-					{choices.map(({ option, usage }) => (
-						<div key={option.selection ?? "system"}>
-							{option.selection === null && <DropdownMenuSeparator />}
-							<DropdownMenuItem
-								key={option.selection ?? "system"}
-								onSelect={() => account.choose(option.selection)}
-								className="block cursor-pointer py-2"
-							>
-								<div className="flex items-center justify-between gap-3">
-									<span className="truncate font-medium">
-										{forkAccountLabel(option, usage?.email)}
-									</span>
-									<span className="shrink-0 text-[10px] text-muted-foreground">
-										{usage?.isDefault && <Trans>Default</Trans>}
-										{suggested?.option.selection === option.selection && (
-											<>
-												{" "}
-												· <Trans>Suggested</Trans>
-											</>
-										)}
-										{account.selection === option.selection && " ✓"}
-									</span>
-								</div>
-								<div className="mt-1.5">
-									<ForkUsageSummary account={usage} model={model} />
-								</div>
-								{(usage?.status === "signed_out" ||
-									usage?.status === "token_expired") && (
-									<div className="mt-1 text-warning">
-										<Trans>Reconnect account</Trans>
-									</div>
-								)}
-							</DropdownMenuItem>
-						</div>
-					))}
-					<DropdownMenuSeparator />
-					{selected?.usage &&
-						(selected.usage.status === "signed_out" ||
-							selected.usage.status === "token_expired" ||
-							selected.usage.status === "token_stale") &&
-						(provider === "claude" || provider === "codex") && (
-							<DropdownMenuItem
-								onSelect={() =>
-									menuDialog.afterClose(() =>
-										setReconnect({
-											agent: provider,
-											credentialKind:
-												selected.usage?.credentialKind === "api_key"
-													? "api_key"
-													: "subscription",
-											selection: selected.option.selection,
-											label:
-												selected.option.alias ??
-												selected.usage?.email ??
-												selected.option.label,
-										}),
-									)
-								}
-							>
-								<Trans>Reconnect account</Trans>
-							</DropdownMenuItem>
-						)}
-					<DropdownMenuItem
-						onSelect={() => menuDialog.afterClose(() => setAdding(true))}
-					>
-						<Trans>Add account</Trans>
-					</DropdownMenuItem>
-					<DropdownMenuItem
-						onSelect={(event) => {
-							event.preventDefault();
-							void account.quota
-								.refresh()
-								.catch((error) => toast.error(errorMessage(error)));
-						}}
-					>
-						<Trans>Refresh</Trans>
-					</DropdownMenuItem>
+					<ForkAccountMenuItems
+						account={account}
+						provider={provider}
+						model={model}
+						afterClose={menuDialog.afterClose}
+					/>
 				</DropdownMenuContent>
 			</DropdownMenu>
-			{(reconnect || adding) &&
+			{(account.reconnect || account.adding) &&
 				(provider === "claude" || provider === "codex") && (
 					<AddAccountDialog
 						open
 						hostUrl={account.hostUrl}
-						agent={reconnect?.agent ?? provider}
-						switchTarget={reconnect}
+						agent={account.reconnect?.agent ?? provider}
+						switchTarget={account.reconnect}
 						onOpenChange={(open) => {
 							if (!open) {
-								setReconnect(null);
-								setAdding(false);
+								account.setReconnect(null);
+								account.setAdding(false);
 							}
 						}}
 						onAccountAdded={() => {
