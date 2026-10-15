@@ -3543,6 +3543,9 @@ msgstr "채팅을 {0}(으)로 옮겼습니다"
 msgid "Chat session not found"
 msgstr "채팅 세션을 찾을 수 없습니다"
 
+msgid "Chat session ready"
+msgstr "채팅 세션 준비 완료"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "채팅을 열 때 채팅 지원 여부를 확인합니다."
 
@@ -5633,6 +5636,9 @@ msgstr "현재"
 
 msgid "Current chat"
 msgstr "현재 채팅"
+
+msgid "current checkout"
+msgstr "현재 체크아웃"
 
 msgid "Current level"
 msgstr "현재 단계"
@@ -19248,6 +19254,9 @@ msgstr "작업 공간 경로를 아직 사용할 수 없습니다"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "워크스페이스 고정 및 일괄 작업"
+
+msgid "Workspace ready"
+msgstr "워크스페이스 준비 완료"
 
 msgid "Workspace restored"
 msgstr "워크스페이스를 복원했습니다"

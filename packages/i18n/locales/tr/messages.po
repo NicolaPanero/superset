@@ -3543,6 +3543,9 @@ msgstr "Sohbet {0} hesabına taşındı"
 msgid "Chat session not found"
 msgstr "Sohbet oturumu bulunamadı"
 
+msgid "Chat session ready"
+msgstr "Sohbet oturumu hazır"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Sohbet desteği bir sohbet açtığınızda kontrol edilir."
 
@@ -5633,6 +5636,9 @@ msgstr "Geçerli"
 
 msgid "Current chat"
 msgstr "Mevcut sohbet"
+
+msgid "current checkout"
+msgstr "mevcut checkout"
 
 msgid "Current level"
 msgstr "Mevcut düzey"
@@ -19248,6 +19254,9 @@ msgstr "Çalışma alanı yolu henüz kullanılamıyor"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Çalışma alanı sabitleme ve toplu eylemler"
+
+msgid "Workspace ready"
+msgstr "Çalışma alanı hazır"
 
 msgid "Workspace restored"
 msgstr "Çalışma alanı geri yüklendi"

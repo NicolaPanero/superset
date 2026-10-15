@@ -3543,6 +3543,9 @@ msgstr "Đã chuyển cuộc trò chuyện sang {0}"
 msgid "Chat session not found"
 msgstr "Không tìm thấy phiên chat"
 
+msgid "Chat session ready"
+msgstr "Phiên chat đã sẵn sàng"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Khả năng hỗ trợ trò chuyện được kiểm tra khi bạn mở một cuộc trò chuyện."
 
@@ -5633,6 +5636,9 @@ msgstr "Hiện tại"
 
 msgid "Current chat"
 msgstr "Chat hiện tại"
+
+msgid "current checkout"
+msgstr "checkout hiện tại"
 
 msgid "Current level"
 msgstr "Mức hiện tại"
@@ -19248,6 +19254,9 @@ msgstr "Đường dẫn không gian làm việc chưa sẵn sàng"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Ghim workspace & hành động hàng loạt"
+
+msgid "Workspace ready"
+msgstr "Workspace đã sẵn sàng"
 
 msgid "Workspace restored"
 msgstr "Đã khôi phục workspace"

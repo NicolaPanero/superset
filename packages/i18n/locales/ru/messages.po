@@ -3543,6 +3543,9 @@ msgstr "Чат перенесён в {0}"
 msgid "Chat session not found"
 msgstr "Сессия чата не найдена"
 
+msgid "Chat session ready"
+msgstr "Сессия чата готова"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Поддержка чата проверяется при открытии чата."
 
@@ -5633,6 +5636,9 @@ msgstr "Текущая"
 
 msgid "Current chat"
 msgstr "Текущий чат"
+
+msgid "current checkout"
+msgstr "текущий checkout"
 
 msgid "Current level"
 msgstr "Текущий уровень"
@@ -19248,6 +19254,9 @@ msgstr "Путь рабочего пространства пока недост
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Закрепление рабочих областей и массовые действия"
+
+msgid "Workspace ready"
+msgstr "Рабочая область готова"
 
 msgid "Workspace restored"
 msgstr "Рабочая область восстановлена"

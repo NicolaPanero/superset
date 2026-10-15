@@ -3543,6 +3543,9 @@ msgstr "Czat przeniesiony na {0}"
 msgid "Chat session not found"
 msgstr "Nie znaleziono sesji czatu"
 
+msgid "Chat session ready"
+msgstr "Sesja czatu gotowa"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Obsługa czatu jest sprawdzana przy otwieraniu czatu."
 
@@ -5633,6 +5636,9 @@ msgstr "Bieżąca"
 
 msgid "Current chat"
 msgstr "Bieżący czat"
+
+msgid "current checkout"
+msgstr "bieżący checkout"
 
 msgid "Current level"
 msgstr "Obecny poziom"
@@ -19248,6 +19254,9 @@ msgstr "Ścieżka obszaru roboczego nie jest jeszcze dostępna"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Przypinanie obszarów roboczych i akcje zbiorcze"
+
+msgid "Workspace ready"
+msgstr "Obszar roboczy gotowy"
 
 msgid "Workspace restored"
 msgstr "Przywrócono obszar roboczy"

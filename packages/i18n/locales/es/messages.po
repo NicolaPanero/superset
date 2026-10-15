@@ -3543,6 +3543,9 @@ msgstr "Chat movido a {0}"
 msgid "Chat session not found"
 msgstr "Sesión de chat no encontrada"
 
+msgid "Chat session ready"
+msgstr "Sesión de chat lista"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "La compatibilidad con el chat se comprueba al abrir un chat."
 
@@ -5633,6 +5636,9 @@ msgstr "Actual"
 
 msgid "Current chat"
 msgstr "Chat actual"
+
+msgid "current checkout"
+msgstr "checkout actual"
 
 msgid "Current level"
 msgstr "Nivel actual"
@@ -19248,6 +19254,9 @@ msgstr "La ruta del espacio de trabajo aún no está disponible"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Fijar espacios de trabajo y acciones en lote"
+
+msgid "Workspace ready"
+msgstr "Espacio de trabajo listo"
 
 msgid "Workspace restored"
 msgstr "Espacio de trabajo restaurado"

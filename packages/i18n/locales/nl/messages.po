@@ -3543,6 +3543,9 @@ msgstr "Chat verplaatst naar {0}"
 msgid "Chat session not found"
 msgstr "Chatsessie niet gevonden"
 
+msgid "Chat session ready"
+msgstr "Chatsessie klaar"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Chatondersteuning wordt gecontroleerd wanneer je een chat opent."
 
@@ -5633,6 +5636,9 @@ msgstr "Huidig"
 
 msgid "Current chat"
 msgstr "Huidige chat"
+
+msgid "current checkout"
+msgstr "huidige checkout"
 
 msgid "Current level"
 msgstr "Huidig niveau"
@@ -19248,6 +19254,9 @@ msgstr "Het werkruimtepad is nog niet beschikbaar"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Werkruimtes vastzetten en bulkacties"
+
+msgid "Workspace ready"
+msgstr "Werkruimte klaar"
 
 msgid "Workspace restored"
 msgstr "Werkruimte hersteld"

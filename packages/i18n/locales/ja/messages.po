@@ -3543,6 +3543,9 @@ msgstr "チャットを {0} に移動しました"
 msgid "Chat session not found"
 msgstr "チャットセッションが見つかりません"
 
+msgid "Chat session ready"
+msgstr "チャットセッションの準備完了"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "チャットを開くときにチャット対応を確認します。"
 
@@ -5633,6 +5636,9 @@ msgstr "現在"
 
 msgid "Current chat"
 msgstr "現在のチャット"
+
+msgid "current checkout"
+msgstr "現在のチェックアウト"
 
 msgid "Current level"
 msgstr "現在のレベル"
@@ -19248,6 +19254,9 @@ msgstr "ワークスペースのパスはまだ利用できません"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "ワークスペースのピン留めと一括操作"
+
+msgid "Workspace ready"
+msgstr "ワークスペースの準備完了"
 
 msgid "Workspace restored"
 msgstr "ワークスペースを復元しました"

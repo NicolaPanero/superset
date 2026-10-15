@@ -3543,6 +3543,9 @@ msgstr "Chat déplacé vers {0}"
 msgid "Chat session not found"
 msgstr "Session de chat introuvable"
 
+msgid "Chat session ready"
+msgstr "Session de chat prête"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "La prise en charge du chat est vérifiée lorsque vous ouvrez un chat."
 
@@ -5633,6 +5636,9 @@ msgstr "Actuelle"
 
 msgid "Current chat"
 msgstr "Discussion actuelle"
+
+msgid "current checkout"
+msgstr "checkout actuel"
 
 msgid "Current level"
 msgstr "Niveau actuel"
@@ -19248,6 +19254,9 @@ msgstr "Le chemin de l’espace de travail n’est pas encore disponible"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Épinglage des espaces de travail et actions groupées"
+
+msgid "Workspace ready"
+msgstr "Espace de travail prêt"
 
 msgid "Workspace restored"
 msgstr "Espace de travail restauré"

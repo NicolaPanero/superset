@@ -3543,6 +3543,9 @@ msgstr "Chat dipindahkan ke {0}"
 msgid "Chat session not found"
 msgstr "Sesi chat tidak ditemukan"
 
+msgid "Chat session ready"
+msgstr "Sesi chat siap"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Dukungan chat diperiksa saat Anda membuka chat."
 
@@ -5633,6 +5636,9 @@ msgstr "Saat ini"
 
 msgid "Current chat"
 msgstr "Chat saat ini"
+
+msgid "current checkout"
+msgstr "checkout saat ini"
 
 msgid "Current level"
 msgstr "Level saat ini"
@@ -19248,6 +19254,9 @@ msgstr "Jalur ruang kerja belum tersedia"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Penyematan workspace & aksi massal"
+
+msgid "Workspace ready"
+msgstr "Workspace siap"
 
 msgid "Workspace restored"
 msgstr "Workspace dipulihkan"

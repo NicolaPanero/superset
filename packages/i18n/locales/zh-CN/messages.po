@@ -3543,6 +3543,9 @@ msgstr "聊天已移至 {0}"
 msgid "Chat session not found"
 msgstr "未找到聊天会话"
 
+msgid "Chat session ready"
+msgstr "聊天会话已就绪"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "打开聊天时会检查聊天支持情况。"
 
@@ -5633,6 +5636,9 @@ msgstr "当前"
 
 msgid "Current chat"
 msgstr "当前聊天"
+
+msgid "current checkout"
+msgstr "当前检出"
 
 msgid "Current level"
 msgstr "当前等级"
@@ -19248,6 +19254,9 @@ msgstr "工作区路径尚不可用"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "工作区固定与批量操作"
+
+msgid "Workspace ready"
+msgstr "工作区已就绪"
 
 msgid "Workspace restored"
 msgstr "工作区已恢复"

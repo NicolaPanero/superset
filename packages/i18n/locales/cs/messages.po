@@ -3543,6 +3543,9 @@ msgstr "Chat přesunut na {0}"
 msgid "Chat session not found"
 msgstr "Relace chatu nenalezena"
 
+msgid "Chat session ready"
+msgstr "Chatovací relace připravena"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Podpora chatu se ověřuje při otevření chatu."
 
@@ -5633,6 +5636,9 @@ msgstr "Aktuální"
 
 msgid "Current chat"
 msgstr "Aktuální chat"
+
+msgid "current checkout"
+msgstr "aktuální checkout"
 
 msgid "Current level"
 msgstr "Aktuální úroveň"
@@ -19248,6 +19254,9 @@ msgstr "Cesta pracovního prostoru zatím není dostupná"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Připínání pracovních prostorů a hromadné akce"
+
+msgid "Workspace ready"
+msgstr "Pracovní prostor připraven"
 
 msgid "Workspace restored"
 msgstr "Pracovní prostor obnoven"
