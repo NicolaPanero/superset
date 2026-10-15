@@ -33,3 +33,19 @@ jobs:
         run: bun install --frozen-lockfile --ignore-scripts
       - name: Validate fork features
         run: bash scripts/fork/validate.sh
+      - name: Record tested content
+        id: tested-tree
+        shell: bash
+        run: |
+          tree=$(git rev-parse 'HEAD^{tree}')
+          echo "tree=$tree" >> "$GITHUB_OUTPUT"
+          mkdir -p "$RUNNER_TEMP/fork-validation"
+          echo "$tree" > "$RUNNER_TEMP/fork-validation/passed"
+      - name: Save PR validation for the release
+        uses: actions/upload-artifact@v4
+        with:
+          name: fork-validated-tree-v1-${{ steps.tested-tree.outputs.tree }}
+          path: ${{ runner.temp }}/fork-validation/passed
+          retention-days: 30
+          if-no-files-found: error
+          overwrite: true

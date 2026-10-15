@@ -346,8 +346,12 @@ su ogni push a `fork/main` (anche se contiene più commit), oppure su avvio manu
 commit non ancora pubblicati, usando il motore fissato. Un nuovo push annulla la
 build precedente: resta da completare soltanto quella dell’ultima revisione.
 Un minuto di attesa prima dei lavori costosi raggruppa i push ravvicinati.
-Le pull request usano il workflow di regressione; i push al branch usano la
-validazione della release, evitando due esecuzioni degli stessi test.
+Le pull request usano il workflow di regressione e salvano per 30 giorni il tree
+Git verificato. Dopo il merge, la release riusa il risultato se il contenuto è
+identico e l'esecuzione della PR nello stesso repository è conclusa con successo,
+anche se lo SHA cambia per merge, squash o rebase. Se la prova manca, è scaduta o
+il contenuto è diverso, esegue la validazione prima delle build. Le prove native
+Mac e Windows restano obbligatorie.
 I controlli completi della release possono essere riusati in un nuovo tentativo
 solo per il medesimo commit già validato. Download e helper fissati sono in cache;
 le prove native delle due piattaforme restano obbligatorie prima di memorizzare
