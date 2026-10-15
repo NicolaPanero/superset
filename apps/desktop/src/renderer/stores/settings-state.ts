@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 export type SettingsSection =
+	| "fork"
 	| "mobile"
 	| "account"
 	| "organization"

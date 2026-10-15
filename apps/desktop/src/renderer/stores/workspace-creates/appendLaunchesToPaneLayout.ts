@@ -1,4 +1,5 @@
 import { createWorkspaceStore, type WorkspaceState } from "@superset/panes";
+import { isForkSetupTerminal } from "renderer/lib/fork-settings-visibility";
 import type {
 	PaneViewerData,
 	TerminalPaneData,
@@ -24,6 +25,7 @@ interface AppendArgs {
 	existing: WorkspaceState<PaneViewerData> | undefined;
 	terminals: Array<{ terminalId: string; label?: string }>;
 	agents: AgentLaunchResult[];
+	hideSetupTerminals?: boolean;
 }
 
 interface PaneLaunch {
@@ -35,11 +37,14 @@ export function appendLaunchesToPaneLayout({
 	existing,
 	terminals,
 	agents,
+	hideSetupTerminals = false,
 }: AppendArgs): WorkspaceState<PaneViewerData> {
-	const terminalLaunches: PaneLaunch[] = terminals.map((entry) => ({
-		sessionId: entry.terminalId,
-		label: entry.label,
-	}));
+	const terminalLaunches: PaneLaunch[] = terminals
+		.filter((entry) => !hideSetupTerminals || !isForkSetupTerminal(entry))
+		.map((entry) => ({
+			sessionId: entry.terminalId,
+			label: entry.label,
+		}));
 	const agentLaunches: PaneLaunch[] = agents
 		.filter(
 			(entry): entry is Extract<typeof entry, { ok: true }> =>

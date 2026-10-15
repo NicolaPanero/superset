@@ -23,6 +23,7 @@ import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId"
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import {
 	integrationSettingItemId,
@@ -71,6 +72,7 @@ export function IntegrationsSettings({
 	// the whole app, so a second window on another org would render this
 	// window against the other one's organization.
 	const activeOrganizationId = useActiveOrganizationId();
+	const showProFeatures = useForkProFeatures();
 	const searchQuery = useSettingsSearchQuery();
 	const { gateFeature, hasAccess, isReady: planReady } = usePaywall();
 
@@ -230,6 +232,7 @@ export function IntegrationsSettings({
 					if (!isItemVisible(itemId, visibleItems)) return null;
 					const state = providerStates[integration.provider];
 					const gate = PRO_GATED[integration.provider];
+					if (gate && !showProFeatures) return null;
 					const openWeb = () => handleOpenWeb(integration.webPath);
 					return (
 						<IntegrationRow

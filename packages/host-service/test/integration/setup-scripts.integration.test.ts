@@ -131,6 +131,14 @@ describe("setup scripts integration", () => {
 
 		expect(created.terminals).toHaveLength(1);
 		expect(created.terminals[0]?.label).toBe("Workspace Setup");
+		const listed = await scenario.host.trpc.terminal.list.query({
+			workspaceId: created.workspace.id,
+		});
+		expect(
+			listed.sessions.find(
+				(session) => session.terminalId === created.terminals[0]?.terminalId,
+			)?.customTitle,
+		).toBe("Workspace Setup");
 
 		// The command text and its Enter arrive as separate writes (the Enter is
 		// delayed so shell startup can't eat it) — assert both, in order.

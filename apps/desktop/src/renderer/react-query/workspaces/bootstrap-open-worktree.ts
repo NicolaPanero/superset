@@ -17,6 +17,7 @@ interface BootstrapOpenWorktreeOptions {
 	data: OpenWorkspaceData;
 	addTab: (workspaceId: string) => { tabId: string; paneId: string };
 	setTabAutoTitle: (tabId: string, title: string) => void;
+	setTabWorkspaceSetup?: (tabId: string, enabled: boolean) => void;
 	createOrAttach: (input: {
 		paneId: string;
 		tabId: string;
@@ -37,6 +38,7 @@ export async function bootstrapOpenWorktree(
 
 	const { tabId, paneId } = options.addTab(options.data.workspace.id);
 	if (setupCommand) {
+		options.setTabWorkspaceSetup?.(tabId, true);
 		options.setTabAutoTitle(tabId, "Workspace Setup");
 	}
 

@@ -1866,9 +1866,6 @@ msgstr "将 v1 工作区迁入已导入的对应 v2 项目。"
 msgid "Advanced"
 msgstr "高级"
 
-msgid "Advanced CLI options"
-msgstr "高级 CLI 选项"
-
 msgid "Advanced configuration"
 msgstr "高级配置"
 
@@ -6985,11 +6982,11 @@ msgstr "外部浏览器"
 msgid "External editor"
 msgstr "外部编辑器"
 
-msgid "Extra folders"
-msgstr "额外文件夹"
-
 msgid "extra ${used} of ${limit}"
 msgstr "额外用量${used}/${limit}"
+
+msgid "Extra folders"
+msgstr "额外文件夹"
 
 msgid "Extra high"
 msgstr "极高"
@@ -7903,6 +7900,9 @@ msgstr "分叉会话"
 msgid "Fork session…"
 msgstr "分叉会话…"
 
+msgid "Fork Settings"
+msgstr "Fork 设置"
+
 msgid "Fork to new chat"
 msgstr "分叉到新聊天"
 
@@ -8303,6 +8303,12 @@ msgstr "隐藏"
 msgid "Hide checks"
 msgstr "隐藏检查"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "隐藏 CLI 登录账户和 CHAT/CLI 切换按钮。在后台运行 workspace 设置。"
+
+msgid "Hide CLI options"
+msgstr "隐藏 CLI 选项"
+
 msgid "Hide details"
 msgstr "隐藏详情"
 
@@ -8333,11 +8339,17 @@ msgstr "从侧边栏隐藏"
 msgid "Hide log"
 msgstr "隐藏日志"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "在此设备上隐藏付费功能和升级提示。"
+
 msgid "Hide PR review comments"
 msgstr "隐藏PR审查评论"
 
 msgid "Hide Preview"
 msgstr "隐藏预览"
+
+msgid "Hide Pro features"
+msgstr "隐藏 Pro 功能"
 
 msgid "Hide pull request list"
 msgstr "隐藏拉取请求列表"
@@ -9891,6 +9903,9 @@ msgstr "品红"
 msgid "Main"
 msgstr "主进程"
 
+msgid "Main repository"
+msgstr "主仓库"
+
 msgid "Make all panes equal size"
 msgstr "使所有窗格大小相同"
 
@@ -9902,9 +9917,6 @@ msgstr "设为默认——新终端和智能体将使用此账户启动。"
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "请确认设备未休眠、已联网且正在运行 Superset。"
-
-msgid "Main repository"
-msgstr "主仓库"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "把chip样式设为TooltipContent的默认样式"
@@ -10896,6 +10908,9 @@ msgstr "还没有环境。创建一个，以便基于它启动云端工作区。
 msgid "No extended thinking"
 msgstr "不使用扩展思考"
 
+msgid "No extra folders."
+msgstr "没有额外文件夹。"
+
 msgid "No failed runs."
 msgstr "没有失败的运行。"
 
@@ -10907,9 +10922,6 @@ msgstr "未找到文件"
 
 msgid "No files match the accepted types."
 msgstr "没有文件符合允许的类型。"
-
-msgid "No extra folders."
-msgstr "没有额外文件夹。"
 
 msgid "No files match your search"
 msgstr "没有与搜索匹配的文件"
@@ -12224,6 +12236,9 @@ msgstr "其他应用"
 msgid "Other devices"
 msgstr "其他设备"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "智能体可以在其中工作的其他文件夹，其更改会显示在此项目的更改旁边。可以是 git 仓库，也可以是普通文件夹。"
+
 msgid "Other Hosts"
 msgstr "其他主机"
 
@@ -12235,9 +12250,6 @@ msgstr "其他团队成员"
 
 msgid "Other ways to reach us"
 msgstr "其他联系方式"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "智能体可以在其中工作的其他文件夹，其更改会显示在此项目的更改旁边。可以是 git 仓库，也可以是普通文件夹。"
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "我们 1150 万美元的种子轮由 Union Square Ventures 领投，Y Combinator、Paul Graham 以及我们敬佩的创始人参投。"
@@ -13633,6 +13645,9 @@ msgstr "移除{label}？"
 msgid "Remove attachment"
 msgstr "移除附件"
 
+msgid "Remove folder"
+msgstr "移除文件夹"
+
 msgid "Remove from favorites"
 msgstr "从收藏中移除"
 
@@ -13644,9 +13659,6 @@ msgstr "从侧边栏移除"
 
 msgid "Remove from Sidebar"
 msgstr "从侧边栏移除"
-
-msgid "Remove folder"
-msgstr "移除文件夹"
 
 msgid "Remove icon"
 msgstr "移除图标"
@@ -15367,9 +15379,6 @@ msgstr "显示所有行"
 
 msgid "Show checks"
 msgstr "显示检查"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "在此设备上显示 CLI 登录账户和 CHAT/CLI 切换按钮。"
 
 msgid "Show closed"
 msgstr "显示已关闭"
@@ -17465,6 +17474,12 @@ msgstr "该文件"
 msgid "This file is empty or was deleted."
 msgstr "这个文件为空或已被删除。"
 
+msgid "This folder is not a git repository."
+msgstr "此文件夹不是 git 仓库。"
+
+msgid "This folder no longer exists on disk."
+msgstr "此文件夹在磁盘上已不存在。"
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "这个GitHub安装已连接到另一个Superset组织。请先在那里断开连接，或卸载Superset GitHub App，然后重试。"
 
@@ -17473,12 +17488,6 @@ msgstr "此主机"
 
 msgid "This host has not reported a version yet."
 msgstr "此主机尚未报告版本。"
-
-msgid "This folder is not a git repository."
-msgstr "此文件夹不是 git 仓库。"
-
-msgid "This folder no longer exists on disk."
-msgstr "此文件夹在磁盘上已不存在。"
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "此主机落后于你正在使用的应用。工作区仍可打开，但较新的功能可能无法使用。"
@@ -19267,6 +19276,9 @@ msgstr "worktree已打开"
 msgid "Worktree out of sync"
 msgstr "worktree不同步"
 
+msgid "Worktree per workspace"
+msgstr "每个工作区一个 worktree"
+
 msgid "Worktrees"
 msgstr "Worktree"
 
@@ -19275,9 +19287,6 @@ msgstr "worktree 会从磁盘中删除；位于项目检出上的工作区仅会
 
 msgid "Would you like to reassign it?"
 msgstr "要重新分配吗？"
-
-msgid "Worktree per workspace"
-msgstr "每个工作区一个 worktree"
 
 msgid "Wrap lines"
 msgstr "自动换行"

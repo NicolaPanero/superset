@@ -385,6 +385,14 @@ export const useTabsStore = create<TabsStore>()(
 					}));
 				},
 
+				setTabWorkspaceSetup: (tabId, enabled) => {
+					set((state) => ({
+						tabs: state.tabs.map((tab) =>
+							tab.id === tabId ? { ...tab, isWorkspaceSetup: enabled } : tab,
+						),
+					}));
+				},
+
 				setTabAutoTitle: (tabId, title) => {
 					set((state) => {
 						const tab = state.tabs.find((t) => t.id === tabId);

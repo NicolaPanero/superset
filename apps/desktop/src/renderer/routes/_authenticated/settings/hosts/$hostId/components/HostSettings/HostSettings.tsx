@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { toast } from "@superset/ui/sonner";
 import { useMemo } from "react";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { useHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useKnownHosts } from "renderer/hooks/known-hosts/useKnownHosts";
 import { authClient } from "renderer/lib/auth-client";
@@ -13,6 +14,7 @@ import {
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { ExposeViaRelaySection } from "renderer/routes/_authenticated/settings/components/ExposeViaRelaySection";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import type { CandidateRow } from "./components/AddMemberDropdown";
 import { AddMemberDropdown } from "./components/AddMemberDropdown";
@@ -40,6 +42,7 @@ interface HostSettingsProps {
 
 export function HostSettings({ hostId }: HostSettingsProps) {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const searchQuery = useSettingsSearchQuery();
 	const { data: session } = authClient.useSession();
 	const currentUserId = session?.user?.id ?? null;
@@ -196,7 +199,7 @@ export function HostSettings({ hostId }: HostSettingsProps) {
 					canEdit={isOwner}
 				/>
 
-				{hostId === machineId && (
+				{showProFeatures && hostId === machineId && (
 					<section className="space-y-3">
 						<h3 className="text-sm font-medium">
 							<HighlightText
@@ -210,35 +213,37 @@ export function HostSettings({ hostId }: HostSettingsProps) {
 					</section>
 				)}
 
-				<section className="space-y-3">
-					<div className="flex items-end justify-between gap-4">
-						<div>
-							<h3 className="text-sm font-medium">
-								<HighlightText
-									text={t({
-										message: "Members",
-									})}
-									query={searchQuery}
-								/>
-							</h3>
-							{!isOwner && (
-								<p className="text-sm text-muted-foreground mt-0.5">
-									<Trans>Only owners can change membership.</Trans>
-								</p>
+				<ForkProFeature>
+					<section className="space-y-3">
+						<div className="flex items-end justify-between gap-4">
+							<div>
+								<h3 className="text-sm font-medium">
+									<HighlightText
+										text={t({
+											message: "Members",
+										})}
+										query={searchQuery}
+									/>
+								</h3>
+								{!isOwner && (
+									<p className="text-sm text-muted-foreground mt-0.5">
+										<Trans>Only owners can change membership.</Trans>
+									</p>
+								)}
+							</div>
+							{isOwner && (
+								<AddMemberDropdown candidates={candidates} onPick={handleAdd} />
 							)}
 						</div>
-						{isOwner && (
-							<AddMemberDropdown candidates={candidates} onPick={handleAdd} />
-						)}
-					</div>
 
-					<MembersTable
-						members={members}
-						isOwner={isOwner}
-						onSetRole={handleSetRole}
-						onRemove={handleRemove}
-					/>
-				</section>
+						<MembersTable
+							members={members}
+							isOwner={isOwner}
+							onSetRole={handleSetRole}
+							onRemove={handleRemove}
+						/>
+					</section>
+				</ForkProFeature>
 
 				{isOwner || isOrgOwner ? (
 					<DeleteHostSection

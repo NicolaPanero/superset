@@ -9,6 +9,7 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { HiOutlinePlus, HiOutlineUserPlus } from "react-icons/hi2";
 import { useInviteMember } from "renderer/routes/_authenticated/hooks/useInviteMember";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 export interface CandidateRow {
 	userId: string;
@@ -26,6 +27,9 @@ export function AddMemberDropdown({
 	onPick,
 }: AddMemberDropdownProps) {
 	const inviteMember = useInviteMember();
+	const showProFeatures = useForkProFeatures();
+
+	if (!showProFeatures) return null;
 
 	if (candidates.length === 0 && !inviteMember) {
 		return (

@@ -1083,10 +1083,10 @@ export function usePaneRegistry({
 			},
 		}),
 		[
-			workspaceKeyForPath,
 			store,
 			linkedStores,
 			workspaceId,
+			workspaceKeyForPath,
 			agentSurface,
 			parkChat,
 			closeChatWithUndo,

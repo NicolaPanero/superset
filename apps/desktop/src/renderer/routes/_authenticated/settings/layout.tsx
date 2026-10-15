@@ -11,6 +11,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { CheckResourcesHotkeyMount } from "renderer/commandPalette";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { useHistoryNavigationShortcuts } from "renderer/routes/_authenticated/_dashboard/hooks/useHistoryNavigationShortcuts";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import {
 	type SettingsSection,
 	useSetSettingsSearchQuery,
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/_authenticated/settings")({
 });
 
 const SECTION_ORDER: SettingsSection[] = [
+	"fork",
 	"account",
 	"connections",
 	"appearance",
@@ -65,6 +67,7 @@ const SECTION_ORDER: SettingsSection[] = [
  * hand-maintained lookups that can drift out of sync with each other.
  */
 const SECTION_PATHS: Partial<Record<SettingsSection, string>> = {
+	fork: "/settings/fork",
 	mobile: "/settings/mobile",
 	account: "/settings/account",
 	connections: "/settings/connections",
@@ -114,6 +117,7 @@ const NON_ROUTABLE_ESCAPE_PARENTS = new Set([
 
 function SettingsLayout() {
 	const isV2CloudEnabled = useIsV2CloudEnabled();
+	const showProFeatures = useForkProFeatures();
 	const mobileEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_LAUNCH) === true;
 	const cloudWorkspacesEnabled =
@@ -138,6 +142,7 @@ function SettingsLayout() {
 						isV2CloudEnabled,
 						cloudWorkspacesEnabled,
 						mobileEnabled,
+						!showProFeatures,
 					)
 				: {},
 		[
@@ -146,6 +151,7 @@ function SettingsLayout() {
 			isV2CloudEnabled,
 			cloudWorkspacesEnabled,
 			mobileEnabled,
+			showProFeatures,
 		],
 	);
 	const totalMatches = Object.values(matchCounts).reduce(

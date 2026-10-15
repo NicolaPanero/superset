@@ -1866,9 +1866,6 @@ msgstr "Rattachez les espaces de travail v1 à leur projet v2 importé."
 msgid "Advanced"
 msgstr "Avancé"
 
-msgid "Advanced CLI options"
-msgstr "Options CLI avancées"
-
 msgid "Advanced configuration"
 msgstr "Configuration avancée"
 
@@ -6985,11 +6982,11 @@ msgstr "Navigateur externe"
 msgid "External editor"
 msgstr "Éditeur externe"
 
-msgid "Extra folders"
-msgstr "Dossiers supplémentaires"
-
 msgid "extra ${used} of ${limit}"
 msgstr "supplément de {used} $ sur {limit} $"
+
+msgid "Extra folders"
+msgstr "Dossiers supplémentaires"
 
 msgid "Extra high"
 msgstr "Très élevé"
@@ -7903,6 +7900,9 @@ msgstr "Forker la session"
 msgid "Fork session…"
 msgstr "Forker la session…"
 
+msgid "Fork Settings"
+msgstr "Paramètres du fork"
+
 msgid "Fork to new chat"
 msgstr "Dupliquer dans un nouveau chat"
 
@@ -8303,6 +8303,12 @@ msgstr "Masquer"
 msgid "Hide checks"
 msgstr "Masquer les vérifications"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Masquez les comptes de connexion CLI et le sélecteur CHAT/CLI. Exécutez la configuration du workspace en arrière-plan."
+
+msgid "Hide CLI options"
+msgstr "Masquer les options CLI"
+
 msgid "Hide details"
 msgstr "Masquer les détails"
 
@@ -8333,11 +8339,17 @@ msgstr "Masquer de la barre latérale"
 msgid "Hide log"
 msgstr "Masquer le journal"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Masquez les fonctionnalités payantes et les invitations à changer de forfait sur cet appareil."
+
 msgid "Hide PR review comments"
 msgstr "Masquer les commentaires de revue de la pull request"
 
 msgid "Hide Preview"
 msgstr "Masquer l'aperçu"
+
+msgid "Hide Pro features"
+msgstr "Masquer les fonctionnalités Pro"
 
 msgid "Hide pull request list"
 msgstr "Masquer la liste des pull requests"
@@ -9891,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Principal"
 
+msgid "Main repository"
+msgstr "Dépôt principal"
+
 msgid "Make all panes equal size"
 msgstr "Donner la même taille à tous les volets"
 
@@ -9902,9 +9917,6 @@ msgstr "Définir par défaut — lancer les nouveaux terminaux et agents sur ce 
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Assurez-vous que l’appareil est actif, en ligne et que Superset y est lancé."
-
-msgid "Main repository"
-msgstr "Dépôt principal"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Faire du style chip la valeur par défaut de TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Aucun environnement pour l'instant. Créez-en un pour démarrer un espac
 msgid "No extended thinking"
 msgstr "Pas de réflexion étendue"
 
+msgid "No extra folders."
+msgstr "Aucun dossier supplémentaire."
+
 msgid "No failed runs."
 msgstr "Aucune exécution en échec."
 
@@ -10907,9 +10922,6 @@ msgstr "Aucun fichier trouvé"
 
 msgid "No files match the accepted types."
 msgstr "Aucun fichier ne correspond aux types acceptés."
-
-msgid "No extra folders."
-msgstr "Aucun dossier supplémentaire."
 
 msgid "No files match your search"
 msgstr "Aucun fichier ne correspond à votre recherche"
@@ -12224,6 +12236,9 @@ msgstr "Autres applications"
 msgid "Other devices"
 msgstr "Autres appareils"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Autres dossiers dans lesquels les agents peuvent travailler et dont les modifications s'affichent à côté de celles de ce projet. Ce peuvent être des dépôts git ou de simples dossiers."
+
 msgid "Other Hosts"
 msgstr "Autres hôtes"
 
@@ -12235,9 +12250,6 @@ msgstr "Autres membres de l'équipe"
 
 msgid "Other ways to reach us"
 msgstr "Autres façons de nous joindre"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Autres dossiers dans lesquels les agents peuvent travailler et dont les modifications s'affichent à côté de celles de ce projet. Ce peuvent être des dépôts git ou de simples dossiers."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Notre tour d'amorçage de 11,5 M$ est mené par Union Square Ventures, avec Y Combinator, Paul Graham et des fondateurs que nous admirons."
@@ -13633,6 +13645,9 @@ msgstr "Retirer {label} ?"
 msgid "Remove attachment"
 msgstr "Retirer la pièce jointe"
 
+msgid "Remove folder"
+msgstr "Retirer le dossier"
+
 msgid "Remove from favorites"
 msgstr "Retirer des favoris"
 
@@ -13644,9 +13659,6 @@ msgstr "Retirer de la barre latérale"
 
 msgid "Remove from Sidebar"
 msgstr "Retirer de la barre latérale"
-
-msgid "Remove folder"
-msgstr "Retirer le dossier"
 
 msgid "Remove icon"
 msgstr "Retirer l'icône"
@@ -15367,9 +15379,6 @@ msgstr "Afficher toutes les lignes"
 
 msgid "Show checks"
 msgstr "Afficher les vérifications"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Afficher les comptes de connexion CLI et le sélecteur CHAT/CLI sur cet appareil."
 
 msgid "Show closed"
 msgstr "Afficher les fermées"
@@ -17465,6 +17474,12 @@ msgstr "ce fichier"
 msgid "This file is empty or was deleted."
 msgstr "Ce fichier est vide ou a été supprimé."
 
+msgid "This folder is not a git repository."
+msgstr "Ce dossier n'est pas un dépôt git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Ce dossier n'existe plus sur le disque."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Cette installation GitHub est déjà connectée à une autre organisation Superset. Déconnectez-la là-bas, ou désinstallez la GitHub App Superset, puis réessayez."
 
@@ -17473,12 +17488,6 @@ msgstr "Cet hôte"
 
 msgid "This host has not reported a version yet."
 msgstr "Cet hôte n'a pas encore signalé de version."
-
-msgid "This folder is not a git repository."
-msgstr "Ce dossier n'est pas un dépôt git."
-
-msgid "This folder no longer exists on disk."
-msgstr "Ce dossier n'existe plus sur le disque."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Cet hôte est en retard sur l'application que vous utilisez. Les espaces de travail s'ouvrent toujours, mais les fonctionnalités récentes peuvent échouer."
@@ -19267,6 +19276,9 @@ msgstr "Worktree ouvert"
 msgid "Worktree out of sync"
 msgstr "Worktree désynchronisé"
 
+msgid "Worktree per workspace"
+msgstr "Worktree par workspace"
+
 msgid "Worktrees"
 msgstr "Worktrees"
 
@@ -19275,9 +19287,6 @@ msgstr "Les worktrees sont supprimés du disque ; les espaces de travail sur le 
 
 msgid "Would you like to reassign it?"
 msgstr "Souhaitez-vous le réattribuer ?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree par workspace"
 
 msgid "Wrap lines"
 msgstr "Renvoyer à la ligne"

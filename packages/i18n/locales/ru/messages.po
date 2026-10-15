@@ -1866,9 +1866,6 @@ msgstr "Перенесите рабочие пространства v1 в со�
 msgid "Advanced"
 msgstr "Дополнительно"
 
-msgid "Advanced CLI options"
-msgstr "Расширенные параметры CLI"
-
 msgid "Advanced configuration"
 msgstr "Расширенная настройка"
 
@@ -6985,11 +6982,11 @@ msgstr "Внешний браузер"
 msgid "External editor"
 msgstr "Внешний редактор"
 
-msgid "Extra folders"
-msgstr "Дополнительные папки"
-
 msgid "extra ${used} of ${limit}"
 msgstr "сверх лимита ${used} из ${limit}"
+
+msgid "Extra folders"
+msgstr "Дополнительные папки"
 
 msgid "Extra high"
 msgstr "Очень высокий"
@@ -7903,6 +7900,9 @@ msgstr "Форкнуть сессию"
 msgid "Fork session…"
 msgstr "Форкнуть сессию…"
 
+msgid "Fork Settings"
+msgstr "Настройки форка"
+
 msgid "Fork to new chat"
 msgstr "Ответвить в новый чат"
 
@@ -8303,6 +8303,12 @@ msgstr "Скрыть"
 msgid "Hide checks"
 msgstr "Скрыть проверки"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Скройте учётные записи CLI и переключатель CHAT/CLI. Выполняйте настройку workspace в фоновом режиме."
+
+msgid "Hide CLI options"
+msgstr "Скрыть параметры CLI"
+
 msgid "Hide details"
 msgstr "Скрыть детали"
 
@@ -8333,11 +8339,17 @@ msgstr "Скрыть с боковой панели"
 msgid "Hide log"
 msgstr "Скрыть лог"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Скройте платные функции и предложения перейти на другой тариф на этом устройстве."
+
 msgid "Hide PR review comments"
 msgstr "Скрыть комментарии ревью PR"
 
 msgid "Hide Preview"
 msgstr "Скрыть предпросмотр"
+
+msgid "Hide Pro features"
+msgstr "Скрыть функции Pro"
 
 msgid "Hide pull request list"
 msgstr "Скрыть список пул-реквестов"
@@ -9891,6 +9903,9 @@ msgstr "Пурпурный"
 msgid "Main"
 msgstr "Основной"
 
+msgid "Main repository"
+msgstr "Основной репозиторий"
+
 msgid "Make all panes equal size"
 msgstr "Сделать все панели одинакового размера"
 
@@ -9902,9 +9917,6 @@ msgstr "Сделать основным — запускать новые тер
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Убедитесь, что устройство не в спящем режиме, подключено к интернету и на нём запущен Superset."
-
-msgid "Main repository"
-msgstr "Основной репозиторий"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Сделать стиль чипа значением по умолчанию для TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Окружений пока нет. Создайте окружение,
 msgid "No extended thinking"
 msgstr "Без расширенного мышления"
 
+msgid "No extra folders."
+msgstr "Нет дополнительных папок."
+
 msgid "No failed runs."
 msgstr "Неудачных запусков нет."
 
@@ -10907,9 +10922,6 @@ msgstr "Файлы не найдены"
 
 msgid "No files match the accepted types."
 msgstr "Ни один файл не подходит по типу."
-
-msgid "No extra folders."
-msgstr "Нет дополнительных папок."
 
 msgid "No files match your search"
 msgstr "Нет файлов, соответствующих поиску"
@@ -12224,6 +12236,9 @@ msgstr "Другие приложения"
 msgid "Other devices"
 msgstr "Другие устройства"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Другие папки, в которых могут работать агенты и изменения в которых показываются рядом с изменениями этого проекта. Это могут быть git-репозитории или обычные папки."
+
 msgid "Other Hosts"
 msgstr "Другие хосты"
 
@@ -12235,9 +12250,6 @@ msgstr "Другие участники команды"
 
 msgid "Other ways to reach us"
 msgstr "Другие способы связаться"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Другие папки, в которых могут работать агенты и изменения в которых показываются рядом с изменениями этого проекта. Это могут быть git-репозитории или обычные папки."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Наш посевной раунд на 11,5 млн $ возглавляет Union Square Ventures, вместе с Y Combinator, Полом Грэмом и основателями, которыми мы восхищаемся."
@@ -13633,6 +13645,9 @@ msgstr "Удалить {label}?"
 msgid "Remove attachment"
 msgstr "Удалить вложение"
 
+msgid "Remove folder"
+msgstr "Удалить папку"
+
 msgid "Remove from favorites"
 msgstr "Удалить из избранного"
 
@@ -13644,9 +13659,6 @@ msgstr "Убрать из боковой панели"
 
 msgid "Remove from Sidebar"
 msgstr "Убрать из боковой панели"
-
-msgid "Remove folder"
-msgstr "Удалить папку"
 
 msgid "Remove icon"
 msgstr "Удалить иконку"
@@ -15367,9 +15379,6 @@ msgstr "Показать все строки"
 
 msgid "Show checks"
 msgstr "Показать проверки"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Показывать аккаунты входа CLI и переключатель CHAT/CLI на этом устройстве."
 
 msgid "Show closed"
 msgstr "Показать закрытые"
@@ -17465,6 +17474,12 @@ msgstr "этот файл"
 msgid "This file is empty or was deleted."
 msgstr "Файл пуст или удалён."
 
+msgid "This folder is not a git repository."
+msgstr "Эта папка не является git-репозиторием."
+
+msgid "This folder no longer exists on disk."
+msgstr "Эта папка больше не существует на диске."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Эта установка GitHub уже подключена к другой организации Superset. Отключите её там или удалите GitHub App Superset, затем повторите."
 
@@ -17473,12 +17488,6 @@ msgstr "Этот хост"
 
 msgid "This host has not reported a version yet."
 msgstr "Этот хост ещё не сообщил версию."
-
-msgid "This folder is not a git repository."
-msgstr "Эта папка не является git-репозиторием."
-
-msgid "This folder no longer exists on disk."
-msgstr "Эта папка больше не существует на диске."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Этот хост отстаёт от используемого приложения. Рабочие пространства открываются, но новые функции могут не работать."
@@ -19267,6 +19276,9 @@ msgstr "Worktree открыт"
 msgid "Worktree out of sync"
 msgstr "Worktree рассинхронизирован"
 
+msgid "Worktree per workspace"
+msgstr "Worktree для каждого workspace"
+
 msgid "Worktrees"
 msgstr "Worktree"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktree удаляются с диска; рабочие области
 
 msgid "Would you like to reassign it?"
 msgstr "Переназначить?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree для каждого workspace"
 
 msgid "Wrap lines"
 msgstr "Переносить строки"

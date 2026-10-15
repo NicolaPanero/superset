@@ -23,6 +23,7 @@ import { useSignOut } from "renderer/hooks/useSignOut";
 import { authClient, getAuthToken } from "renderer/lib/auth-client";
 import { dragDropManager } from "renderer/lib/dnd";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { isForkProRoute } from "renderer/lib/fork-settings-visibility";
 import { terminalRuntimeRegistry } from "renderer/lib/terminal/terminal-runtime-registry";
 import { showWorkspaceAutoNameWarningToast } from "renderer/lib/workspaces/showWorkspaceAutoNameWarningToast";
 import { InitGitDialog } from "renderer/react-query/projects/InitGitDialog";
@@ -46,7 +47,12 @@ import { V1ImportModal } from "renderer/routes/_authenticated/components/V1Impor
 import { useForwardedHotkeys } from "renderer/routes/_authenticated/hooks/useForwardedHotkeys";
 import { useZoomHotkeys } from "renderer/routes/_authenticated/hooks/useZoomHotkeys";
 import { WorkspaceInitEffects } from "renderer/screens/main/components/WorkspaceInitEffects";
+import {
+	useForkCliOptionsStore,
+	useForkProFeatures,
+} from "renderer/stores/fork-cli-options";
 import { useSettingsStore } from "renderer/stores/settings-state";
+import { syncPersistedStoreAcrossWindows } from "renderer/stores/syncPersistedStoreAcrossWindows";
 import { useTabsStore } from "renderer/stores/tabs/store";
 import { useAgentHookListener } from "renderer/stores/tabs/useAgentHookListener";
 import { setPaneWorkspaceRunState } from "renderer/stores/tabs/workspace-run";
@@ -105,6 +111,7 @@ function AuthenticatedLayout() {
 	const utils = electronTrpc.useUtils();
 	const shownWorkspaceInitWarningsRef = useRef(new Set<string>());
 	const isV2CloudEnabled = useIsV2CloudEnabled();
+	const showProFeatures = useForkProFeatures();
 
 	const isSignedIn = env.SKIP_ENV_VALIDATION || !!session?.user;
 	const activeOrganizationId = env.SKIP_ENV_VALIDATION
@@ -121,6 +128,7 @@ function AuthenticatedLayout() {
 	const signOut = useSignOut();
 	const [isSigningOut, setIsSigningOut] = useState(false);
 
+	useEffect(() => syncPersistedStoreAcrossWindows(useForkCliOptionsStore), []);
 	useAgentHookListener();
 	useSettingsExternalChangeListener();
 
@@ -300,6 +308,21 @@ function AuthenticatedLayout() {
 		!renderedPathname.startsWith("/onboarding")
 	) {
 		return onboardingRedirect;
+	}
+
+	if (!showProFeatures && isForkProRoute(renderedPathname)) {
+		return (
+			<Redirect
+				to={
+					renderedPathname.startsWith("/settings/")
+						? "/settings/fork"
+						: isV2CloudEnabled
+							? "/new-workspace"
+							: "/workspace"
+				}
+				replace
+			/>
+		);
 	}
 
 	return (

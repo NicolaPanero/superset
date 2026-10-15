@@ -22,6 +22,7 @@ import {
 	HiOutlineServer,
 } from "react-icons/hi2";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { FormPickerTrigger } from "../../PromptGroup/components/FormPickerTrigger";
 import { useWorkspaceHostOptions } from "./hooks/useWorkspaceHostOptions";
 
@@ -83,17 +84,26 @@ export function DevicePicker({
 }: DevicePickerProps) {
 	const { t } = useLingui();
 	const { machineId } = useLocalHostService();
-	const cloudEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES);
-	const { currentDeviceName, localHostIsOnline, otherHosts } =
-		useWorkspaceHostOptions();
+	const showProFeatures = useForkProFeatures();
+	const cloudFlag = useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES);
+	const cloudEnabled = showProFeatures ? cloudFlag : false;
+	const {
+		currentDeviceName,
+		localHostIsOnline,
+		otherHosts: knownOtherHosts,
+	} = useWorkspaceHostOptions();
+	const otherHosts = showProFeatures ? knownOtherHosts : [];
 	// A remembered cloud target outlives the flag that offers it, and the menu
 	// then has no cloud entry to point at what the trigger claims is selected.
 	// Undefined means the flags haven't resolved, which is not a "no".
 	useEffect(() => {
-		if (hostId === CLOUD_HOST_ID && cloudEnabled === false) {
+		if (
+			(hostId === CLOUD_HOST_ID && cloudEnabled === false) ||
+			(!showProFeatures && hostId !== null && hostId !== machineId)
+		) {
 			onSelectHostId(machineId);
 		}
-	}, [cloudEnabled, hostId, machineId, onSelectHostId]);
+	}, [cloudEnabled, hostId, machineId, onSelectHostId, showProFeatures]);
 	const isLocal = hostId === null || hostId === machineId;
 	const selectedLabel =
 		hostId === CLOUD_HOST_ID

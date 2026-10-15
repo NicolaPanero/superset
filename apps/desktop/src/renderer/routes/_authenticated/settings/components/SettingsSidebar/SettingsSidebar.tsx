@@ -16,6 +16,7 @@ import {
 	WINDOW_CONTROLS_ROW_HEIGHT,
 	WINDOW_CONTROLS_ROW_TOP,
 } from "renderer/routes/_authenticated/_dashboard/components/WindowChrome";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import {
 	useSetSettingsSearchQuery,
 	useSettingsOriginRoute,
@@ -31,6 +32,7 @@ export function SettingsSidebar() {
 	const setSearchQuery = useSetSettingsSearchQuery();
 	const originRoute = useSettingsOriginRoute();
 	const isV2CloudEnabled = useIsV2CloudEnabled();
+	const showProFeatures = useForkProFeatures();
 	const { data: platform } = electronTrpc.window.getPlatform.useQuery();
 	const isMac = platform === undefined || platform === "darwin";
 	const mobileEnabled =
@@ -44,6 +46,7 @@ export function SettingsSidebar() {
 				isV2CloudEnabled,
 				cloudWorkspacesEnabled,
 				mobileEnabled,
+				!showProFeatures,
 			)
 		: null;
 

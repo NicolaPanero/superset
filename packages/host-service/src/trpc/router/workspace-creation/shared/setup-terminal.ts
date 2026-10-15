@@ -4,7 +4,10 @@ import {
 	resolveScript,
 	shellSingleQuote,
 } from "../../../../runtime/setup/config";
-import { createTerminalSessionInternal } from "../../../../terminal/terminal";
+import {
+	createTerminalSessionInternal,
+	renameTerminalSession,
+} from "../../../../terminal/terminal";
 import type { HostServiceContext } from "../../../../types";
 import type { TerminalDescriptor } from "./types";
 
@@ -86,6 +89,14 @@ export async function startSetupTerminalIfPresent(
 			warning: `Failed to start setup terminal: ${result.error}`,
 			chained: false,
 		};
+	}
+
+	if (!args.chainCommand) {
+		renameTerminalSession({
+			terminalId,
+			customTitle: "Workspace Setup",
+			db: args.ctx.db,
+		});
 	}
 
 	return {

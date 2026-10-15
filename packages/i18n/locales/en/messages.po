@@ -1866,9 +1866,6 @@ msgstr "Adopt v1 workspaces under their imported v2 project."
 msgid "Advanced"
 msgstr "Advanced"
 
-msgid "Advanced CLI options"
-msgstr "Advanced CLI options"
-
 msgid "Advanced configuration"
 msgstr "Advanced configuration"
 
@@ -6985,11 +6982,11 @@ msgstr "External Browser"
 msgid "External editor"
 msgstr "External editor"
 
-msgid "Extra folders"
-msgstr "Extra folders"
-
 msgid "extra ${used} of ${limit}"
 msgstr "extra ${used} of ${limit}"
+
+msgid "Extra folders"
+msgstr "Extra folders"
 
 msgid "Extra high"
 msgstr "Extra high"
@@ -7903,6 +7900,9 @@ msgstr "Fork session"
 msgid "Fork session…"
 msgstr "Fork session…"
 
+msgid "Fork Settings"
+msgstr "Fork Settings"
+
 msgid "Fork to new chat"
 msgstr "Fork to new chat"
 
@@ -8303,6 +8303,12 @@ msgstr "Hide"
 msgid "Hide checks"
 msgstr "Hide checks"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+
+msgid "Hide CLI options"
+msgstr "Hide CLI options"
+
 msgid "Hide details"
 msgstr "Hide details"
 
@@ -8333,11 +8339,17 @@ msgstr "Hide from Sidebar"
 msgid "Hide log"
 msgstr "Hide log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Hide paid features and upgrade prompts on this device."
+
 msgid "Hide PR review comments"
 msgstr "Hide PR review comments"
 
 msgid "Hide Preview"
 msgstr "Hide Preview"
+
+msgid "Hide Pro features"
+msgstr "Hide Pro features"
 
 msgid "Hide pull request list"
 msgstr "Hide pull request list"
@@ -9891,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Main repository"
+
 msgid "Make all panes equal size"
 msgstr "Make all panes equal size"
 
@@ -9902,9 +9917,6 @@ msgstr "Make default — launch new terminals and agents on this account."
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Make sure the device is awake, online, and running Superset."
-
-msgid "Main repository"
-msgstr "Main repository"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Make the chip style the TooltipContent default"
@@ -10896,6 +10908,9 @@ msgstr "No environments yet."
 msgid "No extended thinking"
 msgstr "No extended thinking"
 
+msgid "No extra folders."
+msgstr "No extra folders."
+
 msgid "No failed runs."
 msgstr "No failed runs."
 
@@ -10907,9 +10922,6 @@ msgstr "No files found"
 
 msgid "No files match the accepted types."
 msgstr "No files match the accepted types."
-
-msgid "No extra folders."
-msgstr "No extra folders."
 
 msgid "No files match your search"
 msgstr "No files match your search"
@@ -12224,6 +12236,9 @@ msgstr "Other apps"
 msgid "Other devices"
 msgstr "Other devices"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+
 msgid "Other Hosts"
 msgstr "Other Hosts"
 
@@ -12235,9 +12250,6 @@ msgstr "Other Team Members"
 
 msgid "Other ways to reach us"
 msgstr "Other ways to reach us"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
@@ -13633,6 +13645,9 @@ msgstr "Remove {label}?"
 msgid "Remove attachment"
 msgstr "Remove attachment"
 
+msgid "Remove folder"
+msgstr "Remove folder"
+
 msgid "Remove from favorites"
 msgstr "Remove from favorites"
 
@@ -13644,9 +13659,6 @@ msgstr "Remove from sidebar"
 
 msgid "Remove from Sidebar"
 msgstr "Remove from Sidebar"
-
-msgid "Remove folder"
-msgstr "Remove folder"
 
 msgid "Remove icon"
 msgstr "Remove icon"
@@ -15367,9 +15379,6 @@ msgstr "Show all lines"
 
 msgid "Show checks"
 msgstr "Show checks"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Show CLI login accounts and the CHAT/CLI switch on this device."
 
 msgid "Show closed"
 msgstr "Show closed"
@@ -17465,6 +17474,12 @@ msgstr "this file"
 msgid "This file is empty or was deleted."
 msgstr "This file is empty or was deleted."
 
+msgid "This folder is not a git repository."
+msgstr "This folder is not a git repository."
+
+msgid "This folder no longer exists on disk."
+msgstr "This folder no longer exists on disk."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 
@@ -17473,12 +17488,6 @@ msgstr "This host"
 
 msgid "This host has not reported a version yet."
 msgstr "This host has not reported a version yet."
-
-msgid "This folder is not a git repository."
-msgstr "This folder is not a git repository."
-
-msgid "This folder no longer exists on disk."
-msgstr "This folder no longer exists on disk."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
@@ -19267,6 +19276,9 @@ msgstr "Worktree opened"
 msgid "Worktree out of sync"
 msgstr "Worktree out of sync"
 
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
+
 msgid "Worktrees"
 msgstr "Worktrees"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktrees are removed from disk; workspaces on the project's checkout on
 
 msgid "Would you like to reassign it?"
 msgstr "Would you like to reassign it?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree per workspace"
 
 msgid "Wrap lines"
 msgstr "Wrap lines"

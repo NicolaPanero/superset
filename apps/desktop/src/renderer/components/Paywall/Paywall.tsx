@@ -5,6 +5,10 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { track } from "renderer/lib/analytics";
+import {
+	useForkCliOptionsStore,
+	useForkProFeatures,
+} from "renderer/stores/fork-cli-options";
 import type { GatedFeature } from "./constants";
 import { FEATURE_ID_MAP } from "./constants";
 
@@ -17,6 +21,7 @@ let showPaywallFn: ((options: PaywallOptions) => void) | null = null;
 
 export const Paywall = () => {
 	const navigate = useNavigate();
+	const showProFeatures = useForkProFeatures();
 	const [paywallOptions, setPaywallOptions] = useState<PaywallOptions | null>(
 		null,
 	);
@@ -101,7 +106,7 @@ export const Paywall = () => {
 	const selectedFeature =
 		PRO_FEATURES.find((f) => f.id === selectedFeatureId) || PRO_FEATURES[0];
 
-	if (!selectedFeature) {
+	if (!showProFeatures || !selectedFeature) {
 		return null;
 	}
 
@@ -136,6 +141,7 @@ export const paywall = (
 	feature: GatedFeature,
 	context?: Record<string, unknown>,
 ) => {
+	if (useForkCliOptionsStore.getState().hideProFeatures) return;
 	if (!showPaywallFn) {
 		console.error(
 			"[paywall] Paywall not mounted. Make sure to render <Paywall /> in your app",

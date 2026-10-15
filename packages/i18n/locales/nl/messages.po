@@ -1866,9 +1866,6 @@ msgstr "Koppel v1-werkruimten aan hun geïmporteerde v2-project."
 msgid "Advanced"
 msgstr "Geavanceerd"
 
-msgid "Advanced CLI options"
-msgstr "Geavanceerde CLI-opties"
-
 msgid "Advanced configuration"
 msgstr "Geavanceerde configuratie"
 
@@ -6985,11 +6982,11 @@ msgstr "Externe browser"
 msgid "External editor"
 msgstr "Externe editor"
 
-msgid "Extra folders"
-msgstr "Extra mappen"
-
 msgid "extra ${used} of ${limit}"
 msgstr "extra ${used} van ${limit}"
+
+msgid "Extra folders"
+msgstr "Extra mappen"
 
 msgid "Extra high"
 msgstr "Zeer hoog"
@@ -7903,6 +7900,9 @@ msgstr "Sessie forken"
 msgid "Fork session…"
 msgstr "Sessie forken…"
 
+msgid "Fork Settings"
+msgstr "Fork-instellingen"
+
 msgid "Fork to new chat"
 msgstr "Forken naar nieuwe chat"
 
@@ -8303,6 +8303,12 @@ msgstr "Verbergen"
 msgid "Hide checks"
 msgstr "Checks verbergen"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Verberg CLI-inlogaccounts en de CHAT/CLI-schakelaar. Voer de workspace-instelling op de achtergrond uit."
+
+msgid "Hide CLI options"
+msgstr "CLI-opties verbergen"
+
 msgid "Hide details"
 msgstr "Details verbergen"
 
@@ -8333,11 +8339,17 @@ msgstr "Uit de zijbalk verbergen"
 msgid "Hide log"
 msgstr "Log verbergen"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Verberg betaalde functies en upgradeverzoeken op dit apparaat."
+
 msgid "Hide PR review comments"
 msgstr "PR-reviewopmerkingen verbergen"
 
 msgid "Hide Preview"
 msgstr "Preview verbergen"
+
+msgid "Hide Pro features"
+msgstr "Pro-functies verbergen"
 
 msgid "Hide pull request list"
 msgstr "Lijst met pull requests verbergen"
@@ -9891,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Hoofdrepository"
+
 msgid "Make all panes equal size"
 msgstr "Alle panelen even groot maken"
 
@@ -9902,9 +9917,6 @@ msgstr "Standaard maken — start nieuwe terminals en agents op dit account."
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Zorg dat het apparaat wakker en online is en dat Superset erop draait."
-
-msgid "Main repository"
-msgstr "Hoofdrepository"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Maak de chipstijl de standaard voor TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Nog geen omgevingen. Maak er een aan om er een cloudwerkruimte vanaf te 
 msgid "No extended thinking"
 msgstr "Geen uitgebreid nadenken"
 
+msgid "No extra folders."
+msgstr "Geen extra mappen."
+
 msgid "No failed runs."
 msgstr "Geen mislukte uitvoeringen."
 
@@ -10907,9 +10922,6 @@ msgstr "Geen bestanden gevonden"
 
 msgid "No files match the accepted types."
 msgstr "Geen bestanden komen overeen met de toegestane typen."
-
-msgid "No extra folders."
-msgstr "Geen extra mappen."
 
 msgid "No files match your search"
 msgstr "Geen bestanden komen overeen met je zoekopdracht"
@@ -12224,6 +12236,9 @@ msgstr "Andere apps"
 msgid "Other devices"
 msgstr "Andere apparaten"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Andere mappen waarin agents kunnen werken en waarvan de wijzigingen naast die van dit project worden getoond. Het kunnen git-repositories of gewone mappen zijn."
+
 msgid "Other Hosts"
 msgstr "Andere hosts"
 
@@ -12235,9 +12250,6 @@ msgstr "Andere teamleden"
 
 msgid "Other ways to reach us"
 msgstr "Andere manieren om ons te bereiken"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Andere mappen waarin agents kunnen werken en waarvan de wijzigingen naast die van dit project worden getoond. Het kunnen git-repositories of gewone mappen zijn."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Onze seedronde van $11,5M wordt geleid door Union Square Ventures, samen met Y Combinator, Paul Graham en founders die we bewonderen."
@@ -13633,6 +13645,9 @@ msgstr "{label} verwijderen?"
 msgid "Remove attachment"
 msgstr "Bijlage verwijderen"
 
+msgid "Remove folder"
+msgstr "Map verwijderen"
+
 msgid "Remove from favorites"
 msgstr "Verwijderen uit favorieten"
 
@@ -13644,9 +13659,6 @@ msgstr "Uit zijbalk verwijderen"
 
 msgid "Remove from Sidebar"
 msgstr "Uit zijbalk verwijderen"
-
-msgid "Remove folder"
-msgstr "Map verwijderen"
 
 msgid "Remove icon"
 msgstr "Icoon verwijderen"
@@ -15367,9 +15379,6 @@ msgstr "Alle regels tonen"
 
 msgid "Show checks"
 msgstr "Checks tonen"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Toon CLI-aanmeldaccounts en de CHAT/CLI-schakelaar op dit apparaat."
 
 msgid "Show closed"
 msgstr "Gesloten tonen"
@@ -17465,6 +17474,12 @@ msgstr "dit bestand"
 msgid "This file is empty or was deleted."
 msgstr "Dit bestand is leeg of is verwijderd."
 
+msgid "This folder is not a git repository."
+msgstr "Deze map is geen git-repository."
+
+msgid "This folder no longer exists on disk."
+msgstr "Deze map bestaat niet meer op schijf."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Deze GitHub-installatie is al gekoppeld aan een andere Superset-organisatie. Verbreek de verbinding daar of verwijder de Superset GitHub App, en probeer het opnieuw."
 
@@ -17473,12 +17488,6 @@ msgstr "Deze host"
 
 msgid "This host has not reported a version yet."
 msgstr "Deze host heeft nog geen versie gemeld."
-
-msgid "This folder is not a git repository."
-msgstr "Deze map is geen git-repository."
-
-msgid "This folder no longer exists on disk."
-msgstr "Deze map bestaat niet meer op schijf."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Deze host loopt achter op de app die je gebruikt. Werkruimtes openen nog, maar nieuwere functies kunnen erop mislukken."
@@ -19267,6 +19276,9 @@ msgstr "Worktree geopend"
 msgid "Worktree out of sync"
 msgstr "Worktree niet in sync"
 
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
+
 msgid "Worktrees"
 msgstr "Worktrees"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktrees worden van de schijf verwijderd; werkruimtes op de checkout va
 
 msgid "Would you like to reassign it?"
 msgstr "Wil je hem opnieuw toewijzen?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree per workspace"
 
 msgid "Wrap lines"
 msgstr "Regels afbreken"

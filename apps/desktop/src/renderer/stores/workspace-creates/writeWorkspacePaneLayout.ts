@@ -8,6 +8,7 @@ import {
 	getPrependTabOrder,
 	isSidebarWorkspaceVisible,
 } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import { appendLaunchesToPaneLayout } from "./appendLaunchesToPaneLayout";
 
 type HostWorkspacesCreateResult = NonNullable<
@@ -34,6 +35,7 @@ export function writeWorkspacePaneLayout(
 			| undefined,
 		terminals,
 		agents,
+		hideSetupTerminals: useForkCliOptionsStore.getState().hideCliOptions,
 	});
 
 	if (existing) {

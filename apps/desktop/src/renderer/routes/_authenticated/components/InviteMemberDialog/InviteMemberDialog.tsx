@@ -30,10 +30,12 @@ import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { organizationRoleName } from "renderer/lib/organizationRoleName";
 import { useOrganizationRole } from "renderer/routes/_authenticated/hooks/useOrganizationRole";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useInviteMemberDialogStore } from "renderer/stores/invite-member-dialog";
 
 export function InviteMemberDialog() {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const open = useInviteMemberDialogStore((state) => state.isOpen);
 	const onOpenChange = useInviteMemberDialogStore((state) => state.setOpen);
 	const organizationId = useActiveOrganizationId();
@@ -93,6 +95,8 @@ export function InviteMemberDialog() {
 			setIsInviting(false);
 		}
 	};
+
+	if (!showProFeatures) return null;
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>

@@ -1866,9 +1866,6 @@ msgstr "v1 çalışma alanlarını içe aktarılan v2 projelerine bağlayın."
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-msgid "Advanced CLI options"
-msgstr "Gelişmiş CLI seçenekleri"
-
 msgid "Advanced configuration"
 msgstr "Gelişmiş yapılandırma"
 
@@ -6985,11 +6982,11 @@ msgstr "Harici Tarayıcı"
 msgid "External editor"
 msgstr "Harici düzenleyici"
 
-msgid "Extra folders"
-msgstr "Ek klasörler"
-
 msgid "extra ${used} of ${limit}"
 msgstr "ek ${used}/${limit}"
+
+msgid "Extra folders"
+msgstr "Ek klasörler"
 
 msgid "Extra high"
 msgstr "Çok yüksek"
@@ -7903,6 +7900,9 @@ msgstr "Oturumu forkla"
 msgid "Fork session…"
 msgstr "Oturumu forkla…"
 
+msgid "Fork Settings"
+msgstr "Fork ayarları"
+
 msgid "Fork to new chat"
 msgstr "Yeni sohbete çatalla"
 
@@ -8303,6 +8303,12 @@ msgstr "Gizle"
 msgid "Hide checks"
 msgstr "Kontrolleri gizle"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI giriş hesaplarını ve CHAT/CLI geçişini gizleyin. Workspace kurulumunu arka planda çalıştırın."
+
+msgid "Hide CLI options"
+msgstr "CLI seçeneklerini gizle"
+
 msgid "Hide details"
 msgstr "Ayrıntıları gizle"
 
@@ -8333,11 +8339,17 @@ msgstr "Kenar çubuğundan gizle"
 msgid "Hide log"
 msgstr "Günlüğü gizle"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Bu cihazdaki ücretli özellikleri ve plan yükseltme istemlerini gizleyin."
+
 msgid "Hide PR review comments"
 msgstr "PR inceleme yorumlarını gizle"
 
 msgid "Hide Preview"
 msgstr "Önizlemeyi gizle"
+
+msgid "Hide Pro features"
+msgstr "Pro özelliklerini gizle"
 
 msgid "Hide pull request list"
 msgstr "Pull request listesini gizle"
@@ -9891,6 +9903,9 @@ msgstr "Macenta"
 msgid "Main"
 msgstr "Ana"
 
+msgid "Main repository"
+msgstr "Ana depo"
+
 msgid "Make all panes equal size"
 msgstr "Tüm bölmeleri eşit boyuta getir"
 
@@ -9902,9 +9917,6 @@ msgstr "Varsayılan yap — yeni terminalleri ve ajanları bu hesapta başlat."
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Cihazın uyanık, çevrimiçi ve Superset’in çalışır durumda olduğundan emin olun."
-
-msgid "Main repository"
-msgstr "Ana depo"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Çip stilini TooltipContent varsayılanı yap"
@@ -10896,6 +10908,9 @@ msgstr "Henüz ortam yok. Bir bulut çalışma alanını üzerinden başlatmak i
 msgid "No extended thinking"
 msgstr "Genişletilmiş düşünme yok"
 
+msgid "No extra folders."
+msgstr "Ek klasör yok."
+
 msgid "No failed runs."
 msgstr "Başarısız çalıştırma yok."
 
@@ -10907,9 +10922,6 @@ msgstr "Dosya bulunamadı"
 
 msgid "No files match the accepted types."
 msgstr "Hiçbir dosya kabul edilen türlerle eşleşmiyor."
-
-msgid "No extra folders."
-msgstr "Ek klasör yok."
 
 msgid "No files match your search"
 msgstr "Aramanızla eşleşen dosya yok"
@@ -12224,6 +12236,9 @@ msgstr "Diğer uygulamalar"
 msgid "Other devices"
 msgstr "Diğer cihazlar"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Ajanların çalışabildiği ve değişiklikleri bu projenin değişikliklerinin yanında gösterilen diğer klasörler. Git depoları veya düz klasörler olabilir."
+
 msgid "Other Hosts"
 msgstr "Diğer host'lar"
 
@@ -12235,9 +12250,6 @@ msgstr "Diğer takım üyeleri"
 
 msgid "Other ways to reach us"
 msgstr "Bize ulaşmanın diğer yolları"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Ajanların çalışabildiği ve değişiklikleri bu projenin değişikliklerinin yanında gösterilen diğer klasörler. Git depoları veya düz klasörler olabilir."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "11,5 milyon dolarlık tohum turumuza Union Square Ventures liderlik ediyor; Y Combinator, Paul Graham ve hayran olduğumuz kurucular da yer alıyor."
@@ -13633,6 +13645,9 @@ msgstr "{label} kaldırılsın mı?"
 msgid "Remove attachment"
 msgstr "Eki kaldır"
 
+msgid "Remove folder"
+msgstr "Klasörü kaldır"
+
 msgid "Remove from favorites"
 msgstr "Favorilerden kaldır"
 
@@ -13644,9 +13659,6 @@ msgstr "Kenar çubuğundan kaldır"
 
 msgid "Remove from Sidebar"
 msgstr "Kenar çubuğundan kaldır"
-
-msgid "Remove folder"
-msgstr "Klasörü kaldır"
 
 msgid "Remove icon"
 msgstr "Simgeyi kaldır"
@@ -15367,9 +15379,6 @@ msgstr "Tüm satırları göster"
 
 msgid "Show checks"
 msgstr "Kontrolleri göster"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Bu cihazda CLI oturum açma hesaplarını ve CHAT/CLI geçişini gösterir."
 
 msgid "Show closed"
 msgstr "Kapalıları göster"
@@ -17465,6 +17474,12 @@ msgstr "bu dosya"
 msgid "This file is empty or was deleted."
 msgstr "Bu dosya boş veya silinmiş."
 
+msgid "This folder is not a git repository."
+msgstr "Bu klasör bir git deposu değil."
+
+msgid "This folder no longer exists on disk."
+msgstr "Bu klasör artık diskte yok."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Bu GitHub kurulumu zaten başka bir Superset kuruluşuna bağlı. Oradaki bağlantıyı kesin veya Superset GitHub App'i kaldırın, sonra yeniden deneyin."
 
@@ -17473,12 +17488,6 @@ msgstr "Bu host"
 
 msgid "This host has not reported a version yet."
 msgstr "Bu ana makine henüz bir sürüm bildirmedi."
-
-msgid "This folder is not a git repository."
-msgstr "Bu klasör bir git deposu değil."
-
-msgid "This folder no longer exists on disk."
-msgstr "Bu klasör artık diskte yok."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Bu ana makine kullandığınız uygulamanın gerisinde. Çalışma alanları hâlâ açılıyor ama yeni özellikler üzerinde çalışmayabilir."
@@ -19267,6 +19276,9 @@ msgstr "Worktree açıldı"
 msgid "Worktree out of sync"
 msgstr "Worktree eşitlenmemiş"
 
+msgid "Worktree per workspace"
+msgstr "Çalışma alanı başına worktree"
+
 msgid "Worktrees"
 msgstr "Worktree'ler"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktree'ler diskten kaldırılır; projenin checkout'undaki çalışma 
 
 msgid "Would you like to reassign it?"
 msgstr "Yeniden atamak ister misiniz?"
-
-msgid "Worktree per workspace"
-msgstr "Çalışma alanı başına worktree"
 
 msgid "Wrap lines"
 msgstr "Satırları kaydır"

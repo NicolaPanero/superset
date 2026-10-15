@@ -1,8 +1,10 @@
 import type { WorkspaceStore } from "@superset/panes";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useEffect } from "react";
+import { isForkSetupTerminal } from "renderer/lib/fork-settings-visibility";
 import { logStressEvent } from "renderer/lib/performance/stress-instrumentation";
 import { getTerminalBackgroundMarkerIdsKey } from "renderer/lib/terminal/terminal-background-intents";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData } from "../../types";
 import {
@@ -12,6 +14,7 @@ import {
 } from "../../utils/backgroundTerminals";
 import { isTerminalReplacementCancelled } from "../../utils/cancelledTerminalReplacements";
 import { focusOrAddTerminalPane } from "../../utils/focusTerminalPane";
+import { backgroundForkSetupTabs } from "./backgroundForkSetupTabs";
 
 interface UseAutoAdoptBackgroundSessionsArgs {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
@@ -42,6 +45,9 @@ export function useAutoAdoptBackgroundSessions({
 	workspaceId,
 	isLayoutReady,
 }: UseAutoAdoptBackgroundSessionsArgs): void {
+	const hideCliOptions = useForkCliOptionsStore(
+		(state) => state.hideCliOptions,
+	);
 	const sessionsQuery = workspaceTrpc.terminal.list.useQuery(
 		{ workspaceId },
 		{ enabled: isLayoutReady, refetchOnWindowFocus: false },
@@ -54,6 +60,10 @@ export function useAutoAdoptBackgroundSessions({
 	useEffect(() => {
 		if (!isLayoutReady || !sessions || isFetchingSessions) return;
 
+		if (hideCliOptions) {
+			for (const target of [store, ...linkedStores])
+				backgroundForkSetupTabs(target, sessions, workspaceId);
+		}
 		const state = store.getState();
 		const marked = new Set(
 			parseAttachedTerminalIdsKey(
@@ -70,7 +80,9 @@ export function useAutoAdoptBackgroundSessions({
 			),
 		).filter(
 			(session) =>
-				!marked.has(session.terminalId) &&
+				(!hideCliOptions || !isForkSetupTerminal(session)) &&
+				(!marked.has(session.terminalId) ||
+					(!hideCliOptions && isForkSetupTerminal(session))) &&
 				!isTerminalReplacementCancelled(session.terminalId),
 		);
 		if (toAdopt.length === 0) return;
@@ -80,6 +92,14 @@ export function useAutoAdoptBackgroundSessions({
 		const restoreActiveTabId = state.tabs.length > 0 ? state.activeTabId : null;
 		for (const session of toAdopt.reverse()) {
 			focusOrAddTerminalPane(store, session.terminalId);
+			if (isForkSetupTerminal(session)) {
+				const location = store.getState().getActivePane();
+				if (location)
+					store.getState().setTabTitleOverride({
+						tabId: location.tabId,
+						titleOverride: "Workspace Setup",
+					});
+			}
 		}
 		if (restoreActiveTabId) {
 			store.getState().setActiveTab(restoreActiveTabId);
@@ -90,6 +110,7 @@ export function useAutoAdoptBackgroundSessions({
 		});
 	}, [
 		isLayoutReady,
+		hideCliOptions,
 		isFetchingSessions,
 		sessions,
 		store,

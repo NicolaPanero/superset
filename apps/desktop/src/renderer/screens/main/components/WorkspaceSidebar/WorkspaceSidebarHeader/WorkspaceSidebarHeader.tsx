@@ -6,6 +6,7 @@ import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { GoGitPullRequest } from "react-icons/go";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import {
 	pullRequestsSearchFromFilters,
@@ -117,28 +118,30 @@ export function WorkspaceSidebarHeader({
 					<TooltipContent side="right">Workspaces</TooltipContent>
 				</Tooltip>
 
-				<Tooltip delayDuration={300}>
-					<TooltipTrigger asChild>
-						<button
-							type="button"
-							onClick={handleTasksClick}
-							aria-label={translate(msg({ message: "Tasks" }))}
-							aria-current={isTasksOpen ? "page" : undefined}
-							className={cn(
-								"flex items-center justify-center size-8 rounded-md transition-colors",
-								isTasksOpen
-									? "text-foreground bg-fill-selected"
-									: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
-							)}
-						>
-							<HiOutlineClipboardDocumentList
-								className="size-4"
-								strokeWidth={STROKE_WIDTH}
-							/>
-						</button>
-					</TooltipTrigger>
-					<TooltipContent side="right">Tasks</TooltipContent>
-				</Tooltip>
+				<ForkProFeature>
+					<Tooltip delayDuration={300}>
+						<TooltipTrigger asChild>
+							<button
+								type="button"
+								onClick={handleTasksClick}
+								aria-label={translate(msg({ message: "Tasks" }))}
+								aria-current={isTasksOpen ? "page" : undefined}
+								className={cn(
+									"flex items-center justify-center size-8 rounded-md transition-colors",
+									isTasksOpen
+										? "text-foreground bg-fill-selected"
+										: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
+								)}
+							>
+								<HiOutlineClipboardDocumentList
+									className="size-4"
+									strokeWidth={STROKE_WIDTH}
+								/>
+							</button>
+						</TooltipTrigger>
+						<TooltipContent side="right">Tasks</TooltipContent>
+					</Tooltip>
+				</ForkProFeature>
 
 				<Tooltip delayDuration={300}>
 					<TooltipTrigger asChild>
@@ -183,26 +186,28 @@ export function WorkspaceSidebarHeader({
 				<span className="text-sm font-medium flex-1 text-left">Workspaces</span>
 			</button>
 
-			<button
-				type="button"
-				onClick={handleTasksClick}
-				aria-label={translate(msg({ message: "Tasks" }))}
-				aria-current={isTasksOpen ? "page" : undefined}
-				className={cn(
-					"flex items-center gap-2 px-2 py-1.5 w-full rounded-md transition-colors",
-					isTasksOpen
-						? "text-foreground bg-fill-selected"
-						: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
-				)}
-			>
-				<div className="flex items-center justify-center size-5">
-					<HiOutlineClipboardDocumentList
-						className="size-4"
-						strokeWidth={STROKE_WIDTH}
-					/>
-				</div>
-				<span className="text-sm font-medium flex-1 text-left">Tasks</span>
-			</button>
+			<ForkProFeature>
+				<button
+					type="button"
+					onClick={handleTasksClick}
+					aria-label={translate(msg({ message: "Tasks" }))}
+					aria-current={isTasksOpen ? "page" : undefined}
+					className={cn(
+						"flex items-center gap-2 px-2 py-1.5 w-full rounded-md transition-colors",
+						isTasksOpen
+							? "text-foreground bg-fill-selected"
+							: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
+					)}
+				>
+					<div className="flex items-center justify-center size-5">
+						<HiOutlineClipboardDocumentList
+							className="size-4"
+							strokeWidth={STROKE_WIDTH}
+						/>
+					</div>
+					<span className="text-sm font-medium flex-1 text-left">Tasks</span>
+				</button>
+			</ForkProFeature>
 
 			<button
 				type="button"

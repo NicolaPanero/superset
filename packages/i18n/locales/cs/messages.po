@@ -1866,9 +1866,6 @@ msgstr "Přiřaďte pracovní prostory v1 k odpovídajícím importovaným proje
 msgid "Advanced"
 msgstr "Pokročilé"
 
-msgid "Advanced CLI options"
-msgstr "Pokročilé možnosti CLI"
-
 msgid "Advanced configuration"
 msgstr "Pokročilá konfigurace"
 
@@ -6985,11 +6982,11 @@ msgstr "Externí prohlížeč"
 msgid "External editor"
 msgstr "Externí editor"
 
-msgid "Extra folders"
-msgstr "Další složky"
-
 msgid "extra ${used} of ${limit}"
 msgstr "navíc {used} $ z {limit} $"
+
+msgid "Extra folders"
+msgstr "Další složky"
 
 msgid "Extra high"
 msgstr "Velmi vysoké"
@@ -7903,6 +7900,9 @@ msgstr "Forkovat relaci"
 msgid "Fork session…"
 msgstr "Forkovat relaci…"
 
+msgid "Fork Settings"
+msgstr "Nastavení forku"
+
 msgid "Fork to new chat"
 msgstr "Rozvětvit do nového chatu"
 
@@ -8303,6 +8303,12 @@ msgstr "Skrýt"
 msgid "Hide checks"
 msgstr "Skrýt kontroly"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Skryjte přihlašovací účty CLI a přepínač CHAT/CLI. Spouštějte nastavení workspace na pozadí."
+
+msgid "Hide CLI options"
+msgstr "Skrýt možnosti CLI"
+
 msgid "Hide details"
 msgstr "Skrýt podrobnosti"
 
@@ -8333,11 +8339,17 @@ msgstr "Skrýt z postranního panelu"
 msgid "Hide log"
 msgstr "Skrýt log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Skryjte placené funkce a výzvy k přechodu na vyšší tarif na tomto zařízení."
+
 msgid "Hide PR review comments"
 msgstr "Skrýt komentáře z revize PR"
 
 msgid "Hide Preview"
 msgstr "Skrýt náhled"
+
+msgid "Hide Pro features"
+msgstr "Skrýt funkce Pro"
 
 msgid "Hide pull request list"
 msgstr "Skrýt seznam pull requestů"
@@ -9891,6 +9903,9 @@ msgstr "Purpurová"
 msgid "Main"
 msgstr "Hlavní"
 
+msgid "Main repository"
+msgstr "Hlavní repozitář"
+
 msgid "Make all panes equal size"
 msgstr "Nastavit všem panelům stejnou velikost"
 
@@ -9902,9 +9917,6 @@ msgstr "Nastavit jako výchozí — nové terminály a agenty spouštět na tomt
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Ujistěte se, že je zařízení probuzené, online a běží na něm Superset."
-
-msgid "Main repository"
-msgstr "Hlavní repozitář"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Udělat ze stylu čipu výchozí TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Zatím žádná prostředí. Vytvořte jedno a spusťte z něj cloudový
 msgid "No extended thinking"
 msgstr "Bez rozšířeného přemýšlení"
 
+msgid "No extra folders."
+msgstr "Žádné další složky."
+
 msgid "No failed runs."
 msgstr "Žádná neúspěšná spuštění."
 
@@ -10907,9 +10922,6 @@ msgstr "Nenalezeny žádné soubory"
 
 msgid "No files match the accepted types."
 msgstr "Žádný soubor neodpovídá povoleným typům."
-
-msgid "No extra folders."
-msgstr "Žádné další složky."
 
 msgid "No files match your search"
 msgstr "Žádné soubory neodpovídají hledání"
@@ -12224,6 +12236,9 @@ msgstr "Ostatní aplikace"
 msgid "Other devices"
 msgstr "Ostatní zařízení"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Další složky, ve kterých mohou agenti pracovat a jejichž změny se zobrazují vedle změn tohoto projektu. Může jít o repozitáře git nebo obyčejné složky."
+
 msgid "Other Hosts"
 msgstr "Ostatní hosty"
 
@@ -12235,9 +12250,6 @@ msgstr "Další členové týmu"
 
 msgid "Other ways to reach us"
 msgstr "Další způsoby, jak nás zastihnout"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Další složky, ve kterých mohou agenti pracovat a jejichž změny se zobrazují vedle změn tohoto projektu. Může jít o repozitáře git nebo obyčejné složky."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Naše seedové kolo ve výši 11,5 mil. $ vede Union Square Ventures, spolu s Y Combinator, Paulem Grahamem a zakladateli, kterých si vážíme."
@@ -13633,6 +13645,9 @@ msgstr "Odebrat {label}?"
 msgid "Remove attachment"
 msgstr "Odebrat přílohu"
 
+msgid "Remove folder"
+msgstr "Odebrat složku"
+
 msgid "Remove from favorites"
 msgstr "Odebrat z oblíbených"
 
@@ -13644,9 +13659,6 @@ msgstr "Odebrat z postranního panelu"
 
 msgid "Remove from Sidebar"
 msgstr "Odebrat z postranního panelu"
-
-msgid "Remove folder"
-msgstr "Odebrat složku"
 
 msgid "Remove icon"
 msgstr "Odebrat ikonu"
@@ -15367,9 +15379,6 @@ msgstr "Zobrazit všechny řádky"
 
 msgid "Show checks"
 msgstr "Zobrazit kontroly"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Zobrazit přihlašovací účty CLI a přepínač CHAT/CLI na tomto zařízení."
 
 msgid "Show closed"
 msgstr "Zobrazit uzavřené"
@@ -17465,6 +17474,12 @@ msgstr "tento soubor"
 msgid "This file is empty or was deleted."
 msgstr "Tento soubor je prázdný nebo byl smazán."
 
+msgid "This folder is not a git repository."
+msgstr "Tato složka není repozitář git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Tato složka na disku již neexistuje."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Tato instalace GitHubu je už připojená k jiné organizaci Superset. Odpojte ji tam, nebo odinstalujte Superset GitHub App, a zkuste to znovu."
 
@@ -17473,12 +17488,6 @@ msgstr "Tento host"
 
 msgid "This host has not reported a version yet."
 msgstr "Tento hostitel zatím nenahlásil verzi."
-
-msgid "This folder is not a git repository."
-msgstr "Tato složka není repozitář git."
-
-msgid "This folder no longer exists on disk."
-msgstr "Tato složka na disku již neexistuje."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Tento hostitel zaostává za aplikací, kterou používáte. Pracovní prostory se stále otevřou, ale novější funkce na něm mohou selhat."
@@ -19267,6 +19276,9 @@ msgstr "Worktree otevřen"
 msgid "Worktree out of sync"
 msgstr "Worktree není synchronizovaný"
 
+msgid "Worktree per workspace"
+msgstr "Worktree na workspace"
+
 msgid "Worktrees"
 msgstr "Worktrees"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktree se odstraní z disku; pracovní prostory na checkoutu projektu 
 
 msgid "Would you like to reassign it?"
 msgstr "Chcete zkratku přiřadit znovu?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree na workspace"
 
 msgid "Wrap lines"
 msgstr "Zalamovat řádky"

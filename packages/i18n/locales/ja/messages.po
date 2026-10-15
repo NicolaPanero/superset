@@ -1866,9 +1866,6 @@ msgstr "v1ワークスペースをインポート済みのv2プロジェクト�
 msgid "Advanced"
 msgstr "詳細"
 
-msgid "Advanced CLI options"
-msgstr "高度なCLIオプション"
-
 msgid "Advanced configuration"
 msgstr "詳細設定"
 
@@ -6985,11 +6982,11 @@ msgstr "外部ブラウザ"
 msgid "External editor"
 msgstr "外部エディタ"
 
-msgid "Extra folders"
-msgstr "追加フォルダ"
-
 msgid "extra ${used} of ${limit}"
 msgstr "追加分 ${limit}中${used}"
+
+msgid "Extra folders"
+msgstr "追加フォルダ"
 
 msgid "Extra high"
 msgstr "最高"
@@ -7903,6 +7900,9 @@ msgstr "セッションをフォーク"
 msgid "Fork session…"
 msgstr "セッションをフォーク…"
 
+msgid "Fork Settings"
+msgstr "フォーク設定"
+
 msgid "Fork to new chat"
 msgstr "新しいチャットにフォーク"
 
@@ -8303,6 +8303,12 @@ msgstr "隠す"
 msgid "Hide checks"
 msgstr "チェックを隠す"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI ログインアカウントと CHAT/CLI 切り替えを非表示にします。workspace のセットアップをバックグラウンドで実行します。"
+
+msgid "Hide CLI options"
+msgstr "CLI オプションを非表示"
+
 msgid "Hide details"
 msgstr "詳細を隠す"
 
@@ -8333,11 +8339,17 @@ msgstr "サイドバーから非表示"
 msgid "Hide log"
 msgstr "ログを隠す"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "このデバイスで有料機能とアップグレードの案内を非表示にします。"
+
 msgid "Hide PR review comments"
 msgstr "PRレビューコメントを隠す"
 
 msgid "Hide Preview"
 msgstr "プレビューを隠す"
+
+msgid "Hide Pro features"
+msgstr "Pro 機能を非表示"
 
 msgid "Hide pull request list"
 msgstr "プルリクエスト一覧を隠す"
@@ -9891,6 +9903,9 @@ msgstr "マゼンタ"
 msgid "Main"
 msgstr "メイン"
 
+msgid "Main repository"
+msgstr "メインリポジトリ"
+
 msgid "Make all panes equal size"
 msgstr "すべてのペインを同じサイズにする"
 
@@ -9902,9 +9917,6 @@ msgstr "デフォルトにする — 新しいターミナルとエージェン�
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "デバイスがスリープ状態ではなく、オンラインで Superset が起動していることを確認してください。"
-
-msgid "Main repository"
-msgstr "メインリポジトリ"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "チップスタイルをTooltipContentのデフォルトにする"
@@ -10896,6 +10908,9 @@ msgstr "環境はまだありません。作成すると、そこからクラウ
 msgid "No extended thinking"
 msgstr "拡張思考なし"
 
+msgid "No extra folders."
+msgstr "追加フォルダはありません。"
+
 msgid "No failed runs."
 msgstr "失敗した実行はありません。"
 
@@ -10907,9 +10922,6 @@ msgstr "ファイルが見つかりません"
 
 msgid "No files match the accepted types."
 msgstr "対応している形式のファイルがありません。"
-
-msgid "No extra folders."
-msgstr "追加フォルダはありません。"
 
 msgid "No files match your search"
 msgstr "検索に一致するファイルがありません"
@@ -12224,6 +12236,9 @@ msgstr "他のアプリ"
 msgid "Other devices"
 msgstr "その他のデバイス"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "エージェントが作業できる他のフォルダで、その変更はこのプロジェクトの変更の横に表示されます。gitリポジトリでも通常のフォルダでも構いません。"
+
 msgid "Other Hosts"
 msgstr "その他のホスト"
 
@@ -12235,9 +12250,6 @@ msgstr "他のチームメンバー"
 
 msgid "Other ways to reach us"
 msgstr "その他の連絡方法"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "エージェントが作業できる他のフォルダで、その変更はこのプロジェクトの変更の横に表示されます。gitリポジトリでも通常のフォルダでも構いません。"
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "1,150万ドルのシードラウンドは Union Square Ventures が主導し、Y Combinator、Paul Graham、そして私たちが尊敬する創業者たちが参加しています。"
@@ -13633,6 +13645,9 @@ msgstr "{label}を削除しますか?"
 msgid "Remove attachment"
 msgstr "添付ファイルを削除"
 
+msgid "Remove folder"
+msgstr "フォルダを削除"
+
 msgid "Remove from favorites"
 msgstr "お気に入りから削除"
 
@@ -13644,9 +13659,6 @@ msgstr "サイドバーから削除"
 
 msgid "Remove from Sidebar"
 msgstr "サイドバーから削除"
-
-msgid "Remove folder"
-msgstr "フォルダを削除"
 
 msgid "Remove icon"
 msgstr "アイコンを削除"
@@ -15367,9 +15379,6 @@ msgstr "すべての行を表示"
 
 msgid "Show checks"
 msgstr "チェックを表示"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "このデバイスでCLIログインのアカウントとCHAT/CLI切り替えを表示します。"
 
 msgid "Show closed"
 msgstr "クローズ済みも表示"
@@ -17465,6 +17474,12 @@ msgstr "このファイル"
 msgid "This file is empty or was deleted."
 msgstr "このファイルは空か、削除されています。"
 
+msgid "This folder is not a git repository."
+msgstr "このフォルダはgitリポジトリではありません。"
+
+msgid "This folder no longer exists on disk."
+msgstr "このフォルダはディスク上に存在しません。"
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "このGitHubインストールは別のSuperset組織にすでに接続されています。そちらで接続を解除するか、Superset GitHub Appをアンインストールしてから、もう一度お試しください。"
 
@@ -17473,12 +17488,6 @@ msgstr "このホスト"
 
 msgid "This host has not reported a version yet."
 msgstr "このホストはまだバージョンを報告していません。"
-
-msgid "This folder is not a git repository."
-msgstr "このフォルダはgitリポジトリではありません。"
-
-msgid "This folder no longer exists on disk."
-msgstr "このフォルダはディスク上に存在しません。"
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "このホストは使用中のアプリより古いバージョンです。ワークスペースは開けますが、新しい機能は動作しない可能性があります。"
@@ -19267,6 +19276,9 @@ msgstr "ワークツリーを開きました"
 msgid "Worktree out of sync"
 msgstr "ワークツリーが同期していません"
 
+msgid "Worktree per workspace"
+msgstr "ワークスペースごとのワークツリー"
+
 msgid "Worktrees"
 msgstr "ワークツリー"
 
@@ -19275,9 +19287,6 @@ msgstr "ワークツリーはディスクから削除され、プロジェクト
 
 msgid "Would you like to reassign it?"
 msgstr "割り当て直しますか?"
-
-msgid "Worktree per workspace"
-msgstr "ワークスペースごとのワークツリー"
 
 msgid "Wrap lines"
 msgstr "行を折り返す"

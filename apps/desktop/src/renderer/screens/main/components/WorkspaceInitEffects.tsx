@@ -12,6 +12,7 @@ import { launchAgentSession } from "renderer/lib/agent-session-orchestrator";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { writeCommandsInPane } from "renderer/lib/terminal/launch-command";
 import { isTerminalAttachCanceledMessage } from "renderer/screens/main/components/WorkspaceView/ContentView/TabsContent/Terminal/attach-cancel";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import { useTabsStore } from "renderer/stores/tabs/store";
 import { useTabsWithPresets } from "renderer/stores/tabs/useTabsWithPresets";
 import {
@@ -47,6 +48,9 @@ export function WorkspaceInitEffects() {
 	const processingRef = useRef<Set<string>>(new Set());
 
 	const addTab = useTabsStore((state) => state.addTab);
+	const setTabWorkspaceSetup = useTabsStore(
+		(state) => state.setTabWorkspaceSetup,
+	);
 	const setTabAutoTitle = useTabsStore((state) => state.setTabAutoTitle);
 	const { openPreset } = useTabsWithPresets();
 	const createOrAttach = useCreateOrAttachWithTheme();
@@ -159,7 +163,10 @@ export function WorkspaceInitEffects() {
 				const { tabId: setupTabId, paneId: setupPaneId } = addTab(
 					setup.workspaceId,
 				);
+				setTabWorkspaceSetup(setupTabId, true);
 				setTabAutoTitle(setupTabId, "Workspace Setup");
+				if (useForkCliOptionsStore.getState().hideCliOptions)
+					addTab(setup.workspaceId);
 				openPresetsInActiveTab(setup.workspaceId, presets);
 
 				if (agentLaunchRequest || agentCommand) {
@@ -167,6 +174,7 @@ export function WorkspaceInitEffects() {
 					if (launch) {
 						startAgentSession(launch.request);
 						if (launch.chained) {
+							setTabWorkspaceSetup(setupTabId, false);
 							onComplete();
 							return;
 						}
@@ -224,6 +232,7 @@ export function WorkspaceInitEffects() {
 
 			if (hasSetupScript) {
 				const { tabId, paneId } = addTab(setup.workspaceId);
+				setTabWorkspaceSetup(tabId, true);
 				setTabAutoTitle(tabId, "Workspace Setup");
 
 				if (agentLaunchRequest || agentCommand) {
@@ -231,6 +240,7 @@ export function WorkspaceInitEffects() {
 					if (launch) {
 						startAgentSession(launch.request);
 						if (launch.chained) {
+							setTabWorkspaceSetup(tabId, false);
 							onComplete();
 							return;
 						}
@@ -332,6 +342,7 @@ export function WorkspaceInitEffects() {
 		[
 			addTab,
 			setTabAutoTitle,
+			setTabWorkspaceSetup,
 			createOrAttach,
 			resolveAgentLaunchForSetupPane,
 			startAgentSession,

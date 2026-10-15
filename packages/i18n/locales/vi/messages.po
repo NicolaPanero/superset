@@ -1866,9 +1866,6 @@ msgstr "Chuyển không gian làm việc v1 vào dự án v2 tương ứng đã 
 msgid "Advanced"
 msgstr "Nâng cao"
 
-msgid "Advanced CLI options"
-msgstr "Tùy chọn CLI nâng cao"
-
 msgid "Advanced configuration"
 msgstr "Cấu hình nâng cao"
 
@@ -6985,11 +6982,11 @@ msgstr "Trình duyệt ngoài"
 msgid "External editor"
 msgstr "Trình soạn thảo ngoài"
 
-msgid "Extra folders"
-msgstr "Thư mục bổ sung"
-
 msgid "extra ${used} of ${limit}"
 msgstr "dùng thêm ${used} trên ${limit}"
+
+msgid "Extra folders"
+msgstr "Thư mục bổ sung"
 
 msgid "Extra high"
 msgstr "Rất cao"
@@ -7903,6 +7900,9 @@ msgstr "Fork phiên"
 msgid "Fork session…"
 msgstr "Fork phiên…"
 
+msgid "Fork Settings"
+msgstr "Cài đặt fork"
+
 msgid "Fork to new chat"
 msgstr "Tách sang cuộc trò chuyện mới"
 
@@ -8303,6 +8303,12 @@ msgstr "Ẩn"
 msgid "Hide checks"
 msgstr "Ẩn check"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Ẩn tài khoản đăng nhập CLI và bộ chuyển CHAT/CLI. Chạy thiết lập workspace trong nền."
+
+msgid "Hide CLI options"
+msgstr "Ẩn tùy chọn CLI"
+
 msgid "Hide details"
 msgstr "Ẩn chi tiết"
 
@@ -8333,11 +8339,17 @@ msgstr "Ẩn khỏi thanh bên"
 msgid "Hide log"
 msgstr "Ẩn log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Ẩn tính năng trả phí và lời mời nâng cấp gói trên thiết bị này."
+
 msgid "Hide PR review comments"
 msgstr "Ẩn bình luận review PR"
 
 msgid "Hide Preview"
 msgstr "Ẩn xem trước"
+
+msgid "Hide Pro features"
+msgstr "Ẩn tính năng Pro"
 
 msgid "Hide pull request list"
 msgstr "Ẩn danh sách pull request"
@@ -9891,6 +9903,9 @@ msgstr "Đỏ tía"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Kho lưu trữ chính"
+
 msgid "Make all panes equal size"
 msgstr "Làm mọi khung bằng nhau"
 
@@ -9902,9 +9917,6 @@ msgstr "Đặt làm mặc định — mở terminal và agent mới trên tài k
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Đảm bảo thiết bị không ở chế độ ngủ, có kết nối mạng và đang chạy Superset."
-
-msgid "Main repository"
-msgstr "Kho lưu trữ chính"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Đặt kiểu chip làm mặc định cho TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Chưa có environment nào. Tạo một cái để khởi động worksp
 msgid "No extended thinking"
 msgstr "Không suy nghĩ mở rộng"
 
+msgid "No extra folders."
+msgstr "Không có thư mục bổ sung."
+
 msgid "No failed runs."
 msgstr "Không có lần chạy thất bại."
 
@@ -10907,9 +10922,6 @@ msgstr "Không tìm thấy tệp nào"
 
 msgid "No files match the accepted types."
 msgstr "Không có tệp nào thuộc loại được chấp nhận."
-
-msgid "No extra folders."
-msgstr "Không có thư mục bổ sung."
 
 msgid "No files match your search"
 msgstr "Không có tệp nào khớp với tìm kiếm của bạn"
@@ -12224,6 +12236,9 @@ msgstr "Ứng dụng khác"
 msgid "Other devices"
 msgstr "Thiết bị khác"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Các thư mục khác mà tác nhân có thể làm việc và thay đổi của chúng hiển thị cạnh thay đổi của dự án này. Có thể là kho git hoặc thư mục thông thường."
+
 msgid "Other Hosts"
 msgstr "Host khác"
 
@@ -12235,9 +12250,6 @@ msgstr "Các thành viên khác"
 
 msgid "Other ways to reach us"
 msgstr "Các cách khác để liên hệ"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Các thư mục khác mà tác nhân có thể làm việc và thay đổi của chúng hiển thị cạnh thay đổi của dự án này. Có thể là kho git hoặc thư mục thông thường."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Vòng gọi vốn hạt giống 11,5 triệu USD của chúng tôi do Union Square Ventures dẫn dắt, cùng Y Combinator, Paul Graham và những nhà sáng lập mà chúng tôi ngưỡng mộ."
@@ -13633,6 +13645,9 @@ msgstr "Gỡ {label}?"
 msgid "Remove attachment"
 msgstr "Xóa tệp đính kèm"
 
+msgid "Remove folder"
+msgstr "Xóa thư mục"
+
 msgid "Remove from favorites"
 msgstr "Xóa khỏi mục yêu thích"
 
@@ -13644,9 +13659,6 @@ msgstr "Gỡ khỏi thanh bên"
 
 msgid "Remove from Sidebar"
 msgstr "Gỡ khỏi thanh bên"
-
-msgid "Remove folder"
-msgstr "Xóa thư mục"
 
 msgid "Remove icon"
 msgstr "Gỡ biểu tượng"
@@ -15367,9 +15379,6 @@ msgstr "Hiện tất cả các dòng"
 
 msgid "Show checks"
 msgstr "Hiện check"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Hiển thị tài khoản đăng nhập CLI và nút chuyển CHAT/CLI trên thiết bị này."
 
 msgid "Show closed"
 msgstr "Hiện issue đã đóng"
@@ -17465,6 +17474,12 @@ msgstr "tệp này"
 msgid "This file is empty or was deleted."
 msgstr "Tệp này rỗng hoặc đã bị xóa."
 
+msgid "This folder is not a git repository."
+msgstr "Thư mục này không phải là kho git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Thư mục này không còn tồn tại trên đĩa."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Bản cài đặt GitHub này đã kết nối với một tổ chức Superset khác. Hãy ngắt kết nối ở đó, hoặc gỡ Superset GitHub App, rồi thử lại."
 
@@ -17473,12 +17488,6 @@ msgstr "Host này"
 
 msgid "This host has not reported a version yet."
 msgstr "Máy chủ này chưa báo cáo phiên bản."
-
-msgid "This folder is not a git repository."
-msgstr "Thư mục này không phải là kho git."
-
-msgid "This folder no longer exists on disk."
-msgstr "Thư mục này không còn tồn tại trên đĩa."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Máy chủ này cũ hơn ứng dụng bạn đang dùng. Workspace vẫn mở được nhưng các tính năng mới có thể lỗi."
@@ -19267,6 +19276,9 @@ msgstr "Đã mở worktree"
 msgid "Worktree out of sync"
 msgstr "Worktree không còn đồng bộ"
 
+msgid "Worktree per workspace"
+msgstr "Worktree cho mỗi workspace"
+
 msgid "Worktrees"
 msgstr "Worktree"
 
@@ -19275,9 +19287,6 @@ msgstr "Các worktree bị xóa khỏi ổ đĩa; các workspace trên checkout 
 
 msgid "Would you like to reassign it?"
 msgstr "Bạn có muốn gán lại không?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree cho mỗi workspace"
 
 msgid "Wrap lines"
 msgstr "Ngắt dòng"

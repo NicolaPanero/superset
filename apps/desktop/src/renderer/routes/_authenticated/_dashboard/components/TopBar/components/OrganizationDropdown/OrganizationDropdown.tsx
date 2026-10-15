@@ -24,12 +24,14 @@ import {
 	HiOutlinePlus,
 	HiOutlineWindow,
 } from "react-icons/hi2";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
 import { useSignOut } from "renderer/hooks/useSignOut";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { HelpSubMenu } from "./components/HelpSubMenu";
 import { SubmitPromptDialog } from "./components/SubmitPromptDialog";
 
@@ -79,7 +81,8 @@ export function OrganizationDropdown({
 		});
 
 	const { plan: currentPlan } = useCurrentPlan();
-	const isPaid = currentPlan !== "free";
+	const showProFeatures = useForkProFeatures();
+	const isPaid = showProFeatures && currentPlan !== "free";
 	const planLabel = currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1);
 	const planBadge = isPaid ? (
 		<Badge
@@ -160,14 +163,16 @@ export function OrganizationDropdown({
 					}
 				>
 					{/* Organization */}
-					<DropdownMenuItem
-						onSelect={() => navigate({ to: "/settings/organization" })}
-					>
-						<FiUsers className="h-4 w-4" />
-						<span>
-							<Trans>Manage members</Trans>
-						</span>
-					</DropdownMenuItem>
+					<ForkProFeature>
+						<DropdownMenuItem
+							onSelect={() => navigate({ to: "/settings/organization" })}
+						>
+							<FiUsers className="h-4 w-4" />
+							<span>
+								<Trans>Manage members</Trans>
+							</span>
+						</DropdownMenuItem>
+					</ForkProFeature>
 					{organizations && organizations.length > 0 && (
 						<DropdownMenuSub>
 							<DropdownMenuSubTrigger className="gap-2">

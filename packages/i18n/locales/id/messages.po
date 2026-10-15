@@ -1866,9 +1866,6 @@ msgstr "Gabungkan ruang kerja v1 ke proyek v2 terkait yang telah diimpor."
 msgid "Advanced"
 msgstr "Lanjutan"
 
-msgid "Advanced CLI options"
-msgstr "Opsi CLI lanjutan"
-
 msgid "Advanced configuration"
 msgstr "Konfigurasi lanjutan"
 
@@ -6985,11 +6982,11 @@ msgstr "Browser Eksternal"
 msgid "External editor"
 msgstr "Editor eksternal"
 
-msgid "Extra folders"
-msgstr "Folder tambahan"
-
 msgid "extra ${used} of ${limit}"
 msgstr "tambahan ${used} dari ${limit}"
+
+msgid "Extra folders"
+msgstr "Folder tambahan"
 
 msgid "Extra high"
 msgstr "Sangat tinggi"
@@ -7903,6 +7900,9 @@ msgstr "Fork sesi"
 msgid "Fork session…"
 msgstr "Fork sesi…"
 
+msgid "Fork Settings"
+msgstr "Pengaturan fork"
+
 msgid "Fork to new chat"
 msgstr "Cabangkan ke chat baru"
 
@@ -8303,6 +8303,12 @@ msgstr "Sembunyikan"
 msgid "Hide checks"
 msgstr "Sembunyikan check"
 
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "Sembunyikan akun masuk CLI dan pengalih CHAT/CLI. Jalankan penyiapan workspace di latar belakang."
+
+msgid "Hide CLI options"
+msgstr "Sembunyikan opsi CLI"
+
 msgid "Hide details"
 msgstr "Sembunyikan detail"
 
@@ -8333,11 +8339,17 @@ msgstr "Sembunyikan dari Sidebar"
 msgid "Hide log"
 msgstr "Sembunyikan log"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "Sembunyikan fitur berbayar dan ajakan meningkatkan paket di perangkat ini."
+
 msgid "Hide PR review comments"
 msgstr "Sembunyikan komentar review PR"
 
 msgid "Hide Preview"
 msgstr "Sembunyikan Pratinjau"
+
+msgid "Hide Pro features"
+msgstr "Sembunyikan fitur Pro"
 
 msgid "Hide pull request list"
 msgstr "Sembunyikan daftar pull request"
@@ -9891,6 +9903,9 @@ msgstr "Magenta"
 msgid "Main"
 msgstr "Main"
 
+msgid "Main repository"
+msgstr "Repositori utama"
+
 msgid "Make all panes equal size"
 msgstr "Samakan ukuran semua panel"
 
@@ -9902,9 +9917,6 @@ msgstr "Jadikan bawaan — jalankan terminal dan agen baru dengan akun ini."
 
 msgid "Make sure the device is awake, online, and running Superset."
 msgstr "Pastikan perangkat aktif, terhubung ke internet, dan menjalankan Superset."
-
-msgid "Main repository"
-msgstr "Repositori utama"
 
 msgid "Make the chip style the TooltipContent default"
 msgstr "Jadikan gaya chip sebagai bawaan TooltipContent"
@@ -10896,6 +10908,9 @@ msgstr "Belum ada environment. Buat satu untuk memulai workspace cloud darinya."
 msgid "No extended thinking"
 msgstr "Tanpa extended thinking"
 
+msgid "No extra folders."
+msgstr "Tidak ada folder tambahan."
+
 msgid "No failed runs."
 msgstr "Tidak ada eksekusi yang gagal."
 
@@ -10907,9 +10922,6 @@ msgstr "File tidak ditemukan"
 
 msgid "No files match the accepted types."
 msgstr "Tidak ada file yang cocok dengan tipe yang diterima."
-
-msgid "No extra folders."
-msgstr "Tidak ada folder tambahan."
 
 msgid "No files match your search"
 msgstr "Tidak ada file yang cocok dengan pencarian Anda"
@@ -12224,6 +12236,9 @@ msgstr "Aplikasi lain"
 msgid "Other devices"
 msgstr "Perangkat lain"
 
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "Folder lain tempat agen dapat bekerja dan perubahannya ditampilkan di samping perubahan proyek ini. Bisa berupa repositori git atau folder biasa."
+
 msgid "Other Hosts"
 msgstr "Host Lain"
 
@@ -12235,9 +12250,6 @@ msgstr "Anggota Tim Lainnya"
 
 msgid "Other ways to reach us"
 msgstr "Cara lain menghubungi kami"
-
-msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
-msgstr "Folder lain tempat agen dapat bekerja dan perubahannya ditampilkan di samping perubahan proyek ini. Bisa berupa repositori git atau folder biasa."
 
 msgid "Our $11.5M seed round is led by Union Square Ventures, with Y Combinator, Paul Graham, and founders we admire."
 msgstr "Putaran pendanaan awal kami senilai $11,5 juta dipimpin oleh Union Square Ventures, bersama Y Combinator, Paul Graham, dan para pendiri yang kami kagumi."
@@ -13633,6 +13645,9 @@ msgstr "Hapus {label}?"
 msgid "Remove attachment"
 msgstr "Hapus lampiran"
 
+msgid "Remove folder"
+msgstr "Hapus folder"
+
 msgid "Remove from favorites"
 msgstr "Hapus dari favorit"
 
@@ -13644,9 +13659,6 @@ msgstr "Hapus dari sidebar"
 
 msgid "Remove from Sidebar"
 msgstr "Hapus dari Sidebar"
-
-msgid "Remove folder"
-msgstr "Hapus folder"
 
 msgid "Remove icon"
 msgstr "Hapus ikon"
@@ -15367,9 +15379,6 @@ msgstr "Tampilkan semua baris"
 
 msgid "Show checks"
 msgstr "Tampilkan check"
-
-msgid "Show CLI login accounts and the CHAT/CLI switch on this device."
-msgstr "Tampilkan akun login CLI dan pengalih CHAT/CLI pada perangkat ini."
 
 msgid "Show closed"
 msgstr "Tampilkan yang ditutup"
@@ -17465,6 +17474,12 @@ msgstr "file ini"
 msgid "This file is empty or was deleted."
 msgstr "File ini kosong atau sudah dihapus."
 
+msgid "This folder is not a git repository."
+msgstr "Folder ini bukan repositori git."
+
+msgid "This folder no longer exists on disk."
+msgstr "Folder ini sudah tidak ada di disk."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "Instalasi GitHub ini sudah terhubung ke organisasi Superset lain. Putuskan di sana, atau copot GitHub App Superset, lalu coba lagi."
 
@@ -17473,12 +17488,6 @@ msgstr "Host ini"
 
 msgid "This host has not reported a version yet."
 msgstr "Host ini belum melaporkan versi."
-
-msgid "This folder is not a git repository."
-msgstr "Folder ini bukan repositori git."
-
-msgid "This folder no longer exists on disk."
-msgstr "Folder ini sudah tidak ada di disk."
 
 msgid "This host is behind the app you are using. Workspaces still open, but newer features may fail on it."
 msgstr "Host ini tertinggal dari aplikasi yang Anda gunakan. Workspace masih terbuka, tetapi fitur baru mungkin gagal di sana."
@@ -19267,6 +19276,9 @@ msgstr "Worktree dibuka"
 msgid "Worktree out of sync"
 msgstr "Worktree tidak sinkron"
 
+msgid "Worktree per workspace"
+msgstr "Worktree per workspace"
+
 msgid "Worktrees"
 msgstr "Worktree"
 
@@ -19275,9 +19287,6 @@ msgstr "Worktree dihapus dari disk; workspace di checkout proyek hanya ditutup. 
 
 msgid "Would you like to reassign it?"
 msgstr "Ingin menetapkannya ulang?"
-
-msgid "Worktree per workspace"
-msgstr "Worktree per workspace"
 
 msgid "Wrap lines"
 msgstr "Bungkus baris"
