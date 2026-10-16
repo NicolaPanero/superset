@@ -16,8 +16,8 @@ const input = {
 	enabled: true,
 };
 const profile = {
-	selection: "/profiles/.claude-b4b-siapcn-it",
-	label: "b4b@siapcn.it",
+	selection: "/profiles/.claude-work-example-com",
+	label: "work@example.com",
 	credentialKind: "subscription" as const,
 };
 function fixture(
