@@ -9,11 +9,13 @@ describe("resolveAmbientCodexHome", () => {
 	let previousCodexHome: string | undefined;
 	let previousInjected: string | undefined;
 	let previousAmbient: string | undefined;
+	let previousPinned: string | undefined;
 
 	beforeEach(() => {
 		previousCodexHome = process.env.CODEX_HOME;
 		previousInjected = process.env.SUPERSET_DEFAULT_CODEX_HOME;
 		previousAmbient = process.env.SUPERSET_AMBIENT_CODEX_HOME;
+		previousPinned = process.env.SUPERSET_PINNED_ACCOUNT_ENV;
 	});
 
 	afterEach(() => {
@@ -21,6 +23,7 @@ describe("resolveAmbientCodexHome", () => {
 			["CODEX_HOME", previousCodexHome],
 			["SUPERSET_DEFAULT_CODEX_HOME", previousInjected],
 			["SUPERSET_AMBIENT_CODEX_HOME", previousAmbient],
+			["SUPERSET_PINNED_ACCOUNT_ENV", previousPinned],
 		] as const) {
 			if (value === undefined) delete process.env[key];
 			else process.env[key] = value;
@@ -50,6 +53,16 @@ describe("resolveAmbientCodexHome", () => {
 		process.env.SUPERSET_DEFAULT_CODEX_HOME = "/home/tester/.codex-work";
 		delete process.env.SUPERSET_AMBIENT_CODEX_HOME;
 		expect(resolveAmbientCodexHome(HOME)).toBe(path.join(HOME, ".codex"));
+	});
+
+	it("ignores a CODEX_HOME pinned by a chat's account", () => {
+		process.env.CODEX_HOME = "/home/tester/.codex-work";
+		process.env.SUPERSET_DEFAULT_CODEX_HOME = "";
+		process.env.SUPERSET_PINNED_ACCOUNT_ENV = "CODEX_HOME";
+		delete process.env.SUPERSET_AMBIENT_CODEX_HOME;
+		expect(resolveAmbientCodexHome(HOME)).toBe(path.join(HOME, ".codex"));
+		process.env.SUPERSET_AMBIENT_CODEX_HOME = "/home/tester/my-codex";
+		expect(resolveAmbientCodexHome(HOME)).toBe("/home/tester/my-codex");
 	});
 
 	it("normalizes the injected value before comparing it", () => {
