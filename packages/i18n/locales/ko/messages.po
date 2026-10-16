@@ -1658,6 +1658,9 @@ msgstr "{0} 계정 추가"
 msgid "Add {0} to workspace"
 msgstr "{0}을(를) 워크스페이스에 추가"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "시작하려면 Bitbucket 저장소를 추가하세요."
+
 msgid "Add a comment…"
 msgstr "댓글 추가…"
 
@@ -2222,6 +2225,9 @@ msgstr "로컬 브랜치도 삭제"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "worktree 워크스페이스를 삭제할 때 로컬 git 브랜치도 함께 삭제합니다"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "이 컴퓨터의 GitHub CLI에서도 로그아웃"
+
 msgid "Also viewing this page"
 msgstr "이 페이지를 함께 보는 사람"
 
@@ -2407,6 +2413,9 @@ msgstr "API 키"
 
 msgid "API keys are not validated with a paid request."
 msgstr "API 키는 유료 요청으로 검증하지 않습니다."
+
+msgid "API token"
+msgstr "API 토큰"
 
 msgid "API-equivalent"
 msgstr "API 환산"
@@ -4272,6 +4281,9 @@ msgstr "기본 스타일과 비교함"
 msgid "complete"
 msgstr "종료"
 
+msgid "Complete authorization in your browser."
+msgstr "브라우저에서 인증을 완료하세요."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "공식 CLI 절차를 완료한 뒤 이 창을 닫아 결과를 확인하세요."
 
@@ -4309,11 +4321,17 @@ msgstr "git 브랜치와 worktree 동작을 설정합니다"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Superset과 Linear 사이에서 작업을 동기화하는 방식을 설정합니다."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "포크 설정에서 통합을 구성하세요."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "터미널 동작과 재사용 가능한 터미널 스크립트를 설정합니다"
 
 msgid "Configure the in-app browser"
 msgstr "앱 내 브라우저를 설정합니다"
+
+msgid "Configure the OAuth service below."
+msgstr "아래에서 OAuth 서비스를 구성하세요."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "실행기에 표시할 에이전트와 실행 구성 방식을 설정합니다."
@@ -4326,6 +4344,12 @@ msgstr "설정된 계정"
 
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
+
+msgid "Confirm delete"
+msgstr "삭제 확인"
+
+msgid "Confirm merge"
+msgstr "병합 확인"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "외부 서비스를 연결해 조직과 데이터를 동기화합니다.
 msgid "Connect external services to sync data."
 msgstr "외부 서비스를 연결해 데이터를 동기화합니다."
 
+msgid "Connect GitHub"
+msgstr "GitHub 연결"
+
 msgid "Connect Google"
 msgstr "Google 연결"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Jira 및 Bitbucket 연결"
 
 msgid "Connect Linear"
 msgstr "Linear 연결"
@@ -4432,6 +4462,9 @@ msgstr "Microsoft Teams 테넌트를 연결하세요. 테넌트 관리자가 로
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Notion 워크스페이스를 연결하고 자동화가 지켜볼 페이지와 데이터 소스를 공유하세요."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "이 컴퓨터의 저장소와 작업을 연결하세요."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Slack 워크스페이스를 연결해 대화에서 바로 작업을 관리하세요."
@@ -5925,6 +5958,9 @@ msgstr "선택한 워크스페이스 삭제"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "세션 \"{workspaceName}\"을(를) 삭제할까요?"
 
+msgid "Delete task"
+msgstr "작업 삭제"
+
 msgid "Delete team"
 msgstr "팀 삭제"
 
@@ -6283,6 +6319,9 @@ msgstr "Sentry 연결을 해제할까요?"
 
 msgid "Disconnect Slack?"
 msgstr "Slack 연결을 해제할까요?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "이 계정을 Superset에서 연결 해제할까요?"
 
 msgid "Disconnected"
 msgstr "연결 끊김"
@@ -7519,6 +7558,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "빠름"
 
+msgid "Fast-forward"
+msgstr "빨리 감기"
+
 msgid "Fatal"
 msgstr "치명적"
 
@@ -7584,6 +7626,9 @@ msgstr "파일을 찾을 수 없습니다"
 
 msgid "File open mode"
 msgstr "파일 열기 방식"
+
+msgid "File path"
+msgstr "파일 경로"
 
 msgid "File viewer"
 msgstr "파일 뷰어"
@@ -9572,6 +9617,9 @@ msgstr "Superset으로 만드는 게 즐거우신가요?"
 msgid "Lime"
 msgstr "라임"
 
+msgid "Line"
+msgstr "줄"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "머지 실패: {0}"
 
 msgid "Merge into center"
 msgstr "가운데로 합치기"
+
+msgid "Merge method"
+msgstr "병합 방식"
 
 msgid "Merge pull request"
 msgstr "풀 리퀘스트 머지"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "기본은 OAuth, CI에는 API 키"
 
+msgid "OAuth service"
+msgstr "OAuth 서비스"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "{0} 중"
@@ -11612,6 +11666,9 @@ msgstr "보드의 첫 100명 중 한 명"
 
 msgid "one of the selected repositories"
 msgstr "선택한 리포지토리 중 하나"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "하나의 서비스로 Jira와 Bitbucket을 모두 연결할 수 있습니다."
 
 msgid "One step left"
 msgstr "한 단계 남았습니다"
@@ -11932,6 +11989,9 @@ msgstr "T3 Chat에서 열기"
 
 msgid "Open in tab"
 msgstr "탭에서 열기"
+
+msgid "Open in workspace"
+msgstr "작업 공간에서 열기"
 
 msgid "Open in…"
 msgstr "다음으로 열기…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "최고 속도"
+
+msgid "Pending"
+msgstr "대기 중"
 
 msgid "Pending Invitations"
 msgstr "대기 중인 초대"
@@ -13228,10 +13291,16 @@ msgstr "보라"
 msgid "Push"
 msgstr "푸시"
 
+msgid "Push and create PR"
+msgstr "푸시하고 PR 만들기"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "푸시 실패: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "풀 리퀘스트를 만들기 전에 브랜치를 푸시하세요."
 
 msgid "Pushed"
 msgstr "푸시됨"
@@ -13666,6 +13735,9 @@ msgstr "{0} 제거"
 msgid "Remove {label}?"
 msgstr "{label}을(를) 제거할까요?"
 
+msgid "Remove approval"
+msgstr "승인 취소"
+
 msgid "Remove attachment"
 msgstr "첨부 파일 제거"
 
@@ -13893,6 +13965,9 @@ msgstr "리포지토리"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "GitHub App 설치를 통해 접근할 수 있는 리포지토리입니다."
+
+msgid "Repositories and pull requests"
+msgstr "저장소 및 풀 리퀘스트"
 
 msgid "Repositories refreshed"
 msgstr "리포지토리를 새로 고쳤습니다"
@@ -15084,6 +15159,9 @@ msgstr "팀 선택"
 msgid "Select terminal script directory"
 msgstr "터미널 스크립트 디렉터리 선택"
 
+msgid "Select workspace"
+msgstr "작업 공간 선택"
+
 msgid "Select worktree location"
 msgstr "worktree 위치 선택"
 
@@ -15186,6 +15264,9 @@ msgstr "구분선"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "서비스 가용성은 <0>status.superset.sh</0>에, 보안 및 규정 준수 문서는 <1>trust.superset.sh</1>에 공개되어 있습니다."
 
+msgid "Service URL"
+msgstr "서비스 URL"
+
 msgid "Session"
 msgstr "세션"
 
@@ -15226,6 +15307,9 @@ msgstr "세션"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "세션 · 비용 상위 {0}개"
+
+msgid "Set as default"
+msgstr "기본값으로 설정"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "단일 탭 + 패널"
 msgid "Single-select"
 msgstr "단일 선택"
 
+msgid "Site URL"
+msgstr "사이트 URL"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "사이트 전체 텔레메트리 · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "출처"
 msgid "Source Available"
 msgstr "소스 공개"
 
+msgid "Source branch"
+msgstr "소스 브랜치"
+
 msgid "Source path (not an import)"
 msgstr "소스 경로 (임포트 아님)"
 
@@ -15965,6 +16055,9 @@ msgstr "새 브라우저로 분할"
 
 msgid "Split with Sandbox Desktop"
 msgstr "샌드박스 데스크톱으로 분할"
+
+msgid "Squash"
+msgstr "커밋 합치기"
 
 msgid "Squash & Merge"
 msgstr "스쿼시 후 머지"
@@ -16762,6 +16855,9 @@ msgstr "목표일"
 msgid "Target agent"
 msgstr "대상 에이전트"
 
+msgid "Target branch"
+msgstr "대상 브랜치"
+
 msgid "Target date"
 msgstr "목표일"
 
@@ -16809,6 +16905,9 @@ msgstr "작업 관리 위치가 업데이트되었습니다"
 
 msgid "Tasks"
 msgstr "작업"
+
+msgid "Tasks and projects"
+msgstr "작업 및 프로젝트"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Superset에서 만든 작업이 이 Linear 팀으로 동기화됩니다."
@@ -17473,6 +17572,9 @@ msgstr "워크스페이스와 해당 터미널을 닫습니다. 프로젝트의 
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "이 클라우드 워크스페이스를 깨우는 중입니다. 한동안 사용하지 않았다면 최대 30초가 걸릴 수 있습니다."
+
+msgid "This computer"
+msgstr "이 컴퓨터"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "재부팅/충돌 복구에 사용하는 저장된 스크롤백을 삭제합니다."
@@ -18432,6 +18534,9 @@ msgstr "브랜치 접두사를 업데이트할"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "안내 설정을 위해 이 호스트를 업데이트하거나 고급 설정을 사용하세요."
 
+msgid "Update this host to configure integrations."
+msgstr "통합을 구성하려면 이 호스트를 업데이트하세요."
+
 msgid "Updated"
 msgstr "업데이트됨"
 
@@ -18650,6 +18755,9 @@ msgstr "확인 후 저장됨"
 
 msgid "Verified through sign-in"
 msgstr "로그인으로 확인됨"
+
+msgid "Verify"
+msgstr "확인"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "툴팁 안에서 Kbd가 계속 보이는지 확인"
@@ -19453,6 +19561,9 @@ msgstr "버전 {version}을 읽기 전용으로 보고 있습니다"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "파일은 최대 {MAX_ATTACHMENTS}개까지 첨부할 수 있습니다"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "이 연결은 나중에 포크 설정에서 구성할 수 있습니다."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "30일 동안 설정 → 프로젝트에서 복원할 수 있습니다. 저장소 폴더는 절대 삭제되지 않습니다."

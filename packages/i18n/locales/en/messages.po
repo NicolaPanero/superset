@@ -1658,6 +1658,9 @@ msgstr "Add {0} account"
 msgid "Add {0} to workspace"
 msgstr "Add {0} to workspace"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Add a Bitbucket repository to get started."
+
 msgid "Add a comment…"
 msgstr "Add a comment…"
 
@@ -2222,6 +2225,9 @@ msgstr "Also delete local branches"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Also delete the local git branch when deleting a worktree workspace"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Also sign out of GitHub CLI on this computer"
+
 msgid "Also viewing this page"
 msgstr "Also viewing this page"
 
@@ -2407,6 +2413,9 @@ msgstr "API Keys"
 
 msgid "API keys are not validated with a paid request."
 msgstr "API keys are not validated with a paid request."
+
+msgid "API token"
+msgstr "API token"
 
 msgid "API-equivalent"
 msgstr "API-equivalent"
@@ -4272,6 +4281,9 @@ msgstr "Compared against the default style"
 msgid "complete"
 msgstr "complete"
 
+msgid "Complete authorization in your browser."
+msgstr "Complete authorization in your browser."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Complete the official CLI flow, then close this window to check the result."
 
@@ -4309,11 +4321,17 @@ msgstr "Configure git branch and worktree behavior"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Configure how tasks sync between Superset and Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Configure integrations in Fork Settings."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Configure terminal behavior and reusable terminal scripts"
 
 msgid "Configure the in-app browser"
 msgstr "Configure the in-app browser"
+
+msgid "Configure the OAuth service below."
+msgstr "Configure the OAuth service below."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Configure which agents appear in launchers and how their launches are built."
@@ -4326,6 +4344,12 @@ msgstr "Configured account"
 
 msgid "Confirm before quitting"
 msgstr "Confirm before quitting"
+
+msgid "Confirm delete"
+msgstr "Confirm delete"
+
+msgid "Confirm merge"
+msgstr "Confirm merge"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "Connect external services to sync data with your organization."
 msgid "Connect external services to sync data."
 msgstr "Connect external services to sync data."
 
+msgid "Connect GitHub"
+msgstr "Connect GitHub"
+
 msgid "Connect Google"
 msgstr "Connect Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Connect Jira and Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Connect Linear"
@@ -4432,6 +4462,9 @@ msgstr "Connect your Microsoft Teams tenant. A tenant admin signs in and grants 
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Connect your Notion workspace and share the pages and data sources automations should watch."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Connect your repositories and tasks on this computer."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Connect your Slack workspace to manage tasks from conversations."
@@ -5925,6 +5958,9 @@ msgstr "Delete selected workspaces"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Delete session \"{workspaceName}\"?"
 
+msgid "Delete task"
+msgstr "Delete task"
+
 msgid "Delete team"
 msgstr "Delete team"
 
@@ -6283,6 +6319,9 @@ msgstr "Disconnect Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Disconnect Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Disconnect this account from Superset?"
 
 msgid "Disconnected"
 msgstr "Disconnected"
@@ -7519,6 +7558,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Fast"
 
+msgid "Fast-forward"
+msgstr "Fast-forward"
+
 msgid "Fatal"
 msgstr "Fatal"
 
@@ -7584,6 +7626,9 @@ msgstr "File not found"
 
 msgid "File open mode"
 msgstr "File open mode"
+
+msgid "File path"
+msgstr "File path"
 
 msgid "File viewer"
 msgstr "File viewer"
@@ -9572,6 +9617,9 @@ msgstr "Like building with Superset?"
 msgid "Lime"
 msgstr "Lime"
 
+msgid "Line"
+msgstr "Line"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "Merge failed: {0}"
 
 msgid "Merge into center"
 msgstr "Merge into center"
+
+msgid "Merge method"
+msgstr "Merge method"
 
 msgid "Merge pull request"
 msgstr "Merge pull request"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "OAuth by default, API keys for CI"
 
+msgid "OAuth service"
+msgstr "OAuth service"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "of {0}"
@@ -11612,6 +11666,9 @@ msgstr "One of the first hundred on the board"
 
 msgid "one of the selected repositories"
 msgstr "one of the selected repositories"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "One service can connect both Jira and Bitbucket."
 
 msgid "One step left"
 msgstr "One step left"
@@ -11932,6 +11989,9 @@ msgstr "Open in T3 Chat"
 
 msgid "Open in tab"
 msgstr "Open in tab"
+
+msgid "Open in workspace"
+msgstr "Open in workspace"
 
 msgid "Open in…"
 msgstr "Open in…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Peak pace"
+
+msgid "Pending"
+msgstr "Pending"
 
 msgid "Pending Invitations"
 msgstr "Pending Invitations"
@@ -13228,10 +13291,16 @@ msgstr "Purple"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Push and create PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push failed: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Push your branch before creating a pull request."
 
 msgid "Pushed"
 msgstr "Pushed"
@@ -13666,6 +13735,9 @@ msgstr "Remove {0}"
 msgid "Remove {label}?"
 msgstr "Remove {label}?"
 
+msgid "Remove approval"
+msgstr "Remove approval"
+
 msgid "Remove attachment"
 msgstr "Remove attachment"
 
@@ -13893,6 +13965,9 @@ msgstr "Repositories"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repositories accessible through the GitHub App installation."
+
+msgid "Repositories and pull requests"
+msgstr "Repositories and pull requests"
 
 msgid "Repositories refreshed"
 msgstr "Repositories refreshed"
@@ -15084,6 +15159,9 @@ msgstr "Select teams"
 msgid "Select terminal script directory"
 msgstr "Select terminal script directory"
 
+msgid "Select workspace"
+msgstr "Select workspace"
+
 msgid "Select worktree location"
 msgstr "Select worktree location"
 
@@ -15186,6 +15264,9 @@ msgstr "Separator"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "Service URL"
+
 msgid "Session"
 msgstr "Session"
 
@@ -15226,6 +15307,9 @@ msgstr "Sessions"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Sessions · top {0} by cost"
+
+msgid "Set as default"
+msgstr "Set as default"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "Single tab + panes"
 msgid "Single-select"
 msgstr "Single-select"
 
+msgid "Site URL"
+msgstr "Site URL"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Site-wide telemetry · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "Source"
 msgid "Source Available"
 msgstr "Source Available"
 
+msgid "Source branch"
+msgstr "Source branch"
+
 msgid "Source path (not an import)"
 msgstr "Source path (not an import)"
 
@@ -15965,6 +16055,9 @@ msgstr "Split with New Browser"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Split with Sandbox Desktop"
+
+msgid "Squash"
+msgstr "Squash"
 
 msgid "Squash & Merge"
 msgstr "Squash & Merge"
@@ -16762,6 +16855,9 @@ msgstr "Target"
 msgid "Target agent"
 msgstr "Target agent"
 
+msgid "Target branch"
+msgstr "Target branch"
+
 msgid "Target date"
 msgstr "Target date"
 
@@ -16809,6 +16905,9 @@ msgstr "Task tracker updated"
 
 msgid "Tasks"
 msgstr "Tasks"
+
+msgid "Tasks and projects"
+msgstr "Tasks and projects"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Tasks created in Superset will be synced to this Linear team."
@@ -17473,6 +17572,9 @@ msgstr "This closes the workspace and its terminals. The project's files, branch
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
+
+msgid "This computer"
+msgstr "This computer"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "This deletes the saved scrollback used for reboot/crash recovery."
@@ -18432,6 +18534,9 @@ msgstr "update the branch prefix"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Update this host for guided setup, or use advanced configuration."
 
+msgid "Update this host to configure integrations."
+msgstr "Update this host to configure integrations."
+
 msgid "Updated"
 msgstr "Updated"
 
@@ -18650,6 +18755,9 @@ msgstr "Verified and saved"
 
 msgid "Verified through sign-in"
 msgstr "Verified through sign-in"
+
+msgid "Verify"
+msgstr "Verify"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Verify Kbd stays visible inside tooltips"
@@ -19453,6 +19561,9 @@ msgstr "You are viewing version {version}, read-only"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "You can attach up to {MAX_ATTACHMENTS} files"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "You can configure these connections later in Fork Settings."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."

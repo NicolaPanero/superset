@@ -1658,6 +1658,9 @@ msgstr "添加{0}账户"
 msgid "Add {0} to workspace"
 msgstr "将{0}添加到工作区"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "添加 Bitbucket 仓库以开始使用。"
+
 msgid "Add a comment…"
 msgstr "添加评论…"
 
@@ -2222,6 +2225,9 @@ msgstr "同时删除本地分支"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "删除worktree工作区时一并删除本地git分支"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "同时退出此计算机上的 GitHub CLI"
+
 msgid "Also viewing this page"
 msgstr "也在查看此页面的人"
 
@@ -2407,6 +2413,9 @@ msgstr "API密钥"
 
 msgid "API keys are not validated with a paid request."
 msgstr "不会通过付费请求验证 API 密钥。"
+
+msgid "API token"
+msgstr "API 令牌"
 
 msgid "API-equivalent"
 msgstr "按API价折算"
@@ -4272,6 +4281,9 @@ msgstr "与默认样式做了对比"
 msgid "complete"
 msgstr "已结束"
 
+msgid "Complete authorization in your browser."
+msgstr "在浏览器中完成授权。"
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "完成官方 CLI 流程后关闭此窗口，检查结果。"
 
@@ -4309,11 +4321,17 @@ msgstr "配置git分支和worktree行为"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "配置任务在Superset和Linear之间的同步方式。"
 
+msgid "Configure integrations in Fork Settings."
+msgstr "在分支版本设置中配置集成。"
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "配置终端行为和可复用的终端脚本"
 
 msgid "Configure the in-app browser"
 msgstr "配置应用内浏览器"
+
+msgid "Configure the OAuth service below."
+msgstr "在下方配置 OAuth 服务。"
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "配置哪些智能体出现在启动器中，以及它们的启动方式。"
@@ -4326,6 +4344,12 @@ msgstr "已配置的账户"
 
 msgid "Confirm before quitting"
 msgstr "退出前确认"
+
+msgid "Confirm delete"
+msgstr "确认删除"
+
+msgid "Confirm merge"
+msgstr "确认合并"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "连接外部服务，与你的组织同步数据。"
 msgid "Connect external services to sync data."
 msgstr "连接外部服务以同步数据。"
 
+msgid "Connect GitHub"
+msgstr "连接 GitHub"
+
 msgid "Connect Google"
 msgstr "连接Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "连接 Jira 和 Bitbucket"
 
 msgid "Connect Linear"
 msgstr "连接Linear"
@@ -4432,6 +4462,9 @@ msgstr "连接你的Microsoft Teams租户。由租户管理员登录，一次性
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "连接你的Notion工作区，并共享需要自动化监听的页面和数据源。"
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "连接此计算机上的仓库和任务。"
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "连接你的Slack工作区，直接在对话中管理任务。"
@@ -5925,6 +5958,9 @@ msgstr "删除选中的工作区"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "删除会话“{workspaceName}”？"
 
+msgid "Delete task"
+msgstr "删除任务"
+
 msgid "Delete team"
 msgstr "删除团队"
 
@@ -6283,6 +6319,9 @@ msgstr "断开Sentry连接？"
 
 msgid "Disconnect Slack?"
 msgstr "断开Slack连接？"
+
+msgid "Disconnect this account from Superset?"
+msgstr "要将此账号与 Superset 断开连接吗？"
 
 msgid "Disconnected"
 msgstr "已断开"
@@ -7519,6 +7558,9 @@ msgstr "常见问题"
 msgid "Fast"
 msgstr "快速"
 
+msgid "Fast-forward"
+msgstr "快进"
+
 msgid "Fatal"
 msgstr "致命"
 
@@ -7584,6 +7626,9 @@ msgstr "未找到文件"
 
 msgid "File open mode"
 msgstr "文件打开方式"
+
+msgid "File path"
+msgstr "文件路径"
 
 msgid "File viewer"
 msgstr "文件查看器"
@@ -9572,6 +9617,9 @@ msgstr "喜欢用Superset开发吗？"
 msgid "Lime"
 msgstr "青柠色"
 
+msgid "Line"
+msgstr "行"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "合并失败：{0}"
 
 msgid "Merge into center"
 msgstr "合并到中间"
+
+msgid "Merge method"
+msgstr "合并方式"
 
 msgid "Merge pull request"
 msgstr "合并拉取请求"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "默认用OAuth，CI用API密钥"
 
+msgid "OAuth service"
+msgstr "OAuth 服务"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "共{0}人"
@@ -11612,6 +11666,9 @@ msgstr "榜单最早的一百人之一"
 
 msgid "one of the selected repositories"
 msgstr "所选仓库之一"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "一个服务即可连接 Jira 和 Bitbucket。"
 
 msgid "One step left"
 msgstr "还差一步"
@@ -11932,6 +11989,9 @@ msgstr "在T3 Chat中打开"
 
 msgid "Open in tab"
 msgstr "在标签页中打开"
+
+msgid "Open in workspace"
+msgstr "在工作区中打开"
 
 msgid "Open in…"
 msgstr "打开方式…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "峰值速度"
+
+msgid "Pending"
+msgstr "待处理"
 
 msgid "Pending Invitations"
 msgstr "待处理邀请"
@@ -13228,10 +13291,16 @@ msgstr "紫色"
 msgid "Push"
 msgstr "推送"
 
+msgid "Push and create PR"
+msgstr "推送并创建 PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "推送失败：{0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "创建拉取请求前请先推送分支。"
 
 msgid "Pushed"
 msgstr "已推送"
@@ -13666,6 +13735,9 @@ msgstr "移除{0}"
 msgid "Remove {label}?"
 msgstr "移除{label}？"
 
+msgid "Remove approval"
+msgstr "撤销批准"
+
 msgid "Remove attachment"
 msgstr "移除附件"
 
@@ -13893,6 +13965,9 @@ msgstr "仓库"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "通过GitHub App安装可访问的仓库。"
+
+msgid "Repositories and pull requests"
+msgstr "仓库和拉取请求"
 
 msgid "Repositories refreshed"
 msgstr "仓库已刷新"
@@ -15084,6 +15159,9 @@ msgstr "选择团队"
 msgid "Select terminal script directory"
 msgstr "选择终端脚本目录"
 
+msgid "Select workspace"
+msgstr "选择工作区"
+
 msgid "Select worktree location"
 msgstr "选择worktree位置"
 
@@ -15186,6 +15264,9 @@ msgstr "分隔线"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "服务可用性发布在<0>status.superset.sh</0>，安全与合规文档在<1>trust.superset.sh</1>。"
 
+msgid "Service URL"
+msgstr "服务 URL"
+
 msgid "Session"
 msgstr "会话"
 
@@ -15226,6 +15307,9 @@ msgstr "会话"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "会话 · 按费用排名前{0}"
+
+msgid "Set as default"
+msgstr "设为默认"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "单标签页+窗格"
 msgid "Single-select"
 msgstr "单选"
 
+msgid "Site URL"
+msgstr "站点 URL"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "全站遥测 · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "来源"
 msgid "Source Available"
 msgstr "源码可见"
 
+msgid "Source branch"
+msgstr "源分支"
+
 msgid "Source path (not an import)"
 msgstr "源码路径（不是导入路径）"
 
@@ -15965,6 +16055,9 @@ msgstr "拆分并新建浏览器"
 
 msgid "Split with Sandbox Desktop"
 msgstr "拆分并打开沙盒桌面"
+
+msgid "Squash"
+msgstr "压缩提交"
 
 msgid "Squash & Merge"
 msgstr "压缩并合并"
@@ -16762,6 +16855,9 @@ msgstr "目标日期"
 msgid "Target agent"
 msgstr "目标智能体"
 
+msgid "Target branch"
+msgstr "目标分支"
+
 msgid "Target date"
 msgstr "目标日期"
 
@@ -16809,6 +16905,9 @@ msgstr "任务管理位置已更新"
 
 msgid "Tasks"
 msgstr "任务"
+
+msgid "Tasks and projects"
+msgstr "任务和项目"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "在Superset中创建的任务会同步到这个Linear团队。"
@@ -17473,6 +17572,9 @@ msgstr "这将关闭该工作区及其终端。项目的文件、分支和其他
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "正在唤醒此云工作区。如果它已闲置一段时间，可能需要最多 30 秒。"
+
+msgid "This computer"
+msgstr "此计算机"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "这将删除用于重启/崩溃恢复的已保存回滚缓冲。"
@@ -18432,6 +18534,9 @@ msgstr "更新分支前缀"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "更新此主机以使用引导配置，或使用高级配置。"
 
+msgid "Update this host to configure integrations."
+msgstr "请更新此主机以配置集成。"
+
 msgid "Updated"
 msgstr "已更新"
 
@@ -18650,6 +18755,9 @@ msgstr "已验证并保存"
 
 msgid "Verified through sign-in"
 msgstr "通过登录验证"
+
+msgid "Verify"
+msgstr "验证"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "确认Kbd在tooltip中仍然可见"
@@ -19453,6 +19561,9 @@ msgstr "您正在查看版本 {version}，只读"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "最多可附加{MAX_ATTACHMENTS}个文件"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "你可以稍后在分支版本设置中配置这些连接。"
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "你可以在 30 天内从“设置 → 项目”恢复它。仓库文件夹永远不会被删除。"

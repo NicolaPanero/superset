@@ -1658,6 +1658,9 @@ msgstr "Thêm tài khoản {0}"
 msgid "Add {0} to workspace"
 msgstr "Thêm {0} vào workspace"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Thêm kho lưu trữ Bitbucket để bắt đầu."
+
 msgid "Add a comment…"
 msgstr "Thêm bình luận…"
 
@@ -2222,6 +2225,9 @@ msgstr "Xóa luôn nhánh cục bộ"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Xóa luôn nhánh git cục bộ khi xóa một workspace worktree"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Đồng thời đăng xuất GitHub CLI trên máy tính này"
+
 msgid "Also viewing this page"
 msgstr "Cũng đang xem trang này"
 
@@ -2407,6 +2413,9 @@ msgstr "Khóa API"
 
 msgid "API keys are not validated with a paid request."
 msgstr "Khóa API không được xác thực bằng yêu cầu trả phí."
+
+msgid "API token"
+msgstr "Mã thông báo API"
 
 msgid "API-equivalent"
 msgstr "quy đổi theo API"
@@ -4272,6 +4281,9 @@ msgstr "So sánh với kiểu mặc định"
 msgid "complete"
 msgstr "đã kết thúc"
 
+msgid "Complete authorization in your browser."
+msgstr "Hoàn tất ủy quyền trong trình duyệt."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Hoàn thành quy trình CLI chính thức rồi đóng cửa sổ này để kiểm tra kết quả."
 
@@ -4309,11 +4321,17 @@ msgstr "Cấu hình hành vi của nhánh git và worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Cấu hình cách tác vụ đồng bộ giữa Superset và Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Cấu hình tích hợp trong cài đặt fork."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Cấu hình hành vi terminal và các script terminal dùng lại được"
 
 msgid "Configure the in-app browser"
 msgstr "Cấu hình trình duyệt trong ứng dụng"
+
+msgid "Configure the OAuth service below."
+msgstr "Cấu hình dịch vụ OAuth bên dưới."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Chọn agent nào xuất hiện trong trình khởi chạy và cách dựng lệnh khởi chạy của chúng."
@@ -4326,6 +4344,12 @@ msgstr "Tài khoản đã cấu hình"
 
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
+
+msgid "Confirm delete"
+msgstr "Xác nhận xóa"
+
+msgid "Confirm merge"
+msgstr "Xác nhận hợp nhất"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "Kết nối dịch vụ bên ngoài để đồng bộ dữ liệu với
 msgid "Connect external services to sync data."
 msgstr "Kết nối dịch vụ bên ngoài để đồng bộ dữ liệu."
 
+msgid "Connect GitHub"
+msgstr "Kết nối GitHub"
+
 msgid "Connect Google"
 msgstr "Kết nối Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Kết nối Jira và Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Kết nối Linear"
@@ -4432,6 +4462,9 @@ msgstr "Kết nối tenant Microsoft Teams của bạn. Quản trị viên tenan
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Kết nối workspace Notion của bạn và chia sẻ các trang cùng nguồn dữ liệu mà tự động hóa cần theo dõi."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Kết nối các kho lưu trữ và tác vụ trên máy tính này."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Kết nối workspace Slack của bạn để quản lý tác vụ ngay trong hội thoại."
@@ -5925,6 +5958,9 @@ msgstr "Xóa các workspace đã chọn"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Xóa phiên \"{workspaceName}\"?"
 
+msgid "Delete task"
+msgstr "Xóa tác vụ"
+
 msgid "Delete team"
 msgstr "Xóa nhóm"
 
@@ -6283,6 +6319,9 @@ msgstr "Ngắt kết nối Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Ngắt kết nối Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Ngắt kết nối tài khoản này khỏi Superset?"
 
 msgid "Disconnected"
 msgstr "Đã ngắt kết nối"
@@ -7519,6 +7558,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Nhanh"
 
+msgid "Fast-forward"
+msgstr "Tua nhanh"
+
 msgid "Fatal"
 msgstr "Nghiêm trọng"
 
@@ -7584,6 +7626,9 @@ msgstr "Không tìm thấy tệp"
 
 msgid "File open mode"
 msgstr "Chế độ mở tệp"
+
+msgid "File path"
+msgstr "Đường dẫn tệp"
 
 msgid "File viewer"
 msgstr "Trình xem tệp"
@@ -9572,6 +9617,9 @@ msgstr "Thích xây dựng cùng Superset?"
 msgid "Lime"
 msgstr "Xanh chanh"
 
+msgid "Line"
+msgstr "Dòng"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "Merge thất bại: {0}"
 
 msgid "Merge into center"
 msgstr "Gộp vào giữa"
+
+msgid "Merge method"
+msgstr "Phương thức hợp nhất"
 
 msgid "Merge pull request"
 msgstr "Merge pull request"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "Mặc định là OAuth, khóa API cho CI"
 
+msgid "OAuth service"
+msgstr "Dịch vụ OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "trên {0}"
@@ -11612,6 +11666,9 @@ msgstr "Một trong một trăm người đầu tiên trên bảng"
 
 msgid "one of the selected repositories"
 msgstr "một trong các repository đã chọn"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Một dịch vụ có thể kết nối cả Jira và Bitbucket."
 
 msgid "One step left"
 msgstr "Còn một bước nữa"
@@ -11932,6 +11989,9 @@ msgstr "Mở trong T3 Chat"
 
 msgid "Open in tab"
 msgstr "Mở trong tab"
+
+msgid "Open in workspace"
+msgstr "Mở trong không gian làm việc"
 
 msgid "Open in…"
 msgstr "Mở trong…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Tốc độ đỉnh"
+
+msgid "Pending"
+msgstr "Đang chờ"
 
 msgid "Pending Invitations"
 msgstr "Lời mời đang chờ"
@@ -13228,10 +13291,16 @@ msgstr "Tím"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Đẩy và tạo PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push thất bại: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Đẩy nhánh của bạn trước khi tạo pull request."
 
 msgid "Pushed"
 msgstr "Đã push"
@@ -13666,6 +13735,9 @@ msgstr "Gỡ {0}"
 msgid "Remove {label}?"
 msgstr "Gỡ {label}?"
 
+msgid "Remove approval"
+msgstr "Hủy phê duyệt"
+
 msgid "Remove attachment"
 msgstr "Xóa tệp đính kèm"
 
@@ -13893,6 +13965,9 @@ msgstr "Repository"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Các repository truy cập được qua bản cài đặt GitHub App."
+
+msgid "Repositories and pull requests"
+msgstr "Kho lưu trữ và pull request"
 
 msgid "Repositories refreshed"
 msgstr "Đã làm mới repository"
@@ -15084,6 +15159,9 @@ msgstr "Chọn nhóm"
 msgid "Select terminal script directory"
 msgstr "Chọn thư mục cho script terminal"
 
+msgid "Select workspace"
+msgstr "Chọn không gian làm việc"
+
 msgid "Select worktree location"
 msgstr "Chọn vị trí worktree"
 
@@ -15186,6 +15264,9 @@ msgstr "Separator"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Tình trạng dịch vụ được công bố tại <0>status.superset.sh</0>, còn tài liệu bảo mật và tuân thủ tại <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL dịch vụ"
+
 msgid "Session"
 msgstr "Phiên"
 
@@ -15226,6 +15307,9 @@ msgstr "Phiên"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Phiên · {0} phiên tốn nhiều nhất"
+
+msgid "Set as default"
+msgstr "Đặt làm mặc định"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "Một tab + khung"
 msgid "Single-select"
 msgstr "Chọn một"
 
+msgid "Site URL"
+msgstr "URL trang web"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Số liệu toàn trang · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "Nguồn"
 msgid "Source Available"
 msgstr "Mã nguồn công khai"
 
+msgid "Source branch"
+msgstr "Nhánh nguồn"
+
 msgid "Source path (not an import)"
 msgstr "Đường dẫn nguồn (không phải import)"
 
@@ -15965,6 +16055,9 @@ msgstr "Chia kèm trình duyệt mới"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Chia với Màn hình nền sandbox"
+
+msgid "Squash"
+msgstr "Gộp các commit"
 
 msgid "Squash & Merge"
 msgstr "Squash & merge"
@@ -16762,6 +16855,9 @@ msgstr "Mục tiêu"
 msgid "Target agent"
 msgstr "Agent đích"
 
+msgid "Target branch"
+msgstr "Nhánh đích"
+
 msgid "Target date"
 msgstr "Ngày mục tiêu"
 
@@ -16809,6 +16905,9 @@ msgstr "Đã cập nhật nơi theo dõi công việc"
 
 msgid "Tasks"
 msgstr "Tác vụ"
+
+msgid "Tasks and projects"
+msgstr "Tác vụ và dự án"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Tác vụ tạo trong Superset sẽ được đồng bộ sang nhóm Linear này."
@@ -17473,6 +17572,9 @@ msgstr "Thao tác này đóng workspace và các terminal của nó. Tệp, nhá
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Không gian làm việc đám mây này đang được đánh thức, có thể mất tới 30 giây sau một thời gian không hoạt động."
+
+msgid "This computer"
+msgstr "Máy tính này"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Thao tác này xóa phần scrollback đã lưu dùng để khôi phục sau khi khởi động lại hoặc crash."
@@ -18432,6 +18534,9 @@ msgstr "cập nhật tiền tố nhánh"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Cập nhật máy chủ này để dùng thiết lập hướng dẫn hoặc dùng cấu hình nâng cao."
 
+msgid "Update this host to configure integrations."
+msgstr "Cập nhật máy chủ này để cấu hình tích hợp."
+
 msgid "Updated"
 msgstr "Đã cập nhật"
 
@@ -18650,6 +18755,9 @@ msgstr "Đã xác minh và lưu"
 
 msgid "Verified through sign-in"
 msgstr "Đã xác minh khi đăng nhập"
+
+msgid "Verify"
+msgstr "Xác minh"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Kiểm tra Kbd vẫn hiện rõ bên trong tooltip"
@@ -19453,6 +19561,9 @@ msgstr "Bạn đang xem phiên bản {version}, chỉ đọc"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Bạn có thể đính kèm tối đa {MAX_ATTACHMENTS} tệp"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Bạn có thể cấu hình các kết nối này sau trong cài đặt fork."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Bạn có thể khôi phục trong Cài đặt → Dự án trong 30 ngày. Thư mục repository không bao giờ bị xóa."

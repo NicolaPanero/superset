@@ -61,6 +61,14 @@ export class LocalGitCredentialProvider implements GitCredentialProvider {
 		return (await promise)?.token ?? null;
 	}
 
+	invalidateToken(host: string): void {
+		this.cachedTokenByHost.delete(host);
+	}
+
+	tokenSource(host: string): TokenSource | null {
+		return this.cachedTokenByHost.get(host)?.source ?? null;
+	}
+
 	/**
 	 * Names the source of the token last resolved for `host`, ignoring its
 	 * TTL — the caller is explaining a failure, not authenticating.

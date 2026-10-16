@@ -12,6 +12,13 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Uso quotidiano
 
+- **Settings → Fork → Connections** configura GitHub, Bitbucket Cloud e Jira Cloud.
+  Le stesse schede sono disponibili nell'onboarding. Jira e Bitbucket accettano
+  token personali oppure un servizio OAuth compatibile; un broker può collegarli
+  entrambi. Jira abilita la sorgente Tasks anche con le funzioni Pro nascoste.
+  Le chiamate partono dall'host verso le API ufficiali, indipendentemente dal login
+  Superset. Contratto OAuth e limiti: [docs/fork-integrations.md](docs/fork-integrations.md).
+
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
   e nella schermata di un workspace senza schede aperte.

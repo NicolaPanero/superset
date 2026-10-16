@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ForkPullRequestsBoundary } from "renderer/components/ForkIntegrations/components/ForkPullRequestsBoundary/ForkPullRequestsBoundary";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { WindowChromeScope } from "renderer/routes/_authenticated/_dashboard/components/WindowChromeScope";
@@ -24,6 +25,9 @@ import {
 const MIN_DETAIL_PANE_WIDTH = 420;
 
 export type PullRequestsSearch = {
+	forkProvider?: "bitbucket";
+	forkProject?: string;
+	forkNumber?: number;
 	search?: string;
 	project?: string;
 	repo?: string;
@@ -38,6 +42,14 @@ export const Route = createFileRoute(
 )({
 	component: PullRequestsLayout,
 	validateSearch: (search: Record<string, unknown>): PullRequestsSearch => ({
+		forkProvider: search.forkProvider === "bitbucket" ? "bitbucket" : undefined,
+		forkProject:
+			typeof search.forkProject === "string" ? search.forkProject : undefined,
+		forkNumber:
+			Number.isSafeInteger(Number(search.forkNumber)) &&
+			Number(search.forkNumber) > 0
+				? Number(search.forkNumber)
+				: undefined,
 		search: typeof search.search === "string" ? search.search : undefined,
 		repo: typeof search.repo === "string" ? search.repo : undefined,
 		project: typeof search.project === "string" ? search.project : undefined,
@@ -122,38 +134,40 @@ function PullRequestsLayout() {
 	);
 
 	return (
-		<div
-			ref={rootRef}
-			className="flex h-full min-h-0 min-w-0 flex-1 overflow-hidden"
-		>
-			{!isListCollapsed && (
-				<ResizablePanel
-					disabled={isDetailCollapsed}
-					width={displayListWidth}
-					onWidthChange={setListWidth}
-					isResizing={isResizingList}
-					onResizingChange={setIsResizingList}
-					minWidth={MIN_PULL_REQUESTS_LIST_WIDTH}
-					maxWidth={MAX_PULL_REQUESTS_LIST_WIDTH}
-					handleSide="right"
-					onDoubleClickHandle={() =>
-						setListWidth(DEFAULT_PULL_REQUESTS_LIST_WIDTH)
-					}
-					className="flex min-h-0 flex-col bg-background"
-				>
-					{listContent}
-				</ResizablePanel>
-			)}
-			{!isDetailCollapsed && (
-				<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background">
-					<WindowChromeScope enabled={isListCollapsed}>
-						{params.prNumber === undefined && (
-							<PageHeader end={<PullRequestListToggle />} />
-						)}
-						<Outlet />
-					</WindowChromeScope>
-				</div>
-			)}
-		</div>
+		<ForkPullRequestsBoundary>
+			<div
+				ref={rootRef}
+				className="flex h-full min-h-0 min-w-0 flex-1 overflow-hidden"
+			>
+				{!isListCollapsed && (
+					<ResizablePanel
+						disabled={isDetailCollapsed}
+						width={displayListWidth}
+						onWidthChange={setListWidth}
+						isResizing={isResizingList}
+						onResizingChange={setIsResizingList}
+						minWidth={MIN_PULL_REQUESTS_LIST_WIDTH}
+						maxWidth={MAX_PULL_REQUESTS_LIST_WIDTH}
+						handleSide="right"
+						onDoubleClickHandle={() =>
+							setListWidth(DEFAULT_PULL_REQUESTS_LIST_WIDTH)
+						}
+						className="flex min-h-0 flex-col bg-background"
+					>
+						{listContent}
+					</ResizablePanel>
+				)}
+				{!isDetailCollapsed && (
+					<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background">
+						<WindowChromeScope enabled={isListCollapsed}>
+							{params.prNumber === undefined && (
+								<PageHeader end={<PullRequestListToggle />} />
+							)}
+							<Outlet />
+						</WindowChromeScope>
+					</div>
+				)}
+			</div>
+		</ForkPullRequestsBoundary>
 	);
 }

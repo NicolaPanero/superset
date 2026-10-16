@@ -1,6 +1,10 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { ForkTaskRouteGate } from "renderer/components/ForkIntegrations/components/ForkTaskRouteGate/ForkTaskRouteGate";
 
 export type TasksSearch = {
+	forkSource?: "jira" | "superset";
+	forkTask?: string;
+	forkConnection?: string;
 	tab?:
 		| "all"
 		| "active"
@@ -21,6 +25,15 @@ export type TasksSearch = {
 export const Route = createFileRoute("/_authenticated/_dashboard/tasks")({
 	component: TasksLayout,
 	validateSearch: (search: Record<string, unknown>): TasksSearch => ({
+		forkSource:
+			search.forkSource === "jira" || search.forkSource === "superset"
+				? search.forkSource
+				: undefined,
+		forkTask: typeof search.forkTask === "string" ? search.forkTask : undefined,
+		forkConnection:
+			typeof search.forkConnection === "string"
+				? search.forkConnection
+				: undefined,
 		tab: [
 			"all",
 			"active",
@@ -50,5 +63,9 @@ export const Route = createFileRoute("/_authenticated/_dashboard/tasks")({
 });
 
 function TasksLayout() {
-	return <Outlet />;
+	return (
+		<ForkTaskRouteGate>
+			<Outlet />
+		</ForkTaskRouteGate>
+	);
 }

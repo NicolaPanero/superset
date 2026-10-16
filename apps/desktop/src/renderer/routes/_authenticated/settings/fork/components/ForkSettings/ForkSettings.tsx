@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
 import { ForkCliOptionsSetting } from "renderer/components/ForkCliOptionsSetting";
+import { ForkIntegrations } from "renderer/components/ForkIntegrations";
 import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import { useForkHomeAppearance } from "renderer/stores/fork-home-appearance";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
@@ -75,6 +76,9 @@ export function ForkSettings() {
 					</div>
 				)}
 			</div>
+			{matches.some((item) => item.id === "fork-connections") && (
+				<ForkIntegrations />
+			)}
 		</div>
 	);
 }

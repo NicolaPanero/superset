@@ -1658,6 +1658,9 @@ msgstr "Tambah akun {0}"
 msgid "Add {0} to workspace"
 msgstr "Tambahkan {0} ke workspace"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Tambahkan repositori Bitbucket untuk memulai."
+
 msgid "Add a comment…"
 msgstr "Tambahkan komentar…"
 
@@ -2222,6 +2225,9 @@ msgstr "Hapus juga branch lokal"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Hapus juga branch git lokal saat menghapus workspace worktree"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Keluar juga dari GitHub CLI di komputer ini"
+
 msgid "Also viewing this page"
 msgstr "Juga melihat halaman ini"
 
@@ -2407,6 +2413,9 @@ msgstr "Kunci API"
 
 msgid "API keys are not validated with a paid request."
 msgstr "Kunci API tidak divalidasi melalui permintaan berbayar."
+
+msgid "API token"
+msgstr "Token API"
 
 msgid "API-equivalent"
 msgstr "Setara API"
@@ -4272,6 +4281,9 @@ msgstr "Dibandingkan dengan gaya bawaan"
 msgid "complete"
 msgstr "selesai"
 
+msgid "Complete authorization in your browser."
+msgstr "Selesaikan otorisasi di browser Anda."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Selesaikan alur CLI resmi, lalu tutup jendela ini untuk memeriksa hasilnya."
 
@@ -4309,11 +4321,17 @@ msgstr "Atur perilaku branch git dan worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Atur cara tugas disinkronkan antara Superset dan Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Konfigurasikan integrasi di pengaturan fork."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Atur perilaku terminal dan skrip terminal pakai ulang"
 
 msgid "Configure the in-app browser"
 msgstr "Atur browser dalam aplikasi"
+
+msgid "Configure the OAuth service below."
+msgstr "Konfigurasikan layanan OAuth di bawah."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Atur agen mana yang muncul di peluncur dan bagaimana peluncurannya disusun."
@@ -4326,6 +4344,12 @@ msgstr "Akun yang dikonfigurasi"
 
 msgid "Confirm before quitting"
 msgstr "Konfirmasi sebelum keluar"
+
+msgid "Confirm delete"
+msgstr "Konfirmasi penghapusan"
+
+msgid "Confirm merge"
+msgstr "Konfirmasi penggabungan"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "Hubungkan layanan eksternal untuk menyinkronkan data dengan organisasi A
 msgid "Connect external services to sync data."
 msgstr "Hubungkan layanan eksternal untuk menyinkronkan data."
 
+msgid "Connect GitHub"
+msgstr "Hubungkan GitHub"
+
 msgid "Connect Google"
 msgstr "Hubungkan Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Hubungkan Jira dan Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Hubungkan Linear"
@@ -4432,6 +4462,9 @@ msgstr "Hubungkan tenant Microsoft Teams Anda. Admin tenant masuk dan memberi pe
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Hubungkan workspace Notion Anda dan bagikan halaman serta sumber data yang harus dipantau otomatisasi."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Hubungkan repositori dan tugas Anda di komputer ini."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Hubungkan workspace Slack Anda untuk mengelola tugas dari percakapan."
@@ -5925,6 +5958,9 @@ msgstr "Hapus workspace yang dipilih"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Hapus sesi \"{workspaceName}\"?"
 
+msgid "Delete task"
+msgstr "Hapus tugas"
+
 msgid "Delete team"
 msgstr "Hapus tim"
 
@@ -6283,6 +6319,9 @@ msgstr "Putuskan Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Putuskan Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Putuskan akun ini dari Superset?"
 
 msgid "Disconnected"
 msgstr "Terputus"
@@ -7519,6 +7558,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Cepat"
 
+msgid "Fast-forward"
+msgstr "Maju cepat"
+
 msgid "Fatal"
 msgstr "Fatal"
 
@@ -7584,6 +7626,9 @@ msgstr "File tidak ditemukan"
 
 msgid "File open mode"
 msgstr "Mode buka file"
+
+msgid "File path"
+msgstr "Jalur file"
 
 msgid "File viewer"
 msgstr "Penampil file"
@@ -9572,6 +9617,9 @@ msgstr "Suka membangun dengan Superset?"
 msgid "Lime"
 msgstr "Limau"
 
+msgid "Line"
+msgstr "Baris"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "Merge gagal: {0}"
 
 msgid "Merge into center"
 msgstr "Gabungkan ke tengah"
+
+msgid "Merge method"
+msgstr "Metode penggabungan"
 
 msgid "Merge pull request"
 msgstr "Merge pull request"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "OAuth secara bawaan, kunci API untuk CI"
 
+msgid "OAuth service"
+msgstr "Layanan OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "dari {0}"
@@ -11612,6 +11666,9 @@ msgstr "Termasuk seratus orang pertama di papan"
 
 msgid "one of the selected repositories"
 msgstr "salah satu repositori yang dipilih"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Satu layanan dapat menghubungkan Jira dan Bitbucket."
 
 msgid "One step left"
 msgstr "Tinggal satu langkah"
@@ -11932,6 +11989,9 @@ msgstr "Buka di T3 Chat"
 
 msgid "Open in tab"
 msgstr "Buka di tab"
+
+msgid "Open in workspace"
+msgstr "Buka di ruang kerja"
 
 msgid "Open in…"
 msgstr "Buka di…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Laju puncak"
+
+msgid "Pending"
+msgstr "Menunggu"
 
 msgid "Pending Invitations"
 msgstr "Undangan Tertunda"
@@ -13228,10 +13291,16 @@ msgstr "Ungu"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Kirim dan buat PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push gagal: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Kirim cabang Anda sebelum membuat pull request."
 
 msgid "Pushed"
 msgstr "Di-push"
@@ -13666,6 +13735,9 @@ msgstr "Hapus {0}"
 msgid "Remove {label}?"
 msgstr "Hapus {label}?"
 
+msgid "Remove approval"
+msgstr "Cabut persetujuan"
+
 msgid "Remove attachment"
 msgstr "Hapus lampiran"
 
@@ -13893,6 +13965,9 @@ msgstr "Repositori"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repositori yang bisa diakses lewat instalasi GitHub App."
+
+msgid "Repositories and pull requests"
+msgstr "Repositori dan pull request"
 
 msgid "Repositories refreshed"
 msgstr "Repositori disegarkan"
@@ -15084,6 +15159,9 @@ msgstr "Pilih tim"
 msgid "Select terminal script directory"
 msgstr "Pilih direktori skrip terminal"
 
+msgid "Select workspace"
+msgstr "Pilih ruang kerja"
+
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"
 
@@ -15186,6 +15264,9 @@ msgstr "Separator"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Ketersediaan layanan dipublikasikan di <0>status.superset.sh</0>, dan dokumentasi keamanan serta kepatuhan di <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL layanan"
+
 msgid "Session"
 msgstr "Sesi"
 
@@ -15226,6 +15307,9 @@ msgstr "Sesi"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Sesi · {0} teratas menurut biaya"
+
+msgid "Set as default"
+msgstr "Jadikan default"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "Satu tab + panel"
 msgid "Single-select"
 msgstr "Pilih satu"
 
+msgid "Site URL"
+msgstr "URL situs"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetri seluruh situs · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "Sumber"
 msgid "Source Available"
 msgstr "Source Available"
 
+msgid "Source branch"
+msgstr "Cabang sumber"
+
 msgid "Source path (not an import)"
 msgstr "Path sumber (bukan impor)"
 
@@ -15965,6 +16055,9 @@ msgstr "Bagi dengan Browser Baru"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Bagi dengan Desktop Sandbox"
+
+msgid "Squash"
+msgstr "Gabungkan commit"
 
 msgid "Squash & Merge"
 msgstr "Squash & Merge"
@@ -16762,6 +16855,9 @@ msgstr "Target"
 msgid "Target agent"
 msgstr "Agen tujuan"
 
+msgid "Target branch"
+msgstr "Cabang tujuan"
+
 msgid "Target date"
 msgstr "Tanggal target"
 
@@ -16809,6 +16905,9 @@ msgstr "Pelacak tugas diperbarui"
 
 msgid "Tasks"
 msgstr "Tugas"
+
+msgid "Tasks and projects"
+msgstr "Tugas dan proyek"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Tugas yang dibuat di Superset akan disinkronkan ke tim Linear ini."
@@ -17473,6 +17572,9 @@ msgstr "Ini menutup workspace beserta terminalnya. File, branch, dan workspace l
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Workspace cloud ini sedang dibangunkan, yang bisa memakan waktu hingga 30 detik setelah tidak aktif."
+
+msgid "This computer"
+msgstr "Komputer ini"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Ini menghapus scrollback tersimpan yang dipakai untuk pemulihan setelah reboot/crash."
@@ -18432,6 +18534,9 @@ msgstr "memperbarui prefix branch"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Perbarui host ini untuk pengaturan terpandu atau gunakan konfigurasi lanjutan."
 
+msgid "Update this host to configure integrations."
+msgstr "Perbarui host ini untuk mengonfigurasi integrasi."
+
 msgid "Updated"
 msgstr "Diperbarui"
 
@@ -18650,6 +18755,9 @@ msgstr "Terverifikasi dan tersimpan"
 
 msgid "Verified through sign-in"
 msgstr "Terverifikasi lewat proses masuk"
+
+msgid "Verify"
+msgstr "Verifikasi"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Pastikan Kbd tetap terlihat di dalam tooltip"
@@ -19453,6 +19561,9 @@ msgstr "Anda melihat versi {version}, hanya-baca"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Anda dapat melampirkan hingga {MAX_ATTACHMENTS} file"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Anda dapat mengonfigurasi koneksi ini nanti di pengaturan fork."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Anda dapat memulihkannya dari Pengaturan → Proyek selama 30 hari. Folder repositori tidak pernah dihapus."

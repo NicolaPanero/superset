@@ -1658,6 +1658,9 @@ msgstr "{0} hesabı ekle"
 msgid "Add {0} to workspace"
 msgstr "{0} öğesini çalışma alanına ekle"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Başlamak için bir Bitbucket deposu ekleyin."
+
 msgid "Add a comment…"
 msgstr "Yorum ekle…"
 
@@ -2222,6 +2225,9 @@ msgstr "Yerel dalları da sil"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Bir worktree çalışma alanını silerken yerel git dalını da sil"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Bu bilgisayarda GitHub CLI oturumunu da kapat"
+
 msgid "Also viewing this page"
 msgstr "Bu sayfayı görüntüleyen diğer kişiler"
 
@@ -2407,6 +2413,9 @@ msgstr "API anahtarları"
 
 msgid "API keys are not validated with a paid request."
 msgstr "API anahtarları ücretli isteklerle doğrulanmaz."
+
+msgid "API token"
+msgstr "API belirteci"
 
 msgid "API-equivalent"
 msgstr "API eşdeğeri"
@@ -4272,6 +4281,9 @@ msgstr "Varsayılan stille karşılaştırıldı"
 msgid "complete"
 msgstr "tamamlandı"
 
+msgid "Complete authorization in your browser."
+msgstr "Yetkilendirmeyi tarayıcınızda tamamlayın."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Resmî CLI işlemini tamamlayın, ardından sonucu kontrol etmek için bu pencereyi kapatın."
 
@@ -4309,11 +4321,17 @@ msgstr "Git dal ve worktree davranışını yapılandırın"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Görevlerin Superset ile Linear arasında nasıl eşitleneceğini yapılandırın."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Entegrasyonları fork ayarlarında yapılandırın."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Terminal davranışını ve yeniden kullanılabilir terminal betiklerini yapılandırın"
 
 msgid "Configure the in-app browser"
 msgstr "Uygulama içi tarayıcıyı yapılandırın"
+
+msgid "Configure the OAuth service below."
+msgstr "Aşağıdaki OAuth hizmetini yapılandırın."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Başlatıcılarda hangi ajanların görüneceğini ve başlatmalarının nasıl kurulacağını yapılandırın."
@@ -4326,6 +4344,12 @@ msgstr "Yapılandırılmış hesap"
 
 msgid "Confirm before quitting"
 msgstr "Çıkmadan önce onay iste"
+
+msgid "Confirm delete"
+msgstr "Silmeyi onayla"
+
+msgid "Confirm merge"
+msgstr "Birleştirmeyi onayla"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4373,8 +4397,14 @@ msgstr "Kuruluşunuzla veri eşitlemek için harici hizmetleri bağlayın."
 msgid "Connect external services to sync data."
 msgstr "Verileri eşitlemek için harici hizmetleri bağlayın."
 
+msgid "Connect GitHub"
+msgstr "GitHub’ı bağla"
+
 msgid "Connect Google"
 msgstr "Google'ı bağla"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Jira ve Bitbucket’ı bağla"
 
 msgid "Connect Linear"
 msgstr "Linear'ı bağla"
@@ -4432,6 +4462,9 @@ msgstr "Microsoft Teams kiracınızı bağlayın. Bir kiracı yöneticisi oturum
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Notion çalışma alanınızı bağlayın ve otomasyonların izlemesi gereken sayfaları ve veri kaynaklarını paylaşın."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Bu bilgisayarda depolarınızı ve görevlerinizi bağlayın."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Görevleri konuşmalardan yönetmek için Slack çalışma alanınızı bağlayın."
@@ -5925,6 +5958,9 @@ msgstr "Seçili çalışma alanlarını sil"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "\"{workspaceName}\" oturumu silinsin mi?"
 
+msgid "Delete task"
+msgstr "Görevi sil"
+
 msgid "Delete team"
 msgstr "Takımı sil"
 
@@ -6283,6 +6319,9 @@ msgstr "Sentry bağlantısı kesilsin mi?"
 
 msgid "Disconnect Slack?"
 msgstr "Slack bağlantısı kesilsin mi?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Bu hesabın Superset bağlantısı kesilsin mi?"
 
 msgid "Disconnected"
 msgstr "Bağlantı kesildi"
@@ -7519,6 +7558,9 @@ msgstr "SSS"
 msgid "Fast"
 msgstr "Hızlı"
 
+msgid "Fast-forward"
+msgstr "Hızlı ileri"
+
 msgid "Fatal"
 msgstr "Kritik"
 
@@ -7584,6 +7626,9 @@ msgstr "Dosya bulunamadı"
 
 msgid "File open mode"
 msgstr "Dosya açma modu"
+
+msgid "File path"
+msgstr "Dosya yolu"
 
 msgid "File viewer"
 msgstr "Dosya görüntüleyici"
@@ -9572,6 +9617,9 @@ msgstr "Superset ile geliştirmeyi seviyor musunuz?"
 msgid "Lime"
 msgstr "Limon yeşili"
 
+msgid "Line"
+msgstr "Satır"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10170,6 +10218,9 @@ msgstr "Birleştirme başarısız: {0}"
 
 msgid "Merge into center"
 msgstr "Ortaya birleştir"
+
+msgid "Merge method"
+msgstr "Birleştirme yöntemi"
 
 msgid "Merge pull request"
 msgstr "Pull request'i birleştir"
@@ -11511,6 +11562,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "Varsayılan OAuth, CI için API anahtarları"
 
+msgid "OAuth service"
+msgstr "OAuth hizmeti"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "{0} içinde"
@@ -11612,6 +11666,9 @@ msgstr "Tablodaki ilk yüz kişiden biri"
 
 msgid "one of the selected repositories"
 msgstr "seçili depolardan biri"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Tek bir hizmet hem Jira hem Bitbucket’ı bağlayabilir."
 
 msgid "One step left"
 msgstr "Bir adım kaldı"
@@ -11932,6 +11989,9 @@ msgstr "T3 Chat'te aç"
 
 msgid "Open in tab"
 msgstr "Sekmede aç"
+
+msgid "Open in workspace"
+msgstr "Çalışma alanında aç"
 
 msgid "Open in…"
 msgstr "Şununla aç…"
@@ -12525,6 +12585,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Zirve hız"
+
+msgid "Pending"
+msgstr "Bekliyor"
 
 msgid "Pending Invitations"
 msgstr "Bekleyen davetler"
@@ -13228,10 +13291,16 @@ msgstr "Mor"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Gönder ve PR oluştur"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push başarısız: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Bir pull request oluşturmadan önce dalınızı gönderin."
 
 msgid "Pushed"
 msgstr "Push edildi"
@@ -13666,6 +13735,9 @@ msgstr "{0} kişisini kaldır"
 msgid "Remove {label}?"
 msgstr "{label} kaldırılsın mı?"
 
+msgid "Remove approval"
+msgstr "Onayı kaldır"
+
 msgid "Remove attachment"
 msgstr "Eki kaldır"
 
@@ -13893,6 +13965,9 @@ msgstr "Depolar"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "GitHub App kurulumu üzerinden erişilebilen depolar."
+
+msgid "Repositories and pull requests"
+msgstr "Depolar ve pull request’ler"
 
 msgid "Repositories refreshed"
 msgstr "Depolar yenilendi"
@@ -15084,6 +15159,9 @@ msgstr "Takımları seç"
 msgid "Select terminal script directory"
 msgstr "Terminal betiği dizinini seçin"
 
+msgid "Select workspace"
+msgstr "Çalışma alanı seç"
+
 msgid "Select worktree location"
 msgstr "Worktree konumunu seçin"
 
@@ -15186,6 +15264,9 @@ msgstr "Ayırıcı"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Hizmet durumu <0>status.superset.sh</0> adresinde, güvenlik ve uyumluluk belgeleri ise <1>trust.superset.sh</1> adresinde yayımlanır."
 
+msgid "Service URL"
+msgstr "Hizmet URL’si"
+
 msgid "Session"
 msgstr "Oturum"
 
@@ -15226,6 +15307,9 @@ msgstr "Oturumlar"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Oturumlar · maliyete göre ilk {0}"
+
+msgid "Set as default"
+msgstr "Varsayılan olarak ayarla"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15688,6 +15772,9 @@ msgstr "Tek sekme + bölmeler"
 msgid "Single-select"
 msgstr "Tekli seçim"
 
+msgid "Site URL"
+msgstr "Site URL’si"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Site geneli telemetri · {range}"
 
@@ -15873,6 +15960,9 @@ msgstr "Kaynak"
 msgid "Source Available"
 msgstr "Kaynağı açık"
 
+msgid "Source branch"
+msgstr "Kaynak dal"
+
 msgid "Source path (not an import)"
 msgstr "Kaynak yolu (içe aktarma değil)"
 
@@ -15965,6 +16055,9 @@ msgstr "Yeni tarayıcıyla böl"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Sanal alan masaüstüyle böl"
+
+msgid "Squash"
+msgstr "Commit’leri birleştir"
 
 msgid "Squash & Merge"
 msgstr "Squash ve birleştir"
@@ -16762,6 +16855,9 @@ msgstr "Hedef"
 msgid "Target agent"
 msgstr "Hedef ajan"
 
+msgid "Target branch"
+msgstr "Hedef dal"
+
 msgid "Target date"
 msgstr "Hedef tarih"
 
@@ -16809,6 +16905,9 @@ msgstr "Görev takibi güncellendi"
 
 msgid "Tasks"
 msgstr "Görevler"
+
+msgid "Tasks and projects"
+msgstr "Görevler ve projeler"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Superset'te oluşturulan görevler bu Linear takımına eşitlenecek."
@@ -17473,6 +17572,9 @@ msgstr "Bu, çalışma alanını ve terminallerini kapatır. Projenin dosyaları
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Bu bulut çalışma alanı uyandırılıyor; bir süre kullanılmadıysa bu işlem 30 saniyeye kadar sürebilir."
+
+msgid "This computer"
+msgstr "Bu bilgisayar"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Bu işlem, yeniden başlatma/çökme kurtarma için saklanan kaydırma geçmişini siler."
@@ -18432,6 +18534,9 @@ msgstr "dal ön ekini güncelleme"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Rehberli kurulum için bu ana makineyi güncelleyin veya gelişmiş yapılandırmayı kullanın."
 
+msgid "Update this host to configure integrations."
+msgstr "Entegrasyonları yapılandırmak için bu ana makineyi güncelleyin."
+
 msgid "Updated"
 msgstr "Güncellendi"
 
@@ -18650,6 +18755,9 @@ msgstr "Doğrulandı ve kaydedildi"
 
 msgid "Verified through sign-in"
 msgstr "Oturum açma ile doğrulandı"
+
+msgid "Verify"
+msgstr "Doğrula"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Kbd'nin tooltip'ler içinde görünür kaldığını doğrula"
@@ -19453,6 +19561,9 @@ msgstr "Sürüm {version} görüntüleniyor, salt okunur"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "En fazla {MAX_ATTACHMENTS} dosya ekleyebilirsiniz"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Bu bağlantıları daha sonra fork ayarlarında yapılandırabilirsiniz."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "30 gün boyunca Ayarlar → Projeler bölümünden geri yükleyebilirsin. Depo klasörü asla silinmez."
