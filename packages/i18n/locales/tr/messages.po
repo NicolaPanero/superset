@@ -12241,6 +12241,9 @@ msgstr "İstem yükünden sonra eklenen isteğe bağlı bayraklar"
 msgid "Options"
 msgstr "Seçenekler"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "Yalnızca bu fork'ta bulunan seçenekler ve bağlantılar."
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Ya da kodlama ajanınızdan Superset CLI'yi kurmasını isteyin."
 
@@ -17572,9 +17575,6 @@ msgstr "Bu, çalışma alanını ve terminallerini kapatır. Projenin dosyaları
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Bu bulut çalışma alanı uyandırılıyor; bir süre kullanılmadıysa bu işlem 30 saniyeye kadar sürebilir."
-
-msgid "This computer"
-msgstr "Bu bilgisayar"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Bu işlem, yeniden başlatma/çökme kurtarma için saklanan kaydırma geçmişini siler."

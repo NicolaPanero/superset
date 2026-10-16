@@ -12241,6 +12241,9 @@ msgstr "Cờ tùy chọn thêm vào sau phần prompt"
 msgid "Options"
 msgstr "Tùy chọn"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "Các tùy chọn và kết nối chỉ có trong bản fork này."
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Hoặc bảo coding agent của bạn cài CLI Superset."
 
@@ -17572,9 +17575,6 @@ msgstr "Thao tác này đóng workspace và các terminal của nó. Tệp, nhá
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Không gian làm việc đám mây này đang được đánh thức, có thể mất tới 30 giây sau một thời gian không hoạt động."
-
-msgid "This computer"
-msgstr "Máy tính này"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Thao tác này xóa phần scrollback đã lưu dùng để khôi phục sau khi khởi động lại hoặc crash."

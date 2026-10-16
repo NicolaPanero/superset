@@ -12241,6 +12241,9 @@ msgstr "追加在提示词内容之后的可选标志"
 msgid "Options"
 msgstr "选项"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "仅此分支版本提供的选项和连接。"
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "或者让你的编码智能体安装Superset CLI。"
 
@@ -17572,9 +17575,6 @@ msgstr "这将关闭该工作区及其终端。项目的文件、分支和其他
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "正在唤醒此云工作区。如果它已闲置一段时间，可能需要最多 30 秒。"
-
-msgid "This computer"
-msgstr "此计算机"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "这将删除用于重启/崩溃恢复的已保存回滚缓冲。"

@@ -1,11 +1,20 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ForkProviderId } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@superset/ui/dropdown-menu";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
+import { cn } from "@superset/ui/utils";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { FaBitbucket, FaGithub, FaJira } from "react-icons/fa";
+import { HiEllipsisHorizontal } from "react-icons/hi2";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { GhAuthDialog } from "renderer/routes/_authenticated/onboarding/components/GhAuthDialog";
 import { useForkConnections } from "../../hooks/useForkConnections";
@@ -14,10 +23,12 @@ export function ForkConnectionCard({
 	provider,
 	brokerUrl,
 	onOAuth,
+	onSetupOAuth,
 }: {
 	provider: ForkProviderId;
 	brokerUrl: string;
 	onOAuth: (providers: ForkProviderId[], connectionId?: string) => void;
+	onSetupOAuth: () => void;
 }) {
 	const { t } = useLingui();
 	const gh = electronTrpc.system.detectGhCli.useQuery(undefined, {
@@ -107,92 +118,167 @@ export function ForkConnectionCard({
 				? "Bitbucket"
 				: "Jira";
 	const connected = current?.enabled && current.state === "connected";
+	const expired = current?.state === "expired";
 	const showForm = editing || add;
+	const openForm = (adding: boolean) => {
+		setConfirmation(false);
+		setAdd(adding);
+		setEditing(!adding);
+		setMode(!adding && current?.mode === "oauth" ? "oauth" : "token");
+	};
+	const closeForm = () => {
+		setEditing(false);
+		setAdd(false);
+		setToken("");
+	};
+	const connectGithub = () => {
+		if (!gh.data?.installed && !brew.data?.installed)
+			window.open("https://cli.github.com/", "_blank", "noopener,noreferrer");
+		else setGhOpen(true);
+	};
+	const status = connected
+		? { tone: "bg-emerald-500", label: t({ message: "Connected" }) }
+		: expired
+			? { tone: "bg-amber-500", label: t({ message: "Expired" }) }
+			: current?.error
+				? { tone: "bg-destructive", label: t({ message: "Error" }) }
+				: {
+						tone: "bg-muted-foreground/40",
+						label: t({ message: "Not connected" }),
+					};
+	const method =
+		current?.mode === "system"
+			? current.source
+			: current?.mode === "oauth"
+				? "OAuth"
+				: current
+					? t({ message: "API token" })
+					: null;
+	const details = connected
+		? [
+				current?.identity?.login ? `@${current.identity.login}` : null,
+				provider === "jira" ? (current?.site ?? null) : null,
+				method,
+			]
+		: [
+				provider === "jira"
+					? t({ message: "Tasks and projects" })
+					: t({ message: "Repositories and pull requests" }),
+			];
 	return (
-		<section className="flex min-w-0 flex-col gap-4 rounded-xl border border-border bg-background p-5">
-			<div className="flex items-start gap-3">
-				<div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-muted/40">
-					<Icon className="size-5" />
+		<section className="px-5 py-4" aria-label={title}>
+			<div className="flex items-center gap-4">
+				<div className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-muted/40">
+					<Icon className="size-[18px]" />
 				</div>
 				<div className="min-w-0 flex-1">
-					<h3 className="font-medium">{title}</h3>
-					<p className="mt-1 text-xs text-muted-foreground">
-						{provider === "jira" ? (
-							<Trans>Tasks and projects</Trans>
-						) : (
-							<Trans>Repositories and pull requests</Trans>
+					<div className="flex items-center gap-2">
+						<h4 className="text-sm font-medium">{title}</h4>
+						<span className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
+							<span className={cn("size-1.5 rounded-full", status.tone)} />
+							{status.label}
+						</span>
+						{current?.isDefault && rows.length > 1 && (
+							<span className="text-[11px] text-muted-foreground">
+								<Trans>Default</Trans>
+							</span>
 						)}
+					</div>
+					<p className="mt-0.5 truncate text-xs text-muted-foreground">
+						{details.filter(Boolean).join(" · ")}
 					</p>
 				</div>
-				<span
-					className={
-						connected
-							? "size-2 rounded-full bg-emerald-500"
-							: "size-2 rounded-full bg-muted-foreground/40"
-					}
-				/>
-			</div>
-			{rows.length > 1 && (
-				<select
-					aria-label={t({ message: "Account" })}
-					className="h-9 rounded-md border bg-background px-2 text-sm"
-					value={current?.id}
-					onChange={(e) => {
-						setSelected(e.target.value);
-						setEditing(false);
-						setAdd(false);
-					}}
-				>
-					{rows.map((c) => (
-						<option key={c.id} value={c.id}>
-							{c.identity?.login ?? c.label} · {c.mode}
-						</option>
+				{rows.length > 1 && (
+					<select
+						aria-label={t({ message: "Account" })}
+						className="h-8 max-w-44 rounded-md border bg-background px-2 text-xs"
+						value={current?.id}
+						onChange={(e) => {
+							setSelected(e.target.value);
+							closeForm();
+						}}
+					>
+						{rows.map((c) => (
+							<option key={c.id} value={c.id}>
+								{c.identity?.login ?? c.label}
+							</option>
+						))}
+					</select>
+				)}
+				{!showForm &&
+					!connected &&
+					(provider === "github" ? (
+						<Button size="sm" disabled={!client} onClick={connectGithub}>
+							<Trans>Connect GitHub</Trans>
+						</Button>
+					) : (
+						<Button size="sm" onClick={() => openForm(!current)}>
+							{expired ? <Trans>Reconnect</Trans> : <Trans>Connect</Trans>}
+						</Button>
 					))}
-				</select>
-			)}
-			{!current && !showForm && (
-				<p className="text-sm text-muted-foreground">
-					<Trans>Not connected</Trans>
+				{current && (
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button
+								size="icon"
+								variant="ghost"
+								className="size-8"
+								aria-label={t({ message: "More actions" })}
+							>
+								<HiEllipsisHorizontal className="size-4" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end">
+							{current.enabled && (
+								<DropdownMenuItem
+									disabled={action.isPending}
+									onSelect={() => action.mutate("verify")}
+								>
+									<Trans>Verify</Trans>
+								</DropdownMenuItem>
+							)}
+							<DropdownMenuItem onSelect={() => openForm(false)}>
+								<Trans>Configure</Trans>
+							</DropdownMenuItem>
+							{current.enabled &&
+								rows.filter((c) => c.enabled).length > 1 &&
+								!current.isDefault && (
+									<DropdownMenuItem
+										disabled={action.isPending}
+										onSelect={() => action.mutate("default")}
+									>
+										<Trans>Set as default</Trans>
+									</DropdownMenuItem>
+								)}
+							<DropdownMenuItem onSelect={() => openForm(true)}>
+								<Trans>Add account</Trans>
+							</DropdownMenuItem>
+							{current.enabled && (
+								<>
+									<DropdownMenuSeparator />
+									<DropdownMenuItem
+										variant="destructive"
+										onSelect={() => {
+											closeForm();
+											setConfirmation(true);
+										}}
+									>
+										<Trans>Disconnect</Trans>
+									</DropdownMenuItem>
+								</>
+							)}
+						</DropdownMenuContent>
+					</DropdownMenu>
+				)}
+			</div>
+			{current?.error && !showForm && (
+				<p className="mt-2 break-words pl-13 text-xs text-destructive">
+					{current.error}
 				</p>
-			)}
-			{current && !showForm && (
-				<div className="space-y-1 text-sm">
-					<p className="truncate font-medium">
-						{current.identity?.login ? (
-							"@" + current.identity.login
-						) : (
-							<Trans>Not connected</Trans>
-						)}
-					</p>
-					<p className="truncate text-xs text-muted-foreground">
-						{current.site ??
-							current.brokerUrl ??
-							(current.mode === "system"
-								? t({ message: "This computer" })
-								: title)}
-					</p>
-					<p className="truncate text-xs text-muted-foreground">
-						{current.mode === "system"
-							? current.source
-							: current.mode === "oauth"
-								? "OAuth"
-								: t({ message: "API token" })}
-					</p>
-					{current.state === "expired" && (
-						<p className="text-xs text-amber-600">
-							<Trans>Reconnect account</Trans>
-						</p>
-					)}
-					{current.error && (
-						<p className="break-words text-xs text-destructive">
-							{current.error}
-						</p>
-					)}
-				</div>
 			)}
 			{showForm && (
 				<form
-					className="space-y-3"
+					className="mt-4 space-y-3 rounded-lg border bg-muted/20 p-4 sm:ml-13"
 					onSubmit={(e) => {
 						e.preventDefault();
 						if (mode === "oauth")
@@ -203,11 +289,16 @@ export function ForkConnectionCard({
 						else action.mutate("save");
 					}}
 				>
-					<div className="grid grid-cols-2 gap-1 rounded-lg bg-muted p-1">
+					<div className="grid w-56 grid-cols-2 gap-1 rounded-lg bg-muted p-1">
 						<Button
 							type="button"
 							size="sm"
-							variant={mode === "token" ? "secondary" : "ghost"}
+							variant="ghost"
+							className={cn(
+								"h-7",
+								mode === "token" &&
+									"bg-background shadow-sm hover:bg-background",
+							)}
 							onClick={() => setMode("token")}
 						>
 							<Trans>API token</Trans>
@@ -215,16 +306,21 @@ export function ForkConnectionCard({
 						<Button
 							type="button"
 							size="sm"
-							variant={mode === "oauth" ? "secondary" : "ghost"}
+							variant="ghost"
+							className={cn(
+								"h-7",
+								mode === "oauth" &&
+									"bg-background shadow-sm hover:bg-background",
+							)}
 							onClick={() => setMode("oauth")}
 						>
 							OAuth
 						</Button>
 					</div>
 					{mode === "token" ? (
-						<>
+						<div className="grid gap-3 sm:grid-cols-2">
 							{provider === "jira" && (
-								<div className="space-y-1">
+								<div className="space-y-1 sm:col-span-2">
 									<Label htmlFor={provider + "-site"}>
 										<Trans>Site URL</Trans>
 									</Label>
@@ -253,7 +349,12 @@ export function ForkConnectionCard({
 									/>
 								</div>
 							)}
-							<div className="space-y-1">
+							<div
+								className={cn(
+									"space-y-1",
+									provider === "github" && "sm:col-span-2",
+								)}
+							>
 								<Label htmlFor={provider + "-token"}>
 									<Trans>API token</Trans>
 								</Label>
@@ -266,124 +367,49 @@ export function ForkConnectionCard({
 									autoComplete="off"
 								/>
 							</div>
-						</>
-					) : (
-						<p className="text-xs text-muted-foreground">
-							{brokerUrl || <Trans>Configure the OAuth service below.</Trans>}
+						</div>
+					) : brokerUrl ? (
+						<p className="truncate text-xs text-muted-foreground">
+							{brokerUrl}
 						</p>
+					) : (
+						<button
+							type="button"
+							className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
+							onClick={onSetupOAuth}
+						>
+							<Trans>Configure the OAuth service below.</Trans>
+						</button>
 					)}
-					<a
-						className="inline-block text-xs text-primary"
-						href={
-							provider === "github"
-								? "https://github.com/settings/tokens"
-								: provider === "jira"
-									? "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
-									: "https://support.atlassian.com/bitbucket-cloud/docs/api-tokens/"
-						}
-						target="_blank"
-						rel="noreferrer"
-					>
-						<Trans>Documentation</Trans>
-					</a>
-					<div className="flex gap-2">
+					<div className="flex items-center gap-2">
 						<Button
 							size="sm"
 							disabled={action.isPending || (mode === "oauth" && !brokerUrl)}
 						>
 							<Trans>Connect</Trans>
 						</Button>
-						{(editing || add) && (
-							<Button
-								type="button"
-								size="sm"
-								variant="ghost"
-								onClick={() => {
-									setEditing(false);
-									setAdd(false);
-									setToken("");
-								}}
-							>
-								<Trans>Cancel</Trans>
-							</Button>
-						)}
+						<Button type="button" size="sm" variant="ghost" onClick={closeForm}>
+							<Trans>Cancel</Trans>
+						</Button>
+						<a
+							className="ml-auto text-xs text-muted-foreground hover:text-foreground"
+							href={
+								provider === "github"
+									? "https://github.com/settings/tokens"
+									: provider === "jira"
+										? "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/"
+										: "https://support.atlassian.com/bitbucket-cloud/docs/api-tokens/"
+							}
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Trans>Documentation</Trans>
+						</a>
 					</div>
 				</form>
 			)}
-			{!showForm && (
-				<div className="mt-auto flex flex-wrap gap-2">
-					{provider === "github" && (!current?.enabled || !connected) && (
-						<Button
-							size="sm"
-							disabled={!client}
-							onClick={() => {
-								if (!gh.data?.installed && !brew.data?.installed)
-									window.open(
-										"https://cli.github.com/",
-										"_blank",
-										"noopener,noreferrer",
-									);
-								else setGhOpen(true);
-							}}
-						>
-							<Trans>Connect GitHub</Trans>
-						</Button>
-					)}
-					{current?.enabled && (
-						<Button
-							size="sm"
-							variant="outline"
-							disabled={action.isPending}
-							onClick={() => action.mutate("verify")}
-						>
-							<Trans>Verify</Trans>
-						</Button>
-					)}
-					<Button
-						size="sm"
-						variant="ghost"
-						onClick={() => {
-							setEditing(true);
-							setMode(current?.mode === "oauth" ? "oauth" : "token");
-						}}
-					>
-						{current ? <Trans>Configure</Trans> : <Trans>Connect</Trans>}
-					</Button>
-					{current?.enabled &&
-						rows.filter((c) => c.enabled).length > 1 &&
-						!current.isDefault && (
-							<Button
-								size="sm"
-								variant="outline"
-								disabled={action.isPending}
-								onClick={() => action.mutate("default")}
-							>
-								<Trans>Set as default</Trans>
-							</Button>
-						)}
-					{current?.enabled && (
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={() => setConfirmation(true)}
-						>
-							<Trans>Disconnect</Trans>
-						</Button>
-					)}
-					<Button
-						size="sm"
-						variant="ghost"
-						onClick={() => {
-							setAdd(true);
-							setMode("token");
-						}}
-					>
-						<Trans>Add account</Trans>
-					</Button>
-				</div>
-			)}
 			{confirmation && (
-				<div className="space-y-3 rounded-lg border p-3 text-sm">
+				<div className="mt-4 space-y-3 rounded-lg border bg-muted/20 p-4 text-sm sm:ml-13">
 					<p>
 						<Trans>Disconnect this account from Superset?</Trans>
 					</p>
@@ -417,7 +443,10 @@ export function ForkConnectionCard({
 				</div>
 			)}
 			{action.isError && (
-				<p role="alert" className="break-words text-xs text-destructive">
+				<p
+					role="alert"
+					className="mt-2 break-words text-xs text-destructive sm:pl-13"
+				>
 					{action.error.message}
 				</p>
 			)}

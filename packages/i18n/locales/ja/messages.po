@@ -12241,6 +12241,9 @@ msgstr "プロンプトの後に付加する任意のフラグ"
 msgid "Options"
 msgstr "オプション"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "このフォークにのみ存在するオプションと接続。"
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "または、お使いのコーディングエージェントにSuperset CLIのインストールを頼んでください。"
 
@@ -17572,9 +17575,6 @@ msgstr "ワークスペースとそのターミナルを閉じます。プロジ
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "このクラウドワークスペースを起動しています。しばらく使われていなかった場合は、最大30秒かかることがあります。"
-
-msgid "This computer"
-msgstr "このコンピューター"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "再起動やクラッシュからの復旧に使う保存済みスクロールバックを削除します。"

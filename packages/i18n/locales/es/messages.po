@@ -12241,6 +12241,9 @@ msgstr "Flags opcionales añadidos después del contenido del prompt"
 msgid "Options"
 msgstr "Opciones"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "Opciones y conexiones que solo existen en este fork."
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "O pídele a tu agente de código que instale la CLI de Superset."
 
@@ -17572,9 +17575,6 @@ msgstr "Esto cierra el espacio de trabajo y sus terminales. Los archivos, las ra
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Este espacio de trabajo en la nube se está reactivando, lo que puede tardar hasta 30 segundos tras un periodo de inactividad."
-
-msgid "This computer"
-msgstr "Este equipo"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Esto elimina el historial guardado que se usa para recuperarse tras un reinicio o un cierre inesperado."

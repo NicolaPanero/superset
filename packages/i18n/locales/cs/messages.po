@@ -12241,6 +12241,9 @@ msgstr "Volitelné přepínače připojené za obsah promptu"
 msgid "Options"
 msgstr "Možnosti"
 
+msgid "Options and connections that only exist in this fork."
+msgstr "Možnosti a připojení, které existují jen v tomto forku."
+
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Nebo požádejte svého kódovacího agenta, ať nainstaluje Superset CLI."
 
@@ -17572,9 +17575,6 @@ msgstr "Tím se zavře pracovní prostor a jeho terminály. Soubory, větve a os
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Tento cloudový workspace se probouzí, což může po nečinnosti trvat až 30 sekund."
-
-msgid "This computer"
-msgstr "Tento počítač"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Tímto se smaže uložený scrollback používaný k obnovení po restartu nebo pádu."

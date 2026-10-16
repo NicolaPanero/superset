@@ -4,10 +4,16 @@ import {
 	type ForkProviderId,
 } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@superset/ui/collapsible";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HiChevronRight } from "react-icons/hi2";
 import { ForkConnectionCard } from "./components/ForkConnectionCard/ForkConnectionCard";
 import { useForkConnections } from "./hooks/useForkConnections";
 
@@ -22,6 +28,18 @@ export function ForkIntegrations() {
 		connections.find((c) => c.brokerUrl)?.brokerUrl ??
 		"";
 	const [attemptId, setAttemptId] = useState<string | null>(null);
+	const [oauthOpen, setOauthOpen] = useState(false);
+	const oauthInput = useRef<HTMLInputElement>(null);
+	const setupOAuth = () => {
+		setOauthOpen(true);
+		setTimeout(() => {
+			oauthInput.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
+			oauthInput.current?.focus({ preventScroll: true });
+		}, 50);
+	};
 	const discovery = useMutation({
 		mutationFn: () =>
 			client!.forkConnections.setBrokerUrl.mutate({ url: brokerUrl }),
@@ -78,17 +96,19 @@ export function ForkIntegrations() {
 				<Trans>Loading...</Trans>
 			</p>
 		);
+	const oauthFailed =
+		discovery.error || start.error || pending.data?.status === "error";
 	return (
-		<div className="space-y-5" data-testid="fork-integrations">
+		<section className="space-y-3" data-testid="fork-integrations">
 			<div>
-				<h2 className="text-lg font-semibold">
+				<h3 className="text-base font-semibold">
 					<Trans>Connections</Trans>
-				</h2>
-				<p className="mt-1 text-sm text-muted-foreground">
+				</h3>
+				<p className="mt-0.5 text-xs text-muted-foreground">
 					<Trans>Connect your repositories and tasks on this computer.</Trans>
 				</p>
 			</div>
-			<div className="grid items-start gap-4 lg:grid-cols-3">
+			<div className="divide-y rounded-lg border">
 				{FORK_PROVIDERS.map((provider) => (
 					<ForkConnectionCard
 						key={provider}
@@ -97,83 +117,97 @@ export function ForkIntegrations() {
 						onOAuth={(providers, connectionId) =>
 							start.mutate({ providers, connectionId })
 						}
+						onSetupOAuth={setupOAuth}
 					/>
 				))}
 			</div>
-			<section className="space-y-3 rounded-xl border bg-muted/20 p-5">
-				<div>
-					<h3 className="text-sm font-medium">
-						<Trans>OAuth service</Trans>
-					</h3>
-					<p className="mt-1 text-xs text-muted-foreground">
-						<Trans>One service can connect both Jira and Bitbucket.</Trans>
-					</p>
-				</div>
-				<Label htmlFor="fork-oauth-url">
-					<Trans>Service URL</Trans>
-				</Label>
-				<div className="flex flex-wrap gap-2">
-					<Input
-						id="fork-oauth-url"
-						className="min-w-48 flex-1"
-						type="url"
-						value={brokerUrl}
-						placeholder="https://auth.example.com"
-						onChange={(e) => {
-							setUrl(e.target.value);
-							discovery.reset();
-						}}
-					/>
-					<Button
-						variant="outline"
-						disabled={!client || !brokerUrl || discovery.isPending}
-						onClick={() => discovery.mutate()}
-					>
-						<Trans>Verify</Trans>
-					</Button>
-				</div>
-				{discovery.data && (
-					<div className="flex flex-wrap items-center gap-3 text-sm">
-						<span>
-							{discovery.data.providers
-								.map((p) =>
-									p === "jira"
-										? "Jira"
-										: p === "bitbucket"
-											? "Bitbucket"
-											: "GitHub",
-								)
-								.join(" · ")}
-						</span>
-						{discovery.data.providers.includes("jira") &&
-							discovery.data.providers.includes("bitbucket") && (
-								<Button
-									size="sm"
-									disabled={start.isPending}
-									onClick={() =>
-										start.mutate({ providers: ["jira", "bitbucket"] })
-									}
-								>
-									<Trans>Connect Jira and Bitbucket</Trans>
-								</Button>
+			<Collapsible
+				open={oauthOpen || !!attemptId || !!oauthFailed}
+				onOpenChange={setOauthOpen}
+				className="rounded-lg border"
+			>
+				<CollapsibleTrigger className="group flex w-full items-center gap-3 px-5 py-3 text-left">
+					<HiChevronRight className="size-3.5 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
+					<div className="min-w-0 flex-1">
+						<p className="text-sm font-medium">
+							<Trans>OAuth service</Trans>
+						</p>
+						<p className="mt-0.5 truncate text-xs text-muted-foreground">
+							{brokerUrl || (
+								<Trans>One service can connect both Jira and Bitbucket.</Trans>
 							)}
+						</p>
 					</div>
-				)}
-				{attemptId && (
-					<output className="text-sm">
-						<Trans>Complete authorization in your browser.</Trans>
-					</output>
-				)}
-				{(discovery.error ||
-					start.error ||
-					pending.data?.status === "error") && (
-					<p role="alert" className="text-xs text-destructive">
-						{discovery.error?.message ??
-							start.error?.message ??
-							t({ message: "Authorization failed" })}
-					</p>
-				)}
-			</section>
-		</div>
+					<span className="text-xs text-muted-foreground">
+						<Trans>Advanced</Trans>
+					</span>
+				</CollapsibleTrigger>
+				<CollapsibleContent className="space-y-3 border-t px-5 py-4">
+					<Label htmlFor="fork-oauth-url">
+						<Trans>Service URL</Trans>
+					</Label>
+					<div className="flex flex-wrap gap-2">
+						<Input
+							ref={oauthInput}
+							id="fork-oauth-url"
+							className="min-w-48 flex-1"
+							type="url"
+							value={brokerUrl}
+							placeholder="https://auth.example.com"
+							onChange={(e) => {
+								setUrl(e.target.value);
+								discovery.reset();
+							}}
+						/>
+						<Button
+							variant="outline"
+							disabled={!client || !brokerUrl || discovery.isPending}
+							onClick={() => discovery.mutate()}
+						>
+							<Trans>Verify</Trans>
+						</Button>
+					</div>
+					{discovery.data && (
+						<div className="flex flex-wrap items-center gap-3 text-sm">
+							<span>
+								{discovery.data.providers
+									.map((p) =>
+										p === "jira"
+											? "Jira"
+											: p === "bitbucket"
+												? "Bitbucket"
+												: "GitHub",
+									)
+									.join(" · ")}
+							</span>
+							{discovery.data.providers.includes("jira") &&
+								discovery.data.providers.includes("bitbucket") && (
+									<Button
+										size="sm"
+										disabled={start.isPending}
+										onClick={() =>
+											start.mutate({ providers: ["jira", "bitbucket"] })
+										}
+									>
+										<Trans>Connect Jira and Bitbucket</Trans>
+									</Button>
+								)}
+						</div>
+					)}
+					{attemptId && (
+						<output className="block text-sm">
+							<Trans>Complete authorization in your browser.</Trans>
+						</output>
+					)}
+					{oauthFailed && (
+						<p role="alert" className="text-xs text-destructive">
+							{discovery.error?.message ??
+								start.error?.message ??
+								t({ message: "Authorization failed" })}
+						</p>
+					)}
+				</CollapsibleContent>
+			</Collapsible>
+		</section>
 	);
 }
