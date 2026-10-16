@@ -6,6 +6,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
 export function ForkWorkspaceLinks() {
 	const { t } = useLingui(),
 		{ workspace, hostUrl } = useWorkspace(),
@@ -17,14 +18,15 @@ export function ForkWorkspaceLinks() {
 		[target, setTarget] = useState("");
 	const tasks = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "links", workspace.id],
-		queryFn: () => client!.forkTasks.links.query({ workspaceId: workspace.id }),
+		queryFn: () =>
+			required(client).forkTasks.links.query({ workspaceId: workspace.id }),
 		enabled: !!data?.version,
 		retry: false,
 	});
 	const scm = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "workspace-pr", workspace.id],
 		queryFn: () =>
-			client!.forkScm.workspace.query({ workspaceId: workspace.id }),
+			required(client).forkScm.workspace.query({ workspaceId: workspace.id }),
 		enabled:
 			!!data?.version &&
 			connections.some((c) => c.provider === "bitbucket" && c.enabled),
@@ -40,7 +42,7 @@ export function ForkWorkspaceLinks() {
 	const create = useMutation({
 		mutationFn: async () => {
 			if (!scm.data?.repository || !connection) return;
-			return client!.forkScm.createForWorkspace.mutate({
+			return required(client).forkScm.createForWorkspace.mutate({
 				workspaceId: workspace.id,
 				connectionId: connection.id,
 				repository: scm.data.repository,
@@ -97,7 +99,7 @@ export function ForkWorkspaceLinks() {
 								search: {
 									forkProvider: "bitbucket",
 									forkProject: workspace.projectId ?? undefined,
-									forkNumber: scm.data!.pullRequest!.number,
+									forkNumber: required(scm.data?.pullRequest).number,
 								},
 							})
 						}

@@ -95,8 +95,8 @@ function bbPR(
 		sourceRepository: p.source.repository
 			? {
 					...r,
-					owner: p.source.repository.full_name.split("/")[0]!,
-					name: p.source.repository.full_name.split("/")[1]!,
+					owner: p.source.repository.full_name.split("/")[0] ?? r.owner,
+					name: p.source.repository.full_name.split("/")[1] ?? r.name,
 				}
 			: r,
 		mergeMethods: p.destination.branch.merge_strategies,
@@ -161,13 +161,13 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 		if (r.provider === "bitbucket") {
 			const query = new URLSearchParams({
 				state: "OPEN",
-				q: `source.branch.name=${JSON.stringify(branch)}${target ? " AND destination.branch.name=" + JSON.stringify(target) : ""}`,
+				q: `source.branch.name=${JSON.stringify(branch)}${target ? ` AND destination.branch.name=${JSON.stringify(target)}` : ""}`,
 				pagelen: "1",
 				sort: "-updated_on",
 			});
 			const page = await this.api.request<{ values: BBPull[] }>(
 				id,
-				repoPath(r) + "/pullrequests?" + query,
+				`${repoPath(r)}/pullrequests?${query}`,
 			);
 			return page.values[0] ? bbPR(page.values[0], r, id) : null;
 		}
@@ -179,7 +179,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 		});
 		const page = await this.api.request<GHPull[]>(
 			id,
-			repoPath(r) + "/pulls?" + query,
+			`${repoPath(r)}/pulls?${query}`,
 		);
 		return page[0] ? ghPR(page[0], r, id) : null;
 	}
@@ -227,17 +227,17 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			};
 		}
 		const prefix = "/user/permissions/repositories";
-		if (cursor && !cursor.startsWith(prefix + "?"))
+		if (cursor && !cursor.startsWith(`${prefix}?`))
 			throw new TRPCError({ code: "BAD_REQUEST" });
 		const data = await this.api.request<{
 			values: { repository: BBRepo }[];
 			next?: string;
-		}>(id, cursor ?? prefix + "?pagelen=100");
+		}>(id, cursor ?? `${prefix}?pagelen=100`);
 		return {
 			items: data.values.map(({ repository: r }) => ({
 				provider: "bitbucket",
 				host: "bitbucket.org",
-				owner: r.full_name.split("/")[0]!,
+				owner: r.full_name.split("/")[0] ?? r.full_name,
 				name: r.slug,
 				id: r.uuid,
 				fullName: r.full_name,
@@ -271,8 +271,8 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				nextCursor: rows.length === 100 ? String(page + 1) : null,
 			};
 		}
-		const prefix = repoPath(r) + "/pullrequests";
-		if (cursor && !cursor.startsWith(prefix + "?"))
+		const prefix = `${repoPath(r)}/pullrequests`;
+		if (cursor && !cursor.startsWith(`${prefix}?`))
 			throw new TRPCError({ code: "BAD_REQUEST" });
 		const states =
 			state === "open"
@@ -356,7 +356,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			};
 		}
 		const prefix = `${repoPath(r)}/pullrequests/${number}/comments`;
-		if (cursor && !cursor.startsWith(prefix + "?"))
+		if (cursor && !cursor.startsWith(`${prefix}?`))
 			throw new TRPCError({ code: "BAD_REQUEST" });
 		const d = await this.api.request<{
 			values: {
@@ -367,7 +367,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				inline?: { path: string; to?: number; from?: number };
 			}[];
 			next?: string;
-		}>(id, cursor ?? prefix + "?pagelen=100");
+		}>(id, cursor ?? `${prefix}?pagelen=100`);
 		return {
 			items: d.values.map((c) => ({
 				id: String(c.id),
@@ -490,7 +490,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				});
 			return this.api.request(
 				id,
-				path + "/merge",
+				`${path}/merge`,
 				r.provider === "github" ? "PUT" : "POST",
 				r.provider === "github"
 					? { sha: data.head, merge_method: data.method ?? "merge" }
@@ -515,7 +515,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					"POST",
 					{ body: data.body },
 				);
-			return this.api.request(id, path + "/comments", "POST", {
+			return this.api.request(id, `${path}/comments`, "POST", {
 				content: { raw: data.body },
 				...(data.path && data.line
 					? { inline: { path: data.path, to: data.line } }
@@ -529,14 +529,14 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 						code: "BAD_REQUEST",
 						message: "Manage this review on GitHub",
 					});
-				return this.api.request(id, path + "/reviews", "POST", {
+				return this.api.request(id, `${path}/reviews`, "POST", {
 					event: "APPROVE",
 					body: data.body ?? "",
 				});
 			}
 			return this.api.request(
 				id,
-				path + "/approve",
+				`${path}/approve`,
 				action === "approve" ? "POST" : "DELETE",
 			);
 		}

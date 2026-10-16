@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { LocalHostServiceContext } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider/LocalHostServiceProvider";
+import { required } from "../utils/required";
 
 export function useForkConnections(hostOverride?: string | null) {
 	const context = useContext(LocalHostServiceContext);
@@ -13,7 +14,7 @@ export function useForkConnections(hostOverride?: string | null) {
 	const cache = useQueryClient();
 	const query = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "connections"],
-		queryFn: () => client!.forkConnections.list.query(),
+		queryFn: () => required(client).forkConnections.list.query(),
 		enabled: !!client,
 		retry: false,
 		staleTime: 10_000,

@@ -15,7 +15,7 @@ export function adfText(node: AdfNode | string | null | undefined): string {
 	if (node.text) return node.text;
 	const text = (node.content ?? []).map(adfText).join("");
 	return ["paragraph", "heading", "listItem"].includes(node.type ?? "")
-		? text + "\n"
+		? `${text}\n`
 		: text;
 }
 export function textAdf(text: string) {

@@ -69,7 +69,8 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 		const managed = enabled.filter((c) => c.mode !== "system");
 		if (managed.length > 1)
 			throw new Error("Select a default connection in Fork Settings");
-		if (managed.length === 1) return managed[0]!;
+		const [onlyManaged] = managed;
+		if (managed.length === 1 && onlyManaged) return onlyManaged;
 		if (
 			rows.some((c) => c.mode === "system" && !c.enabled) ||
 			(provider === "bitbucket" && rows.length > 0)
@@ -109,7 +110,7 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 						: "x-bitbucket-api-token-auth";
 			env.GIT_CONFIG_VALUE_1 =
 				"Authorization: Basic " +
-				Buffer.from(username + ":" + secret.token).toString("base64");
+				Buffer.from(`${username}:${secret.token}`).toString("base64");
 		} catch {}
 		return { env };
 	}

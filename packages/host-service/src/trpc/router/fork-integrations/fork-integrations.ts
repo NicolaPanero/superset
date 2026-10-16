@@ -169,7 +169,7 @@ export const forkConnectionsRouter = router({
 				site = url.origin;
 				if (!cloudId) {
 					const tenant = await forkFetch<{ cloudId: string }>(
-						site + "/_edge/tenant_info",
+						`${site}/_edge/tenant_info`,
 					);
 					cloudId = tenant.cloudId;
 				}
@@ -808,7 +808,7 @@ export const forkTasksRouter = router({
 				id: input.workspaceId,
 				projectId: input.projectId,
 				checkout: "worktree",
-				name: task.key + " " + task.title,
+				name: `${task.key} ${task.title}`,
 				branch: forkTaskBranch(task.key, task.title),
 				skipBranchPrefix: true,
 			});
@@ -824,7 +824,7 @@ export const forkTasksRouter = router({
 				.values({
 					scope: ctx.organizationId,
 					workspaceId: result.workspace.id,
-					taskKey: input.connectionId + ":" + task.id,
+					taskKey: `${input.connectionId}:${task.id}`,
 					task: link,
 				})
 				.onConflictDoUpdate({
@@ -956,7 +956,7 @@ export const forkTasksRouter = router({
 				.values({
 					scope: ctx.organizationId,
 					workspaceId: input.workspaceId,
-					taskKey: input.connectionId + ":" + task.id,
+					taskKey: `${input.connectionId}:${task.id}`,
 					task: link,
 				})
 				.onConflictDoUpdate({
@@ -987,7 +987,7 @@ export const forkTasksRouter = router({
 						eq(forkExternalTaskLinks.workspaceId, input.workspaceId),
 						eq(
 							forkExternalTaskLinks.taskKey,
-							input.connectionId + ":" + input.taskId,
+							`${input.connectionId}:${input.taskId}`,
 						),
 					),
 				)

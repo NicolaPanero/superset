@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
 
 export function ForkPullRequestDetail({
 	pullRequest,
@@ -31,7 +32,7 @@ export function ForkPullRequestDetail({
 	const [merging, setMerging] = useState(false);
 	const detail = useQuery({
 		queryKey: key,
-		queryFn: () => client!.forkScm.get.query(target),
+		queryFn: () => required(client).forkScm.get.query(target),
 		initialData: pullRequest,
 		enabled: !!client,
 		refetchOnMount: "always",
@@ -59,19 +60,19 @@ export function ForkPullRequestDetail({
 		initialPageParam: undefined as string | undefined,
 		queryKey: [...key, "comments"],
 		queryFn: ({ pageParam }) =>
-			client!.forkScm.comments.query({ ...target, cursor: pageParam }),
+			required(client).forkScm.comments.query({ ...target, cursor: pageParam }),
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
 		enabled: !!client && tab === "conversation",
 	});
 	const diff = useQuery({
 		queryKey: [...key, "diff"],
-		queryFn: () => client!.forkScm.diff.query(target),
+		queryFn: () => required(client).forkScm.diff.query(target),
 		enabled: !!client && tab === "code",
 		retry: false,
 	});
 	const checks = useQuery({
 		queryKey: [...key, "checks"],
-		queryFn: () => client!.forkScm.checks.query(target),
+		queryFn: () => required(client).forkScm.checks.query(target),
 		enabled: !!client && tab === "checks",
 		retry: false,
 	});
@@ -86,7 +87,7 @@ export function ForkPullRequestDetail({
 				| "comment"
 				| "edit",
 		) =>
-			client!.forkScm.action.mutate({
+			required(client).forkScm.action.mutate({
 				...target,
 				action,
 				head: pr.headCommit,

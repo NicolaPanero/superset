@@ -5,6 +5,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
 import { ForkTaskDetail } from "../ForkTaskDetail/ForkTaskDetail";
 
 export function ForkJiraTasks() {
@@ -30,7 +31,11 @@ export function ForkJiraTasks() {
 		queryKey: ["fork-integrations", hostUrl, "tasks", connectionId, jql],
 		initialPageParam: undefined as string | undefined,
 		queryFn: ({ pageParam }) =>
-			client!.forkTasks.list.query({ connectionId, jql, cursor: pageParam }),
+			required(client).forkTasks.list.query({
+				connectionId,
+				jql,
+				cursor: pageParam,
+			}),
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
 		enabled: !!client && !!connectionId,
 		retry: false,
@@ -44,7 +49,10 @@ export function ForkJiraTasks() {
 			search.forkTask,
 		],
 		queryFn: () =>
-			client!.forkTasks.get.query({ connectionId, key: search.forkTask! }),
+			required(client).forkTasks.get.query({
+				connectionId,
+				key: required(search.forkTask),
+			}),
 		enabled: !!client && !!connectionId && !!search.forkTask,
 		retry: false,
 	});
@@ -100,7 +108,7 @@ export function ForkJiraTasks() {
 						variant="outline"
 						onClick={() =>
 							window.open(
-								jira.find((c) => c.id === connectionId)!.site +
+								required(jira.find((c) => c.id === connectionId)?.site) +
 									"/secure/CreateIssue!default.jspa",
 								"_blank",
 								"noopener,noreferrer",

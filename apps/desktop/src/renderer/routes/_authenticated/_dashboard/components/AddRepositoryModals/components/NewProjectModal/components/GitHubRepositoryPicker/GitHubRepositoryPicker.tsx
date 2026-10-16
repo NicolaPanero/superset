@@ -38,8 +38,10 @@ export function GitHubRepositoryPicker({
 	const [account, setAccount] = useState("");
 	const accounts = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "connections"],
-		queryFn: () =>
-			getHostServiceClientByUrl(hostUrl!).forkConnections.list.query(),
+		queryFn: () => {
+			if (!hostUrl) throw new Error("fork_host_unavailable");
+			return getHostServiceClientByUrl(hostUrl).forkConnections.list.query();
+		},
 		enabled: open && !!hostUrl,
 		retry: false,
 	});

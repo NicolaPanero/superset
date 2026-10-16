@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { HiChevronRight } from "react-icons/hi2";
 import { ForkConnectionCard } from "./components/ForkConnectionCard/ForkConnectionCard";
 import { useForkConnections } from "./hooks/useForkConnections";
+import { required } from "./utils/required";
 
 export function ForkIntegrations() {
 	const { t } = useLingui();
@@ -42,7 +43,7 @@ export function ForkIntegrations() {
 	};
 	const discovery = useMutation({
 		mutationFn: () =>
-			client!.forkConnections.setBrokerUrl.mutate({ url: brokerUrl }),
+			required(client).forkConnections.setBrokerUrl.mutate({ url: brokerUrl }),
 		onSuccess: () => void refresh(),
 	});
 	const start = useMutation({
@@ -53,7 +54,7 @@ export function ForkIntegrations() {
 			providers: ForkProviderId[];
 			connectionId?: string;
 		}) =>
-			client!.forkConnections.startOAuth.mutate({
+			required(client).forkConnections.startOAuth.mutate({
 				url: brokerUrl,
 				providers,
 				connectionId,
@@ -66,7 +67,9 @@ export function ForkIntegrations() {
 	const pending = useQuery({
 		queryKey: ["fork-integrations", "oauth", attemptId],
 		queryFn: () =>
-			client!.forkConnections.oauthStatus.query({ attemptId: attemptId! }),
+			required(client).forkConnections.oauthStatus.query({
+				attemptId: required(attemptId),
+			}),
 		enabled: !!client && !!attemptId,
 		refetchInterval: (q) =>
 			q.state.data?.status === "pending" ||
@@ -81,7 +84,7 @@ export function ForkIntegrations() {
 		const ids = pending.data.connectionIds;
 		setAttemptId(null);
 		void Promise.all(
-			ids.map((id) => client!.forkConnections.verify.mutate({ id })),
+			ids.map((id) => required(client).forkConnections.verify.mutate({ id })),
 		).finally(() => void refresh());
 	}, [pending.data, client, refresh]);
 	if (isError || !client)

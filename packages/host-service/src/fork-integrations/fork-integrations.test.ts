@@ -184,8 +184,8 @@ test("a common OAuth broker returns two grants through a bound one-time desktop 
 				return Response.json({
 					version: 1,
 					providers: ["jira", "bitbucket"],
-					authorization_endpoint: base + "/authorize",
-					token_endpoint: base + "/token",
+					authorization_endpoint: `${base}/authorize`,
+					token_endpoint: `${base}/token`,
 				});
 			if (url.pathname === "/token") {
 				const payload = (await request.json()) as {
@@ -229,10 +229,10 @@ test("a common OAuth broker returns two grants through a bound one-time desktop 
 		]);
 		const result = await startForkOAuth(store, base, ["jira", "bitbucket"]);
 		const authorization = new URL(result.url),
-			redirect = new URL(authorization.searchParams.get("redirect_uri")!);
+			redirect = new URL(authorization.searchParams.get("redirect_uri") ?? "");
 		redirect.searchParams.set(
 			"state",
-			authorization.searchParams.get("state")!,
+			authorization.searchParams.get("state") ?? "",
 		);
 		redirect.searchParams.set("code", "one-time-test");
 		const invalid = new URL(redirect);
@@ -261,7 +261,7 @@ test("a common OAuth broker returns two grants through a bound one-time desktop 
 });
 
 test("explicit repository accounts and the system default cannot fall back to a different identity", async () => {
-	const { sqlite, store, db } = fixture();
+	const { sqlite, store } = fixture();
 	try {
 		const first = store.create("github", "token", null),
 			second = store.create("github", "token", null);
@@ -310,8 +310,8 @@ test("concurrent OAuth refreshes rotate one broker session and keep upstream tok
 				return Response.json({
 					version: 1,
 					providers: ["bitbucket"],
-					authorization_endpoint: base + "/authorize",
-					token_endpoint: base + "/token",
+					authorization_endpoint: `${base}/authorize`,
+					token_endpoint: `${base}/token`,
 				});
 			if (path === "/token") {
 				const payload = (await request.json()) as {

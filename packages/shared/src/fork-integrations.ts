@@ -153,13 +153,16 @@ export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 		.replace(/^\/+|\/+$/g, "")
 		.replace(/\.git$/, "")
 		.split("/");
+	const [owner, name] = parts;
 	if (
 		!provider ||
+		!owner ||
+		!name ||
 		parts.length !== 2 ||
-		parts.some((p) => !p || p === "." || p === "..")
+		parts.some((p) => p === "." || p === "..")
 	)
 		return null;
-	return { provider, host, owner: parts[0]!, name: parts[1]! };
+	return { provider, host, owner, name };
 }
 export function forkRepositoryKey(ref: ForkRepositoryRef): string {
 	return [

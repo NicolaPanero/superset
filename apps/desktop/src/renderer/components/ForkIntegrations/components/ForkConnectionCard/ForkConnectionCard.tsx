@@ -321,11 +321,11 @@ export function ForkConnectionCard({
 						<div className="grid gap-3 sm:grid-cols-2">
 							{provider === "jira" && (
 								<div className="space-y-1 sm:col-span-2">
-									<Label htmlFor={provider + "-site"}>
+									<Label htmlFor={`${provider}-site`}>
 										<Trans>Site URL</Trans>
 									</Label>
 									<Input
-										id={provider + "-site"}
+										id={`${provider}-site`}
 										type="url"
 										required
 										value={site || current?.site || ""}
@@ -336,11 +336,11 @@ export function ForkConnectionCard({
 							)}
 							{provider !== "github" && (
 								<div className="space-y-1">
-									<Label htmlFor={provider + "-email"}>
+									<Label htmlFor={`${provider}-email`}>
 										<Trans>Email</Trans>
 									</Label>
 									<Input
-										id={provider + "-email"}
+										id={`${provider}-email`}
 										type="email"
 										required
 										value={email}
@@ -355,11 +355,11 @@ export function ForkConnectionCard({
 									provider === "github" && "sm:col-span-2",
 								)}
 							>
-								<Label htmlFor={provider + "-token"}>
+								<Label htmlFor={`${provider}-token`}>
 									<Trans>API token</Trans>
 								</Label>
 								<Input
-									id={provider + "-token"}
+									id={`${provider}-token`}
 									type="password"
 									required
 									value={token}

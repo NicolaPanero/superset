@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
 import { ForkTransitionFields } from "../ForkTransitionFields/ForkTransitionFields";
 
 export function ForkTaskDetail({
@@ -36,7 +37,7 @@ export function ForkTaskDetail({
 		[priorityId, setPriorityId] = useState(task.priorityId ?? "");
 	const metadata = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "edit-metadata", target],
-		queryFn: () => client!.forkTasks.editMetadata.query(target),
+		queryFn: () => required(client).forkTasks.editMetadata.query(target),
 		enabled: !!client,
 	});
 	const assignees = useQuery({
@@ -48,28 +49,31 @@ export function ForkTaskDetail({
 			assigneeQuery,
 		],
 		queryFn: () =>
-			client!.forkTasks.assignees.query({ ...target, query: assigneeQuery }),
+			required(client).forkTasks.assignees.query({
+				...target,
+				query: assigneeQuery,
+			}),
 		enabled: !!client && metadata.data?.canAssign === true,
 	});
 	const [createId] = useState(() => crypto.randomUUID());
 	const transitions = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "transitions", target],
-		queryFn: () => client!.forkTasks.transitions.query(target),
+		queryFn: () => required(client).forkTasks.transitions.query(target),
 		enabled: !!client,
 	});
 	const comments = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "comments", target],
-		queryFn: () => client!.forkTasks.comments.query(target),
+		queryFn: () => required(client).forkTasks.comments.query(target),
 		enabled: !!client,
 	});
 	const projects = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "projects"],
-		queryFn: () => client!.project.list.query(),
+		queryFn: () => required(client).project.list.query(),
 		enabled: !!client,
 	});
 	const workspaces = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "workspaces"],
-		queryFn: () => client!.workspace.list.query(),
+		queryFn: () => required(client).workspace.list.query(),
 		enabled: !!client,
 	});
 	const action = useMutation({
@@ -203,7 +207,7 @@ export function ForkTaskDetail({
 						>
 							<option value="">{t({ message: "Unassigned" })}</option>
 							{task.assignee &&
-								!assignees.data?.some((u) => u.id === task.assignee!.id) && (
+								!assignees.data?.some((u) => u.id === task.assignee?.id) && (
 									<option value={task.assignee.id}>{task.assignee.name}</option>
 								)}
 							{assignees.data?.map((u) => (

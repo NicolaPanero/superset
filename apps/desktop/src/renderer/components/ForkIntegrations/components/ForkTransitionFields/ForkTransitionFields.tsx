@@ -26,13 +26,13 @@ export function ForkTransitionFields({
 				const multiple = field.schema?.type === "array";
 				return (
 					<div key={field.id} className="space-y-1">
-						<Label htmlFor={"jira-transition-" + field.id}>
+						<Label htmlFor={`jira-transition-${field.id}`}>
 							{field.name}
 							{field.required ? " *" : ""}
 						</Label>
 						{field.allowedValues?.length ? (
 							<select
-								id={"jira-transition-" + field.id}
+								id={`jira-transition-${field.id}`}
 								required={field.required}
 								multiple={multiple}
 								className="min-h-9 w-full rounded-md border bg-background px-2 text-sm"
@@ -77,7 +77,7 @@ export function ForkTransitionFields({
 							</select>
 						) : (
 							<Input
-								id={"jira-transition-" + field.id}
+								id={`jira-transition-${field.id}`}
 								required={field.required}
 								type={
 									field.schema?.type === "number"

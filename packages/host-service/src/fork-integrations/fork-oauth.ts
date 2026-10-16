@@ -54,8 +54,8 @@ export async function discoverForkBroker(
 		metadata.authorization_endpoint,
 		metadata.token_endpoint,
 		metadata.revocation_endpoint,
-	].filter(Boolean)) {
-		if (new URL(endpoint!).origin !== new URL(base).origin)
+	].filter((value): value is string => Boolean(value))) {
+		if (new URL(endpoint).origin !== new URL(base).origin)
 			throw new TRPCError({
 				code: "BAD_REQUEST",
 				message: "OAuth endpoints must belong to the configured service",
@@ -301,7 +301,8 @@ export async function forkAccessSecret(
 	if (current) return current;
 	const operation = (async () => {
 		try {
-			const metadata = await discoverForkBroker(connection.brokerUrl!);
+			if (!connection.brokerUrl) throw new Error("OAuth service unavailable");
+			const metadata = await discoverForkBroker(connection.brokerUrl);
 			const grant = tokenSchema.parse(
 				await forkFetch(metadata.token_endpoint, {
 					method: "POST",

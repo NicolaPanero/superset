@@ -12,6 +12,7 @@ import {
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
 import { ForkPullRequestDetail } from "../ForkPullRequestDetail/ForkPullRequestDetail";
 
 export function ForkPullRequests() {
@@ -28,7 +29,7 @@ export function ForkPullRequests() {
 	);
 	const projects = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "scm-projects"],
-		queryFn: () => client!.forkScm.projects.query(),
+		queryFn: () => required(client).forkScm.projects.query(),
 		enabled: !!client,
 	});
 	const repos =
@@ -51,9 +52,9 @@ export function ForkPullRequests() {
 			project?.repository,
 		],
 		queryFn: () =>
-			client!.forkScm.defaultBranch.query({
+			required(client).forkScm.defaultBranch.query({
 				connectionId,
-				repository: project!.repository,
+				repository: required(project).repository,
 			}),
 		enabled: !!client && !!project && !!connectionId,
 	});
@@ -73,9 +74,9 @@ export function ForkPullRequests() {
 		],
 		initialPageParam: undefined as string | undefined,
 		queryFn: ({ pageParam }) =>
-			client!.forkScm.list.query({
+			required(client).forkScm.list.query({
 				connectionId,
-				repository: project!.repository,
+				repository: required(project).repository,
 				state,
 				cursor: pageParam,
 			}),
@@ -117,27 +118,27 @@ export function ForkPullRequests() {
 			search.forkNumber,
 		],
 		queryFn: () =>
-			client!.forkScm.get.query({
+			required(client).forkScm.get.query({
 				connectionId,
-				repository: project!.repository,
-				number: search.forkNumber!,
+				repository: required(project).repository,
+				number: required(search.forkNumber),
 			}),
 		enabled: !!client && !!project && !!connectionId && !!search.forkNumber,
 		retry: false,
 	});
 	const active = selected ?? linked.data ?? null;
 	const [checkoutIds] = useState(() => new Map<string, string>());
-	const checkoutKey = project?.projectId + ":" + active?.number;
+	const checkoutKey = `${project?.projectId}:${active?.number}`;
 	if (!checkoutIds.has(checkoutKey))
 		checkoutIds.set(checkoutKey, crypto.randomUUID());
-	const checkoutId = checkoutIds.get(checkoutKey)!;
+	const checkoutId = required(checkoutIds.get(checkoutKey));
 	const checkout = useMutation({
 		mutationFn: () =>
-			client!.forkScm.checkout.mutate({
+			required(client).forkScm.checkout.mutate({
 				connectionId,
-				repository: project!.repository,
-				number: active!.number,
-				projectId: project!.projectId,
+				repository: required(project).repository,
+				number: required(active).number,
+				projectId: required(project).projectId,
 				workspaceId: checkoutId,
 			}),
 		onSuccess: (r) => {
@@ -149,11 +150,11 @@ export function ForkPullRequests() {
 	});
 	const bind = useMutation({
 		mutationFn: (id: string) =>
-			client!.forkConnections.bind.mutate({
-				projectId: project!.projectId,
-				repository: project!.repository,
+			required(client).forkConnections.bind.mutate({
+				projectId: required(project).projectId,
+				repository: required(project).repository,
 				connectionId: id,
-				remote: project!.remote,
+				remote: required(project).remote,
 			}),
 		onSuccess: () =>
 			void cache.invalidateQueries({ queryKey: ["fork-integrations"] }),

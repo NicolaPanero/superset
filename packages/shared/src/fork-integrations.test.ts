@@ -6,13 +6,14 @@ import {
 } from "./fork-integrations";
 
 test("SSH and HTTPS remotes identify the same repository without mixing providers", () => {
-	const github = parseForkRemote("git@github.com:Org/Repo.git")!;
-	expect(forkRepositoryKey(github)).toBe(
-		forkRepositoryKey(parseForkRemote("https://github.com/org/repo")!),
-	);
-	expect(forkRepositoryKey(github)).not.toBe(
-		forkRepositoryKey(parseForkRemote("ssh://git@bitbucket.org/org/repo.git")!),
-	);
+	const key = (remote: string) => {
+		const ref = parseForkRemote(remote);
+		if (!ref) throw new Error(`unparsed remote ${remote}`);
+		return forkRepositoryKey(ref);
+	};
+	const github = key("git@github.com:Org/Repo.git");
+	expect(github).toBe(key("https://github.com/org/repo"));
+	expect(github).not.toBe(key("ssh://git@bitbucket.org/org/repo.git"));
 	expect(
 		parseForkRemote("https://github.com.attacker.example/org/repo"),
 	).toBeNull();
