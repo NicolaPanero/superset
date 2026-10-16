@@ -1788,6 +1788,9 @@ msgstr "Script toevoegen"
 msgid "Add Script"
 msgstr "Script toevoegen"
 
+msgid "Add server"
+msgstr "Server toevoegen"
+
 msgid "Add setup commands, one per line..."
 msgstr "Voeg setupcommando's toe, één per regel..."
 
@@ -5882,6 +5885,7 @@ msgstr "“{title}” verwijderen?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "{0} verwijderen?"
 
@@ -6825,6 +6829,9 @@ msgstr "Omgeving opgeslagen"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Omgevingsopzet, flaky tests en credential-geknutsel — de saaie faalvormen die onbewaakte runs in 2025 om zeep hielpen — zijn grotendeels weggewerkt met engineering in plaats van met modellen."
+
+msgid "Environment variables"
+msgstr "Omgevingsvariabelen"
 
 msgid "Environment Variables"
 msgstr "Omgevingsvariabelen"
@@ -8319,6 +8326,9 @@ msgstr "Heeft niet-gepushte commits"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Directe vergelijkingen"
+
+msgid "Headers"
+msgstr "Headers"
 
 msgid "Heading 1"
 msgstr "Kop 1"
@@ -10135,6 +10145,9 @@ msgstr "MCP-server"
 msgid "MCP Server Commands"
 msgstr "MCP-servercommando's"
 
+msgid "MCP servers"
+msgstr "MCP-servers"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Gemeten over de laatste 30 dagen"
 
@@ -11085,6 +11098,9 @@ msgstr "Geen overeenkomende leden in de organisatie."
 msgid "No matching pages"
 msgstr "Geen overeenkomende pagina's"
 
+msgid "No MCP servers yet."
+msgstr "Nog geen MCP-servers."
+
 msgid "No members yet"
 msgstr "Nog geen leden"
 
@@ -11639,6 +11655,9 @@ msgstr "Op jouw machine. Repo's, worktrees, terminaluitvoer en agentsessies blij
 
 msgid "Onboarding redesign"
 msgstr "Onboarding-redesign"
+
+msgid "One argument per line"
+msgstr "Eén argument per regel"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Eén chat die een taak plant, parallelle agents over worktrees uitzet en de resultaten weer samenbrengt."
@@ -15440,6 +15459,9 @@ msgstr "Gedeeld door sessies die deze aanmelding gebruiken."
 msgid "Shared app components"
 msgstr "Gedeelde app-componenten"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Gedeeld door alle agents en accounts op deze computer."
+
 msgid "Shared component library."
 msgstr "Gedeelde componentbibliotheek."
 
@@ -16351,6 +16373,10 @@ msgstr "Agent in {what} wordt gestopt"
 
 msgid "Stops the agent and sends this now"
 msgstr "Stopt de agent en verzendt dit nu"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Opgeslagen in {0}"
 
 msgid "Strikethrough"
 msgstr "Doorhalen"
@@ -18294,6 +18320,9 @@ msgstr "Niet beschikbaar"
 msgid "Uncached input"
 msgstr "Niet-gecachete input"
 
+msgid "Unchanged"
+msgstr "Ongewijzigd"
+
 msgid "Uncollectible"
 msgstr "Oninbaar"
 
@@ -18602,6 +18631,9 @@ msgstr "Uptime-SLA en toegewijde support"
 msgid "Urgent"
 msgstr "Urgent"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL gekopieerd"
 
@@ -18740,6 +18772,9 @@ msgstr "Willekeurige branchnaam gebruikt (AI-generatie niet beschikbaar)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId komt niet overeen met het project van de werkruimte"
+
+msgid "Value"
+msgstr "Waarde"
 
 msgid "Variables"
 msgstr "Variabelen"

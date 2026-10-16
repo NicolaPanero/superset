@@ -1788,6 +1788,9 @@ msgstr "Добавить скрипт"
 msgid "Add Script"
 msgstr "Добавить скрипт"
 
+msgid "Add server"
+msgstr "Добавить сервер"
+
 msgid "Add setup commands, one per line..."
 msgstr "Добавьте команды установки, по одной в строке..."
 
@@ -5882,6 +5885,7 @@ msgstr "Удалить «{title}»?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Удалить {0}?"
 
@@ -6825,6 +6829,9 @@ msgstr "Окружение сохранено"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Настройка окружения, нестабильные тесты и возня с учётными данными — скучные режимы отказа, которые убивали автономные прогоны в 2025-м, — по большей части решены инженерно, а не моделью."
+
+msgid "Environment variables"
+msgstr "Переменные окружения"
 
 msgid "Environment Variables"
 msgstr "Переменные окружения"
@@ -8319,6 +8326,9 @@ msgstr "Есть неотправленные коммиты"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Прямые сравнения"
+
+msgid "Headers"
+msgstr "Заголовки"
 
 msgid "Heading 1"
 msgstr "Заголовок 1"
@@ -10135,6 +10145,9 @@ msgstr "Сервер MCP"
 msgid "MCP Server Commands"
 msgstr "Команды сервера MCP"
 
+msgid "MCP servers"
+msgstr "MCP-серверы"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Измерено за последние 30 дней"
 
@@ -11085,6 +11098,9 @@ msgstr "Нет подходящих участников организации.
 msgid "No matching pages"
 msgstr "Нет подходящих страниц"
 
+msgid "No MCP servers yet."
+msgstr "MCP-серверов пока нет."
+
 msgid "No members yet"
 msgstr "Участников пока нет"
 
@@ -11639,6 +11655,9 @@ msgstr "На вашей машине. Репозитории, worktree, выво
 
 msgid "Onboarding redesign"
 msgstr "Редизайн онбординга"
+
+msgid "One argument per line"
+msgstr "Один аргумент на строку"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Один чат, который планирует задачу, разводит параллельных агентов по worktree и сводит результаты обратно."
@@ -15440,6 +15459,9 @@ msgstr "Общий лимит для сеансов с этим аккаунто
 msgid "Shared app components"
 msgstr "Общие компоненты приложения"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Общие для всех агентов и аккаунтов на этом компьютере."
+
 msgid "Shared component library."
 msgstr "Общая библиотека компонентов."
 
@@ -16351,6 +16373,10 @@ msgstr "Остановка агента в {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Останавливает агента и отправляет это сейчас"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Хранятся в {0}"
 
 msgid "Strikethrough"
 msgstr "Зачёркнутый"
@@ -18294,6 +18320,9 @@ msgstr "Недоступно"
 msgid "Uncached input"
 msgstr "Некешированный ввод"
 
+msgid "Unchanged"
+msgstr "Без изменений"
+
 msgid "Uncollectible"
 msgstr "Безнадёжный"
 
@@ -18602,6 +18631,9 @@ msgstr "SLA по доступности и выделенная поддержк
 msgid "Urgent"
 msgstr "Срочный"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL скопирован"
 
@@ -18740,6 +18772,9 @@ msgstr "Используется случайное имя ветки (гене�
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId не совпадает с проектом рабочей области"
+
+msgid "Value"
+msgstr "Значение"
 
 msgid "Variables"
 msgstr "Переменные"

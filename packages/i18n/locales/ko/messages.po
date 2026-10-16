@@ -1788,6 +1788,9 @@ msgstr "스크립트 추가"
 msgid "Add Script"
 msgstr "스크립트 추가"
 
+msgid "Add server"
+msgstr "서버 추가"
+
 msgid "Add setup commands, one per line..."
 msgstr "설정 명령을 한 줄에 하나씩 추가하세요..."
 
@@ -5882,6 +5885,7 @@ msgstr "“{title}”을(를) 삭제할까요?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "{0}을(를) 삭제할까요?"
 
@@ -6825,6 +6829,9 @@ msgstr "환경이 저장되었습니다"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "환경 설정, 불안정한 테스트, 자격 증명 연결처럼 2025년에 무인 실행을 망가뜨렸던 지루한 실패 유형은 대부분 모델링이 아니라 엔지니어링으로 해결됩니다."
+
+msgid "Environment variables"
+msgstr "환경 변수"
 
 msgid "Environment Variables"
 msgstr "환경 변수"
@@ -8319,6 +8326,9 @@ msgstr "푸시되지 않은 커밋 있음"
 
 msgid "Head-to-Head Comparisons"
 msgstr "1:1 비교"
+
+msgid "Headers"
+msgstr "헤더"
 
 msgid "Heading 1"
 msgstr "제목 1"
@@ -10135,6 +10145,9 @@ msgstr "MCP 서버"
 msgid "MCP Server Commands"
 msgstr "MCP 서버 명령"
 
+msgid "MCP servers"
+msgstr "MCP 서버"
+
 msgid "Measured over the trailing 30 days"
 msgstr "최근 30일 기준"
 
@@ -11085,6 +11098,9 @@ msgstr "일치하는 조직 멤버가 없습니다."
 msgid "No matching pages"
 msgstr "일치하는 페이지가 없습니다"
 
+msgid "No MCP servers yet."
+msgstr "아직 MCP 서버가 없습니다."
+
 msgid "No members yet"
 msgstr "아직 멤버가 없습니다"
 
@@ -11639,6 +11655,9 @@ msgstr "본인의 머신에서 실행됩니다. 리포지토리, worktree, 터�
 
 msgid "Onboarding redesign"
 msgstr "온보딩 리디자인"
+
+msgid "One argument per line"
+msgstr "한 줄에 인수 하나"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "하나의 채팅이 작업을 계획하고, worktree 전반에 에이전트를 병렬로 펼치고, 결과를 다시 모읍니다."
@@ -15440,6 +15459,9 @@ msgstr "이 로그인을 사용하는 세션 간에 공유됩니다."
 msgid "Shared app components"
 msgstr "공용 앱 컴포넌트"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "이 컴퓨터의 모든 에이전트와 계정이 함께 사용합니다."
+
 msgid "Shared component library."
 msgstr "공유 컴포넌트 라이브러리입니다."
 
@@ -16351,6 +16373,10 @@ msgstr "{what}의 에이전트 중지 중"
 
 msgid "Stops the agent and sends this now"
 msgstr "에이전트를 중지하고 지금 이 메시지를 보냅니다"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "저장 위치: {0}"
 
 msgid "Strikethrough"
 msgstr "취소선"
@@ -18294,6 +18320,9 @@ msgstr "사용할 수 없음"
 msgid "Uncached input"
 msgstr "캐시되지 않은 입력"
 
+msgid "Unchanged"
+msgstr "변경 없음"
+
 msgid "Uncollectible"
 msgstr "회수 불가"
 
@@ -18602,6 +18631,9 @@ msgstr "가동률 SLA 및 전담 지원"
 msgid "Urgent"
 msgstr "긴급"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL을 복사했습니다"
 
@@ -18740,6 +18772,9 @@ msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 사용 불가)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId가 워크스페이스의 프로젝트와 일치하지 않습니다"
+
+msgid "Value"
+msgstr "값"
 
 msgid "Variables"
 msgstr "변수"

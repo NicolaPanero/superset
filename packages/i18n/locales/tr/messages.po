@@ -1788,6 +1788,9 @@ msgstr "Betik ekle"
 msgid "Add Script"
 msgstr "Betik ekle"
 
+msgid "Add server"
+msgstr "Sunucu ekle"
+
 msgid "Add setup commands, one per line..."
 msgstr "Kurulum komutlarını her satıra bir tane olacak şekilde ekleyin..."
 
@@ -5882,6 +5885,7 @@ msgstr "“{title}” silinsin mi?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "{0} silinsin mi?"
 
@@ -6825,6 +6829,9 @@ msgstr "Ortam kaydedildi"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Ortam kurulumu, kararsız testler ve kimlik bilgisi tesisatı, yani 2025'te gözetimsiz çalıştırmaları öldüren sıkıcı hata biçimleri, modelleyerek değil mühendislikle büyük ölçüde ortadan kaldırılır."
+
+msgid "Environment variables"
+msgstr "Ortam değişkenleri"
 
 msgid "Environment Variables"
 msgstr "Ortam değişkenleri"
@@ -8319,6 +8326,9 @@ msgstr "Push edilmemiş commit'ler var"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Birebir karşılaştırmalar"
+
+msgid "Headers"
+msgstr "Üst bilgiler"
 
 msgid "Heading 1"
 msgstr "Başlık 1"
@@ -10135,6 +10145,9 @@ msgstr "MCP sunucusu"
 msgid "MCP Server Commands"
 msgstr "MCP sunucusu komutları"
 
+msgid "MCP servers"
+msgstr "MCP sunucuları"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Son 30 gün üzerinden ölçülür"
 
@@ -11085,6 +11098,9 @@ msgstr "Eşleşen kuruluş üyesi yok."
 msgid "No matching pages"
 msgstr "Eşleşen sayfa yok"
 
+msgid "No MCP servers yet."
+msgstr "Henüz MCP sunucusu yok."
+
 msgid "No members yet"
 msgstr "Henüz üye yok"
 
@@ -11639,6 +11655,9 @@ msgstr "Sizin makinenizde. Depolar, worktree'ler, terminal çıktısı ve ajan o
 
 msgid "Onboarding redesign"
 msgstr "Onboarding yeniden tasarımı"
+
+msgid "One argument per line"
+msgstr "Her satıra bir bağımsız değişken"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Bir görevi planlayan, worktree'ler arasında paralel ajanlara dağıtan ve sonuçları geri toplayan tek bir sohbet."
@@ -15440,6 +15459,9 @@ msgstr "Bu hesabı kullanan oturumlar arasında paylaşılır."
 msgid "Shared app components"
 msgstr "Paylaşılan uygulama bileşenleri"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Bu bilgisayardaki tüm ajanlar ve hesaplar tarafından paylaşılır."
+
 msgid "Shared component library."
 msgstr "Paylaşılan bileşen kitaplığı."
 
@@ -16351,6 +16373,10 @@ msgstr "{what} içindeki ajan durduruluyor"
 
 msgid "Stops the agent and sends this now"
 msgstr "Ajanı durdurur ve bunu hemen gönderir"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "{0} içinde saklanır"
 
 msgid "Strikethrough"
 msgstr "Üstü çizili"
@@ -18294,6 +18320,9 @@ msgstr "Kullanılamıyor"
 msgid "Uncached input"
 msgstr "Önbelleksiz girdi"
 
+msgid "Unchanged"
+msgstr "Değişmedi"
+
 msgid "Uncollectible"
 msgstr "Tahsil edilemez"
 
@@ -18602,6 +18631,9 @@ msgstr "Çalışma süresi SLA'sı ve ayrılmış destek"
 msgid "Urgent"
 msgstr "Acil"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL kopyalandı"
 
@@ -18740,6 +18772,9 @@ msgstr "Rastgele dal adı kullanılıyor (AI üretimi kullanılamıyor)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId, çalışma alanının projesiyle eşleşmiyor"
+
+msgid "Value"
+msgstr "Değer"
 
 msgid "Variables"
 msgstr "Değişkenler"

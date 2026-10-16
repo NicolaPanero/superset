@@ -1788,6 +1788,9 @@ msgstr "Tambah skrip"
 msgid "Add Script"
 msgstr "Tambah Skrip"
 
+msgid "Add server"
+msgstr "Tambah server"
+
 msgid "Add setup commands, one per line..."
 msgstr "Tambahkan perintah setup, satu per baris..."
 
@@ -5882,6 +5885,7 @@ msgstr "Hapus “{title}”?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Hapus {0}?"
 
@@ -6825,6 +6829,9 @@ msgstr "Environment disimpan"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Penyiapan environment, tes flaky, dan urusan kredensial — mode kegagalan membosankan yang mematikan run tanpa pengawasan pada 2025 — sebagian besar diselesaikan lewat rekayasa, bukan lewat model."
+
+msgid "Environment variables"
+msgstr "Variabel lingkungan"
 
 msgid "Environment Variables"
 msgstr "Variabel Environment"
@@ -8319,6 +8326,9 @@ msgstr "Ada commit yang belum di-push"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Perbandingan Langsung"
+
+msgid "Headers"
+msgstr "Header"
 
 msgid "Heading 1"
 msgstr "Judul 1"
@@ -10135,6 +10145,9 @@ msgstr "Server MCP"
 msgid "MCP Server Commands"
 msgstr "Perintah server MCP"
 
+msgid "MCP servers"
+msgstr "Server MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Diukur selama 30 hari terakhir"
 
@@ -11085,6 +11098,9 @@ msgstr "Tidak ada anggota organisasi yang cocok."
 msgid "No matching pages"
 msgstr "Tidak ada halaman yang cocok"
 
+msgid "No MCP servers yet."
+msgstr "Belum ada server MCP."
+
 msgid "No members yet"
 msgstr "Belum ada anggota"
 
@@ -11639,6 +11655,9 @@ msgstr "Di mesin Anda. Repo, worktree, output terminal, dan sesi agen tetap loka
 
 msgid "Onboarding redesign"
 msgstr "Desain ulang onboarding"
+
+msgid "One argument per line"
+msgstr "Satu argumen per baris"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Satu chat yang merencanakan tugas, menyebar agen paralel ke seluruh worktree, dan menyatukan hasilnya kembali."
@@ -15440,6 +15459,9 @@ msgstr "Dibagikan di semua sesi yang menggunakan login ini."
 msgid "Shared app components"
 msgstr "Komponen aplikasi bersama"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Dipakai bersama oleh semua agen dan akun di komputer ini."
+
 msgid "Shared component library."
 msgstr "Pustaka komponen bersama."
 
@@ -16351,6 +16373,10 @@ msgstr "Menghentikan agen di {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Menghentikan agen dan mengirim ini sekarang"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Disimpan di {0}"
 
 msgid "Strikethrough"
 msgstr "Coret"
@@ -18294,6 +18320,9 @@ msgstr "Tidak tersedia"
 msgid "Uncached input"
 msgstr "Input tanpa cache"
 
+msgid "Unchanged"
+msgstr "Tidak diubah"
+
 msgid "Uncollectible"
 msgstr "Tak tertagih"
 
@@ -18602,6 +18631,9 @@ msgstr "SLA uptime & dukungan khusus"
 msgid "Urgent"
 msgstr "Mendesak"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL disalin"
 
@@ -18740,6 +18772,9 @@ msgstr "Memakai nama branch acak (pembuatan AI tidak tersedia)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId tidak cocok dengan proyek workspace"
+
+msgid "Value"
+msgstr "Nilai"
 
 msgid "Variables"
 msgstr "Variabel"

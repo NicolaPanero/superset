@@ -10,6 +10,7 @@ import {
 	forkScmRouter,
 	forkTasksRouter,
 } from "./fork-integrations/fork-integrations";
+import { forkMcpRouter } from "./fork-mcp";
 import { gitRouter } from "./git";
 import { githubRouter } from "./github";
 import { healthRouter } from "./health";
@@ -39,6 +40,7 @@ import { workspacesRouter } from "./workspaces";
 
 export const appRouter = router({
 	forkConnections: forkConnectionsRouter,
+	forkMcp: forkMcpRouter,
 	forkScm: forkScmRouter,
 	forkTasks: forkTasksRouter,
 	agents: agentsRouter,

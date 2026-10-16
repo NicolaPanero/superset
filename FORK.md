@@ -19,6 +19,13 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Le chiamate partono dall'host verso le API ufficiali, indipendentemente dal login
   Superset. Contratto OAuth e limiti: [docs/fork-integrations.md](docs/fork-integrations.md).
 
+- **Settings → Fork → MCP servers** gestisce un solo elenco di server MCP
+  (HTTP, SSE, stdio) per tutti gli agenti e gli account dell'host, salvato in
+  `$SUPERSET_HOME_DIR/fork/mcp-servers.json`. Al primo avvio importa quelli di
+  `~/.claude.json` senza toccarli. Le chat ACP ricevono l'elenco a ogni sessione;
+  i terminali `claude` e `codex` lo ricevono dai wrapper (`--mcp-config` e `-c`).
+  Header e variabili restano sull'host: l'interfaccia mostra solo i nomi.
+
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
   e nella schermata di un workspace senza schede aperte.

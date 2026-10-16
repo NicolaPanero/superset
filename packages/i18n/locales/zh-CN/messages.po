@@ -1788,6 +1788,9 @@ msgstr "添加脚本"
 msgid "Add Script"
 msgstr "添加脚本"
 
+msgid "Add server"
+msgstr "添加服务器"
+
 msgid "Add setup commands, one per line..."
 msgstr "添加设置命令，每行一条..."
 
@@ -5882,6 +5885,7 @@ msgstr "删除“{title}”？"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "删除{0}？"
 
@@ -6825,6 +6829,9 @@ msgstr "环境已保存"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "环境搭建、不稳定的测试、凭据串联，这些在2025年让无人值守运行折戟的无聊失败模式，大多是被工程手段消除的，而不是被模型消除的。"
+
+msgid "Environment variables"
+msgstr "环境变量"
 
 msgid "Environment Variables"
 msgstr "环境变量"
@@ -8319,6 +8326,9 @@ msgstr "有未推送的提交"
 
 msgid "Head-to-Head Comparisons"
 msgstr "一对一对比"
+
+msgid "Headers"
+msgstr "请求头"
 
 msgid "Heading 1"
 msgstr "标题1"
@@ -10135,6 +10145,9 @@ msgstr "MCP服务器"
 msgid "MCP Server Commands"
 msgstr "MCP服务器命令"
 
+msgid "MCP servers"
+msgstr "MCP 服务器"
+
 msgid "Measured over the trailing 30 days"
 msgstr "按最近 30 天计算"
 
@@ -11085,6 +11098,9 @@ msgstr "没有匹配的组织成员。"
 msgid "No matching pages"
 msgstr "没有匹配的页面"
 
+msgid "No MCP servers yet."
+msgstr "还没有 MCP 服务器。"
+
 msgid "No members yet"
 msgstr "暂无成员"
 
@@ -11639,6 +11655,9 @@ msgstr "在你自己的机器上。仓库、worktree、终端输出和智能体�
 
 msgid "Onboarding redesign"
 msgstr "新手引导改版"
+
+msgid "One argument per line"
+msgstr "每行一个参数"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "一个聊天窗口规划任务，把并行智能体分派到各个worktree，再把结果汇总回来。"
@@ -15440,6 +15459,9 @@ msgstr "使用此登录的所有会话共享此额度。"
 msgid "Shared app components"
 msgstr "共享应用组件"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "由此电脑上的所有代理和账户共享。"
+
 msgid "Shared component library."
 msgstr "共享组件库。"
 
@@ -16351,6 +16373,10 @@ msgstr "正在停止 {what} 中的代理"
 
 msgid "Stops the agent and sends this now"
 msgstr "停止智能体并立即发送此消息"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "存储于 {0}"
 
 msgid "Strikethrough"
 msgstr "删除线"
@@ -18294,6 +18320,9 @@ msgstr "不可用"
 msgid "Uncached input"
 msgstr "未缓存输入"
 
+msgid "Unchanged"
+msgstr "保持不变"
+
 msgid "Uncollectible"
 msgstr "无法收款"
 
@@ -18602,6 +18631,9 @@ msgstr "可用性SLA与专属支持"
 msgid "Urgent"
 msgstr "紧急"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL已复制"
 
@@ -18740,6 +18772,9 @@ msgstr "使用随机分支名（AI生成不可用）"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId与该工作区的项目不匹配"
+
+msgid "Value"
+msgstr "值"
 
 msgid "Variables"
 msgstr "变量"

@@ -1788,6 +1788,9 @@ msgstr "Přidat skript"
 msgid "Add Script"
 msgstr "Přidat skript"
 
+msgid "Add server"
+msgstr "Přidat server"
+
 msgid "Add setup commands, one per line..."
 msgstr "Přidejte setup příkazy, jeden na řádek..."
 
@@ -5882,6 +5885,7 @@ msgstr "Smazat „{title}“?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Smazat {0}?"
 
@@ -6825,6 +6829,9 @@ msgstr "Prostředí uloženo"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Příprava prostředí, nestabilní testy a rozvody přihlašovacích údajů — nudné příčiny selhání, které v roce 2025 zabíjely běhy bez dozoru — se většinou vyřeší inženýrsky, ne modelem."
+
+msgid "Environment variables"
+msgstr "Proměnné prostředí"
 
 msgid "Environment Variables"
 msgstr "Proměnné prostředí"
@@ -8319,6 +8326,9 @@ msgstr "Obsahuje neodeslané commity"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Přímá srovnání"
+
+msgid "Headers"
+msgstr "Hlavičky"
 
 msgid "Heading 1"
 msgstr "Nadpis 1"
@@ -10135,6 +10145,9 @@ msgstr "MCP server"
 msgid "MCP Server Commands"
 msgstr "Příkazy MCP serveru"
 
+msgid "MCP servers"
+msgstr "Servery MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Měřeno za posledních 30 dní"
 
@@ -11085,6 +11098,9 @@ msgstr "Žádní odpovídající členové organizace."
 msgid "No matching pages"
 msgstr "Žádné odpovídající stránky"
 
+msgid "No MCP servers yet."
+msgstr "Zatím žádné servery MCP."
+
 msgid "No members yet"
 msgstr "Zatím žádní členové"
 
@@ -11639,6 +11655,9 @@ msgstr "Na vašem počítači. Repozitáře, worktree, výstup terminálu i rela
 
 msgid "Onboarding redesign"
 msgstr "Redesign onboardingu"
+
+msgid "One argument per line"
+msgstr "Jeden argument na řádek"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Jeden chat, který naplánuje úkol, rozešle paralelní agenty do worktree a výsledky zase složí dohromady."
@@ -15440,6 +15459,9 @@ msgstr "Sdíleno mezi relacemi používajícími toto přihlášení."
 msgid "Shared app components"
 msgstr "Sdílené komponenty aplikace"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Sdílené všemi agenty a účty na tomto počítači."
+
 msgid "Shared component library."
 msgstr "Sdílená knihovna komponent."
 
@@ -16351,6 +16373,10 @@ msgstr "Zastavuje se agent v {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Zastaví agenta a odešle toto hned"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Uloženo v {0}"
 
 msgid "Strikethrough"
 msgstr "Přeškrtnuté"
@@ -18294,6 +18320,9 @@ msgstr "Nedostupné"
 msgid "Uncached input"
 msgstr "Vstup mimo cache"
 
+msgid "Unchanged"
+msgstr "Beze změny"
+
 msgid "Uncollectible"
 msgstr "Nedobytná"
 
@@ -18602,6 +18631,9 @@ msgstr "SLA na dostupnost a dedikovaná podpora"
 msgid "Urgent"
 msgstr "Urgentní"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL zkopírována"
 
@@ -18740,6 +18772,9 @@ msgstr "Použije se náhodný název větve (generování přes AI není dostupn
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId neodpovídá projektu pracovního prostoru"
+
+msgid "Value"
+msgstr "Hodnota"
 
 msgid "Variables"
 msgstr "Proměnné"

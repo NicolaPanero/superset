@@ -11,6 +11,7 @@ import {
 	getMatchingItemsForSection,
 	SETTING_ITEM_ID,
 } from "../../../utils/settings-search";
+import { ForkMcpServers } from "./components/ForkMcpServers";
 
 export function ForkSettings() {
 	const { t } = useLingui();
@@ -97,6 +98,9 @@ export function ForkSettings() {
 			)}
 			{matches.some((item) => item.id === "fork-connections") && (
 				<ForkIntegrations />
+			)}
+			{matches.some((item) => item.id === SETTING_ITEM_ID.FORK_MCP_SERVERS) && (
+				<ForkMcpServers />
 			)}
 		</div>
 	);

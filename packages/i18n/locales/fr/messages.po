@@ -1788,6 +1788,9 @@ msgstr "Ajouter un script"
 msgid "Add Script"
 msgstr "Ajouter un script"
 
+msgid "Add server"
+msgstr "Ajouter un serveur"
+
 msgid "Add setup commands, one per line..."
 msgstr "Ajoutez des commandes de configuration, une par ligne..."
 
@@ -5882,6 +5885,7 @@ msgstr "Supprimer « {title} » ?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Supprimer {0} ?"
 
@@ -6825,6 +6829,9 @@ msgstr "Environnement enregistré"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "La préparation des environnements, les tests instables et la plomberie des identifiants — les modes d'échec ennuyeux qui tuaient les exécutions sans surveillance en 2025 — sont surtout réglés par l'ingénierie, pas par les modèles."
+
+msgid "Environment variables"
+msgstr "Variables d'environnement"
 
 msgid "Environment Variables"
 msgstr "Variables d'environnement"
@@ -8319,6 +8326,9 @@ msgstr "Contient des commits non poussés"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Comparaisons en face-à-face"
+
+msgid "Headers"
+msgstr "En-têtes"
 
 msgid "Heading 1"
 msgstr "Titre 1"
@@ -10135,6 +10145,9 @@ msgstr "Serveur MCP"
 msgid "MCP Server Commands"
 msgstr "Commandes du serveur MCP"
 
+msgid "MCP servers"
+msgstr "Serveurs MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Mesuré sur les 30 derniers jours"
 
@@ -11085,6 +11098,9 @@ msgstr "Aucun membre de l'organisation ne correspond."
 msgid "No matching pages"
 msgstr "Aucune page correspondante"
 
+msgid "No MCP servers yet."
+msgstr "Aucun serveur MCP pour l'instant."
+
 msgid "No members yet"
 msgstr "Aucun membre pour l'instant"
 
@@ -11639,6 +11655,9 @@ msgstr "Sur votre machine. Les dépôts, les worktrees, la sortie du terminal et
 
 msgid "Onboarding redesign"
 msgstr "Refonte de l'onboarding"
+
+msgid "One argument per line"
+msgstr "Un argument par ligne"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Un seul chat qui planifie une tâche, déploie des agents en parallèle sur plusieurs worktrees et rassemble les résultats."
@@ -15440,6 +15459,9 @@ msgstr "Partagé entre les sessions utilisant cette connexion."
 msgid "Shared app components"
 msgstr "Composants d'application partagés"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Partagés par tous les agents et comptes de cet ordinateur."
+
 msgid "Shared component library."
 msgstr "Bibliothèque de composants partagée."
 
@@ -16351,6 +16373,10 @@ msgstr "Arrêt de l’agent dans {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Arrête l'agent et envoie ceci maintenant"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Enregistrés dans {0}"
 
 msgid "Strikethrough"
 msgstr "Barré"
@@ -18294,6 +18320,9 @@ msgstr "Indisponible"
 msgid "Uncached input"
 msgstr "Entrée non mise en cache"
 
+msgid "Unchanged"
+msgstr "Inchangé"
+
 msgid "Uncollectible"
 msgstr "Irrécouvrable"
 
@@ -18602,6 +18631,9 @@ msgstr "SLA de disponibilité et support dédié"
 msgid "Urgent"
 msgstr "Urgente"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL copiée"
 
@@ -18740,6 +18772,9 @@ msgstr "Utilisation d'un nom de branche aléatoire (génération IA indisponible
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId ne correspond pas au projet de l'espace de travail"
+
+msgid "Value"
+msgstr "Valeur"
 
 msgid "Variables"
 msgstr "Variables"

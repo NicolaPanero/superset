@@ -1788,6 +1788,9 @@ msgstr "スクリプトを追加"
 msgid "Add Script"
 msgstr "スクリプトを追加"
 
+msgid "Add server"
+msgstr "サーバーを追加"
+
 msgid "Add setup commands, one per line..."
 msgstr "セットアップコマンドを1行に1つずつ追加..."
 
@@ -5882,6 +5885,7 @@ msgstr "「{title}」を削除しますか?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "{0}を削除しますか?"
 
@@ -6825,6 +6829,9 @@ msgstr "環境を保存しました"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "環境構築、不安定なテスト、認証情報の受け渡し。2025年に無人実行を潰していた退屈な失敗要因は、モデルの進歩ではなくエンジニアリングでほぼ取り除かれます。"
+
+msgid "Environment variables"
+msgstr "環境変数"
 
 msgid "Environment Variables"
 msgstr "環境変数"
@@ -8319,6 +8326,9 @@ msgstr "未プッシュのコミットがあります"
 
 msgid "Head-to-Head Comparisons"
 msgstr "1対1の比較"
+
+msgid "Headers"
+msgstr "ヘッダー"
 
 msgid "Heading 1"
 msgstr "見出し1"
@@ -10135,6 +10145,9 @@ msgstr "MCPサーバー"
 msgid "MCP Server Commands"
 msgstr "MCPサーバーのコマンド"
 
+msgid "MCP servers"
+msgstr "MCP サーバー"
+
 msgid "Measured over the trailing 30 days"
 msgstr "直近30日間で計測"
 
@@ -11085,6 +11098,9 @@ msgstr "一致する組織メンバーがいません。"
 msgid "No matching pages"
 msgstr "一致するページはありません"
 
+msgid "No MCP servers yet."
+msgstr "MCP サーバーはまだありません。"
+
 msgid "No members yet"
 msgstr "メンバーはまだいません"
 
@@ -11639,6 +11655,9 @@ msgstr "お使いのマシンです。リポジトリ、ワークツリー、タ
 
 msgid "Onboarding redesign"
 msgstr "オンボーディングの再設計"
+
+msgid "One argument per line"
+msgstr "1 行に 1 つの引数"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "1つのチャットがタスクを計画し、ワークツリーをまたいで並列エージェントに展開し、結果をまとめて返します。"
@@ -15440,6 +15459,9 @@ msgstr "このログインを使用するセッション間で共有されます
 msgid "Shared app components"
 msgstr "共有アプリコンポーネント"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "このコンピューターのすべてのエージェントとアカウントで共有されます。"
+
 msgid "Shared component library."
 msgstr "共有コンポーネントライブラリ。"
 
@@ -16351,6 +16373,10 @@ msgstr "{what} のエージェントを停止中"
 
 msgid "Stops the agent and sends this now"
 msgstr "エージェントを停止して、これを今すぐ送信します"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "保存先: {0}"
 
 msgid "Strikethrough"
 msgstr "取り消し線"
@@ -18294,6 +18320,9 @@ msgstr "利用不可"
 msgid "Uncached input"
 msgstr "未キャッシュ入力"
 
+msgid "Unchanged"
+msgstr "変更なし"
+
 msgid "Uncollectible"
 msgstr "回収不能"
 
@@ -18602,6 +18631,9 @@ msgstr "稼働率SLAと専任サポート"
 msgid "Urgent"
 msgstr "緊急"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URLをコピーしました"
 
@@ -18740,6 +18772,9 @@ msgstr "ランダムなブランチ名を使用します(AI生成を利用でき
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectIdがワークスペースのプロジェクトと一致しません"
+
+msgid "Value"
+msgstr "値"
 
 msgid "Variables"
 msgstr "変数"

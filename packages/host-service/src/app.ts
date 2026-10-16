@@ -31,6 +31,7 @@ import {
 } from "./chat-v3";
 import { createDb, type HostDb } from "./db";
 import { EventBus, GitWatcher, registerEventBusRoute } from "./events";
+import { syncForkMcpLaunchFiles } from "./fork-mcp";
 import { agentIsBusy, PageWatchManager } from "./page-watch/index.ts";
 import { registerForwardMuxRoute } from "./ports/forward-mux-route";
 import { portManager } from "./ports/port-manager";
@@ -418,6 +419,11 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		await provisionSelectedAccounts(db).catch((err) => {
 			console.warn("[host-service] account provisioning failed:", err);
 		});
+		try {
+			syncForkMcpLaunchFiles();
+		} catch (err) {
+			console.warn("[host-service] MCP launch files failed:", err);
+		}
 	})();
 
 	const wsAuth: MiddlewareHandler = async (c, next) => {

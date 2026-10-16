@@ -1788,6 +1788,9 @@ msgstr "Thêm script"
 msgid "Add Script"
 msgstr "Thêm script"
 
+msgid "Add server"
+msgstr "Thêm máy chủ"
+
 msgid "Add setup commands, one per line..."
 msgstr "Thêm lệnh thiết lập, mỗi dòng một lệnh..."
 
@@ -5882,6 +5885,7 @@ msgstr "Xóa “{title}”?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Xóa {0}?"
 
@@ -6825,6 +6829,9 @@ msgstr "Đã lưu environment"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Thiết lập môi trường, test chập chờn và việc đấu nối thông tin đăng nhập, những kiểu hỏng buồn tẻ đã giết các lần chạy không giám sát năm 2025, phần lớn được xử lý bằng kỹ thuật chứ không phải bằng mô hình."
+
+msgid "Environment variables"
+msgstr "Biến môi trường"
 
 msgid "Environment Variables"
 msgstr "Biến môi trường"
@@ -8319,6 +8326,9 @@ msgstr "Có commit chưa push"
 
 msgid "Head-to-Head Comparisons"
 msgstr "So sánh trực diện"
+
+msgid "Headers"
+msgstr "Header"
 
 msgid "Heading 1"
 msgstr "Tiêu đề 1"
@@ -10135,6 +10145,9 @@ msgstr "Server MCP"
 msgid "MCP Server Commands"
 msgstr "Lệnh server MCP"
 
+msgid "MCP servers"
+msgstr "Máy chủ MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Đo trong 30 ngày gần nhất"
 
@@ -11085,6 +11098,9 @@ msgstr "Không có thành viên tổ chức nào khớp."
 msgid "No matching pages"
 msgstr "Không có trang phù hợp"
 
+msgid "No MCP servers yet."
+msgstr "Chưa có máy chủ MCP nào."
+
 msgid "No members yet"
 msgstr "Chưa có thành viên nào"
 
@@ -11639,6 +11655,9 @@ msgstr "Trên máy của bạn. Repo, worktree, output terminal và phiên agent
 
 msgid "Onboarding redesign"
 msgstr "Thiết kế lại onboarding"
+
+msgid "One argument per line"
+msgstr "Mỗi dòng một đối số"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Một khung chat lên kế hoạch cho tác vụ, tỏa ra nhiều agent song song trên các worktree và gom kết quả lại."
@@ -15440,6 +15459,9 @@ msgstr "Dùng chung giữa các phiên sử dụng tài khoản đăng nhập n�
 msgid "Shared app components"
 msgstr "Component dùng chung của ứng dụng"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Dùng chung cho mọi tác tử và tài khoản trên máy tính này."
+
 msgid "Shared component library."
 msgstr "Thư viện component dùng chung."
 
@@ -16351,6 +16373,10 @@ msgstr "Đang dừng tác nhân trong {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Dừng agent và gửi tin nhắn này ngay"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Lưu tại {0}"
 
 msgid "Strikethrough"
 msgstr "Gạch ngang"
@@ -18294,6 +18320,9 @@ msgstr "Không khả dụng"
 msgid "Uncached input"
 msgstr "Đầu vào chưa cache"
 
+msgid "Unchanged"
+msgstr "Giữ nguyên"
+
 msgid "Uncollectible"
 msgstr "Không thu được"
 
@@ -18602,6 +18631,9 @@ msgstr "SLA thời gian hoạt động & hỗ trợ chuyên trách"
 msgid "Urgent"
 msgstr "Khẩn cấp"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "Đã sao chép URL"
 
@@ -18740,6 +18772,9 @@ msgstr "Dùng tên nhánh ngẫu nhiên (không thể tạo tên bằng AI)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId không khớp với dự án của workspace"
+
+msgid "Value"
+msgstr "Giá trị"
 
 msgid "Variables"
 msgstr "Biến"

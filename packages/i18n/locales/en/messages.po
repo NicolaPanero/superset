@@ -1788,6 +1788,9 @@ msgstr "Add script"
 msgid "Add Script"
 msgstr "Add Script"
 
+msgid "Add server"
+msgstr "Add server"
+
 msgid "Add setup commands, one per line..."
 msgstr "Add setup commands, one per line..."
 
@@ -5882,6 +5885,7 @@ msgstr "Delete “{title}”?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
 
@@ -6825,6 +6829,9 @@ msgstr "Environment saved"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
+
+msgid "Environment variables"
+msgstr "Environment variables"
 
 msgid "Environment Variables"
 msgstr "Environment Variables"
@@ -8319,6 +8326,9 @@ msgstr "Has unpushed commits"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Head-to-Head Comparisons"
+
+msgid "Headers"
+msgstr "Headers"
 
 msgid "Heading 1"
 msgstr "Heading 1"
@@ -10135,6 +10145,9 @@ msgstr "MCP Server"
 msgid "MCP Server Commands"
 msgstr "MCP Server Commands"
 
+msgid "MCP servers"
+msgstr "MCP servers"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Measured over the trailing 30 days"
 
@@ -11085,6 +11098,9 @@ msgstr "No matching org members."
 msgid "No matching pages"
 msgstr "No matching pages"
 
+msgid "No MCP servers yet."
+msgstr "No MCP servers yet."
+
 msgid "No members yet"
 msgstr "No members yet"
 
@@ -11639,6 +11655,9 @@ msgstr "On your machine. Repos, worktrees, terminal output, and agent sessions s
 
 msgid "Onboarding redesign"
 msgstr "Onboarding redesign"
+
+msgid "One argument per line"
+msgstr "One argument per line"
 
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
@@ -15440,6 +15459,9 @@ msgstr "Shared across sessions using this login."
 msgid "Shared app components"
 msgstr "Shared app components"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "Shared by every agent and account on this computer."
+
 msgid "Shared component library."
 msgstr "Shared component library."
 
@@ -16351,6 +16373,10 @@ msgstr "Stopping the agent in {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Stops the agent and sends this now"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Stored in {0}"
 
 msgid "Strikethrough"
 msgstr "Strikethrough"
@@ -18294,6 +18320,9 @@ msgstr "Unavailable"
 msgid "Uncached input"
 msgstr "Uncached input"
 
+msgid "Unchanged"
+msgstr "Unchanged"
+
 msgid "Uncollectible"
 msgstr "Uncollectible"
 
@@ -18602,6 +18631,9 @@ msgstr "Uptime SLA & dedicated support"
 msgid "Urgent"
 msgstr "Urgent"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL copied"
 
@@ -18740,6 +18772,9 @@ msgstr "Using random branch name (AI generation unavailable)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId does not match the workspace's project"
+
+msgid "Value"
+msgstr "Value"
 
 msgid "Variables"
 msgstr "Variables"

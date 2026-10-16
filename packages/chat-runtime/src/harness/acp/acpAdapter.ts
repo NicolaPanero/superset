@@ -44,6 +44,7 @@ import {
 	fullAccessModes,
 	fullAccessNativeMode,
 } from "./forkFullAccess";
+import { acpMcpServers } from "./forkMcpServers";
 import { ForkPlanReadPermissions } from "./forkPlanReadPermissions";
 import { forkPromptError } from "./forkPromptError";
 import {
@@ -407,6 +408,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private sessionId: string | null = null;
 	private loadingSessionId: string | null = null;
 	private cwd = process.cwd();
+	private mcpServers: HarnessStartOptions["mcpServers"];
 	private openText: OpenText | null = null;
 	private currentTurn: Turn | null = null;
 	private historyTurnId: string | null = null;
@@ -462,6 +464,7 @@ export class AcpAdapter implements HarnessAdapter {
 
 	start(startOptions: HarnessStartOptions): AsyncIterable<AdapterEvent> {
 		this.cwd = startOptions.cwd;
+		this.mcpServers = startOptions.mcpServers;
 		void this.bootstrap(startOptions);
 		return this.queue.iterable();
 	}
@@ -734,7 +737,7 @@ export class AcpAdapter implements HarnessAdapter {
 			{
 				sessionId: this.sessionId,
 				cwd: this.cwd,
-				mcpServers: [],
+				mcpServers: acpMcpServers(this.mcpServers, this.agentCapabilities),
 				...(point
 					? {
 							_meta: {
@@ -858,7 +861,10 @@ export class AcpAdapter implements HarnessAdapter {
 							sessionId: startOptions.resume.harnessSessionId,
 							cwd: startOptions.cwd,
 							...extraDirectories(startOptions),
-							mcpServers: [],
+							mcpServers: acpMcpServers(
+								this.mcpServers,
+								this.agentCapabilities,
+							),
 						},
 						startupTimeoutMs,
 					);
@@ -883,7 +889,10 @@ export class AcpAdapter implements HarnessAdapter {
 						{
 							cwd: startOptions.cwd,
 							...extraDirectories(startOptions),
-							mcpServers: [],
+							mcpServers: acpMcpServers(
+								this.mcpServers,
+								this.agentCapabilities,
+							),
 						},
 						startupTimeoutMs,
 					);
@@ -900,7 +909,7 @@ export class AcpAdapter implements HarnessAdapter {
 					{
 						cwd: startOptions.cwd,
 						...extraDirectories(startOptions),
-						mcpServers: [],
+						mcpServers: acpMcpServers(this.mcpServers, this.agentCapabilities),
 					},
 					startupTimeoutMs,
 				);
