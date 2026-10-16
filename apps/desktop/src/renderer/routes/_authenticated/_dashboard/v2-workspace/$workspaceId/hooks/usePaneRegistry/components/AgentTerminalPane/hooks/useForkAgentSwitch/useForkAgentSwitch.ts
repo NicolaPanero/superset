@@ -3,6 +3,7 @@ import { acpHarnessForPreset } from "@superset/chat/core";
 import type { RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
@@ -42,6 +43,7 @@ export function useForkAgentSwitch(
 			staleTime: 60_000,
 		});
 	const wiring = useChatWiring();
+	const queryClient = useQueryClient();
 	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const prepareFromChat =
 		workspaceTrpc.sessionTransfer.prepareFromChat.useMutation();
@@ -131,6 +133,10 @@ export function useForkAgentSwitch(
 				console.warn("[acp-chat] native agent switch failed", error);
 				restoreRecovery();
 				ctx.actions.updateData(data);
+				if (data.acpSessionId)
+					void queryClient.invalidateQueries({
+						queryKey: ["acp-chat-session", data.acpSessionId],
+					});
 				return false;
 			}
 		},
@@ -142,6 +148,7 @@ export function useForkAgentSwitch(
 			capabilities,
 			prepareAcpLaunch,
 			prepareFromChat,
+			queryClient,
 			wiring.transport,
 			workspaceId,
 			t,
