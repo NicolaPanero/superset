@@ -6,6 +6,13 @@ import {
 	SUPERSET_USER_ID_HEADER,
 } from "@superset/shared/host-routing";
 import { SANDBOX_PORTS } from "@superset/shared/sandbox-contract";
+import {
+	ForkGitCredentialProvider,
+	forkGitEnvResolver,
+	forkGitFactory,
+} from "./fork-integrations/fork-credentials";
+import { forkExecGh } from "./fork-integrations/fork-exec-gh";
+import { ForkConnectionStore } from "./fork-integrations/fork-store";
 
 /** One frame of a 1920x1200 display is ~9 MB; this is a stalled reader, not a burst. */
 const MAX_DISPLAY_BUFFER_BYTES = 32 * 1024 * 1024;
@@ -37,7 +44,6 @@ import { runArchivedWorkspaceReconcile } from "./runtime/archived-workspace-reco
 import { registerBrowserCdpRoute } from "./runtime/browser-bridge/browser-cdp-route";
 import { WorkspaceFilesystemManager } from "./runtime/filesystem";
 import type { GitCredentialProvider } from "./runtime/git";
-import { createGitEnvResolver, createGitFactory } from "./runtime/git";
 import { runProjectBackfill } from "./runtime/project-backfill";
 import { PullRequestRuntimeManager } from "./runtime/pull-requests";
 import {
@@ -138,27 +144,35 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// place and leaves provisioning with nothing to orchestrate.
 	const sandboxIdentity = readSandboxIdentity();
 	if (sandboxIdentity) runSandboxSelfSeed(db, sandboxIdentity);
-	const git = createGitFactory(providers.credentials);
+	const credentials =
+		process.env.SUPERSET_HOST_RUN_MODE === "sandbox"
+			? providers.credentials
+			: new ForkGitCredentialProvider(
+					providers.credentials,
+					new ForkConnectionStore(db, config.organizationId),
+				);
+	const git = forkGitFactory(credentials);
 	const github =
 		options.github ??
 		(async () => {
-			const token = await providers.credentials.getToken("github.com");
+			const token = await credentials.getToken("github.com");
 			if (!token) {
 				// Expected precondition failure (user has no GitHub auth), not an
 				// internal error — every procedure calling ctx.github() inherits
 				// this classification.
 				throw new TRPCError({
 					code: "PRECONDITION_FAILED",
-					message: providers.credentials.credentialRemedy(
-						"github.com",
-						"missing",
-					),
+					message: credentials.credentialRemedy("github.com", "missing"),
 					cause: { kind: "NO_GITHUB_TOKEN" },
 				});
 			}
 			return new Octokit({ auth: token });
 		});
-	const execGh: ExecGh = options.execGh ?? defaultExecGh;
+	const execGh: ExecGh = forkExecGh(
+		options.execGh ?? defaultExecGh,
+		credentials,
+		new ForkConnectionStore(db, config.organizationId),
+	);
 
 	const filesystem = new WorkspaceFilesystemManager({ db });
 	// GitWatcher is the single source of truth for `.git/` and worktree fs
@@ -175,7 +189,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// Per-workspace branch/HEAD/upstream reads run in the worker pool: the
 	// PR-sync loop fires them for every workspace on each watcher event and
 	// 5-min sweep, which would otherwise spawn+drain git on the event loop.
-	const resolveGitEnv = createGitEnvResolver(providers.credentials);
+	const resolveGitEnv = forkGitEnvResolver(credentials);
 	const pullRequestRuntime = new PullRequestRuntimeManager({
 		db,
 		execGh,
@@ -323,7 +337,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// pane on the `chat-v3` PostHog flag.
 	const chatAgentContext: HostServiceContext = {
 		git,
-		credentials: providers.credentials,
+		credentials,
 		github,
 		execGh,
 		api,
@@ -355,7 +369,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// one project and one workspace, seeded by us, that no earlier build ever
 	// touched. There is nothing to recover, so the sweeps can only invent.
 	const purgeContext = {
-		credentials: providers.credentials,
+		credentials,
 		api,
 		db,
 		eventBus,
@@ -384,7 +398,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		// whose worktree still exists).
 		await runArchivedWorkspaceReconcile({
 			git,
-			credentials: providers.credentials,
+			credentials,
 			github,
 			execGh,
 			api,
@@ -505,7 +519,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 				const isAuthenticated = await providers.hostAuth.validate(c.req.raw);
 				return {
 					git,
-					credentials: providers.credentials,
+					credentials,
 					github,
 					execGh,
 					api,
@@ -582,7 +596,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		await launchSandboxAgentOnce(
 			{
 				git,
-				credentials: providers.credentials,
+				credentials,
 				github,
 				execGh,
 				api,
@@ -602,7 +616,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	const resumeCrashedAgents = async () => {
 		const ctx = {
 			git,
-			credentials: providers.credentials,
+			credentials,
 			github,
 			execGh,
 			api,

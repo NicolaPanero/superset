@@ -1658,6 +1658,9 @@ msgstr "Přidat účet {0}"
 msgid "Add {0} to workspace"
 msgstr "Přidat {0} do pracovního prostoru"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Začněte přidáním repozitáře Bitbucket."
+
 msgid "Add a comment…"
 msgstr "Přidat komentář…"
 
@@ -2222,6 +2225,9 @@ msgstr "Smazat i lokální větve"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Při mazání pracovního prostoru s worktree smazat i lokální git větev"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Odhlásit se také z GitHub CLI na tomto počítači"
+
 msgid "Also viewing this page"
 msgstr "Tuto stránku si také prohlížejí"
 
@@ -2407,6 +2413,9 @@ msgstr "API klíče"
 
 msgid "API keys are not validated with a paid request."
 msgstr "Klíče API se neověřují placenými požadavky."
+
+msgid "API token"
+msgstr "Token API"
 
 msgid "API-equivalent"
 msgstr "ekvivalent API"
@@ -4269,6 +4278,9 @@ msgstr "Porovnáno s výchozím stylem"
 msgid "complete"
 msgstr "dokončeno"
 
+msgid "Complete authorization in your browser."
+msgstr "Dokončete autorizaci v prohlížeči."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Dokončete postup oficiálního CLI a zavřete toto okno pro kontrolu výsledku."
 
@@ -4306,11 +4318,17 @@ msgstr "Nastavte chování git větví a worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Nastavte, jak se úkoly synchronizují mezi Superset a Linearem."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Nastavte integrace v nastavení forku."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Nastavte chování terminálu a znovupoužitelné terminálové skripty"
 
 msgid "Configure the in-app browser"
 msgstr "Nastavte vestavěný prohlížeč"
+
+msgid "Configure the OAuth service below."
+msgstr "Níže nastavte službu OAuth."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejich spuštění sestavuje."
@@ -4323,6 +4341,12 @@ msgstr "Nakonfigurovaný účet"
 
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
+
+msgid "Confirm delete"
+msgstr "Potvrdit odstranění"
+
+msgid "Confirm merge"
+msgstr "Potvrdit sloučení"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4370,8 +4394,14 @@ msgstr "Připojte externí služby a synchronizujte data se svou organizací."
 msgid "Connect external services to sync data."
 msgstr "Připojte externí služby a synchronizujte data."
 
+msgid "Connect GitHub"
+msgstr "Připojit GitHub"
+
 msgid "Connect Google"
 msgstr "Připojit Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Připojit Jira a Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Připojit Linear"
@@ -4429,6 +4459,9 @@ msgstr "Připojte svůj tenant Microsoft Teams. Administrátor tenantu se přihl
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Připojte svůj Notion workspace a nasdílejte stránky a datové zdroje, které mají automatizace sledovat."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Připojte repozitáře a úkoly na tomto počítači."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Připojte svůj Slack workspace a spravujte úkoly přímo z konverzací."
@@ -5916,6 +5949,9 @@ msgstr "Smazat vybrané pracovní prostory"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Smazat relaci „{workspaceName}“?"
 
+msgid "Delete task"
+msgstr "Odstranit úkol"
+
 msgid "Delete team"
 msgstr "Smazat tým"
 
@@ -6274,6 +6310,9 @@ msgstr "Odpojit Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Odpojit Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Odpojit tento účet od Superset?"
 
 msgid "Disconnected"
 msgstr "Odpojeno"
@@ -7507,6 +7546,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Rychlý"
 
+msgid "Fast-forward"
+msgstr "Rychlý posun vpřed"
+
 msgid "Fatal"
 msgstr "Fatální"
 
@@ -7572,6 +7614,9 @@ msgstr "Soubor nenalezen"
 
 msgid "File open mode"
 msgstr "Režim otevírání souborů"
+
+msgid "File path"
+msgstr "Cesta k souboru"
 
 msgid "File viewer"
 msgstr "Prohlížeč souborů"
@@ -9560,6 +9605,9 @@ msgstr "Baví vás vývoj v Superset?"
 msgid "Lime"
 msgstr "Limetková"
 
+msgid "Line"
+msgstr "Řádek"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10158,6 +10206,9 @@ msgstr "Sloučení selhalo: {0}"
 
 msgid "Merge into center"
 msgstr "Sloučit do středu"
+
+msgid "Merge method"
+msgstr "Způsob sloučení"
 
 msgid "Merge pull request"
 msgstr "Sloučit pull request"
@@ -11499,6 +11550,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "Ve výchozím stavu OAuth, pro CI API klíče"
 
+msgid "OAuth service"
+msgstr "Služba OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "z {0}"
@@ -11600,6 +11654,9 @@ msgstr "Mezi první stovkou v žebříčku"
 
 msgid "one of the selected repositories"
 msgstr "jeden z vybraných repozitářů"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Jedna služba může připojit Jira i Bitbucket."
 
 msgid "One step left"
 msgstr "Zbývá jeden krok"
@@ -11920,6 +11977,9 @@ msgstr "Otevřít v T3 Chat"
 
 msgid "Open in tab"
 msgstr "Otevřít na kartě"
+
+msgid "Open in workspace"
+msgstr "Otevřít v pracovním prostoru"
 
 msgid "Open in…"
 msgstr "Otevřít v…"
@@ -12513,6 +12573,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Nejvyšší tempo"
+
+msgid "Pending"
+msgstr "Čeká"
 
 msgid "Pending Invitations"
 msgstr "Čekající pozvánky"
@@ -13216,10 +13279,16 @@ msgstr "Fialová"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Odeslat a vytvořit PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push se nezdařil: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Před vytvořením pull requestu odešlete svou větev."
 
 msgid "Pushed"
 msgstr "Nový push"
@@ -13654,6 +13723,9 @@ msgstr "Odebrat {0}"
 msgid "Remove {label}?"
 msgstr "Odebrat {label}?"
 
+msgid "Remove approval"
+msgstr "Zrušit schválení"
+
 msgid "Remove attachment"
 msgstr "Odebrat přílohu"
 
@@ -13881,6 +13953,9 @@ msgstr "Repozitáře"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repozitáře dostupné přes instalaci GitHub App."
+
+msgid "Repositories and pull requests"
+msgstr "Repozitáře a pull requesty"
 
 msgid "Repositories refreshed"
 msgstr "Repozitáře obnoveny"
@@ -15072,6 +15147,9 @@ msgstr "Vyberte týmy"
 msgid "Select terminal script directory"
 msgstr "Vyberte adresář terminálového skriptu"
 
+msgid "Select workspace"
+msgstr "Vybrat pracovní prostor"
+
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
 
@@ -15174,6 +15252,9 @@ msgstr "Oddělovač"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Dostupnost služby zveřejňujeme na <0>status.superset.sh</0> a dokumentaci k bezpečnosti a compliance na <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL služby"
+
 msgid "Session"
 msgstr "Relace"
 
@@ -15214,6 +15295,9 @@ msgstr "Relace"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Relace · top {0} podle nákladů"
+
+msgid "Set as default"
+msgstr "Nastavit jako výchozí"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15676,6 +15760,9 @@ msgstr "Jedna karta + panely"
 msgid "Single-select"
 msgstr "Výběr jedné možnosti"
 
+msgid "Site URL"
+msgstr "URL webu"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetrie celého webu · {range}"
 
@@ -15861,6 +15948,9 @@ msgstr "Zdroj"
 msgid "Source Available"
 msgstr "Dostupný zdrojový kód"
 
+msgid "Source branch"
+msgstr "Zdrojová větev"
+
 msgid "Source path (not an import)"
 msgstr "Cesta ke zdroji (ne import)"
 
@@ -15953,6 +16043,9 @@ msgstr "Rozdělit s novým prohlížečem"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Rozdělit s plochou sandboxu"
+
+msgid "Squash"
+msgstr "Sloučit commity"
 
 msgid "Squash & Merge"
 msgstr "Squash a sloučit"
@@ -16747,6 +16840,9 @@ msgstr "Cíl"
 msgid "Target agent"
 msgstr "Cílový agent"
 
+msgid "Target branch"
+msgstr "Cílová větev"
+
 msgid "Target date"
 msgstr "Cílové datum"
 
@@ -16794,6 +16890,9 @@ msgstr "Sledování úkolů aktualizováno"
 
 msgid "Tasks"
 msgstr "Úkoly"
+
+msgid "Tasks and projects"
+msgstr "Úkoly a projekty"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Úkoly vytvořené v Superset se budou synchronizovat do tohoto týmu v Linearu."
@@ -17458,6 +17557,9 @@ msgstr "Tím se zavře pracovní prostor a jeho terminály. Soubory, větve a os
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Tento cloudový workspace se probouzí, což může po nečinnosti trvat až 30 sekund."
+
+msgid "This computer"
+msgstr "Tento počítač"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Tímto se smaže uložený scrollback používaný k obnovení po restartu nebo pádu."
@@ -18417,6 +18519,9 @@ msgstr "aktualizovat prefix větve"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Aktualizujte tohoto hostitele pro průvodce nastavením nebo použijte pokročilou konfiguraci."
 
+msgid "Update this host to configure integrations."
+msgstr "Aktualizujte tohoto hostitele pro nastavení integrací."
+
 msgid "Updated"
 msgstr "Aktualizováno"
 
@@ -18635,6 +18740,9 @@ msgstr "Ověřeno a uloženo"
 
 msgid "Verified through sign-in"
 msgstr "Ověřeno přihlášením"
+
+msgid "Verify"
+msgstr "Ověřit"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Ověřit, že Kbd zůstane v tooltipech viditelný"
@@ -19435,6 +19543,9 @@ msgstr "Prohlížíte si verzi {version}, jen pro čtení"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Můžete přiložit nejvýše {MAX_ATTACHMENTS} souborů"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Tato připojení můžete později nastavit v nastavení forku."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Můžete ho obnovit v Nastavení → Projekty po dobu 30 dnů. Složka repozitáře se nikdy nemaže."

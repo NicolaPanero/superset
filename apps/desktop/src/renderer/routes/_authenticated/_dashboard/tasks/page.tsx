@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useMemo } from "react";
+import { ForkTasksBoundary } from "renderer/components/ForkIntegrations/components/ForkTasksBoundary/ForkTasksBoundary";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { TasksView } from "./components/TasksView";
 import { Route as TasksLayoutRoute } from "./layout";
@@ -32,14 +33,16 @@ function TasksPage() {
 		[projects, project],
 	);
 	return (
-		<TasksView
-			initialTab={tab}
-			initialAssignee={assignee}
-			initialLabel={label}
-			initialSearch={search}
-			initialType={type === "prs" ? undefined : type}
-			initialProjects={initialProjects}
-			initialState={state}
-		/>
+		<ForkTasksBoundary>
+			<TasksView
+				initialTab={tab}
+				initialAssignee={assignee}
+				initialLabel={label}
+				initialSearch={search}
+				initialType={type === "prs" ? undefined : type}
+				initialProjects={initialProjects}
+				initialState={state}
+			/>
+		</ForkTasksBoundary>
 	);
 }

@@ -65,6 +65,9 @@ export function NewProjectModal({
 		null,
 	);
 	const [working, setWorking] = useState(false);
+	const [forkConnectionId, setForkConnectionId] = useState<
+		string | undefined
+	>();
 	const cloneAbortRef = useRef<AbortController | null>(null);
 
 	useEffect(() => {
@@ -82,6 +85,7 @@ export function NewProjectModal({
 		setName("");
 		setNameTouched(false);
 		setSelectedRepository(null);
+		setForkConnectionId(undefined);
 		setWorking(false);
 	};
 
@@ -160,13 +164,27 @@ export function NewProjectModal({
 				return;
 			}
 			const client = getHostServiceClientByUrl(activeHostUrl);
-			const result = await client.project.create.mutate(
-				{
-					name: trimmedName,
-					mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
-				},
-				{ signal: abort.signal },
-			);
+			const result = forkConnectionId
+				? await client.forkScm.clone.mutate(
+						{
+							connectionId: forkConnectionId,
+							url: trimmedUrl,
+							parentDir: trimmedParent,
+							name: trimmedName,
+						},
+						{ signal: abort.signal },
+					)
+				: await client.project.create.mutate(
+						{
+							name: trimmedName,
+							mode: {
+								kind: "clone",
+								parentDir: trimmedParent,
+								url: trimmedUrl,
+							},
+						},
+						{ signal: abort.signal },
+					);
 			finalizeSetup(activeHostUrl, result);
 			onSuccess?.({ projectId: result.projectId });
 			reset();
@@ -217,6 +235,7 @@ export function NewProjectModal({
 							disabled={working}
 							hostUrl={activeHostUrl}
 							onSelect={(repository) => {
+								setForkConnectionId(repository.connectionId);
 								setUrl(repository.cloneUrl);
 								setName(deriveProjectNameFromUrl(repository.cloneUrl));
 								setNameTouched(false);
@@ -236,6 +255,7 @@ export function NewProjectModal({
 							onChange={(e) => {
 								setUrl(e.target.value);
 								setSelectedRepository(null);
+								setForkConnectionId(undefined);
 							}}
 							placeholder={t({
 								message: "https://github.com/owner/repo.git or /path/to/repo",

@@ -1658,6 +1658,9 @@ msgstr "Añadir una cuenta de {0}"
 msgid "Add {0} to workspace"
 msgstr "Añadir {0} al espacio de trabajo"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Añade un repositorio de Bitbucket para empezar."
+
 msgid "Add a comment…"
 msgstr "Añade un comentario…"
 
@@ -2222,6 +2225,9 @@ msgstr "Eliminar también las ramas locales"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Eliminar también la rama local de git al eliminar un espacio de trabajo con worktree"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Cerrar también la sesión de GitHub CLI en este equipo"
+
 msgid "Also viewing this page"
 msgstr "También están viendo esta página"
 
@@ -2407,6 +2413,9 @@ msgstr "Claves de API"
 
 msgid "API keys are not validated with a paid request."
 msgstr "Las claves API no se validan mediante solicitudes de pago."
+
+msgid "API token"
+msgstr "Token de API"
 
 msgid "API-equivalent"
 msgstr "equivalente en API"
@@ -4269,6 +4278,9 @@ msgstr "Comparado con el estilo predeterminado"
 msgid "complete"
 msgstr "finalizada"
 
+msgid "Complete authorization in your browser."
+msgstr "Completa la autorización en tu navegador."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Completa el proceso del CLI oficial y cierra esta ventana para comprobar el resultado."
 
@@ -4306,11 +4318,17 @@ msgstr "Configura el comportamiento de las ramas y los worktrees de git"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Configura cómo se sincronizan las tareas entre Superset y Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Configura las integraciones en los ajustes del fork."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Configura el comportamiento de la terminal y los scripts de terminal reutilizables"
 
 msgid "Configure the in-app browser"
 msgstr "Configura el navegador integrado"
+
+msgid "Configure the OAuth service below."
+msgstr "Configura el servicio OAuth a continuación."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Configura qué agentes aparecen en los lanzadores y cómo se construyen sus lanzamientos."
@@ -4323,6 +4341,12 @@ msgstr "Cuenta configurada"
 
 msgid "Confirm before quitting"
 msgstr "Confirmar antes de salir"
+
+msgid "Confirm delete"
+msgstr "Confirmar eliminación"
+
+msgid "Confirm merge"
+msgstr "Confirmar fusión"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4370,8 +4394,14 @@ msgstr "Conecta servicios externos para sincronizar datos con tu organización."
 msgid "Connect external services to sync data."
 msgstr "Conecta servicios externos para sincronizar datos."
 
+msgid "Connect GitHub"
+msgstr "Conectar GitHub"
+
 msgid "Connect Google"
 msgstr "Conectar Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Conectar Jira y Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Conectar Linear"
@@ -4429,6 +4459,9 @@ msgstr "Conecta tu tenant de Microsoft Teams. Un administrador del tenant inicia
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Conecta tu espacio de trabajo de Notion y comparte las páginas y fuentes de datos que deben vigilar las automatizaciones."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Conecta tus repositorios y tareas en este equipo."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Conecta tu espacio de trabajo de Slack para gestionar tareas desde las conversaciones."
@@ -5916,6 +5949,9 @@ msgstr "Eliminar los espacios de trabajo seleccionados"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "¿Eliminar la sesión \"{workspaceName}\"?"
 
+msgid "Delete task"
+msgstr "Eliminar tarea"
+
 msgid "Delete team"
 msgstr "Eliminar el equipo"
 
@@ -6274,6 +6310,9 @@ msgstr "¿Desconectar Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "¿Desconectar Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "¿Desconectar esta cuenta de Superset?"
 
 msgid "Disconnected"
 msgstr "Desconectado"
@@ -7507,6 +7546,9 @@ msgstr "Preguntas frecuentes"
 msgid "Fast"
 msgstr "Rápido"
 
+msgid "Fast-forward"
+msgstr "Avance rápido"
+
 msgid "Fatal"
 msgstr "Fatal"
 
@@ -7572,6 +7614,9 @@ msgstr "Archivo no encontrado"
 
 msgid "File open mode"
 msgstr "Modo de apertura de archivos"
+
+msgid "File path"
+msgstr "Ruta del archivo"
 
 msgid "File viewer"
 msgstr "Visor de archivos"
@@ -9560,6 +9605,9 @@ msgstr "¿Te gusta crear con Superset?"
 msgid "Lime"
 msgstr "Lima"
 
+msgid "Line"
+msgstr "Línea"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10158,6 +10206,9 @@ msgstr "No se pudo fusionar: {0}"
 
 msgid "Merge into center"
 msgstr "Combinar en el centro"
+
+msgid "Merge method"
+msgstr "Método de fusión"
 
 msgid "Merge pull request"
 msgstr "Fusionar la pull request"
@@ -11499,6 +11550,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "OAuth por defecto, claves de API para CI"
 
+msgid "OAuth service"
+msgstr "Servicio OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "de {0}"
@@ -11600,6 +11654,9 @@ msgstr "Entre los cien primeros de la clasificación"
 
 msgid "one of the selected repositories"
 msgstr "uno de los repositorios seleccionados"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Un solo servicio puede conectar Jira y Bitbucket."
 
 msgid "One step left"
 msgstr "Falta un paso"
@@ -11920,6 +11977,9 @@ msgstr "Abrir en T3 Chat"
 
 msgid "Open in tab"
 msgstr "Abrir en una pestaña"
+
+msgid "Open in workspace"
+msgstr "Abrir en el espacio de trabajo"
 
 msgid "Open in…"
 msgstr "Abrir en…"
@@ -12513,6 +12573,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Ritmo máximo"
+
+msgid "Pending"
+msgstr "Pendiente"
 
 msgid "Pending Invitations"
 msgstr "Invitaciones pendientes"
@@ -13216,10 +13279,16 @@ msgstr "Morado"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Enviar y crear PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Error al hacer push: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Envía tu rama antes de crear una pull request."
 
 msgid "Pushed"
 msgstr "Con push"
@@ -13654,6 +13723,9 @@ msgstr "Quitar a {0}"
 msgid "Remove {label}?"
 msgstr "¿Quitar {label}?"
 
+msgid "Remove approval"
+msgstr "Retirar aprobación"
+
 msgid "Remove attachment"
 msgstr "Quitar adjunto"
 
@@ -13881,6 +13953,9 @@ msgstr "Repositorios"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repositorios accesibles a través de la instalación de la GitHub App."
+
+msgid "Repositories and pull requests"
+msgstr "Repositorios y pull requests"
 
 msgid "Repositories refreshed"
 msgstr "Repositorios actualizados"
@@ -15072,6 +15147,9 @@ msgstr "Seleccionar equipos"
 msgid "Select terminal script directory"
 msgstr "Seleccionar el directorio del script de terminal"
 
+msgid "Select workspace"
+msgstr "Seleccionar espacio de trabajo"
+
 msgid "Select worktree location"
 msgstr "Seleccionar la ubicación del worktree"
 
@@ -15174,6 +15252,9 @@ msgstr "Separador"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "La disponibilidad del servicio se publica en <0>status.superset.sh</0>, y la documentación de seguridad y cumplimiento en <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL del servicio"
+
 msgid "Session"
 msgstr "Sesión"
 
@@ -15214,6 +15295,9 @@ msgstr "Sesiones"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Sesiones · las {0} de mayor coste"
+
+msgid "Set as default"
+msgstr "Establecer como predeterminado"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15676,6 +15760,9 @@ msgstr "Una pestaña + paneles"
 msgid "Single-select"
 msgstr "Selección única"
 
+msgid "Site URL"
+msgstr "URL del sitio"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetría de todo el sitio · {range}"
 
@@ -15861,6 +15948,9 @@ msgstr "Origen"
 msgid "Source Available"
 msgstr "Código disponible"
 
+msgid "Source branch"
+msgstr "Rama de origen"
+
 msgid "Source path (not an import)"
 msgstr "Ruta del código fuente (no es una importación)"
 
@@ -15953,6 +16043,9 @@ msgstr "Dividir con un navegador nuevo"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Dividir con escritorio del entorno aislado"
+
+msgid "Squash"
+msgstr "Combinar commits"
 
 msgid "Squash & Merge"
 msgstr "Squash y fusionar"
@@ -16747,6 +16840,9 @@ msgstr "Objetivo"
 msgid "Target agent"
 msgstr "Agente de destino"
 
+msgid "Target branch"
+msgstr "Rama de destino"
+
 msgid "Target date"
 msgstr "Fecha objetivo"
 
@@ -16794,6 +16890,9 @@ msgstr "Gestor de tareas actualizado"
 
 msgid "Tasks"
 msgstr "Tareas"
+
+msgid "Tasks and projects"
+msgstr "Tareas y proyectos"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Las tareas creadas en Superset se sincronizarán con este equipo de Linear."
@@ -17458,6 +17557,9 @@ msgstr "Esto cierra el espacio de trabajo y sus terminales. Los archivos, las ra
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "Este espacio de trabajo en la nube se está reactivando, lo que puede tardar hasta 30 segundos tras un periodo de inactividad."
+
+msgid "This computer"
+msgstr "Este equipo"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "Esto elimina el historial guardado que se usa para recuperarse tras un reinicio o un cierre inesperado."
@@ -18417,6 +18519,9 @@ msgstr "actualizar el prefijo de rama"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Actualiza este host para la configuración guiada o usa la configuración avanzada."
 
+msgid "Update this host to configure integrations."
+msgstr "Actualiza este host para configurar integraciones."
+
 msgid "Updated"
 msgstr "Actualizado"
 
@@ -18635,6 +18740,9 @@ msgstr "Verificado y guardado"
 
 msgid "Verified through sign-in"
 msgstr "Verificado al iniciar sesión"
+
+msgid "Verify"
+msgstr "Verificar"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Verificar que Kbd siga visible dentro de los tooltips"
@@ -19435,6 +19543,9 @@ msgstr "Estás viendo la versión {version}, solo lectura"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Puedes adjuntar hasta {MAX_ATTACHMENTS} archivos"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Puedes configurar estas conexiones más adelante en los ajustes del fork."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Puedes restaurarlo desde Configuración → Proyectos durante 30 días. La carpeta del repositorio nunca se elimina."

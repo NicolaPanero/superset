@@ -1658,6 +1658,9 @@ msgstr "{0}アカウントを追加"
 msgid "Add {0} to workspace"
 msgstr "{0} をワークスペースに追加"
 
+msgid "Add a Bitbucket repository to get started."
+msgstr "Bitbucketリポジトリを追加して始めましょう。"
+
 msgid "Add a comment…"
 msgstr "コメントを追加…"
 
@@ -2222,6 +2225,9 @@ msgstr "ローカルブランチも削除"
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "ワークツリーワークスペースを削除するときにローカルのgitブランチも削除する"
 
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "このコンピューターのGitHub CLIからもサインアウトする"
+
 msgid "Also viewing this page"
 msgstr "このページを見ている他のユーザー"
 
@@ -2407,6 +2413,9 @@ msgstr "APIキー"
 
 msgid "API keys are not validated with a paid request."
 msgstr "API キーは有料リクエストでは検証されません。"
+
+msgid "API token"
+msgstr "APIトークン"
 
 msgid "API-equivalent"
 msgstr "API換算"
@@ -4269,6 +4278,9 @@ msgstr "デフォルトスタイルと比較"
 msgid "complete"
 msgstr "終了"
 
+msgid "Complete authorization in your browser."
+msgstr "ブラウザーで認証を完了してください。"
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "公式CLIの手順を完了してから、このウィンドウを閉じて結果を確認してください。"
 
@@ -4306,11 +4318,17 @@ msgstr "gitブランチとワークツリーの動作を設定"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "SupersetとLinearの間でタスクをどう同期するかを設定します。"
 
+msgid "Configure integrations in Fork Settings."
+msgstr "フォーク設定で連携を設定してください。"
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "ターミナルの動作と再利用可能なターミナルスクリプトを設定"
 
 msgid "Configure the in-app browser"
 msgstr "アプリ内ブラウザを設定"
+
+msgid "Configure the OAuth service below."
+msgstr "以下でOAuthサービスを設定してください。"
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "ランチャーに表示するエージェントと起動方法を設定します。"
@@ -4323,6 +4341,12 @@ msgstr "設定されたアカウント"
 
 msgid "Confirm before quitting"
 msgstr "終了前に確認"
+
+msgid "Confirm delete"
+msgstr "削除を確認"
+
+msgid "Confirm merge"
+msgstr "マージを確認"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4370,8 +4394,14 @@ msgstr "外部サービスを接続して組織とデータを同期します。
 msgid "Connect external services to sync data."
 msgstr "外部サービスを接続してデータを同期します。"
 
+msgid "Connect GitHub"
+msgstr "GitHubに接続"
+
 msgid "Connect Google"
 msgstr "Googleを接続"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "JiraとBitbucketに接続"
 
 msgid "Connect Linear"
 msgstr "Linearを接続"
@@ -4429,6 +4459,9 @@ msgstr "Microsoft Teamsのテナントを接続します。テナント管理者
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Notionのワークスペースを接続し、オートメーションに監視させるページとデータソースを共有します。"
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "このコンピューターのリポジトリとタスクを接続します。"
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Slackのワークスペースを接続して、会話からタスクを管理します。"
@@ -5916,6 +5949,9 @@ msgstr "選択したワークスペースを削除"
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "セッション「{workspaceName}」を削除しますか?"
 
+msgid "Delete task"
+msgstr "タスクを削除"
+
 msgid "Delete team"
 msgstr "チームを削除"
 
@@ -6274,6 +6310,9 @@ msgstr "Sentryの接続を解除しますか?"
 
 msgid "Disconnect Slack?"
 msgstr "Slackの接続を解除しますか?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "このアカウントをSupersetから切断しますか？"
 
 msgid "Disconnected"
 msgstr "切断されました"
@@ -7507,6 +7546,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "高速"
 
+msgid "Fast-forward"
+msgstr "早送り"
+
 msgid "Fatal"
 msgstr "致命的"
 
@@ -7572,6 +7614,9 @@ msgstr "ファイルが見つかりません"
 
 msgid "File open mode"
 msgstr "ファイルの開き方"
+
+msgid "File path"
+msgstr "ファイルパス"
 
 msgid "File viewer"
 msgstr "ファイルビューア"
@@ -9560,6 +9605,9 @@ msgstr "Supersetでの開発は気に入りましたか?"
 msgid "Lime"
 msgstr "ライム"
 
+msgid "Line"
+msgstr "行"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -10158,6 +10206,9 @@ msgstr "マージに失敗しました: {0}"
 
 msgid "Merge into center"
 msgstr "中央に統合"
+
+msgid "Merge method"
+msgstr "マージ方法"
 
 msgid "Merge pull request"
 msgstr "プルリクエストをマージ"
@@ -11499,6 +11550,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "既定はOAuth、CIにはAPIキー"
 
+msgid "OAuth service"
+msgstr "OAuthサービス"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "{0}人中"
@@ -11600,6 +11654,9 @@ msgstr "ボード最初の100人のひとり"
 
 msgid "one of the selected repositories"
 msgstr "選択したリポジトリのいずれか"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "1つのサービスでJiraとBitbucketの両方に接続できます。"
 
 msgid "One step left"
 msgstr "あと1ステップ"
@@ -11920,6 +11977,9 @@ msgstr "T3 Chatで開く"
 
 msgid "Open in tab"
 msgstr "タブで開く"
+
+msgid "Open in workspace"
+msgstr "ワークスペースで開く"
 
 msgid "Open in…"
 msgstr "アプリで開く…"
@@ -12513,6 +12573,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "最速ペース"
+
+msgid "Pending"
+msgstr "保留中"
 
 msgid "Pending Invitations"
 msgstr "保留中の招待"
@@ -13216,10 +13279,16 @@ msgstr "紫"
 msgid "Push"
 msgstr "プッシュ"
 
+msgid "Push and create PR"
+msgstr "プッシュしてPRを作成"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "プッシュに失敗しました: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "プルリクエストを作成する前にブランチをプッシュしてください。"
 
 msgid "Pushed"
 msgstr "プッシュ"
@@ -13654,6 +13723,9 @@ msgstr "{0}を削除"
 msgid "Remove {label}?"
 msgstr "{label}を削除しますか?"
 
+msgid "Remove approval"
+msgstr "承認を取り消す"
+
 msgid "Remove attachment"
 msgstr "添付ファイルを削除"
 
@@ -13881,6 +13953,9 @@ msgstr "リポジトリ"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "GitHub Appのインストールからアクセスできるリポジトリです。"
+
+msgid "Repositories and pull requests"
+msgstr "リポジトリとプルリクエスト"
 
 msgid "Repositories refreshed"
 msgstr "リポジトリを更新しました"
@@ -15072,6 +15147,9 @@ msgstr "チームを選択"
 msgid "Select terminal script directory"
 msgstr "ターミナルスクリプトのディレクトリを選択"
 
+msgid "Select workspace"
+msgstr "ワークスペースを選択"
+
 msgid "Select worktree location"
 msgstr "ワークツリーの場所を選択"
 
@@ -15174,6 +15252,9 @@ msgstr "Separator"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "サービスの稼働状況は<0>status.superset.sh</0>で、セキュリティとコンプライアンスに関するドキュメントは<1>trust.superset.sh</1>で公開しています。"
 
+msgid "Service URL"
+msgstr "サービスURL"
+
 msgid "Session"
 msgstr "セッション"
 
@@ -15214,6 +15295,9 @@ msgstr "セッション"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "セッション · コスト上位{0}件"
+
+msgid "Set as default"
+msgstr "デフォルトに設定"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15676,6 +15760,9 @@ msgstr "単一タブ + ペイン"
 msgid "Single-select"
 msgstr "単一選択"
 
+msgid "Site URL"
+msgstr "サイトURL"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "サイト全体のテレメトリ · {range}"
 
@@ -15861,6 +15948,9 @@ msgstr "ソース"
 msgid "Source Available"
 msgstr "ソース公開"
 
+msgid "Source branch"
+msgstr "ソースブランチ"
+
 msgid "Source path (not an import)"
 msgstr "ソースパス(インポートパスではありません)"
 
@@ -15953,6 +16043,9 @@ msgstr "新規ブラウザで分割"
 
 msgid "Split with Sandbox Desktop"
 msgstr "サンドボックスのデスクトップで分割"
+
+msgid "Squash"
+msgstr "コミットをまとめる"
 
 msgid "Squash & Merge"
 msgstr "スカッシュしてマージ"
@@ -16747,6 +16840,9 @@ msgstr "目標日"
 msgid "Target agent"
 msgstr "対象のエージェント"
 
+msgid "Target branch"
+msgstr "ターゲットブランチ"
+
 msgid "Target date"
 msgstr "目標日"
 
@@ -16794,6 +16890,9 @@ msgstr "タスクの管理先を更新しました"
 
 msgid "Tasks"
 msgstr "タスク"
+
+msgid "Tasks and projects"
+msgstr "タスクとプロジェクト"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Supersetで作成したタスクはこのLinearチームに同期されます。"
@@ -17458,6 +17557,9 @@ msgstr "ワークスペースとそのターミナルを閉じます。プロジ
 
 msgid "This cloud workspace is waking up, which can take up to 30 seconds after it has been idle."
 msgstr "このクラウドワークスペースを起動しています。しばらく使われていなかった場合は、最大30秒かかることがあります。"
+
+msgid "This computer"
+msgstr "このコンピューター"
 
 msgid "This deletes the saved scrollback used for reboot/crash recovery."
 msgstr "再起動やクラッシュからの復旧に使う保存済みスクロールバックを削除します。"
@@ -18417,6 +18519,9 @@ msgstr "ブランチのプレフィックスを更新する"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "ガイド付き設定を使用するにはホストを更新するか、詳細設定を使用してください。"
 
+msgid "Update this host to configure integrations."
+msgstr "連携を設定するには、このホストを更新してください。"
+
 msgid "Updated"
 msgstr "更新済み"
 
@@ -18635,6 +18740,9 @@ msgstr "検証して保存しました"
 
 msgid "Verified through sign-in"
 msgstr "サインインで確認済み"
+
+msgid "Verify"
+msgstr "確認"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "tooltip内でKbdが見えたままか確認する"
@@ -19435,6 +19543,9 @@ msgstr "バージョン {version} を閲覧中です（読み取り専用）"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "添付できるファイルは最大{MAX_ATTACHMENTS}件です"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "これらの接続は後からフォーク設定で設定できます。"
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "30 日間は「設定 → プロジェクト」から復元できます。リポジトリのフォルダーが削除されることはありません。"

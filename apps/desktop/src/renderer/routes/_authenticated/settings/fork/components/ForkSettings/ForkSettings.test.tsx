@@ -3,7 +3,13 @@ import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import { useForkHomeAppearance } from "renderer/stores/fork-home-appearance";
 import { useSettingsStore } from "renderer/stores/settings-state";
-import { act, cleanup, fireEvent, render } from "renderer/test-utils/fork-ui";
+import {
+	act,
+	cleanup,
+	fireEvent,
+	queryFixture,
+	render,
+} from "renderer/test-utils/fork-ui";
 import { getVisibleMatchCountBySection } from "../../../utils/settings-search";
 import { ForkSettings } from "./ForkSettings";
 
@@ -23,6 +29,7 @@ test("Fork Settings restores Pro UI and persists independent hide preferences", 
 				<span>Paid action</span>
 			</ForkProFeature>
 		</>,
+		{ wrapper: queryFixture().wrapper },
 	);
 	const cli = view.getByRole("switch", { name: "Hide CLI options" });
 	const pro = view.getByRole("switch", { name: "Hide Pro features" });
@@ -42,7 +49,7 @@ test("Fork Settings restores Pro UI and persists independent hide preferences", 
 
 test("settings search offers Fork Settings and omits hidden Pro sections", () => {
 	const hidden = getVisibleMatchCountBySection("", true, true, true, true);
-	expect(hidden.fork).toBe(3);
+	expect(hidden.fork).toBe(4);
 	expect(hidden.billing).toBeUndefined();
 	expect(hidden.teams).toBeUndefined();
 	expect(hidden.mobile).toBeUndefined();
@@ -53,7 +60,7 @@ test("settings search offers Fork Settings and omits hidden Pro sections", () =>
 
 test("the home background is opt-in, survives reload and appears in settings search", async () => {
 	useSettingsStore.getState().setSearchQuery("ascii");
-	const view = render(<ForkSettings />);
+	const view = render(<ForkSettings />, { wrapper: queryFixture().wrapper });
 	const toggle = view.getByRole("switch", {
 		name: "Interactive home background",
 	});
@@ -97,4 +104,19 @@ test("the background is on by default and an explicit off survives a reload", as
 	} finally {
 		await rehydrate(saved);
 	}
+});
+
+test("external provider actions remain available when native Pro features are hidden", () => {
+	const view = render(
+		<>
+			<ForkProFeature available>
+				<span>Jira action</span>
+			</ForkProFeature>
+			<ForkProFeature>
+				<span>Native action</span>
+			</ForkProFeature>
+		</>,
+	);
+	expect(view.getByText("Jira action")).toBeTruthy();
+	expect(view.queryByText("Native action")).toBeNull();
 });
