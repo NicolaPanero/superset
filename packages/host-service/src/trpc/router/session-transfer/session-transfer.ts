@@ -247,6 +247,19 @@ function earlierSource(
 	return undefined;
 }
 
+function earlierHistoryPage(
+	source: NonNullable<ReturnType<typeof earlierSource>>,
+	before?: number,
+) {
+	return new TxcriptTransferProvider().history({
+		sourceAgent: source.agent,
+		sourceSessionId: source.sessionId,
+		sourceRoot: source.storeRoot,
+		sourceReference: source.reference,
+		...(before !== undefined ? { before } : {}),
+	});
+}
+
 export const sessionTransferRouter = router({
 	context: protectedProcedure
 		.input(
@@ -643,7 +656,14 @@ export const sessionTransferRouter = router({
 		),
 	hasEarlierMessages: protectedProcedure
 		.input(earlierInput)
-		.query(({ ctx, input }) => earlierSource(ctx, input) !== undefined),
+		.query(async ({ ctx, input }) => {
+			const source = earlierSource(ctx, input);
+			if (!source) return false;
+			// A failed read still offers the button, so the user can retry it.
+			return earlierHistoryPage(source)
+				.then((page) => page.messages.length > 0)
+				.catch(() => true);
+		}),
 	earlierMessages: protectedProcedure
 		.input(
 			earlierInput.extend({
@@ -653,20 +673,12 @@ export const sessionTransferRouter = router({
 		.query(async ({ ctx, input }) => {
 			const source = earlierSource(ctx, input);
 			if (!source) return null;
-			return new TxcriptTransferProvider()
-				.history({
-					sourceAgent: source.agent,
-					sourceSessionId: source.sessionId,
-					sourceRoot: source.storeRoot,
-					sourceReference: source.reference,
-					...(input.before !== undefined ? { before: input.before } : {}),
-				})
-				.catch((error: Error) => {
-					throw new TRPCError({
-						code: "PRECONDITION_FAILED",
-						message: error.message,
-					});
+			return earlierHistoryPage(source, input.before).catch((error: Error) => {
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message: error.message,
 				});
+			});
 		}),
 	externalSessions: protectedProcedure
 		.input(

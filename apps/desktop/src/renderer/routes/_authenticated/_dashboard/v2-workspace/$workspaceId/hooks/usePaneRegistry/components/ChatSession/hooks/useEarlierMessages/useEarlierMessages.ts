@@ -49,7 +49,7 @@ export function useEarlierMessages(
 				{ staleTime: Number.POSITIVE_INFINITY },
 			)
 			.then((page) => {
-				if (!page) {
+				if (!page || page.messages.length === 0) {
 					setNextBefore(null);
 					return;
 				}
