@@ -396,7 +396,6 @@ export function ForkChatSwitchDialog({
 				return;
 			if (placement === "this-chat") {
 				restoreRecovery = markChatSessionClosed(chatSessionId);
-				await wiring.transport.closeSession({ sessionId: chatSessionId });
 				rememberEffort(data.terminalId);
 				rememberPreviousChat(data, sourceLabel, true);
 				ctx.actions.updateData({
@@ -411,6 +410,9 @@ export function ForkChatSwitchDialog({
 						: {}),
 				});
 				ctx.actions.setTitle(target.label);
+				void wiring.transport
+					.closeSession({ sessionId: chatSessionId })
+					.catch(() => undefined);
 			} else {
 				const opened = await onOpenAgentChat({
 					configId: launch.agentConfigId,

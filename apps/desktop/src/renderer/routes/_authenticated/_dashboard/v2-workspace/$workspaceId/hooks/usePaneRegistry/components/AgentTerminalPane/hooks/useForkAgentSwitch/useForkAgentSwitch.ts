@@ -110,11 +110,10 @@ export function useForkAgentSwitch(
 						: {}),
 					targetTerminalId: data.terminalId,
 				});
-				// Closed only once the target exists: the pane never shows a stopped
-				// chat while converting, and a failed conversion leaves it running.
+				// The source closes only once the target exists, and after the pane
+				// moved to it: waiting for the close would show a stopped chat.
 				if (data.acpSessionId) {
 					restoreRecovery = markChatSessionClosed(data.acpSessionId);
-					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
 				}
 				const modelId = target.model?.id ?? launch.defaultModelId;
 				ctx.actions.updateData({
@@ -127,6 +126,10 @@ export function useForkAgentSwitch(
 					...(target.modeId ? { chatModeId: target.modeId } : {}),
 				});
 				ctx.actions.setTitle(target.label);
+				if (data.acpSessionId)
+					void wiring.transport
+						.closeSession({ sessionId: data.acpSessionId })
+						.catch(() => undefined);
 				toast.success(t({ message: "Native handoff complete" }), {
 					description: `${source.id} → ${target.label}`,
 				});
