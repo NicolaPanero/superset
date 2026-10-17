@@ -10,27 +10,21 @@ import {
 	DialogTitle,
 } from "@superset/ui/dialog";
 import { Label } from "@superset/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectSeparator,
-	SelectTrigger,
-	SelectValue,
-} from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ForkAccountEmptyState } from "renderer/components/ForkAccountEmptyState";
+import {
+	ForkAccountPicker,
+	type useForkCreationAccount,
+} from "renderer/components/ForkAccountPicker";
 import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
-import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
-import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import {
 	forkLaunchAccountSelection,
@@ -97,6 +91,10 @@ export function ForkChatSwitchDialog({
 	const queryClient = useQueryClient();
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const [account, setAccount] = useState(CONFIGURED_ACCOUNT);
+	const [pickerOpen, setPickerOpen] = useState(false);
+	const [adding, setAdding] = useState(false);
+	const [reconnect, setReconnect] =
+		useState<ReturnType<typeof useForkCreationAccount>["reconnect"]>(null);
 	const [placement, setPlacement] = useState<Placement>("this-chat");
 	const [transfer, setTransfer] = useState<Transfer>("native");
 	const [transferId, setTransferId] = useState(() => crypto.randomUUID());
@@ -150,7 +148,7 @@ export function ForkChatSwitchDialog({
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
 	const quota = useHostUsageQuota(open && managed ? hostUrl : null);
 	const options = useQuery({
-		queryKey: ["agent-launch-account-options", hostUrl, target?.presetId],
+		queryKey: ["fork-account-options", hostUrl, target?.presetId],
 		enabled: open && managed && !!hostUrl,
 		queryFn: () =>
 			hostUrl && target
@@ -437,16 +435,32 @@ export function ForkChatSwitchDialog({
 		}
 	};
 
-	const accountOptions = choices.filter(
-		(option) => !sameAgent || option.selection !== accountSwitcher?.current,
-	);
-	const pickedUsage = quota.data?.find(
-		(row) =>
-			row.agent === target?.presetId &&
-			(pickedSelection === undefined
-				? row.isDefault
-				: row.selection === pickedSelection),
-	);
+	const accountPicker: ReturnType<typeof useForkCreationAccount> = {
+		hostUrl,
+		pickerOpen,
+		setPickerOpen,
+		adding,
+		setAdding,
+		reconnect,
+		setReconnect,
+		quota,
+		options,
+		refreshDefault: () => metadata.refetch(),
+		selection:
+			pickedSelection !== undefined || sameAgent
+				? pickedSelection
+				: (metadata.data?.defaultSelection ?? configuredSelection),
+		forcedApi: metadata.data?.environmentOverride ?? false,
+		enabled: managed && !!hostUrl,
+		available: !!metadata.data,
+		choose: (value) => {
+			setPickerOpen(false);
+			setAccount(accountValue(value));
+			setTransferId(crypto.randomUUID());
+			setFailed(false);
+		},
+		confirm: () => Promise.resolve(true),
+	};
 	const summary = [target?.label, model?.label, effort?.label]
 		.filter(Boolean)
 		.join(" · ");
@@ -484,57 +498,13 @@ export function ForkChatSwitchDialog({
 							<Label>
 								<Trans>Account</Trans>
 							</Label>
-							<Select
-								value={
-									showCliOptions
-										? sameAgent && account === CONFIGURED_ACCOUNT
-											? ""
-											: account
-										: (pickedSelection ?? "")
-								}
-								onValueChange={(value) => {
-									setAccount(value);
-									setTransferId(crypto.randomUUID());
-									setFailed(false);
-								}}
-								disabled={stage !== null || !options.isSuccess}
-							>
-								<SelectTrigger
-									aria-label={t({ message: "Account" })}
-									className="w-full"
-								>
-									<SelectValue
-										placeholder={t({ message: "Choose an account" })}
-									/>
-								</SelectTrigger>
-								<SelectContent>
-									{showCliOptions && !sameAgent && (
-										<SelectItem value={CONFIGURED_ACCOUNT}>
-											<Trans>Configured account</Trans>
-										</SelectItem>
-									)}
-									{accountOptions.map((option) => {
-										const usage = quota.data?.find(
-											(row) =>
-												row.agent === target?.presetId &&
-												row.selection === option.selection,
-										);
-										const label = forkAccountLabel(option, usage?.email);
-										return (
-											<div key={option.selection ?? SYSTEM_ACCOUNT}>
-												{option.selection === null && <SelectSeparator />}
-												<SelectItem value={option.selection ?? SYSTEM_ACCOUNT}>
-													{label === "System default" ? (
-														<Trans>System default</Trans>
-													) : (
-														label
-													)}
-												</SelectItem>
-											</div>
-										);
-									})}
-								</SelectContent>
-							</Select>
+							<ForkAccountPicker
+								account={accountPicker}
+								provider={target?.presetId ?? null}
+								model={model?.id}
+								hidden={sameAgent ? accountSwitcher?.current : undefined}
+								disabled={stage !== null}
+							/>
 							{options.isSuccess &&
 								choices.length === 0 &&
 								target &&
@@ -550,9 +520,6 @@ export function ForkChatSwitchDialog({
 										}}
 									/>
 								)}
-							{!accountMissing && pickedUsage && (
-								<ForkUsageSummary account={pickedUsage} compact />
-							)}
 						</div>
 					)}
 					{!sameAgent && (

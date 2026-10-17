@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
+import { formatPercent } from "@superset/i18n/format";
 import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import {
 	DropdownMenu,
@@ -7,12 +8,17 @@ import {
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
+import { LuChevronDown } from "react-icons/lu";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { AddAccountDialog } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
-import { ForkUsageSummary } from "../ForkUsageSummary";
-import { ForkAccountAvatar } from "./components/ForkAccountAvatar";
+import {
+	ForkAccountAvatar,
+	QUOTA_TONE_TEXT,
+	quotaTone,
+} from "./components/ForkAccountAvatar";
 import { ForkAccountMenuItems } from "./components/ForkAccountMenuItems";
 import { useForkAccountChoices } from "./useForkAccountChoices";
 import type { useForkCreationAccount } from "./useForkCreationAccount";
@@ -23,16 +29,25 @@ export function ForkAccountPicker({
 	model,
 	compact = false,
 	extraItems,
+	hidden,
+	disabled = false,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
 	model?: string;
 	compact?: boolean;
 	extraItems?: ReactNode;
+	hidden?: string | null;
+	disabled?: boolean;
 }) {
 	const { t } = useLingui();
 	const menuDialog = useForkMenuDialog();
-	const { choices, selected } = useForkAccountChoices(account, provider, model);
+	const { choices, selected } = useForkAccountChoices(
+		account,
+		provider,
+		model,
+		hidden,
+	);
 	if (!account.enabled) return null;
 	const label = account.forcedApi
 		? t({ message: "API billing" })
@@ -56,6 +71,7 @@ export function ForkAccountPicker({
 						aria-label={label}
 						title={label}
 						disabled={
+							disabled ||
 							!account.available ||
 							account.forcedApi ||
 							(choices.length === 1 && !!selected)
@@ -70,24 +86,40 @@ export function ForkAccountPicker({
 				) : (
 					<DropdownMenuTrigger
 						data-fork-account-picker
-						disabled={!account.available || account.forcedApi}
-						className="flex h-[22px] min-w-0 max-w-[380px] shrink-0 whitespace-nowrap items-center gap-1 rounded-md border px-1.5 py-0.5 text-xs"
+						disabled={disabled || !account.available || account.forcedApi}
+						className="flex h-9 w-full min-w-0 items-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50"
 					>
-						<span className="truncate">{label}</span>
-						{!account.forcedApi && (
-							<>
-								<span>·</span>
-								<ForkUsageSummary
-									account={selected?.usage}
-									model={model}
-									compact
-								/>
-							</>
-						)}
+						<ForkAccountAvatar
+							label={selected ? label : null}
+							remaining={quota.remaining}
+						/>
+						<span
+							className={cn("truncate", !selected && "text-muted-foreground")}
+						>
+							{label}
+						</span>
+						<span className="ml-auto flex shrink-0 items-center gap-2">
+							{selected && !account.forcedApi && quota.remaining !== null && (
+								<span
+									className={cn(
+										"text-xs",
+										QUOTA_TONE_TEXT[quotaTone(quota.remaining)],
+									)}
+								>
+									{formatPercent(quota.remaining / 100, {
+										maximumFractionDigits: 0,
+									})}
+								</span>
+							)}
+							<LuChevronDown className="size-4 text-muted-foreground" />
+						</span>
 					</DropdownMenuTrigger>
 				)}
 				<DropdownMenuContent
-					className="w-96 max-w-[calc(100vw-32px)] max-h-[min(60vh,var(--radix-dropdown-menu-content-available-height))] overflow-x-hidden overflow-y-auto"
+					className={cn(
+						"w-96 max-w-[calc(100vw-32px)] max-h-[min(60vh,var(--radix-dropdown-menu-content-available-height))] overflow-x-hidden overflow-y-auto",
+						!compact && "min-w-(--radix-dropdown-menu-trigger-width)",
+					)}
 					align="start"
 					collisionPadding={8}
 					onCloseAutoFocus={menuDialog.onCloseAutoFocus}
@@ -98,6 +130,7 @@ export function ForkAccountPicker({
 						model={model}
 						afterClose={menuDialog.afterClose}
 						extraItems={extraItems}
+						hidden={hidden}
 					/>
 				</DropdownMenuContent>
 			</DropdownMenu>

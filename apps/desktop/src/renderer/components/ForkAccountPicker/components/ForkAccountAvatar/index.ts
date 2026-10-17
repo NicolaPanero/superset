@@ -1,2 +1,2 @@
 export { ForkAccountAvatar } from "./ForkAccountAvatar";
-export { quotaTone } from "./quotaTone";
+export { QUOTA_TONE_TEXT, quotaTone } from "./quotaTone";

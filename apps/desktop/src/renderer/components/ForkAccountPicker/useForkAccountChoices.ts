@@ -7,12 +7,14 @@ export function useForkAccountChoices(
 	account: ReturnType<typeof useForkCreationAccount>,
 	provider: string | null,
 	model?: string,
+	hidden?: string | null,
 ) {
 	const showCliOptions = useForkCliOptions();
 	const choices = visibleForkAccountOptions(
 		account.options.data ?? [],
 		showCliOptions,
 	)
+		.filter((option) => hidden === undefined || option.selection !== hidden)
 		.toSorted(
 			(a, b) => Number(a.selection === null) - Number(b.selection === null),
 		)

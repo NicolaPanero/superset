@@ -22,18 +22,22 @@ export function ForkAccountMenuItems({
 	model,
 	afterClose,
 	extraItems,
+	hidden,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
 	model?: string;
 	afterClose: (action: () => void) => void;
 	extraItems?: ReactNode;
+	/** An account not to offer, such as the one a chat already uses. */
+	hidden?: string | null;
 }) {
 	const navigate = useNavigate();
 	const { choices, selected, suggested } = useForkAccountChoices(
 		account,
 		provider,
 		model,
+		hidden,
 	);
 	const canSignIn = provider === "claude" || provider === "codex";
 	const newest = Math.max(
