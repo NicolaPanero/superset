@@ -88,7 +88,7 @@ export function ForkAccountSubmenu({
 			{/* Portaled: the parent panel's backdrop-blur would otherwise clip it. */}
 			<DropdownMenuPortal>
 				<DropdownMenuSubContent
-					className={cn("w-96 max-h-[60vh] overflow-auto", contentClassName)}
+					className={cn("w-80 max-h-[60vh] overflow-auto", contentClassName)}
 				>
 					<ForkAccountMenuItems
 						account={account}

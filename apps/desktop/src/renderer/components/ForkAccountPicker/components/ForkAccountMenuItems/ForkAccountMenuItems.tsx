@@ -1,13 +1,15 @@
 import { Trans } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
+import { formatDate } from "@superset/i18n/format";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
-import { LuSettings2 } from "react-icons/lu";
+import { LuCheck, LuPlus, LuRefreshCw, LuSettings2 } from "react-icons/lu";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { ForkUsageSummary } from "../../../ForkUsageSummary";
 import { useForkAccountChoices } from "../../useForkAccountChoices";
@@ -31,6 +33,13 @@ export function ForkAccountMenuItems({
 		model,
 	);
 	const canSignIn = provider === "claude" || provider === "codex";
+	const newest = Math.max(
+		0,
+		...choices.map(({ usage }) => usage?.fetchedAt.getTime() ?? 0),
+	);
+	const date = newest
+		? formatDate(new Date(newest), { hour: "numeric", minute: "2-digit" })
+		: null;
 	return (
 		<>
 			<DropdownMenuLabel>
@@ -41,40 +50,49 @@ export function ForkAccountMenuItems({
 					<Trans>Add an account to start chatting.</Trans>
 				</p>
 			)}
-			{choices.map(({ option, usage }) => (
-				<div key={option.selection ?? "system"}>
-					{option.selection === null && <DropdownMenuSeparator />}
-					<DropdownMenuItem
-						onSelect={() => account.choose(option.selection)}
-						className="block cursor-pointer py-2"
-					>
-						<div className="flex items-center justify-between gap-3">
-							<span className="truncate font-medium">
-								{forkAccountLabel(option, usage?.email)}
-							</span>
-							<span className="shrink-0 text-[10px] text-muted-foreground">
-								{usage?.isDefault && <Trans>Default</Trans>}
-								{suggested?.option.selection === option.selection && (
-									<>
-										{" "}
-										· <Trans>Suggested</Trans>
-									</>
+			{choices.map(({ option, usage }) => {
+				const chosen = account.selection === option.selection;
+				return (
+					<div key={option.selection ?? "system"}>
+						{option.selection === null && <DropdownMenuSeparator />}
+						<DropdownMenuItem
+							onSelect={() => account.choose(option.selection)}
+							className="grid cursor-pointer grid-cols-[1rem_minmax(0,1fr)] items-start gap-x-2 gap-y-1 py-1.5"
+						>
+							<LuCheck
+								className={cn(
+									"mt-0.5 size-3.5",
+									chosen ? "text-foreground" : "invisible",
 								)}
-								{account.selection === option.selection && " ✓"}
-							</span>
-						</div>
-						<div className="mt-1.5">
-							<ForkUsageSummary account={usage} model={model} />
-						</div>
-						{(usage?.status === "signed_out" ||
-							usage?.status === "token_expired") && (
-							<div className="mt-1 text-warning">
-								<Trans>Reconnect account</Trans>
+							/>
+							<div className="flex min-w-0 items-center gap-1.5">
+								<span className="truncate font-medium">
+									{forkAccountLabel(option, usage?.email)}
+								</span>
+								{usage?.isDefault && (
+									<span className="shrink-0 rounded border px-1 text-[10px] text-muted-foreground">
+										<Trans>Default</Trans>
+									</span>
+								)}
+								{suggested?.option.selection === option.selection && (
+									<span className="shrink-0 rounded bg-muted px-1 text-[10px] text-muted-foreground">
+										<Trans>Suggested</Trans>
+									</span>
+								)}
 							</div>
-						)}
-					</DropdownMenuItem>
-				</div>
-			))}
+							<div className="col-start-2 flex min-w-0 flex-wrap items-center gap-x-2">
+								<ForkUsageSummary account={usage} model={model} compact />
+								{(usage?.status === "signed_out" ||
+									usage?.status === "token_expired") && (
+									<span className="text-xs text-warning">
+										<Trans>Reconnect account</Trans>
+									</span>
+								)}
+							</div>
+						</DropdownMenuItem>
+					</div>
+				);
+			})}
 			<DropdownMenuSeparator />
 			{selected?.usage &&
 				(selected.usage.status === "signed_out" ||
@@ -106,6 +124,7 @@ export function ForkAccountMenuItems({
 				<DropdownMenuItem
 					onSelect={() => afterClose(() => account.setAdding(true))}
 				>
+					<LuPlus className="size-3.5 shrink-0 text-muted-foreground" />
 					<Trans>Add account</Trans>
 				</DropdownMenuItem>
 			)}
@@ -117,7 +136,13 @@ export function ForkAccountMenuItems({
 						.catch((error) => toast.error(errorMessage(error)));
 				}}
 			>
+				<LuRefreshCw className="size-3.5 shrink-0 text-muted-foreground" />
 				<Trans>Refresh</Trans>
+				{date && (
+					<span className="ml-auto text-[10px] text-muted-foreground">
+						<Trans>Updated {date}</Trans>
+					</span>
+				)}
 			</DropdownMenuItem>
 			<DropdownMenuItem
 				onSelect={() =>

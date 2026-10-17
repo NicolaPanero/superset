@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { formatPercent } from "@superset/i18n/format";
 import { cn } from "@superset/ui/utils";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
+import { formatResetLabel } from "renderer/utils/usage/formatResetIn";
 import {
 	displayUsedPercent,
 	usageTone,
@@ -22,8 +23,14 @@ export function UsageWindowChip({
 		maximumFractionDigits: 0,
 	});
 	const tone = usageTone(window.usedPercent);
+	const resets = window.resetsAt
+		? formatResetLabel(window.resetsAt, new Date())
+		: null;
 	return (
-		<span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap">
+		<span
+			className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap"
+			title={resets ? `${window.label} · ${resets}` : window.label}
+		>
 			<span className="text-muted-foreground">{short}</span>
 			<UsageBar
 				className="w-9 shrink-0"
