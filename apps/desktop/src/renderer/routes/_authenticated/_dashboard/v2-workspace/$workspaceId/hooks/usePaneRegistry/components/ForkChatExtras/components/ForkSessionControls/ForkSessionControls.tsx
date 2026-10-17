@@ -24,6 +24,11 @@ import {
 	pendingEffortChange,
 } from "../../utils/pendingEffort";
 import {
+	clearPendingModelReset,
+	hasPendingModelReset,
+	pendingModelResetChange,
+} from "../../utils/pendingModelReset";
+import {
 	ForkChatSwitchDialog,
 	type ForkSwitchRequest,
 } from "../ForkChatSwitchDialog";
@@ -62,6 +67,19 @@ export function ForkSessionControls({
 	const usage = account.quota.data?.find(
 		(row) => row.agent === provider && row.selection === account.selection,
 	);
+
+	useEffect(() => {
+		if (!onSelect || !hasPendingModelReset(data.terminalId)) return;
+		if (
+			!configOptions.some(
+				(entry) => entry.category === "model" && entry.options.length > 0,
+			)
+		)
+			return;
+		clearPendingModelReset(data.terminalId);
+		const change = pendingModelResetChange(configOptions);
+		if (change) onSelect(change.configId, change.value);
+	}, [configOptions, data.terminalId, onSelect]);
 
 	// The effort picked before a switch reaches the new session once it lists it.
 	useEffect(() => {

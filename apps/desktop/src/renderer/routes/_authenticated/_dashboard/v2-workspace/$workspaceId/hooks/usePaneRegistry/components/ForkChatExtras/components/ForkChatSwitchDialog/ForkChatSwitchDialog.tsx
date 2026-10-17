@@ -40,6 +40,7 @@ import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../hooks/useForkAccountSwitch";
 import { contextHandoff } from "../../utils/contextHandoff/contextHandoff";
 import { setPendingEffort } from "../../utils/pendingEffort";
+import { setPendingModelReset } from "../../utils/pendingModelReset";
 import { rememberPreviousChat } from "../../utils/previousChat";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
@@ -225,6 +226,7 @@ export function ForkChatSwitchDialog({
 	const effort = request?.effort ?? null;
 	const rememberEffort = (terminalId: string) => {
 		if (effort) setPendingEffort(terminalId, effort.id);
+		if (!model) setPendingModelReset(terminalId);
 	};
 
 	const close = () => {
