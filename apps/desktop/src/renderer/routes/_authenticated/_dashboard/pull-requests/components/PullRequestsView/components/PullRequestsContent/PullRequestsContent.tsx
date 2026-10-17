@@ -69,8 +69,8 @@ export function PullRequestsContent({
 	} = useWorkItemsList({
 		projectTargets,
 		resetKey: `${debouncedQuery.trim()}\0${authorFilter ?? ""}\0${reviewFilter ?? ""}\0${includeClosed}\0${mergedOnly}`,
-		getQueryOptions: ({ target, page }) => {
-			const queryKey = [
+		getQueryOptions: ({ target, page }) => ({
+			queryKey: [
 				"pullRequests",
 				"searchPullRequests",
 				target.key,
@@ -81,48 +81,42 @@ export function PullRequestsContent({
 				includeClosed,
 				mergedOnly,
 				page,
-			];
-			return {
-				queryKey,
-				networkMode: "always",
-				refetchOnReconnect: true,
-				queryFn: async () => {
-					const firstProject = target.projects[0];
-					if (!target.hostUrl || !firstProject) return null;
-					const client = getHostServiceClientByUrl(target.hostUrl);
-					const result = await forkPullRequestSearch(
-						client,
-						{
-							projectId: firstProject.projectId,
-							projectIds: target.projects.map((project) => project.projectId),
-							query: debouncedQuery.trim() || undefined,
-							author: authorFilter ?? undefined,
-							review: reviewFilter ?? undefined,
-							limit: PAGE_SIZE,
-							includeClosed,
-							mergedOnly,
-							page,
-						},
-						cache.getQueryData(queryKey),
-					);
-					// The router types come from this build, the rows come from
-					// whichever host-service the host actually runs — hosts update
-					// independently and the list is not version-gated. Rows only
-					// gained `checks` in host-service 1.20.0, so an older host
-					// answers without it. Absent checks read as "none reported".
-					return {
-						...result,
-						pullRequests: result.pullRequests.map((pullRequest) => ({
-							...pullRequest,
-							checks: pullRequest.checks ?? [],
-						})),
-					};
-				},
-				enabled: !!target.hostUrl,
-				staleTime: 30_000,
-				gcTime: 10 * 60_000,
-			};
-		},
+			],
+			queryFn: async ({ queryKey }) => {
+				const firstProject = target.projects[0];
+				if (!target.hostUrl || !firstProject) return null;
+				const client = getHostServiceClientByUrl(target.hostUrl);
+				const previous = cache.getQueryData(queryKey);
+				const result = await forkPullRequestSearch(client, previous).query({
+					projectId: firstProject.projectId,
+					projectIds: target.projects.map((project) => project.projectId),
+					query: debouncedQuery.trim() || undefined,
+					author: authorFilter ?? undefined,
+					review: reviewFilter ?? undefined,
+					limit: PAGE_SIZE,
+					includeClosed,
+					mergedOnly,
+					page,
+				});
+				// The router types come from this build, the rows come from
+				// whichever host-service the host actually runs — hosts update
+				// independently and the list is not version-gated. Rows only
+				// gained `checks` in host-service 1.20.0, so an older host
+				// answers without it. Absent checks read as "none reported".
+				return {
+					...result,
+					pullRequests: result.pullRequests.map((pullRequest) => ({
+						...pullRequest,
+						checks: pullRequest.checks ?? [],
+					})),
+				};
+			},
+			enabled: !!target.hostUrl,
+			staleTime: 30_000,
+			gcTime: 10 * 60_000,
+			networkMode: "always",
+			refetchOnReconnect: true,
+		}),
 		getRows: (data) => data.pullRequests,
 		getRowKey: (pullRequest) =>
 			`${pullRequest.projectId}:${pullRequest.prNumber}`,

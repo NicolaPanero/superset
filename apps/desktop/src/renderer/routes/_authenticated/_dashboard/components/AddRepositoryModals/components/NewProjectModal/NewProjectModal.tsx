@@ -14,6 +14,8 @@ import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { useEffect, useRef, useState } from "react";
 import { LuFolderOpen, LuLoaderCircle } from "react-icons/lu";
+import { ForkRepositoryPicker as GitHubRepositoryPicker } from "renderer/components/ForkIntegrations/components/ForkRepositoryPicker";
+import { forkProjectCreator } from "renderer/components/ForkIntegrations/utils/forkProjectCreator";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -23,7 +25,6 @@ import {
 	useFinalizeProjectSetup,
 } from "renderer/react-query/projects";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
-import { GitHubRepositoryPicker } from "./components/GitHubRepositoryPicker";
 
 interface NewProjectModalProps {
 	open: boolean;
@@ -164,27 +165,13 @@ export function NewProjectModal({
 				return;
 			}
 			const client = getHostServiceClientByUrl(activeHostUrl);
-			const result = forkConnectionId
-				? await client.forkScm.clone.mutate(
-						{
-							connectionId: forkConnectionId,
-							url: trimmedUrl,
-							parentDir: trimmedParent,
-							name: trimmedName,
-						},
-						{ signal: abort.signal },
-					)
-				: await client.project.create.mutate(
-						{
-							name: trimmedName,
-							mode: {
-								kind: "clone",
-								parentDir: trimmedParent,
-								url: trimmedUrl,
-							},
-						},
-						{ signal: abort.signal },
-					);
+			const result = await forkProjectCreator(client, forkConnectionId).mutate(
+				{
+					name: trimmedName,
+					mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
+				},
+				{ signal: abort.signal },
+			);
 			finalizeSetup(activeHostUrl, result);
 			onSuccess?.({ projectId: result.projectId });
 			reset();

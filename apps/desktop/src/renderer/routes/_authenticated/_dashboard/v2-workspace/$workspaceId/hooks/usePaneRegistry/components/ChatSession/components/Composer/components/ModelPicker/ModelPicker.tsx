@@ -10,13 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { cn } from "@superset/ui/utils";
-import {
-	type KeyboardEvent,
-	type ReactNode,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import { type KeyboardEvent, useMemo, useRef, useState } from "react";
 import { LuCheck, LuChevronDown } from "react-icons/lu";
 import {
 	getPresetIcon,
@@ -31,16 +25,13 @@ import {
 import { useOptimisticSelections } from "../../hooks/useOptimisticSelections";
 import { EffortSliderCard } from "./components/EffortSliderCard";
 import { ModelPanel } from "./components/ModelPanel";
+import type { ForkModelPickerProps } from "./fork-model-picker-props";
 import type { AgentSwitcher } from "./types";
 
-export type ModelPickerProps = {
+export type ModelPickerProps = ForkModelPickerProps & {
 	configOptions: SessionConfigOption[];
 	onSelect: (configId: string, value: string) => void;
 	agentSwitcher?: AgentSwitcher;
-	emptyLabel?: string;
-	footer?: ReactNode;
-	keepOpenOnPick?: boolean;
-	onOpenChange?: (open: boolean) => void;
 };
 
 const TRAIT_ROW_CLASS = cn(
@@ -64,12 +55,10 @@ function currentLabel(option: SessionConfigOption | undefined) {
 export function ModelPicker({
 	agentSwitcher,
 	configOptions,
-	emptyLabel,
-	footer,
-	keepOpenOnPick = false,
-	onOpenChange,
 	onSelect,
+	...fork
 }: ModelPickerProps) {
+	const { emptyLabel, footer, keepOpenOnPick = false, onOpenChange } = fork;
 	const [open, setOpenState] = useState(false);
 	const setOpen = (next: boolean) => {
 		setOpenState(next);
@@ -127,15 +116,15 @@ export function ModelPicker({
 	);
 	if (!model && settings.length === 0 && !canSwitchAgent) return null;
 	const showsModels = Boolean(model) || canSwitchAgent;
-	const currentAgentLabel = agentSwitcher?.agents.find(
-		(agent) => agent.presetId === agentSwitcher.currentPresetId,
-	)?.label;
+	const currentAgentLabel =
+		agentSwitcher?.agents.find(
+			(agent) => agent.presetId === agentSwitcher.currentPresetId,
+		)?.label ?? emptyLabel;
 	const pillLabel =
 		currentLabel(model) ??
 		model?.label ??
 		currentAgentLabel ??
-		settings[0]?.label ??
-		emptyLabel;
+		settings[0]?.label;
 	const pick = (option: SessionConfigOption, value: string) => {
 		if (value !== option.currentValue) choose(option.id, value);
 		closeAfterPick();

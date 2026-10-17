@@ -29,10 +29,10 @@ test("unified PR search uses host capabilities and keeps the released-host fallb
 			},
 		},
 	} as unknown as HostServiceClient;
-	await forkPullRequestSearch(client, { projectId: "project" });
+	await forkPullRequestSearch(client).query({ projectId: "project" });
 	expect([unifiedCalls, legacyCalls]).toEqual([1, 0]);
 	version = 1;
-	await forkPullRequestSearch(client, { projectId: "project" });
+	await forkPullRequestSearch(client).query({ projectId: "project" });
 	expect([unifiedCalls, legacyCalls]).toEqual([1, 1]);
 });
 

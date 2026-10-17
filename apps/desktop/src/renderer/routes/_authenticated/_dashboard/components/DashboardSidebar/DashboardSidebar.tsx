@@ -457,9 +457,6 @@ export function DashboardSidebar({
 										fadeEdges={["top", "bottom"]}
 										className="flex-1 overflow-y-auto hide-scrollbar"
 									>
-										<ForkServiceNotices
-											hidden={isCollapsed || workspacesListCollapsed}
-										/>
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<DashboardSidebarPinnedSection
 												pinnedWorkspaces={pinnedWorkspaces}
@@ -497,6 +494,9 @@ export function DashboardSidebar({
 										{!isCollapsed && !workspacesListCollapsed && (
 											<DashboardSidebarGithubNotice status={githubStatus} />
 										)}
+										<ForkServiceNotices
+											hidden={isCollapsed || workspacesListCollapsed}
+										/>
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<SortableContext
 												items={displayedProjectIds}

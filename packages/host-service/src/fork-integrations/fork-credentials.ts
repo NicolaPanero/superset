@@ -3,6 +3,7 @@ import {
 	parseForkRemote,
 } from "@superset/shared/fork-integrations";
 import { eq } from "drizzle-orm";
+import type { HostDb } from "../db";
 import { forkIntegrationBindings } from "../db/fork-schema";
 import { projects, workspaces } from "../db/schema";
 import { createGitEnvResolver, createGitFactory } from "../runtime/git";
@@ -12,7 +13,7 @@ import type {
 } from "../runtime/git/types";
 import { getToolEnvironment } from "../terminal/clean-shell-env";
 import { forkAccessSecret } from "./fork-oauth";
-import type { ForkConnectionStore } from "./fork-store";
+import { ForkConnectionStore } from "./fork-store";
 
 export class ForkGitCredentialProvider implements GitCredentialProvider {
 	constructor(
@@ -173,4 +174,18 @@ export function forkGitEnvResolver(
 				? credentials.forPath(path)
 				: credentials,
 		)(path);
+}
+
+/** Adds provider connection credentials; a sandbox keeps the host's own. */
+export function forkHostProviders<
+	T extends { credentials: GitCredentialProvider },
+>(providers: T, db: HostDb, config: { organizationId: string }): T {
+	if (process.env.SUPERSET_HOST_RUN_MODE === "sandbox") return providers;
+	return {
+		...providers,
+		credentials: new ForkGitCredentialProvider(
+			providers.credentials,
+			new ForkConnectionStore(db, config.organizationId),
+		),
+	};
 }

@@ -7,9 +7,9 @@ import {
 } from "@superset/shared/host-routing";
 import { SANDBOX_PORTS } from "@superset/shared/sandbox-contract";
 import {
-	ForkGitCredentialProvider,
 	forkGitEnvResolver,
 	forkGitFactory,
+	forkHostProviders,
 } from "./fork-integrations/fork-credentials";
 import { forkExecGh } from "./fork-integrations/fork-exec-gh";
 import { ForkConnectionStore } from "./fork-integrations/fork-store";
@@ -134,7 +134,8 @@ export interface CreateAppResult {
 }
 
 export function createApp(options: CreateAppOptions): CreateAppResult {
-	const { config, providers } = options;
+	const { config } = options;
+	let { providers } = options;
 
 	const api =
 		options.api ??
@@ -145,25 +146,22 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// place and leaves provisioning with nothing to orchestrate.
 	const sandboxIdentity = readSandboxIdentity();
 	if (sandboxIdentity) runSandboxSelfSeed(db, sandboxIdentity);
-	const credentials =
-		process.env.SUPERSET_HOST_RUN_MODE === "sandbox"
-			? providers.credentials
-			: new ForkGitCredentialProvider(
-					providers.credentials,
-					new ForkConnectionStore(db, config.organizationId),
-				);
-	const git = forkGitFactory(credentials);
+	providers = forkHostProviders(providers, db, config);
+	const git = forkGitFactory(providers.credentials);
 	const github =
 		options.github ??
 		(async () => {
-			const token = await credentials.getToken("github.com");
+			const token = await providers.credentials.getToken("github.com");
 			if (!token) {
 				// Expected precondition failure (user has no GitHub auth), not an
 				// internal error — every procedure calling ctx.github() inherits
 				// this classification.
 				throw new TRPCError({
 					code: "PRECONDITION_FAILED",
-					message: credentials.credentialRemedy("github.com", "missing"),
+					message: providers.credentials.credentialRemedy(
+						"github.com",
+						"missing",
+					),
 					cause: { kind: "NO_GITHUB_TOKEN" },
 				});
 			}
@@ -171,7 +169,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		});
 	const execGh: ExecGh = forkExecGh(
 		options.execGh ?? defaultExecGh,
-		credentials,
+		providers.credentials,
 		new ForkConnectionStore(db, config.organizationId),
 	);
 
@@ -190,7 +188,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// Per-workspace branch/HEAD/upstream reads run in the worker pool: the
 	// PR-sync loop fires them for every workspace on each watcher event and
 	// 5-min sweep, which would otherwise spawn+drain git on the event loop.
-	const resolveGitEnv = forkGitEnvResolver(credentials);
+	const resolveGitEnv = forkGitEnvResolver(providers.credentials);
 	const pullRequestRuntime = new PullRequestRuntimeManager({
 		db,
 		execGh,
@@ -338,7 +336,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// pane on the `chat-v3` PostHog flag.
 	const chatAgentContext: HostServiceContext = {
 		git,
-		credentials,
+		credentials: providers.credentials,
 		github,
 		execGh,
 		api,
@@ -370,7 +368,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// one project and one workspace, seeded by us, that no earlier build ever
 	// touched. There is nothing to recover, so the sweeps can only invent.
 	const purgeContext = {
-		credentials,
+		credentials: providers.credentials,
 		api,
 		db,
 		eventBus,
@@ -399,7 +397,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		// whose worktree still exists).
 		await runArchivedWorkspaceReconcile({
 			git,
-			credentials,
+			credentials: providers.credentials,
 			github,
 			execGh,
 			api,
@@ -525,7 +523,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 				const isAuthenticated = await providers.hostAuth.validate(c.req.raw);
 				return {
 					git,
-					credentials,
+					credentials: providers.credentials,
 					github,
 					execGh,
 					api,
@@ -602,7 +600,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		await launchSandboxAgentOnce(
 			{
 				git,
-				credentials,
+				credentials: providers.credentials,
 				github,
 				execGh,
 				api,
@@ -622,7 +620,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	const resumeCrashedAgents = async () => {
 		const ctx = {
 			git,
-			credentials,
+			credentials: providers.credentials,
 			github,
 			execGh,
 			api,

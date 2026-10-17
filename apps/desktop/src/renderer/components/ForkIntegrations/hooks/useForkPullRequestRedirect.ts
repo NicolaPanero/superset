@@ -1,16 +1,10 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { type ReactNode, useEffect } from "react";
+import { useEffect } from "react";
+import type { ForkPullRequestsSearch } from "../utils/forkRouteSearch";
 
-export function ForkPullRequestsBoundary({
-	children,
-}: {
-	children: ReactNode;
-}) {
-	const search = useSearch({ strict: false }) as {
-		forkProvider?: "bitbucket";
-		forkProject?: string;
-		forkNumber?: number;
-	};
+/** Opens a Bitbucket pull request link as the pull request detail route. */
+export function useForkPullRequestRedirect() {
+	const search = useSearch({ strict: false }) as ForkPullRequestsSearch;
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (
@@ -26,5 +20,4 @@ export function ForkPullRequestsBoundary({
 			});
 		}
 	}, [navigate, search.forkProvider, search.forkNumber, search.forkProject]);
-	return children;
 }

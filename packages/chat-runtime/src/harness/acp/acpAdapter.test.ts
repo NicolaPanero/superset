@@ -300,10 +300,10 @@ function startAdapter(
 		AcpAdapterOptions,
 		| "authMethodId"
 		| "defaultModeId"
-		| "forkPlanReadPermissions"
 		| "selectionWaitMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
+		| "forkPlanReadPermissions"
 	> = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
 	let counter = 0;

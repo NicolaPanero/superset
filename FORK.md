@@ -466,8 +466,15 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
 - Procedure additive in `agents/fork-*.ts`, `usage/fork-procedures.ts` e
   `session-transfer`; i contratti tRPC esistenti rimangono compatibili.
 - `ForkChatExtras` fornisce al composer, tramite `ForkComposerControlsProvider`,
-  selettore, tondino e conferma del fork; `ModelPicker` ufficiale riceve solo
-  `keepOpenOnPick` e `onOpenChange`. `ForkHandoffMenus` resta per i terminali.
+  selettore, tondino e conferma del fork; le proprietà aggiunte a `ModelPicker`
+  ufficiale sono in `fork-model-picker-props.ts` e arrivano con `...fork`, lontano
+  dalle righe che upstream modifica. `ForkHandoffMenus` resta per i terminali.
+- Integrazioni Bitbucket e Jira: `forkHostProviders` in `app.ts` sostituisce le
+  credenziali in un solo punto; i layout di PR e Tasks leggono i parametri
+  `fork*` con `forkRouteSearch` (una riga ciascuno); `useForkPullRequestRedirect`
+  apre i link Bitbucket; `NewProjectModal` cambia solo l’import del selettore
+  e la chiamata `forkProjectCreator(...).mutate`, mentre `GitHubRepositoryPicker`
+  resta quello ufficiale.
 - `useForkBackgroundChats` e `ForkImportChatDialog` per gestione e ricerca
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e

@@ -33,7 +33,18 @@ type SearchInput = Parameters<
 	HostServiceClient["workspaceCreation"]["searchPullRequests"]["query"]
 >[0];
 
-export async function forkPullRequestSearch(
+/** PR search across providers; `previous` is the cached page for the same query. */
+export function forkPullRequestSearch(
+	client: HostServiceClient,
+	previous?: unknown,
+) {
+	return {
+		query: (input: SearchInput) =>
+			searchPullRequests(client, input, previous as SearchPage | undefined),
+	};
+}
+
+async function searchPullRequests(
 	client: HostServiceClient,
 	input: SearchInput,
 	previous?: SearchPage,
