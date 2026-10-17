@@ -20,6 +20,7 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 		readonly store: ForkConnectionStore,
 		readonly preferredId?: string,
 		readonly environment = getToolEnvironment,
+		readonly preferredProvider?: "github" | "bitbucket",
 	) {}
 	forPath(path: string) {
 		const project = this.store.db
@@ -48,11 +49,16 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 			this.store,
 			binding?.connectionId ?? this.preferredId,
 			this.environment,
+			binding?.repository.provider ?? this.preferredProvider,
 		);
 	}
 	select(provider: "github" | "bitbucket", id?: string): ForkConnection | null {
 		const rows = this.store.list().filter((c) => c.provider === provider);
-		const explicit = id ?? this.preferredId;
+		const explicit =
+			id ??
+			(this.preferredProvider && this.preferredProvider !== provider
+				? undefined
+				: this.preferredId);
 		if (explicit) {
 			const selected = rows.find((c) => c.id === explicit);
 			if (explicit === "system:github" && !selected && provider === "github")
@@ -83,6 +89,12 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 		const ref = remoteUrl ? parseForkRemote(remoteUrl) : null;
 		if (!ref || !remoteUrl?.startsWith("https://"))
 			return this.fallback.getCredentials(remoteUrl);
+		let connection: ForkConnection | undefined;
+		try {
+			const selected = this.select(ref.provider);
+			if (!selected) return this.fallback.getCredentials(remoteUrl);
+			connection = selected;
+		} catch {}
 		const env = {
 			...(await this.environment()),
 			GIT_TERMINAL_PROMPT: "0",
@@ -97,9 +109,8 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 			GIT_CONFIG_KEY_3: "core.askPass",
 			GIT_CONFIG_VALUE_3: "",
 		};
+		if (!connection) return { env };
 		try {
-			const connection = this.select(ref.provider, this.preferredId);
-			if (!connection) return this.fallback.getCredentials(remoteUrl);
 			const secret = await forkAccessSecret(this.store, connection.id);
 			if (!secret.token) return { env };
 			const username =

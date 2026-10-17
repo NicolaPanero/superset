@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ForkPullRequest } from "@superset/shared/fork-integrations";
+import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Textarea } from "@superset/ui/textarea";
@@ -10,18 +11,22 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import { useState } from "react";
+import { CommentBody } from "renderer/components/CommentBody";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import { ForkServiceNotice } from "../ForkServiceNotice";
 
 export function ForkPullRequestDetail({
 	pullRequest,
 	onBack,
+	hostUrl: targetHostUrl,
 }: {
 	pullRequest: ForkPullRequest;
 	onBack: () => void;
+	hostUrl?: string | null;
 }) {
 	const { t } = useLingui(),
-		{ client, hostUrl } = useForkConnections(),
+		{ client, hostUrl } = useForkConnections(targetHostUrl),
 		cache = useQueryClient();
 	const target = {
 		connectionId: pullRequest.connectionId,
@@ -31,6 +36,9 @@ export function ForkPullRequestDetail({
 	const key = ["fork-integrations", hostUrl, "pr", target];
 	const [merging, setMerging] = useState(false);
 	const detail = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: key,
 		queryFn: () => required(client).forkScm.get.query(target),
 		initialData: pullRequest,
@@ -57,6 +65,9 @@ export function ForkPullRequestDetail({
 	const [inlinePath, setInlinePath] = useState(""),
 		[inlineLine, setInlineLine] = useState("");
 	const comments = useInfiniteQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		initialPageParam: undefined as string | undefined,
 		queryKey: [...key, "comments"],
 		queryFn: ({ pageParam }) =>
@@ -65,18 +76,24 @@ export function ForkPullRequestDetail({
 		enabled: !!client && tab === "conversation",
 	});
 	const diff = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: [...key, "diff"],
 		queryFn: () => required(client).forkScm.diff.query(target),
 		enabled: !!client && tab === "code",
-		retry: false,
 	});
 	const checks = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: [...key, "checks"],
 		queryFn: () => required(client).forkScm.checks.query(target),
 		enabled: !!client && tab === "checks",
-		retry: false,
 	});
 	const action = useMutation({
+		networkMode: "always",
+		retry: false,
 		mutationFn: (
 			action:
 				| "merge"
@@ -103,11 +120,34 @@ export function ForkPullRequestDetail({
 			setEdit(false);
 			setMerge(false);
 			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
+			void cache.invalidateQueries({ queryKey: ["pullRequests"] });
 		},
 	});
+	const errors = [
+		action.error,
+		detail.error,
+		comments.error,
+		checks.error,
+		diff.error,
+	];
+	const unavailable = errors.some(isForkServiceUnavailable);
+	const error = errors.find(
+		(error) => error && !isForkServiceUnavailable(error),
+	);
 	const busy = action.isPending || (merging && pr.state === "open");
 	return (
 		<div className="min-w-0 flex-1 space-y-5 overflow-auto p-5">
+			{unavailable && (
+				<ForkServiceNotice
+					provider={pr.repository.provider}
+					onRetry={() => {
+						void detail.refetch();
+						if (tab === "conversation") void comments.refetch();
+						if (tab === "code") void diff.refetch();
+						if (tab === "checks") void checks.refetch();
+					}}
+				/>
+			)}
 			<div className="flex flex-wrap items-center gap-2">
 				<Button size="sm" variant="ghost" onClick={onBack}>
 					<Trans>Back</Trans>
@@ -121,7 +161,13 @@ export function ForkPullRequestDetail({
 					#{pr.number}
 				</a>
 				<span className="rounded-full bg-muted px-2 py-1 text-xs">
-					{pr.state}
+					{pr.state === "open" ? (
+						<Trans context="status">Open</Trans>
+					) : pr.state === "merged" ? (
+						<Trans>Merged</Trans>
+					) : (
+						<Trans>Closed</Trans>
+					)}
 				</span>
 				<span className="text-xs text-muted-foreground">{pr.author}</span>
 			</div>
@@ -150,9 +196,9 @@ export function ForkPullRequestDetail({
 					</Button>
 				</div>
 			) : (
-				<p className="whitespace-pre-wrap break-words text-sm">
-					{pr.description}
-				</p>
+				<div className="min-w-0 overflow-x-auto break-words text-sm">
+					<CommentBody body={pr.description} />
+				</div>
 			)}
 			<div className="flex flex-wrap gap-2">
 				<Button size="sm" variant="outline" onClick={() => setEdit(!edit)}>
@@ -267,9 +313,9 @@ export function ForkPullRequestDetail({
 									{c.author}
 									{c.path ? ` · ${c.path}:${c.line ?? ""}` : ""}
 								</p>
-								<p className="whitespace-pre-wrap break-words text-sm">
-									{c.body}
-								</p>
+								<div className="min-w-0 overflow-x-auto break-words text-sm">
+									<CommentBody body={c.body} />
+								</div>
 							</article>
 						))}
 					{comments.hasNextPage && (
@@ -318,7 +364,9 @@ export function ForkPullRequestDetail({
 					{diff.data ??
 						(diff.isPending
 							? t({ message: "Loading..." })
-							: diff.error?.message)}
+							: isForkServiceUnavailable(diff.error)
+								? ""
+								: diff.error?.message)}
 				</pre>
 			)}
 			{tab === "checks" && (
@@ -337,12 +385,9 @@ export function ForkPullRequestDetail({
 					))}
 				</div>
 			)}
-			{(action.error || detail.error || comments.error || checks.error) && (
+			{error && (
 				<p role="alert" className="text-sm text-destructive">
-					{action.error?.message ??
-						detail.error?.message ??
-						comments.error?.message ??
-						checks.error?.message}
+					{error.message}
 				</p>
 			)}
 		</div>

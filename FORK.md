@@ -18,6 +18,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   entrambi. Jira abilita la sorgente Tasks anche con le funzioni Pro nascoste.
   Le chiamate partono dall'host verso le API ufficiali, indipendentemente dal login
   Superset. Contratto OAuth e limiti: [docs/fork-integrations.md](docs/fork-integrations.md).
+  GitHub e Bitbucket condividono la schermata Pull Requests, con l'icona del
+  provider su ogni repository. Jira è la vista Tasks predefinita quando
+  configurato: ricerca, filtri rapidi, lista/board e dettaglio affiancato;
+  JQL resta disponibile nei controlli avanzati.
 
 - **Settings → Fork → MCP servers** gestisce un solo elenco di server MCP
   (HTTP, SSE, stdio) per tutti gli agenti e gli account dell'host, salvato in

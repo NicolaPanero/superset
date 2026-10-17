@@ -968,6 +968,9 @@ msgstr "{name}은(는) 기본 제공이라 교체할 수 없습니다"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name}이(가) 추가되지 않았습니다"
 
+msgid "{name} unreachable"
+msgstr "{name}에 연결할 수 없음"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {사람을 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} sender {발신자를 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} other {항목을 하나 이상 지정하거나 {choice} 옵션을 선택하세요.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "{0} 계정 추가"
 msgid "Add {0} to workspace"
 msgstr "{0}을(를) 워크스페이스에 추가"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "시작하려면 Bitbucket 저장소를 추가하세요."
-
 msgid "Add a comment…"
 msgstr "댓글 추가…"
 
@@ -2146,6 +2146,9 @@ msgstr "업그레이드 과정에서 모든 세션이 유지되었습니다."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "모든 세션이 닫히고 새 데몬이 실행 중입니다."
+
+msgid "All statuses"
+msgstr "모든 상태"
 
 msgid "All tasks"
 msgstr "모든 작업"
@@ -3594,6 +3597,9 @@ msgstr "로그인 확인"
 msgid "Check the account email in your browser before using a reset."
 msgstr "초기화를 사용하기 전에 브라우저에서 계정 이메일을 확인하세요."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "포크 설정에서 {repositories} 연결을 확인하세요."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "저장하기 전에 렌더링된 프롬프트와 실행 결과를 확인하세요"
 
@@ -3743,6 +3749,9 @@ msgstr "오래된 TODO 정리…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "더 깔끔하고 촘촘한 사이드바"
+
+msgid "Clear"
+msgstr "지우기"
 
 msgid "Clear all"
 msgstr "모두 지우기"
@@ -4376,6 +4385,9 @@ msgstr "에이전트를 앱에 연결하세요"
 msgid "Connect an account"
 msgstr "계정 연결"
 
+msgid "Connect an account in Fork Settings"
+msgstr "포크 설정에서 계정을 연결하세요"
+
 msgid "Connect another account"
 msgstr "다른 계정 연결"
 
@@ -4979,6 +4991,15 @@ msgstr "플러그인을 불러오지 못했습니다. 연결을 확인하고 다
 
 msgid "Could not load presets from the host"
 msgstr "호스트에서 프리셋을 불러올 수 없습니다"
+
+msgid "Could not load pull request."
+msgstr "풀 리퀘스트를 불러올 수 없습니다."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "{failedRepositories}의 풀 리퀘스트를 불러오지 못했습니다."
+
+msgid "Could not load tasks."
+msgstr "작업을 불러올 수 없습니다."
 
 msgid "Could not load this diff"
 msgstr "이 차이를 불러올 수 없습니다"
@@ -14346,6 +14367,9 @@ msgstr "리뷰 무시됨"
 msgid "Review each failure before deciding whether to continue."
 msgstr "계속할지 결정하기 전에 각 실패를 확인하세요."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "리뷰 필터는 GitHub 저장소에 적용됩니다."
+
 msgid "Review message"
 msgstr "리뷰 메시지"
 
@@ -16914,6 +16938,9 @@ msgstr "작업 실행"
 msgid "Task layout"
 msgstr "작업 레이아웃"
 
+msgid "Task linked to workspace."
+msgstr "작업을 워크스페이스에 연결했습니다."
+
 msgid "Task Management"
 msgstr "작업 관리"
 
@@ -17436,6 +17463,9 @@ msgstr "자율 주행 소프트웨어 공장"
 msgid "The server could not be found"
 msgstr "서버를 찾을 수 없습니다"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "서비스를 일시적으로 사용할 수 없습니다. Superset이 자동으로 다시 시도합니다. 계정 설정은 변경되지 않았습니다."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "로그인 링크가 완전하지 않습니다. 다시 시도해 주세요."
 
@@ -17950,6 +17980,9 @@ msgstr "제목"
 
 msgid "To"
 msgstr "새 위치"
+
+msgid "To do"
+msgstr "할 일"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "에이전트 대화를 재개하려면 해당 폴더에서 다음을 실행하세요:"

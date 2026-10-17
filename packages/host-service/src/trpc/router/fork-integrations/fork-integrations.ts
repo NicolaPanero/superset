@@ -17,6 +17,7 @@ import {
 } from "../../../db/fork-schema";
 import { projects, workspaces } from "../../../db/schema";
 import { ForkApi, SYSTEM_GITHUB } from "../../../fork-integrations/fork-api";
+import { forkAvailability } from "../../../fork-integrations/fork-availability";
 import { ForkGitCredentialProvider } from "../../../fork-integrations/fork-credentials";
 import { forkFetch } from "../../../fork-integrations/fork-http";
 import { ForkJiraProvider } from "../../../fork-integrations/fork-jira";
@@ -26,7 +27,12 @@ import {
 	revokeForkGrant,
 	startForkOAuth,
 } from "../../../fork-integrations/fork-oauth";
+import { forkScmProjects } from "../../../fork-integrations/fork-projects";
 import { ForkScmProvider } from "../../../fork-integrations/fork-scm";
+import {
+	forkPullRequestSearchInput,
+	forkSearchPullRequests,
+} from "../../../fork-integrations/fork-search-pull-requests";
 import { ForkConnectionStore } from "../../../fork-integrations/fork-store";
 import { createGitFactory } from "../../../runtime/git";
 import type { HostServiceContext } from "../../../types";
@@ -82,6 +88,15 @@ const local = machineOnlyProcedure.use(({ ctx, next }) => {
 });
 const read = queryProcedure.meta({ timeoutMs: 30_000 });
 export const forkConnectionsRouter = router({
+	availability: read.query(async ({ ctx }) => {
+		const { store, api } = services(ctx);
+		return forkAvailability(store).check(store.list(), (connection) =>
+			api.request(
+				connection.id,
+				connection.provider === "jira" ? "/rest/api/3/myself" : "/user",
+			),
+		);
+	}),
 	setBrokerUrl: local
 		.input(z.object({ url: z.string().url() }))
 		.mutation(async ({ ctx, input }) => {
@@ -365,43 +380,31 @@ export const forkScmRouter = router({
 					defaultBranch: null as string | null,
 					error: null as string | null,
 				};
-			const binding = ctx.db
-				.select()
-				.from(forkIntegrationBindings)
-				.where(
-					and(
-						eq(forkIntegrationBindings.scope, ctx.organizationId),
-						eq(forkIntegrationBindings.projectId, workspace.projectId),
-					),
-				)
-				.get();
-			const remote = binding?.remote ?? "origin";
-			let repository = binding?.repository ?? null;
-			if (!repository) {
-				try {
-					repository = parseForkRemote(
-						(
-							await (await ctx.git(workspace.worktreePath)).getRemotes(true)
-						).find((r) => r.name === remote)?.refs.fetch ?? "",
-					);
-				} catch {}
-			}
+			const project = (await forkScmProjects(ctx, [workspace.projectId]))[0];
+			const remote = project?.remote ?? "origin";
+			const repository = project?.repository ?? null;
 			const { scm, store } = services(ctx);
 			const candidates = store
 				.list()
 				.filter((c) => c.provider === repository?.provider && c.enabled);
 			const connectionId =
-				binding?.connectionId ??
+				project?.connectionId ??
 				candidates.find((c) => c.isDefault)?.id ??
 				(candidates.length === 1 ? candidates[0]?.id : undefined);
-			let pullRequest = linked,
+			const matchingLink =
+				linked &&
+				repository &&
+				forkRepositoryKey(linked.repository) === forkRepositoryKey(repository)
+					? linked
+					: null;
+			let pullRequest = matchingLink,
 				defaultBranch: string | null = null,
 				error: string | null = null;
 			if (repository && connectionId) {
 				try {
 					defaultBranch = await scm.defaultBranch(connectionId, repository);
-					pullRequest = linked
-						? await scm.get(connectionId, repository, linked.number)
+					pullRequest = matchingLink
+						? await scm.get(connectionId, repository, matchingLink.number)
 						: workspace.branch
 							? await scm.forBranch(connectionId, repository, workspace.branch)
 							: null;
@@ -603,7 +606,7 @@ export const forkScmRouter = router({
 					projectId: project.id,
 					repository: input.repository,
 					connectionId: input.connectionId,
-					remote: "origin",
+					remote: remote.name,
 				})
 				.onConflictDoUpdate({
 					target: [
@@ -611,6 +614,7 @@ export const forkScmRouter = router({
 						forkIntegrationBindings.projectId,
 					],
 					set: {
+						remote: remote.name,
 						connectionId: input.connectionId,
 						repository: input.repository,
 					},
@@ -656,46 +660,21 @@ export const forkScmRouter = router({
 		),
 	repositories: read
 		.input(z.object({ connectionId, cursor: z.string().max(4000).optional() }))
-		.query(({ ctx, input }) =>
-			services(ctx).scm.repositories(input.connectionId, input.cursor),
-		),
-	projects: read.query(async ({ ctx }) => {
-		const bindings = ctx.db
-			.select()
-			.from(forkIntegrationBindings)
-			.where(eq(forkIntegrationBindings.scope, ctx.organizationId))
-			.all();
-		const result = [];
-		for (const p of ctx.db
-			.select()
-			.from(projects)
-			.all()
-			.filter((p) => !p.deletedAt)) {
-			const binding = bindings.find((b) => b.projectId === p.id);
-			let ref =
-				binding?.repository ?? (p.repoUrl ? parseForkRemote(p.repoUrl) : null);
-			let remote = binding?.remote ?? "origin";
-			if (!ref) {
-				try {
-					const remotes = await (await ctx.git(p.repoPath)).getRemotes(true);
-					const found = remotes.find((r) => r.name === "origin") ?? remotes[0];
-					if (found) {
-						ref = parseForkRemote(found.refs.fetch);
-						remote = found.name;
-					}
-				} catch {}
-			}
-			if (ref)
-				result.push({
-					projectId: p.id,
-					name: p.name,
-					repository: ref,
-					connectionId: binding?.connectionId ?? null,
-					remote,
-				});
-		}
-		return result;
-	}),
+		.query(async ({ ctx, input }) => {
+			const { scm } = services(ctx);
+			const hints =
+				scm.assert(input.connectionId).provider === "bitbucket"
+					? (await forkScmProjects(ctx))
+							.filter((p) => p.repository.provider === "bitbucket")
+							.map((p) => p.repository.owner)
+					: [];
+			return scm.repositories(input.connectionId, input.cursor, hints);
+		}),
+	searchPullRequests: read
+		.input(forkPullRequestSearchInput)
+		.query(({ ctx, input }) => forkSearchPullRequests(ctx, input)),
+	projects: read.query(({ ctx }) => forkScmProjects(ctx)),
+
 	list: read
 		.input(
 			z.object({

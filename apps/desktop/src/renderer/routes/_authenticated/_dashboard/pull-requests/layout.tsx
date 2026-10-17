@@ -92,8 +92,13 @@ function PullRequestsLayout() {
 	);
 	// Stable identity: effects downstream key off this array.
 	const initialProjects = useMemo(
-		() => resolveProjectFilterParams(projects, project, undefined),
-		[projects, project],
+		() =>
+			resolveProjectFilterParams(
+				projects,
+				params.prNumber === undefined ? project : undefined,
+				undefined,
+			),
+		[projects, project, params.prNumber],
 	);
 
 	const rootRef = useRef<HTMLDivElement>(null);

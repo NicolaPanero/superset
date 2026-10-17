@@ -20,14 +20,35 @@ An explicitly disconnected account is not silently recovered from a credential
 helper. Signing out of the shared GitHub CLI is a separate, explicit option.
 SSH remains independent of API authentication.
 
-GitHub keeps the upstream PR screens and requires GitHub CLI for their CLI-based
-operations. The default connection also supplies that CLI's API token.
-Bitbucket has a separate PR tab, including reviews, comments, diff, checks,
-merge, decline/reopen and workspace checkout. Project bindings select the
-account for HTTPS Git operations, including separate checkouts of the same
-repository. Existing SSH keys continue to control SSH access.
+The New Project repository picker searches connected GitHub and Bitbucket
+accounts together. Each result shows its provider icon and account. Accounts
+load independently, so one unavailable account does not block the others.
+Duplicate repositories prefer the default account; pagination remains
+independent for each account.
+Bitbucket discovery uses `/user/workspaces` and `/repositories/{workspace}`;
+the old global repository-permissions endpoint has been retired. Listing all
+workspaces needs `read:workspace:bitbucket`, and listing repositories needs
+`read:repository:bitbucket`. A token without workspace-list access can still
+list repositories in workspaces found in this host's existing Git projects.
 
-Jira has table/board views, JQL, issue details, editable fields, workflow
+GitHub and Bitbucket share the existing PR list, project filters and split view.
+Provider icons identify each repository. Discovery reads the live Git remote;
+stale GitHub metadata does not send a Bitbucket repository to GitHub search.
+An unavailable account leaves the other repositories visible with a connection
+notice. GitHub review filters apply only to GitHub repositories, with a notice
+when Bitbucket repositories are excluded by that filter.
+Bitbucket supports reviews, comments, diff, checks, merge, decline/reopen,
+PR creation and workspace checkout. Project bindings select the account for
+HTTPS Git operations within that provider, including separate checkouts of the
+same repository. Existing SSH keys continue to control SSH access.
+GitHub keeps its CLI-based operations; a project's selected account supplies
+the CLI token when it runs in that checkout.
+
+Jira is the default Tasks view when configured. It has list/board views,
+text and issue-key search, assignee/project/status filters, and optional JQL.
+Filters and view mode survive opening an issue; wide windows show the issue
+beside the list, while narrow windows show the detail with a close control.
+Issue details open in reading mode, with explicit editing, workflow
 transitions and comments. Tasks can create a workspace or link an existing
 one; PR creation from that workspace includes the linked issue URLs.
 Creating an issue opens Jira's native form, so project-specific required
@@ -137,6 +158,15 @@ No provider endpoint is built into the fork.
 New host APIs are additive: `forkConnections`, `forkScm`, `forkTasks`.
 The renderer probes `forkConnections.list` and leaves legacy GitHub flows
 available on older hosts. No released upstream procedure changes its shape.
+
+Version 3 adds a guarded availability query. Provider outages are tracked on the
+host, separately from account credentials. After a failed Bitbucket or Jira
+request, the desktop shows an unreachable notice and probes the affected account
+at most once every 30 seconds. Recovery refreshes active reads. Network failures
+during account verification preserve the saved identity, credentials and state.
+Cached tasks, PRs and repositories remain visible during failed refreshes for
+the same filters. Mutations fail immediately and are never queued for replay
+when the network returns.
 
 Provider references include service, host and repository; Jira references also
 include the connection/site. Jira IDs never enter native Superset `taskId`

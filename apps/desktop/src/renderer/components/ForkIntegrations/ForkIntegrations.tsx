@@ -15,6 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { HiChevronRight } from "react-icons/hi2";
 import { ForkConnectionCard } from "./components/ForkConnectionCard/ForkConnectionCard";
+import { ForkServiceNotices } from "./components/ForkServiceNotices";
 import { useForkConnections } from "./hooks/useForkConnections";
 import { required } from "./utils/required";
 
@@ -42,11 +43,15 @@ export function ForkIntegrations() {
 		}, 50);
 	};
 	const discovery = useMutation({
+		networkMode: "always",
+		retry: false,
 		mutationFn: () =>
 			required(client).forkConnections.setBrokerUrl.mutate({ url: brokerUrl }),
 		onSuccess: () => void refresh(),
 	});
 	const start = useMutation({
+		networkMode: "always",
+		retry: false,
 		mutationFn: ({
 			providers,
 			connectionId,
@@ -65,6 +70,9 @@ export function ForkIntegrations() {
 		},
 	});
 	const pending = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: ["fork-integrations", "oauth", attemptId],
 		queryFn: () =>
 			required(client).forkConnections.oauthStatus.query({
@@ -77,7 +85,6 @@ export function ForkIntegrations() {
 			!q.state.data
 				? 1500
 				: false,
-		retry: false,
 	});
 	useEffect(() => {
 		if (pending.data?.status !== "complete") return;
@@ -103,6 +110,7 @@ export function ForkIntegrations() {
 		discovery.error || start.error || pending.data?.status === "error";
 	return (
 		<section className="space-y-3" data-testid="fork-integrations">
+			<ForkServiceNotices sidebar={false} />
 			<div>
 				<h3 className="text-base font-semibold">
 					<Trans>Connections</Trans>

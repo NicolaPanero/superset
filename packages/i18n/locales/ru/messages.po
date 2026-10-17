@@ -968,6 +968,9 @@ msgstr "{name} встроен и не может быть заменён"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} не добавлен"
 
+msgid "{name} unreachable"
+msgstr "Сервис {name} недоступен"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Укажите хотя бы одного человека или выберите {choice}.} sender {Укажите хотя бы одного отправителя или выберите {choice}.} other {Укажите хотя бы одно значение или выберите {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Добавить аккаунт {0}"
 msgid "Add {0} to workspace"
 msgstr "Добавить {0} в рабочую область"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Добавьте репозиторий Bitbucket, чтобы начать."
-
 msgid "Add a comment…"
 msgstr "Добавьте комментарий…"
 
@@ -2146,6 +2146,9 @@ msgstr "Все сессии сохранены при обновлении."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Все сессии закрыты, работает новый демон."
+
+msgid "All statuses"
+msgstr "Все статусы"
 
 msgid "All tasks"
 msgstr "Все задачи"
@@ -3594,6 +3597,9 @@ msgstr "Проверить вход"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Перед использованием сброса проверьте адрес электронной почты аккаунта в браузере."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Проверьте подключение для {repositories} в настройках форка."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Проверьте отрендеренный промпт и вывод запуска перед сохранением"
 
@@ -3743,6 +3749,9 @@ msgstr "Разберись со старыми TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Чище и плотнее боковая панель"
+
+msgid "Clear"
+msgstr "Очистить"
 
 msgid "Clear all"
 msgstr "Очистить всё"
@@ -4376,6 +4385,9 @@ msgstr "Подключите агентов к своим приложениям
 msgid "Connect an account"
 msgstr "Подключить аккаунт"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Подключите аккаунт в настройках форка"
+
 msgid "Connect another account"
 msgstr "Подключить ещё аккаунт"
 
@@ -4979,6 +4991,15 @@ msgstr "Не удалось загрузить плагины. Проверьт�
 
 msgid "Could not load presets from the host"
 msgstr "Не удалось загрузить пресеты с хоста"
+
+msgid "Could not load pull request."
+msgstr "Не удалось загрузить pull request."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Не удалось загрузить pull request для {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Не удалось загрузить задачи."
 
 msgid "Could not load this diff"
 msgstr "Не удалось загрузить этот diff"
@@ -14346,6 +14367,9 @@ msgstr "Ревью отклонено"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Просмотрите каждую ошибку, прежде чем решать, продолжать ли."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Фильтры проверки применяются к репозиториям GitHub."
+
 msgid "Review message"
 msgstr "Сообщение ревью"
 
@@ -16914,6 +16938,9 @@ msgstr "Запуск задачи"
 msgid "Task layout"
 msgstr "Раскладка задач"
 
+msgid "Task linked to workspace."
+msgstr "Задача связана с workspace."
+
 msgid "Task Management"
 msgstr "Управление задачами"
 
@@ -17436,6 +17463,9 @@ msgstr "Самоуправляемая софтверная фабрика"
 msgid "The server could not be found"
 msgstr "Не удалось найти сервер"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Сервис временно недоступен. Superset автоматически повторит попытку. Настройки вашей учётной записи не изменены."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Ссылка для входа была неполной. Попробуйте ещё раз."
 
@@ -17950,6 +17980,9 @@ msgstr "Название"
 
 msgid "To"
 msgstr "Куда"
+
+msgid "To do"
+msgstr "К выполнению"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Чтобы возобновить разговор с агентом, выполните это в его папке:"

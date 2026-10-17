@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@superset/ui/avatar";
 import { cn } from "@superset/ui/utils";
+import { ForkProviderIcon } from "renderer/components/ForkIntegrations/components/ForkProviderIcon";
 import { formatRelativeTime } from "renderer/lib/formatRelativeTime";
 import { PullRequestChecksSummary } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/PullRequestChecksSummary";
 import type { PullRequestCheck } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/pull-request-checks";
@@ -13,6 +14,7 @@ import {
 } from "renderer/screens/main/components/PRIcon";
 
 export interface PullRequestRowData {
+	provider?: "github" | "bitbucket";
 	projectId: string;
 	prNumber: number;
 	title: string;
@@ -72,10 +74,12 @@ export function PullRequestRow({
 					{pr.authorLogin && (
 						<div className="flex shrink-0 items-center gap-1">
 							<Avatar className="size-4 rounded-full ring-1 ring-border/50">
-								<AvatarImage
-									src={`https://github.com/${pr.authorLogin}.png?size=32`}
-									alt={pr.authorLogin}
-								/>
+								{pr.provider !== "bitbucket" && (
+									<AvatarImage
+										src={`https://github.com/${pr.authorLogin}.png?size=32`}
+										alt={pr.authorLogin}
+									/>
+								)}
 								<AvatarFallback className="text-[8px]">
 									{pr.authorLogin.slice(0, 1).toUpperCase()}
 								</AvatarFallback>
@@ -83,7 +87,11 @@ export function PullRequestRow({
 						</div>
 					)}
 					{repoSlug && (
-						<span className="min-w-0 shrink-0 truncate text-[10px]">
+						<span className="inline-flex min-w-0 items-center gap-1 truncate text-[10px]">
+							<ForkProviderIcon
+								provider={pr.provider ?? "github"}
+								className="size-3"
+							/>
 							{repoSlug}
 						</span>
 					)}

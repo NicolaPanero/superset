@@ -968,6 +968,9 @@ msgstr "{name} is ingebouwd en kan niet worden vervangen"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} is niet toegevoegd"
 
+msgid "{name} unreachable"
+msgstr "{name} niet bereikbaar"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Geef minstens één persoon op, of kies {choice}.} sender {Geef minstens één afzender op, of kies {choice}.} other {Geef minstens één item op, of kies {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "{0}-account toevoegen"
 msgid "Add {0} to workspace"
 msgstr "{0} toevoegen aan werkruimte"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Voeg een Bitbucket-repository toe om te beginnen."
-
 msgid "Add a comment…"
 msgstr "Voeg een reactie toe…"
 
@@ -2146,6 +2146,9 @@ msgstr "Alle sessies zijn behouden bij de upgrade."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Alle sessies zijn gesloten en er draait een verse daemon."
+
+msgid "All statuses"
+msgstr "Alle statussen"
 
 msgid "All tasks"
 msgstr "Alle taken"
@@ -3594,6 +3597,9 @@ msgstr "Aanmelding controleren"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Controleer het e-mailadres van het account in je browser voordat je een reset gebruikt."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Controleer de verbinding voor {repositories} in de forkinstellingen."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Bekijk de gerenderde prompt en startuitvoer voordat je opslaat"
 
@@ -3743,6 +3749,9 @@ msgstr "Ruim verouderde TODO's op…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Strakkere, compactere zijbalk"
+
+msgid "Clear"
+msgstr "Wissen"
 
 msgid "Clear all"
 msgstr "Alles wissen"
@@ -4376,6 +4385,9 @@ msgstr "Verbind agents met je apps"
 msgid "Connect an account"
 msgstr "Een account verbinden"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Koppel een account in de forkinstellingen"
+
 msgid "Connect another account"
 msgstr "Nog een account verbinden"
 
@@ -4979,6 +4991,15 @@ msgstr "Plugins konden niet worden geladen. Controleer je verbinding en probeer 
 
 msgid "Could not load presets from the host"
 msgstr "Kan presets van de host niet laden"
+
+msgid "Could not load pull request."
+msgstr "Pull request kon niet worden geladen."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Pull requests voor {failedRepositories} konden niet worden geladen."
+
+msgid "Could not load tasks."
+msgstr "Taken konden niet worden geladen."
 
 msgid "Could not load this diff"
 msgstr "Kan deze diff niet laden"
@@ -14346,6 +14367,9 @@ msgstr "Review afgewezen"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Bekijk elke fout voordat je besluit door te gaan."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Reviewfilters gelden voor GitHub-repositories."
+
 msgid "Review message"
 msgstr "Reviewbericht"
 
@@ -16914,6 +16938,9 @@ msgstr "Start via taak"
 msgid "Task layout"
 msgstr "Taakweergave"
 
+msgid "Task linked to workspace."
+msgstr "Taak gekoppeld aan workspace."
+
 msgid "Task Management"
 msgstr "Taakbeheer"
 
@@ -17436,6 +17463,9 @@ msgstr "De zelfrijdende softwarefabriek"
 msgid "The server could not be found"
 msgstr "De server is niet gevonden"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "De dienst is tijdelijk niet beschikbaar. Superset probeert het automatisch opnieuw. Je accountinstellingen blijven ongewijzigd."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "De inloglink was onvolledig. Probeer het opnieuw."
 
@@ -17950,6 +17980,9 @@ msgstr "Titel"
 
 msgid "To"
 msgstr "Naar"
+
+msgid "To do"
+msgstr "Te doen"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Voer dit uit in de map om een agentgesprek te hervatten:"

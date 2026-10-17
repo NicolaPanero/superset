@@ -11,6 +11,7 @@ import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { ForkServiceNotices } from "renderer/components/ForkIntegrations/components/ForkServiceNotices";
 import { ForkProFeature } from "renderer/components/ForkProFeature";
 import {
 	SidebarCardSlot,
@@ -456,6 +457,9 @@ export function DashboardSidebar({
 										fadeEdges={["top", "bottom"]}
 										className="flex-1 overflow-y-auto hide-scrollbar"
 									>
+										<ForkServiceNotices
+											hidden={isCollapsed || workspacesListCollapsed}
+										/>
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<DashboardSidebarPinnedSection
 												pinnedWorkspaces={pinnedWorkspaces}

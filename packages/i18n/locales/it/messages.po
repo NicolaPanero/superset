@@ -968,6 +968,9 @@ msgstr "{name} è integrato e non può essere sostituito"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} non è aggiunto"
 
+msgid "{name} unreachable"
+msgstr "{name} non raggiungibile"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specifica almeno una persona, oppure scegli {choice}.} sender {Specifica almeno un mittente, oppure scegli {choice}.} other {Specifica almeno una voce, oppure scegli {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Aggiungi un account {0}"
 msgid "Add {0} to workspace"
 msgstr "Aggiungi {0} al workspace"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Aggiungi un repository Bitbucket per iniziare."
-
 msgid "Add a comment…"
 msgstr "Aggiungi un commento…"
 
@@ -2146,6 +2146,9 @@ msgstr "Tutte le sessioni conservate durante l'aggiornamento."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Tutte le sessioni sono state chiuse ed è in esecuzione un daemon nuovo."
+
+msgid "All statuses"
+msgstr "Tutti gli stati"
 
 msgid "All tasks"
 msgstr "Tutti i task"
@@ -3594,6 +3597,9 @@ msgstr "Verifica accesso"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Controlla l’email dell’account nel browser prima di usare un reset."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Controlla la connessione per {repositories} nelle impostazioni del fork."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Controlla il prompt generato e l'output di avvio prima di salvare"
 
@@ -3743,6 +3749,9 @@ msgstr "Ripulisci i TODO obsoleti…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Barra laterale più pulita e densa"
+
+msgid "Clear"
+msgstr "Cancella"
 
 msgid "Clear all"
 msgstr "Cancella tutto"
@@ -4376,6 +4385,9 @@ msgstr "Collega gli agenti alle tue app"
 msgid "Connect an account"
 msgstr "Collega un account"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Collega un account nelle impostazioni del fork"
+
 msgid "Connect another account"
 msgstr "Collega un altro account"
 
@@ -4979,6 +4991,15 @@ msgstr "Impossibile caricare i plugin. Controlla la connessione e riprova."
 
 msgid "Could not load presets from the host"
 msgstr "Impossibile caricare i preset dall'host"
+
+msgid "Could not load pull request."
+msgstr "Impossibile caricare la pull request."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Impossibile caricare le pull request per {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Impossibile caricare i task."
 
 msgid "Could not load this diff"
 msgstr "Impossibile caricare questo diff"
@@ -14346,6 +14367,9 @@ msgstr "Revisione respinta"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Esamina ogni errore prima di decidere se continuare."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "I filtri di revisione si applicano ai repository GitHub."
+
 msgid "Review message"
 msgstr "Messaggio della revisione"
 
@@ -16914,6 +16938,9 @@ msgstr "Avvio del task"
 msgid "Task layout"
 msgstr "Layout dei task"
 
+msgid "Task linked to workspace."
+msgstr "Task collegato al workspace."
+
 msgid "Task Management"
 msgstr "Gestione dei task"
 
@@ -17436,6 +17463,9 @@ msgstr "La fabbrica di software a guida autonoma"
 msgid "The server could not be found"
 msgstr "Impossibile trovare il server"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Il servizio è temporaneamente non disponibile. Superset riproverà automaticamente. Le impostazioni del tuo account restano invariate."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Il link di accesso era incompleto. Riprova."
 
@@ -17950,6 +17980,9 @@ msgstr "Titolo"
 
 msgid "To"
 msgstr "A"
+
+msgid "To do"
+msgstr "Da fare"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Per riprendere una conversazione con un agente, esegui questo nella sua cartella:"

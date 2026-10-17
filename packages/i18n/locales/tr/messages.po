@@ -968,6 +968,9 @@ msgstr "{name} yerleşiktir ve değiştirilemez"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} eklenmedi"
 
+msgid "{name} unreachable"
+msgstr "{name} erişilemiyor"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {En az bir kişi belirtin veya {choice} seçeneğini seçin.} sender {En az bir gönderen belirtin veya {choice} seçeneğini seçin.} other {En az bir öğe belirtin veya {choice} seçeneğini seçin.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "{0} hesabı ekle"
 msgid "Add {0} to workspace"
 msgstr "{0} öğesini çalışma alanına ekle"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Başlamak için bir Bitbucket deposu ekleyin."
-
 msgid "Add a comment…"
 msgstr "Yorum ekle…"
 
@@ -2146,6 +2146,9 @@ msgstr "Yükseltme boyunca tüm oturumlar korundu."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Tüm oturumlar kapatıldı ve yeni bir daemon çalışıyor."
+
+msgid "All statuses"
+msgstr "Tüm durumlar"
 
 msgid "All tasks"
 msgstr "Tüm görevler"
@@ -3594,6 +3597,9 @@ msgstr "Oturum açmayı kontrol et"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Sıfırlamayı kullanmadan önce tarayıcınızda hesap e-postasını kontrol edin."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Fork ayarlarında {repositories} bağlantısını kontrol edin."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Kaydetmeden önce oluşturulan istemi ve başlatma çıktısını kontrol edin"
 
@@ -3743,6 +3749,9 @@ msgstr "Eskimiş TODO'ları temizle…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Daha temiz, daha yoğun kenar çubuğu"
+
+msgid "Clear"
+msgstr "Temizle"
 
 msgid "Clear all"
 msgstr "Tümünü temizle"
@@ -4376,6 +4385,9 @@ msgstr "Ajanlarınızı uygulamalarınıza bağlayın"
 msgid "Connect an account"
 msgstr "Hesap bağla"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Fork ayarlarında bir hesap bağlayın"
+
 msgid "Connect another account"
 msgstr "Başka bir hesap bağla"
 
@@ -4979,6 +4991,15 @@ msgstr "Eklentiler yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin."
 
 msgid "Could not load presets from the host"
 msgstr "Host'tan hazır ayarlar yüklenemedi"
+
+msgid "Could not load pull request."
+msgstr "Pull request yüklenemedi."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "{failedRepositories} için pull requestler yüklenemedi."
+
+msgid "Could not load tasks."
+msgstr "Görevler yüklenemedi."
 
 msgid "Could not load this diff"
 msgstr "Bu fark yüklenemedi"
@@ -14346,6 +14367,9 @@ msgstr "İnceleme yok sayıldı"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Devam edip etmemeye karar vermeden önce her hatayı inceleyin."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "İnceleme filtreleri GitHub depolarına uygulanır."
+
 msgid "Review message"
 msgstr "İnceleme mesajı"
 
@@ -16914,6 +16938,9 @@ msgstr "Görev başlatma"
 msgid "Task layout"
 msgstr "Görev düzeni"
 
+msgid "Task linked to workspace."
+msgstr "Görev workspace ile ilişkilendirildi."
+
 msgid "Task Management"
 msgstr "Görev yönetimi"
 
@@ -17436,6 +17463,9 @@ msgstr "Kendi kendini süren yazılım fabrikası"
 msgid "The server could not be found"
 msgstr "Sunucu bulunamadı"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Hizmet geçici olarak kullanılamıyor. Superset otomatik olarak yeniden deneyecek. Hesap ayarlarınız değişmedi."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Oturum açma bağlantısı eksikti. Lütfen yeniden deneyin."
 
@@ -17950,6 +17980,9 @@ msgstr "Başlık"
 
 msgid "To"
 msgstr "Hedef"
+
+msgid "To do"
+msgstr "Yapılacak"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Bir ajan konuşmasını sürdürmek için klasöründe şunu çalıştırın:"

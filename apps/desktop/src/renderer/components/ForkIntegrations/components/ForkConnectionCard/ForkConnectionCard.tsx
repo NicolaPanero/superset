@@ -56,6 +56,8 @@ export function ForkConnectionCard({
 	const [logoutCli, setLogoutCli] = useState(false);
 	const [confirmation, setConfirmation] = useState(false);
 	const action = useMutation({
+		networkMode: "always",
+		retry: false,
 		mutationFn: async (
 			kind: "save" | "verify" | "disconnect" | "enable" | "default",
 		) => {

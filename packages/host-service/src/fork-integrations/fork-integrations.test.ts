@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
 import { expect, test } from "bun:test";
+import { TRPCError } from "@trpc/server";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import type { HostDb } from "../db";
 import {
@@ -35,6 +36,35 @@ const fallback: GitCredentialProvider = {
 	getCredentials: async () => ({ env: { EXISTING_HELPER: "yes" } }),
 	credentialRemedy: () => "Reconnect",
 };
+test("offline verification preserves Bitbucket and Jira identity, state and secrets", async () => {
+	const { sqlite, store } = fixture();
+	try {
+		for (const provider of ["bitbucket", "jira"] as const) {
+			const connection = store.save(
+				{
+					...store.create(provider, "token", "https://team.atlassian.net"),
+					state: "connected",
+					identity: { id: "user", login: "ada", name: "Ada", avatarUrl: null },
+					verifiedAt: 1000,
+				},
+				{ token: "saved-token", email: "test@example.test" },
+			);
+			const before = store.get(connection.id);
+			const api = new ForkApi(store, fallback, (async () => {
+				throw new TRPCError({
+					code: "BAD_GATEWAY",
+					message: "The service could not be reached",
+				});
+			}) as typeof forkFetch);
+			const result = await api.verify(connection.id);
+			expect(result.state).toBe("connected");
+			expect(result.error).toBe("The service could not be reached");
+			expect(store.get(connection.id)).toEqual(before);
+		}
+	} finally {
+		sqlite.close();
+	}
+});
 test("connections isolate scopes, seal secrets and remove credentials on disconnect", () => {
 	const { sqlite, db, store } = fixture();
 	try {
@@ -98,6 +128,155 @@ test("provider validation prevents credentials from crossing repository hosts", 
 				name: "repo",
 			}),
 		).toThrow();
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("Bitbucket repository discovery pages workspaces and repositories through current APIs", async () => {
+	const { sqlite, store } = fixture();
+	try {
+		const c = store.create("bitbucket", "token", null);
+		store.save(c, { token: "test", email: "user@example.test" });
+		const paths: string[] = [];
+		const transport: typeof forkFetch = async <T>(url: string | URL) => {
+			const target = new URL(url);
+			paths.push(target.pathname);
+			if (target.pathname === "/2.0/user/workspaces")
+				return {
+					values: [
+						{ workspace: { slug: "team" } },
+						{ workspace: { slug: "other" } },
+					],
+				} as T;
+			return {
+				values: [
+					{
+						uuid: "repo",
+						full_name: "team/app",
+						slug: "app",
+						links: {
+							html: { href: "https://bitbucket.org/team/app" },
+							clone: [],
+						},
+					},
+				],
+				next: target.searchParams.get("page") === "1" ? "next" : undefined,
+			} as T;
+		};
+		const scm = new ForkScmProvider(new ForkApi(store, fallback, transport));
+		const first = await scm.repositories(c.id);
+		expect(first.items[0]).toMatchObject({
+			fullName: "team/app",
+			connectionId: c.id,
+		});
+		expect(first.nextCursor).toBe("bb:1:0:2");
+		const second = await scm.repositories(c.id, first.nextCursor ?? undefined);
+		expect(second.nextCursor).toBe("bb:1:1:1");
+		expect(paths).toEqual([
+			"/2.0/user/workspaces",
+			"/2.0/repositories/team",
+			"/2.0/user/workspaces",
+			"/2.0/repositories/team",
+		]);
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("repository-only Bitbucket tokens can list repositories in known workspaces", async () => {
+	const { sqlite, store } = fixture();
+	try {
+		const c = store.create("bitbucket", "token", null);
+		store.save(c, { token: "test", email: "user@example.test" });
+		const transport: typeof forkFetch = async <T>(url: string | URL) => {
+			const path = new URL(url).pathname;
+			if (path === "/2.0/user/workspaces")
+				throw new TRPCError({ code: "FORBIDDEN" });
+			expect(path).toBe("/2.0/repositories/team");
+			return {
+				values: [
+					{
+						uuid: "repo",
+						full_name: "team/app",
+						slug: "app",
+						links: {
+							html: { href: "https://bitbucket.org/team/app" },
+							clone: [],
+						},
+					},
+				],
+			} as T;
+		};
+		const scm = new ForkScmProvider(new ForkApi(store, fallback, transport));
+		const result = await scm.repositories(c.id, undefined, ["team"]);
+		expect(result.items[0]?.cloneUrl).toBe(
+			"https://bitbucket.org/team/app.git",
+		);
+		expect(result.nextCursor).toBeNull();
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("a project's bound Bitbucket account leaves its GitHub remote on GitHub credentials", async () => {
+	const { sqlite, db, store } = fixture();
+	try {
+		const connection = store.create("bitbucket", "token", null);
+		store.save(connection, { token: "bb-token", email: "user@example.test" });
+		sqlite.exec(
+			"INSERT INTO projects (id, repo_path) VALUES ('project', '/project')",
+		);
+		db.insert(forkIntegrationBindings)
+			.values({
+				scope: store.scope,
+				projectId: "project",
+				connectionId: connection.id,
+				remote: "origin",
+				repository: {
+					provider: "bitbucket",
+					host: "bitbucket.org",
+					owner: "team",
+					name: "app",
+				},
+			})
+			.run();
+		const credentials = new ForkGitCredentialProvider(fallback, store).forPath(
+			"/project",
+		);
+		expect(await credentials.getToken("bitbucket.org")).toBe("bb-token");
+		expect(await credentials.getToken("github.com")).toBe("system-test-token");
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("Bitbucket search sends state, text and page filters to the API", async () => {
+	const { sqlite, store } = fixture();
+	try {
+		const c = store.create("bitbucket", "token", null);
+		store.save(c, { token: "test", email: "user@example.test" });
+		let requested: URL | undefined;
+		const transport: typeof forkFetch = async <T>(url: string | URL) => {
+			requested = new URL(url);
+			return { values: [], size: 0 } as T;
+		};
+		const scm = new ForkScmProvider(new ForkApi(store, fallback, transport));
+		await scm.searchBitbucket(
+			c.id,
+			{
+				provider: "bitbucket",
+				host: "bitbucket.org",
+				owner: "team",
+				name: "app",
+			},
+			{ query: 'fix" OR state="OPEN', mergedOnly: true, page: 2, limit: 30 },
+		);
+		expect(requested?.searchParams.getAll("state")).toEqual(["MERGED"]);
+		expect(requested?.searchParams.get("page")).toBe("2");
+		expect(requested?.searchParams.get("q")).toContain(
+			'title~"fix\\" OR state=\\"OPEN"',
+		);
 	} finally {
 		sqlite.close();
 	}

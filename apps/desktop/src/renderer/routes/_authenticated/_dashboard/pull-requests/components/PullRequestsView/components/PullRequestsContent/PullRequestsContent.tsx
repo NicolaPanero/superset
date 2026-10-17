@@ -1,8 +1,11 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { GoGitPullRequest } from "react-icons/go";
 import { LuRefreshCw } from "react-icons/lu";
+import { ForkPullRequestNotices } from "renderer/components/ForkIntegrations/components/ForkPullRequestNotices";
+import { forkPullRequestSearch } from "renderer/components/ForkIntegrations/utils/searchPullRequests";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -48,10 +51,12 @@ export function PullRequestsContent({
 	const { t } = useLingui();
 	const debouncedQuery = useDebouncedValue(searchQuery, 300);
 	const navigate = useNavigate();
+	const cache = useQueryClient();
 	const expandDetail = usePullRequestsSplitViewStore((s) => s.expandDetail);
 
 	const {
 		rows: pullRequests,
+		pages,
 		totalCount,
 		repoMismatch,
 		isFetching,
@@ -64,8 +69,8 @@ export function PullRequestsContent({
 	} = useWorkItemsList({
 		projectTargets,
 		resetKey: `${debouncedQuery.trim()}\0${authorFilter ?? ""}\0${reviewFilter ?? ""}\0${includeClosed}\0${mergedOnly}`,
-		getQueryOptions: ({ target, page }) => ({
-			queryKey: [
+		getQueryOptions: ({ target, page }) => {
+			const queryKey = [
 				"pullRequests",
 				"searchPullRequests",
 				target.key,
@@ -76,39 +81,48 @@ export function PullRequestsContent({
 				includeClosed,
 				mergedOnly,
 				page,
-			],
-			queryFn: async () => {
-				const firstProject = target.projects[0];
-				if (!target.hostUrl || !firstProject) return null;
-				const client = getHostServiceClientByUrl(target.hostUrl);
-				const result = await client.workspaceCreation.searchPullRequests.query({
-					projectId: firstProject.projectId,
-					projectIds: target.projects.map((project) => project.projectId),
-					query: debouncedQuery.trim() || undefined,
-					author: authorFilter ?? undefined,
-					review: reviewFilter ?? undefined,
-					limit: PAGE_SIZE,
-					includeClosed,
-					mergedOnly,
-					page,
-				});
-				// The router types come from this build, the rows come from
-				// whichever host-service the host actually runs — hosts update
-				// independently and the list is not version-gated. Rows only
-				// gained `checks` in host-service 1.20.0, so an older host
-				// answers without it. Absent checks read as "none reported".
-				return {
-					...result,
-					pullRequests: result.pullRequests.map((pullRequest) => ({
-						...pullRequest,
-						checks: pullRequest.checks ?? [],
-					})),
-				};
-			},
-			enabled: !!target.hostUrl,
-			staleTime: 30_000,
-			gcTime: 10 * 60_000,
-		}),
+			];
+			return {
+				queryKey,
+				networkMode: "always",
+				refetchOnReconnect: true,
+				queryFn: async () => {
+					const firstProject = target.projects[0];
+					if (!target.hostUrl || !firstProject) return null;
+					const client = getHostServiceClientByUrl(target.hostUrl);
+					const result = await forkPullRequestSearch(
+						client,
+						{
+							projectId: firstProject.projectId,
+							projectIds: target.projects.map((project) => project.projectId),
+							query: debouncedQuery.trim() || undefined,
+							author: authorFilter ?? undefined,
+							review: reviewFilter ?? undefined,
+							limit: PAGE_SIZE,
+							includeClosed,
+							mergedOnly,
+							page,
+						},
+						cache.getQueryData(queryKey),
+					);
+					// The router types come from this build, the rows come from
+					// whichever host-service the host actually runs — hosts update
+					// independently and the list is not version-gated. Rows only
+					// gained `checks` in host-service 1.20.0, so an older host
+					// answers without it. Absent checks read as "none reported".
+					return {
+						...result,
+						pullRequests: result.pullRequests.map((pullRequest) => ({
+							...pullRequest,
+							checks: pullRequest.checks ?? [],
+						})),
+					};
+				},
+				enabled: !!target.hostUrl,
+				staleTime: 30_000,
+				gcTime: 10 * 60_000,
+			};
+		},
 		getRows: (data) => data.pullRequests,
 		getRowKey: (pullRequest) =>
 			`${pullRequest.projectId}:${pullRequest.prNumber}`,
@@ -120,6 +134,7 @@ export function PullRequestsContent({
 			to: "/pull-requests/$prNumber",
 			params: { prNumber: String(pr.prNumber) },
 			search: {
+				forkProvider: pr.provider === "bitbucket" ? "bitbucket" : undefined,
 				search: searchQuery || undefined,
 				project: pr.projectId,
 				repo: pullRequestRefFromUrl(pr.url)?.repoFullName,
@@ -217,6 +232,10 @@ export function PullRequestsContent({
 			</div>
 
 			<div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto">
+				<ForkPullRequestNotices
+					onRetry={() => void refetch()}
+					warnings={pages.flatMap((page) => page.warnings)}
+				/>
 				{error instanceof Error && pullRequests.length === 0 ? (
 					<div className="flex flex-col items-start gap-3 px-4 py-4 text-sm text-destructive select-text cursor-text">
 						<span>{error.message}</span>
@@ -268,7 +287,9 @@ export function PullRequestsContent({
 								(selectedPrProjectId != null
 									? selectedPrProjectId === pr.projectId
 									: firstMatchingPrIndex === index);
-							const repoSlug = repoSlugByProjectId.get(pr.projectId);
+							const repoSlug = pr.repository
+								? `${pr.repository.owner}/${pr.repository.name}`
+								: repoSlugByProjectId.get(pr.projectId);
 							return (
 								<PullRequestRow
 									key={rowKey}

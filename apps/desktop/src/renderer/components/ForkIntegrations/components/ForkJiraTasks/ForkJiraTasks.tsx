@@ -1,33 +1,68 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
+import { useFormat } from "@superset/i18n/react";
+import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
-import { Input } from "@superset/ui/input";
+import { Skeleton } from "@superset/ui/skeleton";
+import { cn } from "@superset/ui/utils";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LuCheckCheck, LuX } from "react-icons/lu";
+import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import { ForkProviderIcon } from "../ForkProviderIcon";
+import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkTaskDetail } from "../ForkTaskDetail/ForkTaskDetail";
+import { ForkJiraTaskCard } from "./components/ForkJiraTaskCard";
+import { ForkJiraTaskToolbar } from "./components/ForkJiraTaskToolbar";
+import {
+	type ForkJiraTaskFilters,
+	forkJiraQuery,
+	jiraStatusTone,
+} from "./fork-jira-query";
 
 export function ForkJiraTasks() {
-	const { t } = useLingui(),
-		navigate = useNavigate();
+	const { formatNumber } = useFormat();
+	const navigate = useNavigate();
 	const { connections, client, hostUrl } = useForkConnections();
-	const search = useSearch({ strict: false }) as {
-		forkTask?: string;
-		forkConnection?: string;
-	};
+	const search = useSearch({ strict: false }) as ForkJiraTaskFilters;
 	const jira = connections.filter((c) => c.provider === "jira" && c.enabled);
-	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const connectionId =
 		search.forkConnection ??
-		selectedId ??
 		jira.find((c) => c.isDefault)?.id ??
 		jira[0]?.id ??
 		"";
-	const [draft, setDraft] = useState(""),
-		[jql, setJql] = useState(""),
-		[board, setBoard] = useState(false);
+	const connection = jira.find((c) => c.id === connectionId);
+	const scope = search.forkScope ?? "mine";
+	const status = search.forkStatus ?? "all";
+	const board = search.forkView === "board";
+	const [text, setText] = useState(search.search ?? "");
+	useEffect(() => setText(search.search ?? ""), [search.search]);
+	const debouncedText = useDebouncedValue(text, 300);
+	const jql = forkJiraQuery({
+		search: debouncedText,
+		scope,
+		status,
+		project: search.forkJiraProject ?? "",
+		jql: search.forkJql ?? "",
+	});
+	const update = (patch: Partial<typeof search>) =>
+		navigate({
+			to: "/tasks",
+			search: {
+				...search,
+				search: text || undefined,
+				forkSource: "jira",
+				forkConnection: connectionId,
+				...patch,
+			},
+			replace: !Object.hasOwn(patch, "forkTask"),
+		});
 	const query = useInfiniteQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: ["fork-integrations", hostUrl, "tasks", connectionId, jql],
 		initialPageParam: undefined as string | undefined,
 		queryFn: ({ pageParam }) =>
@@ -37,10 +72,22 @@ export function ForkJiraTasks() {
 				cursor: pageParam,
 			}),
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
-		enabled: !!client && !!connectionId,
+		enabled: !!client && !!connection,
+		staleTime: 30_000,
+	});
+	const projects = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
 		retry: false,
+		queryKey: ["fork-integrations", hostUrl, "jira-projects", connectionId],
+		queryFn: () => required(client).forkTasks.projects.query({ connectionId }),
+		enabled: !!client && !!connection,
+		staleTime: 60_000,
 	});
 	const detail = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: [
 			"fork-integrations",
 			hostUrl,
@@ -53,204 +100,261 @@ export function ForkJiraTasks() {
 				connectionId,
 				key: required(search.forkTask),
 			}),
-		enabled: !!client && !!connectionId && !!search.forkTask,
-		retry: false,
+		enabled: !!client && !!connection && !!search.forkTask,
 	});
-	const selectTask = (key?: string) =>
-		navigate({
-			to: "/tasks",
-			search: {
-				forkSource: "jira",
-				forkConnection: connectionId,
-				forkTask: key,
-			},
-		});
-	const items = query.data?.pages.flatMap((p) => p.items) ?? [];
-	const groups = [
+	const items = [
 		...new Map(
-			items.map((task) => [task.status.id, task.status.name]),
-		).entries(),
+			(query.data?.pages.flatMap((p) => p.items) ?? []).map((task) => [
+				task.id,
+				task,
+			]),
+		).values(),
 	];
-	if (search.forkTask)
-		return (
-			<div className="min-h-0 flex-1 overflow-auto">
-				{detail.data ? (
-					<ForkTaskDetail
-						key={detail.data.connectionId + detail.data.id}
-						task={detail.data}
-						onBack={() => void selectTask()}
-					/>
-				) : (
-					<div className="p-6">
-						<Button variant="ghost" onClick={() => void selectTask()}>
-							<Trans>Back</Trans>
-						</Button>
-						<p role="alert">
-							{detail.error?.message ?? t({ message: "Loading..." })}
-						</p>
-					</div>
-				)}
-			</div>
-		);
+	const categories = ["new", "indeterminate", "done"];
+	const groups = [
+		...new Map(items.map((task) => [task.status.id, task.status])).values(),
+	].sort(
+		(a, b) => categories.indexOf(a.category) - categories.indexOf(b.category),
+	);
+	const close = () => void update({ forkTask: undefined });
+	const unavailable = [query.error, detail.error].some(
+		isForkServiceUnavailable,
+	);
 	return (
-		<div className="flex min-h-0 flex-1 flex-col">
-			<form
-				className="flex flex-wrap items-center gap-2 border-b p-4"
-				onSubmit={(e) => {
-					e.preventDefault();
-					setJql(draft);
+		<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background">
+			<ForkJiraTaskToolbar
+				search={search}
+				jira={jira}
+				projects={projects.data ?? []}
+				connectionId={connectionId}
+				text={text}
+				setText={setText}
+				update={update}
+				isFetching={query.isFetching}
+				onRefresh={() => {
+					void query.refetch();
+					if (search.forkTask) void detail.refetch();
 				}}
-			>
-				<span className="mr-2 text-lg font-semibold">Jira</span>
-				{jira.find((c) => c.id === connectionId)?.site && (
-					<Button
-						type="button"
-						variant="outline"
-						onClick={() =>
-							window.open(
-								required(jira.find((c) => c.id === connectionId)?.site) +
-									"/secure/CreateIssue!default.jspa",
-								"_blank",
-								"noopener,noreferrer",
-							)
-						}
-					>
-						<Trans>Create task</Trans>
-					</Button>
-				)}
-				<select
-					aria-label={t({ message: "Account" })}
-					className="h-9 max-w-64 rounded-md border bg-background px-2 text-sm"
-					value={connectionId}
-					onChange={(e) => {
-						setSelectedId(e.target.value);
-						void navigate({
-							to: "/tasks",
-							search: { forkSource: "jira", forkConnection: e.target.value },
-						});
-					}}
+			/>
+			{unavailable && (
+				<div className="border-b p-3">
+					<ForkServiceNotice
+						provider="jira"
+						onRetry={() => {
+							void query.refetch();
+							if (search.forkTask) void detail.refetch();
+						}}
+					/>
+				</div>
+			)}
+			<div className="@container/jira flex min-h-0 min-w-0 flex-1 overflow-hidden">
+				<div
+					className={cn(
+						"flex min-h-0 min-w-0 flex-1 flex-col",
+						search.forkTask && "hidden @3xl/jira:flex",
+					)}
 				>
-					{jira.map((c) => (
-						<option key={c.id} value={c.id}>
-							{c.identity?.login ?? c.site ?? c.label}
-						</option>
-					))}
-				</select>
-				<Input
-					className="min-w-48 flex-1"
-					aria-label="JQL"
-					placeholder="JQL"
-					value={draft}
-					onChange={(e) => setDraft(e.target.value)}
-				/>
-				<Button type="submit" variant="outline">
-					<Trans>Search</Trans>
-				</Button>
-				<Button type="button" variant="ghost" onClick={() => setBoard(!board)}>
-					{board ? <Trans>Table</Trans> : <Trans>Board</Trans>}
-				</Button>
-				<Button
-					type="button"
-					variant="ghost"
-					onClick={() => void query.refetch()}
-				>
-					<Trans>Refresh</Trans>
-				</Button>
-			</form>
-			<div className="min-h-0 flex-1 overflow-auto p-4">
-				{query.isError && (
-					<p role="alert" className="mb-4 text-sm text-destructive">
-						{query.error.message}
-					</p>
-				)}
-				{query.isPending && (
-					<p className="text-sm text-muted-foreground">
-						<Trans>Loading...</Trans>
-					</p>
-				)}
-				{!query.isPending && !items.length && !query.isError && (
-					<p className="p-6 text-center text-muted-foreground">
-						<Trans>No tasks found</Trans>
-					</p>
-				)}
-				{board ? (
-					<div className="flex items-start gap-4">
-						{groups.map(([id, name]) => (
-							<section
-								key={id}
-								className="w-72 shrink-0 rounded-lg bg-muted/40 p-3"
-							>
-								<h3 className="mb-3 text-sm font-medium">{name}</h3>
-								<div className="space-y-2">
-									{items
-										.filter((task) => task.status.id === id)
-										.map((task) => (
-											<button
-												type="button"
-												className="w-full rounded-lg border bg-background p-3 text-left shadow-sm hover:border-primary/40"
-												key={task.id}
-												onClick={() => void selectTask(task.key)}
-											>
-												<span className="text-xs text-muted-foreground">
-													{task.key}
-												</span>
-												<p className="mt-1 text-sm">{task.title}</p>
-											</button>
-										))}
-								</div>
-							</section>
-						))}
+					<div className="flex items-center gap-2 border-b bg-muted/20 px-4 py-2 text-[11px] text-muted-foreground">
+						<ForkProviderIcon provider="jira" className="size-3" />
+						<span aria-live="polite">
+							{formatNumber(items.length)}
+							{query.hasNextPage && "+"} · <Trans>Tasks</Trans>
+						</span>
+						{search.forkJql && (
+							<span className="ml-auto rounded bg-muted px-1.5 font-mono">
+								JQL
+							</span>
+						)}
 					</div>
-				) : (
-					<table className="w-full text-sm">
-						<thead>
-							<tr className="border-b text-left text-xs text-muted-foreground">
-								<th className="p-3">
-									<Trans>Task</Trans>
-								</th>
-								<th className="p-3">
-									<Trans>Status</Trans>
-								</th>
-								<th className="p-3">
-									<Trans>Assignee</Trans>
-								</th>
-								<th className="p-3">
-									<Trans>Priority</Trans>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{items.map((task) => (
-								<tr key={task.id} className="border-b hover:bg-muted/30">
-									<td className="p-3">
-										<button
-											type="button"
-											className="text-left"
-											onClick={() => void selectTask(task.key)}
-										>
-											<span className="mr-3 text-xs text-muted-foreground">
-												{task.key}
-											</span>
-											{task.title}
-										</button>
-									</td>
-									<td className="p-3">{task.status.name}</td>
-									<td className="p-3">{task.assignee?.name ?? "—"}</td>
-									<td className="p-3">{task.priority ?? "—"}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				)}
-				{query.hasNextPage && (
-					<Button
-						className="mt-4"
-						variant="outline"
-						disabled={query.isFetchingNextPage}
-						onClick={() => void query.fetchNextPage()}
+					<div
+						className="min-h-0 flex-1 overflow-auto p-3"
+						aria-busy={query.isFetching}
 					>
-						<Trans>Load more</Trans>
-					</Button>
+						{!connection ? (
+							<div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-sm text-muted-foreground">
+								<ForkProviderIcon provider="jira" className="size-8" />
+								<Trans>Connect an account in Fork Settings</Trans>
+								<Button
+									size="sm"
+									variant="outline"
+									onClick={() => void navigate({ to: "/settings/fork" })}
+								>
+									<Trans>Connections</Trans>
+								</Button>
+							</div>
+						) : query.isPending ? (
+							<div className="space-y-2">
+								{["first", "second", "third", "fourth", "fifth", "sixth"].map(
+									(id) => (
+										<Skeleton key={id} className="h-24 w-full rounded-xl" />
+									),
+								)}
+							</div>
+						) : (
+							<>
+								{query.isError && !isForkServiceUnavailable(query.error) && (
+									<div
+										role="alert"
+										className="mb-4 rounded-xl border bg-muted/20 p-4 text-sm"
+									>
+										<p className="font-medium">
+											<Trans>Could not load tasks.</Trans>
+										</p>
+										<p className="mt-1 break-words text-xs text-muted-foreground">
+											{query.error.message}
+										</p>
+										<div className="mt-3 flex gap-2">
+											<Button
+												size="sm"
+												variant="outline"
+												onClick={() => void query.refetch()}
+											>
+												<Trans>Try again</Trans>
+											</Button>
+											<Button
+												size="sm"
+												variant="ghost"
+												onClick={() => void navigate({ to: "/settings/fork" })}
+											>
+												<Trans>Connections</Trans>
+											</Button>
+										</div>
+									</div>
+								)}
+								{!items.length && !query.isError && (
+									<div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center text-muted-foreground">
+										<div className="rounded-2xl border bg-muted/30 p-4">
+											<LuCheckCheck className="size-7 opacity-60" />
+										</div>
+										<p className="text-sm font-medium text-foreground">
+											<Trans>No tasks found</Trans>
+										</p>
+										<Button
+											size="sm"
+											variant="ghost"
+											onClick={() => {
+												setText("");
+												void update({
+													search: undefined,
+													forkScope: "all",
+													forkStatus: "all",
+													forkJiraProject: undefined,
+													forkJql: undefined,
+												});
+											}}
+										>
+											<Trans>All tasks</Trans>
+										</Button>
+									</div>
+								)}
+								{board ? (
+									<div className="flex min-h-full items-start gap-3">
+										{groups.map((group) => {
+											const tasks = items.filter(
+												(task) => task.status.id === group.id,
+											);
+											return (
+												<section
+													key={group.id}
+													className="w-72 shrink-0 rounded-xl border border-border/60 bg-muted/25 p-2.5"
+												>
+													<div className="mb-3 flex items-center gap-2 px-1 py-1">
+														<span
+															className={cn(
+																"size-2 rounded-full",
+																jiraStatusTone(group.category).split(" ")[0],
+																"bg-current",
+															)}
+														/>
+														<h2 className="text-xs font-medium">
+															{group.name}
+														</h2>
+														<span className="ml-auto rounded-md bg-background px-1.5 text-[10px] tabular-nums text-muted-foreground">
+															{formatNumber(tasks.length)}
+														</span>
+													</div>
+													<div className="space-y-2">
+														{tasks.map((task) => (
+															<ForkJiraTaskCard
+																key={task.id}
+																task={task}
+																selected={search.forkTask === task.key}
+																board
+																onClick={() =>
+																	void update({ forkTask: task.key })
+																}
+															/>
+														))}
+													</div>
+												</section>
+											);
+										})}
+									</div>
+								) : (
+									<div className="space-y-1">
+										{items.map((task) => (
+											<ForkJiraTaskCard
+												key={task.id}
+												task={task}
+												selected={search.forkTask === task.key}
+												onClick={() => void update({ forkTask: task.key })}
+											/>
+										))}
+									</div>
+								)}
+								{query.hasNextPage && (
+									<Button
+										className="mx-auto mt-4 flex"
+										variant="outline"
+										size="sm"
+										disabled={query.isFetchingNextPage}
+										onClick={() => void query.fetchNextPage()}
+									>
+										<Trans>Load more</Trans>
+									</Button>
+								)}
+							</>
+						)}
+					</div>
+				</div>
+				{search.forkTask && (
+					<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto border-l @3xl/jira:max-w-[55%]">
+						{detail.data ? (
+							<ForkTaskDetail
+								key={detail.data.connectionId + detail.data.id}
+								task={detail.data}
+								onBack={close}
+							/>
+						) : (
+							<div className="space-y-4 p-6">
+								<Button size="sm" variant="ghost" onClick={close}>
+									<LuX className="size-3.5" />
+									<Trans>Close</Trans>
+								</Button>
+								{detail.isError ? (
+									<div role="alert" className="space-y-3">
+										{!isForkServiceUnavailable(detail.error) && (
+											<p className="text-sm text-muted-foreground">
+												{detail.error.message}
+											</p>
+										)}
+										<Button
+											size="sm"
+											variant="outline"
+											onClick={() => void detail.refetch()}
+										>
+											<Trans>Try again</Trans>
+										</Button>
+									</div>
+								) : (
+									<>
+										<Skeleton className="h-7 w-1/2" />
+										<Skeleton className="h-32 w-full" />
+									</>
+								)}
+							</div>
+						)}
+					</div>
 				)}
 			</div>
 		</div>

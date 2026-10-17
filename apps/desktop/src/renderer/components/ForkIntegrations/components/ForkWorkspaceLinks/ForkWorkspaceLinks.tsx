@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import { ForkProviderIcon } from "../ForkProviderIcon";
 export function ForkWorkspaceLinks() {
 	const { t } = useLingui(),
 		{ workspace, hostUrl } = useWorkspace(),
@@ -17,20 +18,24 @@ export function ForkWorkspaceLinks() {
 		[title, setTitle] = useState(""),
 		[target, setTarget] = useState("");
 	const tasks = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: ["fork-integrations", hostUrl, "links", workspace.id],
 		queryFn: () =>
 			required(client).forkTasks.links.query({ workspaceId: workspace.id }),
 		enabled: !!data?.version,
-		retry: false,
 	});
 	const scm = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: ["fork-integrations", hostUrl, "workspace-pr", workspace.id],
 		queryFn: () =>
 			required(client).forkScm.workspace.query({ workspaceId: workspace.id }),
 		enabled:
 			!!data?.version &&
 			connections.some((c) => c.provider === "bitbucket" && c.enabled),
-		retry: false,
 		staleTime: 30_000,
 	});
 	const connection =
@@ -40,6 +45,8 @@ export function ForkWorkspaceLinks() {
 		) ??
 		connections.find((c) => c.provider === "bitbucket" && c.enabled);
 	const create = useMutation({
+		networkMode: "always",
+		retry: false,
 		mutationFn: async () => {
 			if (!scm.data?.repository || !connection) return;
 			return required(client).forkScm.createForWorkspace.mutate({
@@ -70,6 +77,14 @@ export function ForkWorkspaceLinks() {
 	return (
 		<div className="shrink-0 space-y-2 border-b bg-background px-4 py-2">
 			<div className="flex flex-wrap items-center gap-2">
+				{scm.data?.repository?.provider === "bitbucket" && (
+					<span className="mr-1 inline-flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
+						<ForkProviderIcon provider="bitbucket" />
+						<span className="max-w-64 truncate">
+							{scm.data.repository.owner}/{scm.data.repository.name}
+						</span>
+					</span>
+				)}
 				{tasks.data?.map((task) => (
 					<Button
 						key={task.connectionId + task.taskId}
@@ -86,6 +101,7 @@ export function ForkWorkspaceLinks() {
 							})
 						}
 					>
+						<ForkProviderIcon provider="jira" className="size-3" />
 						{task.key}
 					</Button>
 				))}
@@ -104,8 +120,7 @@ export function ForkWorkspaceLinks() {
 							})
 						}
 					>
-						Bitbucket #{scm.data.pullRequest.number} ·{" "}
-						{scm.data.pullRequest.state}
+						#{scm.data.pullRequest.number}
 					</Button>
 				) : (
 					scm.data?.repository?.provider === "bitbucket" && (

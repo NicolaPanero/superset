@@ -968,6 +968,9 @@ msgstr "{name} is built in and cannot be replaced"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} is not added"
 
+msgid "{name} unreachable"
+msgstr "{name} unreachable"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Add {0} account"
 msgid "Add {0} to workspace"
 msgstr "Add {0} to workspace"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Add a Bitbucket repository to get started."
-
 msgid "Add a comment…"
 msgstr "Add a comment…"
 
@@ -2146,6 +2146,9 @@ msgstr "All sessions preserved across the upgrade."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "All sessions were closed and a fresh daemon is running."
+
+msgid "All statuses"
+msgstr "All statuses"
 
 msgid "All tasks"
 msgstr "All tasks"
@@ -3594,6 +3597,9 @@ msgstr "Check sign-in"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Check the account email in your browser before using a reset."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Check the connection for {repositories} in Fork Settings."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Check the rendered prompt and launch output before saving"
 
@@ -3743,6 +3749,9 @@ msgstr "Clean up stale TODOs…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Cleaner, denser sidebar"
+
+msgid "Clear"
+msgstr "Clear"
 
 msgid "Clear all"
 msgstr "Clear all"
@@ -4376,6 +4385,9 @@ msgstr "Connect agents to your apps"
 msgid "Connect an account"
 msgstr "Connect an account"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Connect an account in Fork Settings"
+
 msgid "Connect another account"
 msgstr "Connect another account"
 
@@ -4979,6 +4991,15 @@ msgstr "Could not load plugins. Check your connection and try again."
 
 msgid "Could not load presets from the host"
 msgstr "Could not load presets from the host"
+
+msgid "Could not load pull request."
+msgstr "Could not load pull request."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Could not load pull requests for {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Could not load tasks."
 
 msgid "Could not load this diff"
 msgstr "Could not load this diff"
@@ -14346,6 +14367,9 @@ msgstr "Review Dismissed"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Review each failure before deciding whether to continue."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Review filters apply to GitHub repositories."
+
 msgid "Review message"
 msgstr "Review message"
 
@@ -16914,6 +16938,9 @@ msgstr "Task Launch"
 msgid "Task layout"
 msgstr "Task layout"
 
+msgid "Task linked to workspace."
+msgstr "Task linked to workspace."
+
 msgid "Task Management"
 msgstr "Task Management"
 
@@ -17436,6 +17463,9 @@ msgstr "The self-driving software factory"
 msgid "The server could not be found"
 msgstr "The server could not be found"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "The sign-in link was incomplete. Please try again."
 
@@ -17950,6 +17980,9 @@ msgstr "Title"
 
 msgid "To"
 msgstr "To"
+
+msgid "To do"
+msgstr "To do"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "To resume an agent conversation, run this in its folder:"

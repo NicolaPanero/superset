@@ -1,46 +1,30 @@
-import { Button } from "@superset/ui/button";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import type { ReactNode } from "react";
-import { useForkConnections } from "../../hooks/useForkConnections";
-import { ForkPullRequests } from "../ForkPullRequests/ForkPullRequests";
+import { type ReactNode, useEffect } from "react";
+
 export function ForkPullRequestsBoundary({
 	children,
 }: {
 	children: ReactNode;
 }) {
-	const { connections } = useForkConnections(),
-		navigate = useNavigate();
-	const search = useSearch({ strict: false }) as { forkProvider?: string };
-	const available = connections.some(
-		(c) => c.provider === "bitbucket" && c.enabled,
-	);
-	const selected = available && search.forkProvider === "bitbucket";
-	return (
-		<div className="flex min-h-0 min-w-0 flex-1 flex-col">
-			{available && (
-				<div className="flex gap-2 border-b px-4 py-2">
-					<Button
-						size="sm"
-						variant={!selected ? "secondary" : "ghost"}
-						onClick={() => void navigate({ to: "/pull-requests", search: {} })}
-					>
-						GitHub
-					</Button>
-					<Button
-						size="sm"
-						variant={selected ? "secondary" : "ghost"}
-						onClick={() =>
-							void navigate({
-								to: "/pull-requests",
-								search: { forkProvider: "bitbucket" },
-							})
-						}
-					>
-						Bitbucket
-					</Button>
-				</div>
-			)}
-			{selected ? <ForkPullRequests /> : children}
-		</div>
-	);
+	const search = useSearch({ strict: false }) as {
+		forkProvider?: "bitbucket";
+		forkProject?: string;
+		forkNumber?: number;
+	};
+	const navigate = useNavigate();
+	useEffect(() => {
+		if (
+			search.forkProvider === "bitbucket" &&
+			search.forkNumber &&
+			search.forkProject
+		) {
+			void navigate({
+				to: "/pull-requests/$prNumber",
+				params: { prNumber: String(search.forkNumber) },
+				search: { forkProvider: "bitbucket", project: search.forkProject },
+				replace: true,
+			});
+		}
+	}, [navigate, search.forkProvider, search.forkNumber, search.forkProject]);
+	return children;
 }

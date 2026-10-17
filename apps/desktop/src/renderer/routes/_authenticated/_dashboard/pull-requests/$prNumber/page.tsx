@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { withForkPullRequest } from "renderer/components/ForkIntegrations/components/ForkPullRequestRoute";
 import { useHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { useProjectHost } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectHost";
@@ -17,7 +18,7 @@ import { Route as PullRequestsLayoutRoute } from "../layout";
 export const Route = createFileRoute(
 	"/_authenticated/_dashboard/pull-requests/$prNumber/",
 )({
-	component: PullRequestDetailPage,
+	component: withForkPullRequest(PullRequestDetailPage),
 });
 
 function PullRequestDetailPage() {

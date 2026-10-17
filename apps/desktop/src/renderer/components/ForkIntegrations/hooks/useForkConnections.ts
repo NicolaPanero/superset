@@ -13,10 +13,12 @@ export function useForkConnections(hostOverride?: string | null) {
 	const client = hostUrl ? getHostServiceClientByUrl(hostUrl) : null;
 	const cache = useQueryClient();
 	const query = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
 		queryKey: ["fork-integrations", hostUrl, "connections"],
 		queryFn: () => required(client).forkConnections.list.query(),
 		enabled: !!client,
-		retry: false,
 		staleTime: 10_000,
 		refetchOnWindowFocus: true,
 	});

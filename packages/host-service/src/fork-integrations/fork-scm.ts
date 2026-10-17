@@ -7,13 +7,15 @@ import type {
 import { FORK_PROVIDER_DEFINITIONS } from "@superset/shared/fork-integrations";
 import { TRPCError } from "@trpc/server";
 import type { ForkApi } from "./fork-api";
+import { forkAvailability } from "./fork-availability";
+import { forkBitbucketRepositories } from "./fork-bitbucket-repositories";
 import { forkText } from "./fork-http";
 import type { ForkSourceControlProvider } from "./fork-provider";
 
 interface BBUser {
 	display_name: string;
 }
-interface BBRepo {
+export interface BBRepo {
 	uuid: string;
 	full_name: string;
 	name: string;
@@ -22,6 +24,7 @@ interface BBRepo {
 	mainbranch?: { name: string };
 }
 interface BBPull {
+	draft?: boolean;
 	id: number;
 	title: string;
 	description: string;
@@ -101,6 +104,7 @@ function bbPR(
 			: r,
 		mergeMethods: p.destination.branch.merge_strategies,
 		defaultMergeMethod: p.destination.branch.default_merge_strategy,
+		isDraft: p.draft ?? false,
 	};
 }
 function ghPR(
@@ -143,6 +147,68 @@ function nextPath(
 }
 export class ForkScmProvider implements ForkSourceControlProvider {
 	constructor(readonly api: ForkApi) {}
+	async searchBitbucket(
+		id: string,
+		r: ForkRepositoryRef,
+		input: {
+			query?: string;
+			author?: string;
+			includeClosed?: boolean;
+			mergedOnly?: boolean;
+			page: number;
+			limit: number;
+		},
+	) {
+		this.assert(id, r);
+		const prefix = `${repoPath(r)}/pullrequests`;
+		const params = new URLSearchParams({
+			page: String(input.page),
+			pagelen: String(input.limit),
+			sort: "-updated_on",
+		});
+		for (const state of input.mergedOnly
+			? ["MERGED"]
+			: input.includeClosed
+				? ["OPEN", "MERGED", "DECLINED", "SUPERSEDED"]
+				: ["OPEN"])
+			params.append("state", state);
+		const filters: string[] = [];
+		const query = input.query?.trim();
+		if (query) {
+			const number =
+				query.match(/^#?(\d+)$/)?.[1] ??
+				query.match(
+					/^https:\/\/bitbucket\.org\/[^/]+\/[^/]+\/pull-requests\/(\d+)\/?$/,
+				)?.[1];
+			if (number) filters.push(`id=${Number(number)}`);
+			else
+				filters.push(
+					`(title~${JSON.stringify(query)} OR source.branch.name~${JSON.stringify(query)})`,
+				);
+		}
+		if (input.author)
+			filters.push(
+				`(${input.author
+					.split(",")
+					.map(
+						(author) =>
+							`author.nickname=${JSON.stringify(author.trim().replace(/^@/, ""))}`,
+					)
+					.join(" OR ")})`,
+			);
+		if (filters.length) params.set("q", filters.join(" AND "));
+		const data = await this.api.request<{
+			values: BBPull[];
+			next?: string;
+			size?: number;
+		}>(id, `${prefix}?${params}`);
+		return {
+			items: data.values.map((p) => bbPR(p, r, id)),
+			totalCount:
+				data.size ?? (input.page - 1) * input.limit + data.values.length,
+			nextCursor: nextPath(data.next, "https://api.bitbucket.org/2.0", prefix),
+		};
+	}
 	async defaultBranch(id: string, r: ForkRepositoryRef) {
 		this.assert(id, r);
 		if (r.provider === "github")
@@ -200,6 +266,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 	async repositories(
 		id: string,
 		cursor?: string,
+		knownWorkspaces: string[] = [],
 	): Promise<ForkPage<ForkRepository>> {
 		const c = this.assert(id);
 		if (c.provider === "github") {
@@ -226,30 +293,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				nextCursor: rows.length === 100 ? String(page + 1) : null,
 			};
 		}
-		const prefix = "/user/permissions/repositories";
-		if (cursor && !cursor.startsWith(`${prefix}?`))
-			throw new TRPCError({ code: "BAD_REQUEST" });
-		const data = await this.api.request<{
-			values: { repository: BBRepo }[];
-			next?: string;
-		}>(id, cursor ?? `${prefix}?pagelen=100`);
-		return {
-			items: data.values.map(({ repository: r }) => ({
-				provider: "bitbucket",
-				host: "bitbucket.org",
-				owner: r.full_name.split("/")[0] ?? r.full_name,
-				name: r.slug,
-				id: r.uuid,
-				fullName: r.full_name,
-				url: r.links.html.href,
-				cloneUrl:
-					r.links.clone.find((l) => l.name === "https")?.href ??
-					`https://bitbucket.org/${r.full_name}.git`,
-				defaultBranch: r.mainbranch?.name ?? null,
-				connectionId: id,
-			})),
-			nextCursor: nextPath(data.next, "https://api.bitbucket.org/2.0", prefix),
-		};
+		return forkBitbucketRepositories(this.api, id, cursor, knownWorkspaces);
 	}
 	async list(
 		id: string,
@@ -312,16 +356,23 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 	}
 	async diff(id: string, r: ForkRepositoryRef, number: number) {
 		this.assert(id, r);
-		const { base, headers } = await this.api.auth(id);
-		const path =
-			r.provider === "github"
-				? `${repoPath(r)}/pulls/${number}`
-				: `${repoPath(r)}/pullrequests/${number}/diff`;
-		return forkText(base + path, {
-			...headers,
-			accept:
-				r.provider === "github" ? "application/vnd.github.diff" : "text/plain",
-		});
+		return forkAvailability(this.api.store).run(
+			this.api.connection(id),
+			async () => {
+				const { base, headers } = await this.api.auth(id);
+				const path =
+					r.provider === "github"
+						? `${repoPath(r)}/pulls/${number}`
+						: `${repoPath(r)}/pullrequests/${number}/diff`;
+				return forkText(base + path, {
+					...headers,
+					accept:
+						r.provider === "github"
+							? "application/vnd.github.diff"
+							: "text/plain",
+				});
+			},
+		);
 	}
 	async comments(
 		id: string,

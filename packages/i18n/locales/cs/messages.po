@@ -968,6 +968,9 @@ msgstr "{name} je vestavěný a nelze jej nahradit"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} není přidán"
 
+msgid "{name} unreachable"
+msgstr "Služba {name} je nedostupná"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Přidat účet {0}"
 msgid "Add {0} to workspace"
 msgstr "Přidat {0} do pracovního prostoru"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Začněte přidáním repozitáře Bitbucket."
-
 msgid "Add a comment…"
 msgstr "Přidat komentář…"
 
@@ -2146,6 +2146,9 @@ msgstr "Všechny relace přežily aktualizaci."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Všechny relace byly zavřeny a běží čerstvý démon."
+
+msgid "All statuses"
+msgstr "Všechny stavy"
 
 msgid "All tasks"
 msgstr "Všechny úkoly"
@@ -3594,6 +3597,9 @@ msgstr "Zkontrolovat přihlášení"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Před použitím resetu zkontrolujte e-mail účtu v prohlížeči."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Zkontrolujte připojení pro {repositories} v nastavení forku."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Před uložením zkontrolujte vykreslený prompt a výstup spuštění"
 
@@ -3743,6 +3749,9 @@ msgstr "Ukliď zastaralé TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Čistší a hustší postranní panel"
+
+msgid "Clear"
+msgstr "Vymazat"
 
 msgid "Clear all"
 msgstr "Vymazat vše"
@@ -4376,6 +4385,9 @@ msgstr "Připojte agenty ke svým aplikacím"
 msgid "Connect an account"
 msgstr "Připojit účet"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Připojte účet v nastavení forku"
+
 msgid "Connect another account"
 msgstr "Připojit další účet"
 
@@ -4979,6 +4991,15 @@ msgstr "Pluginy se nepodařilo načíst. Zkontrolujte připojení a zkuste to zn
 
 msgid "Could not load presets from the host"
 msgstr "Nepodařilo se načíst přednastavení z hosta"
+
+msgid "Could not load pull request."
+msgstr "Pull request se nepodařilo načíst."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Nepodařilo se načíst pull requesty pro {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Úkoly se nepodařilo načíst."
 
 msgid "Could not load this diff"
 msgstr "Tento rozdíl se nepodařilo načíst"
@@ -14346,6 +14367,9 @@ msgstr "Revize zamítnuta"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Než se rozhodnete pokračovat, projděte si každé selhání."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Filtry kontroly platí pro repozitáře GitHub."
+
 msgid "Review message"
 msgstr "Zpráva k revizi"
 
@@ -16914,6 +16938,9 @@ msgstr "Spuštění úkolu"
 msgid "Task layout"
 msgstr "Rozvržení úkolů"
 
+msgid "Task linked to workspace."
+msgstr "Úkol propojen s workspace."
+
 msgid "Task Management"
 msgstr "Správa úkolů"
 
@@ -17436,6 +17463,9 @@ msgstr "Samořídící softwarová továrna"
 msgid "The server could not be found"
 msgstr "Server se nepodařilo najít"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Služba je dočasně nedostupná. Superset to automaticky zkusí znovu. Nastavení vašeho účtu se nemění."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Přihlašovací odkaz byl neúplný. Zkuste to prosím znovu."
 
@@ -17950,6 +17980,9 @@ msgstr "Název"
 
 msgid "To"
 msgstr "Do"
+
+msgid "To do"
+msgstr "K vyřízení"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Chcete-li obnovit konverzaci s agentem, spusťte toto v její složce:"

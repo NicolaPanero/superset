@@ -1,5 +1,19 @@
 export type ForkProviderId = "github" | "bitbucket" | "jira";
 export type ForkConnectionMode = "token" | "oauth" | "system";
+export interface ForkServiceAvailability {
+	connectionId: string;
+	provider: ForkProviderId;
+	since: number;
+	retryAt: number;
+}
+
+export function isForkServiceUnavailable(error: unknown): boolean {
+	if (!error || typeof error !== "object") return false;
+	const value = error as { code?: string; data?: { code?: string } | null };
+	return ["BAD_GATEWAY", "SERVICE_UNAVAILABLE", "TIMEOUT"].includes(
+		value.data?.code ?? value.code ?? "",
+	);
+}
 export interface ForkIdentity {
 	id: string;
 	login: string;
@@ -53,6 +67,7 @@ export interface ForkPullRequest {
 	sourceRepository?: ForkRepositoryRef;
 	mergeMethods?: string[];
 	defaultMergeMethod?: string;
+	isDraft?: boolean;
 }
 export interface ForkComment {
 	id: string;
@@ -131,7 +146,7 @@ export const FORK_PROVIDER_DEFINITIONS = {
 		capabilities: readonly string[];
 	}
 >;
-export const FORK_INTEGRATIONS_VERSION = 1;
+export const FORK_INTEGRATIONS_VERSION = 3;
 
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");

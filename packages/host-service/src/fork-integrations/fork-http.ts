@@ -20,10 +20,11 @@ export function validateBrokerUrl(value: string): string {
 export async function forkFetch<T>(
 	url: string | URL,
 	init: RequestInit = {},
+	fetcher: typeof fetch = fetch,
 ): Promise<T> {
 	let response: Response;
 	try {
-		response = await fetch(url, {
+		response = await fetcher(url, {
 			...init,
 			redirect: "error",
 			signal: init.signal ?? AbortSignal.timeout(15_000),
@@ -56,7 +57,15 @@ export async function forkFetch<T>(
 		});
 	}
 	if (response.status === 204) return undefined as T;
-	const content = await response.text();
+	let content: string;
+	try {
+		content = await response.text();
+	} catch {
+		throw new TRPCError({
+			code: "BAD_GATEWAY",
+			message: "The service could not be reached",
+		});
+	}
 	if (!content) return undefined as T;
 	try {
 		return JSON.parse(content) as T;
@@ -70,13 +79,14 @@ export async function forkFetch<T>(
 export async function forkText(
 	url: string,
 	headers: Record<string, string>,
+	fetcher: typeof fetch = fetch,
 ): Promise<string> {
 	const origin = new URL(url).origin;
 	const signal = AbortSignal.timeout(20_000);
 	for (let redirects = 0; redirects < 4; redirects++) {
 		let response: Response;
 		try {
-			response = await fetch(url, { headers, redirect: "manual", signal });
+			response = await fetcher(url, { headers, redirect: "manual", signal });
 		} catch {
 			throw new TRPCError({
 				code: "BAD_GATEWAY",
@@ -104,7 +114,12 @@ export async function forkText(
 		let length = 0;
 		if (!reader) return "";
 		for (;;) {
-			const { done, value } = await reader.read();
+			const { done, value } = await reader.read().catch(() => {
+				throw new TRPCError({
+					code: "BAD_GATEWAY",
+					message: "The service could not be reached",
+				});
+			});
 			if (done) break;
 			length += value.byteLength;
 			if (length > 10 * 1024 * 1024) {

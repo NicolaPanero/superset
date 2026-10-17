@@ -968,6 +968,9 @@ msgstr "{name} bawaan dan tidak dapat diganti"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} belum ditambahkan"
 
+msgid "{name} unreachable"
+msgstr "{name} tidak dapat dijangkau"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Tentukan minimal satu orang, atau pilih {choice}.} sender {Tentukan minimal satu pengirim, atau pilih {choice}.} other {Tentukan minimal satu entri, atau pilih {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Tambah akun {0}"
 msgid "Add {0} to workspace"
 msgstr "Tambahkan {0} ke workspace"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Tambahkan repositori Bitbucket untuk memulai."
-
 msgid "Add a comment…"
 msgstr "Tambahkan komentar…"
 
@@ -2146,6 +2146,9 @@ msgstr "Semua sesi dipertahankan sepanjang upgrade."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Semua sesi ditutup dan daemon baru sedang berjalan."
+
+msgid "All statuses"
+msgstr "Semua status"
 
 msgid "All tasks"
 msgstr "Semua tugas"
@@ -3594,6 +3597,9 @@ msgstr "Periksa login"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Periksa email akun di browser sebelum menggunakan reset."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Periksa koneksi untuk {repositories} di pengaturan fork."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Periksa prompt yang dirender dan output peluncuran sebelum menyimpan"
 
@@ -3743,6 +3749,9 @@ msgstr "Bereskan TODO yang basi…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Sidebar lebih bersih dan padat"
+
+msgid "Clear"
+msgstr "Hapus"
 
 msgid "Clear all"
 msgstr "Hapus semua"
@@ -4376,6 +4385,9 @@ msgstr "Hubungkan agen ke aplikasi Anda"
 msgid "Connect an account"
 msgstr "Hubungkan akun"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Hubungkan akun di pengaturan fork"
+
 msgid "Connect another account"
 msgstr "Hubungkan akun lain"
 
@@ -4979,6 +4991,15 @@ msgstr "Tidak dapat memuat plugin. Periksa koneksi Anda dan coba lagi."
 
 msgid "Could not load presets from the host"
 msgstr "Tidak bisa memuat preset dari host"
+
+msgid "Could not load pull request."
+msgstr "Pull request tidak dapat dimuat."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Tidak dapat memuat pull request untuk {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Tugas tidak dapat dimuat."
 
 msgid "Could not load this diff"
 msgstr "Tidak bisa memuat diff ini"
@@ -14346,6 +14367,9 @@ msgstr "Review Diabaikan"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Tinjau tiap kegagalan sebelum memutuskan untuk melanjutkan."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Filter tinjauan berlaku untuk repositori GitHub."
+
 msgid "Review message"
 msgstr "Pesan review"
 
@@ -16914,6 +16938,9 @@ msgstr "Peluncuran Tugas"
 msgid "Task layout"
 msgstr "Tata letak tugas"
 
+msgid "Task linked to workspace."
+msgstr "Tugas ditautkan ke workspace."
+
 msgid "Task Management"
 msgstr "Manajemen Tugas"
 
@@ -17436,6 +17463,9 @@ msgstr "Pabrik perangkat lunak yang menyetir sendiri"
 msgid "The server could not be found"
 msgstr "Servernya tidak ditemukan"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Layanan sementara tidak tersedia. Superset akan mencoba lagi secara otomatis. Pengaturan akun Anda tidak berubah."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Tautan masuk tidak lengkap. Silakan coba lagi."
 
@@ -17950,6 +17980,9 @@ msgstr "Judul"
 
 msgid "To"
 msgstr "Ke"
+
+msgid "To do"
+msgstr "Untuk dikerjakan"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Untuk melanjutkan percakapan agen, jalankan ini di foldernya:"

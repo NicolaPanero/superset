@@ -968,6 +968,9 @@ msgstr "{name} jest wbudowany i nie można go zastąpić"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} nie został dodany"
 
+msgid "{name} unreachable"
+msgstr "Usługa {name} jest nieosiągalna"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Podaj co najmniej jedną osobę lub wybierz {choice}.} sender {Podaj co najmniej jednego nadawcę lub wybierz {choice}.} other {Podaj co najmniej jedną pozycję lub wybierz {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Dodaj konto {0}"
 msgid "Add {0} to workspace"
 msgstr "Dodaj {0} do obszaru roboczego"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Dodaj repozytorium Bitbucket, aby rozpocząć."
-
 msgid "Add a comment…"
 msgstr "Dodaj komentarz…"
 
@@ -2146,6 +2146,9 @@ msgstr "Wszystkie sesje zachowane mimo aktualizacji."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Wszystkie sesje zamknięto i działa świeży demon."
+
+msgid "All statuses"
+msgstr "Wszystkie statusy"
 
 msgid "All tasks"
 msgstr "Wszystkie zadania"
@@ -3594,6 +3597,9 @@ msgstr "Sprawdź logowanie"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Przed użyciem resetu sprawdź adres e-mail konta w przeglądarce."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Sprawdź połączenie dla {repositories} w ustawieniach forka."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Sprawdź wyrenderowany prompt i wynik uruchomienia przed zapisaniem"
 
@@ -3743,6 +3749,9 @@ msgstr "Uporządkuj nieaktualne TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Czystszy, gęstszy pasek boczny"
+
+msgid "Clear"
+msgstr "Wyczyść"
 
 msgid "Clear all"
 msgstr "Wyczyść wszystko"
@@ -4376,6 +4385,9 @@ msgstr "Połącz agentów ze swoimi aplikacjami"
 msgid "Connect an account"
 msgstr "Połącz konto"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Połącz konto w ustawieniach forka"
+
 msgid "Connect another account"
 msgstr "Połącz kolejne konto"
 
@@ -4979,6 +4991,15 @@ msgstr "Nie udało się wczytać wtyczek. Sprawdź połączenie i spróbuj ponow
 
 msgid "Could not load presets from the host"
 msgstr "Nie udało się wczytać presetów z hosta"
+
+msgid "Could not load pull request."
+msgstr "Nie udało się wczytać pull requesta."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Nie udało się załadować pull requestów dla {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Nie udało się wczytać zadań."
 
 msgid "Could not load this diff"
 msgstr "Nie udało się wczytać tych różnic"
@@ -14346,6 +14367,9 @@ msgstr "Przegląd odrzucony"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Przejrzyj każdy błąd, zanim zdecydujesz o kontynuacji."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Filtry przeglądu dotyczą repozytoriów GitHub."
+
 msgid "Review message"
 msgstr "Wiadomość przeglądu"
 
@@ -16914,6 +16938,9 @@ msgstr "Uruchomienie zadania"
 msgid "Task layout"
 msgstr "Układ zadań"
 
+msgid "Task linked to workspace."
+msgstr "Zadanie powiązane z workspace."
+
 msgid "Task Management"
 msgstr "Zarządzanie zadaniami"
 
@@ -17436,6 +17463,9 @@ msgstr "Samojezdna fabryka oprogramowania"
 msgid "The server could not be found"
 msgstr "Nie znaleziono serwera"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Usługa jest tymczasowo niedostępna. Superset spróbuje ponownie automatycznie. Ustawienia Twojego konta pozostają bez zmian."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Link logowania był niepełny. Spróbuj ponownie."
 
@@ -17950,6 +17980,9 @@ msgstr "Tytuł"
 
 msgid "To"
 msgstr "Do"
+
+msgid "To do"
+msgstr "Do zrobienia"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Aby wznowić rozmowę z agentem, uruchom to w jej folderze:"

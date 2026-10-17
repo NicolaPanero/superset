@@ -3,6 +3,7 @@ import { promisify } from "node:util";
 import type { GitCredentialProvider } from "../runtime/git";
 import { getToolEnvironment } from "../terminal/clean-shell-env";
 import type { ExecGh } from "../trpc/router/workspace-creation/utils/exec-gh";
+import { ForkGitCredentialProvider } from "./fork-credentials";
 import type { ForkConnectionStore } from "./fork-store";
 
 const exec = promisify(execFile);
@@ -14,7 +15,11 @@ export function forkExecGh(
 	return async (args, options) => {
 		if (!store.list().some((c) => c.provider === "github"))
 			return fallback(args, options);
-		const token = await credentials.getToken("github.com");
+		const selected =
+			credentials instanceof ForkGitCredentialProvider && options?.cwd
+				? credentials.forPath(options.cwd)
+				: credentials;
+		const token = await selected.getToken("github.com");
 		if (!token) throw new Error("Connect GitHub in Fork Settings");
 		const env = {
 			...(await getToolEnvironment()),

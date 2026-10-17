@@ -2,9 +2,13 @@ import type {
 	ForkConnection,
 	ForkIdentity,
 } from "@superset/shared/fork-integrations";
-import { FORK_PROVIDER_DEFINITIONS } from "@superset/shared/fork-integrations";
+import {
+	FORK_PROVIDER_DEFINITIONS,
+	isForkServiceUnavailable,
+} from "@superset/shared/fork-integrations";
 import { TRPCError } from "@trpc/server";
 import type { GitCredentialProvider } from "../runtime/git";
+import { forkAvailability } from "./fork-availability";
 import { forkFetch } from "./fork-http";
 import { forkAccessSecret } from "./fork-oauth";
 import type { ForkConnectionStore } from "./fork-store";
@@ -92,13 +96,15 @@ export class ForkApi {
 		method = "GET",
 		body?: unknown,
 	): Promise<T> {
-		const { base, headers } = await this.auth(id);
 		if (!path.startsWith("/") || path.startsWith("//"))
 			throw new Error("Invalid API path");
-		return this.transport<T>(`${base}${path}`, {
-			method,
-			headers,
-			...(body === undefined ? {} : { body: JSON.stringify(body) }),
+		return forkAvailability(this.store).run(this.connection(id), async () => {
+			const { base, headers } = await this.auth(id);
+			return this.transport<T>(`${base}${path}`, {
+				method,
+				headers,
+				...(body === undefined ? {} : { body: JSON.stringify(body) }),
+			});
 		});
 	}
 	async verify(id: string): Promise<ForkConnection> {
@@ -172,6 +178,7 @@ export class ForkApi {
 		} catch (error) {
 			const message =
 				error instanceof Error ? error.message : "Connection failed";
+			if (isForkServiceUnavailable(error)) return { ...c, error: message };
 			const next: ForkConnection = {
 				...c,
 				state:

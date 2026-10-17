@@ -968,6 +968,9 @@ msgstr "{name} là tích hợp sẵn nên không thể thay thế"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} chưa được thêm"
 
+msgid "{name} unreachable"
+msgstr "Không thể kết nối tới {name}"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Hãy chỉ định ít nhất một người, hoặc chọn {choice}.} sender {Hãy chỉ định ít nhất một người gửi, hoặc chọn {choice}.} other {Hãy chỉ định ít nhất một mục, hoặc chọn {choice}.}}"
 
@@ -1658,9 +1661,6 @@ msgstr "Thêm tài khoản {0}"
 msgid "Add {0} to workspace"
 msgstr "Thêm {0} vào workspace"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Thêm kho lưu trữ Bitbucket để bắt đầu."
-
 msgid "Add a comment…"
 msgstr "Thêm bình luận…"
 
@@ -2146,6 +2146,9 @@ msgstr "Mọi phiên đều được giữ nguyên qua lần nâng cấp."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Đã đóng mọi phiên và một daemon mới đang chạy."
+
+msgid "All statuses"
+msgstr "Tất cả trạng thái"
 
 msgid "All tasks"
 msgstr "Tất cả tác vụ"
@@ -3594,6 +3597,9 @@ msgstr "Kiểm tra đăng nhập"
 msgid "Check the account email in your browser before using a reset."
 msgstr "Kiểm tra email của tài khoản trong trình duyệt trước khi dùng lượt đặt lại."
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Kiểm tra kết nối cho {repositories} trong cài đặt fork."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Kiểm tra prompt đã dựng và kết quả khởi chạy trước khi lưu"
 
@@ -3743,6 +3749,9 @@ msgstr "Dọn các TODO cũ…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Thanh bên gọn và dày hơn"
+
+msgid "Clear"
+msgstr "Xóa"
 
 msgid "Clear all"
 msgstr "Xóa tất cả"
@@ -4376,6 +4385,9 @@ msgstr "Kết nối agent với ứng dụng của bạn"
 msgid "Connect an account"
 msgstr "Kết nối tài khoản"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Kết nối tài khoản trong cài đặt fork"
+
 msgid "Connect another account"
 msgstr "Kết nối tài khoản khác"
 
@@ -4979,6 +4991,15 @@ msgstr "Không tải được plugin. Hãy kiểm tra kết nối và thử lạ
 
 msgid "Could not load presets from the host"
 msgstr "Không thể tải preset từ host"
+
+msgid "Could not load pull request."
+msgstr "Không thể tải pull request."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Không thể tải pull request cho {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Không thể tải tác vụ."
 
 msgid "Could not load this diff"
 msgstr "Không thể tải diff này"
@@ -14346,6 +14367,9 @@ msgstr "Review đã bị bỏ qua"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Xem lại từng lỗi trước khi quyết định có tiếp tục hay không."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Bộ lọc đánh giá áp dụng cho kho mã GitHub."
+
 msgid "Review message"
 msgstr "Nội dung review"
 
@@ -16914,6 +16938,9 @@ msgstr "Khởi chạy tác vụ"
 msgid "Task layout"
 msgstr "Bố cục tác vụ"
 
+msgid "Task linked to workspace."
+msgstr "Đã liên kết tác vụ với workspace."
+
 msgid "Task Management"
 msgstr "Quản lý tác vụ"
 
@@ -17436,6 +17463,9 @@ msgstr "Nhà máy phần mềm tự vận hành"
 msgid "The server could not be found"
 msgstr "Không tìm thấy server"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Dịch vụ tạm thời không khả dụng. Superset sẽ tự động thử lại. Cài đặt tài khoản của bạn không thay đổi."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Liên kết đăng nhập không đầy đủ. Vui lòng thử lại."
 
@@ -17950,6 +17980,9 @@ msgstr "Tiêu đề"
 
 msgid "To"
 msgstr "Đến"
+
+msgid "To do"
+msgstr "Cần làm"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Để tiếp tục một cuộc trò chuyện với agent, hãy chạy lệnh này trong thư mục của nó:"

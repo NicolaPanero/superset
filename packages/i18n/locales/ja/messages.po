@@ -968,6 +968,9 @@ msgstr "{name} は組み込みのため置き換えられません"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} は追加されていません"
 
+msgid "{name} unreachable"
+msgstr "{name}に接続できません"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {人を1人以上指定するか、{choice}を選択してください。} sender {送信者を1人以上指定するか、{choice}を選択してください。} other {項目を1つ以上指定するか、{choice}を選択してください。}}"
 
@@ -1658,9 +1661,6 @@ msgstr "{0}アカウントを追加"
 msgid "Add {0} to workspace"
 msgstr "{0} をワークスペースに追加"
 
-msgid "Add a Bitbucket repository to get started."
-msgstr "Bitbucketリポジトリを追加して始めましょう。"
-
 msgid "Add a comment…"
 msgstr "コメントを追加…"
 
@@ -2146,6 +2146,9 @@ msgstr "アップグレード後もすべてのセッションが維持されま
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "すべてのセッションを閉じ、新しいデーモンが動作しています。"
+
+msgid "All statuses"
+msgstr "すべてのステータス"
 
 msgid "All tasks"
 msgstr "すべてのタスク"
@@ -3594,6 +3597,9 @@ msgstr "ログインを確認"
 msgid "Check the account email in your browser before using a reset."
 msgstr "リセットを使用する前に、ブラウザーでアカウントのメールアドレスを確認してください。"
 
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "フォーク設定で {repositories} の接続を確認してください。"
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "保存前にレンダリングされたプロンプトと起動出力を確認"
 
@@ -3743,6 +3749,9 @@ msgstr "古いTODOを整理…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "すっきり高密度なサイドバー"
+
+msgid "Clear"
+msgstr "クリア"
 
 msgid "Clear all"
 msgstr "すべてクリア"
@@ -4376,6 +4385,9 @@ msgstr "エージェントをアプリにつなぐ"
 msgid "Connect an account"
 msgstr "アカウントを接続"
 
+msgid "Connect an account in Fork Settings"
+msgstr "フォーク設定でアカウントを接続してください"
+
 msgid "Connect another account"
 msgstr "別のアカウントを接続"
 
@@ -4979,6 +4991,15 @@ msgstr "プラグインを読み込めませんでした。接続を確認して
 
 msgid "Could not load presets from the host"
 msgstr "ホストからプリセットを読み込めませんでした"
+
+msgid "Could not load pull request."
+msgstr "プルリクエストを読み込めませんでした。"
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "{failedRepositories}のプルリクエストを読み込めませんでした。"
+
+msgid "Could not load tasks."
+msgstr "タスクを読み込めませんでした。"
 
 msgid "Could not load this diff"
 msgstr "この差分を読み込めませんでした"
@@ -14346,6 +14367,9 @@ msgstr "レビューが却下されました"
 msgid "Review each failure before deciding whether to continue."
 msgstr "続行するか判断する前に、各失敗を確認してください。"
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "レビューフィルターは GitHub リポジトリに適用されます。"
+
 msgid "Review message"
 msgstr "レビューのメッセージ"
 
@@ -16914,6 +16938,9 @@ msgstr "タスク起動"
 msgid "Task layout"
 msgstr "タスクのレイアウト"
 
+msgid "Task linked to workspace."
+msgstr "タスクをワークスペースにリンクしました。"
+
 msgid "Task Management"
 msgstr "タスク管理"
 
@@ -17436,6 +17463,9 @@ msgstr "自動運転するソフトウェア工場"
 msgid "The server could not be found"
 msgstr "サーバーが見つかりませんでした"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "サービスは一時的に利用できません。Supersetが自動的に再試行します。アカウント設定は変更されていません。"
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "サインインリンクが不完全でした。もう一度お試しください。"
 
@@ -17950,6 +17980,9 @@ msgstr "タイトル"
 
 msgid "To"
 msgstr "移動先"
+
+msgid "To do"
+msgstr "未着手"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "エージェントとの会話を再開するには、そのフォルダで次を実行します:"
