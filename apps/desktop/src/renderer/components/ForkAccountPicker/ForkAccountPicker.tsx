@@ -87,8 +87,9 @@ export function ForkAccountPicker({
 					</DropdownMenuTrigger>
 				)}
 				<DropdownMenuContent
-					className="w-80 max-w-[calc(100vw-32px)] max-h-[60vh] overflow-auto"
+					className="w-96 max-w-[calc(100vw-32px)] max-h-[min(60vh,var(--radix-dropdown-menu-content-available-height))] overflow-x-hidden overflow-y-auto"
 					align="start"
+					collisionPadding={8}
 					onCloseAutoFocus={menuDialog.onCloseAutoFocus}
 				>
 					<ForkAccountMenuItems

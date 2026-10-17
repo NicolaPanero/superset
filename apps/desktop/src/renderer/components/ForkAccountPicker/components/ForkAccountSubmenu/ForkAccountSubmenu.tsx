@@ -88,7 +88,11 @@ export function ForkAccountSubmenu({
 			{/* Portaled: the parent panel's backdrop-blur would otherwise clip it. */}
 			<DropdownMenuPortal>
 				<DropdownMenuSubContent
-					className={cn("w-80 max-h-[60vh] overflow-auto", contentClassName)}
+					collisionPadding={8}
+					className={cn(
+						"w-96 max-w-[calc(100vw-32px)] max-h-[min(60vh,var(--radix-dropdown-menu-content-available-height))] overflow-x-hidden overflow-y-auto",
+						contentClassName,
+					)}
 				>
 					<ForkAccountMenuItems
 						account={account}
