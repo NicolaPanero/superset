@@ -39,6 +39,8 @@ export type ModelPickerProps = {
 	agentSwitcher?: AgentSwitcher;
 	emptyLabel?: string;
 	footer?: ReactNode;
+	keepOpenOnPick?: boolean;
+	onOpenChange?: (open: boolean) => void;
 };
 
 const TRAIT_ROW_CLASS = cn(
@@ -64,9 +66,18 @@ export function ModelPicker({
 	configOptions,
 	emptyLabel,
 	footer,
+	keepOpenOnPick = false,
+	onOpenChange,
 	onSelect,
 }: ModelPickerProps) {
-	const [open, setOpen] = useState(false);
+	const [open, setOpenState] = useState(false);
+	const setOpen = (next: boolean) => {
+		setOpenState(next);
+		onOpenChange?.(next);
+	};
+	const closeAfterPick = () => {
+		if (!keepOpenOnPick) setOpen(false);
+	};
 	const searchRef = useRef<HTMLInputElement>(null);
 	const settingsRef = useRef<HTMLDivElement>(null);
 	const isDark = useIsDarkTheme();
@@ -127,7 +138,7 @@ export function ModelPicker({
 		emptyLabel;
 	const pick = (option: SessionConfigOption, value: string) => {
 		if (value !== option.currentValue) choose(option.id, value);
-		setOpen(false);
+		closeAfterPick();
 	};
 	// Radix traps Tab inside the menu, so the settings row below the model
 	// panel is only reachable by hand: Tab past the last agent tab lands on
@@ -190,11 +201,12 @@ export function ModelPicker({
 			>
 				{showsModels ? (
 					<ModelPanel
+						keepOpen={keepOpenOnPick}
 						agentSwitcher={
 							agentSwitcher && {
 								...agentSwitcher,
 								onSwitch: (presetId, picked) => {
-									setOpen(false);
+									closeAfterPick();
 									agentSwitcher.onSwitch(presetId, picked);
 								},
 							}

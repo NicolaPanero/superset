@@ -3441,9 +3441,6 @@ msgstr "Ошибка сертификата"
 msgid "Chain of Thought"
 msgstr "Цепочка рассуждений"
 
-msgid "Change agent or account"
-msgstr "Сменить агента или аккаунт"
-
 msgid "Change assignee"
 msgstr "Изменить исполнителя"
 
@@ -4643,9 +4640,6 @@ msgstr "Продолжить с другим агентом"
 msgid "Continue with another agent…"
 msgstr "Продолжить с другим агентом…"
 
-msgid "Continue with context"
-msgstr "Продолжить с контекстом"
-
 msgid "Continue with GitHub"
 msgstr "Продолжить с GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+клик"
 
 msgid "Current"
 msgstr "Текущая"
-
-msgid "Current chat"
-msgstr "Текущий чат"
 
 msgid "current checkout"
 msgstr "текущий checkout"
@@ -8030,6 +8021,9 @@ msgstr "Полный changelog →"
 msgid "Full Disk Access"
 msgstr "Полный доступ к диску"
 
+msgid "Full history"
+msgstr "Вся история"
+
 msgid "Full name"
 msgstr "Имя и фамилия"
 
@@ -10052,9 +10046,6 @@ msgstr "Управляйте задачами из обсуждений в Slack
 msgid "Manage Terminal Scripts"
 msgstr "Управление скриптами терминала"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Управляйте автоматическим продолжением этого чата. Изменения сохраняются сразу."
-
 msgid "Manage your account settings"
 msgstr "Управление настройками аккаунта"
 
@@ -10476,8 +10467,8 @@ msgstr "Почти вся история софта"
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Переносит этот чат в другой аккаунт. Разговор остаётся здесь и продолжается в рамках лимита этого аккаунта."
+msgid "Move to another account"
+msgstr "Перенести на другой аккаунт"
 
 msgid "Move to Center"
 msgstr "Переместить в центр"
@@ -16459,6 +16450,9 @@ msgstr "Кратко опиши изменения в этой рабочей о
 msgid "Summary"
 msgstr "Сводка"
 
+msgid "Summary only"
+msgstr "Только краткое содержание"
+
 msgid "sun 11:00"
 msgstr "вс 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Регулярность"
 msgid "Sustain · active days in 30"
 msgstr "Регулярность · активных дней из 30"
 
+msgid "Switch"
+msgstr "Переключить"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Меняйте агентов. Процесс остаётся"
 
@@ -16723,6 +16720,9 @@ msgstr "Сменить вход"
 
 msgid "Switch sign-in…"
 msgstr "Сменить вход…"
+
+msgid "Switch to {summary}"
+msgstr "Переключиться на {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Переключиться на активную рабочую область"
@@ -16786,6 +16786,9 @@ msgstr "Перейти в рабочую область 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Перейти в рабочую область 9"
+
+msgid "Switch…"
+msgstr "Переключить…"
 
 msgid "Symbol, light"
 msgstr "Символ, светлый"
@@ -17208,6 +17211,9 @@ msgstr "Истекло время ожидания соединения"
 msgid "The connection was closed"
 msgstr "Соединение было закрыто"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Текущий чат остаётся открытым, пока не запустится новый."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Текущий промпт будет заменён выбранной версией. В историю добавится запись «Восстановлено», чтобы это можно было отменить."
 
@@ -17349,6 +17355,9 @@ msgstr "Название организации или команды"
 
 msgid "The network connection changed"
 msgstr "Сетевое соединение изменилось"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Новый агент продолжит весь разговор, включая инструменты."
 
 msgid "The overnight shift"
 msgstr "Ночная смена"
@@ -18127,6 +18136,9 @@ msgstr "Где вести задачи"
 
 msgid "Tracking"
 msgstr "Отслеживание"
+
+msgid "Transfer"
+msgstr "Перенос"
 
 msgid "Translated"
 msgstr "Переведено"
@@ -18948,9 +18960,6 @@ msgstr "Ожидание проверок"
 
 msgid "Waiting for it to connect…"
 msgstr "Ожидание подключения…"
-
-msgid "Waiting for quota"
-msgstr "Ожидание квоты"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Ожидание квоты. Остановка отменяет автоматическое продолжение."

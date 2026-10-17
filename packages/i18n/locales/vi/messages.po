@@ -3441,9 +3441,6 @@ msgstr "Lỗi chứng chỉ"
 msgid "Chain of Thought"
 msgstr "Chuỗi suy luận"
 
-msgid "Change agent or account"
-msgstr "Đổi tác nhân hoặc tài khoản"
-
 msgid "Change assignee"
 msgstr "Đổi người phụ trách"
 
@@ -4643,9 +4640,6 @@ msgstr "Tiếp tục với agent khác"
 msgid "Continue with another agent…"
 msgstr "Tiếp tục với agent khác…"
 
-msgid "Continue with context"
-msgstr "Tiếp tục với ngữ cảnh"
-
 msgid "Continue with GitHub"
 msgstr "Tiếp tục với GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+nhấp"
 
 msgid "Current"
 msgstr "Hiện tại"
-
-msgid "Current chat"
-msgstr "Chat hiện tại"
 
 msgid "current checkout"
 msgstr "checkout hiện tại"
@@ -8030,6 +8021,9 @@ msgstr "Changelog đầy đủ →"
 msgid "Full Disk Access"
 msgstr "Full Disk Access"
 
+msgid "Full history"
+msgstr "Toàn bộ lịch sử"
+
 msgid "Full name"
 msgstr "Họ và tên"
 
@@ -10052,9 +10046,6 @@ msgstr "Quản lý tác vụ từ hội thoại Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Quản lý script terminal"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Quản lý việc tự động tiếp tục chat này. Thay đổi được lưu ngay."
-
 msgid "Manage your account settings"
 msgstr "Quản lý cài đặt tài khoản của bạn"
 
@@ -10476,8 +10467,8 @@ msgstr "Gần như suốt lịch sử phần mềm"
 msgid "Move {count} to Group"
 msgstr "Chuyển {count} vào nhóm"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Chuyển cuộc trò chuyện này sang tài khoản khác. Cuộc trò chuyện vẫn ở đây và tiếp tục với hạn mức của tài khoản đó."
+msgid "Move to another account"
+msgstr "Chuyển sang tài khoản khác"
 
 msgid "Move to Center"
 msgstr "Chuyển vào giữa"
@@ -16459,6 +16450,9 @@ msgstr "Tóm tắt các thay đổi trong workspace này"
 msgid "Summary"
 msgstr "Tóm tắt"
 
+msgid "Summary only"
+msgstr "Chỉ tóm tắt"
+
 msgid "sun 11:00"
 msgstr "CN 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Bền bỉ"
 msgid "Sustain · active days in 30"
 msgstr "Duy trì · số ngày hoạt động trong 30 ngày"
 
+msgid "Switch"
+msgstr "Chuyển"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Đổi agent. Giữ nguyên quy trình"
 
@@ -16723,6 +16720,9 @@ msgstr "Đổi đăng nhập"
 
 msgid "Switch sign-in…"
 msgstr "Đổi đăng nhập…"
+
+msgid "Switch to {summary}"
+msgstr "Chuyển sang {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Chuyển sang workspace đang hoạt động"
@@ -16786,6 +16786,9 @@ msgstr "Chuyển tới workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Chuyển tới workspace 9"
+
+msgid "Switch…"
+msgstr "Chuyển…"
 
 msgid "Symbol, light"
 msgstr "Biểu tượng, sáng"
@@ -17208,6 +17211,9 @@ msgstr "Kết nối đã quá thời gian"
 msgid "The connection was closed"
 msgstr "Kết nối đã bị đóng"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Cuộc trò chuyện hiện tại vẫn mở cho đến khi cuộc mới chạy."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt hiện tại sẽ được thay bằng phiên bản đã chọn. Một mục \"Đã khôi phục\" sẽ được thêm vào lịch sử để bạn có thể hoàn tác."
 
@@ -17349,6 +17355,9 @@ msgstr "Tên tổ chức hoặc nhóm của bạn"
 
 msgid "The network connection changed"
 msgstr "Kết nối mạng đã thay đổi"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Tác tử mới tiếp tục toàn bộ cuộc trò chuyện, kể cả công cụ."
 
 msgid "The overnight shift"
 msgstr "Ca đêm"
@@ -18127,6 +18136,9 @@ msgstr "Theo dõi công việc trong"
 
 msgid "Tracking"
 msgstr "Theo dõi"
+
+msgid "Transfer"
+msgstr "Chuyển giao"
 
 msgid "Translated"
 msgstr "Đã dịch"
@@ -18948,9 +18960,6 @@ msgstr "Đang chờ check"
 
 msgid "Waiting for it to connect…"
 msgstr "Đang chờ kết nối…"
-
-msgid "Waiting for quota"
-msgstr "Đang chờ hạn mức"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Đang chờ hạn mức. Dừng sẽ hủy việc tiếp tục tự động."

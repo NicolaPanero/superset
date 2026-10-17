@@ -7,6 +7,14 @@ import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import type { AgentSelectAgent } from "renderer/components/AgentSelect";
 import {
+	agentChoices,
+	agentLaunchPreset,
+	creationConfigOptions,
+	EFFORT_CONFIG_ID,
+	fromOptionValue,
+	MODEL_CONFIG_ID,
+} from "renderer/lib/fork-model-options";
+import {
 	type AgentSwitcher,
 	ModelPicker,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Composer/components/ModelPicker";
@@ -14,14 +22,6 @@ import {
 	MENU_PANEL_CLASS,
 	MENU_ROW_CLASS,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Composer/constants";
-import {
-	agentChoices,
-	agentLaunchPreset,
-	creationConfigOptions,
-	EFFORT_CONFIG_ID,
-	fromOptionValue,
-	MODEL_CONFIG_ID,
-} from "./utils/creationPickerOptions";
 
 const NO_AGENT = "none";
 

@@ -7,6 +7,7 @@ import {
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
+import type { ReactNode } from "react";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { AddAccountDialog } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
@@ -21,11 +22,13 @@ export function ForkAccountPicker({
 	provider,
 	model,
 	compact = false,
+	extraItems,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
 	model?: string;
 	compact?: boolean;
+	extraItems?: ReactNode;
 }) {
 	const { t } = useLingui();
 	const menuDialog = useForkMenuDialog();
@@ -93,6 +96,7 @@ export function ForkAccountPicker({
 						provider={provider}
 						model={model}
 						afterClose={menuDialog.afterClose}
+						extraItems={extraItems}
 					/>
 				</DropdownMenuContent>
 			</DropdownMenu>

@@ -9,6 +9,7 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { LuCheck, LuPlus, LuRefreshCw, LuSettings2 } from "react-icons/lu";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { ForkUsageSummary } from "../../../ForkUsageSummary";
@@ -20,11 +21,13 @@ export function ForkAccountMenuItems({
 	provider,
 	model,
 	afterClose,
+	extraItems,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
 	model?: string;
 	afterClose: (action: () => void) => void;
+	extraItems?: ReactNode;
 }) {
 	const navigate = useNavigate();
 	const { choices, selected, suggested } = useForkAccountChoices(
@@ -94,6 +97,12 @@ export function ForkAccountMenuItems({
 				);
 			})}
 			<DropdownMenuSeparator />
+			{extraItems && (
+				<>
+					{extraItems}
+					<DropdownMenuSeparator />
+				</>
+			)}
 			{selected?.usage &&
 				(selected.usage.status === "signed_out" ||
 					selected.usage.status === "token_expired" ||

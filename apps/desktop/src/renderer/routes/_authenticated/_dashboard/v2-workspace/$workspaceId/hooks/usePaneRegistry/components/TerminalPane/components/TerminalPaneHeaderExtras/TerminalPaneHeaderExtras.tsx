@@ -64,11 +64,13 @@ export function TerminalPaneHeaderExtras({
 
 	return (
 		<div className="flex items-center gap-1">
-			<AccountUsage
-				key={`${workspaceId}:${terminalId}`}
-				workspaceId={workspaceId}
-				terminalId={terminalId}
-			/>
+			{fork?.paneData.agentSurface !== "acp" && (
+				<AccountUsage
+					key={`${workspaceId}:${terminalId}`}
+					workspaceId={workspaceId}
+					terminalId={terminalId}
+				/>
+			)}
 			<TerminalSubagentsMenu
 				workspaceId={workspaceId}
 				terminalId={terminalId}

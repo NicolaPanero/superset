@@ -3441,9 +3441,6 @@ msgstr "Certificaatfout"
 msgid "Chain of Thought"
 msgstr "Gedachtegang"
 
-msgid "Change agent or account"
-msgstr "Agent of account wijzigen"
-
 msgid "Change assignee"
 msgstr "Toegewezen persoon wijzigen"
 
@@ -4643,9 +4640,6 @@ msgstr "Doorgaan met een andere agent"
 msgid "Continue with another agent…"
 msgstr "Doorgaan met een andere agent…"
 
-msgid "Continue with context"
-msgstr "Doorgaan met context"
-
 msgid "Continue with GitHub"
 msgstr "Doorgaan met GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+klik"
 
 msgid "Current"
 msgstr "Huidig"
-
-msgid "Current chat"
-msgstr "Huidige chat"
 
 msgid "current checkout"
 msgstr "huidige checkout"
@@ -8030,6 +8021,9 @@ msgstr "Volledige changelog →"
 msgid "Full Disk Access"
 msgstr "Volledige Schijftoegang"
 
+msgid "Full history"
+msgstr "Volledige geschiedenis"
+
 msgid "Full name"
 msgstr "Volledige naam"
 
@@ -10052,9 +10046,6 @@ msgstr "Beheer taken vanuit Slack-gesprekken."
 msgid "Manage Terminal Scripts"
 msgstr "Terminalscripts beheren"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Beheer de automatische voortzetting van deze chat. Wijzigingen worden meteen opgeslagen."
-
 msgid "Manage your account settings"
 msgstr "Beheer je accountinstellingen"
 
@@ -10476,8 +10467,8 @@ msgstr "Het grootste deel van de softwaregeschiedenis"
 msgid "Move {count} to Group"
 msgstr "{count} naar groep verplaatsen"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Verplaatst deze chat naar een ander account. Het gesprek blijft hier en gaat verder met het quotum van dat account."
+msgid "Move to another account"
+msgstr "Naar een ander account verplaatsen"
 
 msgid "Move to Center"
 msgstr "Naar het midden verplaatsen"
@@ -16459,6 +16450,9 @@ msgstr "Vat de wijzigingen in deze werkruimte samen"
 msgid "Summary"
 msgstr "Samenvatting"
 
+msgid "Summary only"
+msgstr "Alleen samenvatting"
+
 msgid "sun 11:00"
 msgstr "zo 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Volhouden"
 msgid "Sustain · active days in 30"
 msgstr "Continuïteit · actieve dagen van 30"
 
+msgid "Switch"
+msgstr "Wisselen"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Wissel van agent. Houd je workflow"
 
@@ -16723,6 +16720,9 @@ msgstr "Login wisselen"
 
 msgid "Switch sign-in…"
 msgstr "Login wisselen…"
+
+msgid "Switch to {summary}"
+msgstr "Overschakelen naar {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Overschakelen naar actieve werkruimte"
@@ -16786,6 +16786,9 @@ msgstr "Naar werkruimte 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Naar werkruimte 9"
+
+msgid "Switch…"
+msgstr "Wisselen…"
 
 msgid "Symbol, light"
 msgstr "Symbool, licht"
@@ -17208,6 +17211,9 @@ msgstr "De verbinding is verlopen"
 msgid "The connection was closed"
 msgstr "De verbinding is gesloten"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "De huidige chat blijft open tot de nieuwe draait."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "De huidige prompt wordt vervangen door de geselecteerde versie. Er wordt een nieuw item \"Hersteld\" aan de geschiedenis toegevoegd, zodat je dit ongedaan kunt maken."
 
@@ -17349,6 +17355,9 @@ msgstr "De naam van je organisatie of team"
 
 msgid "The network connection changed"
 msgstr "De netwerkverbinding is gewijzigd"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "De nieuwe agent hervat het hele gesprek, inclusief tools."
 
 msgid "The overnight shift"
 msgstr "De nachtploeg"
@@ -18127,6 +18136,9 @@ msgstr "Taken bijhouden in"
 
 msgid "Tracking"
 msgstr "Bijgehouden"
+
+msgid "Transfer"
+msgstr "Overdracht"
 
 msgid "Translated"
 msgstr "Vertaald"
@@ -18948,9 +18960,6 @@ msgstr "Wachten op checks"
 
 msgid "Waiting for it to connect…"
 msgstr "Wachten op verbinding…"
-
-msgid "Waiting for quota"
-msgstr "Wachten op quotum"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Wachten op quotum. Stoppen annuleert het automatisch doorgaan."

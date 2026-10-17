@@ -3441,9 +3441,6 @@ msgstr "Sertifika hatası"
 msgid "Chain of Thought"
 msgstr "Düşünce zinciri"
 
-msgid "Change agent or account"
-msgstr "Aracıyı veya hesabı değiştir"
-
 msgid "Change assignee"
 msgstr "Atananı değiştir"
 
@@ -4643,9 +4640,6 @@ msgstr "Başka bir ajanla devam et"
 msgid "Continue with another agent…"
 msgstr "Başka bir ajanla devam et…"
 
-msgid "Continue with context"
-msgstr "Bağlamla devam et"
-
 msgid "Continue with GitHub"
 msgstr "GitHub ile devam et"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+tık"
 
 msgid "Current"
 msgstr "Geçerli"
-
-msgid "Current chat"
-msgstr "Mevcut sohbet"
 
 msgid "current checkout"
 msgstr "mevcut checkout"
@@ -8030,6 +8021,9 @@ msgstr "Tüm değişiklik günlüğü →"
 msgid "Full Disk Access"
 msgstr "Tam Disk Erişimi"
 
+msgid "Full history"
+msgstr "Tam geçmiş"
+
 msgid "Full name"
 msgstr "Ad soyad"
 
@@ -10052,9 +10046,6 @@ msgstr "Görevleri Slack konuşmalarından yönetin."
 msgid "Manage Terminal Scripts"
 msgstr "Terminal betiklerini yönet"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Bu sohbetin otomatik devamını yönetin. Değişiklikler hemen kaydedilir."
-
 msgid "Manage your account settings"
 msgstr "Hesap ayarlarınızı yönetin"
 
@@ -10476,8 +10467,8 @@ msgstr "Yazılım tarihinin çoğu"
 msgid "Move {count} to Group"
 msgstr "{count} öğeyi gruba taşı"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Bu sohbeti başka bir hesaba taşır. Konuşma burada kalır ve o hesabın kotasıyla devam eder."
+msgid "Move to another account"
+msgstr "Başka bir hesaba taşı"
 
 msgid "Move to Center"
 msgstr "Ortaya taşı"
@@ -16459,6 +16450,9 @@ msgstr "Bu çalışma alanındaki değişiklikleri özetle"
 msgid "Summary"
 msgstr "Özet"
 
+msgid "Summary only"
+msgstr "Yalnızca özet"
+
 msgid "sun 11:00"
 msgstr "paz 11.00"
 
@@ -16706,6 +16700,9 @@ msgstr "Süreklilik"
 msgid "Sustain · active days in 30"
 msgstr "Süreklilik · 30 günde etkin gün"
 
+msgid "Switch"
+msgstr "Değiştir"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Ajan değiştirin. İş akışınızı koruyun"
 
@@ -16723,6 +16720,9 @@ msgstr "Oturumu değiştir"
 
 msgid "Switch sign-in…"
 msgstr "Oturumu değiştir…"
+
+msgid "Switch to {summary}"
+msgstr "{summary} seçeneğine geç"
 
 msgid "Switch to Active Workspace"
 msgstr "Etkin çalışma alanına geç"
@@ -16786,6 +16786,9 @@ msgstr "8. çalışma alanına geç"
 
 msgid "Switch to Workspace 9"
 msgstr "9. çalışma alanına geç"
+
+msgid "Switch…"
+msgstr "Değiştir…"
 
 msgid "Symbol, light"
 msgstr "Sembol, açık"
@@ -17208,6 +17211,9 @@ msgstr "Bağlantı zaman aşımına uğradı"
 msgid "The connection was closed"
 msgstr "Bağlantı kapatıldı"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Yeni sohbet çalışana kadar mevcut sohbet açık kalır."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Geçerli istem, seçilen sürümle değiştirilecek. Bunu geri alabilmeniz için geçmişe yeni bir \"Geri yüklendi\" kaydı eklenecek."
 
@@ -17349,6 +17355,9 @@ msgstr "Kuruluşunuzun veya takımınızın adı"
 
 msgid "The network connection changed"
 msgstr "Ağ bağlantısı değişti"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Yeni ajan, araçlar dahil tüm konuşmaya devam eder."
 
 msgid "The overnight shift"
 msgstr "Gece vardiyası"
@@ -18127,6 +18136,9 @@ msgstr "Görevleri şurada takip et"
 
 msgid "Tracking"
 msgstr "İzleme"
+
+msgid "Transfer"
+msgstr "Aktarım"
 
 msgid "Translated"
 msgstr "Çevrildi"
@@ -18948,9 +18960,6 @@ msgstr "Kontroller bekleniyor"
 
 msgid "Waiting for it to connect…"
 msgstr "Bağlanması bekleniyor…"
-
-msgid "Waiting for quota"
-msgstr "Kota bekleniyor"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Kota bekleniyor. Durdurmak otomatik devamı iptal eder."

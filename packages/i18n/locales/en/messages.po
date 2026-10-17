@@ -3441,9 +3441,6 @@ msgstr "Certificate Error"
 msgid "Chain of Thought"
 msgstr "Chain of Thought"
 
-msgid "Change agent or account"
-msgstr "Change agent or account"
-
 msgid "Change assignee"
 msgstr "Change assignee"
 
@@ -4643,9 +4640,6 @@ msgstr "Continue with another agent"
 msgid "Continue with another agent…"
 msgstr "Continue with another agent…"
 
-msgid "Continue with context"
-msgstr "Continue with context"
-
 msgid "Continue with GitHub"
 msgstr "Continue with GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+click"
 
 msgid "Current"
 msgstr "Current"
-
-msgid "Current chat"
-msgstr "Current chat"
 
 msgid "current checkout"
 msgstr "current checkout"
@@ -8030,6 +8021,9 @@ msgstr "Full changelog →"
 msgid "Full Disk Access"
 msgstr "Full Disk Access"
 
+msgid "Full history"
+msgstr "Full history"
+
 msgid "Full name"
 msgstr "Full name"
 
@@ -10052,9 +10046,6 @@ msgstr "Manage tasks from Slack conversations."
 msgid "Manage Terminal Scripts"
 msgstr "Manage Terminal Scripts"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Manage this chat's automatic continuation. Changes are saved immediately."
-
 msgid "Manage your account settings"
 msgstr "Manage your account settings"
 
@@ -10476,8 +10467,8 @@ msgstr "Most of software history"
 msgid "Move {count} to Group"
 msgstr "Move {count} to Group"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Move this chat to another account. The conversation stays here and continues with that account's quota."
+msgid "Move to another account"
+msgstr "Move to another account"
 
 msgid "Move to Center"
 msgstr "Move to Center"
@@ -16459,6 +16450,9 @@ msgstr "Summarize the changes in this workspace"
 msgid "Summary"
 msgstr "Summary"
 
+msgid "Summary only"
+msgstr "Summary only"
+
 msgid "sun 11:00"
 msgstr "sun 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Sustain"
 msgid "Sustain · active days in 30"
 msgstr "Sustain · active days in 30"
 
+msgid "Switch"
+msgstr "Switch"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Switch agents. Keep your workflow"
 
@@ -16723,6 +16720,9 @@ msgstr "Switch sign-in"
 
 msgid "Switch sign-in…"
 msgstr "Switch sign-in…"
+
+msgid "Switch to {summary}"
+msgstr "Switch to {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Switch to Active Workspace"
@@ -16786,6 +16786,9 @@ msgstr "Switch to Workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Switch to Workspace 9"
+
+msgid "Switch…"
+msgstr "Switch…"
 
 msgid "Symbol, light"
 msgstr "Symbol, light"
@@ -17208,6 +17211,9 @@ msgstr "The connection timed out"
 msgid "The connection was closed"
 msgstr "The connection was closed"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "The current chat stays open until the new one is running."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 
@@ -17349,6 +17355,9 @@ msgstr "The name of your organization or team"
 
 msgid "The network connection changed"
 msgstr "The network connection changed"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "The new agent resumes the whole conversation, tools included."
 
 msgid "The overnight shift"
 msgstr "The overnight shift"
@@ -18127,6 +18136,9 @@ msgstr "Track tasks in"
 
 msgid "Tracking"
 msgstr "Tracking"
+
+msgid "Transfer"
+msgstr "Transfer"
 
 msgid "Translated"
 msgstr "Translated"
@@ -18948,9 +18960,6 @@ msgstr "Waiting for Checks"
 
 msgid "Waiting for it to connect…"
 msgstr "Waiting for it to connect…"
-
-msgid "Waiting for quota"
-msgstr "Waiting for quota"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Waiting for quota. Stop cancels automatic continuation."

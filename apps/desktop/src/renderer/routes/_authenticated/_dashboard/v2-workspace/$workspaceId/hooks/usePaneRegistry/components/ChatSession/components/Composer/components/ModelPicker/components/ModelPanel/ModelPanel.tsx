@@ -36,12 +36,14 @@ const SHORTCUT_MODIFIER =
 
 export function ModelPanel({
 	agentSwitcher,
+	keepOpen = false,
 	model,
 	onLeave,
 	onPick,
 	searchRef,
 }: {
 	agentSwitcher?: AgentSwitcher;
+	keepOpen?: boolean;
 	model: SessionConfigOption | undefined;
 	/** Tab past the last agent tab (or Shift+Tab before the first) leaves the panel. */
 	onLeave?: (direction: 1 | -1) => void;
@@ -184,7 +186,10 @@ export function ModelPanel({
 				aria-current={selected ? "true" : undefined}
 				className={cn(MENU_ROW_CLASS, "pr-1")}
 				key={rowKey(row)}
-				onSelect={() => pickRow(row)}
+				onSelect={(event) => {
+					if (keepOpen) event.preventDefault();
+					pickRow(row);
+				}}
 				title={row.description}
 			>
 				<span className="min-w-0 flex-1 truncate">{row.label}</span>

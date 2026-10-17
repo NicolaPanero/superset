@@ -3441,9 +3441,6 @@ msgstr "证书错误"
 msgid "Chain of Thought"
 msgstr "思维链"
 
-msgid "Change agent or account"
-msgstr "更换代理或账户"
-
 msgid "Change assignee"
 msgstr "更改负责人"
 
@@ -4643,9 +4640,6 @@ msgstr "换一个智能体继续"
 msgid "Continue with another agent…"
 msgstr "换一个智能体继续…"
 
-msgid "Continue with context"
-msgstr "携带上下文继续"
-
 msgid "Continue with GitHub"
 msgstr "使用GitHub继续"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+点击"
 
 msgid "Current"
 msgstr "当前"
-
-msgid "Current chat"
-msgstr "当前聊天"
 
 msgid "current checkout"
 msgstr "当前检出"
@@ -8030,6 +8021,9 @@ msgstr "完整更新日志 →"
 msgid "Full Disk Access"
 msgstr "完全磁盘访问权限"
 
+msgid "Full history"
+msgstr "完整历史"
+
 msgid "Full name"
 msgstr "姓名"
 
@@ -10052,9 +10046,6 @@ msgstr "在Slack对话中管理任务。"
 msgid "Manage Terminal Scripts"
 msgstr "管理终端脚本"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "管理此聊天的自动继续功能。更改会立即保存。"
-
 msgid "Manage your account settings"
 msgstr "管理你的账户设置"
 
@@ -10476,8 +10467,8 @@ msgstr "软件史的大部分时间"
 msgid "Move {count} to Group"
 msgstr "将{count}个移动到分组"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "将此聊天移至另一个账户。对话保留在这里，并使用该账户的额度继续。"
+msgid "Move to another account"
+msgstr "移到其他账户"
 
 msgid "Move to Center"
 msgstr "移到中间"
@@ -16459,6 +16450,9 @@ msgstr "总结此工作区中的更改"
 msgid "Summary"
 msgstr "摘要"
 
+msgid "Summary only"
+msgstr "仅摘要"
+
 msgid "sun 11:00"
 msgstr "周日11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "持续"
 msgid "Sustain · active days in 30"
 msgstr "持续性 · 30 天内的活跃天数"
 
+msgid "Switch"
+msgstr "切换"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "换智能体，不换工作流"
 
@@ -16723,6 +16720,9 @@ msgstr "切换登录"
 
 msgid "Switch sign-in…"
 msgstr "切换登录…"
+
+msgid "Switch to {summary}"
+msgstr "切换到 {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "切换到活动工作区"
@@ -16786,6 +16786,9 @@ msgstr "切换到工作区8"
 
 msgid "Switch to Workspace 9"
 msgstr "切换到工作区9"
+
+msgid "Switch…"
+msgstr "切换…"
 
 msgid "Symbol, light"
 msgstr "图形标志，浅色"
@@ -17208,6 +17211,9 @@ msgstr "连接已超时"
 msgid "The connection was closed"
 msgstr "连接已被关闭"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "新聊天运行前，当前聊天会保持打开。"
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "当前提示词会被所选版本替换。历史中会新增一条“已恢复”记录，方便你撤销。"
 
@@ -17349,6 +17355,9 @@ msgstr "你的组织或团队的名称"
 
 msgid "The network connection changed"
 msgstr "网络连接已变更"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "新代理会继续整个对话，包括工具调用。"
 
 msgid "The overnight shift"
 msgstr "夜班"
@@ -18127,6 +18136,9 @@ msgstr "任务管理位置"
 
 msgid "Tracking"
 msgstr "已跟踪"
+
+msgid "Transfer"
+msgstr "转移"
 
 msgid "Translated"
 msgstr "已翻译"
@@ -18948,9 +18960,6 @@ msgstr "等待检查"
 
 msgid "Waiting for it to connect…"
 msgstr "正在等待连接…"
-
-msgid "Waiting for quota"
-msgstr "正在等待配额"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "正在等待配额。停止将取消自动继续。"

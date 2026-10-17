@@ -3441,9 +3441,6 @@ msgstr "Chyba certifikátu"
 msgid "Chain of Thought"
 msgstr "Řetězec úvah"
 
-msgid "Change agent or account"
-msgstr "Změnit agenta nebo účet"
-
 msgid "Change assignee"
 msgstr "Změnit řešitele"
 
@@ -4643,9 +4640,6 @@ msgstr "Pokračovat s jiným agentem"
 msgid "Continue with another agent…"
 msgstr "Pokračovat s jiným agentem…"
 
-msgid "Continue with context"
-msgstr "Pokračovat s kontextem"
-
 msgid "Continue with GitHub"
 msgstr "Pokračovat přes GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+kliknutí"
 
 msgid "Current"
 msgstr "Aktuální"
-
-msgid "Current chat"
-msgstr "Aktuální chat"
 
 msgid "current checkout"
 msgstr "aktuální checkout"
@@ -8030,6 +8021,9 @@ msgstr "Celý changelog →"
 msgid "Full Disk Access"
 msgstr "Plný přístup k disku"
 
+msgid "Full history"
+msgstr "Celá historie"
+
 msgid "Full name"
 msgstr "Celé jméno"
 
@@ -10052,9 +10046,6 @@ msgstr "Spravujte úkoly z konverzací ve Slacku."
 msgid "Manage Terminal Scripts"
 msgstr "Spravovat terminálové skripty"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Spravujte automatické pokračování tohoto chatu. Změny se ukládají okamžitě."
-
 msgid "Manage your account settings"
 msgstr "Spravujte nastavení svého účtu"
 
@@ -10476,8 +10467,8 @@ msgstr "Většina historie softwaru"
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Přesune tento chat na jiný účet. Konverzace zůstane zde a pokračuje s kvótou daného účtu."
+msgid "Move to another account"
+msgstr "Přesunout na jiný účet"
 
 msgid "Move to Center"
 msgstr "Přesunout do středu"
@@ -16459,6 +16450,9 @@ msgstr "Shrň změny v tomto pracovním prostoru"
 msgid "Summary"
 msgstr "Souhrn"
 
+msgid "Summary only"
+msgstr "Jen shrnutí"
+
 msgid "sun 11:00"
 msgstr "ne 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Vytrvalost"
 msgid "Sustain · active days in 30"
 msgstr "Pravidelnost · aktivní dny z 30"
 
+msgid "Switch"
+msgstr "Přepnout"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Vyměňte agenta. Workflow zůstane"
 
@@ -16723,6 +16720,9 @@ msgstr "Přepnout přihlášení"
 
 msgid "Switch sign-in…"
 msgstr "Přepnout přihlášení…"
+
+msgid "Switch to {summary}"
+msgstr "Přepnout na {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Přepnout na aktivní pracovní prostor"
@@ -16786,6 +16786,9 @@ msgstr "Přepnout na pracovní prostor 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Přepnout na pracovní prostor 9"
+
+msgid "Switch…"
+msgstr "Přepnout…"
 
 msgid "Symbol, light"
 msgstr "Symbol, světlý"
@@ -17208,6 +17211,9 @@ msgstr "Vypršel časový limit spojení"
 msgid "The connection was closed"
 msgstr "Spojení bylo uzavřeno"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Aktuální chat zůstane otevřený, dokud nový nepoběží."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Současný prompt bude nahrazen vybranou verzí. Do historie přibude nový záznam „Obnoveno“, takže půjde vrátit zpět."
 
@@ -17349,6 +17355,9 @@ msgstr "Název vaší organizace nebo týmu"
 
 msgid "The network connection changed"
 msgstr "Síťové připojení se změnilo"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."
 
 msgid "The overnight shift"
 msgstr "Noční směna"
@@ -18127,6 +18136,9 @@ msgstr "Sledovat úkoly v"
 
 msgid "Tracking"
 msgstr "Sleduji"
+
+msgid "Transfer"
+msgstr "Přenos"
 
 msgid "Translated"
 msgstr "Přeloženo"
@@ -18948,9 +18960,6 @@ msgstr "Čeká na kontroly"
 
 msgid "Waiting for it to connect…"
 msgstr "Čeká se na připojení…"
-
-msgid "Waiting for quota"
-msgstr "Čekání na kvótu"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Čekání na kvótu. Zastavení zruší automatické pokračování."

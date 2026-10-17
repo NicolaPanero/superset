@@ -3441,9 +3441,6 @@ msgstr "Erro de certificado"
 msgid "Chain of Thought"
 msgstr "Cadeia de raciocínio"
 
-msgid "Change agent or account"
-msgstr "Trocar agente ou conta"
-
 msgid "Change assignee"
 msgstr "Alterar responsável"
 
@@ -4643,9 +4640,6 @@ msgstr "Continuar com outro agente"
 msgid "Continue with another agent…"
 msgstr "Continuar com outro agente…"
 
-msgid "Continue with context"
-msgstr "Continuar com contexto"
-
 msgid "Continue with GitHub"
 msgstr "Continuar com o GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+clique"
 
 msgid "Current"
 msgstr "Atual"
-
-msgid "Current chat"
-msgstr "Chat atual"
 
 msgid "current checkout"
 msgstr "checkout atual"
@@ -8030,6 +8021,9 @@ msgstr "Changelog completo →"
 msgid "Full Disk Access"
 msgstr "Acesso Total ao Disco"
 
+msgid "Full history"
+msgstr "Histórico completo"
+
 msgid "Full name"
 msgstr "Nome completo"
 
@@ -10052,9 +10046,6 @@ msgstr "Gerencie tarefas a partir de conversas do Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Gerenciar scripts de terminal"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Gerencie a continuação automática deste chat. As alterações são salvas imediatamente."
-
 msgid "Manage your account settings"
 msgstr "Gerencie as configurações da sua conta"
 
@@ -10476,8 +10467,8 @@ msgstr "Quase toda a história do software"
 msgid "Move {count} to Group"
 msgstr "Mover {count} para um grupo"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Move este chat para outra conta. A conversa continua aqui, com a cota dessa conta."
+msgid "Move to another account"
+msgstr "Mover para outra conta"
 
 msgid "Move to Center"
 msgstr "Mover para o centro"
@@ -16459,6 +16450,9 @@ msgstr "Resuma as alterações desta área de trabalho"
 msgid "Summary"
 msgstr "Resumo"
 
+msgid "Summary only"
+msgstr "Somente resumo"
+
 msgid "sun 11:00"
 msgstr "dom 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Constância"
 msgid "Sustain · active days in 30"
 msgstr "Constância · dias ativos em 30"
 
+msgid "Switch"
+msgstr "Trocar"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Troque de agente. Mantenha seu fluxo"
 
@@ -16723,6 +16720,9 @@ msgstr "Trocar de login"
 
 msgid "Switch sign-in…"
 msgstr "Trocar de login…"
+
+msgid "Switch to {summary}"
+msgstr "Trocar para {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Alternar para área de trabalho ativa"
@@ -16786,6 +16786,9 @@ msgstr "Ir para a área de trabalho 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Ir para a área de trabalho 9"
+
+msgid "Switch…"
+msgstr "Trocar…"
 
 msgid "Symbol, light"
 msgstr "Símbolo, claro"
@@ -17208,6 +17211,9 @@ msgstr "O tempo de conexão esgotou"
 msgid "The connection was closed"
 msgstr "A conexão foi fechada"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "O chat atual continua aberto até o novo estar em execução."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "O prompt atual será substituído pela versão selecionada. Uma nova entrada \"Restaurado\" será adicionada ao histórico para você poder desfazer."
 
@@ -17349,6 +17355,9 @@ msgstr "O nome da sua organização ou equipe"
 
 msgid "The network connection changed"
 msgstr "A conexão de rede mudou"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "O novo agente retoma toda a conversa, incluindo as ferramentas."
 
 msgid "The overnight shift"
 msgstr "O turno da noite"
@@ -18127,6 +18136,9 @@ msgstr "Acompanhar tarefas em"
 
 msgid "Tracking"
 msgstr "Acompanhando"
+
+msgid "Transfer"
+msgstr "Transferência"
 
 msgid "Translated"
 msgstr "Traduzido"
@@ -18948,9 +18960,6 @@ msgstr "Aguardando as verificações"
 
 msgid "Waiting for it to connect…"
 msgstr "Aguardando a conexão…"
-
-msgid "Waiting for quota"
-msgstr "Aguardando cota"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Aguardando cota. Parar cancela a continuação automática."

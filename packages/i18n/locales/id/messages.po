@@ -3441,9 +3441,6 @@ msgstr "Kesalahan Sertifikat"
 msgid "Chain of Thought"
 msgstr "Rantai Pemikiran"
 
-msgid "Change agent or account"
-msgstr "Ganti agen atau akun"
-
 msgid "Change assignee"
 msgstr "Ubah penerima tugas"
 
@@ -4643,9 +4640,6 @@ msgstr "Lanjutkan dengan agen lain"
 msgid "Continue with another agent…"
 msgstr "Lanjutkan dengan agen lain…"
 
-msgid "Continue with context"
-msgstr "Lanjutkan dengan konteks"
-
 msgid "Continue with GitHub"
 msgstr "Lanjutkan dengan GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+klik"
 
 msgid "Current"
 msgstr "Saat ini"
-
-msgid "Current chat"
-msgstr "Chat saat ini"
 
 msgid "current checkout"
 msgstr "checkout saat ini"
@@ -8030,6 +8021,9 @@ msgstr "Changelog lengkap →"
 msgid "Full Disk Access"
 msgstr "Full Disk Access"
 
+msgid "Full history"
+msgstr "Riwayat lengkap"
+
 msgid "Full name"
 msgstr "Nama lengkap"
 
@@ -10052,9 +10046,6 @@ msgstr "Kelola tugas dari percakapan Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Kelola Skrip Terminal"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Kelola kelanjutan otomatis chat ini. Perubahan langsung disimpan."
-
 msgid "Manage your account settings"
 msgstr "Kelola pengaturan akun Anda"
 
@@ -10476,8 +10467,8 @@ msgstr "Sebagian besar sejarah perangkat lunak"
 msgid "Move {count} to Group"
 msgstr "Pindahkan {count} ke Grup"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Pindahkan chat ini ke akun lain. Percakapan tetap di sini dan berlanjut dengan kuota akun tersebut."
+msgid "Move to another account"
+msgstr "Pindahkan ke akun lain"
 
 msgid "Move to Center"
 msgstr "Pindahkan ke tengah"
@@ -16459,6 +16450,9 @@ msgstr "Rangkum perubahan di workspace ini"
 msgid "Summary"
 msgstr "Ringkasan"
 
+msgid "Summary only"
+msgstr "Ringkasan saja"
+
 msgid "sun 11:00"
 msgstr "min 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Konsistensi"
 msgid "Sustain · active days in 30"
 msgstr "Konsistensi · hari aktif dari 30"
 
+msgid "Switch"
+msgstr "Ganti"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Ganti agen. Pertahankan alur kerja Anda"
 
@@ -16723,6 +16720,9 @@ msgstr "Ganti sesi masuk"
 
 msgid "Switch sign-in…"
 msgstr "Ganti sesi masuk…"
+
+msgid "Switch to {summary}"
+msgstr "Ganti ke {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Beralih ke workspace aktif"
@@ -16786,6 +16786,9 @@ msgstr "Beralih ke Workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Beralih ke Workspace 9"
+
+msgid "Switch…"
+msgstr "Ganti…"
 
 msgid "Symbol, light"
 msgstr "Simbol, terang"
@@ -17208,6 +17211,9 @@ msgstr "Koneksinya kehabisan waktu"
 msgid "The connection was closed"
 msgstr "Koneksinya ditutup"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Chat saat ini tetap terbuka sampai chat baru berjalan."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt saat ini akan diganti dengan versi yang dipilih. Entri \"Dipulihkan\" yang baru akan ditambahkan ke riwayat sehingga Anda bisa membatalkannya."
 
@@ -17349,6 +17355,9 @@ msgstr "Nama organisasi atau tim Anda"
 
 msgid "The network connection changed"
 msgstr "Koneksi jaringan berubah"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
 
 msgid "The overnight shift"
 msgstr "Shift malam"
@@ -18127,6 +18136,9 @@ msgstr "Lacak tugas di"
 
 msgid "Tracking"
 msgstr "Pelacakan"
+
+msgid "Transfer"
+msgstr "Transfer"
 
 msgid "Translated"
 msgstr "Diterjemahkan"
@@ -18948,9 +18960,6 @@ msgstr "Menunggu Check"
 
 msgid "Waiting for it to connect…"
 msgstr "Menunggu terhubung…"
-
-msgid "Waiting for quota"
-msgstr "Menunggu kuota"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Menunggu kuota. Berhenti membatalkan kelanjutan otomatis."

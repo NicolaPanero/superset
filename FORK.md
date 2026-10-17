@@ -49,11 +49,19 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
   In questa modalità la creazione, l’elenco dei workspace e le impostazioni
   usano il computer locale, anche con una selezione remota salvata o in un link.
-- **Agent · Account** nell’intestazione apre due schede:
-  **Chat corrente** mostra account, quota e opzioni di continuazione salvate subito;
-  **Cambia agente o account** gestisce il cambio manuale con **Continue**.
-  Il cambio account Claude mantiene la chat nello stesso pannello. Per un altro
-  agente puoi scegliere la stessa chat, una nuova scheda o un pannello affiancato.
+- Nel composer della chat, come nella creazione di un workspace, ci sono il
+  selettore del **modello** e il tondino dell’**account** con la quota.
+  Il selettore mostra tutti gli agenti come schede: modello ed effort
+  dell’agente in uso si applicano subito; per un altro agente restano una
+  bozza finché **Switch…** non apre la conferma, e chiudere il selettore la
+  annulla. Il tondino elenca gli account con la quota, la continuazione
+  automatica, i reset del provider e la copia dell’ID sessione; scegliere un
+  altro account apre la stessa conferma.
+- La conferma sceglie account, posizione (stessa chat, pannello affiancato o
+  nuova scheda) e trasferimento: **Full history** riprende la conversazione
+  nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
+  partenza resta aperta finché la nuova non è avviata; il cambio account
+  Claude mantiene la chat nello stesso pannello.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
   espone questa modalità. Usa la pianificazione nativa. Per Claude approva
   automaticamente le letture e le ricerche nel workspace e i comandi di
@@ -64,8 +72,6 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Le letture shell con percorsi relativi devono iniziare con
   `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
   servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
-- Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
-  e le sue opzioni. Non cambia agente o account.
 - **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
   nell’intestazione cerca per titolo, modello o branch nei depositi locali di
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del
@@ -205,7 +211,7 @@ Il naming fallito deriva il titolo localmente. Le chat già aperte non vengono s
 
 ## Continuazione automatica delle chat Claude e Codex
 
-Apri **Agent · Account → Chat corrente → Continuazione automatica**. Le due
+Apri il tondino dell’account nel composer → **Automatic continuation**. Le due
 opzioni riguardano questa chat e sono entrambe inizialmente disattivate:
 
 - **Passa all’account suggerito quando la quota finisce**: continua nella stessa
@@ -455,8 +461,9 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
   al journal delle migrazioni ufficiali.
 - Procedure additive in `agents/fork-*.ts`, `usage/fork-procedures.ts` e
   `session-transfer`; i contratti tRPC esistenti rimangono compatibili.
-- `ForkChatExtras`, `AcpChatHandoffMenu` e `ForkHandoffMenus` per le azioni
-  specifiche; selettore del modello e pannello chat restano quelli ufficiali.
+- `ForkChatExtras` fornisce al composer, tramite `ForkComposerControlsProvider`,
+  selettore, tondino e conferma del fork; `ModelPicker` ufficiale riceve solo
+  `keepOpenOnPick` e `onOpenChange`. `ForkHandoffMenus` resta per i terminali.
 - `useForkBackgroundChats` e `ForkImportChatDialog` per gestione e ricerca
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e

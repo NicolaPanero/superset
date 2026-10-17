@@ -3441,9 +3441,6 @@ msgstr "Błąd certyfikatu"
 msgid "Chain of Thought"
 msgstr "Tok rozumowania"
 
-msgid "Change agent or account"
-msgstr "Zmień agenta lub konto"
-
 msgid "Change assignee"
 msgstr "Zmień osobę przypisaną"
 
@@ -4643,9 +4640,6 @@ msgstr "Kontynuuj z innym agentem"
 msgid "Continue with another agent…"
 msgstr "Kontynuuj z innym agentem…"
 
-msgid "Continue with context"
-msgstr "Kontynuuj z kontekstem"
-
 msgid "Continue with GitHub"
 msgstr "Kontynuuj z GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+klik"
 
 msgid "Current"
 msgstr "Bieżąca"
-
-msgid "Current chat"
-msgstr "Bieżący czat"
 
 msgid "current checkout"
 msgstr "bieżący checkout"
@@ -8030,6 +8021,9 @@ msgstr "Pełny changelog →"
 msgid "Full Disk Access"
 msgstr "Pełny dostęp do dysku"
 
+msgid "Full history"
+msgstr "Pełna historia"
+
 msgid "Full name"
 msgstr "Imię i nazwisko"
 
@@ -10052,9 +10046,6 @@ msgstr "Zarządzaj zadaniami z rozmów na Slacku."
 msgid "Manage Terminal Scripts"
 msgstr "Zarządzaj skryptami terminala"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Zarządzaj automatycznym kontynuowaniem tego czatu. Zmiany są zapisywane od razu."
-
 msgid "Manage your account settings"
 msgstr "Zarządzaj ustawieniami konta"
 
@@ -10476,8 +10467,8 @@ msgstr "Większość historii oprogramowania"
 msgid "Move {count} to Group"
 msgstr "Przenieś {count} do grupy"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Przenosi ten czat na inne konto. Rozmowa zostaje tutaj i jest kontynuowana w ramach limitu tego konta."
+msgid "Move to another account"
+msgstr "Przenieś na inne konto"
 
 msgid "Move to Center"
 msgstr "Przenieś na środek"
@@ -16459,6 +16450,9 @@ msgstr "Podsumuj zmiany w tym obszarze roboczym"
 msgid "Summary"
 msgstr "Podsumowanie"
 
+msgid "Summary only"
+msgstr "Tylko podsumowanie"
+
 msgid "sun 11:00"
 msgstr "nd 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Regularność"
 msgid "Sustain · active days in 30"
 msgstr "Regularność · aktywne dni z 30"
 
+msgid "Switch"
+msgstr "Przełącz"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Zmieniaj agentów. Zachowaj swój workflow"
 
@@ -16723,6 +16720,9 @@ msgstr "Zmień logowanie"
 
 msgid "Switch sign-in…"
 msgstr "Zmień logowanie…"
+
+msgid "Switch to {summary}"
+msgstr "Przełącz na {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Przełącz na aktywny obszar roboczy"
@@ -16786,6 +16786,9 @@ msgstr "Przełącz na obszar roboczy 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Przełącz na obszar roboczy 9"
+
+msgid "Switch…"
+msgstr "Przełącz…"
 
 msgid "Symbol, light"
 msgstr "Symbol, jasny"
@@ -17208,6 +17211,9 @@ msgstr "Przekroczono czas połączenia"
 msgid "The connection was closed"
 msgstr "Połączenie zostało zamknięte"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Bieżący czat pozostaje otwarty, dopóki nowy nie zostanie uruchomiony."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Bieżący prompt zostanie zastąpiony wybraną wersją. W historii pojawi się nowy wpis „Przywrócona”, dzięki czemu można to cofnąć."
 
@@ -17349,6 +17355,9 @@ msgstr "Nazwa organizacji lub zespołu"
 
 msgid "The network connection changed"
 msgstr "Połączenie sieciowe się zmieniło"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Nowy agent wznawia całą rozmowę, łącznie z narzędziami."
 
 msgid "The overnight shift"
 msgstr "Nocna zmiana"
@@ -18127,6 +18136,9 @@ msgstr "Śledź zadania w"
 
 msgid "Tracking"
 msgstr "Śledzenie"
+
+msgid "Transfer"
+msgstr "Przeniesienie"
 
 msgid "Translated"
 msgstr "Przetłumaczone"
@@ -18948,9 +18960,6 @@ msgstr "Oczekiwanie na kontrole"
 
 msgid "Waiting for it to connect…"
 msgstr "Oczekiwanie na połączenie…"
-
-msgid "Waiting for quota"
-msgstr "Oczekiwanie na limit"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Oczekiwanie na limit. Zatrzymanie anuluje automatyczną kontynuację."

@@ -3441,9 +3441,6 @@ msgstr "Error de certificado"
 msgid "Chain of Thought"
 msgstr "Cadena de razonamiento"
 
-msgid "Change agent or account"
-msgstr "Cambiar agente o cuenta"
-
 msgid "Change assignee"
 msgstr "Cambiar responsable"
 
@@ -4643,9 +4640,6 @@ msgstr "Continuar con otro agente"
 msgid "Continue with another agent…"
 msgstr "Continuar con otro agente…"
 
-msgid "Continue with context"
-msgstr "Continuar con contexto"
-
 msgid "Continue with GitHub"
 msgstr "Continuar con GitHub"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+clic"
 
 msgid "Current"
 msgstr "Actual"
-
-msgid "Current chat"
-msgstr "Chat actual"
 
 msgid "current checkout"
 msgstr "checkout actual"
@@ -8030,6 +8021,9 @@ msgstr "Registro de cambios completo →"
 msgid "Full Disk Access"
 msgstr "Acceso total al disco"
 
+msgid "Full history"
+msgstr "Historial completo"
+
 msgid "Full name"
 msgstr "Nombre completo"
 
@@ -10052,9 +10046,6 @@ msgstr "Gestiona tareas desde las conversaciones de Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Gestionar los scripts de terminal"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Gestiona la continuación automática de este chat. Los cambios se guardan inmediatamente."
-
 msgid "Manage your account settings"
 msgstr "Gestiona la configuración de tu cuenta"
 
@@ -10476,8 +10467,8 @@ msgstr "Casi toda la historia del software"
 msgid "Move {count} to Group"
 msgstr "Mover {count} a un grupo"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Mueve este chat a otra cuenta. La conversación se queda aquí y continúa con la cuota de esa cuenta."
+msgid "Move to another account"
+msgstr "Mover a otra cuenta"
 
 msgid "Move to Center"
 msgstr "Mover al centro"
@@ -16459,6 +16450,9 @@ msgstr "Resume los cambios de este espacio de trabajo"
 msgid "Summary"
 msgstr "Resumen"
 
+msgid "Summary only"
+msgstr "Solo resumen"
+
 msgid "sun 11:00"
 msgstr "dom 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Constancia"
 msgid "Sustain · active days in 30"
 msgstr "Constancia · días activos de 30"
 
+msgid "Switch"
+msgstr "Cambiar"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Cambia de agente. Conserva tu flujo de trabajo"
 
@@ -16723,6 +16720,9 @@ msgstr "Cambiar de sesión"
 
 msgid "Switch sign-in…"
 msgstr "Cambiar de sesión…"
+
+msgid "Switch to {summary}"
+msgstr "Cambiar a {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Cambiar a espacio de trabajo activo"
@@ -16786,6 +16786,9 @@ msgstr "Ir al espacio de trabajo 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Ir al espacio de trabajo 9"
+
+msgid "Switch…"
+msgstr "Cambiar…"
 
 msgid "Symbol, light"
 msgstr "Símbolo, claro"
@@ -17208,6 +17211,9 @@ msgstr "Se agotó el tiempo de conexión"
 msgid "The connection was closed"
 msgstr "Se cerró la conexión"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "El chat actual sigue abierto hasta que el nuevo esté en marcha."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "El prompt actual se reemplazará por la versión seleccionada. Se añadirá una nueva entrada \"Restaurada\" al historial para que puedas deshacerlo."
 
@@ -17349,6 +17355,9 @@ msgstr "El nombre de la organización o equipo"
 
 msgid "The network connection changed"
 msgstr "Cambió la conexión de red"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "El nuevo agente retoma toda la conversación, incluidas las herramientas."
 
 msgid "The overnight shift"
 msgstr "El turno de noche"
@@ -18127,6 +18136,9 @@ msgstr "Gestionar tareas en"
 
 msgid "Tracking"
 msgstr "Seguimiento"
+
+msgid "Transfer"
+msgstr "Transferencia"
 
 msgid "Translated"
 msgstr "Traducido"
@@ -18948,9 +18960,6 @@ msgstr "Esperando las comprobaciones"
 
 msgid "Waiting for it to connect…"
 msgstr "Esperando a que se conecte…"
-
-msgid "Waiting for quota"
-msgstr "Esperando cuota"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Esperando cuota. Detener cancela la continuación automática."

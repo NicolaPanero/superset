@@ -1,8 +1,5 @@
 import { expect, test } from "bun:test";
-import {
-	creationConfigOptions,
-	fromOptionValue,
-} from "./creationPickerOptions";
+import { creationConfigOptions, fromOptionValue } from "./fork-model-options";
 
 const labels = {
 	model: "Model",

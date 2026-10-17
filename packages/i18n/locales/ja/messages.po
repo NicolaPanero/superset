@@ -3441,9 +3441,6 @@ msgstr "証明書エラー"
 msgid "Chain of Thought"
 msgstr "思考プロセス"
 
-msgid "Change agent or account"
-msgstr "エージェント・アカウント変更"
-
 msgid "Change assignee"
 msgstr "担当者を変更"
 
@@ -4643,9 +4640,6 @@ msgstr "別のエージェントで続ける"
 msgid "Continue with another agent…"
 msgstr "別のエージェントで続ける…"
 
-msgid "Continue with context"
-msgstr "コンテキストを引き継いで続行"
-
 msgid "Continue with GitHub"
 msgstr "GitHubで続行"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+クリック"
 
 msgid "Current"
 msgstr "現在"
-
-msgid "Current chat"
-msgstr "現在のチャット"
 
 msgid "current checkout"
 msgstr "現在のチェックアウト"
@@ -8030,6 +8021,9 @@ msgstr "Changelog全体 →"
 msgid "Full Disk Access"
 msgstr "フルディスクアクセス"
 
+msgid "Full history"
+msgstr "完全な履歴"
+
 msgid "Full name"
 msgstr "氏名"
 
@@ -10052,9 +10046,6 @@ msgstr "Slackの会話からタスクを管理します。"
 msgid "Manage Terminal Scripts"
 msgstr "ターミナルスクリプトを管理"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "このチャットの自動継続を管理します。変更はすぐに保存されます。"
-
 msgid "Manage your account settings"
 msgstr "アカウント設定を管理"
 
@@ -10476,8 +10467,8 @@ msgstr "ソフトウェアの歴史のほとんど"
 msgid "Move {count} to Group"
 msgstr "{count}件をグループへ移動"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "このチャットを別のアカウントに移動します。会話はここに残り、そのアカウントの使用枠で続きます。"
+msgid "Move to another account"
+msgstr "別のアカウントに移動"
 
 msgid "Move to Center"
 msgstr "中央に移動"
@@ -16459,6 +16450,9 @@ msgstr "このワークスペースの変更を要約して"
 msgid "Summary"
 msgstr "概要"
 
+msgid "Summary only"
+msgstr "要約のみ"
+
 msgid "sun 11:00"
 msgstr "日 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "継続"
 msgid "Sustain · active days in 30"
 msgstr "継続 · 30日間のアクティブ日数"
 
+msgid "Switch"
+msgstr "切り替え"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "エージェントは替える。ワークフローはそのまま"
 
@@ -16723,6 +16720,9 @@ msgstr "サインインを切り替え"
 
 msgid "Switch sign-in…"
 msgstr "サインインを切り替え…"
+
+msgid "Switch to {summary}"
+msgstr "{summary} に切り替え"
 
 msgid "Switch to Active Workspace"
 msgstr "アクティブなワークスペースに切り替え"
@@ -16786,6 +16786,9 @@ msgstr "ワークスペース8に切り替え"
 
 msgid "Switch to Workspace 9"
 msgstr "ワークスペース9に切り替え"
+
+msgid "Switch…"
+msgstr "切り替え…"
 
 msgid "Symbol, light"
 msgstr "シンボル（明色）"
@@ -17208,6 +17211,9 @@ msgstr "接続がタイムアウトしました"
 msgid "The connection was closed"
 msgstr "接続が閉じられました"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "新しいチャットが起動するまで、現在のチャットは開いたままです。"
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "現在のプロンプトが選択したバージョンで置き換えられます。履歴に新しい「復元済み」エントリが追加されるので、元に戻せます。"
 
@@ -17349,6 +17355,9 @@ msgstr "組織またはチームの名前"
 
 msgid "The network connection changed"
 msgstr "ネットワーク接続が変更されました"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "新しいエージェントがツールを含む会話全体を再開します。"
 
 msgid "The overnight shift"
 msgstr "夜間シフト"
@@ -18127,6 +18136,9 @@ msgstr "タスクの管理先"
 
 msgid "Tracking"
 msgstr "計測期間"
+
+msgid "Transfer"
+msgstr "引き継ぎ"
 
 msgid "Translated"
 msgstr "翻訳済み"
@@ -18948,9 +18960,6 @@ msgstr "チェックを待機中"
 
 msgid "Waiting for it to connect…"
 msgstr "接続を待っています…"
-
-msgid "Waiting for quota"
-msgstr "使用枠を待機中"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "使用枠を待機中。停止すると自動再開をキャンセルします。"

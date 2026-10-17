@@ -3441,9 +3441,6 @@ msgstr "인증서 오류"
 msgid "Chain of Thought"
 msgstr "생각의 흐름"
 
-msgid "Change agent or account"
-msgstr "에이전트 또는 계정 변경"
-
 msgid "Change assignee"
 msgstr "담당자 변경"
 
@@ -4643,9 +4640,6 @@ msgstr "다른 에이전트로 계속하기"
 msgid "Continue with another agent…"
 msgstr "다른 에이전트로 계속하기…"
 
-msgid "Continue with context"
-msgstr "컨텍스트로 계속하기"
-
 msgid "Continue with GitHub"
 msgstr "GitHub로 계속하기"
 
@@ -5669,9 +5663,6 @@ msgstr "Ctrl+Shift+클릭"
 
 msgid "Current"
 msgstr "현재"
-
-msgid "Current chat"
-msgstr "현재 채팅"
 
 msgid "current checkout"
 msgstr "현재 체크아웃"
@@ -8030,6 +8021,9 @@ msgstr "전체 변경 로그 →"
 msgid "Full Disk Access"
 msgstr "전체 디스크 접근 권한"
 
+msgid "Full history"
+msgstr "전체 기록"
+
 msgid "Full name"
 msgstr "이름"
 
@@ -10052,9 +10046,6 @@ msgstr "Slack 대화에서 작업을 관리합니다."
 msgid "Manage Terminal Scripts"
 msgstr "터미널 스크립트 관리"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "이 채팅의 자동 이어가기를 관리합니다. 변경 사항은 즉시 저장됩니다."
-
 msgid "Manage your account settings"
 msgstr "계정 설정을 관리합니다"
 
@@ -10476,8 +10467,8 @@ msgstr "소프트웨어 역사의 대부분"
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "이 채팅을 다른 계정으로 옮깁니다. 대화는 여기 그대로 남고 해당 계정의 사용량으로 계속됩니다."
+msgid "Move to another account"
+msgstr "다른 계정으로 이동"
 
 msgid "Move to Center"
 msgstr "가운데로 이동"
@@ -16459,6 +16450,9 @@ msgstr "이 워크스페이스의 변경 사항을 요약해 줘"
 msgid "Summary"
 msgstr "요약"
 
+msgid "Summary only"
+msgstr "요약만"
+
 msgid "sun 11:00"
 msgstr "일 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "지속"
 msgid "Sustain · active days in 30"
 msgstr "지속성 · 30일 중 활동 일수"
 
+msgid "Switch"
+msgstr "전환"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "에이전트는 바꾸고, 워크플로는 그대로"
 
@@ -16723,6 +16720,9 @@ msgstr "로그인 전환"
 
 msgid "Switch sign-in…"
 msgstr "로그인 전환…"
+
+msgid "Switch to {summary}"
+msgstr "{summary}(으)로 전환"
 
 msgid "Switch to Active Workspace"
 msgstr "활성 워크스페이스로 전환"
@@ -16786,6 +16786,9 @@ msgstr "워크스페이스 8로 전환"
 
 msgid "Switch to Workspace 9"
 msgstr "워크스페이스 9로 전환"
+
+msgid "Switch…"
+msgstr "전환…"
 
 msgid "Symbol, light"
 msgstr "심볼, 밝은 색"
@@ -17208,6 +17211,9 @@ msgstr "연결 시간이 초과되었습니다"
 msgid "The connection was closed"
 msgstr "연결이 닫혔습니다"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "새 채팅이 실행될 때까지 현재 채팅은 열린 상태로 유지됩니다."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "현재 프롬프트가 선택한 버전으로 교체됩니다. 기록에 \"복원됨\" 항목이 새로 추가되므로 되돌릴 수 있습니다."
 
@@ -17349,6 +17355,9 @@ msgstr "조직 또는 팀의 이름"
 
 msgid "The network connection changed"
 msgstr "네트워크 연결이 바뀌었습니다"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "새 에이전트가 도구를 포함한 전체 대화를 이어갑니다."
 
 msgid "The overnight shift"
 msgstr "야간 근무"
@@ -18127,6 +18136,9 @@ msgstr "작업 관리 위치"
 
 msgid "Tracking"
 msgstr "추적 기간"
+
+msgid "Transfer"
+msgstr "전송"
 
 msgid "Translated"
 msgstr "번역됨"
@@ -18948,9 +18960,6 @@ msgstr "검사 대기 중"
 
 msgid "Waiting for it to connect…"
 msgstr "연결을 기다리는 중…"
-
-msgid "Waiting for quota"
-msgstr "한도 대기 중"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "한도 대기 중입니다. 중지하면 자동 계속이 취소됩니다."

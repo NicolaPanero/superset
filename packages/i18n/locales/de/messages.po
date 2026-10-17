@@ -3441,9 +3441,6 @@ msgstr "Zertifikatsfehler"
 msgid "Chain of Thought"
 msgstr "Gedankenkette"
 
-msgid "Change agent or account"
-msgstr "Agent oder Konto wechseln"
-
 msgid "Change assignee"
 msgstr "Zuständigkeit ändern"
 
@@ -4643,9 +4640,6 @@ msgstr "Mit anderem Agent fortfahren"
 msgid "Continue with another agent…"
 msgstr "Mit anderem Agent fortfahren…"
 
-msgid "Continue with context"
-msgstr "Mit Kontext fortfahren"
-
 msgid "Continue with GitHub"
 msgstr "Mit GitHub fortfahren"
 
@@ -5669,9 +5663,6 @@ msgstr "Strg+Umschalt+Klick"
 
 msgid "Current"
 msgstr "Aktuell"
-
-msgid "Current chat"
-msgstr "Aktueller Chat"
 
 msgid "current checkout"
 msgstr "aktueller Checkout"
@@ -8030,6 +8021,9 @@ msgstr "Vollständiger Changelog →"
 msgid "Full Disk Access"
 msgstr "Vollständiger Festplattenzugriff"
 
+msgid "Full history"
+msgstr "Vollständiger Verlauf"
+
 msgid "Full name"
 msgstr "Vollständiger Name"
 
@@ -10052,9 +10046,6 @@ msgstr "Aufgaben aus Slack-Unterhaltungen verwalten."
 msgid "Manage Terminal Scripts"
 msgstr "Terminal-Skripte verwalten"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Verwalte die automatische Fortsetzung dieses Chats. Änderungen werden sofort gespeichert."
-
 msgid "Manage your account settings"
 msgstr "Verwalte deine Kontoeinstellungen"
 
@@ -10476,8 +10467,8 @@ msgstr "Der Großteil der Softwaregeschichte"
 msgid "Move {count} to Group"
 msgstr "{count} in Gruppe verschieben"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Verschiebt diesen Chat zu einem anderen Konto. Die Unterhaltung bleibt hier und läuft mit dem Kontingent dieses Kontos weiter."
+msgid "Move to another account"
+msgstr "Zu einem anderen Konto wechseln"
 
 msgid "Move to Center"
 msgstr "In die Mitte verschieben"
@@ -16459,6 +16450,9 @@ msgstr "Fasse die Änderungen in diesem Arbeitsbereich zusammen"
 msgid "Summary"
 msgstr "Übersicht"
 
+msgid "Summary only"
+msgstr "Nur Zusammenfassung"
+
 msgid "sun 11:00"
 msgstr "So 11:00"
 
@@ -16706,6 +16700,9 @@ msgstr "Ausdauer"
 msgid "Sustain · active days in 30"
 msgstr "Beständigkeit · aktive Tage von 30"
 
+msgid "Switch"
+msgstr "Wechseln"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Agenten wechseln. Workflow behalten"
 
@@ -16723,6 +16720,9 @@ msgstr "Anmeldung wechseln"
 
 msgid "Switch sign-in…"
 msgstr "Anmeldung wechseln…"
+
+msgid "Switch to {summary}"
+msgstr "Zu {summary} wechseln"
 
 msgid "Switch to Active Workspace"
 msgstr "Zum aktiven Arbeitsbereich wechseln"
@@ -16786,6 +16786,9 @@ msgstr "Zu Arbeitsbereich 8 wechseln"
 
 msgid "Switch to Workspace 9"
 msgstr "Zu Arbeitsbereich 9 wechseln"
+
+msgid "Switch…"
+msgstr "Wechseln…"
 
 msgid "Symbol, light"
 msgstr "Symbol, hell"
@@ -17208,6 +17211,9 @@ msgstr "Zeitüberschreitung bei der Verbindung"
 msgid "The connection was closed"
 msgstr "Die Verbindung wurde geschlossen"
 
+msgid "The current chat stays open until the new one is running."
+msgstr "Der aktuelle Chat bleibt geöffnet, bis der neue läuft."
+
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Der aktuelle Prompt wird durch die ausgewählte Version ersetzt. Im Verlauf wird ein neuer Eintrag \"Wiederhergestellt\" angelegt, damit du das rückgängig machen kannst."
 
@@ -17349,6 +17355,9 @@ msgstr "Der Name deiner Organisation oder deines Teams"
 
 msgid "The network connection changed"
 msgstr "Die Netzwerkverbindung hat sich geändert"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Der neue Agent setzt die gesamte Unterhaltung fort, einschließlich Tools."
 
 msgid "The overnight shift"
 msgstr "Die Nachtschicht"
@@ -18127,6 +18136,9 @@ msgstr "Aufgabenverwaltung"
 
 msgid "Tracking"
 msgstr "Erfassung"
+
+msgid "Transfer"
+msgstr "Übertragung"
 
 msgid "Translated"
 msgstr "Übersetzt"
@@ -18948,9 +18960,6 @@ msgstr "Wartet auf Prüfungen"
 
 msgid "Waiting for it to connect…"
 msgstr "Warten auf die Verbindung…"
-
-msgid "Waiting for quota"
-msgstr "Warten auf Kontingent"
 
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Warten auf Kontingent. Stopp beendet die automatische Fortsetzung."
