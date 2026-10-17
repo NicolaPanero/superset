@@ -860,7 +860,7 @@ export class AcpAdapter implements HarnessAdapter {
 						{
 							sessionId: startOptions.resume.harnessSessionId,
 							cwd: startOptions.cwd,
-							...extraDirectories(startOptions),
+							...extraDirectories(startOptions, this.agentCapabilities),
 							mcpServers: acpMcpServers(
 								this.mcpServers,
 								this.agentCapabilities,
@@ -888,7 +888,7 @@ export class AcpAdapter implements HarnessAdapter {
 						"session/new",
 						{
 							cwd: startOptions.cwd,
-							...extraDirectories(startOptions),
+							...extraDirectories(startOptions, this.agentCapabilities),
 							mcpServers: acpMcpServers(
 								this.mcpServers,
 								this.agentCapabilities,
@@ -908,7 +908,7 @@ export class AcpAdapter implements HarnessAdapter {
 					"session/new",
 					{
 						cwd: startOptions.cwd,
-						...extraDirectories(startOptions),
+						...extraDirectories(startOptions, this.agentCapabilities),
 						mcpServers: acpMcpServers(this.mcpServers, this.agentCapabilities),
 					},
 					startupTimeoutMs,
@@ -2265,9 +2265,18 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 }
 
-function extraDirectories(startOptions: HarnessStartOptions) {
+/** Only for agents that advertise it: Grok rejects the whole request otherwise. */
+export function extraDirectories(
+	startOptions: Pick<HarnessStartOptions, "additionalDirectories">,
+	agentCapabilities: Record<string, unknown>,
+) {
 	const dirs = startOptions.additionalDirectories ?? [];
-	return dirs.length > 0 ? { additionalDirectories: dirs } : {};
+	const session = agentCapabilities.sessionCapabilities as
+		| { additionalDirectories?: unknown }
+		| undefined;
+	return dirs.length > 0 && session?.additionalDirectories
+		? { additionalDirectories: dirs }
+		: {};
 }
 
 export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {
