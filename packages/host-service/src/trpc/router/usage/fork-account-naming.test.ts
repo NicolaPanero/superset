@@ -32,7 +32,7 @@ afterEach(() => {
 const id = "34c89ba6-f34e-41d4-b351-76f90b58a0d4";
 function fixture(
 	agent: "claude" | "codex" = "claude",
-	email = "b4b@siapcn.it",
+	email = "work@example.com",
 ) {
 	const home = mkdtempSync(join(tmpdir(), "fork-account-naming-"));
 	roots.push(home);
@@ -90,10 +90,10 @@ describe("automatic account profile naming", () => {
 			'{"permissions":{"allow":[]}}',
 		);
 		const result = await finishForkAccountLogin(f.input, f.deps);
-		const target = join(f.home, ".claude-b4b-siapcn-it");
+		const target = join(f.home, ".claude-work-example-com");
 		expect(result).toEqual({
 			selection: target,
-			label: "b4b@siapcn.it",
+			label: "work@example.com",
 			credentialKind: "subscription",
 		});
 		expect(existsSync(f.source)).toBe(false);
@@ -102,7 +102,7 @@ describe("automatic account profile naming", () => {
 		);
 		expect(f.moves).toEqual([[f.source, target]]);
 		expect(f.deps.registry.list()[0]).toMatchObject({
-			email: "b4b@siapcn.it",
+			email: "work@example.com",
 			selection: target,
 		});
 	});
@@ -154,7 +154,7 @@ describe("automatic account profile naming", () => {
 	it("does not overwrite an existing folder, even when it is empty", async () => {
 		const f = fixture();
 		f.complete();
-		const occupied = join(f.home, ".claude-b4b-siapcn-it");
+		const occupied = join(f.home, ".claude-work-example-com");
 		mkdirSync(occupied);
 		expect((await finishForkAccountLogin(f.input, f.deps))?.selection).toBe(
 			`${occupied}-2`,
@@ -165,12 +165,12 @@ describe("automatic account profile naming", () => {
 	it("reserves names belonging to disconnected profiles whose folder is missing", async () => {
 		const f = fixture();
 		f.complete();
-		const occupied = join(f.home, ".claude-b4b-siapcn-it");
+		const occupied = join(f.home, ".claude-work-example-com");
 		f.deps.registry.remember({
 			agent: "claude",
 			selection: occupied,
 			credentialKind: "subscription",
-			email: "b4b@siapcn.it",
+			email: "work@example.com",
 			identity: createHash("sha256").update("other identity").digest("hex"),
 		});
 		expect((await finishForkAccountLogin(f.input, f.deps))?.selection).toBe(
@@ -215,7 +215,7 @@ describe("automatic account profile naming", () => {
 			}),
 		).rejects.toThrow("keychain denied");
 		expect(existsSync(f.source)).toBe(true);
-		expect(existsSync(join(f.home, ".claude-b4b-siapcn-it"))).toBe(false);
+		expect(existsSync(join(f.home, ".claude-work-example-com"))).toBe(false);
 		expect(f.deps.registry.list()).toEqual([]);
 	});
 
@@ -235,8 +235,8 @@ describe("automatic account profile naming", () => {
 		);
 		expect(existsSync(f.source)).toBe(true);
 		expect(f.moves).toEqual([
-			[f.source, join(f.home, ".claude-b4b-siapcn-it")],
-			[join(f.home, ".claude-b4b-siapcn-it"), f.source],
+			[f.source, join(f.home, ".claude-work-example-com")],
+			[join(f.home, ".claude-work-example-com"), f.source],
 		]);
 	});
 
@@ -280,7 +280,7 @@ describe("automatic account profile naming", () => {
 	});
 
 	it("sanitizes emails as bounded folder names instead of shell or path syntax", () => {
-		expect(accountProfileSlug(" B4B@siapcn.it ")).toBe("b4b-siapcn-it");
+		expect(accountProfileSlug(" Work@Example.com ")).toBe("work-example-com");
 		expect(accountProfileSlug("../../$(echo example);@email.invalid")).toBe(
 			"echo-example-email-invalid",
 		);

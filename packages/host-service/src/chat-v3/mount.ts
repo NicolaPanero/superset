@@ -28,6 +28,7 @@ import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
 import { createResolveCwd } from "./resolveCwd";
+import { withForkMcpServers } from "./withForkMcpServers";
 import { withProjectFolders } from "./withProjectFolders";
 
 export const CHAT_V3_TRPC_PATH = "/chat-v3/trpc";
@@ -100,7 +101,10 @@ function harnessRegistry(
 		...acpHarnessEntries(db, agents),
 	];
 	return new Map(
-		entries.map(([name, factory]) => [name, withProjectFolders(db, factory)]),
+		entries.map(([name, factory]) => [
+			name,
+			withForkMcpServers(withProjectFolders(db, factory)),
+		]),
 	);
 }
 

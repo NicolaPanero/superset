@@ -12,6 +12,24 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Uso quotidiano
 
+- **Settings → Fork → Connections** configura GitHub, Bitbucket Cloud e Jira Cloud.
+  Le stesse schede sono disponibili nell'onboarding. Jira e Bitbucket accettano
+  token personali oppure un servizio OAuth compatibile; un broker può collegarli
+  entrambi. Jira abilita la sorgente Tasks anche con le funzioni Pro nascoste.
+  Le chiamate partono dall'host verso le API ufficiali, indipendentemente dal login
+  Superset. Contratto OAuth e limiti: [docs/fork-integrations.md](docs/fork-integrations.md).
+  GitHub e Bitbucket condividono la schermata Pull Requests, con l'icona del
+  provider su ogni repository. Jira è la vista Tasks predefinita quando
+  configurato: ricerca, filtri rapidi, lista/board e dettaglio affiancato;
+  JQL resta disponibile nei controlli avanzati.
+
+- **Settings → Fork → MCP servers** gestisce un solo elenco di server MCP
+  (HTTP, SSE, stdio) per tutti gli agenti e gli account dell'host, salvato in
+  `$SUPERSET_HOME_DIR/fork/mcp-servers.json`. Al primo avvio importa quelli di
+  `~/.claude.json` senza toccarli. Le chat ACP ricevono l'elenco a ogni sessione;
+  i terminali `claude` e `codex` lo ricevono dai wrapper (`--mcp-config` e `-c`).
+  Header e variabili restano sull'host: l'interfaccia mostra solo i nomi.
+
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
   e nella schermata di un workspace senza schede aperte.
@@ -35,16 +53,29 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   dispositivo nella home, in **Workspaces** e nelle impostazioni Git e progetto.
   In questa modalità la creazione, l’elenco dei workspace e le impostazioni
   usano il computer locale, anche con una selezione remota salvata o in un link.
-- **Agent · Account** nell’intestazione apre due schede:
-  **Chat corrente** mostra account, quota e opzioni di continuazione salvate subito;
-  **Cambia agente o account** gestisce il cambio manuale con **Continue**.
-  Il cambio account Claude mantiene la chat nello stesso pannello. Per un altro
-  agente puoi scegliere la stessa chat, una nuova scheda o un pannello affiancato.
+- Nel composer della chat, come nella creazione di un workspace, ci sono il
+  selettore del **modello** e il tondino dell’**account** con la quota.
+  Il selettore mostra tutti gli agenti come schede: modello ed effort
+  dell’agente in uso si applicano subito; per un altro agente restano una
+  bozza finché **Switch…** non apre la conferma, e chiudere il selettore la
+  annulla. Il tondino elenca gli account con la quota, la continuazione
+  automatica, i reset del provider e la copia dell’ID sessione; scegliere un
+  altro account apre la stessa conferma.
+- La conferma sceglie account, posizione (stessa chat, pannello affiancato o
+  nuova scheda) e trasferimento: **Full history** riprende la conversazione
+  nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
+  partenza resta aperta finché la nuova non è avviata; il cambio account
+  Claude mantiene la chat nello stesso pannello.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
-  espone questa modalità. Usa la pianificazione nativa e disattiva le
-  approvazioni automatiche di **Full access**.
-- Il selettore del **modello** contiene soltanto i modelli dell’agente in uso
-  e le sue opzioni. Non cambia agente o account.
+  espone questa modalità. Usa la pianificazione nativa. Per Claude approva
+  automaticamente le letture e le ricerche nel workspace e i comandi di
+  esplorazione riconosciuti, verificando anche pipe, concatenazioni e percorsi
+  reali. Le approvazioni valgono per una sola chiamata. Modifiche, uscita da
+  Plan, tool MCP, percorsi esterni e comandi non riconosciuti richiedono
+  conferma; le domande sulle scelte progettuali restano visibili.
+  Le letture shell con percorsi relativi devono iniziare con
+  `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
+  servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
 - **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
   nell’intestazione cerca per titolo, modello o branch nei depositi locali di
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del
@@ -184,7 +215,7 @@ Il naming fallito deriva il titolo localmente. Le chat già aperte non vengono s
 
 ## Continuazione automatica delle chat Claude e Codex
 
-Apri **Agent · Account → Chat corrente → Continuazione automatica**. Le due
+Apri il tondino dell’account nel composer → **Automatic continuation**. Le due
 opzioni riguardano questa chat e sono entrambe inizialmente disattivate:
 
 - **Passa all’account suggerito quando la quota finisce**: continua nella stessa
@@ -434,8 +465,16 @@ Tenere le estensioni in file propri e limitare gli agganci nei file ufficiali:
   al journal delle migrazioni ufficiali.
 - Procedure additive in `agents/fork-*.ts`, `usage/fork-procedures.ts` e
   `session-transfer`; i contratti tRPC esistenti rimangono compatibili.
-- `ForkChatExtras`, `AcpChatHandoffMenu` e `ForkHandoffMenus` per le azioni
-  specifiche; selettore del modello e pannello chat restano quelli ufficiali.
+- `ForkChatExtras` fornisce al composer, tramite `ForkComposerControlsProvider`,
+  selettore, tondino e conferma del fork; le proprietà aggiunte a `ModelPicker`
+  ufficiale sono in `fork-model-picker-props.ts` e arrivano con `...fork`, lontano
+  dalle righe che upstream modifica. `ForkHandoffMenus` resta per i terminali.
+- Integrazioni Bitbucket e Jira: `forkHostProviders` in `app.ts` sostituisce le
+  credenziali in un solo punto; i layout di PR e Tasks leggono i parametri
+  `fork*` con `forkRouteSearch` (una riga ciascuno); `useForkPullRequestRedirect`
+  apre i link Bitbucket; `NewProjectModal` cambia solo l’import del selettore
+  e la chiamata `forkProjectCreator(...).mutate`, mentre `GitHubRepositoryPicker`
+  resta quello ufficiale.
 - `useForkBackgroundChats` e `ForkImportChatDialog` per gestione e ricerca
   delle conversazioni; `forkChatCloseIntent` distingue chiusura e stop.
 - `fork-identity.ts`, `fork-data-migration`, `fork-updates.ts` e

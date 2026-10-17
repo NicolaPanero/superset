@@ -38,12 +38,15 @@ describe("host-wide default account pointers", () => {
 	let previousCodexHome: string | undefined;
 	let previousInjectedCodexHome: string | undefined;
 	let previousAmbientCodexHome: string | undefined;
+	let previousPinnedAccount: string | undefined;
 
 	beforeEach(() => {
 		previousHome = process.env.SUPERSET_HOME_DIR;
 		previousCodexHome = process.env.CODEX_HOME;
 		previousInjectedCodexHome = process.env.SUPERSET_DEFAULT_CODEX_HOME;
 		previousAmbientCodexHome = process.env.SUPERSET_AMBIENT_CODEX_HOME;
+		previousPinnedAccount = process.env.SUPERSET_PINNED_ACCOUNT_ENV;
+		delete process.env.SUPERSET_PINNED_ACCOUNT_ENV;
 		home = mkdtempSync(join(tmpdir(), "superset-default-account-"));
 		process.env.SUPERSET_HOME_DIR = home;
 	});
@@ -55,6 +58,7 @@ describe("host-wide default account pointers", () => {
 			["CODEX_HOME", previousCodexHome],
 			["SUPERSET_DEFAULT_CODEX_HOME", previousInjectedCodexHome],
 			["SUPERSET_AMBIENT_CODEX_HOME", previousAmbientCodexHome],
+			["SUPERSET_PINNED_ACCOUNT_ENV", previousPinnedAccount],
 		] as const) {
 			if (value === undefined) delete process.env[key];
 			else process.env[key] = value;

@@ -25,9 +25,10 @@ import {
 import { useOptimisticSelections } from "../../hooks/useOptimisticSelections";
 import { EffortSliderCard } from "./components/EffortSliderCard";
 import { ModelPanel } from "./components/ModelPanel";
+import type { ForkModelPickerProps } from "./fork-model-picker-props";
 import type { AgentSwitcher } from "./types";
 
-export type ModelPickerProps = {
+export type ModelPickerProps = ForkModelPickerProps & {
 	configOptions: SessionConfigOption[];
 	onSelect: (configId: string, value: string) => void;
 	agentSwitcher?: AgentSwitcher;
@@ -55,8 +56,17 @@ export function ModelPicker({
 	agentSwitcher,
 	configOptions,
 	onSelect,
+	...fork
 }: ModelPickerProps) {
-	const [open, setOpen] = useState(false);
+	const { emptyLabel, footer, keepOpenOnPick = false, onOpenChange } = fork;
+	const [open, setOpenState] = useState(false);
+	const setOpen = (next: boolean) => {
+		setOpenState(next);
+		onOpenChange?.(next);
+	};
+	const closeAfterPick = () => {
+		if (!keepOpenOnPick) setOpen(false);
+	};
 	const searchRef = useRef<HTMLInputElement>(null);
 	const settingsRef = useRef<HTMLDivElement>(null);
 	const isDark = useIsDarkTheme();
@@ -81,7 +91,9 @@ export function ModelPicker({
 	const choose = (configId: string, value: string) =>
 		select(configId, value, () => onSelect(configId, value));
 	const agentIcon = agentSwitcher
-		? getPresetIcon(agentSwitcher.currentPresetId, isDark)
+		? (agentSwitcher.agents.find(
+				(agent) => agent.presetId === agentSwitcher.currentPresetId,
+			)?.icon ?? getPresetIcon(agentSwitcher.currentPresetId, isDark))
 		: undefined;
 	const model = options.find(
 		(option) => option.category === "model" && option.options.length > 0,
@@ -104,9 +116,10 @@ export function ModelPicker({
 	);
 	if (!model && settings.length === 0 && !canSwitchAgent) return null;
 	const showsModels = Boolean(model) || canSwitchAgent;
-	const currentAgentLabel = agentSwitcher?.agents.find(
-		(agent) => agent.presetId === agentSwitcher.currentPresetId,
-	)?.label;
+	const currentAgentLabel =
+		agentSwitcher?.agents.find(
+			(agent) => agent.presetId === agentSwitcher.currentPresetId,
+		)?.label ?? emptyLabel;
 	const pillLabel =
 		currentLabel(model) ??
 		model?.label ??
@@ -114,7 +127,7 @@ export function ModelPicker({
 		settings[0]?.label;
 	const pick = (option: SessionConfigOption, value: string) => {
 		if (value !== option.currentValue) choose(option.id, value);
-		setOpen(false);
+		closeAfterPick();
 	};
 	// Radix traps Tab inside the menu, so the settings row below the model
 	// panel is only reachable by hand: Tab past the last agent tab lands on
@@ -177,11 +190,12 @@ export function ModelPicker({
 			>
 				{showsModels ? (
 					<ModelPanel
+						keepOpen={keepOpenOnPick}
 						agentSwitcher={
 							agentSwitcher && {
 								...agentSwitcher,
 								onSwitch: (presetId, picked) => {
-									setOpen(false);
+									closeAfterPick();
 									agentSwitcher.onSwitch(presetId, picked);
 								},
 							}
@@ -242,6 +256,7 @@ export function ModelPicker({
 						))}
 					</div>
 				) : null}
+				{footer}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

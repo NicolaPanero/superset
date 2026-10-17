@@ -23,5 +23,6 @@ export { FakeHarness } from "./fake";
 export type {
 	AdapterEvent,
 	HarnessAdapter,
+	HarnessMcpServer,
 	HarnessStartOptions,
 } from "./types";

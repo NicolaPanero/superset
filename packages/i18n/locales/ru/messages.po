@@ -968,6 +968,9 @@ msgstr "{name} встроен и не может быть заменён"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} не добавлен"
 
+msgid "{name} unreachable"
+msgstr "Сервис {name} недоступен"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Укажите хотя бы одного человека или выберите {choice}.} sender {Укажите хотя бы одного отправителя или выберите {choice}.} other {Укажите хотя бы одно значение или выберите {choice}.}}"
 
@@ -1785,6 +1788,9 @@ msgstr "Добавить скрипт"
 msgid "Add Script"
 msgstr "Добавить скрипт"
 
+msgid "Add server"
+msgstr "Добавить сервер"
+
 msgid "Add setup commands, one per line..."
 msgstr "Добавьте команды установки, по одной в строке..."
 
@@ -2141,6 +2147,9 @@ msgstr "Все сессии сохранены при обновлении."
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Все сессии закрыты, работает новый демон."
 
+msgid "All statuses"
+msgstr "Все статусы"
+
 msgid "All tasks"
 msgstr "Все задачи"
 
@@ -2221,6 +2230,9 @@ msgstr "Также удалить локальные ветки"
 
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Также удалять локальную ветку git при удалении рабочей области с worktree"
+
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Также выйти из GitHub CLI на этом компьютере"
 
 msgid "Also viewing this page"
 msgstr "Также просматривают эту страницу"
@@ -2408,6 +2420,9 @@ msgstr "Ключи API"
 msgid "API keys are not validated with a paid request."
 msgstr "Ключи API не проверяются платными запросами."
 
+msgid "API token"
+msgstr "Токен API"
+
 msgid "API-equivalent"
 msgstr "в эквиваленте API"
 
@@ -2434,9 +2449,6 @@ msgstr "Логотип Apple"
 
 msgid "Application menu"
 msgstr "Меню приложения"
-
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Применяется сразу к этому чату, даже если квота уже исчерпана. Менять агента или аккаунт не нужно."
 
 msgid "Applies to"
 msgstr "Применяется к"
@@ -2856,6 +2868,9 @@ msgstr "Ожидает ревью от вас или вашей команды"
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to {label}"
+msgstr "Вернуться к {label}"
 
 msgid "Back to About"
 msgstr "К разделу «О нас»"
@@ -3429,9 +3444,6 @@ msgstr "Ошибка сертификата"
 msgid "Chain of Thought"
 msgstr "Цепочка рассуждений"
 
-msgid "Change agent or account"
-msgstr "Сменить агента или аккаунт"
-
 msgid "Change assignee"
 msgstr "Изменить исполнителя"
 
@@ -3543,6 +3555,9 @@ msgstr "Чат перенесён в {0}"
 msgid "Chat session not found"
 msgstr "Сессия чата не найдена"
 
+msgid "Chat session ready"
+msgstr "Сессия чата готова"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Поддержка чата проверяется при открытии чата."
 
@@ -3581,6 +3596,9 @@ msgstr "Проверить вход"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Перед использованием сброса проверьте адрес электронной почты аккаунта в браузере."
+
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Проверьте подключение для {repositories} в настройках форка."
 
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Проверьте отрендеренный промпт и вывод запуска перед сохранением"
@@ -3731,6 +3749,9 @@ msgstr "Разберись со старыми TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Чище и плотнее боковая панель"
+
+msgid "Clear"
+msgstr "Очистить"
 
 msgid "Clear all"
 msgstr "Очистить всё"
@@ -4269,6 +4290,9 @@ msgstr "Сравнили со стилем по умолчанию"
 msgid "complete"
 msgstr "завершён"
 
+msgid "Complete authorization in your browser."
+msgstr "Завершите авторизацию в браузере."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Завершите процедуру официального CLI и закройте это окно, чтобы проверить результат."
 
@@ -4306,11 +4330,17 @@ msgstr "Настройка поведения веток git и worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Настройте, как задачи синхронизируются между Superset и Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Настройте интеграции в настройках форка."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Настройка поведения терминала и переиспользуемых скриптов терминала"
 
 msgid "Configure the in-app browser"
 msgstr "Настройка встроенного браузера"
+
+msgid "Configure the OAuth service below."
+msgstr "Настройте службу OAuth ниже."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Настройте, какие агенты появляются в запускалках и как формируется их запуск."
@@ -4318,11 +4348,14 @@ msgstr "Настройте, какие агенты появляются в за
 msgid "Configure workspace run command"
 msgstr "Настроить команду запуска рабочей области"
 
-msgid "Configured account"
-msgstr "Настроенная учётная запись"
-
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
+
+msgid "Confirm delete"
+msgstr "Подтвердить удаление"
+
+msgid "Confirm merge"
+msgstr "Подтвердить слияние"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4352,6 +4385,9 @@ msgstr "Подключите агентов к своим приложениям
 msgid "Connect an account"
 msgstr "Подключить аккаунт"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Подключите аккаунт в настройках форка"
+
 msgid "Connect another account"
 msgstr "Подключить ещё аккаунт"
 
@@ -4370,8 +4406,14 @@ msgstr "Подключайте внешние сервисы для синхро
 msgid "Connect external services to sync data."
 msgstr "Подключайте внешние сервисы для синхронизации данных."
 
+msgid "Connect GitHub"
+msgstr "Подключить GitHub"
+
 msgid "Connect Google"
 msgstr "Подключить Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Подключить Jira и Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Подключить Linear"
@@ -4429,6 +4471,9 @@ msgstr "Подключите свой тенант Microsoft Teams. Админи
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Подключите рабочее пространство Notion и откройте доступ к страницам и источникам данных, за которыми должны следить автоматизации."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Подключите репозитории и задачи на этом компьютере."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Подключите рабочее пространство Slack, чтобы управлять задачами из обсуждений."
@@ -4604,9 +4649,6 @@ msgstr "Продолжить с другим агентом"
 msgid "Continue with another agent…"
 msgstr "Продолжить с другим агентом…"
 
-msgid "Continue with context"
-msgstr "Продолжить с контекстом"
-
 msgid "Continue with GitHub"
 msgstr "Продолжить с GitHub"
 
@@ -4615,6 +4657,12 @@ msgstr "Продолжить с Google"
 
 msgid "Continued from {source}"
 msgstr "Продолжение из {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Сразу продолжает на аккаунте с наибольшей квотой."
+
+msgid "Continues on this account when quota returns."
+msgstr "Продолжает на этом аккаунте, когда квота восстановится."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Для продолжения сессии агента нужно закреплённое рабочее пространство"
@@ -4943,6 +4991,15 @@ msgstr "Не удалось загрузить плагины. Проверьт�
 
 msgid "Could not load presets from the host"
 msgstr "Не удалось загрузить пресеты с хоста"
+
+msgid "Could not load pull request."
+msgstr "Не удалось загрузить pull request."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Не удалось загрузить pull request для {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Не удалось загрузить задачи."
 
 msgid "Could not load this diff"
 msgstr "Не удалось загрузить этот diff"
@@ -5358,6 +5415,9 @@ msgstr "Создать"
 msgid "Create \"{newLabel}\""
 msgstr "Создать «{newLabel}»"
 
+msgid "Create & start"
+msgstr "Создать и запустить"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Создаёт нативный форк на стороне провайдера с тем же контекстом разговора. Исходная сессия остаётся без изменений."
 
@@ -5628,8 +5688,8 @@ msgstr "Ctrl+Shift+клик"
 msgid "Current"
 msgstr "Текущая"
 
-msgid "Current chat"
-msgstr "Текущий чат"
+msgid "current checkout"
+msgstr "текущий checkout"
 
 msgid "Current level"
 msgstr "Текущий уровень"
@@ -5840,6 +5900,7 @@ msgstr "Удалить «{title}»?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Удалить {0}?"
 
@@ -5915,6 +5976,9 @@ msgstr "Удалить выбранные рабочие области"
 
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Удалить сессию «{workspaceName}»?"
+
+msgid "Delete task"
+msgstr "Удалить задачу"
 
 msgid "Delete team"
 msgstr "Удалить команду"
@@ -6275,6 +6339,9 @@ msgstr "Отключить Sentry?"
 msgid "Disconnect Slack?"
 msgstr "Отключить Slack?"
 
+msgid "Disconnect this account from Superset?"
+msgstr "Отключить этот аккаунт от Superset?"
+
 msgid "Disconnected"
 msgstr "Отключено"
 
@@ -6551,6 +6618,9 @@ msgstr "Каждая сессия продолжит с того места, г�
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "У каждой поверхности своя типографика. Изменения сразу видны в живом предпросмотре."
 
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Каждая задача получает свою рабочую область и ветку. Агент запускается в чате."
+
 msgid "Early 2024"
 msgstr "Начало 2024"
 
@@ -6774,6 +6844,9 @@ msgstr "Окружение сохранено"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Настройка окружения, нестабильные тесты и возня с учётными данными — скучные режимы отказа, которые убивали автономные прогоны в 2025-м, — по большей части решены инженерно, а не моделью."
+
+msgid "Environment variables"
+msgstr "Переменные окружения"
 
 msgid "Environment Variables"
 msgstr "Переменные окружения"
@@ -7507,6 +7580,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Быстрый"
 
+msgid "Fast-forward"
+msgstr "Быстрая перемотка"
+
 msgid "Fatal"
 msgstr "Критическая"
 
@@ -7572,6 +7648,9 @@ msgstr "Файл не найден"
 
 msgid "File open mode"
 msgstr "Режим открытия файлов"
+
+msgid "File path"
+msgstr "Путь к файлу"
 
 msgid "File viewer"
 msgstr "Просмотрщик файлов"
@@ -7966,6 +8045,9 @@ msgstr "Полный changelog →"
 msgid "Full Disk Access"
 msgstr "Полный доступ к диску"
 
+msgid "Full history"
+msgstr "Вся история"
+
 msgid "Full name"
 msgstr "Имя и фамилия"
 
@@ -8262,6 +8344,9 @@ msgstr "Есть неотправленные коммиты"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Прямые сравнения"
+
+msgid "Headers"
+msgstr "Заголовки"
 
 msgid "Heading 1"
 msgstr "Заголовок 1"
@@ -9560,6 +9645,9 @@ msgstr "Нравится создавать с Superset?"
 msgid "Lime"
 msgstr "Лаймовый"
 
+msgid "Line"
+msgstr "Строка"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -9982,9 +10070,6 @@ msgstr "Управляйте задачами из обсуждений в Slack
 msgid "Manage Terminal Scripts"
 msgstr "Управление скриптами терминала"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Управляйте автоматическим продолжением этого чата. Изменения сохраняются сразу."
-
 msgid "Manage your account settings"
 msgstr "Управление настройками аккаунта"
 
@@ -10075,6 +10160,9 @@ msgstr "Сервер MCP"
 msgid "MCP Server Commands"
 msgstr "Команды сервера MCP"
 
+msgid "MCP servers"
+msgstr "MCP-серверы"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Измерено за последние 30 дней"
 
@@ -10158,6 +10246,9 @@ msgstr "Не удалось объединить: {0}"
 
 msgid "Merge into center"
 msgstr "Объединить с центром"
+
+msgid "Merge method"
+msgstr "Способ слияния"
 
 msgid "Merge pull request"
 msgstr "Объединить пул-реквест"
@@ -10400,8 +10491,8 @@ msgstr "Почти вся история софта"
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Переносит этот чат в другой аккаунт. Разговор остаётся здесь и продолжается в рамках лимита этого аккаунта."
+msgid "Move to another account"
+msgstr "Перенести на другой аккаунт"
 
 msgid "Move to Center"
 msgstr "Переместить в центр"
@@ -11022,6 +11113,9 @@ msgstr "Нет подходящих участников организации.
 msgid "No matching pages"
 msgstr "Нет подходящих страниц"
 
+msgid "No MCP servers yet."
+msgstr "MCP-серверов пока нет."
+
 msgid "No members yet"
 msgstr "Участников пока нет"
 
@@ -11499,6 +11593,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "OAuth по умолчанию, ключи API для CI"
 
+msgid "OAuth service"
+msgstr "Служба OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "из {0}"
@@ -11538,9 +11635,6 @@ msgstr "Офлайн / local-first режим"
 msgid "Older"
 msgstr "Ранее"
 
-msgid "On"
-msgstr "Включено"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "на {offScopeHostName} — здесь не запустится"
 
@@ -11574,6 +11668,9 @@ msgstr "На вашей машине. Репозитории, worktree, выво
 msgid "Onboarding redesign"
 msgstr "Редизайн онбординга"
 
+msgid "One argument per line"
+msgstr "Один аргумент на строку"
+
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Один чат, который планирует задачу, разводит параллельных агентов по worktree и сводит результаты обратно."
 
@@ -11600,6 +11697,9 @@ msgstr "В числе первых ста в рейтинге"
 
 msgid "one of the selected repositories"
 msgstr "один из выбранных репозиториев"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Одна служба может подключить и Jira, и Bitbucket."
 
 msgid "One step left"
 msgstr "Остался один шаг"
@@ -11921,6 +12021,9 @@ msgstr "Открыть в T3 Chat"
 msgid "Open in tab"
 msgstr "Открыть во вкладке"
 
+msgid "Open in workspace"
+msgstr "Открыть в рабочей области"
+
 msgid "Open in…"
 msgstr "Открыть в…"
 
@@ -12168,6 +12271,9 @@ msgstr "Необязательные флаги, добавляемые посл
 
 msgid "Options"
 msgstr "Параметры"
+
+msgid "Options and connections that only exist in this fork."
+msgstr "Параметры и подключения, которые есть только в этом форке."
 
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Или попросите своего кодового агента установить CLI Superset."
@@ -12513,6 +12619,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Пиковый темп"
+
+msgid "Pending"
+msgstr "Ожидание"
 
 msgid "Pending Invitations"
 msgstr "Ожидающие приглашения"
@@ -13216,10 +13325,16 @@ msgstr "Фиолетовый"
 msgid "Push"
 msgstr "Запушить"
 
+msgid "Push and create PR"
+msgstr "Отправить и создать PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Не удалось запушить: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Отправьте ветку перед созданием pull request."
 
 msgid "Pushed"
 msgstr "Новые коммиты"
@@ -13654,6 +13769,9 @@ msgstr "Удалить {0}"
 msgid "Remove {label}?"
 msgstr "Удалить {label}?"
 
+msgid "Remove approval"
+msgstr "Отозвать одобрение"
+
 msgid "Remove attachment"
 msgstr "Удалить вложение"
 
@@ -13881,6 +13999,9 @@ msgstr "Репозитории"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Репозитории, доступные через установку GitHub App."
+
+msgid "Repositories and pull requests"
+msgstr "Репозитории и pull request"
 
 msgid "Repositories refreshed"
 msgstr "Репозитории обновлены"
@@ -14245,6 +14366,9 @@ msgstr "Ревью отклонено"
 
 msgid "Review each failure before deciding whether to continue."
 msgstr "Просмотрите каждую ошибку, прежде чем решать, продолжать ли."
+
+msgid "Review filters apply to GitHub repositories."
+msgstr "Фильтры проверки применяются к репозиториям GitHub."
 
 msgid "Review message"
 msgstr "Сообщение ревью"
@@ -15072,6 +15196,9 @@ msgstr "Выбрать команды"
 msgid "Select terminal script directory"
 msgstr "Выберите папку скрипта терминала"
 
+msgid "Select workspace"
+msgstr "Выбрать рабочую область"
+
 msgid "Select worktree location"
 msgstr "Выберите расположение worktree"
 
@@ -15174,6 +15301,9 @@ msgstr "Разделитель"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Доступность сервиса публикуется на <0>status.superset.sh</0>, а документация по безопасности и соответствию — на <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL службы"
+
 msgid "Session"
 msgstr "Сессия"
 
@@ -15214,6 +15344,9 @@ msgstr "Сессии"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Сессии · топ {0} по стоимости"
+
+msgid "Set as default"
+msgstr "Сделать основным"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15340,6 +15473,9 @@ msgstr "Общий лимит для сеансов с этим аккаунто
 
 msgid "Shared app components"
 msgstr "Общие компоненты приложения"
+
+msgid "Shared by every agent and account on this computer."
+msgstr "Общие для всех агентов и аккаунтов на этом компьютере."
 
 msgid "Shared component library."
 msgstr "Общая библиотека компонентов."
@@ -15676,6 +15812,9 @@ msgstr "Одна вкладка + панели"
 msgid "Single-select"
 msgstr "Одиночный выбор"
 
+msgid "Site URL"
+msgstr "URL сайта"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Телеметрия по всему сайту · {range}"
 
@@ -15861,6 +16000,9 @@ msgstr "Источник"
 msgid "Source Available"
 msgstr "Исходный код доступен"
 
+msgid "Source branch"
+msgstr "Исходная ветка"
+
 msgid "Source path (not an import)"
 msgstr "Путь к исходнику (не импорт)"
 
@@ -15953,6 +16095,9 @@ msgstr "Разделить с новым браузером"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Разделить с рабочим столом песочницы"
+
+msgid "Squash"
+msgstr "Объединить коммиты"
 
 msgid "Squash & Merge"
 msgstr "Сжать и объединить"
@@ -16074,6 +16219,9 @@ msgstr "Начните просмотр"
 
 msgid "Start building in two."
 msgstr "Начните разработку за два."
+
+msgid "Start chat"
+msgstr "Начать чат"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Запускайте агентов для кода, следите за ними в реальном времени и проверяйте diff с iPhone или iPad. Доступно в App Store; Android скоро."
@@ -16241,6 +16389,10 @@ msgstr "Остановка агента в {what}"
 msgid "Stops the agent and sends this now"
 msgstr "Останавливает агента и отправляет это сейчас"
 
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Хранятся в {0}"
+
 msgid "Strikethrough"
 msgstr "Зачёркнутый"
 
@@ -16321,6 +16473,9 @@ msgstr "Кратко опиши изменения в этой рабочей о
 
 msgid "Summary"
 msgstr "Сводка"
+
+msgid "Summary only"
+msgstr "Только краткое содержание"
 
 msgid "sun 11:00"
 msgstr "вс 11:00"
@@ -16569,6 +16724,12 @@ msgstr "Регулярность"
 msgid "Sustain · active days in 30"
 msgstr "Регулярность · активных дней из 30"
 
+msgid "Switch"
+msgstr "Переключить"
+
+msgid "Switch account"
+msgstr "Сменить аккаунт"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Меняйте агентов. Процесс остаётся"
 
@@ -16586,6 +16747,9 @@ msgstr "Сменить вход"
 
 msgid "Switch sign-in…"
 msgstr "Сменить вход…"
+
+msgid "Switch to {summary}"
+msgstr "Переключиться на {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Переключиться на активную рабочую область"
@@ -16620,9 +16784,6 @@ msgstr "Перейти на вкладку 8"
 msgid "Switch to Tab 9"
 msgstr "Перейти на вкладку 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Перейти на рекомендуемый аккаунт, когда квота исчерпана"
-
 msgid "Switch to Workspace 1"
 msgstr "Перейти в рабочую область 1"
 
@@ -16650,6 +16811,12 @@ msgstr "Перейти в рабочую область 8"
 msgid "Switch to Workspace 9"
 msgstr "Перейти в рабочую область 9"
 
+msgid "Switch, or wait"
+msgstr "Сменить или подождать"
+
+msgid "Switch…"
+msgstr "Переключить…"
+
 msgid "Symbol, light"
 msgstr "Символ, светлый"
 
@@ -16676,9 +16843,6 @@ msgstr "Синхронизация..."
 
 msgid "System"
 msgstr "Системная"
-
-msgid "System default"
-msgstr "Системное значение по умолчанию"
 
 msgid "System design"
 msgstr "Системный дизайн"
@@ -16747,6 +16911,9 @@ msgstr "Срок"
 msgid "Target agent"
 msgstr "Целевой агент"
 
+msgid "Target branch"
+msgstr "Целевая ветка"
+
 msgid "Target date"
 msgstr "Целевая дата"
 
@@ -16771,6 +16938,9 @@ msgstr "Запуск задачи"
 msgid "Task layout"
 msgstr "Раскладка задач"
 
+msgid "Task linked to workspace."
+msgstr "Задача связана с workspace."
+
 msgid "Task Management"
 msgstr "Управление задачами"
 
@@ -16794,6 +16964,9 @@ msgstr "Система управления задачами обновлена"
 
 msgid "Tasks"
 msgstr "Задачи"
+
+msgid "Tasks and projects"
+msgstr "Задачи и проекты"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Задачи, созданные в Superset, будут синхронизироваться с этой командой Linear."
@@ -17047,6 +17220,9 @@ msgstr "Лучший агент будет меняться.<0/>Ваш проц�
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Теперь кнопка выделяется. Я проверил это в вашей панели."
 
+msgid "The chat pauses until you continue it."
+msgstr "Чат приостанавливается, пока вы его не продолжите."
+
 msgid "The chat will open when the current response finishes."
 msgstr "Чат откроется после завершения текущего ответа."
 
@@ -17064,6 +17240,9 @@ msgstr "Истекло время ожидания соединения"
 
 msgid "The connection was closed"
 msgstr "Соединение было закрыто"
+
+msgid "The current chat stays open until the new one is running."
+msgstr "Текущий чат остаётся открытым, пока не запустится новый."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Текущий промпт будет заменён выбранной версией. В историю добавится запись «Восстановлено», чтобы это можно было отменить."
@@ -17207,6 +17386,9 @@ msgstr "Название организации или команды"
 msgid "The network connection changed"
 msgstr "Сетевое соединение изменилось"
 
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Новый агент продолжит весь разговор, включая инструменты."
+
 msgid "The overnight shift"
 msgstr "Ночная смена"
 
@@ -17280,6 +17462,9 @@ msgstr "Самоуправляемая софтверная фабрика"
 
 msgid "The server could not be found"
 msgstr "Не удалось найти сервер"
+
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Сервис временно недоступен. Superset автоматически повторит попытку. Настройки вашей учётной записи не изменены."
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Ссылка для входа была неполной. Попробуйте ещё раз."
@@ -17400,6 +17585,9 @@ msgstr "Этот агент не может открыть чат. Включи�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Этого агента больше нет на выбранном устройстве (возможно, его агенты были сброшены). Запуски будут падать, пока не выберете нового."
+
+msgid "This agent received the messages so far."
+msgstr "Этот агент получил сообщения до этого момента."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Этот агент получил весь разговор до этого момента."
@@ -17793,6 +17981,9 @@ msgstr "Название"
 msgid "To"
 msgstr "Куда"
 
+msgid "To do"
+msgstr "К выполнению"
+
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Чтобы возобновить разговор с агентом, выполните это в его папке:"
 
@@ -17985,6 +18176,9 @@ msgstr "Где вести задачи"
 msgid "Tracking"
 msgstr "Отслеживание"
 
+msgid "Transfer"
+msgstr "Перенос"
+
 msgid "Translated"
 msgstr "Переведено"
 
@@ -18176,6 +18370,9 @@ msgstr "Недоступно"
 
 msgid "Uncached input"
 msgstr "Некешированный ввод"
+
+msgid "Unchanged"
+msgstr "Без изменений"
 
 msgid "Uncollectible"
 msgstr "Безнадёжный"
@@ -18417,6 +18614,9 @@ msgstr "обновить префикс ветки"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Обновите этот хост для пошаговой настройки или используйте расширенные настройки."
 
+msgid "Update this host to configure integrations."
+msgstr "Обновите этот хост для настройки интеграций."
+
 msgid "Updated"
 msgstr "Обновлено"
 
@@ -18481,6 +18681,9 @@ msgstr "SLA по доступности и выделенная поддержк
 
 msgid "Urgent"
 msgstr "Срочный"
+
+msgid "URL"
+msgstr "URL"
 
 msgid "URL copied"
 msgstr "URL скопирован"
@@ -18621,6 +18824,9 @@ msgstr "Используется случайное имя ветки (гене�
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId не совпадает с проектом рабочей области"
 
+msgid "Value"
+msgstr "Значение"
+
 msgid "Variables"
 msgstr "Переменные"
 
@@ -18635,6 +18841,9 @@ msgstr "Проверено и сохранено"
 
 msgid "Verified through sign-in"
 msgstr "Подтверждено при входе"
+
+msgid "Verify"
+msgstr "Проверить"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Проверить, что Kbd остаётся видимым внутри tooltip"
@@ -18771,11 +18980,11 @@ msgstr "Громкость"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Дождаться обновления квоты и продолжить"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Перед передачей дождитесь, пока агент закончит."
+
+msgid "Wait for the reset"
+msgstr "Дождаться сброса"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Ждать настройки рабочей области перед запуском агентов"
@@ -18791,9 +19000,6 @@ msgstr "Ожидание проверок"
 msgid "Waiting for it to connect…"
 msgstr "Ожидание подключения…"
 
-msgid "Waiting for quota"
-msgstr "Ожидание квоты"
-
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Ожидание квоты. Остановка отменяет автоматическое продолжение."
 
@@ -18808,6 +19014,9 @@ msgstr "Ожидание первого сообщения субагента…
 
 msgid "Waiting for your input"
 msgstr "Ждёт вашего ответа"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Ждёт сброса, если ни у одного другого аккаунта нет квоты."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Хотите что-то быстрее? <0>Скажите нам в Discord</0>. Многое из этого началось с пожелания пользователя."
@@ -19046,6 +19255,9 @@ msgstr "Что дальше"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Если выключено, ничто извне не может получить доступ к файлам и инструментам на этом устройстве. Отсюда по-прежнему можно подключаться к удалённым песочницам. <0>Подробнее<1/></0>"
 
+msgid "When quota runs out"
+msgstr "Когда квота закончится"
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Куда ведут значки обнаруженных портов в боковой панели при клике."
 
@@ -19239,6 +19451,9 @@ msgstr "Путь рабочего пространства пока недост
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Закрепление рабочих областей и массовые действия"
+
+msgid "Workspace ready"
+msgstr "Рабочая область готова"
 
 msgid "Workspace restored"
 msgstr "Рабочая область восстановлена"
@@ -19435,6 +19650,9 @@ msgstr "Вы просматриваете версию {version}, только �
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Можно прикрепить не более {MAX_ATTACHMENTS} файлов"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Эти подключения можно настроить позже в настройках форка."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Его можно восстановить в разделе «Настройки → Проекты» в течение 30 дней. Папка репозитория никогда не удаляется."

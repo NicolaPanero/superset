@@ -85,7 +85,6 @@ import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
 import { useWorkspaceFolders } from "../useWorkspaceFolders";
-import { AccountUsage } from "./components/AccountUsage";
 import {
 	AgentSurfaceToggle,
 	AgentTerminalPane,
@@ -104,7 +103,7 @@ import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
 import { ForkChatExtras } from "./components/ForkChatExtras";
-import { forkChatContext } from "./components/ForkChatExtras/utils/forkChatContext/forkChatContext";
+import { ForkChatOrigin } from "./components/ForkChatOrigin";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
@@ -115,7 +114,6 @@ import { PullRequestPaneHeaderExtras } from "./components/PullRequestPane/compon
 import { ReviewPane } from "./components/ReviewPane";
 import { SubagentPane } from "./components/SubagentPane";
 import { TerminalPaneHeaderExtras } from "./components/TerminalPane/components/TerminalPaneHeaderExtras";
-import { ForkHandoffMenus } from "./components/TerminalPane/components/TerminalPaneHeaderExtras/components/ForkHandoffMenus";
 import { TerminalPaneIcon } from "./components/TerminalPane/components/TerminalPaneIcon";
 import { TerminalSessionDropdown } from "./components/TerminalPane/components/TerminalSessionDropdown";
 import { terminalContextMenuLinkStore } from "./components/TerminalPane/contextMenuLinkStore";
@@ -562,7 +560,11 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<ForkChatExtras ctx={ctx} workspaceId={workspaceId}>
+					<ForkChatExtras
+						ctx={ctx}
+						workspaceId={workspaceId}
+						openAgentChat={openAgentChat}
+					>
 						<AgentTerminalPane
 							onSwitchSurface={agentSurface.switchSurface}
 							ctx={ctx}
@@ -876,21 +878,7 @@ export function usePaneRegistry({
 					const data = ctx.pane.data as ChatPaneData;
 					return (
 						<div className="flex items-center gap-1">
-							<ForkHandoffMenus
-								workspaceId={workspaceId}
-								terminalId={data.terminalId}
-								fork={{
-									ctx: forkChatContext(ctx),
-									paneData: forkChatContext(ctx).pane.data as TerminalPaneData,
-									openAgentChat,
-									createNewAgentSession,
-								}}
-							/>
-							<AccountUsage
-								key={`${workspaceId}:${data.terminalId}`}
-								workspaceId={workspaceId}
-								terminalId={data.terminalId}
-							/>
+							<ForkChatOrigin ctx={ctx} workspaceId={workspaceId} />
 							<AgentSurfaceToggle
 								pane={{ kind: "chat", data }}
 								onChange={(surface, agent) =>
@@ -902,7 +890,11 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<ForkChatExtras ctx={ctx} workspaceId={workspaceId}>
+					<ForkChatExtras
+						ctx={ctx}
+						workspaceId={workspaceId}
+						openAgentChat={openAgentChat}
+					>
 						<ChatPane
 							ctx={ctx}
 							onOpenFile={onOpenFile}

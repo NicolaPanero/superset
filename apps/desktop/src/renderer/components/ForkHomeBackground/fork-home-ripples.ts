@@ -1,5 +1,5 @@
-export const CLICK_LIMIT = 3;
-export const CLICK_INTERVAL_MS = 400;
+export const CLICK_LIMIT = 5;
+export const CLICK_INTERVAL_MS = 200;
 export const DRIFT_LIMIT = 16;
 export const RIPPLE_LIMIT = CLICK_LIMIT + DRIFT_LIMIT;
 

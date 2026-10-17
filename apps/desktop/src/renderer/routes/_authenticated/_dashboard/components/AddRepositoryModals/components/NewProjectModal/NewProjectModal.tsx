@@ -14,6 +14,8 @@ import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { useEffect, useRef, useState } from "react";
 import { LuFolderOpen, LuLoaderCircle } from "react-icons/lu";
+import { ForkRepositoryPicker as GitHubRepositoryPicker } from "renderer/components/ForkIntegrations/components/ForkRepositoryPicker";
+import { forkProjectCreator } from "renderer/components/ForkIntegrations/utils/forkProjectCreator";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -23,7 +25,6 @@ import {
 	useFinalizeProjectSetup,
 } from "renderer/react-query/projects";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
-import { GitHubRepositoryPicker } from "./components/GitHubRepositoryPicker";
 
 interface NewProjectModalProps {
 	open: boolean;
@@ -65,6 +66,9 @@ export function NewProjectModal({
 		null,
 	);
 	const [working, setWorking] = useState(false);
+	const [forkConnectionId, setForkConnectionId] = useState<
+		string | undefined
+	>();
 	const cloneAbortRef = useRef<AbortController | null>(null);
 
 	useEffect(() => {
@@ -82,6 +86,7 @@ export function NewProjectModal({
 		setName("");
 		setNameTouched(false);
 		setSelectedRepository(null);
+		setForkConnectionId(undefined);
 		setWorking(false);
 	};
 
@@ -160,7 +165,7 @@ export function NewProjectModal({
 				return;
 			}
 			const client = getHostServiceClientByUrl(activeHostUrl);
-			const result = await client.project.create.mutate(
+			const result = await forkProjectCreator(client, forkConnectionId).mutate(
 				{
 					name: trimmedName,
 					mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
@@ -217,6 +222,7 @@ export function NewProjectModal({
 							disabled={working}
 							hostUrl={activeHostUrl}
 							onSelect={(repository) => {
+								setForkConnectionId(repository.connectionId);
 								setUrl(repository.cloneUrl);
 								setName(deriveProjectNameFromUrl(repository.cloneUrl));
 								setNameTouched(false);
@@ -236,6 +242,7 @@ export function NewProjectModal({
 							onChange={(e) => {
 								setUrl(e.target.value);
 								setSelectedRepository(null);
+								setForkConnectionId(undefined);
 							}}
 							placeholder={t({
 								message: "https://github.com/owner/repo.git or /path/to/repo",

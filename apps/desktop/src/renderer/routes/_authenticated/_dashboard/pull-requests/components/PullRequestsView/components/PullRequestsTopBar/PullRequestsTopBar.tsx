@@ -3,6 +3,7 @@ import { Button } from "@superset/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import { cn } from "@superset/ui/utils";
 import { LuListFilter } from "react-icons/lu";
+import { ForkCreatePullRequest } from "renderer/components/ForkIntegrations/components/ForkCreatePullRequest";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { ProjectFilter } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter";
 import { WorkItemsSearch } from "renderer/routes/_authenticated/_dashboard/components/WorkItemsSearch";
@@ -116,6 +117,7 @@ export function PullRequestsTopBar({
 				reservesWindowControls={isDetailCollapsed}
 			/>
 			<div className="flex items-center gap-1.5">
+				<ForkCreatePullRequest projectTargets={projectTargets} />
 				<div className="min-w-0 flex-1">
 					<WorkItemsSearch
 						value={searchQuery}

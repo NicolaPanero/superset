@@ -6,7 +6,7 @@ copy credentials or refresh tokens from the external CLI login.
 
 The profile name is optional when adding an account on an updated fork host.
 Leave it empty to derive the folder name from the identity after the provider's
-login finishes: `b4b@siapcn.it` becomes `~/.claude-b4b-siapcn-it`. Codex follows
+login finishes: `work@example.com` becomes `~/.claude-work-example-com`. Codex follows
 the same rule. API logins without an email use a unique `api-…` name. A folder
 already in use or reserved by a disconnected profile gets a numeric suffix;
 no existing profile is overwritten. The temporary sign-in is not offered as an

@@ -274,7 +274,8 @@ const CODEX_SHARED_FILES = ["config.toml", "AGENTS.md"] as const;
  * system default, so provisioning would share config *out of* the profile and
  * `discoverCodexHomes` would label it `selection: null`. The
  * `SUPERSET_DEFAULT_CODEX_HOME` twin exists precisely to mark our own
- * injection. `SUPERSET_AMBIENT_CODEX_HOME` preserves the actual default when
+ * injection; a chat pinned to one account blanks that twin and sets
+ * `SUPERSET_PINNED_ACCOUNT_ENV` instead. `SUPERSET_AMBIENT_CODEX_HOME` preserves the actual default when
  * that default was itself a custom CODEX_HOME, so a nested host-service can
  * distinguish the selected profile from the user's real home.
  */
@@ -284,8 +285,10 @@ export function resolveAmbientCodexHome(
 	const fromEnv = process.env.CODEX_HOME?.trim();
 	const supersetInjected = process.env.SUPERSET_DEFAULT_CODEX_HOME?.trim();
 	const preservedAmbient = process.env.SUPERSET_AMBIENT_CODEX_HOME?.trim();
+	const pinned = process.env.SUPERSET_PINNED_ACCOUNT_ENV === "CODEX_HOME";
 	if (
 		fromEnv &&
+		!pinned &&
 		(!supersetInjected || canonical(fromEnv) !== canonical(supersetInjected))
 	) {
 		return path.resolve(fromEnv);

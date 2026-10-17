@@ -44,6 +44,8 @@ import {
 	fullAccessModes,
 	fullAccessNativeMode,
 } from "./forkFullAccess";
+import { acpMcpServers } from "./forkMcpServers";
+import { ForkPlanReadPermissions } from "./forkPlanReadPermissions";
 import { forkPromptError } from "./forkPromptError";
 import {
 	type AcpImageSource,
@@ -204,6 +206,7 @@ function sessionMissing(error: unknown): boolean {
 
 export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
+	forkPlanReadPermissions?: boolean;
 	forkAtMessage?: boolean;
 	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
 	wholeUserMessageReplay?: boolean;
@@ -405,6 +408,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private sessionId: string | null = null;
 	private loadingSessionId: string | null = null;
 	private cwd = process.cwd();
+	private mcpServers: HarnessStartOptions["mcpServers"];
 	private openText: OpenText | null = null;
 	private currentTurn: Turn | null = null;
 	private historyTurnId: string | null = null;
@@ -460,6 +464,7 @@ export class AcpAdapter implements HarnessAdapter {
 
 	start(startOptions: HarnessStartOptions): AsyncIterable<AdapterEvent> {
 		this.cwd = startOptions.cwd;
+		this.mcpServers = startOptions.mcpServers;
 		void this.bootstrap(startOptions);
 		return this.queue.iterable();
 	}
@@ -732,7 +737,7 @@ export class AcpAdapter implements HarnessAdapter {
 			{
 				sessionId: this.sessionId,
 				cwd: this.cwd,
-				mcpServers: [],
+				mcpServers: acpMcpServers(this.mcpServers, this.agentCapabilities),
 				...(point
 					? {
 							_meta: {
@@ -855,8 +860,11 @@ export class AcpAdapter implements HarnessAdapter {
 						{
 							sessionId: startOptions.resume.harnessSessionId,
 							cwd: startOptions.cwd,
-							...extraDirectories(startOptions),
-							mcpServers: [],
+							...extraDirectories(startOptions, this.agentCapabilities),
+							mcpServers: acpMcpServers(
+								this.mcpServers,
+								this.agentCapabilities,
+							),
 						},
 						startupTimeoutMs,
 					);
@@ -880,8 +888,11 @@ export class AcpAdapter implements HarnessAdapter {
 						"session/new",
 						{
 							cwd: startOptions.cwd,
-							...extraDirectories(startOptions),
-							mcpServers: [],
+							...extraDirectories(startOptions, this.agentCapabilities),
+							mcpServers: acpMcpServers(
+								this.mcpServers,
+								this.agentCapabilities,
+							),
 						},
 						startupTimeoutMs,
 					);
@@ -897,8 +908,8 @@ export class AcpAdapter implements HarnessAdapter {
 					"session/new",
 					{
 						cwd: startOptions.cwd,
-						...extraDirectories(startOptions),
-						mcpServers: [],
+						...extraDirectories(startOptions, this.agentCapabilities),
+						mcpServers: acpMcpServers(this.mcpServers, this.agentCapabilities),
 					},
 					startupTimeoutMs,
 				);
@@ -1855,9 +1866,34 @@ export class AcpAdapter implements HarnessAdapter {
 		}
 		if (
 			this.autoApprovePermissions &&
+			this.modeId !== "plan" &&
 			parsed.data.sessionId === this.sessionId
 		) {
 			const optionId = fullAccessAllowOption(parsed.data.options);
+			if (optionId) {
+				this.client?.respond(request.id, {
+					outcome: { outcome: "selected", optionId },
+				});
+				return;
+			}
+		}
+		if (
+			this.options.forkPlanReadPermissions &&
+			this.modeId === "plan" &&
+			this.selectionsInFlight.size === 0 &&
+			parsed.data.sessionId === this.sessionId
+		) {
+			const call = parsed.data.toolCall;
+			const toolName =
+				call?.name ??
+				call?._meta?.claudeCode?.toolName ??
+				(call?.toolCallId
+					? this.toolCalls.get(call.toolCallId)?.toolName
+					: undefined);
+			const optionId = new ForkPlanReadPermissions(this.cwd).allowOption(
+				parsed.data,
+				toolName,
+			);
 			if (optionId) {
 				this.client?.respond(request.id, {
 					outcome: { outcome: "selected", optionId },
@@ -2229,9 +2265,18 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 }
 
-function extraDirectories(startOptions: HarnessStartOptions) {
+/** Only for agents that advertise it: Grok rejects the whole request otherwise. */
+export function extraDirectories(
+	startOptions: Pick<HarnessStartOptions, "additionalDirectories">,
+	agentCapabilities: Record<string, unknown>,
+) {
 	const dirs = startOptions.additionalDirectories ?? [];
-	return dirs.length > 0 ? { additionalDirectories: dirs } : {};
+	const session = agentCapabilities.sessionCapabilities as
+		| { additionalDirectories?: unknown }
+		| undefined;
+	return dirs.length > 0 && session?.additionalDirectories
+		? { additionalDirectories: dirs }
+		: {};
 }
 
 export function createAcpAdapter(options: AcpAdapterOptions): HarnessAdapter {

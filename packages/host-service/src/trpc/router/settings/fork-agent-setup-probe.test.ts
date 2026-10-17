@@ -96,19 +96,23 @@ test("missing CLI and bounded wrong-provider candidates remain unavailable", asy
 });
 test("ACP check only initializes and cleans its temporary working directory", async () => {
 	const dir = await mkdtemp(join(tmpdir(), "superset-fake-acp-"));
-	const fixture = join(dir, "agent");
+	const fixture = join(dir, "agent.cjs");
 	const log = join(dir, "requests.jsonl");
 	await writeFile(
 		fixture,
-		`#!/usr/bin/env node\nconst fs=require('node:fs');require('node:readline').createInterface({input:process.stdin}).on('line',line=>{fs.appendFileSync(process.env.TEST_SETUP_LOG,JSON.stringify({request:JSON.parse(line),cwd:process.cwd()})+'\\n');console.log(JSON.stringify({jsonrpc:'2.0',id:1,result:{protocolVersion:1,agentInfo:{name:'Cursor Agent'}}}));});`,
-		{ mode: 0o700 },
+		`const fs=require('node:fs');require('node:readline').createInterface({input:process.stdin}).on('line',line=>{fs.appendFileSync(process.env.TEST_SETUP_LOG,JSON.stringify({request:JSON.parse(line),cwd:process.cwd()})+'\\n');console.log(JSON.stringify({jsonrpc:'2.0',id:1,result:{protocolVersion:1,agentInfo:{name:'Cursor Agent'}}}));});`,
 	);
 	try {
 		expect(
-			await probeSetupChat(fixture, "cursor-agent", {
-				...process.env,
-				TEST_SETUP_LOG: log,
-			}),
+			await probeSetupChat(
+				process.execPath,
+				"cursor-agent",
+				{
+					...process.env,
+					TEST_SETUP_LOG: log,
+				},
+				[fixture],
+			),
 		).toBe(true);
 		const { readFile, access } = await import("node:fs/promises");
 		const lines = (await readFile(log, "utf8"))

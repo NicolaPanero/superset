@@ -13,10 +13,27 @@ export type AdapterEvent =
 	| { kind: "turn"; turn: Turn }
 	| { kind: "session"; session: Partial<SessionState> };
 
+export type HarnessMcpServer =
+	| {
+			transport: "stdio";
+			name: string;
+			command: string;
+			args: string[];
+			env: Record<string, string>;
+	  }
+	| {
+			transport: "http" | "sse";
+			name: string;
+			url: string;
+			headers: Record<string, string>;
+	  };
+
 export type HarnessStartOptions = {
 	cwd: string;
 	/** Folders the agent may use besides `cwd`, when the harness supports it. */
 	additionalDirectories?: string[];
+	/** Fork-managed MCP servers, sent to agents that take them per session. */
+	mcpServers?: HarnessMcpServer[];
 	modeId?: string;
 	modelId?: string;
 	resume?: { harnessSessionId: string };

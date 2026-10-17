@@ -310,7 +310,11 @@ function AuthenticatedLayout() {
 		return onboardingRedirect;
 	}
 
-	if (!showProFeatures && isForkProRoute(renderedPathname)) {
+	if (
+		!showProFeatures &&
+		isForkProRoute(renderedPathname) &&
+		!renderedPathname.startsWith("/tasks")
+	) {
 		return (
 			<Redirect
 				to={

@@ -76,6 +76,7 @@ export function useAutoAdoptChatSessions({
 			.filter(
 				(session) =>
 					session.live &&
+					session.status !== "dead" &&
 					!(session.terminalId && parked.has(session.terminalId)) &&
 					!isChatSessionClosed(session.sessionId) &&
 					!attached.has(session.sessionId) &&

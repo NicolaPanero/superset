@@ -37,7 +37,6 @@ import {
 import type { EarlierMessages } from "../../hooks/useEarlierMessages";
 import type { ChatForkTarget } from "../../types";
 import { pageLinkFinder } from "../../utils/pageLinks";
-import { ForkChatProvenance } from "./components/ForkChatProvenance";
 import { TranscriptFindBar } from "./components/TranscriptFindBar";
 import { TranscriptRowItem } from "./components/TranscriptRowItem";
 import { useLoadOlderOnReach } from "./hooks/useLoadOlderOnReach";
@@ -343,9 +342,6 @@ export function Transcript({
 					{ "--scrollbar-gutter": `${scrollbarGutter}px` } as CSSProperties
 				}
 			>
-				<div className="sticky top-0 z-10 bg-background">
-					<ForkChatProvenance className={CHAT_COLUMN_CLASSNAME} />
-				</div>
 				{hasOlder && (
 					<div
 						className={cn(

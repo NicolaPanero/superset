@@ -20,16 +20,10 @@ import { Button } from "@superset/ui/button";
 import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
 import { toast } from "@superset/ui/sonner";
-import { Spinner } from "@superset/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	ArrowUpIcon,
-	HistoryIcon,
-	PaperclipIcon,
-	Settings2Icon,
-} from "lucide-react";
+import { HistoryIcon, PaperclipIcon, Settings2Icon } from "lucide-react";
 import {
 	type DragEvent as ReactDragEvent,
 	useCallback,
@@ -43,9 +37,9 @@ import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
-import { AgentSelect } from "renderer/components/AgentSelect";
 import {
 	ForkAccountPicker,
+	ForkAccountSubmenu,
 	useForkCreationAccount,
 } from "renderer/components/ForkAccountPicker";
 import {
@@ -119,6 +113,8 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
+import { ForkCreateWorkspaceButton } from "./components/ForkCreateWorkspaceButton";
+import { ForkCreationModelPicker } from "./components/ForkCreationModelPicker";
 import { ForkImportFromHome } from "./components/ForkImportFromHome/ForkImportFromHome";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
@@ -809,6 +805,12 @@ export function NewWorkspaceScreen({
 				<h1 className="text-center text-3xl font-medium text-foreground/90">
 					<Trans>What should we build next?</Trans>
 				</h1>
+				<p className="-mt-5 text-center text-sm text-muted-foreground">
+					<Trans>
+						Each task gets its own workspace and branch. The agent starts in a
+						chat.
+					</Trans>
+				</p>
 				<GitHubStarPill surface="new_workspace" reserveSpace />
 			</div>
 			<div className="flex w-full flex-col items-center px-6 pb-8">
@@ -931,49 +933,6 @@ export function NewWorkspaceScreen({
 						ref={composerRef}
 						toolbar={
 							<div className="flex min-w-0 flex-wrap items-center gap-1.5">
-								<AgentSelect<WorkspaceCreateAgent>
-									agents={v2Agents}
-									value={selectedAgent}
-									placeholder={t({
-										message: "No agent",
-									})}
-									onValueChange={setSelectedAgent}
-									onBeforeConfigureAgents={closeModal}
-									triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
-									iconClassName="size-3 object-contain"
-									allowNone
-									noneLabel={t({
-										message: "No agent",
-									})}
-									noneValue="none"
-								/>
-								<ForkAccountPicker
-									account={forkAccount}
-									provider={selectedPresetId}
-									model={selectedModel ?? undefined}
-								/>
-								{modelSupport && (
-									<AgentModelSelect
-										models={modelSupport.models}
-										value={selectedModel}
-										onValueChange={setSelectedModel}
-										defaultLabel={t({
-											message: "Default model",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
-									/>
-								)}
-								{effortSupport && effortOptions.length > 0 && (
-									<AgentModelSelect
-										models={effortOptions}
-										value={selectedEffort}
-										onValueChange={setSelectedEffort}
-										defaultLabel={t({
-											message: "Default effort",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
-									/>
-								)}
 								{modeSupport && (
 									<AgentModelSelect
 										models={modeSupport.modes}
@@ -1071,20 +1030,43 @@ export function NewWorkspaceScreen({
 										<Trans>Add attachment</Trans>
 									</TooltipContent>
 								</Tooltip>
-								<PromptInputButton
-									className="size-[22px] rounded-full border border-transparent bg-foreground/10 shadow-none p-[5px] hover:bg-foreground/20"
-									disabled={needsSetup || isCreating}
-									onClick={(e) => {
-										e.preventDefault();
-										handleSubmit();
-									}}
-								>
-									{isCreating ? (
-										<Spinner className="size-3.5 text-muted-foreground" />
-									) : (
-										<ArrowUpIcon className="size-3.5 text-muted-foreground" />
+								<ForkCreationModelPicker
+									agents={v2Agents}
+									selectedAgent={selectedAgent}
+									onSelectAgent={setSelectedAgent}
+									selectedModel={modelSupport ? selectedModel : null}
+									onModelChange={setSelectedModel}
+									efforts={effortSupport ? effortOptions : []}
+									selectedEffort={selectedEffort}
+									onEffortChange={setSelectedEffort}
+									renderAccountItem={(rowClassName, panelClassName) => (
+										<ForkAccountSubmenu
+											account={forkAccount}
+											provider={selectedPresetId}
+											model={selectedModel ?? undefined}
+											className={rowClassName}
+											contentClassName={panelClassName}
+										/>
 									)}
-								</PromptInputButton>
+								/>
+								<ForkAccountPicker
+									account={forkAccount}
+									provider={selectedPresetId}
+									model={selectedModel ?? undefined}
+									compact
+								/>
+								<ForkCreateWorkspaceButton
+									kind={
+										draft.isSession
+											? "chat"
+											: selectedAgent === "none"
+												? "workspace"
+												: "agent"
+									}
+									disabled={needsSetup || isCreating}
+									isCreating={isCreating}
+									onSubmit={handleSubmit}
+								/>
 							</div>
 						}
 					/>

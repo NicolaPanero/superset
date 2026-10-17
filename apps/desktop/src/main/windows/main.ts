@@ -27,6 +27,7 @@ import {
 } from "../lib/app-state";
 import { browserManager } from "../lib/browser/browser-manager";
 import { attachEditContextMenu } from "../lib/edit-context-menu";
+import { attachForkImageContextMenu } from "../lib/fork-image-context-menu";
 import { createApplicationMenu } from "../lib/menu";
 import { menuEmitter } from "../lib/menu-events";
 import { playNotificationSound } from "../lib/notification-sound";
@@ -439,6 +440,7 @@ export async function createPlatformWindow({
 	window.on("focus", () => markFocused(window.id));
 
 	attachEditContextMenu(window.webContents);
+	attachForkImageContextMenu(window.webContents);
 
 	if (wasEmpty) {
 		startSharedServices();

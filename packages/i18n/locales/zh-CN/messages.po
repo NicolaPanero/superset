@@ -968,6 +968,9 @@ msgstr "{name} 是内置的，无法替换"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} 尚未添加"
 
+msgid "{name} unreachable"
+msgstr "无法连接到{name}"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {请至少指定一个人员，或选择{choice}。} sender {请至少指定一个发件人，或选择{choice}。} other {请至少指定一个条目，或选择{choice}。}}"
 
@@ -1785,6 +1788,9 @@ msgstr "添加脚本"
 msgid "Add Script"
 msgstr "添加脚本"
 
+msgid "Add server"
+msgstr "添加服务器"
+
 msgid "Add setup commands, one per line..."
 msgstr "添加设置命令，每行一条..."
 
@@ -2141,6 +2147,9 @@ msgstr "升级过程中所有会话都已保留。"
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "所有会话已关闭，全新的守护进程正在运行。"
 
+msgid "All statuses"
+msgstr "所有状态"
+
 msgid "All tasks"
 msgstr "全部任务"
 
@@ -2221,6 +2230,9 @@ msgstr "同时删除本地分支"
 
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "删除worktree工作区时一并删除本地git分支"
+
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "同时退出此计算机上的 GitHub CLI"
 
 msgid "Also viewing this page"
 msgstr "也在查看此页面的人"
@@ -2408,6 +2420,9 @@ msgstr "API密钥"
 msgid "API keys are not validated with a paid request."
 msgstr "不会通过付费请求验证 API 密钥。"
 
+msgid "API token"
+msgstr "API 令牌"
+
 msgid "API-equivalent"
 msgstr "按API价折算"
 
@@ -2434,9 +2449,6 @@ msgstr "Apple 标志"
 
 msgid "Application menu"
 msgstr "应用程序菜单"
-
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "立即应用于此聊天，即使额度已用完。无需更换代理或账户。"
 
 msgid "Applies to"
 msgstr "适用于"
@@ -2856,6 +2868,9 @@ msgstr "等待你或你团队的审查"
 
 msgid "Back"
 msgstr "返回"
+
+msgid "Back to {label}"
+msgstr "返回 {label}"
 
 msgid "Back to About"
 msgstr "返回关于页"
@@ -3429,9 +3444,6 @@ msgstr "证书错误"
 msgid "Chain of Thought"
 msgstr "思维链"
 
-msgid "Change agent or account"
-msgstr "更换代理或账户"
-
 msgid "Change assignee"
 msgstr "更改负责人"
 
@@ -3543,6 +3555,9 @@ msgstr "聊天已移至 {0}"
 msgid "Chat session not found"
 msgstr "未找到聊天会话"
 
+msgid "Chat session ready"
+msgstr "聊天会话已就绪"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "打开聊天时会检查聊天支持情况。"
 
@@ -3581,6 +3596,9 @@ msgstr "检查登录"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "使用重置前，请在浏览器中确认账号的邮箱地址。"
+
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "请在 Fork 设置中检查 {repositories} 的连接。"
 
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "保存前检查渲染后的提示词和启动输出"
@@ -3731,6 +3749,9 @@ msgstr "清理过期的TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "更清爽紧凑的侧边栏"
+
+msgid "Clear"
+msgstr "清除"
 
 msgid "Clear all"
 msgstr "全部清除"
@@ -4269,6 +4290,9 @@ msgstr "与默认样式做了对比"
 msgid "complete"
 msgstr "已结束"
 
+msgid "Complete authorization in your browser."
+msgstr "在浏览器中完成授权。"
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "完成官方 CLI 流程后关闭此窗口，检查结果。"
 
@@ -4306,11 +4330,17 @@ msgstr "配置git分支和worktree行为"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "配置任务在Superset和Linear之间的同步方式。"
 
+msgid "Configure integrations in Fork Settings."
+msgstr "在分支版本设置中配置集成。"
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "配置终端行为和可复用的终端脚本"
 
 msgid "Configure the in-app browser"
 msgstr "配置应用内浏览器"
+
+msgid "Configure the OAuth service below."
+msgstr "在下方配置 OAuth 服务。"
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "配置哪些智能体出现在启动器中，以及它们的启动方式。"
@@ -4318,11 +4348,14 @@ msgstr "配置哪些智能体出现在启动器中，以及它们的启动方式
 msgid "Configure workspace run command"
 msgstr "配置工作区运行命令"
 
-msgid "Configured account"
-msgstr "已配置的账户"
-
 msgid "Confirm before quitting"
 msgstr "退出前确认"
+
+msgid "Confirm delete"
+msgstr "确认删除"
+
+msgid "Confirm merge"
+msgstr "确认合并"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4352,6 +4385,9 @@ msgstr "将智能体连接到你的应用"
 msgid "Connect an account"
 msgstr "连接账号"
 
+msgid "Connect an account in Fork Settings"
+msgstr "请在 Fork 设置中连接账户"
+
 msgid "Connect another account"
 msgstr "连接其他账号"
 
@@ -4370,8 +4406,14 @@ msgstr "连接外部服务，与你的组织同步数据。"
 msgid "Connect external services to sync data."
 msgstr "连接外部服务以同步数据。"
 
+msgid "Connect GitHub"
+msgstr "连接 GitHub"
+
 msgid "Connect Google"
 msgstr "连接Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "连接 Jira 和 Bitbucket"
 
 msgid "Connect Linear"
 msgstr "连接Linear"
@@ -4429,6 +4471,9 @@ msgstr "连接你的Microsoft Teams租户。由租户管理员登录，一次性
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "连接你的Notion工作区，并共享需要自动化监听的页面和数据源。"
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "连接此计算机上的仓库和任务。"
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "连接你的Slack工作区，直接在对话中管理任务。"
@@ -4604,9 +4649,6 @@ msgstr "换一个智能体继续"
 msgid "Continue with another agent…"
 msgstr "换一个智能体继续…"
 
-msgid "Continue with context"
-msgstr "携带上下文继续"
-
 msgid "Continue with GitHub"
 msgstr "使用GitHub继续"
 
@@ -4615,6 +4657,12 @@ msgstr "使用Google继续"
 
 msgid "Continued from {source}"
 msgstr "继续自 {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "立即在配额最多的账户上继续。"
+
+msgid "Continues on this account when quota returns."
+msgstr "配额恢复后在此账户上继续。"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "继续智能体会话需要固定的工作区"
@@ -4943,6 +4991,15 @@ msgstr "无法加载插件。请检查网络连接后重试。"
 
 msgid "Could not load presets from the host"
 msgstr "无法从主机加载预设"
+
+msgid "Could not load pull request."
+msgstr "无法加载拉取请求。"
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "无法加载{failedRepositories}的拉取请求。"
+
+msgid "Could not load tasks."
+msgstr "无法加载任务。"
 
 msgid "Could not load this diff"
 msgstr "无法加载这个差异"
@@ -5358,6 +5415,9 @@ msgstr "创建"
 msgid "Create \"{newLabel}\""
 msgstr "创建“{newLabel}”"
 
+msgid "Create & start"
+msgstr "创建并开始"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "在提供方创建一个具有相同对话上下文的原生分叉。原会话保持不变。"
 
@@ -5628,8 +5688,8 @@ msgstr "Ctrl+Shift+点击"
 msgid "Current"
 msgstr "当前"
 
-msgid "Current chat"
-msgstr "当前聊天"
+msgid "current checkout"
+msgstr "当前检出"
 
 msgid "Current level"
 msgstr "当前等级"
@@ -5840,6 +5900,7 @@ msgstr "删除“{title}”？"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "删除{0}？"
 
@@ -5915,6 +5976,9 @@ msgstr "删除选中的工作区"
 
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "删除会话“{workspaceName}”？"
+
+msgid "Delete task"
+msgstr "删除任务"
 
 msgid "Delete team"
 msgstr "删除团队"
@@ -6275,6 +6339,9 @@ msgstr "断开Sentry连接？"
 msgid "Disconnect Slack?"
 msgstr "断开Slack连接？"
 
+msgid "Disconnect this account from Superset?"
+msgstr "要将此账号与 Superset 断开连接吗？"
+
 msgid "Disconnected"
 msgstr "已断开"
 
@@ -6551,6 +6618,9 @@ msgstr "每个会话都会从中断处继续。"
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "每个界面都有各自的排版设置。更改会立即体现在实时预览中。"
 
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "每个任务都有独立的工作区和分支。智能体会在聊天中启动。"
+
 msgid "Early 2024"
 msgstr "2024年初"
 
@@ -6774,6 +6844,9 @@ msgstr "环境已保存"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "环境搭建、不稳定的测试、凭据串联，这些在2025年让无人值守运行折戟的无聊失败模式，大多是被工程手段消除的，而不是被模型消除的。"
+
+msgid "Environment variables"
+msgstr "环境变量"
 
 msgid "Environment Variables"
 msgstr "环境变量"
@@ -7507,6 +7580,9 @@ msgstr "常见问题"
 msgid "Fast"
 msgstr "快速"
 
+msgid "Fast-forward"
+msgstr "快进"
+
 msgid "Fatal"
 msgstr "致命"
 
@@ -7572,6 +7648,9 @@ msgstr "未找到文件"
 
 msgid "File open mode"
 msgstr "文件打开方式"
+
+msgid "File path"
+msgstr "文件路径"
 
 msgid "File viewer"
 msgstr "文件查看器"
@@ -7966,6 +8045,9 @@ msgstr "完整更新日志 →"
 msgid "Full Disk Access"
 msgstr "完全磁盘访问权限"
 
+msgid "Full history"
+msgstr "完整历史"
+
 msgid "Full name"
 msgstr "姓名"
 
@@ -8262,6 +8344,9 @@ msgstr "有未推送的提交"
 
 msgid "Head-to-Head Comparisons"
 msgstr "一对一对比"
+
+msgid "Headers"
+msgstr "请求头"
 
 msgid "Heading 1"
 msgstr "标题1"
@@ -9560,6 +9645,9 @@ msgstr "喜欢用Superset开发吗？"
 msgid "Lime"
 msgstr "青柠色"
 
+msgid "Line"
+msgstr "行"
+
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
 msgid "Line {0}"
@@ -9982,9 +10070,6 @@ msgstr "在Slack对话中管理任务。"
 msgid "Manage Terminal Scripts"
 msgstr "管理终端脚本"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "管理此聊天的自动继续功能。更改会立即保存。"
-
 msgid "Manage your account settings"
 msgstr "管理你的账户设置"
 
@@ -10075,6 +10160,9 @@ msgstr "MCP服务器"
 msgid "MCP Server Commands"
 msgstr "MCP服务器命令"
 
+msgid "MCP servers"
+msgstr "MCP 服务器"
+
 msgid "Measured over the trailing 30 days"
 msgstr "按最近 30 天计算"
 
@@ -10158,6 +10246,9 @@ msgstr "合并失败：{0}"
 
 msgid "Merge into center"
 msgstr "合并到中间"
+
+msgid "Merge method"
+msgstr "合并方式"
 
 msgid "Merge pull request"
 msgstr "合并拉取请求"
@@ -10400,8 +10491,8 @@ msgstr "软件史的大部分时间"
 msgid "Move {count} to Group"
 msgstr "将{count}个移动到分组"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "将此聊天移至另一个账户。对话保留在这里，并使用该账户的额度继续。"
+msgid "Move to another account"
+msgstr "移到其他账户"
 
 msgid "Move to Center"
 msgstr "移到中间"
@@ -11022,6 +11113,9 @@ msgstr "没有匹配的组织成员。"
 msgid "No matching pages"
 msgstr "没有匹配的页面"
 
+msgid "No MCP servers yet."
+msgstr "还没有 MCP 服务器。"
+
 msgid "No members yet"
 msgstr "暂无成员"
 
@@ -11499,6 +11593,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "默认用OAuth，CI用API密钥"
 
+msgid "OAuth service"
+msgstr "OAuth 服务"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "共{0}人"
@@ -11538,9 +11635,6 @@ msgstr "离线/本地优先模式"
 msgid "Older"
 msgstr "更早"
 
-msgid "On"
-msgstr "开启"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不会在这里运行"
 
@@ -11574,6 +11668,9 @@ msgstr "在你自己的机器上。仓库、worktree、终端输出和智能体�
 msgid "Onboarding redesign"
 msgstr "新手引导改版"
 
+msgid "One argument per line"
+msgstr "每行一个参数"
+
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "一个聊天窗口规划任务，把并行智能体分派到各个worktree，再把结果汇总回来。"
 
@@ -11600,6 +11697,9 @@ msgstr "榜单最早的一百人之一"
 
 msgid "one of the selected repositories"
 msgstr "所选仓库之一"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "一个服务即可连接 Jira 和 Bitbucket。"
 
 msgid "One step left"
 msgstr "还差一步"
@@ -11921,6 +12021,9 @@ msgstr "在T3 Chat中打开"
 msgid "Open in tab"
 msgstr "在标签页中打开"
 
+msgid "Open in workspace"
+msgstr "在工作区中打开"
+
 msgid "Open in…"
 msgstr "打开方式…"
 
@@ -12168,6 +12271,9 @@ msgstr "追加在提示词内容之后的可选标志"
 
 msgid "Options"
 msgstr "选项"
+
+msgid "Options and connections that only exist in this fork."
+msgstr "仅此分支版本提供的选项和连接。"
 
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "或者让你的编码智能体安装Superset CLI。"
@@ -12513,6 +12619,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "峰值速度"
+
+msgid "Pending"
+msgstr "待处理"
 
 msgid "Pending Invitations"
 msgstr "待处理邀请"
@@ -13216,10 +13325,16 @@ msgstr "紫色"
 msgid "Push"
 msgstr "推送"
 
+msgid "Push and create PR"
+msgstr "推送并创建 PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "推送失败：{0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "创建拉取请求前请先推送分支。"
 
 msgid "Pushed"
 msgstr "已推送"
@@ -13654,6 +13769,9 @@ msgstr "移除{0}"
 msgid "Remove {label}?"
 msgstr "移除{label}？"
 
+msgid "Remove approval"
+msgstr "撤销批准"
+
 msgid "Remove attachment"
 msgstr "移除附件"
 
@@ -13881,6 +13999,9 @@ msgstr "仓库"
 
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "通过GitHub App安装可访问的仓库。"
+
+msgid "Repositories and pull requests"
+msgstr "仓库和拉取请求"
 
 msgid "Repositories refreshed"
 msgstr "仓库已刷新"
@@ -14245,6 +14366,9 @@ msgstr "审查已忽略"
 
 msgid "Review each failure before deciding whether to continue."
 msgstr "在决定是否继续之前，请逐个查看失败原因。"
+
+msgid "Review filters apply to GitHub repositories."
+msgstr "审查筛选器适用于 GitHub 仓库。"
 
 msgid "Review message"
 msgstr "审查留言"
@@ -15072,6 +15196,9 @@ msgstr "选择团队"
 msgid "Select terminal script directory"
 msgstr "选择终端脚本目录"
 
+msgid "Select workspace"
+msgstr "选择工作区"
+
 msgid "Select worktree location"
 msgstr "选择worktree位置"
 
@@ -15174,6 +15301,9 @@ msgstr "分隔线"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "服务可用性发布在<0>status.superset.sh</0>，安全与合规文档在<1>trust.superset.sh</1>。"
 
+msgid "Service URL"
+msgstr "服务 URL"
+
 msgid "Session"
 msgstr "会话"
 
@@ -15214,6 +15344,9 @@ msgstr "会话"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "会话 · 按费用排名前{0}"
+
+msgid "Set as default"
+msgstr "设为默认"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15340,6 +15473,9 @@ msgstr "使用此登录的所有会话共享此额度。"
 
 msgid "Shared app components"
 msgstr "共享应用组件"
+
+msgid "Shared by every agent and account on this computer."
+msgstr "由此电脑上的所有代理和账户共享。"
 
 msgid "Shared component library."
 msgstr "共享组件库。"
@@ -15676,6 +15812,9 @@ msgstr "单标签页+窗格"
 msgid "Single-select"
 msgstr "单选"
 
+msgid "Site URL"
+msgstr "站点 URL"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "全站遥测 · {range}"
 
@@ -15861,6 +16000,9 @@ msgstr "来源"
 msgid "Source Available"
 msgstr "源码可见"
 
+msgid "Source branch"
+msgstr "源分支"
+
 msgid "Source path (not an import)"
 msgstr "源码路径（不是导入路径）"
 
@@ -15953,6 +16095,9 @@ msgstr "拆分并新建浏览器"
 
 msgid "Split with Sandbox Desktop"
 msgstr "拆分并打开沙盒桌面"
+
+msgid "Squash"
+msgstr "压缩提交"
 
 msgid "Squash & Merge"
 msgstr "压缩并合并"
@@ -16074,6 +16219,9 @@ msgstr "开始浏览"
 
 msgid "Start building in two."
 msgstr "两步开始构建。"
+
+msgid "Start chat"
+msgstr "开始聊天"
 
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "在 iPhone 或 iPad 上启动编程智能体、实时跟进并审查差异。已在 App Store 上架；Android 版即将推出。"
@@ -16241,6 +16389,10 @@ msgstr "正在停止 {what} 中的代理"
 msgid "Stops the agent and sends this now"
 msgstr "停止智能体并立即发送此消息"
 
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "存储于 {0}"
+
 msgid "Strikethrough"
 msgstr "删除线"
 
@@ -16321,6 +16473,9 @@ msgstr "总结此工作区中的更改"
 
 msgid "Summary"
 msgstr "摘要"
+
+msgid "Summary only"
+msgstr "仅摘要"
 
 msgid "sun 11:00"
 msgstr "周日11:00"
@@ -16569,6 +16724,12 @@ msgstr "持续"
 msgid "Sustain · active days in 30"
 msgstr "持续性 · 30 天内的活跃天数"
 
+msgid "Switch"
+msgstr "切换"
+
+msgid "Switch account"
+msgstr "切换账户"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "换智能体，不换工作流"
 
@@ -16586,6 +16747,9 @@ msgstr "切换登录"
 
 msgid "Switch sign-in…"
 msgstr "切换登录…"
+
+msgid "Switch to {summary}"
+msgstr "切换到 {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "切换到活动工作区"
@@ -16620,9 +16784,6 @@ msgstr "切换到标签页8"
 msgid "Switch to Tab 9"
 msgstr "切换到标签页9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "配额耗尽时切换到建议账户"
-
 msgid "Switch to Workspace 1"
 msgstr "切换到工作区1"
 
@@ -16650,6 +16811,12 @@ msgstr "切换到工作区8"
 msgid "Switch to Workspace 9"
 msgstr "切换到工作区9"
 
+msgid "Switch, or wait"
+msgstr "切换或等待"
+
+msgid "Switch…"
+msgstr "切换…"
+
 msgid "Symbol, light"
 msgstr "图形标志，浅色"
 
@@ -16676,9 +16843,6 @@ msgstr "正在同步..."
 
 msgid "System"
 msgstr "跟随系统"
-
-msgid "System default"
-msgstr "系统默认值"
 
 msgid "System design"
 msgstr "系统设计"
@@ -16747,6 +16911,9 @@ msgstr "目标日期"
 msgid "Target agent"
 msgstr "目标智能体"
 
+msgid "Target branch"
+msgstr "目标分支"
+
 msgid "Target date"
 msgstr "目标日期"
 
@@ -16771,6 +16938,9 @@ msgstr "任务启动"
 msgid "Task layout"
 msgstr "任务布局"
 
+msgid "Task linked to workspace."
+msgstr "任务已关联到工作区。"
+
 msgid "Task Management"
 msgstr "任务管理"
 
@@ -16794,6 +16964,9 @@ msgstr "任务管理位置已更新"
 
 msgid "Tasks"
 msgstr "任务"
+
+msgid "Tasks and projects"
+msgstr "任务和项目"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "在Superset中创建的任务会同步到这个Linear团队。"
@@ -17047,6 +17220,9 @@ msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按钮现在更醒目了。我已在你的窗格中确认过。"
 
+msgid "The chat pauses until you continue it."
+msgstr "聊天会暂停，直到你继续。"
+
 msgid "The chat will open when the current response finishes."
 msgstr "当前回复完成后将打开聊天。"
 
@@ -17064,6 +17240,9 @@ msgstr "连接已超时"
 
 msgid "The connection was closed"
 msgstr "连接已被关闭"
+
+msgid "The current chat stays open until the new one is running."
+msgstr "新聊天运行前，当前聊天会保持打开。"
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "当前提示词会被所选版本替换。历史中会新增一条“已恢复”记录，方便你撤销。"
@@ -17207,6 +17386,9 @@ msgstr "你的组织或团队的名称"
 msgid "The network connection changed"
 msgstr "网络连接已变更"
 
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "新代理会继续整个对话，包括工具调用。"
+
 msgid "The overnight shift"
 msgstr "夜班"
 
@@ -17280,6 +17462,9 @@ msgstr "自动驾驶的软件工厂"
 
 msgid "The server could not be found"
 msgstr "找不到服务器"
+
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "服务暂时不可用。Superset 将自动重试。你的账户设置未发生变化。"
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "登录链接不完整。请重试。"
@@ -17400,6 +17585,9 @@ msgstr "此智能体无法打开聊天。请启用高级 CLI 选项以在终端�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所选设备上已不存在这个智能体（它的智能体可能被重置过）。在你选择新的智能体之前，运行都会失败。"
+
+msgid "This agent received the messages so far."
+msgstr "此代理已收到目前为止的消息。"
 
 msgid "This agent received the whole conversation so far."
 msgstr "此代理已收到目前为止的完整对话。"
@@ -17793,6 +17981,9 @@ msgstr "标题"
 msgid "To"
 msgstr "到"
 
+msgid "To do"
+msgstr "待办"
+
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "要恢复与智能体的对话，请在其文件夹中运行："
 
@@ -17985,6 +18176,9 @@ msgstr "任务管理位置"
 msgid "Tracking"
 msgstr "已跟踪"
 
+msgid "Transfer"
+msgstr "转移"
+
 msgid "Translated"
 msgstr "已翻译"
 
@@ -18176,6 +18370,9 @@ msgstr "不可用"
 
 msgid "Uncached input"
 msgstr "未缓存输入"
+
+msgid "Unchanged"
+msgstr "保持不变"
 
 msgid "Uncollectible"
 msgstr "无法收款"
@@ -18417,6 +18614,9 @@ msgstr "更新分支前缀"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "更新此主机以使用引导配置，或使用高级配置。"
 
+msgid "Update this host to configure integrations."
+msgstr "请更新此主机以配置集成。"
+
 msgid "Updated"
 msgstr "已更新"
 
@@ -18481,6 +18681,9 @@ msgstr "可用性SLA与专属支持"
 
 msgid "Urgent"
 msgstr "紧急"
+
+msgid "URL"
+msgstr "URL"
 
 msgid "URL copied"
 msgstr "URL已复制"
@@ -18621,6 +18824,9 @@ msgstr "使用随机分支名（AI生成不可用）"
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId与该工作区的项目不匹配"
 
+msgid "Value"
+msgstr "值"
+
 msgid "Variables"
 msgstr "变量"
 
@@ -18635,6 +18841,9 @@ msgstr "已验证并保存"
 
 msgid "Verified through sign-in"
 msgstr "通过登录验证"
+
+msgid "Verify"
+msgstr "验证"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "确认Kbd在tooltip中仍然可见"
@@ -18771,11 +18980,11 @@ msgstr "音量"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "等待配额重置后继续"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "请等待代理完成后再交接。"
+
+msgid "Wait for the reset"
+msgstr "等待重置"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "启动智能体前等待工作区设置完成"
@@ -18791,9 +19000,6 @@ msgstr "等待检查"
 msgid "Waiting for it to connect…"
 msgstr "正在等待连接…"
 
-msgid "Waiting for quota"
-msgstr "正在等待配额"
-
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "正在等待配额。停止将取消自动继续。"
 
@@ -18808,6 +19014,9 @@ msgstr "正在等待子智能体的第一条消息…"
 
 msgid "Waiting for your input"
 msgstr "等待你的输入"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "没有其他账户有配额时等待重置。"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "想让某件事早点做？<0>在Discord上告诉我们</0>。这里的很多条目最初都来自用户的请求。"
@@ -19046,6 +19255,9 @@ msgstr "接下来"
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
 
+msgid "When quota runs out"
+msgstr "配额用完时"
+
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "点击侧边栏中检测到的端口标记时打开的位置。"
 
@@ -19239,6 +19451,9 @@ msgstr "工作区路径尚不可用"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "工作区固定与批量操作"
+
+msgid "Workspace ready"
+msgstr "工作区已就绪"
 
 msgid "Workspace restored"
 msgstr "工作区已恢复"
@@ -19435,6 +19650,9 @@ msgstr "您正在查看版本 {version}，只读"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "最多可附加{MAX_ATTACHMENTS}个文件"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "你可以稍后在分支版本设置中配置这些连接。"
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "你可以在 30 天内从“设置 → 项目”恢复它。仓库文件夹永远不会被删除。"

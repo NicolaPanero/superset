@@ -1,5 +1,10 @@
 import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useForkPullRequestRedirect } from "renderer/components/ForkIntegrations/hooks/useForkPullRequestRedirect";
+import {
+	type ForkPullRequestsSearch,
+	forkPullRequestsSearch,
+} from "renderer/components/ForkIntegrations/utils/forkRouteSearch";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { WindowChromeScope } from "renderer/routes/_authenticated/_dashboard/components/WindowChromeScope";
@@ -23,7 +28,7 @@ import {
 // grows again).
 const MIN_DETAIL_PANE_WIDTH = 420;
 
-export type PullRequestsSearch = {
+export type PullRequestsSearch = ForkPullRequestsSearch & {
 	search?: string;
 	project?: string;
 	repo?: string;
@@ -38,6 +43,7 @@ export const Route = createFileRoute(
 )({
 	component: PullRequestsLayout,
 	validateSearch: (search: Record<string, unknown>): PullRequestsSearch => ({
+		...forkPullRequestsSearch(search),
 		search: typeof search.search === "string" ? search.search : undefined,
 		repo: typeof search.repo === "string" ? search.repo : undefined,
 		project: typeof search.project === "string" ? search.project : undefined,
@@ -60,6 +66,7 @@ export const Route = createFileRoute(
  * always reveals the other, since hiding both would leave nothing on screen.
  */
 function PullRequestsLayout() {
+	useForkPullRequestRedirect();
 	const { search, project, repo, projects, author, review, state } =
 		Route.useSearch();
 	const params = useParams({ strict: false }) as { prNumber?: string };
@@ -80,8 +87,13 @@ function PullRequestsLayout() {
 	);
 	// Stable identity: effects downstream key off this array.
 	const initialProjects = useMemo(
-		() => resolveProjectFilterParams(projects, project, undefined),
-		[projects, project],
+		() =>
+			resolveProjectFilterParams(
+				projects,
+				params.prNumber === undefined ? project : undefined,
+				undefined,
+			),
+		[projects, project, params.prNumber],
 	);
 
 	const rootRef = useRef<HTMLDivElement>(null);

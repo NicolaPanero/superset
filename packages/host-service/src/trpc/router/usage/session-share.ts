@@ -344,6 +344,21 @@ function mergeAndLinkHistory(
 	drainPendingHistory(pending, dst);
 }
 
+/** The main entry already resolves to the profile's own entry (the two homes
+ * were shared the other way round). Linking it would make a symlink loop and
+ * leave the real tree stranded in the pending path. */
+function mainLinksBackToProfile(
+	profile: string,
+	main: string,
+	name: string,
+): boolean {
+	const dst = join(main, name);
+	return (
+		lstatOrNull(dst)?.isSymbolicLink() === true &&
+		canonical(dst) === canonical(join(profile, name))
+	);
+}
+
 /**
  * Best-effort per entry: one unmergeable path must not stop the rest, and a
  * partially shared profile is strictly better than an unshared one.
@@ -358,15 +373,17 @@ function shareSessionState(
 	const profile = shareableProfileDir(configDir, mainHome, spec.providerHomes);
 	if (!profile) return;
 	const main = resolve(mainHome);
-	const steps: Array<() => void> = [
+	const steps: Array<readonly [string, () => void]> = [
 		...spec.dirs.map(
-			(name) => () => mergeAndLinkSessionDir(profile, main, name),
+			(name) =>
+				[name, () => mergeAndLinkSessionDir(profile, main, name)] as const,
 		),
 		...spec.historyFiles.map(
-			(name) => () => mergeAndLinkHistory(profile, main, name),
+			(name) => [name, () => mergeAndLinkHistory(profile, main, name)] as const,
 		),
 	];
-	for (const step of steps) {
+	for (const [name, step] of steps) {
+		if (mainLinksBackToProfile(profile, main, name)) continue;
 		try {
 			step();
 		} catch {

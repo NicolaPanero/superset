@@ -1,0 +1,54 @@
+const string = (value: unknown) =>
+	typeof value === "string" ? value : undefined;
+
+function oneOf<T extends string>(value: unknown, choices: readonly T[]) {
+	return choices.includes(value as T) ? (value as T) : undefined;
+}
+
+export type ForkTasksSearch = {
+	forkSource?: "jira" | "superset";
+	forkTask?: string;
+	forkConnection?: string;
+	forkView?: "board" | "list";
+	forkScope?: "mine" | "all";
+	forkStatus?: "all" | "new" | "indeterminate" | "done";
+	forkJiraProject?: string;
+	forkJql?: string;
+};
+
+export function forkTasksSearch(
+	search: Record<string, unknown>,
+): ForkTasksSearch {
+	return {
+		forkSource: oneOf(search.forkSource, ["jira", "superset"]),
+		forkTask: string(search.forkTask),
+		forkConnection: string(search.forkConnection),
+		forkView: oneOf(search.forkView, ["board", "list"]),
+		forkScope: oneOf(search.forkScope, ["mine", "all"]),
+		forkStatus: oneOf(search.forkStatus, [
+			"all",
+			"new",
+			"indeterminate",
+			"done",
+		]),
+		forkJiraProject: string(search.forkJiraProject),
+		forkJql: string(search.forkJql)?.slice(0, 4000),
+	};
+}
+
+export type ForkPullRequestsSearch = {
+	forkProvider?: "bitbucket";
+	forkProject?: string;
+	forkNumber?: number;
+};
+
+export function forkPullRequestsSearch(
+	search: Record<string, unknown>,
+): ForkPullRequestsSearch {
+	const number = Number(search.forkNumber);
+	return {
+		forkProvider: oneOf(search.forkProvider, ["bitbucket"]),
+		forkProject: string(search.forkProject),
+		forkNumber: Number.isSafeInteger(number) && number > 0 ? number : undefined,
+	};
+}

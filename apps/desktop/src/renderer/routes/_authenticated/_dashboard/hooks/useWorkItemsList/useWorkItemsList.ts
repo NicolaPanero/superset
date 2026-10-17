@@ -69,7 +69,7 @@ export function useWorkItemsList<
 	getQueryOptions,
 	getRows,
 	getRowKey,
-}: UseWorkItemsListOptions<TData, TRow>): UseWorkItemsListResult<TRow> {
+}: UseWorkItemsListOptions<TData, TRow>): UseWorkItemsListResult<TRow> & { pages: TData[] } {
 	const hostTargets = useMemo(
 		() => groupProjectTargetsByHost(projectTargets),
 		[projectTargets],
@@ -136,6 +136,7 @@ export function useWorkItemsList<
 	);
 
 	return {
+		pages: queries.flatMap((query) => query.data ? [query.data] : []),
 		rows,
 		totalCount,
 		repoMismatch,

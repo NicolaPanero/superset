@@ -5,6 +5,7 @@ import { SquarePen } from "lucide-react";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import type { SubagentPaneData } from "../../../../../../types";
 import { AccountUsage } from "../../../AccountUsage";
+import { ForkChatOrigin } from "../../../ForkChatOrigin";
 import {
 	terminalRichInputOpenStore,
 	useTerminalRichInputOpen,
@@ -64,11 +65,14 @@ export function TerminalPaneHeaderExtras({
 
 	return (
 		<div className="flex items-center gap-1">
-			<AccountUsage
-				key={`${workspaceId}:${terminalId}`}
-				workspaceId={workspaceId}
-				terminalId={terminalId}
-			/>
+			{fork && <ForkChatOrigin ctx={fork.ctx} workspaceId={workspaceId} />}
+			{fork?.paneData.agentSurface !== "acp" && (
+				<AccountUsage
+					key={`${workspaceId}:${terminalId}`}
+					workspaceId={workspaceId}
+					terminalId={terminalId}
+				/>
+			)}
 			<TerminalSubagentsMenu
 				workspaceId={workspaceId}
 				terminalId={terminalId}

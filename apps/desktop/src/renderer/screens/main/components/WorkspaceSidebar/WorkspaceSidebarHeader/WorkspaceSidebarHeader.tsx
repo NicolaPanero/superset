@@ -6,6 +6,7 @@ import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { GoGitPullRequest } from "react-icons/go";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { LuLayers } from "react-icons/lu";
+import { useForkConnections } from "renderer/components/ForkIntegrations/hooks/useForkConnections";
 import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import {
@@ -31,6 +32,7 @@ export function WorkspaceSidebarHeader({
 	const navigate = useNavigate();
 	const matchRoute = useMatchRoute();
 	const { gateFeature } = usePaywall();
+	const { jiraConfigured } = useForkConnections();
 
 	const isWorkspacesListOpen = !!matchRoute({ to: "/workspaces" });
 	const isTasksOpen = !!matchRoute({ to: "/tasks", fuzzy: true });
@@ -67,6 +69,10 @@ export function WorkspaceSidebarHeader({
 	} = usePullRequestsFilterStore();
 
 	const handleTasksClick = () => {
+		if (jiraConfigured) {
+			void navigate({ to: "/tasks", search: { forkSource: "jira" } });
+			return;
+		}
 		gateFeature(GATED_FEATURES.TASKS, () => {
 			navigate({
 				to: "/tasks",
@@ -118,7 +124,7 @@ export function WorkspaceSidebarHeader({
 					<TooltipContent side="right">Workspaces</TooltipContent>
 				</Tooltip>
 
-				<ForkProFeature>
+				<ForkProFeature available={jiraConfigured}>
 					<Tooltip delayDuration={300}>
 						<TooltipTrigger asChild>
 							<button
@@ -186,7 +192,7 @@ export function WorkspaceSidebarHeader({
 				<span className="text-sm font-medium flex-1 text-left">Workspaces</span>
 			</button>
 
-			<ForkProFeature>
+			<ForkProFeature available={jiraConfigured}>
 				<button
 					type="button"
 					onClick={handleTasksClick}

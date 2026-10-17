@@ -31,6 +31,7 @@ import {
 	VscNewFolder,
 } from "react-icons/vsc";
 import { useFrameStackStore } from "renderer/commandPalette";
+import { useForkConnections } from "renderer/components/ForkIntegrations/hooks/useForkConnections";
 import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { SidebarKbdHint } from "renderer/components/SidebarKbdHint";
@@ -161,6 +162,7 @@ export function DashboardSidebarHeader({
 	});
 	const isProjectsOpen = !!matchRoute({ to: "/projects", fuzzy: true });
 	const showProFeatures = useForkProFeatures();
+	const { jiraConfigured } = useForkConnections();
 	const isCloudEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true &&
 		showProFeatures;
@@ -255,6 +257,10 @@ export function DashboardSidebarHeader({
 	};
 
 	const handleTasksClick = () => {
+		if (jiraConfigured) {
+			void navigate({ to: "/tasks", search: { forkSource: "jira" } });
+			return;
+		}
 		gateFeature(GATED_FEATURES.TASKS, () => {
 			navigate({
 				to: "/tasks",
@@ -485,7 +491,7 @@ export function DashboardSidebarHeader({
 						</Tooltip>
 					</ForkProFeature>
 
-					<ForkProFeature>
+					<ForkProFeature available={jiraConfigured}>
 						<Tooltip delayDuration={300}>
 							<TooltipTrigger asChild>
 								<button
@@ -831,7 +837,7 @@ export function DashboardSidebarHeader({
 				</div>
 			</ForkProFeature>
 
-			<ForkProFeature>
+			<ForkProFeature available={jiraConfigured}>
 				<button
 					type="button"
 					onClick={handleTasksClick}
