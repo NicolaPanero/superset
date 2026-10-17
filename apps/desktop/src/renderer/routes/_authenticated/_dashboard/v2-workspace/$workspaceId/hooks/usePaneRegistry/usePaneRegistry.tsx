@@ -103,6 +103,7 @@ import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
 import { ForkChatExtras } from "./components/ForkChatExtras";
+import { ForkChatOrigin } from "./components/ForkChatOrigin";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
@@ -877,6 +878,7 @@ export function usePaneRegistry({
 					const data = ctx.pane.data as ChatPaneData;
 					return (
 						<div className="flex items-center gap-1">
+							<ForkChatOrigin ctx={ctx} workspaceId={workspaceId} />
 							<AgentSurfaceToggle
 								pane={{ kind: "chat", data }}
 								onChange={(surface, agent) =>
