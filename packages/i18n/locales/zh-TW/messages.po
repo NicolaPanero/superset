@@ -2866,6 +2866,9 @@ msgstr "等待你或你團隊的審查"
 msgid "Back"
 msgstr "返回"
 
+msgid "Back to {label}"
+msgstr "返回 {label}"
+
 msgid "Back to About"
 msgstr "返回關於頁"
 
@@ -17558,6 +17561,9 @@ msgstr "此代理無法開啟聊天。請啟用進階 CLI 選項以在終端機�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所選裝置上已不存在這個代理程式（它的代理程式可能被重置過）。在你選擇新的代理程式之前，執行都會失敗。"
+
+msgid "This agent received the messages so far."
+msgstr "此代理已收到目前為止的訊息。"
 
 msgid "This agent received the whole conversation so far."
 msgstr "此代理已收到目前為止的完整對話。"

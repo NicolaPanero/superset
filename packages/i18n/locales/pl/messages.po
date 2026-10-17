@@ -2866,6 +2866,9 @@ msgstr "Oczekuje na przegląd Twój lub Twojego zespołu"
 msgid "Back"
 msgstr "Wstecz"
 
+msgid "Back to {label}"
+msgstr "Wróć do {label}"
+
 msgid "Back to About"
 msgstr "Wróć do O nas"
 
@@ -17558,6 +17561,9 @@ msgstr "Ten agent nie może otworzyć czatu. Włącz zaawansowane opcje CLI, aby
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Ten agent już nie istnieje na wybranym urządzeniu (jego agenci mogli zostać zresetowani). Uruchomienia będą kończyć się błędem, dopóki nie wybierzesz nowego."
+
+msgid "This agent received the messages so far."
+msgstr "Ten agent otrzymał dotychczasowe wiadomości."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Ten agent otrzymał całą dotychczasową rozmowę."

@@ -2866,6 +2866,9 @@ msgstr "Pendientes de tu revisión o la de tu equipo"
 msgid "Back"
 msgstr "Atrás"
 
+msgid "Back to {label}"
+msgstr "Volver a {label}"
+
 msgid "Back to About"
 msgstr "Volver a Acerca de"
 
@@ -17558,6 +17561,9 @@ msgstr "Este agente no puede abrir un chat. Activa las opciones avanzadas de CLI
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Este agente ya no existe en el dispositivo seleccionado (puede que sus agentes se hayan restablecido). Las ejecuciones fallarán hasta que elijas uno nuevo."
+
+msgid "This agent received the messages so far."
+msgstr "Este agente recibió los mensajes hasta ahora."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Este agente recibió toda la conversación hasta ahora."

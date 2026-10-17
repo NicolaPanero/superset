@@ -2866,6 +2866,9 @@ msgstr "Awaiting review from you or your team"
 msgid "Back"
 msgstr "Back"
 
+msgid "Back to {label}"
+msgstr "Back to {label}"
+
 msgid "Back to About"
 msgstr "Back to About"
 
@@ -17558,6 +17561,9 @@ msgstr "This agent cannot open a chat. Enable advanced CLI options to use it in 
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
+
+msgid "This agent received the messages so far."
+msgstr "This agent received the messages so far."
 
 msgid "This agent received the whole conversation so far."
 msgstr "This agent received the whole conversation so far."

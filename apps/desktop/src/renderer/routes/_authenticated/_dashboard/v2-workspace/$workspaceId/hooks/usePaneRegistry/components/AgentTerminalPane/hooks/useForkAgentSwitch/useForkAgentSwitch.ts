@@ -24,7 +24,7 @@ export interface AgentSwitchTarget {
 	accountSelection?: string | null;
 }
 
-/** Converts an explicit handoff in the current pane; failure leaves the source resumable. */
+/** Converts an explicit handoff in the current pane; failure leaves the source running. */
 export function useForkAgentSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
@@ -84,12 +84,8 @@ export function useForkAgentSwitch(
 				pendingAttachments: _attachments,
 				...rest
 			} = data;
-			const restoreRecovery = data.acpSessionId
-				? markChatSessionClosed(data.acpSessionId)
-				: () => {};
+			let restoreRecovery = () => {};
 			try {
-				if (data.acpSessionId)
-					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
 				const launch = await prepareAcpLaunch.mutateAsync({
 					workspaceId,
 					configId: targetConfig.id,
@@ -114,6 +110,12 @@ export function useForkAgentSwitch(
 						: {}),
 					targetTerminalId: data.terminalId,
 				});
+				// Closed only once the target exists: the pane never shows a stopped
+				// chat while converting, and a failed conversion leaves it running.
+				if (data.acpSessionId) {
+					restoreRecovery = markChatSessionClosed(data.acpSessionId);
+					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
+				}
 				const modelId = target.model?.id ?? launch.defaultModelId;
 				ctx.actions.updateData({
 					...rest,

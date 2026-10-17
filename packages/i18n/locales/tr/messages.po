@@ -2866,6 +2866,9 @@ msgstr "Sizden veya takımınızdan inceleme bekliyor"
 msgid "Back"
 msgstr "Geri"
 
+msgid "Back to {label}"
+msgstr "{label} sohbetine dön"
+
 msgid "Back to About"
 msgstr "Hakkımızda sayfasına dön"
 
@@ -17558,6 +17561,9 @@ msgstr "Bu ajan sohbet açamıyor. Terminalde kullanmak için gelişmiş CLI se�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Bu ajan seçili cihazda artık yok (ajanları sıfırlanmış olabilir). Yeni bir tane seçene kadar çalıştırmalar başarısız olacak."
+
+msgid "This agent received the messages so far."
+msgstr "Bu ajan şimdiye kadarki mesajları aldı."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Bu ajan şimdiye kadarki konuşmanın tamamını aldı."

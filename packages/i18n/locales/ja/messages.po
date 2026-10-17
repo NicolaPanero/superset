@@ -2866,6 +2866,9 @@ msgstr "自分またはチームのレビュー待ち"
 msgid "Back"
 msgstr "戻る"
 
+msgid "Back to {label}"
+msgstr "{label} に戻る"
+
 msgid "Back to About"
 msgstr "会社概要に戻る"
 
@@ -17558,6 +17561,9 @@ msgstr "このエージェントはチャットを開けません。ターミナ
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "選択したデバイスにこのエージェントは存在しません(エージェントがリセットされた可能性があります)。新しいエージェントを選ぶまで実行は失敗します。"
+
+msgid "This agent received the messages so far."
+msgstr "このエージェントはここまでのメッセージを受け取りました。"
 
 msgid "This agent received the whole conversation so far."
 msgstr "このエージェントはこれまでの会話をすべて受け取りました。"

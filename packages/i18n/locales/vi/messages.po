@@ -2866,6 +2866,9 @@ msgstr "Đang chờ bạn hoặc nhóm bạn review"
 msgid "Back"
 msgstr "Quay lại"
 
+msgid "Back to {label}"
+msgstr "Quay lại {label}"
+
 msgid "Back to About"
 msgstr "Quay lại Giới thiệu"
 
@@ -17558,6 +17561,9 @@ msgstr "Tác nhân này không thể mở trò chuyện. Bật tùy chọn CLI n
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."
+
+msgid "This agent received the messages so far."
+msgstr "Tác tử này đã nhận các tin nhắn cho đến nay."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Tác tử này đã nhận toàn bộ cuộc trò chuyện cho đến nay."

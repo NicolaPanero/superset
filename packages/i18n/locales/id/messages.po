@@ -2866,6 +2866,9 @@ msgstr "Menunggu review dari Anda atau tim Anda"
 msgid "Back"
 msgstr "Kembali"
 
+msgid "Back to {label}"
+msgstr "Kembali ke {label}"
+
 msgid "Back to About"
 msgstr "Kembali ke Tentang"
 
@@ -17558,6 +17561,9 @@ msgstr "Agen ini tidak dapat membuka chat. Aktifkan opsi CLI lanjutan untuk meng
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."
+
+msgid "This agent received the messages so far."
+msgstr "Agen ini menerima pesan sejauh ini."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Agen ini menerima seluruh percakapan sejauh ini."

@@ -4,6 +4,10 @@ import { createContext, type ReactNode, useContext } from "react";
 export interface ForkChatProvenance {
 	label: string;
 	email: string | null;
+	/** Only the messages came over, not the native session. */
+	summaryOnly?: boolean;
+	/** Reopens the chat this pane held before an in-place switch. */
+	onReturn?: () => void;
 }
 
 const ForkChatProvenanceContext = createContext<ForkChatProvenance | null>(

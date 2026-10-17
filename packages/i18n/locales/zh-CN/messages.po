@@ -2866,6 +2866,9 @@ msgstr "等待你或你团队的审查"
 msgid "Back"
 msgstr "返回"
 
+msgid "Back to {label}"
+msgstr "返回 {label}"
+
 msgid "Back to About"
 msgstr "返回关于页"
 
@@ -17558,6 +17561,9 @@ msgstr "此智能体无法打开聊天。请启用高级 CLI 选项以在终端�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所选设备上已不存在这个智能体（它的智能体可能被重置过）。在你选择新的智能体之前，运行都会失败。"
+
+msgid "This agent received the messages so far."
+msgstr "此代理已收到目前为止的消息。"
 
 msgid "This agent received the whole conversation so far."
 msgstr "此代理已收到目前为止的完整对话。"

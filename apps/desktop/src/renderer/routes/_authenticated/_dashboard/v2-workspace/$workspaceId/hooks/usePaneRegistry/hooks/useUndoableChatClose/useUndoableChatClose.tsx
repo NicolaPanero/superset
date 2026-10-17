@@ -17,7 +17,7 @@ import {
 import { ChatClosedToast } from "./components/ChatClosedToast";
 import { createClosedChatBatches } from "./utils/closedChatBatches";
 
-const UNDO_WINDOW_MS = 10_000;
+const UNDO_WINDOW_MS = 5_000;
 
 interface ClosedChat {
 	pane: Pane<PaneViewerData>;

@@ -2866,6 +2866,9 @@ msgstr "Ожидает ревью от вас или вашей команды"
 msgid "Back"
 msgstr "Назад"
 
+msgid "Back to {label}"
+msgstr "Вернуться к {label}"
+
 msgid "Back to About"
 msgstr "К разделу «О нас»"
 
@@ -17558,6 +17561,9 @@ msgstr "Этот агент не может открыть чат. Включи�
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Этого агента больше нет на выбранном устройстве (возможно, его агенты были сброшены). Запуски будут падать, пока не выберете нового."
+
+msgid "This agent received the messages so far."
+msgstr "Этот агент получил сообщения до этого момента."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Этот агент получил весь разговор до этого момента."

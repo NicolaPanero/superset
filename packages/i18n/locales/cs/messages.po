@@ -2866,6 +2866,9 @@ msgstr "Čeká na revizi od vás nebo vašeho týmu"
 msgid "Back"
 msgstr "Zpět"
 
+msgid "Back to {label}"
+msgstr "Zpět na {label}"
+
 msgid "Back to About"
 msgstr "Zpět na O nás"
 
@@ -17558,6 +17561,9 @@ msgstr "Tento agent nemůže otevřít chat. Zapněte pokročilé možnosti CLI,
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
+
+msgid "This agent received the messages so far."
+msgstr "Tento agent dostal dosavadní zprávy."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Tento agent obdržel celou dosavadní konverzaci."

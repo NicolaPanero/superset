@@ -46,6 +46,7 @@ import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../hooks/useForkAccountSwitch";
 import { contextHandoff } from "../../utils/contextHandoff/contextHandoff";
 import { setPendingEffort } from "../../utils/pendingEffort";
+import { rememberPreviousChat } from "../../utils/previousChat";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 type Transfer = "native" | "context";
@@ -278,6 +279,7 @@ export function ForkChatSwitchDialog({
 			setTransferId(crypto.randomUUID());
 			if (switched) {
 				rememberEffort(data.terminalId);
+				rememberPreviousChat(data, sourceLabel, false);
 				onClose();
 			} else setFailed(true);
 			return;
@@ -396,6 +398,7 @@ export function ForkChatSwitchDialog({
 				restoreRecovery = markChatSessionClosed(chatSessionId);
 				await wiring.transport.closeSession({ sessionId: chatSessionId });
 				rememberEffort(data.terminalId);
+				rememberPreviousChat(data, sourceLabel, true);
 				ctx.actions.updateData({
 					terminalId: data.terminalId,
 					agentSurface: "acp",
