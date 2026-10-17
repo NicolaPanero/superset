@@ -2447,9 +2447,6 @@ msgstr "Biểu trưng Apple"
 msgid "Application menu"
 msgstr "Menu ứng dụng"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Áp dụng ngay cho chat này, kể cả khi đã hết hạn mức. Không cần đổi tác nhân hoặc tài khoản."
-
 msgid "Applies to"
 msgstr "Áp dụng cho"
 
@@ -4648,6 +4645,12 @@ msgstr "Tiếp tục với Google"
 
 msgid "Continued from {source}"
 msgstr "Tiếp tục từ {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Tiếp tục ngay trên tài khoản còn nhiều hạn mức nhất."
+
+msgid "Continues on this account when quota returns."
+msgstr "Tiếp tục trên tài khoản này khi hạn mức được làm mới."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Để tiếp tục phiên agent, cần ghim một workspace"
@@ -11611,9 +11614,6 @@ msgstr "Chế độ ngoại tuyến / ưu tiên cục bộ"
 msgid "Older"
 msgstr "Cũ hơn"
 
-msgid "On"
-msgstr "Bật"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "trên {offScopeHostName} — sẽ không chạy ở đây"
 
@@ -16703,6 +16703,9 @@ msgstr "Duy trì · số ngày hoạt động trong 30 ngày"
 msgid "Switch"
 msgstr "Chuyển"
 
+msgid "Switch account"
+msgstr "Đổi tài khoản"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Đổi agent. Giữ nguyên quy trình"
 
@@ -16757,9 +16760,6 @@ msgstr "Chuyển tới tab 8"
 msgid "Switch to Tab 9"
 msgstr "Chuyển tới tab 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Chuyển sang tài khoản được đề xuất khi hết hạn mức"
-
 msgid "Switch to Workspace 1"
 msgstr "Chuyển tới workspace 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Chuyển tới workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Chuyển tới workspace 9"
+
+msgid "Switch, or wait"
+msgstr "Đổi hoặc chờ"
 
 msgid "Switch…"
 msgstr "Chuyển…"
@@ -17192,6 +17195,9 @@ msgstr "Agent tốt nhất sẽ thay đổi.<0/>Quy trình của bạn thì khô
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Nút giờ đã nổi bật. Tôi đã kiểm tra trong ngăn của bạn."
+
+msgid "The chat pauses until you continue it."
+msgstr "Cuộc trò chuyện tạm dừng cho đến khi bạn tiếp tục."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Cuộc trò chuyện sẽ mở khi phản hồi hiện tại hoàn tất."
@@ -18941,11 +18947,11 @@ msgstr "Âm lượng"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Chờ hạn mức được đặt lại rồi tiếp tục"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Hãy đợi tác tử hoàn tất trước khi chuyển."
+
+msgid "Wait for the reset"
+msgstr "Chờ làm mới"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Chờ setup workspace xong rồi mới khởi động agent"
@@ -18975,6 +18981,9 @@ msgstr "Đang chờ tin nhắn đầu tiên của agent con…"
 
 msgid "Waiting for your input"
 msgstr "Đang chờ bạn phản hồi"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Chờ làm mới khi không còn tài khoản nào có hạn mức."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Muốn có sớm hơn? <0>Hãy nói với chúng tôi trên Discord</0>. Phần lớn những gì ở đây bắt đầu từ yêu cầu của người dùng."
@@ -19212,6 +19221,9 @@ msgstr "Tiếp theo"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Khi tắt, không gì khác có thể truy cập tệp và công cụ trên thiết bị này. Bạn vẫn có thể kết nối tới sandbox từ xa từ đây. <0>Tìm hiểu thêm<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Khi hết hạn mức"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Nơi mở khi nhấp vào huy hiệu cổng phát hiện được ở thanh bên."

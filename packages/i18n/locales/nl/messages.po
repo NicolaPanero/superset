@@ -2447,9 +2447,6 @@ msgstr "Apple-logo"
 msgid "Application menu"
 msgstr "Toepassingsmenu"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Geldt meteen voor deze chat, ook als het quotum al op is. Je hoeft niet van agent of account te wisselen."
-
 msgid "Applies to"
 msgstr "Geldt voor"
 
@@ -4648,6 +4645,12 @@ msgstr "Doorgaan met Google"
 
 msgid "Continued from {source}"
 msgstr "Voortgezet vanuit {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Gaat nu verder op het account met het meeste quotum."
+
+msgid "Continues on this account when quota returns."
+msgstr "Gaat verder op dit account zodra het quotum terug is."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Een agentsessie voortzetten vereist een vastgezette workspace"
@@ -11611,9 +11614,6 @@ msgstr "Offline / local-first modus"
 msgid "Older"
 msgstr "Ouder"
 
-msgid "On"
-msgstr "Aan"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "op {offScopeHostName} — draait hier niet"
 
@@ -16703,6 +16703,9 @@ msgstr "Continuïteit · actieve dagen van 30"
 msgid "Switch"
 msgstr "Wisselen"
 
+msgid "Switch account"
+msgstr "Account wisselen"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Wissel van agent. Houd je workflow"
 
@@ -16757,9 +16760,6 @@ msgstr "Naar tabblad 8"
 msgid "Switch to Tab 9"
 msgstr "Naar tabblad 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Naar het voorgestelde account wisselen als het quotum op is"
-
 msgid "Switch to Workspace 1"
 msgstr "Naar werkruimte 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Naar werkruimte 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Naar werkruimte 9"
+
+msgid "Switch, or wait"
+msgstr "Wisselen of wachten"
 
 msgid "Switch…"
 msgstr "Wisselen…"
@@ -17192,6 +17195,9 @@ msgstr "De beste agent verandert.<0/>Jouw workflow niet."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "De knop valt nu op. Ik heb het gecontroleerd in je paneel."
+
+msgid "The chat pauses until you continue it."
+msgstr "De chat pauzeert tot je hem voortzet."
 
 msgid "The chat will open when the current response finishes."
 msgstr "De chat opent zodra het huidige antwoord klaar is."
@@ -18941,11 +18947,11 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Wachten tot het quotum wordt vernieuwd en doorgaan"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Wacht tot de agent klaar is voordat u overdraagt."
+
+msgid "Wait for the reset"
+msgstr "Wachten op de reset"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Wachten op werkruimte-setup voordat agents starten"
@@ -18975,6 +18981,9 @@ msgstr "Wachten op het eerste bericht van de subagent…"
 
 msgid "Waiting for your input"
 msgstr "Wacht op je invoer"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Wacht op de reset als geen ander account quotum heeft."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Wil je iets eerder zien? <0>Laat het weten in Discord</0>. Veel van wat hier staat begon als gebruikersverzoek."
@@ -19212,6 +19221,9 @@ msgstr "Wat volgt"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Als dit uitstaat, kan niets anders bij de bestanden en tools op dit apparaat. Je kunt vanaf hier nog steeds verbinden met externe sandboxes. <0>Meer informatie<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Als het quotum op is"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Waar de badges van gedetecteerde poorten in de zijbalk openen bij een klik."

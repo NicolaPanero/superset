@@ -2447,9 +2447,6 @@ msgstr "Apple 标志"
 msgid "Application menu"
 msgstr "应用程序菜单"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "立即应用于此聊天，即使额度已用完。无需更换代理或账户。"
-
 msgid "Applies to"
 msgstr "适用于"
 
@@ -4648,6 +4645,12 @@ msgstr "使用Google继续"
 
 msgid "Continued from {source}"
 msgstr "继续自 {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "立即在配额最多的账户上继续。"
+
+msgid "Continues on this account when quota returns."
+msgstr "配额恢复后在此账户上继续。"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "继续智能体会话需要固定的工作区"
@@ -11611,9 +11614,6 @@ msgstr "离线/本地优先模式"
 msgid "Older"
 msgstr "更早"
 
-msgid "On"
-msgstr "开启"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不会在这里运行"
 
@@ -16703,6 +16703,9 @@ msgstr "持续性 · 30 天内的活跃天数"
 msgid "Switch"
 msgstr "切换"
 
+msgid "Switch account"
+msgstr "切换账户"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "换智能体，不换工作流"
 
@@ -16757,9 +16760,6 @@ msgstr "切换到标签页8"
 msgid "Switch to Tab 9"
 msgstr "切换到标签页9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "配额耗尽时切换到建议账户"
-
 msgid "Switch to Workspace 1"
 msgstr "切换到工作区1"
 
@@ -16786,6 +16786,9 @@ msgstr "切换到工作区8"
 
 msgid "Switch to Workspace 9"
 msgstr "切换到工作区9"
+
+msgid "Switch, or wait"
+msgstr "切换或等待"
 
 msgid "Switch…"
 msgstr "切换…"
@@ -17192,6 +17195,9 @@ msgstr "最好的智能体会变。<0/>你的工作流不该变。"
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按钮现在更醒目了。我已在你的窗格中确认过。"
+
+msgid "The chat pauses until you continue it."
+msgstr "聊天会暂停，直到你继续。"
 
 msgid "The chat will open when the current response finishes."
 msgstr "当前回复完成后将打开聊天。"
@@ -18941,11 +18947,11 @@ msgstr "音量"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "等待配额重置后继续"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "请等待代理完成后再交接。"
+
+msgid "Wait for the reset"
+msgstr "等待重置"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "启动智能体前等待工作区设置完成"
@@ -18975,6 +18981,9 @@ msgstr "正在等待子智能体的第一条消息…"
 
 msgid "Waiting for your input"
 msgstr "等待你的输入"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "没有其他账户有配额时等待重置。"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "想让某件事早点做？<0>在Discord上告诉我们</0>。这里的很多条目最初都来自用户的请求。"
@@ -19212,6 +19221,9 @@ msgstr "接下来"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
+
+msgid "When quota runs out"
+msgstr "配额用完时"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "点击侧边栏中检测到的端口标记时打开的位置。"

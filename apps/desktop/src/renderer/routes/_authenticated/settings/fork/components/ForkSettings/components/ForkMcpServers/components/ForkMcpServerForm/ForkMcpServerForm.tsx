@@ -3,9 +3,9 @@ import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { Textarea } from "@superset/ui/textarea";
-import { cn } from "@superset/ui/utils";
 import { useId, useState } from "react";
 import { HiOutlinePlus, HiOutlineXMark } from "react-icons/hi2";
+import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
 import type { ForkMcpServerSummary } from "../../hooks/useForkMcp";
 
 type Transport = ForkMcpServerSummary["transport"];
@@ -127,25 +127,12 @@ export function ForkMcpServerForm({
 					<Label>
 						<Trans>Type</Trans>
 					</Label>
-					<div className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-1">
-						{TRANSPORTS.map((option) => (
-							<Button
-								key={option.value}
-								type="button"
-								size="sm"
-								variant="ghost"
-								aria-pressed={transport === option.value}
-								className={cn(
-									"h-7",
-									transport === option.value &&
-										"bg-background shadow-sm hover:bg-background",
-								)}
-								onClick={() => setTransport(option.value)}
-							>
-								{option.label}
-							</Button>
-						))}
-					</div>
+					<ForkSegmentedControl
+						label={t({ message: "Type" })}
+						value={transport}
+						onChange={setTransport}
+						segments={TRANSPORTS}
+					/>
 				</div>
 			</div>
 			{transport === "stdio" ? (

@@ -2447,9 +2447,6 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Menu aplikasi"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Langsung berlaku untuk chat ini, meskipun kuotanya sudah habis. Tidak perlu mengganti agen atau akun."
-
 msgid "Applies to"
 msgstr "Berlaku untuk"
 
@@ -4648,6 +4645,12 @@ msgstr "Lanjutkan dengan Google"
 
 msgid "Continued from {source}"
 msgstr "Dilanjutkan dari {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Langsung lanjut di akun dengan kuota terbanyak."
+
+msgid "Continues on this account when quota returns."
+msgstr "Lanjut di akun ini saat kuota kembali."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Melanjutkan sesi agen memerlukan ruang kerja yang disematkan"
@@ -11611,9 +11614,6 @@ msgstr "Mode offline / local-first"
 msgid "Older"
 msgstr "Lebih lama"
 
-msgid "On"
-msgstr "Aktif"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "di {offScopeHostName} — tidak akan berjalan di sini"
 
@@ -16703,6 +16703,9 @@ msgstr "Konsistensi · hari aktif dari 30"
 msgid "Switch"
 msgstr "Ganti"
 
+msgid "Switch account"
+msgstr "Ganti akun"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Ganti agen. Pertahankan alur kerja Anda"
 
@@ -16757,9 +16760,6 @@ msgstr "Beralih ke Tab 8"
 msgid "Switch to Tab 9"
 msgstr "Beralih ke Tab 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Beralih ke akun yang disarankan saat kuota habis"
-
 msgid "Switch to Workspace 1"
 msgstr "Beralih ke Workspace 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Beralih ke Workspace 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Beralih ke Workspace 9"
+
+msgid "Switch, or wait"
+msgstr "Ganti, atau tunggu"
 
 msgid "Switch…"
 msgstr "Ganti…"
@@ -17192,6 +17195,9 @@ msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tombolnya kini menonjol. Saya sudah memeriksanya di panel Anda."
+
+msgid "The chat pauses until you continue it."
+msgstr "Chat berhenti sampai Anda melanjutkannya."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Chat akan terbuka setelah respons saat ini selesai."
@@ -18941,11 +18947,11 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Tunggu kuota diperbarui lalu lanjutkan"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Tunggu hingga agen selesai sebelum mentransfer."
+
+msgid "Wait for the reset"
+msgstr "Tunggu reset"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Tunggu setup workspace sebelum menjalankan agen"
@@ -18975,6 +18981,9 @@ msgstr "Menunggu pesan pertama dari subagen…"
 
 msgid "Waiting for your input"
 msgstr "Menunggu masukan Anda"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Menunggu reset bila tidak ada akun lain yang punya kuota."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Ingin sesuatu lebih cepat? <0>Beri tahu kami di Discord</0>. Banyak yang ada di sini bermula dari permintaan pengguna."
@@ -19212,6 +19221,9 @@ msgstr "Selanjutnya"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Saat kuota habis"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Ke mana badge port yang terdeteksi di sidebar terbuka saat diklik."

@@ -2447,9 +2447,6 @@ msgstr "Apple logosu"
 msgid "Application menu"
 msgstr "Uygulama menüsü"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Kota tükenmiş olsa bile bu sohbete hemen uygulanır. Aracı veya hesap değiştirmeniz gerekmez."
-
 msgid "Applies to"
 msgstr "Uygulanacak yer"
 
@@ -4648,6 +4645,12 @@ msgstr "Google ile devam et"
 
 msgid "Continued from {source}"
 msgstr "{source} üzerinden devam ediyor"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Hemen en fazla kotası olan hesapta devam eder."
+
+msgid "Continues on this account when quota returns."
+msgstr "Kota geri geldiğinde bu hesapta devam eder."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Bir aracı oturumunu sürdürmek için sabitlenmiş bir çalışma alanı gerekir"
@@ -11611,9 +11614,6 @@ msgstr "Çevrimdışı / yerel öncelikli mod"
 msgid "Older"
 msgstr "Daha eski"
 
-msgid "On"
-msgstr "Açık"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName} üzerinde — burada çalışmaz"
 
@@ -16703,6 +16703,9 @@ msgstr "Süreklilik · 30 günde etkin gün"
 msgid "Switch"
 msgstr "Değiştir"
 
+msgid "Switch account"
+msgstr "Hesap değiştir"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Ajan değiştirin. İş akışınızı koruyun"
 
@@ -16757,9 +16760,6 @@ msgstr "8. sekmeye geç"
 msgid "Switch to Tab 9"
 msgstr "9. sekmeye geç"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Kota bittiğinde önerilen hesaba geç"
-
 msgid "Switch to Workspace 1"
 msgstr "1. çalışma alanına geç"
 
@@ -16786,6 +16786,9 @@ msgstr "8. çalışma alanına geç"
 
 msgid "Switch to Workspace 9"
 msgstr "9. çalışma alanına geç"
+
+msgid "Switch, or wait"
+msgstr "Değiştir veya bekle"
 
 msgid "Switch…"
 msgstr "Değiştir…"
@@ -17192,6 +17195,9 @@ msgstr "En iyi ajan değişecek.<0/>İş akışınız değişmemeli."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Düğme artık öne çıkıyor. Bölmenizde kontrol ettim."
+
+msgid "The chat pauses until you continue it."
+msgstr "Siz devam ettirene kadar sohbet duraklar."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Mevcut yanıt tamamlandığında sohbet açılacak."
@@ -18941,11 +18947,11 @@ msgstr "Ses düzeyi"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Kota yenilenene kadar bekle ve devam et"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Aktarmadan önce ajanın bitirmesini bekleyin."
+
+msgid "Wait for the reset"
+msgstr "Sıfırlanmayı bekle"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Ajanları başlatmadan önce çalışma alanı kurulumunu bekle"
@@ -18975,6 +18981,9 @@ msgstr "Alt ajanın ilk mesajı bekleniyor…"
 
 msgid "Waiting for your input"
 msgstr "Girdinizi bekliyor"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Başka hiçbir hesapta kota yoksa sıfırlanmayı bekler."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Bir şeyi daha erken mi istiyorsunuz? <0>Discord'da bize söyleyin</0>. Buradakilerin çoğu bir kullanıcı isteği olarak başladı."
@@ -19212,6 +19221,9 @@ msgstr "Sırada ne var"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Kapalıyken başka hiçbir şey bu cihazdaki dosya ve araçlara erişemez. Buradan uzak sandbox'lara yine de bağlanabilirsiniz. <0>Daha fazla bilgi<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Kota bittiğinde"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Kenar çubuğundaki algılanan port rozetlerine tıklandığında nerede açılacağı."

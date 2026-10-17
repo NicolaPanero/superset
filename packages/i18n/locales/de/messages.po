@@ -2447,9 +2447,6 @@ msgstr "Apple-Logo"
 msgid "Application menu"
 msgstr "Anwendungsmenü"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Gilt sofort für diesen Chat, auch wenn sein Kontingent bereits aufgebraucht ist. Ein Agenten- oder Kontowechsel ist nicht erforderlich."
-
 msgid "Applies to"
 msgstr "Gilt für"
 
@@ -4648,6 +4645,12 @@ msgstr "Mit Google fortfahren"
 
 msgid "Continued from {source}"
 msgstr "Fortgesetzt von {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Setzt sofort mit dem Konto mit dem meisten Kontingent fort."
+
+msgid "Continues on this account when quota returns."
+msgstr "Setzt auf diesem Konto fort, sobald das Kontingent zurückkommt."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Das Fortsetzen einer Agent-Sitzung erfordert einen angehefteten Workspace"
@@ -11611,9 +11614,6 @@ msgstr "Offline- / Local-First-Modus"
 msgid "Older"
 msgstr "Älter"
 
-msgid "On"
-msgstr "An"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "auf {offScopeHostName} — läuft hier nicht"
 
@@ -16703,6 +16703,9 @@ msgstr "Beständigkeit · aktive Tage von 30"
 msgid "Switch"
 msgstr "Wechseln"
 
+msgid "Switch account"
+msgstr "Konto wechseln"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Agenten wechseln. Workflow behalten"
 
@@ -16757,9 +16760,6 @@ msgstr "Zu Tab 8 wechseln"
 msgid "Switch to Tab 9"
 msgstr "Zu Tab 9 wechseln"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Bei erschöpftem Kontingent zum vorgeschlagenen Konto wechseln"
-
 msgid "Switch to Workspace 1"
 msgstr "Zu Arbeitsbereich 1 wechseln"
 
@@ -16786,6 +16786,9 @@ msgstr "Zu Arbeitsbereich 8 wechseln"
 
 msgid "Switch to Workspace 9"
 msgstr "Zu Arbeitsbereich 9 wechseln"
+
+msgid "Switch, or wait"
+msgstr "Wechseln oder warten"
 
 msgid "Switch…"
 msgstr "Wechseln…"
@@ -17192,6 +17195,9 @@ msgstr "Der beste Agent wird wechseln.<0/>Dein Workflow nicht."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Der Button hebt sich jetzt ab. Ich habe es in deinem Bereich geprüft."
+
+msgid "The chat pauses until you continue it."
+msgstr "Der Chat pausiert, bis du ihn fortsetzt."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Der Chat wird geöffnet, sobald die aktuelle Antwort fertig ist."
@@ -18941,11 +18947,11 @@ msgstr "Lautstärke"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Auf das Zurücksetzen des Kontingents warten und fortsetzen"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Warten Sie vor der Übergabe, bis der Agent fertig ist."
+
+msgid "Wait for the reset"
+msgstr "Auf das Zurücksetzen warten"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Auf das Arbeitsbereich-Setup warten, bevor Agenten starten"
@@ -18975,6 +18981,9 @@ msgstr "Warten auf die erste Nachricht des Subagenten …"
 
 msgid "Waiting for your input"
 msgstr "Wartet auf deine Eingabe"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Wartet auf das Zurücksetzen, wenn kein anderes Konto Kontingent hat."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Du hättest etwas gern früher? <0>Sag es uns auf Discord</0>. Vieles hier hat als Nutzerwunsch angefangen."
@@ -19212,6 +19221,9 @@ msgstr "Was als Nächstes kommt"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Wenn deaktiviert, kann nichts anderes auf die Dateien und Tools dieses Geräts zugreifen. Du kannst dich von hier aus weiterhin mit Remote-Sandboxes verbinden. <0>Mehr erfahren<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Wenn das Kontingent aufgebraucht ist"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Wo Port-Badges in der Seitenleiste beim Klick geöffnet werden."

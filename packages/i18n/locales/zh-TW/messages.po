@@ -2447,9 +2447,6 @@ msgstr "Apple 標誌"
 msgid "Application menu"
 msgstr "應用程式選單"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "立即套用於此聊天，即使額度已用完。無須更換代理或帳戶。"
-
 msgid "Applies to"
 msgstr "適用於"
 
@@ -4648,6 +4645,12 @@ msgstr "使用Google繼續"
 
 msgid "Continued from {source}"
 msgstr "延續自 {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "立即在配額最多的帳號上繼續。"
+
+msgid "Continues on this account when quota returns."
+msgstr "配額恢復後在此帳號上繼續。"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "繼續代理程式工作階段需要已釘選的工作區"
@@ -11611,9 +11614,6 @@ msgstr "離線/本地優先模式"
 msgid "Older"
 msgstr "更早"
 
-msgid "On"
-msgstr "開啟"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不會在這裡執行"
 
@@ -16703,6 +16703,9 @@ msgstr "持續性 · 30 天內的活躍天數"
 msgid "Switch"
 msgstr "切換"
 
+msgid "Switch account"
+msgstr "切換帳號"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "換代理程式，不換工作流"
 
@@ -16757,9 +16760,6 @@ msgstr "切換到分頁8"
 msgid "Switch to Tab 9"
 msgstr "切換到分頁9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "配額用盡時切換至建議帳戶"
-
 msgid "Switch to Workspace 1"
 msgstr "切換到工作區1"
 
@@ -16786,6 +16786,9 @@ msgstr "切換到工作區8"
 
 msgid "Switch to Workspace 9"
 msgstr "切換到工作區9"
+
+msgid "Switch, or wait"
+msgstr "切換或等待"
 
 msgid "Switch…"
 msgstr "切換…"
@@ -17192,6 +17195,9 @@ msgstr "最好的代理程式會變。<0/>你的工作流不該變。"
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按鈕現在更醒目了。我已在你的窗格中確認過。"
+
+msgid "The chat pauses until you continue it."
+msgstr "聊天會暫停，直到你繼續。"
 
 msgid "The chat will open when the current response finishes."
 msgstr "目前回覆完成後將開啟聊天。"
@@ -18941,11 +18947,11 @@ msgstr "音量"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "等待配額重設後繼續"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "請等待代理完成後再交接。"
+
+msgid "Wait for the reset"
+msgstr "等待重設"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "啟動代理程式前等待工作區設定完成"
@@ -18975,6 +18981,9 @@ msgstr "正在等待子代理程式的第一則訊息…"
 
 msgid "Waiting for your input"
 msgstr "等待你的輸入"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "沒有其他帳號有配額時等待重設。"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "想讓某件事早點做？<0>在Discord上告訴我們</0>。這裡的很多條目最初都來自使用者的請求。"
@@ -19212,6 +19221,9 @@ msgstr "接下來"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "關閉後，任何其他來源都無法存取此裝置上的檔案和工具。你仍可從這裡連線到遠端沙箱。<0>瞭解更多<1/></0>"
+
+msgid "When quota runs out"
+msgstr "配額用完時"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "點選側邊欄中檢測到的埠標記時開啟的位置。"

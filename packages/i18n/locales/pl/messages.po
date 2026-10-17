@@ -2447,9 +2447,6 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Menu aplikacji"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Działa od razu w tym czacie, nawet jeśli limit został już wyczerpany. Nie trzeba zmieniać agenta ani konta."
-
 msgid "Applies to"
 msgstr "Dotyczy"
 
@@ -4648,6 +4645,12 @@ msgstr "Kontynuuj z Google"
 
 msgid "Continued from {source}"
 msgstr "Kontynuacja z {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Kontynuuje od razu na koncie z największym limitem."
+
+msgid "Continues on this account when quota returns."
+msgstr "Kontynuuje na tym koncie, gdy limit wróci."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Kontynuowanie sesji agenta wymaga przypiętego obszaru roboczego"
@@ -11611,9 +11614,6 @@ msgstr "Tryb offline / local-first"
 msgid "Older"
 msgstr "Starsze"
 
-msgid "On"
-msgstr "Włączona"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "na {offScopeHostName} — nie uruchomi się tutaj"
 
@@ -16703,6 +16703,9 @@ msgstr "Regularność · aktywne dni z 30"
 msgid "Switch"
 msgstr "Przełącz"
 
+msgid "Switch account"
+msgstr "Zmień konto"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Zmieniaj agentów. Zachowaj swój workflow"
 
@@ -16757,9 +16760,6 @@ msgstr "Przełącz na kartę 8"
 msgid "Switch to Tab 9"
 msgstr "Przełącz na kartę 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Przełącz na sugerowane konto po wyczerpaniu limitu"
-
 msgid "Switch to Workspace 1"
 msgstr "Przełącz na obszar roboczy 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Przełącz na obszar roboczy 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Przełącz na obszar roboczy 9"
+
+msgid "Switch, or wait"
+msgstr "Zmień lub poczekaj"
 
 msgid "Switch…"
 msgstr "Przełącz…"
@@ -17192,6 +17195,9 @@ msgstr "Najlepszy agent się zmieni.<0/>Twój workflow nie musi."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Przycisk teraz się wyróżnia. Sprawdziłem to w Twoim panelu."
+
+msgid "The chat pauses until you continue it."
+msgstr "Czat wstrzymuje się, dopóki go nie wznowisz."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Czat otworzy się po zakończeniu bieżącej odpowiedzi."
@@ -18941,11 +18947,11 @@ msgstr "Głośność"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Poczekaj na odnowienie limitu i kontynuuj"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Przed przekazaniem poczekaj, aż agent skończy."
+
+msgid "Wait for the reset"
+msgstr "Poczekaj na reset"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Czekaj na konfigurację obszaru roboczego przed uruchomieniem agentów"
@@ -18975,6 +18981,9 @@ msgstr "Oczekiwanie na pierwszą wiadomość subagenta…"
 
 msgid "Waiting for your input"
 msgstr "Czeka na Twoją odpowiedź"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Czeka na reset, gdy żadne inne konto nie ma limitu."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Chcesz coś szybciej? <0>Napisz na Discordzie</0>. Wiele z tego, co tu jest, zaczęło się od prośby użytkownika."
@@ -19212,6 +19221,9 @@ msgstr "Co dalej"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Gdy wyłączone, nic innego nie ma dostępu do plików i narzędzi na tym urządzeniu. Nadal możesz łączyć się stąd ze zdalnymi sandboxami. <0>Dowiedz się więcej<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Gdy limit się wyczerpie"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Gdzie otwierają się plakietki wykrytych portów na pasku bocznym po kliknięciu."

@@ -125,6 +125,9 @@ export type PromptInputProps = {
 	defaultValue?: string;
 	// Plain text of the composer as it is typed, for persisting a draft.
 	onChange?: (text: string) => void;
+	// Attachments to open with and each change to them, for a host that keeps
+	// them with the draft. Read once on mount, like defaultValue.
+	draftFiles?: { initial: File[]; onChange: (files: File[]) => void };
 	// Spans of a stored draft that were chips before it was serialized, so
 	// they come back as chips. Runs on the draft as read, never on typing.
 	findChips?: (text: string) => ComposerChipMatch[];

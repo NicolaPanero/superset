@@ -2447,9 +2447,6 @@ msgstr "Логотип Apple"
 msgid "Application menu"
 msgstr "Меню приложения"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Применяется сразу к этому чату, даже если квота уже исчерпана. Менять агента или аккаунт не нужно."
-
 msgid "Applies to"
 msgstr "Применяется к"
 
@@ -4648,6 +4645,12 @@ msgstr "Продолжить с Google"
 
 msgid "Continued from {source}"
 msgstr "Продолжение из {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Сразу продолжает на аккаунте с наибольшей квотой."
+
+msgid "Continues on this account when quota returns."
+msgstr "Продолжает на этом аккаунте, когда квота восстановится."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Для продолжения сессии агента нужно закреплённое рабочее пространство"
@@ -11611,9 +11614,6 @@ msgstr "Офлайн / local-first режим"
 msgid "Older"
 msgstr "Ранее"
 
-msgid "On"
-msgstr "Включено"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "на {offScopeHostName} — здесь не запустится"
 
@@ -16703,6 +16703,9 @@ msgstr "Регулярность · активных дней из 30"
 msgid "Switch"
 msgstr "Переключить"
 
+msgid "Switch account"
+msgstr "Сменить аккаунт"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Меняйте агентов. Процесс остаётся"
 
@@ -16757,9 +16760,6 @@ msgstr "Перейти на вкладку 8"
 msgid "Switch to Tab 9"
 msgstr "Перейти на вкладку 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Перейти на рекомендуемый аккаунт, когда квота исчерпана"
-
 msgid "Switch to Workspace 1"
 msgstr "Перейти в рабочую область 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Перейти в рабочую область 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Перейти в рабочую область 9"
+
+msgid "Switch, or wait"
+msgstr "Сменить или подождать"
 
 msgid "Switch…"
 msgstr "Переключить…"
@@ -17192,6 +17195,9 @@ msgstr "Лучший агент будет меняться.<0/>Ваш проц�
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Теперь кнопка выделяется. Я проверил это в вашей панели."
+
+msgid "The chat pauses until you continue it."
+msgstr "Чат приостанавливается, пока вы его не продолжите."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Чат откроется после завершения текущего ответа."
@@ -18941,11 +18947,11 @@ msgstr "Громкость"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Дождаться обновления квоты и продолжить"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Перед передачей дождитесь, пока агент закончит."
+
+msgid "Wait for the reset"
+msgstr "Дождаться сброса"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Ждать настройки рабочей области перед запуском агентов"
@@ -18975,6 +18981,9 @@ msgstr "Ожидание первого сообщения субагента…
 
 msgid "Waiting for your input"
 msgstr "Ждёт вашего ответа"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Ждёт сброса, если ни у одного другого аккаунта нет квоты."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Хотите что-то быстрее? <0>Скажите нам в Discord</0>. Многое из этого началось с пожелания пользователя."
@@ -19212,6 +19221,9 @@ msgstr "Что дальше"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Если выключено, ничто извне не может получить доступ к файлам и инструментам на этом устройстве. Отсюда по-прежнему можно подключаться к удалённым песочницам. <0>Подробнее<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Когда квота закончится"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Куда ведут значки обнаруженных портов в боковой панели при клике."

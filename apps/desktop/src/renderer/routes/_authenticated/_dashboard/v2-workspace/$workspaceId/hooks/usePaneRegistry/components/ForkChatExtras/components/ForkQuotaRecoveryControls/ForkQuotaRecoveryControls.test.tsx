@@ -89,15 +89,16 @@ function fixture(
 	const view = render(widget(), { wrapper: queries.wrapper });
 	return { state, writes, view, widget };
 }
-test("a quota-limited current chat saves waiting immediately without a handoff command", async () => {
+test("choosing to wait saves both options immediately without a handoff command", async () => {
 	const f = fixture();
 	await flush();
-	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	fireEvent.click(f.view.getByRole("radio", { name: /^Wait for the reset/ }));
 	await flush();
 	expect(f.writes).toEqual([
 		{
 			workspaceId: "00000000-0000-0000-0000-000000000001",
 			terminalId: "current-chat",
+			switchAccounts: false,
 			resumeAtReset: true,
 		},
 	]);
@@ -105,50 +106,42 @@ test("a quota-limited current chat saves waiting immediately without a handoff c
 	expect(f.view.container.textContent).toContain("Waiting for quota");
 	expect(f.view.queryByRole("button", { name: "Continue" })).toBeNull();
 });
-test("the two continuation options remain independent and are retained across remount", async () => {
+test("each answer saves both options and survives a remount", async () => {
 	const f = fixture();
 	await flush();
-	fireEvent.click(
-		f.view.getByLabelText(
-			"Switch to the suggested account when quota runs out",
-		),
-	);
+	const radio = (name: RegExp) => f.view.getByRole("radio", { name });
+	fireEvent.click(radio(/^Switch account/));
 	await flush();
 	expect(f.state).toMatchObject({ switchAccounts: true, resumeAtReset: false });
-	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	fireEvent.click(radio(/^Switch, or wait/));
 	await flush();
 	f.view.rerender(<span />);
 	f.view.rerender(f.widget());
 	await flush();
-	expect(
-		f.view
-			.getByLabelText("Switch to the suggested account when quota runs out")
-			.getAttribute("aria-checked"),
-	).toBe("true");
-	expect(
-		f.view
-			.getByLabelText("Wait and continue when quota resets")
-			.getAttribute("aria-checked"),
-	).toBe("true");
-	fireEvent.click(
-		f.view.getByLabelText(
-			"Switch to the suggested account when quota runs out",
-		),
-	);
+	expect((radio(/^Switch, or wait/) as HTMLInputElement).checked).toBe(true);
+	fireEvent.click(radio(/^Wait for the reset/));
 	await flush();
 	expect(f.state).toMatchObject({ switchAccounts: false, resumeAtReset: true });
+	fireEvent.click(radio(/^Pause/));
+	await flush();
+	expect(f.state).toMatchObject({
+		switchAccounts: false,
+		resumeAtReset: false,
+	});
 });
 test("a rejected save does not display an enabled option", async () => {
 	const f = fixture({ fail: true });
 	await flush();
-	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	fireEvent.click(f.view.getByRole("radio", { name: /^Wait for the reset/ }));
 	await flush();
 	expect(f.state.resumeAtReset).toBe(false);
 	expect(
-		f.view
-			.getByLabelText("Wait and continue when quota resets")
-			.getAttribute("aria-checked"),
-	).toBe("false");
+		(
+			f.view.getByRole("radio", {
+				name: /^Wait for the reset/,
+			}) as HTMLInputElement
+		).checked,
+	).toBe(false);
 });
 test.each([
 	{ supported: false },
@@ -156,7 +149,7 @@ test.each([
 ])("unsupported hosts do not break the surrounding chat", async (options) => {
 	const f = fixture(options);
 	await flush();
-	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.view.queryAllByRole("radio")).toHaveLength(0);
 	expect(f.view.container.textContent).toContain(
 		"Automatic continuation is not supported on this host.",
 	);
@@ -168,7 +161,6 @@ test("a stopped chat explains that Resume is required before the options can act
 	expect(f.view.container.textContent).toContain(
 		"Resume this chat to activate these options.",
 	);
-	expect(f.view.container.textContent).not.toContain("Applies immediately");
 });
 
 test("Codex shows both options and saves them to the current Codex chat", async () => {
@@ -177,22 +169,23 @@ test("Codex shows both options and saves them to the current Codex chat", async 
 		capabilities: { switchAccounts: true, resumeAtReset: true },
 	});
 	await flush();
-	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	fireEvent.click(f.view.getByRole("radio", { name: /^Wait for the reset/ }));
 	await flush();
 	expect(f.writes).toEqual([
 		{
 			workspaceId: "00000000-0000-0000-0000-000000000001",
 			terminalId: "current-chat",
 			agent: "codex",
+			switchAccounts: false,
 			resumeAtReset: true,
 		},
 	]);
 	expect(f.view.container.textContent).not.toContain("Claude conversation");
 });
-test("an older host never offers a Codex checkbox that it cannot execute", async () => {
+test("an older host never offers a Codex choice that it cannot execute", async () => {
 	const f = fixture({ agent: "codex" });
 	await flush();
-	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.view.queryAllByRole("radio")).toHaveLength(0);
 	expect(f.writes).toEqual([]);
 });
 test.each([
@@ -202,17 +195,16 @@ test.each([
 	"gemini",
 	"agy",
 	"custom",
-])("%s keeps Current chat explanations without nonfunctional checkboxes", async (agent) => {
+])("%s explains why continuation is unavailable without offering choices", async (agent) => {
 	const f = fixture({ agent });
 	await flush();
-	expect(f.view.queryAllByRole("checkbox")).toHaveLength(0);
+	expect(f.view.queryAllByRole("radio")).toHaveLength(0);
 	expect(f.view.container.textContent).toContain(
 		"Automatic account switching needs isolated profiles",
 	);
 	expect(f.view.container.textContent).toContain(
 		"Automatic continuation needs verified quota",
 	);
-	expect(f.view.container.textContent).not.toContain("Applies immediately");
 	expect(f.writes).toEqual([]);
 });
 test("waiting and rotation are shown independently when a host only supports waiting", async () => {
@@ -221,8 +213,8 @@ test("waiting and rotation are shown independently when a host only supports wai
 		capabilities: { switchAccounts: false, resumeAtReset: true },
 	});
 	await flush();
-	expect(f.view.queryAllByRole("checkbox")).toHaveLength(1);
-	fireEvent.click(f.view.getByLabelText("Wait and continue when quota resets"));
+	expect(f.view.queryAllByRole("radio")).toHaveLength(2);
+	fireEvent.click(f.view.getByRole("radio", { name: /^Wait for the reset/ }));
 	await flush();
 	expect(f.state.resumeAtReset).toBe(true);
 });

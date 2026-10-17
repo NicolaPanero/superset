@@ -2447,9 +2447,6 @@ msgstr "Logotipo de Apple"
 msgid "Application menu"
 msgstr "Menú de la aplicación"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Se aplica inmediatamente a este chat, aunque su cuota ya se haya agotado. No hace falta cambiar de agente ni de cuenta."
-
 msgid "Applies to"
 msgstr "Se aplica a"
 
@@ -4648,6 +4645,12 @@ msgstr "Continuar con Google"
 
 msgid "Continued from {source}"
 msgstr "Continuado desde {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Continúa ahora en la cuenta con más cuota."
+
+msgid "Continues on this account when quota returns."
+msgstr "Continúa en esta cuenta cuando vuelva la cuota."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuar una sesión de agente requiere un espacio de trabajo fijado"
@@ -11611,9 +11614,6 @@ msgstr "Modo sin conexión / local primero"
 msgid "Older"
 msgstr "Más antiguo"
 
-msgid "On"
-msgstr "Activada"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "en {offScopeHostName}: no se ejecutará aquí"
 
@@ -16703,6 +16703,9 @@ msgstr "Constancia · días activos de 30"
 msgid "Switch"
 msgstr "Cambiar"
 
+msgid "Switch account"
+msgstr "Cambiar de cuenta"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Cambia de agente. Conserva tu flujo de trabajo"
 
@@ -16757,9 +16760,6 @@ msgstr "Ir a la pestaña 8"
 msgid "Switch to Tab 9"
 msgstr "Ir a la pestaña 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Cambiar a la cuenta sugerida cuando se agote la cuota"
-
 msgid "Switch to Workspace 1"
 msgstr "Ir al espacio de trabajo 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Ir al espacio de trabajo 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Ir al espacio de trabajo 9"
+
+msgid "Switch, or wait"
+msgstr "Cambiar o esperar"
 
 msgid "Switch…"
 msgstr "Cambiar…"
@@ -17192,6 +17195,9 @@ msgstr "El mejor agente cambiará.<0/>Tu flujo de trabajo, no."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "El botón ahora destaca. Lo he comprobado en tu panel."
+
+msgid "The chat pauses until you continue it."
+msgstr "El chat se detiene hasta que lo continúes."
 
 msgid "The chat will open when the current response finishes."
 msgstr "El chat se abrirá cuando termine la respuesta actual."
@@ -18941,11 +18947,11 @@ msgstr "Volumen"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Esperar al reinicio de la cuota y continuar"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Espera a que el agente termine antes de transferir."
+
+msgid "Wait for the reset"
+msgstr "Esperar al restablecimiento"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Esperar a la configuración del espacio de trabajo antes de iniciar los agentes"
@@ -18975,6 +18981,9 @@ msgstr "Esperando el primer mensaje del subagente…"
 
 msgid "Waiting for your input"
 msgstr "Esperando tu respuesta"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Espera al restablecimiento si ninguna otra cuenta tiene cuota."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "¿Quieres algo antes? <0>Cuéntanoslo en Discord</0>. Buena parte de lo que hay aquí empezó como una petición de un usuario."
@@ -19212,6 +19221,9 @@ msgstr "Qué viene"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Si está desactivado, nada más puede acceder a los archivos y herramientas de este dispositivo. Aún puedes conectarte a sandboxes remotos desde aquí. <0>Más información<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Cuando se agote la cuota"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Dónde se abren las etiquetas de puertos detectados de la barra lateral al hacer clic."

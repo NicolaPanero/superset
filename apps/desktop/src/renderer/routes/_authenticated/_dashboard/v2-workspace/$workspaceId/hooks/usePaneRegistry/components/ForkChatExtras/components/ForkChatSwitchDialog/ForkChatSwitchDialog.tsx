@@ -19,12 +19,12 @@ import {
 	SelectValue,
 } from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
-import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MessageSquare, PanelRight, SquareStack } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ForkAccountEmptyState } from "renderer/components/ForkAccountEmptyState";
+import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
 import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
@@ -445,11 +445,6 @@ export function ForkChatSwitchDialog({
 	const summary = [target?.label, model?.label, effort?.label]
 		.filter(Boolean)
 		.join(" · ");
-	const segmented = (active: boolean) =>
-		cn(
-			"h-8 justify-center gap-1.5 text-xs",
-			active && "bg-background shadow-sm hover:bg-background",
-		);
 
 	return (
 		<Dialog open={open} onOpenChange={(next) => !next && close()}>
@@ -560,39 +555,29 @@ export function ForkChatSwitchDialog({
 							<Label>
 								<Trans>Open session in</Trans>
 							</Label>
-							<div
-								className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-1"
-								role="radiogroup"
-							>
-								{(
-									[
-										[
-											"this-chat",
-											MessageSquare,
-											<Trans key="c">This chat</Trans>,
-										],
-										[
-											"split-pane",
-											PanelRight,
-											<Trans key="s">Split pane</Trans>,
-										],
-										["new-tab", SquareStack, <Trans key="n">New tab</Trans>],
-									] as const
-								).map(([value, Icon, label]) => (
-									<Button
-										key={value}
-										type="button"
-										variant="ghost"
-										className={segmented(placement === value)}
-										onClick={() => setPlacement(value)}
-										aria-pressed={placement === value}
-										disabled={stage !== null}
-									>
-										<Icon className="size-3.5" />
-										{label}
-									</Button>
-								))}
-							</div>
+							<ForkSegmentedControl
+								label={t({ message: "Open session in" })}
+								value={placement}
+								onChange={setPlacement}
+								disabled={stage !== null}
+								segments={[
+									{
+										value: "this-chat",
+										icon: MessageSquare,
+										label: <Trans>This chat</Trans>,
+									},
+									{
+										value: "split-pane",
+										icon: PanelRight,
+										label: <Trans>Split pane</Trans>,
+									},
+									{
+										value: "new-tab",
+										icon: SquareStack,
+										label: <Trans>New tab</Trans>,
+									},
+								]}
+							/>
 						</div>
 					)}
 					{!sameAgent && (
@@ -600,31 +585,20 @@ export function ForkChatSwitchDialog({
 							<Label>
 								<Trans>Transfer</Trans>
 							</Label>
-							<div
-								className="grid grid-cols-2 gap-1 rounded-lg bg-muted p-1"
-								role="radiogroup"
-							>
-								<Button
-									type="button"
-									variant="ghost"
-									className={segmented(useNative)}
-									onClick={() => setTransfer("native")}
-									aria-pressed={useNative}
-									disabled={stage !== null || !nativeAvailable}
-								>
-									<Trans>Full history</Trans>
-								</Button>
-								<Button
-									type="button"
-									variant="ghost"
-									className={segmented(!useNative)}
-									onClick={() => setTransfer("context")}
-									aria-pressed={!useNative}
-									disabled={stage !== null}
-								>
-									<Trans>Summary only</Trans>
-								</Button>
-							</div>
+							<ForkSegmentedControl
+								label={t({ message: "Transfer" })}
+								value={useNative ? "native" : "context"}
+								onChange={setTransfer}
+								disabled={stage !== null}
+								segments={[
+									{
+										value: "native",
+										label: <Trans>Full history</Trans>,
+										disabled: !nativeAvailable,
+									},
+									{ value: "context", label: <Trans>Summary only</Trans> },
+								]}
+							/>
 							<p className="text-muted-foreground text-xs">
 								{useNative ? (
 									<Trans>

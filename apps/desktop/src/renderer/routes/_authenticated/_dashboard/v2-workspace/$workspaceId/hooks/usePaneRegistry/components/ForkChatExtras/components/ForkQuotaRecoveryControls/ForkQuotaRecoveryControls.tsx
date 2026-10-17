@@ -1,10 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { chatRecoveryCapabilities } from "@superset/shared/fork-chat-recovery";
-import { Checkbox } from "@superset/ui/checkbox";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { ChevronDown, Repeat2 } from "lucide-react";
-import { useId } from "react";
+import { type ReactNode, useId } from "react";
 
 export function ForkQuotaRecoveryControls({
 	workspaceId,
@@ -50,120 +49,156 @@ export function ForkQuotaRecoveryControls({
 	};
 	const canSwitch = local.switchAccounts && capabilities.switchAccounts;
 	const canWait = local.resumeAtReset && capabilities.resumeAtReset;
-	const active =
-		(canSwitch && state?.switchAccounts) || (canWait && state?.resumeAtReset);
+	type Mode = "stop" | "wait" | "switch" | "both";
+	const mode: Mode =
+		state?.switchAccounts && canSwitch
+			? state?.resumeAtReset && canWait
+				? "both"
+				: "switch"
+			: state?.resumeAtReset && canWait
+				? "wait"
+				: "stop";
+	const choose = (next: Mode) =>
+		save.mutate({
+			...input,
+			switchAccounts: next === "switch" || next === "both",
+			resumeAtReset: next === "wait" || next === "both",
+		});
+	const choices: Array<{
+		value: Mode;
+		available: boolean;
+		title: ReactNode;
+		detail: ReactNode;
+	}> = [
+		{
+			value: "stop",
+			available: true,
+			title: <Trans>Pause</Trans>,
+			detail: <Trans>The chat pauses until you continue it.</Trans>,
+		},
+		{
+			value: "wait",
+			available: canWait,
+			title: <Trans>Wait for the reset</Trans>,
+			detail: <Trans>Continues on this account when quota returns.</Trans>,
+		},
+		{
+			value: "switch",
+			available: canSwitch,
+			title: <Trans>Switch account</Trans>,
+			detail: <Trans>Continues now on the account with the most quota.</Trans>,
+		},
+		{
+			value: "both",
+			available: canSwitch && canWait,
+			title: <Trans>Switch, or wait</Trans>,
+			detail: (
+				<Trans>Waits for the reset when no other account has quota.</Trans>
+			),
+		},
+	];
+	const offered = canSwitch || canWait;
 	return (
-		<div>
-			<details className="group rounded-md border">
-				<summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-sm [&::-webkit-details-marker]:hidden">
-					<Repeat2 className="size-3.5 text-muted-foreground" />
-					<span>
-						<Trans>Automatic continuation</Trans>
-					</span>
-					<span className="ml-auto text-xs text-muted-foreground">
-						{active ? (
-							<Trans>On</Trans>
-						) : canSwitch || canWait ? (
-							<Trans>Off</Trans>
-						) : null}
-					</span>
-					<ChevronDown className="size-3.5 text-muted-foreground transition-transform group-open:rotate-180" />
-				</summary>
+		<div className="space-y-2 text-xs">
+			{offered && (
 				<fieldset
-					className="space-y-3 px-3 pb-3"
+					className="space-y-1"
 					disabled={save.isPending}
 					aria-label={t({ message: "Automatic continuation" })}
 				>
-					{(canSwitch || canWait) && (
-						<p className="text-xs text-muted-foreground">
-							{sessionLive === false ? (
-								<Trans>Resume this chat to activate these options.</Trans>
-							) : (
-								<Trans>
-									Applies immediately to this chat, even if its quota has
-									already run out. No agent or account change is required.
-								</Trans>
-							)}
-						</p>
-					)}
-					<div className="space-y-1">
-						<label
-							htmlFor={canSwitch ? `${id}-switch` : undefined}
-							className={`flex items-center gap-2 text-sm ${canSwitch ? "cursor-pointer" : ""}`}
-						>
-							{canSwitch && (
-								<Checkbox
-									id={`${id}-switch`}
-									checked={state?.switchAccounts ?? false}
-									onCheckedChange={(checked) =>
-										save.mutate({ ...input, switchAccounts: checked === true })
-									}
-								/>
-							)}
-							<Trans>Switch to the suggested account when quota runs out</Trans>
-						</label>
-						{!canSwitch && (
-							<p className="text-xs text-muted-foreground">
-								<Trans>
-									Automatic account switching needs isolated profiles for this
-									agent.
-								</Trans>
-							</p>
-						)}
-					</div>
-					<div className="space-y-1 border-t pt-3">
-						<label
-							htmlFor={canWait ? `${id}-reset` : undefined}
-							className={`flex items-center gap-2 text-sm ${canWait ? "cursor-pointer" : ""}`}
-						>
-							{canWait && (
-								<Checkbox
-									id={`${id}-reset`}
-									checked={state?.resumeAtReset ?? false}
-									onCheckedChange={(checked) =>
-										save.mutate({ ...input, resumeAtReset: checked === true })
-									}
-								/>
-							)}
-							<Trans>Wait and continue when quota resets</Trans>
-						</label>
-						{!canWait && (
-							<p className="text-xs text-muted-foreground">
-								<Trans>
-									Automatic continuation needs verified quota and reset data for
-									this chat.
-								</Trans>
-							</p>
-						)}
-					</div>
-					{(local.switchAccounts || local.resumeAtReset) &&
-						!canSwitch &&
-						!canWait && (
-							<p className="text-xs text-muted-foreground">
-								<Trans>
-									Automatic continuation is not supported on this host.
-								</Trans>
-							</p>
-						)}
-					{(canSwitch || canWait) && (
-						<p className="text-xs text-muted-foreground">
-							<Trans>
-								Keeps this conversation, model and permissions. Only
-								subscription accounts with verified quota are used.
-							</Trans>
-						</p>
-					)}
+					<legend className="mb-1 px-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+						<Trans>When quota runs out</Trans>
+					</legend>
+					{choices
+						.filter((choice) => choice.available)
+						.map((choice) => {
+							const selected = mode === choice.value;
+							return (
+								<label
+									key={choice.value}
+									className={cn(
+										"flex cursor-pointer items-start gap-2.5 rounded-md border px-2.5 py-2 transition-colors",
+										"has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring",
+										selected
+											? "border-foreground/30 bg-accent/60"
+											: "border-transparent hover:bg-accent/30",
+									)}
+								>
+									<input
+										type="radio"
+										name={`${id}-mode`}
+										className="sr-only"
+										checked={selected}
+										onChange={() => choose(choice.value)}
+									/>
+									<span
+										aria-hidden="true"
+										className={cn(
+											"mt-0.5 grid size-3.5 shrink-0 place-items-center rounded-full border",
+											selected
+												? "border-foreground"
+												: "border-muted-foreground/50",
+										)}
+									>
+										{selected && (
+											<span className="size-1.5 rounded-full bg-foreground" />
+										)}
+									</span>
+									<span className="min-w-0">
+										<span className="block text-sm text-foreground">
+											{choice.title}
+										</span>
+										<span className="block text-muted-foreground">
+											{choice.detail}
+										</span>
+									</span>
+								</label>
+							);
+						})}
 				</fieldset>
-			</details>
-			{(canWait || canSwitch) && state?.phase === "waiting" && (
-				<output className="mt-2 block text-xs text-muted-foreground">
+			)}
+			{offered && sessionLive === false && (
+				<p className="px-1 text-muted-foreground">
+					<Trans>Resume this chat to activate these options.</Trans>
+				</p>
+			)}
+			{!canSwitch && (
+				<p className="px-1 text-muted-foreground">
+					<Trans>
+						Automatic account switching needs isolated profiles for this agent.
+					</Trans>
+				</p>
+			)}
+			{!canWait && (
+				<p className="px-1 text-muted-foreground">
+					<Trans>
+						Automatic continuation needs verified quota and reset data for this
+						chat.
+					</Trans>
+				</p>
+			)}
+			{(local.switchAccounts || local.resumeAtReset) && !offered && (
+				<p className="px-1 text-muted-foreground">
+					<Trans>Automatic continuation is not supported on this host.</Trans>
+				</p>
+			)}
+			{offered && state?.phase === "waiting" && (
+				<output className="block px-1 text-foreground">
 					<Trans>Waiting for quota. Stop cancels automatic continuation.</Trans>
 				</output>
 			)}
 			{canSwitch && state?.phase === "switching" && (
-				<output className="mt-2 block text-xs text-muted-foreground">
+				<output className="block px-1 text-foreground">
 					<Trans>Continuing on {state.accountLabel}…</Trans>
 				</output>
+			)}
+			{offered && (
+				<p className="border-t px-1 pt-2 text-muted-foreground">
+					<Trans>
+						Keeps this conversation, model and permissions. Only subscription
+						accounts with verified quota are used.
+					</Trans>
+				</p>
 			)}
 		</div>
 	);

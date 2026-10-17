@@ -42,7 +42,7 @@ test("a new stdio server sends one argument per line and its variables", () => {
 			onCancel={() => {}}
 		/>,
 	);
-	fireEvent.click(view.getByRole("button", { name: "stdio" }));
+	fireEvent.click(view.getByRole("radio", { name: "stdio" }));
 	fireEvent.change(view.getByLabelText("Name"), {
 		target: { value: "local" },
 	});

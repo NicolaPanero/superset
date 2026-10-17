@@ -2447,9 +2447,6 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Menu de l'application"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "S’applique immédiatement à cette discussion, même si son quota est déjà épuisé. Aucun changement d’agent ou de compte n’est nécessaire."
-
 msgid "Applies to"
 msgstr "S'applique à"
 
@@ -4648,6 +4645,12 @@ msgstr "Continuer avec Google"
 
 msgid "Continued from {source}"
 msgstr "Suite de {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Continue immédiatement sur le compte qui a le plus de quota."
+
+msgid "Continues on this account when quota returns."
+msgstr "Continue sur ce compte quand le quota revient."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Continuer une session d'agent nécessite un espace de travail épinglé"
@@ -11611,9 +11614,6 @@ msgstr "Mode hors ligne / local d'abord"
 msgid "Older"
 msgstr "Plus ancien"
 
-msgid "On"
-msgstr "Activée"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "sur {offScopeHostName} — ne s'exécutera pas ici"
 
@@ -16703,6 +16703,9 @@ msgstr "Régularité · jours actifs sur 30"
 msgid "Switch"
 msgstr "Changer"
 
+msgid "Switch account"
+msgstr "Changer de compte"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Changez d'agent. Gardez votre flux de travail"
 
@@ -16757,9 +16760,6 @@ msgstr "Passer à l'onglet 8"
 msgid "Switch to Tab 9"
 msgstr "Passer à l'onglet 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Passer au compte suggéré lorsque le quota est épuisé"
-
 msgid "Switch to Workspace 1"
 msgstr "Passer à l'espace de travail 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Passer à l'espace de travail 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Passer à l'espace de travail 9"
+
+msgid "Switch, or wait"
+msgstr "Changer ou attendre"
 
 msgid "Switch…"
 msgstr "Changer…"
@@ -17192,6 +17195,9 @@ msgstr "Le meilleur agent changera.<0/>Pas votre façon de travailler."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Le bouton ressort maintenant. Je l'ai vérifié dans votre volet."
+
+msgid "The chat pauses until you continue it."
+msgstr "Le chat s'arrête jusqu'à ce que vous le relanciez."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Le chat s’ouvrira une fois la réponse en cours terminée."
@@ -18941,11 +18947,11 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Attendre le renouvellement du quota et reprendre"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Attendez que l'agent ait terminé avant le transfert."
+
+msgid "Wait for the reset"
+msgstr "Attendre la réinitialisation"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Attendre la configuration de l'espace de travail avant de démarrer les agents"
@@ -18975,6 +18981,9 @@ msgstr "En attente du premier message du sous-agent…"
 
 msgid "Waiting for your input"
 msgstr "En attente de votre réponse"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Attend la réinitialisation si aucun autre compte n'a de quota."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Vous voulez quelque chose plus tôt ? <0>Dites-le-nous sur Discord</0>. Une bonne partie de ce qui figure ici est née d'une demande d'utilisateur."
@@ -19212,6 +19221,9 @@ msgstr "La suite"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Si désactivé, rien d'autre ne peut accéder aux fichiers et aux outils de cet appareil. Vous pouvez toujours vous connecter à des sandbox distants depuis ici. <0>En savoir plus<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Quand le quota est épuisé"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Ce qu'ouvrent les badges de ports détectés de la barre latérale lorsqu'on clique dessus."

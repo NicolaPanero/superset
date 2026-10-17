@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { FaBitbucket, FaGithub, FaJira } from "react-icons/fa";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
+import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { GhAuthDialog } from "renderer/routes/_authenticated/onboarding/components/GhAuthDialog";
 import { useForkConnections } from "../../hooks/useForkConnections";
@@ -289,34 +290,15 @@ export function ForkConnectionCard({
 						else action.mutate("save");
 					}}
 				>
-					<div className="grid w-56 grid-cols-2 gap-1 rounded-lg bg-muted p-1">
-						<Button
-							type="button"
-							size="sm"
-							variant="ghost"
-							className={cn(
-								"h-7",
-								mode === "token" &&
-									"bg-background shadow-sm hover:bg-background",
-							)}
-							onClick={() => setMode("token")}
-						>
-							<Trans>API token</Trans>
-						</Button>
-						<Button
-							type="button"
-							size="sm"
-							variant="ghost"
-							className={cn(
-								"h-7",
-								mode === "oauth" &&
-									"bg-background shadow-sm hover:bg-background",
-							)}
-							onClick={() => setMode("oauth")}
-						>
-							OAuth
-						</Button>
-					</div>
+					<ForkSegmentedControl
+						className="w-56"
+						value={mode}
+						onChange={setMode}
+						segments={[
+							{ value: "token", label: <Trans>API token</Trans> },
+							{ value: "oauth", label: "OAuth" },
+						]}
+					/>
 					{mode === "token" ? (
 						<div className="grid gap-3 sm:grid-cols-2">
 							{provider === "jira" && (

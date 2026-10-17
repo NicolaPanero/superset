@@ -2447,9 +2447,6 @@ msgstr "Appleのロゴ"
 msgid "Application menu"
 msgstr "アプリケーションメニュー"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "利用枠をすでに使い切っていても、このチャットにすぐに適用されます。エージェントやアカウントを変更する必要はありません。"
-
 msgid "Applies to"
 msgstr "適用範囲"
 
@@ -4648,6 +4645,12 @@ msgstr "Googleで続行"
 
 msgid "Continued from {source}"
 msgstr "{source} から継続"
+
+msgid "Continues now on the account with the most quota."
+msgstr "最もクォータが残っているアカウントですぐに続行します。"
+
+msgid "Continues on this account when quota returns."
+msgstr "クォータが戻ったらこのアカウントで続行します。"
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "エージェントセッションを継続するには、ワークスペースをピン留めする必要があります"
@@ -11611,9 +11614,6 @@ msgstr "オフライン/ローカルファーストモード"
 msgid "Older"
 msgstr "それ以前"
 
-msgid "On"
-msgstr "オン"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName}上 — ここでは実行されません"
 
@@ -16703,6 +16703,9 @@ msgstr "継続 · 30日間のアクティブ日数"
 msgid "Switch"
 msgstr "切り替え"
 
+msgid "Switch account"
+msgstr "アカウントを切り替え"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "エージェントは替える。ワークフローはそのまま"
 
@@ -16757,9 +16760,6 @@ msgstr "タブ8に切り替え"
 msgid "Switch to Tab 9"
 msgstr "タブ9に切り替え"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "使用枠を使い切ったらおすすめのアカウントに切り替える"
-
 msgid "Switch to Workspace 1"
 msgstr "ワークスペース1に切り替え"
 
@@ -16786,6 +16786,9 @@ msgstr "ワークスペース8に切り替え"
 
 msgid "Switch to Workspace 9"
 msgstr "ワークスペース9に切り替え"
+
+msgid "Switch, or wait"
+msgstr "切り替えるか待機"
 
 msgid "Switch…"
 msgstr "切り替え…"
@@ -17192,6 +17195,9 @@ msgstr "最良のエージェントは変わります。<0/>ワークフロー�
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "ボタンが目立つようになりました。ペインで確認済みです。"
+
+msgid "The chat pauses until you continue it."
+msgstr "続行するまでチャットは一時停止します。"
 
 msgid "The chat will open when the current response finishes."
 msgstr "現在の応答が完了するとチャットが開きます。"
@@ -18941,11 +18947,11 @@ msgstr "音量"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "使用枠のリセットを待って再開する"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "引き継ぐ前に、エージェントの処理が終わるまでお待ちください。"
+
+msgid "Wait for the reset"
+msgstr "リセットを待つ"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "エージェント起動前にワークスペースのセットアップを待つ"
@@ -18975,6 +18981,9 @@ msgstr "サブエージェントの最初のメッセージを待っています
 
 msgid "Waiting for your input"
 msgstr "入力を待っています"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "他にクォータのあるアカウントがなければリセットを待ちます。"
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "もっと早く欲しいものがありますか?<0>Discordで教えてください</0>。ここにあるものの多くは、ユーザーの要望から始まりました。"
@@ -19212,6 +19221,9 @@ msgstr "今後の予定"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "オフにすると、このデバイスのファイルやツールに外部からアクセスできなくなります。ここからリモートサンドボックスへの接続は引き続き可能です。<0>詳細<1/></0>"
+
+msgid "When quota runs out"
+msgstr "クォータを使い切ったとき"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "サイドバーの検出ポートバッジをクリックしたときの開き方。"

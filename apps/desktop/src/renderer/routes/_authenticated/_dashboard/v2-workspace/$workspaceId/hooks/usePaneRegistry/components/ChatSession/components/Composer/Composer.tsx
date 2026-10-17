@@ -35,6 +35,7 @@ import { AgentComposer } from "renderer/routes/_authenticated/components/AgentCo
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
 import { useForkComposerControls } from "../../providers/ForkComposerControlsProvider";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
+import { forkDraftFiles } from "../../utils/forkDraftFiles";
 import { elementsForChips } from "../../utils/messageElements";
 import { type AgentSwitcher, ModelPicker } from "./components/ModelPicker";
 import { ModePicker, type SessionMode } from "./components/ModePicker";
@@ -352,6 +353,7 @@ export const Composer = memo(function Composer({
 				clearOnSubmit={!disabled}
 				commands={commands}
 				defaultValue={storedDraft}
+				draftFiles={forkDraftFiles(draftKey)}
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}

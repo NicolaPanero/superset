@@ -2447,9 +2447,6 @@ msgstr "Logo Apple"
 msgid "Application menu"
 msgstr "Nabídka aplikace"
 
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Platí okamžitě pro tento chat, i když už vyčerpal kvótu. Není nutné měnit agenta ani účet."
-
 msgid "Applies to"
 msgstr "Platí pro"
 
@@ -4648,6 +4645,12 @@ msgstr "Pokračovat přes Google"
 
 msgid "Continued from {source}"
 msgstr "Pokračování z {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Pokračuje hned na účtu s největší kvótou."
+
+msgid "Continues on this account when quota returns."
+msgstr "Pokračuje na tomto účtu, až se kvóta obnoví."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
@@ -11611,9 +11614,6 @@ msgstr "Offline / local-first režim"
 msgid "Older"
 msgstr "Starší"
 
-msgid "On"
-msgstr "Zapnuto"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "na {offScopeHostName} — tady nepoběží"
 
@@ -16703,6 +16703,9 @@ msgstr "Pravidelnost · aktivní dny z 30"
 msgid "Switch"
 msgstr "Přepnout"
 
+msgid "Switch account"
+msgstr "Přepnout účet"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Vyměňte agenta. Workflow zůstane"
 
@@ -16757,9 +16760,6 @@ msgstr "Přepnout na kartu 8"
 msgid "Switch to Tab 9"
 msgstr "Přepnout na kartu 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Po vyčerpání kvóty přepnout na doporučený účet"
-
 msgid "Switch to Workspace 1"
 msgstr "Přepnout na pracovní prostor 1"
 
@@ -16786,6 +16786,9 @@ msgstr "Přepnout na pracovní prostor 8"
 
 msgid "Switch to Workspace 9"
 msgstr "Přepnout na pracovní prostor 9"
+
+msgid "Switch, or wait"
+msgstr "Přepnout, nebo počkat"
 
 msgid "Switch…"
 msgstr "Přepnout…"
@@ -17192,6 +17195,9 @@ msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tlačítko je teď výrazné. Zkontroloval jsem to ve vašem panelu."
+
+msgid "The chat pauses until you continue it."
+msgstr "Chat se pozastaví, dokud v něm nebudete pokračovat."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Chat se otevře po dokončení aktuální odpovědi."
@@ -18941,11 +18947,11 @@ msgstr "Hlasitost"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Počkat na obnovení kvóty a pokračovat"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Před předáním počkejte, až agent dokončí práci."
+
+msgid "Wait for the reset"
+msgstr "Počkat na obnovení"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Před spuštěním agentů počkat na setup pracovního prostoru"
@@ -18975,6 +18981,9 @@ msgstr "Čekání na první zprávu subagenta…"
 
 msgid "Waiting for your input"
 msgstr "Čeká na váš vstup"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Počká na obnovení, když žádný jiný účet nemá kvótu."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Chcete něco dřív? <0>Napište nám na Discordu</0>. Spousta z toho, co je tady, začala jako přání uživatele."
@@ -19212,6 +19221,9 @@ msgstr "Co bude dál"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Když je vypnuto, nic jiného se nedostane k souborům a nástrojům na tomto zařízení. Odsud se stále můžete připojovat ke vzdáleným sandboxům. <0>Zjistit více<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Když dojde kvóta"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Kam vedou odznaky rozpoznaných portů v postranním panelu po kliknutí."
