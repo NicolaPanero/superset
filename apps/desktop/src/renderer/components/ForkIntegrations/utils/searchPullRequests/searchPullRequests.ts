@@ -44,25 +44,43 @@ export function forkPullRequestSearch(
 	};
 }
 
-async function searchPullRequests(
+const SUPPORT_TTL_MS = 60_000;
+const support = new WeakMap<
+	HostServiceClient,
+	{ at: number; supported: Promise<boolean> }
+>();
+
+/** Hosts answer the same until they update, so one probe serves a minute of searches. */
+export function forkUnifiedSearchSupported(
 	client: HostServiceClient,
-	input: SearchInput,
-	previous?: SearchPage,
-) {
-	let supported = false;
-	try {
-		supported = (await client.forkConnections.list.query()).version >= 2;
-	} catch (error) {
-		if (
-			!(
+	now = Date.now(),
+): Promise<boolean> {
+	const cached = support.get(client);
+	if (cached && now - cached.at < SUPPORT_TTL_MS) return cached.supported;
+	const supported = client.forkConnections.list
+		.query()
+		.then((result) => result.version >= 2)
+		.catch((error) => {
+			support.delete(client);
+			if (
 				error &&
 				typeof error === "object" &&
 				"data" in error &&
 				(error.data as { code?: string } | undefined)?.code === "NOT_FOUND"
 			)
-		)
+				return false;
 			throw error;
-	}
+		});
+	support.set(client, { at: now, supported });
+	return supported;
+}
+
+async function searchPullRequests(
+	client: HostServiceClient,
+	input: SearchInput,
+	previous?: SearchPage,
+) {
+	const supported = await forkUnifiedSearchSupported(client);
 	if (supported)
 		return forkKeepUnavailablePullRequests(
 			await client.forkScm.searchPullRequests.query(input),

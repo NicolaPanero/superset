@@ -5,13 +5,21 @@ import {
 	forkPullRequestSearch,
 } from "./searchPullRequests";
 
-test("unified PR search uses host capabilities and keeps the released-host fallback", async () => {
+test("unified PR search probes each host once and keeps the released-host fallback", async () => {
 	let version = 2;
+	let probes = 0;
 	let legacyCalls = 0;
 	let unifiedCalls = 0;
 	const page = { pullRequests: [], totalCount: 0, hasNextPage: false, page: 1 };
 	const client = {
-		forkConnections: { list: { query: async () => ({ version }) } },
+		forkConnections: {
+			list: {
+				query: async () => {
+					probes++;
+					return { version };
+				},
+			},
+		},
 		forkScm: {
 			searchPullRequests: {
 				query: async () => {
@@ -30,10 +38,11 @@ test("unified PR search uses host capabilities and keeps the released-host fallb
 		},
 	} as unknown as HostServiceClient;
 	await forkPullRequestSearch(client).query({ projectId: "project" });
-	expect([unifiedCalls, legacyCalls]).toEqual([1, 0]);
-	version = 1;
 	await forkPullRequestSearch(client).query({ projectId: "project" });
-	expect([unifiedCalls, legacyCalls]).toEqual([1, 1]);
+	expect([probes, unifiedCalls, legacyCalls]).toEqual([1, 2, 0]);
+	version = 1;
+	await forkPullRequestSearch({ ...client }).query({ projectId: "project" });
+	expect([probes, unifiedCalls, legacyCalls]).toEqual([2, 2, 1]);
 });
 
 test("an offline refresh keeps cached rows only for the unreachable project", () => {

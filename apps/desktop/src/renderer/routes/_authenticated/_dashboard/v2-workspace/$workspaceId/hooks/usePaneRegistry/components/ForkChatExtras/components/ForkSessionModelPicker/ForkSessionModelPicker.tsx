@@ -131,7 +131,17 @@ export function ForkSessionModelPicker({
 		onBrowse: (id) => {
 			if (chatConfigs.some((config) => config.id === id)) browse(id, null);
 		},
-		onSwitch: (id, model) => browse(id, model?.id ?? null),
+		// Only Favorites lists other agents' models, outside a browsed tab.
+		onSwitch: (id, model) => {
+			if (id === realId) {
+				browse(realId, null);
+				const current = configOptions.find(
+					(option) => option.category === "model",
+				);
+				if (model && current) onSelect?.(current.id, model.id);
+			} else if (browsing) browse(id, model?.id ?? null);
+			else onRequestSwitch({ configId: id, model, effort: null });
+		},
 	};
 	const summary = [
 		viewedConfig?.label,

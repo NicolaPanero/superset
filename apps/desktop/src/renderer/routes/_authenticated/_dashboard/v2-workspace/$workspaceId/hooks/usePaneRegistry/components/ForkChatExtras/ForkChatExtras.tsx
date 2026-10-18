@@ -1,5 +1,5 @@
 import type { RendererContext } from "@superset/panes";
-import { type ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback, useMemo } from "react";
 import type { PaneViewerData, TerminalPaneData } from "../../../../types";
 import type { OpenAgentChat } from "../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { ForkAccountSwitchProvider } from "../ChatSession/providers/ForkAccountSwitchProvider";
@@ -23,7 +23,7 @@ export function ForkChatExtras({
 	openAgentChat: OpenAgentChat;
 	children: ReactNode;
 }) {
-	const fork = forkChatContext(ctx);
+	const fork = useMemo(() => forkChatContext(ctx), [ctx]);
 	const data = fork.pane.data as TerminalPaneData;
 	const controls = useCallback<ForkComposerControls>(
 		(props) => (
