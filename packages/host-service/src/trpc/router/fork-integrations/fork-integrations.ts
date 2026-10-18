@@ -27,6 +27,10 @@ import {
 	revokeForkGrant,
 	startForkOAuth,
 } from "../../../fork-integrations/fork-oauth";
+import {
+	forkPullRequestBranch,
+	forkPullRequestFetchTarget,
+} from "../../../fork-integrations/fork-pr-checkout";
 import { forkScmProjects } from "../../../fork-integrations/fork-projects";
 import { ForkScmProvider } from "../../../fork-integrations/fork-scm";
 import {
@@ -205,6 +209,7 @@ export const forkConnectionsRouter = router({
 					code: "BAD_REQUEST",
 					message: "Add another account for a different Jira site",
 				});
+			if (!previous) store.keepDefaultBefore(input.provider);
 			const c = previous ?? store.create(input.provider, "token", site);
 			store.save(
 				{
@@ -623,17 +628,36 @@ export const forkScmRouter = router({
 			const source = pr.sourceRepository ?? input.repository;
 			repository.parse(source);
 			scm.assert(input.connectionId, source);
-			const tracking = `superset-pr/${pr.number}`;
-			await (await ctx.git(project.repoPath)).fetch([
-				`https://${source.host}/${source.owner}/${source.name}.git`,
-				`+refs/heads/${pr.sourceBranch}:refs/remotes/${tracking}`,
-			]);
+			const github = input.repository.provider === "github";
+			const sameRepository =
+				(!github || !!pr.sourceRepository) &&
+				forkRepositoryKey(source) === forkRepositoryKey(input.repository);
+			const branch = forkPullRequestBranch(pr, sameRepository);
+			const localBranchExists = await git
+				.raw(["rev-parse", "--verify", `refs/heads/${branch}^{commit}`])
+				.then((out) => /^[0-9a-f]{40,}/.test(out.trim()))
+				.catch(() => false);
+			const destination = forkPullRequestFetchTarget({
+				branch,
+				sameRepository,
+				remote: remote.name,
+				localBranchExists,
+			});
+			// A GitHub fork may be private or deleted; the base repository keeps its head.
+			const fetched = github ? input.repository : source;
+			const from = sameRepository
+				? remote.name
+				: `https://${fetched.host}/${fetched.owner}/${fetched.name}.git`;
+			const sourceRef =
+				github && !sameRepository
+					? `refs/pull/${pr.number}/head`
+					: `refs/heads/${pr.sourceBranch}`;
+			if (destination) await git.fetch([from, `+${sourceRef}:${destination}`]);
 			const result = await workspacesRouter.createCaller(ctx).create({
 				id: input.workspaceId,
 				projectId: input.projectId,
-				branch: pr.sourceBranch,
+				branch,
 				skipBranchPrefix: true,
-				baseBranch: tracking,
 				name: pr.title,
 			});
 			ctx.db

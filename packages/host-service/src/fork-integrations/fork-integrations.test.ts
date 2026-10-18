@@ -321,6 +321,34 @@ test("merging a changed PR fails before the write request", async () => {
 		sqlite.close();
 	}
 });
+test("a scoped Jira token moves to the cloud gateway after the site rejects it", async () => {
+	const { sqlite, store } = fixture();
+	const urls: string[] = [];
+	const transport = (async (url: string) => {
+		urls.push(String(url));
+		if (String(url).startsWith("https://example.atlassian.net"))
+			throw new TRPCError({ code: "UNAUTHORIZED" });
+		return { accountId: "a", displayName: "Ada" };
+	}) as typeof forkFetch;
+	try {
+		const c = store.create("jira", "token", "https://example.atlassian.net");
+		store.save(c, {
+			token: "scoped",
+			email: "test@example.test",
+			cloudId: "cloud-scoped",
+		});
+		const api = new ForkApi(store, fallback, transport);
+		await api.request(c.id, "/rest/api/3/myself");
+		await api.request(c.id, "/rest/api/3/myself");
+		expect(urls).toEqual([
+			"https://example.atlassian.net/rest/api/3/myself",
+			"https://api.atlassian.com/ex/jira/cloud-scoped/rest/api/3/myself",
+			"https://api.atlassian.com/ex/jira/cloud-scoped/rest/api/3/myself",
+		]);
+	} finally {
+		sqlite.close();
+	}
+});
 test("Jira writes use official issue endpoints and ADF without importing native tasks", async () => {
 	const { sqlite, store } = fixture();
 	const calls: { url: string; method?: string; body: unknown }[] = [];
@@ -342,7 +370,7 @@ test("Jira writes use official issue endpoints and ADF without importing native 
 		const jira = new ForkJiraProvider(new ForkApi(store, fallback, transport));
 		await jira.comment(c.id, "APP-1", "First\nSecond");
 		expect(calls[0]?.url).toBe(
-			"https://api.atlassian.com/ex/jira/cloud-test/rest/api/3/issue/APP-1/comment",
+			"https://example.atlassian.net/rest/api/3/issue/APP-1/comment",
 		);
 		expect(adfText(textAdf("First\nSecond")).trim()).toBe("First\nSecond");
 	} finally {
@@ -435,6 +463,28 @@ test("a common OAuth broker returns two grants through a bound one-time desktop 
 		).toEqual(["bitbucket", "jira"]);
 	} finally {
 		broker.stop(true);
+		sqlite.close();
+	}
+});
+
+test("adding a second account keeps the account in use as the default", async () => {
+	const { sqlite, store } = fixture();
+	try {
+		const first = store.create("bitbucket", "token", null);
+		store.save(first, { token: "first-test" });
+		store.keepDefaultBefore("bitbucket");
+		store.save(store.create("bitbucket", "token", null), {
+			token: "second-test",
+		});
+		const credentials = new ForkGitCredentialProvider(
+			fallback,
+			store,
+			undefined,
+			async () => ({}),
+		);
+		expect(credentials.select("bitbucket")?.id).toBe(first.id);
+		expect(await credentials.getToken("bitbucket.org")).toBe("first-test");
+	} finally {
 		sqlite.close();
 	}
 });

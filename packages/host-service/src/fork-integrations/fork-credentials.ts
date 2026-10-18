@@ -2,7 +2,7 @@ import {
 	type ForkConnection,
 	parseForkRemote,
 } from "@superset/shared/fork-integrations";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import type { HostDb } from "../db";
 import { forkIntegrationBindings } from "../db/fork-schema";
 import { projects, workspaces } from "../db/schema";
@@ -41,9 +41,13 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 			? this.store.db
 					.select()
 					.from(forkIntegrationBindings)
-					.where(eq(forkIntegrationBindings.scope, this.store.scope))
-					.all()
-					.find((b) => b.projectId === projectId)
+					.where(
+						and(
+							eq(forkIntegrationBindings.scope, this.store.scope),
+							eq(forkIntegrationBindings.projectId, projectId),
+						),
+					)
+					.get()
 			: undefined;
 		return new ForkGitCredentialProvider(
 			this.fallback,

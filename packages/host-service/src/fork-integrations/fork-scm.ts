@@ -53,7 +53,11 @@ interface GHPull {
 	merged_at?: string | null;
 	html_url: string;
 	user: { login: string };
-	head: { ref: string; sha: string };
+	head: {
+		ref: string;
+		sha: string;
+		repo: { name: string; owner: { login: string } } | null;
+	};
 	base: { ref: string };
 	updated_at: string;
 }
@@ -125,6 +129,15 @@ function ghPR(
 		targetBranch: p.base.ref,
 		headCommit: p.head.sha,
 		updatedAt: p.updated_at,
+		...(p.head.repo
+			? {
+					sourceRepository: {
+						...r,
+						owner: p.head.repo.owner.login,
+						name: p.head.repo.name,
+					},
+				}
+			: {}),
 	};
 }
 function nextPath(

@@ -14,6 +14,8 @@ import { forkAccessSecret } from "./fork-oauth";
 import type { ForkConnectionStore } from "./fork-store";
 
 export const SYSTEM_GITHUB = "system:github";
+/** Jira token connections that answered only through the cloud gateway. */
+const jiraGatewayTokens = new Set<string>();
 export class ForkApi {
 	constructor(
 		readonly store: ForkConnectionStore,
@@ -51,9 +53,11 @@ export class ForkApi {
 			brokerUrl: null,
 		};
 	}
-	async auth(
-		id: string,
-	): Promise<{ base: string; headers: Record<string, string> }> {
+	async auth(id: string): Promise<{
+		base: string;
+		headers: Record<string, string>;
+		fallbackBase?: string;
+	}> {
 		const c = this.connection(id);
 		const secret =
 			c.mode === "system"
@@ -78,17 +82,24 @@ export class ForkApi {
 		const definition = FORK_PROVIDER_DEFINITIONS[c.provider];
 		if (definition.apiBase) return { base: definition.apiBase, headers };
 		const cloudId = "cloudId" in secret ? secret.cloudId : undefined;
-		if (cloudId)
-			return {
-				base: `https://api.atlassian.com/ex/jira/${encodeURIComponent(cloudId)}`,
-				headers,
-			};
-		if (!c.site || !/^https:\/\/[^/]+\.atlassian\.net\/?$/.test(c.site))
+		const gateway = cloudId
+			? `https://api.atlassian.com/ex/jira/${encodeURIComponent(cloudId)}`
+			: undefined;
+		const site =
+			c.site && /^https:\/\/[^/]+\.atlassian\.net\/?$/.test(c.site)
+				? c.site.replace(/\/$/, "")
+				: undefined;
+		if (gateway && (c.mode !== "token" || !site))
+			return { base: gateway, headers };
+		if (!site)
 			throw new TRPCError({
 				code: "BAD_REQUEST",
 				message: "Configure a Jira Cloud site",
 			});
-		return { base: c.site.replace(/\/$/, ""), headers };
+		// Classic API tokens work only on the site; scoped ones only on the gateway.
+		if (gateway && jiraGatewayTokens.has(`${this.store.scope}:${id}`))
+			return { base: gateway, headers };
+		return { base: site, headers, fallbackBase: gateway };
 	}
 	async request<T>(
 		id: string,
@@ -99,12 +110,23 @@ export class ForkApi {
 		if (!path.startsWith("/") || path.startsWith("//"))
 			throw new Error("Invalid API path");
 		return forkAvailability(this.store).run(this.connection(id), async () => {
-			const { base, headers } = await this.auth(id);
-			return this.transport<T>(`${base}${path}`, {
-				method,
-				headers,
-				...(body === undefined ? {} : { body: JSON.stringify(body) }),
-			});
+			const { base, headers, fallbackBase } = await this.auth(id);
+			const send = (root: string) =>
+				this.transport<T>(`${root}${path}`, {
+					method,
+					headers,
+					...(body === undefined ? {} : { body: JSON.stringify(body) }),
+				});
+			if (!fallbackBase) return send(base);
+			try {
+				return await send(base);
+			} catch (error) {
+				if (!(error instanceof TRPCError && error.code === "UNAUTHORIZED"))
+					throw error;
+				const result = await send(fallbackBase);
+				jiraGatewayTokens.add(`${this.store.scope}:${id}`);
+				return result;
+			}
 		});
 	}
 	async verify(id: string): Promise<ForkConnection> {

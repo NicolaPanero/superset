@@ -7,8 +7,13 @@ independent. No MCP connection is required.
 Configure accounts in **Fork Settings → Connections** or in onboarding.
 GitHub can use the existing local CLI/credential-helper account. Jira and
 Bitbucket accept personal API tokens or a compatible OAuth broker. A Jira token
-needs the account email and an HTTPS `*.atlassian.net` site. Scoped tokens use
-the site's cloud ID, resolved from its tenant metadata.
+needs the account email and an HTTPS `*.atlassian.net` site. Classic tokens
+call the site. When the site rejects a scoped token, calls move to the cloud
+gateway with the site's cloud ID, resolved from its tenant metadata.
+
+Adding a second account for a provider makes the account in use the default,
+so Git, `gh` and API calls keep the same identity. Codex receives MCP header
+and environment secrets through a private environment file, not arguments.
 
 Connection metadata and workspace associations live in fork-owned SQLite
 tables. Secrets are sealed using the existing host machine encryption utility.

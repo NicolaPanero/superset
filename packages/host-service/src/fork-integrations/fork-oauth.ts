@@ -70,6 +70,7 @@ function persistGrant(
 	reconnectId?: string,
 ) {
 	const existing = reconnectId ? store.get(reconnectId)?.connection : undefined;
+	if (!existing) store.keepDefaultBefore(grant.provider);
 	const connection =
 		existing ?? store.create(grant.provider, "oauth", grant.site ?? null);
 	const next: ForkConnection = {

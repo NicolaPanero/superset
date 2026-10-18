@@ -105,6 +105,14 @@ export class ForkConnectionStore {
 			brokerUrl: null,
 		};
 	}
+	/** A second account keeps the one already in use as the default. */
+	keepDefaultBefore(provider: ForkProviderId): void {
+		const rows = this.list().filter((c) => c.provider === provider);
+		if (rows.some((c) => c.isDefault)) return;
+		const inUse = rows.filter((c) => c.enabled && c.mode !== "system");
+		const [only] = inUse;
+		if (inUse.length === 1 && only) this.save({ ...only, isDefault: true });
+	}
 	disconnect(id: string): ForkConnection | null {
 		const row = this.get(id);
 		if (!row) return null;
