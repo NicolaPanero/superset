@@ -1,4 +1,5 @@
 import { afterAll, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import {
 	existsSync,
 	mkdirSync,
@@ -12,9 +13,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { mergeSecrets } from "../trpc/router/fork-mcp/fork-mcp";
 import {
+	codexLaunch,
+	ForkMcpListInvalidError,
 	type ForkMcpPaths,
 	harnessMcpServers,
 	readForkMcpServers,
+	readForkMcpServersForUpdate,
 	writeForkMcpServers,
 } from "./fork-mcp-servers";
 
@@ -29,6 +33,7 @@ function fixture(name: string): { paths: ForkMcpPaths; claudeJson: string } {
 			servers: join(dir, "fork", "mcp-servers.json"),
 			claudeConfig: join(dir, "state", "fork-mcp-claude.json"),
 			codexArgs: join(dir, "state", "fork-mcp-codex.args"),
+			codexEnv: join(dir, "state", "fork-mcp-codex.env"),
 		},
 		claudeJson: join(dir, "claude.json"),
 	};
@@ -101,11 +106,15 @@ test("launch files carry only enabled servers and disappear when none are", () =
 	expect(readFileSync(paths.codexArgs, "utf8")).toBe(
 		[
 			'mcp_servers.remote.url="https://mcp.example.com/"',
-			'mcp_servers.remote.http_headers={"x-api-key"="Bearer \\"one\\""}',
+			'mcp_servers.remote.env_http_headers={"x-api-key"="SUPERSET_FORK_MCP_SECRET_0"}',
 			"",
 		].join("\n"),
 	);
+	expect(readFileSync(paths.codexEnv, "utf8")).toBe(
+		"export SUPERSET_FORK_MCP_SECRET_0='Bearer \"one\"'\n",
+	);
 	expect(statSync(paths.codexArgs).mode & 0o777).toBe(0o600);
+	expect(statSync(paths.codexEnv).mode & 0o777).toBe(0o600);
 	expect(
 		harnessMcpServers(readForkMcpServers(paths)).map((s) => s.name),
 	).toEqual(["remote", "events"]);
@@ -113,13 +122,45 @@ test("launch files carry only enabled servers and disappear when none are", () =
 	writeForkMcpServers([], paths);
 	expect(existsSync(paths.claudeConfig)).toBe(false);
 	expect(existsSync(paths.codexArgs)).toBe(false);
+	expect(existsSync(paths.codexEnv)).toBe(false);
 });
 
-test("an unreadable list gives no servers instead of failing the session", () => {
+test("a local server gets its secret environment from the launcher, not from arguments", () => {
+	const launch = codexLaunch([
+		{
+			transport: "stdio",
+			name: "local",
+			enabled: true,
+			command: "printenv",
+			args: ["API_KEY"],
+			env: { API_KEY: "it's secret" },
+		},
+	]);
+	expect(launch.args).not.toContain("it's secret");
+	const args = JSON.parse(
+		launch.args
+			.split("\n")
+			.find((line) => line.startsWith("mcp_servers.local.args="))
+			?.slice("mcp_servers.local.args=".length) ?? "[]",
+	) as string[];
+	const exported = /^export (\w+)=/.exec(launch.env)?.[1] ?? "";
+	expect(launch.args).toContain(`mcp_servers.local.env_vars=["${exported}"]`);
+	const result = spawnSync("/bin/sh", args, {
+		env: { PATH: process.env.PATH, [exported]: "it's secret" },
+		encoding: "utf8",
+	});
+	expect(result.stdout).toBe("it's secret\n");
+});
+
+test("an unreadable list gives no servers to a session and is never overwritten", () => {
 	const { paths } = fixture("corrupt");
 	writeForkMcpServers([], paths);
 	writeFileSync(paths.servers, "{not json");
 	expect(readForkMcpServers(paths)).toEqual([]);
+	expect(() => readForkMcpServersForUpdate(paths)).toThrow(
+		ForkMcpListInvalidError,
+	);
+	expect(readFileSync(paths.servers, "utf8")).toBe("{not json");
 });
 
 test("an empty secret keeps the stored value and a new name needs one", () => {

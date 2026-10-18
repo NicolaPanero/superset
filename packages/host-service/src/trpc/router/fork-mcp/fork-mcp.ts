@@ -1,13 +1,28 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import {
+	ForkMcpListInvalidError,
 	type ForkMcpServer,
 	forkMcpPaths,
 	readForkMcpServers,
+	readForkMcpServersForUpdate,
 	writeForkMcpServers,
 } from "../../../fork-mcp";
 import { MCP_SERVER_NAME } from "../../../fork-mcp/fork-mcp-servers";
 import { protectedProcedure, router } from "../../index";
+
+function editableServers(): ForkMcpServer[] {
+	try {
+		return readForkMcpServersForUpdate();
+	} catch (error) {
+		if (error instanceof ForkMcpListInvalidError)
+			throw new TRPCError({
+				code: "PRECONDITION_FAILED",
+				message: error.message,
+			});
+		throw error;
+	}
+}
 
 const secretInput = z.array(
 	z.object({ name: z.string().min(1), value: z.string().optional() }),
@@ -88,7 +103,7 @@ export const forkMcpRouter = router({
 			}),
 		)
 		.mutation(({ input }) => {
-			const servers = readForkMcpServers();
+			const servers = editableServers();
 			const previous = servers.find(
 				(server) => server.name === (input.originalName ?? input.server.name),
 			);
@@ -123,7 +138,7 @@ export const forkMcpRouter = router({
 		.input(z.object({ name: z.string(), enabled: z.boolean() }))
 		.mutation(({ input }) => {
 			writeForkMcpServers(
-				readForkMcpServers().map((server) =>
+				editableServers().map((server) =>
 					server.name === input.name
 						? { ...server, enabled: input.enabled }
 						: server,
@@ -136,7 +151,7 @@ export const forkMcpRouter = router({
 		.input(z.object({ name: z.string() }))
 		.mutation(({ input }) => {
 			writeForkMcpServers(
-				readForkMcpServers().filter((server) => server.name !== input.name),
+				editableServers().filter((server) => server.name !== input.name),
 			);
 			return { success: true as const };
 		}),

@@ -40,24 +40,29 @@ test("claude gets the launch file last, except for subcommands and after --", ()
 	]);
 });
 
-test("codex gets one -c override per line, values kept whole", () => {
+test("codex gets one -c override per line and secret values only as environment", () => {
 	writeFileSync(
 		join(home, "state", "fork-mcp-codex.args"),
-		'mcp_servers.remote.url="https://mcp.example.com/"\nmcp_servers.remote.http_headers={"Authorization"="Bearer a b"}',
+		'mcp_servers.remote.url="https://mcp.example.com/"\nmcp_servers.remote.env_http_headers={"Authorization"="SUPERSET_FORK_MCP_SECRET_0"}',
+	);
+	writeFileSync(
+		join(home, "state", "fork-mcp-codex.env"),
+		"export SUPERSET_FORK_MCP_SECRET_0='Bearer a '\"'\"'b'\n",
 	);
 	const script = withForkCodexMcpArgs(
 		`_superset_codex_args=()
 _superset_configure_project_trust() { :; }
 _superset_configure_project_trust
-"$REAL_BIN" "\${_superset_codex_args[@]}" "$@"
+"$REAL_BIN" "\${_superset_codex_args[@]}" "$@" "env:$SUPERSET_FORK_MCP_SECRET_0"
 `,
 	);
 	expect(run(script, ["exec"])).toEqual([
 		"-c",
 		'mcp_servers.remote.url="https://mcp.example.com/"',
 		"-c",
-		'mcp_servers.remote.http_headers={"Authorization"="Bearer a b"}',
+		'mcp_servers.remote.env_http_headers={"Authorization"="SUPERSET_FORK_MCP_SECRET_0"}',
 		"exec",
+		"env:Bearer a 'b",
 	]);
 	expect(() => withForkCodexMcpArgs("no marker")).toThrow();
 });

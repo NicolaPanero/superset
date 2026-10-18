@@ -46,13 +46,15 @@ const CODEX_ARGS_READY = "_superset_configure_project_trust\n";
 
 const FORK_CODEX_MCP_ARGS = `_superset_fork_mcp_args="\${SUPERSET_HOME_DIR:+$SUPERSET_HOME_DIR/state/fork-mcp-codex.args}"
 if [ -n "$_superset_fork_mcp_args" ] && [ -s "$_superset_fork_mcp_args" ]; then
+  _superset_fork_mcp_env="$SUPERSET_HOME_DIR/state/fork-mcp-codex.env"
+  [ -s "$_superset_fork_mcp_env" ] && . "$_superset_fork_mcp_env"
   while IFS= read -r _superset_line || [ -n "$_superset_line" ]; do
     [ -n "$_superset_line" ] && _superset_codex_args+=("-c" "$_superset_line")
   done < "$_superset_fork_mcp_args"
 fi
 `;
 
-/** Adds one `-c` override per line of the host's Codex launch file. */
+/** Adds one `-c` override per line of the host's Codex launch file, and its secret values as environment. */
 export function withForkCodexMcpArgs(execBlock: string): string {
 	if (!execBlock.includes(CODEX_ARGS_READY))
 		throw new Error(

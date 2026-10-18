@@ -45,6 +45,7 @@ export interface ForkMcpPaths {
 	servers: string;
 	claudeConfig: string;
 	codexArgs: string;
+	codexEnv: string;
 }
 
 export function forkMcpPaths(home = resolveSupersetHomeDir()): ForkMcpPaths {
@@ -52,6 +53,7 @@ export function forkMcpPaths(home = resolveSupersetHomeDir()): ForkMcpPaths {
 		servers: join(home, "fork", "mcp-servers.json"),
 		claudeConfig: join(home, "state", "fork-mcp-claude.json"),
 		codexArgs: join(home, "state", "fork-mcp-codex.args"),
+		codexEnv: join(home, "state", "fork-mcp-codex.env"),
 	};
 }
 
@@ -121,33 +123,92 @@ function tomlTable(values: Record<string, string>): string {
 	return `{${entries.join(",")}}`;
 }
 
-/** One `-c` override per line; Codex has no SSE transport, so SSE is left out. */
-function codexArgs(servers: ForkMcpServer[]): string {
+const SHELL_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
+
+function shellQuote(value: string): string {
+	return `'${value.replaceAll("'", `'"'"'`)}'`;
+}
+
+/**
+ * One `-c` override per line, and the secret values as `export` lines. The
+ * wrapper sources the values into Codex's environment, so they never appear
+ * in its arguments. "SECRET" in each name keeps them out of agent commands.
+ * Codex has no SSE transport, so SSE is left out.
+ */
+export function codexLaunch(servers: ForkMcpServer[]): {
+	args: string;
+	env: string;
+} {
+	const exports: string[] = [];
+	const secret = (value: string) => {
+		const name = `SUPERSET_FORK_MCP_SECRET_${exports.length}`;
+		exports.push(`export ${name}=${shellQuote(value)}`);
+		return name;
+	};
 	const lines = servers.flatMap((server) => {
 		const key = `mcp_servers.${server.name}`;
-		if (server.transport === "stdio")
+		if (server.transport !== "stdio") {
+			if (server.transport === "sse") return [];
+			return [
+				`${key}.url=${JSON.stringify(server.url)}`,
+				`${key}.env_http_headers=${tomlTable(
+					Object.fromEntries(
+						Object.entries(server.headers).map(([header, value]) => [
+							header,
+							secret(value),
+						]),
+					),
+				)}`,
+			];
+		}
+		const mapped = Object.entries(server.env).filter(([name]) =>
+			SHELL_NAME.test(name),
+		);
+		const plain = Object.fromEntries(
+			Object.entries(server.env).filter(([name]) => !SHELL_NAME.test(name)),
+		);
+		if (mapped.length === 0)
 			return [
 				`${key}.command=${JSON.stringify(server.command)}`,
 				`${key}.args=${JSON.stringify(server.args)}`,
-				`${key}.env=${tomlTable(server.env)}`,
+				`${key}.env=${tomlTable(plain)}`,
 			];
-		if (server.transport === "sse") return [];
+		const forwarded = mapped.map(([name, value]) => ({
+			name,
+			from: secret(value),
+		}));
+		const script = `${forwarded
+			.map(({ name, from }) => `export ${name}="$${from}"; unset ${from}; `)
+			.join("")}exec "$@"`;
 		return [
-			`${key}.url=${JSON.stringify(server.url)}`,
-			`${key}.http_headers=${tomlTable(server.headers)}`,
+			`${key}.command="/bin/sh"`,
+			`${key}.args=${JSON.stringify([
+				"-c",
+				script,
+				"superset-mcp",
+				server.command,
+				...server.args,
+			])}`,
+			`${key}.env=${tomlTable(plain)}`,
+			`${key}.env_vars=${JSON.stringify(forwarded.map(({ from }) => from))}`,
 		];
 	});
-	return lines.length > 0 ? `${lines.join("\n")}\n` : "";
+	return {
+		args: lines.length > 0 ? `${lines.join("\n")}\n` : "",
+		env: exports.length > 0 ? `${exports.join("\n")}\n` : "",
+	};
 }
 
 /** Rewrites the launch files the agent wrappers read; removes them when empty. */
 function writeLaunchFiles(paths: ForkMcpPaths, servers: ForkMcpServer[]) {
 	const enabled = servers.filter((server) => server.enabled);
-	const args = codexArgs(enabled);
+	const codex = codexLaunch(enabled);
 	if (enabled.length > 0)
 		writePrivate(paths.claudeConfig, claudeConfig(enabled));
 	else rmSync(paths.claudeConfig, { force: true });
-	if (args) writePrivate(paths.codexArgs, args);
+	if (codex.env) writePrivate(paths.codexEnv, codex.env);
+	else rmSync(paths.codexEnv, { force: true });
+	if (codex.args) writePrivate(paths.codexArgs, codex.args);
 	else rmSync(paths.codexArgs, { force: true });
 }
 
@@ -160,14 +221,10 @@ export function writeForkMcpServers(
 	writeLaunchFiles(paths, file.servers);
 }
 
-/**
- * The one list every agent gets. Created on first read from the servers
- * Claude already has, which stay where they are.
- */
-export function readForkMcpServers(
-	paths = forkMcpPaths(),
-	claudeJsonPath = join(homedir(), ".claude.json"),
-): ForkMcpServer[] {
+function loadForkMcpServers(
+	paths: ForkMcpPaths,
+	claudeJsonPath: string,
+): ForkMcpServer[] | null {
 	if (!existsSync(paths.servers)) {
 		const imported = importClaudeMcpServers(claudeJsonPath);
 		writeForkMcpServers(imported, paths);
@@ -180,13 +237,39 @@ export function readForkMcpServers(
 		raw = null;
 	}
 	const parsed = fileSchema.safeParse(raw);
-	if (!parsed.success) {
-		console.warn(
-			`[host-service] ${paths.servers} is not a valid MCP server list; ignoring it`,
-		);
-		return [];
+	return parsed.success ? parsed.data.servers : null;
+}
+
+/**
+ * The one list every agent gets. Created on first read from the servers
+ * Claude already has, which stay where they are.
+ */
+export function readForkMcpServers(
+	paths = forkMcpPaths(),
+	claudeJsonPath = join(homedir(), ".claude.json"),
+): ForkMcpServer[] {
+	const servers = loadForkMcpServers(paths, claudeJsonPath);
+	if (servers) return servers;
+	console.warn(
+		`[host-service] ${paths.servers} is not a valid MCP server list; ignoring it`,
+	);
+	return [];
+}
+
+export class ForkMcpListInvalidError extends Error {
+	constructor(readonly path: string) {
+		super(`${path} is not a valid MCP server list. Fix or remove it first.`);
 	}
-	return parsed.data.servers;
+}
+
+/** The list to change; a file that does not parse is never overwritten. */
+export function readForkMcpServersForUpdate(
+	paths = forkMcpPaths(),
+	claudeJsonPath = join(homedir(), ".claude.json"),
+): ForkMcpServer[] {
+	const servers = loadForkMcpServers(paths, claudeJsonPath);
+	if (!servers) throw new ForkMcpListInvalidError(paths.servers);
+	return servers;
 }
 
 /** Keeps the wrapper launch files in step with the list, as at host boot. */
