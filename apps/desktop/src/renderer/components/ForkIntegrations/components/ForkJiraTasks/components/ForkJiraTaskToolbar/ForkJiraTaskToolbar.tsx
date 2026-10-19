@@ -187,6 +187,26 @@ export function ForkJiraTaskToolbar({
 							))}
 						</SelectContent>
 					</Select>
+					<Input
+						aria-label={t({ message: "Issue type" })}
+						placeholder={t({ message: "Issue type" })}
+						className="h-8 w-28 text-xs"
+						disabled={!!search.forkJql}
+						value={search.forkIssueType ?? ""}
+						onChange={(event) =>
+							void update({ forkIssueType: event.target.value || undefined })
+						}
+					/>
+					<Input
+						aria-label={t({ message: "Parent issue" })}
+						placeholder={t({ message: "Parent issue" })}
+						className="h-8 w-28 text-xs"
+						disabled={!!search.forkJql}
+						value={search.forkParent ?? ""}
+						onChange={(event) =>
+							void update({ forkParent: event.target.value || undefined })
+						}
+					/>
 					<Select
 						value={status}
 						disabled={!!search.forkJql}

@@ -8,7 +8,7 @@ import { useForkConnections } from "./useForkConnections";
  * any issue matching the text otherwise. Null when Jira is not connected.
  */
 export function useForkJiraSearch() {
-	const { client, connections } = useForkConnections();
+	const { client, connections, hostUrl } = useForkConnections();
 	const jira = connections.filter((c) => c.provider === "jira" && c.enabled);
 	const connectionId = (jira.find((c) => c.isDefault) ?? jira[0])?.id;
 	const search = useCallback(
@@ -36,5 +36,7 @@ export function useForkJiraSearch() {
 		},
 		[client, connectionId],
 	);
-	return connectionId ? search : null;
+	return connectionId
+		? Object.assign(search, { scopeKey: `${hostUrl}:${connectionId}` })
+		: null;
 }

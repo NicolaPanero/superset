@@ -6140,6 +6140,9 @@ msgstr "Popište úkol pro agenta…"
 msgid "Describe the work to your agent"
 msgstr "Popište práci svému agentovi"
 
+msgid "Describe what the agent should do"
+msgstr "Popište, co má agent udělat"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Popište, co potřebujete. Superset pro úkol vytvoří izolovaný pracovní prostor a čistou větev."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue vyřešena"
 msgid "Issue title"
 msgstr "Název issue"
 
+msgid "Issue type"
+msgstr "Typ úkolu"
+
 msgid "Issue unresolved"
 msgstr "Issue nevyřešena"
 
@@ -9270,6 +9276,9 @@ msgstr "Jan Novák"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Automatizace Jira"
 
 msgid "Jira issues"
 msgstr "Úkoly Jira"
@@ -10502,6 +10511,9 @@ msgstr "většina vývojářů"
 
 msgid "Most of software history"
 msgstr "Většina historie softwaru"
+
+msgid "Move"
+msgstr "Přesunout"
 
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
@@ -12559,6 +12571,9 @@ msgstr "Nadřazený adresář"
 msgid "Parent directory on {hostName}"
 msgstr "Nadřazený adresář na {hostName}"
 
+msgid "Parent issue"
+msgstr "Nadřazený úkol"
+
 msgid "Part of Superset Pro"
 msgstr "Součást Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Spouštějte automatizace při změnách issues v Sentry."
 
 msgid "Run commands and navigate the application."
 msgstr "Spouštějte příkazy a procházejte aplikaci."
+
+msgid "Run history"
+msgstr "Historie spuštění"
 
 msgid "Run History"
 msgstr "Historie běhů"
@@ -17364,6 +17382,9 @@ msgstr "Budoucí domov pro znovupoužitelné konfigurace agentů, prompty a prů
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Hostitel se vrátil s verzí {0}, ne {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host kontroluje každou minutu. Zapnutí pravidla zaznamená stávající shody; každý nový odpovídající úkol spustí jeden workspace a agenta. Pravidla se ukládají pozastavená."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Hostitel se neobnovil do patnácti minut."

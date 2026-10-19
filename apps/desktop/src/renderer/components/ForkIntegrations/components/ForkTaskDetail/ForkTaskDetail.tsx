@@ -213,7 +213,7 @@ export function ForkTaskDetail({
 		drafts.resetDraft();
 		drafts.updateDraft({
 			linkedIssues: [forkJiraLinkedIssue(task)],
-			branchName: forkTaskBranch(task.key, task.title),
+			branchName: forkTaskBranch(task.key, task.title, task.type?.name),
 			branchNameEdited: true,
 			branchNameFromProvider: false,
 			workspaceName: `${task.key} ${task.title}`,

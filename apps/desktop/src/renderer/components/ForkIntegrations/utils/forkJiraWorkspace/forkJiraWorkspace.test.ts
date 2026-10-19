@@ -30,3 +30,32 @@ test("a Jira issue started in a workspace reaches the agent prompt with its text
 		forkJiraPromptSections([{ ...issue, source: "github" }], read),
 	).toEqual([]);
 });
+
+test("issues with the same key on two Jira sites keep separate prompt bodies", () => {
+	const base = {
+		id: "1",
+		key: "APP-1",
+		title: "Fix",
+		url: "https://example.atlassian.net/browse/APP-1",
+		status: { id: "todo", name: "To Do", category: "new" },
+		priority: null,
+		assignee: null,
+		labels: [],
+	};
+	const a = forkJiraLinkedIssue({
+		...base,
+		connectionId: "jira-a",
+		description: "Site A",
+	});
+	const b = forkJiraLinkedIssue({
+		...base,
+		connectionId: "jira-b",
+		description: "Site B",
+	});
+	const read = (key: string) => {
+		const entry = useNewWorkspacePromptContextStore.getState().entries.get(key);
+		return entry?.state === "ready" ? entry.body.text : null;
+	};
+	expect(forkJiraPromptSections([a], read)[0]).toContain("Site A");
+	expect(forkJiraPromptSections([b], read)[0]).toContain("Site B");
+});

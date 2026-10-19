@@ -22,6 +22,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   provider su ogni repository. Jira è la vista Tasks predefinita quando
   configurato: ricerca, filtri rapidi, lista/board e dettaglio affiancato;
   JQL resta disponibile nei controlli avanzati.
+  La board Jira permette di spostare le card con le transizioni consentite;
+  **Automations** configura regole JQL locali all’host. **Start in workspace**
+  passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
+  delle PR Bitbucket. Flusso, limiti e compatibilità sono in
+  [docs/fork-integrations.md](docs/fork-integrations.md).
 
 - **Settings → Fork → MCP servers** gestisce un solo elenco di server MCP
   (HTTP, SSE, stdio) per tutti gli agenti e gli account dell'host, salvato in

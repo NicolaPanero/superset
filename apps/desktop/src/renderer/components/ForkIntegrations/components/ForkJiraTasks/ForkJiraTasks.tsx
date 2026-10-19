@@ -12,16 +12,14 @@ import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { useForkJiraFilters } from "renderer/stores/fork-jira-filters";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import { ForkJiraAutomations } from "../ForkJiraAutomations";
 import { ForkProviderIcon } from "../ForkProviderIcon";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkTaskDetail } from "../ForkTaskDetail/ForkTaskDetail";
+import { ForkJiraBoard } from "./components/ForkJiraBoard";
 import { ForkJiraTaskCard } from "./components/ForkJiraTaskCard";
 import { ForkJiraTaskToolbar } from "./components/ForkJiraTaskToolbar";
-import {
-	type ForkJiraTaskFilters,
-	forkJiraQuery,
-	jiraStatusTone,
-} from "./fork-jira-query";
+import { type ForkJiraTaskFilters, forkJiraQuery } from "./fork-jira-query";
 
 export function ForkJiraTasks() {
 	const { formatNumber } = useFormat();
@@ -30,7 +28,12 @@ export function ForkJiraTasks() {
 	const routeSearch = useSearch({ strict: false }) as ForkJiraTaskFilters;
 	const remembered = useForkJiraFilters((state) => state.filters);
 	const remember = useForkJiraFilters((state) => state.remember);
-	const search: ForkJiraTaskFilters = { ...remembered, ...routeSearch };
+	const search: ForkJiraTaskFilters = {
+		...remembered,
+		...Object.fromEntries(
+			Object.entries(routeSearch).filter(([, value]) => value !== undefined),
+		),
+	};
 	const jira = connections.filter((c) => c.provider === "jira" && c.enabled);
 	const connectionId =
 		(jira.some((c) => c.id === search.forkConnection)
@@ -63,6 +66,8 @@ export function ForkJiraTasks() {
 		jql: search.forkJql ?? "",
 		projectKeys: projects.data?.map((p) => p.key),
 		sprint: search.forkSprint,
+		issueType: search.forkIssueType,
+		parent: search.forkParent,
 	});
 	const update = (patch: Partial<typeof search>) => {
 		remember(patch);
@@ -120,12 +125,6 @@ export function ForkJiraTasks() {
 			]),
 		).values(),
 	];
-	const categories = ["new", "indeterminate", "done"];
-	const groups = [
-		...new Map(items.map((task) => [task.status.id, task.status])).values(),
-	].sort(
-		(a, b) => categories.indexOf(a.category) - categories.indexOf(b.category),
-	);
 	const close = () => void update({ forkTask: undefined });
 	const unavailable = [query.error, detail.error].some(
 		isForkServiceUnavailable,
@@ -170,6 +169,7 @@ export function ForkJiraTasks() {
 							{formatNumber(items.length)}
 							{query.hasNextPage && "+"} · <Trans>Tasks</Trans>
 						</span>
+						<ForkJiraAutomations connectionId={connectionId} jql={jql} />
 						{search.forkJql && (
 							<span className="ml-auto rounded bg-muted px-1.5 font-mono">
 								JQL
@@ -250,6 +250,9 @@ export function ForkJiraTasks() {
 													forkStatus: "all",
 													forkJiraProject: undefined,
 													forkJql: undefined,
+													forkIssueType: undefined,
+													forkParent: undefined,
+													forkSprint: undefined,
 												});
 											}}
 										>
@@ -258,48 +261,11 @@ export function ForkJiraTasks() {
 									</div>
 								)}
 								{board ? (
-									<div className="flex min-h-full items-start gap-3">
-										{groups.map((group) => {
-											const tasks = items.filter(
-												(task) => task.status.id === group.id,
-											);
-											return (
-												<section
-													key={group.id}
-													className="w-72 shrink-0 rounded-xl border border-border/60 bg-muted/25 p-2.5"
-												>
-													<div className="mb-3 flex items-center gap-2 px-1 py-1">
-														<span
-															className={cn(
-																"size-2 rounded-full",
-																jiraStatusTone(group.category).split(" ")[0],
-																"bg-current",
-															)}
-														/>
-														<h2 className="text-xs font-medium">
-															{group.name}
-														</h2>
-														<span className="ml-auto rounded-md bg-background px-1.5 text-[10px] tabular-nums text-muted-foreground">
-															{formatNumber(tasks.length)}
-														</span>
-													</div>
-													<div className="space-y-2">
-														{tasks.map((task) => (
-															<ForkJiraTaskCard
-																key={task.id}
-																task={task}
-																selected={search.forkTask === task.key}
-																board
-																onClick={() =>
-																	void update({ forkTask: task.key })
-																}
-															/>
-														))}
-													</div>
-												</section>
-											);
-										})}
-									</div>
+									<ForkJiraBoard
+										tasks={items}
+										selected={search.forkTask}
+										onSelect={(key) => void update({ forkTask: key })}
+									/>
 								) : (
 									<div className="space-y-1">
 										{items.map((task) => (

@@ -14,10 +14,7 @@ import { ForkScmProvider } from "./fork-scm";
 import { ForkConnectionStore } from "./fork-store";
 
 /** Bitbucket can filter on the viewer as a reviewer, not on review state. */
-const BITBUCKET_REVIEW_FILTERS = new Set([
-	"review-requested",
-	"team-review-requested",
-]);
+const BITBUCKET_REVIEW_FILTERS = new Set(["review-requested"]);
 const GITHUB_LOGIN = /^(?!.*--)[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?(?:\[bot\])?$/i;
 
 export const forkPullRequestSearchInput = z.object({
@@ -73,6 +70,7 @@ export async function forkSearchPullRequests(
 		connections: store.list(),
 		bitbucket: (id, repository, query) =>
 			scm.searchBitbucket(id, repository, query),
+		diffstat: (id, repository, number) => scm.diffstat(id, repository, number),
 		checks: (id, repository, commit) =>
 			scm.commitChecks(id, repository, commit),
 		github: (query) =>
@@ -88,6 +86,7 @@ export async function forkSearchProviderPullRequests(
 		connections: ForkConnection[];
 		bitbucket: ForkScmProvider["searchBitbucket"];
 		checks?: ForkScmProvider["commitChecks"];
+		diffstat?: ForkScmProvider["diffstat"];
 		github: (input: SearchInput) => Promise<PullRequestsPage>;
 	},
 ): Promise<ForkPullRequestsPage> {
@@ -104,7 +103,11 @@ export async function forkSearchProviderPullRequests(
 		.filter((p) => p.repository.provider === "bitbucket")
 		.map(async (p) => {
 			const repository = `${p.repository.owner}/${p.repository.name}`;
-			if (input.review && !BITBUCKET_REVIEW_FILTERS.has(input.review)) {
+			if (
+				input.review &&
+				input.review !== "none" &&
+				!BITBUCKET_REVIEW_FILTERS.has(input.review)
+			) {
 				result.warnings.push({ repository, kind: "review-filter" });
 				return;
 			}
@@ -123,7 +126,9 @@ export async function forkSearchProviderPullRequests(
 			try {
 				const data = await providers.bitbucket(connectionId, p.repository, {
 					...input,
-					...(input.review ? { reviewer: account.identity?.id ?? "" } : {}),
+					...(input.review && input.review !== "none"
+						? { reviewer: account.identity?.id ?? "" }
+						: {}),
 				});
 				const checks = await Promise.all(
 					data.items.map((pr) =>
@@ -134,6 +139,21 @@ export async function forkSearchProviderPullRequests(
 							: null,
 					),
 				);
+				const stats: ({ additions: number; deletions: number } | null)[] = [];
+				for (let start = 0; start < data.items.length; start += 5) {
+					stats.push(
+						...(await Promise.all(
+							data.items
+								.slice(start, start + 5)
+								.map(
+									(pr) =>
+										providers
+											.diffstat?.(connectionId, p.repository, pr.number)
+											.catch(() => null) ?? null,
+								),
+						)),
+					);
+				}
 				result.pullRequests.push(
 					...data.items.map((pr: ForkPullRequest, index) => ({
 						projectId: p.projectId,
@@ -146,8 +166,8 @@ export async function forkSearchProviderPullRequests(
 						updatedAt: pr.updatedAt,
 						checks: checks[index]?.checks ?? [],
 						checksStatus: checks[index]?.status ?? ("none" as const),
-						additions: null,
-						deletions: null,
+						additions: stats[index]?.additions ?? null,
+						deletions: stats[index]?.deletions ?? null,
 						headRefName: pr.sourceBranch,
 						provider: "bitbucket" as const,
 						repository: pr.repository,

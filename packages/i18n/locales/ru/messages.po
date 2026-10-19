@@ -6140,6 +6140,9 @@ msgstr "Опишите задачу для агента…"
 msgid "Describe the work to your agent"
 msgstr "Опишите задачу своему агенту"
 
+msgid "Describe what the agent should do"
+msgstr "Опишите, что должен сделать агент"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Опишите, что нужно. Superset создаст изолированную рабочую область и чистую ветку под задачу."
 
@@ -9214,6 +9217,9 @@ msgstr "Задача решена"
 msgid "Issue title"
 msgstr "Название задачи"
 
+msgid "Issue type"
+msgstr "Тип задачи"
+
 msgid "Issue unresolved"
 msgstr "Задача снова открыта"
 
@@ -9270,6 +9276,9 @@ msgstr "Иван Иванов"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Автоматизации Jira"
 
 msgid "Jira issues"
 msgstr "Задачи Jira"
@@ -10502,6 +10511,9 @@ msgstr "большинство разработчиков"
 
 msgid "Most of software history"
 msgstr "Почти вся история софта"
+
+msgid "Move"
+msgstr "Переместить"
 
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
@@ -12559,6 +12571,9 @@ msgstr "Родительская папка"
 msgid "Parent directory on {hostName}"
 msgstr "Родительская папка на {hostName}"
 
+msgid "Parent issue"
+msgstr "Родительская задача"
+
 msgid "Part of Superset Pro"
 msgstr "Входит в Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Запускайте автоматизации при изменени�
 
 msgid "Run commands and navigate the application."
 msgstr "Выполняйте команды и перемещайтесь по приложению."
+
+msgid "Run history"
+msgstr "История запусков"
 
 msgid "Run History"
 msgstr "История запусков"
@@ -17364,6 +17382,9 @@ msgstr "Будущий дом для переиспользуемых конфи
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Хост вернулся с версией {0}, а не {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Хост проверяет каждую минуту. При включении правила сохраняются текущие совпадения; каждая новая подходящая задача запускает один workspace и агента. Правила сохраняются на паузе."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Хост не восстановил работу в течение пятнадцати минут."

@@ -16,8 +16,12 @@ export const forkJiraProvider: CommandProvider = {
 				useForkJiraFilters.getState().remember({
 					forkScope: "mine",
 					forkStatus: "open",
+					forkJiraProject: undefined,
+					forkSprint: undefined,
+					forkIssueType: undefined,
+					forkParent: undefined,
 				});
-				ctx.navigate("/tasks");
+				ctx.navigate("/tasks?forkSource=jira&forkScope=mine&forkStatus=open");
 			},
 		},
 	],

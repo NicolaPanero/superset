@@ -43,3 +43,15 @@ test("the default Jira view lists unfinished issues and can narrow to the curren
 		"assignee = currentUser() AND statusCategory != 3 AND sprint in openSprints() ORDER BY updated DESC",
 	);
 });
+
+test("issue type and parent filters are quoted independently from JQL grammar", () => {
+	expect(
+		forkJiraQuery({
+			...filters,
+			issueType: 'Bug" OR assignee = attacker',
+			parent: "APP-7",
+		}),
+	).toContain(
+		'issuetype = "Bug\\" OR assignee = attacker" AND parent = "APP-7"',
+	);
+});

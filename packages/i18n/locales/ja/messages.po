@@ -6140,6 +6140,9 @@ msgstr "エージェントに任せるタスクを説明…"
 msgid "Describe the work to your agent"
 msgstr "エージェントに作業内容を説明する"
 
+msgid "Describe what the agent should do"
+msgstr "エージェントが行う作業を説明"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "必要なことを説明してください。Supersetがそのタスク用に独立したワークスペースときれいなブランチを作成します。"
 
@@ -9214,6 +9217,9 @@ msgstr "Issueを解決"
 msgid "Issue title"
 msgstr "Issueのタイトル"
 
+msgid "Issue type"
+msgstr "課題タイプ"
+
 msgid "Issue unresolved"
 msgstr "Issueを未解決に"
 
@@ -9270,6 +9276,9 @@ msgstr "山田太郎"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira 自動化"
 
 msgid "Jira issues"
 msgstr "Jira 課題"
@@ -10502,6 +10511,9 @@ msgstr "大半の開発者"
 
 msgid "Most of software history"
 msgstr "ソフトウェアの歴史のほとんど"
+
+msgid "Move"
+msgstr "移動"
 
 msgid "Move {count} to Group"
 msgstr "{count}件をグループへ移動"
@@ -12559,6 +12571,9 @@ msgstr "親ディレクトリ"
 msgid "Parent directory on {hostName}"
 msgstr "{hostName}上の親ディレクトリ"
 
+msgid "Parent issue"
+msgstr "親課題"
+
 msgid "Part of Superset Pro"
 msgstr "Superset Proに含まれます"
 
@@ -14574,6 +14589,9 @@ msgstr "Sentryのissueが変化したときにオートメーションを実行�
 
 msgid "Run commands and navigate the application."
 msgstr "コマンドを実行し、アプリ内を移動します。"
+
+msgid "Run history"
+msgstr "実行履歴"
 
 msgid "Run History"
 msgstr "実行履歴"
@@ -17364,6 +17382,9 @@ msgstr "再利用可能なSupersetエージェント設定、プロンプト、�
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "ホストは{targetVersion}ではなく{0}で復帰しました。"
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "ホストは毎分確認します。ルールを有効にすると既存の一致を記録し、新しく一致した課題ごとにワークスペースとエージェントを1つ起動します。ルールは一時停止状態で保存されます。"
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "ホストが15分以内に復帰しませんでした。"

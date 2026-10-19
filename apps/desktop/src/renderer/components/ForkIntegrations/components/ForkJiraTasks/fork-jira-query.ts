@@ -19,6 +19,8 @@ export function forkJiraQuery({
 	jql,
 	projectKeys = [],
 	sprint,
+	issueType,
+	parent,
 }: {
 	search: string;
 	scope: JiraScope;
@@ -27,6 +29,8 @@ export function forkJiraQuery({
 	jql: string;
 	projectKeys?: string[];
 	sprint?: "current";
+	issueType?: string;
+	parent?: string;
 }) {
 	if (jql.trim()) return jql.trim();
 	const terms: string[] = [];
@@ -37,6 +41,9 @@ export function forkJiraQuery({
 	else if (status !== "all")
 		terms.push(`statusCategory = ${STATUS_CATEGORY_ID[status]}`);
 	if (sprint === "current") terms.push("sprint in openSprints()");
+	if (issueType?.trim())
+		terms.push(`issuetype = ${JSON.stringify(issueType.trim())}`);
+	if (parent?.trim()) terms.push(`parent = ${JSON.stringify(parent.trim())}`);
 	const text = search.trim();
 	const keyProject = /^([A-Za-z][A-Za-z0-9_]*)-\d+$/.exec(text)?.[1];
 	// Jira rejects a key whose project does not exist, so "utf-8" stays text.
@@ -69,5 +76,7 @@ export interface ForkJiraTaskFilters {
 	forkSprint?: "current";
 	forkJiraProject?: string;
 	forkJql?: string;
+	forkIssueType?: string;
+	forkParent?: string;
 	search?: string;
 }

@@ -6140,6 +6140,9 @@ msgstr "에이전트에게 맡길 작업을 설명하세요…"
 msgid "Describe the work to your agent"
 msgstr "에이전트에게 작업을 설명하세요"
 
+msgid "Describe what the agent should do"
+msgstr "에이전트가 할 작업을 설명하세요"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "필요한 것을 설명하세요. Superset이 그 작업을 위한 격리된 워크스페이스와 깨끗한 브랜치를 만듭니다."
 
@@ -9214,6 +9217,9 @@ msgstr "이슈 해결됨"
 msgid "Issue title"
 msgstr "이슈 제목"
 
+msgid "Issue type"
+msgstr "이슈 유형"
+
 msgid "Issue unresolved"
 msgstr "이슈 미해결"
 
@@ -9270,6 +9276,9 @@ msgstr "홍길동"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira 자동화"
 
 msgid "Jira issues"
 msgstr "Jira 이슈"
@@ -10502,6 +10511,9 @@ msgstr "대부분의 개발자"
 
 msgid "Most of software history"
 msgstr "소프트웨어 역사의 대부분"
+
+msgid "Move"
+msgstr "이동"
 
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
@@ -12559,6 +12571,9 @@ msgstr "상위 디렉터리"
 msgid "Parent directory on {hostName}"
 msgstr "{hostName}의 상위 디렉터리"
 
+msgid "Parent issue"
+msgstr "상위 이슈"
+
 msgid "Part of Superset Pro"
 msgstr "Superset Pro에 포함"
 
@@ -14574,6 +14589,9 @@ msgstr "Sentry 이슈가 바뀌면 자동화를 실행합니다."
 
 msgid "Run commands and navigate the application."
 msgstr "명령을 실행하고 앱을 탐색합니다."
+
+msgid "Run history"
+msgstr "실행 기록"
 
 msgid "Run History"
 msgstr "실행 기록"
@@ -17364,6 +17382,9 @@ msgstr "재사용 가능한 Superset 에이전트 설정, 프롬프트, 셋업 �
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "호스트가 {targetVersion}이(가) 아닌 {0}(으)로 돌아왔습니다."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "호스트는 매분 확인합니다. 규칙을 활성화하면 기존 일치 항목을 기록하고 새로 일치하는 이슈마다 워크스페이스와 에이전트를 하나씩 시작합니다. 규칙은 일시 중지 상태로 저장됩니다."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "호스트가 15분 이내에 다시 연결되지 않았습니다."

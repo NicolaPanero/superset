@@ -40,9 +40,10 @@ GitHub and Bitbucket share the existing PR list, project filters and split view.
 Provider icons identify each repository. Discovery reads the live Git remote;
 stale GitHub metadata does not send a Bitbucket repository to GitHub search.
 An unavailable account leaves the other repositories visible with a connection
-notice. GitHub review filters apply only to GitHub repositories, with a notice
-when Bitbucket repositories are excluded by that filter.
-Bitbucket supports reviews, comments, diff, checks, merge, decline/reopen,
+notice. The review-requested filter includes Bitbucket reviewers. Other GitHub review
+filters keep a notice when Bitbucket cannot represent their semantics.
+Bitbucket supports approvals, change requests, threaded comments, inline diff
+comments (including removed lines), checks, merge, decline,
 PR creation and workspace checkout. Project bindings select the account for
 HTTPS Git operations within that provider, including separate checkouts of the
 same repository. Existing SSH keys continue to control SSH access.
@@ -58,7 +59,10 @@ transitions and comments. Tasks can create a workspace or link an existing
 one; PR creation from that workspace includes the linked issue URLs.
 Creating an issue opens Jira's native form, so project-specific required
 fields remain available. Editing a title does not rewrite rich descriptions.
-Descriptions edited in the plain text field are saved as text ADF paragraphs.
+Descriptions and comments use Markdown converted to and from ADF. Headings,
+lists, links, emphasis, code blocks, tables and quotes retain their structure.
+Jira-only nodes such as mentions become readable text; attachment nodes and
+custom rich nodes are not reconstructed by the Markdown editor.
 
 Use provider API tokens with the permissions needed for the enabled actions.
 Read access does not grant merge, write or delete access. API errors remain
@@ -67,6 +71,56 @@ Jira and Bitbucket credentials are configured separately, even when they
 belong to the same Atlassian account. Token setup:
 [Jira API tokens](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/),
 [Bitbucket API tokens](https://support.atlassian.com/bitbucket-cloud/docs/api-tokens/).
+
+## Workspace and review workflow
+
+**Start in workspace** opens the normal workspace screen with the Jira issue
+linked. Choose the project, base and agent there. The agent receives the title,
+URL and description; the issue key names the branch and is added to PR titles.
+Bug/Defect issues use `bugfix/`; the project's configured branch prefix still
+applies. After creation the issue is linked and moved to an input-free working
+status if one is available. Opening a PR tries an input-free review transition.
+Workflows that require fields remain available through the issue's transition
+form. Linked workspaces can be opened or unlinked from the issue detail.
+
+Jira issues can also be linked from New workspace or mentioned in chat with `@`.
+The command palette's **My Jira issues** opens the unfinished assigned issues.
+Project, status, type, parent/epic and current-sprint filters are remembered.
+Sprint field IDs are discovered per site. The board supports drag-and-drop and
+an equivalent **Move** menu; only Jira's available transitions are offered.
+Required transition fields open a form, and a failed move leaves the card in
+its original status.
+
+Bitbucket's PR detail shows reviewers, approvals, change requests, threads and
+inline comments using the app's diff renderer. **Fix findings** selects an agent,
+prepares or reuses a checkout and sends unresolved review comments plus failed
+checks to it. The prompt treats provider text as external data and leaves
+changes for review. **Open in workspace** reuses a linked workspace in the
+selected project when its branch still matches. PR rows include pipeline
+status and additions/deletions; workspace sidebar links refresh in background.
+The endpoints follow [Bitbucket's pull request API](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/)
+and [Jira's transition API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/).
+
+## Local Jira automations
+
+Open **Automations** in the Jira Tasks view. A rule contains a JQL query, target
+project, agent and instructions. Rules are local to this host and organization;
+they use the existing workspace and agent launch paths, with the configured
+agent's account. They do not use the hosted automation service.
+
+Rules are saved paused. After enabling, the first successful poll records
+existing matches without launching them. The host checks once a minute while
+running. Each later matching issue starts one workspace and agent per rule,
+with `automation` and `jira` tags and the issue context in the prompt. Up to five
+new launches per rule are handled in one poll. Queries must match at most 1000
+issues; narrow a query that exceeds this limit. Offline reads launch nothing.
+
+Run history retains the workspace and any launch error. A durable claim prevents
+automatic duplicate attempts after a failure or interrupted host. Check the
+workspace and start an agent manually after fixing a launch problem. Pausing
+prevents future launches; deleting a rule deletes its history and leaves its
+workspaces intact. The host must be running for polling; events that enter and
+leave the query entirely between polls cannot be observed.
 
 ## OAuth broker protocol, version 1
 
@@ -163,6 +217,13 @@ No provider endpoint is built into the fork.
 New host APIs are additive: `forkConnections`, `forkScm`, `forkTasks`.
 The renderer probes `forkConnections.list` and leaves legacy GitHub flows
 available on older hosts. No released upstream procedure changes its shape.
+
+Version 4 adds local Jira automations, review repair and board transition
+destinations. These controls are gated by `forkConnections.list.version` and
+leave older host APIs available. New-workspace Jira linking falls back to the
+existing `link` procedure on older fork hosts. The existing procedure shapes
+remain compatible; transition destinations and comment sides are optional
+additions. The fork owns its SQLite tables and their initialization.
 
 Version 3 adds a guarded availability query. Provider outages are tracked on the
 host, separately from account credentials. After a failed Bitbucket or Jira

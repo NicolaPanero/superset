@@ -14,6 +14,8 @@ export type ForkJiraFilters = Pick<
 	| "forkStatus"
 	| "forkJiraProject"
 	| "forkSprint"
+	| "forkIssueType"
+	| "forkParent"
 >;
 
 const KEYS = [
@@ -23,6 +25,8 @@ const KEYS = [
 	"forkStatus",
 	"forkJiraProject",
 	"forkSprint",
+	"forkIssueType",
+	"forkParent",
 ] as const;
 
 export function pickForkJiraFilters(

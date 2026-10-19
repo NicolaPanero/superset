@@ -37,16 +37,23 @@ export function ForkPullRequestDiff({
 	threads: ForkReviewThread[];
 	busy: boolean;
 	canComment: boolean;
-	onComment: (path: string, line: number, body: string) => Promise<unknown>;
+	onComment: (
+		path: string,
+		line: number,
+		body: string,
+		side: "old" | "new",
+	) => Promise<unknown>;
 	onReply: (commentId: string, body: string) => Promise<unknown>;
 	onResolve: (commentId: string, resolved: boolean) => void;
 }) {
 	const { t } = useLingui();
 	const theme = useResolvedTheme();
 	const files = useMemo(() => forkSplitDiff(diff), [diff]);
-	const [draft, setDraft] = useState<{ path: string; line: number } | null>(
-		null,
-	);
+	const [draft, setDraft] = useState<{
+		path: string;
+		line: number;
+		side: "old" | "new";
+	} | null>(null);
 	const [body, setBody] = useState("");
 	const style = getDiffViewerStyle(theme, { fontSize: 12 }) as CSSProperties;
 	if (!files.length)
@@ -64,14 +71,20 @@ export function ForkPullRequestDiff({
 							(thread) => thread.root.path === file.path && thread.root.line,
 						)
 						.map((thread) => ({
-							side: "additions" as const,
+							side:
+								thread.root.side === "old"
+									? ("deletions" as const)
+									: ("additions" as const),
 							lineNumber: thread.root.line ?? 0,
 							metadata: { thread },
 						})),
 					...(draft?.path === file.path
 						? [
 								{
-									side: "additions" as const,
+									side:
+										draft.side === "old"
+											? ("deletions" as const)
+											: ("additions" as const),
 									lineNumber: draft.line,
 									metadata: { thread: null },
 								},
@@ -120,11 +133,17 @@ export function ForkPullRequestDiff({
 												disabled={!body.trim() || busy || !draft}
 												onClick={() => {
 													if (!draft) return;
-													void onComment(draft.path, draft.line, body).then(
+													void onComment(
+														draft.path,
+														draft.line,
+														body,
+														draft.side,
+													).then(
 														() => {
 															setBody("");
 															setDraft(null);
 														},
+														() => undefined,
 													);
 												}}
 											>
@@ -150,10 +169,11 @@ export function ForkPullRequestDiff({
 												className="flex size-4 items-center justify-center rounded bg-primary text-primary-foreground"
 												onClick={() => {
 													const line = hovered();
-													if (line?.side === "additions")
+													if (line)
 														setDraft({
 															path: file.path,
 															line: line.lineNumber,
+															side: line.side === "deletions" ? "old" : "new",
 														});
 												}}
 											>

@@ -24,3 +24,12 @@ test("Jira branch names preserve the issue key and remove unsafe title character
 		"APP-12-fix-a-issue-one",
 	);
 });
+
+test("bug branches carry the issue key under bugfix while normal issues use the project prefix", () => {
+	expect(forkTaskBranch("APP-12", "Fix login", "Bug")).toBe(
+		"bugfix/APP-12-fix-login",
+	);
+	expect(forkTaskBranch("APP-13", "Add login", "Story")).toBe(
+		"APP-13-add-login",
+	);
+});

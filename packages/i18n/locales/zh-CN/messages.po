@@ -6140,6 +6140,9 @@ msgstr "描述交给智能体的任务…"
 msgid "Describe the work to your agent"
 msgstr "向智能体描述工作内容"
 
+msgid "Describe what the agent should do"
+msgstr "描述代理应执行的操作"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "描述你的需求。Superset会为该任务创建隔离的工作区和干净的分支。"
 
@@ -9214,6 +9217,9 @@ msgstr "问题已解决"
 msgid "Issue title"
 msgstr "议题标题"
 
+msgid "Issue type"
+msgstr "事务类型"
+
 msgid "Issue unresolved"
 msgstr "问题未解决"
 
@@ -9270,6 +9276,9 @@ msgstr "张三"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira 自动化"
 
 msgid "Jira issues"
 msgstr "Jira 事务"
@@ -10502,6 +10511,9 @@ msgstr "多数开发者"
 
 msgid "Most of software history"
 msgstr "软件史的大部分时间"
+
+msgid "Move"
+msgstr "移动"
 
 msgid "Move {count} to Group"
 msgstr "将{count}个移动到分组"
@@ -12559,6 +12571,9 @@ msgstr "父目录"
 msgid "Parent directory on {hostName}"
 msgstr "{hostName}上的父目录"
 
+msgid "Parent issue"
+msgstr "父事务"
+
 msgid "Part of Superset Pro"
 msgstr "包含在 Superset 专业版中"
 
@@ -14574,6 +14589,9 @@ msgstr "在Sentry问题发生变化时运行自动化。"
 
 msgid "Run commands and navigate the application."
 msgstr "运行命令并在应用中导航。"
+
+msgid "Run history"
+msgstr "运行历史"
 
 msgid "Run History"
 msgstr "运行历史"
@@ -17364,6 +17382,9 @@ msgstr "未来用于存放可复用的 Superset 智能体配置、提示词与�
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "主机以 {0} 而非 {targetVersion} 恢复。"
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "主机每分钟检查一次。启用规则时会记录现有匹配项；每个新匹配的事务会启动一个工作区和代理。规则保存时处于暂停状态。"
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "主机未在十五分钟内恢复。"

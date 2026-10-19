@@ -6140,6 +6140,9 @@ msgstr "Beschrijf de taak voor de agent…"
 msgid "Describe the work to your agent"
 msgstr "Beschrijf het werk aan je agent"
 
+msgid "Describe what the agent should do"
+msgstr "Beschrijf wat de agent moet doen"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Beschrijf wat je nodig hebt. Superset maakt een geïsoleerde werkruimte en een schone branch voor de taak."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue opgelost"
 msgid "Issue title"
 msgstr "Titel van issue"
 
+msgid "Issue type"
+msgstr "Issuetype"
+
 msgid "Issue unresolved"
 msgstr "Issue onopgelost"
 
@@ -9270,6 +9276,9 @@ msgstr "Jan Jansen"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira-automatiseringen"
 
 msgid "Jira issues"
 msgstr "Jira-issues"
@@ -10502,6 +10511,9 @@ msgstr "de meeste ontwikkelaars"
 
 msgid "Most of software history"
 msgstr "Het grootste deel van de softwaregeschiedenis"
+
+msgid "Move"
+msgstr "Verplaatsen"
 
 msgid "Move {count} to Group"
 msgstr "{count} naar groep verplaatsen"
@@ -12559,6 +12571,9 @@ msgstr "Bovenliggende map"
 msgid "Parent directory on {hostName}"
 msgstr "Bovenliggende map op {hostName}"
 
+msgid "Parent issue"
+msgstr "Bovenliggende issue"
+
 msgid "Part of Superset Pro"
 msgstr "Onderdeel van Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Voer automatiseringen uit wanneer Sentry-issues wijzigen."
 
 msgid "Run commands and navigate the application."
 msgstr "Opdrachten uitvoeren en door de app navigeren."
+
+msgid "Run history"
+msgstr "Uitvoeringsgeschiedenis"
 
 msgid "Run History"
 msgstr "Runs"
@@ -17364,6 +17382,9 @@ msgstr "De toekomstige plek voor herbruikbare Superset-agentconfigs, prompts en 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "De host kwam terug op {0}, niet op {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "De host controleert elke minuut. Bij het inschakelen van een regel worden bestaande overeenkomsten vastgelegd; elke nieuwe overeenkomende issue start één workspace en agent. Regels worden gepauzeerd opgeslagen."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "De host was na vijftien minuten nog niet terug."

@@ -6140,6 +6140,9 @@ msgstr "Opisz zadanie dla agenta…"
 msgid "Describe the work to your agent"
 msgstr "Opisz zadanie swojemu agentowi"
 
+msgid "Describe what the agent should do"
+msgstr "Opisz, co agent ma zrobić"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Opisz, czego potrzebujesz. Superset tworzy izolowany obszar roboczy i czystą gałąź dla zadania."
 
@@ -9214,6 +9217,9 @@ msgstr "Zgłoszenie rozwiązane"
 msgid "Issue title"
 msgstr "Tytuł zgłoszenia"
 
+msgid "Issue type"
+msgstr "Typ zgłoszenia"
+
 msgid "Issue unresolved"
 msgstr "Zgłoszenie nierozwiązane"
 
@@ -9270,6 +9276,9 @@ msgstr "Jan Kowalski"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Automatyzacje Jira"
 
 msgid "Jira issues"
 msgstr "Zgłoszenia Jira"
@@ -10502,6 +10511,9 @@ msgstr "większość programistów"
 
 msgid "Most of software history"
 msgstr "Większość historii oprogramowania"
+
+msgid "Move"
+msgstr "Przenieś"
 
 msgid "Move {count} to Group"
 msgstr "Przenieś {count} do grupy"
@@ -12559,6 +12571,9 @@ msgstr "Katalog nadrzędny"
 msgid "Parent directory on {hostName}"
 msgstr "Katalog nadrzędny na {hostName}"
 
+msgid "Parent issue"
+msgstr "Zgłoszenie nadrzędne"
+
 msgid "Part of Superset Pro"
 msgstr "Część Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Uruchamiaj automatyzacje przy zmianach zgłoszeń w Sentry."
 
 msgid "Run commands and navigate the application."
 msgstr "Uruchamiaj polecenia i nawiguj po aplikacji."
+
+msgid "Run history"
+msgstr "Historia uruchomień"
 
 msgid "Run History"
 msgstr "Historia uruchomień"
@@ -17364,6 +17382,9 @@ msgstr "Przyszłe miejsce dla wielokrotnie używanych konfiguracji agentów Supe
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Host wrócił w wersji {0}, a nie {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host sprawdza co minutę. Włączenie reguły zapisuje istniejące dopasowania; każde nowe pasujące zgłoszenie uruchamia jeden workspace i agenta. Reguły są zapisywane jako wstrzymane."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Host nie wrócił do działania w ciągu piętnastu minut."

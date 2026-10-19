@@ -87,12 +87,15 @@ export interface ForkPage<T> {
 	nextCursor: string | null;
 }
 const part = (s: string) => encodeURIComponent(s);
+const diffstatCache = new Map<
+	string,
+	{ at: number; value: { additions: number; deletions: number } }
+>();
 const commitChecksCache = new Map<
 	string,
 	{
 		value: Awaited<ReturnType<ForkScmProvider["commitChecks"]>>;
 		at: number;
-		final: boolean;
 	}
 >();
 function repoPath(r: ForkRepositoryRef) {
@@ -484,7 +487,11 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				...(c.deleted ? { deleted: true } : {}),
 				...(c.resolution ? { resolved: true } : {}),
 				...(c.inline
-					? { path: c.inline.path, line: c.inline.to ?? c.inline.from }
+					? {
+							path: c.inline.path,
+							line: c.inline.to ?? c.inline.from,
+							side: c.inline.to != null ? ("new" as const) : ("old" as const),
+						}
 					: {}),
 			})),
 			nextCursor: nextPath(d.next, "https://api.bitbucket.org/2.0", prefix),
@@ -578,10 +585,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			return [];
 		}
 	}
-	/**
-	 * Build status of a commit for the pull request list. Finished results never
-	 * change, so they stay cached; running ones are read again after a minute.
-	 */
+
 	async commitChecks(
 		id: string,
 		r: ForkRepositoryRef,
@@ -594,10 +598,9 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			url: string | null;
 		}[];
 	}> {
-		const key = `${forkRepositoryKey(r)}:${commit}`;
+		const key = `${id}:${forkRepositoryKey(r)}:${commit}`;
 		const cached = commitChecksCache.get(key);
-		if (cached && (cached.final || Date.now() - cached.at < 60_000))
-			return cached.value;
+		if (cached && Date.now() - cached.at < 60_000) return cached.value;
 		const d = await this.api.request<{
 			values: { key: string; name?: string; state: string; url?: string }[];
 		}>(id, `${repoPath(r)}/commit/${part(commit)}/statuses?pagelen=100`);
@@ -626,8 +629,40 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 		commitChecksCache.set(key, {
 			value,
 			at: Date.now(),
-			final: status === "success" || status === "failure",
 		});
+		return value;
+	}
+	async diffstat(id: string, r: ForkRepositoryRef, number: number) {
+		this.assert(id, r);
+		const key = `${id}:${forkRepositoryKey(r)}:${number}`;
+		const cached = diffstatCache.get(key);
+		if (cached && Date.now() - cached.at < 60_000) return cached.value;
+		const prefix = `${repoPath(r)}/pullrequests/${number}/diffstat`;
+		let cursor: string | null = `${prefix}?pagelen=100`;
+		let additions = 0,
+			deletions = 0;
+		for (let page = 0; cursor && page < 50; page++) {
+			const data: {
+				values: { lines_added?: number; lines_removed?: number }[];
+				next?: string;
+			} = await this.api.request(id, cursor);
+			for (const file of data.values) {
+				additions += file.lines_added ?? 0;
+				deletions += file.lines_removed ?? 0;
+			}
+			cursor = nextPath(data.next, "https://api.bitbucket.org/2.0", prefix);
+		}
+		if (cursor)
+			throw new TRPCError({
+				code: "BAD_REQUEST",
+				message: "Pull request has too many changed files to summarize",
+			});
+		const value = { additions, deletions };
+		if (diffstatCache.size >= 500) {
+			const oldest = diffstatCache.keys().next().value;
+			if (oldest) diffstatCache.delete(oldest);
+		}
+		diffstatCache.set(key, { value, at: Date.now() });
 		return value;
 	}
 	async action(
@@ -649,6 +684,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			| "edit",
 		data: {
 			commentId?: string;
+			side?: "old" | "new";
 			body?: string;
 			title?: string;
 			method?: string;
@@ -703,7 +739,12 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			return this.api.request(id, `${path}/comments`, "POST", {
 				content: { raw: data.body },
 				...(data.path && data.line
-					? { inline: { path: data.path, to: data.line } }
+					? {
+							inline: {
+								path: data.path,
+								[data.side === "old" ? "from" : "to"]: data.line,
+							},
+						}
 					: {}),
 			});
 		}

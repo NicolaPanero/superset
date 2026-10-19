@@ -17,11 +17,27 @@ interface JiraIssue {
 		labels?: string[];
 		issuetype?: { name: string; iconUrl?: string; subtask?: boolean };
 		parent?: { key: string; fields?: { summary?: string } };
-		[SPRINT_FIELD]?: { name: string; state: string }[] | null;
+		[field: string]: unknown;
 	};
 }
 /** The sprint field Jira Cloud creates; sites without boards just omit it. */
 const SPRINT_FIELD = "customfield_10020";
+const sprintFields = new Map<
+	string,
+	{ at: number; id: Promise<string | null> }
+>();
+function readSprint(value: unknown): string | null {
+	if (!Array.isArray(value)) return null;
+	const sprints = value.filter(
+		(entry): entry is { name: string; state: string } =>
+			!!entry && typeof entry === "object" && typeof entry.name === "string",
+	);
+	return (
+		sprints.find((entry) => entry.state === "active")?.name ??
+		sprints.at(-1)?.name ??
+		null
+	);
+}
 const TASK_FIELDS = [
 	"summary",
 	"status",
@@ -30,7 +46,6 @@ const TASK_FIELDS = [
 	"labels",
 	"issuetype",
 	"parent",
-	SPRINT_FIELD,
 ] as const;
 
 export class ForkJiraProvider implements ForkTaskProvider {
@@ -71,11 +86,33 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			parent: f.parent
 				? { key: f.parent.key, title: f.parent.fields?.summary ?? "" }
 				: null,
-			sprint:
-				(f[SPRINT_FIELD] ?? []).find((s) => s.state === "active")?.name ??
-				f[SPRINT_FIELD]?.at(-1)?.name ??
-				null,
+			sprint: readSprint(f[SPRINT_FIELD]),
 		};
+	}
+	async sprintField(id: string): Promise<string | null> {
+		const key = `${this.api.connection(id).site}:${id}`;
+		const cached = sprintFields.get(key);
+		if (cached && Date.now() - cached.at < 3600_000) return cached.id;
+		const field = this.api
+			.request<{ id: string; schema?: { custom?: string } }[]>(
+				id,
+				"/rest/api/3/field",
+			)
+			.then((fields) =>
+				Array.isArray(fields)
+					? (fields.find(
+							(f) =>
+								f.schema?.custom === "com.pyxis.greenhopper.jira:gh-sprint",
+						)?.id ?? null)
+					: null,
+			)
+			.catch(() => null);
+		if (sprintFields.size >= 100) {
+			const oldest = sprintFields.keys().next().value;
+			if (oldest) sprintFields.delete(oldest);
+		}
+		sprintFields.set(key, { at: Date.now(), id: field });
+		return field;
 	}
 	async list(
 		id: string,
@@ -83,30 +120,44 @@ export class ForkJiraProvider implements ForkTaskProvider {
 		cursor?: string,
 	): Promise<ForkPage<ForkTask>> {
 		this.assert(id);
+		const sprintField = await this.sprintField(id);
 		const d = await this.api.request<{
 			issues: JiraIssue[];
 			nextPageToken?: string;
 			isLast?: boolean;
 		}>(id, "/rest/api/3/search/jql", "POST", {
 			jql: jql.trim() || "assignee = currentUser() ORDER BY updated DESC",
-			fields: [...TASK_FIELDS],
+			fields: [...TASK_FIELDS, ...(sprintField ? [sprintField] : [])],
 			maxResults: 50,
 			...(cursor ? { nextPageToken: cursor } : {}),
 		});
 		return {
-			items: d.issues.map((t) => this.task(id, t)),
+			items: d.issues.map((t) =>
+				this.task(id, {
+					...t,
+					fields: {
+						...t.fields,
+						[SPRINT_FIELD]: sprintField ? t.fields[sprintField] : undefined,
+					},
+				}),
+			),
 			nextCursor: d.isLast ? null : (d.nextPageToken ?? null),
 		};
 	}
 	async get(id: string, key: string) {
 		this.assert(id);
-		return this.task(
+		const sprintField = await this.sprintField(id);
+		const issue = await this.api.request<JiraIssue>(
 			id,
-			await this.api.request<JiraIssue>(
-				id,
-				`/rest/api/3/issue/${encodeURIComponent(key)}?fields=description,${TASK_FIELDS.join(",")}`,
-			),
+			`/rest/api/3/issue/${encodeURIComponent(key)}?fields=description,${[...TASK_FIELDS, ...(sprintField ? [sprintField] : [])].join(",")}`,
 		);
+		return this.task(id, {
+			...issue,
+			fields: {
+				...issue.fields,
+				[SPRINT_FIELD]: sprintField ? issue.fields[sprintField] : undefined,
+			},
+		});
 	}
 	async projects(id: string) {
 		this.assert(id);
@@ -127,6 +178,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			transitions: {
 				id: string;
 				name: string;
+				to?: { id: string; name: string; statusCategory?: { key: string } };
 				fields?: Record<
 					string,
 					{
@@ -144,6 +196,13 @@ export class ForkJiraProvider implements ForkTaskProvider {
 		return d.transitions.map((t) => ({
 			id: t.id,
 			name: t.name,
+			to: t.to
+				? {
+						id: t.to.id,
+						name: t.to.name,
+						category: t.to.statusCategory?.key ?? "undefined",
+					}
+				: null,
 			fields: Object.entries(t.fields ?? {}).map(([id, f]) => ({ id, ...f })),
 		}));
 	}

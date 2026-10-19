@@ -15,6 +15,8 @@ export type ForkTasksSearch = {
 	forkSprint?: "current";
 	forkJiraProject?: string;
 	forkJql?: string;
+	forkIssueType?: string;
+	forkParent?: string;
 };
 
 export function forkTasksSearch(
@@ -36,6 +38,8 @@ export function forkTasksSearch(
 		forkJiraProject: string(search.forkJiraProject),
 		forkSprint: oneOf(search.forkSprint, ["current"]),
 		forkJql: string(search.forkJql)?.slice(0, 4000),
+		forkIssueType: string(search.forkIssueType)?.slice(0, 200),
+		forkParent: string(search.forkParent)?.slice(0, 100),
 	};
 }
 

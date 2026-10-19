@@ -9,6 +9,38 @@ import {
 import type { VerifiedNativeAgent } from "../session-transfer/registry";
 import { projects, workspaces } from "./schema.ts";
 
+export const forkJiraAutomations = sqliteTable("fork_jira_automations", {
+	id: text().primaryKey(),
+	scope: text().notNull(),
+	connectionId: text("connection_id").notNull(),
+	projectId: text("project_id")
+		.notNull()
+		.references(() => projects.id, { onDelete: "cascade" }),
+	name: text().notNull(),
+	jql: text().notNull(),
+	agent: text().notNull(),
+	prompt: text().notNull(),
+	enabled: integer({ mode: "boolean" }).notNull().default(false),
+	initialized: integer({ mode: "boolean" }).notNull().default(false),
+	checkedAt: integer("checked_at"),
+	error: text(),
+});
+
+export const forkJiraAutomationRuns = sqliteTable(
+	"fork_jira_automation_runs",
+	{
+		ruleId: text("rule_id")
+			.notNull()
+			.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+		taskId: text("task_id").notNull(),
+		taskKey: text("task_key").notNull(),
+		workspaceId: text("workspace_id"),
+		error: text(),
+		createdAt: integer("created_at").notNull(),
+	},
+	(table) => [primaryKey({ columns: [table.ruleId, table.taskId] })],
+);
+
 export const forkIntegrationSettings = sqliteTable(
 	"fork_integration_settings",
 	{

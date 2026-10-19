@@ -18,26 +18,41 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
+import { useForkConnections } from "../../hooks/useForkConnections";
 import { useForkJiraSearch } from "../../hooks/useForkJiraSearch";
 import { forkJiraLinkedIssue } from "../../utils/forkJiraWorkspace";
+import { required } from "../../utils/required";
 import { ForkProviderIcon } from "../ForkProviderIcon";
 
 /** Links a Jira issue to the new-workspace draft; hidden without a Jira account. */
 export function ForkJiraIssueLinkButton({ className }: { className?: string }) {
 	const { t } = useLingui();
 	const search = useForkJiraSearch();
+	const { client } = useForkConnections();
+	const [selectionError, setSelectionError] = useState<string | null>(null);
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState("");
 	const debounced = useDebouncedValue(query.trim(), 300);
 	const issues = useQuery({
-		queryKey: ["fork-integrations", "jira-link", debounced],
+		queryKey: ["fork-integrations", search?.scopeKey, "jira-link", debounced],
 		queryFn: () => search?.(debounced) ?? [],
 		enabled: open && !!search,
 		retry: false,
 		staleTime: 30_000,
 	});
 	if (!search) return null;
-	const select = (task: ForkTask) => {
+	const select = async (summary: ForkTask) => {
+		setSelectionError(null);
+		let task: ForkTask;
+		try {
+			task = await required(client).forkTasks.get.query({
+				connectionId: summary.connectionId,
+				key: summary.key,
+			});
+		} catch (error) {
+			setSelectionError(error instanceof Error ? error.message : String(error));
+			return;
+		}
 		const draft = useNewWorkspaceDraftStore.getState();
 		setOpen(false);
 		setQuery("");
@@ -46,7 +61,7 @@ export function ForkJiraIssueLinkButton({ className }: { className?: string }) {
 			linkedIssues: [...draft.linkedIssues, forkJiraLinkedIssue(task)],
 			...(!draft.branchNameEdited && !draft.branchName.trim()
 				? {
-						branchName: forkTaskBranch(task.key, task.title),
+						branchName: forkTaskBranch(task.key, task.title, task.type?.name),
 						branchNameEdited: true,
 						branchNameFromProvider: false,
 					}
@@ -86,6 +101,11 @@ export function ForkJiraIssueLinkButton({ className }: { className?: string }) {
 						onValueChange={setQuery}
 					/>
 					<CommandList className="max-h-[420px]">
+						{selectionError && (
+							<p role="alert" className="px-3 py-2 text-xs text-destructive">
+								{selectionError}
+							</p>
+						)}
 						<CommandEmpty>
 							{issues.isFetching
 								? t({ message: "Searching…" })
@@ -105,7 +125,7 @@ export function ForkJiraIssueLinkButton({ className }: { className?: string }) {
 									<CommandItem
 										key={task.id}
 										value={task.id}
-										onSelect={() => select(task)}
+										onSelect={() => void select(task)}
 										className="items-start gap-3 px-2.5 py-2"
 									>
 										{task.type?.iconUrl ? (

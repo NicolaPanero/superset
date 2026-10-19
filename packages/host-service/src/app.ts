@@ -12,6 +12,7 @@ import {
 	forkHostProviders,
 } from "./fork-integrations/fork-credentials";
 import { forkExecGh } from "./fork-integrations/fork-exec-gh";
+import { startForkJiraAutomations } from "./fork-integrations/fork-jira-automations";
 import { ForkConnectionStore } from "./fork-integrations/fork-store";
 
 /** One frame of a 1920x1200 display is ~9 MB; this is a stalled reader, not a burst. */
@@ -359,6 +360,11 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			}),
 	});
 
+	const stopForkJiraAutomations = startForkJiraAutomations({
+		...chatAgentContext,
+		isLocalCaller: true,
+	});
+
 	// Startup sweeps run in the background so they don't block server
 	// startup.
 	//
@@ -546,6 +552,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 
 	const ownsDb = options.db === undefined;
 	const dispose = async (): Promise<void> => {
+		await stopForkJiraAutomations();
 		if (projectPurgeTimer) clearInterval(projectPurgeTimer);
 		await disposeWorkspaceTitleJobs(db);
 		// Each step is best-effort and isolated: a throw in one cleanup must

@@ -16,6 +16,7 @@ import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkCommentThread } from "./components/ForkCommentThread";
+import { ForkFixFindings } from "./components/ForkFixFindings";
 import { ForkPullRequestDiff } from "./components/ForkPullRequestDiff";
 import { ForkPullRequestReviewers } from "./components/ForkPullRequestReviewers";
 import { forkReviewThreads } from "./utils/forkReviewThreads";
@@ -123,6 +124,7 @@ export function ForkPullRequestDetail({
 			action: PullRequestAction;
 			body?: string;
 			commentId?: string;
+			side?: "old" | "new";
 			path?: string;
 			line?: number;
 		}) =>
@@ -216,6 +218,7 @@ export function ForkPullRequestDetail({
 				{pr.sourceBranch} → {pr.targetBranch}
 			</p>
 			<ForkPullRequestReviewers reviewers={pr.reviewers ?? []} />
+			{bitbucket && <ForkFixFindings pr={pr} hostUrl={hostUrl} />}
 			{edit ? (
 				<div className="space-y-2">
 					<Input
@@ -392,8 +395,14 @@ export function ForkPullRequestDetail({
 						threads={threads}
 						busy={busy}
 						canComment={bitbucket}
-						onComment={(path, line, text) =>
-							action.mutateAsync({ action: "comment", body: text, path, line })
+						onComment={(path, line, text, side) =>
+							action.mutateAsync({
+								action: "comment",
+								body: text,
+								path,
+								line,
+								side,
+							})
 						}
 						onReply={reply}
 						onResolve={resolve}

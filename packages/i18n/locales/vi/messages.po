@@ -6140,6 +6140,9 @@ msgstr "Mô tả tác vụ cho agent…"
 msgid "Describe the work to your agent"
 msgstr "Mô tả công việc cho tác tử của bạn"
 
+msgid "Describe what the agent should do"
+msgstr "Mô tả việc agent cần làm"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Mô tả điều bạn cần. Superset tạo một workspace tách biệt và một nhánh sạch cho tác vụ đó."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue được giải quyết"
 msgid "Issue title"
 msgstr "Tiêu đề issue"
 
+msgid "Issue type"
+msgstr "Loại issue"
+
 msgid "Issue unresolved"
 msgstr "Issue chưa giải quyết"
 
@@ -9270,6 +9276,9 @@ msgstr "Nguyễn Văn A"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Tự động hóa Jira"
 
 msgid "Jira issues"
 msgstr "Issue Jira"
@@ -10502,6 +10511,9 @@ msgstr "phần lớn lập trình viên"
 
 msgid "Most of software history"
 msgstr "Gần như suốt lịch sử phần mềm"
+
+msgid "Move"
+msgstr "Di chuyển"
 
 msgid "Move {count} to Group"
 msgstr "Chuyển {count} vào nhóm"
@@ -12559,6 +12571,9 @@ msgstr "Thư mục cha"
 msgid "Parent directory on {hostName}"
 msgstr "Thư mục cha trên {hostName}"
 
+msgid "Parent issue"
+msgstr "Issue cha"
+
 msgid "Part of Superset Pro"
 msgstr "Thuộc Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Chạy tự động hóa khi issue Sentry thay đổi."
 
 msgid "Run commands and navigate the application."
 msgstr "Chạy lệnh và điều hướng trong ứng dụng."
+
+msgid "Run history"
+msgstr "Lịch sử chạy"
 
 msgid "Run History"
 msgstr "Lịch sử chạy"
@@ -17364,6 +17382,9 @@ msgstr "Nơi sẽ chứa các cấu hình agent, prompt và hướng dẫn thi�
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Máy chủ đã trở lại với {0}, không phải {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host kiểm tra mỗi phút. Bật quy tắc sẽ ghi nhận các kết quả khớp hiện có; mỗi issue mới khớp sẽ khởi chạy một workspace và agent. Quy tắc được lưu ở trạng thái tạm dừng."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Máy chủ không hoạt động trở lại trong vòng mười lăm phút."

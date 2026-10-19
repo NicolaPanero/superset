@@ -85,6 +85,7 @@ export interface ForkComment {
 	createdAt: string;
 	path?: string;
 	line?: number;
+	side?: "old" | "new";
 	parentId?: string;
 	resolved?: boolean;
 	deleted?: boolean;
@@ -161,7 +162,7 @@ export const FORK_PROVIDER_DEFINITIONS = {
 		capabilities: readonly string[];
 	}
 >;
-export const FORK_INTEGRATIONS_VERSION = 3;
+export const FORK_INTEGRATIONS_VERSION = 4;
 
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");
@@ -202,7 +203,11 @@ export function forkRepositoryKey(ref: ForkRepositoryRef): string {
 		ref.name.toLowerCase(),
 	].join(":");
 }
-export function forkTaskBranch(key: string, title: string): string {
+export function forkTaskBranch(
+	key: string,
+	title: string,
+	issueType?: string,
+): string {
 	const slug = title
 		.normalize("NFKD")
 		.replace(/[\u0300-\u036f]/g, "")
@@ -211,5 +216,5 @@ export function forkTaskBranch(key: string, title: string): string {
 		.replace(/^-|-$/g, "")
 		.slice(0, 40)
 		.replace(/-$/, "");
-	return `${key}-${slug || "task"}`;
+	return `${/^(bug|defect)$/i.test(issueType ?? "") ? "bugfix/" : ""}${key}-${slug || "task"}`;
 }

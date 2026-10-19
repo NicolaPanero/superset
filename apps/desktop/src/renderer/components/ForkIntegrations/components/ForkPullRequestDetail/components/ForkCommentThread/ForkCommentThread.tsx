@@ -83,7 +83,10 @@ export function ForkCommentThread({
 									size="sm"
 									disabled={!reply.trim() || busy}
 									onClick={() =>
-										void onReply(root.id, reply).then(() => setReply(""))
+										void onReply(root.id, reply).then(
+											() => setReply(""),
+											() => undefined,
+										)
 									}
 								>
 									<Trans>Reply</Trans>

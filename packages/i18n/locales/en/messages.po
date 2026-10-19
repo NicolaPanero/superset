@@ -6140,6 +6140,9 @@ msgstr "Describe the task for the agent…"
 msgid "Describe the work to your agent"
 msgstr "Describe the work to your agent"
 
+msgid "Describe what the agent should do"
+msgstr "Describe what the agent should do"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue resolved"
 msgid "Issue title"
 msgstr "Issue title"
 
+msgid "Issue type"
+msgstr "Issue type"
+
 msgid "Issue unresolved"
 msgstr "Issue unresolved"
 
@@ -9270,6 +9276,9 @@ msgstr "Jane Doe"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira automations"
 
 msgid "Jira issues"
 msgstr "Jira issues"
@@ -10502,6 +10511,9 @@ msgstr "most developers"
 
 msgid "Most of software history"
 msgstr "Most of software history"
+
+msgid "Move"
+msgstr "Move"
 
 msgid "Move {count} to Group"
 msgstr "Move {count} to Group"
@@ -12559,6 +12571,9 @@ msgstr "Parent directory"
 msgid "Parent directory on {hostName}"
 msgstr "Parent directory on {hostName}"
 
+msgid "Parent issue"
+msgstr "Parent issue"
+
 msgid "Part of Superset Pro"
 msgstr "Part of Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Run automations when Sentry issues change."
 
 msgid "Run commands and navigate the application."
 msgstr "Run commands and navigate the application."
+
+msgid "Run history"
+msgstr "Run history"
 
 msgid "Run History"
 msgstr "Run History"
@@ -17364,6 +17382,9 @@ msgstr "The future home for reusable Superset agent configs, prompts, and setup 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "The host came back on {0}, not {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "The host did not come back within fifteen minutes."

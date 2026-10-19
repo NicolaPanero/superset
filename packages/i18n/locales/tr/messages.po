@@ -6140,6 +6140,9 @@ msgstr "Ajan için görevi anlatın…"
 msgid "Describe the work to your agent"
 msgstr "Yapılacak işi ajanınıza açıklayın"
 
+msgid "Describe what the agent should do"
+msgstr "Ajanın ne yapması gerektiğini açıklayın"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Neye ihtiyacınız olduğunu anlatın. Superset, görev için yalıtılmış bir çalışma alanı ve temiz bir dal oluşturur."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue çözüldü"
 msgid "Issue title"
 msgstr "Issue başlığı"
 
+msgid "Issue type"
+msgstr "Kayıt türü"
+
 msgid "Issue unresolved"
 msgstr "Issue çözülmedi"
 
@@ -9270,6 +9276,9 @@ msgstr "Ayşe Yılmaz"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira otomasyonları"
 
 msgid "Jira issues"
 msgstr "Jira kayıtları"
@@ -10502,6 +10511,9 @@ msgstr "çoğu geliştirici"
 
 msgid "Most of software history"
 msgstr "Yazılım tarihinin çoğu"
+
+msgid "Move"
+msgstr "Taşı"
 
 msgid "Move {count} to Group"
 msgstr "{count} öğeyi gruba taşı"
@@ -12559,6 +12571,9 @@ msgstr "Üst dizin"
 msgid "Parent directory on {hostName}"
 msgstr "{hostName} üzerindeki üst dizin"
 
+msgid "Parent issue"
+msgstr "Üst kayıt"
+
 msgid "Part of Superset Pro"
 msgstr "Superset Pro'nun parçası"
 
@@ -14574,6 +14589,9 @@ msgstr "Sentry issue'ları değiştiğinde otomasyon çalıştırın."
 
 msgid "Run commands and navigate the application."
 msgstr "Komutları çalıştırın ve uygulamada gezinin."
+
+msgid "Run history"
+msgstr "Çalıştırma geçmişi"
 
 msgid "Run History"
 msgstr "Çalıştırma geçmişi"
@@ -17364,6 +17382,9 @@ msgstr "Yeniden kullanılabilir Superset ajan yapılandırmaları, istemleri ve 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Ana makine {targetVersion} yerine {0} ile geri döndü."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Ana makine her dakika kontrol eder. Bir kural etkinleştirildiğinde mevcut eşleşmeler kaydedilir; eşleşen her yeni kayıt bir workspace ve ajan başlatır. Kurallar duraklatılmış olarak kaydedilir."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Ana makine on beş dakika içinde geri gelmedi."

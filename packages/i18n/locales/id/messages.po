@@ -6140,6 +6140,9 @@ msgstr "Jelaskan tugas untuk agennya…"
 msgid "Describe the work to your agent"
 msgstr "Jelaskan pekerjaan kepada agen Anda"
 
+msgid "Describe what the agent should do"
+msgstr "Jelaskan apa yang harus dilakukan agen"
+
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Jelaskan apa yang Anda butuhkan. Superset membuat workspace terisolasi dan branch bersih untuk tugas itu."
 
@@ -9214,6 +9217,9 @@ msgstr "Issue diselesaikan"
 msgid "Issue title"
 msgstr "Judul issue"
 
+msgid "Issue type"
+msgstr "Jenis isu"
+
 msgid "Issue unresolved"
 msgstr "Issue belum selesai"
 
@@ -9270,6 +9276,9 @@ msgstr "Jane Doe"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Otomasi Jira"
 
 msgid "Jira issues"
 msgstr "Isu Jira"
@@ -10502,6 +10511,9 @@ msgstr "sebagian besar developer"
 
 msgid "Most of software history"
 msgstr "Sebagian besar sejarah perangkat lunak"
+
+msgid "Move"
+msgstr "Pindahkan"
 
 msgid "Move {count} to Group"
 msgstr "Pindahkan {count} ke Grup"
@@ -12559,6 +12571,9 @@ msgstr "Direktori induk"
 msgid "Parent directory on {hostName}"
 msgstr "Direktori induk di {hostName}"
 
+msgid "Parent issue"
+msgstr "Isu induk"
+
 msgid "Part of Superset Pro"
 msgstr "Bagian dari Superset Pro"
 
@@ -14574,6 +14589,9 @@ msgstr "Jalankan otomatisasi saat issue Sentry berubah."
 
 msgid "Run commands and navigate the application."
 msgstr "Jalankan perintah dan navigasi aplikasi."
+
+msgid "Run history"
+msgstr "Riwayat eksekusi"
 
 msgid "Run History"
 msgstr "Riwayat Run"
@@ -17364,6 +17382,9 @@ msgstr "Rumah masa depan untuk konfigurasi agen Superset, prompt, dan panduan pe
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Host kembali dengan {0}, bukan {targetVersion}."
+
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host memeriksa setiap menit. Mengaktifkan aturan mencatat kecocokan yang ada; setiap isu baru yang cocok memulai satu workspace dan agen. Aturan disimpan dalam keadaan dijeda."
 
 msgid "The host did not come back within fifteen minutes."
 msgstr "Host tidak kembali dalam lima belas menit."

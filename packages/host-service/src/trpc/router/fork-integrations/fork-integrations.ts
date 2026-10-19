@@ -1,4 +1,5 @@
 import { execFile } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { promisify } from "node:util";
 import {
 	FORK_INTEGRATIONS_VERSION,
@@ -7,7 +8,7 @@ import {
 	parseForkRemote,
 } from "@superset/shared/fork-integrations";
 import { TRPCError } from "@trpc/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import {
 	forkExternalTaskLinks,
@@ -36,6 +37,7 @@ import {
 	forkPullRequestFetchTarget,
 } from "../../../fork-integrations/fork-pr-checkout";
 import { forkScmProjects } from "../../../fork-integrations/fork-projects";
+import { forkReviewRepairPrompt } from "../../../fork-integrations/fork-review-prompt";
 import {
 	forkPullRequestSearchInput,
 	forkSearchPullRequests,
@@ -44,8 +46,10 @@ import { forkServices as services } from "../../../fork-integrations/fork-servic
 import { forkCreateWorkspacePullRequest } from "../../../fork-integrations/fork-workspace-pull-request";
 import { createGitFactory } from "../../../runtime/git";
 import { machineOnlyProcedure, queryProcedure, router } from "../../index";
+import { runAgentInWorkspace } from "../agents";
 import { createFromClone } from "../project/handlers";
 import { workspacesRouter } from "../workspaces/workspaces";
+import { forkJiraAutomationProcedures } from "./fork-jira-automations";
 
 const exec = promisify(execFile);
 const provider = z.enum(["github", "bitbucket", "jira"]);
@@ -476,13 +480,21 @@ export const forkScmRouter = router({
 				.select({
 					workspaceId: forkWorkspacePullRequests.workspaceId,
 					pullRequest: forkWorkspacePullRequests.pullRequest,
+					branch: workspaces.branch,
+					path: workspaces.worktreePath,
 				})
 				.from(forkWorkspacePullRequests)
 				.innerJoin(
 					workspaces,
 					eq(workspaces.id, forkWorkspacePullRequests.workspaceId),
 				)
-				.where(eq(forkWorkspacePullRequests.scope, ctx.organizationId))
+				.where(
+					and(
+						eq(forkWorkspacePullRequests.scope, ctx.organizationId),
+						eq(workspaces.projectId, input.projectId),
+						isNull(workspaces.archivedAt),
+					),
+				)
 				.all()
 				.find(
 					(row) =>
@@ -490,7 +502,27 @@ export const forkScmRouter = router({
 						forkRepositoryKey(row.pullRequest.repository) ===
 							forkRepositoryKey(input.repository),
 				);
-			if (existing) return { workspaceId: existing.workspaceId };
+			if (existing) {
+				const currentBranch = (
+					await (
+						await ctx.git(existing.path)
+					)
+						.revparse(["--abbrev-ref", "HEAD"])
+						.catch(() => "")
+				).trim();
+				const source = existing.pullRequest.sourceRepository;
+				const expected = forkPullRequestBranch(
+					existing.pullRequest,
+					!source ||
+						forkRepositoryKey(source) === forkRepositoryKey(input.repository),
+				);
+				if (
+					currentBranch === existing.branch &&
+					(currentBranch === existing.pullRequest.sourceBranch ||
+						currentBranch === expected)
+				)
+					return { workspaceId: existing.workspaceId };
+			}
 			const { scm } = services(ctx),
 				pr = await scm.get(input.connectionId, input.repository, input.number);
 			const git = await ctx.git(project.repoPath),
@@ -584,6 +616,48 @@ export const forkScmRouter = router({
 				})
 				.run();
 			return { workspaceId: result.workspace.id };
+		}),
+	fixFindings: local
+		.input(
+			target.extend({
+				projectId: z.string().uuid(),
+				agent: z.string().min(1).max(200),
+			}),
+		)
+		.mutation(async ({ ctx, input }): Promise<{ workspaceId: string }> => {
+			const { scm } = services(ctx);
+			const pr = await scm.get(
+				input.connectionId,
+				input.repository,
+				input.number,
+			);
+			const comments =
+				[] as import("@superset/shared/fork-integrations").ForkComment[];
+			let cursor: string | undefined;
+			do {
+				const page = await scm.comments(
+					input.connectionId,
+					input.repository,
+					input.number,
+					cursor,
+				);
+				comments.push(...page.items);
+				cursor = page.nextCursor ?? undefined;
+			} while (cursor && comments.length < 1000);
+			const checks = await scm.checks(
+				input.connectionId,
+				input.repository,
+				input.number,
+			);
+			const result = await forkScmRouter
+				.createCaller(ctx)
+				.checkout({ ...input, workspaceId: randomUUID() });
+			await runAgentInWorkspace(ctx, {
+				workspaceId: result.workspaceId,
+				agent: input.agent,
+				prompt: forkReviewRepairPrompt(pr, comments, checks),
+			});
+			return result;
 		}),
 	defaultBranch: read
 		.input(z.object({ connectionId, repository }))
@@ -688,6 +762,7 @@ export const forkScmRouter = router({
 					"unresolve",
 					"edit",
 				]),
+				side: z.enum(["old", "new"]).optional(),
 				commentId: z
 					.string()
 					.regex(/^\d{1,20}$/)
@@ -724,6 +799,7 @@ export const forkScmRouter = router({
 		}),
 });
 export const forkTasksRouter = router({
+	...forkJiraAutomationProcedures,
 	createWorkspace: local
 		.input(
 			taskTarget.extend({
@@ -738,7 +814,7 @@ export const forkTasksRouter = router({
 				projectId: input.projectId,
 				checkout: "worktree",
 				name: `${task.key} ${task.title}`,
-				branch: forkTaskBranch(task.key, task.title),
+				branch: forkTaskBranch(task.key, task.title, task.type?.name),
 			});
 			forkLinkTask(ctx, result.workspace.id, {
 				connectionId: input.connectionId,
@@ -852,7 +928,10 @@ export const forkTasksRouter = router({
 				url: task.url,
 			};
 			forkLinkTask(ctx, input.workspaceId, link);
-			return { task: link, branch: forkTaskBranch(task.key, task.title) };
+			return {
+				task: link,
+				branch: forkTaskBranch(task.key, task.title, task.type?.name),
+			};
 		}),
 	/** Workspaces linked to an issue, newest first. */
 	workspaces: read
@@ -889,8 +968,25 @@ export const forkTasksRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			const { workspaceId, ...link } = input;
-			forkLinkTask(ctx, workspaceId, link);
+			const { workspaceId } = input;
+			const workspace = ctx.db
+				.select({ id: workspaces.id })
+				.from(workspaces)
+				.where(eq(workspaces.id, workspaceId))
+				.get();
+			if (!workspace)
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Workspace not found",
+				});
+			const task = await services(ctx).jira.get(input.connectionId, input.key);
+			forkLinkTask(ctx, workspaceId, {
+				connectionId: input.connectionId,
+				taskId: task.id,
+				key: task.key,
+				title: task.title,
+				url: task.url,
+			});
 			await forkAdvanceLinkedTasks(ctx, workspaceId, "progress");
 			return { ok: true };
 		}),

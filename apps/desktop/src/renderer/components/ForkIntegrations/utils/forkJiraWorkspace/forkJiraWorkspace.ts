@@ -5,34 +5,32 @@ import { useNewWorkspacePromptContextStore } from "renderer/stores/new-workspace
 
 const JIRA_SOURCE = "jira" as const;
 
-/** The Jira connection behind each issue linked in a new-workspace draft. */
-const pendingIssues = new Map<
-	string,
-	{ connectionId: string; taskId: string }
->();
-
-const bodyKey = (key: string) => `jira-issue:${key}`;
+const bodyKey = (issue: LinkedIssue) =>
+	`jira-issue:${issue.forkJira?.connectionId ?? ""}:${issue.slug}`;
 
 /** Links the issue to a new-workspace draft and hands its text to the agent prompt. */
 export function forkJiraLinkedIssue(task: ForkTask): LinkedIssue {
-	pendingIssues.set(task.key, {
-		connectionId: task.connectionId,
-		taskId: task.id,
-	});
-	useNewWorkspacePromptContextStore.setState((state) => {
-		const entries = new Map(state.entries);
-		entries.set(bodyKey(task.key), {
-			state: "ready",
-			body: { text: task.description },
-		});
-		return { entries };
-	});
-	return {
+	const issue: LinkedIssue = {
 		slug: task.key,
 		title: task.title,
 		source: JIRA_SOURCE,
 		url: task.url,
+		forkJira: { connectionId: task.connectionId, taskId: task.id },
 	};
+	useNewWorkspacePromptContextStore.setState((state) => {
+		const entries = new Map(state.entries);
+		entries.set(bodyKey(issue), {
+			state: "ready",
+			body: { text: task.description },
+		});
+		const jiraKeys = [...entries.keys()].filter((key) =>
+			key.startsWith("jira-issue:"),
+		);
+		for (const key of jiraKeys.slice(0, Math.max(0, jiraKeys.length - 100)))
+			entries.delete(key);
+		return { entries };
+	});
+	return issue;
 }
 
 export function forkJiraPromptSections(
@@ -46,7 +44,7 @@ export function forkJiraPromptSections(
 				`## Linked Jira issue — ${issue.slug}: ${issue.title}`,
 				...(issue.url ? [issue.url] : []),
 			].join("\n");
-			const body = readBody(bodyKey(issue.slug));
+			const body = readBody(bodyKey(issue));
 			return body ? `${header}\n\n${body}` : header;
 		});
 }
@@ -57,13 +55,26 @@ export async function forkStartJiraWork(
 	workspaceId: string,
 	issues: LinkedIssue[],
 ): Promise<void> {
+	const version = await client.forkConnections.list
+		.query()
+		.then((result) => result.version)
+		.catch(() => 0);
 	await Promise.all(
 		issues
 			.filter((issue) => issue.source === JIRA_SOURCE && issue.url)
 			.map((issue) => {
-				const pending = pendingIssues.get(issue.slug);
+				const pending = issue.forkJira;
 				if (!pending) return undefined;
-				pendingIssues.delete(issue.slug);
+				if (version < 4)
+					return client.forkTasks.link
+						.mutate({
+							workspaceId,
+							connectionId: pending.connectionId,
+							key: issue.slug,
+						})
+						.catch((error) =>
+							console.warn("[fork-jira] could not link", issue.slug, error),
+						);
 				return client.forkTasks.startWork
 					.mutate({
 						workspaceId,
