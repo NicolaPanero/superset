@@ -60,8 +60,10 @@ function ambientCodexHome(): string {
 	const fromEnv = process.env.CODEX_HOME?.trim();
 	const supersetInjected = process.env.SUPERSET_DEFAULT_CODEX_HOME?.trim();
 	const preservedAmbient = process.env.SUPERSET_AMBIENT_CODEX_HOME?.trim();
+	const pinned = process.env.SUPERSET_PINNED_ACCOUNT_ENV === "CODEX_HOME";
 	if (
 		fromEnv &&
+		!pinned &&
 		(!supersetInjected ||
 			canonicalAccountHome(fromEnv) !== canonicalAccountHome(supersetInjected))
 	) {

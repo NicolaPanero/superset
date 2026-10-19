@@ -10,12 +10,13 @@ import {
 } from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { LuFolderPlus, LuFolderTree, LuGitBranch } from "react-icons/lu";
+import { LuFolderPlus, LuFolderTree } from "react-icons/lu";
 import { addProjectFolders } from "renderer/lib/addProjectFolders";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getBaseName } from "renderer/lib/pathBasename/pathBasename";
 import { useWorkspaceFolders } from "../../../../hooks/useWorkspaceFolders";
 import { useSelectedRepoStore } from "../../../../state/selectedRepoStore";
+import { RepoOptionLabel } from "./components/RepoOptionLabel";
 
 const MAIN_REPO_VALUE = "__main__";
 const ADD_FOLDER_VALUE = "__add__";
@@ -78,7 +79,7 @@ export function RepoSelector({ workspaceId }: RepoSelectorProps) {
 			>
 				<SelectTrigger
 					size="sm"
-					className="h-7 w-full gap-1.5 text-xs"
+					className="h-7 w-full gap-1.5 text-xs *:data-[slot=select-value]:min-w-0 *:data-[slot=select-value]:flex-1"
 					aria-label={t({ message: "Repository" })}
 				>
 					<LuFolderTree className="size-3.5 shrink-0 text-muted-foreground" />
@@ -86,19 +87,19 @@ export function RepoSelector({ workspaceId }: RepoSelectorProps) {
 				</SelectTrigger>
 				<SelectContent>
 					<SelectItem value={MAIN_REPO_VALUE}>
-						<span className="flex items-center gap-1.5">
-							{mainLabel}
-							<LuGitBranch className="size-3 text-muted-foreground" />
-						</span>
+						<RepoOptionLabel
+							name={mainLabel}
+							isGitRepo
+							branch={workspace.data?.branch ?? null}
+						/>
 					</SelectItem>
 					{folders.map((folder) => (
 						<SelectItem key={folder.id} value={folder.workspaceKey}>
-							<span className="flex items-center gap-1.5">
-								{folder.name}
-								{folder.isGitRepo ? (
-									<LuGitBranch className="size-3 text-muted-foreground" />
-								) : null}
-							</span>
+							<RepoOptionLabel
+								name={folder.name}
+								isGitRepo={folder.isGitRepo}
+								branch={folder.branch ?? null}
+							/>
 						</SelectItem>
 					))}
 					<SelectSeparator />

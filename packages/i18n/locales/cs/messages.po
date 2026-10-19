@@ -174,6 +174,10 @@ msgstr "{0, plural, one {# štítek} few {# štítky} many {# štítku} other {#
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# přihlášení} few {# přihlášení} many {# přihlášení} other {# přihlášení}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, one {Smazána # stará příloha.} few {Smazány # staré přílohy.} many {Smazáno # staré přílohy.} other {Smazáno # starých příloh.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# prošlo} few {# prošlo} many {# prošlo} other {# prošlo}}"
@@ -968,6 +972,9 @@ msgstr "{name} je vestavěný a nelze jej nahradit"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} není přidán"
 
+msgid "{name} unreachable"
+msgstr "Služba {name} je nedostupná"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Zadejte alespoň jednu osobu, nebo zvolte {choice}.} sender {Zadejte alespoň jednoho odesílatele, nebo zvolte {choice}.} other {Zadejte alespoň jednu položku, nebo zvolte {choice}.}}"
 
@@ -1163,6 +1170,21 @@ msgstr "@superset"
 
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
+
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Lepší přepínání agentů**: vyberte model a úsilí ještě před přepnutím, včetně Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira a Bitbucket v aplikaci**: úkoly, nástěnky, pull requesty, revize, buildy a automatizace."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kvóty pod kontrolou**: využití podle účtu, podporované bezplatné resety a automatické pokračování."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Bezpečnější práce**: samostatné účty pro každý repozitář a lepší ochrana větví a souběžných požadavků."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Uklizené workspacy**: vložené obrázky a soubory se po 30 dnech smažou. Změníte to ve Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1785,6 +1807,9 @@ msgstr "Přidat skript"
 msgid "Add Script"
 msgstr "Přidat skript"
 
+msgid "Add server"
+msgstr "Přidat server"
+
 msgid "Add setup commands, one per line..."
 msgstr "Přidejte setup příkazy, jeden na řádek..."
 
@@ -2141,6 +2166,9 @@ msgstr "Všechny relace přežily aktualizaci."
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Všechny relace byly zavřeny a běží čerstvý démon."
 
+msgid "All statuses"
+msgstr "Všechny stavy"
+
 msgid "All tasks"
 msgstr "Všechny úkoly"
 
@@ -2221,6 +2249,9 @@ msgstr "Smazat i lokální větve"
 
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Při mazání pracovního prostoru s worktree smazat i lokální git větev"
+
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Odhlásit se také z GitHub CLI na tomto počítači"
 
 msgid "Also viewing this page"
 msgstr "Tuto stránku si také prohlížejí"
@@ -2408,6 +2439,9 @@ msgstr "API klíče"
 msgid "API keys are not validated with a paid request."
 msgstr "Klíče API se neověřují placenými požadavky."
 
+msgid "API token"
+msgstr "Token API"
+
 msgid "API-equivalent"
 msgstr "ekvivalent API"
 
@@ -2434,9 +2468,6 @@ msgstr "Logo Apple"
 
 msgid "Application menu"
 msgstr "Nabídka aplikace"
-
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Platí okamžitě pro tento chat, i když už vyčerpal kvótu. Není nutné měnit agenta ani účet."
 
 msgid "Applies to"
 msgstr "Platí pro"
@@ -2856,6 +2887,9 @@ msgstr "Čeká na revizi od vás nebo vašeho týmu"
 
 msgid "Back"
 msgstr "Zpět"
+
+msgid "Back to {label}"
+msgstr "Zpět na {label}"
 
 msgid "Back to About"
 msgstr "Zpět na O nás"
@@ -3429,9 +3463,6 @@ msgstr "Chyba certifikátu"
 msgid "Chain of Thought"
 msgstr "Řetězec úvah"
 
-msgid "Change agent or account"
-msgstr "Změnit agenta nebo účet"
-
 msgid "Change assignee"
 msgstr "Změnit řešitele"
 
@@ -3543,6 +3574,9 @@ msgstr "Chat přesunut na {0}"
 msgid "Chat session not found"
 msgstr "Relace chatu nenalezena"
 
+msgid "Chat session ready"
+msgstr "Chatovací relace připravena"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Podpora chatu se ověřuje při otevření chatu."
 
@@ -3581,6 +3615,9 @@ msgstr "Zkontrolovat přihlášení"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Před použitím resetu zkontrolujte e-mail účtu v prohlížeči."
+
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Zkontrolujte připojení pro {repositories} v nastavení forku."
 
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Před uložením zkontrolujte vykreslený prompt a výstup spuštění"
@@ -3702,6 +3739,9 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
 
+msgid "Choose project later"
+msgstr "Vybrat projekt později"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
 
@@ -3731,6 +3771,9 @@ msgstr "Ukliď zastaralé TODO…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Čistší a hustší postranní panel"
+
+msgid "Clear"
+msgstr "Vymazat"
 
 msgid "Clear all"
 msgstr "Vymazat vše"
@@ -4193,6 +4236,9 @@ msgstr "Komentář nenalezen"
 msgid "Comment not posted"
 msgstr "Komentář se nepodařilo odeslat"
 
+msgid "Comment on this line"
+msgstr "Okomentovat tento řádek"
+
 msgid "Comment on this page"
 msgstr "Okomentovat tuto stránku"
 
@@ -4269,6 +4315,9 @@ msgstr "Porovnáno s výchozím stylem"
 msgid "complete"
 msgstr "dokončeno"
 
+msgid "Complete authorization in your browser."
+msgstr "Dokončete autorizaci v prohlížeči."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Dokončete postup oficiálního CLI a zavřete toto okno pro kontrolu výsledku."
 
@@ -4306,11 +4355,17 @@ msgstr "Nastavte chování git větví a worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Nastavte, jak se úkoly synchronizují mezi Superset a Linearem."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Nastavte integrace v nastavení forku."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Nastavte chování terminálu a znovupoužitelné terminálové skripty"
 
 msgid "Configure the in-app browser"
 msgstr "Nastavte vestavěný prohlížeč"
+
+msgid "Configure the OAuth service below."
+msgstr "Níže nastavte službu OAuth."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejich spuštění sestavuje."
@@ -4318,11 +4373,14 @@ msgstr "Nastavte, kteří agenti se zobrazují ve spouštěčích a jak se jejic
 msgid "Configure workspace run command"
 msgstr "Nastavit spouštěcí příkaz pracovního prostoru"
 
-msgid "Configured account"
-msgstr "Nakonfigurovaný účet"
-
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
+
+msgid "Confirm delete"
+msgstr "Potvrdit odstranění"
+
+msgid "Confirm merge"
+msgstr "Potvrdit sloučení"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4352,6 +4410,9 @@ msgstr "Připojte agenty ke svým aplikacím"
 msgid "Connect an account"
 msgstr "Připojit účet"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Připojte účet v nastavení forku"
+
 msgid "Connect another account"
 msgstr "Připojit další účet"
 
@@ -4370,8 +4431,14 @@ msgstr "Připojte externí služby a synchronizujte data se svou organizací."
 msgid "Connect external services to sync data."
 msgstr "Připojte externí služby a synchronizujte data."
 
+msgid "Connect GitHub"
+msgstr "Připojit GitHub"
+
 msgid "Connect Google"
 msgstr "Připojit Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Připojit Jira a Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Připojit Linear"
@@ -4429,6 +4496,9 @@ msgstr "Připojte svůj tenant Microsoft Teams. Administrátor tenantu se přihl
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Připojte svůj Notion workspace a nasdílejte stránky a datové zdroje, které mají automatizace sledovat."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Připojte repozitáře a úkoly na tomto počítači."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Připojte svůj Slack workspace a spravujte úkoly přímo z konverzací."
@@ -4604,9 +4674,6 @@ msgstr "Pokračovat s jiným agentem"
 msgid "Continue with another agent…"
 msgstr "Pokračovat s jiným agentem…"
 
-msgid "Continue with context"
-msgstr "Pokračovat s kontextem"
-
 msgid "Continue with GitHub"
 msgstr "Pokračovat přes GitHub"
 
@@ -4615,6 +4682,12 @@ msgstr "Pokračovat přes Google"
 
 msgid "Continued from {source}"
 msgstr "Pokračování z {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Pokračuje hned na účtu s největší kvótou."
+
+msgid "Continues on this account when quota returns."
+msgstr "Pokračuje na tomto účtu, až se kvóta obnoví."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Pokračování v relaci agenta vyžaduje připnutý pracovní prostor"
@@ -4943,6 +5016,15 @@ msgstr "Pluginy se nepodařilo načíst. Zkontrolujte připojení a zkuste to zn
 
 msgid "Could not load presets from the host"
 msgstr "Nepodařilo se načíst přednastavení z hosta"
+
+msgid "Could not load pull request."
+msgstr "Pull request se nepodařilo načíst."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Nepodařilo se načíst pull requesty pro {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Úkoly se nepodařilo načíst."
 
 msgid "Could not load this diff"
 msgstr "Tento rozdíl se nepodařilo načíst"
@@ -5358,6 +5440,9 @@ msgstr "Vytvořit"
 msgid "Create \"{newLabel}\""
 msgstr "Vytvořit „{newLabel}“"
 
+msgid "Create & start"
+msgstr "Vytvořit a spustit"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Vytvoří nativní fork u poskytovatele se stejným kontextem konverzace. Původní relace zůstane beze změny."
 
@@ -5628,8 +5713,8 @@ msgstr "Ctrl+Shift+kliknutí"
 msgid "Current"
 msgstr "Aktuální"
 
-msgid "Current chat"
-msgstr "Aktuální chat"
+msgid "current checkout"
+msgstr "aktuální checkout"
 
 msgid "Current level"
 msgstr "Aktuální úroveň"
@@ -5639,6 +5724,9 @@ msgstr "Aktuální tempo"
 
 msgid "Current plan"
 msgstr "Aktuální tarif"
+
+msgid "Current sprint"
+msgstr "Aktuální sprint"
 
 msgid "Current tab"
 msgstr "Aktuální karta"
@@ -5762,6 +5850,9 @@ msgstr "Den"
 msgid "Day One"
 msgstr "První den"
 
+msgid "days"
+msgstr "dní"
+
 msgid "days running three agents at once"
 msgstr "dní se třemi agenty najednou"
 
@@ -5840,6 +5931,7 @@ msgstr "Smazat „{title}“?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Smazat {0}?"
 
@@ -5892,11 +5984,17 @@ msgstr "Smazat obrázek"
 msgid "Delete local branch on workspace removal"
 msgstr "Smazat lokální větev při odstranění pracovního prostoru"
 
+msgid "Delete old attachments"
+msgstr "Mazat staré přílohy"
+
 msgid "Delete organization"
 msgstr "Smazat organizaci"
 
 msgid "Delete page"
 msgstr "Smazat stránku"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Po tomto počtu dní smazat z workspaců vložené obrázky a soubory. Nastavte 0, chcete-li je ponechat."
 
 msgid "Delete permanently"
 msgstr "Trvale smazat"
@@ -5915,6 +6013,9 @@ msgstr "Smazat vybrané pracovní prostory"
 
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Smazat relaci „{workspaceName}“?"
+
+msgid "Delete task"
+msgstr "Odstranit úkol"
 
 msgid "Delete team"
 msgstr "Smazat tým"
@@ -5980,6 +6081,9 @@ msgstr "{name} smazán"
 
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Smazal(a) {deletedBy} {deletedWhen} · {deviceNames}"
+
+msgid "Deleted comment"
+msgstr "Smazaný komentář"
 
 msgid "deleted or unavailable — pick another"
 msgstr "smazán nebo nedostupný — vyberte jiný"
@@ -6063,6 +6167,9 @@ msgstr "Popište úkol pro agenta…"
 
 msgid "Describe the work to your agent"
 msgstr "Popište práci svému agentovi"
+
+msgid "Describe what the agent should do"
+msgstr "Popište, co má agent udělat"
 
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Popište, co potřebujete. Superset pro úkol vytvoří izolovaný pracovní prostor a čistou větev."
@@ -6274,6 +6381,9 @@ msgstr "Odpojit Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Odpojit Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Odpojit tento účet od Superset?"
 
 msgid "Disconnected"
 msgstr "Odpojeno"
@@ -6551,6 +6661,9 @@ msgstr "Každá relace naváže tam, kde skončila."
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Každá plocha má vlastní typografii. Změny se okamžitě projeví v živých náhledech."
 
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Každý úkol dostane vlastní pracovní prostor a větev. Agent se spustí v chatu."
+
 msgid "Early 2024"
 msgstr "Zač. 2024"
 
@@ -6774,6 +6887,9 @@ msgstr "Prostředí uloženo"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Příprava prostředí, nestabilní testy a rozvody přihlašovacích údajů — nudné příčiny selhání, které v roce 2025 zabíjely běhy bez dozoru — se většinou vyřeší inženýrsky, ne modelem."
+
+msgid "Environment variables"
+msgstr "Proměnné prostředí"
 
 msgid "Environment Variables"
 msgstr "Proměnné prostředí"
@@ -7507,6 +7623,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Rychlý"
 
+msgid "Fast-forward"
+msgstr "Rychlý posun vpřed"
+
 msgid "Fatal"
 msgstr "Fatální"
 
@@ -7966,6 +8085,9 @@ msgstr "Celý changelog →"
 msgid "Full Disk Access"
 msgstr "Plný přístup k disku"
 
+msgid "Full history"
+msgstr "Celá historie"
+
 msgid "Full name"
 msgstr "Celé jméno"
 
@@ -8170,6 +8292,9 @@ msgstr "Přejít do Superset"
 msgid "Go to workspace"
 msgstr "Přejít do pracovního prostoru"
 
+msgid "Google closed Gemini CLI for personal accounts, including Google AI Pro and student plans. Open an Antigravity chat and sign in with the same Google account. A paid Gemini API key still works."
+msgstr "Google ukončil Gemini CLI pro osobní účty, včetně tarifů Google AI Pro a studentských. Otevřete chat Antigravity a přihlaste se stejným účtem Google. Placený klíč API Gemini stále funguje."
+
 msgid "Google did not grant lasting access. Remove Superset from your Google account's third-party access and try again."
 msgstr "Google neudělil trvalý přístup. Odeberte Superset z přístupu třetích stran ve svém účtu Google a zkuste to znovu."
 
@@ -8262,6 +8387,9 @@ msgstr "Obsahuje neodeslané commity"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Přímá srovnání"
+
+msgid "Headers"
+msgstr "Hlavičky"
 
 msgid "Heading 1"
 msgstr "Nadpis 1"
@@ -9117,6 +9245,9 @@ msgstr "Issue vyřešena"
 msgid "Issue title"
 msgstr "Název issue"
 
+msgid "Issue type"
+msgstr "Typ úkolu"
+
 msgid "Issue unresolved"
 msgstr "Issue nevyřešena"
 
@@ -9173,6 +9304,12 @@ msgstr "Jan Novák"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Automatizace Jira"
+
+msgid "Jira issues"
+msgstr "Úkoly Jira"
 
 msgid "Join"
 msgstr "Připojit se"
@@ -9620,6 +9757,9 @@ msgstr "Odkaz zkopírován"
 msgid "Link GitHub issue"
 msgstr "Propojit GitHub issue"
 
+msgid "Link Jira issue"
+msgstr "Propojit úkol Jira"
+
 msgid "Link Linear issue"
 msgstr "Propojit Linear issue"
 
@@ -9982,9 +10122,6 @@ msgstr "Spravujte úkoly z konverzací ve Slacku."
 msgid "Manage Terminal Scripts"
 msgstr "Spravovat terminálové skripty"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Spravujte automatické pokračování tohoto chatu. Změny se ukládají okamžitě."
-
 msgid "Manage your account settings"
 msgstr "Spravujte nastavení svého účtu"
 
@@ -10075,6 +10212,9 @@ msgstr "MCP server"
 msgid "MCP Server Commands"
 msgstr "Příkazy MCP serveru"
 
+msgid "MCP servers"
+msgstr "Servery MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Měřeno za posledních 30 dní"
 
@@ -10158,6 +10298,9 @@ msgstr "Sloučení selhalo: {0}"
 
 msgid "Merge into center"
 msgstr "Sloučit do středu"
+
+msgid "Merge method"
+msgstr "Způsob sloučení"
 
 msgid "Merge pull request"
 msgstr "Sloučit pull request"
@@ -10397,11 +10540,14 @@ msgstr "většina vývojářů"
 msgid "Most of software history"
 msgstr "Většina historie softwaru"
 
+msgid "Move"
+msgstr "Přesunout"
+
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Přesune tento chat na jiný účet. Konverzace zůstane zde a pokračuje s kvótou daného účtu."
+msgid "Move to another account"
+msgstr "Přesunout na jiný účet"
 
 msgid "Move to Center"
 msgstr "Přesunout do středu"
@@ -10437,6 +10583,9 @@ msgstr "Ztlumeno"
 
 msgid "My Agent"
 msgstr "Můj agent"
+
+msgid "My Jira issues"
+msgstr "Moje úkoly Jira"
 
 msgid "My Tasks"
 msgstr "Moje úkoly"
@@ -11013,6 +11162,9 @@ msgstr "Žádné shody"
 msgid "No matching files"
 msgstr "Žádné odpovídající soubory"
 
+msgid "No matching issues"
+msgstr "Žádné odpovídající úkoly"
+
 msgid "No matching models"
 msgstr "Žádné odpovídající modely"
 
@@ -11021,6 +11173,9 @@ msgstr "Žádní odpovídající členové organizace."
 
 msgid "No matching pages"
 msgstr "Žádné odpovídající stránky"
+
+msgid "No MCP servers yet."
+msgstr "Zatím žádné servery MCP."
 
 msgid "No members yet"
 msgstr "Zatím žádní členové"
@@ -11377,6 +11532,9 @@ msgstr "Nepřipojeno · cloudové pracovní prostory pushují jako GitHub App va
 msgid "Not demoed here"
 msgstr "Tady se neukazuje"
 
+msgid "Not done"
+msgstr "Nedokončené"
+
 msgid "Not found"
 msgstr "Nenalezeno"
 
@@ -11499,6 +11657,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "Ve výchozím stavu OAuth, pro CI API klíče"
 
+msgid "OAuth service"
+msgstr "Služba OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "z {0}"
@@ -11538,9 +11699,6 @@ msgstr "Offline / local-first režim"
 msgid "Older"
 msgstr "Starší"
 
-msgid "On"
-msgstr "Zapnuto"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "na {offScopeHostName} — tady nepoběží"
 
@@ -11574,6 +11732,9 @@ msgstr "Na vašem počítači. Repozitáře, worktree, výstup terminálu i rela
 msgid "Onboarding redesign"
 msgstr "Redesign onboardingu"
 
+msgid "One argument per line"
+msgstr "Jeden argument na řádek"
+
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Jeden chat, který naplánuje úkol, rozešle paralelní agenty do worktree a výsledky zase složí dohromady."
 
@@ -11600,6 +11761,9 @@ msgstr "Mezi první stovkou v žebříčku"
 
 msgid "one of the selected repositories"
 msgstr "jeden z vybraných repozitářů"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Jedna služba může připojit Jira i Bitbucket."
 
 msgid "One step left"
 msgstr "Zbývá jeden krok"
@@ -11921,6 +12085,9 @@ msgstr "Otevřít v T3 Chat"
 msgid "Open in tab"
 msgstr "Otevřít na kartě"
 
+msgid "Open in workspace"
+msgstr "Otevřít v pracovním prostoru"
+
 msgid "Open in…"
 msgstr "Otevřít v…"
 
@@ -12085,6 +12252,9 @@ msgstr "Otevře panel Změny na nové kartě, nebo zaměří existující"
 msgid "Open the global command palette"
 msgstr "Otevřít globální paletu příkazů"
 
+msgid "Open the guide"
+msgstr "Otevřít průvodce"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Otevřít dialog nového agenta v aktuálním workspacu"
 
@@ -12168,6 +12338,9 @@ msgstr "Volitelné přepínače připojené za obsah promptu"
 
 msgid "Options"
 msgstr "Možnosti"
+
+msgid "Options and connections that only exist in this fork."
+msgstr "Možnosti a připojení, které existují jen v tomto forku."
 
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Nebo požádejte svého kódovacího agenta, ať nainstaluje Superset CLI."
@@ -12429,6 +12602,9 @@ msgstr "Nadřazený adresář"
 msgid "Parent directory on {hostName}"
 msgstr "Nadřazený adresář na {hostName}"
 
+msgid "Parent issue"
+msgstr "Nadřazený úkol"
+
 msgid "Part of Superset Pro"
 msgstr "Součást Superset Pro"
 
@@ -12513,6 +12689,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Nejvyšší tempo"
+
+msgid "Pending"
+msgstr "Čeká"
 
 msgid "Pending Invitations"
 msgstr "Čekající pozvánky"
@@ -13216,10 +13395,16 @@ msgstr "Fialová"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Odeslat a vytvořit PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push se nezdařil: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Před vytvořením pull requestu odešlete svou větev."
 
 msgid "Pushed"
 msgstr "Nový push"
@@ -13445,6 +13630,12 @@ msgstr "Rebase a sloučit"
 msgid "Rebase and merge"
 msgstr "Rebase a sloučit"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, rychlé převinutí"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, slučovací commit"
+
 msgid "Recent Activity"
 msgstr "Nedávná aktivita"
 
@@ -13653,6 +13844,9 @@ msgstr "Odebrat {0}"
 
 msgid "Remove {label}?"
 msgstr "Odebrat {label}?"
+
+msgid "Remove approval"
+msgstr "Zrušit schválení"
 
 msgid "Remove attachment"
 msgstr "Odebrat přílohu"
@@ -13882,6 +14076,9 @@ msgstr "Repozitáře"
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repozitáře dostupné přes instalaci GitHub App."
 
+msgid "Repositories and pull requests"
+msgstr "Repozitáře a pull requesty"
+
 msgid "Repositories refreshed"
 msgstr "Repozitáře obnoveny"
 
@@ -13905,6 +14102,9 @@ msgstr "Požádat o zkušební verzi"
 
 msgid "Request Body"
 msgstr "Tělo požadavku"
+
+msgid "Request changes"
+msgstr "Požádat o změny"
 
 msgid "requested changes"
 msgstr "požádal(a) o změny"
@@ -14023,6 +14223,9 @@ msgstr "Vyřešit vlákno"
 
 msgid "Resolved"
 msgstr "Vyřešeno"
+
+msgid "Resolved · show"
+msgstr "Vyřešeno · zobrazit"
 
 msgid "Resource consumption"
 msgstr "Spotřeba prostředků"
@@ -14246,6 +14449,9 @@ msgstr "Revize zamítnuta"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Než se rozhodnete pokračovat, projděte si každé selhání."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Filtry kontroly platí pro repozitáře GitHub."
+
 msgid "Review message"
 msgstr "Zpráva k revizi"
 
@@ -14414,6 +14620,9 @@ msgstr "Spouštějte automatizace při změnách issues v Sentry."
 
 msgid "Run commands and navigate the application."
 msgstr "Spouštějte příkazy a procházejte aplikaci."
+
+msgid "Run history"
+msgstr "Historie spuštění"
 
 msgid "Run History"
 msgstr "Historie běhů"
@@ -14769,6 +14978,9 @@ msgstr "Hledat v {frameTitle}…"
 msgid "Search issues..."
 msgstr "Hledat issues..."
 
+msgid "Search Jira…"
+msgstr "Hledat v Jira…"
+
 msgid "Search labels..."
 msgstr "Hledat štítky..."
 
@@ -15072,6 +15284,9 @@ msgstr "Vyberte týmy"
 msgid "Select terminal script directory"
 msgstr "Vyberte adresář terminálového skriptu"
 
+msgid "Select workspace"
+msgstr "Vybrat pracovní prostor"
+
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
 
@@ -15174,6 +15389,9 @@ msgstr "Oddělovač"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Dostupnost služby zveřejňujeme na <0>status.superset.sh</0> a dokumentaci k bezpečnosti a compliance na <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL služby"
+
 msgid "Session"
 msgstr "Relace"
 
@@ -15214,6 +15432,9 @@ msgstr "Relace"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Relace · top {0} podle nákladů"
+
+msgid "Set as default"
+msgstr "Nastavit jako výchozí"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15340,6 +15561,9 @@ msgstr "Sdíleno mezi relacemi používajícími toto přihlášení."
 
 msgid "Shared app components"
 msgstr "Sdílené komponenty aplikace"
+
+msgid "Shared by every agent and account on this computer."
+msgstr "Sdílené všemi agenty a účty na tomto počítači."
 
 msgid "Shared component library."
 msgstr "Sdílená knihovna komponent."
@@ -15676,6 +15900,9 @@ msgstr "Jedna karta + panely"
 msgid "Single-select"
 msgstr "Výběr jedné možnosti"
 
+msgid "Site URL"
+msgstr "URL webu"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetrie celého webu · {range}"
 
@@ -15861,6 +16088,9 @@ msgstr "Zdroj"
 msgid "Source Available"
 msgstr "Dostupný zdrojový kód"
 
+msgid "Source branch"
+msgstr "Zdrojová větev"
+
 msgid "Source path (not an import)"
 msgstr "Cesta ke zdroji (ne import)"
 
@@ -15954,11 +16184,17 @@ msgstr "Rozdělit s novým prohlížečem"
 msgid "Split with Sandbox Desktop"
 msgstr "Rozdělit s plochou sandboxu"
 
+msgid "Squash"
+msgstr "Sloučit commity"
+
 msgid "Squash & Merge"
 msgstr "Squash a sloučit"
 
 msgid "Squash and merge"
 msgstr "Squash a sloučit"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, jen rychlé převinutí"
 
 msgid "SS"
 msgstr "SS"
@@ -16075,6 +16311,9 @@ msgstr "Začněte prohlížet"
 msgid "Start building in two."
 msgstr "Začněte stavět ve dvou."
 
+msgid "Start chat"
+msgstr "Zahájit chat"
+
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Spouštějte kódovací agenty, sledujte je živě a kontrolujte diff z iPhonu nebo iPadu. K dispozici v App Storu; Android brzy."
 
@@ -16089,6 +16328,9 @@ msgstr "Začněte zdarma. Až vám to jako týmu přestane stačit, přejděte v
 
 msgid "Start from a template"
 msgstr "Začít ze šablony"
+
+msgid "Start in workspace"
+msgstr "Začít ve workspace"
 
 msgid "Start new session"
 msgstr "Spustit novou relaci"
@@ -16241,6 +16483,13 @@ msgstr "Zastavuje se agent v {what}"
 msgid "Stops the agent and sends this now"
 msgstr "Zastaví agenta a odešle toto hned"
 
+msgid "Storage"
+msgstr "Úložiště"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Uloženo v {0}"
+
 msgid "Strikethrough"
 msgstr "Přeškrtnuté"
 
@@ -16321,6 +16570,9 @@ msgstr "Shrň změny v tomto pracovním prostoru"
 
 msgid "Summary"
 msgstr "Souhrn"
+
+msgid "Summary only"
+msgstr "Jen shrnutí"
 
 msgid "sun 11:00"
 msgstr "ne 11:00"
@@ -16569,6 +16821,12 @@ msgstr "Vytrvalost"
 msgid "Sustain · active days in 30"
 msgstr "Pravidelnost · aktivní dny z 30"
 
+msgid "Switch"
+msgstr "Přepnout"
+
+msgid "Switch account"
+msgstr "Přepnout účet"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Vyměňte agenta. Workflow zůstane"
 
@@ -16586,6 +16844,9 @@ msgstr "Přepnout přihlášení"
 
 msgid "Switch sign-in…"
 msgstr "Přepnout přihlášení…"
+
+msgid "Switch to {summary}"
+msgstr "Přepnout na {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Přepnout na aktivní pracovní prostor"
@@ -16620,9 +16881,6 @@ msgstr "Přepnout na kartu 8"
 msgid "Switch to Tab 9"
 msgstr "Přepnout na kartu 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Po vyčerpání kvóty přepnout na doporučený účet"
-
 msgid "Switch to Workspace 1"
 msgstr "Přepnout na pracovní prostor 1"
 
@@ -16650,6 +16908,12 @@ msgstr "Přepnout na pracovní prostor 8"
 msgid "Switch to Workspace 9"
 msgstr "Přepnout na pracovní prostor 9"
 
+msgid "Switch, or wait"
+msgstr "Přepnout, nebo počkat"
+
+msgid "Switch…"
+msgstr "Přepnout…"
+
 msgid "Symbol, light"
 msgstr "Symbol, světlý"
 
@@ -16676,9 +16940,6 @@ msgstr "Synchronizuji..."
 
 msgid "System"
 msgstr "Systémový"
-
-msgid "System default"
-msgstr "Výchozí nastavení systému"
 
 msgid "System design"
 msgstr "Návrh systému"
@@ -16747,6 +17008,9 @@ msgstr "Cíl"
 msgid "Target agent"
 msgstr "Cílový agent"
 
+msgid "Target branch"
+msgstr "Cílová větev"
+
 msgid "Target date"
 msgstr "Cílové datum"
 
@@ -16771,6 +17035,9 @@ msgstr "Spuštění úkolu"
 msgid "Task layout"
 msgstr "Rozvržení úkolů"
 
+msgid "Task linked to workspace."
+msgstr "Úkol propojen s workspace."
+
 msgid "Task Management"
 msgstr "Správa úkolů"
 
@@ -16794,6 +17061,9 @@ msgstr "Sledování úkolů aktualizováno"
 
 msgid "Tasks"
 msgstr "Úkoly"
+
+msgid "Tasks and projects"
+msgstr "Úkoly a projekty"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Úkoly vytvořené v Superset se budou synchronizovat do tohoto týmu v Linearu."
@@ -17047,6 +17317,9 @@ msgstr "Nejlepší agent se změní.<0/>Vaše workflow ne."
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tlačítko je teď výrazné. Zkontroloval jsem to ve vašem panelu."
 
+msgid "The chat pauses until you continue it."
+msgstr "Chat se pozastaví, dokud v něm nebudete pokračovat."
+
 msgid "The chat will open when the current response finishes."
 msgstr "Chat se otevře po dokončení aktuální odpovědi."
 
@@ -17064,6 +17337,9 @@ msgstr "Vypršel časový limit spojení"
 
 msgid "The connection was closed"
 msgstr "Spojení bylo uzavřeno"
+
+msgid "The current chat stays open until the new one is running."
+msgstr "Aktuální chat zůstane otevřený, dokud nový nepoběží."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Současný prompt bude nahrazen vybranou verzí. Do historie přibude nový záznam „Obnoveno“, takže půjde vrátit zpět."
@@ -17141,6 +17417,9 @@ msgstr "Budoucí domov pro znovupoužitelné konfigurace agentů, prompty a prů
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Hostitel se vrátil s verzí {0}, ne {targetVersion}."
 
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host kontroluje každou minutu. Zapnutí pravidla zaznamená stávající shody; každý nový odpovídající úkol spustí jeden workspace a agenta. Pravidla se ukládají pozastavená."
+
 msgid "The host did not come back within fifteen minutes."
 msgstr "Hostitel se neobnovil do patnácti minut."
 
@@ -17206,6 +17485,9 @@ msgstr "Název vaší organizace nebo týmu"
 
 msgid "The network connection changed"
 msgstr "Síťové připojení se změnilo"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."
 
 msgid "The overnight shift"
 msgstr "Noční směna"
@@ -17280,6 +17562,9 @@ msgstr "Samořídící softwarová továrna"
 
 msgid "The server could not be found"
 msgstr "Server se nepodařilo najít"
+
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Služba je dočasně nedostupná. Superset to automaticky zkusí znovu. Nastavení vašeho účtu se nemění."
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Přihlašovací odkaz byl neúplný. Zkuste to prosím znovu."
@@ -17400,6 +17685,9 @@ msgstr "Tento agent nemůže otevřít chat. Zapněte pokročilé možnosti CLI,
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
+
+msgid "This agent received the messages so far."
+msgstr "Tento agent dostal dosavadní zprávy."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Tento agent obdržel celou dosavadní konverzaci."
@@ -17742,6 +18030,9 @@ msgstr "Tím se všechny připravené změny odeberou z indexu a vrátí zpět. 
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Tímto zrušíte přípravu a vrátíte všechny připravené změny. Připravené nové soubory budou smazány. Tuto akci nelze vrátit zpět."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Toto okno se znovu zobrazí, až budou k dispozici nové důležité funkce."
+
 msgid "This workspace"
 msgstr "Tento pracovní prostor"
 
@@ -17792,6 +18083,9 @@ msgstr "Název"
 
 msgid "To"
 msgstr "Do"
+
+msgid "To do"
+msgstr "K vyřízení"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Chcete-li obnovit konverzaci s agentem, spusťte toto v její složce:"
@@ -17985,6 +18279,9 @@ msgstr "Sledovat úkoly v"
 msgid "Tracking"
 msgstr "Sleduji"
 
+msgid "Transfer"
+msgstr "Přenos"
+
 msgid "Translated"
 msgstr "Přeloženo"
 
@@ -18177,6 +18474,9 @@ msgstr "Nedostupné"
 msgid "Uncached input"
 msgstr "Vstup mimo cache"
 
+msgid "Unchanged"
+msgstr "Beze změny"
+
 msgid "Uncollectible"
 msgstr "Nedobytná"
 
@@ -18280,6 +18580,13 @@ msgstr "Neomezeně"
 
 msgid "Unlimited users"
 msgstr "Neomezeně uživatelů"
+
+msgid "Unlink"
+msgstr "Odpojit"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Odpojit {0}"
 
 msgid "Unlink task"
 msgstr "Odpojit úkol"
@@ -18417,6 +18724,9 @@ msgstr "aktualizovat prefix větve"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Aktualizujte tohoto hostitele pro průvodce nastavením nebo použijte pokročilou konfiguraci."
 
+msgid "Update this host to configure integrations."
+msgstr "Aktualizujte tohoto hostitele pro nastavení integrací."
+
 msgid "Updated"
 msgstr "Aktualizováno"
 
@@ -18481,6 +18791,9 @@ msgstr "SLA na dostupnost a dedikovaná podpora"
 
 msgid "Urgent"
 msgstr "Urgentní"
+
+msgid "URL"
+msgstr "URL"
 
 msgid "URL copied"
 msgstr "URL zkopírována"
@@ -18621,6 +18934,9 @@ msgstr "Použije se náhodný název větve (generování přes AI není dostupn
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId neodpovídá projektu pracovního prostoru"
 
+msgid "Value"
+msgstr "Hodnota"
+
 msgid "Variables"
 msgstr "Proměnné"
 
@@ -18635,6 +18951,9 @@ msgstr "Ověřeno a uloženo"
 
 msgid "Verified through sign-in"
 msgstr "Ověřeno přihlášením"
+
+msgid "Verify"
+msgstr "Ověřit"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Ověřit, že Kbd zůstane v tooltipech viditelný"
@@ -18771,11 +19090,11 @@ msgstr "Hlasitost"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Počkat na obnovení kvóty a pokračovat"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Před předáním počkejte, až agent dokončí práci."
+
+msgid "Wait for the reset"
+msgstr "Počkat na obnovení"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Před spuštěním agentů počkat na setup pracovního prostoru"
@@ -18791,9 +19110,6 @@ msgstr "Čeká na kontroly"
 msgid "Waiting for it to connect…"
 msgstr "Čeká se na připojení…"
 
-msgid "Waiting for quota"
-msgstr "Čekání na kvótu"
-
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Čekání na kvótu. Zastavení zruší automatické pokračování."
 
@@ -18808,6 +19124,9 @@ msgstr "Čekání na první zprávu subagenta…"
 
 msgid "Waiting for your input"
 msgstr "Čeká na váš vstup"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Počká na obnovení, když žádný jiný účet nemá kvótu."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Chcete něco dřív? <0>Napište nám na Discordu</0>. Spousta z toho, co je tady, začala jako přání uživatele."
@@ -19040,11 +19359,17 @@ msgstr "Co obsahuje Enterprise?"
 msgid "What's New"
 msgstr "Co je nového"
 
+msgid "What's new in Superset++"
+msgstr "Novinky v Superset++"
+
 msgid "What's next"
 msgstr "Co bude dál"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Když je vypnuto, nic jiného se nedostane k souborům a nástrojům na tomto zařízení. Odsud se stále můžete připojovat ke vzdáleným sandboxům. <0>Zjistit více<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Když dojde kvóta"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Kam vedou odznaky rozpoznaných portů v postranním panelu po kliknutí."
@@ -19114,6 +19439,9 @@ msgstr "s přílohou i bez ní"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "S mobilní aplikací Superset mohu řešit problémy v produkci odkudkoli."
+
+msgid "Withdraw change request"
+msgstr "Stáhnout žádost o změny"
 
 msgid "Wordmark, black"
 msgstr "Logotyp, černý"
@@ -19239,6 +19567,9 @@ msgstr "Cesta pracovního prostoru zatím není dostupná"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Připínání pracovních prostorů a hromadné akce"
+
+msgid "Workspace ready"
+msgstr "Pracovní prostor připraven"
 
 msgid "Workspace restored"
 msgstr "Pracovní prostor obnoven"
@@ -19435,6 +19766,9 @@ msgstr "Prohlížíte si verzi {version}, jen pro čtení"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Můžete přiložit nejvýše {MAX_ATTACHMENTS} souborů"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Tato připojení můžete později nastavit v nastavení forku."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Můžete ho obnovit v Nastavení → Projekty po dobu 30 dnů. Složka repozitáře se nikdy nemaže."

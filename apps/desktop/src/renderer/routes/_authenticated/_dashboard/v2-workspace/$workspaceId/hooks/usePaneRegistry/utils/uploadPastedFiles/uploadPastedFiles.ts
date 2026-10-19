@@ -5,6 +5,7 @@ import {
 	WORKSPACE_ATTACHMENTS_DIR,
 } from "@superset/shared/workspace-attachments";
 import { fileToBase64 } from "renderer/lib/file-to-base64";
+import { forkRandomAttachmentName } from "./forkRandomAttachmentName";
 
 // Pastes follow the shared workspace-attachments convention (same directory
 // and naming as agent-launch and the mobile composer): worktree-relative
@@ -14,6 +15,7 @@ import { fileToBase64 } from "renderer/lib/file-to-base64";
 
 /** Collision-probe cap; matches the spirit of createUniqueEntry's bound. */
 const MAX_NAME_ATTEMPTS = 50;
+const FORK_RANDOM_NAME_ATTEMPTS = 5;
 
 // Same caps as the agent-launch adapter's attachment writer. The bytes are
 // FileReader-read and base64'd (~1.33x) in renderer memory, then travel as
@@ -85,8 +87,15 @@ async function writeUnique(
 	base: string,
 	data: string,
 ): Promise<string> {
-	for (let attempt = 0; attempt < MAX_NAME_ATTEMPTS; attempt++) {
-		const fileName = attachmentNameWithSuffix(base, attempt);
+	for (
+		let attempt = 0;
+		attempt < MAX_NAME_ATTEMPTS + FORK_RANDOM_NAME_ATTEMPTS;
+		attempt++
+	) {
+		const fileName =
+			attempt < MAX_NAME_ATTEMPTS
+				? attachmentNameWithSuffix(base, attempt)
+				: forkRandomAttachmentName(base);
 		const outcome = await deps.writeFile({
 			workspaceId,
 			absolutePath: `${dirAbs}/${fileName}`,

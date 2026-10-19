@@ -11,6 +11,7 @@ import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { ForkServiceNotices } from "renderer/components/ForkIntegrations/components/ForkServiceNotices";
 import { ForkProFeature } from "renderer/components/ForkProFeature";
 import {
 	SidebarCardSlot,
@@ -493,6 +494,9 @@ export function DashboardSidebar({
 										{!isCollapsed && !workspacesListCollapsed && (
 											<DashboardSidebarGithubNotice status={githubStatus} />
 										)}
+										<ForkServiceNotices
+											hidden={isCollapsed || workspacesListCollapsed}
+										/>
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<SortableContext
 												items={displayedProjectIds}

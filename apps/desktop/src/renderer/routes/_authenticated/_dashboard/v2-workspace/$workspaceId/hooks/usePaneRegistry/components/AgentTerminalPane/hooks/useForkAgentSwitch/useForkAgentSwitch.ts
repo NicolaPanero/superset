@@ -3,6 +3,7 @@ import { acpHarnessForPreset } from "@superset/chat/core";
 import type { RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
@@ -23,7 +24,7 @@ export interface AgentSwitchTarget {
 	accountSelection?: string | null;
 }
 
-/** Converts an explicit handoff in the current pane; failure leaves the source resumable. */
+/** Converts an explicit handoff in the current pane; failure leaves the source running. */
 export function useForkAgentSwitch(
 	workspaceId: string,
 	ctx: RendererContext<PaneViewerData>,
@@ -42,6 +43,7 @@ export function useForkAgentSwitch(
 			staleTime: 60_000,
 		});
 	const wiring = useChatWiring();
+	const queryClient = useQueryClient();
 	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const prepareFromChat =
 		workspaceTrpc.sessionTransfer.prepareFromChat.useMutation();
@@ -82,12 +84,8 @@ export function useForkAgentSwitch(
 				pendingAttachments: _attachments,
 				...rest
 			} = data;
-			const restoreRecovery = data.acpSessionId
-				? markChatSessionClosed(data.acpSessionId)
-				: () => {};
+			let restoreRecovery = () => {};
 			try {
-				if (data.acpSessionId)
-					await wiring.transport.closeSession({ sessionId: data.acpSessionId });
 				const launch = await prepareAcpLaunch.mutateAsync({
 					workspaceId,
 					configId: targetConfig.id,
@@ -112,6 +110,11 @@ export function useForkAgentSwitch(
 						: {}),
 					targetTerminalId: data.terminalId,
 				});
+				// The source closes only once the target exists, and after the pane
+				// moved to it: waiting for the close would show a stopped chat.
+				if (data.acpSessionId) {
+					restoreRecovery = markChatSessionClosed(data.acpSessionId);
+				}
 				const modelId = target.model?.id ?? launch.defaultModelId;
 				ctx.actions.updateData({
 					...rest,
@@ -123,6 +126,10 @@ export function useForkAgentSwitch(
 					...(target.modeId ? { chatModeId: target.modeId } : {}),
 				});
 				ctx.actions.setTitle(target.label);
+				if (data.acpSessionId)
+					void wiring.transport
+						.closeSession({ sessionId: data.acpSessionId })
+						.catch(() => undefined);
 				toast.success(t({ message: "Native handoff complete" }), {
 					description: `${source.id} → ${target.label}`,
 				});
@@ -131,6 +138,10 @@ export function useForkAgentSwitch(
 				console.warn("[acp-chat] native agent switch failed", error);
 				restoreRecovery();
 				ctx.actions.updateData(data);
+				if (data.acpSessionId)
+					void queryClient.invalidateQueries({
+						queryKey: ["acp-chat-session", data.acpSessionId],
+					});
 				return false;
 			}
 		},
@@ -142,6 +153,7 @@ export function useForkAgentSwitch(
 			capabilities,
 			prepareAcpLaunch,
 			prepareFromChat,
+			queryClient,
 			wiring.transport,
 			workspaceId,
 			t,

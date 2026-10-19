@@ -102,12 +102,12 @@ test("the system slot stays distinct from a named profile signed into the same e
 	const options = await agentAccountOptions("claude", {
 		claudeProfiles: async () => [
 			{
-				configDir: "/profiles/btcore",
-				sourceLabel: "btcore",
-				email: "btcore@example.invalid",
+				configDir: "/profiles/personal",
+				sourceLabel: "personal",
+				email: "personal@example.invalid",
 				credentialKind: "subscription",
 				loginFingerprint: null,
-				credentialsPath: "/profiles/btcore/.credentials.json",
+				credentialsPath: "/profiles/personal/.credentials.json",
 				keychainServices: [],
 			},
 		],
@@ -115,6 +115,6 @@ test("the system slot stays distinct from a named profile signed into the same e
 	});
 	expect(options).toEqual([
 		{ selection: null, label: "System default" },
-		{ selection: "/profiles/btcore", label: "btcore@example.invalid" },
+		{ selection: "/profiles/personal", label: "personal@example.invalid" },
 	]);
 });

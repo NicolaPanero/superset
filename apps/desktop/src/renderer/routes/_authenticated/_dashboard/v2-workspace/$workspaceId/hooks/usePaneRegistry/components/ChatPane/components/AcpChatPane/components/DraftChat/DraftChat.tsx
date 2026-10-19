@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Composer } from "../../../../../ChatSession/components/Composer";
 import { ConnectionNotice } from "../../../../../ChatSession/components/ConnectionNotice";
 import { heldPromptQueue } from "../../../../../ChatSession/utils/heldPromptQueue";
+import { ForkDraftChatIntro } from "./components/ForkDraftChatIntro";
 
 const NO_COMMANDS: never[] = [];
 
@@ -27,7 +28,10 @@ export function DraftChat({
 
 	return (
 		<ComposerDropZone className="flex h-full min-h-0 w-full min-w-0 flex-col">
-			<div className="min-h-0 flex-1" />
+			<ForkDraftChatIntro
+				className="min-h-0 flex-1"
+				hasPendingPrompt={queued.length > 0}
+			/>
 			<ConnectionNotice>{notice}</ConnectionNotice>
 			<Composer
 				availableCommands={NO_COMMANDS}

@@ -55,6 +55,10 @@ function fixture(mode = "ok") {
 	);
 	command("plutil", 'for last; do :; done; cat "$last"');
 	command("xattr", "exit 0");
+	command(
+		"shasum",
+		`[ "$*" = "-a 256 -c -" ]; exec ${quote(process.execPath)} -e ${quote("const fs = require('node:fs'); const crypto = require('node:crypto'); const line = fs.readFileSync(0, 'utf8').trimEnd(); const match = /^([a-f0-9]{64})  (.+)$/.exec(line); process.exit(match && crypto.createHash('sha256').update(fs.readFileSync(match[2])).digest('hex') === match[1] ? 0 : 1);")}`,
+	);
 	command("pgrep", mode === "active" ? "exit 0" : "exit 1");
 	command("open", `printf '%s' "$1" > ${quote(opened)}`);
 	if (mode === "swap")

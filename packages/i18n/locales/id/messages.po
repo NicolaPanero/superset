@@ -174,6 +174,10 @@ msgstr "{0, plural, other {# label}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# login} other {# login}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, other {# lampiran lama dihapus.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# lulus} other {# lulus}}"
@@ -968,6 +972,9 @@ msgstr "{name} bawaan dan tidak dapat diganti"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name} belum ditambahkan"
 
+msgid "{name} unreachable"
+msgstr "{name} tidak dapat dijangkau"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {Tentukan minimal satu orang, atau pilih {choice}.} sender {Tentukan minimal satu pengirim, atau pilih {choice}.} other {Tentukan minimal satu entri, atau pilih {choice}.}}"
 
@@ -1163,6 +1170,21 @@ msgstr "@superset"
 
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
+
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Peralihan agen yang lebih baik**: pilih model dan effort sebelum beralih, termasuk Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira dan Bitbucket di aplikasi**: tugas, papan, pull request, review, build, dan otomatisasi."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kuota terkendali**: penggunaan per akun, reset gratis yang didukung, dan kelanjutan otomatis."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Alur kerja lebih aman**: akun terpisah per repositori dan perlindungan lebih untuk branch serta permintaan bersamaan."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Workspace rapi**: gambar dan file yang ditempel dihapus setelah 30 hari. Ubah di Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1785,6 +1807,9 @@ msgstr "Tambah skrip"
 msgid "Add Script"
 msgstr "Tambah Skrip"
 
+msgid "Add server"
+msgstr "Tambah server"
+
 msgid "Add setup commands, one per line..."
 msgstr "Tambahkan perintah setup, satu per baris..."
 
@@ -2141,6 +2166,9 @@ msgstr "Semua sesi dipertahankan sepanjang upgrade."
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Semua sesi ditutup dan daemon baru sedang berjalan."
 
+msgid "All statuses"
+msgstr "Semua status"
+
 msgid "All tasks"
 msgstr "Semua tugas"
 
@@ -2221,6 +2249,9 @@ msgstr "Hapus juga branch lokal"
 
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "Hapus juga branch git lokal saat menghapus workspace worktree"
+
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "Keluar juga dari GitHub CLI di komputer ini"
 
 msgid "Also viewing this page"
 msgstr "Juga melihat halaman ini"
@@ -2408,6 +2439,9 @@ msgstr "Kunci API"
 msgid "API keys are not validated with a paid request."
 msgstr "Kunci API tidak divalidasi melalui permintaan berbayar."
 
+msgid "API token"
+msgstr "Token API"
+
 msgid "API-equivalent"
 msgstr "Setara API"
 
@@ -2434,9 +2468,6 @@ msgstr "Logo Apple"
 
 msgid "Application menu"
 msgstr "Menu aplikasi"
-
-msgid "Applies immediately to this chat, even if its quota has already run out. No agent or account change is required."
-msgstr "Langsung berlaku untuk chat ini, meskipun kuotanya sudah habis. Tidak perlu mengganti agen atau akun."
 
 msgid "Applies to"
 msgstr "Berlaku untuk"
@@ -2856,6 +2887,9 @@ msgstr "Menunggu review dari Anda atau tim Anda"
 
 msgid "Back"
 msgstr "Kembali"
+
+msgid "Back to {label}"
+msgstr "Kembali ke {label}"
 
 msgid "Back to About"
 msgstr "Kembali ke Tentang"
@@ -3429,9 +3463,6 @@ msgstr "Kesalahan Sertifikat"
 msgid "Chain of Thought"
 msgstr "Rantai Pemikiran"
 
-msgid "Change agent or account"
-msgstr "Ganti agen atau akun"
-
 msgid "Change assignee"
 msgstr "Ubah penerima tugas"
 
@@ -3543,6 +3574,9 @@ msgstr "Chat dipindahkan ke {0}"
 msgid "Chat session not found"
 msgstr "Sesi chat tidak ditemukan"
 
+msgid "Chat session ready"
+msgstr "Sesi chat siap"
+
 msgid "Chat support is checked when you open a chat."
 msgstr "Dukungan chat diperiksa saat Anda membuka chat."
 
@@ -3581,6 +3615,9 @@ msgstr "Periksa login"
 
 msgid "Check the account email in your browser before using a reset."
 msgstr "Periksa email akun di browser sebelum menggunakan reset."
+
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "Periksa koneksi untuk {repositories} di pengaturan fork."
 
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "Periksa prompt yang dirender dan output peluncuran sebelum menyimpan"
@@ -3702,6 +3739,9 @@ msgstr "Pilih cara membuka tampilan perubahan dari bilah atas"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 
+msgid "Choose project later"
+msgstr "Pilih proyek nanti"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
 
@@ -3731,6 +3771,9 @@ msgstr "Bereskan TODO yang basi…"
 
 msgid "Cleaner, denser sidebar"
 msgstr "Sidebar lebih bersih dan padat"
+
+msgid "Clear"
+msgstr "Hapus"
 
 msgid "Clear all"
 msgstr "Hapus semua"
@@ -4193,6 +4236,9 @@ msgstr "Komentar tidak ditemukan"
 msgid "Comment not posted"
 msgstr "Komentar tidak terkirim"
 
+msgid "Comment on this line"
+msgstr "Komentari baris ini"
+
 msgid "Comment on this page"
 msgstr "Komentari halaman ini"
 
@@ -4269,6 +4315,9 @@ msgstr "Dibandingkan dengan gaya bawaan"
 msgid "complete"
 msgstr "selesai"
 
+msgid "Complete authorization in your browser."
+msgstr "Selesaikan otorisasi di browser Anda."
+
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Selesaikan alur CLI resmi, lalu tutup jendela ini untuk memeriksa hasilnya."
 
@@ -4306,11 +4355,17 @@ msgstr "Atur perilaku branch git dan worktree"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Atur cara tugas disinkronkan antara Superset dan Linear."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "Konfigurasikan integrasi di pengaturan fork."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "Atur perilaku terminal dan skrip terminal pakai ulang"
 
 msgid "Configure the in-app browser"
 msgstr "Atur browser dalam aplikasi"
+
+msgid "Configure the OAuth service below."
+msgstr "Konfigurasikan layanan OAuth di bawah."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "Atur agen mana yang muncul di peluncur dan bagaimana peluncurannya disusun."
@@ -4318,11 +4373,14 @@ msgstr "Atur agen mana yang muncul di peluncur dan bagaimana peluncurannya disus
 msgid "Configure workspace run command"
 msgstr "Atur perintah run workspace"
 
-msgid "Configured account"
-msgstr "Akun yang dikonfigurasi"
-
 msgid "Confirm before quitting"
 msgstr "Konfirmasi sebelum keluar"
+
+msgid "Confirm delete"
+msgstr "Konfirmasi penghapusan"
+
+msgid "Confirm merge"
+msgstr "Konfirmasi penggabungan"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4352,6 +4410,9 @@ msgstr "Hubungkan agen ke aplikasi Anda"
 msgid "Connect an account"
 msgstr "Hubungkan akun"
 
+msgid "Connect an account in Fork Settings"
+msgstr "Hubungkan akun di pengaturan fork"
+
 msgid "Connect another account"
 msgstr "Hubungkan akun lain"
 
@@ -4370,8 +4431,14 @@ msgstr "Hubungkan layanan eksternal untuk menyinkronkan data dengan organisasi A
 msgid "Connect external services to sync data."
 msgstr "Hubungkan layanan eksternal untuk menyinkronkan data."
 
+msgid "Connect GitHub"
+msgstr "Hubungkan GitHub"
+
 msgid "Connect Google"
 msgstr "Hubungkan Google"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Hubungkan Jira dan Bitbucket"
 
 msgid "Connect Linear"
 msgstr "Hubungkan Linear"
@@ -4429,6 +4496,9 @@ msgstr "Hubungkan tenant Microsoft Teams Anda. Admin tenant masuk dan memberi pe
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Hubungkan workspace Notion Anda dan bagikan halaman serta sumber data yang harus dipantau otomatisasi."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "Hubungkan repositori dan tugas Anda di komputer ini."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Hubungkan workspace Slack Anda untuk mengelola tugas dari percakapan."
@@ -4604,9 +4674,6 @@ msgstr "Lanjutkan dengan agen lain"
 msgid "Continue with another agent…"
 msgstr "Lanjutkan dengan agen lain…"
 
-msgid "Continue with context"
-msgstr "Lanjutkan dengan konteks"
-
 msgid "Continue with GitHub"
 msgstr "Lanjutkan dengan GitHub"
 
@@ -4615,6 +4682,12 @@ msgstr "Lanjutkan dengan Google"
 
 msgid "Continued from {source}"
 msgstr "Dilanjutkan dari {source}"
+
+msgid "Continues now on the account with the most quota."
+msgstr "Langsung lanjut di akun dengan kuota terbanyak."
+
+msgid "Continues on this account when quota returns."
+msgstr "Lanjut di akun ini saat kuota kembali."
 
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "Melanjutkan sesi agen memerlukan ruang kerja yang disematkan"
@@ -4943,6 +5016,15 @@ msgstr "Tidak dapat memuat plugin. Periksa koneksi Anda dan coba lagi."
 
 msgid "Could not load presets from the host"
 msgstr "Tidak bisa memuat preset dari host"
+
+msgid "Could not load pull request."
+msgstr "Pull request tidak dapat dimuat."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "Tidak dapat memuat pull request untuk {failedRepositories}."
+
+msgid "Could not load tasks."
+msgstr "Tugas tidak dapat dimuat."
 
 msgid "Could not load this diff"
 msgstr "Tidak bisa memuat diff ini"
@@ -5358,6 +5440,9 @@ msgstr "Buat"
 msgid "Create \"{newLabel}\""
 msgstr "Buat \"{newLabel}\""
 
+msgid "Create & start"
+msgstr "Buat & mulai"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "Membuat fork asli di penyedia dengan konteks percakapan yang sama. Sesi aslinya tidak berubah."
 
@@ -5628,8 +5713,8 @@ msgstr "Ctrl+Shift+klik"
 msgid "Current"
 msgstr "Saat ini"
 
-msgid "Current chat"
-msgstr "Chat saat ini"
+msgid "current checkout"
+msgstr "checkout saat ini"
 
 msgid "Current level"
 msgstr "Level saat ini"
@@ -5639,6 +5724,9 @@ msgstr "Laju saat ini"
 
 msgid "Current plan"
 msgstr "Paket saat ini"
+
+msgid "Current sprint"
+msgstr "Sprint saat ini"
 
 msgid "Current tab"
 msgstr "Tab saat ini"
@@ -5762,6 +5850,9 @@ msgstr "Hari"
 msgid "Day One"
 msgstr "Hari pertama"
 
+msgid "days"
+msgstr "hari"
+
 msgid "days running three agents at once"
 msgstr "hari menjalankan tiga agen sekaligus"
 
@@ -5840,6 +5931,7 @@ msgstr "Hapus “{title}”?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "Hapus {0}?"
 
@@ -5892,11 +5984,17 @@ msgstr "Hapus gambar"
 msgid "Delete local branch on workspace removal"
 msgstr "Hapus branch lokal saat workspace dihapus"
 
+msgid "Delete old attachments"
+msgstr "Hapus lampiran lama"
+
 msgid "Delete organization"
 msgstr "Hapus organisasi"
 
 msgid "Delete page"
 msgstr "Hapus halaman"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Hapus gambar dan file yang ditempel dari workspace setelah jumlah hari ini. Isi 0 untuk menyimpannya."
 
 msgid "Delete permanently"
 msgstr "Hapus permanen"
@@ -5915,6 +6013,9 @@ msgstr "Hapus workspace yang dipilih"
 
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "Hapus sesi \"{workspaceName}\"?"
+
+msgid "Delete task"
+msgstr "Hapus tugas"
 
 msgid "Delete team"
 msgstr "Hapus tim"
@@ -5980,6 +6081,9 @@ msgstr "Menghapus {name}"
 
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Dihapus oleh {deletedBy} {deletedWhen} · {deviceNames}"
+
+msgid "Deleted comment"
+msgstr "Komentar dihapus"
 
 msgid "deleted or unavailable — pick another"
 msgstr "dihapus atau tidak tersedia — pilih yang lain"
@@ -6063,6 +6167,9 @@ msgstr "Jelaskan tugas untuk agennya…"
 
 msgid "Describe the work to your agent"
 msgstr "Jelaskan pekerjaan kepada agen Anda"
+
+msgid "Describe what the agent should do"
+msgstr "Jelaskan apa yang harus dilakukan agen"
 
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "Jelaskan apa yang Anda butuhkan. Superset membuat workspace terisolasi dan branch bersih untuk tugas itu."
@@ -6274,6 +6381,9 @@ msgstr "Putuskan Sentry?"
 
 msgid "Disconnect Slack?"
 msgstr "Putuskan Slack?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "Putuskan akun ini dari Superset?"
 
 msgid "Disconnected"
 msgstr "Terputus"
@@ -6551,6 +6661,9 @@ msgstr "Setiap sesi melanjutkan dari titik terakhir."
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "Tiap permukaan punya tipografinya sendiri. Perubahan langsung terlihat di pratinjau."
 
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "Setiap tugas mendapat workspace dan branch sendiri. Agen dimulai dalam chat."
+
 msgid "Early 2024"
 msgstr "Awal 2024"
 
@@ -6774,6 +6887,9 @@ msgstr "Environment disimpan"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "Penyiapan environment, tes flaky, dan urusan kredensial — mode kegagalan membosankan yang mematikan run tanpa pengawasan pada 2025 — sebagian besar diselesaikan lewat rekayasa, bukan lewat model."
+
+msgid "Environment variables"
+msgstr "Variabel lingkungan"
 
 msgid "Environment Variables"
 msgstr "Variabel Environment"
@@ -7507,6 +7623,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "Cepat"
 
+msgid "Fast-forward"
+msgstr "Maju cepat"
+
 msgid "Fatal"
 msgstr "Fatal"
 
@@ -7966,6 +8085,9 @@ msgstr "Changelog lengkap →"
 msgid "Full Disk Access"
 msgstr "Full Disk Access"
 
+msgid "Full history"
+msgstr "Riwayat lengkap"
+
 msgid "Full name"
 msgstr "Nama lengkap"
 
@@ -8170,6 +8292,9 @@ msgstr "Ke Superset"
 msgid "Go to workspace"
 msgstr "Ke workspace"
 
+msgid "Google closed Gemini CLI for personal accounts, including Google AI Pro and student plans. Open an Antigravity chat and sign in with the same Google account. A paid Gemini API key still works."
+msgstr "Google menutup Gemini CLI untuk akun pribadi, termasuk paket Google AI Pro dan pelajar. Buka chat Antigravity dan masuk dengan akun Google yang sama. Kunci API Gemini berbayar masih berfungsi."
+
 msgid "Google did not grant lasting access. Remove Superset from your Google account's third-party access and try again."
 msgstr "Google tidak memberikan akses jangka panjang. Hapus Superset dari akses pihak ketiga di akun Google Anda lalu coba lagi."
 
@@ -8262,6 +8387,9 @@ msgstr "Ada commit yang belum di-push"
 
 msgid "Head-to-Head Comparisons"
 msgstr "Perbandingan Langsung"
+
+msgid "Headers"
+msgstr "Header"
 
 msgid "Heading 1"
 msgstr "Judul 1"
@@ -9117,6 +9245,9 @@ msgstr "Issue diselesaikan"
 msgid "Issue title"
 msgstr "Judul issue"
 
+msgid "Issue type"
+msgstr "Jenis isu"
+
 msgid "Issue unresolved"
 msgstr "Issue belum selesai"
 
@@ -9173,6 +9304,12 @@ msgstr "Jane Doe"
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Otomasi Jira"
+
+msgid "Jira issues"
+msgstr "Isu Jira"
 
 msgid "Join"
 msgstr "Gabung"
@@ -9620,6 +9757,9 @@ msgstr "Tautan disalin"
 msgid "Link GitHub issue"
 msgstr "Tautkan issue GitHub"
 
+msgid "Link Jira issue"
+msgstr "Tautkan isu Jira"
+
 msgid "Link Linear issue"
 msgstr "Tautkan issue Linear"
 
@@ -9982,9 +10122,6 @@ msgstr "Kelola tugas dari percakapan Slack."
 msgid "Manage Terminal Scripts"
 msgstr "Kelola Skrip Terminal"
 
-msgid "Manage this chat's automatic continuation. Changes are saved immediately."
-msgstr "Kelola kelanjutan otomatis chat ini. Perubahan langsung disimpan."
-
 msgid "Manage your account settings"
 msgstr "Kelola pengaturan akun Anda"
 
@@ -10075,6 +10212,9 @@ msgstr "Server MCP"
 msgid "MCP Server Commands"
 msgstr "Perintah server MCP"
 
+msgid "MCP servers"
+msgstr "Server MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Diukur selama 30 hari terakhir"
 
@@ -10158,6 +10298,9 @@ msgstr "Merge gagal: {0}"
 
 msgid "Merge into center"
 msgstr "Gabungkan ke tengah"
+
+msgid "Merge method"
+msgstr "Metode penggabungan"
 
 msgid "Merge pull request"
 msgstr "Merge pull request"
@@ -10397,11 +10540,14 @@ msgstr "sebagian besar developer"
 msgid "Most of software history"
 msgstr "Sebagian besar sejarah perangkat lunak"
 
+msgid "Move"
+msgstr "Pindahkan"
+
 msgid "Move {count} to Group"
 msgstr "Pindahkan {count} ke Grup"
 
-msgid "Move this chat to another account. The conversation stays here and continues with that account's quota."
-msgstr "Pindahkan chat ini ke akun lain. Percakapan tetap di sini dan berlanjut dengan kuota akun tersebut."
+msgid "Move to another account"
+msgstr "Pindahkan ke akun lain"
 
 msgid "Move to Center"
 msgstr "Pindahkan ke tengah"
@@ -10437,6 +10583,9 @@ msgstr "Dibisukan"
 
 msgid "My Agent"
 msgstr "Agen Saya"
+
+msgid "My Jira issues"
+msgstr "Isu Jira saya"
 
 msgid "My Tasks"
 msgstr "Tugas Saya"
@@ -11013,6 +11162,9 @@ msgstr "Tidak ada yang cocok"
 msgid "No matching files"
 msgstr "Tidak ada berkas yang cocok"
 
+msgid "No matching issues"
+msgstr "Tidak ada isu yang cocok"
+
 msgid "No matching models"
 msgstr "Tidak ada model yang cocok"
 
@@ -11021,6 +11173,9 @@ msgstr "Tidak ada anggota organisasi yang cocok."
 
 msgid "No matching pages"
 msgstr "Tidak ada halaman yang cocok"
+
+msgid "No MCP servers yet."
+msgstr "Belum ada server MCP."
 
 msgid "No members yet"
 msgstr "Belum ada anggota"
@@ -11377,6 +11532,9 @@ msgstr "Belum terhubung · workspace cloud melakukan push sebagai GitHub App org
 msgid "Not demoed here"
 msgstr "Tidak didemokan di sini"
 
+msgid "Not done"
+msgstr "Belum selesai"
+
 msgid "Not found"
 msgstr "Tidak ditemukan"
 
@@ -11499,6 +11657,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "OAuth secara bawaan, kunci API untuk CI"
 
+msgid "OAuth service"
+msgstr "Layanan OAuth"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "dari {0}"
@@ -11538,9 +11699,6 @@ msgstr "Mode offline / local-first"
 msgid "Older"
 msgstr "Lebih lama"
 
-msgid "On"
-msgstr "Aktif"
-
 msgid "on {offScopeHostName} — won't run here"
 msgstr "di {offScopeHostName} — tidak akan berjalan di sini"
 
@@ -11574,6 +11732,9 @@ msgstr "Di mesin Anda. Repo, worktree, output terminal, dan sesi agen tetap loka
 msgid "Onboarding redesign"
 msgstr "Desain ulang onboarding"
 
+msgid "One argument per line"
+msgstr "Satu argumen per baris"
+
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "Satu chat yang merencanakan tugas, menyebar agen paralel ke seluruh worktree, dan menyatukan hasilnya kembali."
 
@@ -11600,6 +11761,9 @@ msgstr "Termasuk seratus orang pertama di papan"
 
 msgid "one of the selected repositories"
 msgstr "salah satu repositori yang dipilih"
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "Satu layanan dapat menghubungkan Jira dan Bitbucket."
 
 msgid "One step left"
 msgstr "Tinggal satu langkah"
@@ -11921,6 +12085,9 @@ msgstr "Buka di T3 Chat"
 msgid "Open in tab"
 msgstr "Buka di tab"
 
+msgid "Open in workspace"
+msgstr "Buka di ruang kerja"
+
 msgid "Open in…"
 msgstr "Buka di…"
 
@@ -12085,6 +12252,9 @@ msgstr "Buka panel Perubahan di tab baru, atau fokuskan yang sudah ada"
 msgid "Open the global command palette"
 msgstr "Buka command palette global"
 
+msgid "Open the guide"
+msgstr "Buka panduan"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Buka dialog agen baru di workspace saat ini"
 
@@ -12168,6 +12338,9 @@ msgstr "Flag opsional yang ditambahkan setelah muatan prompt"
 
 msgid "Options"
 msgstr "Opsi"
+
+msgid "Options and connections that only exist in this fork."
+msgstr "Opsi dan koneksi yang hanya ada di fork ini."
 
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "Atau minta agen coding Anda memasang CLI Superset."
@@ -12429,6 +12602,9 @@ msgstr "Direktori induk"
 msgid "Parent directory on {hostName}"
 msgstr "Direktori induk di {hostName}"
 
+msgid "Parent issue"
+msgstr "Isu induk"
+
 msgid "Part of Superset Pro"
 msgstr "Bagian dari Superset Pro"
 
@@ -12513,6 +12689,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Laju puncak"
+
+msgid "Pending"
+msgstr "Menunggu"
 
 msgid "Pending Invitations"
 msgstr "Undangan Tertunda"
@@ -13216,10 +13395,16 @@ msgstr "Ungu"
 msgid "Push"
 msgstr "Push"
 
+msgid "Push and create PR"
+msgstr "Kirim dan buat PR"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "Push gagal: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "Kirim cabang Anda sebelum membuat pull request."
 
 msgid "Pushed"
 msgstr "Di-push"
@@ -13445,6 +13630,12 @@ msgstr "Rebase & Merge"
 msgid "Rebase and merge"
 msgstr "Rebase dan merge"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, fast-forward"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, commit merge"
+
 msgid "Recent Activity"
 msgstr "Aktivitas Terbaru"
 
@@ -13653,6 +13844,9 @@ msgstr "Hapus {0}"
 
 msgid "Remove {label}?"
 msgstr "Hapus {label}?"
+
+msgid "Remove approval"
+msgstr "Cabut persetujuan"
 
 msgid "Remove attachment"
 msgstr "Hapus lampiran"
@@ -13882,6 +14076,9 @@ msgstr "Repositori"
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "Repositori yang bisa diakses lewat instalasi GitHub App."
 
+msgid "Repositories and pull requests"
+msgstr "Repositori dan pull request"
+
 msgid "Repositories refreshed"
 msgstr "Repositori disegarkan"
 
@@ -13905,6 +14102,9 @@ msgstr "Minta uji coba"
 
 msgid "Request Body"
 msgstr "Body Permintaan"
+
+msgid "Request changes"
+msgstr "Minta perubahan"
 
 msgid "requested changes"
 msgstr "meminta perubahan"
@@ -14023,6 +14223,9 @@ msgstr "Selesaikan thread"
 
 msgid "Resolved"
 msgstr "Terselesaikan"
+
+msgid "Resolved · show"
+msgstr "Terselesaikan · tampilkan"
 
 msgid "Resource consumption"
 msgstr "Konsumsi sumber daya"
@@ -14246,6 +14449,9 @@ msgstr "Review Diabaikan"
 msgid "Review each failure before deciding whether to continue."
 msgstr "Tinjau tiap kegagalan sebelum memutuskan untuk melanjutkan."
 
+msgid "Review filters apply to GitHub repositories."
+msgstr "Filter tinjauan berlaku untuk repositori GitHub."
+
 msgid "Review message"
 msgstr "Pesan review"
 
@@ -14414,6 +14620,9 @@ msgstr "Jalankan otomatisasi saat issue Sentry berubah."
 
 msgid "Run commands and navigate the application."
 msgstr "Jalankan perintah dan navigasi aplikasi."
+
+msgid "Run history"
+msgstr "Riwayat eksekusi"
 
 msgid "Run History"
 msgstr "Riwayat Run"
@@ -14769,6 +14978,9 @@ msgstr "Cari di {frameTitle}…"
 msgid "Search issues..."
 msgstr "Cari issue..."
 
+msgid "Search Jira…"
+msgstr "Cari di Jira…"
+
 msgid "Search labels..."
 msgstr "Cari label..."
 
@@ -15072,6 +15284,9 @@ msgstr "Pilih tim"
 msgid "Select terminal script directory"
 msgstr "Pilih direktori skrip terminal"
 
+msgid "Select workspace"
+msgstr "Pilih ruang kerja"
+
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"
 
@@ -15174,6 +15389,9 @@ msgstr "Separator"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "Ketersediaan layanan dipublikasikan di <0>status.superset.sh</0>, dan dokumentasi keamanan serta kepatuhan di <1>trust.superset.sh</1>."
 
+msgid "Service URL"
+msgstr "URL layanan"
+
 msgid "Session"
 msgstr "Sesi"
 
@@ -15214,6 +15432,9 @@ msgstr "Sesi"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "Sesi · {0} teratas menurut biaya"
+
+msgid "Set as default"
+msgstr "Jadikan default"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15340,6 +15561,9 @@ msgstr "Dibagikan di semua sesi yang menggunakan login ini."
 
 msgid "Shared app components"
 msgstr "Komponen aplikasi bersama"
+
+msgid "Shared by every agent and account on this computer."
+msgstr "Dipakai bersama oleh semua agen dan akun di komputer ini."
 
 msgid "Shared component library."
 msgstr "Pustaka komponen bersama."
@@ -15676,6 +15900,9 @@ msgstr "Satu tab + panel"
 msgid "Single-select"
 msgstr "Pilih satu"
 
+msgid "Site URL"
+msgstr "URL situs"
+
 msgid "Site-wide telemetry · {range}"
 msgstr "Telemetri seluruh situs · {range}"
 
@@ -15861,6 +16088,9 @@ msgstr "Sumber"
 msgid "Source Available"
 msgstr "Source Available"
 
+msgid "Source branch"
+msgstr "Cabang sumber"
+
 msgid "Source path (not an import)"
 msgstr "Path sumber (bukan impor)"
 
@@ -15954,11 +16184,17 @@ msgstr "Bagi dengan Browser Baru"
 msgid "Split with Sandbox Desktop"
 msgstr "Bagi dengan Desktop Sandbox"
 
+msgid "Squash"
+msgstr "Gabungkan commit"
+
 msgid "Squash & Merge"
 msgstr "Squash & Merge"
 
 msgid "Squash and merge"
 msgstr "Squash dan merge"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, hanya fast-forward"
 
 msgid "SS"
 msgstr "SS"
@@ -16075,6 +16311,9 @@ msgstr "Mulai menjelajah"
 msgid "Start building in two."
 msgstr "Mulai membangun dalam dua."
 
+msgid "Start chat"
+msgstr "Mulai chat"
+
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "Mulai agen coding, ikuti secara langsung, dan tinjau diff dari iPhone atau iPad Anda. Tersedia di App Store; Android segera hadir."
 
@@ -16089,6 +16328,9 @@ msgstr "Mulai gratis. Upgrade saat tim Anda membutuhkan lebih. Paket enterprise 
 
 msgid "Start from a template"
 msgstr "Mulai dari templat"
+
+msgid "Start in workspace"
+msgstr "Mulai di workspace"
 
 msgid "Start new session"
 msgstr "Mulai sesi baru"
@@ -16241,6 +16483,13 @@ msgstr "Menghentikan agen di {what}"
 msgid "Stops the agent and sends this now"
 msgstr "Menghentikan agen dan mengirim ini sekarang"
 
+msgid "Storage"
+msgstr "Penyimpanan"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "Disimpan di {0}"
+
 msgid "Strikethrough"
 msgstr "Coret"
 
@@ -16321,6 +16570,9 @@ msgstr "Rangkum perubahan di workspace ini"
 
 msgid "Summary"
 msgstr "Ringkasan"
+
+msgid "Summary only"
+msgstr "Ringkasan saja"
 
 msgid "sun 11:00"
 msgstr "min 11:00"
@@ -16569,6 +16821,12 @@ msgstr "Konsistensi"
 msgid "Sustain · active days in 30"
 msgstr "Konsistensi · hari aktif dari 30"
 
+msgid "Switch"
+msgstr "Ganti"
+
+msgid "Switch account"
+msgstr "Ganti akun"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "Ganti agen. Pertahankan alur kerja Anda"
 
@@ -16586,6 +16844,9 @@ msgstr "Ganti sesi masuk"
 
 msgid "Switch sign-in…"
 msgstr "Ganti sesi masuk…"
+
+msgid "Switch to {summary}"
+msgstr "Ganti ke {summary}"
 
 msgid "Switch to Active Workspace"
 msgstr "Beralih ke workspace aktif"
@@ -16620,9 +16881,6 @@ msgstr "Beralih ke Tab 8"
 msgid "Switch to Tab 9"
 msgstr "Beralih ke Tab 9"
 
-msgid "Switch to the suggested account when quota runs out"
-msgstr "Beralih ke akun yang disarankan saat kuota habis"
-
 msgid "Switch to Workspace 1"
 msgstr "Beralih ke Workspace 1"
 
@@ -16650,6 +16908,12 @@ msgstr "Beralih ke Workspace 8"
 msgid "Switch to Workspace 9"
 msgstr "Beralih ke Workspace 9"
 
+msgid "Switch, or wait"
+msgstr "Ganti, atau tunggu"
+
+msgid "Switch…"
+msgstr "Ganti…"
+
 msgid "Symbol, light"
 msgstr "Simbol, terang"
 
@@ -16676,9 +16940,6 @@ msgstr "Menyinkronkan..."
 
 msgid "System"
 msgstr "Sistem"
-
-msgid "System default"
-msgstr "Default sistem"
 
 msgid "System design"
 msgstr "Desain sistem"
@@ -16747,6 +17008,9 @@ msgstr "Target"
 msgid "Target agent"
 msgstr "Agen tujuan"
 
+msgid "Target branch"
+msgstr "Cabang tujuan"
+
 msgid "Target date"
 msgstr "Tanggal target"
 
@@ -16771,6 +17035,9 @@ msgstr "Peluncuran Tugas"
 msgid "Task layout"
 msgstr "Tata letak tugas"
 
+msgid "Task linked to workspace."
+msgstr "Tugas ditautkan ke workspace."
+
 msgid "Task Management"
 msgstr "Manajemen Tugas"
 
@@ -16794,6 +17061,9 @@ msgstr "Pelacak tugas diperbarui"
 
 msgid "Tasks"
 msgstr "Tugas"
+
+msgid "Tasks and projects"
+msgstr "Tugas dan proyek"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Tugas yang dibuat di Superset akan disinkronkan ke tim Linear ini."
@@ -17047,6 +17317,9 @@ msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tombolnya kini menonjol. Saya sudah memeriksanya di panel Anda."
 
+msgid "The chat pauses until you continue it."
+msgstr "Chat berhenti sampai Anda melanjutkannya."
+
 msgid "The chat will open when the current response finishes."
 msgstr "Chat akan terbuka setelah respons saat ini selesai."
 
@@ -17064,6 +17337,9 @@ msgstr "Koneksinya kehabisan waktu"
 
 msgid "The connection was closed"
 msgstr "Koneksinya ditutup"
+
+msgid "The current chat stays open until the new one is running."
+msgstr "Chat saat ini tetap terbuka sampai chat baru berjalan."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt saat ini akan diganti dengan versi yang dipilih. Entri \"Dipulihkan\" yang baru akan ditambahkan ke riwayat sehingga Anda bisa membatalkannya."
@@ -17141,6 +17417,9 @@ msgstr "Rumah masa depan untuk konfigurasi agen Superset, prompt, dan panduan pe
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Host kembali dengan {0}, bukan {targetVersion}."
 
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "Host memeriksa setiap menit. Mengaktifkan aturan mencatat kecocokan yang ada; setiap isu baru yang cocok memulai satu workspace dan agen. Aturan disimpan dalam keadaan dijeda."
+
 msgid "The host did not come back within fifteen minutes."
 msgstr "Host tidak kembali dalam lima belas menit."
 
@@ -17206,6 +17485,9 @@ msgstr "Nama organisasi atau tim Anda"
 
 msgid "The network connection changed"
 msgstr "Koneksi jaringan berubah"
+
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
 
 msgid "The overnight shift"
 msgstr "Shift malam"
@@ -17280,6 +17562,9 @@ msgstr "Pabrik perangkat lunak yang menyetir sendiri"
 
 msgid "The server could not be found"
 msgstr "Servernya tidak ditemukan"
+
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "Layanan sementara tidak tersedia. Superset akan mencoba lagi secara otomatis. Pengaturan akun Anda tidak berubah."
 
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "Tautan masuk tidak lengkap. Silakan coba lagi."
@@ -17400,6 +17685,9 @@ msgstr "Agen ini tidak dapat membuka chat. Aktifkan opsi CLI lanjutan untuk meng
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."
+
+msgid "This agent received the messages so far."
+msgstr "Agen ini menerima pesan sejauh ini."
 
 msgid "This agent received the whole conversation so far."
 msgstr "Agen ini menerima seluruh percakapan sejauh ini."
@@ -17742,6 +18030,9 @@ msgstr "Ini akan mengeluarkan semua perubahan dari staging dan membatalkannya. F
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Ini akan meng-unstage dan mengembalikan semua perubahan yang di-stage. File baru yang di-stage akan dihapus. Ini tidak bisa dibatalkan."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Jendela ini hanya muncul lagi saat ada fitur penting baru."
+
 msgid "This workspace"
 msgstr "Workspace ini"
 
@@ -17792,6 +18083,9 @@ msgstr "Judul"
 
 msgid "To"
 msgstr "Ke"
+
+msgid "To do"
+msgstr "Untuk dikerjakan"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "Untuk melanjutkan percakapan agen, jalankan ini di foldernya:"
@@ -17985,6 +18279,9 @@ msgstr "Lacak tugas di"
 msgid "Tracking"
 msgstr "Pelacakan"
 
+msgid "Transfer"
+msgstr "Transfer"
+
 msgid "Translated"
 msgstr "Diterjemahkan"
 
@@ -18177,6 +18474,9 @@ msgstr "Tidak tersedia"
 msgid "Uncached input"
 msgstr "Input tanpa cache"
 
+msgid "Unchanged"
+msgstr "Tidak diubah"
+
 msgid "Uncollectible"
 msgstr "Tak tertagih"
 
@@ -18280,6 +18580,13 @@ msgstr "Tanpa batas"
 
 msgid "Unlimited users"
 msgstr "Pengguna tanpa batas"
+
+msgid "Unlink"
+msgstr "Putuskan tautan"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Putuskan tautan {0}"
 
 msgid "Unlink task"
 msgstr "Lepaskan tautan tugas"
@@ -18417,6 +18724,9 @@ msgstr "memperbarui prefix branch"
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Perbarui host ini untuk pengaturan terpandu atau gunakan konfigurasi lanjutan."
 
+msgid "Update this host to configure integrations."
+msgstr "Perbarui host ini untuk mengonfigurasi integrasi."
+
 msgid "Updated"
 msgstr "Diperbarui"
 
@@ -18481,6 +18791,9 @@ msgstr "SLA uptime & dukungan khusus"
 
 msgid "Urgent"
 msgstr "Mendesak"
+
+msgid "URL"
+msgstr "URL"
 
 msgid "URL copied"
 msgstr "URL disalin"
@@ -18621,6 +18934,9 @@ msgstr "Memakai nama branch acak (pembuatan AI tidak tersedia)"
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId tidak cocok dengan proyek workspace"
 
+msgid "Value"
+msgstr "Nilai"
+
 msgid "Variables"
 msgstr "Variabel"
 
@@ -18635,6 +18951,9 @@ msgstr "Terverifikasi dan tersimpan"
 
 msgid "Verified through sign-in"
 msgstr "Terverifikasi lewat proses masuk"
+
+msgid "Verify"
+msgstr "Verifikasi"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "Pastikan Kbd tetap terlihat di dalam tooltip"
@@ -18771,11 +19090,11 @@ msgstr "Volume"
 msgid "VS Code"
 msgstr "VS Code"
 
-msgid "Wait and continue when quota resets"
-msgstr "Tunggu kuota diperbarui lalu lanjutkan"
-
 msgid "Wait for the agent to finish before handing off."
 msgstr "Tunggu hingga agen selesai sebelum mentransfer."
+
+msgid "Wait for the reset"
+msgstr "Tunggu reset"
 
 msgid "Wait for workspace setup before starting agents"
 msgstr "Tunggu setup workspace sebelum menjalankan agen"
@@ -18791,9 +19110,6 @@ msgstr "Menunggu Check"
 msgid "Waiting for it to connect…"
 msgstr "Menunggu terhubung…"
 
-msgid "Waiting for quota"
-msgstr "Menunggu kuota"
-
 msgid "Waiting for quota. Stop cancels automatic continuation."
 msgstr "Menunggu kuota. Berhenti membatalkan kelanjutan otomatis."
 
@@ -18808,6 +19124,9 @@ msgstr "Menunggu pesan pertama dari subagen…"
 
 msgid "Waiting for your input"
 msgstr "Menunggu masukan Anda"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "Menunggu reset bila tidak ada akun lain yang punya kuota."
 
 msgid "Want something sooner? <0>Tell us in Discord</0>. Much of what's here started as a user request."
 msgstr "Ingin sesuatu lebih cepat? <0>Beri tahu kami di Discord</0>. Banyak yang ada di sini bermula dari permintaan pengguna."
@@ -19040,11 +19359,17 @@ msgstr "Apa saja yang termasuk di Enterprise?"
 msgid "What's New"
 msgstr "Apa yang Baru"
 
+msgid "What's new in Superset++"
+msgstr "Yang baru di Superset++"
+
 msgid "What's next"
 msgstr "Selanjutnya"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"
+
+msgid "When quota runs out"
+msgstr "Saat kuota habis"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Ke mana badge port yang terdeteksi di sidebar terbuka saat diklik."
@@ -19114,6 +19439,9 @@ msgstr "dengan atau tanpa lampiran"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Dengan aplikasi seluler Superset, saya bisa menangani masalah produksi dari mana saja."
+
+msgid "Withdraw change request"
+msgstr "Tarik permintaan perubahan"
 
 msgid "Wordmark, black"
 msgstr "Wordmark, hitam"
@@ -19239,6 +19567,9 @@ msgstr "Jalur ruang kerja belum tersedia"
 
 msgid "Workspace pinning & bulk actions"
 msgstr "Penyematan workspace & aksi massal"
+
+msgid "Workspace ready"
+msgstr "Workspace siap"
 
 msgid "Workspace restored"
 msgstr "Workspace dipulihkan"
@@ -19435,6 +19766,9 @@ msgstr "Anda melihat versi {version}, hanya-baca"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "Anda dapat melampirkan hingga {MAX_ATTACHMENTS} file"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "Anda dapat mengonfigurasi koneksi ini nanti di pengaturan fork."
 
 msgid "You can restore it from Settings → Projects for 30 days. The repository folder is never deleted."
 msgstr "Anda dapat memulihkannya dari Pengaturan → Proyek selama 30 hari. Folder repositori tidak pernah dihapus."

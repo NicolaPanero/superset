@@ -120,6 +120,9 @@ export type PromptInputProps = {
 	dictation?: PromptInputDictation;
 	toolbar?: ReactNode;
 	toolbarEnd?: ReactNode;
+	// Attachments to open with and each change to them, for a host that keeps
+	// them with the draft. Read once on mount, like defaultValue.
+	draftFiles?: { initial: File[]; onChange: (files: File[]) => void };
 	// Text to open with, read once on mount. A host that persists drafts hands
 	// back what it stored; the composer owns the editor state from then on.
 	defaultValue?: string;

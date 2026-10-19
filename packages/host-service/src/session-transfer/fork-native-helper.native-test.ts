@@ -285,6 +285,35 @@ test("the real engine matches the pin and declares conversion-only support", asy
 		conversionOnly: true,
 	});
 });
+test("Codex imports preserve reasoning text without provider-private state", async () => {
+	const converted = await convert(
+		"claude",
+		"codex",
+		"codex-replayable-reasoning",
+	);
+	const items = readFileSync(converted.reference, "utf8")
+		.trim()
+		.split("\n")
+		.map((line) => JSON.parse(line))
+		.filter((record) => record.type === "response_item")
+		.map((record) => record.payload);
+	expect(
+		items.some((item) =>
+			["reasoning", "compaction", "web_search_call"].includes(item.type),
+		),
+	).toBe(false);
+	const reasoning = items.find((item) =>
+		item.content?.some(
+			(block: { text?: string }) =>
+				block.text === "Inspect the source before continuing",
+		),
+	);
+	expect(reasoning).toMatchObject({
+		type: "message",
+		role: "assistant",
+		phase: "commentary",
+	});
+});
 for (const source of agents)
 	for (const to of agents.filter((agent) => agent !== source))
 		test(`real native codec ${source} -> ${to} preserves long Unicode conversation`, async () => {

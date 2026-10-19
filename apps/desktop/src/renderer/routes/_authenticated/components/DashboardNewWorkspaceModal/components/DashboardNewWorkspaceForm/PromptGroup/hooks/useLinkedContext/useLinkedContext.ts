@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { forkJiraUnlinkPatch } from "renderer/components/ForkIntegrations/utils/forkJiraWorkspace";
 import { deriveBranchName } from "renderer/routes/_authenticated/utils/deriveBranchName";
 import {
 	type LinearIssueReference,
@@ -103,6 +104,11 @@ export function useLinkedContext(
 			const remaining = linkedIssues.filter((i) => i.slug !== slug);
 			const patch: Partial<DashboardNewWorkspaceDraft> = {
 				linkedIssues: remaining,
+				...forkJiraUnlinkPatch(
+					removed,
+					remaining,
+					useNewWorkspaceDraftStore.getState(),
+				),
 			};
 			// Clear the seeded names, but only when they still match what the
 			// issue seeded — a user edit sticks. When another internal issue is

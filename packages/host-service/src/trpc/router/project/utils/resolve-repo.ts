@@ -14,6 +14,7 @@ import {
 	isPermissionDenied,
 	isUnreadable,
 } from "../../../../runtime/path-state";
+import { scaffoldIdentityArgs, throwIfGitMissing } from "./fork-git-setup";
 import {
 	findMatchingRemote,
 	getGitHubRemotes,
@@ -198,6 +199,7 @@ async function gitInitMainBranch(targetPath: string): Promise<void> {
 async function commitInitialEmpty(repoPath: string): Promise<void> {
 	try {
 		await createUserSimpleGit(repoPath).raw([
+			...(await scaffoldIdentityArgs(repoPath)),
 			...scaffoldCommitArgs,
 			"--allow-empty",
 			"-m",
@@ -252,6 +254,7 @@ export async function tryRevParseGitRoot(path: string): Promise<string | null> {
 	} catch (err) {
 		error = err;
 	}
+	throwIfGitMissing(error);
 	const blockedPath = isPermissionDenied(error)
 		? path
 		: findUnreadableRepoAbove(path);
@@ -470,7 +473,12 @@ export async function cloneTemplateInto(
 		const git = createUserSimpleGit(targetPath);
 		await git.add(".");
 		try {
-			await git.raw([...scaffoldCommitArgs, "-m", "Initial commit"]);
+			await git.raw([
+				...(await scaffoldIdentityArgs(targetPath)),
+				...scaffoldCommitArgs,
+				"-m",
+				"Initial commit",
+			]);
 		} catch (err) {
 			throw asInitialCommitTrpcError(err);
 		}
@@ -531,6 +539,7 @@ export async function cloneRepoInto(
 		signal?.throwIfAborted();
 	} catch (err) {
 		await rollbackTargetDir(targetPath);
+		throwIfGitMissing(err);
 		throw new TRPCError({
 			code: "BAD_REQUEST",
 			message: `Failed to clone repository: ${

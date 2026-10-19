@@ -496,7 +496,7 @@ export function AcpChatPane({
 				recoveries.current = MAX_RECOVERIES;
 			setFailure(
 				cause?.kind === "account"
-					? t({ message: "Reconnect account" })
+					? (cause.detail ?? t({ message: "Reconnect account" }))
 					: cause?.kind === "missing"
 						? t({
 								message:

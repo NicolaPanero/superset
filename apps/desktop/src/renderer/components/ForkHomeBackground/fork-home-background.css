@@ -6,13 +6,12 @@
 	height: 100%;
 	pointer-events: none;
 	color: var(--foreground);
-	--fork-home-ember: #ff7a2f;
-	--fork-home-crest: #ffe0b0;
+	--fork-home-ember: var(--highlight);
+	--fork-home-crest: color-mix(in oklab, var(--highlight) 40%, white);
 }
 
 .light .fork-home-background {
-	--fork-home-ember: #d25611;
-	--fork-home-crest: #8f3a08;
+	--fork-home-crest: color-mix(in oklab, var(--highlight) 60%, black);
 }
 
 .fork-home-background ~ header {

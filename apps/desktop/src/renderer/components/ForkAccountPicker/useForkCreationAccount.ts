@@ -4,6 +4,7 @@ import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota
 import { validateAccountLaunch } from "renderer/lib/fork-account-launch";
 import { forkLaunchAccountSelection } from "renderer/lib/fork-account-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import type { SwitchSignInTarget } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
 import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 
@@ -19,6 +20,8 @@ export function useForkCreationAccount(
 	const enabled = !!hostUrl && (provider === "claude" || provider === "codex");
 	const quota = useHostUsageQuota(enabled ? hostUrl : null, clientForHost);
 	const [pickerOpen, setPickerOpen] = useState(false);
+	const [adding, setAdding] = useState(false);
+	const [reconnect, setReconnect] = useState<SwitchSignInTarget | null>(null);
 	const options = useQuery({
 		queryKey: ["fork-account-options", hostUrl, provider],
 		enabled,
@@ -83,6 +86,10 @@ export function useForkCreationAccount(
 		hostUrl,
 		pickerOpen,
 		setPickerOpen,
+		adding,
+		setAdding,
+		reconnect,
+		setReconnect,
 		quota,
 		options,
 		refreshDefault: () => metadata.refetch(),

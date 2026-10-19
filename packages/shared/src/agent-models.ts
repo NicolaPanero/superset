@@ -14,6 +14,11 @@
  * update them here when a tool adds or retires models.
  */
 
+import {
+	FORK_AGENT_EFFORT_SUPPORT,
+	FORK_AGENT_MODEL_SUPPORT,
+} from "./fork-agent-models";
+
 export interface AgentModelOption {
 	id: string;
 	label: string;
@@ -375,6 +380,7 @@ export const AGENT_MODEL_SUPPORT: readonly AgentModelSupport[] = [
 			{ id: "opencode", label: "OpenCode" },
 		],
 	},
+	...FORK_AGENT_MODEL_SUPPORT,
 ];
 
 export interface AgentEffortOption extends AgentModelOption {
@@ -661,6 +667,7 @@ export const AGENT_EFFORT_SUPPORT: readonly AgentEffortSupport[] = [
 		],
 		modelVariants: CURSOR_EFFORT_VARIANTS,
 	},
+	...FORK_AGENT_EFFORT_SUPPORT,
 ];
 
 /**

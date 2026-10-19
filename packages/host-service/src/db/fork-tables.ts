@@ -1,4 +1,37 @@
 const FORK_TABLES_SQL = `
+CREATE TABLE IF NOT EXISTS fork_jira_automations (
+ id text PRIMARY KEY NOT NULL, scope text NOT NULL, connection_id text NOT NULL,
+ project_id text NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+ name text NOT NULL, jql text NOT NULL, agent text NOT NULL, prompt text NOT NULL,
+ enabled integer NOT NULL DEFAULT 0, initialized integer NOT NULL DEFAULT 0,
+ checked_at integer, error text
+);
+CREATE TABLE IF NOT EXISTS fork_jira_automation_runs (
+ rule_id text NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
+ task_id text NOT NULL, task_key text NOT NULL, workspace_id text, error text,
+ created_at integer NOT NULL, PRIMARY KEY(rule_id, task_id)
+);
+CREATE TABLE IF NOT EXISTS fork_integration_settings (
+ scope text PRIMARY KEY NOT NULL, broker_url text NOT NULL
+);
+CREATE TABLE IF NOT EXISTS fork_integration_connections (
+ id text NOT NULL, scope text NOT NULL, provider text NOT NULL,
+ metadata text NOT NULL, secret text, PRIMARY KEY(scope, id)
+);
+CREATE INDEX IF NOT EXISTS fork_integration_connections_scope ON fork_integration_connections(scope);
+CREATE TABLE IF NOT EXISTS fork_integration_bindings (
+ scope text NOT NULL, project_id text NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+ repository text NOT NULL, connection_id text NOT NULL, remote text NOT NULL,
+ PRIMARY KEY(scope, project_id)
+);
+CREATE TABLE IF NOT EXISTS fork_external_task_links (
+ scope text NOT NULL, workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+ task_key text NOT NULL, task text NOT NULL, PRIMARY KEY(scope, workspace_id, task_key)
+);
+CREATE TABLE IF NOT EXISTS fork_workspace_pull_requests (
+ scope text NOT NULL, workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+ pull_request text NOT NULL, PRIMARY KEY(scope, workspace_id)
+);
 CREATE TABLE IF NOT EXISTS chat_quota_recovery (
  workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
  terminal_id text NOT NULL, switch_accounts integer NOT NULL, resume_at_reset integer NOT NULL,

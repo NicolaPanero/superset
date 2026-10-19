@@ -9,12 +9,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { type ReactNode, useState } from "react";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SiGithub } from "react-icons/si";
+import { ForkOnboardingConnections } from "renderer/components/ForkIntegrations/components/ForkOnboardingConnections/ForkOnboardingConnections";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { GhAuthDialog, type GhAuthDialogMode } from "./components/GhAuthDialog";
 import { OnboardingLanguageRow } from "./components/OnboardingLanguageRow";
 
 export const Route = createFileRoute("/_authenticated/onboarding/")({
-	component: OnboardingDashboardPage,
+	component: () => (
+		<ForkOnboardingConnections fallback={<OnboardingDashboardPage />} />
+	),
 });
 
 const PREREQ_POLL_MS = 4000;

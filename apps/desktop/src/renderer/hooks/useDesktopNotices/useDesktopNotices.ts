@@ -24,6 +24,8 @@ function getChannel(version: string): "stable" | "canary" {
 }
 
 interface UseDesktopNoticesResult {
+	/** True after the initial server notice request succeeds or fails. */
+	ready: boolean;
 	/** Highest-severity applicable notice to show on poll/boot, if any. */
 	current: DesktopNotice | null;
 	/** Applicable `pre-update` notice to confirm before installing an update. */
@@ -57,7 +59,7 @@ export function useDesktopNotices(): UseDesktopNoticesResult {
 	);
 
 	// Fails open: any fetch/parse error just means no notices this cycle.
-	const { data } = useQuery({
+	const { data, isPending } = useQuery({
 		queryKey: ["desktop-notices"],
 		queryFn: async () => {
 			const response = await fetch(
@@ -113,5 +115,5 @@ export function useDesktopNotices(): UseDesktopNoticesResult {
 	if (preview?.trigger === "pre-update") preUpdateNotice = preview;
 	else if (preview) current = preview;
 
-	return { current, preUpdateNotice, dismiss };
+	return { ready: !isPending, current, preUpdateNotice, dismiss };
 }

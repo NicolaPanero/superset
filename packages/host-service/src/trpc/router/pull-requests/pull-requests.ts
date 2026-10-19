@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { forkWithBitbucketPullRequests } from "../../../fork-integrations/fork-sidebar-pull-requests";
 import { protectedProcedure, router } from "../../index";
 import { addComment } from "./procedures/add-comment";
 import { createForWorkspace } from "./procedures/create-for-workspace";
@@ -22,10 +23,12 @@ export const pullRequestsRouter = router({
 			}),
 		)
 		.query(async ({ ctx, input }) => {
-			const workspaces =
+			const workspaces = forkWithBitbucketPullRequests(
+				ctx,
 				await ctx.runtime.pullRequests.getPullRequestsByWorkspaces(
 					input.workspaceIds,
-				);
+				),
+			);
 			// Why links may be stale: the sweep keeps existing links through a
 			// rate limit, outage, or rejected credential but cannot create new
 			// ones, and a workspace with no PR chip says nothing on its own.

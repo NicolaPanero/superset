@@ -1,5 +1,6 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { forkScopedExecGh } from "../../../../fork-integrations/fork-request-scope";
 import { getToolEnvironment } from "../../../../terminal/clean-shell-env";
 
 const execFileAsync = promisify(execFile);
@@ -25,6 +26,8 @@ export type ExecGh = (
 ) => Promise<unknown>;
 
 export const execGh: ExecGh = async (args, options) => {
+	const scoped = forkScopedExecGh(args, options);
+	if (scoped) return scoped;
 	const env = await getToolEnvironment();
 	const child = execFileAsync("gh", args, {
 		encoding: "utf8",

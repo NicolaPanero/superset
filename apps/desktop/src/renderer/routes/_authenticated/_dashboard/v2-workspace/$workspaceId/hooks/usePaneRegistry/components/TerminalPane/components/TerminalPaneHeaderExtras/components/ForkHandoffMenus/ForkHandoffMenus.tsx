@@ -7,7 +7,6 @@ import type {
 	CreateNewAgentSession,
 	OpenAgentChat,
 } from "../../../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
-import { AcpChatHandoffMenu } from "../AcpChatHandoffMenu";
 import { TerminalNativeHandoffMenu } from "../TerminalNativeHandoffMenu";
 
 export interface ForkHandoffMenusProps {
@@ -17,7 +16,7 @@ export interface ForkHandoffMenusProps {
 	createNewAgentSession: CreateNewAgentSession;
 }
 
-/** The fork's native handoff control: chat panes and terminal panes. */
+/** The fork's native handoff control for agent terminals. */
 export function ForkHandoffMenus({
 	workspaceId,
 	terminalId,
@@ -27,14 +26,9 @@ export function ForkHandoffMenus({
 	terminalId: string;
 	fork: ForkHandoffMenusProps;
 }) {
-	return fork.paneData.agentSurface === "acp" ? (
-		<AcpChatHandoffMenu
-			ctx={fork.ctx}
-			workspaceId={workspaceId}
-			data={fork.paneData}
-			onOpenAgentChat={fork.openAgentChat}
-		/>
-	) : (
+	// Chats switch agent and account from the composer's model and account controls.
+	if (fork.paneData.agentSurface === "acp") return null;
+	return (
 		<TerminalNativeHandoffMenu
 			workspaceId={workspaceId}
 			terminalId={terminalId}

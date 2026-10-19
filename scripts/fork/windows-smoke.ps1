@@ -21,6 +21,8 @@ try {
     # redirected output can return a null ExitCode even after a successful exit.
     & bun (Join-Path $PSScriptRoot "windows-native-smoke.ts") $executable (Join-Path $PSScriptRoot "windows-native-probe.cjs") $installation
     if ($LASTEXITCODE -ne 0) { throw "Installed native runtime failed with exit code $LASTEXITCODE" }
+    Write-Host "Checking project import through the installed host service"
+    & (Join-Path $PSScriptRoot "windows-import-smoke.ps1") -Installer $Installer -Installation $installation
     Write-Host "Checking installed conversion helpers and bundled CLI"
     $bin = Join-Path $installation "resources/resources/bin"
     & (Join-Path $bin "txcript-transfer.exe") capabilities

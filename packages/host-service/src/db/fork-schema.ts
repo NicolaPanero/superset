@@ -7,7 +7,104 @@ import {
 	uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import type { VerifiedNativeAgent } from "../session-transfer/registry";
-import { workspaces } from "./schema.ts";
+import { projects, workspaces } from "./schema.ts";
+
+export const forkJiraAutomations = sqliteTable("fork_jira_automations", {
+	id: text().primaryKey(),
+	scope: text().notNull(),
+	connectionId: text("connection_id").notNull(),
+	projectId: text("project_id")
+		.notNull()
+		.references(() => projects.id, { onDelete: "cascade" }),
+	name: text().notNull(),
+	jql: text().notNull(),
+	agent: text().notNull(),
+	prompt: text().notNull(),
+	enabled: integer({ mode: "boolean" }).notNull().default(false),
+	initialized: integer({ mode: "boolean" }).notNull().default(false),
+	checkedAt: integer("checked_at"),
+	error: text(),
+});
+
+export const forkJiraAutomationRuns = sqliteTable(
+	"fork_jira_automation_runs",
+	{
+		ruleId: text("rule_id")
+			.notNull()
+			.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+		taskId: text("task_id").notNull(),
+		taskKey: text("task_key").notNull(),
+		workspaceId: text("workspace_id"),
+		error: text(),
+		createdAt: integer("created_at").notNull(),
+	},
+	(table) => [primaryKey({ columns: [table.ruleId, table.taskId] })],
+);
+
+export const forkIntegrationSettings = sqliteTable(
+	"fork_integration_settings",
+	{
+		scope: text().primaryKey(),
+		brokerUrl: text("broker_url").notNull(),
+	},
+);
+export const forkIntegrationConnections = sqliteTable(
+	"fork_integration_connections",
+	{
+		id: text().notNull(),
+		scope: text().notNull(),
+		provider: text().notNull(),
+		metadata: text({ mode: "json" })
+			.notNull()
+			.$type<import("@superset/shared/fork-integrations").ForkConnection>(),
+		secret: text(),
+	},
+	(table) => [primaryKey({ columns: [table.scope, table.id] })],
+);
+export const forkIntegrationBindings = sqliteTable(
+	"fork_integration_bindings",
+	{
+		scope: text().notNull(),
+		projectId: text("project_id")
+			.notNull()
+			.references(() => projects.id, { onDelete: "cascade" }),
+		repository: text({ mode: "json" })
+			.notNull()
+			.$type<import("@superset/shared/fork-integrations").ForkRepositoryRef>(),
+		connectionId: text("connection_id").notNull(),
+		remote: text().notNull(),
+	},
+	(table) => [primaryKey({ columns: [table.scope, table.projectId] })],
+);
+export const forkExternalTaskLinks = sqliteTable(
+	"fork_external_task_links",
+	{
+		scope: text().notNull(),
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		taskKey: text("task_key").notNull(),
+		task: text({ mode: "json" })
+			.notNull()
+			.$type<import("@superset/shared/fork-integrations").ForkTaskLink>(),
+	},
+	(table) => [
+		primaryKey({ columns: [table.scope, table.workspaceId, table.taskKey] }),
+	],
+);
+export const forkWorkspacePullRequests = sqliteTable(
+	"fork_workspace_pull_requests",
+	{
+		scope: text().notNull(),
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		pullRequest: text("pull_request", { mode: "json" })
+			.notNull()
+			.$type<import("@superset/shared/fork-integrations").ForkPullRequest>(),
+	},
+	(table) => [primaryKey({ columns: [table.scope, table.workspaceId] })],
+);
 
 /**
  * Tables owned by the fork. They stay out of schema.ts and the drizzle

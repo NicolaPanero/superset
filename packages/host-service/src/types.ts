@@ -23,6 +23,7 @@ export interface HostServiceRuntime {
 }
 
 export interface HostServiceContext {
+	forkTransport?: typeof import("./fork-integrations/fork-http").forkFetch;
 	git: GitFactory;
 	credentials: GitCredentialProvider;
 	github: () => Promise<Octokit>;

@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
@@ -40,6 +40,9 @@ export function PullRequestsView({
 	selectedPrRepo = null,
 }: PullRequestsViewProps) {
 	const navigate = useNavigate();
+	const { forkProvider } = useSearch({ strict: false }) as {
+		forkProvider?: "bitbucket";
+	};
 	const {
 		search: storedSearch,
 		projectFilters: storedProjectFilters,
@@ -79,13 +82,20 @@ export function PullRequestsView({
 						params: { prNumber: String(selectedPrNumber) },
 						search: {
 							...search,
+							forkProvider,
 							project: selectedPrProjectId ?? undefined,
 							repo: selectedPrRepo ?? undefined,
 						},
 						replace: true,
 					})
 				: navigate({ to: "/pull-requests", search, replace: true }),
-		[navigate, selectedPrNumber, selectedPrProjectId, selectedPrRepo],
+		[
+			navigate,
+			selectedPrNumber,
+			selectedPrProjectId,
+			selectedPrRepo,
+			forkProvider,
+		],
 	);
 	const {
 		isReady: areProjectsReady,

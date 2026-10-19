@@ -6,7 +6,7 @@ import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 export function ForkCliOptionsSetting() {
 	const { hideCliOptions, setHideCliOptions } = useForkCliOptionsStore();
 	return (
-		<div className="flex items-center justify-between gap-4 border-t px-6 py-4">
+		<div className="flex items-center justify-between gap-6 px-5 py-4">
 			<div className="space-y-1">
 				<Label htmlFor="fork-cli-options">
 					<Trans>Hide CLI options</Trans>

@@ -2,6 +2,8 @@ import * as Sentry from "@sentry/node";
 import { isI18nErrorCause } from "@superset/trpc/i18n-error";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { forkRequestContext } from "../fork-integrations/fork-request-context";
+import { forkWithRequestScope } from "../fork-integrations/fork-request-scope";
 import {
 	inaccessiblePathMessage,
 	isPermissionDenied,
@@ -134,15 +136,18 @@ export const router = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const publicProcedure = baseProcedure;
 
-export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
-	if (!ctx.isAuthenticated) {
-		throw new TRPCError({
-			code: "UNAUTHORIZED",
-			message: "Invalid or missing authentication token.",
-		});
-	}
-	return next({ ctx });
-});
+export const protectedProcedure = baseProcedure.use(
+	async ({ ctx, next, getRawInput }) => {
+		if (!ctx.isAuthenticated) {
+			throw new TRPCError({
+				code: "UNAUTHORIZED",
+				message: "Invalid or missing authentication token.",
+			});
+		}
+		const scoped = forkRequestContext(ctx, await getRawInput());
+		return forkWithRequestScope(scoped, () => next({ ctx: scoped }));
+	},
+);
 
 /**
  * For procedures that only make sense on a machine someone owns.

@@ -73,10 +73,10 @@ test("removed accounts, 24-hour snapshots and account overflow are discarded", (
 });
 
 test("a disconnected system login cannot inherit a named profile's identity or quota", () => {
-	const btcore = {
+	const personal = {
 		...account,
-		selection: "/profiles/btcore",
-		accountKey: "btcore",
+		selection: "/profiles/personal",
+		accountKey: "personal",
 	};
 	const innovation = {
 		...account,
@@ -87,7 +87,7 @@ test("a disconnected system login cannot inherit a named profile's identity or q
 	const snapshots = new Map<string, UsageAccount>();
 	reconcileQuota([account], snapshots, now);
 	const result = reconcileQuota(
-		includeClaudeSystemLogin([btcore, innovation], now),
+		includeClaudeSystemLogin([personal, innovation], now),
 		snapshots,
 		now,
 	);
@@ -97,7 +97,7 @@ test("a disconnected system login cannot inherit a named profile's identity or q
 		status: "signed_out",
 		windows: [],
 	});
-	expect(result.slice(1)).toMatchObject([btcore, innovation]);
+	expect(result.slice(1)).toMatchObject([personal, innovation]);
 	expect([...snapshots.values()].some((row) => row.selection === null)).toBe(
 		false,
 	);

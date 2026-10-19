@@ -40,6 +40,7 @@ const extra = [
 	"packages/host-service/src/trpc/router/usage/default-account.test.ts",
 	"packages/host-service/src/trpc/router/workspace-creation/utils/workspace-naming-job.test.ts",
 	"packages/chat-runtime/src/harness/acp/cursorExtensions.test.ts",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/utils/uploadPastedFiles/uploadPastedFiles.test.ts",
 ];
 const files = suiteRoots.flatMap((directory) =>
 	readdirSync(resolve(root, directory), {

@@ -1,5 +1,4 @@
 import { expect, test } from "bun:test";
-import { randomUUID } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { recordCreatedBranch } from "../../src/trpc/router/workspace-cleanup/fork-branch-ownership";
@@ -131,27 +130,18 @@ test("forced local workspace removal preserves uncommitted files, branch and rem
 });
 
 test("one global delete-branch choice applies only to eligible branches in a mixed deletion batch", async () => {
-	const f = await createBasicScenario({
-		hostOptions: {
-			apiOverrides: {
-				"v2Workspace.trackCreated.mutate": () => ({ success: true }),
-			},
-		},
-	});
+	const f = await createFeatureWorktreeScenario({ branch: "owned-batch" });
 	try {
-		await f.repo.git.branch(["imported"]);
+		await recordCreatedBranch(f.repo.git, f.branch, f.featureWorkspaceId);
+		const importedPath = join(f.repo.repoPath, ".worktrees", "imported");
+		await f.repo.git.raw(["worktree", "add", "-b", "imported", importedPath]);
 		const head = await f.repo.git.revparse(["imported"]);
-		const create = async (branch: string) =>
-			(
-				await f.host.trpc.workspaces.create.mutate({
-					id: randomUUID(),
-					projectId: f.projectId,
-					branch,
-					skipBranchPrefix: true,
-				})
-			).workspace;
-		const imported = await create("imported"),
-			owned = await create("owned-batch");
+		const imported = seedWorkspace(f.host, {
+			projectId: f.projectId,
+			worktreePath: importedPath,
+			branch: "imported",
+		});
+		const owned = { id: f.featureWorkspaceId, branch: f.branch };
 		const previews = await Promise.all(
 			[imported, owned].map((ws) =>
 				f.host.trpc.workspaceCleanup.inspect.query({ workspaceId: ws.id }),

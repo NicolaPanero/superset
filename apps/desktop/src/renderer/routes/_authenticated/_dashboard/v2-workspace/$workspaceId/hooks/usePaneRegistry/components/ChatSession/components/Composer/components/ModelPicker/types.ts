@@ -1,6 +1,7 @@
 export type AgentChoice = {
 	presetId: string;
 	label: string;
+	icon?: string;
 	models: { id: string; label: string }[];
 };
 
@@ -12,4 +13,5 @@ export type AgentSwitcher = {
 		presetId: string,
 		model: { id: string; label: string } | null,
 	) => void;
+	onBrowse?: (presetId: string) => void;
 };
