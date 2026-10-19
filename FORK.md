@@ -63,7 +63,9 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Il selettore mostra tutti gli agenti come schede: modello ed effort
   dell’agente in uso si applicano subito; per un altro agente restano una
   bozza finché **Switch…** non apre la conferma, e chiudere il selettore la
-  annulla. Il tondino elenca gli account con la quota, la continuazione
+  annulla. Grok offre Grok 4.7, 4.6 e 4.5; l’effort compare solo con 4.6
+  (fino a xHigh) e 4.5 (fino a High), perché Grok 4.7 non ne dichiara.
+  Il tondino elenca gli account con la quota, la continuazione
   automatica, i reset del provider e la copia dell’ID sessione; scegliere un
   altro account apre la stessa conferma.
 - La conferma sceglie account, posizione (stessa chat, pannello affiancato o

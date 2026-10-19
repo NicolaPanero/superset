@@ -10,6 +10,7 @@ afterEach(cleanup);
 const configs = [
 	{ id: "claude", label: "Claude", presetId: "claude" },
 	{ id: "codex", label: "Codex", presetId: "codex" },
+	{ id: "grok", label: "Grok", presetId: "grok" },
 ];
 const data = {
 	terminalId: "terminal-1",
@@ -94,4 +95,33 @@ test("the chat's own agent applies a model at once", async () => {
 	await flush();
 	expect(onSelect).toHaveBeenCalledWith("model", "sonnet");
 	expect(view.queryByRole("menuitem", { name: "Switch…" })).toBeNull();
+});
+
+test("a browsed Grok tab offers the efforts of the picked model", async () => {
+	const onRequestSwitch = mock();
+	const view = render(
+		<ForkSessionModelPicker
+			configs={configs}
+			data={data}
+			configOptions={live}
+			onRequestSwitch={onRequestSwitch}
+		/>,
+	);
+	await openPicker(view);
+	fireEvent.click(view.getByLabelText("Grok"));
+	await flush();
+	fireEvent.click(row(view, "Grok 4.6"));
+	await flush();
+	fireEvent.keyDown(view.getByRole("slider"), {
+		key: "End",
+	});
+	await flush();
+	expect(view.getByText("Grok · Grok 4.6 · xHigh")).toBeTruthy();
+	fireEvent.click(view.getByRole("menuitem", { name: "Switch…" }));
+	await flush();
+	expect(onRequestSwitch).toHaveBeenCalledWith({
+		configId: "grok",
+		model: { id: "grok-4.6", label: "Grok 4.6" },
+		effort: { id: "xhigh", label: "xHigh" },
+	});
 });
