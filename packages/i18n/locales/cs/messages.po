@@ -4217,6 +4217,9 @@ msgstr "Komentář nenalezen"
 msgid "Comment not posted"
 msgstr "Komentář se nepodařilo odeslat"
 
+msgid "Comment on this line"
+msgstr "Okomentovat tento řádek"
+
 msgid "Comment on this page"
 msgstr "Okomentovat tuto stránku"
 
@@ -6051,6 +6054,9 @@ msgstr "{name} smazán"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Smazal(a) {deletedBy} {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Smazaný komentář"
+
 msgid "deleted or unavailable — pick another"
 msgstr "smazán nebo nedostupný — vyberte jiný"
 
@@ -7654,9 +7660,6 @@ msgstr "Soubor nenalezen"
 
 msgid "File open mode"
 msgstr "Režim otevírání souborů"
-
-msgid "File path"
-msgstr "Cesta k souboru"
 
 msgid "File viewer"
 msgstr "Prohlížeč souborů"
@@ -9653,9 +9656,6 @@ msgstr "Baví vás vývoj v Superset?"
 
 msgid "Lime"
 msgstr "Limetková"
-
-msgid "Line"
-msgstr "Řádek"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Požádat o zkušební verzi"
 msgid "Request Body"
 msgstr "Tělo požadavku"
 
+msgid "Request changes"
+msgstr "Požádat o změny"
+
 msgid "requested changes"
 msgstr "požádal(a) o změny"
 
@@ -14162,6 +14165,9 @@ msgstr "Vyřešit vlákno"
 
 msgid "Resolved"
 msgstr "Vyřešeno"
+
+msgid "Resolved · show"
+msgstr "Vyřešeno · zobrazit"
 
 msgid "Resource consumption"
 msgstr "Spotřeba prostředků"
@@ -19357,6 +19363,9 @@ msgstr "s přílohou i bez ní"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "S mobilní aplikací Superset mohu řešit problémy v produkci odkudkoli."
+
+msgid "Withdraw change request"
+msgstr "Stáhnout žádost o změny"
 
 msgid "Wordmark, black"
 msgstr "Logotyp, černý"

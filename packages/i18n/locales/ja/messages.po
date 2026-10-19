@@ -4217,6 +4217,9 @@ msgstr "コメントが見つかりません"
 msgid "Comment not posted"
 msgstr "コメントを投稿できませんでした"
 
+msgid "Comment on this line"
+msgstr "この行にコメント"
+
 msgid "Comment on this page"
 msgstr "このページにコメント"
 
@@ -6051,6 +6054,9 @@ msgstr "{name}を削除しました"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "{deletedBy} が{deletedWhen}に削除 · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "削除されたコメント"
+
 msgid "deleted or unavailable — pick another"
 msgstr "削除済みまたは利用不可 — 別のものを選んでください"
 
@@ -7654,9 +7660,6 @@ msgstr "ファイルが見つかりません"
 
 msgid "File open mode"
 msgstr "ファイルの開き方"
-
-msgid "File path"
-msgstr "ファイルパス"
 
 msgid "File viewer"
 msgstr "ファイルビューア"
@@ -9653,9 +9656,6 @@ msgstr "Supersetでの開発は気に入りましたか?"
 
 msgid "Lime"
 msgstr "ライム"
-
-msgid "Line"
-msgstr "行"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "トライアルを申し込む"
 msgid "Request Body"
 msgstr "リクエストボディ"
 
+msgid "Request changes"
+msgstr "変更をリクエスト"
+
 msgid "requested changes"
 msgstr "が変更をリクエストしました"
 
@@ -14162,6 +14165,9 @@ msgstr "スレッドを解決"
 
 msgid "Resolved"
 msgstr "解決済み"
+
+msgid "Resolved · show"
+msgstr "解決済み · 表示"
 
 msgid "Resource consumption"
 msgstr "リソース消費"
@@ -19357,6 +19363,9 @@ msgstr "添付の有無を問わず"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Supersetのモバイルアプリがあれば、どこからでも本番環境の問題に対応できます。"
+
+msgid "Withdraw change request"
+msgstr "変更リクエストを取り下げ"
 
 msgid "Wordmark, black"
 msgstr "ワードマーク（黒）"

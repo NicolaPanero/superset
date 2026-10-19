@@ -4217,6 +4217,9 @@ msgstr "Commento non trovato"
 msgid "Comment not posted"
 msgstr "Commento non pubblicato"
 
+msgid "Comment on this line"
+msgstr "Commenta questa riga"
+
 msgid "Comment on this page"
 msgstr "Commenta questa pagina"
 
@@ -6051,6 +6054,9 @@ msgstr "{name} eliminato"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Eliminato da {deletedBy} {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Commento eliminato"
+
 msgid "deleted or unavailable — pick another"
 msgstr "eliminato o non disponibile — scegline un altro"
 
@@ -7654,9 +7660,6 @@ msgstr "File non trovato"
 
 msgid "File open mode"
 msgstr "Modalità di apertura dei file"
-
-msgid "File path"
-msgstr "Percorso del file"
 
 msgid "File viewer"
 msgstr "Visualizzatore di file"
@@ -9653,9 +9656,6 @@ msgstr "Ti piace creare con Superset?"
 
 msgid "Lime"
 msgstr "Lime"
-
-msgid "Line"
-msgstr "Riga"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Richiedi una prova"
 msgid "Request Body"
 msgstr "Corpo della richiesta"
 
+msgid "Request changes"
+msgstr "Richiedi modifiche"
+
 msgid "requested changes"
 msgstr "ha richiesto modifiche"
 
@@ -14162,6 +14165,9 @@ msgstr "Risolvi il thread"
 
 msgid "Resolved"
 msgstr "Risolto"
+
+msgid "Resolved · show"
+msgstr "Risolto · mostra"
 
 msgid "Resource consumption"
 msgstr "Consumo di risorse"
@@ -19357,6 +19363,9 @@ msgstr "con o senza allegati"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Con l’app mobile di Superset posso risolvere i problemi in produzione ovunque mi trovi."
+
+msgid "Withdraw change request"
+msgstr "Ritira la richiesta di modifiche"
 
 msgid "Wordmark, black"
 msgstr "Logotipo, nero"

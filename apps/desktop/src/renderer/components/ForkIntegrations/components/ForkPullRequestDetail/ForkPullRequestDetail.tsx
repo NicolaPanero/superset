@@ -15,6 +15,24 @@ import { CommentBody } from "renderer/components/CommentBody";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
 import { ForkServiceNotice } from "../ForkServiceNotice";
+import { ForkCommentThread } from "./components/ForkCommentThread";
+import { ForkPullRequestDiff } from "./components/ForkPullRequestDiff";
+import { ForkPullRequestReviewers } from "./components/ForkPullRequestReviewers";
+import { forkReviewThreads } from "./utils/forkReviewThreads";
+
+type PullRequestAction =
+	| "merge"
+	| "close"
+	| "reopen"
+	| "approve"
+	| "unapprove"
+	| "request-changes"
+	| "unrequest-changes"
+	| "comment"
+	| "reply"
+	| "resolve"
+	| "unresolve"
+	| "edit";
 
 type MergeMethod =
 	| "merge_commit"
@@ -68,8 +86,6 @@ export function ForkPullRequestDetail({
 			(pullRequest.defaultMergeMethod as MergeMethod | undefined) ??
 				"merge_commit",
 		);
-	const [inlinePath, setInlinePath] = useState(""),
-		[inlineLine, setInlineLine] = useState("");
 	const comments = useInfiniteQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",
@@ -79,7 +95,7 @@ export function ForkPullRequestDetail({
 		queryFn: ({ pageParam }) =>
 			required(client).forkScm.comments.query({ ...target, cursor: pageParam }),
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
-		enabled: !!client && tab === "conversation",
+		enabled: !!client && tab !== "checks",
 	});
 	const diff = useQuery({
 		refetchOnReconnect: true,
@@ -100,27 +116,25 @@ export function ForkPullRequestDetail({
 	const action = useMutation({
 		networkMode: "always",
 		retry: false,
-		mutationFn: (
-			action:
-				| "merge"
-				| "close"
-				| "reopen"
-				| "approve"
-				| "unapprove"
-				| "comment"
-				| "edit",
-		) =>
+		mutationFn: ({
+			action,
+			...extra
+		}: {
+			action: PullRequestAction;
+			body?: string;
+			commentId?: string;
+			path?: string;
+			line?: number;
+		}) =>
 			required(client).forkScm.action.mutate({
 				...target,
 				action,
 				head: pr.headCommit,
 				method: pr.repository.provider === "github" ? "merge" : method,
-				...(action === "edit" ? { title, body: description } : { body }),
-				...(inlinePath && inlineLine
-					? { path: inlinePath, line: Number(inlineLine) }
-					: {}),
+				...(action === "edit" ? { title, body: description } : {}),
+				...extra,
 			}),
-		onSuccess: (_, kind) => {
+		onSuccess: (_, { action: kind }) => {
 			if (kind === "merge") setMerging(true);
 			setBody("");
 			setEdit(false);
@@ -129,6 +143,14 @@ export function ForkPullRequestDetail({
 			void cache.invalidateQueries({ queryKey: ["pullRequests"] });
 		},
 	});
+	const act = (kind: PullRequestAction) => action.mutate({ action: kind });
+	const allComments = comments.data?.pages.flatMap((page) => page.items) ?? [];
+	const threads = forkReviewThreads(allComments);
+	const bitbucket = pr.repository.provider === "bitbucket";
+	const reply = (commentId: string, text: string) =>
+		action.mutateAsync({ action: "reply", commentId, body: text });
+	const resolve = (commentId: string, resolved: boolean) =>
+		action.mutate({ action: resolved ? "resolve" : "unresolve", commentId });
 	const errors = [
 		action.error,
 		detail.error,
@@ -193,6 +215,7 @@ export function ForkPullRequestDetail({
 			<p className="break-all font-mono text-xs text-muted-foreground">
 				{pr.sourceBranch} → {pr.targetBranch}
 			</p>
+			<ForkPullRequestReviewers reviewers={pr.reviewers ?? []} />
 			{edit ? (
 				<div className="space-y-2">
 					<Input
@@ -205,11 +228,7 @@ export function ForkPullRequestDetail({
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
-					<Button
-						size="sm"
-						disabled={busy}
-						onClick={() => action.mutate("edit")}
-					>
+					<Button size="sm" disabled={busy} onClick={() => act("edit")}>
 						<Trans>Save</Trans>
 					</Button>
 				</div>
@@ -228,7 +247,7 @@ export function ForkPullRequestDetail({
 							size="sm"
 							variant="outline"
 							disabled={busy}
-							onClick={() => action.mutate("approve")}
+							onClick={() => act("approve")}
 						>
 							<Trans>Approve</Trans>
 						</Button>
@@ -236,10 +255,30 @@ export function ForkPullRequestDetail({
 							size="sm"
 							variant="outline"
 							disabled={busy}
-							onClick={() => action.mutate("unapprove")}
+							onClick={() => act("unapprove")}
 						>
 							<Trans>Remove approval</Trans>
 						</Button>
+						{bitbucket && (
+							<Button
+								size="sm"
+								variant="outline"
+								disabled={busy}
+								onClick={() => act("request-changes")}
+							>
+								<Trans>Request changes</Trans>
+							</Button>
+						)}
+						{bitbucket && (
+							<Button
+								size="sm"
+								variant="ghost"
+								disabled={busy}
+								onClick={() => act("unrequest-changes")}
+							>
+								<Trans>Withdraw change request</Trans>
+							</Button>
+						)}
 						<Button size="sm" disabled={busy} onClick={() => setMerge(true)}>
 							{merging ? <Trans>Pending</Trans> : <Trans>Merge</Trans>}
 						</Button>
@@ -247,7 +286,7 @@ export function ForkPullRequestDetail({
 							size="sm"
 							variant="ghost"
 							disabled={busy}
-							onClick={() => action.mutate("close")}
+							onClick={() => act("close")}
 						>
 							<Trans>Close</Trans>
 						</Button>
@@ -259,7 +298,7 @@ export function ForkPullRequestDetail({
 						size="sm"
 						variant="outline"
 						disabled={busy}
-						onClick={() => action.mutate("reopen")}
+						onClick={() => act("reopen")}
 					>
 						<Trans>Reopen</Trans>
 					</Button>
@@ -279,11 +318,7 @@ export function ForkPullRequestDetail({
 							</option>
 						))}
 					</select>
-					<Button
-						size="sm"
-						disabled={busy}
-						onClick={() => action.mutate("merge")}
-					>
+					<Button size="sm" disabled={busy} onClick={() => act("merge")}>
 						<Trans>Confirm merge</Trans>
 					</Button>
 					<Button size="sm" variant="ghost" onClick={() => setMerge(false)}>
@@ -316,19 +351,16 @@ export function ForkPullRequestDetail({
 			</div>
 			{tab === "conversation" && (
 				<div className="space-y-3">
-					{comments.data?.pages
-						.flatMap((p) => p.items)
-						.map((c) => (
-							<article key={c.id} className="rounded-lg border p-3">
-								<p className="mb-2 text-xs font-medium">
-									{c.author}
-									{c.path ? ` · ${c.path}:${c.line ?? ""}` : ""}
-								</p>
-								<div className="min-w-0 overflow-x-auto break-words text-sm">
-									<CommentBody body={c.body} />
-								</div>
-							</article>
-						))}
+					{threads.map((thread) => (
+						<ForkCommentThread
+							key={thread.root.id}
+							thread={thread}
+							busy={busy}
+							canReply={bitbucket}
+							onReply={reply}
+							onResolve={resolve}
+						/>
+					))}
 					{comments.hasNextPage && (
 						<Button
 							variant="ghost"
@@ -344,42 +376,37 @@ export function ForkPullRequestDetail({
 						value={body}
 						onChange={(e) => setBody(e.target.value)}
 					/>
-					<div className="flex gap-2">
-						<Input
-							aria-label={t({ message: "File path" })}
-							placeholder={t({ message: "File path" })}
-							value={inlinePath}
-							onChange={(e) => setInlinePath(e.target.value)}
-						/>
-						<Input
-							className="w-24"
-							aria-label={t({ message: "Line" })}
-							placeholder={t({ message: "Line" })}
-							type="number"
-							min="1"
-							value={inlineLine}
-							onChange={(e) => setInlineLine(e.target.value)}
-						/>
-					</div>
 					<Button
 						size="sm"
 						disabled={!body.trim() || action.isPending}
-						onClick={() => action.mutate("comment")}
+						onClick={() => action.mutate({ action: "comment", body })}
 					>
 						<Trans>Add comment</Trans>
 					</Button>
 				</div>
 			)}
-			{tab === "code" && (
-				<pre className="overflow-x-auto rounded-lg border bg-muted/20 p-4 font-mono text-xs">
-					{diff.data ??
-						(diff.isPending
+			{tab === "code" &&
+				(diff.data !== undefined ? (
+					<ForkPullRequestDiff
+						diff={diff.data}
+						threads={threads}
+						busy={busy}
+						canComment={bitbucket}
+						onComment={(path, line, text) =>
+							action.mutateAsync({ action: "comment", body: text, path, line })
+						}
+						onReply={reply}
+						onResolve={resolve}
+					/>
+				) : (
+					<p className="text-sm text-muted-foreground">
+						{diff.isPending
 							? t({ message: "Loading..." })
 							: isForkServiceUnavailable(diff.error)
 								? ""
-								: diff.error?.message)}
-				</pre>
-			)}
+								: diff.error?.message}
+					</p>
+				))}
 			{tab === "checks" && (
 				<div className="space-y-2">
 					{checks.data?.map((c) => (

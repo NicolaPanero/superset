@@ -4217,6 +4217,9 @@ msgstr "Opmerking niet gevonden"
 msgid "Comment not posted"
 msgstr "Opmerking niet geplaatst"
 
+msgid "Comment on this line"
+msgstr "Reageren op deze regel"
+
 msgid "Comment on this page"
 msgstr "Reageren op deze pagina"
 
@@ -6051,6 +6054,9 @@ msgstr "{name} verwijderd"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Verwijderd door {deletedBy} {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Verwijderde opmerking"
+
 msgid "deleted or unavailable — pick another"
 msgstr "verwijderd of niet beschikbaar — kies een andere"
 
@@ -7654,9 +7660,6 @@ msgstr "Bestand niet gevonden"
 
 msgid "File open mode"
 msgstr "Openmodus voor bestanden"
-
-msgid "File path"
-msgstr "Bestandspad"
 
 msgid "File viewer"
 msgstr "Bestandsviewer"
@@ -9653,9 +9656,6 @@ msgstr "Bouw je graag met Superset?"
 
 msgid "Lime"
 msgstr "Limoen"
-
-msgid "Line"
-msgstr "Regel"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Proefperiode aanvragen"
 msgid "Request Body"
 msgstr "Request body"
 
+msgid "Request changes"
+msgstr "Wijzigingen aanvragen"
+
 msgid "requested changes"
 msgstr "heeft wijzigingen aangevraagd"
 
@@ -14162,6 +14165,9 @@ msgstr "Thread oplossen"
 
 msgid "Resolved"
 msgstr "Opgelost"
+
+msgid "Resolved · show"
+msgstr "Opgelost · tonen"
 
 msgid "Resource consumption"
 msgstr "Resourcegebruik"
@@ -19357,6 +19363,9 @@ msgstr "met of zonder bijlagen"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Met de mobiele app van Superset kan ik overal productieproblemen aanpakken."
+
+msgid "Withdraw change request"
+msgstr "Wijzigingsverzoek intrekken"
 
 msgid "Wordmark, black"
 msgstr "Woordmerk, zwart"

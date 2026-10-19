@@ -4217,6 +4217,9 @@ msgstr "Komentar tidak ditemukan"
 msgid "Comment not posted"
 msgstr "Komentar tidak terkirim"
 
+msgid "Comment on this line"
+msgstr "Komentari baris ini"
+
 msgid "Comment on this page"
 msgstr "Komentari halaman ini"
 
@@ -6051,6 +6054,9 @@ msgstr "Menghapus {name}"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Dihapus oleh {deletedBy} {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Komentar dihapus"
+
 msgid "deleted or unavailable — pick another"
 msgstr "dihapus atau tidak tersedia — pilih yang lain"
 
@@ -7654,9 +7660,6 @@ msgstr "File tidak ditemukan"
 
 msgid "File open mode"
 msgstr "Mode buka file"
-
-msgid "File path"
-msgstr "Jalur file"
 
 msgid "File viewer"
 msgstr "Penampil file"
@@ -9653,9 +9656,6 @@ msgstr "Suka membangun dengan Superset?"
 
 msgid "Lime"
 msgstr "Limau"
-
-msgid "Line"
-msgstr "Baris"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Minta uji coba"
 msgid "Request Body"
 msgstr "Body Permintaan"
 
+msgid "Request changes"
+msgstr "Minta perubahan"
+
 msgid "requested changes"
 msgstr "meminta perubahan"
 
@@ -14162,6 +14165,9 @@ msgstr "Selesaikan thread"
 
 msgid "Resolved"
 msgstr "Terselesaikan"
+
+msgid "Resolved · show"
+msgstr "Terselesaikan · tampilkan"
 
 msgid "Resource consumption"
 msgstr "Konsumsi sumber daya"
@@ -19357,6 +19363,9 @@ msgstr "dengan atau tanpa lampiran"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Dengan aplikasi seluler Superset, saya bisa menangani masalah produksi dari mana saja."
+
+msgid "Withdraw change request"
+msgstr "Tarik permintaan perubahan"
 
 msgid "Wordmark, black"
 msgstr "Wordmark, hitam"

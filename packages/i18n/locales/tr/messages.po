@@ -4217,6 +4217,9 @@ msgstr "Yorum bulunamadı"
 msgid "Comment not posted"
 msgstr "Yorum gönderilmedi"
 
+msgid "Comment on this line"
+msgstr "Bu satıra yorum yap"
+
 msgid "Comment on this page"
 msgstr "Bu sayfaya yorum yap"
 
@@ -6051,6 +6054,9 @@ msgstr "{name} silindi"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "{deletedBy} tarafından {deletedWhen} silindi · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Silinmiş yorum"
+
 msgid "deleted or unavailable — pick another"
 msgstr "silinmiş veya kullanılamıyor — başka birini seçin"
 
@@ -7654,9 +7660,6 @@ msgstr "Dosya bulunamadı"
 
 msgid "File open mode"
 msgstr "Dosya açma modu"
-
-msgid "File path"
-msgstr "Dosya yolu"
 
 msgid "File viewer"
 msgstr "Dosya görüntüleyici"
@@ -9653,9 +9656,6 @@ msgstr "Superset ile geliştirmeyi seviyor musunuz?"
 
 msgid "Lime"
 msgstr "Limon yeşili"
-
-msgid "Line"
-msgstr "Satır"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Deneme talep et"
 msgid "Request Body"
 msgstr "İstek gövdesi"
 
+msgid "Request changes"
+msgstr "Değişiklik iste"
+
 msgid "requested changes"
 msgstr "değişiklik istedi"
 
@@ -14162,6 +14165,9 @@ msgstr "Konuyu çöz"
 
 msgid "Resolved"
 msgstr "Çözüldü"
+
+msgid "Resolved · show"
+msgstr "Çözüldü · göster"
 
 msgid "Resource consumption"
 msgstr "Kaynak tüketimi"
@@ -19357,6 +19363,9 @@ msgstr "ekli veya eksiz"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Superset mobil uygulamasıyla üretim ortamındaki sorunlara her yerden müdahale edebiliyorum."
+
+msgid "Withdraw change request"
+msgstr "Değişiklik isteğini geri çek"
 
 msgid "Wordmark, black"
 msgstr "Yazı logosu, siyah"

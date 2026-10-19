@@ -4,7 +4,10 @@ import type {
 	ForkRepository,
 	ForkRepositoryRef,
 } from "@superset/shared/fork-integrations";
-import { FORK_PROVIDER_DEFINITIONS } from "@superset/shared/fork-integrations";
+import {
+	FORK_PROVIDER_DEFINITIONS,
+	forkRepositoryKey,
+} from "@superset/shared/fork-integrations";
 import { TRPCError } from "@trpc/server";
 import type { ForkApi } from "./fork-api";
 import { forkAvailability } from "./fork-availability";
@@ -14,6 +17,9 @@ import type { ForkSourceControlProvider } from "./fork-provider";
 
 interface BBUser {
 	display_name: string;
+	nickname?: string;
+	uuid?: string;
+	links?: { avatar?: { href: string } };
 }
 export interface BBRepo {
 	uuid: string;
@@ -44,6 +50,12 @@ interface BBPull {
 	};
 	updated_on: string;
 	links: { html: { href: string } };
+	participants?: {
+		user: BBUser;
+		role: string;
+		approved: boolean;
+		state?: string | null;
+	}[];
 }
 interface GHPull {
 	number: number;
@@ -75,6 +87,14 @@ export interface ForkPage<T> {
 	nextCursor: string | null;
 }
 const part = (s: string) => encodeURIComponent(s);
+const commitChecksCache = new Map<
+	string,
+	{
+		value: Awaited<ReturnType<ForkScmProvider["commitChecks"]>>;
+		at: number;
+		final: boolean;
+	}
+>();
 function repoPath(r: ForkRepositoryRef) {
 	return r.provider === "github"
 		? `/repos/${part(r.owner)}/${part(r.name)}`
@@ -94,7 +114,7 @@ function bbPR(
 		url: p.links.html.href,
 		state:
 			p.state === "MERGED" ? "merged" : p.state === "OPEN" ? "open" : "closed",
-		author: p.author.display_name,
+		author: p.author.nickname ?? p.author.display_name,
 		sourceBranch: p.source.branch.name,
 		targetBranch: p.destination.branch.name,
 		headCommit: p.source.commit.hash,
@@ -109,6 +129,22 @@ function bbPR(
 		mergeMethods: p.destination.branch.merge_strategies,
 		defaultMergeMethod: p.destination.branch.default_merge_strategy,
 		isDraft: p.draft ?? false,
+		...(p.participants
+			? {
+					reviewers: p.participants
+						.filter((x) => x.role === "REVIEWER" || x.approved || x.state)
+						.map((x) => ({
+							name: x.user.display_name,
+							avatarUrl: x.user.links?.avatar?.href ?? null,
+							state:
+								x.state === "changes_requested"
+									? ("changes_requested" as const)
+									: x.approved
+										? ("approved" as const)
+										: ("pending" as const),
+						})),
+				}
+			: {}),
 	};
 }
 function ghPR(
@@ -166,6 +202,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 		input: {
 			query?: string;
 			author?: string;
+			reviewer?: string;
 			includeClosed?: boolean;
 			mergedOnly?: boolean;
 			page: number;
@@ -209,6 +246,8 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					)
 					.join(" OR ")})`,
 			);
+		if (input.reviewer)
+			filters.push(`reviewers.uuid=${JSON.stringify(input.reviewer)}`);
 		if (filters.length) params.set("q", filters.join(" AND "));
 		const data = await this.api.request<{
 			values: BBPull[];
@@ -429,6 +468,9 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				content: { raw: string };
 				created_on: string;
 				inline?: { path: string; to?: number; from?: number };
+				parent?: { id: number };
+				deleted?: boolean;
+				resolution?: unknown;
 			}[];
 			next?: string;
 		}>(id, cursor ?? `${prefix}?pagelen=100`);
@@ -438,6 +480,9 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				author: c.user.display_name,
 				body: c.content.raw,
 				createdAt: c.created_on,
+				...(c.parent ? { parentId: String(c.parent.id) } : {}),
+				...(c.deleted ? { deleted: true } : {}),
+				...(c.resolution ? { resolved: true } : {}),
 				...(c.inline
 					? { path: c.inline.path, line: c.inline.to ?? c.inline.from }
 					: {}),
@@ -509,11 +554,81 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					description: data.description,
 					source: { branch: { name: data.source } },
 					destination: { branch: { name: data.target } },
+					reviewers: await this.defaultReviewers(id, r),
 				},
 			),
 			r,
 			id,
 		);
+	}
+	/** The repository's default reviewers, without the author. */
+	async defaultReviewers(
+		id: string,
+		r: ForkRepositoryRef,
+	): Promise<{ uuid: string }[]> {
+		const me = this.api.connection(id).identity?.id;
+		try {
+			const d = await this.api.request<{
+				values: { user: { uuid: string } }[];
+			}>(id, `${repoPath(r)}/effective-default-reviewers?pagelen=100`);
+			return d.values
+				.map((v) => ({ uuid: v.user.uuid }))
+				.filter((v) => v.uuid !== me);
+		} catch {
+			return [];
+		}
+	}
+	/**
+	 * Build status of a commit for the pull request list. Finished results never
+	 * change, so they stay cached; running ones are read again after a minute.
+	 */
+	async commitChecks(
+		id: string,
+		r: ForkRepositoryRef,
+		commit: string,
+	): Promise<{
+		status: "success" | "failure" | "pending" | "none";
+		checks: {
+			name: string;
+			status: "success" | "failure" | "pending";
+			url: string | null;
+		}[];
+	}> {
+		const key = `${forkRepositoryKey(r)}:${commit}`;
+		const cached = commitChecksCache.get(key);
+		if (cached && (cached.final || Date.now() - cached.at < 60_000))
+			return cached.value;
+		const d = await this.api.request<{
+			values: { key: string; name?: string; state: string; url?: string }[];
+		}>(id, `${repoPath(r)}/commit/${part(commit)}/statuses?pagelen=100`);
+		const checks = d.values.map((s) => ({
+			name: s.name || s.key,
+			status:
+				s.state === "SUCCESSFUL"
+					? ("success" as const)
+					: s.state === "INPROGRESS"
+						? ("pending" as const)
+						: ("failure" as const),
+			url: s.url ?? null,
+		}));
+		const status = checks.some((c) => c.status === "failure")
+			? "failure"
+			: checks.some((c) => c.status === "pending")
+				? "pending"
+				: checks.length
+					? "success"
+					: "none";
+		const value = { status, checks } as const;
+		if (commitChecksCache.size >= 500) {
+			const oldest = commitChecksCache.keys().next().value;
+			if (oldest) commitChecksCache.delete(oldest);
+		}
+		commitChecksCache.set(key, {
+			value,
+			at: Date.now(),
+			final: status === "success" || status === "failure",
+		});
+		return value;
 	}
 	async action(
 		id: string,
@@ -525,9 +640,15 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			| "reopen"
 			| "approve"
 			| "unapprove"
+			| "request-changes"
+			| "unrequest-changes"
 			| "comment"
+			| "reply"
+			| "resolve"
+			| "unresolve"
 			| "edit",
 		data: {
+			commentId?: string;
 			body?: string;
 			title?: string;
 			method?: string;
@@ -586,6 +707,35 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					: {}),
 			});
 		}
+		if (r.provider === "bitbucket") {
+			if (action === "request-changes" || action === "unrequest-changes")
+				return this.api.request(
+					id,
+					`${path}/request-changes`,
+					action === "request-changes" ? "POST" : "DELETE",
+				);
+			if (action === "reply")
+				return this.api.request(id, `${path}/comments`, "POST", {
+					content: { raw: data.body },
+					parent: { id: Number(data.commentId) },
+				});
+			if (action === "resolve" || action === "unresolve")
+				return this.api.request(
+					id,
+					`${path}/comments/${part(data.commentId ?? "")}/resolve`,
+					action === "resolve" ? "POST" : "DELETE",
+				);
+		} else if (
+			action === "request-changes" ||
+			action === "unrequest-changes" ||
+			action === "reply" ||
+			action === "resolve" ||
+			action === "unresolve"
+		)
+			throw new TRPCError({
+				code: "BAD_REQUEST",
+				message: "Manage this review on GitHub",
+			});
 		if (action === "approve" || action === "unapprove") {
 			if (r.provider === "github") {
 				if (action === "unapprove")

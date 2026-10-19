@@ -472,6 +472,25 @@ export const forkScmRouter = router({
 					code: "NOT_FOUND",
 					message: "Project not found",
 				});
+			const existing = ctx.db
+				.select({
+					workspaceId: forkWorkspacePullRequests.workspaceId,
+					pullRequest: forkWorkspacePullRequests.pullRequest,
+				})
+				.from(forkWorkspacePullRequests)
+				.innerJoin(
+					workspaces,
+					eq(workspaces.id, forkWorkspacePullRequests.workspaceId),
+				)
+				.where(eq(forkWorkspacePullRequests.scope, ctx.organizationId))
+				.all()
+				.find(
+					(row) =>
+						row.pullRequest.number === input.number &&
+						forkRepositoryKey(row.pullRequest.repository) ===
+							forkRepositoryKey(input.repository),
+				);
+			if (existing) return { workspaceId: existing.workspaceId };
 			const { scm } = services(ctx),
 				pr = await scm.get(input.connectionId, input.repository, input.number);
 			const git = await ctx.git(project.repoPath),
@@ -661,9 +680,18 @@ export const forkScmRouter = router({
 					"reopen",
 					"approve",
 					"unapprove",
+					"request-changes",
+					"unrequest-changes",
 					"comment",
+					"reply",
+					"resolve",
+					"unresolve",
 					"edit",
 				]),
+				commentId: z
+					.string()
+					.regex(/^\d{1,20}$/)
+					.optional(),
 				body: z.string().max(65000).optional(),
 				title: z.string().min(1).max(500).optional(),
 				method: z

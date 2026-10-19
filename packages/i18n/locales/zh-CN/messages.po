@@ -4217,6 +4217,9 @@ msgstr "未找到评论"
 msgid "Comment not posted"
 msgstr "评论未发布"
 
+msgid "Comment on this line"
+msgstr "评论这一行"
+
 msgid "Comment on this page"
 msgstr "评论这个页面"
 
@@ -6051,6 +6054,9 @@ msgstr "已删除{name}"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "{deletedBy} {deletedWhen}删除 · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "已删除的评论"
+
 msgid "deleted or unavailable — pick another"
 msgstr "已删除或不可用，请另选一个"
 
@@ -7654,9 +7660,6 @@ msgstr "未找到文件"
 
 msgid "File open mode"
 msgstr "文件打开方式"
-
-msgid "File path"
-msgstr "文件路径"
 
 msgid "File viewer"
 msgstr "文件查看器"
@@ -9653,9 +9656,6 @@ msgstr "喜欢用Superset开发吗？"
 
 msgid "Lime"
 msgstr "青柠色"
-
-msgid "Line"
-msgstr "行"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "申请试用"
 msgid "Request Body"
 msgstr "请求体"
 
+msgid "Request changes"
+msgstr "请求更改"
+
 msgid "requested changes"
 msgstr "请求了更改"
 
@@ -14162,6 +14165,9 @@ msgstr "解决讨论串"
 
 msgid "Resolved"
 msgstr "已解决"
+
+msgid "Resolved · show"
+msgstr "已解决 · 显示"
 
 msgid "Resource consumption"
 msgstr "资源占用"
@@ -19357,6 +19363,9 @@ msgstr "有无附件均可"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "有了 Superset 手机应用，我可以随时随地处理生产环境问题。"
+
+msgid "Withdraw change request"
+msgstr "撤回更改请求"
 
 msgid "Wordmark, black"
 msgstr "文字标志，黑色"

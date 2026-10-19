@@ -68,6 +68,12 @@ export interface ForkPullRequest {
 	mergeMethods?: string[];
 	defaultMergeMethod?: string;
 	isDraft?: boolean;
+	reviewers?: ForkReviewer[];
+}
+export interface ForkReviewer {
+	name: string;
+	avatarUrl: string | null;
+	state: "approved" | "changes_requested" | "pending";
 }
 export interface ForkComment {
 	id: string;
@@ -76,6 +82,9 @@ export interface ForkComment {
 	createdAt: string;
 	path?: string;
 	line?: number;
+	parentId?: string;
+	resolved?: boolean;
+	deleted?: boolean;
 }
 export interface ForkTask {
 	id: string;

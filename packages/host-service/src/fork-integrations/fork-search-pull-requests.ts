@@ -13,6 +13,13 @@ import { type ForkScmProject, forkScmProjects } from "./fork-projects";
 import { ForkScmProvider } from "./fork-scm";
 import { ForkConnectionStore } from "./fork-store";
 
+/** Bitbucket can filter on the viewer as a reviewer, not on review state. */
+const BITBUCKET_REVIEW_FILTERS = new Set([
+	"review-requested",
+	"team-review-requested",
+]);
+const GITHUB_LOGIN = /^(?!.*--)[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?(?:\[bot\])?$/i;
+
 export const forkPullRequestSearchInput = z.object({
 	projectId: z.string(),
 	projectIds: z.array(z.string()).min(1).max(50).optional(),
@@ -66,6 +73,8 @@ export async function forkSearchPullRequests(
 		connections: store.list(),
 		bitbucket: (id, repository, query) =>
 			scm.searchBitbucket(id, repository, query),
+		checks: (id, repository, commit) =>
+			scm.commitChecks(id, repository, commit),
 		github: (query) =>
 			workspaceCreationRouter.createCaller(ctx).searchPullRequests(query),
 	});
@@ -78,6 +87,7 @@ export async function forkSearchProviderPullRequests(
 		projects: ForkScmProject[];
 		connections: ForkConnection[];
 		bitbucket: ForkScmProvider["searchBitbucket"];
+		checks?: ForkScmProvider["commitChecks"];
 		github: (input: SearchInput) => Promise<PullRequestsPage>;
 	},
 ): Promise<ForkPullRequestsPage> {
@@ -94,7 +104,7 @@ export async function forkSearchProviderPullRequests(
 		.filter((p) => p.repository.provider === "bitbucket")
 		.map(async (p) => {
 			const repository = `${p.repository.owner}/${p.repository.name}`;
-			if (input.review) {
+			if (input.review && !BITBUCKET_REVIEW_FILTERS.has(input.review)) {
 				result.warnings.push({ repository, kind: "review-filter" });
 				return;
 			}
@@ -105,18 +115,27 @@ export async function forkSearchProviderPullRequests(
 				p.connectionId ??
 				candidates.find((c) => c.isDefault)?.id ??
 				(candidates.length === 1 ? candidates[0]?.id : undefined);
-			if (!connectionId || !candidates.some((c) => c.id === connectionId)) {
+			const account = candidates.find((c) => c.id === connectionId);
+			if (!connectionId || !account) {
 				result.warnings.push({ repository, kind: "connection" });
 				return;
 			}
 			try {
-				const data = await providers.bitbucket(
-					connectionId,
-					p.repository,
-					input,
+				const data = await providers.bitbucket(connectionId, p.repository, {
+					...input,
+					...(input.review ? { reviewer: account.identity?.id ?? "" } : {}),
+				});
+				const checks = await Promise.all(
+					data.items.map((pr) =>
+						pr.state === "open" && providers.checks
+							? providers
+									.checks(connectionId, p.repository, pr.headCommit)
+									.catch(() => null)
+							: null,
+					),
 				);
 				result.pullRequests.push(
-					...data.items.map((pr: ForkPullRequest) => ({
+					...data.items.map((pr: ForkPullRequest, index) => ({
 						projectId: p.projectId,
 						prNumber: pr.number,
 						title: pr.title,
@@ -125,8 +144,8 @@ export async function forkSearchProviderPullRequests(
 						isDraft: pr.isDraft ?? false,
 						authorLogin: pr.author,
 						updatedAt: pr.updatedAt,
-						checks: [],
-						checksStatus: "none" as const,
+						checks: checks[index]?.checks ?? [],
+						checksStatus: checks[index]?.status ?? ("none" as const),
 						additions: null,
 						deletions: null,
 						headRefName: pr.sourceBranch,
@@ -152,13 +171,20 @@ export async function forkSearchProviderPullRequests(
 				});
 			}
 		});
-	const firstGithub = github[0];
+	const githubAuthors = input.author
+		?.split(",")
+		.map((author) => author.trim().replace(/^@/, ""))
+		.filter((author) => GITHUB_LOGIN.test(author));
+	// A Bitbucket nickname is never a GitHub login, so it filters GitHub to nothing.
+	const firstGithub =
+		input.author && !githubAuthors?.length ? undefined : github[0];
 	if (firstGithub)
 		jobs.push(
 			(async () => {
 				try {
 					const data = await providers.github({
 						...input,
+						...(input.author ? { author: githubAuthors?.join(",") } : {}),
 						projectId: firstGithub.projectId,
 						projectIds: github.map((p) => p.projectId),
 					});

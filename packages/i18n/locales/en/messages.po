@@ -4217,6 +4217,9 @@ msgstr "Comment not found"
 msgid "Comment not posted"
 msgstr "Comment not posted"
 
+msgid "Comment on this line"
+msgstr "Comment on this line"
+
 msgid "Comment on this page"
 msgstr "Comment on this page"
 
@@ -6051,6 +6054,9 @@ msgstr "Deleted {name}"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Deleted comment"
+
 msgid "deleted or unavailable — pick another"
 msgstr "deleted or unavailable — pick another"
 
@@ -7654,9 +7660,6 @@ msgstr "File not found"
 
 msgid "File open mode"
 msgstr "File open mode"
-
-msgid "File path"
-msgstr "File path"
 
 msgid "File viewer"
 msgstr "File viewer"
@@ -9653,9 +9656,6 @@ msgstr "Like building with Superset?"
 
 msgid "Lime"
 msgstr "Lime"
-
-msgid "Line"
-msgstr "Line"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Request a trial"
 msgid "Request Body"
 msgstr "Request Body"
 
+msgid "Request changes"
+msgstr "Request changes"
+
 msgid "requested changes"
 msgstr "requested changes"
 
@@ -14162,6 +14165,9 @@ msgstr "Resolve thread"
 
 msgid "Resolved"
 msgstr "Resolved"
+
+msgid "Resolved · show"
+msgstr "Resolved · show"
 
 msgid "Resource consumption"
 msgstr "Resource consumption"
@@ -19357,6 +19363,9 @@ msgstr "with or without attachments"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "With the Superset mobile app, I can address production issues from anywhere."
+
+msgid "Withdraw change request"
+msgstr "Withdraw change request"
 
 msgid "Wordmark, black"
 msgstr "Wordmark, black"

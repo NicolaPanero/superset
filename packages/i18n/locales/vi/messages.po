@@ -4217,6 +4217,9 @@ msgstr "Không tìm thấy bình luận"
 msgid "Comment not posted"
 msgstr "Chưa đăng được bình luận"
 
+msgid "Comment on this line"
+msgstr "Bình luận dòng này"
+
 msgid "Comment on this page"
 msgstr "Bình luận về trang này"
 
@@ -6051,6 +6054,9 @@ msgstr "Đã xóa {name}"
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "{deletedBy} đã xóa {deletedWhen} · {deviceNames}"
 
+msgid "Deleted comment"
+msgstr "Bình luận đã xóa"
+
 msgid "deleted or unavailable — pick another"
 msgstr "đã bị xóa hoặc không khả dụng — hãy chọn cái khác"
 
@@ -7654,9 +7660,6 @@ msgstr "Không tìm thấy tệp"
 
 msgid "File open mode"
 msgstr "Chế độ mở tệp"
-
-msgid "File path"
-msgstr "Đường dẫn tệp"
 
 msgid "File viewer"
 msgstr "Trình xem tệp"
@@ -9653,9 +9656,6 @@ msgstr "Thích xây dựng cùng Superset?"
 
 msgid "Lime"
 msgstr "Xanh chanh"
-
-msgid "Line"
-msgstr "Dòng"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14045,6 +14045,9 @@ msgstr "Yêu cầu dùng thử"
 msgid "Request Body"
 msgstr "Thân yêu cầu"
 
+msgid "Request changes"
+msgstr "Yêu cầu thay đổi"
+
 msgid "requested changes"
 msgstr "đã yêu cầu thay đổi"
 
@@ -14162,6 +14165,9 @@ msgstr "Đánh dấu luồng đã xử lý"
 
 msgid "Resolved"
 msgstr "Đã giải quyết"
+
+msgid "Resolved · show"
+msgstr "Đã giải quyết · hiện"
 
 msgid "Resource consumption"
 msgstr "Mức tiêu thụ tài nguyên"
@@ -19357,6 +19363,9 @@ msgstr "có hoặc không có tệp đính kèm"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Với ứng dụng di động Superset, tôi có thể xử lý sự cố trên môi trường production từ bất cứ đâu."
+
+msgid "Withdraw change request"
+msgstr "Rút lại yêu cầu thay đổi"
 
 msgid "Wordmark, black"
 msgstr "Wordmark, đen"

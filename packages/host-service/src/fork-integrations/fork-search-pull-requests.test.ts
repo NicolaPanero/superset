@@ -131,3 +131,55 @@ test("a missing Bitbucket account preserves GitHub results and explains the unav
 		{ repository: "team/app", kind: "connection" },
 	]);
 });
+
+test("Bitbucket rows carry review-request filtering and build status; GitHub skips nicknames", async () => {
+	let githubCalls = 0;
+	let bitbucketInput: unknown;
+	const result = await forkSearchProviderPullRequests(
+		forkPullRequestSearchInput.parse({
+			projectId: "bb",
+			projectIds: ["bb", "gh"],
+			review: "review-requested",
+			author: "ada.lovelace",
+		}),
+		{
+			projects: [
+				project,
+				{
+					...project,
+					projectId: "gh",
+					connectionId: null,
+					repository: { ...repository, provider: "github", host: "github.com" },
+				},
+			],
+			connections: [
+				{
+					...account,
+					identity: { id: "{me}", login: "me", name: null, avatarUrl: null },
+				},
+			],
+			bitbucket: async (_id, _repo, input) => {
+				bitbucketInput = input;
+				return { items: [pr], totalCount: 1, nextCursor: null };
+			},
+			checks: async () => ({
+				status: "failure",
+				checks: [{ name: "build", status: "failure", url: null }],
+			}),
+			github: async () => {
+				githubCalls++;
+				throw new Error("must not search GitHub for a Bitbucket nickname");
+			},
+		},
+	);
+	expect(githubCalls).toBe(0);
+	expect(bitbucketInput).toMatchObject({
+		reviewer: "{me}",
+		author: "ada.lovelace",
+	});
+	expect(result.warnings).toEqual([]);
+	expect(result.pullRequests[0]).toMatchObject({
+		checksStatus: "failure",
+		checks: [{ name: "build" }],
+	});
+});
