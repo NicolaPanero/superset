@@ -1,0 +1,43 @@
+# Installs a published Superset++ Windows exe on a clean runner and imports projects through its host service.
+
+name: Fork - Windows project import
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Release tag to test (empty for the latest release)
+        type: string
+        default: ""
+  push:
+    branches: ["fork/windows-probe/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    if: github.repository == 'NicolaPanero/superset'
+    runs-on: windows-2022
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          sparse-checkout: scripts/fork
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version-file: .bun-version
+      - name: Download the Windows installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE: ${{ inputs.release }}
+        run: |
+          $arguments = @("release", "download", "--repo", "${{ github.repository }}", "--pattern", "Superset-fork-x64.exe", "--dir", "$env:RUNNER_TEMP")
+          if ($env:RELEASE) { $arguments = @("release", "download", $env:RELEASE) + $arguments[2..($arguments.Length - 1)] }
+          & gh @arguments
+          if ($LASTEXITCODE -ne 0) { throw "Download failed" }
+      - name: Install and import projects
+        run: ./scripts/fork/windows-import-smoke.ps1 -Installer "$env:RUNNER_TEMP/Superset-fork-x64.exe"

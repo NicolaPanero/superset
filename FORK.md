@@ -463,7 +463,11 @@ La conclusione del sync non avvia una build: solo il merge della proposta su
 sia ancora l’ultimo di `fork/main`. Il workflow controlla traduzioni,
 tipi e test del fork prima di avviare le build Mac e Windows. Ogni piattaforma
 esegue le 20 conversioni native; Windows verifica anche l’installer NSIS, i moduli
-nativi nel runtime Electron installato e lo script di aggiornamento. La release
+nativi nel runtime Electron installato, lo script di aggiornamento e l’import dei
+progetti tramite l’host service installato (con e senza Git, e senza identità Git).
+Per provare su Windows un exe già pubblicato, senza macchina virtuale, avvia
+`fork-windows-import.yml` (input `release`, vuoto per l’ultima) oppure fai push su un
+ramo `fork/windows-probe/…`: installa l’exe su un runner pulito e importa i progetti. La release
 viene pubblicata solo quando entrambe le piattaforme hanno superato i controlli,
 con tutti e due i download: una build fallita lascia disponibile la release precedente.
 Se il merge upstream presenta conflitti, il sync apre una pull request in bozza
