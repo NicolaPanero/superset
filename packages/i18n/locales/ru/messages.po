@@ -174,6 +174,10 @@ msgstr "{0, plural, one {# метка} few {# метки} many {# меток} ot
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# логин} few {# логина} many {# логинов} other {# логина}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, one {Удалено # старое вложение.} few {Удалено # старых вложения.} many {Удалено # старых вложений.} other {Удалено # старого вложения.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# пройдено} few {# пройдено} many {# пройдено} other {# пройдено}}"
@@ -1178,6 +1182,9 @@ msgstr "**Квоты под контролем**: использование п�
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**Более безопасная работа**: отдельные аккаунты для каждого репозитория и усиленная защита веток и параллельных запросов."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Порядок в workspace**: вставленные изображения и файлы удаляются через 30 дней. Это можно изменить в Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "День"
 msgid "Day One"
 msgstr "Первый день"
 
+msgid "days"
+msgstr "дн."
+
 msgid "days running three agents at once"
 msgstr "дней с тремя агентами одновременно"
 
@@ -5974,11 +5984,17 @@ msgstr "Удалить изображение"
 msgid "Delete local branch on workspace removal"
 msgstr "Удалять локальную ветку при удалении рабочей области"
 
+msgid "Delete old attachments"
+msgstr "Удалять старые вложения"
+
 msgid "Delete organization"
 msgstr "Удалить организацию"
 
 msgid "Delete page"
 msgstr "Удалить страницу"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Удалять вставленные изображения и файлы из workspace через указанное число дней. Укажите 0, чтобы хранить их."
 
 msgid "Delete permanently"
 msgstr "Удалить навсегда"
@@ -16466,6 +16482,9 @@ msgstr "Остановка агента в {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Останавливает агента и отправляет это сейчас"
+
+msgid "Storage"
+msgstr "Хранилище"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

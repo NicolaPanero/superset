@@ -174,6 +174,10 @@ msgstr "{0, plural, other {# 个标签}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {#项登录信息} other {#项登录信息}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, other {已删除 # 个旧附件。}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {#项通过} other {#项通过}}"
@@ -1178,6 +1182,9 @@ msgstr "**配额尽在掌握**：按账户查看用量、支持的免费重置�
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**更安全的工作流**：每个仓库使用独立账户，并加强对分支和并发请求的保护。"
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**整洁的工作区**：粘贴的图片和文件会在 30 天后删除。可在 Fork Settings 中更改。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "按天"
 msgid "Day One"
 msgstr "元老"
 
+msgid "days"
+msgstr "天"
+
 msgid "days running three agents at once"
 msgstr "同时运行三个智能体的天数"
 
@@ -5974,11 +5984,17 @@ msgstr "删除图片"
 msgid "Delete local branch on workspace removal"
 msgstr "移除工作区时删除本地分支"
 
+msgid "Delete old attachments"
+msgstr "删除旧附件"
+
 msgid "Delete organization"
 msgstr "删除组织"
 
 msgid "Delete page"
 msgstr "删除页面"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "在此天数后从工作区删除粘贴的图片和文件。设为 0 则保留。"
 
 msgid "Delete permanently"
 msgstr "永久删除"
@@ -16466,6 +16482,9 @@ msgstr "正在停止 {what} 中的代理"
 
 msgid "Stops the agent and sends this now"
 msgstr "停止智能体并立即发送此消息"
+
+msgid "Storage"
+msgstr "存储"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

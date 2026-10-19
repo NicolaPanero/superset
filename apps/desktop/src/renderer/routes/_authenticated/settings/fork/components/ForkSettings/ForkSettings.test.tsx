@@ -49,7 +49,7 @@ test("Fork Settings restores Pro UI and persists independent hide preferences", 
 
 test("settings search offers Fork Settings and omits hidden Pro sections", () => {
 	const hidden = getVisibleMatchCountBySection("", true, true, true, true);
-	expect(hidden.fork).toBe(5);
+	expect(hidden.fork).toBe(6);
 	expect(hidden.billing).toBeUndefined();
 	expect(hidden.teams).toBeUndefined();
 	expect(hidden.mobile).toBeUndefined();

@@ -174,6 +174,10 @@ msgstr "{0, plural, other {라벨 #개}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {로그인 #개} other {로그인 #개}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, other {오래된 첨부 파일 #개를 삭제했습니다.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {#개 통과} other {#개 통과}}"
@@ -1178,6 +1182,9 @@ msgstr "**할당량 관리**: 계정별 사용량, 지원되는 무료 초기화
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**더 안전한 워크플로**: 저장소별로 분리된 계정과 브랜치 및 동시 요청에 대한 강화된 보호."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**깔끔한 워크스페이스**: 붙여 넣은 이미지와 파일은 30일 후 삭제됩니다. Fork Settings에서 변경할 수 있습니다."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "일"
 msgid "Day One"
 msgstr "데이 원"
 
+msgid "days"
+msgstr "일"
+
 msgid "days running three agents at once"
 msgstr "에이전트 세 개를 동시에 돌린 일수"
 
@@ -5974,11 +5984,17 @@ msgstr "이미지 삭제"
 msgid "Delete local branch on workspace removal"
 msgstr "워크스페이스 삭제 시 로컬 브랜치 삭제"
 
+msgid "Delete old attachments"
+msgstr "오래된 첨부 파일 삭제"
+
 msgid "Delete organization"
 msgstr "조직 삭제"
 
 msgid "Delete page"
 msgstr "페이지 삭제"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "붙여 넣은 이미지와 파일을 이 일수가 지나면 워크스페이스에서 삭제합니다. 보관하려면 0으로 설정하세요."
 
 msgid "Delete permanently"
 msgstr "영구 삭제"
@@ -16466,6 +16482,9 @@ msgstr "{what}의 에이전트 중지 중"
 
 msgid "Stops the agent and sends this now"
 msgstr "에이전트를 중지하고 지금 이 메시지를 보냅니다"
+
+msgid "Storage"
+msgstr "저장 공간"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

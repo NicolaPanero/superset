@@ -46,6 +46,10 @@ export function ForkWhatsNewNotice() {
 			message:
 				"**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests.",
 		}),
+		t({
+			message:
+				"**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings.",
+		}),
 	];
 	const notice: DesktopNotice = {
 		id: `fork-whats-new:${FORK_WHATS_NEW_ID}`,

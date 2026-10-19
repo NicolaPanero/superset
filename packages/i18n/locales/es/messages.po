@@ -174,6 +174,10 @@ msgstr "{0, plural, one {# etiqueta} other {# etiquetas}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# inicio de sesión} other {# inicios de sesión}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, one {# adjunto antiguo eliminado.} other {# adjuntos antiguos eliminados.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# superada} other {# superadas}}"
@@ -1178,6 +1182,9 @@ msgstr "**Cuotas bajo control**: uso por cuenta, restablecimientos gratuitos com
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**Flujos más seguros**: cuentas separadas por repositorio y más protección para ramas y solicitudes simultáneas."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Workspaces ordenados**: las imágenes y archivos pegados se eliminan a los 30 días. Cámbialo en Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "Día"
 msgid "Day One"
 msgstr "Día uno"
 
+msgid "days"
+msgstr "días"
+
 msgid "days running three agents at once"
 msgstr "días con tres agentes a la vez"
 
@@ -5974,11 +5984,17 @@ msgstr "Eliminar imagen"
 msgid "Delete local branch on workspace removal"
 msgstr "Eliminar la rama local al quitar el espacio de trabajo"
 
+msgid "Delete old attachments"
+msgstr "Eliminar adjuntos antiguos"
+
 msgid "Delete organization"
 msgstr "Eliminar la organización"
 
 msgid "Delete page"
 msgstr "Eliminar la página"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Elimina de los workspaces las imágenes y archivos pegados después de este número de días. Usa 0 para conservarlos."
 
 msgid "Delete permanently"
 msgstr "Eliminar definitivamente"
@@ -16466,6 +16482,9 @@ msgstr "Deteniendo el agente en {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Detiene el agente y envía esto ahora"
+
+msgid "Storage"
+msgstr "Almacenamiento"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

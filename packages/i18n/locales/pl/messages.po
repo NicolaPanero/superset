@@ -174,6 +174,10 @@ msgstr "{0, plural, one {# etykieta} few {# etykiety} many {# etykiet} other {# 
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# logowanie} few {# logowania} many {# logowań} other {# logowania}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, one {Usunięto # stary załącznik.} few {Usunięto # stare załączniki.} many {Usunięto # starych załączników.} other {Usunięto # starego załącznika.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# zaliczony} few {# zaliczone} many {# zaliczonych} other {# zaliczonego}}"
@@ -1178,6 +1182,9 @@ msgstr "**Limity pod kontrolą**: użycie na konto, obsługiwane darmowe resety 
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**Bezpieczniejsza praca**: osobne konta dla każdego repozytorium i lepsza ochrona gałęzi oraz równoczesnych żądań."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Porządek w workspace’ach**: wklejone obrazy i pliki są usuwane po 30 dniach. Zmienisz to w Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "Dzień"
 msgid "Day One"
 msgstr "Pierwszy dzień"
 
+msgid "days"
+msgstr "dni"
+
 msgid "days running three agents at once"
 msgstr "dni z trzema agentami naraz"
 
@@ -5974,11 +5984,17 @@ msgstr "Usuń obraz"
 msgid "Delete local branch on workspace removal"
 msgstr "Usuwaj lokalną gałąź przy usuwaniu obszaru roboczego"
 
+msgid "Delete old attachments"
+msgstr "Usuwaj stare załączniki"
+
 msgid "Delete organization"
 msgstr "Usuń organizację"
 
 msgid "Delete page"
 msgstr "Usuń stronę"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Usuwaj wklejone obrazy i pliki z workspace’ów po tej liczbie dni. Ustaw 0, aby je zachować."
 
 msgid "Delete permanently"
 msgstr "Usuń trwale"
@@ -16466,6 +16482,9 @@ msgstr "Zatrzymywanie agenta w {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Zatrzymuje agenta i wysyła to teraz"
+
+msgid "Storage"
+msgstr "Pamięć"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

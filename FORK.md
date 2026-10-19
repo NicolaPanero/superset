@@ -287,6 +287,16 @@ attribuisce retroattivamente una provenienza. Il backend ricontrolla prima di
 eliminare e il flag `force` non aggira queste protezioni. Non elimina branch remoti.
 Nelle cancellazioni multiple la preferenza si applica solo ai branch idonei.
 
+### Allegati vecchi
+
+Immagini e file incollati restano in `.superset/attachments` del workspace; sulla
+cartella principale del progetto non spariscono neppure eliminando il workspace.
+**Settings → Fork → Storage** li elimina dopo N giorni (predefinito 30, `0` li
+conserva). L’host controlla un minuto dopo l’avvio, poi ogni 24 ore, e subito quando
+cambi il valore. Conta la data di modifica: un’immagine riusata in chat riparte da
+zero. Le chat più vecchie mostrano come mancanti le immagini eliminate. Il valore è
+per computer, in `~/.superset/fork/attachment-retention.json`.
+
 ## Cosa è ufficiale e cosa mantiene il fork
 
 | Funzione | Base ufficiale 1.38 | Estensione Superset++ |

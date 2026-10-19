@@ -11,6 +11,7 @@ import {
 	getMatchingItemsForSection,
 	SETTING_ITEM_ID,
 } from "../../../utils/settings-search";
+import { ForkAttachmentRetention } from "./components/ForkAttachmentRetention";
 import { ForkMcpServers } from "./components/ForkMcpServers";
 
 export function ForkSettings() {
@@ -93,6 +94,15 @@ export function ForkSettings() {
 								/>
 							</div>
 						)}
+					</div>
+				</SettingsSection>
+			)}
+			{matches.some(
+				(item) => item.id === SETTING_ITEM_ID.FORK_ATTACHMENT_RETENTION,
+			) && (
+				<SettingsSection title={t({ message: "Storage" })}>
+					<div className="rounded-lg border">
+						<ForkAttachmentRetention />
 					</div>
 				</SettingsSection>
 			)}

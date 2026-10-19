@@ -5,6 +5,7 @@ import { attachmentsRouter } from "./attachments";
 import { browserRouter } from "./browser/browser";
 import { configRouter } from "./config";
 import { filesystemRouter } from "./filesystem";
+import { forkAttachmentsRouter } from "./fork-attachments";
 import {
 	forkConnectionsRouter,
 	forkScmRouter,
@@ -39,6 +40,7 @@ import { workspaceCreationRouter } from "./workspace-creation";
 import { workspacesRouter } from "./workspaces";
 
 export const appRouter = router({
+	forkAttachments: forkAttachmentsRouter,
 	forkConnections: forkConnectionsRouter,
 	forkMcp: forkMcpRouter,
 	forkScm: forkScmRouter,

@@ -32,6 +32,7 @@ import {
 } from "./chat-v3";
 import { createDb, type HostDb } from "./db";
 import { EventBus, GitWatcher, registerEventBusRoute } from "./events";
+import { startAttachmentRetention } from "./fork-attachments/fork-attachment-retention";
 import { syncForkMcpLaunchFiles } from "./fork-mcp";
 import { agentIsBusy, PageWatchManager } from "./page-watch/index.ts";
 import { registerForwardMuxRoute } from "./ports/forward-mux-route";
@@ -366,6 +367,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		...chatAgentContext,
 		isLocalCaller: true,
 	});
+	const stopAttachmentRetention = startAttachmentRetention(db);
 
 	// Startup sweeps run in the background so they don't block server
 	// startup.
@@ -556,6 +558,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	const ownsDb = options.db === undefined;
 	const dispose = async (): Promise<void> => {
 		await stopForkJiraAutomations();
+		stopAttachmentRetention();
 		if (projectPurgeTimer) clearInterval(projectPurgeTimer);
 		await disposeWorkspaceTitleJobs(db);
 		// Each step is best-effort and isolated: a throw in one cleanup must

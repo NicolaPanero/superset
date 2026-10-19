@@ -174,6 +174,10 @@ msgstr "{0, plural, one {# libellé} other {# libellés}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# identifiant} other {# identifiants}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, one {# ancienne pièce jointe supprimée.} other {# anciennes pièces jointes supprimées.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# réussi} other {# réussis}}"
@@ -1178,6 +1182,9 @@ msgstr "**Quotas maîtrisés** : utilisation par compte, réinitialisations grat
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**Flux plus sûrs** : comptes séparés par dépôt et protection renforcée des branches et des requêtes simultanées."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Workspaces rangés** : les images et fichiers collés sont supprimés après 30 jours. Modifiable dans Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "Jour"
 msgid "Day One"
 msgstr "Premier jour"
 
+msgid "days"
+msgstr "jours"
+
 msgid "days running three agents at once"
 msgstr "jours à faire tourner trois agents à la fois"
 
@@ -5974,11 +5984,17 @@ msgstr "Supprimer l’image"
 msgid "Delete local branch on workspace removal"
 msgstr "Supprimer la branche locale à la suppression de l'espace de travail"
 
+msgid "Delete old attachments"
+msgstr "Supprimer les anciennes pièces jointes"
+
 msgid "Delete organization"
 msgstr "Supprimer l'organisation"
 
 msgid "Delete page"
 msgstr "Supprimer la page"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Supprime des workspaces les images et fichiers collés après ce nombre de jours. Indiquez 0 pour les conserver."
 
 msgid "Delete permanently"
 msgstr "Supprimer définitivement"
@@ -16466,6 +16482,9 @@ msgstr "Arrêt de l’agent dans {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Arrête l'agent et envoie ceci maintenant"
+
+msgid "Storage"
+msgstr "Stockage"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"

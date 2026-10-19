@@ -174,6 +174,10 @@ msgstr "{0, plural, other {# label}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {# login} other {# login}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, other {# lampiran lama dihapus.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {# lulus} other {# lulus}}"
@@ -1178,6 +1182,9 @@ msgstr "**Kuota terkendali**: penggunaan per akun, reset gratis yang didukung, d
 
 msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
 msgstr "**Alur kerja lebih aman**: akun terpisah per repositori dan perlindungan lebih untuk branch serta permintaan bersamaan."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**Workspace rapi**: gambar dan file yang ditempel dihapus setelah 30 hari. Ubah di Fork Settings."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -5843,6 +5850,9 @@ msgstr "Hari"
 msgid "Day One"
 msgstr "Hari pertama"
 
+msgid "days"
+msgstr "hari"
+
 msgid "days running three agents at once"
 msgstr "hari menjalankan tiga agen sekaligus"
 
@@ -5974,11 +5984,17 @@ msgstr "Hapus gambar"
 msgid "Delete local branch on workspace removal"
 msgstr "Hapus branch lokal saat workspace dihapus"
 
+msgid "Delete old attachments"
+msgstr "Hapus lampiran lama"
+
 msgid "Delete organization"
 msgstr "Hapus organisasi"
 
 msgid "Delete page"
 msgstr "Hapus halaman"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "Hapus gambar dan file yang ditempel dari workspace setelah jumlah hari ini. Isi 0 untuk menyimpannya."
 
 msgid "Delete permanently"
 msgstr "Hapus permanen"
@@ -16466,6 +16482,9 @@ msgstr "Menghentikan agen di {what}"
 
 msgid "Stops the agent and sends this now"
 msgstr "Menghentikan agen dan mengirim ini sekarang"
+
+msgid "Storage"
+msgstr "Penyimpanan"
 
 #. placeholder {0}: data.path
 msgid "Stored in {0}"
