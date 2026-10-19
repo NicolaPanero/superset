@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* si facturé au tarif API plein"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Changement d’agent amélioré** : choisissez le modèle et l’effort avant de changer, Grok 4.7 compris."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira et Bitbucket dans l’app** : tâches, tableaux, pull requests, revues, builds et automatisations."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Quotas maîtrisés** : utilisation par compte, réinitialisations gratuites prises en charge et poursuite automatique."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Flux plus sûrs** : comptes séparés par dépôt et protection renforcée des branches et des requêtes simultanées."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Ouvre le panneau des modifications dans un nouvel onglet, ou active celu
 msgid "Open the global command palette"
 msgstr "Ouvrir la palette de commandes globale"
 
+msgid "Open the guide"
+msgstr "Ouvrir le guide"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Ouvrir la boîte de dialogue de nouvel agent dans le workspace actuel"
 
@@ -17996,6 +18011,9 @@ msgstr "Toutes les modifications indexées seront désindexées et annulées. Le
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Cette action désindexera et annulera toutes les modifications indexées. Les nouveaux fichiers indexés seront supprimés. Cette action est irréversible."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Cette fenêtre ne réapparaîtra qu’en cas de nouvelles fonctionnalités importantes."
+
 msgid "This workspace"
 msgstr "Cet espace de travail"
 
@@ -19321,6 +19339,9 @@ msgstr "Que comprend l'offre Enterprise ?"
 
 msgid "What's New"
 msgstr "Quoi de neuf"
+
+msgid "What's new in Superset++"
+msgstr "Nouveautés de Superset++"
 
 msgid "What's next"
 msgstr "La suite"

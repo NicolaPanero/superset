@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se fatturato alla tariffa API piena"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Cambio agente più completo**: scegli modello ed effort prima dello switch, incluso Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira e Bitbucket nell’app**: attività, board, pull request, review, build e automazioni."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Quote sotto controllo**: utilizzo per account, reset gratuiti supportati e continuazione automatica."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Flussi più sicuri**: account separati per repository e più protezioni per branch e richieste concorrenti."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Apre il pannello delle modifiche in una nuova scheda, o attiva quello es
 msgid "Open the global command palette"
 msgstr "Apri la palette dei comandi globale"
 
+msgid "Open the guide"
+msgstr "Apri la guida"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Apri la finestra di nuovo agente nel workspace corrente"
 
@@ -17996,6 +18011,9 @@ msgstr "Tutte le modifiche in staging verranno rimosse dallo staging e annullate
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Questo toglierà dallo stage e annullerà tutte le modifiche in stage. I nuovi file in stage verranno eliminati. L'operazione non può essere annullata."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Questa finestra ricomparirà solo quando ci saranno nuove funzioni importanti."
+
 msgid "This workspace"
 msgstr "Questo workspace"
 
@@ -19321,6 +19339,9 @@ msgstr "Cosa include Enterprise?"
 
 msgid "What's New"
 msgstr "Novità"
+
+msgid "What's new in Superset++"
+msgstr "Novità in Superset++"
 
 msgid "What's next"
 msgstr "Prossimi passi"

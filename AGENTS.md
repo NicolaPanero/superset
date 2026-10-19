@@ -287,6 +287,11 @@ and releases. These rules apply to every agent:
   check out or delete changes you did not make.
 - Keep fork code in fork-owned files (`fork-*`, `scripts/fork/`, `FORK.md`) and keep the hooks
   in upstream files small, as `FORK.md` ("Riduzione dei conflitti") explains.
+- Every PR to `fork/main` ships a release, so update the "what's new" popup in
+  `apps/desktop/src/renderer/components/ForkWhatsNewNotice/ForkWhatsNewNotice.tsx` in the same PR:
+  replace the highlights with the PR's main user-visible features (3–5 lines, English source,
+  translated in all 17 locales) and change `FORK_WHATS_NEW_ID` so the popup shows again. Leave
+  both unchanged only when the PR has no user-visible feature (fixes, CI, docs); say so in the PR.
 - Before a PR, run `bun run check:i18n` (all 17 locales translated), typecheck desktop and
   host-service, and `bun run test:fork`. A plain `bun test` lacks the fork preloads and
   shows false failures.

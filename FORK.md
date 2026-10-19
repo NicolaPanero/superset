@@ -410,6 +410,9 @@ avvio compare una sola volta il dialog delle novità. Riusa il renderer markdown
 degli avvisi ufficiali, rimanda a questa guida e salva soltanto l’identificatore
 fisso dell’ultimo gruppo visto. Gli avvisi urgenti inviati da Superset hanno la
 precedenza; chiudendoli, le novità del fork restano disponibili.
+Il testo è tradotto nelle 17 lingue dell’app. Ogni PR verso `fork/main` con
+funzioni visibili aggiorna le novità e il loro identificatore, come indicato
+in `AGENTS.md`.
 
 Le build con il vecchio updater chiudono invece subito la finestra e scaricano
 in background: attendere qualche minuto prima di riaprire o interrompere l’app.

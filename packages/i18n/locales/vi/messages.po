@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* nếu tính theo giá API đầy đủ"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Chuyển agent tốt hơn**: chọn mô hình và mức effort trước khi chuyển, bao gồm Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira và Bitbucket trong ứng dụng**: tác vụ, bảng, pull request, review, build và tự động hóa."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kiểm soát hạn mức**: mức sử dụng theo tài khoản, hỗ trợ đặt lại miễn phí và tự động tiếp tục."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Quy trình an toàn hơn**: tài khoản riêng cho từng kho mã và bảo vệ tốt hơn cho nhánh và các yêu cầu đồng thời."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Mở bảng thay đổi trong tab mới, hoặc chuyển tiêu điểm �
 msgid "Open the global command palette"
 msgstr "Mở bảng lệnh toàn cục"
 
+msgid "Open the guide"
+msgstr "Mở hướng dẫn"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Mở hộp thoại agent mới trong workspace hiện tại"
 
@@ -17996,6 +18011,9 @@ msgstr "Thao tác này sẽ bỏ staging và hoàn tác mọi thay đổi đã �
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Thao tác này sẽ bỏ stage và hoàn nguyên toàn bộ thay đổi đã stage. Các tệp mới đã stage sẽ bị xóa. Không thể hoàn tác."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Cửa sổ này chỉ xuất hiện lại khi có tính năng quan trọng mới."
+
 msgid "This workspace"
 msgstr "Workspace này"
 
@@ -19321,6 +19339,9 @@ msgstr "Gói Enterprise gồm những gì?"
 
 msgid "What's New"
 msgstr "Có gì mới"
+
+msgid "What's new in Superset++"
+msgstr "Có gì mới trong Superset++"
 
 msgid "What's next"
 msgstr "Tiếp theo"

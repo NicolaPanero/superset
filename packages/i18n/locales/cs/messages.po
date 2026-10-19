@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Lepší přepínání agentů**: vyberte model a úsilí ještě před přepnutím, včetně Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira a Bitbucket v aplikaci**: úkoly, nástěnky, pull requesty, revize, buildy a automatizace."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kvóty pod kontrolou**: využití podle účtu, podporované bezplatné resety a automatické pokračování."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Bezpečnější práce**: samostatné účty pro každý repozitář a lepší ochrana větví a souběžných požadavků."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Otevře panel Změny na nové kartě, nebo zaměří existující"
 msgid "Open the global command palette"
 msgstr "Otevřít globální paletu příkazů"
 
+msgid "Open the guide"
+msgstr "Otevřít průvodce"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Otevřít dialog nového agenta v aktuálním workspacu"
 
@@ -17996,6 +18011,9 @@ msgstr "Tím se všechny připravené změny odeberou z indexu a vrátí zpět. 
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Tímto zrušíte přípravu a vrátíte všechny připravené změny. Připravené nové soubory budou smazány. Tuto akci nelze vrátit zpět."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Toto okno se znovu zobrazí, až budou k dispozici nové důležité funkce."
+
 msgid "This workspace"
 msgstr "Tento pracovní prostor"
 
@@ -19321,6 +19339,9 @@ msgstr "Co obsahuje Enterprise?"
 
 msgid "What's New"
 msgstr "Co je nového"
+
+msgid "What's new in Superset++"
+msgstr "Novinky v Superset++"
 
 msgid "What's next"
 msgstr "Co bude dál"

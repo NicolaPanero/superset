@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Peralihan agen yang lebih baik**: pilih model dan effort sebelum beralih, termasuk Grok 4.7."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Jira dan Bitbucket di aplikasi**: tugas, papan, pull request, review, build, dan otomatisasi."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kuota terkendali**: penggunaan per akun, reset gratis yang didukung, dan kelanjutan otomatis."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Alur kerja lebih aman**: akun terpisah per repositori dan perlindungan lebih untuk branch serta permintaan bersamaan."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Buka panel Perubahan di tab baru, atau fokuskan yang sudah ada"
 msgid "Open the global command palette"
 msgstr "Buka command palette global"
 
+msgid "Open the guide"
+msgstr "Buka panduan"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Buka dialog agen baru di workspace saat ini"
 
@@ -17996,6 +18011,9 @@ msgstr "Ini akan mengeluarkan semua perubahan dari staging dan membatalkannya. F
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Ini akan meng-unstage dan mengembalikan semua perubahan yang di-stage. File baru yang di-stage akan dihapus. Ini tidak bisa dibatalkan."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Jendela ini hanya muncul lagi saat ada fitur penting baru."
+
 msgid "This workspace"
 msgstr "Workspace ini"
 
@@ -19321,6 +19339,9 @@ msgstr "Apa saja yang termasuk di Enterprise?"
 
 msgid "What's New"
 msgstr "Apa yang Baru"
+
+msgid "What's new in Superset++"
+msgstr "Yang baru di Superset++"
 
 msgid "What's next"
 msgstr "Selanjutnya"

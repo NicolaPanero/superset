@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全價計費"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**更好的代理切換**：切換前即可選擇模型與推理強度，包括 Grok 4.7。"
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**應用程式內的 Jira 與 Bitbucket**：任務、看板、拉取請求、審查、建置與自動化。"
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**配額盡在掌握**：依帳戶查看用量、支援的免費重設以及自動繼續。"
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**更安全的工作流程**：每個儲存庫使用獨立帳戶，並加強分支與並行請求的保護。"
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "在新分頁中開啟更改面板，或聚焦現有面板"
 msgid "Open the global command palette"
 msgstr "開啟全域性命令面板"
 
+msgid "Open the guide"
+msgstr "開啟指南"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "在目前的工作區開啟新建代理程式對話框"
 
@@ -17996,6 +18011,9 @@ msgstr "這將取消暫存並還原所有已暫存的變更。已暫存的新檔
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "這將取消暫存並還原所有已暫存的更改。已暫存的新檔案將被刪除。此操作無法復原。"
 
+msgid "This window shows again only when there are new important features."
+msgstr "只有在有重要新功能時，此視窗才會再次顯示。"
+
 msgid "This workspace"
 msgstr "此工作區"
 
@@ -19321,6 +19339,9 @@ msgstr "企業版包含什麼？"
 
 msgid "What's New"
 msgstr "最新動態"
+
+msgid "What's new in Superset++"
+msgstr "Superset++ 新功能"
 
 msgid "What's next"
 msgstr "接下來"

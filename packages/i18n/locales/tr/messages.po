@@ -1167,6 +1167,18 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* tam API tarifesiyle faturalandırılsaydı"
 
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**Daha iyi ajan geçişi**: Geçiş yapmadan önce modeli ve efor düzeyini seçin, Grok 4.7 dahil."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**Uygulamada Jira ve Bitbucket**: görevler, panolar, pull request'ler, incelemeler, build'ler ve otomasyonlar."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**Kotalar kontrol altında**: hesap başına kullanım, desteklenen ücretsiz sıfırlamalar ve otomatik devam."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**Daha güvenli iş akışları**: depo başına ayrı hesaplar ve dallar ile eşzamanlı istekler için daha fazla koruma."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -12224,6 +12236,9 @@ msgstr "Değişiklikler panelini yeni sekmede açar veya mevcut olana odaklanır
 msgid "Open the global command palette"
 msgstr "Genel komut paletini aç"
 
+msgid "Open the guide"
+msgstr "Kılavuzu aç"
+
 msgid "Open the new agent dialog in the current workspace"
 msgstr "Geçerli workspace'te yeni ajan iletişim kutusunu aç"
 
@@ -17996,6 +18011,9 @@ msgstr "Bu işlem, hazırlanmış tüm değişiklikleri hazırlıktan çıkarır
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "Bu işlem, hazırlanmış tüm değişiklikleri hazırlıktan çıkarır ve geri alır. Hazırlanmış yeni dosyalar silinir. Bu geri alınamaz."
 
+msgid "This window shows again only when there are new important features."
+msgstr "Bu pencere yalnızca yeni önemli özellikler olduğunda yeniden görünür."
+
 msgid "This workspace"
 msgstr "Bu çalışma alanı"
 
@@ -19321,6 +19339,9 @@ msgstr "Enterprise'a neler dahil?"
 
 msgid "What's New"
 msgstr "Yenilikler"
+
+msgid "What's new in Superset++"
+msgstr "Superset++'taki yenilikler"
 
 msgid "What's next"
 msgstr "Sırada ne var"
