@@ -21,6 +21,7 @@ import {
 } from "./acpCatalogue";
 import { chatSessionAccount } from "./forkChatAccount";
 import { forkConfiguredCli } from "./forkConfiguredCli";
+import { forkGeminiAuthMethod } from "./forkGeminiAuth";
 import { forkLaunchChoices } from "./forkLaunchChoices";
 import { forkQuotaRecoveryHarness } from "./forkQuotaRecoveryHarness";
 
@@ -141,4 +142,18 @@ test("Gemini native import is not advertised before its codec is verified", () =
 	expect(isVerifiedNativeAgent("gemini")).toBe(false);
 	for (const agent of ["claude", "codex", "cursor-agent", "grok", "opencode"])
 		expect(isVerifiedNativeAgent(agent)).toBe(true);
+});
+test("a Gemini key or Vertex setup in the launch environment replaces the ended Google sign-in", () => {
+	expect(
+		forkGeminiAuthMethod({ GEMINI_API_KEY: "key" }, "oauth-personal"),
+	).toBe("gemini-api-key");
+	expect(
+		forkGeminiAuthMethod(
+			{ GOOGLE_GENAI_USE_VERTEXAI: "true" },
+			"oauth-personal",
+		),
+	).toBe("vertex-ai");
+	expect(forkGeminiAuthMethod({ GEMINI_API_KEY: "" }, "oauth-personal")).toBe(
+		"oauth-personal",
+	);
 });

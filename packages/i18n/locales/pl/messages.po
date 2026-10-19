@@ -8252,6 +8252,9 @@ msgstr "Przejdź do Superset"
 msgid "Go to workspace"
 msgstr "Przejdź do obszaru roboczego"
 
+msgid "Google closed Gemini CLI for personal accounts, including Google AI Pro and student plans. Open an Antigravity chat and sign in with the same Google account. A paid Gemini API key still works."
+msgstr "Google zamknął Gemini CLI dla kont osobistych, w tym planów Google AI Pro i studenckich. Otwórz czat Antigravity i zaloguj się tym samym kontem Google. Płatny klucz API Gemini nadal działa."
+
 msgid "Google did not grant lasting access. Remove Superset from your Google account's third-party access and try again."
 msgstr "Google nie przyznało trwałego dostępu. Usuń Superset z dostępu aplikacji zewnętrznych w koncie Google i spróbuj ponownie."
 

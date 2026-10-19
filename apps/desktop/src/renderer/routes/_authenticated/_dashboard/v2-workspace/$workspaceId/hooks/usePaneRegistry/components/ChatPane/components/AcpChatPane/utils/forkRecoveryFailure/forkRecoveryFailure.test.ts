@@ -24,7 +24,17 @@ describe("failed chat resume diagnostics", () => {
 				source([message, "acp agent exited (code 0)"]),
 				"chat",
 			),
-		).toEqual({ kind: "missing", message });
+		).toEqual({ kind: "missing", message, detail: undefined });
+	});
+	test("explains the ended Gemini sign-in instead of asking to reconnect", async () => {
+		const failure = await forkRecoveryFailure(
+			source([
+				"authenticate: This client is no longer supported for Gemini Code Assist for individuals.",
+			]),
+			"chat",
+		);
+		expect(failure?.kind).toBe("account");
+		expect(failure?.detail).toContain("Antigravity");
 	});
 	test("recognizes a login problem without treating an unknown error as a missing conversation", async () => {
 		expect(

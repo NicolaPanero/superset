@@ -18,6 +18,7 @@ import {
 } from "./forkAntigravityRuntime";
 import { chatAccountUsesApiCredentials } from "./forkChatAccount";
 import { forkConfiguredCli } from "./forkConfiguredCli";
+import { forkGeminiAuthMethod } from "./forkGeminiAuth";
 import { forkLaunchChoices } from "./forkLaunchChoices";
 import { forkQuotaRecoveryHarness } from "./forkQuotaRecoveryHarness";
 
@@ -60,18 +61,15 @@ export function acpHarnessFactory(
 			db,
 			harness,
 			options,
-			(accountSelection, captured) =>
-				createAdapter({
+			(accountSelection, captured) => {
+				let authMethodId = entry.authMethodId;
+				return createAdapter({
 					command: entry.binary,
 					forkPlanReadPermissions: harness === "claude-acp",
 					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
-					authMethodId:
-						harness === "gemini-acp" &&
-						options.agentConfigId &&
-						resolveHostAgentConfig(db, options.agentConfigId)?.env
-							.GEMINI_API_KEY
-							? "gemini-api-key"
-							: entry.authMethodId,
+					get authMethodId() {
+						return authMethodId;
+					},
 					wholeUserMessageReplay: entry.wholeUserMessageReplay,
 					cwd: options.cwd,
 					resolveAttachment,
@@ -113,6 +111,8 @@ export function acpHarnessFactory(
 								}),
 						});
 						const env = cli.env;
+						if (harness === "gemini-acp")
+							authMethodId = forkGeminiAuthMethod(env, entry.authMethodId);
 						agents?.launched?.(options.sessionId, env);
 						await captureSessionAccount(
 							entry.binary,
@@ -155,7 +155,8 @@ export function acpHarnessFactory(
 							},
 						};
 					},
-				}),
+				});
+			},
 		);
 }
 
