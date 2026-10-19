@@ -40,12 +40,22 @@ export function ForkJiraTasks() {
 	const [text, setText] = useState(search.search ?? "");
 	useEffect(() => setText(search.search ?? ""), [search.search]);
 	const debouncedText = useDebouncedValue(text, 300);
+	const projects = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		queryKey: ["fork-integrations", hostUrl, "jira-projects", connectionId],
+		queryFn: () => required(client).forkTasks.projects.query({ connectionId }),
+		enabled: !!client && !!connection,
+		staleTime: 60_000,
+	});
 	const jql = forkJiraQuery({
 		search: debouncedText,
 		scope,
 		status,
 		project: search.forkJiraProject ?? "",
 		jql: search.forkJql ?? "",
+		projectKeys: projects.data?.map((p) => p.key),
 	});
 	const update = (patch: Partial<typeof search>) =>
 		navigate({
@@ -74,15 +84,6 @@ export function ForkJiraTasks() {
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
 		enabled: !!client && !!connection,
 		staleTime: 30_000,
-	});
-	const projects = useQuery({
-		refetchOnReconnect: true,
-		networkMode: "always",
-		retry: false,
-		queryKey: ["fork-integrations", hostUrl, "jira-projects", connectionId],
-		queryFn: () => required(client).forkTasks.projects.query({ connectionId }),
-		enabled: !!client && !!connection,
-		staleTime: 60_000,
 	});
 	const detail = useQuery({
 		refetchOnReconnect: true,

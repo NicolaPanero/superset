@@ -7,14 +7,23 @@ import type { ForkPage } from "./fork-scm";
 interface AdfNode {
 	type?: string;
 	text?: string;
+	attrs?: { text?: string; url?: string; shortName?: string };
 	content?: AdfNode[];
 }
 export function adfText(node: AdfNode | string | null | undefined): string {
 	if (!node) return "";
 	if (typeof node === "string") return node;
 	if (node.text) return node.text;
+	if (node.type === "hardBreak") return "\n";
+	if (node.type === "mention" || node.type === "emoji")
+		return node.attrs?.text ?? node.attrs?.shortName ?? "";
+	if (node.type === "inlineCard" || node.type === "blockCard")
+		return node.attrs?.url ?? "";
 	const text = (node.content ?? []).map(adfText).join("");
-	return ["paragraph", "heading", "listItem"].includes(node.type ?? "")
+	if (node.type === "listItem") return `- ${text.trimEnd()}\n`;
+	return ["paragraph", "heading", "codeBlock", "blockquote"].includes(
+		node.type ?? "",
+	)
 		? `${text}\n`
 		: text;
 }
@@ -114,10 +123,16 @@ export class ForkJiraProvider implements ForkTaskProvider {
 	}
 	async projects(id: string) {
 		this.assert(id);
-		const d = await this.api.request<{
-			values: { id: string; key: string; name: string }[];
-		}>(id, "/rest/api/3/project/search?maxResults=100");
-		return d.values;
+		const projects: { id: string; key: string; name: string }[] = [];
+		for (let startAt = 0; startAt < 1000; startAt += 100) {
+			const d = await this.api.request<{
+				values: { id: string; key: string; name: string }[];
+				isLast?: boolean;
+			}>(id, `/rest/api/3/project/search?maxResults=100&startAt=${startAt}`);
+			projects.push(...d.values);
+			if (d.isLast !== false || d.values.length === 0) break;
+		}
+		return projects;
 	}
 	async transitions(id: string, key: string) {
 		this.assert(id);

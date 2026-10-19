@@ -1,27 +1,41 @@
 export type JiraScope = "mine" | "all";
 export type JiraStatus = "all" | "new" | "indeterminate" | "done";
 
+/** JQL takes status category names or IDs, not the keys the API returns. */
+const STATUS_CATEGORY_ID: Record<Exclude<JiraStatus, "all">, number> = {
+	new: 2,
+	indeterminate: 4,
+	done: 3,
+};
+
 export function forkJiraQuery({
 	search,
 	scope,
 	status,
 	project,
 	jql,
+	projectKeys = [],
 }: {
 	search: string;
 	scope: JiraScope;
 	status: JiraStatus;
 	project: string;
 	jql: string;
+	projectKeys?: string[];
 }) {
 	if (jql.trim()) return jql.trim();
 	const terms: string[] = [];
 	if (scope === "mine") terms.push("assignee = currentUser()");
 	if (project) terms.push(`project = ${JSON.stringify(project)}`);
 	if (status !== "all")
-		terms.push(`statusCategory = ${JSON.stringify(status)}`);
+		terms.push(`statusCategory = ${STATUS_CATEGORY_ID[status]}`);
 	const text = search.trim();
-	if (/^[A-Za-z][A-Za-z0-9_]*-\d+$/.test(text))
+	const keyProject = /^([A-Za-z][A-Za-z0-9_]*)-\d+$/.exec(text)?.[1];
+	// Jira rejects a key whose project does not exist, so "utf-8" stays text.
+	if (
+		keyProject &&
+		projectKeys.some((key) => key.toUpperCase() === keyProject.toUpperCase())
+	)
 		terms.push(`key = ${JSON.stringify(text)}`);
 	else if (text)
 		terms.push(

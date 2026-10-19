@@ -15,9 +15,15 @@ test("Jira search builds server-side filters and keeps quoted text out of the JQ
 			search: "APP-42",
 			status: "indeterminate",
 			project: "APP",
+			projectKeys: ["APP"],
 		}),
 	).toBe(
-		'assignee = currentUser() AND project = "APP" AND statusCategory = "indeterminate" AND key = "APP-42" ORDER BY updated DESC',
+		'assignee = currentUser() AND project = "APP" AND statusCategory = 4 AND key = "APP-42" ORDER BY updated DESC',
+	);
+	expect(
+		forkJiraQuery({ ...filters, search: "utf-8", projectKeys: ["APP"] }),
+	).toBe(
+		'assignee = currentUser() AND text ~ "utf\\\\-8" ORDER BY updated DESC',
 	);
 	const query = forkJiraQuery({
 		...filters,

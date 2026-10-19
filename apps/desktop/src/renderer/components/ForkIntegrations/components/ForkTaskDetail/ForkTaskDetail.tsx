@@ -71,7 +71,7 @@ export function ForkTaskDetail({
 			}),
 		enabled: !!client && editing && metadata.data?.canAssign === true,
 	});
-	const [createId] = useState(() => crypto.randomUUID());
+	const [createId, setCreateId] = useState(() => crypto.randomUUID());
 	const transitions = useQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",
@@ -125,10 +125,13 @@ export function ForkTaskDetail({
 						priorityId && priorityId !== task.priorityId
 							? priorityId
 							: undefined,
-					labels: labels
-						.split(",")
-						.map((s) => s.trim())
-						.filter(Boolean),
+					labels:
+						labels === task.labels.join(", ")
+							? undefined
+							: labels
+									.split(",")
+									.map((s) => s.trim())
+									.filter(Boolean),
 				});
 			if (kind === "comment") {
 				await client.forkTasks.comment.mutate({ ...target, body });
@@ -152,6 +155,7 @@ export function ForkTaskDetail({
 					projectId,
 					workspaceId: createId,
 				});
+				setCreateId(crypto.randomUUID());
 				await navigate({
 					to: "/v2-workspace/$workspaceId",
 					params: { workspaceId: result.workspaceId },
