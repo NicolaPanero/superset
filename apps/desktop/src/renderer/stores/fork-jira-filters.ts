@@ -29,9 +29,7 @@ const KEYS = [
 	"forkParent",
 ] as const;
 
-export function pickForkJiraFilters(
-	search: Record<string, unknown>,
-): ForkJiraFilters {
+function pickForkJiraFilters(search: Record<string, unknown>): ForkJiraFilters {
 	const valid = forkTasksSearch(search);
 	return Object.fromEntries(
 		KEYS.filter((key) => key in search).map((key) => [key, valid[key]]),

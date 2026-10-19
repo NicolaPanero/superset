@@ -1,6 +1,7 @@
 # Jira, Bitbucket and Git integration verification
 
-Verification date: 2026-10-19. Feature baseline: `2985e4a29c`.
+Verification date: 2026-10-19. Feature baseline: "feat(fork): finish Jira automation
+and Bitbucket review workflows".
 
 ## Results
 
@@ -88,9 +89,8 @@ No generated database migration, API contract replacement or dependency update
 is part of this verification change.
 
 The merge simulation against the fetched `origin/fork/main` was clean. Against
-official `upstream/main` at `8bc96462cc`, both the feature baseline
-`2985e4a29c` and the verification fix `e9d3776ffa` have the same 37 conflicting
-paths. This change adds no conflicting path. Those existing conflicts require
+official `upstream/main` at `8bc96462cc`, both the feature baseline and
+the verification fix have the same 37 conflicting paths. This change adds no conflicting path. Those existing conflicts require
 a dedicated upstream sync; the simulation changed no working files.
 
 Before staging, inspect `git diff --check` and the upstream-file hooks. A

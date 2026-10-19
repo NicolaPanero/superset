@@ -50,7 +50,7 @@ make the account eligible for automatic continuation.
 
 ## Free usage-limit resets
 
-Account Usage details and Settings → Usage include a small reset action. It does not change the account picker or automatic continuation preferences, and never redeems a reset automatically.
+The pane's Account usage popover, the chat session menu and Settings → Local agent accounts include a small reset action. It does not change the account picker or automatic continuation preferences, and never redeems a reset automatically.
 
 - Codex uses the installed CLI's documented `account/rateLimits/read` and `account/rateLimitResetCredit/consume` app-server methods. Availability and expiry are shown only when verified; missing support is unknown, not zero. Older hosts or CLIs fall back to the provider's usage website.
 - Redemption requires an explicit confirmation and a registered, independent subscription profile. The host checks the profile identity and the CLI's account email before redeeming. API billing and mutable external logins cannot use the direct action.
