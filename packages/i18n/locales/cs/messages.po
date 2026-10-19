@@ -1180,6 +1180,9 @@ msgstr "**Přehlednější akce úkolů**: měňte stav pomocí štítku úkolu,
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Nástěnky odpovídající Jira**: seskupené stavy pracovního postupu zůstávají ve stejných sloupcích."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Jednodušší pracovní prostory úkolů**: spusťte pracovní prostor z úkolu nebo vyhledejte a propojte existující."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
-
-msgid "Choose project later"
-msgstr "Vybrat projekt později"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
@@ -9775,6 +9775,9 @@ msgstr "odkaz zkopírován"
 msgid "Link copied"
 msgstr "Odkaz zkopírován"
 
+msgid "Link existing workspace"
+msgstr "Propojit existující pracovní prostor"
+
 msgid "Link GitHub issue"
 msgstr "Propojit GitHub issue"
 
@@ -11483,6 +11486,9 @@ msgstr "Nenalezeny žádné pracovní prostory."
 
 msgid "No workspaces in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné pracovní prostory."
+
+msgid "No workspaces linked to this task."
+msgstr "K tomuto úkolu nejsou připojeny žádné pracovní prostory."
 
 msgid "No workspaces match your filters"
 msgstr "Vašim filtrům neodpovídá žádný pracovní prostor"
@@ -15317,9 +15323,6 @@ msgstr "Vyberte týmy"
 msgid "Select terminal script directory"
 msgstr "Vyberte adresář terminálového skriptu"
 
-msgid "Select workspace"
-msgstr "Vybrat pracovní prostor"
-
 msgid "Select worktree location"
 msgstr "Vyberte umístění worktree"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Začít ze šablony"
 
 msgid "Start in workspace"
-msgstr "Začít ve workspace"
+msgstr "Začít v pracovním prostoru"
 
 msgid "Start new session"
 msgstr "Spustit novou relaci"

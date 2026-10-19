@@ -1180,6 +1180,9 @@ msgstr "**Duidelijkere taakacties**: wijzig de status via het statuslabel, met b
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Borden zoals in Jira**: gegroepeerde workflowstatussen blijven in dezelfde kolommen."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Eenvoudigere werkruimtes voor taken**: start een werkruimte vanuit een taak of zoek en koppel een bestaande werkruimte."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Kies hoe de weergave Wijzigingen vanuit de bovenbalk wordt geopend"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Kies hoe bestandspaden openen bij Cmd+klik in de terminal"
-
-msgid "Choose project later"
-msgstr "Project later kiezen"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Kies wat je uit de ingebouwde browser wilt wissen."
@@ -9775,6 +9775,9 @@ msgstr "link gekopieerd"
 msgid "Link copied"
 msgstr "Link gekopieerd"
 
+msgid "Link existing workspace"
+msgstr "Bestaande werkruimte koppelen"
+
 msgid "Link GitHub issue"
 msgstr "GitHub-issue koppelen"
 
@@ -11483,6 +11486,9 @@ msgstr "Geen werkruimtes gevonden."
 
 msgid "No workspaces in this project yet."
 msgstr "Dit project heeft nog geen workspaces."
+
+msgid "No workspaces linked to this task."
+msgstr "Er zijn geen werkruimtes aan deze taak gekoppeld."
 
 msgid "No workspaces match your filters"
 msgstr "Geen werkruimtes komen overeen met je filters"
@@ -15317,9 +15323,6 @@ msgstr "Teams kiezen"
 msgid "Select terminal script directory"
 msgstr "Map voor terminalscript kiezen"
 
-msgid "Select workspace"
-msgstr "Werkruimte selecteren"
-
 msgid "Select worktree location"
 msgstr "Locatie voor worktree kiezen"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Beginnen met een sjabloon"
 
 msgid "Start in workspace"
-msgstr "Starten in een workspace"
+msgstr "Starten in een werkruimte"
 
 msgid "Start new session"
 msgstr "Nieuwe sessie starten"

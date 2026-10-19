@@ -1180,6 +1180,9 @@ msgstr "**Thao tác tác vụ rõ ràng hơn**: đổi trạng thái từ nhãn 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Bảng khớp với Jira**: các trạng thái quy trình được nhóm vẫn nằm trong cùng các cột."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Workspace tác vụ đơn giản hơn**: bắt đầu workspace từ tác vụ hoặc tìm và liên kết workspace hiện có."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Chọn cách chế độ xem thay đổi mở từ thanh trên cùng"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
-
-msgid "Choose project later"
-msgstr "Chọn dự án sau"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
@@ -9775,6 +9775,9 @@ msgstr "đã sao chép liên kết"
 msgid "Link copied"
 msgstr "Đã sao chép liên kết"
 
+msgid "Link existing workspace"
+msgstr "Liên kết workspace hiện có"
+
 msgid "Link GitHub issue"
 msgstr "Liên kết issue GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Không tìm thấy workspace nào."
 
 msgid "No workspaces in this project yet."
 msgstr "Dự án này chưa có không gian làm việc nào."
+
+msgid "No workspaces linked to this task."
+msgstr "Chưa có workspace nào liên kết với tác vụ này."
 
 msgid "No workspaces match your filters"
 msgstr "Không có workspace nào khớp bộ lọc"
@@ -15316,9 +15322,6 @@ msgstr "Chọn nhóm"
 
 msgid "Select terminal script directory"
 msgstr "Chọn thư mục cho script terminal"
-
-msgid "Select workspace"
-msgstr "Chọn không gian làm việc"
 
 msgid "Select worktree location"
 msgstr "Chọn vị trí worktree"

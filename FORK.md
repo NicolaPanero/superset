@@ -26,6 +26,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   scegliendo una board e uno sprint usa le colonne configurate in Jira, anche
   quando raggruppano più stati. Il badge di stato apre le azioni in lista,
   board e dettaglio; un trascinamento con più stati possibili chiede quale usare.
+  Il dettaglio mostra i workspace collegati con azioni compatte; **Link existing
+  workspace** cerca per nome, progetto o branch e riconosce quelli già collegati.
   **Automations** configura regole JQL locali all’host. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in

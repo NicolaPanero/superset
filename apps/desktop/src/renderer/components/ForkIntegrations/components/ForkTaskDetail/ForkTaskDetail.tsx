@@ -3,35 +3,23 @@ import type {
 	ForkJiraColumn,
 	ForkTask,
 } from "@superset/shared/fork-integrations";
-import {
-	forkTaskBranch,
-	isForkServiceUnavailable,
-} from "@superset/shared/fork-integrations";
+import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { Textarea } from "@superset/ui/textarea";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-	LuArrowUpRight,
-	LuGitBranch,
-	LuPencil,
-	LuUnlink,
-	LuX,
-} from "react-icons/lu";
+import { LuArrowUpRight, LuPencil, LuX } from "react-icons/lu";
 import { MarkdownRenderer } from "renderer/components/MarkdownRenderer";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
-import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
-import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import { useForkConnections } from "../../hooks/useForkConnections";
-import { forkJiraLinkedIssue } from "../../utils/forkJiraWorkspace";
 import { required } from "../../utils/required";
 import { ForkProviderIcon } from "../ForkProviderIcon";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkTaskStatus } from "../ForkTaskStatus";
+import { ForkTaskWorkspaces } from "./components/ForkTaskWorkspaces";
 
 export function ForkTaskDetail({
 	task,
@@ -44,18 +32,14 @@ export function ForkTaskDetail({
 }) {
 	const { t } = useLingui(),
 		{ client, hostUrl } = useForkConnections(),
-		cache = useQueryClient(),
-		navigate = useNavigate(),
-		openNewWorkspace = useOpenNewWorkspace();
+		cache = useQueryClient();
 	const target = { connectionId: task.connectionId, key: task.key };
 	const [editing, setEditing] = useState(false);
 	const [title, setTitle] = useState(task.title),
 		[description, setDescription] = useState(task.description),
 		[labels, setLabels] = useState(task.labels.join(", "));
 	const [body, setBody] = useState("");
-	const [confirmDelete, setConfirmDelete] = useState(false),
-		[projectId, setProjectId] = useState(""),
-		[workspaceId, setWorkspaceId] = useState("");
+	const [confirmDelete, setConfirmDelete] = useState(false);
 	const [assigneeId, setAssigneeId] = useState(task.assignee?.id ?? ""),
 		[assigneeQuery, setAssigneeQuery] = useState(""),
 		[priorityId, setPriorityId] = useState(task.priorityId ?? "");
@@ -95,26 +79,10 @@ export function ForkTaskDetail({
 		queryFn: () => required(client).forkTasks.comments.query(target),
 		enabled: !!client,
 	});
-	const projects = useQuery({
-		refetchOnReconnect: true,
-		networkMode: "always",
-		retry: false,
-		queryKey: ["fork-integrations", hostUrl, "projects"],
-		queryFn: () => required(client).project.list.query(),
-		enabled: !!client,
-	});
-	const workspaces = useQuery({
-		refetchOnReconnect: true,
-		networkMode: "always",
-		retry: false,
-		queryKey: ["fork-integrations", hostUrl, "workspaces"],
-		queryFn: () => required(client).workspace.list.query(),
-		enabled: !!client,
-	});
 	const action = useMutation({
 		networkMode: "always",
 		retry: false,
-		mutationFn: async (kind: "save" | "comment" | "delete" | "link") => {
+		mutationFn: async (kind: "save" | "comment" | "delete") => {
 			if (!client) return;
 			if (kind === "save")
 				return client.forkTasks.edit.mutate({
@@ -146,16 +114,12 @@ export function ForkTaskDetail({
 				await client.forkTasks.remove.mutate(target);
 				onBack();
 			}
-			if (kind === "link")
-				await client.forkTasks.link.mutate({ ...target, workspaceId });
 		},
 		onSuccess: (_, kind) => {
 			if (kind === "save") {
 				setEditing(false);
 				toast.success(t({ message: "Saved" }));
 			}
-			if (kind === "link")
-				toast.success(t({ message: "Task linked to workspace." }));
 			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
 		},
 	});
@@ -165,43 +129,6 @@ export function ForkTaskDetail({
 		assignees.error,
 		comments.error,
 	].some(isForkServiceUnavailable);
-	const linkedWorkspaces = useQuery({
-		refetchOnReconnect: true,
-		networkMode: "always",
-		retry: false,
-		queryKey: ["fork-integrations", hostUrl, "task-workspaces", target],
-		queryFn: () =>
-			required(client).forkTasks.workspaces.query({
-				connectionId: task.connectionId,
-				taskId: task.id,
-			}),
-		enabled: !!client,
-	});
-	const unlink = useMutation({
-		networkMode: "always",
-		retry: false,
-		mutationFn: (workspaceId: string) =>
-			required(client).forkTasks.unlink.mutate({
-				workspaceId,
-				connectionId: task.connectionId,
-				taskId: task.id,
-			}),
-		onSettled: () =>
-			void cache.invalidateQueries({ queryKey: ["fork-integrations"] }),
-	});
-	const startInWorkspace = () => {
-		const drafts = useNewWorkspaceDraftStore.getState();
-		drafts.resetDraft();
-		drafts.updateDraft({
-			linkedIssues: [forkJiraLinkedIssue(task)],
-			branchName: forkTaskBranch(task.key, task.title, task.type?.name),
-			branchNameEdited: true,
-			branchNameFromProvider: false,
-			workspaceName: `${task.key} ${task.title}`,
-			workspaceNameEdited: true,
-		});
-		openNewWorkspace(projectId || null);
-	};
 	return (
 		<div className="mx-auto w-full min-w-0 max-w-4xl space-y-6 p-5">
 			{unavailable && (
@@ -391,84 +318,7 @@ export function ForkTaskDetail({
 				</section>
 			)}
 
-			<section className="space-y-3 rounded-xl border border-primary/15 bg-primary/[0.025] p-4">
-				<h3 className="text-sm font-medium">
-					<span className="inline-flex items-center gap-2">
-						<LuGitBranch className="size-3.5 text-primary" />
-						<Trans>Workspaces</Trans>
-					</span>
-				</h3>
-				{linkedWorkspaces.data && linkedWorkspaces.data.length > 0 && (
-					<ul className="space-y-1">
-						{linkedWorkspaces.data.map((w) => (
-							<li key={w.id} className="flex items-center gap-1">
-								<Button
-									size="sm"
-									variant="ghost"
-									className="min-w-0 flex-1 justify-start"
-									onClick={() =>
-										void navigate({
-											to: "/v2-workspace/$workspaceId",
-											params: { workspaceId: w.id },
-										})
-									}
-								>
-									<span className="truncate">{w.name || w.id}</span>
-								</Button>
-								<Button
-									size="icon-sm"
-									variant="ghost"
-									aria-label={t({ message: "Unlink" })}
-									disabled={unlink.isPending}
-									onClick={() => unlink.mutate(w.id)}
-								>
-									<LuUnlink className="size-3.5" />
-								</Button>
-							</li>
-						))}
-					</ul>
-				)}
-				<div className="flex flex-wrap gap-2">
-					<select
-						aria-label={t({ message: "Project" })}
-						className="h-9 rounded-md border bg-background px-2 text-sm"
-						value={projectId}
-						onChange={(e) => setProjectId(e.target.value)}
-					>
-						<option value="">{t({ message: "Choose project later" })}</option>
-						{projects.data?.map((p) => (
-							<option key={p.id} value={p.id}>
-								{p.name}
-							</option>
-						))}
-					</select>
-					<Button onClick={startInWorkspace}>
-						<Trans>Start in workspace</Trans>
-					</Button>
-				</div>
-				<div className="flex flex-wrap gap-2">
-					<select
-						aria-label={t({ message: "Workspace" })}
-						className="h-9 rounded-md border bg-background px-2 text-sm"
-						value={workspaceId}
-						onChange={(e) => setWorkspaceId(e.target.value)}
-					>
-						<option value="">{t({ message: "Select workspace" })}</option>
-						{workspaces.data?.map((p) => (
-							<option key={p.id} value={p.id}>
-								{p.name}
-							</option>
-						))}
-					</select>
-					<Button
-						variant="outline"
-						disabled={!workspaceId || action.isPending}
-						onClick={() => action.mutate("link")}
-					>
-						<Trans>Link</Trans>
-					</Button>
-				</div>
-			</section>
+			<ForkTaskWorkspaces task={task} />
 			<section className="space-y-3">
 				<h3 className="text-sm font-medium">
 					<Trans>Comments</Trans>

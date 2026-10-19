@@ -1180,6 +1180,9 @@ msgstr "**更清楚的任務操作**：透過任務狀態標籤變更狀態。�
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**與 Jira 一致的看板**：已分組的工作流程狀態保留在同一欄中。"
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**更簡單的任務工作區**：從任務啟動工作區，或搜尋並連結現有工作區。"
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "選擇從頂欄開啟變更檢視的方式"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "選擇在終端中Cmd+點選檔案路徑時的開啟方式"
-
-msgid "Choose project later"
-msgstr "稍後選擇專案"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "選擇要從應用程式內瀏覽器清除的內容。"
@@ -9775,6 +9775,9 @@ msgstr "連結已複製"
 msgid "Link copied"
 msgstr "連結已複製"
 
+msgid "Link existing workspace"
+msgstr "連結現有工作區"
+
 msgid "Link GitHub issue"
 msgstr "關聯GitHub議題"
 
@@ -11483,6 +11486,9 @@ msgstr "未找到工作區。"
 
 msgid "No workspaces in this project yet."
 msgstr "此專案尚無工作區。"
+
+msgid "No workspaces linked to this task."
+msgstr "此任務尚未連結任何工作區。"
 
 msgid "No workspaces match your filters"
 msgstr "沒有符合篩選條件的工作區"
@@ -15316,9 +15322,6 @@ msgstr "選擇團隊"
 
 msgid "Select terminal script directory"
 msgstr "選擇終端指令碼目錄"
-
-msgid "Select workspace"
-msgstr "選擇工作區"
 
 msgid "Select worktree location"
 msgstr "選擇worktree位置"

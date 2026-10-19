@@ -1180,6 +1180,9 @@ msgstr "**Daha anlaşılır görev işlemleri**: bir sütunda birden fazla durum
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jira ile aynı panolar**: gruplanmış iş akışı durumları aynı sütunlarda kalır."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Görevler için daha basit çalışma alanları**: bir görevden çalışma alanı başlatın veya mevcut bir alanı arayıp bağlayın."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Değişiklikler görünümünün üst çubuktan nasıl açılacağını 
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağını seçin"
-
-msgid "Choose project later"
-msgstr "Projeyi sonra seç"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
@@ -9775,6 +9775,9 @@ msgstr "bağlantı kopyalandı"
 msgid "Link copied"
 msgstr "Bağlantı kopyalandı"
 
+msgid "Link existing workspace"
+msgstr "Mevcut çalışma alanını bağla"
+
 msgid "Link GitHub issue"
 msgstr "GitHub issue'su bağla"
 
@@ -11483,6 +11486,9 @@ msgstr "Çalışma alanı bulunamadı."
 
 msgid "No workspaces in this project yet."
 msgstr "Bu projede henüz çalışma alanı yok."
+
+msgid "No workspaces linked to this task."
+msgstr "Bu göreve bağlı çalışma alanı yok."
 
 msgid "No workspaces match your filters"
 msgstr "Filtrelerinizle eşleşen çalışma alanı yok"
@@ -15317,9 +15323,6 @@ msgstr "Takımları seç"
 msgid "Select terminal script directory"
 msgstr "Terminal betiği dizinini seçin"
 
-msgid "Select workspace"
-msgstr "Çalışma alanı seç"
-
 msgid "Select worktree location"
 msgstr "Worktree konumunu seçin"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Şablondan başla"
 
 msgid "Start in workspace"
-msgstr "Bir workspace'te başlat"
+msgstr "Bir çalışma alanında başlat"
 
 msgid "Start new session"
 msgstr "Yeni oturum başlat"

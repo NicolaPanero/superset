@@ -1180,6 +1180,9 @@ msgstr "**Actions plus claires** : changez le statut depuis le badge de la tâch
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Tableaux fidèles à Jira** : les statuts regroupés du workflow restent dans les mêmes colonnes."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Des espaces de travail simplifiés pour les tâches** : démarrez un espace de travail depuis une tâche ou recherchez et liez un espace existant."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Choisissez comment la vue des changements s'ouvre depuis la barre supér
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Choisissez comment ouvrir les chemins de fichiers lors d'un Cmd+clic dans le terminal"
-
-msgid "Choose project later"
-msgstr "Choisir le projet plus tard"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choisissez ce qu'il faut effacer du navigateur intégré."
@@ -9775,6 +9775,9 @@ msgstr "lien copié"
 msgid "Link copied"
 msgstr "Lien copié"
 
+msgid "Link existing workspace"
+msgstr "Lier un espace de travail existant"
+
 msgid "Link GitHub issue"
 msgstr "Lier une issue GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Aucun espace de travail trouvé."
 
 msgid "No workspaces in this project yet."
 msgstr "Ce projet n’a pas encore d’espace de travail."
+
+msgid "No workspaces linked to this task."
+msgstr "Aucun espace de travail lié à cette tâche."
 
 msgid "No workspaces match your filters"
 msgstr "Aucun espace de travail ne correspond à vos filtres"
@@ -15317,9 +15323,6 @@ msgstr "Sélectionner des équipes"
 msgid "Select terminal script directory"
 msgstr "Sélectionner le répertoire du script de terminal"
 
-msgid "Select workspace"
-msgstr "Sélectionner un espace de travail"
-
 msgid "Select worktree location"
 msgstr "Sélectionner l'emplacement des worktrees"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Partir d'un modèle"
 
 msgid "Start in workspace"
-msgstr "Démarrer dans un workspace"
+msgstr "Démarrer dans un espace de travail"
 
 msgid "Start new session"
 msgstr "Démarrer une nouvelle session"

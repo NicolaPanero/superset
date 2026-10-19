@@ -1180,6 +1180,9 @@ msgstr "**Ações de tarefas mais claras**: altere o status pelo indicador da ta
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Quadros iguais aos do Jira**: os status agrupados do fluxo de trabalho permanecem nas mesmas colunas."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Áreas de trabalho de tarefas mais simples**: inicie uma área de trabalho a partir de uma tarefa ou pesquise e vincule uma existente."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Escolha como a visualização de alterações abre pela barra superior"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Escolha como abrir caminhos de arquivo ao dar Cmd+clique no terminal"
-
-msgid "Choose project later"
-msgstr "Escolher o projeto depois"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Escolha o que limpar do navegador do app."
@@ -9775,6 +9775,9 @@ msgstr "link copiado"
 msgid "Link copied"
 msgstr "Link copiado"
 
+msgid "Link existing workspace"
+msgstr "Vincular área de trabalho existente"
+
 msgid "Link GitHub issue"
 msgstr "Vincular issue do GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Nenhuma área de trabalho encontrada."
 
 msgid "No workspaces in this project yet."
 msgstr "Este projeto ainda não tem espaços de trabalho."
+
+msgid "No workspaces linked to this task."
+msgstr "Nenhuma área de trabalho vinculada a esta tarefa."
 
 msgid "No workspaces match your filters"
 msgstr "Nenhuma área de trabalho corresponde aos seus filtros"
@@ -15317,9 +15323,6 @@ msgstr "Selecionar equipes"
 msgid "Select terminal script directory"
 msgstr "Selecionar o diretório do script de terminal"
 
-msgid "Select workspace"
-msgstr "Selecionar espaço de trabalho"
-
 msgid "Select worktree location"
 msgstr "Selecionar o local das worktrees"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Começar por um modelo"
 
 msgid "Start in workspace"
-msgstr "Começar em um workspace"
+msgstr "Começar em uma área de trabalho"
 
 msgid "Start new session"
 msgstr "Iniciar nova sessão"

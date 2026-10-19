@@ -1180,6 +1180,9 @@ msgstr "**Klarere Aufgabenaktionen**: Ändere den Status über das Statusfeld de
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Boards wie in Jira**: Gruppierte Workflow-Status bleiben in denselben Spalten."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Einfachere Arbeitsbereiche für Aufgaben**: Starte einen Arbeitsbereich aus einer Aufgabe oder suche und verknüpfe einen vorhandenen."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Wähle, wie sich die Änderungsansicht aus der Titelleiste öffnet"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Lege fest, wie Dateipfade beim Cmd+Klick im Terminal geöffnet werden"
-
-msgid "Choose project later"
-msgstr "Projekt später wählen"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wähle, was aus dem In-App-Browser gelöscht werden soll."
@@ -9775,6 +9775,9 @@ msgstr "Link kopiert"
 msgid "Link copied"
 msgstr "Link kopiert"
 
+msgid "Link existing workspace"
+msgstr "Vorhandenen Arbeitsbereich verknüpfen"
+
 msgid "Link GitHub issue"
 msgstr "GitHub-Issue verknüpfen"
 
@@ -11483,6 +11486,9 @@ msgstr "Keine Arbeitsbereiche gefunden."
 
 msgid "No workspaces in this project yet."
 msgstr "Dieses Projekt hat noch keine Arbeitsbereiche."
+
+msgid "No workspaces linked to this task."
+msgstr "Mit dieser Aufgabe sind keine Arbeitsbereiche verknüpft."
 
 msgid "No workspaces match your filters"
 msgstr "Keine Arbeitsbereiche passen zu deinen Filtern"
@@ -15317,9 +15323,6 @@ msgstr "Teams auswählen"
 msgid "Select terminal script directory"
 msgstr "Verzeichnis für Terminal-Skript wählen"
 
-msgid "Select workspace"
-msgstr "Arbeitsbereich auswählen"
-
 msgid "Select worktree location"
 msgstr "Worktree-Speicherort wählen"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Mit einer Vorlage starten"
 
 msgid "Start in workspace"
-msgstr "In einem Workspace starten"
+msgstr "In einem Arbeitsbereich starten"
 
 msgid "Start new session"
 msgstr "Neue Sitzung starten"

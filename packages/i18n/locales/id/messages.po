@@ -1180,6 +1180,9 @@ msgstr "**Tindakan tugas yang lebih jelas**: ubah status dari lencana tugas, den
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Papan yang sesuai dengan Jira**: status alur kerja yang dikelompokkan tetap berada di kolom yang sama."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Workspace tugas lebih sederhana**: mulai workspace dari tugas atau cari dan tautkan workspace yang sudah ada."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Pilih cara membuka tampilan perubahan dari bilah atas"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
-
-msgid "Choose project later"
-msgstr "Pilih proyek nanti"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
@@ -9775,6 +9775,9 @@ msgstr "tautan disalin"
 msgid "Link copied"
 msgstr "Tautan disalin"
 
+msgid "Link existing workspace"
+msgstr "Tautkan workspace yang ada"
+
 msgid "Link GitHub issue"
 msgstr "Tautkan issue GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Tidak ada workspace ditemukan."
 
 msgid "No workspaces in this project yet."
 msgstr "Belum ada workspace di proyek ini."
+
+msgid "No workspaces linked to this task."
+msgstr "Belum ada workspace yang ditautkan ke tugas ini."
 
 msgid "No workspaces match your filters"
 msgstr "Tidak ada workspace yang cocok dengan filter Anda"
@@ -15316,9 +15322,6 @@ msgstr "Pilih tim"
 
 msgid "Select terminal script directory"
 msgstr "Pilih direktori skrip terminal"
-
-msgid "Select workspace"
-msgstr "Pilih ruang kerja"
 
 msgid "Select worktree location"
 msgstr "Pilih lokasi worktree"

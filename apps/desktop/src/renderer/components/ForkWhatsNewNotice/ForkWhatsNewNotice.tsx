@@ -42,6 +42,10 @@ export function ForkWhatsNewNotice() {
 			message:
 				"**Board and sprint filters**: choose your Jira board and sprint without writing JQL.",
 		}),
+		t({
+			message:
+				"**Simpler task workspaces**: start a workspace from a task or search and link an existing one.",
+		}),
 	];
 	const notice: DesktopNotice = {
 		id: `fork-whats-new:${FORK_WHATS_NEW_ID}`,

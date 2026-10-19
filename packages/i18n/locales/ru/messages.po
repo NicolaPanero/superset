@@ -1180,6 +1180,9 @@ msgstr "**Понятные действия с задачами**: меняйт�
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Доски как в Jira**: сгруппированные статусы рабочего процесса остаются в тех же столбцах."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Рабочие области задач стали проще**: создайте рабочую область из задачи или найдите и свяжите существующую."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Выберите, как открывается представлени
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Выберите, как открывать пути файлов при Cmd+клике в терминале"
-
-msgid "Choose project later"
-msgstr "Выбрать проект позже"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."
@@ -9775,6 +9775,9 @@ msgstr "ссылка скопирована"
 msgid "Link copied"
 msgstr "Ссылка скопирована"
 
+msgid "Link existing workspace"
+msgstr "Связать существующую рабочую область"
+
 msgid "Link GitHub issue"
 msgstr "Привязать задачу GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Рабочие области не найдены."
 
 msgid "No workspaces in this project yet."
 msgstr "В этом проекте пока нет рабочих пространств."
+
+msgid "No workspaces linked to this task."
+msgstr "С этой задачей не связана ни одна рабочая область."
 
 msgid "No workspaces match your filters"
 msgstr "Нет рабочих областей под ваши фильтры"
@@ -15317,9 +15323,6 @@ msgstr "Выбрать команды"
 msgid "Select terminal script directory"
 msgstr "Выберите папку скрипта терминала"
 
-msgid "Select workspace"
-msgstr "Выбрать рабочую область"
-
 msgid "Select worktree location"
 msgstr "Выберите расположение worktree"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Начать с шаблона"
 
 msgid "Start in workspace"
-msgstr "Начать в workspace"
+msgstr "Начать в рабочей области"
 
 msgid "Start new session"
 msgstr "Начать новую сессию"

@@ -1180,6 +1180,9 @@ msgstr "**Czytelniejsze działania**: zmieniaj status za pomocą etykiety zadani
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Tablice zgodne z Jira**: zgrupowane statusy przepływu pracy pozostają w tych samych kolumnach."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Prostsze obszary robocze zadań**: rozpocznij obszar roboczy z poziomu zadania lub wyszukaj i powiąż istniejący."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Wybierz, jak widok zmian otwiera się z górnego paska"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Wybierz, jak otwierać ścieżki plików po Cmd+kliknięciu w terminalu"
-
-msgid "Choose project later"
-msgstr "Wybierz projekt później"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wybierz, co wyczyścić z przeglądarki w aplikacji."
@@ -9775,6 +9775,9 @@ msgstr "link skopiowany"
 msgid "Link copied"
 msgstr "Skopiowano link"
 
+msgid "Link existing workspace"
+msgstr "Powiąż istniejący obszar roboczy"
+
 msgid "Link GitHub issue"
 msgstr "Powiąż zgłoszenie GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Nie znaleziono obszarów roboczych."
 
 msgid "No workspaces in this project yet."
 msgstr "Ten projekt nie ma jeszcze obszarów roboczych."
+
+msgid "No workspaces linked to this task."
+msgstr "Brak obszarów roboczych powiązanych z tym zadaniem."
 
 msgid "No workspaces match your filters"
 msgstr "Żaden obszar roboczy nie pasuje do filtrów"
@@ -15317,9 +15323,6 @@ msgstr "Wybierz zespoły"
 msgid "Select terminal script directory"
 msgstr "Wybierz katalog skryptu terminala"
 
-msgid "Select workspace"
-msgstr "Wybierz obszar roboczy"
-
 msgid "Select worktree location"
 msgstr "Wybierz lokalizację worktree"
 
@@ -16366,7 +16369,7 @@ msgid "Start from a template"
 msgstr "Zacznij od szablonu"
 
 msgid "Start in workspace"
-msgstr "Rozpocznij w workspace"
+msgstr "Rozpocznij w obszarze roboczym"
 
 msgid "Start new session"
 msgstr "Uruchom nową sesję"

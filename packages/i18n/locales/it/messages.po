@@ -1180,6 +1180,9 @@ msgstr "**Azioni più chiare sui task**: cambia stato dal badge, con una scelta 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Board fedeli a Jira**: gli stati raggruppati del workflow restano nelle stesse colonne."
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**Workspace dei task più semplici**: avvia un workspace dal task oppure cerca e collega un workspace esistente."
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "Scegli come si apre la vista delle modifiche dalla barra superiore"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Scegli come aprire i percorsi dei file con Cmd+clic nel terminale"
-
-msgid "Choose project later"
-msgstr "Scegli il progetto dopo"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Scegli cosa cancellare dal browser interno."
@@ -9775,6 +9775,9 @@ msgstr "link copiato"
 msgid "Link copied"
 msgstr "Link copiato"
 
+msgid "Link existing workspace"
+msgstr "Collega workspace esistente"
+
 msgid "Link GitHub issue"
 msgstr "Collega una issue GitHub"
 
@@ -11483,6 +11486,9 @@ msgstr "Nessun workspace trovato."
 
 msgid "No workspaces in this project yet."
 msgstr "Nessuno spazio di lavoro in questo progetto."
+
+msgid "No workspaces linked to this task."
+msgstr "Nessun workspace collegato a questo task."
 
 msgid "No workspaces match your filters"
 msgstr "Nessun workspace corrisponde ai filtri"
@@ -15316,9 +15322,6 @@ msgstr "Seleziona i team"
 
 msgid "Select terminal script directory"
 msgstr "Seleziona la directory dello script del terminale"
-
-msgid "Select workspace"
-msgstr "Seleziona spazio di lavoro"
 
 msgid "Select worktree location"
 msgstr "Seleziona la posizione dei worktree"

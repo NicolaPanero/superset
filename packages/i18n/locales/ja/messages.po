@@ -1180,6 +1180,9 @@ msgstr "**わかりやすいタスク操作**：タスクのバッジから状�
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jiraと一致するボード**：まとめられたワークフローの状態は、同じ列に表示されます。"
 
+msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
+msgstr "**タスクのワークスペースをシンプルに**: タスクからワークスペースを開始するか、既存のワークスペースを検索してリンクできます。"
+
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -3747,9 +3750,6 @@ msgstr "トップバーから変更ビューをどのように開くかを選択
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "ターミナルでCmd+クリックしたときのファイルパスの開き方"
-
-msgid "Choose project later"
-msgstr "プロジェクトは後で選ぶ"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
@@ -9775,6 +9775,9 @@ msgstr "リンクをコピーしました"
 msgid "Link copied"
 msgstr "リンクをコピーしました"
 
+msgid "Link existing workspace"
+msgstr "既存のワークスペースをリンク"
+
 msgid "Link GitHub issue"
 msgstr "GitHub issueをリンク"
 
@@ -11483,6 +11486,9 @@ msgstr "ワークスペースが見つかりません。"
 
 msgid "No workspaces in this project yet."
 msgstr "このプロジェクトにはまだワークスペースがありません。"
+
+msgid "No workspaces linked to this task."
+msgstr "このタスクにリンクされたワークスペースはありません。"
 
 msgid "No workspaces match your filters"
 msgstr "フィルターに一致するワークスペースがありません"
@@ -15316,9 +15322,6 @@ msgstr "チームを選択"
 
 msgid "Select terminal script directory"
 msgstr "ターミナルスクリプトのディレクトリを選択"
-
-msgid "Select workspace"
-msgstr "ワークスペースを選択"
 
 msgid "Select worktree location"
 msgstr "ワークツリーの場所を選択"
