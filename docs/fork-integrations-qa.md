@@ -87,6 +87,12 @@ The draft unlink hook delegates the Jira-specific patch to the fork utility.
 No generated database migration, API contract replacement or dependency update
 is part of this verification change.
 
+The merge simulation against the fetched `origin/fork/main` was clean. Against
+official `upstream/main` at `8bc96462cc`, both the feature baseline
+`2985e4a29c` and the verification fix `e9d3776ffa` have the same 37 conflicting
+paths. This change adds no conflicting path. Those existing conflicts require
+a dedicated upstream sync; the simulation changed no working files.
+
 Before staging, inspect `git diff --check` and the upstream-file hooks. A
 `git merge-tree --write-tree HEAD origin/fork/main` check can detect conflicts
 against the fetched fork base without changing the checkout. This cannot
