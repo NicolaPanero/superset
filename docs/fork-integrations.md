@@ -12,6 +12,16 @@ sign the local GitHub CLI in or connect the host's repository account. The
 onboarding step is optional when working with local folders or another Git
 provider. A signed-in local GitHub CLI can be reused explicitly without
 starting another sign-in flow.
+An enabled system account is checked again when opening the connections screen
+or returning to the app after a failed check. Saved Git credentials can therefore
+be detected even when `gh` is not installed. This does not reconnect an account
+that the user explicitly disconnected.
+GitHub CLI installation is a separate step. When `gh` is missing, its setup panel
+states this even if the account is already connected through a credential helper.
+With Homebrew, **Install GitHub CLI** starts the guided installation and sign-in.
+Without Homebrew, **Open installation guide** opens the official site for manual
+installation; **Check again** detects it when the user returns. Nothing is
+installed just by signing in to Superset or opening onboarding.
 GitHub can use the existing local CLI/credential-helper account. Jira and
 Bitbucket accept personal API tokens or a compatible OAuth broker. A Jira token
 needs the account email and an HTTPS `*.atlassian.net` site. Classic tokens

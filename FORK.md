@@ -165,6 +165,12 @@ passaggio e collegano le guide ufficiali dei CLI principali. L’onboarding dist
 il login a Superset dall’accesso locale ai repository GitHub; un account CLI già
 autenticato può essere riutilizzato senza ripetere il login. GitHub resta opzionale
 per progetti locali o su altri provider.
+Le credenziali Git salvate vengono ricontrollate all’apertura delle connessioni e
+al ritorno nell’app dopo un controllo fallito, senza riattivare account disconnessi.
+Se manca `gh`, un riquadro distinto lo indica anche con l’account già riconosciuto:
+con Homebrew avvia l’installazione guidata, altrimenti apre la guida ufficiale e
+permette di ricontrollare dopo l’installazione manuale. Il login a Superset non
+installa `gh`.
 L’esportazione di preset condivisibili rimane un passaggio successivo.
 Riferimenti: [Grok ACP](https://docs.x.ai/build/cli/headless-scripting),
 [Grok API e priorità delle credenziali](https://docs.x.ai/build/enterprise),

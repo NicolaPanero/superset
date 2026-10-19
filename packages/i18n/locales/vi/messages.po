@@ -8223,6 +8223,9 @@ msgstr "Việc cài đặt GitHub App đã bị hủy."
 msgid "GitHub App installed successfully!"
 msgstr "Đã cài GitHub App thành công!"
 
+msgid "GitHub CLI (gh) is not installed."
+msgstr "GitHub CLI (gh) chưa được cài đặt."
+
 msgid "GitHub connected, but initial sync failed to start. Please try reconnecting."
 msgstr "Đã kết nối GitHub, nhưng lần đồng bộ đầu tiên không khởi động được. Vui lòng thử kết nối lại."
 
@@ -12138,6 +12141,9 @@ msgstr "Mở trong không gian làm việc"
 
 msgid "Open in…"
 msgstr "Mở trong…"
+
+msgid "Open installation guide"
+msgstr "Mở hướng dẫn cài đặt"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Open issue #{0} in browser"
@@ -17469,6 +17475,12 @@ msgstr "Toàn bộ workspace. Chạy nhiều agent song song, giữ mỗi agent 
 
 msgid "The future home for reusable Superset agent configs, prompts, and setup guides."
 msgstr "Nơi sẽ chứa các cấu hình agent, prompt và hướng dẫn thiết lập Superset có thể tái sử dụng."
+
+msgid "The guide opens in your browser. Install gh on this computer, then check again."
+msgstr "Hướng dẫn mở trong trình duyệt. Cài đặt gh trên máy tính này, rồi kiểm tra lại."
+
+msgid "The guided terminal installs gh with Homebrew and opens GitHub sign-in."
+msgstr "Terminal có hướng dẫn cài đặt gh bằng Homebrew và mở trang đăng nhập GitHub."
 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."

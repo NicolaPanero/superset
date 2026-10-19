@@ -8223,6 +8223,9 @@ msgstr "GitHub App安装已取消。"
 msgid "GitHub App installed successfully!"
 msgstr "GitHub App安装成功！"
 
+msgid "GitHub CLI (gh) is not installed."
+msgstr "尚未安装 GitHub CLI（gh）。"
+
 msgid "GitHub connected, but initial sync failed to start. Please try reconnecting."
 msgstr "GitHub已连接，但初始同步未能启动。请尝试重新连接。"
 
@@ -12138,6 +12141,9 @@ msgstr "在工作区中打开"
 
 msgid "Open in…"
 msgstr "打开方式…"
+
+msgid "Open installation guide"
+msgstr "打开安装指南"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Open issue #{0} in browser"
@@ -17469,6 +17475,12 @@ msgstr "完整的工作区。并行运行智能体，让每个智能体独占自
 
 msgid "The future home for reusable Superset agent configs, prompts, and setup guides."
 msgstr "未来用于存放可复用的 Superset 智能体配置、提示词与安装指南。"
+
+msgid "The guide opens in your browser. Install gh on this computer, then check again."
+msgstr "指南将在浏览器中打开。在此计算机上安装 gh 后，请再次检查。"
+
+msgid "The guided terminal installs gh with Homebrew and opens GitHub sign-in."
+msgstr "引导式终端会通过 Homebrew 安装 gh 并打开 GitHub 登录页面。"
 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."

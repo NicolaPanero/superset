@@ -8223,6 +8223,9 @@ msgstr "Pemasangan GitHub App dibatalkan."
 msgid "GitHub App installed successfully!"
 msgstr "GitHub App berhasil dipasang!"
 
+msgid "GitHub CLI (gh) is not installed."
+msgstr "GitHub CLI (gh) belum terpasang."
+
 msgid "GitHub connected, but initial sync failed to start. Please try reconnecting."
 msgstr "GitHub terhubung, tapi sinkronisasi awal gagal dimulai. Silakan coba hubungkan ulang."
 
@@ -12138,6 +12141,9 @@ msgstr "Buka di ruang kerja"
 
 msgid "Open in…"
 msgstr "Buka di…"
+
+msgid "Open installation guide"
+msgstr "Buka panduan pemasangan"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Open issue #{0} in browser"
@@ -17469,6 +17475,12 @@ msgstr "Workspace lengkap. Jalankan agen secara paralel, simpan masing-masing di
 
 msgid "The future home for reusable Superset agent configs, prompts, and setup guides."
 msgstr "Rumah masa depan untuk konfigurasi agen Superset, prompt, dan panduan penyiapan yang dapat digunakan ulang."
+
+msgid "The guide opens in your browser. Install gh on this computer, then check again."
+msgstr "Panduan terbuka di browser. Pasang gh di komputer ini, lalu periksa lagi."
+
+msgid "The guided terminal installs gh with Homebrew and opens GitHub sign-in."
+msgstr "Terminal terpandu memasang gh dengan Homebrew dan membuka halaman masuk GitHub."
 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."

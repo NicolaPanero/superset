@@ -83,7 +83,13 @@ function OnboardingDashboardPage() {
 						status={rowStatus(isPendingGh, ghReady)}
 						statusLabel={ghStatusLabel}
 						statusTone={ghInstalled ? "warning" : "neutral"}
-						actionLabel={ghInstalled ? "Sign in" : "Install"}
+						actionLabel={translate(
+							ghInstalled
+								? msg({ message: "Sign in" })
+								: brewAvailable
+									? msg({ message: "Install GitHub CLI" })
+									: msg({ message: "Open installation guide" }),
+						)}
 						actionIcon={
 							ghInstalled || brewAvailable ? undefined : (
 								<HiArrowUpRight className="size-3.5" />

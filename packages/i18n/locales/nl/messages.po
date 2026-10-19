@@ -8223,6 +8223,9 @@ msgstr "De installatie van de GitHub App is geannuleerd."
 msgid "GitHub App installed successfully!"
 msgstr "GitHub App geïnstalleerd!"
 
+msgid "GitHub CLI (gh) is not installed."
+msgstr "GitHub CLI (gh) is niet geïnstalleerd."
+
 msgid "GitHub connected, but initial sync failed to start. Please try reconnecting."
 msgstr "GitHub is verbonden, maar de eerste synchronisatie kon niet starten. Verbind opnieuw."
 
@@ -12138,6 +12141,9 @@ msgstr "Openen in werkruimte"
 
 msgid "Open in…"
 msgstr "Openen in…"
+
+msgid "Open installation guide"
+msgstr "Installatiehandleiding openen"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Open issue #{0} in browser"
@@ -17469,6 +17475,12 @@ msgstr "De volledige werkruimte. Draai agents parallel, houd elke agent in zijn 
 
 msgid "The future home for reusable Superset agent configs, prompts, and setup guides."
 msgstr "De toekomstige plek voor herbruikbare Superset-agentconfigs, prompts en setupgidsen."
+
+msgid "The guide opens in your browser. Install gh on this computer, then check again."
+msgstr "De handleiding wordt in je browser geopend. Installeer gh op deze computer en controleer opnieuw."
+
+msgid "The guided terminal installs gh with Homebrew and opens GitHub sign-in."
+msgstr "De begeleide terminal installeert gh met Homebrew en opent de GitHub-aanmelding."
 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."

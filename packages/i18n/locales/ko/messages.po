@@ -8223,6 +8223,9 @@ msgstr "GitHub App 설치가 취소되었습니다."
 msgid "GitHub App installed successfully!"
 msgstr "GitHub App을 설치했습니다!"
 
+msgid "GitHub CLI (gh) is not installed."
+msgstr "GitHub CLI(gh)가 설치되지 않았습니다."
+
 msgid "GitHub connected, but initial sync failed to start. Please try reconnecting."
 msgstr "GitHub는 연결되었지만 초기 동기화를 시작하지 못했습니다. 다시 연결해 보세요."
 
@@ -12138,6 +12141,9 @@ msgstr "작업 공간에서 열기"
 
 msgid "Open in…"
 msgstr "다음으로 열기…"
+
+msgid "Open installation guide"
+msgstr "설치 가이드 열기"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Open issue #{0} in browser"
@@ -17469,6 +17475,12 @@ msgstr "완전한 워크스페이스. 에이전트를 병렬로 실행하고, �
 
 msgid "The future home for reusable Superset agent configs, prompts, and setup guides."
 msgstr "재사용 가능한 Superset 에이전트 설정, 프롬프트, 셋업 가이드가 모일 공간입니다."
+
+msgid "The guide opens in your browser. Install gh on this computer, then check again."
+msgstr "가이드가 브라우저에서 열립니다. 이 컴퓨터에 gh를 설치한 다음 다시 확인하세요."
+
+msgid "The guided terminal installs gh with Homebrew and opens GitHub sign-in."
+msgstr "안내 터미널이 Homebrew로 gh를 설치하고 GitHub 로그인을 엽니다."
 
 #. placeholder {0}: info.version
 msgid "The host came back on {0}, not {targetVersion}."
