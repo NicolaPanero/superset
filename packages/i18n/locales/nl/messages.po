@@ -9271,6 +9271,9 @@ msgstr "Jan Jansen"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira-issues"
+
 msgid "Join"
 msgstr "Meedoen"
 
@@ -9716,6 +9719,9 @@ msgstr "Link gekopieerd"
 
 msgid "Link GitHub issue"
 msgstr "GitHub-issue koppelen"
+
+msgid "Link Jira issue"
+msgstr "Jira-issue koppelen"
 
 msgid "Link Linear issue"
 msgstr "Linear-issue koppelen"
@@ -10538,6 +10544,9 @@ msgstr "Gedempt"
 msgid "My Agent"
 msgstr "Mijn agent"
 
+msgid "My Jira issues"
+msgstr "Mijn Jira-issues"
+
 msgid "My Tasks"
 msgstr "Mijn taken"
 
@@ -11112,6 +11121,9 @@ msgstr "Geen overeenkomsten"
 
 msgid "No matching files"
 msgstr "Geen overeenkomende bestanden"
+
+msgid "No matching issues"
+msgstr "Geen overeenkomende issues"
 
 msgid "No matching models"
 msgstr "Geen overeenkomende modellen"
@@ -14916,6 +14928,9 @@ msgstr "Zoeken in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issues zoeken..."
+
+msgid "Search Jira…"
+msgstr "Zoeken in Jira…"
 
 msgid "Search labels..."
 msgstr "Labels zoeken..."

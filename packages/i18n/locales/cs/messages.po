@@ -9271,6 +9271,9 @@ msgstr "Jan Novák"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Úkoly Jira"
+
 msgid "Join"
 msgstr "Připojit se"
 
@@ -9716,6 +9719,9 @@ msgstr "Odkaz zkopírován"
 
 msgid "Link GitHub issue"
 msgstr "Propojit GitHub issue"
+
+msgid "Link Jira issue"
+msgstr "Propojit úkol Jira"
 
 msgid "Link Linear issue"
 msgstr "Propojit Linear issue"
@@ -10538,6 +10544,9 @@ msgstr "Ztlumeno"
 msgid "My Agent"
 msgstr "Můj agent"
 
+msgid "My Jira issues"
+msgstr "Moje úkoly Jira"
+
 msgid "My Tasks"
 msgstr "Moje úkoly"
 
@@ -11112,6 +11121,9 @@ msgstr "Žádné shody"
 
 msgid "No matching files"
 msgstr "Žádné odpovídající soubory"
+
+msgid "No matching issues"
+msgstr "Žádné odpovídající úkoly"
 
 msgid "No matching models"
 msgstr "Žádné odpovídající modely"
@@ -14916,6 +14928,9 @@ msgstr "Hledat v {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Hledat issues..."
+
+msgid "Search Jira…"
+msgstr "Hledat v Jira…"
 
 msgid "Search labels..."
 msgstr "Hledat štítky..."

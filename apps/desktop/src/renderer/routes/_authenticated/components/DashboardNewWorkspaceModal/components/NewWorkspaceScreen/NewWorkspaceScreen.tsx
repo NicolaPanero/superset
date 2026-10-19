@@ -46,6 +46,7 @@ import {
 	ForkHomeBackground,
 	ForkHomeBrand,
 } from "renderer/components/ForkHomeBackground";
+import { ForkJiraIssueLinkButton } from "renderer/components/ForkIntegrations/components/ForkJiraIssueLinkButton";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -973,6 +974,9 @@ export function NewWorkspaceScreen({
 										</PromptInputButton>
 									</IssueLinkCommand>
 								)}
+								<ForkJiraIssueLinkButton
+									className={`${PILL_BUTTON_CLASS} w-[22px]`}
+								/>
 								<GitHubIssueLinkCommand
 									onSelect={(issue) =>
 										addLinkedGitHubIssue(

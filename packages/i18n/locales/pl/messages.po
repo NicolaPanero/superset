@@ -9271,6 +9271,9 @@ msgstr "Jan Kowalski"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Zgłoszenia Jira"
+
 msgid "Join"
 msgstr "Dołącz"
 
@@ -9716,6 +9719,9 @@ msgstr "Skopiowano link"
 
 msgid "Link GitHub issue"
 msgstr "Powiąż zgłoszenie GitHub"
+
+msgid "Link Jira issue"
+msgstr "Połącz zgłoszenie Jira"
 
 msgid "Link Linear issue"
 msgstr "Połącz zgłoszenie Linear"
@@ -10538,6 +10544,9 @@ msgstr "Wyciszono"
 msgid "My Agent"
 msgstr "Mój agent"
 
+msgid "My Jira issues"
+msgstr "Moje zgłoszenia Jira"
+
 msgid "My Tasks"
 msgstr "Moje zadania"
 
@@ -11112,6 +11121,9 @@ msgstr "Brak dopasowań"
 
 msgid "No matching files"
 msgstr "Brak pasujących plików"
+
+msgid "No matching issues"
+msgstr "Brak pasujących zgłoszeń"
 
 msgid "No matching models"
 msgstr "Brak pasujących modeli"
@@ -14916,6 +14928,9 @@ msgstr "Szukaj w {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Szukaj zgłoszeń..."
+
+msgid "Search Jira…"
+msgstr "Szukaj w Jira…"
 
 msgid "Search labels..."
 msgstr "Szukaj etykiet..."

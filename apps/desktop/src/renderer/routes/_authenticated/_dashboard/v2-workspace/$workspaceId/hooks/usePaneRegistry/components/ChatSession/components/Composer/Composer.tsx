@@ -27,6 +27,7 @@ import {
 	useMemo,
 	useRef,
 } from "react";
+import { useForkJiraMentionProvider } from "renderer/components/ForkIntegrations/hooks/useForkJiraMentionProvider";
 import { env } from "renderer/env.renderer";
 import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -232,8 +233,10 @@ export const Composer = memo(function Composer({
 		[cloudUtils],
 	);
 
+	const forkMentionProviders = useForkJiraMentionProvider();
 	const mentionProviders = useMemo<ComposerMentionProvider[]>(
 		() => [
+			...forkMentionProviders,
 			{
 				id: "files",
 				title: t({ message: "Files" }),
@@ -255,7 +258,7 @@ export const Composer = memo(function Composer({
 				},
 			},
 		],
-		[searchFiles, searchPages, t],
+		[forkMentionProviders, searchFiles, searchPages, t],
 	);
 
 	const commands = useMemo(

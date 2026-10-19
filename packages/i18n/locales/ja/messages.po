@@ -9271,6 +9271,9 @@ msgstr "山田太郎"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira 課題"
+
 msgid "Join"
 msgstr "参加"
 
@@ -9716,6 +9719,9 @@ msgstr "リンクをコピーしました"
 
 msgid "Link GitHub issue"
 msgstr "GitHub issueをリンク"
+
+msgid "Link Jira issue"
+msgstr "Jira 課題をリンク"
 
 msgid "Link Linear issue"
 msgstr "Linear issueをリンク"
@@ -10538,6 +10544,9 @@ msgstr "ミュート中"
 msgid "My Agent"
 msgstr "マイエージェント"
 
+msgid "My Jira issues"
+msgstr "自分の Jira 課題"
+
 msgid "My Tasks"
 msgstr "マイタスク"
 
@@ -11112,6 +11121,9 @@ msgstr "一致なし"
 
 msgid "No matching files"
 msgstr "一致するファイルはありません"
+
+msgid "No matching issues"
+msgstr "一致する課題がありません"
 
 msgid "No matching models"
 msgstr "一致するモデルがありません"
@@ -14916,6 +14928,9 @@ msgstr "{frameTitle}内を検索…"
 
 msgid "Search issues..."
 msgstr "Issueを検索..."
+
+msgid "Search Jira…"
+msgstr "Jira を検索…"
 
 msgid "Search labels..."
 msgstr "ラベルを検索..."

@@ -9271,6 +9271,9 @@ msgstr "Maria Silva"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Issues do Jira"
+
 msgid "Join"
 msgstr "Entrar"
 
@@ -9716,6 +9719,9 @@ msgstr "Link copiado"
 
 msgid "Link GitHub issue"
 msgstr "Vincular issue do GitHub"
+
+msgid "Link Jira issue"
+msgstr "Vincular issue do Jira"
 
 msgid "Link Linear issue"
 msgstr "Vincular issue do Linear"
@@ -10538,6 +10544,9 @@ msgstr "Silenciado"
 msgid "My Agent"
 msgstr "Meu agente"
 
+msgid "My Jira issues"
+msgstr "Minhas issues do Jira"
+
 msgid "My Tasks"
 msgstr "Minhas tarefas"
 
@@ -11112,6 +11121,9 @@ msgstr "Nenhuma ocorrência"
 
 msgid "No matching files"
 msgstr "Nenhum arquivo correspondente"
+
+msgid "No matching issues"
+msgstr "Nenhuma issue correspondente"
 
 msgid "No matching models"
 msgstr "Nenhum modelo correspondente"
@@ -14916,6 +14928,9 @@ msgstr "Buscar em {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Buscar issues..."
+
+msgid "Search Jira…"
+msgstr "Pesquisar no Jira…"
 
 msgid "Search labels..."
 msgstr "Pesquisar rótulos..."

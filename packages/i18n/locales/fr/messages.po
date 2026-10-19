@@ -9271,6 +9271,9 @@ msgstr "Jane Doe"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Tickets Jira"
+
 msgid "Join"
 msgstr "Rejoindre"
 
@@ -9716,6 +9719,9 @@ msgstr "Lien copié"
 
 msgid "Link GitHub issue"
 msgstr "Lier une issue GitHub"
+
+msgid "Link Jira issue"
+msgstr "Lier un ticket Jira"
 
 msgid "Link Linear issue"
 msgstr "Lier une issue Linear"
@@ -10538,6 +10544,9 @@ msgstr "Micro coupé"
 msgid "My Agent"
 msgstr "Mon agent"
 
+msgid "My Jira issues"
+msgstr "Mes tickets Jira"
+
 msgid "My Tasks"
 msgstr "Mes tâches"
 
@@ -11112,6 +11121,9 @@ msgstr "Aucun résultat"
 
 msgid "No matching files"
 msgstr "Aucun fichier correspondant"
+
+msgid "No matching issues"
+msgstr "Aucun ticket correspondant"
 
 msgid "No matching models"
 msgstr "Aucun modèle correspondant"
@@ -14916,6 +14928,9 @@ msgstr "Rechercher dans {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Rechercher des issues..."
+
+msgid "Search Jira…"
+msgstr "Rechercher dans Jira…"
 
 msgid "Search labels..."
 msgstr "Rechercher des étiquettes..."

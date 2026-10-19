@@ -9271,6 +9271,9 @@ msgstr "Mario Rossi"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Issue Jira"
+
 msgid "Join"
 msgstr "Unisciti"
 
@@ -9716,6 +9719,9 @@ msgstr "Link copiato"
 
 msgid "Link GitHub issue"
 msgstr "Collega una issue GitHub"
+
+msgid "Link Jira issue"
+msgstr "Collega issue Jira"
 
 msgid "Link Linear issue"
 msgstr "Collega issue Linear"
@@ -10538,6 +10544,9 @@ msgstr "Microfono disattivato"
 msgid "My Agent"
 msgstr "Il mio agente"
 
+msgid "My Jira issues"
+msgstr "Le mie issue Jira"
+
 msgid "My Tasks"
 msgstr "I miei task"
 
@@ -11112,6 +11121,9 @@ msgstr "Nessuna corrispondenza"
 
 msgid "No matching files"
 msgstr "Nessun file corrispondente"
+
+msgid "No matching issues"
+msgstr "Nessuna issue corrispondente"
 
 msgid "No matching models"
 msgstr "Nessun modello corrispondente"
@@ -14916,6 +14928,9 @@ msgstr "Cerca in {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Cerca nelle issue..."
+
+msgid "Search Jira…"
+msgstr "Cerca in Jira…"
 
 msgid "Search labels..."
 msgstr "Cerca etichette..."

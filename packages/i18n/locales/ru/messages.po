@@ -9271,6 +9271,9 @@ msgstr "Иван Иванов"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Задачи Jira"
+
 msgid "Join"
 msgstr "Присоединиться"
 
@@ -9716,6 +9719,9 @@ msgstr "Ссылка скопирована"
 
 msgid "Link GitHub issue"
 msgstr "Привязать задачу GitHub"
+
+msgid "Link Jira issue"
+msgstr "Связать задачу Jira"
 
 msgid "Link Linear issue"
 msgstr "Связать задачу Linear"
@@ -10538,6 +10544,9 @@ msgstr "Микрофон выключен"
 msgid "My Agent"
 msgstr "Мой агент"
 
+msgid "My Jira issues"
+msgstr "Мои задачи Jira"
+
 msgid "My Tasks"
 msgstr "Мои задачи"
 
@@ -11112,6 +11121,9 @@ msgstr "Нет совпадений"
 
 msgid "No matching files"
 msgstr "Нет подходящих файлов"
+
+msgid "No matching issues"
+msgstr "Нет подходящих задач"
 
 msgid "No matching models"
 msgstr "Нет подходящих моделей"
@@ -14916,6 +14928,9 @@ msgstr "Поиск в {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Поиск задач..."
+
+msgid "Search Jira…"
+msgstr "Поиск в Jira…"
 
 msgid "Search labels..."
 msgstr "Поиск меток..."

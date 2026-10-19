@@ -9271,6 +9271,9 @@ msgstr "홍길동"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira 이슈"
+
 msgid "Join"
 msgstr "참가"
 
@@ -9716,6 +9719,9 @@ msgstr "링크 복사됨"
 
 msgid "Link GitHub issue"
 msgstr "GitHub 이슈 연결"
+
+msgid "Link Jira issue"
+msgstr "Jira 이슈 연결"
 
 msgid "Link Linear issue"
 msgstr "Linear 이슈 연결"
@@ -10538,6 +10544,9 @@ msgstr "음소거됨"
 msgid "My Agent"
 msgstr "내 에이전트"
 
+msgid "My Jira issues"
+msgstr "내 Jira 이슈"
+
 msgid "My Tasks"
 msgstr "내 작업"
 
@@ -11112,6 +11121,9 @@ msgstr "일치 항목 없음"
 
 msgid "No matching files"
 msgstr "일치하는 파일 없음"
+
+msgid "No matching issues"
+msgstr "일치하는 이슈 없음"
 
 msgid "No matching models"
 msgstr "일치하는 모델이 없습니다"
@@ -14916,6 +14928,9 @@ msgstr "{frameTitle}에서 검색…"
 
 msgid "Search issues..."
 msgstr "이슈 검색..."
+
+msgid "Search Jira…"
+msgstr "Jira 검색…"
 
 msgid "Search labels..."
 msgstr "레이블 검색..."

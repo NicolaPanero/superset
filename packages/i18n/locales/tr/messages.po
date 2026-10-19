@@ -9271,6 +9271,9 @@ msgstr "Ayşe Yılmaz"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira kayıtları"
+
 msgid "Join"
 msgstr "Katıl"
 
@@ -9716,6 +9719,9 @@ msgstr "Bağlantı kopyalandı"
 
 msgid "Link GitHub issue"
 msgstr "GitHub issue'su bağla"
+
+msgid "Link Jira issue"
+msgstr "Jira kaydı bağla"
 
 msgid "Link Linear issue"
 msgstr "Linear issue'su bağla"
@@ -10538,6 +10544,9 @@ msgstr "Sessizde"
 msgid "My Agent"
 msgstr "Ajanım"
 
+msgid "My Jira issues"
+msgstr "Jira kayıtlarım"
+
 msgid "My Tasks"
 msgstr "Görevlerim"
 
@@ -11112,6 +11121,9 @@ msgstr "Eşleşme yok"
 
 msgid "No matching files"
 msgstr "Eşleşen dosya yok"
+
+msgid "No matching issues"
+msgstr "Eşleşen kayıt yok"
 
 msgid "No matching models"
 msgstr "Eşleşen model yok"
@@ -14916,6 +14928,9 @@ msgstr "Şurada ara: {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Issue ara..."
+
+msgid "Search Jira…"
+msgstr "Jira'da ara…"
 
 msgid "Search labels..."
 msgstr "Etiket ara..."

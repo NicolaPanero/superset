@@ -9271,6 +9271,9 @@ msgstr "Nguyễn Văn A"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Issue Jira"
+
 msgid "Join"
 msgstr "Tham gia"
 
@@ -9716,6 +9719,9 @@ msgstr "Đã sao chép liên kết"
 
 msgid "Link GitHub issue"
 msgstr "Liên kết issue GitHub"
+
+msgid "Link Jira issue"
+msgstr "Liên kết issue Jira"
 
 msgid "Link Linear issue"
 msgstr "Liên kết issue Linear"
@@ -10538,6 +10544,9 @@ msgstr "Đã tắt tiếng"
 msgid "My Agent"
 msgstr "Agent của tôi"
 
+msgid "My Jira issues"
+msgstr "Issue Jira của tôi"
+
 msgid "My Tasks"
 msgstr "Tác vụ của tôi"
 
@@ -11112,6 +11121,9 @@ msgstr "Không có kết quả khớp"
 
 msgid "No matching files"
 msgstr "Không có tệp phù hợp"
+
+msgid "No matching issues"
+msgstr "Không có issue phù hợp"
 
 msgid "No matching models"
 msgstr "Không có mô hình phù hợp"
@@ -14916,6 +14928,9 @@ msgstr "Tìm trong {frameTitle}…"
 
 msgid "Search issues..."
 msgstr "Tìm issue..."
+
+msgid "Search Jira…"
+msgstr "Tìm trong Jira…"
 
 msgid "Search labels..."
 msgstr "Tìm kiếm nhãn..."

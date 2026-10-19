@@ -9271,6 +9271,9 @@ msgstr "Erika Mustermann"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira-Vorgänge"
+
 msgid "Join"
 msgstr "Beitreten"
 
@@ -9716,6 +9719,9 @@ msgstr "Link kopiert"
 
 msgid "Link GitHub issue"
 msgstr "GitHub-Issue verknüpfen"
+
+msgid "Link Jira issue"
+msgstr "Jira-Vorgang verknüpfen"
 
 msgid "Link Linear issue"
 msgstr "Linear-Issue verknüpfen"
@@ -10538,6 +10544,9 @@ msgstr "Stummgeschaltet"
 msgid "My Agent"
 msgstr "Mein Agent"
 
+msgid "My Jira issues"
+msgstr "Meine Jira-Vorgänge"
+
 msgid "My Tasks"
 msgstr "Meine Aufgaben"
 
@@ -11112,6 +11121,9 @@ msgstr "Keine Treffer"
 
 msgid "No matching files"
 msgstr "Keine passenden Dateien"
+
+msgid "No matching issues"
+msgstr "Keine passenden Vorgänge"
 
 msgid "No matching models"
 msgstr "Keine passenden Modelle"
@@ -14916,6 +14928,9 @@ msgstr "In {frameTitle} suchen…"
 
 msgid "Search issues..."
 msgstr "Issues suchen..."
+
+msgid "Search Jira…"
+msgstr "Jira durchsuchen…"
 
 msgid "Search labels..."
 msgstr "Labels suchen..."

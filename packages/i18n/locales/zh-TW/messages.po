@@ -9271,6 +9271,9 @@ msgstr "張三"
 msgid "JetBrains"
 msgstr "JetBrains"
 
+msgid "Jira issues"
+msgstr "Jira 議題"
+
 msgid "Join"
 msgstr "加入"
 
@@ -9716,6 +9719,9 @@ msgstr "連結已複製"
 
 msgid "Link GitHub issue"
 msgstr "關聯GitHub議題"
+
+msgid "Link Jira issue"
+msgstr "連結 Jira 議題"
 
 msgid "Link Linear issue"
 msgstr "連結Linear議題"
@@ -10538,6 +10544,9 @@ msgstr "已靜音"
 msgid "My Agent"
 msgstr "我的代理程式"
 
+msgid "My Jira issues"
+msgstr "我的 Jira 議題"
+
 msgid "My Tasks"
 msgstr "我的任務"
 
@@ -11112,6 +11121,9 @@ msgstr "沒有匹配項"
 
 msgid "No matching files"
 msgstr "沒有符合的檔案"
+
+msgid "No matching issues"
+msgstr "沒有符合的議題"
 
 msgid "No matching models"
 msgstr "沒有符合的模型"
@@ -14916,6 +14928,9 @@ msgstr "在{frameTitle}中搜尋…"
 
 msgid "Search issues..."
 msgstr "搜尋議題..."
+
+msgid "Search Jira…"
+msgstr "搜尋 Jira…"
 
 msgid "Search labels..."
 msgstr "搜尋標籤..."
