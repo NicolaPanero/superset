@@ -1,6 +1,7 @@
 import {
 	type ForkConnection,
 	type ForkRepositoryRef,
+	forkCloudHost,
 	forkRepositoryKey,
 	parseForkRemote,
 } from "@superset/shared/fork-integrations";
@@ -154,12 +155,7 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 	}
 
 	async getToken(host: string) {
-		const provider =
-			host === "github.com"
-				? "github"
-				: host === "bitbucket.org"
-					? "bitbucket"
-					: null;
+		const provider = forkCloudHost(host)?.provider ?? null;
 		if (!provider) return this.fallback.getToken(host);
 		try {
 			const selected = this.select(provider);

@@ -164,6 +164,18 @@ export const FORK_PROVIDER_DEFINITIONS = {
 >;
 export const FORK_INTEGRATIONS_VERSION = 4;
 
+/** `ssh.bitbucket.org` replaces `bitbucket.org` for Git SSH on 12 Nov 2026. */
+export function forkCloudHost(hostname: string): {
+	provider: "github" | "bitbucket";
+	host: string;
+} | null {
+	const host = hostname.toLowerCase();
+	if (host === "github.com") return { provider: "github", host };
+	if (host === "bitbucket.org" || host === "ssh.bitbucket.org")
+		return { provider: "bitbucket", host: "bitbucket.org" };
+	return null;
+}
+
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");
 	let url: URL;
@@ -173,27 +185,21 @@ export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 		return null;
 	}
 	if (!["https:", "ssh:", "git:"].includes(url.protocol)) return null;
-	const host = url.hostname.toLowerCase();
-	const provider =
-		host === "github.com"
-			? "github"
-			: host === "bitbucket.org"
-				? "bitbucket"
-				: null;
+	const cloud = forkCloudHost(url.hostname);
 	const parts = url.pathname
 		.replace(/^\/+|\/+$/g, "")
 		.replace(/\.git$/, "")
 		.split("/");
 	const [owner, name] = parts;
 	if (
-		!provider ||
+		!cloud ||
 		!owner ||
 		!name ||
 		parts.length !== 2 ||
 		parts.some((p) => p === "." || p === "..")
 	)
 		return null;
-	return { provider, host, owner, name };
+	return { provider: cloud.provider, host: cloud.host, owner, name };
 }
 export function forkRepositoryKey(ref: ForkRepositoryRef): string {
 	return [

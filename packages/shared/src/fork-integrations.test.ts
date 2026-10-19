@@ -13,7 +13,13 @@ test("SSH and HTTPS remotes identify the same repository without mixing provider
 	};
 	const github = key("git@github.com:Org/Repo.git");
 	expect(github).toBe(key("https://github.com/org/repo"));
-	expect(github).not.toBe(key("ssh://git@bitbucket.org/org/repo.git"));
+	const bitbucket = key("ssh://git@bitbucket.org/org/repo.git");
+	expect(github).not.toBe(bitbucket);
+	expect(bitbucket).toBe(key("git@ssh.bitbucket.org:Org/Repo.git"));
+	expect(bitbucket).toBe(key("https://bitbucket.org/org/repo.git"));
+	expect(
+		parseForkRemote("git@ssh.bitbucket.org.attacker.example:org/repo.git"),
+	).toBeNull();
 	expect(
 		parseForkRemote("https://github.com.attacker.example/org/repo"),
 	).toBeNull();
