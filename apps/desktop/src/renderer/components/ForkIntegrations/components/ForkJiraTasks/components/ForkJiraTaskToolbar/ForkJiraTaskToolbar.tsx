@@ -19,6 +19,7 @@ import {
 	LuPlus,
 	LuRefreshCw,
 	LuSearch,
+	LuTimer,
 	LuX,
 } from "react-icons/lu";
 import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
@@ -50,7 +51,7 @@ export function ForkJiraTaskToolbar({
 	const { t } = useLingui();
 	const connection = jira.find((c) => c.id === connectionId);
 	const scope = search.forkScope ?? "mine";
-	const status = search.forkStatus ?? "all";
+	const status = search.forkStatus ?? "open";
 	const board = search.forkView === "board";
 	const [advanced, setAdvanced] = useState(!!search.forkJql);
 	const [draft, setDraft] = useState(search.forkJql ?? "");
@@ -203,6 +204,9 @@ export function ForkJiraTaskToolbar({
 							<SelectItem value="all">
 								<Trans>All statuses</Trans>
 							</SelectItem>
+							<SelectItem value="open">
+								<Trans>Not done</Trans>
+							</SelectItem>
 							<SelectItem value="new">
 								<Trans>To do</Trans>
 							</SelectItem>
@@ -214,6 +218,21 @@ export function ForkJiraTaskToolbar({
 							</SelectItem>
 						</SelectContent>
 					</Select>
+					<Button
+						size="sm"
+						variant={search.forkSprint ? "secondary" : "ghost"}
+						disabled={!!search.forkJql}
+						aria-pressed={!!search.forkSprint}
+						className="h-8 text-xs"
+						onClick={() =>
+							void update({
+								forkSprint: search.forkSprint ? undefined : "current",
+							})
+						}
+					>
+						<LuTimer className="size-3.5" />
+						<Trans>Current sprint</Trans>
+					</Button>
 					<Button
 						size="icon-sm"
 						variant={advanced ? "secondary" : "ghost"}

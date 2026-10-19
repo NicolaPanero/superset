@@ -3720,6 +3720,9 @@ msgstr "Chọn cách chế độ xem thay đổi mở từ thanh trên cùng"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
 
+msgid "Choose project later"
+msgstr "Chọn dự án sau"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
 
@@ -5699,6 +5702,9 @@ msgstr "Tốc độ hiện tại"
 
 msgid "Current plan"
 msgstr "Gói hiện tại"
+
+msgid "Current sprint"
+msgstr "Sprint hiện tại"
 
 msgid "Current tab"
 msgstr "Tab hiện tại"
@@ -11474,6 +11480,9 @@ msgstr "Chưa kết nối · workspace cloud push dưới danh nghĩa GitHub App
 msgid "Not demoed here"
 msgstr "Không demo ở đây"
 
+msgid "Not done"
+msgstr "Chưa xong"
+
 msgid "Not found"
 msgstr "Không tìm thấy"
 
@@ -16250,6 +16259,9 @@ msgstr "Bắt đầu miễn phí. Nâng cấp khi đội của bạn lớn hơn.
 msgid "Start from a template"
 msgstr "Bắt đầu từ mẫu"
 
+msgid "Start in workspace"
+msgstr "Bắt đầu trong workspace"
+
 msgid "Start new session"
 msgstr "Bắt đầu phiên mới"
 
@@ -18489,6 +18501,13 @@ msgstr "Không giới hạn"
 
 msgid "Unlimited users"
 msgstr "Không giới hạn người dùng"
+
+msgid "Unlink"
+msgstr "Bỏ liên kết"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Bỏ liên kết {0}"
 
 msgid "Unlink task"
 msgstr "Bỏ liên kết nhiệm vụ"

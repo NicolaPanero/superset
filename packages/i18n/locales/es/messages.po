@@ -3720,6 +3720,9 @@ msgstr "Elige cómo se abre la vista de cambios desde la barra superior"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Elige cómo abrir las rutas de archivo al hacer Cmd+clic en la terminal"
 
+msgid "Choose project later"
+msgstr "Elegir el proyecto después"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Elige qué borrar del navegador integrado."
 
@@ -5699,6 +5702,9 @@ msgstr "Ritmo actual"
 
 msgid "Current plan"
 msgstr "Plan actual"
+
+msgid "Current sprint"
+msgstr "Sprint actual"
 
 msgid "Current tab"
 msgstr "Pestaña actual"
@@ -11474,6 +11480,9 @@ msgstr "No conectado · los espacios de trabajo en la nube hacen push como la Gi
 msgid "Not demoed here"
 msgstr "No se muestra aquí"
 
+msgid "Not done"
+msgstr "Sin terminar"
+
 msgid "Not found"
 msgstr "No encontrado"
 
@@ -16250,6 +16259,9 @@ msgstr "Empieza gratis. Sube de plan cuando tu equipo se quede corto. Planes Ent
 msgid "Start from a template"
 msgstr "Empezar desde una plantilla"
 
+msgid "Start in workspace"
+msgstr "Empezar en un workspace"
+
 msgid "Start new session"
 msgstr "Iniciar una sesión nueva"
 
@@ -18489,6 +18501,13 @@ msgstr "Ilimitado"
 
 msgid "Unlimited users"
 msgstr "Usuarios ilimitados"
+
+msgid "Unlink"
+msgstr "Desvincular"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Desvincular {0}"
 
 msgid "Unlink task"
 msgstr "Desvincular tarea"

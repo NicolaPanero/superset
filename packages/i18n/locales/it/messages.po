@@ -3720,6 +3720,9 @@ msgstr "Scegli come si apre la vista delle modifiche dalla barra superiore"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Scegli come aprire i percorsi dei file con Cmd+clic nel terminale"
 
+msgid "Choose project later"
+msgstr "Scegli il progetto dopo"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Scegli cosa cancellare dal browser interno."
 
@@ -5699,6 +5702,9 @@ msgstr "Ritmo attuale"
 
 msgid "Current plan"
 msgstr "Piano attuale"
+
+msgid "Current sprint"
+msgstr "Sprint corrente"
 
 msgid "Current tab"
 msgstr "Scheda corrente"
@@ -11474,6 +11480,9 @@ msgstr "Non collegato · i workspace cloud fanno push come la GitHub App della t
 msgid "Not demoed here"
 msgstr "Non mostrato qui"
 
+msgid "Not done"
+msgstr "Non completate"
+
 msgid "Not found"
 msgstr "Non trovato"
 
@@ -16250,6 +16259,9 @@ msgstr "Inizia gratis. Passa a un piano superiore quando il tuo team cresce. Pia
 msgid "Start from a template"
 msgstr "Parti da un modello"
 
+msgid "Start in workspace"
+msgstr "Avvia in un workspace"
+
 msgid "Start new session"
 msgstr "Avvia una nuova sessione"
 
@@ -18489,6 +18501,13 @@ msgstr "Illimitati"
 
 msgid "Unlimited users"
 msgstr "Utenti illimitati"
+
+msgid "Unlink"
+msgstr "Scollega"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Scollega {0}"
 
 msgid "Unlink task"
 msgstr "Scollega attività"

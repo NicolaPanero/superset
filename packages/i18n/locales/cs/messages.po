@@ -3720,6 +3720,9 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
 
+msgid "Choose project later"
+msgstr "Vybrat projekt později"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
 
@@ -5699,6 +5702,9 @@ msgstr "Aktuální tempo"
 
 msgid "Current plan"
 msgstr "Aktuální tarif"
+
+msgid "Current sprint"
+msgstr "Aktuální sprint"
 
 msgid "Current tab"
 msgstr "Aktuální karta"
@@ -11474,6 +11480,9 @@ msgstr "Nepřipojeno · cloudové pracovní prostory pushují jako GitHub App va
 msgid "Not demoed here"
 msgstr "Tady se neukazuje"
 
+msgid "Not done"
+msgstr "Nedokončené"
+
 msgid "Not found"
 msgstr "Nenalezeno"
 
@@ -16250,6 +16259,9 @@ msgstr "Začněte zdarma. Až vám to jako týmu přestane stačit, přejděte v
 msgid "Start from a template"
 msgstr "Začít ze šablony"
 
+msgid "Start in workspace"
+msgstr "Začít ve workspace"
+
 msgid "Start new session"
 msgstr "Spustit novou relaci"
 
@@ -18489,6 +18501,13 @@ msgstr "Neomezeně"
 
 msgid "Unlimited users"
 msgstr "Neomezeně uživatelů"
+
+msgid "Unlink"
+msgstr "Odpojit"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Odpojit {0}"
 
 msgid "Unlink task"
 msgstr "Odpojit úkol"

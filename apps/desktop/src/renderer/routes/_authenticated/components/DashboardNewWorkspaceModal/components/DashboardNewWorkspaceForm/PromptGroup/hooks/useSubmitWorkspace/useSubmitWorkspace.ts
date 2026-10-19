@@ -5,6 +5,7 @@ import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import { toast } from "@superset/ui/sonner";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
+import { useForkAfterWorkspaceSubmit } from "renderer/components/ForkIntegrations/hooks/useForkAfterWorkspaceSubmit";
 import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { cloudTrpc, cloudTrpcClient } from "renderer/lib/cloud-trpc";
@@ -42,6 +43,7 @@ export function useSubmitWorkspace(
 	const matchRoute = useMatchRoute();
 	const { closeAndResetDraft, draft } = useDashboardNewWorkspaceDraft();
 	const { submit } = useWorkspaceCreates();
+	const forkAfterSubmit = useForkAfterWorkspaceSubmit();
 	const { machineId } = useLocalHostService();
 	const activeOrganizationId = useActiveOrganizationId();
 	const awaitAcpChatEnabled = useAwaitAcpChatEnabled();
@@ -329,6 +331,7 @@ export function useSubmitWorkspace(
 		}
 
 		const { completed } = submit({ hostId, snapshot });
+		forkAfterSubmit(hostId, draft.linkedIssues, completed);
 		// Navigation is a transition: the old screen stays up until the
 		// workspace route loads, so the draft is kept on it until then.
 		await navigate({
@@ -368,6 +371,7 @@ export function useSubmitWorkspace(
 		});
 	}, [
 		activeOrganizationId,
+		forkAfterSubmit,
 		accountLaunch,
 		awaitAcpChatEnabled,
 		selectedPresetId,

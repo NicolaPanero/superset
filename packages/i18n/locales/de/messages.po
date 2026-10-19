@@ -3720,6 +3720,9 @@ msgstr "Wähle, wie sich die Änderungsansicht aus der Titelleiste öffnet"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Lege fest, wie Dateipfade beim Cmd+Klick im Terminal geöffnet werden"
 
+msgid "Choose project later"
+msgstr "Projekt später wählen"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wähle, was aus dem In-App-Browser gelöscht werden soll."
 
@@ -5699,6 +5702,9 @@ msgstr "Aktuelles Tempo"
 
 msgid "Current plan"
 msgstr "Aktueller Tarif"
+
+msgid "Current sprint"
+msgstr "Aktueller Sprint"
 
 msgid "Current tab"
 msgstr "Aktueller Tab"
@@ -11474,6 +11480,9 @@ msgstr "Nicht verbunden · Cloud-Arbeitsbereiche pushen als GitHub-App deiner Or
 msgid "Not demoed here"
 msgstr "Hier nicht gezeigt"
 
+msgid "Not done"
+msgstr "Nicht erledigt"
+
 msgid "Not found"
 msgstr "Nicht gefunden"
 
@@ -16250,6 +16259,9 @@ msgstr "Starte kostenlos. Upgrade, wenn dein Team herauswächst. Enterprise-Tari
 msgid "Start from a template"
 msgstr "Mit einer Vorlage starten"
 
+msgid "Start in workspace"
+msgstr "In einem Workspace starten"
+
 msgid "Start new session"
 msgstr "Neue Sitzung starten"
 
@@ -18489,6 +18501,13 @@ msgstr "Unbegrenzt"
 
 msgid "Unlimited users"
 msgstr "Unbegrenzte Nutzer"
+
+msgid "Unlink"
+msgstr "Verknüpfung lösen"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Verknüpfung von {0} lösen"
 
 msgid "Unlink task"
 msgstr "Aufgabe trennen"

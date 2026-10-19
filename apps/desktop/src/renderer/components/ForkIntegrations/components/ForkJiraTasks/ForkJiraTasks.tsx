@@ -9,6 +9,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LuCheckCheck, LuX } from "react-icons/lu";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
+import { useForkJiraFilters } from "renderer/stores/fork-jira-filters";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
 import { ForkProviderIcon } from "../ForkProviderIcon";
@@ -26,16 +27,21 @@ export function ForkJiraTasks() {
 	const { formatNumber } = useFormat();
 	const navigate = useNavigate();
 	const { connections, client, hostUrl } = useForkConnections();
-	const search = useSearch({ strict: false }) as ForkJiraTaskFilters;
+	const routeSearch = useSearch({ strict: false }) as ForkJiraTaskFilters;
+	const remembered = useForkJiraFilters((state) => state.filters);
+	const remember = useForkJiraFilters((state) => state.remember);
+	const search: ForkJiraTaskFilters = { ...remembered, ...routeSearch };
 	const jira = connections.filter((c) => c.provider === "jira" && c.enabled);
 	const connectionId =
-		search.forkConnection ??
+		(jira.some((c) => c.id === search.forkConnection)
+			? search.forkConnection
+			: undefined) ??
 		jira.find((c) => c.isDefault)?.id ??
 		jira[0]?.id ??
 		"";
 	const connection = jira.find((c) => c.id === connectionId);
 	const scope = search.forkScope ?? "mine";
-	const status = search.forkStatus ?? "all";
+	const status = search.forkStatus ?? "open";
 	const board = search.forkView === "board";
 	const [text, setText] = useState(search.search ?? "");
 	useEffect(() => setText(search.search ?? ""), [search.search]);
@@ -56,9 +62,11 @@ export function ForkJiraTasks() {
 		project: search.forkJiraProject ?? "",
 		jql: search.forkJql ?? "",
 		projectKeys: projects.data?.map((p) => p.key),
+		sprint: search.forkSprint,
 	});
-	const update = (patch: Partial<typeof search>) =>
-		navigate({
+	const update = (patch: Partial<typeof search>) => {
+		remember(patch);
+		return navigate({
 			to: "/tasks",
 			search: {
 				...search,
@@ -69,6 +77,7 @@ export function ForkJiraTasks() {
 			},
 			replace: !Object.hasOwn(patch, "forkTask"),
 		});
+	};
 	const query = useInfiniteQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",

@@ -3720,6 +3720,9 @@ msgstr "Kies hoe de weergave Wijzigingen vanuit de bovenbalk wordt geopend"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Kies hoe bestandspaden openen bij Cmd+klik in de terminal"
 
+msgid "Choose project later"
+msgstr "Project later kiezen"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Kies wat je uit de ingebouwde browser wilt wissen."
 
@@ -5699,6 +5702,9 @@ msgstr "Huidig tempo"
 
 msgid "Current plan"
 msgstr "Huidig plan"
+
+msgid "Current sprint"
+msgstr "Huidige sprint"
 
 msgid "Current tab"
 msgstr "Huidig tabblad"
@@ -11474,6 +11480,9 @@ msgstr "Niet gekoppeld · cloudwerkruimtes pushen als de GitHub App van je organ
 msgid "Not demoed here"
 msgstr "Hier niet gedemonstreerd"
 
+msgid "Not done"
+msgstr "Niet klaar"
+
 msgid "Not found"
 msgstr "Niet gevonden"
 
@@ -16250,6 +16259,9 @@ msgstr "Begin gratis. Upgrade wanneer je team eruit groeit. Enterprise-plannen v
 msgid "Start from a template"
 msgstr "Beginnen met een sjabloon"
 
+msgid "Start in workspace"
+msgstr "Starten in een workspace"
+
 msgid "Start new session"
 msgstr "Nieuwe sessie starten"
 
@@ -18489,6 +18501,13 @@ msgstr "Onbeperkt"
 
 msgid "Unlimited users"
 msgstr "Onbeperkt aantal gebruikers"
+
+msgid "Unlink"
+msgstr "Ontkoppelen"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "{0} ontkoppelen"
 
 msgid "Unlink task"
 msgstr "Taak ontkoppelen"

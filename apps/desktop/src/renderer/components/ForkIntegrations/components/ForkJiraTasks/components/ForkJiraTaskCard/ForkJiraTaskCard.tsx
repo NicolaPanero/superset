@@ -42,10 +42,26 @@ export function ForkJiraTaskCard({
 				/>
 			)}
 			<div className="min-w-0 flex-1 space-y-1.5">
-				<div className="flex items-center gap-2">
+				<div className="flex min-w-0 items-center gap-2">
+					{task.type?.iconUrl && (
+						<img
+							alt={task.type.name}
+							title={task.type.name}
+							className="size-3.5 shrink-0"
+							src={task.type.iconUrl}
+						/>
+					)}
 					<span className="font-mono text-[11px] text-muted-foreground">
 						{task.key}
 					</span>
+					{task.parent && (
+						<span
+							className="min-w-0 truncate text-[10px] text-muted-foreground"
+							title={task.parent.title}
+						>
+							{task.parent.key}
+						</span>
+					)}
 					{!board && (
 						<span
 							className={cn(
@@ -82,6 +98,11 @@ export function ForkJiraTaskCard({
 			>
 				{board && (
 					<div className="flex min-w-0 flex-1 gap-1 overflow-hidden">
+						{task.sprint && (
+							<span className="truncate rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
+								{task.sprint}
+							</span>
+						)}
 						{task.labels.slice(0, 2).map((label) => (
 							<span
 								key={label}

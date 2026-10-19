@@ -9,10 +9,11 @@ import {
 } from "../db/fork-schema";
 import { ensureForkTables } from "../db/fork-tables";
 import type { GitCredentialProvider } from "../runtime/git";
+import { adfToMarkdown, markdownToAdf } from "./fork-adf";
 import { ForkApi } from "./fork-api";
 import { ForkGitCredentialProvider } from "./fork-credentials";
 import type { forkFetch } from "./fork-http";
-import { adfText, ForkJiraProvider, textAdf } from "./fork-jira";
+import { ForkJiraProvider } from "./fork-jira";
 import {
 	discoverForkBroker,
 	forkAccessSecret,
@@ -372,7 +373,7 @@ test("Jira writes use official issue endpoints and ADF without importing native 
 		expect(calls[0]?.url).toBe(
 			"https://example.atlassian.net/rest/api/3/issue/APP-1/comment",
 		);
-		expect(adfText(textAdf("First\nSecond")).trim()).toBe("First\nSecond");
+		expect(adfToMarkdown(markdownToAdf("First\nSecond"))).toBe("First\nSecond");
 	} finally {
 		sqlite.close();
 	}
@@ -714,6 +715,72 @@ test("a delayed account check cannot reconnect an account after disconnect", asy
 		});
 		expect((await check).enabled).toBe(false);
 		expect(store.get(connection.id)?.secret).toEqual({});
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("starting work and opening a review move a Jira issue only through input-free transitions", async () => {
+	const { sqlite, store } = fixture();
+	const posted: unknown[] = [];
+	let status = { name: "To Do", category: "new" };
+	const transport = (async (url: string, init: RequestInit) => {
+		if (init.method === "POST") {
+			posted.push(JSON.parse(String(init.body)));
+			return undefined;
+		}
+		if (String(url).includes("/transitions"))
+			return {
+				transitions: [
+					{
+						id: "needs-input",
+						to: {
+							name: "In Progress",
+							statusCategory: { key: "indeterminate" },
+						},
+						fields: { resolution: { required: true } },
+					},
+					{
+						id: "start",
+						to: {
+							name: "In Progress",
+							statusCategory: { key: "indeterminate" },
+						},
+					},
+					{
+						id: "review",
+						to: {
+							name: "Code Review",
+							statusCategory: { key: "indeterminate" },
+						},
+					},
+				],
+			};
+		return {
+			id: "1",
+			key: "APP-1",
+			fields: {
+				summary: "Title",
+				status: {
+					id: "s",
+					name: status.name,
+					statusCategory: { key: status.category },
+				},
+			},
+		};
+	}) as typeof forkFetch;
+	try {
+		const c = store.create("jira", "token", "https://example.atlassian.net");
+		store.save(c, { token: "t", email: "test@example.test" });
+		const jira = new ForkJiraProvider(new ForkApi(store, fallback, transport));
+		expect(await jira.advance(c.id, "APP-1", "progress")).toBe(true);
+		status = { name: "In Progress", category: "indeterminate" };
+		expect(await jira.advance(c.id, "APP-1", "progress")).toBe(false);
+		expect(await jira.advance(c.id, "APP-1", "review")).toBe(true);
+		expect(posted).toEqual([
+			{ transition: { id: "start" } },
+			{ transition: { id: "review" } },
+		]);
 	} finally {
 		sqlite.close();
 	}

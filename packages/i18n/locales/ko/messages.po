@@ -3720,6 +3720,9 @@ msgstr "상단 바에서 변경 사항 보기를 여는 방식을 선택합니�
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선택하세요"
 
+msgid "Choose project later"
+msgstr "나중에 프로젝트 선택"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
 
@@ -5699,6 +5702,9 @@ msgstr "현재 속도"
 
 msgid "Current plan"
 msgstr "현재 플랜"
+
+msgid "Current sprint"
+msgstr "현재 스프린트"
 
 msgid "Current tab"
 msgstr "현재 탭"
@@ -11474,6 +11480,9 @@ msgstr "연결되지 않음 · 클라우드 워크스페이스가 조직의 GitH
 msgid "Not demoed here"
 msgstr "여기서는 시연하지 않음"
 
+msgid "Not done"
+msgstr "완료되지 않음"
+
 msgid "Not found"
 msgstr "찾을 수 없습니다"
 
@@ -16250,6 +16259,9 @@ msgstr "무료로 시작하세요. 팀이 커지면 업그레이드하세요. �
 msgid "Start from a template"
 msgstr "템플릿으로 시작"
 
+msgid "Start in workspace"
+msgstr "워크스페이스에서 시작"
+
 msgid "Start new session"
 msgstr "새 세션 시작"
 
@@ -18489,6 +18501,13 @@ msgstr "무제한"
 
 msgid "Unlimited users"
 msgstr "사용자 무제한"
+
+msgid "Unlink"
+msgstr "연결 해제"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "{0} 연결 해제"
 
 msgid "Unlink task"
 msgstr "작업 연결 해제"

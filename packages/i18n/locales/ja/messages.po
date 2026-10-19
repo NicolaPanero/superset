@@ -3720,6 +3720,9 @@ msgstr "トップバーから変更ビューをどのように開くかを選択
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "ターミナルでCmd+クリックしたときのファイルパスの開き方"
 
+msgid "Choose project later"
+msgstr "プロジェクトは後で選ぶ"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
 
@@ -5699,6 +5702,9 @@ msgstr "現在のペース"
 
 msgid "Current plan"
 msgstr "現在のプラン"
+
+msgid "Current sprint"
+msgstr "現在のスプリント"
 
 msgid "Current tab"
 msgstr "現在のタブ"
@@ -11474,6 +11480,9 @@ msgstr "未接続 · クラウドワークスペースは組織の GitHub App �
 msgid "Not demoed here"
 msgstr "ここではデモしていません"
 
+msgid "Not done"
+msgstr "未完了"
+
 msgid "Not found"
 msgstr "見つかりません"
 
@@ -16250,6 +16259,9 @@ msgstr "無料で始められます。チームの規模に合わなくなった
 msgid "Start from a template"
 msgstr "テンプレートから開始"
 
+msgid "Start in workspace"
+msgstr "ワークスペースで開始"
+
 msgid "Start new session"
 msgstr "新しいセッションを開始"
 
@@ -18489,6 +18501,13 @@ msgstr "無制限"
 
 msgid "Unlimited users"
 msgstr "ユーザー数無制限"
+
+msgid "Unlink"
+msgstr "リンクを解除"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "{0} のリンクを解除"
 
 msgid "Unlink task"
 msgstr "タスクのリンクを解除"

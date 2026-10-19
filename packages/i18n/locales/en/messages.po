@@ -3720,6 +3720,9 @@ msgstr "Choose how the Changes view opens from the top bar"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Choose how to open file paths when Cmd+clicking in the terminal"
 
+msgid "Choose project later"
+msgstr "Choose project later"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choose what to clear from the in-app browser."
 
@@ -5699,6 +5702,9 @@ msgstr "Current pace"
 
 msgid "Current plan"
 msgstr "Current plan"
+
+msgid "Current sprint"
+msgstr "Current sprint"
 
 msgid "Current tab"
 msgstr "Current tab"
@@ -11474,6 +11480,9 @@ msgstr "Not connected · cloud workspaces push as your organization's GitHub App
 msgid "Not demoed here"
 msgstr "Not demoed here"
 
+msgid "Not done"
+msgstr "Not done"
+
 msgid "Not found"
 msgstr "Not found"
 
@@ -16250,6 +16259,9 @@ msgstr "Start free. Upgrade when your team outgrows it. Enterprise plans for org
 msgid "Start from a template"
 msgstr "Start from a template"
 
+msgid "Start in workspace"
+msgstr "Start in workspace"
+
 msgid "Start new session"
 msgstr "Start new session"
 
@@ -18489,6 +18501,13 @@ msgstr "Unlimited"
 
 msgid "Unlimited users"
 msgstr "Unlimited users"
+
+msgid "Unlink"
+msgstr "Unlink"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Unlink {0}"
 
 msgid "Unlink task"
 msgstr "Unlink task"

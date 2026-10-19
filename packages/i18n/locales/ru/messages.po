@@ -3720,6 +3720,9 @@ msgstr "Выберите, как открывается представлени
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Выберите, как открывать пути файлов при Cmd+клике в терминале"
 
+msgid "Choose project later"
+msgstr "Выбрать проект позже"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."
 
@@ -5699,6 +5702,9 @@ msgstr "Текущий темп"
 
 msgid "Current plan"
 msgstr "Текущий тариф"
+
+msgid "Current sprint"
+msgstr "Текущий спринт"
 
 msgid "Current tab"
 msgstr "Текущая вкладка"
@@ -11474,6 +11480,9 @@ msgstr "Не подключено · облачные рабочие облас�
 msgid "Not demoed here"
 msgstr "Здесь не показано"
 
+msgid "Not done"
+msgstr "Не завершённые"
+
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -16250,6 +16259,9 @@ msgstr "Начните бесплатно. Переходите на платн�
 msgid "Start from a template"
 msgstr "Начать с шаблона"
 
+msgid "Start in workspace"
+msgstr "Начать в workspace"
+
 msgid "Start new session"
 msgstr "Начать новую сессию"
 
@@ -18489,6 +18501,13 @@ msgstr "Без ограничений"
 
 msgid "Unlimited users"
 msgstr "Неограниченное число пользователей"
+
+msgid "Unlink"
+msgstr "Отвязать"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Отвязать {0}"
 
 msgid "Unlink task"
 msgstr "Отвязать задачу"

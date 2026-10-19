@@ -3720,6 +3720,9 @@ msgstr "Değişiklikler görünümünün üst çubuktan nasıl açılacağını 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağını seçin"
 
+msgid "Choose project later"
+msgstr "Projeyi sonra seç"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
 
@@ -5699,6 +5702,9 @@ msgstr "Mevcut hız"
 
 msgid "Current plan"
 msgstr "Mevcut plan"
+
+msgid "Current sprint"
+msgstr "Geçerli sprint"
 
 msgid "Current tab"
 msgstr "Geçerli sekme"
@@ -11474,6 +11480,9 @@ msgstr "Bağlı değil · bulut çalışma alanları organizasyonunun GitHub App
 msgid "Not demoed here"
 msgstr "Burada gösterilmiyor"
 
+msgid "Not done"
+msgstr "Tamamlanmamış"
+
 msgid "Not found"
 msgstr "Bulunamadı"
 
@@ -16250,6 +16259,9 @@ msgstr "Ücretsiz başlayın. Takımınız büyüdüğünde yükseltin. Gelişmi
 msgid "Start from a template"
 msgstr "Şablondan başla"
 
+msgid "Start in workspace"
+msgstr "Bir workspace'te başlat"
+
 msgid "Start new session"
 msgstr "Yeni oturum başlat"
 
@@ -18489,6 +18501,13 @@ msgstr "Sınırsız"
 
 msgid "Unlimited users"
 msgstr "Sınırsız kullanıcı"
+
+msgid "Unlink"
+msgstr "Bağlantıyı kaldır"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "{0} bağlantısını kaldır"
 
 msgid "Unlink task"
 msgstr "Görevin bağlantısını kaldır"

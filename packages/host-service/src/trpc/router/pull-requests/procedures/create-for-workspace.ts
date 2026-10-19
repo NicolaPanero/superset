@@ -2,6 +2,10 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { workspaces } from "../../../../db/schema";
+import {
+	forkAdvanceLinkedTasks,
+	forkPullRequestTitle,
+} from "../../../../fork-integrations/fork-jira-workflow";
 import { forkBitbucketWorkspacePullRequest } from "../../../../fork-integrations/fork-workspace-pull-request";
 import { createGitEnvResolver } from "../../../../runtime/git";
 import { getHostWorkerPool } from "../../../../workers/host-worker-pool";
@@ -82,13 +86,14 @@ export const createForWorkspace = protectedProcedure
 			const { data } = await octokit.pulls.create({
 				owner: repo.owner,
 				repo: repo.name,
-				title: input.title,
+				title: forkPullRequestTitle(ctx, input.workspaceId, input.title),
 				head,
 				base,
 				draft: input.draft,
 				...(input.body ? { body: input.body } : {}),
 			});
 			created = data;
+			void forkAdvanceLinkedTasks(ctx, input.workspaceId, "review");
 		} catch (error) {
 			throw actionRejectionError(
 				error,

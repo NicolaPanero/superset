@@ -3720,6 +3720,9 @@ msgstr "Escolha como a visualização de alterações abre pela barra superior"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Escolha como abrir caminhos de arquivo ao dar Cmd+clique no terminal"
 
+msgid "Choose project later"
+msgstr "Escolher o projeto depois"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Escolha o que limpar do navegador do app."
 
@@ -5699,6 +5702,9 @@ msgstr "Ritmo atual"
 
 msgid "Current plan"
 msgstr "Plano atual"
+
+msgid "Current sprint"
+msgstr "Sprint atual"
 
 msgid "Current tab"
 msgstr "Aba atual"
@@ -11474,6 +11480,9 @@ msgstr "Não conectado · as áreas de trabalho na nuvem fazem push como a GitHu
 msgid "Not demoed here"
 msgstr "Não demonstrado aqui"
 
+msgid "Not done"
+msgstr "Não concluídas"
+
 msgid "Not found"
 msgstr "Não encontrado"
 
@@ -16250,6 +16259,9 @@ msgstr "Comece de graça. Faça upgrade quando o time crescer. Planos Enterprise
 msgid "Start from a template"
 msgstr "Começar por um modelo"
 
+msgid "Start in workspace"
+msgstr "Começar em um workspace"
+
 msgid "Start new session"
 msgstr "Iniciar nova sessão"
 
@@ -18489,6 +18501,13 @@ msgstr "Ilimitado"
 
 msgid "Unlimited users"
 msgstr "Usuários ilimitados"
+
+msgid "Unlink"
+msgstr "Desvincular"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Desvincular {0}"
 
 msgid "Unlink task"
 msgstr "Desvincular tarefa"

@@ -37,3 +37,9 @@ test("Jira search builds server-side filters and keeps quoted text out of the JQ
 		"updated IS NOT EMPTY ORDER BY updated DESC",
 	);
 });
+
+test("the default Jira view lists unfinished issues and can narrow to the current sprint", () => {
+	expect(forkJiraQuery({ ...filters, status: "open", sprint: "current" })).toBe(
+		"assignee = currentUser() AND statusCategory != 3 AND sprint in openSprints() ORDER BY updated DESC",
+	);
+});

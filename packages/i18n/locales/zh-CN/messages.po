@@ -3720,6 +3720,9 @@ msgstr "选择从顶栏打开更改视图的方式"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "选择在终端中Cmd+点击文件路径时的打开方式"
 
+msgid "Choose project later"
+msgstr "稍后选择项目"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "选择要从应用内浏览器清除的内容。"
 
@@ -5699,6 +5702,9 @@ msgstr "当前速度"
 
 msgid "Current plan"
 msgstr "当前方案"
+
+msgid "Current sprint"
+msgstr "当前冲刺"
 
 msgid "Current tab"
 msgstr "当前标签页"
@@ -11474,6 +11480,9 @@ msgstr "未连接 · 云端工作区以组织的 GitHub App 身份推送"
 msgid "Not demoed here"
 msgstr "此处未做演示"
 
+msgid "Not done"
+msgstr "未完成"
+
 msgid "Not found"
 msgstr "未找到"
 
@@ -16250,6 +16259,9 @@ msgstr "免费开始。团队用不够时再升级。企业方案面向有进阶
 msgid "Start from a template"
 msgstr "从模板开始"
 
+msgid "Start in workspace"
+msgstr "在工作区中开始"
+
 msgid "Start new session"
 msgstr "开始新会话"
 
@@ -18489,6 +18501,13 @@ msgstr "无限"
 
 msgid "Unlimited users"
 msgstr "用户数不限"
+
+msgid "Unlink"
+msgstr "取消关联"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "取消关联 {0}"
 
 msgid "Unlink task"
 msgstr "取消关联任务"

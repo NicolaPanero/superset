@@ -1,3 +1,4 @@
+import { forkJiraPromptSections } from "renderer/components/ForkIntegrations/utils/forkJiraWorkspace";
 import type {
 	LinkedIssue,
 	LinkedPR,
@@ -47,6 +48,8 @@ export function buildSubmitPrompt(args: BuildSubmitPromptArgs): string {
 		const header = headerLines.join("\n");
 		linkedSections.push(body ? `${header}\n\n${body}` : header);
 	}
+
+	linkedSections.push(...forkJiraPromptSections(args.linkedIssues, readBody));
 
 	if (args.linkedPR) {
 		const body = readBody(`pr:${args.linkedPR.prNumber}`);

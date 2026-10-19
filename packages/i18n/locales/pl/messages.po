@@ -3720,6 +3720,9 @@ msgstr "Wybierz, jak widok zmian otwiera się z górnego paska"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Wybierz, jak otwierać ścieżki plików po Cmd+kliknięciu w terminalu"
 
+msgid "Choose project later"
+msgstr "Wybierz projekt później"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wybierz, co wyczyścić z przeglądarki w aplikacji."
 
@@ -5699,6 +5702,9 @@ msgstr "Obecne tempo"
 
 msgid "Current plan"
 msgstr "Bieżący plan"
+
+msgid "Current sprint"
+msgstr "Bieżący sprint"
 
 msgid "Current tab"
 msgstr "Bieżąca karta"
@@ -11474,6 +11480,9 @@ msgstr "Niepołączone · obszary robocze w chmurze pushują jako GitHub App two
 msgid "Not demoed here"
 msgstr "Nie pokazano tutaj"
 
+msgid "Not done"
+msgstr "Nieukończone"
+
 msgid "Not found"
 msgstr "Nie znaleziono"
 
@@ -16250,6 +16259,9 @@ msgstr "Zacznij za darmo. Podnieś plan, gdy zespół z niego wyrośnie. Plany E
 msgid "Start from a template"
 msgstr "Zacznij od szablonu"
 
+msgid "Start in workspace"
+msgstr "Rozpocznij w workspace"
+
 msgid "Start new session"
 msgstr "Uruchom nową sesję"
 
@@ -18489,6 +18501,13 @@ msgstr "Bez limitu"
 
 msgid "Unlimited users"
 msgstr "Bez limitu użytkowników"
+
+msgid "Unlink"
+msgstr "Odłącz"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Odłącz {0}"
 
 msgid "Unlink task"
 msgstr "Odłącz zadanie"

@@ -6,12 +6,16 @@ import {
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import {
-	forkExternalTaskLinks,
 	forkIntegrationBindings,
 	forkWorkspacePullRequests,
 } from "../db/fork-schema";
 import { workspaces } from "../db/schema";
 import type { HostServiceContext } from "../types";
+import {
+	forkAdvanceLinkedTasks,
+	forkLinkedTasks,
+	forkPullRequestTitle,
+} from "./fork-jira-workflow";
 import { forkScmProjects } from "./fork-projects";
 import { forkServices as services } from "./fork-services";
 
@@ -95,28 +99,20 @@ export async function forkCreateWorkspacePullRequest(
 			remote,
 			workspace.branch,
 		);
-		const tasks = ctx.db
-			.select()
-			.from(forkExternalTaskLinks)
-			.where(
-				and(
-					eq(forkExternalTaskLinks.scope, ctx.organizationId),
-					eq(forkExternalTaskLinks.workspaceId, workspace.id),
-				),
-			)
-			.all();
+		const tasks = forkLinkedTasks(ctx, workspace.id);
 		const description = [
 			input.description,
-			...tasks.map((t) => `[${t.task.key}](${t.task.url})`),
+			...tasks.map((t) => `[${t.key}](${t.url})`),
 		]
 			.filter(Boolean)
 			.join("\n\n");
 		pr = await scm.create(input.connectionId, input.repository, {
-			title: input.title,
+			title: forkPullRequestTitle(ctx, workspace.id, input.title),
 			description,
 			source: workspace.branch,
 			target: input.target,
 		});
+		await forkAdvanceLinkedTasks(ctx, workspace.id, "review");
 	}
 	ctx.db
 		.insert(forkWorkspacePullRequests)

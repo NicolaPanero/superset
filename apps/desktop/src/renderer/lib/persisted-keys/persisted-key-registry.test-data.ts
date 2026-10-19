@@ -7,6 +7,7 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	readonly [file: string, keys: readonly string[]]
 > = [
 	["src/renderer/stores/fork-cli-options.ts", ["superset-fork-cli-options"]],
+	["src/renderer/stores/fork-jira-filters.ts", ["superset-fork-jira-filters"]],
 	[
 		"src/renderer/stores/fork-home-appearance.ts",
 		["superset-fork-home-appearance"],

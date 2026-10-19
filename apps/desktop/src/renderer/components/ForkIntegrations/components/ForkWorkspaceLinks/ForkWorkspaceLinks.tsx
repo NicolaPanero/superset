@@ -4,6 +4,7 @@ import { Input } from "@superset/ui/input";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { LuX } from "react-icons/lu";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
@@ -44,6 +45,18 @@ export function ForkWorkspaceLinks() {
 			(c) => c.provider === "bitbucket" && c.enabled && c.isDefault,
 		) ??
 		connections.find((c) => c.provider === "bitbucket" && c.enabled);
+	const unlink = useMutation({
+		networkMode: "always",
+		retry: false,
+		mutationFn: (task: { connectionId: string; taskId: string }) =>
+			required(client).forkTasks.unlink.mutate({
+				workspaceId: workspace.id,
+				connectionId: task.connectionId,
+				taskId: task.taskId,
+			}),
+		onSettled: () =>
+			void cache.invalidateQueries({ queryKey: ["fork-integrations"] }),
+	});
 	const create = useMutation({
 		networkMode: "always",
 		retry: false,
@@ -86,24 +99,37 @@ export function ForkWorkspaceLinks() {
 					</span>
 				)}
 				{tasks.data?.map((task) => (
-					<Button
+					<span
 						key={task.connectionId + task.taskId}
-						size="sm"
-						variant="outline"
-						onClick={() =>
-							void navigate({
-								to: "/tasks",
-								search: {
-									forkSource: "jira",
-									forkConnection: task.connectionId,
-									forkTask: task.key,
-								},
-							})
-						}
+						className="inline-flex items-center"
 					>
-						<ForkProviderIcon provider="jira" className="size-3" />
-						{task.key}
-					</Button>
+						<Button
+							size="sm"
+							variant="outline"
+							onClick={() =>
+								void navigate({
+									to: "/tasks",
+									search: {
+										forkSource: "jira",
+										forkConnection: task.connectionId,
+										forkTask: task.key,
+									},
+								})
+							}
+						>
+							<ForkProviderIcon provider="jira" className="size-3" />
+							{task.key}
+						</Button>
+						<Button
+							size="icon-sm"
+							variant="ghost"
+							aria-label={t({ message: `Unlink ${task.key}` })}
+							disabled={unlink.isPending}
+							onClick={() => unlink.mutate(task)}
+						>
+							<LuX className="size-3" />
+						</Button>
+					</span>
 				))}
 				{scm.data?.pullRequest && (
 					<Button

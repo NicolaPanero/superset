@@ -1,42 +1,10 @@
 import type { ForkComment, ForkTask } from "@superset/shared/fork-integrations";
 import { TRPCError } from "@trpc/server";
+import { type AdfNode, adfToMarkdown, markdownToAdf } from "./fork-adf";
 import type { ForkApi } from "./fork-api";
 import type { ForkTaskProvider } from "./fork-provider";
 import type { ForkPage } from "./fork-scm";
 
-interface AdfNode {
-	type?: string;
-	text?: string;
-	attrs?: { text?: string; url?: string; shortName?: string };
-	content?: AdfNode[];
-}
-export function adfText(node: AdfNode | string | null | undefined): string {
-	if (!node) return "";
-	if (typeof node === "string") return node;
-	if (node.text) return node.text;
-	if (node.type === "hardBreak") return "\n";
-	if (node.type === "mention" || node.type === "emoji")
-		return node.attrs?.text ?? node.attrs?.shortName ?? "";
-	if (node.type === "inlineCard" || node.type === "blockCard")
-		return node.attrs?.url ?? "";
-	const text = (node.content ?? []).map(adfText).join("");
-	if (node.type === "listItem") return `- ${text.trimEnd()}\n`;
-	return ["paragraph", "heading", "codeBlock", "blockquote"].includes(
-		node.type ?? "",
-	)
-		? `${text}\n`
-		: text;
-}
-export function textAdf(text: string) {
-	return {
-		type: "doc",
-		version: 1,
-		content: text.split("\n").map((line) => ({
-			type: "paragraph",
-			content: line ? [{ type: "text", text: line }] : [],
-		})),
-	};
-}
 interface JiraIssue {
 	id: string;
 	key: string;
@@ -47,8 +15,24 @@ interface JiraIssue {
 		priority?: { id: string; name: string } | null;
 		assignee?: { accountId: string; displayName: string } | null;
 		labels?: string[];
+		issuetype?: { name: string; iconUrl?: string; subtask?: boolean };
+		parent?: { key: string; fields?: { summary?: string } };
+		[SPRINT_FIELD]?: { name: string; state: string }[] | null;
 	};
 }
+/** The sprint field Jira Cloud creates; sites without boards just omit it. */
+const SPRINT_FIELD = "customfield_10020";
+const TASK_FIELDS = [
+	"summary",
+	"status",
+	"priority",
+	"assignee",
+	"labels",
+	"issuetype",
+	"parent",
+	SPRINT_FIELD,
+] as const;
+
 export class ForkJiraProvider implements ForkTaskProvider {
 	constructor(readonly api: ForkApi) {}
 	assert(id: string) {
@@ -68,7 +52,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			key: issue.key,
 			connectionId: id,
 			title: f.summary,
-			description: adfText(f.description).trim(),
+			description: adfToMarkdown(f.description),
 			url: `${c.site}/browse/${encodeURIComponent(issue.key)}`,
 			status: {
 				id: f.status.id,
@@ -81,6 +65,16 @@ export class ForkJiraProvider implements ForkTaskProvider {
 				? { id: f.assignee.accountId, name: f.assignee.displayName }
 				: null,
 			labels: f.labels ?? [],
+			type: f.issuetype
+				? { name: f.issuetype.name, iconUrl: f.issuetype.iconUrl ?? null }
+				: null,
+			parent: f.parent
+				? { key: f.parent.key, title: f.parent.fields?.summary ?? "" }
+				: null,
+			sprint:
+				(f[SPRINT_FIELD] ?? []).find((s) => s.state === "active")?.name ??
+				f[SPRINT_FIELD]?.at(-1)?.name ??
+				null,
 		};
 	}
 	async list(
@@ -95,14 +89,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			isLast?: boolean;
 		}>(id, "/rest/api/3/search/jql", "POST", {
 			jql: jql.trim() || "assignee = currentUser() ORDER BY updated DESC",
-			fields: [
-				"summary",
-				"description",
-				"status",
-				"priority",
-				"assignee",
-				"labels",
-			],
+			fields: [...TASK_FIELDS],
 			maxResults: 50,
 			...(cursor ? { nextPageToken: cursor } : {}),
 		});
@@ -117,7 +104,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			id,
 			await this.api.request<JiraIssue>(
 				id,
-				`/rest/api/3/issue/${encodeURIComponent(key)}?fields=summary,description,status,priority,assignee,labels`,
+				`/rest/api/3/issue/${encodeURIComponent(key)}?fields=description,${TASK_FIELDS.join(",")}`,
 			),
 		);
 	}
@@ -160,6 +147,53 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			fields: Object.entries(t.fields ?? {}).map(([id, f]) => ({ id, ...f })),
 		}));
 	}
+	/**
+	 * Moves an issue forward without asking: to work in progress when work
+	 * starts, to a review status when a pull request opens. Transitions that
+	 * need input are skipped, so a site's own workflow rules stay in charge.
+	 */
+	async advance(
+		id: string,
+		key: string,
+		target: "progress" | "review",
+	): Promise<boolean> {
+		const issue = await this.get(id, key);
+		if (issue.status.category === "done") return false;
+		if (target === "progress" && issue.status.category !== "new") return false;
+		if (target === "review" && /review/i.test(issue.status.name)) return false;
+		const d = await this.api.request<{
+			transitions: {
+				id: string;
+				to: { name: string; statusCategory?: { key: string } };
+				fields?: Record<string, { required?: boolean }>;
+			}[];
+		}>(
+			id,
+			`/rest/api/3/issue/${encodeURIComponent(key)}/transitions?expand=transitions.fields`,
+		);
+		const usable = d.transitions.filter(
+			(t) => !Object.values(t.fields ?? {}).some((f) => f.required),
+		);
+		const pick =
+			target === "progress"
+				? usable.find(
+						(t) =>
+							t.to.statusCategory?.key === "indeterminate" &&
+							!/review/i.test(t.to.name),
+					)
+				: usable.find(
+						(t) =>
+							/review/i.test(t.to.name) && t.to.statusCategory?.key !== "done",
+					);
+		if (!pick) return false;
+		await this.api.request(
+			id,
+			`/rest/api/3/issue/${encodeURIComponent(key)}/transitions`,
+			"POST",
+			{ transition: { id: pick.id } },
+		);
+		return true;
+	}
 	async editMetadata(id: string, key: string) {
 		this.assert(id);
 		const data = await this.api.request<{
@@ -199,7 +233,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 		return d.comments.map((c) => ({
 			id: c.id,
 			author: c.author.displayName,
-			body: adfText(c.body).trim(),
+			body: adfToMarkdown(c.body),
 			createdAt: c.created,
 		}));
 	}
@@ -219,7 +253,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			...(fields.title === undefined ? {} : { summary: fields.title }),
 			...(fields.description === undefined
 				? {}
-				: { description: textAdf(fields.description) }),
+				: { description: markdownToAdf(fields.description) }),
 			...(fields.assigneeId === undefined
 				? {}
 				: {
@@ -261,7 +295,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 			id,
 			`/rest/api/3/issue/${encodeURIComponent(key)}/comment`,
 			"POST",
-			{ body: textAdf(body) },
+			{ body: markdownToAdf(body) },
 		);
 		return { ok: true };
 	}

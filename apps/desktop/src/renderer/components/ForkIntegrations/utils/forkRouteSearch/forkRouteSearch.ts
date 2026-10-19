@@ -11,7 +11,8 @@ export type ForkTasksSearch = {
 	forkConnection?: string;
 	forkView?: "board" | "list";
 	forkScope?: "mine" | "all";
-	forkStatus?: "all" | "new" | "indeterminate" | "done";
+	forkStatus?: "all" | "open" | "new" | "indeterminate" | "done";
+	forkSprint?: "current";
 	forkJiraProject?: string;
 	forkJql?: string;
 };
@@ -27,11 +28,13 @@ export function forkTasksSearch(
 		forkScope: oneOf(search.forkScope, ["mine", "all"]),
 		forkStatus: oneOf(search.forkStatus, [
 			"all",
+			"open",
 			"new",
 			"indeterminate",
 			"done",
 		]),
 		forkJiraProject: string(search.forkJiraProject),
+		forkSprint: oneOf(search.forkSprint, ["current"]),
 		forkJql: string(search.forkJql)?.slice(0, 4000),
 	};
 }

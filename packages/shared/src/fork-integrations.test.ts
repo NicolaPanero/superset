@@ -21,6 +21,6 @@ test("SSH and HTTPS remotes identify the same repository without mixing provider
 });
 test("Jira branch names preserve the issue key and remove unsafe title characters", () => {
 	expect(forkTaskBranch("APP-12", "Fix à / issue: one")).toBe(
-		"feature/APP-12-fix-a-issue-one",
+		"APP-12-fix-a-issue-one",
 	);
 });

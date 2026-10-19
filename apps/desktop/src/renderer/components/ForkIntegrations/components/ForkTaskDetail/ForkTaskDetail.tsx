@@ -1,6 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ForkTask } from "@superset/shared/fork-integrations";
-import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
+import {
+	forkTaskBranch,
+	isForkServiceUnavailable,
+} from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
@@ -10,9 +13,19 @@ import { cn } from "@superset/ui/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { LuArrowUpRight, LuGitBranch, LuPencil, LuX } from "react-icons/lu";
+import {
+	LuArrowUpRight,
+	LuGitBranch,
+	LuPencil,
+	LuUnlink,
+	LuX,
+} from "react-icons/lu";
+import { MarkdownRenderer } from "renderer/components/MarkdownRenderer";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
+import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
+import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { forkJiraLinkedIssue } from "../../utils/forkJiraWorkspace";
 import { required } from "../../utils/required";
 import { jiraStatusTone } from "../ForkJiraTasks/fork-jira-query";
 import { ForkProviderIcon } from "../ForkProviderIcon";
@@ -29,7 +42,8 @@ export function ForkTaskDetail({
 	const { t } = useLingui(),
 		{ client, hostUrl } = useForkConnections(),
 		cache = useQueryClient(),
-		navigate = useNavigate();
+		navigate = useNavigate(),
+		openNewWorkspace = useOpenNewWorkspace();
 	const target = { connectionId: task.connectionId, key: task.key };
 	const [editing, setEditing] = useState(false);
 	const [title, setTitle] = useState(task.title),
@@ -71,7 +85,6 @@ export function ForkTaskDetail({
 			}),
 		enabled: !!client && editing && metadata.data?.canAssign === true,
 	});
-	const [createId, setCreateId] = useState(() => crypto.randomUUID());
 	const transitions = useQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",
@@ -108,7 +121,7 @@ export function ForkTaskDetail({
 		networkMode: "always",
 		retry: false,
 		mutationFn: async (
-			kind: "save" | "comment" | "transition" | "delete" | "create" | "link",
+			kind: "save" | "comment" | "transition" | "delete" | "link",
 		) => {
 			if (!client) return;
 			if (kind === "save")
@@ -149,18 +162,6 @@ export function ForkTaskDetail({
 			}
 			if (kind === "link")
 				await client.forkTasks.link.mutate({ ...target, workspaceId });
-			if (kind === "create") {
-				const result = await client.forkTasks.createWorkspace.mutate({
-					...target,
-					projectId,
-					workspaceId: createId,
-				});
-				setCreateId(crypto.randomUUID());
-				await navigate({
-					to: "/v2-workspace/$workspaceId",
-					params: { workspaceId: result.workspaceId },
-				});
-			}
 		},
 		onSuccess: (_, kind) => {
 			if (kind === "save") {
@@ -183,6 +184,43 @@ export function ForkTaskDetail({
 		transitions.error,
 		comments.error,
 	].some(isForkServiceUnavailable);
+	const linkedWorkspaces = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		queryKey: ["fork-integrations", hostUrl, "task-workspaces", target],
+		queryFn: () =>
+			required(client).forkTasks.workspaces.query({
+				connectionId: task.connectionId,
+				taskId: task.id,
+			}),
+		enabled: !!client,
+	});
+	const unlink = useMutation({
+		networkMode: "always",
+		retry: false,
+		mutationFn: (workspaceId: string) =>
+			required(client).forkTasks.unlink.mutate({
+				workspaceId,
+				connectionId: task.connectionId,
+				taskId: task.id,
+			}),
+		onSettled: () =>
+			void cache.invalidateQueries({ queryKey: ["fork-integrations"] }),
+	});
+	const startInWorkspace = () => {
+		const drafts = useNewWorkspaceDraftStore.getState();
+		drafts.resetDraft();
+		drafts.updateDraft({
+			linkedIssues: [forkJiraLinkedIssue(task)],
+			branchName: forkTaskBranch(task.key, task.title),
+			branchNameEdited: true,
+			branchNameFromProvider: false,
+			workspaceName: `${task.key} ${task.title}`,
+			workspaceNameEdited: true,
+		});
+		openNewWorkspace(projectId || null);
+	};
 	const selectedTransition = transitions.data?.find((v) => v.id === transition);
 	return (
 		<div className="mx-auto w-full min-w-0 max-w-4xl space-y-6 p-5">
@@ -240,6 +278,25 @@ export function ForkTaskDetail({
 						</Button>
 					</div>
 					<div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+						{task.type && (
+							<span className="inline-flex items-center gap-1.5 rounded-md border px-2 py-1">
+								{task.type.iconUrl && (
+									<img alt="" className="size-3.5" src={task.type.iconUrl} />
+								)}
+								{task.type.name}
+							</span>
+						)}
+						{task.parent && (
+							<span
+								className="max-w-64 truncate rounded-md border px-2 py-1"
+								title={task.parent.title}
+							>
+								{task.parent.key} · {task.parent.title}
+							</span>
+						)}
+						{task.sprint && (
+							<span className="rounded-md border px-2 py-1">{task.sprint}</span>
+						)}
 						{task.assignee && (
 							<span className="rounded-md border px-2 py-1">
 								{task.assignee.name}
@@ -257,9 +314,11 @@ export function ForkTaskDetail({
 						))}
 					</div>
 					{task.description && (
-						<p className="whitespace-pre-wrap break-words text-sm leading-7 text-muted-foreground">
-							{task.description}
-						</p>
+						<MarkdownRenderer
+							content={task.description}
+							allowHtml={false}
+							className="h-auto overflow-visible text-sm [&_article]:max-w-none [&_article]:p-0"
+						/>
 					)}
 				</section>
 			)}
@@ -409,6 +468,36 @@ export function ForkTaskDetail({
 						<Trans>Workspaces</Trans>
 					</span>
 				</h3>
+				{linkedWorkspaces.data && linkedWorkspaces.data.length > 0 && (
+					<ul className="space-y-1">
+						{linkedWorkspaces.data.map((w) => (
+							<li key={w.id} className="flex items-center gap-1">
+								<Button
+									size="sm"
+									variant="ghost"
+									className="min-w-0 flex-1 justify-start"
+									onClick={() =>
+										void navigate({
+											to: "/v2-workspace/$workspaceId",
+											params: { workspaceId: w.id },
+										})
+									}
+								>
+									<span className="truncate">{w.name || w.id}</span>
+								</Button>
+								<Button
+									size="icon-sm"
+									variant="ghost"
+									aria-label={t({ message: "Unlink" })}
+									disabled={unlink.isPending}
+									onClick={() => unlink.mutate(w.id)}
+								>
+									<LuUnlink className="size-3.5" />
+								</Button>
+							</li>
+						))}
+					</ul>
+				)}
 				<div className="flex flex-wrap gap-2">
 					<select
 						aria-label={t({ message: "Project" })}
@@ -416,18 +505,15 @@ export function ForkTaskDetail({
 						value={projectId}
 						onChange={(e) => setProjectId(e.target.value)}
 					>
-						<option value="">{t({ message: "Select project" })}</option>
+						<option value="">{t({ message: "Choose project later" })}</option>
 						{projects.data?.map((p) => (
 							<option key={p.id} value={p.id}>
 								{p.name}
 							</option>
 						))}
 					</select>
-					<Button
-						disabled={!projectId || action.isPending}
-						onClick={() => action.mutate("create")}
-					>
-						<Trans>Create workspace</Trans>
+					<Button onClick={startInWorkspace}>
+						<Trans>Start in workspace</Trans>
 					</Button>
 				</div>
 				<div className="flex flex-wrap gap-2">
@@ -460,7 +546,11 @@ export function ForkTaskDetail({
 				{comments.data?.map((c) => (
 					<article className="rounded-lg border p-4" key={c.id}>
 						<p className="mb-2 text-xs font-medium">{c.author}</p>
-						<p className="whitespace-pre-wrap break-words text-sm">{c.body}</p>
+						<MarkdownRenderer
+							content={c.body}
+							allowHtml={false}
+							className="h-auto overflow-visible text-sm [&_article]:max-w-none [&_article]:p-0"
+						/>
 					</article>
 				))}
 				{comments.isError && !isForkServiceUnavailable(comments.error) && (

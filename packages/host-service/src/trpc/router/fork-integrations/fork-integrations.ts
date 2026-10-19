@@ -21,6 +21,11 @@ import { forkAvailability } from "../../../fork-integrations/fork-availability";
 import { ForkGitCredentialProvider } from "../../../fork-integrations/fork-credentials";
 import { forkFetch } from "../../../fork-integrations/fork-http";
 import {
+	forkAdvanceLinkedTasks,
+	forkLinkedTasks,
+	forkLinkTask,
+} from "../../../fork-integrations/fork-jira-workflow";
+import {
 	discoverForkBroker,
 	forkOAuthStatus,
 	revokeForkGrant,
@@ -706,32 +711,15 @@ export const forkTasksRouter = router({
 				checkout: "worktree",
 				name: `${task.key} ${task.title}`,
 				branch: forkTaskBranch(task.key, task.title),
-				skipBranchPrefix: true,
 			});
-			const link = {
+			forkLinkTask(ctx, result.workspace.id, {
 				connectionId: input.connectionId,
 				taskId: task.id,
 				key: task.key,
 				title: task.title,
 				url: task.url,
-			};
-			ctx.db
-				.insert(forkExternalTaskLinks)
-				.values({
-					scope: ctx.organizationId,
-					workspaceId: result.workspace.id,
-					taskKey: `${input.connectionId}:${task.id}`,
-					task: link,
-				})
-				.onConflictDoUpdate({
-					target: [
-						forkExternalTaskLinks.scope,
-						forkExternalTaskLinks.workspaceId,
-						forkExternalTaskLinks.taskKey,
-					],
-					set: { task: link },
-				})
-				.run();
+			});
+			void forkAdvanceLinkedTasks(ctx, result.workspace.id, "progress");
 			return { workspaceId: result.workspace.id };
 		}),
 	list: read
@@ -813,19 +801,7 @@ export const forkTasksRouter = router({
 		),
 	links: read
 		.input(z.object({ workspaceId: z.string().uuid() }))
-		.query(({ ctx, input }) =>
-			ctx.db
-				.select()
-				.from(forkExternalTaskLinks)
-				.where(
-					and(
-						eq(forkExternalTaskLinks.scope, ctx.organizationId),
-						eq(forkExternalTaskLinks.workspaceId, input.workspaceId),
-					),
-				)
-				.all()
-				.map((l) => l.task),
-		),
+		.query(({ ctx, input }) => forkLinkedTasks(ctx, input.workspaceId)),
 	link: local
 		.input(taskTarget.extend({ workspaceId: z.string().uuid() }))
 		.mutation(async ({ ctx, input }) => {
@@ -847,24 +823,48 @@ export const forkTasksRouter = router({
 				title: task.title,
 				url: task.url,
 			};
-			ctx.db
-				.insert(forkExternalTaskLinks)
-				.values({
-					scope: ctx.organizationId,
-					workspaceId: input.workspaceId,
-					taskKey: `${input.connectionId}:${task.id}`,
-					task: link,
-				})
-				.onConflictDoUpdate({
-					target: [
-						forkExternalTaskLinks.scope,
-						forkExternalTaskLinks.workspaceId,
-						forkExternalTaskLinks.taskKey,
-					],
-					set: { task: link },
-				})
-				.run();
+			forkLinkTask(ctx, input.workspaceId, link);
 			return { task: link, branch: forkTaskBranch(task.key, task.title) };
+		}),
+	/** Workspaces linked to an issue, newest first. */
+	workspaces: read
+		.input(z.object({ connectionId, taskId: z.string().min(1).max(200) }))
+		.query(({ ctx, input }) =>
+			ctx.db
+				.select({ id: workspaces.id, name: workspaces.name })
+				.from(forkExternalTaskLinks)
+				.innerJoin(
+					workspaces,
+					eq(workspaces.id, forkExternalTaskLinks.workspaceId),
+				)
+				.where(
+					and(
+						eq(forkExternalTaskLinks.scope, ctx.organizationId),
+						eq(
+							forkExternalTaskLinks.taskKey,
+							`${input.connectionId}:${input.taskId}`,
+						),
+					),
+				)
+				.all(),
+		),
+	/** Links a workspace started from an issue, then moves the issue to work in progress. */
+	startWork: local
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				connectionId,
+				taskId: z.string().min(1).max(200),
+				key: taskTarget.shape.key,
+				title: z.string().max(500),
+				url: z.string().url().max(2000),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const { workspaceId, ...link } = input;
+			forkLinkTask(ctx, workspaceId, link);
+			await forkAdvanceLinkedTasks(ctx, workspaceId, "progress");
+			return { ok: true };
 		}),
 	unlink: local
 		.input(

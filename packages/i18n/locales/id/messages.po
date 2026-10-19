@@ -3720,6 +3720,9 @@ msgstr "Pilih cara membuka tampilan perubahan dari bilah atas"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 
+msgid "Choose project later"
+msgstr "Pilih proyek nanti"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
 
@@ -5699,6 +5702,9 @@ msgstr "Laju saat ini"
 
 msgid "Current plan"
 msgstr "Paket saat ini"
+
+msgid "Current sprint"
+msgstr "Sprint saat ini"
 
 msgid "Current tab"
 msgstr "Tab saat ini"
@@ -11474,6 +11480,9 @@ msgstr "Belum terhubung · workspace cloud melakukan push sebagai GitHub App org
 msgid "Not demoed here"
 msgstr "Tidak didemokan di sini"
 
+msgid "Not done"
+msgstr "Belum selesai"
+
 msgid "Not found"
 msgstr "Tidak ditemukan"
 
@@ -16250,6 +16259,9 @@ msgstr "Mulai gratis. Upgrade saat tim Anda membutuhkan lebih. Paket enterprise 
 msgid "Start from a template"
 msgstr "Mulai dari templat"
 
+msgid "Start in workspace"
+msgstr "Mulai di workspace"
+
 msgid "Start new session"
 msgstr "Mulai sesi baru"
 
@@ -18489,6 +18501,13 @@ msgstr "Tanpa batas"
 
 msgid "Unlimited users"
 msgstr "Pengguna tanpa batas"
+
+msgid "Unlink"
+msgstr "Putuskan tautan"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "Putuskan tautan {0}"
 
 msgid "Unlink task"
 msgstr "Lepaskan tautan tugas"

@@ -89,6 +89,9 @@ export interface ForkTask {
 	priorityId?: string | null;
 	assignee: { id: string; name: string } | null;
 	labels: string[];
+	type?: { name: string; iconUrl: string | null } | null;
+	parent?: { key: string; title: string } | null;
+	sprint?: string | null;
 }
 export interface ForkTaskLink {
 	connectionId: string;
@@ -194,6 +197,7 @@ export function forkTaskBranch(key: string, title: string): string {
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-|-$/g, "")
-		.slice(0, 60);
-	return `feature/${key}-${slug || "task"}`;
+		.slice(0, 40)
+		.replace(/-$/, "");
+	return `${key}-${slug || "task"}`;
 }
