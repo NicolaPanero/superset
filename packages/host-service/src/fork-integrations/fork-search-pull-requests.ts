@@ -64,7 +64,9 @@ export async function forkSearchPullRequests(
 		input.projectIds ?? [input.projectId],
 	);
 	const store = new ForkConnectionStore(ctx.db, ctx.organizationId);
-	const scm = new ForkScmProvider(new ForkApi(store, ctx.credentials));
+	const scm = new ForkScmProvider(
+		new ForkApi(store, ctx.credentials, ctx.forkTransport),
+	);
 	return forkSearchProviderPullRequests(input, {
 		projects,
 		connections: store.list(),
@@ -103,11 +105,7 @@ export async function forkSearchProviderPullRequests(
 		.filter((p) => p.repository.provider === "bitbucket")
 		.map(async (p) => {
 			const repository = `${p.repository.owner}/${p.repository.name}`;
-			if (
-				input.review &&
-				input.review !== "none" &&
-				!BITBUCKET_REVIEW_FILTERS.has(input.review)
-			) {
+			if (input.review && !BITBUCKET_REVIEW_FILTERS.has(input.review)) {
 				result.warnings.push({ repository, kind: "review-filter" });
 				return;
 			}
@@ -123,12 +121,14 @@ export async function forkSearchProviderPullRequests(
 				result.warnings.push({ repository, kind: "connection" });
 				return;
 			}
+			if (input.review && !account.identity?.id) {
+				result.warnings.push({ repository, kind: "connection" });
+				return;
+			}
 			try {
 				const data = await providers.bitbucket(connectionId, p.repository, {
 					...input,
-					...(input.review && input.review !== "none"
-						? { reviewer: account.identity?.id ?? "" }
-						: {}),
+					...(input.review ? { reviewer: account.identity?.id } : {}),
 				});
 				const checks = await Promise.all(
 					data.items.map((pr) =>
@@ -195,10 +195,16 @@ export async function forkSearchProviderPullRequests(
 		?.split(",")
 		.map((author) => author.trim().replace(/^@/, ""))
 		.filter((author) => GITHUB_LOGIN.test(author));
-	// A Bitbucket nickname is never a GitHub login, so it filters GitHub to nothing.
-	const firstGithub =
-		input.author && !githubAuthors?.length ? undefined : github[0];
-	if (firstGithub)
+	const groups = new Map<string | null, ForkScmProject[]>();
+	for (const project of github) {
+		if (input.author && !githubAuthors?.length) break;
+		const group = groups.get(project.connectionId) ?? [];
+		group.push(project);
+		groups.set(project.connectionId, group);
+	}
+	for (const group of groups.values()) {
+		const firstGithub = group[0];
+		if (!firstGithub) continue;
 		jobs.push(
 			(async () => {
 				try {
@@ -206,7 +212,7 @@ export async function forkSearchProviderPullRequests(
 						...input,
 						...(input.author ? { author: githubAuthors?.join(",") } : {}),
 						projectId: firstGithub.projectId,
-						projectIds: github.map((p) => p.projectId),
+						projectIds: group.map((p) => p.projectId),
 					});
 					result.pullRequests.push(
 						...data.pullRequests.map((pr) => ({
@@ -222,7 +228,7 @@ export async function forkSearchProviderPullRequests(
 						"[forkScm.searchPullRequests] GitHub request failed",
 						error,
 					);
-					for (const p of github)
+					for (const p of group)
 						result.warnings.push({
 							repository: `${p.repository.owner}/${p.repository.name}`,
 							kind: "request",
@@ -233,6 +239,7 @@ export async function forkSearchProviderPullRequests(
 				}
 			})(),
 		);
+	}
 	await Promise.all(jobs);
 	result.pullRequests.sort((a, b) =>
 		(b.updatedAt ?? "").localeCompare(a.updatedAt ?? ""),

@@ -11,7 +11,7 @@ export function forkServices(ctx: HostServiceContext) {
 		ctx.credentials instanceof ForkGitCredentialProvider
 			? ctx.credentials.fallback
 			: ctx.credentials;
-	const api = new ForkApi(store, credentials);
+	const api = new ForkApi(store, credentials, ctx.forkTransport);
 	return {
 		store,
 		api,

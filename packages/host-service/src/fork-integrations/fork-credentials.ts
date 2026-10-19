@@ -39,24 +39,25 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 					.where(eq(workspaces.worktreePath, path))
 					.get();
 		const projectId = project?.id ?? workspace?.projectId;
-		const binding = projectId
-			? this.store.db
-					.select()
-					.from(forkIntegrationBindings)
-					.where(
-						and(
-							eq(forkIntegrationBindings.scope, this.store.scope),
-							eq(forkIntegrationBindings.projectId, projectId),
-						),
-					)
-					.get()
-			: undefined;
+		return projectId ? this.forProject(projectId) : this;
+	}
+	forProject(projectId: string) {
+		const binding = this.store.db
+			.select()
+			.from(forkIntegrationBindings)
+			.where(
+				and(
+					eq(forkIntegrationBindings.scope, this.store.scope),
+					eq(forkIntegrationBindings.projectId, projectId),
+				),
+			)
+			.get();
 		return new ForkGitCredentialProvider(
 			this.fallback,
 			this.store,
-			binding?.connectionId ?? this.preferredId,
+			binding?.connectionId ?? undefined,
 			this.environment,
-			binding?.repository.provider ?? this.preferredProvider,
+			binding?.repository.provider,
 		);
 	}
 	select(provider: "github" | "bitbucket", id?: string): ForkConnection | null {

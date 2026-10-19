@@ -27,6 +27,7 @@ import {
 const MIGRATIONS_FOLDER = resolve(import.meta.dir, "../../drizzle");
 
 export interface TestHostOptions {
+	forkTransport?: CreateAppOptions["forkTransport"];
 	organizationId?: string;
 	cloudApiUrl?: string;
 	allowedOrigins?: string[];
@@ -104,6 +105,7 @@ export async function createTestHost(
 	const fakeApi = createFakeApiClient(options.apiOverrides);
 
 	const createOptions: CreateAppOptions = {
+		forkTransport: options.forkTransport,
 		config: {
 			organizationId:
 				options.organizationId ?? "00000000-0000-0000-0000-000000000001",

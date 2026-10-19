@@ -199,28 +199,21 @@ function listAdf(lines: string[]): AdfNode {
 	const ordered = !!first && /^\d/.test(first[2] ?? "");
 	const base = first?.[1]?.length ?? 0;
 	const items: AdfNode[] = [];
-	let nested: string[] = [];
+	let body: string[] = [];
+	let inset = base + 2;
 	const flush = () => {
-		const item = items.at(-1);
-		if (item && nested.length > 0)
-			item.content?.push(
-				listAdf(
-					nested.map((line) =>
-						line.slice(Math.min(base + 2, line.search(/\S/))),
-					),
-				),
-			);
-		nested = [];
+		if (body.length)
+			items.push({ type: "listItem", content: blocksAdf(body.join("\n")) });
+		body = [];
 	};
 	for (const line of lines) {
 		const match = LIST_ITEM.exec(line);
 		if (match && (match[1]?.length ?? 0) <= base) {
 			flush();
-			items.push({
-				type: "listItem",
-				content: [{ type: "paragraph", content: inlineAdf(match[3] ?? "") }],
-			});
-		} else nested.push(line);
+			inset = (match[1]?.length ?? 0) + (match[2]?.length ?? 1) + 1;
+			body.push(match[3] ?? "");
+		} else
+			body.push(line.slice(Math.min(inset, Math.max(0, line.search(/\S/)))));
 	}
 	flush();
 	return {
@@ -242,16 +235,21 @@ function blocksAdf(markdown: string): AdfNode[] {
 			i++;
 			continue;
 		}
-		const fence = /^```\s*(\S*)\s*$/.exec(line);
+		const fence = /^ {0,3}(`{3,}|~{3,})[ \t]*(.*)$/.exec(line);
 		if (fence) {
 			const code: string[] = [];
 			i++;
-			while (i < lines.length && !/^```\s*$/.test(lines[i] ?? ""))
+			const closing = new RegExp(
+				`^ {0,3}${fence[1]?.[0]}{${fence[1]?.length},}\\s*$`,
+			);
+			while (i < lines.length && !closing.test(lines[i] ?? ""))
 				code.push(lines[i++] ?? "");
 			i++;
 			blocks.push({
 				type: "codeBlock",
-				...(fence[1] ? { attrs: { language: fence[1] } } : {}),
+				...(fence[2]?.trim()
+					? { attrs: { language: fence[2].trim().split(/\s+/)[0] } }
+					: {}),
 				content: code.length ? [{ type: "text", text: code.join("\n") }] : [],
 			});
 			continue;
@@ -321,6 +319,7 @@ function blocksAdf(markdown: string): AdfNode[] {
 			!LIST_ITEM.test(lines[i] ?? "")
 		)
 			paragraph.push(lines[i++] ?? "");
+		if (!paragraph.length) paragraph.push(lines[i++] ?? "");
 		blocks.push({
 			type: "paragraph",
 			content: inlineAdf(paragraph.join("\n")),

@@ -4,7 +4,7 @@ export type LinkedIssue = {
 	slug: string;
 	title: string;
 	source?: "github" | "internal" | "linear" | "jira";
-	forkJira?: { connectionId: string; taskId: string };
+	forkJira?: { connectionId: string; taskId: string; branchName?: string };
 	url?: string;
 	taskId?: string;
 	/** Provider branch name (e.g. Linear's), synced into `tasks.branch`. */

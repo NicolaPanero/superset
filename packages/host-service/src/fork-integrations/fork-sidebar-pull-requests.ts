@@ -65,7 +65,7 @@ function reviewDecision(pr: ForkPullRequest) {
 	return reviewers.length ? ("pending" as const) : null;
 }
 
-async function refresh(
+export async function forkRefreshSidebarPullRequest(
 	ctx: HostServiceContext,
 	workspaceId: string,
 	stored: ForkPullRequest,
@@ -99,6 +99,7 @@ async function refresh(
 				and(
 					eq(forkWorkspacePullRequests.scope, ctx.organizationId),
 					eq(forkWorkspacePullRequests.workspaceId, workspaceId),
+					eq(forkWorkspacePullRequests.pullRequest, stored),
 				),
 			)
 			.run();
@@ -143,7 +144,7 @@ export function forkWithBitbucketPullRequests(
 			return snapshot;
 		}
 		if (pr.state === "open" && Date.now() - (pr.fetchedAt ?? 0) > REFRESH_MS)
-			void refresh(ctx, snapshot.workspaceId, pr);
+			void forkRefreshSidebarPullRequest(ctx, snapshot.workspaceId, pr);
 		return {
 			...snapshot,
 			pullRequest: {

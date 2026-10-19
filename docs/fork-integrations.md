@@ -4,6 +4,8 @@ The fork calls GitHub, Bitbucket Cloud and Jira Cloud APIs from the host.
 Superset sign-in, organization integrations and cloud workspace credentials are
 independent. No MCP connection is required.
 
+Test coverage and the desktop QA method: [integration verification](fork-integrations-qa.md).
+
 Configure accounts in **Fork Settings → Connections** or in onboarding.
 GitHub can use the existing local CLI/credential-helper account. Jira and
 Bitbucket accept personal API tokens or a compatible OAuth broker. A Jira token

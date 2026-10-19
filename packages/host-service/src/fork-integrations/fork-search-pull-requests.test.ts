@@ -42,6 +42,27 @@ const pr: ForkPullRequest = {
 	updatedAt: "2026-10-17T10:00:00Z",
 };
 
+test.each([
+	["none", "review-filter"],
+	["review-requested", "connection"],
+] as const)("Bitbucket %s never returns unfiltered rows when the filter cannot be applied", async (review, kind) => {
+	const result = await forkSearchProviderPullRequests(
+		forkPullRequestSearchInput.parse({ projectId: "bb", review }),
+		{
+			projects: [project],
+			connections: [account],
+			github: async () => {
+				throw new Error("No GitHub project");
+			},
+			bitbucket: async () => {
+				throw new Error("Must not request unfiltered pull requests");
+			},
+		},
+	);
+	expect(result.pullRequests).toEqual([]);
+	expect(result.warnings).toEqual([{ repository: "team/app", kind }]);
+});
+
 test("Bitbucket projects never enter the GitHub search path", async () => {
 	let githubCalls = 0;
 	const result = await forkSearchProviderPullRequests(
@@ -79,6 +100,38 @@ test("Bitbucket projects never enter the GitHub search path", async () => {
 		hasNextPage: true,
 		warnings: [],
 	});
+});
+
+test("GitHub search groups projects by account before running concurrent queries", async () => {
+	const queries: string[][] = [];
+	const projects = ["one", "two", "one-more"].map((id) => ({
+		...project,
+		projectId: id,
+		connectionId: id === "two" ? "account-two" : "account-one",
+		repository: {
+			...repository,
+			provider: "github" as const,
+			host: "github.com",
+		},
+	}));
+	await forkSearchProviderPullRequests(
+		forkPullRequestSearchInput.parse({
+			projectId: "one",
+			projectIds: projects.map((p) => p.projectId),
+		}),
+		{
+			projects,
+			connections: [],
+			bitbucket: async () => {
+				throw new Error("No Bitbucket project");
+			},
+			github: async (input) => {
+				queries.push(input.projectIds ?? []);
+				return { pullRequests: [], totalCount: 0, page: 1, hasNextPage: false };
+			},
+		},
+	);
+	expect(queries).toEqual([["one", "one-more"], ["two"]]);
 });
 
 test("a missing Bitbucket account preserves GitHub results and explains the unavailable repository", async () => {

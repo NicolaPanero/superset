@@ -50,3 +50,31 @@ test("Jira-only nodes become readable text", () => {
 		}),
 	).toBe("@Ada see https://example.com/1\nBLOCKED");
 });
+
+test("code fences with info strings, tildes and longer delimiters terminate and keep code text", () => {
+	for (const markdown of [
+		"```sh example\necho ok\n```",
+		"````ts\n```\n````",
+		"~~~json\n{}\n~~~",
+		"```sh example\necho ok",
+	]) {
+		const block = markdownToAdf(markdown).content[0];
+		expect(block?.type).toBe("codeBlock");
+		expect(block?.content?.[0]?.text).toBe(
+			markdown.includes("echo")
+				? "echo ok"
+				: markdown.includes("json")
+					? "{}"
+					: "```",
+		);
+	}
+});
+
+test("list continuation lines remain paragraphs within the correct item", () => {
+	const markdown = "- first\n  continuation\n  - nested\n- second";
+	const adf = markdownToAdf(markdown);
+	expect(adfToMarkdown(adf)).toBe(markdown);
+	expect(adf.content[0]?.content?.[0]?.content?.[0]?.content?.[1]?.type).toBe(
+		"hardBreak",
+	);
+});

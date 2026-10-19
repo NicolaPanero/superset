@@ -115,6 +115,7 @@ export interface CreateAppOptions {
 	api?: ApiClient;
 	github?: () => Promise<Octokit>;
 	execGh?: ExecGh;
+	forkTransport?: HostServiceContext["forkTransport"];
 }
 
 export interface CreateAppResult {
@@ -336,6 +337,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// nobody chats with. Exposure is a client concern — the renderer gates the
 	// pane on the `chat-v3` PostHog flag.
 	const chatAgentContext: HostServiceContext = {
+		forkTransport: options.forkTransport,
 		git,
 		credentials: providers.credentials,
 		github,
@@ -528,6 +530,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			createContext: async (_opts, c) => {
 				const isAuthenticated = await providers.hostAuth.validate(c.req.raw);
 				return {
+					forkTransport: options.forkTransport,
 					git,
 					credentials: providers.credentials,
 					github,

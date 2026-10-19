@@ -46,12 +46,13 @@ function getRemoteUrlCached(
  */
 export function createGitEnvResolver(provider: GitCredentialProvider) {
 	return async (repoPath: string): Promise<Record<string, string>> => {
-		const initialCredentials = await provider.getCredentials(null);
+		const scoped = provider.forPath?.(repoPath) ?? provider;
+		const initialCredentials = await scoped.getCredentials(null);
 		const remoteUrl = await getRemoteUrlCached(
 			repoPath,
 			initialCredentials.env,
 		);
-		const credentials = await provider.getCredentials(remoteUrl);
+		const credentials = await scoped.getCredentials(remoteUrl);
 
 		return {
 			...initialCredentials.env,

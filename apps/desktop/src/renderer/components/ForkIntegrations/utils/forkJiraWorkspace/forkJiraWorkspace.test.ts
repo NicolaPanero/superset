@@ -4,6 +4,7 @@ import { useNewWorkspacePromptContextStore } from "renderer/stores/new-workspace
 import {
 	forkJiraLinkedIssue,
 	forkJiraPromptSections,
+	forkJiraUnlinkPatch,
 } from "./forkJiraWorkspace";
 
 test("a Jira issue started in a workspace reaches the agent prompt with its text", () => {
@@ -29,6 +30,62 @@ test("a Jira issue started in a workspace reaches the agent prompt with its text
 	expect(
 		forkJiraPromptSections([{ ...issue, source: "github" }], read),
 	).toEqual([]);
+});
+
+function jiraIssue(key = "APP-7") {
+	return forkJiraLinkedIssue({
+		id: key,
+		key,
+		connectionId: "jira",
+		title: "Fix login",
+		description: "",
+		url: "https://one.atlassian.net/browse/APP-7",
+		status: { id: "todo", name: "To Do", category: "new" },
+		priority: null,
+		assignee: null,
+		labels: [],
+		type: { name: "Bug", iconUrl: null },
+	});
+}
+
+test("removing a Jira issue clears its generated bugfix branch and workspace name", () => {
+	const issue = jiraIssue();
+	expect(
+		forkJiraUnlinkPatch(issue, [], {
+			branchName: "bugfix/APP-7-fix-login",
+			workspaceName: "APP-7 Fix login",
+		}),
+	).toEqual({
+		branchName: "",
+		branchNameEdited: false,
+		branchNameFromProvider: false,
+		workspaceName: "",
+		workspaceNameEdited: false,
+	});
+});
+
+test("removing Jira context preserves names the user changed", () => {
+	expect(
+		forkJiraUnlinkPatch(jiraIssue(), [], {
+			branchName: "custom-branch",
+			workspaceName: "Custom workspace",
+		}),
+	).toEqual({});
+});
+
+test("removing the seeding Jira issue hands names to the remaining issue", () => {
+	expect(
+		forkJiraUnlinkPatch(jiraIssue(), [jiraIssue("APP-8")], {
+			branchName: "bugfix/APP-7-fix-login",
+			workspaceName: "APP-7 Fix login",
+		}),
+	).toEqual({
+		branchName: "bugfix/APP-8-fix-login",
+		branchNameEdited: true,
+		branchNameFromProvider: false,
+		workspaceName: "APP-8 Fix login",
+		workspaceNameEdited: true,
+	});
 });
 
 test("issues with the same key on two Jira sites keep separate prompt bodies", () => {

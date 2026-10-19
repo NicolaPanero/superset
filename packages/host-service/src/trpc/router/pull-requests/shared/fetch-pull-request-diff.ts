@@ -3,6 +3,7 @@ import {
 	isPullRequestDiffTooLarge,
 	type PullRequestDiff,
 } from "@superset/shared/pull-request-diff";
+import { forkRequestCacheKey } from "../../../../fork-integrations/fork-request-scope";
 import { execGh } from "../../workspace-creation/utils/exec-gh";
 import { fetchPullRequestGitDiff } from "./fetch-pull-request-git-diff";
 
@@ -18,7 +19,7 @@ export function fetchPullRequestDiff(
 	repoFullName: string,
 	prNumber: number,
 ): Promise<PullRequestDiff> {
-	const key = `${repoFullName.toLowerCase()}#${prNumber}`;
+	const key = forkRequestCacheKey(`${repoFullName.toLowerCase()}#${prNumber}`);
 	const now = Date.now();
 	for (const [otherKey, entry] of entries) {
 		if (entry.fetchedAt !== null && now - entry.fetchedAt >= CACHE_TTL_MS) {
