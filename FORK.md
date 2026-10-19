@@ -313,6 +313,11 @@ messaggi, chiamate agli strumenti e risultati compatibili con la destinazione.
 La sorgente viene conservata; ogni passaggio registra agente, configurazione,
 account e sessione in un database locale. Un avviso mostra la provenienza.
 
+Con Codex il testo del ragionamento importato resta nella cronologia come
+messaggio dell'assistente. Non viene convertito in un elemento `reasoning`
+OpenAI senza firma; messaggi, chiamate e risultati degli strumenti restano
+disponibili anche nei trasferimenti successivi.
+
 Se il trasferimento nativo non è disponibile o fallisce, il pannello resta
 aperto e propone **Continua con il contesto**. Serve una scelta esplicita.
 Questo trasferimento invia soltanto i messaggi visibili e può omettere storia

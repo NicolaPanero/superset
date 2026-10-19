@@ -68,7 +68,10 @@ riepiloghi e riprese automatiche, immagini, risultati strutturati e abbinamento
 tra chiamate e risultati degli strumenti, inclusi gli errori dei comandi.
 Quattro prove verificano che sorgenti incomplete, fuori dal deposito, con ID
 o cartella del progetto errati non creino una chat di destinazione.
-La suite comprende 25 test e usa conversazioni sintetiche e cartelle temporanee. Il motore e i codec sono
+Una regressione controlla che Codex riceva il ragionamento importato come testo
+dell'assistente, senza elementi `reasoning` sintetici o stato privato del provider.
+Il testo originale resta disponibile alle conversioni successive.
+La suite comprende 26 test e usa conversazioni sintetiche e cartelle temporanee. Il motore e i codec sono
 reali; soltanto il comando `opencode import` è sostituito da un importatore
 SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato.
 
