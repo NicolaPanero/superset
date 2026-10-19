@@ -6,6 +6,7 @@ import type { HostDb } from "../db";
 import {
 	forkIntegrationBindings,
 	forkIntegrationConnections,
+	forkWorkspacePullRequests,
 } from "../db/fork-schema";
 import { ensureForkTables } from "../db/fork-tables";
 import type { GitCredentialProvider } from "../runtime/git";
@@ -21,6 +22,7 @@ import {
 	startForkOAuth,
 } from "./fork-oauth";
 import { ForkScmProvider } from "./fork-scm";
+import { forkWithBitbucketPullRequests } from "./fork-sidebar-pull-requests";
 import { ForkConnectionStore } from "./fork-store";
 
 function fixture(scope = "owner") {
@@ -781,6 +783,64 @@ test("starting work and opening a review move a Jira issue only through input-fr
 			{ transition: { id: "start" } },
 			{ transition: { id: "review" } },
 		]);
+	} finally {
+		sqlite.close();
+	}
+});
+
+test("the sidebar shows a linked Bitbucket pull request where GitHub has none", () => {
+	const { sqlite, db, store } = fixture();
+	try {
+		sqlite.exec(
+			"INSERT INTO workspaces VALUES ('ws-1', 'project-a', '/worktree')",
+		);
+		const repository = {
+			provider: "bitbucket" as const,
+			host: "bitbucket.org",
+			owner: "org",
+			name: "repo",
+		};
+		db.insert(forkWorkspacePullRequests)
+			.values({
+				scope: store.scope,
+				workspaceId: "ws-1",
+				pullRequest: {
+					repository,
+					connectionId: "bb",
+					number: 7,
+					title: "Fix",
+					description: "",
+					url: "https://bitbucket.org/org/repo/pull-requests/7",
+					state: "open",
+					author: "ada",
+					sourceBranch: "fix",
+					targetBranch: "main",
+					headCommit: "abc",
+					updatedAt: "2026-01-01",
+					isDraft: true,
+					reviewers: [{ name: "Bob", avatarUrl: null, state: "approved" }],
+					checksStatus: "failure",
+					fetchedAt: Date.now(),
+				},
+			})
+			.run();
+		const ctx = { db, organizationId: store.scope } as unknown as Parameters<
+			typeof forkWithBitbucketPullRequests
+		>[0];
+		const [snapshot] = forkWithBitbucketPullRequests(ctx, [
+			{
+				workspaceId: "ws-1",
+				pullRequest: null,
+				error: null,
+				lastFetchedAt: null,
+			},
+		]);
+		expect(snapshot?.pullRequest).toMatchObject({
+			number: 7,
+			state: "draft",
+			reviewDecision: "approved",
+			checksStatus: "failure",
+		});
 	} finally {
 		sqlite.close();
 	}

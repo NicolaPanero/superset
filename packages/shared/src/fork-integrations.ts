@@ -69,6 +69,9 @@ export interface ForkPullRequest {
 	defaultMergeMethod?: string;
 	isDraft?: boolean;
 	reviewers?: ForkReviewer[];
+	/** Build status stored with a workspace link, and when it was read. */
+	checksStatus?: "success" | "failure" | "pending" | "none";
+	fetchedAt?: number;
 }
 export interface ForkReviewer {
 	name: string;
