@@ -7,7 +7,7 @@ and Bitbucket review workflows".
 
 | Check | Result |
 | --- | --- |
-| Fork suite | 950 passed: 307 desktop, 618 unit/runtime, 25 host integration |
+| Fork suite | 953 passed: 309 desktop, 619 unit/runtime, 25 host integration |
 | Additional upstream Git/PR tests | 207 passed |
 | Native worker tests | 4 passed |
 | Desktop and host-service typechecks | Passed |
