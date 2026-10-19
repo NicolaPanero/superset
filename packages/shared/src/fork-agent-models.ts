@@ -12,7 +12,8 @@ export const FORK_AGENT_MODEL_SUPPORT: readonly AgentModelSupport[] = [
 	},
 ];
 
-// Grok's ACP model state lists no reasoning efforts for Grok 4.7.
+// A custom Grok 4.7 override exposes no effort unless its config declares
+// reasoning_efforts; do not offer a control the CLI would reject.
 const GROK_REASONING_MODELS = ["grok-4.6", "grok-4.5"];
 
 export const FORK_AGENT_EFFORT_SUPPORT: readonly AgentEffortSupport[] = [
