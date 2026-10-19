@@ -25,7 +25,7 @@ const notice: DesktopNotice = {
 	body: `### Novità in Superset++
 
 - **Jira e Bitbucket nell’app** — attività, board, pull request, review, build e automazioni.
-- **Cambio agente più completo** — scegli modello ed effort prima dello switch, incluso Grok.
+- **Cambio agente più completo** — scegli modello ed effort prima dello switch, incluso Grok 4.7.
 - **Quote sotto controllo** — utilizzo per account, reset gratuiti supportati e continuazione automatica.
 - **Flussi più sicuri** — account separati per repository e protezioni aggiuntive per branch e richieste concorrenti.
 

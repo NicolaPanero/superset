@@ -110,18 +110,18 @@ test("a browsed Grok tab offers the efforts of the picked model", async () => {
 	await openPicker(view);
 	fireEvent.click(view.getByLabelText("Grok"));
 	await flush();
-	fireEvent.click(row(view, "Grok 4.6"));
+	fireEvent.click(row(view, "Grok 4.7"));
 	await flush();
 	fireEvent.keyDown(view.getByRole("slider"), {
 		key: "End",
 	});
 	await flush();
-	expect(view.getByText("Grok · Grok 4.6 · xHigh")).toBeTruthy();
+	expect(view.getByText("Grok · Grok 4.7 · xHigh")).toBeTruthy();
 	fireEvent.click(view.getByRole("menuitem", { name: "Switch…" }));
 	await flush();
 	expect(onRequestSwitch).toHaveBeenCalledWith({
 		configId: "grok",
-		model: { id: "grok-4.6", label: "Grok 4.6" },
+		model: { id: "grok-4.7", label: "Grok 4.7" },
 		effort: { id: "xhigh", label: "xHigh" },
 	});
 });

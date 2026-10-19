@@ -12,9 +12,7 @@ export const FORK_AGENT_MODEL_SUPPORT: readonly AgentModelSupport[] = [
 	},
 ];
 
-// A custom Grok 4.7 override exposes no effort unless its config declares
-// reasoning_efforts; do not offer a control the CLI would reject.
-const GROK_REASONING_MODELS = ["grok-4.6", "grok-4.5"];
+const GROK_REASONING_MODELS = ["grok-4.7", "grok-4.6", "grok-4.5"];
 
 export const FORK_AGENT_EFFORT_SUPPORT: readonly AgentEffortSupport[] = [
 	{
@@ -24,7 +22,7 @@ export const FORK_AGENT_EFFORT_SUPPORT: readonly AgentEffortSupport[] = [
 			{ id: "low", label: "Low", models: GROK_REASONING_MODELS },
 			{ id: "medium", label: "Medium", models: GROK_REASONING_MODELS },
 			{ id: "high", label: "High", models: GROK_REASONING_MODELS },
-			{ id: "xhigh", label: "xHigh", models: ["grok-4.6"] },
+			{ id: "xhigh", label: "xHigh", models: ["grok-4.7", "grok-4.6"] },
 		],
 	},
 ];
