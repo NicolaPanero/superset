@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { workspaces } from "../../../../db/schema";
+import { forkBitbucketWorkspacePullRequest } from "../../../../fork-integrations/fork-workspace-pull-request";
 import { createGitEnvResolver } from "../../../../runtime/git";
 import { getHostWorkerPool } from "../../../../workers/host-worker-pool";
 import { gitPrHeadBaseTask } from "../../../../workers/tasks/git";
@@ -68,6 +69,12 @@ export const createForWorkspace = protectedProcedure
 			});
 		}
 
+		const bitbucket = await forkBitbucketWorkspacePullRequest(ctx, {
+			...input,
+			projectId: workspace.projectId,
+			base,
+		});
+		if (bitbucket) return bitbucket;
 		const repo = await resolveGithubRepo(ctx, workspace.projectId);
 		const octokit = await ctx.github();
 		let created: { number: number; html_url: string };

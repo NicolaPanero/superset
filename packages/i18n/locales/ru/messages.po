@@ -13563,6 +13563,12 @@ msgstr "Перебазировать и объединить"
 msgid "Rebase and merge"
 msgstr "Перебазировать и объединить"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, перемотка вперёд"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, коммит слияния"
+
 msgid "Recent Activity"
 msgstr "Недавняя активность"
 
@@ -16107,6 +16113,9 @@ msgstr "Сжать и объединить"
 
 msgid "Squash and merge"
 msgstr "Сжать и объединить"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, только перемотка вперёд"
 
 msgid "SS"
 msgstr "SS"

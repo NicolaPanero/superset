@@ -16,11 +16,10 @@ import {
 	forkWorkspacePullRequests,
 } from "../../../db/fork-schema";
 import { projects, workspaces } from "../../../db/schema";
-import { ForkApi, SYSTEM_GITHUB } from "../../../fork-integrations/fork-api";
+import { SYSTEM_GITHUB } from "../../../fork-integrations/fork-api";
 import { forkAvailability } from "../../../fork-integrations/fork-availability";
 import { ForkGitCredentialProvider } from "../../../fork-integrations/fork-credentials";
 import { forkFetch } from "../../../fork-integrations/fork-http";
-import { ForkJiraProvider } from "../../../fork-integrations/fork-jira";
 import {
 	discoverForkBroker,
 	forkOAuthStatus,
@@ -32,14 +31,13 @@ import {
 	forkPullRequestFetchTarget,
 } from "../../../fork-integrations/fork-pr-checkout";
 import { forkScmProjects } from "../../../fork-integrations/fork-projects";
-import { ForkScmProvider } from "../../../fork-integrations/fork-scm";
 import {
 	forkPullRequestSearchInput,
 	forkSearchPullRequests,
 } from "../../../fork-integrations/fork-search-pull-requests";
-import { ForkConnectionStore } from "../../../fork-integrations/fork-store";
+import { forkServices as services } from "../../../fork-integrations/fork-services";
+import { forkCreateWorkspacePullRequest } from "../../../fork-integrations/fork-workspace-pull-request";
 import { createGitFactory } from "../../../runtime/git";
-import type { HostServiceContext } from "../../../types";
 import { machineOnlyProcedure, queryProcedure, router } from "../../index";
 import { createFromClone } from "../project/handlers";
 import { workspacesRouter } from "../workspaces/workspaces";
@@ -68,20 +66,6 @@ const taskTarget = z.object({
 	connectionId,
 	key: z.string().regex(/^[A-Za-z][A-Za-z0-9_]*-\d+$/),
 });
-function services(ctx: HostServiceContext) {
-	const store = new ForkConnectionStore(ctx.db, ctx.organizationId);
-	const credentials =
-		ctx.credentials instanceof ForkGitCredentialProvider
-			? ctx.credentials.fallback
-			: ctx.credentials;
-	const api = new ForkApi(store, credentials);
-	return {
-		store,
-		api,
-		scm: new ForkScmProvider(api),
-		jira: new ForkJiraProvider(api),
-	};
-}
 const local = machineOnlyProcedure.use(({ ctx, next }) => {
 	if (ctx.isLocalCaller === false)
 		throw new TRPCError({
@@ -413,6 +397,14 @@ export const forkScmRouter = router({
 						: workspace.branch
 							? await scm.forBranch(connectionId, repository, workspace.branch)
 							: null;
+					// A declined or merged link must not hide a newer open pull request.
+					if (pullRequest && pullRequest.state !== "open" && workspace.branch)
+						pullRequest =
+							(await scm.forBranch(
+								connectionId,
+								repository,
+								workspace.branch,
+							)) ?? pullRequest;
 					if (pullRequest)
 						store.db
 							.insert(forkWorkspacePullRequests)
@@ -456,115 +448,7 @@ export const forkScmRouter = router({
 				target: z.string().min(1).max(250),
 			}),
 		)
-		.mutation(async ({ ctx, input }) => {
-			const workspace = ctx.db
-				.select()
-				.from(workspaces)
-				.where(eq(workspaces.id, input.workspaceId))
-				.get();
-			if (!workspace?.projectId || !workspace.branch)
-				throw new TRPCError({
-					code: "NOT_FOUND",
-					message: "Workspace not found",
-				});
-			const git = await ctx.git(workspace.worktreePath);
-			const binding = ctx.db
-				.select()
-				.from(forkIntegrationBindings)
-				.where(
-					and(
-						eq(forkIntegrationBindings.scope, ctx.organizationId),
-						eq(forkIntegrationBindings.projectId, workspace.projectId),
-					),
-				)
-				.get();
-			const remote = binding?.remote ?? "origin";
-			const actual = parseForkRemote(
-				(await git.getRemotes(true)).find((r) => r.name === remote)?.refs
-					.push ?? "",
-			);
-			if (
-				!actual ||
-				forkRepositoryKey(actual) !== forkRepositoryKey(input.repository)
-			)
-				throw new TRPCError({
-					code: "BAD_REQUEST",
-					message: "The selected repository does not match this workspace",
-				});
-			const { scm } = services(ctx);
-			scm.assert(input.connectionId, input.repository);
-			ctx.db
-				.insert(forkIntegrationBindings)
-				.values({
-					scope: ctx.organizationId,
-					projectId: workspace.projectId,
-					repository: input.repository,
-					connectionId: input.connectionId,
-					remote,
-				})
-				.onConflictDoUpdate({
-					target: [
-						forkIntegrationBindings.scope,
-						forkIntegrationBindings.projectId,
-					],
-					set: {
-						connectionId: input.connectionId,
-						repository: input.repository,
-						remote,
-					},
-				})
-				.run();
-			let pr = await scm.forBranch(
-				input.connectionId,
-				input.repository,
-				workspace.branch,
-				input.target,
-			);
-			if (!pr) {
-				await (await ctx.git(workspace.worktreePath)).push(
-					remote,
-					workspace.branch,
-				);
-				const tasks = ctx.db
-					.select()
-					.from(forkExternalTaskLinks)
-					.where(
-						and(
-							eq(forkExternalTaskLinks.scope, ctx.organizationId),
-							eq(forkExternalTaskLinks.workspaceId, workspace.id),
-						),
-					)
-					.all();
-				const description = [
-					input.description,
-					...tasks.map((t) => `[${t.task.key}](${t.task.url})`),
-				]
-					.filter(Boolean)
-					.join("\n\n");
-				pr = await scm.create(input.connectionId, input.repository, {
-					title: input.title,
-					description,
-					source: workspace.branch,
-					target: input.target,
-				});
-			}
-			ctx.db
-				.insert(forkWorkspacePullRequests)
-				.values({
-					scope: ctx.organizationId,
-					workspaceId: workspace.id,
-					pullRequest: pr,
-				})
-				.onConflictDoUpdate({
-					target: [
-						forkWorkspacePullRequests.scope,
-						forkWorkspacePullRequests.workspaceId,
-					],
-					set: { pullRequest: pr },
-				})
-				.run();
-			return pr;
-		}),
+		.mutation(({ ctx, input }) => forkCreateWorkspacePullRequest(ctx, input)),
 	checkout: local
 		.input(
 			target.extend({
@@ -778,7 +662,16 @@ export const forkScmRouter = router({
 				body: z.string().max(65000).optional(),
 				title: z.string().min(1).max(500).optional(),
 				method: z
-					.enum(["merge", "squash", "rebase", "merge_commit", "fast_forward"])
+					.enum([
+						"merge",
+						"squash",
+						"rebase",
+						"merge_commit",
+						"fast_forward",
+						"squash_fast_forward",
+						"rebase_fast_forward",
+						"rebase_merge",
+					])
 					.optional(),
 				head: z.string().max(100).optional(),
 				path: z.string().max(2000).optional(),

@@ -16,6 +16,14 @@ import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 
+type MergeMethod =
+	| "merge_commit"
+	| "squash"
+	| "fast_forward"
+	| "squash_fast_forward"
+	| "rebase_fast_forward"
+	| "rebase_merge";
+
 export function ForkPullRequestDetail({
 	pullRequest,
 	onBack,
@@ -56,11 +64,9 @@ export function ForkPullRequestDetail({
 		[title, setTitle] = useState(pr.title),
 		[description, setDescription] = useState(pr.description);
 	const [merge, setMerge] = useState(false),
-		[method, setMethod] = useState<"merge_commit" | "squash" | "fast_forward">(
-			(pullRequest.defaultMergeMethod as
-				| "merge_commit"
-				| "squash"
-				| "fast_forward") ?? "merge_commit",
+		[method, setMethod] = useState<MergeMethod>(
+			(pullRequest.defaultMergeMethod as MergeMethod | undefined) ??
+				"merge_commit",
 		);
 	const [inlinePath, setInlinePath] = useState(""),
 		[inlineLine, setInlineLine] = useState("");
@@ -134,6 +140,18 @@ export function ForkPullRequestDetail({
 	const error = errors.find(
 		(error) => error && !isForkServiceUnavailable(error),
 	);
+	const mergeMethods = (
+		[
+			["merge_commit", t({ message: "Merge commit" })],
+			["squash", t({ message: "Squash" })],
+			["fast_forward", t({ message: "Fast-forward" })],
+			["squash_fast_forward", t({ message: "Squash, fast-forward only" })],
+			["rebase_fast_forward", t({ message: "Rebase, fast-forward" })],
+			["rebase_merge", t({ message: "Rebase, merge commit" })],
+		] as const
+	)
+		.filter(([id]) => !pr.mergeMethods || pr.mergeMethods.includes(id))
+		.map(([id, label]) => ({ id, label }));
 	const busy = action.isPending || (merging && pr.state === "open");
 	return (
 		<div className="min-w-0 flex-1 space-y-5 overflow-auto p-5">
@@ -235,7 +253,8 @@ export function ForkPullRequestDetail({
 						</Button>
 					</>
 				)}
-				{pr.state === "closed" && (
+				{/* Bitbucket Cloud cannot reopen a declined pull request. */}
+				{pr.state === "closed" && pr.repository.provider !== "bitbucket" && (
 					<Button
 						size="sm"
 						variant="outline"
@@ -252,21 +271,13 @@ export function ForkPullRequestDetail({
 						aria-label={t({ message: "Merge method" })}
 						className="h-9 rounded-md border bg-background px-2 text-sm"
 						value={method}
-						onChange={(e) => setMethod(e.target.value as typeof method)}
+						onChange={(e) => setMethod(e.target.value as MergeMethod)}
 					>
-						{(!pr.mergeMethods || pr.mergeMethods.includes("merge_commit")) && (
-							<option value="merge_commit">
-								{t({ message: "Merge commit" })}
+						{mergeMethods.map((option) => (
+							<option key={option.id} value={option.id}>
+								{option.label}
 							</option>
-						)}
-						{(!pr.mergeMethods || pr.mergeMethods.includes("squash")) && (
-							<option value="squash">{t({ message: "Squash" })}</option>
-						)}
-						{(!pr.mergeMethods || pr.mergeMethods.includes("fast_forward")) && (
-							<option value="fast_forward">
-								{t({ message: "Fast-forward" })}
-							</option>
-						)}
+						))}
 					</select>
 					<Button
 						size="sm"

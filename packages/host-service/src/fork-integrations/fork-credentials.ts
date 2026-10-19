@@ -1,5 +1,7 @@
 import {
 	type ForkConnection,
+	type ForkRepositoryRef,
+	forkRepositoryKey,
 	parseForkRemote,
 } from "@superset/shared/fork-integrations";
 import { and, eq } from "drizzle-orm";
@@ -90,13 +92,32 @@ export class ForkGitCredentialProvider implements GitCredentialProvider {
 		}
 		return null;
 	}
+	/**
+	 * The account the projects with this remote are bound to. Upstream git
+	 * helpers pass only the remote URL, so a project's account still applies.
+	 */
+	boundTo(repository: ForkRepositoryRef): string | undefined {
+		if (this.preferredId) return undefined;
+		const key = forkRepositoryKey(repository);
+		const ids = new Set(
+			this.store.db
+				.select()
+				.from(forkIntegrationBindings)
+				.where(eq(forkIntegrationBindings.scope, this.store.scope))
+				.all()
+				.filter((b) => forkRepositoryKey(b.repository) === key)
+				.map((b) => b.connectionId),
+		);
+		const [only] = ids;
+		return ids.size === 1 ? only : undefined;
+	}
 	async getCredentials(remoteUrl: string | null) {
 		const ref = remoteUrl ? parseForkRemote(remoteUrl) : null;
 		if (!ref || !remoteUrl?.startsWith("https://"))
 			return this.fallback.getCredentials(remoteUrl);
 		let connection: ForkConnection | undefined;
 		try {
-			const selected = this.select(ref.provider);
+			const selected = this.select(ref.provider, this.boundTo(ref));
 			if (!selected) return this.fallback.getCredentials(remoteUrl);
 			connection = selected;
 		} catch {}

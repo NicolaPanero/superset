@@ -13563,6 +13563,12 @@ msgstr "リベースしてマージ"
 msgid "Rebase and merge"
 msgstr "リベースしてマージ"
 
+msgid "Rebase, fast-forward"
+msgstr "リベース、早送り"
+
+msgid "Rebase, merge commit"
+msgstr "リベース、マージコミット"
+
 msgid "Recent Activity"
 msgstr "最近のアクティビティ"
 
@@ -16107,6 +16113,9 @@ msgstr "スカッシュしてマージ"
 
 msgid "Squash and merge"
 msgstr "スカッシュしてマージ"
+
+msgid "Squash, fast-forward only"
+msgstr "スカッシュ、早送りのみ"
 
 msgid "SS"
 msgstr "SS"

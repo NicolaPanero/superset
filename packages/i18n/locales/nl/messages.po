@@ -13563,6 +13563,12 @@ msgstr "Rebasen en mergen"
 msgid "Rebase and merge"
 msgstr "Rebasen en mergen"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, fast-forward"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, mergecommit"
+
 msgid "Recent Activity"
 msgstr "Recente activiteit"
 
@@ -16107,6 +16113,9 @@ msgstr "Squashen en mergen"
 
 msgid "Squash and merge"
 msgstr "Squashen en mergen"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, alleen fast-forward"
 
 msgid "SS"
 msgstr "SS"

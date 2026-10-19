@@ -13563,6 +13563,12 @@ msgstr "變基併合併"
 msgid "Rebase and merge"
 msgstr "變基併合併"
 
+msgid "Rebase, fast-forward"
+msgstr "變基，快轉"
+
+msgid "Rebase, merge commit"
+msgstr "變基，合併提交"
+
 msgid "Recent Activity"
 msgstr "最近動態"
 
@@ -16107,6 +16113,9 @@ msgstr "壓縮併合併"
 
 msgid "Squash and merge"
 msgstr "壓縮併合併"
+
+msgid "Squash, fast-forward only"
+msgstr "壓縮，僅快轉"
 
 msgid "SS"
 msgstr "SS"

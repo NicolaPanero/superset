@@ -13563,6 +13563,12 @@ msgstr "Rebase & merge"
 msgid "Rebase and merge"
 msgstr "Rebase và merge"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, fast-forward"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, commit hợp nhất"
+
 msgid "Recent Activity"
 msgstr "Hoạt động gần đây"
 
@@ -16107,6 +16113,9 @@ msgstr "Squash & merge"
 
 msgid "Squash and merge"
 msgstr "Squash và merge"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, chỉ fast-forward"
 
 msgid "SS"
 msgstr "SS"

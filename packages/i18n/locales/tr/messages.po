@@ -13563,6 +13563,12 @@ msgstr "Rebase ve birleştir"
 msgid "Rebase and merge"
 msgstr "Rebase ve birleştir"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, ileri sarma"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, birleştirme commit'i"
+
 msgid "Recent Activity"
 msgstr "Son etkinlik"
 
@@ -16107,6 +16113,9 @@ msgstr "Squash ve birleştir"
 
 msgid "Squash and merge"
 msgstr "Squash ve birleştir"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, yalnızca ileri sarma"
 
 msgid "SS"
 msgstr "SS"

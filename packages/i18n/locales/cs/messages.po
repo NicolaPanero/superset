@@ -13563,6 +13563,12 @@ msgstr "Rebase a sloučit"
 msgid "Rebase and merge"
 msgstr "Rebase a sloučit"
 
+msgid "Rebase, fast-forward"
+msgstr "Rebase, rychlé převinutí"
+
+msgid "Rebase, merge commit"
+msgstr "Rebase, slučovací commit"
+
 msgid "Recent Activity"
 msgstr "Nedávná aktivita"
 
@@ -16107,6 +16113,9 @@ msgstr "Squash a sloučit"
 
 msgid "Squash and merge"
 msgstr "Squash a sloučit"
+
+msgid "Squash, fast-forward only"
+msgstr "Squash, jen rychlé převinutí"
 
 msgid "SS"
 msgstr "SS"

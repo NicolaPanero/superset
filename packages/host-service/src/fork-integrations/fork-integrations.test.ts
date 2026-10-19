@@ -589,6 +589,47 @@ test("concurrent OAuth refreshes rotate one broker session and keep upstream tok
 	}
 });
 
+test("git with only a remote URL uses the account its project is bound to", async () => {
+	const { sqlite, store, db } = fixture();
+	try {
+		const primary = store.create("bitbucket", "token", null);
+		store.save(primary, { token: "default-test" });
+		store.keepDefaultBefore("bitbucket");
+		const bound = store.create("bitbucket", "token", null);
+		store.save(bound, { token: "bound-test" });
+		db.insert(forkIntegrationBindings)
+			.values({
+				scope: store.scope,
+				projectId: "project-a",
+				connectionId: bound.id,
+				repository: {
+					provider: "bitbucket",
+					host: "bitbucket.org",
+					owner: "org",
+					name: "repo",
+				},
+				remote: "origin",
+			})
+			.run();
+		const credentials = new ForkGitCredentialProvider(
+			fallback,
+			store,
+			undefined,
+			async () => ({}),
+		);
+		const header = (url: string) =>
+			credentials.getCredentials(url).then((c) => c.env.GIT_CONFIG_VALUE_1);
+		expect(await header("https://bitbucket.org/org/repo.git")).toContain(
+			Buffer.from("x-bitbucket-api-token-auth:bound-test").toString("base64"),
+		);
+		expect(await header("https://bitbucket.org/org/other.git")).toContain(
+			Buffer.from("x-bitbucket-api-token-auth:default-test").toString("base64"),
+		);
+	} finally {
+		sqlite.close();
+	}
+});
+
 test("separate checkouts of one repository retain their selected accounts", async () => {
 	const { sqlite, store, db } = fixture();
 	try {

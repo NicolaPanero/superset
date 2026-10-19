@@ -13563,6 +13563,12 @@ msgstr "리베이스 후 머지"
 msgid "Rebase and merge"
 msgstr "리베이스 후 머지"
 
+msgid "Rebase, fast-forward"
+msgstr "리베이스, 빨리 감기"
+
+msgid "Rebase, merge commit"
+msgstr "리베이스, 병합 커밋"
+
 msgid "Recent Activity"
 msgstr "최근 활동"
 
@@ -16107,6 +16113,9 @@ msgstr "스쿼시 후 머지"
 
 msgid "Squash and merge"
 msgstr "스쿼시 후 머지"
+
+msgid "Squash, fast-forward only"
+msgstr "스쿼시, 빨리 감기만"
 
 msgid "SS"
 msgstr "SS"

@@ -105,7 +105,7 @@ export function ForkWorkspaceLinks() {
 						{task.key}
 					</Button>
 				))}
-				{scm.data?.pullRequest ? (
+				{scm.data?.pullRequest && (
 					<Button
 						size="sm"
 						variant="outline"
@@ -122,8 +122,9 @@ export function ForkWorkspaceLinks() {
 					>
 						#{scm.data.pullRequest.number}
 					</Button>
-				) : (
-					scm.data?.repository?.provider === "bitbucket" && (
+				)}
+				{scm.data?.repository?.provider === "bitbucket" &&
+					scm.data.pullRequest?.state !== "open" && (
 						<Button
 							size="sm"
 							variant="outline"
@@ -131,8 +132,7 @@ export function ForkWorkspaceLinks() {
 						>
 							<Trans>Create pull request</Trans>
 						</Button>
-					)
-				)}
+					)}
 			</div>
 			{creating && (
 				<form
