@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* при оплате по полному тарифу API"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Удобная смена агента**: выбирайте модель и уровень усилия до переключения, включая Grok 4.7."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Фильтры доски и спринта**: выбирайте доску Jira и спринт без написания JQL."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Jira и Bitbucket в приложении**: задачи, доски, pull request, ревью, сборки и автоматизации."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Понятные действия с задачами**: меняйте статус через метку задачи, выбирая нужный вариант, если в столбце несколько статусов."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Квоты под контролем**: использование по аккаунтам, поддерживаемые бесплатные сбросы и автоматическое продолжение."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Более безопасная работа**: отдельные аккаунты для каждого репозитория и усиленная защита веток и параллельных запросов."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Порядок в workspace**: вставленные изображения и файлы удаляются через 30 дней. Это можно изменить в Fork Settings."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Доски как в Jira**: сгруппированные статусы рабочего процесса остаются в тех же столбцах."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Все исполнители"
 msgid "All authors"
 msgstr "Все авторы"
 
+msgid "All boards"
+msgstr "Все доски"
+
 msgid "All changes saved"
 msgstr "Все изменения сохранены"
 
@@ -2165,6 +2162,9 @@ msgstr "Все сессии сохранены при обновлении."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Все сессии закрыты, работает новый демон."
+
+msgid "All sprints"
+msgstr "Все спринты"
 
 msgid "All statuses"
 msgstr "Все статусы"
@@ -3505,9 +3505,15 @@ msgstr "Сменить роль"
 msgid "Change state"
 msgstr "Изменить состояние"
 
+msgid "Change status"
+msgstr "Изменить статус"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Изменить статус (сейчас: {0})"
+
+msgid "Change status of {key}"
+msgstr "Изменить статус {key}"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Выберите проект в разделе задач GitHub, пр�
 
 msgid "Choose a section."
 msgstr "Выберите раздел."
+
+msgid "Choose a status in {column}"
+msgstr "Выберите статус в {column}"
 
 msgid "Choose agent"
 msgstr "Выберите агента"
@@ -4320,6 +4329,9 @@ msgstr "Завершите авторизацию в браузере."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Завершите процедуру официального CLI и закройте это окно, чтобы проверить результат."
+
+msgid "Complete the required fields to change status."
+msgstr "Заполните обязательные поля для изменения статуса."
 
 msgid "Completed"
 msgstr "Завершено"
@@ -5010,6 +5022,9 @@ msgstr "Не удалось загрузить окружения."
 
 msgid "Could not load image"
 msgstr "Не удалось загрузить изображение"
+
+msgid "Could not load Jira board settings."
+msgstr "Не удалось загрузить настройки доски Jira."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Не удалось загрузить плагины. Проверьте подключение и попробуйте снова."
@@ -6569,6 +6584,9 @@ msgstr "Открыт черновик"
 
 msgid "drafted 3 support replies"
 msgstr "подготовил 3 ответа поддержки"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Перетащите задачу в другой столбец или нажмите на её статус."
 
 msgid "Drag to reorder"
 msgstr "Перетащите, чтобы изменить порядок"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Автоматизации Jira"
 
+msgid "Jira board"
+msgstr "Доска Jira"
+
 msgid "Jira issues"
 msgstr "Задачи Jira"
 
@@ -10518,6 +10539,9 @@ msgstr "Другие действия для {0}"
 msgid "More create options"
 msgstr "Другие варианты создания"
 
+msgid "More filters"
+msgstr "Другие фильтры"
+
 msgid "More options"
 msgstr "Ещё"
 
@@ -10539,9 +10563,6 @@ msgstr "большинство разработчиков"
 
 msgid "Most of software history"
 msgstr "Почти вся история софта"
-
-msgid "Move"
-msgstr "Переместить"
 
 msgid "Move {count} to Group"
 msgstr "Переместить {count} в группу"
@@ -10954,6 +10975,9 @@ msgstr "Авторы не найдены."
 
 msgid "No automations match"
 msgstr "Нет подходящих автоматизаций"
+
+msgid "No available status changes"
+msgstr "Нет доступных изменений статуса"
 
 msgid "No branches found"
 msgstr "Ветки не найдены"
@@ -11375,6 +11399,9 @@ msgstr "Клиент Stripe не найден"
 
 msgid "no tags"
 msgstr "нет тегов"
+
+msgid "No tasks"
+msgstr "Нет задач"
 
 msgid "No tasks found"
 msgstr "Задачи не найдены"
@@ -12429,6 +12456,9 @@ msgstr "Другие хосты"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Этим проектом пользуются другие люди. Введите <0>{projectName}</0> для подтверждения."
+
+msgid "Other statuses"
+msgstr "Другие статусы"
 
 msgid "Other Team Members"
 msgstr "Другие участники команды"
@@ -15158,6 +15188,9 @@ msgstr "Посмотрите, какое место ваши последние 
 msgid "Select"
 msgstr "Селект"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Выберите доску Jira, чтобы использовать её столбцы."
+
 msgid "Select a project"
 msgstr "Выберите проект"
 
@@ -16183,6 +16216,9 @@ msgstr "Разделить с новым браузером"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Разделить с рабочим столом песочницы"
+
+msgid "Sprint"
+msgstr "Спринт"
 
 msgid "Squash"
 msgstr "Объединить коммиты"

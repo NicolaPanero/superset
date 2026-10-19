@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* tam API tarifesiyle faturalandırılsaydı"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Daha iyi ajan geçişi**: Geçiş yapmadan önce modeli ve efor düzeyini seçin, Grok 4.7 dahil."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Pano ve sprint filtreleri**: JQL yazmadan Jira panonuzu ve sprintinizi seçin."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Uygulamada Jira ve Bitbucket**: görevler, panolar, pull request'ler, incelemeler, build'ler ve otomasyonlar."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Daha anlaşılır görev işlemleri**: bir sütunda birden fazla durum varsa yönlendirilmiş seçeneklerle görev rozetinden durumu değiştirin."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Kotalar kontrol altında**: hesap başına kullanım, desteklenen ücretsiz sıfırlamalar ve otomatik devam."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Daha güvenli iş akışları**: depo başına ayrı hesaplar ve dallar ile eşzamanlı istekler için daha fazla koruma."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Düzenli workspace’ler**: yapıştırılan görseller ve dosyalar 30 gün sonra silinir. Fork Settings’ten değiştirebilirsiniz."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Jira ile aynı panolar**: gruplanmış iş akışı durumları aynı sütunlarda kalır."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Tüm atananlar"
 msgid "All authors"
 msgstr "Tüm yazarlar"
 
+msgid "All boards"
+msgstr "Tüm panolar"
+
 msgid "All changes saved"
 msgstr "Tüm değişiklikler kaydedildi"
 
@@ -2165,6 +2162,9 @@ msgstr "Yükseltme boyunca tüm oturumlar korundu."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Tüm oturumlar kapatıldı ve yeni bir daemon çalışıyor."
+
+msgid "All sprints"
+msgstr "Tüm sprintler"
 
 msgid "All statuses"
 msgstr "Tüm durumlar"
@@ -3505,9 +3505,15 @@ msgstr "Rolü değiştir"
 msgid "Change state"
 msgstr "Durumu değiştir"
 
+msgid "Change status"
+msgstr "Durumu değiştir"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Durumu değiştir (şu an: {0})"
+
+msgid "Change status of {key}"
+msgstr "{key} durumunu değiştir"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Bir issue açmadan önce GitHub issue'ları bölümünden bir proje seç
 
 msgid "Choose a section."
 msgstr "Bir bölüm seçin."
+
+msgid "Choose a status in {column}"
+msgstr "{column} içinde bir durum seçin"
 
 msgid "Choose agent"
 msgstr "Ajan seçin"
@@ -4320,6 +4329,9 @@ msgstr "Yetkilendirmeyi tarayıcınızda tamamlayın."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Resmî CLI işlemini tamamlayın, ardından sonucu kontrol etmek için bu pencereyi kapatın."
+
+msgid "Complete the required fields to change status."
+msgstr "Durumu değiştirmek için gerekli alanları doldurun."
 
 msgid "Completed"
 msgstr "Tamamlandı"
@@ -5010,6 +5022,9 @@ msgstr "Ortamlar yüklenemedi."
 
 msgid "Could not load image"
 msgstr "Görsel yüklenemedi"
+
+msgid "Could not load Jira board settings."
+msgstr "Jira pano ayarları yüklenemedi."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Eklentiler yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin."
@@ -6569,6 +6584,9 @@ msgstr "Taslak açıldı"
 
 msgid "drafted 3 support replies"
 msgstr "3 destek yanıtı taslağı hazırladı"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Bir görevi başka bir sütuna sürükleyin veya durumuna tıklayın."
 
 msgid "Drag to reorder"
 msgstr "Sıralamak için sürükleyin"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira otomasyonları"
 
+msgid "Jira board"
+msgstr "Jira panosu"
+
 msgid "Jira issues"
 msgstr "Jira kayıtları"
 
@@ -10518,6 +10539,9 @@ msgstr "{0} için diğer işlemler"
 msgid "More create options"
 msgstr "Diğer oluşturma seçenekleri"
 
+msgid "More filters"
+msgstr "Diğer filtreler"
+
 msgid "More options"
 msgstr "Diğer seçenekler"
 
@@ -10539,9 +10563,6 @@ msgstr "çoğu geliştirici"
 
 msgid "Most of software history"
 msgstr "Yazılım tarihinin çoğu"
-
-msgid "Move"
-msgstr "Taşı"
 
 msgid "Move {count} to Group"
 msgstr "{count} öğeyi gruba taşı"
@@ -10954,6 +10975,9 @@ msgstr "Yazar bulunamadı."
 
 msgid "No automations match"
 msgstr "Eşleşen otomasyon yok"
+
+msgid "No available status changes"
+msgstr "Kullanılabilir durum değişikliği yok"
 
 msgid "No branches found"
 msgstr "Dal bulunamadı"
@@ -11375,6 +11399,9 @@ msgstr "Stripe müşterisi bulunamadı"
 
 msgid "no tags"
 msgstr "etiket yok"
+
+msgid "No tasks"
+msgstr "Görev yok"
 
 msgid "No tasks found"
 msgstr "Görev bulunamadı"
@@ -12429,6 +12456,9 @@ msgstr "Diğer host'lar"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Bu projeyi başkaları kullanıyor. Onaylamak için <0>{projectName}</0> yaz."
+
+msgid "Other statuses"
+msgstr "Diğer durumlar"
 
 msgid "Other Team Members"
 msgstr "Diğer takım üyeleri"
@@ -15158,6 +15188,9 @@ msgstr "Son 30 gününüzün herkese açık liderlik tablosunda nereye düştü�
 msgid "Select"
 msgstr "Seçim"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Sütunlarını kullanmak için bir Jira panosu seçin."
+
 msgid "Select a project"
 msgstr "Bir proje seçin"
 
@@ -16183,6 +16216,9 @@ msgstr "Yeni tarayıcıyla böl"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Sanal alan masaüstüyle böl"
+
+msgid "Sprint"
+msgstr "Sprint"
 
 msgid "Squash"
 msgstr "Commit’leri birleştir"

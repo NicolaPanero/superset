@@ -162,7 +162,9 @@ export const FORK_PROVIDER_DEFINITIONS = {
 		capabilities: readonly string[];
 	}
 >;
-export const FORK_INTEGRATIONS_VERSION = 4;
+export type { ForkJiraBoardContext, ForkJiraColumn } from "./fork-jira-board";
+
+export const FORK_INTEGRATIONS_VERSION = 5;
 
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");

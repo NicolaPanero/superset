@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* API定価で課金された場合"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**エージェント切り替えを改善**: 切り替える前にモデルとエフォートを選べます。Grok 4.7 にも対応。"
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**ボードとスプリントのフィルター**：JQLを書かずにJiraボードとスプリントを選べます。"
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**アプリ内で Jira と Bitbucket**: タスク、ボード、プルリクエスト、レビュー、ビルド、自動化。"
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**わかりやすいタスク操作**：タスクのバッジから状態を変更できます。列に複数の状態がある場合は、候補から選択できます。"
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**クォータを管理**: アカウントごとの使用量、対応する無料リセット、自動継続。"
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**より安全なワークフロー**: リポジトリごとに別のアカウントを使い、ブランチと同時リクエストの保護を強化。"
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**ワークスペースを整理**: 貼り付けた画像とファイルは 30 日後に削除されます。Fork Settings で変更できます。"
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Jiraと一致するボード**：まとめられたワークフローの状態は、同じ列に表示されます。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "すべての担当者"
 msgid "All authors"
 msgstr "すべての作成者"
 
+msgid "All boards"
+msgstr "すべてのボード"
+
 msgid "All changes saved"
 msgstr "すべての変更を保存しました"
 
@@ -2165,6 +2162,9 @@ msgstr "アップグレード後もすべてのセッションが維持されま
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "すべてのセッションを閉じ、新しいデーモンが動作しています。"
+
+msgid "All sprints"
+msgstr "すべてのスプリント"
 
 msgid "All statuses"
 msgstr "すべてのステータス"
@@ -3505,9 +3505,15 @@ msgstr "ロールを変更"
 msgid "Change state"
 msgstr "状態を変更"
 
+msgid "Change status"
+msgstr "状態を変更"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "ステータスを変更（現在: {0}）"
+
+msgid "Change status of {key}"
+msgstr "{key}の状態を変更"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "issueを開く前に、GitHub issueでプロジェクトを選択して�
 
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
+
+msgid "Choose a status in {column}"
+msgstr "{column}の状態を選択"
 
 msgid "Choose agent"
 msgstr "エージェントを選択"
@@ -4320,6 +4329,9 @@ msgstr "ブラウザーで認証を完了してください。"
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "公式CLIの手順を完了してから、このウィンドウを閉じて結果を確認してください。"
+
+msgid "Complete the required fields to change status."
+msgstr "状態を変更するには必須項目を入力してください。"
 
 msgid "Completed"
 msgstr "完了"
@@ -5010,6 +5022,9 @@ msgstr "環境を読み込めませんでした。"
 
 msgid "Could not load image"
 msgstr "画像を読み込めませんでした"
+
+msgid "Could not load Jira board settings."
+msgstr "Jiraボードの設定を読み込めませんでした。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "プラグインを読み込めませんでした。接続を確認して再試行してください。"
@@ -6569,6 +6584,9 @@ msgstr "ドラフト作成"
 
 msgid "drafted 3 support replies"
 msgstr "サポート返信を3件下書き"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "タスクを別の列にドラッグするか、状態をクリックしてください。"
 
 msgid "Drag to reorder"
 msgstr "ドラッグして並べ替え"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 自動化"
 
+msgid "Jira board"
+msgstr "Jiraボード"
+
 msgid "Jira issues"
 msgstr "Jira 課題"
 
@@ -10518,6 +10539,9 @@ msgstr "{0} のその他の操作"
 msgid "More create options"
 msgstr "その他の作成オプション"
 
+msgid "More filters"
+msgstr "その他のフィルター"
+
 msgid "More options"
 msgstr "その他のオプション"
 
@@ -10539,9 +10563,6 @@ msgstr "大半の開発者"
 
 msgid "Most of software history"
 msgstr "ソフトウェアの歴史のほとんど"
-
-msgid "Move"
-msgstr "移動"
 
 msgid "Move {count} to Group"
 msgstr "{count}件をグループへ移動"
@@ -10954,6 +10975,9 @@ msgstr "作成者が見つかりません。"
 
 msgid "No automations match"
 msgstr "一致するオートメーションがありません"
+
+msgid "No available status changes"
+msgstr "変更できる状態はありません"
 
 msgid "No branches found"
 msgstr "ブランチが見つかりません"
@@ -11375,6 +11399,9 @@ msgstr "Stripeの顧客が見つかりません"
 
 msgid "no tags"
 msgstr "タグなし"
+
+msgid "No tasks"
+msgstr "タスクがありません"
 
 msgid "No tasks found"
 msgstr "タスクが見つかりません"
@@ -12429,6 +12456,9 @@ msgstr "その他のホスト"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "他のユーザーがこのプロジェクトを使用しています。確認のため <0>{projectName}</0> と入力してください。"
+
+msgid "Other statuses"
+msgstr "その他の状態"
 
 msgid "Other Team Members"
 msgstr "他のチームメンバー"
@@ -15158,6 +15188,9 @@ msgstr "直近30日の実績が公開リーダーボードでどの位置にな�
 msgid "Select"
 msgstr "Select"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Jiraボードを選択すると、その列を使用できます。"
+
 msgid "Select a project"
 msgstr "プロジェクトを選択してください"
 
@@ -16183,6 +16216,9 @@ msgstr "新規ブラウザで分割"
 
 msgid "Split with Sandbox Desktop"
 msgstr "サンドボックスのデスクトップで分割"
+
+msgid "Sprint"
+msgstr "スプリント"
 
 msgid "Squash"
 msgstr "コミットをまとめる"

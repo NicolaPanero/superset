@@ -1,270 +1,258 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { errorMessage } from "@superset/i18n/errors";
 import { useFormat } from "@superset/i18n/react";
-import type { ForkTask } from "@superset/shared/fork-integrations";
+import type {
+	ForkJiraColumn,
+	ForkTask,
+} from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from "@superset/ui/dialog";
 import { cn } from "@superset/ui/utils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { useForkConnections } from "../../../../hooks/useForkConnections";
-import { required } from "../../../../utils/required";
-import { ForkTransitionFields } from "../../../ForkTransitionFields/ForkTransitionFields";
+import { useRef, useState } from "react";
+import { useForkTaskTransition } from "../../../../hooks/useForkTaskTransition";
+import { forkJiraColumnForStatus } from "../../../../utils/forkJiraColumns";
+import { ForkTaskTransitionDialog } from "../../../ForkTaskTransitionDialog";
+import { ForkTaskTransitionOptions } from "../../../ForkTaskTransitionOptions";
 import { jiraStatusTone } from "../../fork-jira-query";
 import { ForkJiraTaskCard } from "../ForkJiraTaskCard";
 
+const DRAG_TYPE = "application/x-superset-jira-issue";
+
 export function ForkJiraBoard({
 	tasks,
+	columns,
 	selected,
 	onSelect,
 }: {
 	tasks: ForkTask[];
+	columns: ForkJiraColumn[];
 	selected?: string;
 	onSelect: (key: string) => void;
 }) {
+	const { t } = useLingui();
 	const { formatNumber } = useFormat();
-	const { client, hostUrl, data } = useForkConnections();
-	const cache = useQueryClient();
 	const [moving, setMoving] = useState<ForkTask | null>(null);
 	const [over, setOver] = useState<string | null>(null);
-	const [transitionId, setTransitionId] = useState("");
-	const [fields, setFields] = useState<Record<string, unknown>>({});
-	const transitions = useQuery({
-		queryKey: [
-			"fork-integrations",
-			hostUrl,
-			"board-transitions",
-			moving?.connectionId,
-			moving?.key,
-		],
-		queryFn: () =>
-			required(client).forkTasks.transitions.query({
-				connectionId: required(moving).connectionId,
-				key: required(moving).key,
-			}),
-		enabled: !!moving && !!client && (data?.version ?? 0) >= 4,
-		retry: false,
-		networkMode: "always",
+	const [destination, setDestination] = useState<ForkJiraColumn | null>(null);
+	const column = destination?.name ?? "";
+	const [dropping, setDropping] = useState(false);
+	const [dragError, setDragError] = useState<unknown>(null);
+	const dropAccepted = useRef(false);
+	const change = useForkTaskTransition(moving, !!moving, () => {
+		setMoving(null);
+		setDestination(null);
 	});
-	const chosen = transitions.data?.find(
-		(transition) => transition.id === transitionId,
-	);
-	const move = useMutation({
-		networkMode: "always",
-		retry: false,
-		mutationFn: ({
-			id,
-			values,
-		}: {
-			id: string;
-			values: Record<string, unknown>;
-		}) =>
-			required(client).forkTasks.transition.mutate({
-				connectionId: required(moving).connectionId,
-				key: required(moving).key,
-				transitionId: id,
-				fields: values,
-			}),
-		onSuccess: () => {
-			setMoving(null);
-			setTransitionId("");
-			setFields({});
-		},
-		onSettled: () =>
-			void cache.invalidateQueries({
-				queryKey: ["fork-integrations", hostUrl],
-			}),
-	});
-	const categories = ["new", "indeterminate", "done"];
-	const groups = [
-		...new Map([
-			...tasks.map((task) => [task.status.id, task.status] as const),
-			...(transitions.data ?? []).flatMap((transition) =>
-				transition.to ? [[transition.to.id, transition.to] as const] : [],
-			),
-		]).values(),
-	].sort(
-		(a, b) => categories.indexOf(a.category) - categories.indexOf(b.category),
-	);
-	const choose = (id: string) => {
-		const transition = transitions.data?.find((entry) => entry.id === id);
-		if (!transition || move.isPending) return;
-		if (transition.fields.some((field) => field.required)) {
-			setTransitionId(id);
-			setFields({});
-		} else move.mutate({ id, values: {} });
+	const busy = change.mutation.isPending || dropping;
+	const options = (column: ForkJiraColumn) =>
+		change.transitions.data?.filter(
+			(entry) =>
+				entry.to &&
+				entry.to.id !== moving?.status.id &&
+				forkJiraColumnForStatus(columns, entry.to)?.id === column.id,
+		) ?? [];
+	const drop = async (column: ForkJiraColumn) => {
+		dropAccepted.current = true;
+		setOver(null);
+		setDropping(true);
+		try {
+			const result = await change.transitions.refetch();
+			if (!result.data || result.error) {
+				setDragError(result.error);
+				setMoving(null);
+				return;
+			}
+			const candidates = result.data.filter(
+				(entry) =>
+					entry.to &&
+					entry.to.id !== moving?.status.id &&
+					forkJiraColumnForStatus(columns, entry.to)?.id === column.id,
+			);
+			const [first] = candidates;
+			if (candidates.length === 1 && first) change.choose(first);
+			else setDestination(column);
+		} finally {
+			setDropping(false);
+		}
 	};
 	return (
-		<div className="space-y-3">
-			{(transitions.error || move.error) && (
-				<p role="alert" className="text-sm text-destructive">
-					{(transitions.error ?? move.error)?.message}
+		<div className="flex min-h-full flex-col gap-3">
+			<p className="text-[11px] text-muted-foreground">
+				<Trans>Drag a task to another column, or click its status.</Trans>
+			</p>
+			{(dragError ||
+				change.transitions.error ||
+				(change.mutation.error && !change.requiredTransition)) && (
+				<p
+					role="alert"
+					className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-xs text-destructive"
+				>
+					{errorMessage(
+						dragError ?? change.transitions.error ?? change.mutation.error,
+					)}
 				</p>
 			)}
-			<div className="flex min-h-full items-start gap-3">
-				{groups.map((group) => {
-					const entries = tasks.filter((task) => task.status.id === group.id);
-					const destination = transitions.data?.find(
-						(transition) => transition.to?.id === group.id,
+			<div aria-live="polite" className="sr-only">
+				{busy && <Trans>Saving...</Trans>}
+			</div>
+			<div className="flex flex-1 items-stretch gap-3">
+				{columns.map((column) => {
+					const entries = tasks.filter(
+						(task) =>
+							forkJiraColumnForStatus(columns, task.status)?.id === column.id,
 					);
-					const droppable =
-						!!destination && moving?.status.id !== group.id && !move.isPending;
+					const available =
+						!!moving &&
+						!busy &&
+						(change.transitions.isFetching || options(column).length > 0);
 					return (
-						<fieldset
-							aria-label={group.name}
-							key={group.id}
+						<section
+							key={column.id}
+							aria-label={column.name}
 							className={cn(
-								"w-72 shrink-0 rounded-xl border border-border/60 bg-muted/25 p-2.5",
-								over === group.id && droppable && "ring-2 ring-primary",
+								"flex min-h-60 w-80 shrink-0 flex-col rounded-xl border border-border/60 bg-muted/20 transition-colors",
+								over === column.id &&
+									available &&
+									"border-primary bg-primary/5 ring-1 ring-primary",
 							)}
 							onDragOver={(event) => {
-								if (droppable) {
+								if (available) {
 									event.preventDefault();
 									event.dataTransfer.dropEffect = "move";
-									setOver(group.id);
+									setOver(column.id);
 								}
 							}}
-							onDragLeave={() => setOver(null)}
+							onDragLeave={(event) => {
+								if (
+									!event.currentTarget.contains(
+										event.relatedTarget as Node | null,
+									)
+								)
+									setOver(null);
+							}}
 							onDrop={(event) => {
 								event.preventDefault();
-								setOver(null);
 								if (
-									droppable &&
-									destination &&
-									event.dataTransfer.getData(
-										"application/x-superset-jira-issue",
-									) === moving?.id
+									available &&
+									event.dataTransfer.getData(DRAG_TYPE) === moving?.id
 								)
-									choose(destination.id);
+									void drop(column);
 							}}
 						>
-							<div className="mb-3 flex items-center gap-2 px-1 py-1">
+							<div className="sticky top-0 z-10 flex items-center gap-2 rounded-t-xl border-b border-border/50 bg-background/95 px-3 py-3 backdrop-blur-sm">
 								<span
 									className={cn(
 										"size-2 rounded-full bg-current",
-										jiraStatusTone(group.category),
+										jiraStatusTone(
+											column.category ?? entries[0]?.status.category ?? "new",
+										),
 									)}
 								/>
-								<h2 className="text-xs font-medium">{group.name}</h2>
-								<span className="ml-auto text-[10px] tabular-nums text-muted-foreground">
+								<h2
+									className="min-w-0 flex-1 truncate text-xs font-semibold"
+									title={column.name}
+								>
+									{column.name}
+								</h2>
+								<span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] tabular-nums text-muted-foreground">
 									{formatNumber(entries.length)}
 								</span>
 							</div>
-							<div className="min-h-20 space-y-2">
+							<div className="flex-1 space-y-2 p-2">
 								{entries.map((task) => (
 									<fieldset
-										key={task.id}
 										aria-label={task.key}
-										draggable={(data?.version ?? 0) >= 4 && !move.isPending}
+										key={task.id}
+										draggable={change.supported && !busy}
+										className={cn(moving?.id === task.id && "opacity-60")}
 										onDragStart={(event) => {
-											event.dataTransfer.setData(
-												"application/x-superset-jira-issue",
-												task.id,
-											);
+											event.dataTransfer.setData(DRAG_TYPE, task.id);
 											event.dataTransfer.effectAllowed = "move";
-											move.reset();
+											dropAccepted.current = false;
+											change.mutation.reset();
+											setDragError(null);
 											setMoving(task);
 										}}
-										onDragEnd={() => setOver(null)}
+										onDragEnd={() => {
+											setOver(null);
+											if (!dropAccepted.current) setMoving(null);
+										}}
 									>
 										<ForkJiraTaskCard
 											task={task}
+											columns={columns}
 											selected={selected === task.key}
 											board
 											onClick={() => onSelect(task.key)}
 										/>
-										{(data?.version ?? 0) >= 4 && (
-											<Button
-												size="sm"
-												variant="ghost"
-												className="h-6 text-[10px]"
-												disabled={move.isPending}
-												onClick={() => {
-													move.reset();
-													setTransitionId("");
-													setMoving(task);
-												}}
-											>
-												<Trans>Move</Trans>
-											</Button>
-										)}
 									</fieldset>
 								))}
+								{!entries.length && (
+									<div className="grid min-h-24 place-items-center rounded-lg border border-dashed border-border/50 text-[11px] text-muted-foreground">
+										<Trans>No tasks</Trans>
+									</div>
+								)}
 							</div>
-						</fieldset>
+						</section>
 					);
 				})}
 			</div>
-			{moving && !transitionId && (
-				<div
-					className="flex flex-wrap items-center gap-2 rounded-lg border p-3"
-					aria-live="polite"
-				>
-					<span className="text-xs">{moving.key}</span>
-					{transitions.isFetching ? (
-						<span className="text-xs text-muted-foreground">
-							<Trans>Loading...</Trans>
-						</span>
+			<Dialog
+				open={!!destination}
+				onOpenChange={(open) => {
+					if (!open && !change.mutation.isPending) {
+						setDestination(null);
+						setMoving(null);
+					}
+				}}
+			>
+				<DialogContent className="max-w-sm">
+					<DialogHeader>
+						<DialogTitle>
+							{t({
+								message: `Choose a status in ${column}`,
+							})}
+						</DialogTitle>
+						<DialogDescription>
+							{moving?.key} · {moving?.status.name}
+						</DialogDescription>
+					</DialogHeader>
+					{destination && options(destination).length ? (
+						<ForkTaskTransitionOptions
+							columns={columns}
+							transitions={options(destination)}
+							busy={change.mutation.isPending}
+							onChoose={(transition) => {
+								setDestination(null);
+								change.choose(transition);
+							}}
+						/>
 					) : (
-						transitions.data?.map((transition) => (
-							<Button
-								key={transition.id}
-								size="sm"
-								variant="outline"
-								disabled={move.isPending}
-								onClick={() => choose(transition.id)}
-							>
-								{transition.name}
-							</Button>
-						))
+						<p className="text-sm text-muted-foreground">
+							<Trans>No available status changes</Trans>
+						</p>
 					)}
 					<Button
-						size="sm"
-						variant="ghost"
-						disabled={move.isPending}
-						onClick={() => setMoving(null)}
+						variant="outline"
+						onClick={() => {
+							setDestination(null);
+							setMoving(null);
+						}}
 					>
 						<Trans>Cancel</Trans>
 					</Button>
-				</div>
-			)}
-			<Dialog
-				open={!!chosen}
-				onOpenChange={(open) => {
-					if (!open && !move.isPending) setTransitionId("");
-				}}
-			>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>{chosen?.name}</DialogTitle>
-					</DialogHeader>
-					<form
-						className="space-y-4"
-						onSubmit={(event) => {
-							event.preventDefault();
-							move.mutate({ id: transitionId, values: fields });
-						}}
-					>
-						<ForkTransitionFields
-							fields={chosen?.fields ?? []}
-							values={fields}
-							onChange={setFields}
-						/>
-						{move.error && (
-							<p role="alert" className="text-sm text-destructive">
-								{move.error.message}
-							</p>
-						)}
-						<Button type="submit" disabled={move.isPending}>
-							<Trans>Save</Trans>
-						</Button>
-					</form>
 				</DialogContent>
 			</Dialog>
+			<ForkTaskTransitionDialog
+				key={change.requiredTransition?.id ?? "closed"}
+				change={change}
+				onCancel={() => setMoving(null)}
+			/>
 		</div>
 	);
 }

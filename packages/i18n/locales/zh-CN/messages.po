@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全价计费"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**更好的智能体切换**：切换前即可选择模型和推理强度，包括 Grok 4.7。"
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**看板和冲刺筛选**：无需编写 JQL，即可选择 Jira 看板和冲刺。"
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**应用内的 Jira 和 Bitbucket**：任务、看板、拉取请求、评审、构建和自动化。"
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**更清晰的任务操作**：通过任务状态标签更改状态。当一列包含多个状态时，可按提示选择。"
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**配额尽在掌握**：按账户查看用量、支持的免费重置以及自动继续。"
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**更安全的工作流**：每个仓库使用独立账户，并加强对分支和并发请求的保护。"
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**整洁的工作区**：粘贴的图片和文件会在 30 天后删除。可在 Fork Settings 中更改。"
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**与 Jira 一致的看板**：已分组的工作流状态保持在同一列中。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "全部负责人"
 msgid "All authors"
 msgstr "所有作者"
 
+msgid "All boards"
+msgstr "所有看板"
+
 msgid "All changes saved"
 msgstr "所有更改已保存"
 
@@ -2165,6 +2162,9 @@ msgstr "升级过程中所有会话都已保留。"
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "所有会话已关闭，全新的守护进程正在运行。"
+
+msgid "All sprints"
+msgstr "所有冲刺"
 
 msgid "All statuses"
 msgstr "所有状态"
@@ -3505,9 +3505,15 @@ msgstr "更改角色"
 msgid "Change state"
 msgstr "更改状态"
 
+msgid "Change status"
+msgstr "更改状态"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "更改状态（当前：{0}）"
+
+msgid "Change status of {key}"
+msgstr "更改 {key} 的状态"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "打开议题前，请先在GitHub议题中选择一个项目。"
 
 msgid "Choose a section."
 msgstr "选择一个分区。"
+
+msgid "Choose a status in {column}"
+msgstr "选择 {column} 中的状态"
 
 msgid "Choose agent"
 msgstr "选择智能体"
@@ -4320,6 +4329,9 @@ msgstr "在浏览器中完成授权。"
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "完成官方 CLI 流程后关闭此窗口，检查结果。"
+
+msgid "Complete the required fields to change status."
+msgstr "请填写必填字段以更改状态。"
 
 msgid "Completed"
 msgstr "完成时间"
@@ -5010,6 +5022,9 @@ msgstr "无法加载环境。"
 
 msgid "Could not load image"
 msgstr "无法加载图片"
+
+msgid "Could not load Jira board settings."
+msgstr "无法加载 Jira 看板设置。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "无法加载插件。请检查网络连接后重试。"
@@ -6569,6 +6584,9 @@ msgstr "创建了草稿"
 
 msgid "drafted 3 support replies"
 msgstr "起草了3条支持回复"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "将任务拖到其他列，或点击其状态。"
 
 msgid "Drag to reorder"
 msgstr "拖动以重新排序"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 自动化"
 
+msgid "Jira board"
+msgstr "Jira 看板"
+
 msgid "Jira issues"
 msgstr "Jira 事务"
 
@@ -10518,6 +10539,9 @@ msgstr "{0}的更多操作"
 msgid "More create options"
 msgstr "更多创建选项"
 
+msgid "More filters"
+msgstr "更多筛选条件"
+
 msgid "More options"
 msgstr "更多选项"
 
@@ -10539,9 +10563,6 @@ msgstr "多数开发者"
 
 msgid "Most of software history"
 msgstr "软件史的大部分时间"
-
-msgid "Move"
-msgstr "移动"
 
 msgid "Move {count} to Group"
 msgstr "将{count}个移动到分组"
@@ -10954,6 +10975,9 @@ msgstr "未找到作者。"
 
 msgid "No automations match"
 msgstr "没有匹配的自动化"
+
+msgid "No available status changes"
+msgstr "没有可用的状态更改"
 
 msgid "No branches found"
 msgstr "未找到分支"
@@ -11375,6 +11399,9 @@ msgstr "未找到Stripe客户"
 
 msgid "no tags"
 msgstr "无标签"
+
+msgid "No tasks"
+msgstr "没有任务"
 
 msgid "No tasks found"
 msgstr "未找到任务"
@@ -12429,6 +12456,9 @@ msgstr "其他主机"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "其他人正在使用此项目。输入 <0>{projectName}</0> 以确认。"
+
+msgid "Other statuses"
+msgstr "其他状态"
 
 msgid "Other Team Members"
 msgstr "其他团队成员"
@@ -15158,6 +15188,9 @@ msgstr "看看你最近30天在公开排行榜上的位置。仅包含token数�
 msgid "Select"
 msgstr "选择框"
 
+msgid "Select a Jira board to use its columns."
+msgstr "选择 Jira 看板以使用其列。"
+
 msgid "Select a project"
 msgstr "请选择项目"
 
@@ -16183,6 +16216,9 @@ msgstr "拆分并新建浏览器"
 
 msgid "Split with Sandbox Desktop"
 msgstr "拆分并打开沙盒桌面"
+
+msgid "Sprint"
+msgstr "冲刺"
 
 msgid "Squash"
 msgstr "压缩提交"

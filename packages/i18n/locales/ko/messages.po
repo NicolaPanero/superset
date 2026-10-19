@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 전액 API 요금으로 청구될 경우"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**더 나은 에이전트 전환**: 전환하기 전에 모델과 effort를 선택하세요. Grok 4.7도 포함됩니다."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**보드 및 스프린트 필터**: JQL을 작성하지 않고 Jira 보드와 스프린트를 선택하세요."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**앱 안의 Jira와 Bitbucket**: 작업, 보드, 풀 리퀘스트, 리뷰, 빌드, 자동화."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**더 명확한 작업 동작**: 작업 배지에서 상태를 변경하고, 열에 여러 상태가 있으면 안내에 따라 선택하세요."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**할당량 관리**: 계정별 사용량, 지원되는 무료 초기화, 자동 이어서 진행."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**더 안전한 워크플로**: 저장소별로 분리된 계정과 브랜치 및 동시 요청에 대한 강화된 보호."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**깔끔한 워크스페이스**: 붙여 넣은 이미지와 파일은 30일 후 삭제됩니다. Fork Settings에서 변경할 수 있습니다."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Jira와 일치하는 보드**: 그룹화된 워크플로 상태가 같은 열에 유지됩니다."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "모든 담당자"
 msgid "All authors"
 msgstr "모든 작성자"
 
+msgid "All boards"
+msgstr "모든 보드"
+
 msgid "All changes saved"
 msgstr "모든 변경 사항 저장됨"
 
@@ -2165,6 +2162,9 @@ msgstr "업그레이드 과정에서 모든 세션이 유지되었습니다."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "모든 세션이 닫히고 새 데몬이 실행 중입니다."
+
+msgid "All sprints"
+msgstr "모든 스프린트"
 
 msgid "All statuses"
 msgstr "모든 상태"
@@ -3505,9 +3505,15 @@ msgstr "역할 변경"
 msgid "Change state"
 msgstr "상태 변경"
 
+msgid "Change status"
+msgstr "상태 변경"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "상태 변경 (현재: {0})"
+
+msgid "Change status of {key}"
+msgstr "{key} 상태 변경"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선�
 
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
+
+msgid "Choose a status in {column}"
+msgstr "{column}에서 상태 선택"
 
 msgid "Choose agent"
 msgstr "에이전트 선택"
@@ -4320,6 +4329,9 @@ msgstr "브라우저에서 인증을 완료하세요."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "공식 CLI 절차를 완료한 뒤 이 창을 닫아 결과를 확인하세요."
+
+msgid "Complete the required fields to change status."
+msgstr "상태를 변경하려면 필수 필드를 입력하세요."
 
 msgid "Completed"
 msgstr "완료"
@@ -5010,6 +5022,9 @@ msgstr "환경을 불러오지 못했습니다."
 
 msgid "Could not load image"
 msgstr "이미지를 불러올 수 없음"
+
+msgid "Could not load Jira board settings."
+msgstr "Jira 보드 설정을 불러올 수 없습니다."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "플러그인을 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요."
@@ -6569,6 +6584,9 @@ msgstr "초안 열림"
 
 msgid "drafted 3 support replies"
 msgstr "지원 답변 3건 초안 작성"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "작업을 다른 열로 드래그하거나 상태를 클릭하세요."
 
 msgid "Drag to reorder"
 msgstr "끌어서 순서 변경"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 자동화"
 
+msgid "Jira board"
+msgstr "Jira 보드"
+
 msgid "Jira issues"
 msgstr "Jira 이슈"
 
@@ -10518,6 +10539,9 @@ msgstr "{0}에 대한 추가 작업"
 msgid "More create options"
 msgstr "추가 생성 옵션"
 
+msgid "More filters"
+msgstr "추가 필터"
+
 msgid "More options"
 msgstr "추가 옵션"
 
@@ -10539,9 +10563,6 @@ msgstr "대부분의 개발자"
 
 msgid "Most of software history"
 msgstr "소프트웨어 역사의 대부분"
-
-msgid "Move"
-msgstr "이동"
 
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
@@ -10954,6 +10975,9 @@ msgstr "작성자를 찾을 수 없습니다."
 
 msgid "No automations match"
 msgstr "일치하는 자동화가 없습니다"
+
+msgid "No available status changes"
+msgstr "변경할 수 있는 상태가 없습니다"
 
 msgid "No branches found"
 msgstr "브랜치를 찾을 수 없습니다"
@@ -11375,6 +11399,9 @@ msgstr "Stripe 고객을 찾을 수 없습니다"
 
 msgid "no tags"
 msgstr "태그 없음"
+
+msgid "No tasks"
+msgstr "작업 없음"
 
 msgid "No tasks found"
 msgstr "작업을 찾을 수 없습니다"
@@ -12429,6 +12456,9 @@ msgstr "다른 호스트"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "다른 사람이 이 프로젝트를 사용 중입니다. 확인하려면 <0>{projectName}</0>을(를) 입력하세요."
+
+msgid "Other statuses"
+msgstr "기타 상태"
 
 msgid "Other Team Members"
 msgstr "다른 팀 멤버"
@@ -15158,6 +15188,9 @@ msgstr "최근 30일 사용량이 공개 리더보드에서 어디쯤인지 확�
 msgid "Select"
 msgstr "선택"
 
+msgid "Select a Jira board to use its columns."
+msgstr "열을 사용하려면 Jira 보드를 선택하세요."
+
 msgid "Select a project"
 msgstr "프로젝트를 선택하세요"
 
@@ -16183,6 +16216,9 @@ msgstr "새 브라우저로 분할"
 
 msgid "Split with Sandbox Desktop"
 msgstr "샌드박스 데스크톱으로 분할"
+
+msgid "Sprint"
+msgstr "스프린트"
 
 msgid "Squash"
 msgstr "커밋 합치기"

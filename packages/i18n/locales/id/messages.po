@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Peralihan agen yang lebih baik**: pilih model dan effort sebelum beralih, termasuk Grok 4.7."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Filter papan dan sprint**: pilih papan Jira dan sprint tanpa menulis JQL."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Jira dan Bitbucket di aplikasi**: tugas, papan, pull request, review, build, dan otomatisasi."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Tindakan tugas yang lebih jelas**: ubah status dari lencana tugas, dengan pilihan terpandu saat satu kolom memiliki beberapa status."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Kuota terkendali**: penggunaan per akun, reset gratis yang didukung, dan kelanjutan otomatis."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Alur kerja lebih aman**: akun terpisah per repositori dan perlindungan lebih untuk branch serta permintaan bersamaan."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Workspace rapi**: gambar dan file yang ditempel dihapus setelah 30 hari. Ubah di Fork Settings."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Papan yang sesuai dengan Jira**: status alur kerja yang dikelompokkan tetap berada di kolom yang sama."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Semua penerima tugas"
 msgid "All authors"
 msgstr "Semua penulis"
 
+msgid "All boards"
+msgstr "Semua papan"
+
 msgid "All changes saved"
 msgstr "Semua perubahan tersimpan"
 
@@ -2165,6 +2162,9 @@ msgstr "Semua sesi dipertahankan sepanjang upgrade."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Semua sesi ditutup dan daemon baru sedang berjalan."
+
+msgid "All sprints"
+msgstr "Semua sprint"
 
 msgid "All statuses"
 msgstr "Semua status"
@@ -3505,9 +3505,15 @@ msgstr "Ubah peran"
 msgid "Change state"
 msgstr "Ubah status"
 
+msgid "Change status"
+msgstr "Ubah status"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Ubah status (saat ini: {0})"
+
+msgid "Change status of {key}"
+msgstr "Ubah status {key}"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
 
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
+
+msgid "Choose a status in {column}"
+msgstr "Pilih status di {column}"
 
 msgid "Choose agent"
 msgstr "Pilih agen"
@@ -4320,6 +4329,9 @@ msgstr "Selesaikan otorisasi di browser Anda."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Selesaikan alur CLI resmi, lalu tutup jendela ini untuk memeriksa hasilnya."
+
+msgid "Complete the required fields to change status."
+msgstr "Isi kolom wajib untuk mengubah status."
 
 msgid "Completed"
 msgstr "Selesai"
@@ -5010,6 +5022,9 @@ msgstr "Tidak dapat memuat environment."
 
 msgid "Could not load image"
 msgstr "Gambar tidak dapat dimuat"
+
+msgid "Could not load Jira board settings."
+msgstr "Tidak dapat memuat pengaturan papan Jira."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Tidak dapat memuat plugin. Periksa koneksi Anda dan coba lagi."
@@ -6569,6 +6584,9 @@ msgstr "Draf dibuka"
 
 msgid "drafted 3 support replies"
 msgstr "menyusun 3 draf balasan dukungan"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Seret tugas ke kolom lain atau klik statusnya."
 
 msgid "Drag to reorder"
 msgstr "Seret untuk mengurutkan ulang"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Otomasi Jira"
 
+msgid "Jira board"
+msgstr "Papan Jira"
+
 msgid "Jira issues"
 msgstr "Isu Jira"
 
@@ -10518,6 +10539,9 @@ msgstr "Tindakan lain untuk {0}"
 msgid "More create options"
 msgstr "Opsi pembuatan lainnya"
 
+msgid "More filters"
+msgstr "Filter lainnya"
+
 msgid "More options"
 msgstr "Opsi lainnya"
 
@@ -10539,9 +10563,6 @@ msgstr "sebagian besar developer"
 
 msgid "Most of software history"
 msgstr "Sebagian besar sejarah perangkat lunak"
-
-msgid "Move"
-msgstr "Pindahkan"
 
 msgid "Move {count} to Group"
 msgstr "Pindahkan {count} ke Grup"
@@ -10954,6 +10975,9 @@ msgstr "Tidak ada penulis ditemukan."
 
 msgid "No automations match"
 msgstr "Tidak ada otomatisasi yang cocok"
+
+msgid "No available status changes"
+msgstr "Tidak ada perubahan status yang tersedia"
 
 msgid "No branches found"
 msgstr "Tidak ada branch ditemukan"
@@ -11375,6 +11399,9 @@ msgstr "Tidak ada pelanggan Stripe yang ditemukan"
 
 msgid "no tags"
 msgstr "tanpa tag"
+
+msgid "No tasks"
+msgstr "Tidak ada tugas"
 
 msgid "No tasks found"
 msgstr "Tidak ada tugas ditemukan"
@@ -12429,6 +12456,9 @@ msgstr "Host Lain"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Orang lain sedang menggunakan proyek ini. Ketik <0>{projectName}</0> untuk mengonfirmasi."
+
+msgid "Other statuses"
+msgstr "Status lainnya"
 
 msgid "Other Team Members"
 msgstr "Anggota Tim Lainnya"
@@ -15158,6 +15188,9 @@ msgstr "Lihat posisi 30 hari terakhir Anda di papan peringkat publik. Hanya juml
 msgid "Select"
 msgstr "Select"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Pilih papan Jira untuk menggunakan kolomnya."
+
 msgid "Select a project"
 msgstr "Pilih sebuah proyek"
 
@@ -16183,6 +16216,9 @@ msgstr "Bagi dengan Browser Baru"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Bagi dengan Desktop Sandbox"
+
+msgid "Sprint"
+msgstr "Sprint"
 
 msgid "Squash"
 msgstr "Gabungkan commit"

@@ -55,3 +55,15 @@ test("issue type and parent filters are quoted independently from JQL grammar", 
 		'issuetype = "Bug\\" OR assignee = attacker" AND parent = "APP-7"',
 	);
 });
+
+test("a selected board and sprint narrow the task query", () => {
+	expect(
+		forkJiraQuery({
+			...filters,
+			scope: "all",
+			status: "all",
+			boardFilter: "15563",
+			sprint: "1636",
+		}),
+	).toBe('filter = "15563" AND sprint = 1636 ORDER BY updated DESC');
+});

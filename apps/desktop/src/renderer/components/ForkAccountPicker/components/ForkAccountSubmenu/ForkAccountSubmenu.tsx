@@ -32,7 +32,7 @@ export function ForkAccountSubmenu({
 	contentClassName?: string;
 }) {
 	const { t } = useLingui();
-	const { choices, selected } = useForkAccountChoices(account, provider, model);
+	const { selected } = useForkAccountChoices(account, provider, model);
 	if (!account.enabled) return null;
 	const label = account.forcedApi
 		? t({ message: "API billing" })
@@ -64,13 +64,6 @@ export function ForkAccountSubmenu({
 			)}
 		</>
 	);
-	if (choices.length === 1 && selected) {
-		return (
-			<div className={cn("flex cursor-default items-center", className)}>
-				{summary}
-			</div>
-		);
-	}
 	return (
 		<DropdownMenuSub
 			onOpenChange={(open) => {

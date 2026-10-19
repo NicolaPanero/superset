@@ -12,7 +12,8 @@ export type ForkTasksSearch = {
 	forkView?: "board" | "list";
 	forkScope?: "mine" | "all";
 	forkStatus?: "all" | "open" | "new" | "indeterminate" | "done";
-	forkSprint?: "current";
+	forkSprint?: string;
+	forkJiraBoard?: string;
 	forkJiraProject?: string;
 	forkJql?: string;
 	forkIssueType?: string;
@@ -36,7 +37,17 @@ export function forkTasksSearch(
 			"done",
 		]),
 		forkJiraProject: string(search.forkJiraProject),
-		forkSprint: oneOf(search.forkSprint, ["current"]),
+		forkSprint:
+			search.forkSprint === "current" ||
+			(typeof search.forkSprint === "string" &&
+				/^[1-9]\d{0,9}$/.test(search.forkSprint))
+				? search.forkSprint
+				: undefined,
+		forkJiraBoard:
+			typeof search.forkJiraBoard === "string" &&
+			/^[1-9]\d{0,9}$/.test(search.forkJiraBoard)
+				? search.forkJiraBoard
+				: undefined,
 		forkJql: string(search.forkJql)?.slice(0, 4000),
 		forkIssueType: string(search.forkIssueType)?.slice(0, 200),
 		forkParent: string(search.forkParent)?.slice(0, 100),

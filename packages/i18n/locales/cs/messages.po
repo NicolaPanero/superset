@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Lepší přepínání agentů**: vyberte model a úsilí ještě před přepnutím, včetně Grok 4.7."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Filtry nástěnky a sprintu**: vyberte nástěnku Jira a sprint bez psaní JQL."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Jira a Bitbucket v aplikaci**: úkoly, nástěnky, pull requesty, revize, buildy a automatizace."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Přehlednější akce úkolů**: měňte stav pomocí štítku úkolu, s výběrem cíle, pokud sloupec obsahuje více stavů."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Kvóty pod kontrolou**: využití podle účtu, podporované bezplatné resety a automatické pokračování."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Bezpečnější práce**: samostatné účty pro každý repozitář a lepší ochrana větví a souběžných požadavků."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Uklizené workspacy**: vložené obrázky a soubory se po 30 dnech smažou. Změníte to ve Fork Settings."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Nástěnky odpovídající Jira**: seskupené stavy pracovního postupu zůstávají ve stejných sloupcích."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Všichni řešitelé"
 msgid "All authors"
 msgstr "Všichni autoři"
 
+msgid "All boards"
+msgstr "Všechny nástěnky"
+
 msgid "All changes saved"
 msgstr "Všechny změny uloženy"
 
@@ -2165,6 +2162,9 @@ msgstr "Všechny relace přežily aktualizaci."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Všechny relace byly zavřeny a běží čerstvý démon."
+
+msgid "All sprints"
+msgstr "Všechny sprinty"
 
 msgid "All statuses"
 msgstr "Všechny stavy"
@@ -3505,9 +3505,15 @@ msgstr "Změnit roli"
 msgid "Change state"
 msgstr "Změnit stav"
 
+msgid "Change status"
+msgstr "Změnit stav"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Změnit stav (aktuálně: {0})"
+
+msgid "Change status of {key}"
+msgstr "Změnit stav {key}"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Než otevřete issue, vyberte projekt v sekci GitHub issues."
 
 msgid "Choose a section."
 msgstr "Vyberte sekci."
+
+msgid "Choose a status in {column}"
+msgstr "Vyberte stav v {column}"
 
 msgid "Choose agent"
 msgstr "Vyberte agenta"
@@ -4320,6 +4329,9 @@ msgstr "Dokončete autorizaci v prohlížeči."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Dokončete postup oficiálního CLI a zavřete toto okno pro kontrolu výsledku."
+
+msgid "Complete the required fields to change status."
+msgstr "Vyplňte povinná pole pro změnu stavu."
 
 msgid "Completed"
 msgstr "Dokončeno"
@@ -5010,6 +5022,9 @@ msgstr "Nepodařilo se načíst prostředí."
 
 msgid "Could not load image"
 msgstr "Obrázek se nepodařilo načíst"
+
+msgid "Could not load Jira board settings."
+msgstr "Nastavení nástěnky Jira se nepodařilo načíst."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Pluginy se nepodařilo načíst. Zkontrolujte připojení a zkuste to znovu."
@@ -6569,6 +6584,9 @@ msgstr "Otevřen koncept"
 
 msgid "drafted 3 support replies"
 msgstr "připravil 3 odpovědi podpoře"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Přetáhněte úkol do jiného sloupce nebo klikněte na jeho stav."
 
 msgid "Drag to reorder"
 msgstr "Přetažením změníte pořadí"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Automatizace Jira"
 
+msgid "Jira board"
+msgstr "Nástěnka Jira"
+
 msgid "Jira issues"
 msgstr "Úkoly Jira"
 
@@ -10518,6 +10539,9 @@ msgstr "Další akce pro {0}"
 msgid "More create options"
 msgstr "Další možnosti vytvoření"
 
+msgid "More filters"
+msgstr "Další filtry"
+
 msgid "More options"
 msgstr "Další možnosti"
 
@@ -10539,9 +10563,6 @@ msgstr "většina vývojářů"
 
 msgid "Most of software history"
 msgstr "Většina historie softwaru"
-
-msgid "Move"
-msgstr "Přesunout"
 
 msgid "Move {count} to Group"
 msgstr "Přesunout {count} do skupiny"
@@ -10954,6 +10975,9 @@ msgstr "Nenalezeni žádní autoři."
 
 msgid "No automations match"
 msgstr "Žádná automatizace neodpovídá"
+
+msgid "No available status changes"
+msgstr "Žádné dostupné změny stavu"
 
 msgid "No branches found"
 msgstr "Nenalezeny žádné větve"
@@ -11375,6 +11399,9 @@ msgstr "Nenalezen žádný zákazník ve Stripe"
 
 msgid "no tags"
 msgstr "žádné štítky"
+
+msgid "No tasks"
+msgstr "Žádné úkoly"
 
 msgid "No tasks found"
 msgstr "Nenalezeny žádné úkoly"
@@ -12429,6 +12456,9 @@ msgstr "Ostatní hosty"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Tento projekt používají další lidé. Pro potvrzení napište <0>{projectName}</0>."
+
+msgid "Other statuses"
+msgstr "Další stavy"
 
 msgid "Other Team Members"
 msgstr "Další členové týmu"
@@ -15158,6 +15188,9 @@ msgstr "Podívejte se, kde se vašich posledních 30 dní umístí ve veřejném
 msgid "Select"
 msgstr "Výběr"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Vyberte nástěnku Jira a použijte její sloupce."
+
 msgid "Select a project"
 msgstr "Vyberte projekt"
 
@@ -16183,6 +16216,9 @@ msgstr "Rozdělit s novým prohlížečem"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Rozdělit s plochou sandboxu"
+
+msgid "Sprint"
+msgstr "Sprint"
 
 msgid "Squash"
 msgstr "Sloučit commity"

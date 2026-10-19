@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全價計費"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**更好的代理切換**：切換前即可選擇模型與推理強度，包括 Grok 4.7。"
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**看板與衝刺篩選**：不必撰寫 JQL，即可選擇 Jira 看板與衝刺。"
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**應用程式內的 Jira 與 Bitbucket**：任務、看板、拉取請求、審查、建置與自動化。"
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**更清楚的任務操作**：透過任務狀態標籤變更狀態。當一欄包含多個狀態時，可依提示選擇。"
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**配額盡在掌握**：依帳戶查看用量、支援的免費重設以及自動繼續。"
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**更安全的工作流程**：每個儲存庫使用獨立帳戶，並加強分支與並行請求的保護。"
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**整潔的工作區**：貼上的圖片和檔案會在 30 天後刪除。可在 Fork Settings 中變更。"
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**與 Jira 一致的看板**：已分組的工作流程狀態保留在同一欄中。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "全部負責人"
 msgid "All authors"
 msgstr "所有作者"
 
+msgid "All boards"
+msgstr "所有看板"
+
 msgid "All changes saved"
 msgstr "所有更改已儲存"
 
@@ -2165,6 +2162,9 @@ msgstr "升級過程中所有會話都已保留。"
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "所有會話已關閉，全新的守護程式正在執行。"
+
+msgid "All sprints"
+msgstr "所有衝刺"
 
 msgid "All statuses"
 msgstr "所有狀態"
@@ -3505,9 +3505,15 @@ msgstr "更改角色"
 msgid "Change state"
 msgstr "變更狀態"
 
+msgid "Change status"
+msgstr "變更狀態"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "變更狀態（目前：{0}）"
+
+msgid "Change status of {key}"
+msgstr "變更 {key} 的狀態"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
 
 msgid "Choose a section."
 msgstr "選擇一個分區。"
+
+msgid "Choose a status in {column}"
+msgstr "選擇 {column} 中的狀態"
 
 msgid "Choose agent"
 msgstr "選擇代理程式"
@@ -4320,6 +4329,9 @@ msgstr "在瀏覽器中完成授權。"
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "完成官方 CLI 流程後關閉此視窗，以檢查結果。"
+
+msgid "Complete the required fields to change status."
+msgstr "請填寫必填欄位以變更狀態。"
 
 msgid "Completed"
 msgstr "完成時間"
@@ -5010,6 +5022,9 @@ msgstr "無法載入環境。"
 
 msgid "Could not load image"
 msgstr "無法載入圖片"
+
+msgid "Could not load Jira board settings."
+msgstr "無法載入 Jira 看板設定。"
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "無法載入外掛。請檢查連線後再試一次。"
@@ -6569,6 +6584,9 @@ msgstr "建立了草稿"
 
 msgid "drafted 3 support replies"
 msgstr "起草了3條支援回覆"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "將任務拖曳到其他欄，或點選其狀態。"
 
 msgid "Drag to reorder"
 msgstr "拖曳以重新排序"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 自動化"
 
+msgid "Jira board"
+msgstr "Jira 看板"
+
 msgid "Jira issues"
 msgstr "Jira 議題"
 
@@ -10518,6 +10539,9 @@ msgstr "{0}的更多操作"
 msgid "More create options"
 msgstr "更多建立選項"
 
+msgid "More filters"
+msgstr "更多篩選條件"
+
 msgid "More options"
 msgstr "更多選項"
 
@@ -10539,9 +10563,6 @@ msgstr "多數開發者"
 
 msgid "Most of software history"
 msgstr "軟體史的大部分時間"
-
-msgid "Move"
-msgstr "移動"
 
 msgid "Move {count} to Group"
 msgstr "將{count}個移動到群組"
@@ -10954,6 +10975,9 @@ msgstr "未找到作者。"
 
 msgid "No automations match"
 msgstr "沒有匹配的自動化"
+
+msgid "No available status changes"
+msgstr "沒有可用的狀態變更"
 
 msgid "No branches found"
 msgstr "未找到分支"
@@ -11375,6 +11399,9 @@ msgstr "未找到Stripe客戶"
 
 msgid "no tags"
 msgstr "無標籤"
+
+msgid "No tasks"
+msgstr "沒有任務"
 
 msgid "No tasks found"
 msgstr "未找到任務"
@@ -12429,6 +12456,9 @@ msgstr "其他主機"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "其他人正在使用此專案。輸入 <0>{projectName}</0> 以確認。"
+
+msgid "Other statuses"
+msgstr "其他狀態"
 
 msgid "Other Team Members"
 msgstr "其他團隊成員"
@@ -15158,6 +15188,9 @@ msgstr "看看你最近 30 天的表現在公開排行榜上的位置。僅包�
 msgid "Select"
 msgstr "選擇框"
 
+msgid "Select a Jira board to use its columns."
+msgstr "選擇 Jira 看板以使用其欄位。"
+
 msgid "Select a project"
 msgstr "請選擇專案"
 
@@ -16183,6 +16216,9 @@ msgstr "拆分並新建瀏覽器"
 
 msgid "Split with Sandbox Desktop"
 msgstr "分割並開啟沙箱桌面"
+
+msgid "Sprint"
+msgstr "衝刺"
 
 msgid "Squash"
 msgstr "壓縮提交"

@@ -1,7 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useFormat } from "@superset/i18n/react";
 import type { ForkConnection } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@superset/ui/popover";
 import {
 	Select,
 	SelectContent,
@@ -26,6 +28,8 @@ import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { ForkProviderIcon } from "../../../ForkProviderIcon";
 import type { ForkJiraTaskFilters, JiraStatus } from "../../fork-jira-query";
+import type { useForkJiraBoardContext } from "../../hooks/useForkJiraBoardContext";
+import { ForkJiraBoardFilters } from "../ForkJiraBoardFilters";
 
 export function ForkJiraTaskToolbar({
 	search,
@@ -37,6 +41,7 @@ export function ForkJiraTaskToolbar({
 	update,
 	isFetching,
 	onRefresh,
+	boardContext,
 }: {
 	search: ForkJiraTaskFilters;
 	jira: ForkConnection[];
@@ -47,8 +52,13 @@ export function ForkJiraTaskToolbar({
 	update: (patch: Partial<ForkJiraTaskFilters>) => unknown;
 	isFetching: boolean;
 	onRefresh: () => void;
+	boardContext: ReturnType<typeof useForkJiraBoardContext>;
 }) {
 	const { t } = useLingui();
+	const { formatNumber } = useFormat();
+	const extraFilterCount = [search.forkIssueType, search.forkParent].filter(
+		Boolean,
+	).length;
 	const connection = jira.find((c) => c.id === connectionId);
 	const scope = search.forkScope ?? "mine";
 	const status = search.forkStatus ?? "open";
@@ -187,26 +197,52 @@ export function ForkJiraTaskToolbar({
 							))}
 						</SelectContent>
 					</Select>
-					<Input
-						aria-label={t({ message: "Issue type" })}
-						placeholder={t({ message: "Issue type" })}
-						className="h-8 w-28 text-xs"
-						disabled={!!search.forkJql}
-						value={search.forkIssueType ?? ""}
-						onChange={(event) =>
-							void update({ forkIssueType: event.target.value || undefined })
-						}
-					/>
-					<Input
-						aria-label={t({ message: "Parent issue" })}
-						placeholder={t({ message: "Parent issue" })}
-						className="h-8 w-28 text-xs"
-						disabled={!!search.forkJql}
-						value={search.forkParent ?? ""}
-						onChange={(event) =>
-							void update({ forkParent: event.target.value || undefined })
-						}
-					/>
+					<Popover>
+						<PopoverTrigger asChild>
+							<Button
+								type="button"
+								variant="ghost"
+								className={cn(
+									"cursor-pointer rounded-md px-2 py-1.5 text-xs text-muted-foreground hover:bg-accent",
+									extraFilterCount > 0 && "bg-accent text-foreground",
+								)}
+							>
+								<Trans>More filters</Trans>
+								{extraFilterCount > 0 && (
+									<span className="ml-1.5 rounded bg-background px-1 text-[10px] tabular-nums">
+										{formatNumber(extraFilterCount)}
+									</span>
+								)}
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent
+							align="end"
+							className="flex w-auto max-w-[calc(100vw-32px)] flex-wrap gap-2 p-3"
+						>
+							<Input
+								aria-label={t({ message: "Issue type" })}
+								placeholder={t({ message: "Issue type" })}
+								className="h-8 w-28 text-xs"
+								disabled={!!search.forkJql}
+								value={search.forkIssueType ?? ""}
+								onChange={(event) =>
+									void update({
+										forkIssueType: event.target.value || undefined,
+									})
+								}
+							/>
+							<Input
+								aria-label={t({ message: "Parent issue" })}
+								placeholder={t({ message: "Parent issue" })}
+								className="h-8 w-28 text-xs"
+								disabled={!!search.forkJql}
+								value={search.forkParent ?? ""}
+								onChange={(event) =>
+									void update({ forkParent: event.target.value || undefined })
+								}
+							/>
+						</PopoverContent>
+					</Popover>
 					<Select
 						value={status}
 						disabled={!!search.forkJql}
@@ -238,21 +274,23 @@ export function ForkJiraTaskToolbar({
 							</SelectItem>
 						</SelectContent>
 					</Select>
-					<Button
-						size="sm"
-						variant={search.forkSprint ? "secondary" : "ghost"}
-						disabled={!!search.forkJql}
-						aria-pressed={!!search.forkSprint}
-						className="h-8 text-xs"
-						onClick={() =>
-							void update({
-								forkSprint: search.forkSprint ? undefined : "current",
-							})
-						}
-					>
-						<LuTimer className="size-3.5" />
-						<Trans>Current sprint</Trans>
-					</Button>
+					{!boardContext.supported && (
+						<Button
+							size="sm"
+							variant={search.forkSprint ? "secondary" : "ghost"}
+							disabled={!!search.forkJql}
+							aria-pressed={!!search.forkSprint}
+							className="h-8 text-xs"
+							onClick={() =>
+								void update({
+									forkSprint: search.forkSprint ? undefined : "current",
+								})
+							}
+						>
+							<LuTimer className="size-3.5" />
+							<Trans>Current sprint</Trans>
+						</Button>
+					)}
 					<Button
 						size="icon-sm"
 						variant={advanced ? "secondary" : "ghost"}
@@ -263,6 +301,11 @@ export function ForkJiraTaskToolbar({
 						<LuCode className="size-3.5" />
 					</Button>
 				</div>
+				<ForkJiraBoardFilters
+					search={search}
+					context={boardContext}
+					update={update}
+				/>
 				{advanced && (
 					<form
 						className="flex gap-2"

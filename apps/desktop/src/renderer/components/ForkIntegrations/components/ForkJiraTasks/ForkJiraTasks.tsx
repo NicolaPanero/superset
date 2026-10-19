@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useFormat } from "@superset/i18n/react";
 import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
@@ -11,6 +11,7 @@ import { LuCheckCheck, LuX } from "react-icons/lu";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { useForkJiraFilters } from "renderer/stores/fork-jira-filters";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { forkJiraColumns } from "../../utils/forkJiraColumns";
 import { required } from "../../utils/required";
 import { ForkJiraAutomations } from "../ForkJiraAutomations";
 import { ForkProviderIcon } from "../ForkProviderIcon";
@@ -20,8 +21,10 @@ import { ForkJiraBoard } from "./components/ForkJiraBoard";
 import { ForkJiraTaskCard } from "./components/ForkJiraTaskCard";
 import { ForkJiraTaskToolbar } from "./components/ForkJiraTaskToolbar";
 import { type ForkJiraTaskFilters, forkJiraQuery } from "./fork-jira-query";
+import { useForkJiraBoardContext } from "./hooks/useForkJiraBoardContext";
 
 export function ForkJiraTasks() {
+	const { t } = useLingui();
 	const { formatNumber } = useFormat();
 	const navigate = useNavigate();
 	const { connections, client, hostUrl } = useForkConnections();
@@ -43,6 +46,11 @@ export function ForkJiraTasks() {
 		jira[0]?.id ??
 		"";
 	const connection = jira.find((c) => c.id === connectionId);
+	const boardContext = useForkJiraBoardContext(
+		connectionId,
+		search.forkJiraBoard,
+		search.forkJiraProject,
+	);
 	const scope = search.forkScope ?? "mine";
 	const status = search.forkStatus ?? "open";
 	const board = search.forkView === "board";
@@ -68,8 +76,14 @@ export function ForkJiraTasks() {
 		sprint: search.forkSprint,
 		issueType: search.forkIssueType,
 		parent: search.forkParent,
+		boardFilter: boardContext.data?.board?.filterId ?? undefined,
 	});
 	const update = (patch: Partial<typeof search>) => {
+		if (
+			Object.hasOwn(patch, "forkJiraProject") ||
+			Object.hasOwn(patch, "forkConnection")
+		)
+			patch = { ...patch, forkJiraBoard: undefined, forkSprint: undefined };
 		remember(patch);
 		return navigate({
 			to: "/tasks",
@@ -96,7 +110,12 @@ export function ForkJiraTasks() {
 				cursor: pageParam,
 			}),
 		getNextPageParam: (page) => page.nextCursor ?? undefined,
-		enabled: !!client && !!connection,
+		enabled:
+			!!client &&
+			!!connection &&
+			(!search.forkJiraBoard ||
+				!boardContext.supported ||
+				!!boardContext.data?.board),
 		staleTime: 30_000,
 	});
 	const detail = useQuery({
@@ -126,12 +145,19 @@ export function ForkJiraTasks() {
 		).values(),
 	];
 	const close = () => void update({ forkTask: undefined });
+	const columns = forkJiraColumns(items, boardContext.data?.board?.columns, {
+		new: t({ message: "To do" }),
+		indeterminate: t({ message: "In progress" }),
+		done: t({ message: "Done" }),
+		other: t({ message: "Other statuses" }),
+	});
 	const unavailable = [query.error, detail.error].some(
 		isForkServiceUnavailable,
 	);
 	return (
 		<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-background">
 			<ForkJiraTaskToolbar
+				boardContext={boardContext}
 				search={search}
 				jira={jira}
 				projects={projects.data ?? []}
@@ -192,6 +218,17 @@ export function ForkJiraTasks() {
 									<Trans>Connections</Trans>
 								</Button>
 							</div>
+						) : search.forkJiraBoard && boardContext.isError ? (
+							<div className="p-4 text-sm text-muted-foreground" role="alert">
+								<Trans>Could not load Jira board settings.</Trans>
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={() => void boardContext.refetch()}
+								>
+									<Trans>Try again</Trans>
+								</Button>
+							</div>
 						) : query.isPending ? (
 							<div className="space-y-2">
 								{["first", "second", "third", "fourth", "fifth", "sixth"].map(
@@ -249,6 +286,7 @@ export function ForkJiraTasks() {
 													forkScope: "all",
 													forkStatus: "all",
 													forkJiraProject: undefined,
+													forkJiraBoard: undefined,
 													forkJql: undefined,
 													forkIssueType: undefined,
 													forkParent: undefined,
@@ -262,6 +300,7 @@ export function ForkJiraTasks() {
 								)}
 								{board ? (
 									<ForkJiraBoard
+										columns={columns}
 										tasks={items}
 										selected={search.forkTask}
 										onSelect={(key) => void update({ forkTask: key })}
@@ -270,6 +309,7 @@ export function ForkJiraTasks() {
 									<div className="space-y-1">
 										{items.map((task) => (
 											<ForkJiraTaskCard
+												columns={columns}
 												key={task.id}
 												task={task}
 												selected={search.forkTask === task.key}
@@ -297,6 +337,7 @@ export function ForkJiraTasks() {
 					<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-auto border-l @3xl/jira:max-w-[55%]">
 						{detail.data ? (
 							<ForkTaskDetail
+								columns={columns}
 								key={detail.data.connectionId + detail.data.id}
 								task={detail.data}
 								onBack={close}

@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* nếu tính theo giá API đầy đủ"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Chuyển agent tốt hơn**: chọn mô hình và mức effort trước khi chuyển, bao gồm Grok 4.7."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Bộ lọc bảng và sprint**: chọn bảng Jira và sprint mà không cần viết JQL."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Jira và Bitbucket trong ứng dụng**: tác vụ, bảng, pull request, review, build và tự động hóa."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Thao tác tác vụ rõ ràng hơn**: đổi trạng thái từ nhãn tác vụ, với lựa chọn hướng dẫn khi một cột có nhiều trạng thái."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Kiểm soát hạn mức**: mức sử dụng theo tài khoản, hỗ trợ đặt lại miễn phí và tự động tiếp tục."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Quy trình an toàn hơn**: tài khoản riêng cho từng kho mã và bảo vệ tốt hơn cho nhánh và các yêu cầu đồng thời."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Workspace gọn gàng**: hình ảnh và tệp đã dán sẽ bị xóa sau 30 ngày. Thay đổi trong Fork Settings."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Bảng khớp với Jira**: các trạng thái quy trình được nhóm vẫn nằm trong cùng các cột."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Tất cả người phụ trách"
 msgid "All authors"
 msgstr "Tất cả tác giả"
 
+msgid "All boards"
+msgstr "Tất cả bảng"
+
 msgid "All changes saved"
 msgstr "Đã lưu mọi thay đổi"
 
@@ -2165,6 +2162,9 @@ msgstr "Mọi phiên đều được giữ nguyên qua lần nâng cấp."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Đã đóng mọi phiên và một daemon mới đang chạy."
+
+msgid "All sprints"
+msgstr "Tất cả sprint"
 
 msgid "All statuses"
 msgstr "Tất cả trạng thái"
@@ -3505,9 +3505,15 @@ msgstr "Đổi vai trò"
 msgid "Change state"
 msgstr "Đổi trạng thái"
 
+msgid "Change status"
+msgstr "Đổi trạng thái"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Đổi trạng thái (hiện tại: {0})"
+
+msgid "Change status of {key}"
+msgstr "Đổi trạng thái của {key}"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Chọn một dự án trong mục Issue GitHub trước khi mở một i
 
 msgid "Choose a section."
 msgstr "Chọn một mục."
+
+msgid "Choose a status in {column}"
+msgstr "Chọn trạng thái trong {column}"
 
 msgid "Choose agent"
 msgstr "Chọn agent"
@@ -4320,6 +4329,9 @@ msgstr "Hoàn tất ủy quyền trong trình duyệt."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Hoàn thành quy trình CLI chính thức rồi đóng cửa sổ này để kiểm tra kết quả."
+
+msgid "Complete the required fields to change status."
+msgstr "Điền các trường bắt buộc để đổi trạng thái."
 
 msgid "Completed"
 msgstr "Hoàn tất"
@@ -5010,6 +5022,9 @@ msgstr "Không thể tải environments."
 
 msgid "Could not load image"
 msgstr "Không thể tải ảnh"
+
+msgid "Could not load Jira board settings."
+msgstr "Không thể tải cài đặt bảng Jira."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Không tải được plugin. Hãy kiểm tra kết nối và thử lại."
@@ -6569,6 +6584,9 @@ msgstr "Mở bản nháp"
 
 msgid "drafted 3 support replies"
 msgstr "đã soạn 3 câu trả lời hỗ trợ"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Kéo tác vụ sang cột khác hoặc nhấp vào trạng thái của tác vụ."
 
 msgid "Drag to reorder"
 msgstr "Kéo để sắp xếp lại"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Tự động hóa Jira"
 
+msgid "Jira board"
+msgstr "Bảng Jira"
+
 msgid "Jira issues"
 msgstr "Issue Jira"
 
@@ -10518,6 +10539,9 @@ msgstr "Thao tác khác cho {0}"
 msgid "More create options"
 msgstr "Thêm tùy chọn tạo"
 
+msgid "More filters"
+msgstr "Bộ lọc khác"
+
 msgid "More options"
 msgstr "Tùy chọn khác"
 
@@ -10539,9 +10563,6 @@ msgstr "phần lớn lập trình viên"
 
 msgid "Most of software history"
 msgstr "Gần như suốt lịch sử phần mềm"
-
-msgid "Move"
-msgstr "Di chuyển"
 
 msgid "Move {count} to Group"
 msgstr "Chuyển {count} vào nhóm"
@@ -10954,6 +10975,9 @@ msgstr "Không tìm thấy tác giả nào."
 
 msgid "No automations match"
 msgstr "Không có tự động hóa nào khớp"
+
+msgid "No available status changes"
+msgstr "Không có thay đổi trạng thái nào"
 
 msgid "No branches found"
 msgstr "Không tìm thấy nhánh nào"
@@ -11375,6 +11399,9 @@ msgstr "Không tìm thấy khách hàng Stripe"
 
 msgid "no tags"
 msgstr "không có thẻ"
+
+msgid "No tasks"
+msgstr "Không có tác vụ"
 
 msgid "No tasks found"
 msgstr "Không tìm thấy tác vụ nào"
@@ -12429,6 +12456,9 @@ msgstr "Host khác"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Người khác đang dùng dự án này. Nhập <0>{projectName}</0> để xác nhận."
+
+msgid "Other statuses"
+msgstr "Trạng thái khác"
 
 msgid "Other Team Members"
 msgstr "Các thành viên khác"
@@ -15158,6 +15188,9 @@ msgstr "Xem 30 ngày qua của bạn đứng ở đâu trên bảng xếp hạng
 msgid "Select"
 msgstr "Select"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Chọn bảng Jira để sử dụng các cột của bảng."
+
 msgid "Select a project"
 msgstr "Chọn một dự án"
 
@@ -16183,6 +16216,9 @@ msgstr "Chia kèm trình duyệt mới"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Chia với Màn hình nền sandbox"
+
+msgid "Sprint"
+msgstr "Sprint"
 
 msgid "Squash"
 msgstr "Gộp các commit"

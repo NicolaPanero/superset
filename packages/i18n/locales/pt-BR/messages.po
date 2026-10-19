@@ -1171,20 +1171,14 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se cobrado no preço cheio da API"
 
-msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
-msgstr "**Troca de agente melhorada**: escolha o modelo e o esforço antes de trocar, incluindo o Grok 4.7."
+msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
+msgstr "**Filtros de quadro e sprint**: escolha seu quadro Jira e sprint sem escrever JQL."
 
-msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
-msgstr "**Jira e Bitbucket no app**: tarefas, quadros, pull requests, revisões, builds e automações."
+msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgstr "**Ações de tarefas mais claras**: altere o status pelo indicador da tarefa, com escolhas guiadas quando uma coluna agrupa vários status."
 
-msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
-msgstr "**Cotas sob controle**: uso por conta, redefinições gratuitas compatíveis e continuação automática."
-
-msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
-msgstr "**Fluxos mais seguros**: contas separadas por repositório e mais proteção para branches e solicitações simultâneas."
-
-msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
-msgstr "**Workspaces organizados**: imagens e arquivos colados são excluídos após 30 dias. Altere em Fork Settings."
+msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+msgstr "**Quadros iguais aos do Jira**: os status agrupados do fluxo de trabalho permanecem nas mesmas colunas."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2072,6 +2066,9 @@ msgstr "Todos os responsáveis"
 msgid "All authors"
 msgstr "Todos os autores"
 
+msgid "All boards"
+msgstr "Todos os quadros"
+
 msgid "All changes saved"
 msgstr "Todas as alterações salvas"
 
@@ -2165,6 +2162,9 @@ msgstr "Todas as sessões foram preservadas na atualização."
 
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "Todas as sessões foram fechadas e um daemon novo está rodando."
+
+msgid "All sprints"
+msgstr "Todos os sprints"
 
 msgid "All statuses"
 msgstr "Todos os status"
@@ -3505,9 +3505,15 @@ msgstr "Alterar cargo"
 msgid "Change state"
 msgstr "Alterar estado"
 
+msgid "Change status"
+msgstr "Alterar status"
+
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Alterar status (atual: {0})"
+
+msgid "Change status of {key}"
+msgstr "Alterar status de {key}"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -3717,6 +3723,9 @@ msgstr "Escolha um projeto em Issues do GitHub antes de abrir uma issue."
 
 msgid "Choose a section."
 msgstr "Escolha uma seção."
+
+msgid "Choose a status in {column}"
+msgstr "Escolha um status em {column}"
 
 msgid "Choose agent"
 msgstr "Escolher agente"
@@ -4320,6 +4329,9 @@ msgstr "Conclua a autorização no navegador."
 
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Conclua o fluxo do CLI oficial e feche esta janela para verificar o resultado."
+
+msgid "Complete the required fields to change status."
+msgstr "Preencha os campos obrigatórios para alterar o status."
 
 msgid "Completed"
 msgstr "Concluída"
@@ -5010,6 +5022,9 @@ msgstr "Não foi possível carregar os ambientes."
 
 msgid "Could not load image"
 msgstr "Não foi possível carregar a imagem"
+
+msgid "Could not load Jira board settings."
+msgstr "Não foi possível carregar as configurações do quadro Jira."
 
 msgid "Could not load plugins. Check your connection and try again."
 msgstr "Não foi possível carregar os plugins. Verifique sua conexão e tente novamente."
@@ -6569,6 +6584,9 @@ msgstr "Rascunho aberto"
 
 msgid "drafted 3 support replies"
 msgstr "escreveu 3 respostas de suporte"
+
+msgid "Drag a task to another column, or click its status."
+msgstr "Arraste uma tarefa para outra coluna ou clique no status dela."
 
 msgid "Drag to reorder"
 msgstr "Arraste para reordenar"
@@ -9308,6 +9326,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Automações do Jira"
 
+msgid "Jira board"
+msgstr "Quadro Jira"
+
 msgid "Jira issues"
 msgstr "Issues do Jira"
 
@@ -10518,6 +10539,9 @@ msgstr "Mais ações para {0}"
 msgid "More create options"
 msgstr "Mais opções de criação"
 
+msgid "More filters"
+msgstr "Mais filtros"
+
 msgid "More options"
 msgstr "Mais opções"
 
@@ -10539,9 +10563,6 @@ msgstr "a maioria das pessoas desenvolvedoras"
 
 msgid "Most of software history"
 msgstr "Quase toda a história do software"
-
-msgid "Move"
-msgstr "Mover"
 
 msgid "Move {count} to Group"
 msgstr "Mover {count} para um grupo"
@@ -10954,6 +10975,9 @@ msgstr "Nenhum autor encontrado."
 
 msgid "No automations match"
 msgstr "Nenhuma automação corresponde"
+
+msgid "No available status changes"
+msgstr "Nenhuma alteração de status disponível"
 
 msgid "No branches found"
 msgstr "Nenhuma branch encontrada"
@@ -11375,6 +11399,9 @@ msgstr "Nenhum cliente Stripe encontrado"
 
 msgid "no tags"
 msgstr "sem tags"
+
+msgid "No tasks"
+msgstr "Nenhuma tarefa"
 
 msgid "No tasks found"
 msgstr "Nenhuma tarefa encontrada"
@@ -12429,6 +12456,9 @@ msgstr "Outros hosts"
 
 msgid "Other people are using this project. Type <0>{projectName}</0> to confirm."
 msgstr "Outras pessoas estão usando este projeto. Digite <0>{projectName}</0> para confirmar."
+
+msgid "Other statuses"
+msgstr "Outros status"
 
 msgid "Other Team Members"
 msgstr "Outras pessoas do time"
@@ -15158,6 +15188,9 @@ msgstr "Veja em que posição seus últimos 30 dias ficam no ranking público. A
 msgid "Select"
 msgstr "Select"
 
+msgid "Select a Jira board to use its columns."
+msgstr "Selecione um quadro Jira para usar suas colunas."
+
 msgid "Select a project"
 msgstr "Selecione um projeto"
 
@@ -16183,6 +16216,9 @@ msgstr "Dividir com novo navegador"
 
 msgid "Split with Sandbox Desktop"
 msgstr "Dividir com área de trabalho do sandbox"
+
+msgid "Sprint"
+msgstr "Sprint"
 
 msgid "Squash"
 msgstr "Combinar commits"

@@ -1,5 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { ForkTask } from "@superset/shared/fork-integrations";
+import type {
+	ForkJiraColumn,
+	ForkTask,
+} from "@superset/shared/fork-integrations";
 import {
 	forkTaskBranch,
 	isForkServiceUnavailable,
@@ -9,7 +12,6 @@ import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { Textarea } from "@superset/ui/textarea";
-import { cn } from "@superset/ui/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
@@ -27,16 +29,17 @@ import { useNewWorkspaceDraftStore } from "renderer/stores/new-workspace-draft";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { forkJiraLinkedIssue } from "../../utils/forkJiraWorkspace";
 import { required } from "../../utils/required";
-import { jiraStatusTone } from "../ForkJiraTasks/fork-jira-query";
 import { ForkProviderIcon } from "../ForkProviderIcon";
 import { ForkServiceNotice } from "../ForkServiceNotice";
-import { ForkTransitionFields } from "../ForkTransitionFields/ForkTransitionFields";
+import { ForkTaskStatus } from "../ForkTaskStatus";
 
 export function ForkTaskDetail({
 	task,
+	columns,
 	onBack,
 }: {
 	task: ForkTask;
+	columns?: ForkJiraColumn[];
 	onBack: () => void;
 }) {
 	const { t } = useLingui(),
@@ -49,9 +52,7 @@ export function ForkTaskDetail({
 	const [title, setTitle] = useState(task.title),
 		[description, setDescription] = useState(task.description),
 		[labels, setLabels] = useState(task.labels.join(", "));
-	const [body, setBody] = useState(""),
-		[transition, setTransition] = useState(""),
-		[fields, setFields] = useState<Record<string, unknown>>({});
+	const [body, setBody] = useState("");
 	const [confirmDelete, setConfirmDelete] = useState(false),
 		[projectId, setProjectId] = useState(""),
 		[workspaceId, setWorkspaceId] = useState("");
@@ -85,14 +86,7 @@ export function ForkTaskDetail({
 			}),
 		enabled: !!client && editing && metadata.data?.canAssign === true,
 	});
-	const transitions = useQuery({
-		refetchOnReconnect: true,
-		networkMode: "always",
-		retry: false,
-		queryKey: ["fork-integrations", hostUrl, "transitions", target],
-		queryFn: () => required(client).forkTasks.transitions.query(target),
-		enabled: !!client,
-	});
+
 	const comments = useQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",
@@ -120,9 +114,7 @@ export function ForkTaskDetail({
 	const action = useMutation({
 		networkMode: "always",
 		retry: false,
-		mutationFn: async (
-			kind: "save" | "comment" | "transition" | "delete" | "link",
-		) => {
+		mutationFn: async (kind: "save" | "comment" | "delete" | "link") => {
 			if (!client) return;
 			if (kind === "save")
 				return client.forkTasks.edit.mutate({
@@ -150,12 +142,6 @@ export function ForkTaskDetail({
 				await client.forkTasks.comment.mutate({ ...target, body });
 				setBody("");
 			}
-			if (kind === "transition")
-				await client.forkTasks.transition.mutate({
-					...target,
-					transitionId: transition,
-					fields,
-				});
 			if (kind === "delete") {
 				await client.forkTasks.remove.mutate(target);
 				onBack();
@@ -170,10 +156,6 @@ export function ForkTaskDetail({
 			}
 			if (kind === "link")
 				toast.success(t({ message: "Task linked to workspace." }));
-			if (kind === "transition") {
-				setTransition("");
-				setFields({});
-			}
 			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
 		},
 	});
@@ -181,7 +163,6 @@ export function ForkTaskDetail({
 		action.error,
 		metadata.error,
 		assignees.error,
-		transitions.error,
 		comments.error,
 	].some(isForkServiceUnavailable);
 	const linkedWorkspaces = useQuery({
@@ -221,7 +202,6 @@ export function ForkTaskDetail({
 		});
 		openNewWorkspace(projectId || null);
 	};
-	const selectedTransition = transitions.data?.find((v) => v.id === transition);
 	return (
 		<div className="mx-auto w-full min-w-0 max-w-4xl space-y-6 p-5">
 			{unavailable && (
@@ -229,7 +209,6 @@ export function ForkTaskDetail({
 					provider="jira"
 					onRetry={() => {
 						void metadata.refetch();
-						void transitions.refetch();
 						void comments.refetch();
 					}}
 				/>
@@ -253,14 +232,7 @@ export function ForkTaskDetail({
 					{task.key}
 					<LuArrowUpRight className="size-3" />
 				</a>
-				<span
-					className={cn(
-						"rounded-md px-2 py-1 text-[11px]",
-						jiraStatusTone(task.status.category),
-					)}
-				>
-					{task.status.name}
-				</span>
+				<ForkTaskStatus task={task} columns={columns} />
 			</div>
 			{!editing && (
 				<section className="space-y-4">
@@ -418,49 +390,7 @@ export function ForkTaskDetail({
 					</Button>
 				</section>
 			)}
-			<section className="space-y-3 rounded-lg border p-4">
-				<h3 className="text-sm font-medium">
-					<Trans>Status</Trans>
-				</h3>
-				<div className="flex gap-2">
-					<select
-						className="h-9 min-w-40 rounded-md border bg-background px-2 text-sm"
-						aria-label={t({ message: "Status" })}
-						value={transition}
-						onChange={(e) => {
-							setTransition(e.target.value);
-							setFields({});
-						}}
-					>
-						<option value="">{task.status.name}</option>
-						{transitions.data?.map((v) => (
-							<option key={v.id} value={v.id}>
-								{v.name}
-							</option>
-						))}
-					</select>
-					<Button
-						variant="outline"
-						disabled={!transition || action.isPending}
-						onClick={() => action.mutate("transition")}
-					>
-						<Trans>Apply</Trans>
-					</Button>
-				</div>
-				{!!selectedTransition?.fields.length && (
-					<ForkTransitionFields
-						fields={selectedTransition.fields}
-						values={fields}
-						onChange={setFields}
-					/>
-				)}
-				{transitions.isError &&
-					!isForkServiceUnavailable(transitions.error) && (
-						<p role="alert" className="text-xs text-destructive">
-							{transitions.error.message}
-						</p>
-					)}
-			</section>
+
 			<section className="space-y-3 rounded-xl border border-primary/15 bg-primary/[0.025] p-4">
 				<h3 className="text-sm font-medium">
 					<span className="inline-flex items-center gap-2">
