@@ -1174,6 +1174,9 @@ msgstr "* 전액 API 요금으로 청구될 경우"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**보드 및 스프린트 필터**: JQL을 작성하지 않고 Jira 보드와 스프린트를 선택하세요."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**더 명확한 설정**: 에이전트의 CLI 설치 안내와 저장소 연결 방식을 확인하세요."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**더 명확한 작업 동작**: 작업 배지에서 상태를 변경하고, 열에 여러 상태가 있으면 안내에 따라 선택하세요."
 
@@ -4443,8 +4446,11 @@ msgstr "외부 서비스를 연결해 조직과 데이터를 동기화합니다.
 msgid "Connect external services to sync data."
 msgstr "외부 서비스를 연결해 데이터를 동기화합니다."
 
-msgid "Connect GitHub"
-msgstr "GitHub 연결"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "이 컴퓨터에서 GitHub 저장소와 풀 리퀘스트에 접근하려면 여기에서 GitHub를 연결하세요. 로컬 폴더나 다른 Git 제공업체를 사용한다면 연결하지 않고 계속할 수 있습니다."
+
+msgid "Connect GitHub repositories"
+msgstr "GitHub 저장소 연결"
 
 msgid "Connect Google"
 msgstr "Google 연결"
@@ -8754,6 +8760,9 @@ msgstr "대기 중"
 msgid "Idle · branch pushed"
 msgstr "유휴 · 브랜치 푸시됨"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "CLI가 아직 설치되지 않았다면 로그인하기 전에 이 에이전트를 실행할 컴퓨터에 설치하세요."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "지금까지 Superset이 마음에 드셨다면 GitHub 스타가 다른 개발자들이 Superset을 발견하는 데 도움이 됩니다."
 
@@ -9030,6 +9039,9 @@ msgstr "{0} 검사 중"
 msgid "Install"
 msgstr "설치"
 
+msgid "Install {agentLabel} CLI"
+msgstr "{agentLabel} CLI 설치"
+
 msgid "Install {pluginLabel}?"
 msgstr "{pluginLabel}을(를) 설치할까요?"
 
@@ -9056,6 +9068,9 @@ msgstr "터미널에서 설치"
 
 msgid "Install GitHub App"
 msgstr "GitHub App 설치"
+
+msgid "Install GitHub CLI"
+msgstr "GitHub CLI 설치"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "한 번만 설치하세요. 그다음엔 어떤 프롬프트에서든 멘션하면 됩니다."
@@ -14127,6 +14142,9 @@ msgstr "리포지토리: {label}"
 msgid "Repository"
 msgstr "리포지토리"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "저장소 접근 권한은 Superset 로그인과 별개입니다."
+
 msgid "Repository URL or path"
 msgstr "리포지토리 URL 또는 경로"
 
@@ -18885,6 +18903,9 @@ msgstr "새 에이전트에 사용"
 
 msgid "Use global default"
 msgstr "전역 기본값 사용"
+
+msgid "Use local GitHub account"
+msgstr "로컬 GitHub 계정 사용"
 
 msgid "Use reset"
 msgstr "초기화 사용"

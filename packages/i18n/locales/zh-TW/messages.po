@@ -1174,6 +1174,9 @@ msgstr "* 如按API全價計費"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**看板與衝刺篩選**：不必撰寫 JQL，即可選擇 Jira 看板與衝刺。"
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**更清楚的設定**：查看代理程式的 CLI 安裝指南，瞭解如何連結程式碼儲存庫。"
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**更清楚的任務操作**：透過任務狀態標籤變更狀態。當一欄包含多個狀態時，可依提示選擇。"
 
@@ -4443,8 +4446,11 @@ msgstr "連線外部服務，與你的組織同步資料。"
 msgid "Connect external services to sync data."
 msgstr "連線外部服務以同步資料。"
 
-msgid "Connect GitHub"
-msgstr "連線 GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "在此連結 GitHub，即可在本機存取其儲存庫和提取請求。如果使用本機資料夾或其他 Git 提供者，可以不連結 GitHub 並繼續。"
+
+msgid "Connect GitHub repositories"
+msgstr "連結 GitHub 儲存庫"
 
 msgid "Connect Google"
 msgstr "連線Google"
@@ -8754,6 +8760,9 @@ msgstr "空閒"
 msgid "Idle · branch pushed"
 msgstr "空閒 · 分支已推送"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "如果尚未安裝 CLI，請先在執行此代理程式的電腦上安裝，再登入。"
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "如果你覺得Superset還不錯，一個GitHub星標能幫助更多開發者發現它。"
 
@@ -9030,6 +9039,9 @@ msgstr "正在檢查{0}"
 msgid "Install"
 msgstr "安裝"
 
+msgid "Install {agentLabel} CLI"
+msgstr "安裝 {agentLabel} CLI"
+
 msgid "Install {pluginLabel}?"
 msgstr "安裝 {pluginLabel}？"
 
@@ -9056,6 +9068,9 @@ msgstr "從終端安裝"
 
 msgid "Install GitHub App"
 msgstr "安裝GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "安裝 GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "只需安裝一次，之後在任何提示詞中提及它即可。"
@@ -14127,6 +14142,9 @@ msgstr "儲存庫：{label}"
 msgid "Repository"
 msgstr "儲存庫"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "儲存庫存取權與 Superset 登入互相獨立。"
+
 msgid "Repository URL or path"
 msgstr "儲存庫URL或路徑"
 
@@ -18885,6 +18903,9 @@ msgstr "用於新代理程式"
 
 msgid "Use global default"
 msgstr "使用全域性預設值"
+
+msgid "Use local GitHub account"
+msgstr "使用本機 GitHub 帳號"
 
 msgid "Use reset"
 msgstr "使用重設"

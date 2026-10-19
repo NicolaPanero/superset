@@ -1174,6 +1174,9 @@ msgstr "* 如按API全价计费"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**看板和冲刺筛选**：无需编写 JQL，即可选择 Jira 看板和冲刺。"
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**更清晰的设置**：查看智能体的 CLI 安装指南，了解如何连接代码仓库。"
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**更清晰的任务操作**：通过任务状态标签更改状态。当一列包含多个状态时，可按提示选择。"
 
@@ -4443,8 +4446,11 @@ msgstr "连接外部服务，与你的组织同步数据。"
 msgid "Connect external services to sync data."
 msgstr "连接外部服务以同步数据。"
 
-msgid "Connect GitHub"
-msgstr "连接 GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "在此连接 GitHub，即可在本机访问其仓库和拉取请求。如果使用本地文件夹或其他 Git 提供商，可以不连接 GitHub 并继续。"
+
+msgid "Connect GitHub repositories"
+msgstr "连接 GitHub 仓库"
 
 msgid "Connect Google"
 msgstr "连接Google"
@@ -8754,6 +8760,9 @@ msgstr "空闲"
 msgid "Idle · branch pushed"
 msgstr "空闲 · 分支已推送"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "如果尚未安装 CLI，请先在运行此智能体的计算机上安装，再登录。"
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "如果你觉得Superset还不错，一个GitHub星标能帮助更多开发者发现它。"
 
@@ -9030,6 +9039,9 @@ msgstr "正在检查{0}"
 msgid "Install"
 msgstr "安装"
 
+msgid "Install {agentLabel} CLI"
+msgstr "安装 {agentLabel} CLI"
+
 msgid "Install {pluginLabel}?"
 msgstr "安装 {pluginLabel}？"
 
@@ -9056,6 +9068,9 @@ msgstr "从终端安装"
 
 msgid "Install GitHub App"
 msgstr "安装GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "安装 GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "只需安装一次，之后在任何提示词中提及它即可。"
@@ -14127,6 +14142,9 @@ msgstr "仓库：{label}"
 msgid "Repository"
 msgstr "仓库"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "仓库访问权限与 Superset 登录相互独立。"
+
 msgid "Repository URL or path"
 msgstr "仓库URL或路径"
 
@@ -18885,6 +18903,9 @@ msgstr "用于新智能体"
 
 msgid "Use global default"
 msgstr "使用全局默认值"
+
+msgid "Use local GitHub account"
+msgstr "使用本地 GitHub 账户"
 
 msgid "Use reset"
 msgstr "使用重置"

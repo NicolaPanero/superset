@@ -1174,6 +1174,9 @@ msgstr "* při účtování plnou sazbou API"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**Filtry nástěnky a sprintu**: vyberte nástěnku Jira a sprint bez psaní JQL."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**Srozumitelnější nastavení**: najděte návody k instalaci CLI agentů a pochopte připojení repozitářů."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**Přehlednější akce úkolů**: měňte stav pomocí štítku úkolu, s výběrem cíle, pokud sloupec obsahuje více stavů."
 
@@ -4443,8 +4446,11 @@ msgstr "Připojte externí služby a synchronizujte data se svou organizací."
 msgid "Connect external services to sync data."
 msgstr "Připojte externí služby a synchronizujte data."
 
-msgid "Connect GitHub"
-msgstr "Připojit GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "Připojte zde GitHub a získejte na tomto počítači přístup k jeho repozitářům a žádostem o sloučení. Pokud používáte místní složky nebo jiného poskytovatele Git, můžete pokračovat bez GitHub."
+
+msgid "Connect GitHub repositories"
+msgstr "Připojit repozitáře GitHub"
 
 msgid "Connect Google"
 msgstr "Připojit Google"
@@ -8754,6 +8760,9 @@ msgstr "Nečinný"
 msgid "Idle · branch pushed"
 msgstr "Nečinné · větev odeslána"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "Pokud CLI ještě není nainstalováno, před přihlášením jej nainstalujte na počítač, na kterém bude tento agent spuštěn."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Pokud se vám Superset zatím líbí, hvězda na GitHubu pomůže dalším vývojářům ho objevit."
 
@@ -9030,6 +9039,9 @@ msgstr "Zkoumám {0}"
 msgid "Install"
 msgstr "Nainstalovat"
 
+msgid "Install {agentLabel} CLI"
+msgstr "Nainstalovat CLI {agentLabel}"
+
 msgid "Install {pluginLabel}?"
 msgstr "Nainstalovat {pluginLabel}?"
 
@@ -9056,6 +9068,9 @@ msgstr "Instalace z terminálu"
 
 msgid "Install GitHub App"
 msgstr "Nainstalovat GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "Nainstalovat GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "Nainstalujte ho jednou. Pak ho zmiňte v libovolném promptu."
@@ -14127,6 +14142,9 @@ msgstr "Repozitáře: {label}"
 msgid "Repository"
 msgstr "Repozitář"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "Přístup k repozitářům je oddělený od přihlášení do Superset."
+
 msgid "Repository URL or path"
 msgstr "URL nebo cesta repozitáře"
 
@@ -18885,6 +18903,9 @@ msgstr "Použít pro nové agenty"
 
 msgid "Use global default"
 msgstr "Použít globální výchozí"
+
+msgid "Use local GitHub account"
+msgstr "Použít místní účet GitHub"
 
 msgid "Use reset"
 msgstr "Použít reset"

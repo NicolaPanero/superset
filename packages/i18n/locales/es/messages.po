@@ -1174,6 +1174,9 @@ msgstr "* si se facturara a la tarifa completa de la API"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**Filtros de tablero y sprint**: elige tu tablero Jira y sprint sin escribir JQL."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**Configuración más clara**: encuentra guías para instalar las CLI de tus agentes y comprende las conexiones a repositorios."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**Acciones más claras**: cambia el estado desde la etiqueta de la tarea, con opciones guiadas cuando una columna agrupa varios estados."
 
@@ -4443,8 +4446,11 @@ msgstr "Conecta servicios externos para sincronizar datos con tu organización."
 msgid "Connect external services to sync data."
 msgstr "Conecta servicios externos para sincronizar datos."
 
-msgid "Connect GitHub"
-msgstr "Conectar GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "Conecta GitHub aquí para acceder a sus repositorios y solicitudes de extracción en este equipo. Puedes continuar sin GitHub si usas carpetas locales u otro proveedor de Git."
+
+msgid "Connect GitHub repositories"
+msgstr "Conectar repositorios de GitHub"
 
 msgid "Connect Google"
 msgstr "Conectar Google"
@@ -8754,6 +8760,9 @@ msgstr "Inactivo"
 msgid "Idle · branch pushed"
 msgstr "Inactivo · rama subida"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "Si la CLI aún no está instalada, instálala en el equipo donde se ejecutará este agente antes de iniciar sesión."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Si Superset te está gustando, una estrella en GitHub ayuda a otros desarrolladores a descubrirlo."
 
@@ -9030,6 +9039,9 @@ msgstr "Inspeccionando {0}"
 msgid "Install"
 msgstr "Instalar"
 
+msgid "Install {agentLabel} CLI"
+msgstr "Instalar la CLI de {agentLabel}"
+
 msgid "Install {pluginLabel}?"
 msgstr "¿Instalar {pluginLabel}?"
 
@@ -9056,6 +9068,9 @@ msgstr "Instalar desde la terminal"
 
 msgid "Install GitHub App"
 msgstr "Instalar la GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "Instalar GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "Instálalo una vez. Luego menciónalo en cualquier prompt."
@@ -14127,6 +14142,9 @@ msgstr "Repositorios: {label}"
 msgid "Repository"
 msgstr "Repositorio"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "El acceso a los repositorios es independiente del inicio de sesión en Superset."
+
 msgid "Repository URL or path"
 msgstr "URL o ruta del repositorio"
 
@@ -18885,6 +18903,9 @@ msgstr "Usar para los agentes nuevos"
 
 msgid "Use global default"
 msgstr "Usar el valor global predeterminado"
+
+msgid "Use local GitHub account"
+msgstr "Usar la cuenta local de GitHub"
 
 msgid "Use reset"
 msgstr "Usar restablecimiento"

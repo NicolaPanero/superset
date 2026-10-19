@@ -33,6 +33,7 @@ import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { getHostServiceUnavailableMessage } from "renderer/lib/host-service-unavailable";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { ForkAgentCliHelp } from "renderer/routes/_authenticated/settings/components/ForkAgentCliHelp";
 import {
 	AgentDetailHeader,
 	AgentLaunchFields,
@@ -279,6 +280,7 @@ export function AgentDetail({
 			/>
 
 			<div className="space-y-6">
+				<ForkAgentCliHelp agentId={config.presetId} agentLabel={config.label} />
 				<Section
 					title={t({
 						message: "Label",

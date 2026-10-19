@@ -1174,6 +1174,9 @@ msgstr "* nếu tính theo giá API đầy đủ"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**Bộ lọc bảng và sprint**: chọn bảng Jira và sprint mà không cần viết JQL."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**Thiết lập rõ ràng hơn**: tìm hướng dẫn cài đặt CLI cho tác nhân và hiểu cách kết nối kho mã."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**Thao tác tác vụ rõ ràng hơn**: đổi trạng thái từ nhãn tác vụ, với lựa chọn hướng dẫn khi một cột có nhiều trạng thái."
 
@@ -4443,8 +4446,11 @@ msgstr "Kết nối dịch vụ bên ngoài để đồng bộ dữ liệu với
 msgid "Connect external services to sync data."
 msgstr "Kết nối dịch vụ bên ngoài để đồng bộ dữ liệu."
 
-msgid "Connect GitHub"
-msgstr "Kết nối GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "Kết nối GitHub tại đây để truy cập kho mã và yêu cầu hợp nhất trên máy tính này. Bạn có thể tiếp tục mà không cần GitHub nếu dùng thư mục cục bộ hoặc nhà cung cấp Git khác."
+
+msgid "Connect GitHub repositories"
+msgstr "Kết nối kho mã GitHub"
 
 msgid "Connect Google"
 msgstr "Kết nối Google"
@@ -8754,6 +8760,9 @@ msgstr "Rảnh"
 msgid "Idle · branch pushed"
 msgstr "Rảnh · đã push nhánh"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "Nếu CLI chưa được cài đặt, hãy cài đặt trên máy tính sẽ chạy tác nhân này trước khi đăng nhập."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Nếu đến giờ bạn thấy Superset hữu ích, một star trên GitHub sẽ giúp các lập trình viên khác biết đến nó."
 
@@ -9030,6 +9039,9 @@ msgstr "Đang kiểm tra {0}"
 msgid "Install"
 msgstr "Cài đặt"
 
+msgid "Install {agentLabel} CLI"
+msgstr "Cài đặt CLI {agentLabel}"
+
 msgid "Install {pluginLabel}?"
 msgstr "Cài đặt {pluginLabel}?"
 
@@ -9056,6 +9068,9 @@ msgstr "Cài đặt từ terminal"
 
 msgid "Install GitHub App"
 msgstr "Cài GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "Cài đặt GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "Cài đặt một lần. Sau đó nhắc đến nó trong bất kỳ prompt nào."
@@ -14127,6 +14142,9 @@ msgstr "Repository: {label}"
 msgid "Repository"
 msgstr "Repository"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "Quyền truy cập kho mã tách biệt với việc đăng nhập Superset."
+
 msgid "Repository URL or path"
 msgstr "URL hoặc đường dẫn repository"
 
@@ -18885,6 +18903,9 @@ msgstr "Dùng cho agent mới"
 
 msgid "Use global default"
 msgstr "Dùng mặc định toàn cục"
+
+msgid "Use local GitHub account"
+msgstr "Dùng tài khoản GitHub cục bộ"
 
 msgid "Use reset"
 msgstr "Dùng lượt đặt lại"

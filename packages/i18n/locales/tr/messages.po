@@ -1174,6 +1174,9 @@ msgstr "* tam API tarifesiyle faturalandırılsaydı"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**Pano ve sprint filtreleri**: JQL yazmadan Jira panonuzu ve sprintinizi seçin."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**Daha anlaşılır kurulum**: ajanlarınız için CLI kurulum kılavuzlarını bulun ve depo bağlantılarını anlayın."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**Daha anlaşılır görev işlemleri**: bir sütunda birden fazla durum varsa yönlendirilmiş seçeneklerle görev rozetinden durumu değiştirin."
 
@@ -4443,8 +4446,11 @@ msgstr "Kuruluşunuzla veri eşitlemek için harici hizmetleri bağlayın."
 msgid "Connect external services to sync data."
 msgstr "Verileri eşitlemek için harici hizmetleri bağlayın."
 
-msgid "Connect GitHub"
-msgstr "GitHub’ı bağla"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "Bu bilgisayarda GitHub depolarına ve çekme isteklerine erişmek için GitHub’ı buradan bağlayın. Yerel klasörler veya başka bir Git sağlayıcısı kullanıyorsanız GitHub olmadan devam edebilirsiniz."
+
+msgid "Connect GitHub repositories"
+msgstr "GitHub depolarını bağla"
 
 msgid "Connect Google"
 msgstr "Google'ı bağla"
@@ -8754,6 +8760,9 @@ msgstr "Boşta"
 msgid "Idle · branch pushed"
 msgstr "Boşta · dal push edildi"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "CLI henüz kurulu değilse oturum açmadan önce bu ajanın çalışacağı bilgisayara kurun."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Superset'ten şimdiye kadar memnunsanız, bir GitHub yıldızı diğer geliştiricilerin onu keşfetmesine yardımcı olur."
 
@@ -9030,6 +9039,9 @@ msgstr "{0} inceleniyor"
 msgid "Install"
 msgstr "Kur"
 
+msgid "Install {agentLabel} CLI"
+msgstr "{agentLabel} CLI kur"
+
 msgid "Install {pluginLabel}?"
 msgstr "{pluginLabel} kurulsun mu?"
 
@@ -9056,6 +9068,9 @@ msgstr "Terminalden kurun"
 
 msgid "Install GitHub App"
 msgstr "GitHub App'i kur"
+
+msgid "Install GitHub CLI"
+msgstr "GitHub CLI kur"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "Bir kez kurun. Sonra herhangi bir istemde ondan söz edin."
@@ -14127,6 +14142,9 @@ msgstr "Depolar: {label}"
 msgid "Repository"
 msgstr "Depo"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "Depolara erişim, Superset oturumundan ayrıdır."
+
 msgid "Repository URL or path"
 msgstr "Depo URL'si veya yolu"
 
@@ -18885,6 +18903,9 @@ msgstr "Yeni ajanlar için kullan"
 
 msgid "Use global default"
 msgstr "Genel varsayılanı kullan"
+
+msgid "Use local GitHub account"
+msgstr "Yerel GitHub hesabını kullan"
 
 msgid "Use reset"
 msgstr "Sıfırlamayı kullan"

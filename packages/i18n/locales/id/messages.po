@@ -1174,6 +1174,9 @@ msgstr "* jika ditagih pada tarif API penuh"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**Filter papan dan sprint**: pilih papan Jira dan sprint tanpa menulis JQL."
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**Penyiapan lebih jelas**: temukan panduan pemasangan CLI agen dan pahami koneksi repositori."
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**Tindakan tugas yang lebih jelas**: ubah status dari lencana tugas, dengan pilihan terpandu saat satu kolom memiliki beberapa status."
 
@@ -4443,8 +4446,11 @@ msgstr "Hubungkan layanan eksternal untuk menyinkronkan data dengan organisasi A
 msgid "Connect external services to sync data."
 msgstr "Hubungkan layanan eksternal untuk menyinkronkan data."
 
-msgid "Connect GitHub"
-msgstr "Hubungkan GitHub"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "Hubungkan GitHub di sini untuk mengakses repositori dan pull request-nya di komputer ini. Anda dapat melanjutkan tanpa GitHub jika menggunakan folder lokal atau penyedia Git lain."
+
+msgid "Connect GitHub repositories"
+msgstr "Hubungkan repositori GitHub"
 
 msgid "Connect Google"
 msgstr "Hubungkan Google"
@@ -8754,6 +8760,9 @@ msgstr "Idle"
 msgid "Idle · branch pushed"
 msgstr "Idle · branch sudah di-push"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "Jika CLI belum terpasang, pasang di komputer tempat agen ini akan dijalankan sebelum masuk."
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Kalau sejauh ini Anda menikmati Superset, satu star GitHub membantu developer lain menemukannya."
 
@@ -9030,6 +9039,9 @@ msgstr "Memeriksa {0}"
 msgid "Install"
 msgstr "Instal"
 
+msgid "Install {agentLabel} CLI"
+msgstr "Pasang CLI {agentLabel}"
+
 msgid "Install {pluginLabel}?"
 msgstr "Instal {pluginLabel}?"
 
@@ -9056,6 +9068,9 @@ msgstr "Instal dari terminal"
 
 msgid "Install GitHub App"
 msgstr "Pasang GitHub App"
+
+msgid "Install GitHub CLI"
+msgstr "Pasang GitHub CLI"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "Instal sekali. Lalu sebut di prompt mana pun."
@@ -14127,6 +14142,9 @@ msgstr "Repositori: {label}"
 msgid "Repository"
 msgstr "Repositori"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "Akses repositori terpisah dari proses masuk ke Superset."
+
 msgid "Repository URL or path"
 msgstr "URL atau path repositori"
 
@@ -18885,6 +18903,9 @@ msgstr "Pakai untuk agen baru"
 
 msgid "Use global default"
 msgstr "Pakai bawaan global"
+
+msgid "Use local GitHub account"
+msgstr "Gunakan akun GitHub lokal"
 
 msgid "Use reset"
 msgstr "Gunakan reset"

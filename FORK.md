@@ -160,6 +160,11 @@ configurazioni API esistenti. **API key configured** indica presenza, non validi
 la verifica non usa richieste a pagamento.
 
 Ogni persona installa il proprio CLI e collega il proprio account o chiave.
+La configurazione dell’agente e la finestra di aggiunta account ricordano questo
+passaggio e collegano le guide ufficiali dei CLI principali. L’onboarding distingue
+il login a Superset dall’accesso locale ai repository GitHub; un account CLI già
+autenticato può essere riutilizzato senza ripetere il login. GitHub resta opzionale
+per progetti locali o su altri provider.
 L’esportazione di preset condivisibili rimane un passaggio successivo.
 Riferimenti: [Grok ACP](https://docs.x.ai/build/cli/headless-scripting),
 [Grok API e priorità delle credenziali](https://docs.x.ai/build/enterprise),

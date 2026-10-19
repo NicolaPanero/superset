@@ -10,8 +10,7 @@ export function ForkOnboardingConnections({
 	fallback: ReactNode;
 }) {
 	const { data, isError } = useForkConnections();
-	if (isError) return fallback;
-	if (!data)
+	if (!data && !isError)
 		return (
 			<p className="text-sm text-muted-foreground">
 				<Trans>Loading...</Trans>
@@ -19,8 +18,20 @@ export function ForkOnboardingConnections({
 		);
 	return (
 		<div className="space-y-5">
-			{SUPPORTED_LOCALES.length > 1 && <OnboardingLanguageRow />}
-			<ForkIntegrations />
+			{!isError && SUPPORTED_LOCALES.length > 1 && <OnboardingLanguageRow />}
+			<div className="space-y-1.5 text-sm">
+				<p className="font-medium">
+					<Trans>Repository access is separate from Superset sign-in.</Trans>
+				</p>
+				<p className="text-xs text-muted-foreground">
+					<Trans>
+						Connect GitHub here to access its repositories and pull requests on
+						this computer. You can continue without it when using local folders
+						or another Git provider.
+					</Trans>
+				</p>
+			</div>
+			{isError ? fallback : <ForkIntegrations />}
 			<p className="text-xs text-muted-foreground">
 				<Trans>
 					You can configure these connections later in Fork Settings.

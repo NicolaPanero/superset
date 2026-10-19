@@ -34,6 +34,7 @@ export function ForkConnectionCard({
 	const { t } = useLingui();
 	const gh = electronTrpc.system.detectGhCli.useQuery(undefined, {
 		enabled: provider === "github",
+		refetchOnWindowFocus: true,
 	});
 	const brew = electronTrpc.system.detectBrew.useQuery(undefined, {
 		enabled: provider === "github",
@@ -135,7 +136,8 @@ export function ForkConnectionCard({
 		setToken("");
 	};
 	const connectGithub = () => {
-		if (!gh.data?.installed && !brew.data?.installed)
+		if (gh.data?.authenticated) action.mutate("enable");
+		else if (!gh.data?.installed && !brew.data?.installed)
 			window.open("https://cli.github.com/", "_blank", "noopener,noreferrer");
 		else setGhOpen(true);
 	};
@@ -211,8 +213,22 @@ export function ForkConnectionCard({
 				{!showForm &&
 					!connected &&
 					(provider === "github" ? (
-						<Button size="sm" disabled={!client} onClick={connectGithub}>
-							<Trans>Connect GitHub</Trans>
+						<Button
+							size="sm"
+							disabled={
+								!client || action.isPending || gh.isPending || brew.isPending
+							}
+							onClick={connectGithub}
+						>
+							{gh.isPending || brew.isPending ? (
+								<Trans>Checking…</Trans>
+							) : gh.data?.authenticated ? (
+								<Trans>Use local GitHub account</Trans>
+							) : gh.data?.installed ? (
+								<Trans>Connect GitHub repositories</Trans>
+							) : (
+								<Trans>Install GitHub CLI</Trans>
+							)}
 						</Button>
 					) : (
 						<Button size="sm" onClick={() => openForm(!current)}>

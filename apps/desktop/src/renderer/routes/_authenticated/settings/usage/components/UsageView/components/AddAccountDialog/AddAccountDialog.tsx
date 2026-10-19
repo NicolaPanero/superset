@@ -24,6 +24,7 @@ import { useHostServiceInfo } from "renderer/hooks/host-service/useHostServiceIn
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { CommandTerminal } from "renderer/routes/_authenticated/components/CommandTerminal";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider/LocalHostServiceProvider";
+import { ForkAgentCliHelp } from "renderer/routes/_authenticated/settings/components/ForkAgentCliHelp";
 import type { UsageLogins } from "../../../../hooks/useHostUsageLogins";
 import { useHostUsageLogins } from "../../../../hooks/useHostUsageLogins";
 import { useSetDefaultUsageAccount } from "../../../../hooks/useSetDefaultUsageAccount";
@@ -481,6 +482,12 @@ export function AddAccountDialog({
 					</div>
 				) : (
 					<div className="flex min-w-0 flex-col gap-3">
+						{!terminalRunning && !commandSucceeded && (
+							<ForkAgentCliHelp
+								agentId={agent}
+								agentLabel={AGENT_LABELS[agent]}
+							/>
+						)}
 						{!switchTarget && terminalAttempt === 0 && (
 							<div className="flex flex-col gap-4 py-2">
 								<div className="flex items-center gap-2">

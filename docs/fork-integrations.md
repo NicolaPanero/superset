@@ -7,6 +7,11 @@ independent. No MCP connection is required.
 Test coverage and the desktop QA method: [integration verification](fork-integrations-qa.md).
 
 Configure accounts in **Fork Settings → Connections** or in onboarding.
+Signing in to Superset with GitHub identifies the Superset user. It does not
+sign the local GitHub CLI in or connect the host's repository account. The
+onboarding step is optional when working with local folders or another Git
+provider. A signed-in local GitHub CLI can be reused explicitly without
+starting another sign-in flow.
 GitHub can use the existing local CLI/credential-helper account. Jira and
 Bitbucket accept personal API tokens or a compatible OAuth broker. A Jira token
 needs the account email and an HTTPS `*.atlassian.net` site. Classic tokens

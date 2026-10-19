@@ -1174,6 +1174,9 @@ msgstr "* API定価で課金された場合"
 msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
 msgstr "**ボードとスプリントのフィルター**：JQLを書かずにJiraボードとスプリントを選べます。"
 
+msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
+msgstr "**わかりやすいセットアップ**: エージェントのCLIインストールガイドとリポジトリ接続の説明を確認できます。"
+
 msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
 msgstr "**わかりやすいタスク操作**：タスクのバッジから状態を変更できます。列に複数の状態がある場合は、候補から選択できます。"
 
@@ -4443,8 +4446,11 @@ msgstr "外部サービスを接続して組織とデータを同期します。
 msgid "Connect external services to sync data."
 msgstr "外部サービスを接続してデータを同期します。"
 
-msgid "Connect GitHub"
-msgstr "GitHubに接続"
+msgid "Connect GitHub here to access its repositories and pull requests on this computer. You can continue without it when using local folders or another Git provider."
+msgstr "このコンピューターでGitHubのリポジトリやプルリクエストにアクセスするには、ここでGitHubを接続します。ローカルフォルダーや他のGitプロバイダーを使う場合は、接続せずに続行できます。"
+
+msgid "Connect GitHub repositories"
+msgstr "GitHubリポジトリを接続"
 
 msgid "Connect Google"
 msgstr "Googleを接続"
@@ -8754,6 +8760,9 @@ msgstr "アイドル"
 msgid "Idle · branch pushed"
 msgstr "アイドル · ブランチをプッシュ済み"
 
+msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
+msgstr "CLIがまだインストールされていない場合は、サインインする前に、このエージェントを実行するコンピューターにインストールしてください。"
+
 msgid "If you're enjoying Superset so far, a GitHub star helps other developers discover it."
 msgstr "Supersetを気に入っていただけたら、GitHubスターが他の開発者の発見につながります。"
 
@@ -9030,6 +9039,9 @@ msgstr "{0}を検査中"
 msgid "Install"
 msgstr "インストール"
 
+msgid "Install {agentLabel} CLI"
+msgstr "{agentLabel} CLIをインストール"
+
 msgid "Install {pluginLabel}?"
 msgstr "{pluginLabel} をインストールしますか？"
 
@@ -9056,6 +9068,9 @@ msgstr "ターミナルからインストール"
 
 msgid "Install GitHub App"
 msgstr "GitHub Appをインストール"
+
+msgid "Install GitHub CLI"
+msgstr "GitHub CLIをインストール"
 
 msgid "Install it once. Then mention it in any prompt."
 msgstr "一度インストールすれば、あとはどのプロンプトでもメンションするだけです。"
@@ -14127,6 +14142,9 @@ msgstr "リポジトリ: {label}"
 msgid "Repository"
 msgstr "リポジトリ"
 
+msgid "Repository access is separate from Superset sign-in."
+msgstr "リポジトリへのアクセスとSupersetへのサインインは別の手順です。"
+
 msgid "Repository URL or path"
 msgstr "リポジトリのURLまたはパス"
 
@@ -18885,6 +18903,9 @@ msgstr "新規エージェントに使用"
 
 msgid "Use global default"
 msgstr "グローバルのデフォルトを使用"
+
+msgid "Use local GitHub account"
+msgstr "ローカルのGitHubアカウントを使用"
 
 msgid "Use reset"
 msgstr "リセットを使用"

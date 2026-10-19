@@ -83,7 +83,6 @@ function OnboardingDashboardPage() {
 						status={rowStatus(isPendingGh, ghReady)}
 						statusLabel={ghStatusLabel}
 						statusTone={ghInstalled ? "warning" : "neutral"}
-						required
 						actionLabel={ghInstalled ? "Sign in" : "Install"}
 						actionIcon={
 							ghInstalled || brewAvailable ? undefined : (

@@ -46,6 +46,10 @@ export function ForkWhatsNewNotice() {
 			message:
 				"**Simpler task workspaces**: start a workspace from a task or search and link an existing one.",
 		}),
+		t({
+			message:
+				"**Clearer setup**: find CLI installation guides for your agents and understand repository connections.",
+		}),
 	];
 	const notice: DesktopNotice = {
 		id: `fork-whats-new:${FORK_WHATS_NEW_ID}`,
