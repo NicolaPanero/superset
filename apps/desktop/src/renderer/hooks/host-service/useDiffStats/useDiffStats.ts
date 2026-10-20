@@ -7,6 +7,7 @@ import {
 } from "renderer/lib/host-service-client";
 import { useWorkspaceEvent } from "../useWorkspaceEvent";
 import { useWorkspaceHostUrl } from "../useWorkspaceHostUrl";
+import { forkFetchDiffStats } from "./utils/fork-fetch-diff-stats";
 
 export interface DiffStats {
 	additions: number;
@@ -32,24 +33,13 @@ export function useDiffStats(
 		[hostUrl, workspaceId],
 	);
 
-	const { data: status } = useQuery({
+	const { data: stats } = useQuery({
 		queryKey,
 		enabled: enabled && Boolean(workspaceId) && Boolean(hostUrl),
-		queryFn: async () => {
-			if (!hostUrl) return null;
-			const client = getHostServiceClientByUrl(hostUrl);
-			const base = await client.git.getBaseBranch.query({
-				workspaceId,
-				inferOrigin: true,
-			});
-			return client.git.getStatus.query({
-				workspaceId,
-				baseBranch: base.needsSelection
-					? "HEAD"
-					: (base.baseBranch ?? undefined),
-				priority: "background",
-			});
-		},
+		queryFn: () =>
+			hostUrl
+				? forkFetchDiffStats(getHostServiceClientByUrl(hostUrl), workspaceId)
+				: null,
 		retry: (failureCount, error) =>
 			error instanceof TRPCClientError && error.data?.code === "TIMEOUT"
 				? failureCount < 2
@@ -72,23 +62,5 @@ export function useDiffStats(
 		Boolean(workspaceId) && Boolean(hostUrl),
 	);
 
-	return useMemo<DiffStats | null>(() => {
-		if (!status) return null;
-
-		const byPath = new Map<
-			string,
-			{ additions: number | null; deletions: number | null }
-		>();
-		for (const file of status.againstBase) byPath.set(file.path, file);
-		for (const file of status.staged) byPath.set(file.path, file);
-		for (const file of status.unstaged) byPath.set(file.path, file);
-
-		let additions = 0;
-		let deletions = 0;
-		for (const file of byPath.values()) {
-			additions += file.additions ?? 0;
-			deletions += file.deletions ?? 0;
-		}
-		return { additions, deletions };
-	}, [status]);
+	return stats ?? null;
 }

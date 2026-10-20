@@ -1,9 +1,10 @@
 import { workspaceTrpc } from "@superset/workspace-client";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import type { FileStatus } from "../../components/StatusIndicator";
 import { useWorkspaceGitStatus } from "../../providers/WorkspaceGitStatusProvider";
 import { buildChangesetFiles } from "./buildChangesetFiles";
 import type { ChangesetFile, DiffRef } from "./types";
+import { forkReuseChangesetFiles } from "./utils/fork-reuse-changeset-files";
 
 interface UseChangesetArgs {
 	workspaceId: string;
@@ -36,7 +37,8 @@ export function useChangeset({
 		},
 	);
 
-	const files = useMemo<ChangesetFile[]>(() => {
+	const previousFiles = useRef<ChangesetFile[]>([]);
+	const builtFiles = useMemo<ChangesetFile[]>(() => {
 		if (ref.kind === "commit") {
 			return (commitQuery.data?.files ?? []).map((file) => ({
 				path: file.path,
@@ -58,6 +60,11 @@ export function useChangeset({
 
 		return buildChangesetFiles(status, ref);
 	}, [ref, gitStatus.data, commitQuery.data?.files]);
+	const files = useMemo(() => {
+		const reused = forkReuseChangesetFiles(previousFiles.current, builtFiles);
+		previousFiles.current = reused;
+		return reused;
+	}, [builtFiles]);
 
 	const activeQuery = ref.kind === "commit" ? commitQuery : gitStatus;
 
