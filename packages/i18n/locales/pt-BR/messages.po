@@ -3709,6 +3709,9 @@ msgstr "Verificações ignoradas"
 msgid "Choose a {pluginLabel} account"
 msgstr "Escolha uma conta do {pluginLabel}"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Escolha um branch base para comparar as alterações dos commits. Até lá, apenas as alterações locais serão exibidas."
+
 msgid "Choose a different profile name."
 msgstr "Escolha outro nome para o perfil."
 
@@ -3744,6 +3747,9 @@ msgstr "Escolha uma pasta de repositório existente"
 
 msgid "Choose app"
 msgstr "Escolher app"
+
+msgid "Choose base branch"
+msgstr "Escolher branch base"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Escolha como os arquivos abrem quando não há painel de prévia"
@@ -19113,6 +19119,9 @@ msgstr "Ver log"
 
 msgid "View more"
 msgstr "Ver mais"
+
+msgid "View on Bitbucket"
+msgstr "Ver no Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Ver no GitHub"

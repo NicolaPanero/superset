@@ -3709,6 +3709,9 @@ msgstr "Checks Skipped"
 msgid "Choose a {pluginLabel} account"
 msgstr "Choose a {pluginLabel} account"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+
 msgid "Choose a different profile name."
 msgstr "Choose a different profile name."
 
@@ -3744,6 +3747,9 @@ msgstr "Choose an existing repo folder"
 
 msgid "Choose app"
 msgstr "Choose app"
+
+msgid "Choose base branch"
+msgstr "Choose base branch"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Choose how files open when no preview pane exists"
@@ -19113,6 +19119,9 @@ msgstr "View log"
 
 msgid "View more"
 msgstr "View more"
+
+msgid "View on Bitbucket"
+msgstr "View on Bitbucket"
 
 msgid "View on GitHub"
 msgstr "View on GitHub"

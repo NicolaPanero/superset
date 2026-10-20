@@ -176,6 +176,16 @@ Riferimenti: [Grok ACP](https://docs.x.ai/build/cli/headless-scripting),
 [Grok API e priorità delle credenziali](https://docs.x.ai/build/enterprise),
 [Cursor ACP](https://cursor.com/docs/cli/acp).
 
+## Base dei confronti Git e remote Bitbucket
+
+I contatori Git e i diff usano una base distinta per ogni branch. La scelta
+salvata in `branch.<nome>.base` prevale; altrimenti l’app recupera e conserva
+l’origine dal reflog quando è verificabile. Nei casi incerti mostra le sole
+modifiche locali e chiede la base nel pannello Changes. Il cambio manuale
+aggiorna anche contatori e liste dei commit. I remote SSH Bitbucket con
+`bitbucket.org` e `ssh.bitbucket.org` identificano lo stesso repository;
+restano valide le configurazioni SSH e `insteadOf` del computer.
+
 ## Account prima dell’avvio e quote
 
 La creazione workspace propone accanto al provider l’account effettivo dell’host e

@@ -18,6 +18,7 @@ import type { SimpleGit } from "simple-git";
 import { resolveUpstream } from "../../../../runtime/git/refs";
 import { createUserSimpleGit } from "../../../../runtime/git/simple-git";
 import type { Branch, ChangedFile, FileStatus } from "../types";
+import { forkExplicitComparisonBase } from "./fork-branch-base";
 
 // Skip line counting for files larger than this — anything over a MB
 // of "source" is almost certainly a data file or accidental binary,
@@ -223,6 +224,10 @@ export async function resolveBaseComparison(
 					},
 				};
 	}
+	const explicitBase = explicitBranch
+		? await forkExplicitComparisonBase(git, branchName)
+		: null;
+	if (explicitBase) return explicitBase;
 	return {
 		branchName,
 		baseRef: `origin/${branchName}`,

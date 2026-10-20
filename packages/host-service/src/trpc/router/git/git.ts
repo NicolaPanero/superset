@@ -39,7 +39,11 @@ import type {
 } from "./types";
 import { scheduleBaseRefFetch } from "./utils/base-ref-freshness";
 import { rethrowEnvironmentalGitError } from "./utils/classify-git-error";
-import { gitConfigWrite } from "./utils/config-write";
+import {
+	type ForkBranchBase,
+	forkDetectBranchBase,
+	forkSetBranchBase,
+} from "./utils/fork-branch-base";
 import {
 	assertSafeRelativePath,
 	getDefaultBranchName,
@@ -330,7 +334,10 @@ export const gitRouter = router({
 	getDiffStatsByWorkspaces: queryProcedure
 		.meta({ timeoutMs: 60_000 })
 		.input(
-			z.object({ workspaceIds: z.array(z.string()).max(MAX_DIFF_STATS_BATCH) }),
+			z.object({
+				workspaceIds: z.array(z.string()).max(MAX_DIFF_STATS_BATCH),
+				inferOrigin: z.boolean().optional(),
+			}),
 		)
 		.query(async ({ ctx, input }) => {
 			const queue = [...input.workspaceIds];
@@ -352,8 +359,16 @@ export const gitRouter = router({
 						workspaceId = queue.shift()
 					) {
 						try {
+							const base = input.inferOrigin
+								? await forkDetectBranchBase(
+										await ctx.git(resolveWorktreePath(ctx, workspaceId)),
+									)
+								: null;
 							const snapshot = await runStatusSnapshot(ctx, {
 								workspaceId,
+								baseBranch: base?.needsSelection
+									? "HEAD"
+									: (base?.baseBranch ?? undefined),
 								priority: "background",
 							});
 							workspaces.push({
@@ -445,10 +460,16 @@ export const gitRouter = router({
 		}),
 
 	getBaseBranch: queryProcedure
-		.input(z.object({ workspaceId: z.string() }))
-		.query(async ({ ctx, input }) => {
+		.input(
+			z.object({
+				workspaceId: z.string(),
+				inferOrigin: z.boolean().optional(),
+			}),
+		)
+		.query(async ({ ctx, input }): Promise<ForkBranchBase> => {
 			const worktreePath = resolveWorktreePath(ctx, input.workspaceId);
 			const git = await ctx.git(worktreePath);
+			if (input.inferOrigin) return forkDetectBranchBase(git);
 			const currentBranch = (
 				await git.revparse(["--abbrev-ref", "HEAD"]).catch(() => "")
 			).trim();
@@ -468,6 +489,8 @@ export const gitRouter = router({
 			z.object({
 				workspaceId: z.string(),
 				baseBranch: z.string().nullable(),
+				expectedBranch: z.string().optional(),
+				onlyIfUnset: z.boolean().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -482,20 +505,10 @@ export const gitRouter = router({
 					message: "Cannot set base branch on detached HEAD",
 				});
 			}
-			if (input.baseBranch) {
-				await gitConfigWrite(git, [
-					"config",
-					`branch.${currentBranch}.base`,
-					input.baseBranch,
-				]);
-			} else {
-				await gitConfigWrite(git, [
-					"config",
-					"--unset",
-					`branch.${currentBranch}.base`,
-				]).catch(() => {});
-			}
-			return { baseBranch: input.baseBranch };
+			const result = await forkSetBranchBase(git, input);
+			invalidateStatus(input.workspaceId);
+			ctx.eventBus.broadcastGitChanged(input.workspaceId);
+			return result;
 		}),
 
 	renameBranch: protectedProcedure

@@ -3709,6 +3709,9 @@ msgstr "チェックをスキップ"
 msgid "Choose a {pluginLabel} account"
 msgstr "{pluginLabel} アカウントを選択"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "コミット済みの変更を比較するベースブランチを選択してください。選択するまではローカルの変更のみが表示されます。"
+
 msgid "Choose a different profile name."
 msgstr "別のプロファイル名を選択してください。"
 
@@ -3744,6 +3747,9 @@ msgstr "既存のリポジトリフォルダを選択"
 
 msgid "Choose app"
 msgstr "アプリを選択"
+
+msgid "Choose base branch"
+msgstr "ベースブランチを選択"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "プレビューペインがないときのファイルの開き方"
@@ -19113,6 +19119,9 @@ msgstr "ログを表示"
 
 msgid "View more"
 msgstr "もっと見る"
+
+msgid "View on Bitbucket"
+msgstr "Bitbucketで表示"
 
 msgid "View on GitHub"
 msgstr "GitHubで表示"

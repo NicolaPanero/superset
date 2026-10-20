@@ -3709,6 +3709,9 @@ msgstr "Prüfungen übersprungen"
 msgid "Choose a {pluginLabel} account"
 msgstr "{pluginLabel}-Konto auswählen"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Wähle einen Basisbranch, um Änderungen in Commits zu vergleichen. Bis dahin werden nur lokale Änderungen angezeigt."
+
 msgid "Choose a different profile name."
 msgstr "Wähle einen anderen Profilnamen."
 
@@ -3744,6 +3747,9 @@ msgstr "Vorhandenen Repo-Ordner wählen"
 
 msgid "Choose app"
 msgstr "App wählen"
+
+msgid "Choose base branch"
+msgstr "Basisbranch wählen"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Lege fest, wie Dateien geöffnet werden, wenn kein Vorschaubereich existiert"
@@ -19113,6 +19119,9 @@ msgstr "Log ansehen"
 
 msgid "View more"
 msgstr "Mehr anzeigen"
+
+msgid "View on Bitbucket"
+msgstr "Auf Bitbucket ansehen"
 
 msgid "View on GitHub"
 msgstr "Auf GitHub ansehen"

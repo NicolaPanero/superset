@@ -3709,6 +3709,9 @@ msgstr "檢查已跳過"
 msgid "Choose a {pluginLabel} account"
 msgstr "選擇 {pluginLabel} 帳戶"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "請選擇基準分支來比較已提交的變更。選擇前僅顯示本機變更。"
+
 msgid "Choose a different profile name."
 msgstr "請選擇其他設定檔名稱。"
 
@@ -3744,6 +3747,9 @@ msgstr "選擇已有的儲存庫資料夾"
 
 msgid "Choose app"
 msgstr "選擇應用"
+
+msgid "Choose base branch"
+msgstr "選擇基準分支"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "選擇在沒有預覽窗格時檔案的開啟方式"
@@ -19113,6 +19119,9 @@ msgstr "檢視日誌"
 
 msgid "View more"
 msgstr "檢視更多"
+
+msgid "View on Bitbucket"
+msgstr "在 Bitbucket 上檢視"
 
 msgid "View on GitHub"
 msgstr "在GitHub上檢視"

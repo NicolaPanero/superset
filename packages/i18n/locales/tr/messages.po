@@ -3709,6 +3709,9 @@ msgstr "Kontroller atlandı"
 msgid "Choose a {pluginLabel} account"
 msgstr "Bir {pluginLabel} hesabı seçin"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Commit değişikliklerini karşılaştırmak için bir temel dal seçin. Seçene kadar yalnızca yerel değişiklikler gösterilir."
+
 msgid "Choose a different profile name."
 msgstr "Farklı bir profil adı seçin."
 
@@ -3744,6 +3747,9 @@ msgstr "Mevcut bir depo klasörü seçin"
 
 msgid "Choose app"
 msgstr "Uygulama seç"
+
+msgid "Choose base branch"
+msgstr "Temel dalı seç"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Önizleme bölmesi yokken dosyaların nasıl açılacağını seçin"
@@ -19113,6 +19119,9 @@ msgstr "Günlüğü görüntüle"
 
 msgid "View more"
 msgstr "Daha fazla göster"
+
+msgid "View on Bitbucket"
+msgstr "Bitbucket’ta görüntüle"
 
 msgid "View on GitHub"
 msgstr "GitHub'da görüntüle"

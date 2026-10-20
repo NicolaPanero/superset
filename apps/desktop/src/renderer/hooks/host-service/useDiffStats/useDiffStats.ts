@@ -1,6 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { TRPCClientError } from "@trpc/client";
 import { useCallback, useMemo } from "react";
-import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import {
+	getHostServiceClientByUrl,
+	hostServiceQueryRetry,
+} from "renderer/lib/host-service-client";
 import { useWorkspaceEvent } from "../useWorkspaceEvent";
 import { useWorkspaceHostUrl } from "../useWorkspaceHostUrl";
 
@@ -31,13 +35,25 @@ export function useDiffStats(
 	const { data: status } = useQuery({
 		queryKey,
 		enabled: enabled && Boolean(workspaceId) && Boolean(hostUrl),
-		queryFn: () => {
+		queryFn: async () => {
 			if (!hostUrl) return null;
-			return getHostServiceClientByUrl(hostUrl).git.getStatus.query({
+			const client = getHostServiceClientByUrl(hostUrl);
+			const base = await client.git.getBaseBranch.query({
 				workspaceId,
+				inferOrigin: true,
+			});
+			return client.git.getStatus.query({
+				workspaceId,
+				baseBranch: base.needsSelection
+					? "HEAD"
+					: (base.baseBranch ?? undefined),
 				priority: "background",
 			});
 		},
+		retry: (failureCount, error) =>
+			error instanceof TRPCClientError && error.data?.code === "TIMEOUT"
+				? failureCount < 2
+				: hostServiceQueryRetry(failureCount, error),
 		refetchOnWindowFocus: false,
 		staleTime: Number.POSITIVE_INFINITY,
 	});

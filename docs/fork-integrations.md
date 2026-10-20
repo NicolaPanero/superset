@@ -41,6 +41,23 @@ the host's active organization; they are not synchronized to another machine.
 An explicitly disconnected account is not silently recovered from a credential
 helper. Signing out of the shared GitHub CLI is a separate, explicit option.
 SSH remains independent of API authentication.
+The SSH remotes `git@bitbucket.org:workspace/repository.git` and
+`git@ssh.bitbucket.org:workspace/repository.git` identify the same Bitbucket
+repository. SSH URLs with an explicit port work too. Repository bindings and
+API/web URLs use the canonical `bitbucket.org` identity; Git keeps using the
+user's existing SSH configuration and `url.*.insteadOf` rewrites. See
+[Atlassian's SSH hostname migration](https://community.atlassian.com/forums/discussion/3234032/upcoming-change-to-bitbucket-cloud-ssh-access-move-from-bitbucket-org-to-ssh-bitbucket-org).
+
+Workspace comparisons use a base per branch. An explicit `branch.<name>.base`
+has priority. Otherwise, the host reads the branch creation reflog, including
+an unambiguous matching checkout when creation says `HEAD`. It requires the
+source branch to still exist. The desktop remembers a detected source in that
+same config key, guarded against a checkout or a concurrent manual choice.
+If evidence is missing or the saved ref was deleted, Changes asks for a base
+and shows only local changes until one is chosen. Header, sidebar, workspace
+list, commit list and file diffs use the same comparison. Main and develop can
+therefore both be bases within one project. The new detection is opt-in on the
+existing procedures; older clients and older hosts keep their existing fallback.
 
 The New Project repository picker searches connected GitHub and Bitbucket
 accounts together. Each result shows its provider icon and account. Accounts

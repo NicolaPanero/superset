@@ -3709,6 +3709,9 @@ msgstr "검사 건너뜀"
 msgid "Choose a {pluginLabel} account"
 msgstr "{pluginLabel} 계정 선택"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "커밋된 변경 사항을 비교할 기준 브랜치를 선택하세요. 선택하기 전까지는 로컬 변경 사항만 표시됩니다."
+
 msgid "Choose a different profile name."
 msgstr "다른 프로필 이름을 선택하세요."
 
@@ -3744,6 +3747,9 @@ msgstr "기존 리포지토리 폴더 선택"
 
 msgid "Choose app"
 msgstr "앱 선택"
+
+msgid "Choose base branch"
+msgstr "기준 브랜치 선택"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "미리보기 패널이 없을 때 파일을 여는 방식을 선택합니다"
@@ -19113,6 +19119,9 @@ msgstr "로그 보기"
 
 msgid "View more"
 msgstr "더 보기"
+
+msgid "View on Bitbucket"
+msgstr "Bitbucket에서 보기"
 
 msgid "View on GitHub"
 msgstr "GitHub에서 보기"

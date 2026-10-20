@@ -3709,6 +3709,9 @@ msgstr "Проверки пропущены"
 msgid "Choose a {pluginLabel} account"
 msgstr "Выберите аккаунт {pluginLabel}"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Выберите базовую ветку для сравнения изменений в коммитах. До выбора отображаются только локальные изменения."
+
 msgid "Choose a different profile name."
 msgstr "Выберите другое имя профиля."
 
@@ -3744,6 +3747,9 @@ msgstr "Выберите папку существующего репозито�
 
 msgid "Choose app"
 msgstr "Выберите приложение"
+
+msgid "Choose base branch"
+msgstr "Выбрать базовую ветку"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Выберите, как открывать файлы, когда нет панели предпросмотра"
@@ -19113,6 +19119,9 @@ msgstr "Смотреть лог"
 
 msgid "View more"
 msgstr "Показать больше"
+
+msgid "View on Bitbucket"
+msgstr "Открыть в Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Посмотреть на GitHub"

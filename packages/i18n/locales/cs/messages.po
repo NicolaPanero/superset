@@ -3709,6 +3709,9 @@ msgstr "Kontroly přeskočeny"
 msgid "Choose a {pluginLabel} account"
 msgstr "Vyberte účet {pluginLabel}"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Vyberte základní větev pro porovnání změn v commitech. Do té doby se zobrazují pouze místní změny."
+
 msgid "Choose a different profile name."
 msgstr "Zvolte jiný název profilu."
 
@@ -3744,6 +3747,9 @@ msgstr "Vyberte složku s existujícím repozitářem"
 
 msgid "Choose app"
 msgstr "Vyberte aplikaci"
+
+msgid "Choose base branch"
+msgstr "Vybrat základní větev"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Zvolte, jak se soubory otevírají, když není žádný panel náhledu"
@@ -19113,6 +19119,9 @@ msgstr "Zobrazit log"
 
 msgid "View more"
 msgstr "Zobrazit více"
+
+msgid "View on Bitbucket"
+msgstr "Zobrazit na Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Zobrazit na GitHubu"

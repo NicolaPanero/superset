@@ -3709,6 +3709,9 @@ msgstr "Check đã bỏ qua"
 msgid "Choose a {pluginLabel} account"
 msgstr "Chọn một tài khoản {pluginLabel}"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Chọn nhánh cơ sở để so sánh các thay đổi trong commit. Trước khi chọn, chỉ các thay đổi cục bộ được hiển thị."
+
 msgid "Choose a different profile name."
 msgstr "Chọn tên hồ sơ khác."
 
@@ -3744,6 +3747,9 @@ msgstr "Chọn một thư mục repo có sẵn"
 
 msgid "Choose app"
 msgstr "Chọn ứng dụng"
+
+msgid "Choose base branch"
+msgstr "Chọn nhánh cơ sở"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Chọn cách mở tệp khi chưa có khung xem trước"
@@ -19113,6 +19119,9 @@ msgstr "Xem log"
 
 msgid "View more"
 msgstr "Xem thêm"
+
+msgid "View on Bitbucket"
+msgstr "Xem trên Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Xem trên GitHub"

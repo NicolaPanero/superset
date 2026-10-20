@@ -3,6 +3,7 @@ import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useForkBranchBase } from "renderer/hooks/host-service/useForkBranchBase";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
@@ -46,10 +47,9 @@ export function useShipActions({
 	// branch.<name>.base (the base createForWorkspace actually opens
 	// against) — measuring against the repo default gets stacked branches
 	// exactly backwards.
-	const baseBranchQuery = workspaceTrpc.git.getBaseBranch.useQuery(
-		{ workspaceId },
-		{ enabled: enabled && canCreatePr, staleTime: Number.POSITIVE_INFINITY },
-	);
+	const baseBranchQuery = useForkBranchBase(workspaceId, {
+		enabled: enabled && canCreatePr,
+	});
 	const commitsQuery = workspaceTrpc.git.listCommits.useQuery(
 		{
 			workspaceId,
@@ -64,7 +64,9 @@ export function useShipActions({
 	);
 	// Optimistic while loading so the action doesn't flash disabled.
 	const hasCommitsAhead =
-		commitsQuery.data == null || commitsQuery.data.commits.length > 0;
+		!baseBranchQuery.data.needsSelection &&
+		baseBranchQuery.data.source !== "reflog" &&
+		(commitsQuery.data == null || commitsQuery.data.commits.length > 0);
 	const latestSubject = commitsQuery.data?.commits[0]?.message ?? "";
 
 	const commitMutation = workspaceTrpc.git.commit.useMutation({

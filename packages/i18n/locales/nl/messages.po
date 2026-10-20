@@ -3709,6 +3709,9 @@ msgstr "Checks overgeslagen"
 msgid "Choose a {pluginLabel} account"
 msgstr "Kies een {pluginLabel}-account"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Kies een basisbranch om wijzigingen in commits te vergelijken. Tot die tijd worden alleen lokale wijzigingen getoond."
+
 msgid "Choose a different profile name."
 msgstr "Kies een andere profielnaam."
 
@@ -3744,6 +3747,9 @@ msgstr "Kies een bestaande repo-map"
 
 msgid "Choose app"
 msgstr "Kies app"
+
+msgid "Choose base branch"
+msgstr "Basisbranch kiezen"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Kies hoe bestanden openen als er geen previewpaneel is"
@@ -19113,6 +19119,9 @@ msgstr "Log bekijken"
 
 msgid "View more"
 msgstr "Meer tonen"
+
+msgid "View on Bitbucket"
+msgstr "Bekijken op Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Bekijken op GitHub"

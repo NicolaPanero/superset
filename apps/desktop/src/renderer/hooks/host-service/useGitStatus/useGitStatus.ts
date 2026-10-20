@@ -3,6 +3,7 @@ import {
 	workspaceTrpc,
 } from "@superset/workspace-client";
 import { useCallback, useEffect, useMemo } from "react";
+import { useForkBranchBase } from "../useForkBranchBase";
 import { useWorkspaceEvent } from "../useWorkspaceEvent";
 import { createTrailingRefreshScheduler } from "./createTrailingRefreshScheduler";
 import { invalidateGitQueries } from "./invalidateGitQueries";
@@ -25,13 +26,10 @@ export const GIT_STATUS_GC_TIME_MS = 10 * 60_000;
 export function useGitStatus(workspaceId: string, enabled = true) {
 	const utils = workspaceTrpc.useUtils();
 
-	const baseBranchQuery = workspaceTrpc.git.getBaseBranch.useQuery(
-		{ workspaceId },
-		{
-			staleTime: Number.POSITIVE_INFINITY,
-			enabled: enabled && Boolean(workspaceId),
-		},
-	);
+	const baseBranchQuery = useForkBranchBase(workspaceId, {
+		enabled,
+		remember: true,
+	});
 	const baseBranch = baseBranchQuery.data?.baseBranch ?? null;
 
 	const query = workspaceTrpc.git.getStatus.useQuery(
@@ -41,7 +39,7 @@ export function useGitStatus(workspaceId: string, enabled = true) {
 			priority: "foreground",
 		},
 		{
-			enabled: enabled && Boolean(workspaceId),
+			enabled: enabled && Boolean(workspaceId) && baseBranchQuery.isSuccess,
 			gcTime: GIT_STATUS_GC_TIME_MS,
 			refetchOnWindowFocus: true,
 			staleTime: GIT_STATUS_STALE_TIME_MS,

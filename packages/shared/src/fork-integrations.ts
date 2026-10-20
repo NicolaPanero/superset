@@ -175,7 +175,11 @@ export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 		return null;
 	}
 	if (!["https:", "ssh:", "git:"].includes(url.protocol)) return null;
-	const host = url.hostname.toLowerCase();
+	const hostname = url.hostname.toLowerCase();
+	const host =
+		url.protocol === "ssh:" && hostname === "ssh.bitbucket.org"
+			? "bitbucket.org"
+			: hostname;
 	const provider =
 		host === "github.com"
 			? "github"

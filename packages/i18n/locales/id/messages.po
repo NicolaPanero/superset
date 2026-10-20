@@ -3709,6 +3709,9 @@ msgstr "Check Dilewati"
 msgid "Choose a {pluginLabel} account"
 msgstr "Pilih akun {pluginLabel}"
 
+msgid "Choose a base branch to compare committed changes. Only local changes are shown until you choose."
+msgstr "Pilih branch dasar untuk membandingkan perubahan dalam commit. Sebelum memilih, hanya perubahan lokal yang ditampilkan."
+
 msgid "Choose a different profile name."
 msgstr "Pilih nama profil lain."
 
@@ -3744,6 +3747,9 @@ msgstr "Pilih folder repo yang sudah ada"
 
 msgid "Choose app"
 msgstr "Pilih aplikasi"
+
+msgid "Choose base branch"
+msgstr "Pilih branch dasar"
 
 msgid "Choose how files open when no preview pane exists"
 msgstr "Pilih cara file dibuka saat tidak ada panel pratinjau"
@@ -19113,6 +19119,9 @@ msgstr "Lihat log"
 
 msgid "View more"
 msgstr "Lihat selengkapnya"
+
+msgid "View on Bitbucket"
+msgstr "Lihat di Bitbucket"
 
 msgid "View on GitHub"
 msgstr "Lihat di GitHub"

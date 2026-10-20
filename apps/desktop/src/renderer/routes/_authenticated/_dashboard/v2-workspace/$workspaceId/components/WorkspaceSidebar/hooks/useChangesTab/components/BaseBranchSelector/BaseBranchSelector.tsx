@@ -40,7 +40,11 @@ export function BaseBranchSelector({
 					className="flex min-w-0 items-center gap-1 rounded px-1.5 py-0.5 font-medium text-foreground text-xs hover:bg-accent"
 				>
 					<span className="min-w-0 truncate" title={currentValue}>
-						{currentValue}
+						{currentValue === "HEAD" ? (
+							<Trans>Choose base branch</Trans>
+						) : (
+							currentValue
+						)}
 					</span>
 					<ChevronDown className="size-3 shrink-0 text-muted-foreground" />
 				</button>

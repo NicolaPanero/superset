@@ -4,6 +4,7 @@ import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo } from "react";
 import { LuGitCompareArrows } from "react-icons/lu";
+import { useForkBranchBase } from "renderer/hooks/host-service/useForkBranchBase";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useChangeset } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useChangeset";
 import { useOpenInExternalEditor } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useOpenInExternalEditor";
@@ -65,10 +66,7 @@ export function useChangesTab({
 		useV2UserPreferences();
 	const viewMode = preferences.changesViewMode;
 
-	const baseBranchQuery = workspaceTrpc.git.getBaseBranch.useQuery(
-		{ workspaceId },
-		{ staleTime: Number.POSITIVE_INFINITY },
-	);
+	const baseBranchQuery = useForkBranchBase(workspaceId);
 	const baseBranch = baseBranchQuery.data?.baseBranch ?? null;
 
 	const ref = useSidebarDiffRef(workspaceId);
