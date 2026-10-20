@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/react/macro";
-import type { Plan } from "@superset/chat/protocol";
+import { normalizePlanEntryStatus, type Plan } from "@superset/chat/protocol";
 import { CheckCircle2, Circle, CircleDotDashed } from "lucide-react";
 
 const ICON_BY_STATUS = {
@@ -15,7 +15,8 @@ export function PlanRow({ item }: { item: Plan }) {
 				<Trans>Plan</Trans>
 			</span>
 			{item.entries.map((entry, index) => {
-				const Icon = ICON_BY_STATUS[entry.status];
+				const status = normalizePlanEntryStatus(entry.status);
+				const Icon = ICON_BY_STATUS[status];
 				return (
 					<div
 						className="flex items-start gap-2 text-sm"
@@ -24,7 +25,7 @@ export function PlanRow({ item }: { item: Plan }) {
 						<Icon className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" />
 						<span
 							className={
-								entry.status === "completed"
+								status === "completed"
 									? "text-muted-foreground line-through"
 									: undefined
 							}
