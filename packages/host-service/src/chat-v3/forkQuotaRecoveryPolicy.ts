@@ -13,6 +13,15 @@ export function isClaudeQuotaFailure(message: string): boolean {
 	);
 }
 
+// When the limit hits mid-turn, the Claude ACP adapter ends the turn as
+// completed and sends the notice as the last agent message. Only a message that
+// is exactly that notice counts.
+export function isClaudeQuotaMessage(text: string): boolean {
+	return /^(?:You've (?:hit|reached) your [\w -]{0,40}limit(?: · resets [^\n]{1,60})?|You're out of (?:usage credits|extra usage)[^\n]{0,80}|Your org is out of usage[^\n]{0,80})$/.test(
+		text.trim(),
+	);
+}
+
 export function isAccountQuotaFailure(
 	agent: string,
 	error: Turn["error"],
