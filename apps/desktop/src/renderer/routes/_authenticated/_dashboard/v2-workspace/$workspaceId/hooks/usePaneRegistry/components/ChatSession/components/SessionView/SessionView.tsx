@@ -33,6 +33,7 @@ import {
 	type OpenLink,
 	type OpenPage,
 } from "../../providers/ChatPaneActionsProvider";
+import { ForkContextUsageProvider } from "../../providers/ForkContextUsageProvider";
 import type { ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { heldPromptQueue } from "../../utils/heldPromptQueue";
@@ -380,6 +381,20 @@ export function SessionView({
 		},
 		[holdPrompt, approvals, respondToApproval, sendPrompt, runningTurnId],
 	);
+	const canCompact = sessionState?.availableCommands?.some(
+		(command) => command.name === "compact",
+	);
+	const contextUsage = useMemo(
+		() => ({
+			usage: sessionState?.contextUsage,
+			running: sessionState?.status === "running",
+			compact: canCompact
+				? () =>
+						void onSend([{ type: "text", text: "/compact" }], { steer: false })
+				: undefined,
+		}),
+		[sessionState?.contextUsage, sessionState?.status, canCompact, onSend],
+	);
 	const awaitingBackground = sessionState?.awaitingBackground === true;
 	const onCancelTurn = useMemo(
 		() =>
@@ -492,23 +507,25 @@ export function SessionView({
 						</ConnectionNotice>
 					)
 				)}
-				<Composer
-					agentSwitcher={agentSwitcher}
-					availableCommands={sessionState?.availableCommands ?? NO_COMMANDS}
-					configOptions={sessionState?.configOptions ?? NO_CONFIG_OPTIONS}
-					onSetConfigOption={onSetConfigOption}
-					modes={sessionState?.availableModes}
-					currentModeId={sessionState?.modeId}
-					onSetMode={onSetMode}
-					draftKey={draftKey}
-					inputRef={composerRef}
-					history={history}
-					isActive={isActive}
-					onCancelTurn={onCancelTurn}
-					onSend={onSend}
-					promptQueue={heldQueue ?? (held ? undefined : promptQueue)}
-					workspaceId={workspaceId}
-				/>
+				<ForkContextUsageProvider value={contextUsage}>
+					<Composer
+						agentSwitcher={agentSwitcher}
+						availableCommands={sessionState?.availableCommands ?? NO_COMMANDS}
+						configOptions={sessionState?.configOptions ?? NO_CONFIG_OPTIONS}
+						onSetConfigOption={onSetConfigOption}
+						modes={sessionState?.availableModes}
+						currentModeId={sessionState?.modeId}
+						onSetMode={onSetMode}
+						draftKey={draftKey}
+						inputRef={composerRef}
+						history={history}
+						isActive={isActive}
+						onCancelTurn={onCancelTurn}
+						onSend={onSend}
+						promptQueue={heldQueue ?? (held ? undefined : promptQueue)}
+						workspaceId={workspaceId}
+					/>
+				</ForkContextUsageProvider>
 			</ComposerDropZone>
 		</ChatPaneActionsProvider>
 	);

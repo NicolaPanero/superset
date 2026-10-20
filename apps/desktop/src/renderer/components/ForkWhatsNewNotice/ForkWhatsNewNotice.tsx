@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "pr-task-redesign-2026-10";
+export const FORK_WHATS_NEW_ID = "context-meter-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -44,7 +44,7 @@ export function ForkWhatsNewNotice() {
 		}),
 		t({
 			message:
-				"**Simpler task workspaces**: start a workspace from a task or search and link an existing one.",
+				"**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude.",
 		}),
 		t({
 			message:

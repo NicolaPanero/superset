@@ -479,3 +479,24 @@ version's files, write the diff to
 package root), update the key in `patchedDependencies`, run `bun install`, then
 `bun test apps/mobile/react-native-enriched-markdown-list-patch.test.ts`. It is
 a native change: rebuild the app to see it.
+
+## @agentclientprotocol/claude-agent-acp (`@agentclientprotocol%2Fclaude-agent-acp@0.85.0.patch`)
+
+**Why:** Superset++ shows a `/context`-style breakdown for Claude chats. The
+adapter calls the SDK's `getContextUsage()` only internally and offers clients
+no way to ask for it.
+
+**What it changes** (`dist/acp-agent.js`): adds the request
+`_superset/context_usage` `{ sessionId }`, answered with
+`{ usage: SDKControlGetContextUsageResponse | null }` from
+`query.getContextUsage({ detail: "summary" })`. `summary` uses local estimates
+and makes no token-count API calls. The answer is `null` after 5 seconds, for
+an unknown session, or when the SDK throws. The client asks only when the
+popover opens and the session is idle, so the request never waits behind a
+turn or blocks chat loading. Agents without the method answer "method not
+found" and the UI shows the total only.
+
+**On upgrade:** re-create the patch with `bun patch` for the new version, or
+drop it if the adapter starts to expose context usage itself.
+
+**Guard test:** `packages/host-service/src/chat-v3/fork-claude-acp-patch.test.ts`.

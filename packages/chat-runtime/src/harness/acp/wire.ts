@@ -60,7 +60,12 @@ export const acpPromptResponseSchema = z.looseObject({
 
 export const acpUsageUpdateSchema = z.looseObject({
 	cost: z.unknown().optional(),
+	used: z.number().nonnegative().optional(),
+	size: z.number().positive().optional(),
 });
+
+/** Superset's request on the patched Claude adapter; other agents lack it. */
+export const ACP_CONTEXT_USAGE_METHOD = "_superset/context_usage";
 
 export const ACP_STEERING_METHOD = "_session/steering";
 

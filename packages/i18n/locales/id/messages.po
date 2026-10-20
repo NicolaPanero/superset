@@ -539,6 +539,10 @@ msgstr "{0} token dalam {1} hari aktif"
 msgid "{0} uninstalled"
 msgstr "{0} dicopot"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "{0} hingga pemadatan otomatis"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} diperbarui"
@@ -1201,6 +1205,9 @@ msgstr "* jika ditagih pada tarif API penuh"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Penyiapan lebih jelas**: temukan panduan pemasangan CLI agen dan pahami koneksi repositori."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**Konteks sekilas pandang**: cincin di kolom obrolan menunjukkan seberapa penuh konteks, dengan rincian per kategori untuk Claude."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**Tugas Jira lebih cepat**: daftar mengelompokkan tugas menurut status, baris dan kartu lebih ringkas, dan semua filter ada dalam satu bilah."
 
@@ -1209,9 +1216,6 @@ msgstr "**Papan yang sesuai dengan Jira**: status alur kerja yang dikelompokkan 
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**Pull request Bitbucket yang didesain ulang**: header dan kolom info seperti di GitHub, dengan menu Review, Merge, dan Lainnya menggantikan tombol yang tersebar."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**Workspace tugas lebih sederhana**: mulai workspace dari tugas atau cari dan tautkan workspace yang sudah ada."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "Browser dalam aplikasi yang lebih baik: lihat pratinjau perubahan Anda d
 
 msgid "A better Superset is ready"
 msgstr "Superset yang lebih baik sudah siap"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "Rincian per kategori tersedia untuk Claude."
 
 msgid "A CDP endpoint per pane"
 msgstr "Satu endpoint CDP per panel"
@@ -4449,6 +4456,9 @@ msgstr "Komunikasi"
 msgid "Community"
 msgstr "Komunitas"
 
+msgid "Compact session"
+msgstr "Padatkan sesi"
+
 msgid "Company"
 msgstr "Perusahaan"
 
@@ -4802,6 +4812,9 @@ msgstr "Mengandung teks ini..."
 
 msgid "Context"
 msgstr "Konteks"
+
+msgid "Context {percent} used"
+msgstr "Konteks terpakai {percent}"
 
 msgid "Context Menu"
 msgstr "Menu Konteks"
@@ -10178,6 +10191,9 @@ msgstr "Memuat pengaturan agen..."
 msgid "Loading and in-flight activity indicators"
 msgstr "Indikator pemuatan dan aktivitas yang sedang berjalan"
 
+msgid "Loading breakdown…"
+msgstr "Memuat rincian…"
+
 msgid "Loading changes..."
 msgstr "Memuat perubahan..."
 
@@ -10543,6 +10559,9 @@ msgstr "Perintah server MCP"
 msgid "MCP servers"
 msgstr "Server MCP"
 
+msgid "MCP tools"
+msgstr "Alat MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Diukur selama 30 hari terakhir"
 
@@ -10594,6 +10613,9 @@ msgstr "Anggota tidak bisa mengubah peran"
 
 msgid "Memory"
 msgstr "Memori"
+
+msgid "Memory files"
+msgstr "File memori"
 
 msgid "Memory share"
 msgstr "Porsi memori"
@@ -17912,6 +17934,9 @@ msgstr "Pemilik otomatisasi ini tidak bisa lagi menggunakan workspace cloud di o
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Agen terbaik akan berganti.<0/>Alur kerja Anda tidak perlu."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "Rincian diperbarui saat agen selesai."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Tombolnya kini menonjol. Saya sudah memeriksanya di panel Anda."

@@ -539,6 +539,10 @@ msgstr "{0} tokens over {1} actieve dagen"
 msgid "{0} uninstalled"
 msgstr "{0} verwijderd"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "{0} tot automatisch comprimeren"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} bijgewerkt"
@@ -1201,6 +1205,9 @@ msgstr "* bij facturering tegen het volle API-tarief"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Duidelijkere installatie**: vind CLI-installatiegidsen voor je agenten en begrijp verbindingen met repositories."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**Context in één oogopslag**: een ring in het invoerveld toont hoe vol de context is, met een uitsplitsing per categorie voor Claude."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**Snellere Jira-taken**: de lijst groepeert taken op status, rijen en kaarten zijn compact en alle filters staan in één balk."
 
@@ -1209,9 +1216,6 @@ msgstr "**Borden zoals in Jira**: gegroepeerde workflowstatussen blijven in deze
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**Vernieuwde Bitbucket-pull requests**: een koptekst en infokolom zoals op GitHub, met de menu's Review, Merge en Meer in plaats van verspreide knoppen."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**Eenvoudigere werkruimtes voor taken**: start een werkruimte vanuit een taak of zoek en koppel een bestaande werkruimte."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "Een betere ingebouwde browser: bekijk je wijzigingen en klik op elk elem
 
 msgid "A better Superset is ready"
 msgstr "Een betere versie van Superset staat klaar"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "Een uitsplitsing per categorie is beschikbaar voor Claude."
 
 msgid "A CDP endpoint per pane"
 msgstr "Een CDP-endpoint per paneel"
@@ -4449,6 +4456,9 @@ msgstr "Communicatie"
 msgid "Community"
 msgstr "Community"
 
+msgid "Compact session"
+msgstr "Sessie comprimeren"
+
 msgid "Company"
 msgstr "Bedrijf"
 
@@ -4802,6 +4812,9 @@ msgstr "Bevat deze tekst..."
 
 msgid "Context"
 msgstr "Context"
+
+msgid "Context {percent} used"
+msgstr "Context {percent} gebruikt"
 
 msgid "Context Menu"
 msgstr "Contextmenu"
@@ -10178,6 +10191,9 @@ msgstr "Agentinstellingen laden..."
 msgid "Loading and in-flight activity indicators"
 msgstr "Laad- en activiteitsindicatoren"
 
+msgid "Loading breakdown…"
+msgstr "Uitsplitsing laden…"
+
 msgid "Loading changes..."
 msgstr "Wijzigingen laden..."
 
@@ -10543,6 +10559,9 @@ msgstr "MCP-servercommando's"
 msgid "MCP servers"
 msgstr "MCP-servers"
 
+msgid "MCP tools"
+msgstr "MCP-tools"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Gemeten over de laatste 30 dagen"
 
@@ -10594,6 +10613,9 @@ msgstr "Leden kunnen rollen niet wijzigen"
 
 msgid "Memory"
 msgstr "Geheugen"
+
+msgid "Memory files"
+msgstr "Geheugenbestanden"
 
 msgid "Memory share"
 msgstr "Geheugenaandeel"
@@ -17912,6 +17934,9 @@ msgstr "De eigenaar van de automatisering kan in deze organisatie geen cloudwerk
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "De beste agent verandert.<0/>Jouw workflow niet."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "De uitsplitsing wordt bijgewerkt als de agent klaar is."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "De knop valt nu op. Ik heb het gecontroleerd in je paneel."

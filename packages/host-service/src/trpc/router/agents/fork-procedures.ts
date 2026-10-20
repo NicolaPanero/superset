@@ -26,6 +26,7 @@ import { validateSessionAccount } from "../usage/session-account/session-account
 import { agentAccountOptions } from "./account-selection";
 import { forkBackgroundChatProcedures } from "./fork-background-chats";
 import { forkChatAccountProcedures } from "./fork-chat-account";
+import { forkContextBreakdownProcedures } from "./fork-context-breakdown";
 import {
 	exitedAgentTerminalIds,
 	launchDetails,
@@ -265,4 +266,5 @@ export const forkAgentProcedures = {
 	...forkBackgroundChatProcedures,
 	...forkChatAccountProcedures,
 	...forkQuotaRecoveryProcedures,
+	...forkContextBreakdownProcedures,
 };

@@ -1,0 +1,59 @@
+diff --git a/dist/acp-agent.js b/dist/acp-agent.js
+index c78f35ca520aa86ebb0047988cb0d621885e25d4..14aa6d1f53f9ea9631f3b2d062d30298e5952f15 100644
+--- a/dist/acp-agent.js
++++ b/dist/acp-agent.js
+@@ -187,6 +187,17 @@ const TURN_NO_RESULT_MESSAGE = "The turn ended without a result: the agent went
+ const STEER_METHOD = "_session/steering";
+ /** Stops one Claude background task without cancelling the parent prompt turn. */
+ const ASYNC_TASK_STOP_METHOD = "_session/async_task/stop";
++/** Superset: on-demand context breakdown for an idle session (patches/README.md). */
++const SUPERSET_CONTEXT_USAGE_METHOD = "_superset/context_usage";
++function parseSupersetContextUsageRequest(value) {
++    const sessionId = value && typeof value === "object" && typeof value.sessionId === "string"
++        ? value.sessionId.trim()
++        : "";
++    if (!sessionId) {
++        throw RequestError.invalidParams(undefined, "context usage params require a non-empty sessionId");
++    }
++    return { sessionId };
++}
+ function parseAsyncTaskStopRequest(value) {
+     if (!value || typeof value !== "object" || Array.isArray(value)) {
+         throw RequestError.invalidParams(undefined, "async task stop params must be an object");
+@@ -4924,6 +4935,28 @@ export class ClaudeAcpAgent {
+             session.pendingOrphanResults = (session.pendingOrphanResults ?? 0) + 1;
+         }
+     }
++    async supersetContextUsage(params) {
++        const query = this.sessions[params.sessionId]?.query;
++        if (!query || typeof query.getContextUsage !== "function")
++            return { usage: null };
++        let timer;
++        const timeout = new Promise((resolve) => {
++            timer = setTimeout(() => resolve(null), 5000);
++        });
++        try {
++            const usage = await Promise.race([
++                query.getContextUsage({ detail: "summary" }),
++                timeout,
++            ]);
++            return { usage: usage ?? null };
++        }
++        catch {
++            return { usage: null };
++        }
++        finally {
++            clearTimeout(timer);
++        }
++    }
+     async cancel(params) {
+         this.exitPlan.cancel(params.sessionId);
+         const session = this.sessions[params.sessionId];
+@@ -8217,6 +8250,7 @@ export function runAcp(logger) {
+         .onRequest(STEER_METHOD, { parse: parseSteerRequest }, (ctx) => agent.steer(ctx.params))
+         .onRequest(ASYNC_TASK_STOP_METHOD, { parse: parseAsyncTaskStopRequest }, (ctx) => agent.stopAsyncTask(ctx.params))
+         .onRequest(GOAL_CONTROL_METHOD, { parse: parseGoalRequest }, (ctx) => agent.goal(ctx.params))
++        .onRequest(SUPERSET_CONTEXT_USAGE_METHOD, { parse: parseSupersetContextUsageRequest }, (ctx) => agent.supersetContextUsage(ctx.params))
+         .connect(stream);
+     agent = new ClaudeAcpAgent(new ClientConnection(connection.client), logger);
+     return { connection, agent };

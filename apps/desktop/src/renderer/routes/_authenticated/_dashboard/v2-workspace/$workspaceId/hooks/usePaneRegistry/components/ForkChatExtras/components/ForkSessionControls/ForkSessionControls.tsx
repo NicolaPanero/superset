@@ -32,6 +32,7 @@ import {
 	ForkChatSwitchDialog,
 	type ForkSwitchRequest,
 } from "../ForkChatSwitchDialog";
+import { ForkContextMeter } from "../ForkContextMeter";
 import { ForkQuotaRecoveryControls } from "../ForkQuotaRecoveryControls";
 import { ForkSessionModelPicker } from "../ForkSessionModelPicker";
 
@@ -154,6 +155,7 @@ export function ForkSessionControls({
 				onSelect={onSelect}
 				onRequestSwitch={setRequest}
 			/>
+			<ForkContextMeter terminalId={data.terminalId} agent={provider} />
 			<ForkAccountPicker
 				account={account}
 				provider={provider}

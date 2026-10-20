@@ -539,6 +539,10 @@ msgstr "{0} токенов · {1} дн. активности"
 msgid "{0} uninstalled"
 msgstr "{0} удалён"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "{0} до автосжатия"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} обновлён"
@@ -1201,6 +1205,9 @@ msgstr "* при оплате по полному тарифу API"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Понятная настройка**: найдите инструкции по установке CLI агентов и узнайте, как подключать репозитории."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**Контекст с первого взгляда**: кольцо в поле ввода показывает заполненность контекста, а для Claude — разбивку по категориям."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**Быстрые задачи Jira**: список группирует задачи по статусу, строки и карточки компактны, все фильтры — в одной панели."
 
@@ -1209,9 +1216,6 @@ msgstr "**Доски как в Jira**: сгруппированные стату
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**Обновлённые pull request в Bitbucket**: заголовок и колонка сведений как в GitHub, меню Review, Merge и «Ещё» вместо разбросанных кнопок."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**Рабочие области задач стали проще**: создайте рабочую область из задачи или найдите и свяжите существующую."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "Лучший встроенный браузер: смотрите св�
 
 msgid "A better Superset is ready"
 msgstr "Улучшенная версия Superset готова"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "Разбивка по категориям доступна для Claude."
 
 msgid "A CDP endpoint per pane"
 msgstr "Свой CDP-эндпоинт для каждой панели"
@@ -4449,6 +4456,9 @@ msgstr "Коммуникация"
 msgid "Community"
 msgstr "Сообщество"
 
+msgid "Compact session"
+msgstr "Сжать сессию"
+
 msgid "Company"
 msgstr "Компания"
 
@@ -4802,6 +4812,9 @@ msgstr "Содержит этот текст..."
 
 msgid "Context"
 msgstr "Контекст"
+
+msgid "Context {percent} used"
+msgstr "Контекст использован на {percent}"
 
 msgid "Context Menu"
 msgstr "Контекстное меню"
@@ -10178,6 +10191,9 @@ msgstr "Загрузка настроек агента..."
 msgid "Loading and in-flight activity indicators"
 msgstr "Индикаторы загрузки и текущей активности"
 
+msgid "Loading breakdown…"
+msgstr "Загрузка разбивки…"
+
 msgid "Loading changes..."
 msgstr "Загрузка изменений..."
 
@@ -10543,6 +10559,9 @@ msgstr "Команды сервера MCP"
 msgid "MCP servers"
 msgstr "MCP-серверы"
 
+msgid "MCP tools"
+msgstr "Инструменты MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Измерено за последние 30 дней"
 
@@ -10594,6 +10613,9 @@ msgstr "Участники не могут изменять роли"
 
 msgid "Memory"
 msgstr "Память"
+
+msgid "Memory files"
+msgstr "Файлы памяти"
 
 msgid "Memory share"
 msgstr "Доля памяти"
@@ -17912,6 +17934,9 @@ msgstr "Владелец автоматизации больше не может
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Лучший агент будет меняться.<0/>Ваш процесс — нет."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "Разбивка обновится, когда агент закончит."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Теперь кнопка выделяется. Я проверил это в вашей панели."

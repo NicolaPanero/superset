@@ -539,6 +539,10 @@ msgstr "{1} 个活跃日内共 {0} 个 Token"
 msgid "{0} uninstalled"
 msgstr "{0}已卸载"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "距离自动压缩还有 {0}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} 已更新"
@@ -1201,6 +1205,9 @@ msgstr "* 如按API全价计费"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**更清晰的设置**：查看智能体的 CLI 安装指南，了解如何连接代码仓库。"
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**上下文一目了然**：聊天输入框中的圆环显示上下文的占用情况，Claude 还可按类别查看细分。"
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**更快的 Jira 任务**：列表按状态分组任务，行和卡片更紧凑，所有筛选器都在一个栏中。"
 
@@ -1209,9 +1216,6 @@ msgstr "**与 Jira 一致的看板**：已分组的工作流状态保持在同�
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**重新设计的 Bitbucket 拉取请求**：与 GitHub 相同的标题和信息栏，用 Review、Merge 和更多菜单取代分散的按钮。"
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**更简单的任务工作区**：从任务启动工作区，或搜索并关联现有工作区。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "更好用的应用内浏览器：预览改动，点击任意元素即可
 
 msgid "A better Superset is ready"
 msgstr "更好的 Superset 已准备就绪"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "按类别细分适用于 Claude。"
 
 msgid "A CDP endpoint per pane"
 msgstr "每个窗格一个 CDP 端点"
@@ -4449,6 +4456,9 @@ msgstr "沟通"
 msgid "Community"
 msgstr "社区"
 
+msgid "Compact session"
+msgstr "压缩会话"
+
 msgid "Company"
 msgstr "公司"
 
@@ -4802,6 +4812,9 @@ msgstr "包含此文本..."
 
 msgid "Context"
 msgstr "上下文"
+
+msgid "Context {percent} used"
+msgstr "上下文已使用 {percent}"
 
 msgid "Context Menu"
 msgstr "右键菜单"
@@ -10178,6 +10191,9 @@ msgstr "正在加载智能体设置..."
 msgid "Loading and in-flight activity indicators"
 msgstr "加载状态与进行中活动的指示器"
 
+msgid "Loading breakdown…"
+msgstr "正在加载细分…"
+
 msgid "Loading changes..."
 msgstr "正在加载更改..."
 
@@ -10543,6 +10559,9 @@ msgstr "MCP服务器命令"
 msgid "MCP servers"
 msgstr "MCP 服务器"
 
+msgid "MCP tools"
+msgstr "MCP 工具"
+
 msgid "Measured over the trailing 30 days"
 msgstr "按最近 30 天计算"
 
@@ -10594,6 +10613,9 @@ msgstr "成员不能修改角色"
 
 msgid "Memory"
 msgstr "内存"
+
+msgid "Memory files"
+msgstr "记忆文件"
 
 msgid "Memory share"
 msgstr "内存占比"
@@ -17912,6 +17934,9 @@ msgstr "该自动化的所有者已无法在此组织中使用云端工作区。
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的智能体会变。<0/>你的工作流不该变。"
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "细分将在代理完成后更新。"
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按钮现在更醒目了。我已在你的窗格中确认过。"

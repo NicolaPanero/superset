@@ -1391,6 +1391,7 @@
     "workerd",
   ],
   "patchedDependencies": {
+    "@agentclientprotocol/claude-agent-acp@0.85.0": "patches/@agentclientprotocol%2Fclaude-agent-acp@0.85.0.patch",
     "metro@0.84.6": "patches/metro@0.84.6.patch",
     "metro@0.87.1": "patches/metro@0.87.1.patch",
     "trpc-electron@0.1.2": "patches/trpc-electron@0.1.2.patch",

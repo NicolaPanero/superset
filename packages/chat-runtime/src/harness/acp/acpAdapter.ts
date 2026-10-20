@@ -71,6 +71,7 @@ import {
 } from "./rpcClient";
 import type { AcpConfigSelectOption, AcpElicitationProperty } from "./wire";
 import {
+	ACP_CONTEXT_USAGE_METHOD,
 	ACP_STEERING_METHOD,
 	type AcpContentBlock,
 	type AcpToolCallContent,
@@ -468,6 +469,8 @@ export class AcpAdapter implements HarnessAdapter {
 	private supportsSteering = false;
 	private cycleEnded = false;
 	private steeredCyclePending = false;
+	private contextUsage: { used: number; size: number } | undefined;
+	private contextBreakdownUnsupported = false;
 	private readonly backgroundTaskTurns = new Map<string, string | undefined>();
 	private awaitingBackground = false;
 	/** The v2 config option that stands in for v1's session mode, once seen. */
@@ -811,6 +814,29 @@ export class AcpAdapter implements HarnessAdapter {
 				});
 				this.emitNotice("error", error.message);
 			});
+	}
+
+	/**
+	 * The agent's per-category context breakdown, or null. Asked only between
+	 * turns: the request shares the agent's control channel with Stop.
+	 */
+	async contextBreakdown(): Promise<unknown | null> {
+		const client = this.client;
+		const sessionId = this.sessionId;
+		if (!client || !sessionId || this.contextBreakdownUnsupported) return null;
+		if (this.currentTurn?.status === "running") return null;
+		try {
+			const response = await client.request(
+				ACP_CONTEXT_USAGE_METHOD,
+				{ sessionId },
+				6_000,
+			);
+			return (response as { usage?: unknown } | null)?.usage ?? null;
+		} catch (error) {
+			if (error instanceof AcpRpcError && error.code === -32601)
+				this.contextBreakdownUnsupported = true;
+			return null;
+		}
 	}
 
 	async stopBackgroundTask(taskId: string): Promise<boolean> {
@@ -1241,6 +1267,15 @@ export class AcpAdapter implements HarnessAdapter {
 
 		if (variant === "usage_update") {
 			const usage = acpUsageUpdateSchema.safeParse(outer.data.update);
+			const { used, size } = usage.data ?? {};
+			if (
+				used !== undefined &&
+				size !== undefined &&
+				(used !== this.contextUsage?.used || size !== this.contextUsage?.size)
+			) {
+				this.contextUsage = { used, size };
+				this.emitSession({ contextUsage: this.contextUsage });
+			}
 			if (usage.success && usage.data.cost !== undefined) this.flushOpenText();
 			if (
 				usage.success &&

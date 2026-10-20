@@ -539,6 +539,10 @@ msgstr "활동 {1}일 동안 토큰 {0}개"
 msgid "{0} uninstalled"
 msgstr "{0} 제거됨"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "자동 압축까지 {0}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} 업데이트됨"
@@ -1201,6 +1205,9 @@ msgstr "* 전액 API 요금으로 청구될 경우"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**더 명확한 설정**: 에이전트의 CLI 설치 안내와 저장소 연결 방식을 확인하세요."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**컨텍스트를 한눈에**: 채팅 입력창의 링이 컨텍스트 사용량을 보여 주며, Claude는 카테고리별 분석도 제공합니다."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**더 빠른 Jira 작업**: 목록이 상태별로 작업을 묶고, 행과 카드가 간결해졌으며, 모든 필터가 한 줄에 모였습니다."
 
@@ -1209,9 +1216,6 @@ msgstr "**Jira와 일치하는 보드**: 그룹화된 워크플로 상태가 같
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**새롭게 디자인된 Bitbucket 풀 리퀘스트**: GitHub와 같은 헤더와 정보 열, 흩어진 버튼 대신 Review·Merge·더 보기 메뉴."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**더 간편한 작업 워크스페이스**: 작업에서 워크스페이스를 시작하거나 기존 워크스페이스를 검색해 연결하세요."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "더 나은 인앱 브라우저입니다. 변경 사항을 미리 보고,
 
 msgid "A better Superset is ready"
 msgstr "더 나은 Superset이 준비되었습니다"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "카테고리별 분석은 Claude에서 사용할 수 있습니다."
 
 msgid "A CDP endpoint per pane"
 msgstr "패널마다 전용 CDP 엔드포인트"
@@ -4449,6 +4456,9 @@ msgstr "커뮤니케이션"
 msgid "Community"
 msgstr "커뮤니티"
 
+msgid "Compact session"
+msgstr "세션 압축"
+
 msgid "Company"
 msgstr "회사"
 
@@ -4802,6 +4812,9 @@ msgstr "이 텍스트를 포함..."
 
 msgid "Context"
 msgstr "컨텍스트"
+
+msgid "Context {percent} used"
+msgstr "컨텍스트 {percent} 사용"
 
 msgid "Context Menu"
 msgstr "컨텍스트 메뉴"
@@ -10178,6 +10191,9 @@ msgstr "에이전트 설정을 불러오는 중..."
 msgid "Loading and in-flight activity indicators"
 msgstr "로딩 및 진행 중 활동 표시기"
 
+msgid "Loading breakdown…"
+msgstr "분석 불러오는 중…"
+
 msgid "Loading changes..."
 msgstr "변경 사항을 불러오는 중..."
 
@@ -10543,6 +10559,9 @@ msgstr "MCP 서버 명령"
 msgid "MCP servers"
 msgstr "MCP 서버"
 
+msgid "MCP tools"
+msgstr "MCP 도구"
+
 msgid "Measured over the trailing 30 days"
 msgstr "최근 30일 기준"
 
@@ -10594,6 +10613,9 @@ msgstr "멤버는 역할을 변경할 수 없습니다"
 
 msgid "Memory"
 msgstr "메모리"
+
+msgid "Memory files"
+msgstr "메모리 파일"
 
 msgid "Memory share"
 msgstr "메모리 점유율"
@@ -17912,6 +17934,9 @@ msgstr "자동화 소유자가 더 이상 이 조직에서 클라우드 워크�
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "최고의 에이전트는 바뀝니다.<0/>워크플로는 그럴 필요 없습니다."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "분석은 에이전트 작업이 끝나면 업데이트됩니다."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "버튼이 이제 눈에 띕니다. 패널에서 확인했습니다."

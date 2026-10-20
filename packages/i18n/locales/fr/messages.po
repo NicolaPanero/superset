@@ -539,6 +539,10 @@ msgstr "{0} tokens sur {1} jours actifs"
 msgid "{0} uninstalled"
 msgstr "{0} désinstallé"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "{0} avant la compaction automatique"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} mis à jour"
@@ -1201,6 +1205,9 @@ msgstr "* si facturé au tarif API plein"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Configuration plus claire** : trouvez les guides d’installation des CLI de vos agents et comprenez les connexions aux dépôts."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**Le contexte en un coup d’œil** : un anneau dans le compositeur indique le remplissage du contexte, avec un détail par catégorie pour Claude."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**Tâches Jira plus rapides** : la liste regroupe les tâches par statut, les lignes et cartes sont compactes et tous les filtres tiennent dans une seule barre."
 
@@ -1209,9 +1216,6 @@ msgstr "**Tableaux fidèles à Jira** : les statuts regroupés du workflow reste
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**Pull requests Bitbucket repensées** : un en-tête et une colonne d’informations comme sur GitHub, avec les menus Review, Merge et Plus au lieu de boutons dispersés."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**Des espaces de travail simplifiés pour les tâches** : démarrez un espace de travail depuis une tâche ou recherchez et liez un espace existant."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "Un meilleur navigateur intégré : prévisualisez vos changements et cli
 
 msgid "A better Superset is ready"
 msgstr "Une meilleure version de Superset est prête"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "Le détail par catégorie est disponible pour Claude."
 
 msgid "A CDP endpoint per pane"
 msgstr "Un point de terminaison CDP par volet"
@@ -4449,6 +4456,9 @@ msgstr "Communication"
 msgid "Community"
 msgstr "Communauté"
 
+msgid "Compact session"
+msgstr "Compacter la session"
+
 msgid "Company"
 msgstr "Entreprise"
 
@@ -4802,6 +4812,9 @@ msgstr "Contient ce texte..."
 
 msgid "Context"
 msgstr "Contexte"
+
+msgid "Context {percent} used"
+msgstr "Contexte utilisé à {percent}"
 
 msgid "Context Menu"
 msgstr "Menu contextuel"
@@ -10178,6 +10191,9 @@ msgstr "Chargement des paramètres de l'agent..."
 msgid "Loading and in-flight activity indicators"
 msgstr "Indicateurs de chargement et d'activité en cours"
 
+msgid "Loading breakdown…"
+msgstr "Chargement du détail…"
+
 msgid "Loading changes..."
 msgstr "Chargement des modifications..."
 
@@ -10543,6 +10559,9 @@ msgstr "Commandes du serveur MCP"
 msgid "MCP servers"
 msgstr "Serveurs MCP"
 
+msgid "MCP tools"
+msgstr "Outils MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Mesuré sur les 30 derniers jours"
 
@@ -10594,6 +10613,9 @@ msgstr "Les membres ne peuvent pas modifier les rôles"
 
 msgid "Memory"
 msgstr "Mémoire"
+
+msgid "Memory files"
+msgstr "Fichiers mémoire"
 
 msgid "Memory share"
 msgstr "Part de mémoire"
@@ -17912,6 +17934,9 @@ msgstr "Le propriétaire de l'automatisation ne peut plus utiliser d'espaces de 
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Le meilleur agent changera.<0/>Pas votre façon de travailler."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "Le détail se met à jour quand l’agent a terminé."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Le bouton ressort maintenant. Je l'ai vérifié dans votre volet."

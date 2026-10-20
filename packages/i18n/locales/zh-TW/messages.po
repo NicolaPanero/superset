@@ -539,6 +539,10 @@ msgstr "{1} 個活躍日內共 {0} 個 Token"
 msgid "{0} uninstalled"
 msgstr "{0}已解除安裝"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "距離自動壓縮還有 {0}"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} 已更新"
@@ -1201,6 +1205,9 @@ msgstr "* 如按API全價計費"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**更清楚的設定**：查看代理程式的 CLI 安裝指南，瞭解如何連結程式碼儲存庫。"
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**內容一目了然**：聊天輸入框中的圓環顯示內容的使用量，Claude 還可依類別查看細分。"
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**更快的 Jira 任務**：清單依狀態分組任務，列與卡片更精簡，所有篩選器都在同一列。"
 
@@ -1209,9 +1216,6 @@ msgstr "**與 Jira 一致的看板**：已分組的工作流程狀態保留在�
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**重新設計的 Bitbucket 拉取請求**：與 GitHub 相同的標題和資訊欄，以 Review、Merge 和更多選單取代分散的按鈕。"
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**更簡單的任務工作區**：從任務啟動工作區，或搜尋並連結現有工作區。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "更好用的應用程式內瀏覽器：預覽改動，點選任意元素
 
 msgid "A better Superset is ready"
 msgstr "更好的 Superset 已準備就緒"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "依類別細分適用於 Claude。"
 
 msgid "A CDP endpoint per pane"
 msgstr "每個窗格一個 CDP 端點"
@@ -4449,6 +4456,9 @@ msgstr "溝通"
 msgid "Community"
 msgstr "社群"
 
+msgid "Compact session"
+msgstr "壓縮工作階段"
+
 msgid "Company"
 msgstr "公司"
 
@@ -4802,6 +4812,9 @@ msgstr "包含此文字..."
 
 msgid "Context"
 msgstr "上下文"
+
+msgid "Context {percent} used"
+msgstr "內容已使用 {percent}"
 
 msgid "Context Menu"
 msgstr "右鍵選單"
@@ -10178,6 +10191,9 @@ msgstr "正在載入代理程式設定..."
 msgid "Loading and in-flight activity indicators"
 msgstr "載入狀態與進行中活動的指示器"
 
+msgid "Loading breakdown…"
+msgstr "正在載入細分…"
+
 msgid "Loading changes..."
 msgstr "正在載入更改..."
 
@@ -10543,6 +10559,9 @@ msgstr "MCP伺服器命令"
 msgid "MCP servers"
 msgstr "MCP 伺服器"
 
+msgid "MCP tools"
+msgstr "MCP 工具"
+
 msgid "Measured over the trailing 30 days"
 msgstr "以最近 30 天計算"
 
@@ -10594,6 +10613,9 @@ msgstr "成員不能修改角色"
 
 msgid "Memory"
 msgstr "記憶體"
+
+msgid "Memory files"
+msgstr "記憶檔案"
 
 msgid "Memory share"
 msgstr "記憶體佔比"
@@ -17912,6 +17934,9 @@ msgstr "此自動化的擁有者已無法在此組織中使用雲端工作區。
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "最好的代理程式會變。<0/>你的工作流不該變。"
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "細分會在代理完成後更新。"
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "按鈕現在更醒目了。我已在你的窗格中確認過。"

@@ -539,6 +539,10 @@ msgstr "{0} token in {1} giorni attivi"
 msgid "{0} uninstalled"
 msgstr "{0} disinstallato"
 
+#. placeholder {0}: formatCompactNumber( Math.max(0, data.autoCompactThreshold - data.totalTokens), )
+msgid "{0} until auto-compact"
+msgstr "{0} all'auto-compattazione"
+
 #. placeholder {0}: displayName(variables.name)
 msgid "{0} updated"
 msgstr "{0} aggiornato"
@@ -1201,6 +1205,9 @@ msgstr "* se fatturato alla tariffa API piena"
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Configurazione più chiara**: guide per installare le CLI degli agenti e spiegazioni sui collegamenti ai repository."
 
+msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
+msgstr "**Contesto a colpo d'occhio**: un anello nel composer mostra quanto è pieno il contesto, con la suddivisione per categoria per Claude."
+
 msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 msgstr "**Task Jira più rapidi**: la lista raggruppa i task per stato, righe e card sono compatte e tutti i filtri stanno in una sola barra."
 
@@ -1209,9 +1216,6 @@ msgstr "**Board fedeli a Jira**: gli stati raggruppati del workflow restano nell
 
 msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 msgstr "**Pull request Bitbucket ridisegnate**: intestazione e colonna informazioni come su GitHub, con i menu Review, Merge e Altro al posto dei pulsanti sparsi."
-
-msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
-msgstr "**Workspace dei task più semplici**: avvia un workspace dal task oppure cerca e collega un workspace esistente."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1446,6 +1450,9 @@ msgstr "Un browser interno migliore: guarda l'anteprima delle tue modifiche e cl
 
 msgid "A better Superset is ready"
 msgstr "Una versione migliore di Superset è pronta"
+
+msgid "A breakdown by category is available for Claude."
+msgstr "La suddivisione per categoria è disponibile per Claude."
 
 msgid "A CDP endpoint per pane"
 msgstr "Un endpoint CDP per riquadro"
@@ -4449,6 +4456,9 @@ msgstr "Comunicazione"
 msgid "Community"
 msgstr "Community"
 
+msgid "Compact session"
+msgstr "Compatta sessione"
+
 msgid "Company"
 msgstr "Azienda"
 
@@ -4802,6 +4812,9 @@ msgstr "Contiene questo testo..."
 
 msgid "Context"
 msgstr "Context"
+
+msgid "Context {percent} used"
+msgstr "Contesto usato al {percent}"
 
 msgid "Context Menu"
 msgstr "Context Menu"
@@ -10178,6 +10191,9 @@ msgstr "Caricamento delle impostazioni degli agenti..."
 msgid "Loading and in-flight activity indicators"
 msgstr "Indicatori di caricamento e di attività in corso"
 
+msgid "Loading breakdown…"
+msgstr "Caricamento suddivisione…"
+
 msgid "Loading changes..."
 msgstr "Caricamento delle modifiche..."
 
@@ -10543,6 +10559,9 @@ msgstr "Comandi del server MCP"
 msgid "MCP servers"
 msgstr "Server MCP"
 
+msgid "MCP tools"
+msgstr "Strumenti MCP"
+
 msgid "Measured over the trailing 30 days"
 msgstr "Misurato sugli ultimi 30 giorni"
 
@@ -10594,6 +10613,9 @@ msgstr "I membri non possono modificare i ruoli"
 
 msgid "Memory"
 msgstr "Memoria"
+
+msgid "Memory files"
+msgstr "File di memoria"
 
 msgid "Memory share"
 msgstr "Quota di memoria"
@@ -17912,6 +17934,9 @@ msgstr "Il proprietario dell'automazione non può più usare i workspace cloud i
 
 msgid "The best agent will change.<0/>Your workflow shouldn't."
 msgstr "Il miglior agente cambierà.<0/>Il tuo flusso di lavoro no."
+
+msgid "The breakdown updates when the agent finishes."
+msgstr "La suddivisione si aggiorna quando l'agente finisce."
 
 msgid "The button now stands out. I checked it in your pane."
 msgstr "Ora il pulsante risalta. L'ho verificato nel tuo riquadro."

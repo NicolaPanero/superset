@@ -55,6 +55,9 @@ class FakeAcpAgent {
 	private heldPrompts: number[] = [];
 	/** Advertise `_session/steering` and answer it with this outcome. */
 	steeringOutcome: string | null = null;
+	/** Answer for `_superset/context_usage`; undefined answers "method not found". */
+	contextUsage: unknown;
+	contextUsageRequests = 0;
 	/** Leave session/prompt unanswered, as a turn still running does. */
 	holdPrompts = false;
 	private handlers!: AcpTransportHandlers;
@@ -313,6 +316,15 @@ class FakeAcpAgent {
 				}
 				// ACP returns null after replaying history; adapter keeps the id.
 				this.respond(frame.id as number, null);
+			} else if (frame.method === "_superset/context_usage") {
+				this.contextUsageRequests++;
+				if (this.contextUsage === undefined)
+					this.deliver({
+						jsonrpc: "2.0",
+						id: frame.id,
+						error: { code: -32601, message: "Method not found" },
+					});
+				else this.respond(frame.id as number, { usage: this.contextUsage });
 			} else if (frame.method === "_session/steering") {
 				this.respond(frame.id as number, { outcome: this.steeringOutcome });
 			} else if (frame.method === "session/prompt" && this.holdPrompts) {
@@ -2405,6 +2417,47 @@ describe("AcpAdapter on protocol v2", () => {
 		await flush();
 		expect(awaiting()).toEqual([true, false]);
 
+		await adapter.dispose();
+	});
+
+	it("reports context usage and asks for the breakdown only between turns", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdPrompts = true;
+		agent.contextUsage = { totalTokens: 10, maxTokens: 100, categories: [] };
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "usage_update",
+			used: 10,
+			size: 100,
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "usage_update",
+			used: 10,
+			size: 100,
+		});
+		await flush();
+		expect(
+			sessionsOf(events).flatMap((s) =>
+				s.contextUsage ? [s.contextUsage] : [],
+			),
+		).toEqual([{ used: 10, size: 100 }]);
+
+		expect(await adapter.contextBreakdown()).toEqual(agent.contextUsage);
+		adapter.prompt([{ type: "text", text: "work" }]);
+		await flush();
+		expect(await adapter.contextBreakdown()).toBeNull();
+		expect(agent.contextUsageRequests).toBe(1);
+		await adapter.dispose();
+	});
+
+	it("stops asking for a breakdown an agent does not support", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter } = startAdapter(agent);
+		await flush();
+		expect(await adapter.contextBreakdown()).toBeNull();
+		expect(await adapter.contextBreakdown()).toBeNull();
+		expect(agent.contextUsageRequests).toBe(1);
 		await adapter.dispose();
 	});
 
