@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} installato"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} in {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se fatturato alla tariffa API piena"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filtri board e sprint**: scegli la board Jira e lo sprint senza scrivere JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Configurazione più chiara**: guide per installare le CLI degli agenti e spiegazioni sui collegamenti ai repository."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Azioni più chiare sui task**: cambia stato dal badge, con una scelta guidata quando una colonna raggruppa più stati."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Task Jira più rapidi**: la lista raggruppa i task per stato, righe e card sono compatte e tutti i filtri stanno in una sola barra."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Board fedeli a Jira**: gli stati raggruppati del workflow restano nelle stesse colonne."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Pull request Bitbucket ridisegnate**: intestazione e colonna informazioni come su GitHub, con i menu Review, Merge e Altro al posto dei pulsanti sparsi."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Workspace dei task più semplici**: avvia un workspace dal task oppure cerca e collega un workspace esistente."
@@ -5215,6 +5217,9 @@ msgstr "Impossibile segnare come pronta"
 msgid "Could not open billing. Please try again."
 msgstr "Impossibile aprire la fatturazione. Riprova."
 
+msgid "Could not open file"
+msgstr "Impossibile aprire il file"
+
 msgid "Could not open Files"
 msgstr "Impossibile aprire File"
 
@@ -6121,6 +6126,10 @@ msgstr "Eliminare \"{projectName}\"?"
 msgid "Delete “{title}”?"
 msgstr "Eliminare “{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Eliminare {0} in Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Bozza aperta"
 
 msgid "drafted 3 support replies"
 msgstr "preparate 3 risposte di supporto"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Trascina un task in un’altra colonna oppure fai clic sul suo stato."
 
 msgid "Drag to reorder"
 msgstr "Trascina per riordinare"
@@ -11713,6 +11719,9 @@ msgstr "Nessun risultato per “{query}”"
 msgid "No results found."
 msgstr "Nessun risultato trovato."
 
+msgid "No reviewers"
+msgstr "Nessun revisore"
+
 msgid "No Reviewers Assigned"
 msgstr "Nessun revisore assegnato"
 
@@ -12473,6 +12482,9 @@ msgstr "Apri nel Finder"
 msgid "Open in GitHub"
 msgstr "Apri in GitHub"
 
+msgid "Open in Jira"
+msgstr "Apri in Jira"
+
 msgid "Open in Linear"
 msgstr "Apri in Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Le sessioni parallele per sviluppatore raddoppiano ogni sette mesi, supe
 msgid "Parameters"
 msgstr "Parametri"
 
+msgid "Parent"
+msgstr "Padre"
+
 msgid "Parent directory"
 msgstr "Directory padre"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Ritmo massimo"
-
-msgid "Pending"
-msgstr "In attesa"
 
 msgid "Pending Invitations"
 msgstr "Inviti in sospeso"
@@ -14723,9 +14735,6 @@ msgstr "Risolvi il thread"
 
 msgid "Resolved"
 msgstr "Risolto"
-
-msgid "Resolved · show"
-msgstr "Risolto · mostra"
 
 msgid "Resource consumption"
 msgstr "Consumo di risorse"

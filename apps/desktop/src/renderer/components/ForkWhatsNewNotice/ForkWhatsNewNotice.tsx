@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "jira-board-ux-2026-10";
+export const FORK_WHATS_NEW_ID = "pr-task-redesign-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -32,15 +32,15 @@ export function ForkWhatsNewNotice() {
 	const highlights = [
 		t({
 			message:
+				"**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons.",
+		}),
+		t({
+			message:
+				"**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar.",
+		}),
+		t({
+			message:
 				"**Jira boards that match Jira**: grouped workflow statuses stay in the same columns.",
-		}),
-		t({
-			message:
-				"**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses.",
-		}),
-		t({
-			message:
-				"**Board and sprint filters**: choose your Jira board and sprint without writing JQL.",
 		}),
 		t({
 			message:

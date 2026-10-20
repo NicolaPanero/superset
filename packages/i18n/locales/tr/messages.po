@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} kuruldu"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} → {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* tam API tarifesiyle faturalandırılsaydı"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Pano ve sprint filtreleri**: JQL yazmadan Jira panonuzu ve sprintinizi seçin."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Daha anlaşılır kurulum**: ajanlarınız için CLI kurulum kılavuzlarını bulun ve depo bağlantılarını anlayın."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Daha anlaşılır görev işlemleri**: bir sütunda birden fazla durum varsa yönlendirilmiş seçeneklerle görev rozetinden durumu değiştirin."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Daha hızlı Jira görevleri**: liste görevleri duruma göre gruplar, satırlar ve kartlar kompakttır, tüm filtreler tek bir çubuktadır."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jira ile aynı panolar**: gruplanmış iş akışı durumları aynı sütunlarda kalır."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Yeniden tasarlanan Bitbucket pull request'leri**: GitHub'daki gibi başlık ve bilgi sütunu, dağınık düğmeler yerine Review, Merge ve Diğer menüleri."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Görevler için daha basit çalışma alanları**: bir görevden çalışma alanı başlatın veya mevcut bir alanı arayıp bağlayın."
@@ -5215,6 +5217,9 @@ msgstr "Hazır olarak işaretlenemedi"
 msgid "Could not open billing. Please try again."
 msgstr "Faturalandırma açılamadı. Lütfen tekrar deneyin."
 
+msgid "Could not open file"
+msgstr "Dosya açılamadı"
+
 msgid "Could not open Files"
 msgstr "Dosyalar açılamadı"
 
@@ -6121,6 +6126,10 @@ msgstr "\"{projectName}\" silinsin mi?"
 msgid "Delete “{title}”?"
 msgstr "“{title}” silinsin mi?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "{0} Jira'da silinsin mi?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Taslak açıldı"
 
 msgid "drafted 3 support replies"
 msgstr "3 destek yanıtı taslağı hazırladı"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Bir görevi başka bir sütuna sürükleyin veya durumuna tıklayın."
 
 msgid "Drag to reorder"
 msgstr "Sıralamak için sürükleyin"
@@ -11713,6 +11719,9 @@ msgstr "“{query}” için sonuç yok"
 msgid "No results found."
 msgstr "Sonuç bulunamadı."
 
+msgid "No reviewers"
+msgstr "İnceleyen yok"
+
 msgid "No Reviewers Assigned"
 msgstr "İnceleyici atanmadı"
 
@@ -12473,6 +12482,9 @@ msgstr "Finder'da aç"
 msgid "Open in GitHub"
 msgstr "GitHub'da aç"
 
+msgid "Open in Jira"
+msgstr "Jira'da aç"
+
 msgid "Open in Linear"
 msgstr "Linear'da aç"
 
@@ -13030,6 +13042,9 @@ msgstr "Geliştirici başına paralel oturumlar yedi ayda bir ikiye katlanarak A
 msgid "Parameters"
 msgstr "Parametreler"
 
+msgid "Parent"
+msgstr "Üst öğe"
+
 msgid "Parent directory"
 msgstr "Üst dizin"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Zirve hız"
-
-msgid "Pending"
-msgstr "Bekliyor"
 
 msgid "Pending Invitations"
 msgstr "Bekleyen davetler"
@@ -14723,9 +14735,6 @@ msgstr "Konuyu çöz"
 
 msgid "Resolved"
 msgstr "Çözüldü"
-
-msgid "Resolved · show"
-msgstr "Çözüldü · göster"
 
 msgid "Resource consumption"
 msgstr "Kaynak tüketimi"

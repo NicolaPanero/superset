@@ -12,6 +12,7 @@ import { Textarea } from "@superset/ui/textarea";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { LuZap } from "react-icons/lu";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
@@ -101,12 +102,17 @@ export function ForkJiraAutomations({
 			<Button
 				size="sm"
 				variant="ghost"
+				className="h-8 gap-1.5 px-2 text-xs"
+				title={t({ message: "Automations" })}
 				onClick={() => {
 					setQuery(jql);
 					setOpen(true);
 				}}
 			>
-				<Trans>Automations</Trans>
+				<LuZap className="size-3.5" />
+				<span className="hidden @3xl:inline">
+					<Trans>Automations</Trans>
+				</span>
 			</Button>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="max-h-[85vh] overflow-auto sm:max-w-2xl">

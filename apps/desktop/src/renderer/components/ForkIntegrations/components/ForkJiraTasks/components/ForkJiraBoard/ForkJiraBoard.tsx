@@ -15,11 +15,12 @@ import {
 } from "@superset/ui/dialog";
 import { cn } from "@superset/ui/utils";
 import { useRef, useState } from "react";
+import { StatusIcon } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/components/shared/StatusIcon";
 import { useForkTaskTransition } from "../../../../hooks/useForkTaskTransition";
 import { forkJiraColumnForStatus } from "../../../../utils/forkJiraColumns";
 import { ForkTaskTransitionDialog } from "../../../ForkTaskTransitionDialog";
 import { ForkTaskTransitionOptions } from "../../../ForkTaskTransitionOptions";
-import { jiraStatusTone } from "../../fork-jira-query";
+import { jiraStatusColor, jiraStatusType } from "../../fork-jira-query";
 import { ForkJiraTaskCard } from "../ForkJiraTaskCard";
 
 const DRAG_TYPE = "application/x-superset-jira-issue";
@@ -28,11 +29,13 @@ export function ForkJiraBoard({
 	tasks,
 	columns,
 	selected,
+	showSprint,
 	onSelect,
 }: {
 	tasks: ForkTask[];
 	columns: ForkJiraColumn[];
 	selected?: string;
+	showSprint?: boolean;
 	onSelect: (key: string) => void;
 }) {
 	const { t } = useLingui();
@@ -81,10 +84,7 @@ export function ForkJiraBoard({
 		}
 	};
 	return (
-		<div className="flex min-h-full flex-col gap-3">
-			<p className="text-[11px] text-muted-foreground">
-				<Trans>Drag a task to another column, or click its status.</Trans>
-			</p>
+		<div className="flex min-h-full flex-col gap-3 p-4">
 			{(dragError ||
 				change.transitions.error ||
 				(change.mutation.error && !change.requiredTransition)) && (
@@ -106,6 +106,8 @@ export function ForkJiraBoard({
 						(task) =>
 							forkJiraColumnForStatus(columns, task.status)?.id === column.id,
 					);
+					const category =
+						column.category ?? entries[0]?.status.category ?? "new";
 					const available =
 						!!moving &&
 						!busy &&
@@ -115,10 +117,13 @@ export function ForkJiraBoard({
 							key={column.id}
 							aria-label={column.name}
 							className={cn(
-								"flex min-h-60 w-80 shrink-0 flex-col rounded-xl border border-border/60 bg-muted/20 transition-colors",
+								"flex min-h-60 flex-col rounded-xl bg-[color-mix(in_srgb,var(--muted)_35%,var(--background))] transition-colors",
+								entries.length
+									? "w-72 min-w-72 max-w-md flex-1"
+									: "w-52 shrink-0",
 								over === column.id &&
 									available &&
-									"border-primary bg-primary/5 ring-1 ring-primary",
+									"bg-primary/5 ring-1 ring-primary",
 							)}
 							onDragOver={(event) => {
 								if (available) {
@@ -144,32 +149,33 @@ export function ForkJiraBoard({
 									void drop(column);
 							}}
 						>
-							<div className="sticky top-0 z-10 flex items-center gap-2 rounded-t-xl border-b border-border/50 bg-background/95 px-3 py-3 backdrop-blur-sm">
-								<span
-									className={cn(
-										"size-2 rounded-full bg-current",
-										jiraStatusTone(
-											column.category ?? entries[0]?.status.category ?? "new",
-										),
-									)}
+							<div className="sticky top-0 z-10 flex items-center gap-2 rounded-t-xl bg-[color-mix(in_srgb,var(--muted)_35%,var(--background))] px-3 pt-3 pb-2">
+								<StatusIcon
+									type={jiraStatusType(category)}
+									color={jiraStatusColor(category)}
 								/>
 								<h2
-									className="min-w-0 flex-1 truncate text-xs font-semibold"
+									className="min-w-0 truncate text-xs font-semibold"
 									title={column.name}
 								>
 									{column.name}
 								</h2>
-								<span className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] tabular-nums text-muted-foreground">
+								<span className="text-xs tabular-nums text-muted-foreground">
 									{formatNumber(entries.length)}
 								</span>
 							</div>
-							<div className="flex-1 space-y-2 p-2">
+							<div className="flex-1 space-y-2 px-2 pb-2">
 								{entries.map((task) => (
 									<fieldset
 										aria-label={task.key}
 										key={task.id}
 										draggable={change.supported && !busy}
-										className={cn(moving?.id === task.id && "opacity-60")}
+										className={cn(
+											change.supported &&
+												!busy &&
+												"cursor-grab active:cursor-grabbing",
+											moving?.id === task.id && "opacity-60",
+										)}
 										onDragStart={(event) => {
 											event.dataTransfer.setData(DRAG_TYPE, task.id);
 											event.dataTransfer.effectAllowed = "move";
@@ -187,13 +193,13 @@ export function ForkJiraBoard({
 											task={task}
 											columns={columns}
 											selected={selected === task.key}
-											board
+											showSprint={showSprint}
 											onClick={() => onSelect(task.key)}
 										/>
 									</fieldset>
 								))}
 								{!entries.length && (
-									<div className="grid min-h-24 place-items-center rounded-lg border border-dashed border-border/50 text-[11px] text-muted-foreground">
+									<div className="grid min-h-16 place-items-center rounded-lg border border-dashed border-border/60 text-[11px] text-muted-foreground">
 										<Trans>No tasks</Trans>
 									</div>
 								)}

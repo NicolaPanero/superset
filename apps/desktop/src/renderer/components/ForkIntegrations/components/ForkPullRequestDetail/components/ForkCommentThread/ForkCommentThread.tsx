@@ -1,10 +1,19 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
-import { Textarea } from "@superset/ui/textarea";
 import { cn } from "@superset/ui/utils";
 import { useState } from "react";
-import { LuCheck, LuRotateCcw } from "react-icons/lu";
+import {
+	LuCheck,
+	LuChevronDown,
+	LuChevronRight,
+	LuFileCode,
+	LuReply,
+	LuRotateCcw,
+} from "react-icons/lu";
 import { CommentBody } from "renderer/components/CommentBody";
+import { ForkCommentComposer } from "../../../ForkCommentComposer";
+import { ForkRelativeTime } from "../../../ForkRelativeTime";
+import { ForkUserAvatar } from "../../../ForkUserAvatar";
 import type { ForkReviewThread } from "../../utils/forkReviewThreads";
 
 export function ForkCommentThread({
@@ -23,77 +32,104 @@ export function ForkCommentThread({
 	showLocation?: boolean;
 }) {
 	const { t } = useLingui();
-	const [reply, setReply] = useState("");
 	const [open, setOpen] = useState(!thread.root.resolved);
+	const [replying, setReplying] = useState(false);
 	const { root } = thread;
+	const location = showLocation && root.path;
 	return (
 		<article
 			className={cn(
-				"rounded-lg border bg-background text-sm",
-				root.resolved && "opacity-70",
+				"overflow-hidden rounded-xl border border-border/60 bg-background text-sm shadow-sm",
+				root.resolved && "bg-muted/20",
 			)}
 		>
-			<header className="flex items-center gap-2 border-b px-3 py-2 text-xs">
-				<span className="font-medium">{root.author}</span>
-				{showLocation && root.path && (
-					<span className="min-w-0 truncate font-mono text-muted-foreground">
-						{root.path}
-						{root.line ? `:${root.line}` : ""}
-					</span>
-				)}
-				{root.resolved && (
-					<button
-						type="button"
-						className="ml-auto text-muted-foreground hover:text-foreground"
-						onClick={() => setOpen(!open)}
-					>
-						{open ? <Trans>Hide</Trans> : <Trans>Resolved · show</Trans>}
-					</button>
-				)}
-			</header>
-			{open && (
-				<div className="space-y-3 p-3">
-					{[root, ...thread.replies].map((comment) => (
-						<div key={comment.id} className="min-w-0 space-y-1">
-							{comment !== root && (
-								<p className="text-xs font-medium">{comment.author}</p>
+			{(location || root.resolved) && (
+				<header className="flex min-w-0 items-center gap-2 border-b border-border/60 bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground">
+					{location && (
+						<span className="flex min-w-0 items-center gap-1.5 font-mono">
+							<LuFileCode className="size-3.5 shrink-0" />
+							<span className="truncate">
+								{root.path}
+								{root.line ? `:${root.line}` : ""}
+							</span>
+						</span>
+					)}
+					{root.resolved && (
+						<button
+							type="button"
+							className="ml-auto flex shrink-0 items-center gap-1 rounded hover:text-foreground"
+							onClick={() => setOpen(!open)}
+						>
+							<LuCheck className="size-3.5" />
+							<Trans>Resolved</Trans>
+							{open ? (
+								<LuChevronDown className="size-3.5" />
+							) : (
+								<LuChevronRight className="size-3.5" />
 							)}
-							<div className="overflow-x-auto break-words">
-								{comment.deleted ? (
-									<span className="text-muted-foreground italic">
-										<Trans>Deleted comment</Trans>
+						</button>
+					)}
+				</header>
+			)}
+			{open && (
+				<div className="divide-y divide-border/40">
+					{[root, ...thread.replies].map((comment) => (
+						<div key={comment.id} className="flex min-w-0 gap-3 px-3 py-3">
+							<ForkUserAvatar name={comment.author} className="mt-0.5" />
+							<div className="min-w-0 flex-1 space-y-1">
+								<p className="flex min-w-0 items-center gap-1.5 text-xs">
+									<span className="truncate font-medium">{comment.author}</span>
+									<span className="text-muted-foreground">
+										<ForkRelativeTime value={comment.createdAt} />
 									</span>
-								) : (
-									<CommentBody body={comment.body} />
-								)}
+								</p>
+								<div className="overflow-x-auto break-words">
+									{comment.deleted ? (
+										<span className="text-muted-foreground italic">
+											<Trans>Deleted comment</Trans>
+										</span>
+									) : (
+										<CommentBody body={comment.body} />
+									)}
+								</div>
 							</div>
 						</div>
 					))}
 					{canReply && (
-						<div className="space-y-2">
-							<Textarea
-								aria-label={t({ message: "Reply" })}
-								placeholder={t({ message: "Reply" })}
-								className="min-h-16"
-								value={reply}
-								onChange={(e) => setReply(e.target.value)}
-							/>
-							<div className="flex gap-2">
-								<Button
-									size="sm"
-									disabled={!reply.trim() || busy}
-									onClick={() =>
-										void onReply(root.id, reply).then(
-											() => setReply(""),
-											() => undefined,
-										)
+						<div className="space-y-2 bg-muted/10 px-3 py-2">
+							{replying && (
+								<ForkCommentComposer
+									compact
+									disabled={busy}
+									placeholder={t({ message: "Write a reply" })}
+									onSubmit={(text) =>
+										onReply(root.id, text).then(() => setReplying(false))
 									}
-								>
-									<Trans>Reply</Trans>
-								</Button>
+								/>
+							)}
+							<div className="flex gap-1">
+								{replying ? (
+									<Button
+										size="xs"
+										variant="ghost"
+										onClick={() => setReplying(false)}
+									>
+										<Trans>Cancel</Trans>
+									</Button>
+								) : (
+									<Button
+										size="xs"
+										variant="ghost"
+										disabled={busy}
+										onClick={() => setReplying(true)}
+									>
+										<LuReply className="size-3.5" />
+										<Trans>Reply</Trans>
+									</Button>
+								)}
 								{root.path && (
 									<Button
-										size="sm"
+										size="xs"
 										variant="ghost"
 										disabled={busy}
 										onClick={() => onResolve(root.id, !root.resolved)}

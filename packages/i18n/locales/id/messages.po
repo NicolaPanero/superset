@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} terpasang"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} ke {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filter papan dan sprint**: pilih papan Jira dan sprint tanpa menulis JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Penyiapan lebih jelas**: temukan panduan pemasangan CLI agen dan pahami koneksi repositori."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Tindakan tugas yang lebih jelas**: ubah status dari lencana tugas, dengan pilihan terpandu saat satu kolom memiliki beberapa status."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Tugas Jira lebih cepat**: daftar mengelompokkan tugas menurut status, baris dan kartu lebih ringkas, dan semua filter ada dalam satu bilah."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Papan yang sesuai dengan Jira**: status alur kerja yang dikelompokkan tetap berada di kolom yang sama."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Pull request Bitbucket yang didesain ulang**: header dan kolom info seperti di GitHub, dengan menu Review, Merge, dan Lainnya menggantikan tombol yang tersebar."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Workspace tugas lebih sederhana**: mulai workspace dari tugas atau cari dan tautkan workspace yang sudah ada."
@@ -5215,6 +5217,9 @@ msgstr "Tidak bisa menandai siap"
 msgid "Could not open billing. Please try again."
 msgstr "Tidak dapat membuka penagihan. Coba lagi."
 
+msgid "Could not open file"
+msgstr "Tidak dapat membuka file"
+
 msgid "Could not open Files"
 msgstr "Tidak bisa membuka Files"
 
@@ -6121,6 +6126,10 @@ msgstr "Hapus \"{projectName}\"?"
 msgid "Delete “{title}”?"
 msgstr "Hapus “{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Hapus {0} di Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Draf dibuka"
 
 msgid "drafted 3 support replies"
 msgstr "menyusun 3 draf balasan dukungan"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Seret tugas ke kolom lain atau klik statusnya."
 
 msgid "Drag to reorder"
 msgstr "Seret untuk mengurutkan ulang"
@@ -11713,6 +11719,9 @@ msgstr "Tidak ada hasil untuk “{query}”"
 msgid "No results found."
 msgstr "Tidak ada hasil ditemukan."
 
+msgid "No reviewers"
+msgstr "Tidak ada peninjau"
+
 msgid "No Reviewers Assigned"
 msgstr "Tidak Ada Reviewer yang Ditugaskan"
 
@@ -12473,6 +12482,9 @@ msgstr "Buka di Finder"
 msgid "Open in GitHub"
 msgstr "Buka di GitHub"
 
+msgid "Open in Jira"
+msgstr "Buka di Jira"
+
 msgid "Open in Linear"
 msgstr "Buka di Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Sesi paralel per pengembang berlipat ganda setiap tujuh bulan, melewati 
 msgid "Parameters"
 msgstr "Parameter"
 
+msgid "Parent"
+msgstr "Induk"
+
 msgid "Parent directory"
 msgstr "Direktori induk"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Laju puncak"
-
-msgid "Pending"
-msgstr "Menunggu"
 
 msgid "Pending Invitations"
 msgstr "Undangan Tertunda"
@@ -14723,9 +14735,6 @@ msgstr "Selesaikan thread"
 
 msgid "Resolved"
 msgstr "Terselesaikan"
-
-msgid "Resolved · show"
-msgstr "Terselesaikan · tampilkan"
 
 msgid "Resource consumption"
 msgstr "Konsumsi sumber daya"

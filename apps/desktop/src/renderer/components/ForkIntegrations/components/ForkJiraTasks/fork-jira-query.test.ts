@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { forkJiraQuery } from "./fork-jira-query";
+import { forkJiraQuery, jiraPriorityLevel } from "./fork-jira-query";
 
 const filters = {
 	search: "",
@@ -66,4 +66,12 @@ test("a selected board and sprint narrow the task query", () => {
 			sprint: "1636",
 		}),
 	).toBe('filter = "15563" AND sprint = 1636 ORDER BY updated DESC');
+});
+
+test("jiraPriorityLevel maps Jira priority names to priority icons", () => {
+	expect(jiraPriorityLevel("Highest")).toBe("urgent");
+	expect(jiraPriorityLevel("High")).toBe("high");
+	expect(jiraPriorityLevel("Medium")).toBe("medium");
+	expect(jiraPriorityLevel("Lowest")).toBe("low");
+	expect(jiraPriorityLevel(null)).toBe("none");
 });

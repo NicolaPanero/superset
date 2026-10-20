@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "Đã cài {0}"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} vào {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* nếu tính theo giá API đầy đủ"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Bộ lọc bảng và sprint**: chọn bảng Jira và sprint mà không cần viết JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Thiết lập rõ ràng hơn**: tìm hướng dẫn cài đặt CLI cho tác nhân và hiểu cách kết nối kho mã."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Thao tác tác vụ rõ ràng hơn**: đổi trạng thái từ nhãn tác vụ, với lựa chọn hướng dẫn khi một cột có nhiều trạng thái."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Tác vụ Jira nhanh hơn**: danh sách nhóm tác vụ theo trạng thái, hàng và thẻ gọn hơn, mọi bộ lọc nằm trên một thanh."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Bảng khớp với Jira**: các trạng thái quy trình được nhóm vẫn nằm trong cùng các cột."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Pull request Bitbucket được thiết kế lại**: tiêu đề và cột thông tin như GitHub, với các menu Review, Merge và Thêm thay cho các nút rời rạc."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Workspace tác vụ đơn giản hơn**: bắt đầu workspace từ tác vụ hoặc tìm và liên kết workspace hiện có."
@@ -5215,6 +5217,9 @@ msgstr "Không thể đánh dấu sẵn sàng"
 msgid "Could not open billing. Please try again."
 msgstr "Không thể mở trang thanh toán. Vui lòng thử lại."
 
+msgid "Could not open file"
+msgstr "Không thể mở tệp"
+
 msgid "Could not open Files"
 msgstr "Không thể mở Files"
 
@@ -6121,6 +6126,10 @@ msgstr "Xóa \"{projectName}\"?"
 msgid "Delete “{title}”?"
 msgstr "Xóa “{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Xóa {0} trong Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Mở bản nháp"
 
 msgid "drafted 3 support replies"
 msgstr "đã soạn 3 câu trả lời hỗ trợ"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Kéo tác vụ sang cột khác hoặc nhấp vào trạng thái của tác vụ."
 
 msgid "Drag to reorder"
 msgstr "Kéo để sắp xếp lại"
@@ -11713,6 +11719,9 @@ msgstr "Không có kết quả cho “{query}”"
 msgid "No results found."
 msgstr "Không tìm thấy kết quả nào."
 
+msgid "No reviewers"
+msgstr "Không có người duyệt"
+
 msgid "No Reviewers Assigned"
 msgstr "Chưa gán người review"
 
@@ -12473,6 +12482,9 @@ msgstr "Mở trong Finder"
 msgid "Open in GitHub"
 msgstr "Mở trong GitHub"
 
+msgid "Open in Jira"
+msgstr "Mở trong Jira"
+
 msgid "Open in Linear"
 msgstr "Mở trong Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Số phiên song song trên mỗi nhà phát triển tăng gấp đôi s
 msgid "Parameters"
 msgstr "Tham số"
 
+msgid "Parent"
+msgstr "Mục cha"
+
 msgid "Parent directory"
 msgstr "Thư mục cha"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Tốc độ đỉnh"
-
-msgid "Pending"
-msgstr "Đang chờ"
 
 msgid "Pending Invitations"
 msgstr "Lời mời đang chờ"
@@ -14723,9 +14735,6 @@ msgstr "Đánh dấu luồng đã xử lý"
 
 msgid "Resolved"
 msgstr "Đã giải quyết"
-
-msgid "Resolved · show"
-msgstr "Đã giải quyết · hiện"
 
 msgid "Resource consumption"
 msgstr "Mức tiêu thụ tài nguyên"

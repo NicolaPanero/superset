@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0}をインストールしました"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} → {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* API定価で課金された場合"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**ボードとスプリントのフィルター**：JQLを書かずにJiraボードとスプリントを選べます。"
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**わかりやすいセットアップ**: エージェントのCLIインストールガイドとリポジトリ接続の説明を確認できます。"
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**わかりやすいタスク操作**：タスクのバッジから状態を変更できます。列に複数の状態がある場合は、候補から選択できます。"
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Jira タスクをより速く**: リストはステータスごとにまとまり、行とカードはコンパクトに、フィルターは 1 本のバーに集約。"
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jiraと一致するボード**：まとめられたワークフローの状態は、同じ列に表示されます。"
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Bitbucket のプルリクエストを刷新**: GitHub と同じヘッダーと情報欄、散らばったボタンの代わりに Review・Merge・その他メニュー。"
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**タスクのワークスペースをシンプルに**: タスクからワークスペースを開始するか、既存のワークスペースを検索してリンクできます。"
@@ -5215,6 +5217,9 @@ msgstr "レビュー可能にできませんでした"
 msgid "Could not open billing. Please try again."
 msgstr "請求ページを開けませんでした。もう一度お試しください。"
 
+msgid "Could not open file"
+msgstr "ファイルを開けませんでした"
+
 msgid "Could not open Files"
 msgstr "「ファイル」を開けませんでした"
 
@@ -6121,6 +6126,10 @@ msgstr "「{projectName}」を削除しますか?"
 msgid "Delete “{title}”?"
 msgstr "「{title}」を削除しますか?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Jira で {0} を削除しますか？"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "ドラフト作成"
 
 msgid "drafted 3 support replies"
 msgstr "サポート返信を3件下書き"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "タスクを別の列にドラッグするか、状態をクリックしてください。"
 
 msgid "Drag to reorder"
 msgstr "ドラッグして並べ替え"
@@ -11713,6 +11719,9 @@ msgstr "「{query}」に一致する結果はありません"
 msgid "No results found."
 msgstr "結果が見つかりません。"
 
+msgid "No reviewers"
+msgstr "レビュアーなし"
+
 msgid "No Reviewers Assigned"
 msgstr "レビュアーの割り当てなし"
 
@@ -12473,6 +12482,9 @@ msgstr "Finderで開く"
 msgid "Open in GitHub"
 msgstr "GitHubで開く"
 
+msgid "Open in Jira"
+msgstr "Jira で開く"
+
 msgid "Open in Linear"
 msgstr "Linearで開く"
 
@@ -13030,6 +13042,9 @@ msgstr "開発者あたりの並列セッション数は7か月ごとに倍増�
 msgid "Parameters"
 msgstr "パラメータ"
 
+msgid "Parent"
+msgstr "親"
+
 msgid "Parent directory"
 msgstr "親ディレクトリ"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "最速ペース"
-
-msgid "Pending"
-msgstr "保留中"
 
 msgid "Pending Invitations"
 msgstr "保留中の招待"
@@ -14723,9 +14735,6 @@ msgstr "スレッドを解決"
 
 msgid "Resolved"
 msgstr "解決済み"
-
-msgid "Resolved · show"
-msgstr "解決済み · 表示"
 
 msgid "Resource consumption"
 msgstr "リソース消費"

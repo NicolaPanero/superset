@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} geïnstalleerd"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} naar {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* bij facturering tegen het volle API-tarief"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filters voor bord en sprint**: kies je Jira-bord en sprint zonder JQL te schrijven."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Duidelijkere installatie**: vind CLI-installatiegidsen voor je agenten en begrijp verbindingen met repositories."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Duidelijkere taakacties**: wijzig de status via het statuslabel, met begeleide keuzes wanneer een kolom meerdere statussen bevat."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Snellere Jira-taken**: de lijst groepeert taken op status, rijen en kaarten zijn compact en alle filters staan in één balk."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Borden zoals in Jira**: gegroepeerde workflowstatussen blijven in dezelfde kolommen."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Vernieuwde Bitbucket-pull requests**: een koptekst en infokolom zoals op GitHub, met de menu's Review, Merge en Meer in plaats van verspreide knoppen."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Eenvoudigere werkruimtes voor taken**: start een werkruimte vanuit een taak of zoek en koppel een bestaande werkruimte."
@@ -5215,6 +5217,9 @@ msgstr "Kan niet als klaar markeren"
 msgid "Could not open billing. Please try again."
 msgstr "Kon facturering niet openen. Probeer het opnieuw."
 
+msgid "Could not open file"
+msgstr "Kan bestand niet openen"
+
 msgid "Could not open Files"
 msgstr "Kan Bestanden niet openen"
 
@@ -6121,6 +6126,10 @@ msgstr "\"{projectName}\" verwijderen?"
 msgid "Delete “{title}”?"
 msgstr "“{title}” verwijderen?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "{0} verwijderen in Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Draft geopend"
 
 msgid "drafted 3 support replies"
 msgstr "3 supportantwoorden opgesteld"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Sleep een taak naar een andere kolom of klik op de status."
 
 msgid "Drag to reorder"
 msgstr "Sleep om te herordenen"
@@ -11713,6 +11719,9 @@ msgstr "Geen resultaten voor “{query}”"
 msgid "No results found."
 msgstr "Geen resultaten gevonden."
 
+msgid "No reviewers"
+msgstr "Geen reviewers"
+
 msgid "No Reviewers Assigned"
 msgstr "Geen reviewers toegewezen"
 
@@ -12473,6 +12482,9 @@ msgstr "Openen in Finder"
 msgid "Open in GitHub"
 msgstr "Openen in GitHub"
 
+msgid "Open in Jira"
+msgstr "Openen in Jira"
+
 msgid "Open in Linear"
 msgstr "Openen in Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Parallelle sessies per ontwikkelaar verdubbelen elke zeven maanden en pa
 msgid "Parameters"
 msgstr "Parameters"
 
+msgid "Parent"
+msgstr "Bovenliggend"
+
 msgid "Parent directory"
 msgstr "Bovenliggende map"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Piektempo"
-
-msgid "Pending"
-msgstr "In afwachting"
 
 msgid "Pending Invitations"
 msgstr "Openstaande uitnodigingen"
@@ -14723,9 +14735,6 @@ msgstr "Thread oplossen"
 
 msgid "Resolved"
 msgstr "Opgelost"
-
-msgid "Resolved · show"
-msgstr "Opgelost · tonen"
 
 msgid "Resource consumption"
 msgstr "Resourcegebruik"

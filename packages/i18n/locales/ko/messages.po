@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} 설치됨"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} → {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 전액 API 요금으로 청구될 경우"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**보드 및 스프린트 필터**: JQL을 작성하지 않고 Jira 보드와 스프린트를 선택하세요."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**더 명확한 설정**: 에이전트의 CLI 설치 안내와 저장소 연결 방식을 확인하세요."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**더 명확한 작업 동작**: 작업 배지에서 상태를 변경하고, 열에 여러 상태가 있으면 안내에 따라 선택하세요."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**더 빠른 Jira 작업**: 목록이 상태별로 작업을 묶고, 행과 카드가 간결해졌으며, 모든 필터가 한 줄에 모였습니다."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jira와 일치하는 보드**: 그룹화된 워크플로 상태가 같은 열에 유지됩니다."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**새롭게 디자인된 Bitbucket 풀 리퀘스트**: GitHub와 같은 헤더와 정보 열, 흩어진 버튼 대신 Review·Merge·더 보기 메뉴."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**더 간편한 작업 워크스페이스**: 작업에서 워크스페이스를 시작하거나 기존 워크스페이스를 검색해 연결하세요."
@@ -5215,6 +5217,9 @@ msgstr "준비됨으로 표시할 수 없습니다"
 msgid "Could not open billing. Please try again."
 msgstr "결제 페이지를 열 수 없습니다. 다시 시도해 주세요."
 
+msgid "Could not open file"
+msgstr "파일을 열 수 없습니다"
+
 msgid "Could not open Files"
 msgstr "파일 앱을 열지 못했습니다"
 
@@ -6121,6 +6126,10 @@ msgstr "\"{projectName}\"을(를) 삭제할까요?"
 msgid "Delete “{title}”?"
 msgstr "“{title}”을(를) 삭제할까요?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Jira에서 {0}을(를) 삭제할까요?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "초안 열림"
 
 msgid "drafted 3 support replies"
 msgstr "지원 답변 3건 초안 작성"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "작업을 다른 열로 드래그하거나 상태를 클릭하세요."
 
 msgid "Drag to reorder"
 msgstr "끌어서 순서 변경"
@@ -11713,6 +11719,9 @@ msgstr "“{query}”에 대한 결과가 없습니다"
 msgid "No results found."
 msgstr "결과를 찾을 수 없습니다."
 
+msgid "No reviewers"
+msgstr "리뷰어 없음"
+
 msgid "No Reviewers Assigned"
 msgstr "지정된 리뷰어 없음"
 
@@ -12473,6 +12482,9 @@ msgstr "Finder에서 열기"
 msgid "Open in GitHub"
 msgstr "GitHub에서 열기"
 
+msgid "Open in Jira"
+msgstr "Jira에서 열기"
+
 msgid "Open in Linear"
 msgstr "Linear에서 열기"
 
@@ -13030,6 +13042,9 @@ msgstr "개발자당 병렬 세션 수가 7개월마다 두 배로 늘어나며 
 msgid "Parameters"
 msgstr "매개변수"
 
+msgid "Parent"
+msgstr "상위 항목"
+
 msgid "Parent directory"
 msgstr "상위 디렉터리"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "최고 속도"
-
-msgid "Pending"
-msgstr "대기 중"
 
 msgid "Pending Invitations"
 msgstr "대기 중인 초대"
@@ -14723,9 +14735,6 @@ msgstr "스레드 해결"
 
 msgid "Resolved"
 msgstr "해결됨"
-
-msgid "Resolved · show"
-msgstr "해결됨 · 보기"
 
 msgid "Resource consumption"
 msgstr "리소스 사용량"

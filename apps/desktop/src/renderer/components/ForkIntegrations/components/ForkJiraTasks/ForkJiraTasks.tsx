@@ -18,7 +18,7 @@ import { ForkProviderIcon } from "../ForkProviderIcon";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkTaskDetail } from "../ForkTaskDetail/ForkTaskDetail";
 import { ForkJiraBoard } from "./components/ForkJiraBoard";
-import { ForkJiraTaskCard } from "./components/ForkJiraTaskCard";
+import { ForkJiraTaskList } from "./components/ForkJiraTaskList";
 import { ForkJiraTaskToolbar } from "./components/ForkJiraTaskToolbar";
 import { type ForkJiraTaskFilters, forkJiraQuery } from "./fork-jira-query";
 import { useForkJiraBoardContext } from "./hooks/useForkJiraBoardContext";
@@ -151,6 +151,7 @@ export function ForkJiraTasks() {
 		done: t({ message: "Done" }),
 		other: t({ message: "Other statuses" }),
 	});
+	const showSprint = new Set(items.map((task) => task.sprint ?? "")).size > 1;
 	const unavailable = [query.error, detail.error].some(
 		isForkServiceUnavailable,
 	);
@@ -170,6 +171,15 @@ export function ForkJiraTasks() {
 					void query.refetch();
 					if (search.forkTask) void detail.refetch();
 				}}
+				count={
+					<>
+						{formatNumber(items.length)}
+						{query.hasNextPage && "+"}
+					</>
+				}
+				automations={
+					<ForkJiraAutomations connectionId={connectionId} jql={jql} />
+				}
 			/>
 			{unavailable && (
 				<div className="border-b p-3">
@@ -189,21 +199,8 @@ export function ForkJiraTasks() {
 						search.forkTask && "hidden @3xl/jira:flex",
 					)}
 				>
-					<div className="flex items-center gap-2 border-b bg-muted/20 px-4 py-2 text-[11px] text-muted-foreground">
-						<ForkProviderIcon provider="jira" className="size-3" />
-						<span aria-live="polite">
-							{formatNumber(items.length)}
-							{query.hasNextPage && "+"} · <Trans>Tasks</Trans>
-						</span>
-						<ForkJiraAutomations connectionId={connectionId} jql={jql} />
-						{search.forkJql && (
-							<span className="ml-auto rounded bg-muted px-1.5 font-mono">
-								JQL
-							</span>
-						)}
-					</div>
 					<div
-						className="min-h-0 flex-1 overflow-auto p-3"
+						className="min-h-0 flex-1 overflow-auto"
 						aria-busy={query.isFetching}
 					>
 						{!connection ? (
@@ -230,19 +227,45 @@ export function ForkJiraTasks() {
 								</Button>
 							</div>
 						) : query.isPending ? (
-							<div className="space-y-2">
-								{["first", "second", "third", "fourth", "fifth", "sixth"].map(
-									(id) => (
-										<Skeleton key={id} className="h-24 w-full rounded-xl" />
-									),
-								)}
-							</div>
+							board ? (
+								<div className="flex gap-3 p-4">
+									{["first", "second", "third"].map((id) => (
+										<div
+											key={id}
+											className="w-72 min-w-72 max-w-md flex-1 space-y-2 rounded-xl bg-[color-mix(in_srgb,var(--muted)_35%,var(--background))] p-2"
+										>
+											<Skeleton className="m-1 h-4 w-24" />
+											<Skeleton className="h-28 w-full rounded-lg" />
+											<Skeleton className="h-28 w-full rounded-lg" />
+										</div>
+									))}
+								</div>
+							) : (
+								<div>
+									<Skeleton className="h-9 w-full rounded-none" />
+									{["a", "b", "c", "d", "e", "f", "g", "h"].map((id) => (
+										<div
+											key={id}
+											className="flex h-10 items-center gap-3 border-b border-border/50 px-4"
+										>
+											<Skeleton className="size-4" />
+											<Skeleton className="h-3 w-20" />
+											<Skeleton className="h-3 flex-1" />
+											<Skeleton className="h-5 w-16" />
+											<Skeleton className="size-5 rounded-full" />
+										</div>
+									))}
+								</div>
+							)
 						) : (
 							<>
 								{query.isError && !isForkServiceUnavailable(query.error) && (
 									<div
 										role="alert"
-										className="mb-4 rounded-xl border bg-muted/20 p-4 text-sm"
+										className={cn(
+											"rounded-xl border bg-muted/20 p-4 text-sm",
+											"m-4",
+										)}
 									>
 										<p className="font-medium">
 											<Trans>Could not load tasks.</Trans>
@@ -303,24 +326,21 @@ export function ForkJiraTasks() {
 										columns={columns}
 										tasks={items}
 										selected={search.forkTask}
+										showSprint={showSprint}
 										onSelect={(key) => void update({ forkTask: key })}
 									/>
 								) : (
-									<div className="space-y-1">
-										{items.map((task) => (
-											<ForkJiraTaskCard
-												columns={columns}
-												key={task.id}
-												task={task}
-												selected={search.forkTask === task.key}
-												onClick={() => void update({ forkTask: task.key })}
-											/>
-										))}
-									</div>
+									<ForkJiraTaskList
+										columns={columns}
+										tasks={items}
+										selected={search.forkTask}
+										showSprint={showSprint}
+										onSelect={(key) => void update({ forkTask: key })}
+									/>
 								)}
 								{query.hasNextPage && (
 									<Button
-										className="mx-auto mt-4 flex"
+										className="mx-auto my-4 flex"
 										variant="outline"
 										size="sm"
 										disabled={query.isFetchingNextPage}

@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} installed"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} into {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* if billed at full API rate"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
@@ -5215,6 +5217,9 @@ msgstr "Could not mark ready"
 msgid "Could not open billing. Please try again."
 msgstr "Could not open billing. Please try again."
 
+msgid "Could not open file"
+msgstr "Could not open file"
+
 msgid "Could not open Files"
 msgstr "Could not open Files"
 
@@ -6121,6 +6126,10 @@ msgstr "Delete \"{projectName}\"?"
 msgid "Delete “{title}”?"
 msgstr "Delete “{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Delete {0} in Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Draft opened"
 
 msgid "drafted 3 support replies"
 msgstr "drafted 3 support replies"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Drag a task to another column, or click its status."
 
 msgid "Drag to reorder"
 msgstr "Drag to reorder"
@@ -11713,6 +11719,9 @@ msgstr "No results for “{query}”"
 msgid "No results found."
 msgstr "No results found."
 
+msgid "No reviewers"
+msgstr "No reviewers"
+
 msgid "No Reviewers Assigned"
 msgstr "No Reviewers Assigned"
 
@@ -12473,6 +12482,9 @@ msgstr "Open in Finder"
 msgid "Open in GitHub"
 msgstr "Open in GitHub"
 
+msgid "Open in Jira"
+msgstr "Open in Jira"
+
 msgid "Open in Linear"
 msgstr "Open in Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Parallel sessions per developer doubling every seven months, crossing th
 msgid "Parameters"
 msgstr "Parameters"
 
+msgid "Parent"
+msgstr "Parent"
+
 msgid "Parent directory"
 msgstr "Parent directory"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Peak pace"
-
-msgid "Pending"
-msgstr "Pending"
 
 msgid "Pending Invitations"
 msgstr "Pending Invitations"
@@ -14723,9 +14735,6 @@ msgstr "Resolve thread"
 
 msgid "Resolved"
 msgstr "Resolved"
-
-msgid "Resolved · show"
-msgstr "Resolved · show"
 
 msgid "Resource consumption"
 msgstr "Resource consumption"

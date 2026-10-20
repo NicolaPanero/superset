@@ -72,6 +72,37 @@ export function jiraStatusTone(category: string) {
 			: "text-muted-foreground bg-muted";
 }
 
+export function jiraStatusType(
+	category: string | undefined,
+): "unstarted" | "started" | "completed" | "backlog" {
+	return category === "done"
+		? "completed"
+		: category === "indeterminate"
+			? "started"
+			: category === "new"
+				? "unstarted"
+				: "backlog";
+}
+
+export function jiraStatusColor(category: string | undefined) {
+	return category === "done"
+		? "#10b981"
+		: category === "indeterminate"
+			? "#3b82f6"
+			: "#a3a3a3";
+}
+
+export function jiraPriorityLevel(
+	name: string | null | undefined,
+): "urgent" | "high" | "medium" | "low" | "none" {
+	const value = name?.toLowerCase() ?? "";
+	if (/highest|blocker|critical|urgent/.test(value)) return "urgent";
+	if (/high|major/.test(value)) return "high";
+	if (/medium|normal/.test(value)) return "medium";
+	if (/low|minor|trivial/.test(value)) return "low";
+	return "none";
+}
+
 export interface ForkJiraTaskFilters {
 	forkTask?: string;
 	forkConnection?: string;

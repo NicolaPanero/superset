@@ -23,7 +23,7 @@ export function ForkJiraBoardFilters({
 	const { t } = useLingui();
 	if (!context.supported) return null;
 	return (
-		<div className="flex flex-wrap items-center gap-2">
+		<>
 			<Select
 				value={search.forkJiraBoard ?? "all"}
 				disabled={context.isPending}
@@ -36,7 +36,8 @@ export function ForkJiraBoardFilters({
 			>
 				<SelectTrigger
 					aria-label={t({ message: "Jira board" })}
-					className="h-8 w-auto min-w-44 max-w-64 text-xs"
+					size="sm"
+					className="w-auto max-w-56 gap-1.5 border-border/60 px-2.5 text-xs shadow-none"
 				>
 					<LuLayoutDashboard className="size-3.5 shrink-0 text-muted-foreground" />
 					<SelectValue placeholder={t({ message: "Jira board" })} />
@@ -61,7 +62,8 @@ export function ForkJiraBoardFilters({
 			>
 				<SelectTrigger
 					aria-label={t({ message: "Sprint" })}
-					className="h-8 w-auto min-w-36 max-w-64 text-xs"
+					size="sm"
+					className="w-auto max-w-56 gap-1.5 border-border/60 px-2.5 text-xs shadow-none"
 				>
 					<LuTimer className="size-3.5 shrink-0 text-muted-foreground" />
 					<SelectValue />
@@ -110,6 +112,6 @@ export function ForkJiraBoardFilters({
 					</span>
 				)
 			)}
-		</div>
+		</>
 	);
 }

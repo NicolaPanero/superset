@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} nainstalováno"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} do {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filtry nástěnky a sprintu**: vyberte nástěnku Jira a sprint bez psaní JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Srozumitelnější nastavení**: najděte návody k instalaci CLI agentů a pochopte připojení repozitářů."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Přehlednější akce úkolů**: měňte stav pomocí štítku úkolu, s výběrem cíle, pokud sloupec obsahuje více stavů."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Rychlejší úkoly v Jira**: seznam seskupuje úkoly podle stavu, řádky a karty jsou kompaktní a všechny filtry jsou v jednom pruhu."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Nástěnky odpovídající Jira**: seskupené stavy pracovního postupu zůstávají ve stejných sloupcích."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Přepracované pull requesty v Bitbucketu**: záhlaví a informační sloupec jako na GitHubu, s nabídkami Review, Merge a Další místo roztroušených tlačítek."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Jednodušší pracovní prostory úkolů**: spusťte pracovní prostor z úkolu nebo vyhledejte a propojte existující."
@@ -5215,6 +5217,9 @@ msgstr "Nepodařilo se označit jako připravené"
 msgid "Could not open billing. Please try again."
 msgstr "Fakturaci se nepodařilo otevřít. Zkuste to znovu."
 
+msgid "Could not open file"
+msgstr "Soubor nelze otevřít"
+
 msgid "Could not open Files"
 msgstr "Nepodařilo se otevřít Soubory"
 
@@ -6121,6 +6126,10 @@ msgstr "Smazat „{projectName}“?"
 msgid "Delete “{title}”?"
 msgstr "Smazat „{title}“?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Smazat {0} v Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Otevřen koncept"
 
 msgid "drafted 3 support replies"
 msgstr "připravil 3 odpovědi podpoře"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Přetáhněte úkol do jiného sloupce nebo klikněte na jeho stav."
 
 msgid "Drag to reorder"
 msgstr "Přetažením změníte pořadí"
@@ -11713,6 +11719,9 @@ msgstr "Žádné výsledky pro „{query}“"
 msgid "No results found."
 msgstr "Nenalezeny žádné výsledky."
 
+msgid "No reviewers"
+msgstr "Žádní recenzenti"
+
 msgid "No Reviewers Assigned"
 msgstr "Nepřiřazeni žádní recenzenti"
 
@@ -12473,6 +12482,9 @@ msgstr "Otevřít ve Finderu"
 msgid "Open in GitHub"
 msgstr "Otevřít na GitHubu"
 
+msgid "Open in Jira"
+msgstr "Otevřít v Jira"
+
 msgid "Open in Linear"
 msgstr "Otevřít v Linearu"
 
@@ -13030,6 +13042,9 @@ msgstr "Počet souběžných relací na vývojáře se každých sedm měsíců 
 msgid "Parameters"
 msgstr "Parametry"
 
+msgid "Parent"
+msgstr "Nadřazený"
+
 msgid "Parent directory"
 msgstr "Nadřazený adresář"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Nejvyšší tempo"
-
-msgid "Pending"
-msgstr "Čeká"
 
 msgid "Pending Invitations"
 msgstr "Čekající pozvánky"
@@ -14723,9 +14735,6 @@ msgstr "Vyřešit vlákno"
 
 msgid "Resolved"
 msgstr "Vyřešeno"
-
-msgid "Resolved · show"
-msgstr "Vyřešeno · zobrazit"
 
 msgid "Resource consumption"
 msgstr "Spotřeba prostředků"

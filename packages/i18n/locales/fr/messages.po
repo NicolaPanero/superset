@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} installé"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} vers {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* si facturé au tarif API plein"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filtres de tableau et de sprint** : choisissez votre tableau Jira et votre sprint sans écrire de JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Configuration plus claire** : trouvez les guides d’installation des CLI de vos agents et comprenez les connexions aux dépôts."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Actions plus claires** : changez le statut depuis le badge de la tâche, avec un choix guidé quand une colonne regroupe plusieurs statuts."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Tâches Jira plus rapides** : la liste regroupe les tâches par statut, les lignes et cartes sont compactes et tous les filtres tiennent dans une seule barre."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Tableaux fidèles à Jira** : les statuts regroupés du workflow restent dans les mêmes colonnes."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Pull requests Bitbucket repensées** : un en-tête et une colonne d’informations comme sur GitHub, avec les menus Review, Merge et Plus au lieu de boutons dispersés."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Des espaces de travail simplifiés pour les tâches** : démarrez un espace de travail depuis une tâche ou recherchez et liez un espace existant."
@@ -5215,6 +5217,9 @@ msgstr "Impossible de marquer comme prête"
 msgid "Could not open billing. Please try again."
 msgstr "Impossible d'ouvrir la facturation. Veuillez réessayer."
 
+msgid "Could not open file"
+msgstr "Impossible d’ouvrir le fichier"
+
 msgid "Could not open Files"
 msgstr "Impossible d'ouvrir Fichiers"
 
@@ -6121,6 +6126,10 @@ msgstr "Supprimer « {projectName} » ?"
 msgid "Delete “{title}”?"
 msgstr "Supprimer « {title} » ?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Supprimer {0} dans Jira ?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Brouillon ouvert"
 
 msgid "drafted 3 support replies"
 msgstr "3 réponses au support rédigées"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Glissez une tâche vers une autre colonne ou cliquez sur son statut."
 
 msgid "Drag to reorder"
 msgstr "Faites glisser pour réorganiser"
@@ -11713,6 +11719,9 @@ msgstr "Aucun résultat pour « {query} »"
 msgid "No results found."
 msgstr "Aucun résultat trouvé."
 
+msgid "No reviewers"
+msgstr "Aucun relecteur"
+
 msgid "No Reviewers Assigned"
 msgstr "Aucun relecteur assigné"
 
@@ -12473,6 +12482,9 @@ msgstr "Ouvrir dans le Finder"
 msgid "Open in GitHub"
 msgstr "Ouvrir dans GitHub"
 
+msgid "Open in Jira"
+msgstr "Ouvrir dans Jira"
+
 msgid "Open in Linear"
 msgstr "Ouvrir dans Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Le nombre de sessions parallèles par développeur double tous les sept 
 msgid "Parameters"
 msgstr "Paramètres"
 
+msgid "Parent"
+msgstr "Parent"
+
 msgid "Parent directory"
 msgstr "Répertoire parent"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Rythme maximal"
-
-msgid "Pending"
-msgstr "En attente"
 
 msgid "Pending Invitations"
 msgstr "Invitations en attente"
@@ -14723,9 +14735,6 @@ msgstr "Résoudre le fil"
 
 msgid "Resolved"
 msgstr "Résolu"
-
-msgid "Resolved · show"
-msgstr "Résolu · afficher"
 
 msgid "Resource consumption"
 msgstr "Consommation de ressources"

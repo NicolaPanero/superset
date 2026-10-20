@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0}已安装"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} → {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全价计费"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**看板和冲刺筛选**：无需编写 JQL，即可选择 Jira 看板和冲刺。"
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**更清晰的设置**：查看智能体的 CLI 安装指南，了解如何连接代码仓库。"
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**更清晰的任务操作**：通过任务状态标签更改状态。当一列包含多个状态时，可按提示选择。"
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**更快的 Jira 任务**：列表按状态分组任务，行和卡片更紧凑，所有筛选器都在一个栏中。"
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**与 Jira 一致的看板**：已分组的工作流状态保持在同一列中。"
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**重新设计的 Bitbucket 拉取请求**：与 GitHub 相同的标题和信息栏，用 Review、Merge 和更多菜单取代分散的按钮。"
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**更简单的任务工作区**：从任务启动工作区，或搜索并关联现有工作区。"
@@ -5215,6 +5217,9 @@ msgstr "无法标记为待审查"
 msgid "Could not open billing. Please try again."
 msgstr "无法打开账单，请重试。"
 
+msgid "Could not open file"
+msgstr "无法打开文件"
+
 msgid "Could not open Files"
 msgstr "无法打开“文件”"
 
@@ -6121,6 +6126,10 @@ msgstr "删除“{projectName}”？"
 msgid "Delete “{title}”?"
 msgstr "删除“{title}”？"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "要在 Jira 中删除 {0} 吗？"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "创建了草稿"
 
 msgid "drafted 3 support replies"
 msgstr "起草了3条支持回复"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "将任务拖到其他列，或点击其状态。"
 
 msgid "Drag to reorder"
 msgstr "拖动以重新排序"
@@ -11713,6 +11719,9 @@ msgstr "没有“{query}”的结果"
 msgid "No results found."
 msgstr "未找到结果。"
 
+msgid "No reviewers"
+msgstr "无审阅者"
+
 msgid "No Reviewers Assigned"
 msgstr "未指派审查者"
 
@@ -12473,6 +12482,9 @@ msgstr "在Finder中打开"
 msgid "Open in GitHub"
 msgstr "在GitHub中打开"
 
+msgid "Open in Jira"
+msgstr "在 Jira 中打开"
+
 msgid "Open in Linear"
 msgstr "在Linear中打开"
 
@@ -13030,6 +13042,9 @@ msgstr "每位开发者的并行会话数每七个月翻倍，在 2026 年 8 月
 msgid "Parameters"
 msgstr "参数"
 
+msgid "Parent"
+msgstr "父级"
+
 msgid "Parent directory"
 msgstr "父目录"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "峰值速度"
-
-msgid "Pending"
-msgstr "待处理"
 
 msgid "Pending Invitations"
 msgstr "待处理邀请"
@@ -14723,9 +14735,6 @@ msgstr "解决讨论串"
 
 msgid "Resolved"
 msgstr "已解决"
-
-msgid "Resolved · show"
-msgstr "已解决 · 显示"
 
 msgid "Resource consumption"
 msgstr "资源占用"

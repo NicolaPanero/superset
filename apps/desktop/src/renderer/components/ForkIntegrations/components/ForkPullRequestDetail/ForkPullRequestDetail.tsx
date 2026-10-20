@@ -4,6 +4,7 @@ import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { Input } from "@superset/ui/input";
 import { Textarea } from "@superset/ui/textarea";
+import { cn } from "@superset/ui/utils";
 import {
 	useInfiniteQuery,
 	useMutation,
@@ -11,24 +12,26 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import { useState } from "react";
-import { CommentBody } from "renderer/components/CommentBody";
+import { PullRequestMarkdown } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/PullRequestMarkdown";
+import { PullRequestPageBody } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/PullRequestPageBody";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import { ForkCommentComposer } from "../ForkCommentComposer";
 import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkCommentThread } from "./components/ForkCommentThread";
 import { ForkFixFindings } from "./components/ForkFixFindings";
+import {
+	type ForkPullRequestAction,
+	ForkPullRequestActions,
+} from "./components/ForkPullRequestActions";
+import { ForkPullRequestChecks } from "./components/ForkPullRequestChecks";
 import { ForkPullRequestDiff } from "./components/ForkPullRequestDiff";
+import { ForkPullRequestHeader } from "./components/ForkPullRequestHeader";
 import { ForkPullRequestReviewers } from "./components/ForkPullRequestReviewers";
 import { forkReviewThreads } from "./utils/forkReviewThreads";
 
 type PullRequestAction =
-	| "merge"
-	| "close"
-	| "reopen"
-	| "approve"
-	| "unapprove"
-	| "request-changes"
-	| "unrequest-changes"
+	| ForkPullRequestAction
 	| "comment"
 	| "reply"
 	| "resolve"
@@ -43,13 +46,13 @@ type MergeMethod =
 	| "rebase_fast_forward"
 	| "rebase_merge";
 
+type Tab = "conversation" | "code" | "checks";
+
 export function ForkPullRequestDetail({
 	pullRequest,
-	onBack,
 	hostUrl: targetHostUrl,
 }: {
 	pullRequest: ForkPullRequest;
-	onBack: () => void;
 	hostUrl?: string | null;
 }) {
 	const { t } = useLingui(),
@@ -75,18 +78,14 @@ export function ForkPullRequestDetail({
 			merging && q.state.data?.state === "open" ? 3000 : false,
 	});
 	const pr = detail.data;
-	const [tab, setTab] = useState<"conversation" | "code" | "checks">(
-			"conversation",
-		),
-		[body, setBody] = useState("");
+	const [tab, setTab] = useState<Tab>("conversation");
 	const [edit, setEdit] = useState(false),
 		[title, setTitle] = useState(pr.title),
 		[description, setDescription] = useState(pr.description);
-	const [merge, setMerge] = useState(false),
-		[method, setMethod] = useState<MergeMethod>(
-			(pullRequest.defaultMergeMethod as MergeMethod | undefined) ??
-				"merge_commit",
-		);
+	const [method, setMethod] = useState<MergeMethod>(
+		(pullRequest.defaultMergeMethod as MergeMethod | undefined) ??
+			"merge_commit",
+	);
 	const comments = useInfiniteQuery({
 		refetchOnReconnect: true,
 		networkMode: "always",
@@ -138,14 +137,11 @@ export function ForkPullRequestDetail({
 			}),
 		onSuccess: (_, { action: kind }) => {
 			if (kind === "merge") setMerging(true);
-			setBody("");
 			setEdit(false);
-			setMerge(false);
 			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
 			void cache.invalidateQueries({ queryKey: ["pullRequests"] });
 		},
 	});
-	const act = (kind: PullRequestAction) => action.mutate({ action: kind });
 	const allComments = comments.data?.pages.flatMap((page) => page.items) ?? [];
 	const threads = forkReviewThreads(allComments);
 	const bitbucket = pr.repository.provider === "bitbucket";
@@ -176,266 +172,214 @@ export function ForkPullRequestDetail({
 	)
 		.filter(([id]) => !pr.mergeMethods || pr.mergeMethods.includes(id))
 		.map(([id, label]) => ({ id, label }));
-	const busy = action.isPending || (merging && pr.state === "open");
+	const pendingMerge = merging && pr.state === "open";
+	const busy = action.isPending || pendingMerge;
+	const tabs: { value: Tab; label: string }[] = [
+		{ value: "conversation", label: t({ message: "Conversation" }) },
+		{ value: "code", label: t({ message: "Changes" }) },
+		{ value: "checks", label: t({ message: "Checks" }) },
+	];
+	const startEdit = () => {
+		setTitle(pr.title);
+		setDescription(pr.description);
+		setEdit(true);
+		setTab("conversation");
+	};
 	return (
-		<div className="min-w-0 flex-1 space-y-5 overflow-auto p-5">
-			{unavailable && (
-				<ForkServiceNotice
-					provider={pr.repository.provider}
-					onRetry={() => {
-						void detail.refetch();
-						if (tab === "conversation") void comments.refetch();
-						if (tab === "code") void diff.refetch();
-						if (tab === "checks") void checks.refetch();
-					}}
+		<div className="flex min-h-0 min-w-0 flex-1 flex-col">
+			<div className="flex h-11 shrink-0 items-center gap-2 border-b px-4">
+				<nav
+					className="flex min-w-0 items-center gap-0.5"
+					aria-label={t({ message: "Pull request detail tabs" })}
+				>
+					{tabs.map(({ value, label }) => (
+						<button
+							key={value}
+							type="button"
+							onClick={() => setTab(value)}
+							aria-pressed={tab === value}
+							className={cn(
+								"inline-flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+								tab === value
+									? "bg-secondary text-foreground"
+									: "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+							)}
+						>
+							{label}
+							{value === "conversation" && threads.length > 0 && (
+								<span className="rounded-full bg-muted px-1.5 text-[10px] tabular-nums text-muted-foreground">
+									{threads.length}
+								</span>
+							)}
+						</button>
+					))}
+				</nav>
+				<div className="ml-auto" />
+				<ForkPullRequestActions
+					pr={pr}
+					busy={busy}
+					merging={pendingMerge}
+					mergeMethods={mergeMethods}
+					method={method}
+					onMethodChange={(value) => setMethod(value as MergeMethod)}
+					onAction={(kind) => action.mutate({ action: kind })}
+					onEdit={startEdit}
 				/>
-			)}
-			<div className="flex flex-wrap items-center gap-2">
-				<Button size="sm" variant="ghost" onClick={onBack}>
-					<Trans>Back</Trans>
-				</Button>
-				<a
-					className="text-sm font-medium text-primary"
-					href={pr.url}
-					target="_blank"
-					rel="noreferrer"
-				>
-					#{pr.number}
-				</a>
-				<span className="rounded-full bg-muted px-2 py-1 text-xs">
-					{pr.state === "open" ? (
-						<Trans context="status">Open</Trans>
-					) : pr.state === "merged" ? (
-						<Trans>Merged</Trans>
-					) : (
-						<Trans>Closed</Trans>
+			</div>
+			{(unavailable || error) && (
+				<div className="space-y-2 border-b px-4 py-3">
+					{unavailable && (
+						<ForkServiceNotice
+							provider={pr.repository.provider}
+							onRetry={() => {
+								void detail.refetch();
+								if (tab === "conversation") void comments.refetch();
+								if (tab === "code") void diff.refetch();
+								if (tab === "checks") void checks.refetch();
+							}}
+						/>
 					)}
-				</span>
-				<span className="text-xs text-muted-foreground">{pr.author}</span>
-			</div>
-			<h2 className="text-xl font-semibold">{pr.title}</h2>
-			<p className="break-all font-mono text-xs text-muted-foreground">
-				{pr.sourceBranch} → {pr.targetBranch}
-			</p>
-			<ForkPullRequestReviewers reviewers={pr.reviewers ?? []} />
-			{bitbucket && <ForkFixFindings pr={pr} hostUrl={hostUrl} />}
-			{edit ? (
-				<div className="space-y-2">
-					<Input
-						aria-label={t({ message: "Title" })}
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-					/>
-					<Textarea
-						aria-label={t({ message: "Description" })}
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-					<Button size="sm" disabled={busy} onClick={() => act("edit")}>
-						<Trans>Save</Trans>
-					</Button>
-				</div>
-			) : (
-				<div className="min-w-0 overflow-x-auto break-words text-sm">
-					<CommentBody body={pr.description} />
+					{error && (
+						<p role="alert" className="text-sm text-destructive">
+							{error.message}
+						</p>
+					)}
 				</div>
 			)}
-			<div className="flex flex-wrap gap-2">
-				<Button size="sm" variant="outline" onClick={() => setEdit(!edit)}>
-					<Trans>Edit</Trans>
-				</Button>
-				{pr.state === "open" && (
-					<>
-						<Button
-							size="sm"
-							variant="outline"
-							disabled={busy}
-							onClick={() => act("approve")}
-						>
-							<Trans>Approve</Trans>
-						</Button>
-						<Button
-							size="sm"
-							variant="outline"
-							disabled={busy}
-							onClick={() => act("unapprove")}
-						>
-							<Trans>Remove approval</Trans>
-						</Button>
-						{bitbucket && (
-							<Button
-								size="sm"
-								variant="outline"
-								disabled={busy}
-								onClick={() => act("request-changes")}
-							>
-								<Trans>Request changes</Trans>
-							</Button>
-						)}
-						{bitbucket && (
-							<Button
-								size="sm"
-								variant="ghost"
-								disabled={busy}
-								onClick={() => act("unrequest-changes")}
-							>
-								<Trans>Withdraw change request</Trans>
-							</Button>
-						)}
-						<Button size="sm" disabled={busy} onClick={() => setMerge(true)}>
-							{merging ? <Trans>Pending</Trans> : <Trans>Merge</Trans>}
-						</Button>
-						<Button
-							size="sm"
-							variant="ghost"
-							disabled={busy}
-							onClick={() => act("close")}
-						>
-							<Trans>Close</Trans>
-						</Button>
-					</>
-				)}
-				{/* Bitbucket Cloud cannot reopen a declined pull request. */}
-				{pr.state === "closed" && pr.repository.provider !== "bitbucket" && (
-					<Button
-						size="sm"
-						variant="outline"
-						disabled={busy}
-						onClick={() => act("reopen")}
-					>
-						<Trans>Reopen</Trans>
-					</Button>
-				)}
-			</div>
-			{merge && (
-				<div className="flex flex-wrap items-center gap-2 rounded-lg border p-3">
-					<select
-						aria-label={t({ message: "Merge method" })}
-						className="h-9 rounded-md border bg-background px-2 text-sm"
-						value={method}
-						onChange={(e) => setMethod(e.target.value as MergeMethod)}
-					>
-						{mergeMethods.map((option) => (
-							<option key={option.id} value={option.id}>
-								{option.label}
-							</option>
-						))}
-					</select>
-					<Button size="sm" disabled={busy} onClick={() => act("merge")}>
-						<Trans>Confirm merge</Trans>
-					</Button>
-					<Button size="sm" variant="ghost" onClick={() => setMerge(false)}>
-						<Trans>Cancel</Trans>
-					</Button>
-				</div>
-			)}
-			<div className="flex gap-2 border-b pb-2">
-				<Button
-					variant={tab === "conversation" ? "secondary" : "ghost"}
-					size="sm"
-					onClick={() => setTab("conversation")}
-				>
-					<Trans>Conversation</Trans>
-				</Button>
-				<Button
-					variant={tab === "code" ? "secondary" : "ghost"}
-					size="sm"
-					onClick={() => setTab("code")}
-				>
-					<Trans>Code</Trans>
-				</Button>
-				<Button
-					variant={tab === "checks" ? "secondary" : "ghost"}
-					size="sm"
-					onClick={() => setTab("checks")}
-				>
-					<Trans>Checks</Trans>
-				</Button>
-			</div>
 			{tab === "conversation" && (
-				<div className="space-y-3">
-					{threads.map((thread) => (
-						<ForkCommentThread
-							key={thread.root.id}
-							thread={thread}
+				<PullRequestPageBody
+					header={
+						<ForkPullRequestHeader
+							pr={pr}
+							pendingLabel={pendingMerge ? t({ message: "Merging…" }) : null}
+						/>
+					}
+					info={(variant) => (
+						<div
+							className={
+								variant === "column" ? "flex flex-col gap-7" : "flex flex-col"
+							}
+						>
+							<ForkPullRequestReviewers
+								reviewers={pr.reviewers ?? []}
+								variant={variant}
+							/>
+							{bitbucket && (
+								<ForkFixFindings pr={pr} hostUrl={hostUrl} variant={variant} />
+							)}
+						</div>
+					)}
+				>
+					{edit ? (
+						<div className="space-y-3 rounded-xl border border-border/60 bg-muted/10 p-4">
+							<Input
+								aria-label={t({ message: "Title" })}
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
+								className="font-medium"
+							/>
+							<Textarea
+								aria-label={t({ message: "Description" })}
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+								className="min-h-40"
+							/>
+							<div className="flex justify-end gap-2">
+								<Button
+									size="sm"
+									variant="ghost"
+									onClick={() => setEdit(false)}
+								>
+									<Trans>Cancel</Trans>
+								</Button>
+								<Button
+									size="sm"
+									disabled={busy || !title.trim()}
+									onClick={() => action.mutate({ action: "edit" })}
+								>
+									<Trans>Save</Trans>
+								</Button>
+							</div>
+						</div>
+					) : (
+						<PullRequestMarkdown body={pr.description} />
+					)}
+					<section className="mt-10 space-y-3">
+						<h2 className="text-sm font-medium">
+							<Trans>Activity</Trans>
+						</h2>
+						{comments.isPending && (
+							<p className="text-xs text-muted-foreground">
+								<Trans>Loading...</Trans>
+							</p>
+						)}
+						{threads.map((thread) => (
+							<ForkCommentThread
+								key={thread.root.id}
+								thread={thread}
+								busy={busy}
+								canReply={bitbucket}
+								onReply={reply}
+								onResolve={resolve}
+							/>
+						))}
+						{comments.hasNextPage && (
+							<Button
+								variant="ghost"
+								size="sm"
+								disabled={comments.isFetchingNextPage}
+								onClick={() => void comments.fetchNextPage()}
+							>
+								<Trans>Load more</Trans>
+							</Button>
+						)}
+						<ForkCommentComposer
+							disabled={action.isPending}
+							onSubmit={(body) =>
+								action.mutateAsync({ action: "comment", body })
+							}
+						/>
+					</section>
+				</PullRequestPageBody>
+			)}
+			{tab === "code" && (
+				<div className="min-h-0 flex-1 overflow-auto p-4">
+					{diff.data !== undefined ? (
+						<ForkPullRequestDiff
+							diff={diff.data}
+							threads={threads}
 							busy={busy}
-							canReply={bitbucket}
+							canComment={bitbucket}
+							onComment={(path, line, text, side) =>
+								action.mutateAsync({
+									action: "comment",
+									body: text,
+									path,
+									line,
+									side,
+								})
+							}
 							onReply={reply}
 							onResolve={resolve}
 						/>
-					))}
-					{comments.hasNextPage && (
-						<Button
-							variant="ghost"
-							size="sm"
-							disabled={comments.isFetchingNextPage}
-							onClick={() => void comments.fetchNextPage()}
-						>
-							<Trans>Load more</Trans>
-						</Button>
+					) : (
+						diff.isPending && (
+							<p className="text-sm text-muted-foreground">
+								<Trans>Loading...</Trans>
+							</p>
+						)
 					)}
-					<Textarea
-						aria-label={t({ message: "Comment" })}
-						value={body}
-						onChange={(e) => setBody(e.target.value)}
-					/>
-					<Button
-						size="sm"
-						disabled={!body.trim() || action.isPending}
-						onClick={() => action.mutate({ action: "comment", body })}
-					>
-						<Trans>Add comment</Trans>
-					</Button>
 				</div>
 			)}
-			{tab === "code" &&
-				(diff.data !== undefined ? (
-					<ForkPullRequestDiff
-						diff={diff.data}
-						threads={threads}
-						busy={busy}
-						canComment={bitbucket}
-						onComment={(path, line, text, side) =>
-							action.mutateAsync({
-								action: "comment",
-								body: text,
-								path,
-								line,
-								side,
-							})
-						}
-						onReply={reply}
-						onResolve={resolve}
-					/>
-				) : (
-					<p className="text-sm text-muted-foreground">
-						{diff.isPending
-							? t({ message: "Loading..." })
-							: isForkServiceUnavailable(diff.error)
-								? ""
-								: diff.error?.message}
-					</p>
-				))}
 			{tab === "checks" && (
-				<div className="space-y-2">
-					{checks.data?.map((c) => (
-						<a
-							key={c.id}
-							className="flex justify-between rounded-lg border p-3 text-sm"
-							href={c.url}
-							target="_blank"
-							rel="noreferrer"
-						>
-							<span>{c.name}</span>
-							<span>{c.state}</span>
-						</a>
-					))}
+				<div className="min-h-0 flex-1 overflow-auto">
+					<div className="mx-auto w-full max-w-[76rem] px-6 py-4">
+						<ForkPullRequestChecks
+							checks={checks.data}
+							loading={checks.isPending}
+						/>
+					</div>
 				</div>
-			)}
-			{error && (
-				<p role="alert" className="text-sm text-destructive">
-					{error.message}
-				</p>
 			)}
 		</div>
 	);

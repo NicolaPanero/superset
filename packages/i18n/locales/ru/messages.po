@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} установлен"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} в {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* при оплате по полному тарифу API"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Фильтры доски и спринта**: выбирайте доску Jira и спринт без написания JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Понятная настройка**: найдите инструкции по установке CLI агентов и узнайте, как подключать репозитории."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Понятные действия с задачами**: меняйте статус через метку задачи, выбирая нужный вариант, если в столбце несколько статусов."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Быстрые задачи Jira**: список группирует задачи по статусу, строки и карточки компактны, все фильтры — в одной панели."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Доски как в Jira**: сгруппированные статусы рабочего процесса остаются в тех же столбцах."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Обновлённые pull request в Bitbucket**: заголовок и колонка сведений как в GitHub, меню Review, Merge и «Ещё» вместо разбросанных кнопок."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Рабочие области задач стали проще**: создайте рабочую область из задачи или найдите и свяжите существующую."
@@ -5215,6 +5217,9 @@ msgstr "Не удалось отметить готовым"
 msgid "Could not open billing. Please try again."
 msgstr "Не удалось открыть страницу оплаты. Попробуйте ещё раз."
 
+msgid "Could not open file"
+msgstr "Не удалось открыть файл"
+
 msgid "Could not open Files"
 msgstr "Не удалось открыть «Файлы»"
 
@@ -6121,6 +6126,10 @@ msgstr "Удалить «{projectName}»?"
 msgid "Delete “{title}”?"
 msgstr "Удалить «{title}»?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Удалить {0} в Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Открыт черновик"
 
 msgid "drafted 3 support replies"
 msgstr "подготовил 3 ответа поддержки"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Перетащите задачу в другой столбец или нажмите на её статус."
 
 msgid "Drag to reorder"
 msgstr "Перетащите, чтобы изменить порядок"
@@ -11713,6 +11719,9 @@ msgstr "Ничего не найдено по запросу «{query}»"
 msgid "No results found."
 msgstr "Ничего не найдено."
 
+msgid "No reviewers"
+msgstr "Нет рецензентов"
+
 msgid "No Reviewers Assigned"
 msgstr "Ревьюеры не назначены"
 
@@ -12473,6 +12482,9 @@ msgstr "Открыть в Finder"
 msgid "Open in GitHub"
 msgstr "Открыть в GitHub"
 
+msgid "Open in Jira"
+msgstr "Открыть в Jira"
+
 msgid "Open in Linear"
 msgstr "Открыть в Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Число параллельных сессий на разработч
 msgid "Parameters"
 msgstr "Параметры"
 
+msgid "Parent"
+msgstr "Родитель"
+
 msgid "Parent directory"
 msgstr "Родительская папка"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Пиковый темп"
-
-msgid "Pending"
-msgstr "Ожидание"
 
 msgid "Pending Invitations"
 msgstr "Ожидающие приглашения"
@@ -14723,9 +14735,6 @@ msgstr "Закрыть ветку"
 
 msgid "Resolved"
 msgstr "Решено"
-
-msgid "Resolved · show"
-msgstr "Решено · показать"
 
 msgid "Resource consumption"
 msgstr "Потребление ресурсов"

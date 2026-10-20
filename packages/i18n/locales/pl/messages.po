@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} zainstalowana"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} do {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* przy rozliczeniu wg pełnej stawki API"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filtry tablicy i sprintu**: wybierz tablicę Jira i sprint bez pisania JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Jaśniejsza konfiguracja**: znajdź instrukcje instalacji CLI agentów i dowiedz się, jak działają połączenia z repozytoriami."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Czytelniejsze działania**: zmieniaj status za pomocą etykiety zadania, z wyborem docelowego statusu, gdy kolumna zawiera ich kilka."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Szybsze zadania Jira**: lista grupuje zadania według statusu, wiersze i karty są zwarte, a wszystkie filtry są na jednym pasku."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Tablice zgodne z Jira**: zgrupowane statusy przepływu pracy pozostają w tych samych kolumnach."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Odświeżone pull requesty Bitbucket**: nagłówek i kolumna informacji jak w GitHub, z menu Review, Merge i Więcej zamiast rozrzuconych przycisków."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Prostsze obszary robocze zadań**: rozpocznij obszar roboczy z poziomu zadania lub wyszukaj i powiąż istniejący."
@@ -5215,6 +5217,9 @@ msgstr "Nie udało się oznaczyć jako gotowy"
 msgid "Could not open billing. Please try again."
 msgstr "Nie udało się otworzyć rozliczeń. Spróbuj ponownie."
 
+msgid "Could not open file"
+msgstr "Nie można otworzyć pliku"
+
 msgid "Could not open Files"
 msgstr "Nie udało się otworzyć Plików"
 
@@ -6121,6 +6126,10 @@ msgstr "Usunąć „{projectName}”?"
 msgid "Delete “{title}”?"
 msgstr "Usunąć „{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Usunąć {0} w Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Otwarto szkic"
 
 msgid "drafted 3 support replies"
 msgstr "przygotował 3 odpowiedzi wsparcia"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Przeciągnij zadanie do innej kolumny lub kliknij jego status."
 
 msgid "Drag to reorder"
 msgstr "Przeciągnij, aby zmienić kolejność"
@@ -11713,6 +11719,9 @@ msgstr "Brak wyników dla „{query}”"
 msgid "No results found."
 msgstr "Nie znaleziono wyników."
 
+msgid "No reviewers"
+msgstr "Brak recenzentów"
+
 msgid "No Reviewers Assigned"
 msgstr "Nie przypisano recenzentów"
 
@@ -12473,6 +12482,9 @@ msgstr "Otwórz w Finderze"
 msgid "Open in GitHub"
 msgstr "Otwórz w GitHub"
 
+msgid "Open in Jira"
+msgstr "Otwórz w Jira"
+
 msgid "Open in Linear"
 msgstr "Otwórz w Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "Liczba równoległych sesji na programistę podwaja się co siedem miesi
 msgid "Parameters"
 msgstr "Parametry"
 
+msgid "Parent"
+msgstr "Nadrzędne"
+
 msgid "Parent directory"
 msgstr "Katalog nadrzędny"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Szczytowe tempo"
-
-msgid "Pending"
-msgstr "Oczekuje"
 
 msgid "Pending Invitations"
 msgstr "Oczekujące zaproszenia"
@@ -14723,9 +14735,6 @@ msgstr "Rozwiąż wątek"
 
 msgid "Resolved"
 msgstr "Rozwiązany"
-
-msgid "Resolved · show"
-msgstr "Rozwiązane · pokaż"
 
 msgid "Resource consumption"
 msgstr "Zużycie zasobów"

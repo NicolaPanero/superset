@@ -424,7 +424,9 @@ msgid "{0} installed"
 msgstr "{0} instalado"
 
 #. placeholder {0}: data.head.ref
+#. placeholder {0}: pr.sourceBranch
 #. placeholder {1}: data.base.ref
+#. placeholder {1}: pr.targetBranch
 msgid "{0} into {1}"
 msgstr "{0} em {1}"
 
@@ -1196,17 +1198,17 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se cobrado no preço cheio da API"
 
-msgid "**Board and sprint filters**: choose your Jira board and sprint without writing JQL."
-msgstr "**Filtros de quadro e sprint**: escolha seu quadro Jira e sprint sem escrever JQL."
-
 msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
 msgstr "**Configuração mais clara**: encontre guias para instalar as CLIs dos seus agentes e entenda as conexões com repositórios."
 
-msgid "**Clearer task actions**: change status from a task badge, with guided choices when a column has several statuses."
-msgstr "**Ações de tarefas mais claras**: altere o status pelo indicador da tarefa, com escolhas guiadas quando uma coluna agrupa vários status."
+msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
+msgstr "**Tarefas do Jira mais rápidas**: a lista agrupa as tarefas por status, linhas e cartões são compactos e todos os filtros ficam em uma única barra."
 
 msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
 msgstr "**Quadros iguais aos do Jira**: os status agrupados do fluxo de trabalho permanecem nas mesmas colunas."
+
+msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
+msgstr "**Pull requests do Bitbucket redesenhados**: cabeçalho e coluna de informações como no GitHub, com menus Review, Merge e Mais no lugar de botões espalhados."
 
 msgid "**Simpler task workspaces**: start a workspace from a task or search and link an existing one."
 msgstr "**Áreas de trabalho de tarefas mais simples**: inicie uma área de trabalho a partir de uma tarefa ou pesquise e vincule uma existente."
@@ -5215,6 +5217,9 @@ msgstr "Não foi possível marcar como pronto"
 msgid "Could not open billing. Please try again."
 msgstr "Não foi possível abrir o faturamento. Tente novamente."
 
+msgid "Could not open file"
+msgstr "Não foi possível abrir o arquivo"
+
 msgid "Could not open Files"
 msgstr "Não foi possível abrir o Arquivos"
 
@@ -6121,6 +6126,10 @@ msgstr "Excluir \"{projectName}\"?"
 msgid "Delete “{title}”?"
 msgstr "Excluir “{title}”?"
 
+#. placeholder {0}: task.key
+msgid "Delete {0} in Jira?"
+msgstr "Excluir {0} no Jira?"
+
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
 #. placeholder {0}: server.name
@@ -6773,9 +6782,6 @@ msgstr "Rascunho aberto"
 
 msgid "drafted 3 support replies"
 msgstr "escreveu 3 respostas de suporte"
-
-msgid "Drag a task to another column, or click its status."
-msgstr "Arraste uma tarefa para outra coluna ou clique no status dela."
 
 msgid "Drag to reorder"
 msgstr "Arraste para reordenar"
@@ -11713,6 +11719,9 @@ msgstr "Nenhum resultado para “{query}”"
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
+msgid "No reviewers"
+msgstr "Nenhum revisor"
+
 msgid "No Reviewers Assigned"
 msgstr "Nenhuma pessoa revisora designada"
 
@@ -12473,6 +12482,9 @@ msgstr "Abrir no Finder"
 msgid "Open in GitHub"
 msgstr "Abrir no GitHub"
 
+msgid "Open in Jira"
+msgstr "Abrir no Jira"
+
 msgid "Open in Linear"
 msgstr "Abrir no Linear"
 
@@ -13030,6 +13042,9 @@ msgstr "As sessões paralelas por desenvolvedor dobram a cada sete meses, ultrap
 msgid "Parameters"
 msgstr "Parâmetros"
 
+msgid "Parent"
+msgstr "Pai"
+
 msgid "Parent directory"
 msgstr "Diretório pai"
 
@@ -13123,9 +13138,6 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "Ritmo máximo"
-
-msgid "Pending"
-msgstr "Pendente"
 
 msgid "Pending Invitations"
 msgstr "Convites pendentes"
@@ -14723,9 +14735,6 @@ msgstr "Resolver thread"
 
 msgid "Resolved"
 msgstr "Resolvida"
-
-msgid "Resolved · show"
-msgstr "Resolvido · mostrar"
 
 msgid "Resource consumption"
 msgstr "Consumo de recursos"
