@@ -1,7 +1,13 @@
 import { afterEach, expect, mock, test } from "bun:test";
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import { getAgentModelSupport } from "@superset/shared/agent-models";
-import { cleanup, fireEvent, flush, render } from "renderer/test-utils/fork-ui";
+import {
+	act,
+	cleanup,
+	fireEvent,
+	flush,
+	render,
+} from "renderer/test-utils/fork-ui";
 import type { TerminalPaneData } from "../../../../../../types";
 import { ForkSessionModelPicker } from "./ForkSessionModelPicker";
 
@@ -38,6 +44,12 @@ function row(view: ReturnType<typeof render>, label: string) {
 	return found;
 }
 
+async function switchAndClose(view: ReturnType<typeof render>) {
+	fireEvent.click(view.getByRole("menuitem", { name: "Switch…" }));
+	await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+	await flush();
+}
+
 async function openPicker(view: ReturnType<typeof render>) {
 	fireEvent.keyDown(view.getByRole("button", { name: /Opus/ }), {
 		key: "ArrowDown",
@@ -70,8 +82,7 @@ test("another agent's model stays a draft until Switch asks to confirm", async (
 	expect(view.getByText(`Codex · ${codexModel.label}`)).toBeTruthy();
 	expect(onSelect).not.toHaveBeenCalled();
 
-	fireEvent.click(view.getByRole("menuitem", { name: "Switch…" }));
-	await flush();
+	await switchAndClose(view);
 	expect(onRequestSwitch).toHaveBeenCalledWith({
 		configId: "codex",
 		model: { id: codexModel.id, label: codexModel.label },
@@ -117,11 +128,29 @@ test("a browsed Grok tab offers the efforts of the picked model", async () => {
 	});
 	await flush();
 	expect(view.getByText("Grok · Grok 4.7 · xHigh")).toBeTruthy();
-	fireEvent.click(view.getByRole("menuitem", { name: "Switch…" }));
-	await flush();
+	await switchAndClose(view);
 	expect(onRequestSwitch).toHaveBeenCalledWith({
 		configId: "grok",
 		model: { id: "grok-4.7", label: "Grok 4.7" },
 		effort: { id: "xhigh", label: "xHigh" },
 	});
+});
+
+test("Switch asks for the dialog only after the menu has closed", async () => {
+	const menuOpenAtRequest: boolean[] = [];
+	const view = render(
+		<ForkSessionModelPicker
+			configs={configs}
+			data={data}
+			configOptions={live}
+			onRequestSwitch={() =>
+				menuOpenAtRequest.push(view.queryByRole("menu") !== null)
+			}
+		/>,
+	);
+	await openPicker(view);
+	fireEvent.click(view.getByLabelText("Codex"));
+	await flush();
+	await switchAndClose(view);
+	expect(menuOpenAtRequest).toEqual([false]);
 });

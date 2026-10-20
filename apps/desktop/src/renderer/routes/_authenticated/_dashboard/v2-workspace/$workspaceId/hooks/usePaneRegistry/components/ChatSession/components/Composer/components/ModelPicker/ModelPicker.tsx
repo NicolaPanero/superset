@@ -58,7 +58,13 @@ export function ModelPicker({
 	onSelect,
 	...fork
 }: ModelPickerProps) {
-	const { emptyLabel, footer, keepOpenOnPick = false, onOpenChange } = fork;
+	const {
+		emptyLabel,
+		footer,
+		keepOpenOnPick = false,
+		onOpenChange,
+		onCloseAutoFocus,
+	} = fork;
 	const [open, setOpenState] = useState(false);
 	const setOpen = (next: boolean) => {
 		setOpenState(next);
@@ -186,6 +192,7 @@ export function ModelPicker({
 					MENU_PANEL_CLASS,
 					"flex w-[296px] flex-col overflow-hidden p-0",
 				)}
+				onCloseAutoFocus={onCloseAutoFocus}
 				side="top"
 			>
 				{showsModels ? (

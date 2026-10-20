@@ -5,4 +5,5 @@ export type ForkModelPickerProps = {
 	footer?: ReactNode;
 	keepOpenOnPick?: boolean;
 	onOpenChange?: (open: boolean) => void;
+	onCloseAutoFocus?: (event: Event) => void;
 };
