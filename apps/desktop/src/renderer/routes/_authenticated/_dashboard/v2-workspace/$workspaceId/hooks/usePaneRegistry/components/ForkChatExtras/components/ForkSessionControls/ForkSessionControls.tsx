@@ -12,6 +12,7 @@ import { toast } from "@superset/ui/sonner";
 import { useEffect, useState } from "react";
 import { LuCopy, LuRepeat2 } from "react-icons/lu";
 import { ForkAccountPicker } from "renderer/components/ForkAccountPicker";
+import { ForkAccountResets } from "renderer/components/ForkAccountResets";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
@@ -63,6 +64,9 @@ export function ForkSessionControls({
 	const modelId = configOptions.find(
 		(option) => option.category === "model",
 	)?.currentValue;
+	const usage = account.quota.data?.find(
+		(row) => row.agent === provider && row.selection === account.selection,
+	);
 	useEffect(() => {
 		if (!onSelect || !hasPendingModelReset(data.terminalId)) return;
 		if (
@@ -109,6 +113,15 @@ export function ForkSessionControls({
 					</DropdownMenuPortal>
 				</DropdownMenuSub>
 			)}
+			{usage && (
+				<div className="px-2 py-1 text-xs">
+					<ForkAccountResets
+						hostUrl={account.hostUrl}
+						account={usage}
+						hideEmail
+					/>
+				</div>
+			)}
 			{sessionId && (
 				<DropdownMenuItem
 					onSelect={() =>
@@ -139,7 +152,6 @@ export function ForkSessionControls({
 				model={modelId}
 				compact
 				extraItems={extraItems}
-				hostUrl={account.hostUrl}
 			/>
 			<ForkChatSwitchDialog
 				ctx={ctx}
