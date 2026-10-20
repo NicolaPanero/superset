@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { randomUUID } from "node:crypto";
+import { getPresetById } from "@superset/shared/host-agent-presets";
 import { buildChatAgentEnv } from "../../src/chat-v3/agentEnv";
 import { forkLaunchChoices } from "../../src/chat-v3/forkLaunchChoices";
 import {
@@ -182,13 +183,16 @@ test.each([
 			HOME: "/user/home",
 			GEMINI_CLI_HOME: "/terminal/login",
 		});
-		const configs = await agentConfigsRouter
-			.createCaller({
-				db: scenario.host.db,
-				isAuthenticated: true,
-			} as HostServiceContext)
-			.list();
-		const gemini = configs.find((c) => c.presetId === provider);
+		const caller = agentConfigsRouter.createCaller({
+			db: scenario.host.db,
+			isAuthenticated: true,
+		} as HostServiceContext);
+		const preset = getPresetById(provider);
+		if (!preset) throw new Error(`missing ${provider} preset`);
+		const { description: _description, ...body } = preset;
+		const gemini =
+			(await caller.list()).find((c) => c.presetId === provider) ??
+			(await caller.add(body));
 		if (!gemini) throw new Error("missing Gemini config");
 		const environment = await buildChatAgentEnv({
 			db: scenario.host.db,

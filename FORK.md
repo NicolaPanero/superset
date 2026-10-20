@@ -127,6 +127,12 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Configurazione guidata di Grok e Cursor
 
+Una nuova installazione parte con quattro agenti: Claude, Codex, Cursor Agent e
+Grok. Solo questi compaiono nelle tendine e in **Settings → Agents**. Gli altri
+preset restano in **Add agent**, già configurati, e compaiono negli elenchi dopo
+l’aggiunta. **Reset to defaults** torna agli stessi quattro. Le installazioni
+esistenti mantengono i propri agenti.
+
 In **Settings → Agents**, la scheda di Grok o Cursor mostra uno stato compatto.
 **Configure** apre installazione, login e **Apply recommended settings**;
 **Advanced configuration** conserva i controlli manuali. Questa prima versione

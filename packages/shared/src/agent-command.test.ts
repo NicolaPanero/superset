@@ -354,7 +354,7 @@ describe("pdev agent registration", () => {
 		expect(DEFAULT_TERMINAL_PRESET_AGENT_TYPES).not.toContain("pdev");
 		const seeded = getDefaultSeedPresets().map((preset) => preset.presetId);
 		expect(seeded).not.toContain("pdev");
-		expect(seeded).toContain("pi");
+		expect(seeded).toContain("claude");
 	});
 
 	it("is enabled only while the pdev-agent flag is active", () => {
