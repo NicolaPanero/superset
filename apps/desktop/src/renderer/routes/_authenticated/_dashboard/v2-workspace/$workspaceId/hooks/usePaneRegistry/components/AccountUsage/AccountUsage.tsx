@@ -8,12 +8,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, CircleHelp, Loader2, Zap } from "lucide-react";
 import { useState } from "react";
+import { ForkAccountResets } from "renderer/components/ForkAccountResets";
+import { ForkUsageSummary } from "renderer/components/ForkUsageSummary";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useNow } from "renderer/hooks/useNow";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
-import { formatResetLabel } from "renderer/utils/usage/formatResetIn";
 import { UsageProgressRing } from "./components/UsageProgressRing";
 import { getAccountUsageState } from "./utils/getAccountUsageState";
 
@@ -59,10 +60,10 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 	if (!binding) return null;
 	const { account, state, tightest } = getAccountUsageState({
 		supported,
-		identity: identity.isError ? null : identity.data,
+		identity: identity.data,
 		accounts: quota.data ?? [],
 		loading: supported && (identity.isPending || quota.isPending),
-		failed: quota.isError,
+		failed: quota.isError || identity.isError,
 		now: now.getTime(),
 	});
 	const status =
@@ -73,16 +74,21 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 				: state === "unverified"
 					? t({ message: "Login unverified" })
 					: state === "stale"
-						? t({ message: "Usage is out of date" })
+						? t({ message: "Last known" })
 						: state === "unavailable"
 							? t({ message: "Usage unavailable." })
 							: null;
 	const percent = tightest ? formatPercent(tightest.usedPercent / 100) : "";
-	const summary = status ?? t({ message: `${percent} used` });
+	const usedLabel = t({ message: `${percent} used` });
+	const summary =
+		state === "stale" && tightest
+			? `${status} · ${usedLabel}`
+			: (status ?? usedLabel);
 	const title = t({ message: "Account usage" });
 	const Icon =
 		state === "loading" ? Loader2 : state === "api" ? Zap : CircleHelp;
-	const severity = state === "ready" && tightest ? tightest.usedPercent : 0;
+	const hasReading = (state === "ready" || state === "stale") && !!tightest;
+	const severity = hasReading && tightest ? tightest.usedPercent : 0;
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<Tooltip open={open ? false : undefined}>
@@ -102,8 +108,11 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 										: "text-muted-foreground/60 hover:text-muted-foreground",
 							)}
 						>
-							{state === "ready" && tightest ? (
-								<UsageProgressRing usedPercent={tightest.usedPercent} />
+							{hasReading && tightest ? (
+								<UsageProgressRing
+									usedPercent={tightest.usedPercent}
+									lastKnown={state === "stale"}
+								/>
 							) : state === "stale" || state === "unavailable" ? (
 								<UsageProgressRing unavailable />
 							) : (
@@ -141,45 +150,12 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 				{status && (
 					<p className="mt-3 text-xs text-muted-foreground">{status}</p>
 				)}
-				{(state === "ready" || state === "stale") &&
-					account?.windows.map((window) => {
-						const used = formatPercent(window.usedPercent / 100);
-						return (
-							<div key={window.id} className="mt-4">
-								<div className="flex justify-between gap-3 text-xs">
-									<span>{window.label}</span>
-									<span className="shrink-0 tabular-nums">
-										<Trans>{used} used</Trans>
-									</span>
-								</div>
-								<div className="mt-2 h-1 overflow-hidden rounded-full bg-muted">
-									<div
-										className={cn(
-											"h-full rounded-full",
-											state === "stale"
-												? "bg-muted-foreground"
-												: window.usedPercent >= 90
-													? "bg-red-500"
-													: window.usedPercent >= 70
-														? "bg-amber-500"
-														: "bg-primary",
-										)}
-										style={{
-											width: `${Math.min(100, Math.max(0, window.usedPercent))}%`,
-										}}
-									/>
-								</div>
-								<p className="mt-1 text-[11px] text-muted-foreground">
-									{window.resetsAt &&
-									new Date(window.resetsAt).getTime() > now.getTime() ? (
-										formatResetLabel(new Date(window.resetsAt), now)
-									) : (
-										<Trans>Reset time unavailable</Trans>
-									)}
-								</p>
-							</div>
-						);
-					})}
+				{account && (
+					<div className="mt-3">
+						<ForkUsageSummary account={account} />
+						<ForkAccountResets hostUrl={hostUrl} account={account} />
+					</div>
+				)}
 				{account?.credentialKind === "subscription" && (
 					<p className="mt-4 border-t pt-3 text-[11px] text-muted-foreground">
 						<Trans>Shared across sessions using this login.</Trans>
@@ -197,7 +173,7 @@ export function AccountUsage({ workspaceId, terminalId }: AccountUsageProps) {
 							})()}
 					</span>
 					<Link
-						to="/settings/usage"
+						to="/settings/local-agent-accounts"
 						search={{
 							workspaceId,
 							accountKey: account?.accountKey,

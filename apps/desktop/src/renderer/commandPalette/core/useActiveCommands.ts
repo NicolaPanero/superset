@@ -1,9 +1,12 @@
 import { useMemo, useSyncExternalStore } from "react";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
+import { isForkProCommand } from "./fork-command-visibility";
 import { getProviders, subscribeToProviders } from "./registry";
 import { resolveSectionOrder, SECTION_LABELS } from "./sections";
 import type { Command, CommandContext, CommandSection } from "./types";
 
 export function useActiveCommands(context: CommandContext): CommandSection[] {
+	const showProFeatures = useForkProFeatures();
 	const providers = useSyncExternalStore(
 		subscribeToProviders,
 		getProviders,
@@ -15,6 +18,7 @@ export function useActiveCommands(context: CommandContext): CommandSection[] {
 		const seenIds = new Set<string>();
 		for (const provider of providers) {
 			for (const command of provider.provide(context)) {
+				if (!showProFeatures && isForkProCommand(command.id)) continue;
 				if (seenIds.has(command.id)) continue;
 				if (command.when && !command.when(context)) continue;
 				seenIds.add(command.id);
@@ -37,5 +41,5 @@ export function useActiveCommands(context: CommandContext): CommandSection[] {
 			sections.push({ id, label: SECTION_LABELS[id], commands: list });
 		}
 		return sections;
-	}, [providers, context]);
+	}, [providers, context, showProFeatures]);
 }

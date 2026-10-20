@@ -12,6 +12,7 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { projects, workspaces } from "../../../db/schema";
+import { provisionFolderWorktrees } from "../../../project-folders";
 import { createGitEnvResolver } from "../../../runtime/git";
 import { getGitAuthorName } from "../../../runtime/git/identity";
 import { resolveRef } from "../../../runtime/git/refs";
@@ -42,6 +43,7 @@ import {
 	buildTerminalAgentLaunch,
 	validateAgentLaunchOptions,
 } from "../agents";
+import { applyForkLaunchChoices } from "../agents/fork-launch";
 import {
 	createLocalWorkspace,
 	DEFAULT_LOCAL_WORKSPACE_NAME,
@@ -49,6 +51,7 @@ import {
 } from "../project/utils/create-local-workspace";
 import { getHostWorktreeBaseDir } from "../settings/worktree-location";
 import { claimWorkspaceRestore } from "../workspace-cleanup";
+import { recordCreatedBranch } from "../workspace-cleanup/fork-branch-ownership";
 import { createSession } from "../workspace-creation/procedures/create-session";
 import {
 	addBranchWorktree,
@@ -676,6 +679,10 @@ export const workspacesRouter = router({
 		.mutation(async ({ ctx, input }) => {
 			for (const launch of input.agents ?? []) {
 				validateAgentLaunchOptions(ctx.db, launch);
+				await applyForkLaunchChoices(ctx.db, {
+					...launch,
+					workspaceId: input.id ?? "pending",
+				});
 			}
 
 			const localProject = requireLocalProject(ctx, input.projectId);
@@ -1283,6 +1290,18 @@ export const workspacesRouter = router({
 								tags: input.tags,
 								rollbackWorktree,
 							});
+							if (!plan.usedExistingBranch) {
+								await recordCreatedBranch(
+									git,
+									resolvedBranch,
+									workspaceRow.id,
+								).catch((error) =>
+									console.warn(
+										"[fork-branch] provenance unavailable; branch will be preserved",
+										error,
+									),
+								);
+							}
 						}
 					}
 				}
@@ -1294,6 +1313,9 @@ export const workspacesRouter = router({
 					attempts: 0,
 					branch: automaticBranch && worktreePath ? workspaceRow.branch : null,
 					agent: namingAgent ?? null,
+					accountSelection: input.agents?.find(
+						(launch) => launch.agent === namingAgent,
+					)?.accountSelection,
 				});
 				scheduleWorkspaceNaming(ctx, workspaceRow.id);
 			}
@@ -1318,19 +1340,32 @@ export const workspacesRouter = router({
 				soleLaunch.surface !== "chat"
 			) {
 				try {
-					chainAgent = buildTerminalAgentLaunch(ctx.db, {
-						workspaceId: workspaceRow.id,
-						agent: soleLaunch.agent,
-						prompt: soleLaunch.prompt,
-						attachmentIds: soleLaunch.attachmentIds,
-						model: soleLaunch.model,
-						effort: soleLaunch.effort,
-						mode: soleLaunch.mode,
-					});
+					chainAgent = buildTerminalAgentLaunch(
+						ctx.db,
+						await applyForkLaunchChoices(ctx.db, {
+							workspaceId: workspaceRow.id,
+							agent: soleLaunch.agent,
+							prompt: soleLaunch.prompt,
+							attachmentIds: soleLaunch.attachmentIds,
+							model: soleLaunch.model,
+							effort: soleLaunch.effort,
+							mode: soleLaunch.mode,
+							accountSelection: soleLaunch.accountSelection,
+						}),
+					);
 				} catch (err) {
 					console.warn(
 						"[workspaces.create] wait-for-setup chain unavailable, dispatching agent in parallel:",
 						err,
+					);
+				}
+			}
+
+			if (!alreadyExists) {
+				const failures = await provisionFolderWorktrees(ctx, workspaceRow.id);
+				for (const failure of failures) {
+					console.warn(
+						`[workspaces.create] extra folder stays shared: ${failure}`,
 					);
 				}
 			}

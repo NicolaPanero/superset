@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 export type SettingsSection =
+	| "fork"
 	| "mobile"
 	| "account"
 	| "organization"
@@ -26,6 +27,7 @@ export type SettingsSection =
 	| "hosts"
 	| "environments"
 	| "agentAccounts"
+	| "localAgentAccounts"
 	| "connections";
 
 interface SettingsState {

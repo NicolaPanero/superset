@@ -1,6 +1,6 @@
 import { presetForAcpHarness } from "@superset/chat/core";
 import type { WorkspaceStore } from "@superset/panes";
-import { useWorkspaceClient } from "@superset/workspace-client";
+import { useWorkspaceClient, workspaceTrpc } from "@superset/workspace-client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { useWorkspaceEvent } from "renderer/hooks/host-service/useWorkspaceEvent";
@@ -37,6 +37,10 @@ export function useAutoAdoptChatSessions({
 		enabled,
 		refetchOnWindowFocus: false,
 	});
+	const parkedQuery = workspaceTrpc.agents.parkedChats.useQuery(
+		{ workspaceId },
+		{ enabled, retry: false },
+	);
 	const sessions = sessionsQuery.data;
 	const isFetchingSessions = sessionsQuery.isFetching;
 
@@ -50,7 +54,11 @@ export function useAutoAdoptChatSessions({
 	);
 
 	useEffect(() => {
-		if (!enabled || !sessions || isFetchingSessions) return;
+		if (!enabled || !sessions || isFetchingSessions || parkedQuery.isPending)
+			return;
+		const parked = new Set(
+			(parkedQuery.data ?? []).map((chat) => chat.terminalId),
+		);
 
 		const attached = new Set<string>();
 		for (const tab of [store, ...linkedStores].flatMap(
@@ -68,6 +76,8 @@ export function useAutoAdoptChatSessions({
 			.filter(
 				(session) =>
 					session.live &&
+					session.status !== "dead" &&
+					!(session.terminalId && parked.has(session.terminalId)) &&
 					!isChatSessionClosed(session.sessionId) &&
 					!attached.has(session.sessionId) &&
 					!(session.terminalId && attached.has(session.terminalId)) &&
@@ -103,5 +113,13 @@ export function useAutoAdoptChatSessions({
 		if (restoreActiveTabId) {
 			store.getState().setActiveTab(restoreActiveTabId);
 		}
-	}, [enabled, isFetchingSessions, sessions, store, linkedStores]);
+	}, [
+		enabled,
+		isFetchingSessions,
+		sessions,
+		store,
+		linkedStores,
+		parkedQuery.data,
+		parkedQuery.isPending,
+	]);
 }

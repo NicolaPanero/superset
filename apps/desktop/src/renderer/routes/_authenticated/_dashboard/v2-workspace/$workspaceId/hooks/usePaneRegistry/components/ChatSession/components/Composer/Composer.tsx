@@ -28,13 +28,16 @@ import {
 	useMemo,
 	useRef,
 } from "react";
+import { useForkJiraMentionProvider } from "renderer/components/ForkIntegrations/hooks/useForkJiraMentionProvider";
 import { env } from "renderer/env.renderer";
 import { useHotkey } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/pagesListInput";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
 import { CHAT_COLUMN_CLASSNAME, CHAT_GUTTER_CLASSNAME } from "../../constants";
+import { useForkComposerControls } from "../../providers/ForkComposerControlsProvider";
 import { commandChip, LEADING_COMMAND } from "../../utils/commandChip";
+import { forkDraftFiles } from "../../utils/forkDraftFiles";
 import { elementsForChips } from "../../utils/messageElements";
 import { type AgentSwitcher, ModelPicker } from "./components/ModelPicker";
 import { ModePicker, type SessionMode } from "./components/ModePicker";
@@ -119,6 +122,7 @@ export const Composer = memo(function Composer({
 	workspaceId,
 }: ComposerProps) {
 	const { t } = useLingui();
+	const forkControls = useForkComposerControls();
 	const trpcUtils = workspaceTrpc.useUtils();
 	const cloudUtils = cloudTrpc.useUtils();
 	const uploadAttachments = useUploadAttachments(workspaceId);
@@ -232,8 +236,10 @@ export const Composer = memo(function Composer({
 		[cloudUtils],
 	);
 
+	const forkMentionProviders = useForkJiraMentionProvider();
 	const mentionProviders = useMemo<ComposerMentionProvider[]>(
 		() => [
+			...forkMentionProviders,
 			{
 				id: "files",
 				title: t({ message: "Files" }),
@@ -255,7 +261,7 @@ export const Composer = memo(function Composer({
 				},
 			},
 		],
-		[searchFiles, searchPages, t],
+		[forkMentionProviders, searchFiles, searchPages, t],
 	);
 
 	const commands = useMemo(
@@ -368,6 +374,7 @@ export const Composer = memo(function Composer({
 				collapseLargePastes
 				commands={commands}
 				defaultValue={storedDraft}
+				draftFiles={forkDraftFiles(draftKey)}
 				history={history}
 				key={draftKey}
 				mentionProviders={mentionProviders}
@@ -393,7 +400,12 @@ export const Composer = memo(function Composer({
 					) : undefined
 				}
 				toolbarEnd={
-					configOptions && onSetConfigOption ? (
+					forkControls ? (
+						forkControls({
+							configOptions: configOptions ?? [],
+							onSelect: onSetConfigOption,
+						})
+					) : configOptions && onSetConfigOption ? (
 						<ModelPicker
 							agentSwitcher={agentSwitcher}
 							configOptions={configOptions}

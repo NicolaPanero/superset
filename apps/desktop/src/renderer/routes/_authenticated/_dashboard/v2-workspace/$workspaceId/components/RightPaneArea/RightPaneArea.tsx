@@ -13,11 +13,13 @@ import { LuArrowLeftToLine, LuMaximize2, LuMinimize2 } from "react-icons/lu";
 import { reportRendererError } from "renderer/lib/report-renderer-error";
 import { RightSidebarToggle } from "renderer/routes/_authenticated/_dashboard/components/RightSidebarToggle";
 import { WindowControlsInset } from "renderer/routes/_authenticated/_dashboard/components/WindowControlsInset";
+import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
-import { renderBrowserTabIcon } from "../../hooks/usePaneRegistry/components/BrowserPane";
+import type { ForkPaneActions } from "../../hooks/useDefaultPaneActions/fork-pane-actions";
 import type { PaneViewerData } from "../../types";
 import { V2NotificationStatusIndicator } from "../V2NotificationStatusIndicator";
+import { WorkspaceTabIcon } from "../WorkspaceTabIcon";
 import { RightPaneAddMenu } from "./components/RightPaneAddMenu";
 import { RightPaneEmptyState } from "./components/RightPaneEmptyState";
 import { RightPaneHeaderButton } from "./components/RightPaneHeaderButton";
@@ -26,7 +28,9 @@ import type { RightPaneKind } from "./types";
 interface RightPaneAreaProps {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	registry: PaneRegistry<PaneViewerData>;
-	paneActions: PaneActionConfig<PaneViewerData>[];
+	paneActions:
+		| PaneActionConfig<PaneViewerData>[]
+		| ForkPaneActions<PaneViewerData>;
 	contextMenuActions: ContextMenuActionConfig<PaneViewerData>[];
 	onBeforeCloseTab: (tab: Tab<PaneViewerData>) => boolean | Promise<boolean>;
 	onInteractionStateChange?: (state: WorkspaceInteractionState) => void;
@@ -57,6 +61,7 @@ export function RightPaneArea({
 	showWindowControls,
 }: RightPaneAreaProps) {
 	const { t } = useLingui();
+	const { workspace } = useWorkspace();
 
 	return (
 		<div
@@ -70,7 +75,9 @@ export function RightPaneArea({
 				paneActions={paneActions}
 				contextMenuActions={contextMenuActions}
 				onPaneError={reportRendererError}
-				renderTabIcon={renderBrowserTabIcon}
+				renderTabIcon={(tab) => (
+					<WorkspaceTabIcon tab={tab} workspaceId={workspace.id} />
+				)}
 				renderTabAccessory={(tab) => (
 					<V2NotificationStatusIndicator
 						sources={getV2NotificationSourcesForTab(tab)}

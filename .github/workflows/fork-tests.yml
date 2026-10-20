@@ -1,0 +1,51 @@
+name: Fork - regression tests
+
+on:
+  pull_request:
+    branches: ["fork/main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fork-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    if: github.repository == 'NicolaPanero/superset'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version-file: .bun-version
+      - name: Cache downloaded dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ hashFiles('.bun-version', 'bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-bun-
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --ignore-scripts
+      - name: Validate fork features
+        run: bash scripts/fork/validate.sh
+      - name: Record tested content
+        id: tested-tree
+        shell: bash
+        run: |
+          tree=$(git rev-parse 'HEAD^{tree}')
+          echo "tree=$tree" >> "$GITHUB_OUTPUT"
+          mkdir -p "$RUNNER_TEMP/fork-validation"
+          echo "$tree" > "$RUNNER_TEMP/fork-validation/passed"
+      - name: Save PR validation for the release
+        uses: actions/upload-artifact@v4
+        with:
+          name: fork-validated-tree-v1-${{ steps.tested-tree.outputs.tree }}
+          path: ${{ runner.temp }}/fork-validation/passed
+          retention-days: 30
+          if-no-files-found: error
+          overwrite: true

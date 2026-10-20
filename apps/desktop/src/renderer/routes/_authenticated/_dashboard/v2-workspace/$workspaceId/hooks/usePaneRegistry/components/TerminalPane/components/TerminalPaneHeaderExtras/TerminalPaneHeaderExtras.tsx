@@ -5,10 +5,15 @@ import { SquarePen } from "lucide-react";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import type { SubagentPaneData } from "../../../../../../types";
 import { AccountUsage } from "../../../AccountUsage";
+import { ForkChatOrigin } from "../../../ForkChatOrigin";
 import {
 	terminalRichInputOpenStore,
 	useTerminalRichInputOpen,
 } from "../../richInputOpenStore";
+import {
+	ForkHandoffMenus,
+	type ForkHandoffMenusProps,
+} from "./components/ForkHandoffMenus";
 import { TerminalConnectionIndicator } from "./components/TerminalConnectionIndicator";
 import { TerminalIdCopyMenu } from "./components/TerminalIdCopyMenu";
 import { TerminalPageWatchChip } from "./components/TerminalPageWatchChip";
@@ -19,6 +24,7 @@ interface TerminalPaneHeaderExtrasProps {
 	workspaceId: string;
 	terminalId: string;
 	terminalInstanceId: string;
+	fork?: ForkHandoffMenusProps;
 	onNewShell: () => Promise<void>;
 	onCreateNewAgentSession: (input: {
 		configId: string;
@@ -40,6 +46,7 @@ export function TerminalPaneHeaderExtras({
 	workspaceId,
 	terminalId,
 	terminalInstanceId,
+	fork,
 	onCreateNewAgentSession,
 	onOpenSubagent,
 	onNewShell,
@@ -58,11 +65,14 @@ export function TerminalPaneHeaderExtras({
 
 	return (
 		<div className="flex items-center gap-1">
-			<AccountUsage
-				key={`${workspaceId}:${terminalId}`}
-				workspaceId={workspaceId}
-				terminalId={terminalId}
-			/>
+			{fork && <ForkChatOrigin ctx={fork.ctx} workspaceId={workspaceId} />}
+			{fork?.paneData.agentSurface !== "acp" && (
+				<AccountUsage
+					key={`${workspaceId}:${terminalId}`}
+					workspaceId={workspaceId}
+					terminalId={terminalId}
+				/>
+			)}
 			<TerminalSubagentsMenu
 				workspaceId={workspaceId}
 				terminalId={terminalId}
@@ -83,6 +93,13 @@ export function TerminalPaneHeaderExtras({
 				terminalId={terminalId}
 				onCreateNewAgentSession={onCreateNewAgentSession}
 			/>
+			{fork && (
+				<ForkHandoffMenus
+					workspaceId={workspaceId}
+					terminalId={terminalId}
+					fork={fork}
+				/>
+			)}
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<button

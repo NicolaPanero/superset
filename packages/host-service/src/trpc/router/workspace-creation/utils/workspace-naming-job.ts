@@ -21,6 +21,7 @@ import {
 	queueWorkspaceTitleJob,
 } from "../../../../workspaces/workspace-title-jobs";
 import { gitStatusStore } from "../../git/utils/git-status-store";
+import { updateRenamedBranchOwnership } from "../../workspace-cleanup/fork-branch-ownership";
 import { resolveGithubRepo } from "../shared/project-helpers";
 import {
 	canNameWithAgent,
@@ -174,7 +175,9 @@ export function scheduleWorkspaceNaming(
 		if (!isCurrent()) return;
 		const names = await generateWorkspaceNamesFromPrompt(
 			prompt,
-			agent ? { db: ctx.db, agent } : undefined,
+			agent
+				? { db: ctx.db, agent, accountSelection: naming.accountSelection }
+				: undefined,
 			project?.namingInstructions,
 			signal,
 			false,
@@ -210,7 +213,13 @@ export function scheduleWorkspaceNaming(
 			hasAgentReply: !!agentReply,
 		});
 		const state: WorkspaceNamingState | null = decision.pending
-			? { prompt, attempts: attempt, branch: oldBranch, agent: agent ?? null }
+			? {
+					...current.naming,
+					prompt,
+					attempts: attempt,
+					branch: oldBranch,
+					agent: agent ?? null,
+				}
 			: null;
 		if (decision.gaveUp && agent) {
 			ctx.eventBus.broadcastWorkspaceNamingFailed({
@@ -273,6 +282,12 @@ async function renameAutomaticBranch(
 	await commitWorkspaceTitleJob(ctx.db, workspaceId, async () => {
 		if (!isCurrent() || !pendingNaming(ctx, workspaceId)) return;
 		await namingGitOps.renameBranch(ctx, input.worktreePath, oldBranch, target);
+		await updateRenamedBranchOwnership(
+			await ctx.git(input.repoPath),
+			oldBranch,
+			target,
+			workspaceId,
+		);
 		gitStatusStore.recordChange(workspaceId, undefined);
 		updateLocalWorkspace(ctx, workspaceId, {
 			name: input.title,

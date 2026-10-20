@@ -1,0 +1,442 @@
+import { Trans, useLingui } from "@lingui/react/macro";
+import type { ForkPullRequest } from "@superset/shared/fork-integrations";
+import { isForkServiceUnavailable } from "@superset/shared/fork-integrations";
+import { Button } from "@superset/ui/button";
+import { Input } from "@superset/ui/input";
+import { Textarea } from "@superset/ui/textarea";
+import {
+	useInfiniteQuery,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
+import { useState } from "react";
+import { CommentBody } from "renderer/components/CommentBody";
+import { useForkConnections } from "../../hooks/useForkConnections";
+import { required } from "../../utils/required";
+import { ForkServiceNotice } from "../ForkServiceNotice";
+import { ForkCommentThread } from "./components/ForkCommentThread";
+import { ForkFixFindings } from "./components/ForkFixFindings";
+import { ForkPullRequestDiff } from "./components/ForkPullRequestDiff";
+import { ForkPullRequestReviewers } from "./components/ForkPullRequestReviewers";
+import { forkReviewThreads } from "./utils/forkReviewThreads";
+
+type PullRequestAction =
+	| "merge"
+	| "close"
+	| "reopen"
+	| "approve"
+	| "unapprove"
+	| "request-changes"
+	| "unrequest-changes"
+	| "comment"
+	| "reply"
+	| "resolve"
+	| "unresolve"
+	| "edit";
+
+type MergeMethod =
+	| "merge_commit"
+	| "squash"
+	| "fast_forward"
+	| "squash_fast_forward"
+	| "rebase_fast_forward"
+	| "rebase_merge";
+
+export function ForkPullRequestDetail({
+	pullRequest,
+	onBack,
+	hostUrl: targetHostUrl,
+}: {
+	pullRequest: ForkPullRequest;
+	onBack: () => void;
+	hostUrl?: string | null;
+}) {
+	const { t } = useLingui(),
+		{ client, hostUrl } = useForkConnections(targetHostUrl),
+		cache = useQueryClient();
+	const target = {
+		connectionId: pullRequest.connectionId,
+		repository: pullRequest.repository,
+		number: pullRequest.number,
+	};
+	const key = ["fork-integrations", hostUrl, "pr", target];
+	const [merging, setMerging] = useState(false);
+	const detail = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		queryKey: key,
+		queryFn: () => required(client).forkScm.get.query(target),
+		initialData: pullRequest,
+		enabled: !!client,
+		refetchOnMount: "always",
+		refetchInterval: (q) =>
+			merging && q.state.data?.state === "open" ? 3000 : false,
+	});
+	const pr = detail.data;
+	const [tab, setTab] = useState<"conversation" | "code" | "checks">(
+			"conversation",
+		),
+		[body, setBody] = useState("");
+	const [edit, setEdit] = useState(false),
+		[title, setTitle] = useState(pr.title),
+		[description, setDescription] = useState(pr.description);
+	const [merge, setMerge] = useState(false),
+		[method, setMethod] = useState<MergeMethod>(
+			(pullRequest.defaultMergeMethod as MergeMethod | undefined) ??
+				"merge_commit",
+		);
+	const comments = useInfiniteQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		initialPageParam: undefined as string | undefined,
+		queryKey: [...key, "comments"],
+		queryFn: ({ pageParam }) =>
+			required(client).forkScm.comments.query({ ...target, cursor: pageParam }),
+		getNextPageParam: (page) => page.nextCursor ?? undefined,
+		enabled: !!client && tab !== "checks",
+	});
+	const diff = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		queryKey: [...key, "diff"],
+		queryFn: () => required(client).forkScm.diff.query(target),
+		enabled: !!client && tab === "code",
+	});
+	const checks = useQuery({
+		refetchOnReconnect: true,
+		networkMode: "always",
+		retry: false,
+		queryKey: [...key, "checks"],
+		queryFn: () => required(client).forkScm.checks.query(target),
+		enabled: !!client && tab === "checks",
+	});
+	const action = useMutation({
+		networkMode: "always",
+		retry: false,
+		mutationFn: ({
+			action,
+			...extra
+		}: {
+			action: PullRequestAction;
+			body?: string;
+			commentId?: string;
+			side?: "old" | "new";
+			path?: string;
+			line?: number;
+		}) =>
+			required(client).forkScm.action.mutate({
+				...target,
+				action,
+				head: pr.headCommit,
+				method: pr.repository.provider === "github" ? "merge" : method,
+				...(action === "edit" ? { title, body: description } : {}),
+				...extra,
+			}),
+		onSuccess: (_, { action: kind }) => {
+			if (kind === "merge") setMerging(true);
+			setBody("");
+			setEdit(false);
+			setMerge(false);
+			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
+			void cache.invalidateQueries({ queryKey: ["pullRequests"] });
+		},
+	});
+	const act = (kind: PullRequestAction) => action.mutate({ action: kind });
+	const allComments = comments.data?.pages.flatMap((page) => page.items) ?? [];
+	const threads = forkReviewThreads(allComments);
+	const bitbucket = pr.repository.provider === "bitbucket";
+	const reply = (commentId: string, text: string) =>
+		action.mutateAsync({ action: "reply", commentId, body: text });
+	const resolve = (commentId: string, resolved: boolean) =>
+		action.mutate({ action: resolved ? "resolve" : "unresolve", commentId });
+	const errors = [
+		action.error,
+		detail.error,
+		comments.error,
+		checks.error,
+		diff.error,
+	];
+	const unavailable = errors.some(isForkServiceUnavailable);
+	const error = errors.find(
+		(error) => error && !isForkServiceUnavailable(error),
+	);
+	const mergeMethods = (
+		[
+			["merge_commit", t({ message: "Merge commit" })],
+			["squash", t({ message: "Squash" })],
+			["fast_forward", t({ message: "Fast-forward" })],
+			["squash_fast_forward", t({ message: "Squash, fast-forward only" })],
+			["rebase_fast_forward", t({ message: "Rebase, fast-forward" })],
+			["rebase_merge", t({ message: "Rebase, merge commit" })],
+		] as const
+	)
+		.filter(([id]) => !pr.mergeMethods || pr.mergeMethods.includes(id))
+		.map(([id, label]) => ({ id, label }));
+	const busy = action.isPending || (merging && pr.state === "open");
+	return (
+		<div className="min-w-0 flex-1 space-y-5 overflow-auto p-5">
+			{unavailable && (
+				<ForkServiceNotice
+					provider={pr.repository.provider}
+					onRetry={() => {
+						void detail.refetch();
+						if (tab === "conversation") void comments.refetch();
+						if (tab === "code") void diff.refetch();
+						if (tab === "checks") void checks.refetch();
+					}}
+				/>
+			)}
+			<div className="flex flex-wrap items-center gap-2">
+				<Button size="sm" variant="ghost" onClick={onBack}>
+					<Trans>Back</Trans>
+				</Button>
+				<a
+					className="text-sm font-medium text-primary"
+					href={pr.url}
+					target="_blank"
+					rel="noreferrer"
+				>
+					#{pr.number}
+				</a>
+				<span className="rounded-full bg-muted px-2 py-1 text-xs">
+					{pr.state === "open" ? (
+						<Trans context="status">Open</Trans>
+					) : pr.state === "merged" ? (
+						<Trans>Merged</Trans>
+					) : (
+						<Trans>Closed</Trans>
+					)}
+				</span>
+				<span className="text-xs text-muted-foreground">{pr.author}</span>
+			</div>
+			<h2 className="text-xl font-semibold">{pr.title}</h2>
+			<p className="break-all font-mono text-xs text-muted-foreground">
+				{pr.sourceBranch} → {pr.targetBranch}
+			</p>
+			<ForkPullRequestReviewers reviewers={pr.reviewers ?? []} />
+			{bitbucket && <ForkFixFindings pr={pr} hostUrl={hostUrl} />}
+			{edit ? (
+				<div className="space-y-2">
+					<Input
+						aria-label={t({ message: "Title" })}
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
+					/>
+					<Textarea
+						aria-label={t({ message: "Description" })}
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
+					/>
+					<Button size="sm" disabled={busy} onClick={() => act("edit")}>
+						<Trans>Save</Trans>
+					</Button>
+				</div>
+			) : (
+				<div className="min-w-0 overflow-x-auto break-words text-sm">
+					<CommentBody body={pr.description} />
+				</div>
+			)}
+			<div className="flex flex-wrap gap-2">
+				<Button size="sm" variant="outline" onClick={() => setEdit(!edit)}>
+					<Trans>Edit</Trans>
+				</Button>
+				{pr.state === "open" && (
+					<>
+						<Button
+							size="sm"
+							variant="outline"
+							disabled={busy}
+							onClick={() => act("approve")}
+						>
+							<Trans>Approve</Trans>
+						</Button>
+						<Button
+							size="sm"
+							variant="outline"
+							disabled={busy}
+							onClick={() => act("unapprove")}
+						>
+							<Trans>Remove approval</Trans>
+						</Button>
+						{bitbucket && (
+							<Button
+								size="sm"
+								variant="outline"
+								disabled={busy}
+								onClick={() => act("request-changes")}
+							>
+								<Trans>Request changes</Trans>
+							</Button>
+						)}
+						{bitbucket && (
+							<Button
+								size="sm"
+								variant="ghost"
+								disabled={busy}
+								onClick={() => act("unrequest-changes")}
+							>
+								<Trans>Withdraw change request</Trans>
+							</Button>
+						)}
+						<Button size="sm" disabled={busy} onClick={() => setMerge(true)}>
+							{merging ? <Trans>Pending</Trans> : <Trans>Merge</Trans>}
+						</Button>
+						<Button
+							size="sm"
+							variant="ghost"
+							disabled={busy}
+							onClick={() => act("close")}
+						>
+							<Trans>Close</Trans>
+						</Button>
+					</>
+				)}
+				{/* Bitbucket Cloud cannot reopen a declined pull request. */}
+				{pr.state === "closed" && pr.repository.provider !== "bitbucket" && (
+					<Button
+						size="sm"
+						variant="outline"
+						disabled={busy}
+						onClick={() => act("reopen")}
+					>
+						<Trans>Reopen</Trans>
+					</Button>
+				)}
+			</div>
+			{merge && (
+				<div className="flex flex-wrap items-center gap-2 rounded-lg border p-3">
+					<select
+						aria-label={t({ message: "Merge method" })}
+						className="h-9 rounded-md border bg-background px-2 text-sm"
+						value={method}
+						onChange={(e) => setMethod(e.target.value as MergeMethod)}
+					>
+						{mergeMethods.map((option) => (
+							<option key={option.id} value={option.id}>
+								{option.label}
+							</option>
+						))}
+					</select>
+					<Button size="sm" disabled={busy} onClick={() => act("merge")}>
+						<Trans>Confirm merge</Trans>
+					</Button>
+					<Button size="sm" variant="ghost" onClick={() => setMerge(false)}>
+						<Trans>Cancel</Trans>
+					</Button>
+				</div>
+			)}
+			<div className="flex gap-2 border-b pb-2">
+				<Button
+					variant={tab === "conversation" ? "secondary" : "ghost"}
+					size="sm"
+					onClick={() => setTab("conversation")}
+				>
+					<Trans>Conversation</Trans>
+				</Button>
+				<Button
+					variant={tab === "code" ? "secondary" : "ghost"}
+					size="sm"
+					onClick={() => setTab("code")}
+				>
+					<Trans>Code</Trans>
+				</Button>
+				<Button
+					variant={tab === "checks" ? "secondary" : "ghost"}
+					size="sm"
+					onClick={() => setTab("checks")}
+				>
+					<Trans>Checks</Trans>
+				</Button>
+			</div>
+			{tab === "conversation" && (
+				<div className="space-y-3">
+					{threads.map((thread) => (
+						<ForkCommentThread
+							key={thread.root.id}
+							thread={thread}
+							busy={busy}
+							canReply={bitbucket}
+							onReply={reply}
+							onResolve={resolve}
+						/>
+					))}
+					{comments.hasNextPage && (
+						<Button
+							variant="ghost"
+							size="sm"
+							disabled={comments.isFetchingNextPage}
+							onClick={() => void comments.fetchNextPage()}
+						>
+							<Trans>Load more</Trans>
+						</Button>
+					)}
+					<Textarea
+						aria-label={t({ message: "Comment" })}
+						value={body}
+						onChange={(e) => setBody(e.target.value)}
+					/>
+					<Button
+						size="sm"
+						disabled={!body.trim() || action.isPending}
+						onClick={() => action.mutate({ action: "comment", body })}
+					>
+						<Trans>Add comment</Trans>
+					</Button>
+				</div>
+			)}
+			{tab === "code" &&
+				(diff.data !== undefined ? (
+					<ForkPullRequestDiff
+						diff={diff.data}
+						threads={threads}
+						busy={busy}
+						canComment={bitbucket}
+						onComment={(path, line, text, side) =>
+							action.mutateAsync({
+								action: "comment",
+								body: text,
+								path,
+								line,
+								side,
+							})
+						}
+						onReply={reply}
+						onResolve={resolve}
+					/>
+				) : (
+					<p className="text-sm text-muted-foreground">
+						{diff.isPending
+							? t({ message: "Loading..." })
+							: isForkServiceUnavailable(diff.error)
+								? ""
+								: diff.error?.message}
+					</p>
+				))}
+			{tab === "checks" && (
+				<div className="space-y-2">
+					{checks.data?.map((c) => (
+						<a
+							key={c.id}
+							className="flex justify-between rounded-lg border p-3 text-sm"
+							href={c.url}
+							target="_blank"
+							rel="noreferrer"
+						>
+							<span>{c.name}</span>
+							<span>{c.state}</span>
+						</a>
+					))}
+				</div>
+			)}
+			{error && (
+				<p role="alert" className="text-sm text-destructive">
+					{error.message}
+				</p>
+			)}
+		</div>
+	);
+}

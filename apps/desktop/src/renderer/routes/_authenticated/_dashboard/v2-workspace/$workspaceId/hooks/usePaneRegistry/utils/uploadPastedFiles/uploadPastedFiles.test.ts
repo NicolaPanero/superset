@@ -140,6 +140,30 @@ describe("uploadPastedFiles", () => {
 		expect(writes.every((w) => w.options.overwrite === false)).toBe(true);
 	});
 
+	it("falls back to a random name once every numbered name is taken", async () => {
+		const { deps, writes } = makeDeps({
+			existing: [
+				`${DIR_ABS}/image.png`,
+				...Array.from(
+					{ length: 49 },
+					(_, i) => `${DIR_ABS}/image_${i + 1}.png`,
+				),
+			],
+		});
+
+		const paths = await uploadPastedFiles({
+			deps,
+			workspaceId: "ws-1",
+			worktreePath: WORKTREE,
+			files: [new File(["x"], "image.png", { type: "image/png" })],
+		});
+
+		expect(paths[0]).toMatch(
+			new RegExp(`^${WORKSPACE_ATTACHMENTS_DIR}/image-[0-9a-f]{12}\\.png$`),
+		);
+		expect(writes.every((w) => w.options.overwrite === false)).toBe(true);
+	});
+
 	it("tolerates a .gitignore that already exists from an earlier paste", async () => {
 		const { deps } = makeDeps({ existing: [`${DIR_ABS}/.gitignore`] });
 

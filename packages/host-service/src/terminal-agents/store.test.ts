@@ -837,6 +837,32 @@ describe("session account attribution", () => {
 		expect(store.listByWorkspace("ws-chat")[0]?.lastEventType).toBe("Stop");
 	});
 
+	it("keeps a chat's account across its later events", () => {
+		const store = new TerminalAgentStore();
+		const account = {
+			agent: "claude" as const,
+			selection: "/profiles/work",
+			credentialKind: "subscription" as const,
+			identity: "id",
+			directory: "/profiles/work",
+			email: "work@example.com",
+		};
+		const chat = {
+			terminalId: "chat-terminal",
+			workspaceId: "ws-account",
+			agentId: "claude" as const,
+			chatSessionId: "chat-1",
+		};
+		store.recordChatEvent({
+			...chat,
+			eventType: "Attached",
+			account,
+			occurredAt: 1,
+		});
+		store.recordChatEvent({ ...chat, eventType: "Start", occurredAt: 2 });
+		expect(store.listByWorkspace("ws-account")[0]?.account).toEqual(account);
+	});
+
 	it("clearing statuses leaves a failed chat failed", () => {
 		const store = new TerminalAgentStore();
 		store.recordChatEvent({

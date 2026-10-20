@@ -1,4 +1,4 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { eq } from "@tanstack/db";
 import { useLiveQuery } from "@tanstack/react-db";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -11,6 +11,7 @@ import {
 	type WorkspaceSidebarTab,
 } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal/schema";
 import { useReviewCommentNavigation } from "../../hooks/useReviewCommentNavigation";
+import { useWorkspaceFolders } from "../../hooks/useWorkspaceFolders";
 import { useRowlessSidebarTabStore } from "../../state/rowlessSidebarTabStore";
 import type { CommentPaneData, DiffFocusSide } from "../../types";
 import {
@@ -18,7 +19,10 @@ import {
 	setWorkspaceSidebarTab,
 } from "../../utils/setWorkspaceSidebarTab";
 import { FilesTab } from "./components/FilesTab";
+import { FolderFiles } from "./components/FolderFiles";
+import { FolderRepoChanges } from "./components/FolderRepoChanges";
 import { PRActionHeader } from "./components/PRActionHeader";
+import { RepoSelector } from "./components/RepoSelector";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { type SelectedDiffTarget, useChangesTab } from "./hooks/useChangesTab";
 import { useReviewTab } from "./hooks/useReviewTab";
@@ -46,6 +50,7 @@ interface WorkspaceSidebarProps {
 		line?: number,
 		side?: DiffFocusSide,
 		changeKey?: string,
+		repoKey?: string,
 	) => void;
 	onOpenComment?: (comment: CommentPaneData) => void;
 	/** Opens the linked PR's summary pane; the Review tab's title falls back to GitHub without it. */
@@ -114,7 +119,9 @@ export function WorkspaceSidebar({
 
 	const changesTab = useChangesTab({
 		workspaceId,
-		selectedDiffTarget,
+		selectedDiffTarget: selectedDiffTarget?.repoKey
+			? undefined
+			: selectedDiffTarget,
 		onSelectFile: onSelectDiffFile
 			? (path, openInNewTab, changeKey) =>
 					onSelectDiffFile(path, openInNewTab, undefined, undefined, changeKey)
@@ -133,23 +140,75 @@ export function WorkspaceSidebar({
 		onOpenInDiff,
 	});
 
+	const { selected: selectedFolder } = useWorkspaceFolders(workspaceId);
+
 	const filesTab: SidebarTabDefinition = {
 		id: "files",
 		label: t({ message: "Files" }),
 		icon: LuFile,
 		content: (
-			<FilesTab
-				onSelectFile={onSelectFile}
-				selectedFilePath={selectedFilePath}
-				pendingReveal={pendingReveal}
-				workspaceId={workspaceId}
-				gitStatus={gitStatus.data}
-				onSearch={onSearch}
-			/>
+			<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+				<RepoSelector workspaceId={workspaceId} />
+				{selectedFolder ? (
+					<FolderFiles
+						key={selectedFolder.workspaceKey}
+						repoKey={selectedFolder.workspaceKey}
+						isGitRepo={selectedFolder.isGitRepo}
+						onSelectFile={onSelectFile}
+						selectedFilePath={selectedFilePath}
+						pendingReveal={pendingReveal}
+						onSearch={onSearch}
+					/>
+				) : (
+					<FilesTab
+						onSelectFile={onSelectFile}
+						selectedFilePath={selectedFilePath}
+						pendingReveal={pendingReveal}
+						workspaceId={workspaceId}
+						gitStatus={gitStatus.data}
+						onSearch={onSearch}
+					/>
+				)}
+			</div>
 		),
 	};
 
-	const tabs: SidebarTabDefinition[] = [filesTab, changesTab, reviewTab];
+	const selectedRepoKey = selectedFolder?.isGitRepo
+		? selectedFolder.workspaceKey
+		: undefined;
+	const changesTabWithRepos: SidebarTabDefinition = {
+		...changesTab,
+		content: (
+			<div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+				<RepoSelector workspaceId={workspaceId} />
+				{selectedFolder && !selectedFolder.isGitRepo ? (
+					<p className="px-3 py-4 text-xs text-muted-foreground">
+						<Trans>This folder is not a git repository.</Trans>
+					</p>
+				) : selectedRepoKey ? (
+					<FolderRepoChanges
+						key={selectedRepoKey}
+						repoKey={selectedRepoKey}
+						selectedDiffTarget={
+							selectedDiffTarget?.repoKey === selectedRepoKey
+								? selectedDiffTarget
+								: undefined
+						}
+						onSelectDiffFile={onSelectDiffFile}
+						onSelectFile={onSelectFile}
+					/>
+				) : (
+					changesTab.content
+				)}
+			</div>
+		),
+	};
+
+	const tabs: SidebarTabDefinition[] = [
+		filesTab,
+		changesTabWithRepos,
+		reviewTab,
+	];
 	const activeTabDef = tabs.find((t) => t.id === activeTab) ?? tabs[0];
 
 	const tabCount = tabs.length;

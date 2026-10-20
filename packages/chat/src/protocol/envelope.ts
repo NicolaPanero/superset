@@ -71,6 +71,7 @@ export const sessionStateSchema = z.looseObject({
 	 * session, and the caller has to know which one it ended up on.
 	 */
 	harnessSessionId: z.string().optional(),
+	forkAtMessage: z.boolean().optional(),
 	queuePaused: z.boolean().optional(),
 	queueControls: z.boolean().optional(),
 	backgroundTasks: z.array(backgroundTaskSchema).optional(),

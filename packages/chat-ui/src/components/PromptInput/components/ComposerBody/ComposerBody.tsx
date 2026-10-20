@@ -133,6 +133,7 @@ export type ComposerBodyProps = Required<
 		| "ref"
 		| "header"
 		| "onAddFiles"
+		| "draftFiles"
 		| "allowEmptySubmit"
 		| "clearOnSubmit"
 		| "hideSubmit"
@@ -191,6 +192,7 @@ export function ComposerBody({
 	ref,
 	header,
 	onAddFiles,
+	draftFiles,
 	allowEmptySubmit,
 	clearOnSubmit,
 	hideSubmit,
@@ -264,7 +266,21 @@ export function ComposerBody({
 		}),
 		[draftText, editor, focusAtEnd, pasted.restore, splitPastes],
 	);
-	const [attachments, setAttachments] = useState<PromptInputAttachment[]>([]);
+	const [attachments, setAttachments] = useState<PromptInputAttachment[]>(() =>
+		(draftFiles?.initial ?? []).map((file) => ({
+			id: crypto.randomUUID(),
+			file,
+			previewUrl:
+				file.type.startsWith("image/") || file.type.startsWith("video/")
+					? URL.createObjectURL(file)
+					: undefined,
+		})),
+	);
+	const onDraftFilesRef = useRef(draftFiles?.onChange);
+	onDraftFilesRef.current = draftFiles?.onChange;
+	useEffect(() => {
+		onDraftFilesRef.current?.(attachments.map((attachment) => attachment.file));
+	}, [attachments]);
 	const [isEmpty, setIsEmpty] = useState(true);
 	const [dragging, setDragging] = useState(false);
 	const [mentionQuery, setMentionQuery] = useState<string | null>(null);

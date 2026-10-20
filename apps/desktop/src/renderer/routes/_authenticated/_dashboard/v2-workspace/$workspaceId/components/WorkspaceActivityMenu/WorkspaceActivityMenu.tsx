@@ -58,6 +58,7 @@ import {
 } from "./components/ActivityMenuHeader";
 import { BackgroundWorkRow } from "./components/BackgroundWorkRow";
 import { ChangesMenuRow } from "./components/ChangesMenuRow";
+import { ForkBackgroundChatsGroup } from "./components/ForkBackgroundChatsGroup";
 import { MenuGroup } from "./components/MenuGroup";
 import { PagesMenuRow } from "./components/PagesMenuRow";
 import {
@@ -603,6 +604,11 @@ export function WorkspaceActivityMenu({
 										: emptyRow(<Trans>Nothing running</Trans>)}
 							</div>
 						</MenuGroup>
+						<ForkBackgroundChatsGroup
+							workspaceId={workspaceId}
+							store={store}
+							onOpened={() => handleOpenChange(false)}
+						/>
 						{subagents.length > 0 && (
 							<MenuGroup title={<Trans>Subagents</Trans>}>
 								<div className="max-h-48 overflow-y-auto">

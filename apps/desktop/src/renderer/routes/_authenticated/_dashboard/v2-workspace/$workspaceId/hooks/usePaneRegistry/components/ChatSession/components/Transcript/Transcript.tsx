@@ -34,6 +34,7 @@ import {
 	CHAT_COLUMN_CLASSNAME,
 	CHAT_SCROLLER_GUTTER_CLASSNAME,
 } from "../../constants";
+import type { EarlierMessages } from "../../hooks/useEarlierMessages";
 import type { ChatForkTarget } from "../../types";
 import { pageLinkFinder } from "../../utils/pageLinks";
 import { TranscriptFindBar } from "./components/TranscriptFindBar";
@@ -73,11 +74,14 @@ export type TranscriptProps = {
 	approvals: ApprovalRequest[];
 	outbox: OutboxEntry[];
 	hasOlder: boolean;
+	earlier?: EarlierMessages | undefined;
 	onLoadOlder: () => Promise<boolean>;
 	onRequestItemBodies: (itemIds: readonly string[]) => void;
 	onRespond: (approvalId: string, decision: Decision) => void;
-	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
 	canForkToWorktree?: boolean;
+	onRewind?: ((itemId: string) => void) | undefined;
+	rewindableItemIds?: ReadonlySet<string> | undefined;
 	onRetryPrompt: (clientId: string) => void;
 	onDiscardPrompt: (clientId: string) => void;
 	/** The pane has focus, so ⌘F opens the find bar here. */
@@ -106,12 +110,15 @@ function proseTopPadding(
 export function Transcript({
 	approvals,
 	canForkToWorktree,
+	earlier,
 	groups,
 	hasOlder,
 	isActive = false,
 	onCloseFind,
 	onDiscardPrompt,
 	onFork,
+	onRewind,
+	rewindableItemIds,
 	onLoadOlder,
 	onRequestItemBodies,
 	onRespond,
@@ -287,6 +294,8 @@ export function Transcript({
 				messageId={rowMessageId(row)}
 				onDiscardPrompt={onDiscardPrompt}
 				onFork={onFork}
+				onRewind={onRewind}
+				rewindableItemIds={rewindableItemIds}
 				onRespond={onRespond}
 				onRetryPrompt={onRetryPrompt}
 				onToggleEntry={onToggleEntry}
@@ -352,6 +361,29 @@ export function Transcript({
 							) : (
 								olderPages.loading && <Spinner className="size-4" />
 							)}
+						</div>
+					)}
+					{!hasOlder && earlier?.available && (
+						<div
+							className={cn(
+								CHAT_COLUMN_CLASSNAME,
+								"flex min-h-10 items-center justify-center pt-2",
+							)}
+						>
+							<Button
+								disabled={earlier.loading}
+								onClick={earlier.show}
+								size="sm"
+								variant="ghost"
+							>
+								{earlier.loading ? (
+									<Spinner className="size-4" />
+								) : earlier.failed ? (
+									<Trans>Couldn't load earlier messages. Retry</Trans>
+								) : (
+									<Trans>Show earlier messages</Trans>
+								)}
+							</Button>
 						</div>
 					)}
 					<MessageScroller.Content

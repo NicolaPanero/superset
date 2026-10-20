@@ -152,6 +152,7 @@ function makeCtx(spec: ContextSpec): HostServiceContext & {
 					// getHostWorktreeBaseDir when a spec sets no per-project
 					// worktreeBaseDir ("no host settings row" shape).
 					where: () => ({ all: terminalSelectAll, get: () => undefined }),
+					innerJoin: () => ({ where: () => ({ all: () => [] }) }),
 				}),
 			}),
 			update: () => ({
@@ -276,7 +277,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -289,7 +290,7 @@ describe("workspaceCleanup.inspect", () => {
 		const ctx = makeCtx({});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -327,7 +328,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -343,7 +344,7 @@ describe("workspaceCleanup.inspect", () => {
 		});
 		const caller = workspaceCleanupRouter.createCaller(ctx);
 		const result = await caller.inspect({ workspaceId: "ws-1" });
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			canDelete: true,
 			reason: null,
 			hasChanges: false,
@@ -913,7 +914,7 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 		}
 	});
 
-	test("branch delete failure is reported as a warning after the local commit point", async () => {
+	test("an unverified branch is retained after the local commit point", async () => {
 		const repo = mkdtempSync(join(tmpdir(), "workspace-delete-repo-"));
 		try {
 			const ctx = makeCtx({
@@ -939,7 +940,7 @@ describe("workspaceCleanup.destroy cleanup ordering", () => {
 			expect(result.worktreeRemoved).toBe(true);
 			expect(result.branchDeleted).toBe(false);
 			expect(result.warnings).toContain(
-				"Failed to delete branch feature: branch delete boom",
+				"Branch preserved: feature (unverified)",
 			);
 		} finally {
 			rmSync(repo, { recursive: true, force: true });

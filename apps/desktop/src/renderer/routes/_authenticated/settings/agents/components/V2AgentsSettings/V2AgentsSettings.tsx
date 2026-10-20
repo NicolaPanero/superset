@@ -16,11 +16,9 @@ import {
 	V2_AGENT_CONFIGS_QUERY_KEY as QUERY_KEY,
 	useV2AgentConfigs,
 } from "renderer/hooks/useV2AgentConfigs";
-import {
-	findLinkedAgent,
-	getAgentCommandText,
-} from "renderer/lib/agent-launch-command";
+import { findLinkedAgent } from "renderer/lib/agent-launch-command";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { getForkAgentSnapshotCommand } from "renderer/lib/fork-agent-snapshot";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { getHostServiceUnavailableMessage } from "renderer/lib/host-service-unavailable";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
@@ -64,7 +62,7 @@ function insertLinkedTerminalPreset(
 		name: agent.label,
 		description: DESCRIPTION_BY_PRESET_ID.get(agent.presetId),
 		cwd: "",
-		commands: [getAgentCommandText(agent)],
+		commands: [getForkAgentSnapshotCommand(agent)],
 		projectIds: null,
 		executionMode: "new-tab",
 		tabOrder: maxTabOrder + 1,
@@ -109,7 +107,7 @@ export function V2AgentsSettings({
 	// for when the agent config isn't loaded; refresh it so an edited agent
 	// command can't resurface stale via that fallback.
 	const syncLinkedPresetSnapshots = (updated: HostAgentConfig) => {
-		const commandText = getAgentCommandText(updated);
+		const commandText = getForkAgentSnapshotCommand(updated);
 		if (commandText.trim().length === 0) return;
 		for (const preset of collections.v2TerminalPresets.values()) {
 			if (

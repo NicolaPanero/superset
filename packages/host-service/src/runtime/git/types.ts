@@ -4,6 +4,7 @@ import type { SimpleGit, SimpleGitOptions } from "simple-git";
 export type CredentialProblem = "missing" | "rejected";
 
 export interface GitCredentialProvider {
+	forPath?(repoPath: string): GitCredentialProvider;
 	getCredentials(
 		remoteUrl: string | null,
 	): Promise<{ env: Record<string, string> }>;

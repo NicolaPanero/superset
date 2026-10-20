@@ -21,6 +21,7 @@ import { LuKeyboard, LuMegaphone } from "react-icons/lu";
 import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 import { useGettingStartedStore } from "renderer/stores/getting-started";
 
@@ -30,6 +31,7 @@ interface HelpSubMenuProps {
 
 export function HelpSubMenu({ onSubmitPrompt }: HelpSubMenuProps) {
 	const navigate = useNavigate();
+	const showProFeatures = useForkProFeatures();
 	const { plan, isReady } = useCurrentPlan();
 	const shortcutsHotkey = useHotkeyDisplay("SHOW_HOTKEYS").text;
 	const openUrlMutation = electronTrpc.external.openUrl.useMutation();
@@ -47,7 +49,7 @@ export function HelpSubMenu({ onSubmitPrompt }: HelpSubMenuProps) {
 				</span>
 			</DropdownMenuSubTrigger>
 			<DropdownMenuSubContent className="w-56">
-				{isReady && isPaidPlanTier(plan) && (
+				{showProFeatures && isReady && isPaidPlanTier(plan) && (
 					<DropdownMenuItem
 						onSelect={() => useGettingStartedStore.getState().show()}
 					>

@@ -3,7 +3,7 @@ import {
 	resolveEditorLineHeight,
 	resolveFontVariantLigatures,
 } from "renderer/lib/editor-typography";
-import { getEditorTheme, type Theme, withAlpha } from "shared/themes";
+import { getEditorTheme, type Theme } from "shared/themes";
 import {
 	DEFAULT_CODE_EDITOR_FONT_FAMILY,
 	DEFAULT_CODE_EDITOR_FONT_SIZE,
@@ -26,9 +26,8 @@ export function createCodeMirrorTheme(
 	const fontSize = fontSettings.fontSize ?? DEFAULT_CODE_EDITOR_FONT_SIZE;
 	const lineHeight = resolveEditorLineHeight(fontSize, fontSettings.lineHeight);
 	const editorTheme = getEditorTheme(theme);
-	const accentOverlay = withAlpha(theme.ui.accent, 0.5);
-	const activeLineBackground = accentOverlay;
-	const selectionBackground = accentOverlay;
+	const activeLineBackground = editorTheme.colors.activeLine;
+	const selectionBackground = editorTheme.colors.selection;
 
 	return EditorView.theme(
 		{

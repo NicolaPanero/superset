@@ -5,6 +5,13 @@ import { attachmentsRouter } from "./attachments";
 import { browserRouter } from "./browser/browser";
 import { configRouter } from "./config";
 import { filesystemRouter } from "./filesystem";
+import { forkAttachmentsRouter } from "./fork-attachments";
+import {
+	forkConnectionsRouter,
+	forkScmRouter,
+	forkTasksRouter,
+} from "./fork-integrations/fork-integrations";
+import { forkMcpRouter } from "./fork-mcp";
 import { gitRouter } from "./git";
 import { githubRouter } from "./github";
 import { healthRouter } from "./health";
@@ -17,8 +24,10 @@ import { pageWatchRouter } from "./page-watch";
 import { panesRouter } from "./panes";
 import { portsRouter } from "./ports";
 import { projectRouter } from "./project";
+import { projectFoldersRouter } from "./project-folders";
 import { pullRequestsRouter } from "./pull-requests";
 import { sandboxRouter } from "./sandbox";
+import { sessionTransferRouter } from "./session-transfer";
 import { settingsRouter } from "./settings";
 import { systemRouter } from "./system";
 import { tagFoldersRouter } from "./tag-folders";
@@ -31,6 +40,11 @@ import { workspaceCreationRouter } from "./workspace-creation";
 import { workspacesRouter } from "./workspaces";
 
 export const appRouter = router({
+	forkAttachments: forkAttachmentsRouter,
+	forkConnections: forkConnectionsRouter,
+	forkMcp: forkMcpRouter,
+	forkScm: forkScmRouter,
+	forkTasks: forkTasksRouter,
 	agents: agentsRouter,
 	agentTooling: agentToolingRouter,
 	attachments: attachmentsRouter,
@@ -47,12 +61,14 @@ export const appRouter = router({
 	notifications: notificationsRouter,
 	pullRequests: pullRequestsRouter,
 	project: projectRouter,
+	projectFolders: projectFoldersRouter,
 	tagFolders: tagFoldersRouter,
 	pageWatch: pageWatchRouter,
 	panes: panesRouter,
 	ports: portsRouter,
 	sandbox: sandboxRouter,
 	settings: settingsRouter,
+	sessionTransfer: sessionTransferRouter,
 	system: systemRouter,
 	terminal: terminalRouter,
 	terminalAgents: terminalAgentsRouter,

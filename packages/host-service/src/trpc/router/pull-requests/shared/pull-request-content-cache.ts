@@ -23,7 +23,9 @@ export function pullRequestContentCacheKey(
 	repo: RepoIdentity,
 	prNumber: number,
 ): string {
-	return `${repo.owner.toLowerCase()}/${repo.name.toLowerCase()}#${prNumber}`;
+	return forkRequestCacheKey(
+		`${repo.owner.toLowerCase()}/${repo.name.toLowerCase()}#${prNumber}`,
+	);
 }
 
 export function readPullRequestContentCache<T>(key: string): Promise<T> | null {
@@ -74,3 +76,5 @@ export function evictPullRequestContent(
 export function pullRequestContentCacheSize(): number {
 	return entries.size;
 }
+
+import { forkRequestCacheKey } from "../../../../fork-integrations/fork-request-scope";

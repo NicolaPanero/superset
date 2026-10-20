@@ -12,24 +12,25 @@ import {
 } from "../../../workers/tasks/usage";
 import { protectedProcedure, queryProcedure, router } from "../../index";
 import { offLoop } from "../../off-loop";
+import { setAccountAlias } from "./account-aliases";
 import {
 	provisionClaudeAccount,
 	provisionCodexAccount,
 } from "./account-provisioning";
-import { fetchAgyAccounts } from "./agy-quota";
-import {
-	fetchClaudeAccounts,
-	readClaudeLoginFingerprint,
-	readDefaultLoginEmail,
-} from "./claude";
-import { fetchCodexAccounts } from "./codex";
+import { readClaudeLoginFingerprint, readDefaultLoginEmail } from "./claude";
 import {
 	getDefaultAccountSelections,
 	setDefaultAccountSelection,
 } from "./default-account";
-import { fetchGrokAccounts } from "./grok-quota";
+import { forkAccountRegistry } from "./fork-account-registry";
+import {
+	assertIsolatedAccount,
+	isolatedAccountQuota,
+} from "./fork-isolated-accounts";
+import { ensureIsolatedDefault } from "./fork-isolated-default";
+import { forkUsageProcedures } from "./fork-procedures";
+import { getQuota, invalidateQuota } from "./fork-quota-cache";
 import { countAgentPrsByDay } from "./history/agent-prs";
-import { fetchOpencodeAccounts } from "./opencode-quota";
 import { removeClaudeProfile, removeCodexHome } from "./profile-remove";
 import {
 	discoverClaudeProfiles,
@@ -37,54 +38,13 @@ import {
 	readCodexProfileKind,
 } from "./profiles";
 import { validateSessionAccount } from "./session-account/session-account";
-import type { UsageAccount } from "./types";
-
-/**
- * Agent quota endpoints are undocumented and rate-limit-sensitive, so
- * results are cached briefly and concurrent callers share one in-flight
- * request. The cached promise is evicted on rejection so a failure does not
- * replay for the whole TTL.
- */
-// >=5 min: Anthropic 429-blacklists faster pollers of the oauth/usage
-// endpoint (ccusage deprecated its live gauge over this; CodexBar #30930).
-const QUOTA_CACHE_TTL_MS = 5 * 60 * 1000;
-
-let cachedQuota: { promise: Promise<UsageAccount[]>; cachedAt: number } | null =
-	null;
-
-function loadAccounts(): Promise<UsageAccount[]> {
-	return Promise.all([
-		fetchClaudeAccounts(),
-		fetchCodexAccounts(),
-		fetchGrokAccounts(),
-		fetchAgyAccounts(),
-		fetchOpencodeAccounts(),
-	]).then((groups) => groups.flat());
-}
-
-function getQuota(forceRefresh: boolean): Promise<UsageAccount[]> {
-	if (
-		!forceRefresh &&
-		cachedQuota &&
-		Date.now() - cachedQuota.cachedAt < QUOTA_CACHE_TTL_MS
-	) {
-		return cachedQuota.promise;
-	}
-
-	const promise = loadAccounts();
-	const entry = { promise, cachedAt: Date.now() };
-	cachedQuota = entry;
-	promise.catch(() => {
-		if (cachedQuota === entry) cachedQuota = null;
-	});
-	return promise;
-}
 
 export const leaderboardPayloadInput = z.object({
 	days: z.number().int().min(1).max(MAX_BACKFILL_DAYS),
 });
 
 export const usageRouter = router({
+	...forkUsageProcedures,
 	sessionAccount: queryProcedure
 		.input(
 			z.object({
@@ -116,21 +76,39 @@ export const usageRouter = router({
 		}),
 	quota: queryProcedure
 		.meta({ timeoutMs: 15_000 })
-		.input(z.object({ forceRefresh: z.boolean().optional() }).optional())
+		.input(
+			z
+				.object({
+					forceRefresh: z.boolean().optional(),
+					isolated: z.boolean().optional(),
+				})
+				.optional(),
+		)
 		.query(async ({ ctx, input }) => {
-			const accounts = await getQuota(input?.forceRefresh ?? false);
+			let accounts = await getQuota(input?.forceRefresh ?? false);
+			if (input?.isolated) {
+				accounts = await isolatedAccountQuota(accounts);
+				await ensureIsolatedDefault(ctx.db, "claude");
+				await ensureIsolatedDefault(ctx.db, "codex");
+			}
 			// isDefault is applied per query, not cached with the quota: changing
 			// the default must reflect immediately without re-hitting providers.
 			const defaults = getDefaultAccountSelections(ctx.db);
-			return accounts.map((account) => ({
-				...account,
-				isDefault:
-					account.agent === "claude"
-						? account.selection === defaults.claudeConfigDir
-						: account.agent === "codex"
-							? account.selection === defaults.codexHome
-							: false,
-			}));
+			return accounts.map(
+				({ identityFingerprint: _identityFingerprint, ...account }) => ({
+					...account,
+					isDefault:
+						input?.isolated &&
+						account.selection === null &&
+						(account.agent === "claude" || account.agent === "codex")
+							? false
+							: account.agent === "claude"
+								? account.selection === defaults.claudeConfigDir
+								: account.agent === "codex"
+									? account.selection === defaults.codexHome
+									: false,
+				}),
+			);
 		}),
 
 	/**
@@ -171,7 +149,17 @@ export const usageRouter = router({
 				return { home, fingerprint, credentialKind };
 			}),
 		);
+		const profileMetadata: {
+			profileNamingVersion?: number;
+			isolatedProfiles?: { agent: "claude" | "codex"; selection: string }[];
+		} = {
+			profileNamingVersion: 1,
+			isolatedProfiles: forkAccountRegistry()
+				.list()
+				.map(({ agent, selection }) => ({ agent, selection })),
+		};
 		return {
+			...profileMetadata,
 			homeDir: homedir(),
 			claudeDefaultFingerprint,
 			claude: await Promise.all(
@@ -199,10 +187,19 @@ export const usageRouter = router({
 			z.object({
 				agent: z.enum(["claude", "codex"]),
 				selection: z.string().nullable(),
+				isolated: z.boolean().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			if (input.selection !== null) {
+			if (input.isolated) {
+				if (input.selection === null)
+					throw new TRPCError({
+						code: "BAD_REQUEST",
+						message: "account_selection_unavailable",
+					});
+				await assertIsolatedAccount(input.agent, input.selection);
+			}
+			if (input.selection !== null && !input.isolated) {
 				// Only accept a discovered login: the value lands in a shell env
 				// overlay, and a typo'd dir would boot agents signed out.
 				const accounts = await getQuota(false);
@@ -252,15 +249,24 @@ export const usageRouter = router({
 			z.object({
 				agent: z.enum(["claude", "codex"]),
 				selection: z.string(),
+				isolated: z.boolean().optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
 			const accounts = await getQuota(false);
-			const known = accounts.some(
-				(account) =>
-					account.agent === input.agent &&
-					account.selection === input.selection,
-			);
+			const known =
+				(input.isolated &&
+					forkAccountRegistry()
+						.list()
+						.some(
+							(row) =>
+								row.agent === input.agent && row.selection === input.selection,
+						)) ||
+				accounts.some(
+					(account) =>
+						account.agent === input.agent &&
+						account.selection === input.selection,
+				);
 			if (!known) {
 				throw new TRPCError({
 					code: "BAD_REQUEST",
@@ -278,11 +284,21 @@ export const usageRouter = router({
 					? defaults.claudeConfigDir
 					: defaults.codexHome;
 			if (pointer === input.selection) {
-				setDefaultAccountSelection(ctx.db, input.agent, null);
+				if (
+					!forkAccountRegistry()
+						.list()
+						.some(
+							(row) =>
+								row.agent === input.agent && row.selection === input.selection,
+						)
+				)
+					setDefaultAccountSelection(ctx.db, input.agent, null);
 			}
+			forkAccountRegistry().forget(input.agent, input.selection);
 			// The quota cache still lists the removed account; drop it so the
 			// next query re-discovers.
-			cachedQuota = null;
+			invalidateQuota();
+			setAccountAlias(ctx.db, input.agent, input.selection, null);
 			return { success: true as const };
 		}),
 
@@ -298,9 +314,14 @@ export const usageRouter = router({
 			z.object({
 				agent: z.enum(["claude", "codex"]),
 				selection: z.string(),
+				isolated: z.boolean().optional(),
 			}),
 		)
 		.mutation(async ({ input }) => {
+			if (input.isolated) {
+				invalidateQuota();
+				await assertIsolatedAccount(input.agent, input.selection);
+			}
 			const discovered =
 				input.agent === "claude"
 					? (await discoverClaudeProfiles()).map((profile) => profile.configDir)

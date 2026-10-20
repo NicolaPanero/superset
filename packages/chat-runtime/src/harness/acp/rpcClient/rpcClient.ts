@@ -126,6 +126,7 @@ export class AcpRpcError extends Error {
 		readonly method: string,
 		readonly code: number,
 		message: string,
+		readonly data?: unknown,
 	) {
 		super(`${method}: ${message}`);
 		this.name = "AcpRpcError";
@@ -231,7 +232,7 @@ export class AcpRpcClient {
 			method?: string;
 			params?: unknown;
 			result?: unknown;
-			error?: { code: number; message: string };
+			error?: { code: number; message: string; data?: unknown };
 		};
 		try {
 			frame = JSON.parse(line);
@@ -265,7 +266,7 @@ export class AcpRpcClient {
 		this.pending.delete(id);
 		if (error !== undefined) {
 			request.reject(
-				new AcpRpcError(request.method, error.code, error.message),
+				new AcpRpcError(request.method, error.code, error.message, error.data),
 			);
 			return;
 		}

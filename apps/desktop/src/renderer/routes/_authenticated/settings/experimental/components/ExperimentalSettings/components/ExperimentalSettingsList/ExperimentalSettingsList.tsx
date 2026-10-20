@@ -22,6 +22,7 @@ import {
 	SETTING_ITEM_ID,
 	type SettingItemId,
 } from "../../../../../utils/settings-search";
+import { AcpChatSetting } from "../AcpChatSetting";
 import { WaitForSetupBeforeAgentSetting } from "../WaitForSetupBeforeAgentSetting";
 
 interface ExperimentalSettingsListProps {
@@ -82,6 +83,9 @@ export function ExperimentalSettingsList({
 			</div>
 
 			<div className="space-y-6">
+				{isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT, visibleItems) && (
+					<AcpChatSetting />
+				)}
 				{showV1Migration && !isV2OnlyUser && (
 					<div className="flex items-center justify-between gap-6">
 						<div className="min-w-0 flex-1 space-y-0.5">

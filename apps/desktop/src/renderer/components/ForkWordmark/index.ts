@@ -1,0 +1,1 @@
+export { ForkWordmark } from "./ForkWordmark";

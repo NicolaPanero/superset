@@ -1,5 +1,5 @@
 const GITHUB_AUTHOR_PATTERN =
-	/^(?!.*--)[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?(?:\[bot\])?$/i;
+	/^(?!.*--)[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?(?:\[bot\])?$|^(?!.*--)[a-z\d][a-z\d._-]{0,99}$/i;
 
 export function normalizeAuthorFilter(value: unknown): string | null {
 	if (typeof value !== "string") return null;

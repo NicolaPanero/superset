@@ -34,6 +34,7 @@ export interface ClosedTabEntry {
  * Extends BaseTab with renderer-specific layout field.
  */
 export interface Tab extends BaseTab {
+	isWorkspaceSetup?: boolean;
 	layout: MosaicNode<string>; // Always defined, leaves are paneIds
 }
 
@@ -98,6 +99,7 @@ export interface AddFileViewerPaneOptions {
  */
 export interface TabsStore extends TabsState {
 	// Tab operations
+	setTabWorkspaceSetup: (tabId: string, enabled: boolean) => void;
 	addTab: (
 		workspaceId: string,
 		options?: AddTabOptions,

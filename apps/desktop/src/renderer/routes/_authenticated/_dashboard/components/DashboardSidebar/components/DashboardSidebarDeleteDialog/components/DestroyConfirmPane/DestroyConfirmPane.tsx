@@ -24,6 +24,7 @@ interface DestroyConfirmPaneProps {
 	 * record goes away, so there is no branch or folder to offer. */
 	sharesProjectCheckout?: boolean;
 	deleteBranch: boolean;
+	branchDeletion?: { branch: string | null; eligible: boolean; reason: string };
 	onDeleteBranchChange: (next: boolean) => void;
 	hasChanges: boolean;
 	hasUnpushedCommits: boolean;
@@ -40,6 +41,7 @@ export function DestroyConfirmPane({
 	isSession = false,
 	sharesProjectCheckout = false,
 	deleteBranch,
+	branchDeletion,
 	onDeleteBranchChange,
 	hasChanges,
 	hasUnpushedCommits,
@@ -109,23 +111,38 @@ export function DestroyConfirmPane({
 						</div>
 					</div>
 				)}
-				{!isSession && !sharesProjectCheckout && (
-					<div className="px-4 pb-2">
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id={checkboxId}
-								checked={deleteBranch}
-								onCheckedChange={(checked) =>
-									onDeleteBranchChange(checked === true)
-								}
-							/>
-							<Label
-								htmlFor={checkboxId}
-								className="text-xs text-muted-foreground cursor-pointer select-none"
-							>
-								<Trans>Also delete local branch</Trans>
-							</Label>
+				{!isSession &&
+					!sharesProjectCheckout &&
+					branchDeletion?.eligible === true && (
+						<div className="px-4 pb-2">
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id={checkboxId}
+									checked={deleteBranch}
+									onCheckedChange={(checked) =>
+										onDeleteBranchChange(checked === true)
+									}
+								/>
+								<Label
+									htmlFor={checkboxId}
+									className="text-xs text-muted-foreground cursor-pointer select-none"
+								>
+									<Trans>Also delete local branch</Trans> ·{" "}
+									<code>{branchDeletion.branch}</code>
+								</Label>
+							</div>
 						</div>
+					)}
+				{!isSession && branchDeletion && !branchDeletion.eligible && (
+					<div className="px-4 pb-2 text-xs text-muted-foreground">
+						{sharesProjectCheckout ? (
+							<Trans>Branch and project files will be preserved.</Trans>
+						) : (
+							<Trans>Branch preserved</Trans>
+						)}
+						{!sharesProjectCheckout && (
+							<code className="block">{branchDeletion.branch}</code>
+						)}
 					</div>
 				)}
 				<AlertDialogFooter className="px-4 pb-4 pt-2 flex-row justify-end gap-2">

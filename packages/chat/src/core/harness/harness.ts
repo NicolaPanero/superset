@@ -10,6 +10,10 @@
 const ACP_HARNESS_BY_PRESET: Record<string, string> = {
 	claude: "claude-acp",
 	codex: "codex-acp",
+	gemini: "gemini-acp",
+	agy: "antigravity-acp",
+	"cursor-agent": "cursor-acp",
+	grok: "grok-acp",
 	opencode: "opencode-acp",
 	pi: "pi-acp",
 	pdev: "pdev-acp",

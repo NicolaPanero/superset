@@ -5,6 +5,7 @@ import { track } from "renderer/lib/analytics";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import type { SidebarCardEntry } from "../../types";
 
 /**
@@ -28,6 +29,7 @@ export function usePaymentFailedCard({
 }: {
 	surface: "v1" | "v2";
 }): SidebarCardEntry | null {
+	const showProFeatures = useForkProFeatures();
 	const { data: session } = authClient.useSession();
 	const { data: activePlan } = cloudTrpc.billing.activePlan.useQuery(undefined);
 	const isFailing = isPaymentFailingStatus(activePlan?.status);
@@ -36,7 +38,7 @@ export function usePaymentFailedCard({
 	// everyone who never paid. Gating them on `plan === "free"` instead would
 	// put a Stripe round-trip on every app load for every past customer.
 	const mayHaveLapsed = activePlan?.lapsed === true;
-	const isRelevant = isFailing || mayHaveLapsed;
+	const isRelevant = showProFeatures && (isFailing || mayHaveLapsed);
 	// Ownership is judged against the org being billed, which is the org THIS
 	// window shows. The session's active organization is shared by every
 	// window, so its membership could belong to whatever org another window
@@ -56,7 +58,7 @@ export function usePaymentFailedCard({
 
 	const hasLapsed = mayHaveLapsed && Boolean(outstandingInvoice);
 
-	if (!isFailing && !hasLapsed) return null;
+	if (!showProFeatures || (!isFailing && !hasLapsed)) return null;
 
 	const isOwner =
 		members?.find((m) => m.userId === session?.user?.id)?.role === "owner";

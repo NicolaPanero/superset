@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
 import { mkdirSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -19,6 +19,7 @@ import {
 	chatContinuationTarget,
 	chatLaunchTarget,
 	continuationTarget,
+	launchChatAgent,
 	validateAgentEffortSelection,
 	validateAgentForkSelection,
 	validateAgentModelSelection,
@@ -590,6 +591,28 @@ describe("buildTerminalAgentLaunch default account env", () => {
 		);
 	});
 
+	it("keeps the native transfer launch on its saved profile after the default and config change", () => {
+		const db = createTestDb();
+		seedClaude(db, { CLAUDE_CONFIG_DIR: "/changed/config-profile" });
+		setDefaultAccountSelection(db, "claude", existingDir);
+		const launch = buildTerminalAgentLaunch(db, {
+			workspaceId: "11111111-1111-1111-1111-111111111111",
+			agent: "claude",
+			prompt: "",
+			resumeSessionId: "native-id",
+			launchSnapshot: {
+				config: { ...argvConfig, args: [] },
+				env: {
+					CLAUDE_CONFIG_DIR: "/saved/profile",
+					SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR: "",
+				},
+			},
+		});
+		expect(launch.fullCommand).toBe(
+			"CLAUDE_CONFIG_DIR='/saved/profile' SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR='' 'claude' '--resume' 'native-id'",
+		);
+	});
+
 	it("lets a per-agent CLAUDE_CONFIG_DIR beat the host default", () => {
 		const db = createTestDb();
 		seedClaude(db, { CLAUDE_CONFIG_DIR: "/pinned/profile" });
@@ -607,7 +630,7 @@ describe("buildTerminalAgentLaunch default account env", () => {
 		);
 	});
 
-	it("skips injection when the selected profile dir no longer exists", () => {
+	it("keeps a missing selected profile pinned instead of falling back to the CLI login", () => {
 		const db = createTestDb();
 		seedClaude(db);
 		setDefaultAccountSelection(db, "claude", "/no/such/profile-dir");
@@ -616,7 +639,9 @@ describe("buildTerminalAgentLaunch default account env", () => {
 			agent: "claude",
 			prompt: "hi",
 		});
-		expect(launch.fullCommand).toBe("'claude' 'hi'");
+		expect(launch.fullCommand).toBe(
+			"CLAUDE_CONFIG_DIR='/no/such/profile-dir' SUPERSET_DEFAULT_CLAUDE_CONFIG_DIR='/no/such/profile-dir' 'claude' 'hi'",
+		);
 	});
 
 	it("does not leak provider account env into other presets", () => {
@@ -1061,6 +1086,44 @@ describe("continuationTarget", () => {
 		expect(chatContinuationTarget(db, store, live("dead"), run)).toBeNull();
 	});
 
+	it("pins the chosen account and config before delivering the first chat prompt", () => {
+		const db = createTestDb();
+		seedClaude(db);
+		const createSession = mock((_input: unknown) => ({
+			sessionId: "selected-session",
+		}));
+		const prompt = mock((_input: unknown) => {});
+		const ctx = {
+			db,
+			runtime: {
+				chat: () => ({
+					live: { supports: () => true },
+					commands: { createSession, prompt },
+				}),
+			},
+		} as unknown as Parameters<typeof launchChatAgent>[0];
+		launchChatAgent(
+			ctx,
+			{
+				workspaceId,
+				agent: "claude",
+				surface: "chat",
+				prompt: "First prompt",
+				accountSelection: "/profiles/chosen",
+			},
+			"/temporary-repo",
+		);
+		expect(createSession.mock.calls[0]?.[0]).toMatchObject({
+			agentConfigId: "00000000-0000-0000-0000-00000000000a",
+			accountSelection: "/profiles/chosen",
+			scopeId: workspaceId,
+		});
+		expect(prompt.mock.calls[0]?.[0]).toMatchObject({
+			sessionId: "selected-session",
+			content: [{ type: "text", text: "First prompt" }],
+		});
+	});
+
 	it("launches a chat only when asked for one with an ACP harness", () => {
 		const db = createTestDb();
 		seedClaude(db);
@@ -1077,5 +1140,62 @@ describe("continuationTarget", () => {
 		expect(
 			chatLaunchTarget(db, { ...launch, surface: "chat", effort: "high" }),
 		).toBeNull();
+	});
+});
+
+describe("fork new workspace chat routing", () => {
+	it.each([
+		"grok",
+		"cursor-agent",
+	])("%s honors the chat surface before any terminal starts", (presetId) => {
+		const workspaceId = crypto.randomUUID();
+		const db = createTestDb();
+		const configId = crypto.randomUUID();
+		db.insert(schema.hostAgentConfigs)
+			.values({
+				id: configId,
+				presetId,
+				label: presetId,
+				command: presetId,
+				argsJson: "[]",
+				promptTransport: "argv",
+				promptArgsJson: "[]",
+				resumeArgsJson: "[]",
+				forkArgsJson: "[]",
+				envJson: "{}",
+				displayOrder: 0,
+			})
+			.run();
+		const input = {
+			workspaceId,
+			agent: configId,
+			surface: "chat" as const,
+			prompt: "first prompt",
+		};
+		const harness = presetId === "grok" ? "grok-acp" : "cursor-acp";
+		expect(chatLaunchTarget(db, input)?.harness).toBe(harness);
+		const createSession = mock((_input: unknown) => ({
+			sessionId: "chat-session",
+		}));
+		const prompt = mock((_input: unknown) => {});
+		const ctx = {
+			db,
+			runtime: {
+				chat: () => ({
+					live: { supports: () => true },
+					commands: { createSession, prompt },
+				}),
+			},
+		} as unknown as Parameters<typeof launchChatAgent>[0];
+		expect(launchChatAgent(ctx, input, "/fixture")?.chatSessionId).toBe(
+			"chat-session",
+		);
+		expect(createSession.mock.calls[0]?.[0]).toMatchObject({
+			harness,
+			agentConfigId: configId,
+		});
+		expect(prompt.mock.calls[0]?.[0]).toMatchObject({
+			content: [{ type: "text", text: "first prompt" }],
+		});
 	});
 });

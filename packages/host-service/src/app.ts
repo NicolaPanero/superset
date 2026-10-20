@@ -6,6 +6,14 @@ import {
 	SUPERSET_USER_ID_HEADER,
 } from "@superset/shared/host-routing";
 import { SANDBOX_PORTS } from "@superset/shared/sandbox-contract";
+import {
+	forkGitEnvResolver,
+	forkGitFactory,
+	forkHostProviders,
+} from "./fork-integrations/fork-credentials";
+import { forkExecGh } from "./fork-integrations/fork-exec-gh";
+import { startForkJiraAutomations } from "./fork-integrations/fork-jira-automations";
+import { ForkConnectionStore } from "./fork-integrations/fork-store";
 
 /** One frame of a 1920x1200 display is ~9 MB; this is a stalled reader, not a burst. */
 const MAX_DISPLAY_BUFFER_BYTES = 32 * 1024 * 1024;
@@ -24,6 +32,8 @@ import {
 } from "./chat-v3";
 import { createDb, type HostDb } from "./db";
 import { EventBus, GitWatcher, registerEventBusRoute } from "./events";
+import { startAttachmentRetention } from "./fork-attachments/fork-attachment-retention";
+import { syncForkMcpLaunchFiles } from "./fork-mcp";
 import { agentIsBusy, PageWatchManager } from "./page-watch/index.ts";
 import { registerForwardMuxRoute } from "./ports/forward-mux-route";
 import { portManager } from "./ports/port-manager";
@@ -37,7 +47,6 @@ import { runArchivedWorkspaceReconcile } from "./runtime/archived-workspace-reco
 import { registerBrowserCdpRoute } from "./runtime/browser-bridge/browser-cdp-route";
 import { WorkspaceFilesystemManager } from "./runtime/filesystem";
 import type { GitCredentialProvider } from "./runtime/git";
-import { createGitEnvResolver, createGitFactory } from "./runtime/git";
 import { runProjectBackfill } from "./runtime/project-backfill";
 import { PullRequestRuntimeManager } from "./runtime/pull-requests";
 import {
@@ -108,6 +117,7 @@ export interface CreateAppOptions {
 	api?: ApiClient;
 	github?: () => Promise<Octokit>;
 	execGh?: ExecGh;
+	forkTransport?: HostServiceContext["forkTransport"];
 }
 
 export interface CreateAppResult {
@@ -128,7 +138,8 @@ export interface CreateAppResult {
 }
 
 export function createApp(options: CreateAppOptions): CreateAppResult {
-	const { config, providers } = options;
+	const { config } = options;
+	let { providers } = options;
 
 	const api =
 		options.api ??
@@ -139,7 +150,8 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// place and leaves provisioning with nothing to orchestrate.
 	const sandboxIdentity = readSandboxIdentity();
 	if (sandboxIdentity) runSandboxSelfSeed(db, sandboxIdentity);
-	const git = createGitFactory(providers.credentials);
+	providers = forkHostProviders(providers, db, config);
+	const git = forkGitFactory(providers.credentials);
 	const github =
 		options.github ??
 		(async () => {
@@ -159,7 +171,11 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			}
 			return new Octokit({ auth: token });
 		});
-	const execGh: ExecGh = options.execGh ?? defaultExecGh;
+	const execGh: ExecGh = forkExecGh(
+		options.execGh ?? defaultExecGh,
+		providers.credentials,
+		new ForkConnectionStore(db, config.organizationId),
+	);
 
 	const filesystem = new WorkspaceFilesystemManager({ db });
 	// GitWatcher is the single source of truth for `.git/` and worktree fs
@@ -176,7 +192,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// Per-workspace branch/HEAD/upstream reads run in the worker pool: the
 	// PR-sync loop fires them for every workspace on each watcher event and
 	// 5-min sweep, which would otherwise spawn+drain git on the event loop.
-	const resolveGitEnv = createGitEnvResolver(providers.credentials);
+	const resolveGitEnv = forkGitEnvResolver(providers.credentials);
 	const pullRequestRuntime = new PullRequestRuntimeManager({
 		db,
 		execGh,
@@ -323,6 +339,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// nobody chats with. Exposure is a client concern — the renderer gates the
 	// pane on the `chat-v3` PostHog flag.
 	const chatAgentContext: HostServiceContext = {
+		forkTransport: options.forkTransport,
 		git,
 		credentials: providers.credentials,
 		github,
@@ -346,6 +363,12 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 				occurredAt,
 			}),
 	});
+
+	const stopForkJiraAutomations = startForkJiraAutomations({
+		...chatAgentContext,
+		isLocalCaller: true,
+	});
+	const stopAttachmentRetention = startAttachmentRetention(db);
 
 	// Startup sweeps run in the background so they don't block server
 	// startup.
@@ -405,6 +428,11 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		await provisionSelectedAccounts(db).catch((err) => {
 			console.warn("[host-service] account provisioning failed:", err);
 		});
+		try {
+			syncForkMcpLaunchFiles();
+		} catch (err) {
+			console.warn("[host-service] MCP launch files failed:", err);
+		}
 	})();
 
 	const wsAuth: MiddlewareHandler = async (c, next) => {
@@ -505,6 +533,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 			createContext: async (_opts, c) => {
 				const isAuthenticated = await providers.hostAuth.validate(c.req.raw);
 				return {
+					forkTransport: options.forkTransport,
 					git,
 					credentials: providers.credentials,
 					github,
@@ -529,6 +558,8 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 
 	const ownsDb = options.db === undefined;
 	const dispose = async (): Promise<void> => {
+		await stopForkJiraAutomations();
+		stopAttachmentRetention();
 		if (projectPurgeTimer) clearInterval(projectPurgeTimer);
 		await disposeWorkspaceTitleJobs(db);
 		// Each step is best-effort and isolated: a throw in one cleanup must

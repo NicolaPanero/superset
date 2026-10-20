@@ -12,6 +12,7 @@ import {
 } from "./agent-wrappers-common";
 import { getArtifactGuardScriptPath } from "./artifact-guard-hook";
 import { getTemplatePath } from "./config";
+import { FORK_CLAUDE_MCP_EXEC, withForkCodexMcpArgs } from "./fork-mcp-wrapper";
 import {
 	buildNestedDesiredEntries,
 	cleanNestedHookDefinition,
@@ -296,7 +297,7 @@ export function getOpenCodePluginContent(notifyPath: string): string {
  * in ~/.claude/settings.json (createClaudeSettingsJson).
  */
 export function createClaudeWrapper(): void {
-	const script = buildWrapperScript("claude", `exec "$REAL_BIN" "$@"`, {
+	const script = buildWrapperScript("claude", FORK_CLAUDE_MCP_EXEC, {
 		agentId: "claude",
 		beforeLaunch: buildDefaultAccountResolver(
 			"CLAUDE_CONFIG_DIR",
@@ -335,7 +336,9 @@ export function buildCodexWrapperExecLine(notifyPath: string): string {
 		getTemplatePath("codex-wrapper-exec.template.sh"),
 		"utf-8",
 	);
-	return template.replaceAll("{{NOTIFY_PATH}}", notifyPath);
+	return withForkCodexMcpArgs(
+		template.replaceAll("{{NOTIFY_PATH}}", notifyPath),
+	);
 }
 
 /**

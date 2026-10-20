@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { forkBitbucketContributors } from "../../../../fork-integrations/fork-contributors";
 import { protectedProcedure } from "../../../index";
 import { resolveGithubRepo } from "../shared/project-helpers";
 import { execGh } from "../utils/exec-gh";
@@ -34,6 +35,8 @@ const repoContributorsCache = new Map<
 export const getRepoContributors = protectedProcedure
 	.input(getRepoContributorsInputSchema)
 	.query(async ({ ctx, input }): Promise<RepoContributor[]> => {
+		const bitbucket = await forkBitbucketContributors(ctx, input.projectId);
+		if (bitbucket) return bitbucket;
 		const repo = await resolveGithubRepo(ctx, input.projectId);
 		const cacheKey = `${repo.owner.toLowerCase()}/${repo.name.toLowerCase()}`;
 		const cached = repoContributorsCache.get(cacheKey);

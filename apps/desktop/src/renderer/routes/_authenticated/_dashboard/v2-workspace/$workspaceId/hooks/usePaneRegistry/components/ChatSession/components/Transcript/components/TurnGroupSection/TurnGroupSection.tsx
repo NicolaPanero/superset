@@ -74,8 +74,10 @@ export type TurnGroupSectionProps = {
 	onRespond: (approvalId: string, decision: Decision) => void;
 	onRetryPrompt: (clientId: string) => void;
 	onDiscardPrompt: (clientId: string) => void;
-	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
 	canForkToWorktree?: boolean;
+	onRewind?: ((itemId: string) => void) | undefined;
+	rewindableItemIds?: ReadonlySet<string> | undefined;
 	commands?: ReadonlyMap<string, AvailableCommand> | undefined;
 };
 
@@ -92,6 +94,8 @@ export function TurnGroupSection({
 	isEntryCollapsed,
 	onDiscardPrompt,
 	onFork,
+	onRewind,
+	rewindableItemIds,
 	onRespond,
 	onRetryPrompt,
 	onToggleEntry,
@@ -119,6 +123,11 @@ export function TurnGroupSection({
 						harness={harness}
 						item={row.item}
 						onFork={onFork}
+						forkFromHere={snapshot.session?.forkAtMessage === true}
+						onRewind={
+							rewindableItemIds?.has(row.item.id) ? onRewind : undefined
+						}
+						canForkInWorkspace={!row.item.id.startsWith("earlier-")}
 						onRespond={onRespond}
 						pagesShownEarlier={row.pagesShownEarlier}
 						text={displayText(snapshot, row.item.id)}

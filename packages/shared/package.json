@@ -420,7 +420,15 @@
 		"./page-storage-ticket": {
 			"types": "./src/page-storage-ticket.ts",
 			"default": "./src/page-storage-ticket.ts"
-		}
+		},
+		"./fork-account-usage": {
+			"types": "./src/fork-account-usage.ts",
+			"default": "./src/fork-account-usage.ts"
+		},
+		"./fork-chat-recovery": "./src/fork-chat-recovery.ts",
+		"./fork-terminal-appearance": "./src/fork-terminal-appearance.ts",
+		"./fork-editor-appearance": "./src/fork-editor-appearance.ts",
+		"./fork-integrations": "./src/fork-integrations.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",

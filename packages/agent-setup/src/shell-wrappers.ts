@@ -27,7 +27,9 @@ function getDefaultPaths(): ShellWrapperPaths {
 const modeDiagnosticsLogged = new Set<string>();
 
 function getShellName(shell: string): string {
-	return shell.split("/").pop() || shell;
+	return (shell.split(/[\\/]/).pop() || shell)
+		.replace(/\.exe$/i, "")
+		.toLowerCase();
 }
 
 /**
@@ -337,6 +339,9 @@ export function getCommandShellArgs(
 	paths: ShellWrapperPaths = getDefaultPaths(),
 ): string[] {
 	const shellName = getShellName(shell);
+	if (shellName === "cmd") return ["/d", "/s", "/c", command];
+	if (shellName === "powershell" || shellName === "pwsh")
+		return ["-NoProfile", "-Command", command];
 	logModeDiagnostics(shellName);
 	const zshRc = path.join(paths.ZSH_DIR, ".zshrc");
 	const bashRcfile = path.join(paths.BASH_DIR, "rcfile");

@@ -177,6 +177,10 @@ msgstr "{0, plural, other {라벨 #개}}"
 msgid "{0, plural, one {# login} other {# logins}}"
 msgstr "{0, plural, one {로그인 #개} other {로그인 #개}}"
 
+#. placeholder {0}: save.data.deleted
+msgid "{0, plural, one {# old attachment deleted.} other {# old attachments deleted.}}"
+msgstr "{0, plural, other {오래된 첨부 파일 #개를 삭제했습니다.}}"
+
 #. placeholder {0}: summary.passed
 msgid "{0, plural, one {# passed} other {# passed}}"
 msgstr "{0, plural, one {#개 통과} other {#개 통과}}"
@@ -984,6 +988,9 @@ msgstr "{name}은(는) 기본 제공이라 교체할 수 없습니다"
 msgid "serverError.plugins.marketplaceNotAdded"
 msgstr "{name}이(가) 추가되지 않았습니다"
 
+msgid "{name} unreachable"
+msgstr "{name}에 연결할 수 없음"
+
 msgid "{noun, select, person {Specify at least one person, or choose {choice}.} sender {Specify at least one sender, or choose {choice}.} other {Specify at least one entry, or choose {choice}.}}"
 msgstr "{noun, select, person {사람을 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} sender {발신자를 한 명 이상 지정하거나 {choice} 옵션을 선택하세요.} other {항목을 하나 이상 지정하거나 {choice} 옵션을 선택하세요.}}"
 
@@ -1084,6 +1091,9 @@ msgstr "{selectedCount}개 선택됨"
 msgid "{share}% human"
 msgstr "사람 {share}%"
 
+msgid "{short}: {used} used"
+msgstr "{short}: {used} 사용"
+
 msgid "{shown} of {total}"
 msgstr "{total}개 중 {shown}개"
 
@@ -1121,6 +1131,9 @@ msgstr "{teardownFailureCount, plural, one {그래도 #개 삭제} other {그래
 
 msgid "{threshold, plural, one {# agent PR merged} other {# agent PRs merged}}"
 msgstr "{threshold, plural, other {에이전트 PR # 건 머지}}"
+
+msgid "{title}: {used} used"
+msgstr "{title}: {used} 사용"
 
 msgid "{toolName} interrupted"
 msgstr "{toolName} 중단됨"
@@ -1182,6 +1195,21 @@ msgstr "@superset"
 
 msgid "* if billed at full API rate"
 msgstr "* 전액 API 요금으로 청구될 경우"
+
+msgid "**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included."
+msgstr "**더 나은 에이전트 전환**: 전환하기 전에 모델과 effort를 선택하세요. Grok 4.7도 포함됩니다."
+
+msgid "**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations."
+msgstr "**앱 안의 Jira와 Bitbucket**: 작업, 보드, 풀 리퀘스트, 리뷰, 빌드, 자동화."
+
+msgid "**Quotas under control**: usage per account, supported free resets and automatic continuation."
+msgstr "**할당량 관리**: 계정별 사용량, 지원되는 무료 초기화, 자동 이어서 진행."
+
+msgid "**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests."
+msgstr "**더 안전한 워크플로**: 저장소별로 분리된 계정과 브랜치 및 동시 요청에 대한 강화된 보호."
+
+msgid "**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings."
+msgstr "**깔끔한 워크스페이스**: 붙여 넣은 이미지와 파일은 30일 후 삭제됩니다. Fork Settings에서 변경할 수 있습니다."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -1475,6 +1503,9 @@ msgstr "진행 중인 작업, 다음 순서, 그리고 {company}이(가) 향하�
 msgid "A majority of production changes merge without any human reading the diff."
 msgstr "프로덕션 변경의 과반이 사람이 차이를 읽지 않은 채 머지됩니다."
 
+msgid "A new build of this Superset fork is available."
+msgstr "이 Superset 포크의 새 빌드를 사용할 수 있습니다."
+
 msgid "A new version of Superset is required to continue. Please update to the latest version."
 msgstr "계속하려면 새 버전의 Superset이 필요합니다. 최신 버전으로 업데이트해 주세요."
 
@@ -1517,6 +1548,9 @@ msgstr "토큰 단위로 과금되는 별도 프로필입니다. 키는 {0} CLI 
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "스킬, 플러그인, MCP 서버, 설정을 공유하는 별도 프로필입니다."
+
+msgid "A Superset++ update is available."
+msgstr "Superset++ 업데이트를 사용할 수 있습니다."
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "작업 키는 문자로 시작하는 1~5자의 문자 또는 숫자입니다."
@@ -1606,6 +1640,12 @@ msgstr "업적"
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
+msgid "ACP chat"
+msgstr "ACP 채팅"
+
+msgid "ACP chat is unavailable"
+msgstr "ACP 채팅을 사용할 수 없습니다"
+
 msgid "Action"
 msgstr "동작"
 
@@ -1668,6 +1708,9 @@ msgstr "댓글 추가…"
 msgid "Add a description…"
 msgstr "설명 추가…"
 
+msgid "Add a folder to the project"
+msgstr "프로젝트에 폴더 추가"
+
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "프로젝트 설정에서 라이프사이클 실행 스크립트를 추가하거나, 터미널 스크립트를 워크스페이스 실행으로 지정하세요."
 
@@ -1694,6 +1737,9 @@ msgstr "나중에 공개하고 싶은 에이전트 설정을 여기에 추가하
 
 msgid "Add agents…"
 msgstr "에이전트 추가…"
+
+msgid "Add an account to start chatting."
+msgstr "채팅을 시작하려면 계정을 추가하세요."
 
 msgid "add an agent"
 msgstr "에이전트를 추가할"
@@ -1736,6 +1782,12 @@ msgstr "파일, 앱 등 추가"
 
 msgid "Add files, apps, and more (@)"
 msgstr "파일, 앱 등 추가 (@)"
+
+msgid "Add folder"
+msgstr "폴더 추가"
+
+msgid "Add folder…"
+msgstr "폴더 추가…"
 
 #. placeholder {0}: issue.issueNumber
 msgid "Add issue #{0} to workspace"
@@ -1789,6 +1841,9 @@ msgstr "스크립트 추가"
 msgid "Add Script"
 msgstr "스크립트 추가"
 
+msgid "Add server"
+msgstr "서버 추가"
+
 msgid "Add setup commands, one per line..."
 msgstr "설정 명령을 한 줄에 하나씩 추가하세요..."
 
@@ -1809,6 +1864,9 @@ msgstr "테스트가 없는 가장 위험한 코드에 테스트 추가…"
 
 msgid "Add tests where they're missing"
 msgstr "빠진 테스트 추가하기"
+
+msgid "Add this folder as a workspace to continue the chat"
+msgstr "채팅을 이어가려면 이 폴더를 워크스페이스로 추가하세요"
 
 msgid "Add this label"
 msgstr "이 라벨 추가"
@@ -1873,6 +1931,9 @@ msgstr "v1 작업 공간을 가져온 해당 v2 프로젝트에 연결합니다.
 
 msgid "Advanced"
 msgstr "고급"
+
+msgid "Advanced configuration"
+msgstr "고급 설정"
 
 msgid "Advanced options"
 msgstr "고급 옵션"
@@ -1950,6 +2011,9 @@ msgid "Agent session started"
 msgstr "에이전트 세션을 시작했습니다"
 
 msgid "agent settings"
+msgstr "에이전트 설정"
+
+msgid "Agent setup"
 msgstr "에이전트 설정"
 
 msgid "Agent usage rankings"
@@ -2150,6 +2214,9 @@ msgstr "업그레이드 과정에서 모든 세션이 유지되었습니다."
 msgid "All sessions were closed and a fresh daemon is running."
 msgstr "모든 세션이 닫히고 새 데몬이 실행 중입니다."
 
+msgid "All statuses"
+msgstr "모든 상태"
+
 msgid "All tasks"
 msgstr "모든 작업"
 
@@ -2230,6 +2297,9 @@ msgstr "로컬 브랜치도 삭제"
 
 msgid "Also delete the local git branch when deleting a worktree workspace"
 msgstr "worktree 워크스페이스를 삭제할 때 로컬 git 브랜치도 함께 삭제합니다"
+
+msgid "Also sign out of GitHub CLI on this computer"
+msgstr "이 컴퓨터의 GitHub CLI에서도 로그아웃"
 
 msgid "Also viewing this page"
 msgstr "이 페이지를 함께 보는 사람"
@@ -2418,6 +2488,9 @@ msgstr "API 과금"
 msgid "API key"
 msgstr "API 키"
 
+msgid "API key configured"
+msgstr "API 키 설정됨"
+
 msgid "API key generated"
 msgstr "API 키가 생성되었습니다"
 
@@ -2429,6 +2502,12 @@ msgstr "API 키"
 
 msgid "API Keys"
 msgstr "API 키"
+
+msgid "API keys are not validated with a paid request."
+msgstr "API 키는 유료 요청으로 검증하지 않습니다."
+
+msgid "API token"
+msgstr "API 토큰"
 
 msgid "API-equivalent"
 msgstr "API 환산"
@@ -2489,6 +2568,9 @@ msgctxt "job application"
 msgid "Apply"
 msgstr "지원"
 
+msgid "Apply recommended settings"
+msgstr "권장 설정 적용"
+
 msgid "Approve"
 msgstr "승인"
 
@@ -2506,6 +2588,9 @@ msgstr "승인됨"
 
 msgid "Approved review"
 msgstr "승인된 리뷰"
+
+msgid "Approves tool actions automatically in this chat."
+msgstr "이 채팅에서 도구 작업을 자동으로 승인합니다."
 
 msgid "Apps"
 msgstr "앱"
@@ -2792,6 +2877,21 @@ msgstr "작업 자동화"
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName}의 워크스페이스 설정 자동화"
 
+msgid "Automatic (email address)"
+msgstr "자동 (이메일 주소)"
+
+msgid "Automatic account switching needs isolated profiles for this agent."
+msgstr "자동 계정 전환에는 이 에이전트의 격리된 프로필이 필요합니다."
+
+msgid "Automatic continuation"
+msgstr "자동 계속"
+
+msgid "Automatic continuation is not supported on this host."
+msgstr "이 호스트는 자동 계속을 지원하지 않습니다."
+
+msgid "Automatic continuation needs verified quota and reset data for this chat."
+msgstr "자동 계속에는 이 채팅의 확인된 할당량 및 초기화 정보가 필요합니다."
+
 msgid "Automation"
 msgstr "자동화"
 
@@ -2869,6 +2969,9 @@ msgctxt "Android back button"
 msgid "Back"
 msgstr "뒤로"
 
+msgid "Back to {label}"
+msgstr "{label}(으)로 돌아가기"
+
 msgid "Back to About"
 msgstr "소개로 돌아가기"
 
@@ -2910,6 +3013,9 @@ msgstr "투자자"
 
 msgid "Background"
 msgstr "배경"
+
+msgid "Background chats"
+msgstr "백그라운드 채팅"
 
 msgid "Background processes"
 msgstr "백그라운드 프로세스"
@@ -3080,6 +3186,9 @@ msgstr "브랜치"
 msgid "Branch \"{0}\" is not on this device or on {1}. Only pushed commits can be restored."
 msgstr "브랜치 \"{0}\"이(가) 이 기기에도 {1}에도 없습니다. 푸시한 커밋만 복원할 수 있습니다."
 
+msgid "Branch and project files will be preserved."
+msgstr "브랜치와 프로젝트 파일이 보존됩니다."
+
 msgid "Branch behavior for new workspaces on this device. Projects can override the prefix individually."
 msgstr "이 기기에서 새 워크스페이스를 만들 때의 브랜치 동작입니다. 프로젝트별로 접두사를 따로 지정할 수 있습니다."
 
@@ -3112,6 +3221,9 @@ msgstr "브랜치 접두사"
 
 msgid "Branch Prefix"
 msgstr "브랜치 접두사"
+
+msgid "Branch preserved"
+msgstr "브랜치 보존"
 
 msgid "Branch renamed to {newName}"
 msgstr "브랜치 이름을 {newName}(으)로 변경했습니다"
@@ -3552,14 +3664,27 @@ msgstr "채팅"
 msgid "Chat closed"
 msgstr "채팅을 닫았습니다"
 
+msgid "Chat imported"
+msgstr "채팅을 가져왔습니다"
+
 msgid "Chat is being reworked"
 msgstr "채팅을 개편하는 중입니다"
 
 msgid "Chat Launch"
 msgstr "채팅 실행"
 
+#. placeholder {0}: target?.name ?? selection ?? ""
+msgid "Chat moved to {0}"
+msgstr "채팅을 {0}(으)로 옮겼습니다"
+
 msgid "Chat session not found"
 msgstr "채팅 세션을 찾을 수 없습니다"
+
+msgid "Chat session ready"
+msgstr "채팅 세션 준비 완료"
+
+msgid "Chat support is checked when you open a chat."
+msgstr "채팅을 열 때 채팅 지원 여부를 확인합니다."
 
 msgid "Chat surfaces: messages, reasoning, suggestions"
 msgstr "채팅 화면: 메시지, 추론, 제안"
@@ -3594,6 +3719,15 @@ msgstr "리소스 확인"
 msgid "Check Resources"
 msgstr "리소스 확인"
 
+msgid "Check sign-in"
+msgstr "로그인 확인"
+
+msgid "Check the account email in your browser before using a reset."
+msgstr "초기화를 사용하기 전에 브라우저에서 계정 이메일을 확인하세요."
+
+msgid "Check the connection for {repositories} in Fork Settings."
+msgstr "포크 설정에서 {repositories} 연결을 확인하세요."
+
 msgid "Check the rendered prompt and launch output before saving"
 msgstr "저장하기 전에 렌더링된 프롬프트와 실행 결과를 확인하세요"
 
@@ -3617,6 +3751,9 @@ msgstr "에이전트 확인하는 중…"
 
 msgid "Checking environments…"
 msgstr "환경 확인 중…"
+
+msgid "Checking free resets…"
+msgstr "무료 초기화 확인 중…"
 
 msgid "Checking host…"
 msgstr "호스트 확인하는 중…"
@@ -3657,6 +3794,9 @@ msgstr "검사 완료"
 msgid "Checks failed"
 msgstr "검사 실패"
 
+msgid "Checks installation and local sign-in without sending a prompt. API keys are not validated with a paid request."
+msgstr "프롬프트를 보내지 않고 설치와 로컬 로그인을 확인합니다. API 키는 유료 요청으로 검증하지 않습니다."
+
 msgid "Checks passed"
 msgstr "검사 통과"
 
@@ -3668,6 +3808,9 @@ msgstr "{pluginLabel} 계정 선택"
 
 msgid "Choose a device"
 msgstr "기기 선택"
+
+msgid "Choose a different profile name."
+msgstr "다른 프로필 이름을 선택하세요."
 
 msgid "Choose a fighter"
 msgstr "파이터 선택"
@@ -3690,6 +3833,9 @@ msgstr "섹션을 선택하세요."
 msgid "Choose agent"
 msgstr "에이전트 선택"
 
+msgid "Choose an account"
+msgstr "계정 선택"
+
 msgid "Choose an existing repo folder"
 msgstr "기존 리포지토리 폴더 선택"
 
@@ -3704,6 +3850,9 @@ msgstr "상단 바에서 변경 사항 보기를 여는 방식을 선택합니�
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선택하세요"
+
+msgid "Choose project later"
+msgstr "나중에 프로젝트 선택"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
@@ -3823,8 +3972,17 @@ msgstr "CLI"
 msgid "CLI & SDK"
 msgstr "CLI 및 SDK"
 
+msgid "CLI default"
+msgstr "CLI 기본값"
+
 msgid "CLI docs"
 msgstr "CLI 문서"
+
+msgid "CLI login"
+msgstr "CLI 로그인"
+
+msgid "CLI not found"
+msgstr "CLI를 찾을 수 없음"
 
 msgid "CLI reference"
 msgstr "CLI 레퍼런스"
@@ -4219,6 +4377,9 @@ msgstr "코멘트를 찾을 수 없습니다"
 msgid "Comment not posted"
 msgstr "코멘트를 게시하지 못했습니다"
 
+msgid "Comment on this line"
+msgstr "이 줄에 댓글 달기"
+
 msgid "Comment on this page"
 msgstr "이 페이지에 댓글 달기"
 
@@ -4295,6 +4456,12 @@ msgstr "기본 스타일과 비교함"
 msgid "complete"
 msgstr "종료"
 
+msgid "Complete authorization in your browser."
+msgstr "브라우저에서 인증을 완료하세요."
+
+msgid "Complete the official CLI flow, then close this window to check the result."
+msgstr "공식 CLI 절차를 완료한 뒤 이 창을 닫아 결과를 확인하세요."
+
 msgid "Completed"
 msgstr "완료"
 
@@ -4332,11 +4499,17 @@ msgstr "GitHub App 구성…"
 msgid "Configure how tasks sync between Superset and Linear."
 msgstr "Superset과 Linear 사이에서 작업을 동기화하는 방식을 설정합니다."
 
+msgid "Configure integrations in Fork Settings."
+msgstr "포크 설정에서 통합을 구성하세요."
+
 msgid "Configure terminal behavior and reusable terminal scripts"
 msgstr "터미널 동작과 재사용 가능한 터미널 스크립트를 설정합니다"
 
 msgid "Configure the in-app browser"
 msgstr "앱 내 브라우저를 설정합니다"
+
+msgid "Configure the OAuth service below."
+msgstr "아래에서 OAuth 서비스를 구성하세요."
 
 msgid "Configure which agents appear in launchers and how their launches are built."
 msgstr "실행기에 표시할 에이전트와 실행 구성 방식을 설정합니다."
@@ -4346,6 +4519,12 @@ msgstr "워크스페이스 실행 명령 구성"
 
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
+
+msgid "Confirm delete"
+msgstr "삭제 확인"
+
+msgid "Confirm merge"
+msgstr "병합 확인"
 
 #. placeholder {0}: status.baseBranch
 msgid "Conflicts with {0}"
@@ -4375,6 +4554,9 @@ msgstr "에이전트를 앱에 연결하세요"
 msgid "Connect an account"
 msgstr "계정 연결"
 
+msgid "Connect an account in Fork Settings"
+msgstr "포크 설정에서 계정을 연결하세요"
+
 msgid "Connect another account"
 msgstr "다른 계정 연결"
 
@@ -4393,6 +4575,9 @@ msgstr "외부 서비스를 연결해 조직과 데이터를 동기화합니다.
 msgid "Connect external services to sync data."
 msgstr "외부 서비스를 연결해 데이터를 동기화합니다."
 
+msgid "Connect GitHub"
+msgstr "GitHub 연결"
+
 msgid "Connect GitHub in Integrations to add {repositoryFullName}."
 msgstr "{repositoryFullName}을(를) 추가하려면 연동에서 GitHub를 연결하세요."
 
@@ -4401,6 +4586,9 @@ msgstr "GitHub 연결…"
 
 msgid "Connect Google"
 msgstr "Google 연결"
+
+msgid "Connect Jira and Bitbucket"
+msgstr "Jira 및 Bitbucket 연결"
 
 msgid "Connect Linear"
 msgstr "Linear 연결"
@@ -4455,6 +4643,9 @@ msgstr "Microsoft Teams 테넌트를 연결하세요. 테넌트 관리자가 로
 
 msgid "Connect your Notion workspace and share the pages and data sources automations should watch."
 msgstr "Notion 워크스페이스를 연결하고 자동화가 지켜볼 페이지와 데이터 소스를 공유하세요."
+
+msgid "Connect your repositories and tasks on this computer."
+msgstr "이 컴퓨터의 저장소와 작업을 연결하세요."
 
 msgid "Connect your Slack workspace to manage tasks from conversations."
 msgstr "Slack 워크스페이스를 연결해 대화에서 바로 작업을 관리하세요."
@@ -4589,6 +4780,9 @@ msgstr "컨텍스트"
 msgid "Context Menu"
 msgstr "컨텍스트 메뉴"
 
+msgid "Context transfer includes only messages and may omit earlier history."
+msgstr "컨텍스트 전송에는 메시지만 포함되며 이전 기록이 생략될 수 있습니다."
+
 msgid "Continue"
 msgstr "계속"
 
@@ -4611,6 +4805,9 @@ msgstr "{0}(으)로 계속"
 msgid "Continue update"
 msgstr "업데이트 계속"
 
+msgid "Continue with"
+msgstr "다음으로 계속"
+
 #. placeholder {0}: PROVIDER_NAME[provider]
 msgid "Continue with {0}"
 msgstr "{0}(으)로 계속하기"
@@ -4627,8 +4824,21 @@ msgstr "GitHub로 계속하기"
 msgid "Continue with Google"
 msgstr "Google로 계속하기"
 
+msgid "Continued from {source}"
+msgstr "{source}에서 이어짐"
+
+msgid "Continues now on the account with the most quota."
+msgstr "할당량이 가장 많은 계정에서 바로 이어갑니다."
+
+msgid "Continues on this account when quota returns."
+msgstr "할당량이 돌아오면 이 계정에서 이어갑니다."
+
 msgid "Continuing an agent session requires a pinned workspace"
 msgstr "에이전트 세션을 계속하려면 고정된 워크스페이스가 필요합니다"
+
+#. placeholder {0}: state.accountLabel
+msgid "Continuing on {0}…"
+msgstr "{0} 계정으로 계속하는 중…"
 
 msgid "continuing the last session"
 msgstr "마지막 세션을 계속"
@@ -4653,6 +4863,9 @@ msgstr "초안으로 전환"
 
 msgid "Converting to draft…"
 msgstr "초안으로 전환하는 중…"
+
+msgid "Converting…"
+msgstr "변환 중…"
 
 msgid "cookies and site data"
 msgstr "쿠키 및 사이트 데이터"
@@ -4881,6 +5094,9 @@ msgstr "세션을 닫을 수 없습니다"
 msgid "Could not close the session"
 msgstr "세션을 닫지 못했습니다"
 
+msgid "Could not confirm the reset. Retry uses the same request."
+msgstr "초기화를 확인할 수 없습니다. 재시도 시 같은 요청을 사용합니다."
+
 msgid "Could not connect {plugin}. Try again."
 msgstr "{plugin}을(를) 연결하지 못했습니다. 다시 시도하세요."
 
@@ -4911,11 +5127,17 @@ msgstr "이 페이지를 삭제할 수 없습니다"
 msgid "Could not disconnect."
 msgstr "연결을 해제하지 못했습니다."
 
+msgid "Could not finish account setup. Try again."
+msgstr "계정 설정을 완료하지 못했습니다. 다시 시도하세요."
+
 msgid "Could not forget {domain}"
 msgstr "{domain}을(를) 잊지 못했습니다"
 
 msgid "Could not import from browser"
 msgstr "브라우저에서 가져오지 못했습니다"
+
+msgid "Could not install the update. Superset++ is still open. Try again from Check for Updates."
+msgstr "업데이트를 설치하지 못했습니다. Superset++는 계속 열려 있습니다. 업데이트 확인에서 다시 시도하세요."
 
 msgid "Could not leave the queue"
 msgstr "대기열에서 나갈 수 없습니다"
@@ -4941,6 +5163,15 @@ msgstr "플러그인을 불러오지 못했습니다. 연결을 확인하고 다
 
 msgid "Could not load presets from the host"
 msgstr "호스트에서 프리셋을 불러올 수 없습니다"
+
+msgid "Could not load pull request."
+msgstr "풀 리퀘스트를 불러올 수 없습니다."
+
+msgid "Could not load pull requests for {failedRepositories}."
+msgstr "{failedRepositories}의 풀 리퀘스트를 불러오지 못했습니다."
+
+msgid "Could not load tasks."
+msgstr "작업을 불러올 수 없습니다."
 
 msgid "Could not load this diff"
 msgstr "이 차이를 불러올 수 없습니다"
@@ -5019,6 +5250,9 @@ msgstr "접근 권한을 제거할 수 없습니다"
 
 msgid "Could not rename the session"
 msgstr "세션 이름을 변경할 수 없습니다"
+
+msgid "Could not rename this account."
+msgstr "이 계정의 이름을 변경할 수 없습니다."
 
 msgid "Could not rename this page"
 msgstr "이 페이지의 이름을 변경할 수 없습니다"
@@ -5159,6 +5393,9 @@ msgstr "워크스페이스 삭제를 끝내지 못했습니다"
 msgid "Couldn't hand this to an agent"
 msgstr "에이전트에게 넘길 수 없습니다"
 
+msgid "Couldn't import the chat"
+msgstr "채팅을 가져올 수 없습니다"
+
 msgid "Couldn't load {filename}"
 msgstr "{filename}을(를) 불러올 수 없습니다"
 
@@ -5232,6 +5469,9 @@ msgstr "이 클라우드 워크스페이스에 연결하지 못했습니다. 아
 msgid "Couldn't reach workspace"
 msgstr "워크스페이스에 연결하지 못했습니다"
 
+msgid "Couldn't read the chats on this Mac."
+msgstr "이 Mac의 채팅을 읽을 수 없습니다."
+
 msgid "Couldn't read this terminal's context."
 msgstr "이 터미널의 컨텍스트를 읽을 수 없습니다."
 
@@ -5268,6 +5508,9 @@ msgstr "저장하지 못했습니다 — 수정하거나 다른 곳을 클릭하
 
 msgid "Couldn't save — retrying…"
 msgstr "저장하지 못했습니다 — 다시 시도하는 중…"
+
+msgid "Couldn't save continuation options"
+msgstr "계속 옵션을 저장할 수 없습니다"
 
 msgid "Couldn't save edits"
 msgstr "편집을 저장하지 못했습니다"
@@ -5314,14 +5557,14 @@ msgstr "음성 모드를 시작할 수 없습니다"
 msgid "Couldn't start workspace"
 msgstr "워크스페이스를 시작하지 못했습니다"
 
-msgid "Couldn't stop the agent's terminal"
-msgstr "에이전트의 터미널을 중지할 수 없습니다"
-
 msgid "Couldn't stop the background task"
 msgstr "백그라운드 작업을 중지할 수 없습니다"
 
 msgid "Couldn't stop the chat"
 msgstr "채팅을 중지할 수 없습니다"
+
+msgid "Couldn't switch account"
+msgstr "계정을 전환할 수 없습니다"
 
 msgid "Couldn't unstage changes"
 msgstr "스테이징을 해제하지 못했습니다"
@@ -5356,6 +5599,9 @@ msgstr "만들기"
 msgid "Create \"{newLabel}\""
 msgstr "\"{newLabel}\" 만들기"
 
+msgid "Create & start"
+msgstr "만들고 시작"
+
 msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
 msgstr "같은 대화 컨텍스트로 제공자의 네이티브 포크를 만듭니다. 원래 세션은 그대로 유지됩니다."
 
@@ -5376,6 +5622,9 @@ msgstr "새 워크스페이스를 만듭니다"
 
 msgid "Create a project to group tasks and cloud workspaces."
 msgstr "작업과 클라우드 워크스페이스를 묶는 프로젝트를 만드세요."
+
+msgid "Create a resumable session with the conversation history. Permissions and credentials stay with the target agent."
+msgstr "대화 기록이 포함된 재개 가능한 세션을 만듭니다. 권한과 인증 정보는 대상 에이전트의 것을 사용합니다."
 
 msgid "Create a task for fixing the login bug"
 msgstr "로그인 버그를 고치는 작업을 만들어 줘"
@@ -5614,6 +5863,9 @@ msgstr "크리에이티브 매니저, Valid"
 msgid "Credentials stay on the server"
 msgstr "자격 증명은 서버에 보관됩니다"
 
+msgid "Credits"
+msgstr "크레딧"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "packages/ui 밖에 있는 기능 공통 컴포넌트 — 새로 만들기 전에 여기를 확인하세요"
 
@@ -5629,6 +5881,9 @@ msgstr "현재"
 msgid "Current access"
 msgstr "현재 접근 권한"
 
+msgid "current checkout"
+msgstr "현재 체크아웃"
+
 msgid "Current level"
 msgstr "현재 단계"
 
@@ -5637,6 +5892,9 @@ msgstr "현재 속도"
 
 msgid "Current plan"
 msgstr "현재 플랜"
+
+msgid "Current sprint"
+msgstr "현재 스프린트"
 
 msgid "Current tab"
 msgstr "현재 탭"
@@ -5757,6 +6015,9 @@ msgstr "일"
 msgid "Day One"
 msgstr "데이 원"
 
+msgid "days"
+msgstr "일"
+
 msgid "days running three agents at once"
 msgstr "에이전트 세 개를 동시에 돌린 일수"
 
@@ -5835,6 +6096,7 @@ msgstr "“{title}”을(를) 삭제할까요?"
 
 #. placeholder {0}: organization.name
 #. placeholder {0}: secret.key
+#. placeholder {0}: server.name
 msgid "Delete {0}?"
 msgstr "{0}을(를) 삭제할까요?"
 
@@ -5887,11 +6149,17 @@ msgstr "이미지 삭제"
 msgid "Delete local branch on workspace removal"
 msgstr "워크스페이스 삭제 시 로컬 브랜치 삭제"
 
+msgid "Delete old attachments"
+msgstr "오래된 첨부 파일 삭제"
+
 msgid "Delete organization"
 msgstr "조직 삭제"
 
 msgid "Delete page"
 msgstr "페이지 삭제"
+
+msgid "Delete pasted images and files from workspaces after this many days. Set 0 to keep them."
+msgstr "붙여 넣은 이미지와 파일을 이 일수가 지나면 워크스페이스에서 삭제합니다. 보관하려면 0으로 설정하세요."
 
 msgid "Delete permanently"
 msgstr "영구 삭제"
@@ -5910,6 +6178,9 @@ msgstr "선택한 워크스페이스 삭제"
 
 msgid "Delete session \"{workspaceName}\"?"
 msgstr "세션 \"{workspaceName}\"을(를) 삭제할까요?"
+
+msgid "Delete task"
+msgstr "작업 삭제"
 
 msgid "Delete team"
 msgstr "팀 삭제"
@@ -5975,6 +6246,9 @@ msgstr "{name}을(를) 삭제했습니다"
 
 msgid "Deleted by {deletedBy} {deletedWhen} · {deviceNames}"
 msgstr "{deletedBy}님이 {deletedWhen} 삭제함 · {deviceNames}"
+
+msgid "Deleted comment"
+msgstr "삭제된 댓글"
 
 msgid "deleted or unavailable — pick another"
 msgstr "삭제되었거나 사용할 수 없습니다 — 다른 항목을 선택하세요"
@@ -6058,6 +6332,9 @@ msgstr "에이전트에게 맡길 작업을 설명하세요…"
 
 msgid "Describe the work to your agent"
 msgstr "에이전트에게 작업을 설명하세요"
+
+msgid "Describe what the agent should do"
+msgstr "에이전트가 할 작업을 설명하세요"
 
 msgid "Describe what you need. Superset creates an isolated workspace and clean branch for the task."
 msgstr "필요한 것을 설명하세요. Superset이 그 작업을 위한 격리된 워크스페이스와 깨끗한 브랜치를 만듭니다."
@@ -6275,6 +6552,9 @@ msgstr "Sentry 연결을 해제할까요?"
 
 msgid "Disconnect Slack?"
 msgstr "Slack 연결을 해제할까요?"
+
+msgid "Disconnect this account from Superset?"
+msgstr "이 계정을 Superset에서 연결 해제할까요?"
 
 msgid "Disconnected"
 msgstr "연결 끊김"
@@ -6558,6 +6838,9 @@ msgstr "각 세션은 중단된 지점부터 이어집니다."
 msgid "Each surface has its own typography. Changes appear immediately in the live previews."
 msgstr "각 화면마다 타이포그래피를 따로 설정합니다. 변경 사항은 실시간 미리보기에 바로 반영됩니다."
 
+msgid "Each task gets its own workspace and branch. The agent starts in a chat."
+msgstr "작업마다 전용 워크스페이스와 브랜치가 생깁니다. 에이전트는 채팅에서 시작합니다."
+
 msgid "Early 2024"
 msgstr "2024년 초"
 
@@ -6749,6 +7032,9 @@ msgstr "{hostName}의 상위 디렉터리를 입력하세요"
 msgid "Enter a path on {hostName}"
 msgstr "{hostName}의 경로를 입력하세요"
 
+msgid "Enter a profile name or update this host to use automatic naming."
+msgstr "프로필 이름을 입력하거나 이 호스트를 업데이트하여 자동 이름 지정을 사용하세요."
+
 msgid "Enter a URL into the search bar above."
 msgstr "위 검색 바에 URL을 입력하세요."
 
@@ -6784,6 +7070,9 @@ msgstr "환경이 저장되었습니다"
 
 msgid "Environment setup, flaky tests, and credential plumbing, the boring failure modes that killed unattended runs in 2025, are mostly engineered away rather than modeled away."
 msgstr "환경 설정, 불안정한 테스트, 자격 증명 연결처럼 2025년에 무인 실행을 망가뜨렸던 지루한 실패 유형은 대부분 모델링이 아니라 엔지니어링으로 해결됩니다."
+
+msgid "Environment variables"
+msgstr "환경 변수"
 
 msgid "Environment Variables"
 msgstr "환경 변수"
@@ -6958,6 +7247,9 @@ msgstr "실험실"
 msgid "Expired"
 msgstr "만료됨"
 
+msgid "Expires {expiry}"
+msgstr "{expiry}에 만료"
+
 msgid "Explain how this repository works…"
 msgstr "이 리포지토리가 어떻게 동작하는지 설명…"
 
@@ -7001,11 +7293,17 @@ msgstr "외부 편집기"
 msgid "extra ${used} of ${limit}"
 msgstr "${limit} 중 추가 ${used}"
 
+msgid "Extra folders"
+msgstr "추가 폴더"
+
 msgid "Extra high"
 msgstr "매우 높음"
 
 msgid "Extra small"
 msgstr "아주 작음"
+
+msgid "Extra usage"
+msgstr "추가 사용량"
 
 msgid "F4 gate · {F4_GATE_SHARE}%"
 msgstr "F4 관문 · {F4_GATE_SHARE}%"
@@ -7517,6 +7815,9 @@ msgstr "FAQ"
 msgid "Fast"
 msgstr "빠름"
 
+msgid "Fast-forward"
+msgstr "빨리 감기"
+
 msgid "Fatal"
 msgstr "치명적"
 
@@ -7679,6 +7980,9 @@ msgstr "필터, {activeFilterCount}개 적용됨"
 msgid "Find"
 msgstr "찾기"
 
+msgid "Find a chat"
+msgstr "채팅 찾기"
+
 msgid "Find a person…"
 msgstr "사람 찾기…"
 
@@ -7705,6 +8009,9 @@ msgstr "페이지에서 찾기"
 
 msgid "Find in Terminal"
 msgstr "터미널에서 찾기"
+
+msgid "Find local chats across this project and its accounts. Open an existing chat or continue one started in a terminal."
+msgstr "이 프로젝트와 계정의 로컬 채팅을 찾으세요. 기존 채팅을 열거나 터미널에서 시작한 채팅을 계속하세요."
 
 msgid "Find recently changed code with weak coverage and test it properly."
 msgstr "최근 변경되었지만 커버리지가 낮은 코드를 찾아 제대로 테스트합니다."
@@ -7910,11 +8217,17 @@ msgstr "{domain} 잊기"
 msgid "Fork args"
 msgstr "포크 인자"
 
+msgid "Fork from here"
+msgstr "여기서 분기"
+
 msgid "Fork session"
 msgstr "세션 포크"
 
 msgid "Fork session…"
 msgstr "세션 포크…"
+
+msgid "Fork Settings"
+msgstr "포크 설정"
 
 msgid "Fork to new chat"
 msgstr "새 채팅으로 포크"
@@ -7939,6 +8252,9 @@ msgstr "무료"
 
 msgid "Free for everyone"
 msgstr "누구나 무료"
+
+msgid "Free resets: {formattedCount}"
+msgstr "무료 초기화: {formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "자주 묻는<0/>질문"
@@ -7972,6 +8288,9 @@ msgstr "전체 변경 로그 →"
 
 msgid "Full Disk Access"
 msgstr "전체 디스크 접근 권한"
+
+msgid "Full history"
+msgstr "전체 기록"
 
 msgid "Full name"
 msgstr "이름"
@@ -8180,6 +8499,9 @@ msgstr "Superset으로 가기"
 msgid "Go to workspace"
 msgstr "워크스페이스로 이동"
 
+msgid "Google closed Gemini CLI for personal accounts, including Google AI Pro and student plans. Open an Antigravity chat and sign in with the same Google account. A paid Gemini API key still works."
+msgstr "Google은 Google AI Pro 및 학생 요금제를 포함한 개인 계정의 Gemini CLI를 종료했습니다. Antigravity 채팅을 열고 같은 Google 계정으로 로그인하세요. 유료 Gemini API 키는 계속 사용할 수 있습니다."
+
 msgid "Google did not grant lasting access. Remove Superset from your Google account's third-party access and try again."
 msgstr "Google이 지속적인 접근 권한을 부여하지 않았습니다. Google 계정의 서드파티 접근에서 Superset을 제거한 뒤 다시 시도해 주세요."
 
@@ -8224,6 +8546,9 @@ msgstr "게스트 {number}"
 
 msgid "Guide"
 msgstr "가이드"
+
+msgid "Guided setup unavailable"
+msgstr "안내 설정을 사용할 수 없음"
 
 msgid "Guides"
 msgstr "가이드"
@@ -8276,6 +8601,9 @@ msgstr "푸시되지 않은 커밋 있음"
 msgid "Head-to-Head Comparisons"
 msgstr "1:1 비교"
 
+msgid "Headers"
+msgstr "헤더"
+
 msgid "Heading 1"
 msgstr "제목 1"
 
@@ -8304,6 +8632,9 @@ msgstr "\"{0}\"을(를) 사이드바에서 숨겼습니다"
 msgid "Hidden"
 msgstr "숨김"
 
+msgid "Hidden email"
+msgstr "숨겨진 이메일"
+
 msgid "Hidden folders"
 msgstr "숨긴 폴더"
 
@@ -8315,6 +8646,12 @@ msgstr "숨기기"
 
 msgid "Hide checks"
 msgstr "검사 숨기기"
+
+msgid "Hide CLI login accounts and the CHAT/CLI switch. Run workspace setup in the background."
+msgstr "CLI 로그인 계정과 CHAT/CLI 전환을 숨깁니다. workspace 설정을 백그라운드에서 실행합니다."
+
+msgid "Hide CLI options"
+msgstr "CLI 옵션 숨기기"
 
 msgid "Hide details"
 msgstr "상세 정보 숨기기"
@@ -8346,11 +8683,17 @@ msgstr "사이드바에서 숨기기"
 msgid "Hide log"
 msgstr "로그 숨기기"
 
+msgid "Hide paid features and upgrade prompts on this device."
+msgstr "이 기기에서 유료 기능과 업그레이드 안내를 숨깁니다."
+
 msgid "Hide PR review comments"
 msgstr "PR 리뷰 코멘트 숨기기"
 
 msgid "Hide Preview"
 msgstr "미리보기 숨기기"
+
+msgid "Hide Pro features"
+msgstr "Pro 기능 숨기기"
 
 msgid "Hide pull request list"
 msgstr "풀 리퀘스트 목록 숨기기"
@@ -8425,6 +8768,9 @@ msgstr "이 조직에서 호스트를 찾을 수 없습니다"
 
 msgid "Host not found in this organization."
 msgstr "이 조직에서 호스트를 찾을 수 없습니다."
+
+msgid "Host offline"
+msgstr "호스트 오프라인"
 
 msgid "Host service"
 msgstr "호스트 서비스"
@@ -8642,6 +8988,9 @@ msgstr "이미지를 찾을 수 없습니다 — 먼저 업로드하세요"
 msgid "Image preview of {0}. Zoom with plus and minus, pan with arrow keys, press 0 to reset."
 msgstr "{0}의 이미지 미리 보기입니다. 플러스와 마이너스로 확대/축소하고, 화살표 키로 이동하며, 0을 누르면 초기화됩니다."
 
+msgid "Image too large to show"
+msgstr "이미지가 너무 커서 표시할 수 없습니다"
+
 msgid "Images"
 msgstr "이미지"
 
@@ -8783,6 +9132,9 @@ msgstr "진행 중"
 msgid "In Progress"
 msgstr "진행 중"
 
+msgid "In Superset"
+msgstr "Superset에 있음"
+
 msgid "In the Superset desktop app, open <0>Settings → Appearance → Theme</0>."
 msgstr "Superset 데스크톱 앱에서 <0>설정 → 모양 → 테마</0>를 여세요."
 
@@ -8898,6 +9250,12 @@ msgstr "설치 후 재시작"
 msgid "Install a plugin once. It is ready on each machine you sign into and in every cloud workspace you start."
 msgstr "플러그인은 한 번만 설치하세요. 로그인하는 모든 머신과 시작하는 모든 클라우드 워크스페이스에서 바로 쓸 수 있습니다."
 
+msgid "Install and restart"
+msgstr "설치 후 다시 시작"
+
+msgid "Install CLI"
+msgstr "CLI 설치"
+
 msgid "Install failed"
 msgstr "설치 실패"
 
@@ -8919,6 +9277,9 @@ msgstr "클라이언트에 Superset MCP 설치하기"
 msgid "Install the desktop app"
 msgstr "데스크톱 앱 설치"
 
+msgid "Install the official CLI, then check again."
+msgstr "공식 CLI를 설치한 뒤 다시 확인하세요."
+
 msgid "Install the plugin to connect"
 msgstr "연결하려면 플러그인을 설치하세요"
 
@@ -8938,6 +9299,9 @@ msgstr "설치된 플러그인이 {name}에서 왔습니다: {plugins}. 먼저 �
 msgid "Installed via"
 msgstr "설치 경로"
 
+msgid "Installed: {installed}. Latest: {latest}. Settings and data are kept."
+msgstr "설치됨: {installed}. 최신: {latest}. 설정과 데이터는 유지됩니다."
+
 msgid "Installing..."
 msgstr "설치 중..."
 
@@ -8955,6 +9319,9 @@ msgstr "대화형 에이전트 터미널입니다."
 
 msgid "Interactive clients authorize over OAuth 2.1 in your browser, scoped to your active organization. For headless environments and CI, generate an API key from Settings → API Keys in the desktop app and pass it as a Bearer token instead. Full setup, including header config for Claude Code, is in the <0>authentication docs</0>."
 msgstr "대화형 클라이언트는 브라우저에서 OAuth 2.1로 인증하며, 권한은 현재 활성 조직으로 한정됩니다. 헤드리스 환경과 CI에서는 데스크톱 앱의 설정 → API 키에서 API 키를 만들어 Bearer 토큰으로 전달하세요. Claude Code용 헤더 설정을 포함한 전체 설정 방법은 <0>인증 문서</0>에 있습니다."
+
+msgid "Interactive home background"
+msgstr "대화형 홈 배경"
 
 msgid "Interested in bringing Superset to your organization? Reach out and we'll work with you to find the right setup for your team."
 msgstr "조직에 Superset을 도입하고 싶으신가요? 문의해 주시면 팀에 맞는 구성을 함께 찾아 드립니다."
@@ -9125,6 +9492,9 @@ msgstr "이슈 해결됨"
 msgid "Issue title"
 msgstr "이슈 제목"
 
+msgid "Issue type"
+msgstr "이슈 유형"
+
 msgid "Issue unresolved"
 msgstr "이슈 미해결"
 
@@ -9184,6 +9554,12 @@ msgstr "일본은 미국 다음으로 큰 시장으로 13,000명 이상의 개�
 
 msgid "JetBrains"
 msgstr "JetBrains"
+
+msgid "Jira automations"
+msgstr "Jira 자동화"
+
+msgid "Jira issues"
+msgstr "Jira 이슈"
 
 msgid "Join"
 msgstr "참가"
@@ -9265,6 +9641,9 @@ msgstr "계속 기다리기"
 
 msgid "Keep working"
 msgstr "계속 작업"
+
+msgid "Keeps this conversation, model and permissions. Only subscription accounts with verified quota are used."
+msgstr "대화, 모델 및 권한을 유지합니다. 할당량이 확인된 구독 계정만 사용합니다."
 
 msgid "Kept the new file — it changed after it was created"
 msgstr "새 파일을 유지했습니다 — 생성 후 내용이 바뀌었습니다"
@@ -9379,6 +9758,9 @@ msgstr "매월 마지막 날"
 msgid "Last day of each month at {time}"
 msgstr "매월 마지막 날 {time}"
 
+msgid "Last known"
+msgstr "마지막 확인값"
+
 msgid "Last run"
 msgstr "마지막 실행"
 
@@ -9433,6 +9815,9 @@ msgstr "새 워크스페이스가 만들어질 때 이 터미널 스크립트를
 msgid "Launch this terminal script whenever a new terminal tab opens."
 msgstr "새 터미널 탭이 열릴 때마다 이 터미널 스크립트를 실행합니다."
 
+msgid "Launching…"
+msgstr "시작 중…"
+
 msgid "Layout"
 msgstr "레이아웃"
 
@@ -9477,6 +9862,12 @@ msgstr "나가고 삭제"
 
 msgid "Leave comment mode"
 msgstr "댓글 모드 나가기"
+
+msgid "Leave empty to use your email after sign-in. Existing profile folders keep their names."
+msgstr "비워 두면 로그인 후 이메일을 사용합니다. 기존 프로필 폴더의 이름은 유지됩니다."
+
+msgid "Leave empty to use your email. The profile folder stays the same."
+msgstr "비워 두면 이메일을 사용합니다. 프로필 폴더는 변경되지 않습니다."
 
 msgid "Leave it empty to go back to the name the terminal reports."
 msgstr "비워 두면 터미널이 보고하는 이름으로 돌아갑니다."
@@ -9624,6 +10015,9 @@ msgstr "링크 복사됨"
 
 msgid "Link GitHub issue"
 msgstr "GitHub 이슈 연결"
+
+msgid "Link Jira issue"
+msgstr "Jira 이슈 연결"
 
 msgid "Link Linear issue"
 msgstr "Linear 이슈 연결"
@@ -9817,6 +10211,9 @@ msgstr "불러오는 중…"
 msgid "Local"
 msgstr "로컬"
 
+msgid "Local agent accounts"
+msgstr "로컬 에이전트 계정"
+
 msgid "Local Device"
 msgstr "로컬 기기"
 
@@ -9920,6 +10317,9 @@ msgstr "자홍"
 msgid "Main"
 msgstr "메인"
 
+msgid "Main repository"
+msgstr "메인 리포지토리"
+
 msgid "Make all panes equal size"
 msgstr "모든 패널을 같은 크기로 맞춥니다"
 
@@ -9983,6 +10383,9 @@ msgstr "플랜 관리"
 
 msgid "Manage plan on the web"
 msgstr "웹에서 플랜 관리"
+
+msgid "Manage resets on provider website"
+msgstr "제공업체 웹사이트에서 초기화 관리"
 
 msgid "Manage sessions"
 msgstr "세션 관리"
@@ -10083,6 +10486,9 @@ msgstr "MCP 서버"
 msgid "MCP Server Commands"
 msgstr "MCP 서버 명령"
 
+msgid "MCP servers"
+msgstr "MCP 서버"
+
 msgid "Measured over the trailing 30 days"
 msgstr "최근 30일 기준"
 
@@ -10166,6 +10572,9 @@ msgstr "머지 실패: {0}"
 
 msgid "Merge into center"
 msgstr "가운데로 합치기"
+
+msgid "Merge method"
+msgstr "병합 방식"
 
 msgid "Merge pull request"
 msgstr "풀 리퀘스트 머지"
@@ -10414,8 +10823,14 @@ msgstr "대부분의 개발자"
 msgid "Most of software history"
 msgstr "소프트웨어 역사의 대부분"
 
+msgid "Move"
+msgstr "이동"
+
 msgid "Move {count} to Group"
 msgstr "{count}개를 그룹으로 이동"
+
+msgid "Move to another account"
+msgstr "다른 계정으로 이동"
 
 msgid "Move to Center"
 msgstr "가운데로 이동"
@@ -10452,6 +10867,9 @@ msgstr "음소거됨"
 msgid "My Agent"
 msgstr "내 에이전트"
 
+msgid "My Jira issues"
+msgstr "내 Jira 이슈"
+
 msgid "My Tasks"
 msgstr "내 작업"
 
@@ -10487,6 +10905,15 @@ msgstr "이 프로젝트의 새 브랜치에 네임스페이스를 붙입니다.
 
 msgid "Naming instructions"
 msgstr "이름 지정 지침"
+
+msgid "Native handoff complete"
+msgstr "네이티브 인계 완료"
+
+msgid "Native handoff failed. You can retry."
+msgstr "네이티브 세션 전달에 실패했습니다. 다시 시도하세요."
+
+msgid "Native handoff is unavailable for this agent pair or host."
+msgstr "이 에이전트 조합 또는 호스트에서는 네이티브 세션 전달을 사용할 수 없습니다."
 
 msgid "Native PR reviews"
 msgstr "네이티브 PR 리뷰"
@@ -10572,6 +10999,9 @@ msgid "New {providerLabel} agents will use {accountLabel}."
 msgstr "새 {providerLabel} 에이전트는 {accountLabel}을(를) 사용합니다."
 
 msgid "New agent"
+msgstr "새 에이전트"
+
+msgid "New Agent"
 msgstr "새 에이전트"
 
 msgid "New agent launches use this account. Relaunch a running agent to switch it."
@@ -10841,6 +11271,9 @@ msgstr "아직 이 브랜치에 변경 사항이 없습니다."
 msgid "No changes to display."
 msgstr "표시할 변경 사항이 없습니다."
 
+msgid "No chats found in this project."
+msgstr "이 프로젝트에서 채팅을 찾지 못했습니다."
+
 msgid "No checks"
 msgstr "검사 없음"
 
@@ -10949,6 +11382,9 @@ msgstr "아직 이벤트가 없습니다"
 msgid "No extended thinking"
 msgstr "확장 사고 없음"
 
+msgid "No extra folders."
+msgstr "추가 폴더가 없습니다."
+
 msgid "No failed runs."
 msgstr "실패한 실행이 없습니다."
 
@@ -11048,6 +11484,9 @@ msgstr "일치 항목 없음"
 msgid "No matching files"
 msgstr "일치하는 파일 없음"
 
+msgid "No matching issues"
+msgstr "일치하는 이슈 없음"
+
 msgid "No matching models"
 msgstr "일치하는 모델이 없습니다"
 
@@ -11059,6 +11498,9 @@ msgstr "일치하는 페이지가 없습니다"
 
 msgid "No matching repositories."
 msgstr "일치하는 저장소가 없습니다."
+
+msgid "No MCP servers yet."
+msgstr "아직 MCP 서버가 없습니다."
 
 msgid "No members yet"
 msgstr "아직 멤버가 없습니다"
@@ -11207,6 +11649,9 @@ msgstr "리포지토리를 찾을 수 없습니다. GitHub App이 리포지토�
 
 msgid "No repositories. Connect GitHub in Integrations, then refresh."
 msgstr "리포지토리가 없습니다. 통합에서 GitHub를 연결한 후 새로 고침하세요."
+
+msgid "No reset was used. Check the updated availability."
+msgstr "초기화를 사용하지 않았습니다. 갱신된 사용 가능 여부를 확인하세요."
 
 msgid "No results"
 msgstr "결과 없음"
@@ -11421,6 +11866,9 @@ msgstr "연결되지 않음 · 클라우드 워크스페이스가 조직의 GitH
 msgid "Not demoed here"
 msgstr "여기서는 시연하지 않음"
 
+msgid "Not done"
+msgstr "완료되지 않음"
+
 msgid "Not found"
 msgstr "찾을 수 없습니다"
 
@@ -11543,6 +11991,9 @@ msgstr "OAuth 2.0"
 msgid "OAuth by default, API keys for CI"
 msgstr "기본은 OAuth, CI에는 API 키"
 
+msgid "OAuth service"
+msgstr "OAuth 서비스"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "of {0}"
 msgstr "{0} 중"
@@ -11618,6 +12069,9 @@ msgstr "화면 키보드"
 msgid "Onboarding redesign"
 msgstr "온보딩 리디자인"
 
+msgid "One argument per line"
+msgstr "한 줄에 인수 하나"
+
 msgid "One chat that plans a task, fans out parallel agents across worktrees, and brings the results back together."
 msgstr "하나의 채팅이 작업을 계획하고, worktree 전반에 에이전트를 병렬로 펼치고, 결과를 다시 모읍니다."
 
@@ -11647,6 +12101,9 @@ msgstr "선택한 리포지토리 중 하나"
 
 msgid "One plugin. Every coding agent."
 msgstr "하나의 플러그인. 모든 코딩 에이전트."
+
+msgid "One service can connect both Jira and Bitbucket."
+msgstr "하나의 서비스로 Jira와 Bitbucket을 모두 연결할 수 있습니다."
 
 msgid "One step left"
 msgstr "한 단계 남았습니다"
@@ -11989,6 +12446,9 @@ msgstr "T3 Chat에서 열기"
 msgid "Open in tab"
 msgstr "탭에서 열기"
 
+msgid "Open in workspace"
+msgstr "작업 공간에서 열기"
+
 msgid "Open in…"
 msgstr "다음으로 열기…"
 
@@ -12029,6 +12489,9 @@ msgstr "메뉴 열기"
 
 msgid "Open navigation"
 msgstr "내비게이션 열기"
+
+msgid "Open new supported agents in a shared chat interface. Existing sessions keep their current view. The terminal remains available."
+msgstr "지원되는 새 에이전트를 공통 채팅 인터페이스에서 엽니다. 기존 세션은 현재 보기를 유지합니다. 터미널도 계속 사용할 수 있습니다."
 
 msgid "Open on GitHub"
 msgstr "GitHub에서 열기"
@@ -12153,6 +12616,12 @@ msgstr "변경 패널을 새 탭에서 열거나 기존 패널에 포커스합�
 msgid "Open the global command palette"
 msgstr "전역 명령 팔레트를 엽니다"
 
+msgid "Open the guide"
+msgstr "가이드 열기"
+
+msgid "Open the new agent dialog in the current workspace"
+msgstr "현재 워크스페이스에서 새 에이전트 대화상자 열기"
+
 msgid "Open the new workspace modal"
 msgstr "새 워크스페이스 모달을 엽니다"
 
@@ -12207,6 +12676,9 @@ msgstr "worktree를 여는 중..."
 msgid "Opens a cloud workspace where an agent installs what the project needs and writes its .superset/config.json"
 msgstr "에이전트가 프로젝트에 필요한 것을 설치하고 .superset/config.json을 작성하는 클라우드 워크스페이스를 엽니다"
 
+msgid "Opens in the workspace of its folder"
+msgstr "해당 폴더의 워크스페이스에서 열립니다"
+
 msgid "Opens on"
 msgstr "열리는 위치"
 
@@ -12233,6 +12705,9 @@ msgstr "프롬프트 페이로드 뒤에 붙일 선택 플래그"
 
 msgid "Options"
 msgstr "옵션"
+
+msgid "Options and connections that only exist in this fork."
+msgstr "이 포크에만 있는 옵션과 연결입니다."
 
 msgid "Or ask your coding agent to install the Superset CLI."
 msgstr "또는 코딩 에이전트에게 Superset CLI를 설치해 달라고 하세요."
@@ -12312,6 +12787,9 @@ msgstr "다른 앱"
 
 msgid "Other devices"
 msgstr "다른 기기"
+
+msgid "Other folders agents can work in and whose changes show next to this project's. They can be git repositories or plain folders."
+msgstr "에이전트가 작업할 수 있고 변경 사항이 이 프로젝트의 변경 사항 옆에 표시되는 다른 폴더입니다. git 리포지토리이거나 일반 폴더일 수 있습니다."
 
 msgid "Other Hosts"
 msgstr "다른 호스트"
@@ -12495,6 +12973,9 @@ msgstr "상위 디렉터리"
 msgid "Parent directory on {hostName}"
 msgstr "{hostName}의 상위 디렉터리"
 
+msgid "Parent issue"
+msgstr "상위 이슈"
+
 msgid "Part of Superset Pro"
 msgstr "Superset Pro에 포함"
 
@@ -12579,6 +13060,9 @@ msgstr "PDF"
 
 msgid "Peak pace"
 msgstr "최고 속도"
+
+msgid "Pending"
+msgstr "대기 중"
 
 msgid "Pending Invitations"
 msgstr "대기 중인 초대"
@@ -13303,10 +13787,16 @@ msgstr "보라"
 msgid "Push"
 msgstr "푸시"
 
+msgid "Push and create PR"
+msgstr "푸시하고 PR 만들기"
+
 #. placeholder {0}: error instanceof Error ? error.message : String(error)
 #. placeholder {0}: error.message
 msgid "Push failed: {0}"
 msgstr "푸시 실패: {0}"
+
+msgid "Push your branch before creating a pull request."
+msgstr "풀 리퀘스트를 만들기 전에 브랜치를 푸시하세요."
 
 msgid "Pushed"
 msgstr "푸시됨"
@@ -13395,6 +13885,12 @@ msgstr "Superset 완전히 종료"
 
 msgid "Quit the source browser first so its logins are saved to disk. You'll be asked to allow Keychain access."
 msgstr "로그인 정보가 디스크에 저장되도록 원본 브라우저를 먼저 종료하세요. 키체인 접근 허용을 요청받게 됩니다."
+
+msgid "Quota exhausted"
+msgstr "한도 소진"
+
+msgid "Quota is shown when the provider supports it."
+msgstr "공급자가 지원하는 경우 할당량이 표시됩니다."
 
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
@@ -13538,6 +14034,12 @@ msgstr "리베이스 후 머지"
 msgid "Rebase and merge"
 msgstr "리베이스 후 머지"
 
+msgid "Rebase, fast-forward"
+msgstr "리베이스, 빨리 감기"
+
+msgid "Rebase, merge commit"
+msgstr "리베이스, 병합 커밋"
+
 msgid "Recent Activity"
 msgstr "최근 활동"
 
@@ -13574,14 +14076,24 @@ msgstr "최근 본 항목"
 msgid "Recents"
 msgstr "최근 항목"
 
+msgid "Recommended settings replace launch commands and arguments. Names, hooks and other environment settings are kept. Applies to new launches."
+msgstr "권장 설정은 실행 명령과 인수를 바꿉니다. 이름, 훅 및 다른 환경 설정은 유지됩니다. 새 실행에 적용됩니다."
+
 msgid "Recommended size 256×256."
 msgstr "권장 크기 256×256."
 
 msgid "Reconnect"
 msgstr "다시 연결"
 
+#. placeholder {0}: switchTarget.label
+msgid "Reconnect {0} using the same account. Other profiles and the CLI login stay separate."
+msgstr "동일한 계정으로 {0}을 다시 연결하세요. 다른 프로필과 CLI 로그인은 별도로 유지됩니다."
+
 msgid "Reconnect {name}"
 msgstr "{name} 다시 연결"
+
+msgid "Reconnect account"
+msgstr "계정 다시 연결"
 
 msgid "Reconnect Google"
 msgstr "Google 다시 연결"
@@ -13651,9 +14163,6 @@ msgstr "풀 리퀘스트 새로 고침"
 
 msgid "Refresh repositories"
 msgstr "리포지토리 새로 고침"
-
-msgid "Refreshes when Claude Code next runs."
-msgstr "다음에 Claude Code를 실행하면 갱신됩니다."
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "다음에 OpenCode를 실행하면 갱신됩니다."
@@ -13758,8 +14267,14 @@ msgstr "{label}을(를) 제거할까요?"
 msgid "Remove {repositoryName}"
 msgstr "{repositoryName} 제거"
 
+msgid "Remove approval"
+msgstr "승인 취소"
+
 msgid "Remove attachment"
 msgstr "첨부 파일 제거"
+
+msgid "Remove folder"
+msgstr "폴더 제거"
 
 msgid "Remove from favorites"
 msgstr "즐겨찾기에서 제거"
@@ -13992,6 +14507,9 @@ msgstr "리포지토리"
 msgid "Repositories accessible through the GitHub App installation."
 msgstr "GitHub App 설치를 통해 접근할 수 있는 리포지토리입니다."
 
+msgid "Repositories and pull requests"
+msgstr "저장소 및 풀 리퀘스트"
+
 msgid "Repositories refreshed"
 msgstr "리포지토리를 새로 고쳤습니다"
 
@@ -14015,6 +14533,9 @@ msgstr "체험판 요청"
 
 msgid "Request Body"
 msgstr "요청 본문"
+
+msgid "Request changes"
+msgstr "변경 요청"
 
 msgid "requested changes"
 msgstr "변경 요청함"
@@ -14051,6 +14572,9 @@ msgstr "에이전트를 초기화할"
 
 msgid "Reset all"
 msgstr "모두 초기화"
+
+msgid "Reset applied. Usage is being refreshed."
+msgstr "초기화가 적용되었습니다. 사용량을 갱신하고 있습니다."
 
 msgid "Reset editor"
 msgstr "편집기 초기화"
@@ -14136,6 +14660,9 @@ msgstr "스레드 해결"
 
 msgid "Resolved"
 msgstr "해결됨"
+
+msgid "Resolved · show"
+msgstr "해결됨 · 보기"
 
 msgid "Resource consumption"
 msgstr "리소스 사용량"
@@ -14276,6 +14803,9 @@ msgstr "재개 인수"
 msgid "Resume automation"
 msgstr "자동화 재개"
 
+msgid "Resume this chat to activate these options."
+msgstr "이 옵션을 활성화하려면 이 채팅을 재개하세요."
+
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"
 msgstr "{0}을(를) 재개하는 중…"
@@ -14306,6 +14836,9 @@ msgstr "{until}에 다시 시도"
 
 msgid "Retrying…"
 msgstr "다시 시도하는 중…"
+
+msgid "Return to before this message and put its text back in the draft. The original conversation is kept in history. Files stay unchanged because this agent does not expose file restore over ACP."
+msgstr "이 메시지 이전으로 돌아가고 메시지 내용을 초안에 다시 넣습니다. 원래 대화는 기록에 보관됩니다. 이 에이전트는 ACP를 통한 파일 복원을 지원하지 않으므로 파일은 변경되지 않습니다."
 
 msgid "Return to dashboard"
 msgstr "대시보드로 돌아가기"
@@ -14355,6 +14888,9 @@ msgstr "리뷰 무시됨"
 
 msgid "Review each failure before deciding whether to continue."
 msgstr "계속할지 결정하기 전에 각 실패를 확인하세요."
+
+msgid "Review filters apply to GitHub repositories."
+msgstr "리뷰 필터는 GitHub 저장소에 적용됩니다."
 
 msgid "Review message"
 msgstr "리뷰 메시지"
@@ -14415,6 +14951,15 @@ msgstr "API 키 해지"
 
 msgid "Revoke key"
 msgstr "키 해지"
+
+msgid "Rewind chat only"
+msgstr "채팅만 되돌리기"
+
+msgid "Rewind conversation?"
+msgstr "대화를 되돌릴까요?"
+
+msgid "Rewind from here"
+msgstr "여기서 되돌리기"
 
 msgid "Rewrote it and published version 2."
 msgstr "다시 작성하고 버전 2를 게시했습니다."
@@ -14525,6 +15070,9 @@ msgstr "Sentry 이슈가 바뀌면 자동화를 실행합니다."
 
 msgid "Run commands and navigate the application."
 msgstr "명령을 실행하고 앱을 탐색합니다."
+
+msgid "Run history"
+msgstr "실행 기록"
 
 msgid "Run History"
 msgstr "실행 기록"
@@ -14832,6 +15380,9 @@ msgstr "키 이름으로 검색..."
 msgid "Search changed files"
 msgstr "변경된 파일 검색"
 
+msgid "Search chats"
+msgstr "채팅 검색"
+
 msgid "Search developers"
 msgstr "개발자 검색"
 
@@ -14873,6 +15424,9 @@ msgstr "{frameTitle}에서 검색…"
 
 msgid "Search issues..."
 msgstr "이슈 검색..."
+
+msgid "Search Jira…"
+msgstr "Jira 검색…"
 
 msgid "Search labels..."
 msgstr "레이블 검색..."
@@ -15186,6 +15740,9 @@ msgstr "팀 선택"
 msgid "Select terminal script directory"
 msgstr "터미널 스크립트 디렉터리 선택"
 
+msgid "Select workspace"
+msgstr "작업 공간 선택"
+
 msgid "Select worktree location"
 msgstr "worktree 위치 선택"
 
@@ -15292,8 +15849,17 @@ msgstr "구분선"
 msgid "Service availability is published at <0>status.superset.sh</0>, and security and compliance documentation at <1>trust.superset.sh</1>."
 msgstr "서비스 가용성은 <0>status.superset.sh</0>에, 보안 및 규정 준수 문서는 <1>trust.superset.sh</1>에 공개되어 있습니다."
 
+msgid "Service URL"
+msgstr "서비스 URL"
+
 msgid "Session"
 msgstr "세션"
+
+msgid "Session ({hours}h)"
+msgstr "세션({hours}시간)"
+
+msgid "Session ({hours}h) · {scope}"
+msgstr "세션({hours}시간) · {scope}"
 
 #. placeholder {0}: session.id.slice(0, 8)
 msgid "Session {0}"
@@ -15326,6 +15892,9 @@ msgstr "세션"
 #. placeholder {0}: detail.sessions.length
 msgid "Sessions · top {0} by cost"
 msgstr "세션 · 비용 상위 {0}개"
+
+msgid "Set as default"
+msgstr "기본값으로 설정"
 
 #. placeholder {0}: color.name
 msgid "Set color to {0}"
@@ -15396,6 +15965,9 @@ msgstr "설정 ({settingsHotkey})"
 msgid "Settings → Remote Access → “Allow remote access to this device via relay”."
 msgstr "설정 → 원격 액세스 → “릴레이를 통해 이 기기에 원격 액세스 허용”."
 
+msgid "Settings applied. Existing chats keep their configuration."
+msgstr "설정이 적용되었습니다. 기존 채팅은 설정을 유지합니다."
+
 msgid "Settings are not available for this device"
 msgstr "이 기기에서는 설정을 사용할 수 없습니다"
 
@@ -15407,6 +15979,9 @@ msgstr "settings.ts"
 
 msgid "Setup"
 msgstr "설정"
+
+msgid "Setup could not be applied. Check again or use advanced configuration."
+msgstr "설정을 적용하지 못했습니다. 다시 확인하거나 고급 설정을 사용하세요."
 
 msgid "Setup script"
 msgstr "설정 스크립트"
@@ -15459,6 +16034,9 @@ msgstr "이 로그인을 사용하는 세션 간에 공유됩니다."
 msgid "Shared app components"
 msgstr "공용 앱 컴포넌트"
 
+msgid "Shared by every agent and account on this computer."
+msgstr "이 컴퓨터의 모든 에이전트와 계정이 함께 사용합니다."
+
 msgid "Shared component library."
 msgstr "공유 컴포넌트 라이브러리입니다."
 
@@ -15510,6 +16088,9 @@ msgstr "이미 사용 중인 단축키"
 msgid "Show"
 msgstr "표시"
 
+msgid "Show a character-based Superset logo and waves that respond to clicks."
+msgstr "문자로 구성된 Superset 로고와 클릭에 반응하는 파동을 표시합니다."
+
 msgid "Show a confirmation dialog when quitting the app"
 msgstr "앱을 종료할 때 확인 대화 상자를 표시합니다"
 
@@ -15554,6 +16135,9 @@ msgstr "기기 툴바 표시"
 
 msgid "Show diff panel"
 msgstr "차이 패널 표시"
+
+msgid "Show earlier messages"
+msgstr "이전 메시지 표시"
 
 msgid "Show emails"
 msgstr "이메일 표시"
@@ -15707,6 +16291,9 @@ msgstr "로컬 관리자로 로그인 (dev)"
 msgid "Sign in to {0}"
 msgstr "{0}에 로그인"
 
+msgid "Sign in to continue"
+msgstr "계속하려면 로그인하세요"
+
 msgid "Sign in to continue to Superset"
 msgstr "Superset을 계속 사용하려면 로그인하세요"
 
@@ -15731,6 +16318,9 @@ msgstr "GitHub로 로그인"
 msgid "Sign in with Google"
 msgstr "Google로 로그인"
 
+msgid "Sign in, set up API keys and check quota for your local agents."
+msgstr "로그인하고 API 키를 설정한 뒤 로컬 에이전트의 할당량을 확인하세요."
+
 msgid "Sign out"
 msgstr "로그아웃"
 
@@ -15739,10 +16329,6 @@ msgstr "로그아웃"
 
 msgid "Sign out of this device"
 msgstr "이 기기에서 로그아웃"
-
-#. placeholder {0}: switchTarget.label
-msgid "Sign the {0} profile into a different account. Other profiles, the system default, and running agents are unaffected."
-msgstr "{0} 프로필을 다른 계정으로 로그인합니다. 다른 프로필, 시스템 기본값, 실행 중인 에이전트에는 영향을 주지 않습니다."
 
 #. placeholder {0}: AGENT_LABELS[switchTarget.agent]
 msgid "Sign the system-default {0} login into a different account. It replaces the current default sign-in on this machine; profiles and running agents are unaffected."
@@ -15816,6 +16402,9 @@ msgstr "단일 탭 + 패널"
 
 msgid "Single-select"
 msgstr "단일 선택"
+
+msgid "Site URL"
+msgstr "사이트 URL"
 
 msgid "Site-wide telemetry · {range}"
 msgstr "사이트 전체 텔레메트리 · {range}"
@@ -15913,6 +16502,9 @@ msgstr "SOC 2 Type II 준수. 보고서를 요청하세요."
 msgid "SOC 2 Type II report"
 msgstr "SOC 2 Type II 보고서"
 
+msgid "Some agent-specific metadata could not be transferred."
+msgstr "일부 에이전트별 메타데이터를 전송하지 못했습니다."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "일부 파일이 허용되지 않는 형식이라 추가되지 않았습니다."
 
@@ -16001,6 +16593,9 @@ msgstr "출처"
 
 msgid "Source Available"
 msgstr "소스 공개"
+
+msgid "Source branch"
+msgstr "소스 브랜치"
 
 msgid "Source path (not an import)"
 msgstr "소스 경로 (임포트 아님)"
@@ -16095,11 +16690,17 @@ msgstr "새 브라우저로 분할"
 msgid "Split with Sandbox Desktop"
 msgstr "샌드박스 데스크톱으로 분할"
 
+msgid "Squash"
+msgstr "커밋 합치기"
+
 msgid "Squash & Merge"
 msgstr "스쿼시 후 머지"
 
 msgid "Squash and merge"
 msgstr "스쿼시 후 머지"
+
+msgid "Squash, fast-forward only"
+msgstr "스쿼시, 빨리 감기만"
 
 msgid "SS"
 msgstr "SS"
@@ -16179,6 +16780,9 @@ msgstr "하루에 늘어난 스타"
 msgid "Stars gained per week"
 msgstr "한 주에 늘어난 스타"
 
+msgid "Start"
+msgstr "시작"
+
 msgctxt "project date"
 msgid "Start"
 msgstr "시작일"
@@ -16210,6 +16814,9 @@ msgstr "탐색 시작"
 msgid "Start building in two."
 msgstr "두 단계로 빌드를 시작하세요."
 
+msgid "Start chat"
+msgstr "채팅 시작"
+
 msgid "Start coding agents, follow them live, and review the diff from your iPhone or iPad. Available on the App Store; Android is coming soon."
 msgstr "iPhone이나 iPad에서 코딩 에이전트를 시작하고, 실시간으로 따라가고, diff를 리뷰하세요. App Store에서 이용할 수 있으며 Android는 곧 출시됩니다."
 
@@ -16224,6 +16831,9 @@ msgstr "무료로 시작하세요. 팀이 커지면 업그레이드하세요. �
 
 msgid "Start from a template"
 msgstr "템플릿으로 시작"
+
+msgid "Start in workspace"
+msgstr "워크스페이스에서 시작"
 
 msgid "Start new session"
 msgstr "새 세션 시작"
@@ -16382,6 +16992,13 @@ msgstr "{what}의 에이전트 중지 중"
 msgid "Stops the agent and sends this now"
 msgstr "에이전트를 중지하고 지금 이 메시지를 보냅니다"
 
+msgid "Storage"
+msgstr "저장 공간"
+
+#. placeholder {0}: data.path
+msgid "Stored in {0}"
+msgstr "저장 위치: {0}"
+
 msgid "Strikethrough"
 msgstr "취소선"
 
@@ -16462,6 +17079,9 @@ msgstr "이 워크스페이스의 변경 사항을 요약해 줘"
 
 msgid "Summary"
 msgstr "요약"
+
+msgid "Summary only"
+msgstr "요약만"
 
 msgid "sun 11:00"
 msgstr "일 11:00"
@@ -16713,6 +17333,12 @@ msgstr "지속"
 msgid "Sustain · active days in 30"
 msgstr "지속성 · 30일 중 활동 일수"
 
+msgid "Switch"
+msgstr "전환"
+
+msgid "Switch account"
+msgstr "계정 전환"
+
 msgid "Switch agents. Keep your workflow"
 msgstr "에이전트는 바꾸고, 워크플로는 그대로"
 
@@ -16730,6 +17356,9 @@ msgstr "로그인 전환"
 
 msgid "Switch sign-in…"
 msgstr "로그인 전환…"
+
+msgid "Switch to {summary}"
+msgstr "{summary}(으)로 전환"
 
 msgid "Switch to Active Workspace"
 msgstr "활성 워크스페이스로 전환"
@@ -16790,6 +17419,12 @@ msgstr "워크스페이스 8로 전환"
 
 msgid "Switch to Workspace 9"
 msgstr "워크스페이스 9로 전환"
+
+msgid "Switch, or wait"
+msgstr "전환 또는 대기"
+
+msgid "Switch…"
+msgstr "전환…"
 
 msgid "Symbol, light"
 msgstr "심볼, 밝은 색"
@@ -16888,6 +17523,9 @@ msgstr "목표일"
 msgid "Target agent"
 msgstr "대상 에이전트"
 
+msgid "Target branch"
+msgstr "대상 브랜치"
+
 msgid "Target date"
 msgstr "목표일"
 
@@ -16912,6 +17550,9 @@ msgstr "작업 실행"
 msgid "Task layout"
 msgstr "작업 레이아웃"
 
+msgid "Task linked to workspace."
+msgstr "작업을 워크스페이스에 연결했습니다."
+
 msgid "Task Management"
 msgstr "작업 관리"
 
@@ -16935,6 +17576,9 @@ msgstr "작업 관리 위치가 업데이트되었습니다"
 
 msgid "Tasks"
 msgstr "작업"
+
+msgid "Tasks and projects"
+msgstr "작업 및 프로젝트"
 
 msgid "Tasks created in Superset will be synced to this Linear team."
 msgstr "Superset에서 만든 작업이 이 Linear 팀으로 동기화됩니다."
@@ -17158,6 +17802,9 @@ msgstr "에이전트가 같은 패널에서 클릭하고 입력하며 변경 사
 msgid "The agent copies the conversation; the branch opens here"
 msgstr "에이전트가 대화를 복사하고 분기는 여기서 열립니다"
 
+msgid "The agent could not load this conversation. Check the account used for this chat, then retry."
+msgstr "에이전트가 이 대화를 불러오지 못했습니다. 이 채팅에 사용한 계정을 확인한 후 다시 시도하세요."
+
 msgid "The agent follows the plugin's skills and calls its tools. The issue shows up in Linear."
 msgstr "에이전트는 플러그인의 스킬을 따라 도구를 호출합니다. 이슈가 Linear에 나타납니다."
 
@@ -17179,6 +17826,9 @@ msgstr "앱은 무료로 다운로드할 수 있습니다. iOS 26 이상과 Supe
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Superset build. Restarting replaces it with this app's copy."
 msgstr "앱은 {appVersion}이지만 다른 것(오래된 CLI나 다른 Superset 빌드일 가능성)이 시작한 호스트 서비스에 연결되어 있습니다. 다시 시작하면 이 앱의 복사본으로 교체됩니다."
 
+msgid "The app will restart when the update is ready. Settings and data are kept."
+msgstr "업데이트가 준비되면 앱이 다시 시작됩니다. 설정과 데이터는 유지됩니다."
+
 msgid "The associated device isn't reachable right now"
 msgstr "연결된 기기에 지금 접근할 수 없습니다"
 
@@ -17191,6 +17841,15 @@ msgstr "최고의 에이전트는 바뀝니다.<0/>워크플로는 그럴 필요
 msgid "The button now stands out. I checked it in your pane."
 msgstr "버튼이 이제 눈에 띕니다. 패널에서 확인했습니다."
 
+msgid "The chat pauses until you continue it."
+msgstr "직접 이어갈 때까지 채팅이 일시 중지됩니다."
+
+msgid "The chat will open when the current response finishes."
+msgstr "현재 응답이 완료되면 채팅이 열립니다."
+
+msgid "The CLI already has custom model settings. Edit them in advanced configuration."
+msgstr "CLI에 사용자 지정 모델 설정이 이미 있습니다. 고급 설정에서 수정하세요."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "클라우드 워크스페이스가 시작되었어야 하지만 제시간에 응답하지 않았습니다. 다음 실행에서 다시 시도합니다."
 
@@ -17202,6 +17861,9 @@ msgstr "연결 시간이 초과되었습니다"
 
 msgid "The connection was closed"
 msgstr "연결이 닫혔습니다"
+
+msgid "The current chat stays open until the new one is running."
+msgstr "새 채팅이 실행될 때까지 현재 채팅은 열린 상태로 유지됩니다."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "현재 프롬프트가 선택한 버전으로 교체됩니다. 기록에 \"복원됨\" 항목이 새로 추가되므로 되돌릴 수 있습니다."
@@ -17279,6 +17941,9 @@ msgstr "재사용 가능한 Superset 에이전트 설정, 프롬프트, 셋업 �
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "호스트가 {targetVersion}이(가) 아닌 {0}(으)로 돌아왔습니다."
 
+msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
+msgstr "호스트는 매분 확인합니다. 규칙을 활성화하면 기존 일치 항목을 기록하고 새로 일치하는 이슈마다 워크스페이스와 에이전트를 하나씩 시작합니다. 규칙은 일시 중지 상태로 저장됩니다."
+
 msgid "The host did not come back within fifteen minutes."
 msgstr "호스트가 15분 이내에 다시 연결되지 않았습니다."
 
@@ -17352,6 +18017,9 @@ msgstr "조직 또는 팀의 이름"
 msgid "The network connection changed"
 msgstr "네트워크 연결이 바뀌었습니다"
 
+msgid "The new agent resumes the whole conversation, tools included."
+msgstr "새 에이전트가 도구를 포함한 전체 대화를 이어갑니다."
+
 msgid "The overnight shift"
 msgstr "야간 근무"
 
@@ -17423,6 +18091,9 @@ msgstr "자율 주행 소프트웨어 공장"
 msgid "The server could not be found"
 msgstr "서버를 찾을 수 없습니다"
 
+msgid "The service is temporarily unavailable. Superset will retry automatically. Your account settings are unchanged."
+msgstr "서비스를 일시적으로 사용할 수 없습니다. Superset이 자동으로 다시 시도합니다. 계정 설정은 변경되지 않았습니다."
+
 msgid "The sign-in link was incomplete. Please try again."
 msgstr "로그인 링크가 완전하지 않습니다. 다시 시도해 주세요."
 
@@ -17483,9 +18154,6 @@ msgstr "에이전트 세션에서 커밋되지 않은 수정 사항이 worktree�
 msgid "Theme"
 msgstr "테마"
 
-msgid "Theme default"
-msgstr "테마 기본값"
-
 msgid "Theme file too large"
 msgstr "테마 파일이 너무 큽니다"
 
@@ -17537,8 +18205,17 @@ msgstr "이 에이전트는 대화를 분기할 수 없습니다"
 msgid "This agent can't run in a cloud workspace"
 msgstr "이 에이전트는 클라우드 워크스페이스에서 실행할 수 없습니다"
 
+msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+msgstr "이 에이전트는 채팅을 열 수 없습니다. 터미널에서 사용하려면 고급 CLI 옵션을 활성화하세요."
+
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "이 에이전트는 선택한 기기에 더 이상 존재하지 않습니다 (에이전트가 초기화되었을 수 있습니다). 새 에이전트를 선택할 때까지 실행이 실패합니다."
+
+msgid "This agent received the messages so far."
+msgstr "이 에이전트는 지금까지의 메시지를 받았습니다."
+
+msgid "This agent received the whole conversation so far."
+msgstr "이 에이전트는 지금까지의 대화 전체를 받았습니다."
 
 msgid "This also:"
 msgstr "다음 작업도 함께 수행됩니다:"
@@ -17559,8 +18236,17 @@ msgstr "이 자동화에는 아직 지시문이 없습니다. 실행하기 전�
 msgid "This automation is in another organization"
 msgstr "이 자동화는 다른 조직에 있습니다"
 
+msgid "This build can't search chats yet. Update Superset to use it."
+msgstr "이 빌드는 아직 채팅을 검색할 수 없습니다. 사용하려면 Superset을 업데이트하세요."
+
+msgid "This build does not update itself. Rebuild it from its source to update."
+msgstr "이 빌드는 자동으로 업데이트되지 않습니다. 업데이트하려면 소스에서 다시 빌드하세요."
+
 msgid "This cannot be undone."
 msgstr "되돌릴 수 없습니다."
+
+msgid "This chat"
+msgstr "이 채팅"
 
 msgid "This chat has ended."
 msgstr "이 채팅은 종료되었습니다."
@@ -17625,6 +18311,12 @@ msgstr "이 파일"
 msgid "This file is empty or was deleted."
 msgstr "이 파일은 비어 있거나 삭제되었습니다."
 
+msgid "This folder is not a git repository."
+msgstr "이 폴더는 git 리포지토리가 아닙니다."
+
+msgid "This folder no longer exists on disk."
+msgstr "이 폴더는 더 이상 디스크에 없습니다."
+
 msgid "This GitHub installation is already connected to another Superset organization. Disconnect it there, or uninstall the Superset GitHub App, then try again."
 msgstr "이 GitHub 설치는 이미 다른 Superset 조직에 연결되어 있습니다. 해당 조직에서 연결을 해제하거나 Superset GitHub App을 제거한 뒤 다시 시도해 주세요."
 
@@ -17663,6 +18355,9 @@ msgstr "이 Linear 워크스페이스는 이미 {owner}이(가) 연결했습니�
 
 msgid "This Linear workspace is already connected by another Superset organization."
 msgstr "이 Linear 워크스페이스는 이미 다른 Superset 조직이 연결했습니다."
+
+msgid "This login follows changes made in the CLI. Use a separate account profile to keep Superset independent."
+msgstr "이 로그인은 CLI에서 변경한 내용을 따릅니다. Superset을 독립적으로 유지하려면 별도의 계정 프로필을 사용하세요."
 
 msgid "This looks like a binary file. Opening it as text may show garbled output or freeze the editor for large files."
 msgstr "바이너리 파일로 보입니다. 텍스트로 열면 깨진 내용이 표시되거나, 파일이 크면 에디터가 멈출 수 있습니다."
@@ -17811,6 +18506,9 @@ msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므�
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므로 소유자로 남아야 합니다."
 
+msgid "This uses one reset for this account, across its chats. It cannot be undone."
+msgstr "이 계정의 모든 채팅에 적용되는 초기화를 한 번 사용합니다. 취소할 수 없습니다."
+
 msgid "This view hit an error"
 msgstr "이 화면에서 오류가 발생했습니다"
 
@@ -17862,6 +18560,9 @@ msgstr "스테이징된 모든 변경을 스테이징 해제하고 되돌립니�
 
 msgid "This will unstage and revert all staged changes. Staged new files will be deleted. This cannot be undone."
 msgstr "스테이징된 변경 사항을 모두 스테이징 해제하고 되돌립니다. 스테이징된 새 파일은 삭제됩니다. 되돌릴 수 없습니다."
+
+msgid "This window shows again only when there are new important features."
+msgstr "이 창은 중요한 새 기능이 있을 때만 다시 표시됩니다."
 
 msgid "This workspace"
 msgstr "이 워크스페이스"
@@ -17916,6 +18617,9 @@ msgstr "제목"
 
 msgid "To"
 msgstr "새 위치"
+
+msgid "To do"
+msgstr "할 일"
 
 msgid "To resume an agent conversation, run this in its folder:"
 msgstr "에이전트 대화를 재개하려면 해당 폴더에서 다음을 실행하세요:"
@@ -18118,6 +18822,9 @@ msgstr "받아쓰기 중"
 msgid "Transcribing…"
 msgstr "받아쓰기 중…"
 
+msgid "Transfer"
+msgstr "전송"
+
 msgid "Translated"
 msgstr "번역됨"
 
@@ -18313,6 +19020,9 @@ msgstr "사용할 수 없음"
 msgid "Uncached input"
 msgstr "캐시되지 않은 입력"
 
+msgid "Unchanged"
+msgstr "변경 없음"
+
 msgid "Uncollectible"
 msgstr "회수 불가"
 
@@ -18417,6 +19127,13 @@ msgstr "무제한"
 msgid "Unlimited users"
 msgstr "사용자 무제한"
 
+msgid "Unlink"
+msgstr "연결 해제"
+
+#. placeholder {0}: task.key
+msgid "Unlink {0}"
+msgstr "{0} 연결 해제"
+
 msgid "Unlink task"
 msgstr "작업 연결 해제"
 
@@ -18474,6 +19191,9 @@ msgstr "지원하지 않는 항목 \"{0}\""
 msgid "Untitled"
 msgstr "제목 없음"
 
+msgid "Untitled chat"
+msgstr "제목 없는 채팅"
+
 msgid "Untitled Page"
 msgstr "제목 없는 페이지"
 
@@ -18482,6 +19202,9 @@ msgstr "제목 없는 스크립트"
 
 msgid "Untitled workspace"
 msgstr "제목 없는 워크스페이스"
+
+msgid "Unverified"
+msgstr "미확인"
 
 msgid "Up next"
 msgstr "다음 실행"
@@ -18543,6 +19266,12 @@ msgstr "파일을 첨부하려면 이 컴퓨터에서 Superset을 업데이트�
 
 msgid "update the branch prefix"
 msgstr "브랜치 접두사를 업데이트할"
+
+msgid "Update this host for guided setup, or use advanced configuration."
+msgstr "안내 설정을 위해 이 호스트를 업데이트하거나 고급 설정을 사용하세요."
+
+msgid "Update this host to configure integrations."
+msgstr "통합을 구성하려면 이 호스트를 업데이트하세요."
 
 msgid "Updated"
 msgstr "업데이트됨"
@@ -18609,6 +19338,9 @@ msgstr "가동률 SLA 및 전담 지원"
 msgid "Urgent"
 msgstr "긴급"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL copied"
 msgstr "URL을 복사했습니다"
 
@@ -18621,9 +19353,6 @@ msgstr "URL에 쓰기 좋은 식별자로, 조직 안에서 고유해야 합니�
 msgid "Usage"
 msgstr "사용량"
 
-msgid "Usage is out of date"
-msgstr "사용량 정보가 오래되었습니다"
-
 msgid "Usage sections"
 msgstr "사용량 섹션"
 
@@ -18634,8 +19363,14 @@ msgstr "사용량을 볼 수 없습니다."
 msgid "Use “{0}”"
 msgstr "“{0}” 사용"
 
+msgid "Use a free reset?"
+msgstr "무료 초기화를 사용하시겠습니까?"
+
 msgid "Use a workspace-relative path or an absolute folder."
 msgstr "워크스페이스 기준 상대 경로나 절대 경로 폴더를 사용하세요."
+
+msgid "Use an API key"
+msgstr "API 키 사용"
 
 msgid "Use another port"
 msgstr "다른 포트 사용"
@@ -18657,6 +19392,9 @@ msgstr "새 에이전트에 사용"
 
 msgid "Use global default"
 msgstr "전역 기본값 사용"
+
+msgid "Use reset"
+msgstr "초기화 사용"
 
 msgid "Use superset automations to create and run automations from a script or from another agent."
 msgstr "superset automations를 사용하면 스크립트나 다른 에이전트에서 자동화를 만들고 실행할 수 있습니다."
@@ -18730,6 +19468,9 @@ msgstr "user@example.com"
 msgid "user@host, ssh://user@host:2222, or an ssh config alias"
 msgstr "user@host, ssh://user@host:2222 또는 ssh 설정 별칭"
 
+msgid "Uses the xAI API with separate billing. Each person supplies their own key."
+msgstr "별도로 청구되는 xAI API를 사용합니다. 각자 자신의 키를 제공해야 합니다."
+
 msgid "Using random branch name (AI generation timed out)"
 msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 시간 초과)"
 
@@ -18738,6 +19479,9 @@ msgstr "임의의 브랜치 이름을 사용합니다 (AI 생성 사용 불가)"
 
 msgid "v2ProjectId does not match the workspace's project"
 msgstr "v2ProjectId가 워크스페이스의 프로젝트와 일치하지 않습니다"
+
+msgid "Value"
+msgstr "값"
 
 msgid "Variables"
 msgstr "변수"
@@ -18753,6 +19497,9 @@ msgstr "확인 후 저장됨"
 
 msgid "Verified through sign-in"
 msgstr "로그인으로 확인됨"
+
+msgid "Verify"
+msgstr "확인"
 
 msgid "Verify Kbd stays visible inside tooltips"
 msgstr "툴팁 안에서 Kbd가 계속 보이는지 확인"
@@ -18902,6 +19649,12 @@ msgstr "볼륨"
 msgid "VS Code"
 msgstr "VS Code"
 
+msgid "Wait for the agent to finish before handing off."
+msgstr "전달하기 전에 에이전트가 끝날 때까지 기다리세요."
+
+msgid "Wait for the reset"
+msgstr "초기화 대기"
+
 msgid "Wait for workspace setup before starting agents"
 msgstr "에이전트를 시작하기 전에 워크스페이스 설정 기다리기"
 
@@ -18919,6 +19672,9 @@ msgstr "검사 대기 중"
 msgid "Waiting for it to connect…"
 msgstr "연결을 기다리는 중…"
 
+msgid "Waiting for quota. Stop cancels automatic continuation."
+msgstr "한도 대기 중입니다. 중지하면 자동 계속이 취소됩니다."
+
 msgid "Waiting for Review"
 msgstr "리뷰 대기 중"
 
@@ -18930,6 +19686,9 @@ msgstr "서브 에이전트의 첫 메시지를 기다리는 중…"
 
 msgid "Waiting for your input"
 msgstr "입력을 기다리는 중"
+
+msgid "Waits for the reset when no other account has quota."
+msgstr "다른 계정에 할당량이 없으면 초기화를 기다립니다."
 
 msgid "Waking up workspace"
 msgstr "워크스페이스 깨우는 중"
@@ -19069,6 +19828,9 @@ msgstr "매주"
 msgid "Weekly"
 msgstr "매주"
 
+msgid "Weekly · {scope}"
+msgstr "매주 · {scope}"
+
 msgid "Weekly at {time}"
 msgstr "매주 {time}"
 
@@ -19165,11 +19927,17 @@ msgstr "엔터프라이즈에는 무엇이 포함되나요?"
 msgid "What's New"
 msgstr "새로운 기능"
 
+msgid "What's new in Superset++"
+msgstr "Superset++의 새로운 기능"
+
 msgid "What's next"
 msgstr "다음 계획"
 
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "끄면 이 기기의 파일과 도구에 아무것도 접근할 수 없습니다. 여기에서 원격 샌드박스로 나가는 연결은 계속 사용할 수 있습니다. <0>자세히 알아보기<1/></0>"
+
+msgid "When quota runs out"
+msgstr "할당량이 소진되면"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "사이드바의 감지된 포트 배지를 클릭했을 때 열리는 위치입니다."
@@ -19236,6 +20004,9 @@ msgstr "첨부 파일 유무 무관"
 
 msgid "With the Superset mobile app, I can address production issues from anywhere."
 msgstr "Superset 모바일 앱 덕분에 어디서든 프로덕션 문제에 대응할 수 있습니다."
+
+msgid "Withdraw change request"
+msgstr "변경 요청 철회"
 
 msgid "Wordmark, black"
 msgstr "워드마크, 검정"
@@ -19362,6 +20133,9 @@ msgstr "워크스페이스 경로를 사용할 수 없습니다"
 msgid "Workspace path is not available yet"
 msgstr "작업 공간 경로를 아직 사용할 수 없습니다"
 
+msgid "Workspace ready"
+msgstr "워크스페이스 준비 완료"
+
 msgid "Workspace restored"
 msgstr "워크스페이스를 복원했습니다"
 
@@ -19421,6 +20195,9 @@ msgstr "worktree를 열었습니다"
 
 msgid "Worktree out of sync"
 msgstr "worktree가 동기화되지 않음"
+
+msgid "Worktree per workspace"
+msgstr "워크스페이스별 worktree"
 
 msgid "Worktrees"
 msgstr "worktree"
@@ -19560,6 +20337,9 @@ msgstr "버전 {version}을 읽기 전용으로 보고 있습니다"
 
 msgid "You can attach up to {MAX_ATTACHMENTS} files"
 msgstr "파일은 최대 {MAX_ATTACHMENTS}개까지 첨부할 수 있습니다"
+
+msgid "You can configure these connections later in Fork Settings."
+msgstr "이 연결은 나중에 포크 설정에서 구성할 수 있습니다."
 
 msgid "You can only share with people and teams in this organization"
 msgstr "이 조직의 사람과 팀하고만 공유할 수 있습니다"

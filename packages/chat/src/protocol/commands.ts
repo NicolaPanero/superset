@@ -10,6 +10,18 @@ const commandBaseFields = {
 /** A start `modeId` asking for no harness default: the agent opens in its own mode. */
 export const AGENT_DEFAULT_MODE = "agent-default";
 
+/** A per-chat approval policy, never sent to an agent as a native mode id. */
+export const FULL_ACCESS_CHAT_MODE = "superset-full-access";
+export function isFullAccessMode(modeId: string | undefined): boolean {
+	return [
+		FULL_ACCESS_CHAT_MODE,
+		"bypassPermissions",
+		"full-access",
+		"agent-full-access",
+		"yolo",
+	].includes(modeId ?? "");
+}
+
 export const createSessionInputSchema = z.object({
 	commandId: z.uuid(),
 	workspaceId: z.string().min(1),
@@ -17,6 +29,9 @@ export const createSessionInputSchema = z.object({
 	modeId: z.string().optional(),
 	modelId: z.string().optional(),
 	resume: z.object({ harnessSessionId: z.string().min(1) }).optional(),
+	agentConfigId: z.string().min(1).optional(),
+	accountSelection: z.string().min(1).nullable().optional(),
+	strictResume: z.boolean().optional(),
 	terminalId: z.string().min(1).optional(),
 });
 export type CreateSessionInput = z.infer<typeof createSessionInputSchema>;

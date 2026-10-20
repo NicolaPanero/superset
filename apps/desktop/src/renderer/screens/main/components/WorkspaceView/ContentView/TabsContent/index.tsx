@@ -1,6 +1,7 @@
 import type { ExternalApp } from "@superset/local-db";
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef } from "react";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import { useTabsStore } from "renderer/stores/tabs/store";
 import { resolveActiveTabIdForWorkspace } from "renderer/stores/tabs/utils";
 import { EmptyTabView } from "./EmptyTabView";
@@ -18,7 +19,17 @@ export function TabsContent({
 	onOpenQuickOpen,
 }: TabsContentProps) {
 	const { workspaceId: activeWorkspaceId } = useParams({ strict: false });
-	const allTabs = useTabsStore((s) => s.tabs);
+	const storedTabs = useTabsStore((s) => s.tabs);
+	const showCliOptions = useForkCliOptions();
+	const allTabs = useMemo(
+		() =>
+			storedTabs.filter(
+				(tab) =>
+					showCliOptions ||
+					!(tab.isWorkspaceSetup ?? tab.name === "Workspace Setup"),
+			),
+		[storedTabs, showCliOptions],
+	);
 	const activeTabIds = useTabsStore((s) => s.activeTabIds);
 	const tabHistoryStacks = useTabsStore((s) => s.tabHistoryStacks);
 	const contentRef = useRef<HTMLDivElement>(null);

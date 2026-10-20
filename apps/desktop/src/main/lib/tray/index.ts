@@ -20,9 +20,11 @@ import {
 } from "main/lib/host-service-coordinator";
 import { menuEmitter } from "main/lib/menu-events";
 import { confirmAndQuitCompletely } from "main/lib/quit-completely";
+import { getWorkspaceName } from "shared/env.shared";
 
 /** Must have "Template" suffix for macOS dark/light mode support */
-const TRAY_ICON_FILENAME = "iconTemplate.png";
+const TRAY_ICON_FILENAME =
+	getWorkspaceName() === "fork" ? "forkIconTemplate.png" : "iconTemplate.png";
 
 function getTrayIconPath(): string | null {
 	if (app.isPackaged) {
@@ -326,7 +328,7 @@ export function initTray(): void {
 		}
 
 		tray = new Tray(icon);
-		tray.setToolTip("Superset");
+		tray.setToolTip(app.getName());
 
 		void updateTrayMenu();
 

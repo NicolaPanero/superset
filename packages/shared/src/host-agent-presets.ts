@@ -1,6 +1,7 @@
 import type { PromptTransport } from "./agent-prompt-launch";
 import { BUILTIN_TERMINAL_AGENTS } from "./builtin-terminal-agents";
 import { FEATURE_FLAGS } from "./constants";
+import { orderForkDefaultAgentPresets } from "./fork-agent-order";
 
 export interface HostAgentPreset {
 	presetId: string;
@@ -92,8 +93,10 @@ export function isAgentPresetEnabled(
 }
 
 export function getDefaultSeedPresets(): HostAgentPreset[] {
-	return HOST_AGENT_PRESETS.filter(
-		(preset) => !AGENT_PRESET_FEATURE_FLAGS.has(preset.presetId),
+	return orderForkDefaultAgentPresets(
+		HOST_AGENT_PRESETS.filter(
+			(preset) => !AGENT_PRESET_FEATURE_FLAGS.has(preset.presetId),
+		),
 	).map(clonePreset);
 }
 

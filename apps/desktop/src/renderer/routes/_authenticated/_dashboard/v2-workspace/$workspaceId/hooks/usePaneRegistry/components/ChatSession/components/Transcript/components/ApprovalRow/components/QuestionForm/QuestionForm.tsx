@@ -108,7 +108,7 @@ export function QuestionForm({
 					</span>
 				</div>
 				{answered.length > 0 && (
-					<dl className="grid grid-cols-[minmax(0,max-content)_1fr] gap-x-4 gap-y-1.5 pl-6 text-sm">
+					<dl className="grid grid-cols-[fit-content(50%)_minmax(0,1fr)] gap-x-4 gap-y-1.5 pl-6 text-sm">
 						{answered.map((entry) => (
 							<div className="contents" key={entry.field.id}>
 								<dt className="truncate text-muted-foreground">

@@ -6,6 +6,7 @@ import {
 import { eq } from "drizzle-orm";
 import type { HostDb } from "../../db/index.ts";
 import { projects, workspaces } from "../../db/schema.ts";
+import { resolveFolderWorkspaceRoot } from "../../project-folders/index.ts";
 import { WatchAttachGuard } from "./watch-attach-guard.ts";
 import {
 	scanGitIgnoredDirectories,
@@ -49,11 +50,12 @@ export class WorkspaceFilesystemManager {
 			.findFirst({ where: eq(workspaces.id, workspaceId) })
 			.sync();
 
-		if (!workspace) {
-			throw new WorkspaceNotFoundError(`Workspace not found: ${workspaceId}`);
-		}
+		if (workspace) return workspace.worktreePath;
 
-		return workspace.worktreePath;
+		const folderRoot = resolveFolderWorkspaceRoot(this.db, workspaceId);
+		if (folderRoot) return folderRoot;
+
+		throw new WorkspaceNotFoundError(`Workspace not found: ${workspaceId}`);
 	}
 
 	resolveProjectRoot(projectId: string): string {

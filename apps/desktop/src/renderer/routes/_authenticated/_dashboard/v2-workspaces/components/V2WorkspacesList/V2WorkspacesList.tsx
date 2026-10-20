@@ -34,6 +34,7 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/deriveBoardColumn";
 import { compareWorkspaces } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/sortWorkspaces";
 import { useV2ProjectLocalMetaStore } from "renderer/stores/v2-project-local-meta";
+import { useForkWorkspacesDeviceFilter } from "../../hooks/useForkWorkspacesDeviceFilter";
 import { V2WorkspaceRow } from "./components/V2WorkspaceRow";
 
 interface V2WorkspacesListProps {
@@ -100,9 +101,7 @@ export function V2WorkspacesList({
 		currentWorkspaceMatch !== false ? currentWorkspaceMatch.workspaceId : null;
 
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
+	const deviceFilter = useForkWorkspacesDeviceFilter();
 	const projectFilters = useV2WorkspacesFilterStore(
 		(state) => state.projectFilters,
 	);

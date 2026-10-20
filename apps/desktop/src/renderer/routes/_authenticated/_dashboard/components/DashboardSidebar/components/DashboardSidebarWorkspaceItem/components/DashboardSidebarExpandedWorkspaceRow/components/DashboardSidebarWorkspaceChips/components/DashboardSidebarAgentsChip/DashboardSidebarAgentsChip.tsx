@@ -11,7 +11,7 @@ import { STATUS_PRIORITY } from "shared/tabs-types";
 import { useDashboardSidebarChipHoverSuppression } from "../../../../hooks/useDashboardSidebarChipHoverSuppression";
 import type { DashboardSidebarRunningAgent } from "../../hooks/useDashboardSidebarWorkspaceRunningAgents";
 import { DashboardSidebarAgentAvatar } from "./components/DashboardSidebarAgentAvatar";
-import { DashboardSidebarAgentHoverRow } from "./components/DashboardSidebarAgentHoverRow";
+import { DashboardSidebarAgentsList } from "./components/DashboardSidebarAgentsList";
 
 interface DashboardSidebarAgentsChipProps {
 	workspaceId: string;
@@ -123,15 +123,7 @@ export function DashboardSidebarAgentsChip({
 					</span>
 					<span className="tabular-nums">{agents.length}</span>
 				</div>
-				<div className="max-h-60 overflow-y-auto">
-					{agents.map((agent) => (
-						<DashboardSidebarAgentHoverRow
-							key={agent.sourceKey}
-							workspaceId={workspaceId}
-							agent={agent}
-						/>
-					))}
-				</div>
+				<DashboardSidebarAgentsList workspaceId={workspaceId} agents={agents} />
 			</HoverCardContent>
 		</HoverCard>
 	);

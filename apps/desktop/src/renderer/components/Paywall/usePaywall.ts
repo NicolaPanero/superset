@@ -4,6 +4,7 @@ import { toast } from "@superset/ui/sonner";
 import { useRef } from "react";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useCurrentPlan } from "renderer/hooks/useCurrentPlan";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 import type { GatedFeature } from "./constants";
 import { paywall } from "./Paywall";
 
@@ -35,6 +36,7 @@ export function usePaywall({
 		callback: () => void | Promise<void>,
 		context?: Record<string, unknown>,
 	): void {
+		if (useForkCliOptionsStore.getState().hideProFeatures) return;
 		if (resolving.current.has(feature)) return;
 		resolving.current.add(feature);
 		void (async () => {
@@ -55,6 +57,7 @@ export function usePaywall({
 					);
 					return;
 				}
+				if (useForkCliOptionsStore.getState().hideProFeatures) return;
 				if (isPaidPlanTier(plan)) {
 					try {
 						await callback();

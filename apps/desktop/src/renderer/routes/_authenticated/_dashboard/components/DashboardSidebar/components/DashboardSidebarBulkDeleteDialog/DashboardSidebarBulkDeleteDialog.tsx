@@ -34,6 +34,7 @@ export function DashboardSidebarBulkDeleteDialog({
 	const checkboxId = useId();
 	const {
 		phase,
+		branchDeletions,
 		close,
 		handleOpenChange,
 		deleteBranch,
@@ -135,24 +136,39 @@ export function DashboardSidebarBulkDeleteDialog({
 					</ul>
 				</div>
 
-				{!onlySharedCheckout && (
-					<div className="px-4 pb-2">
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id={checkboxId}
-								checked={deleteBranch}
-								onCheckedChange={(checked) => setDeleteBranch(checked === true)}
-							/>
-							<Label
-								htmlFor={checkboxId}
-								className="cursor-pointer select-none text-xs text-muted-foreground"
-							>
-								<Trans>Also delete local branches</Trans>
-							</Label>
+				{branchDeletions.some((branch) => branch.eligible) &&
+					uncheckedCount === 0 && (
+						<div className="px-4 pb-2">
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id={checkboxId}
+									checked={deleteBranch}
+									onCheckedChange={(checked) =>
+										setDeleteBranch(checked === true)
+									}
+								/>
+								<Label
+									htmlFor={checkboxId}
+									className="cursor-pointer select-none text-xs text-muted-foreground"
+								>
+									<Trans>Also delete local branches</Trans>
+								</Label>
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 
+				<div className="px-4 pb-2 text-xs text-muted-foreground">
+					{branchDeletions.map((branch) => (
+						<div key={branch.branch ?? branch.reason}>
+							<code>{branch.branch}</code> ·{" "}
+							{branch.eligible ? (
+								<Trans>Also delete local branch</Trans>
+							) : (
+								<Trans>Branch preserved</Trans>
+							)}
+						</div>
+					))}
+				</div>
 				<AlertDialogFooter className="flex-row justify-end gap-2 px-4 pb-4 pt-2">
 					<Button
 						variant="ghost"

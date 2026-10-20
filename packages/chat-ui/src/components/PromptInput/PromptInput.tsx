@@ -45,6 +45,7 @@ export function PromptInput({
 	toolbar,
 	toolbarEnd,
 	defaultValue,
+	draftFiles,
 	findChips,
 	onChange,
 	collapseLargePastes = false,
@@ -85,6 +86,7 @@ export function PromptInput({
 					toolbar={toolbar}
 					toolbarEnd={toolbarEnd}
 					defaultValue={defaultValue}
+					draftFiles={draftFiles}
 					findChips={findChips}
 					onChange={onChange}
 					collapseLargePastes={collapseLargePastes}

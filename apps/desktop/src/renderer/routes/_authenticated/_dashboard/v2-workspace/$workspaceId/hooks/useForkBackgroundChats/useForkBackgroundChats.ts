@@ -1,0 +1,139 @@
+import type { Pane, WorkspaceStore } from "@superset/panes";
+import { workspaceTrpc } from "@superset/workspace-client";
+import { useCallback, useMemo } from "react";
+import type { StoreApi } from "zustand/vanilla";
+import type {
+	ChatPaneData,
+	PaneViewerData,
+	TerminalPaneData,
+} from "../../types";
+import {
+	markChatSessionClosed,
+	markChatSessionOpened,
+} from "../../utils/closedChatSessions";
+import { findTerminalPaneLocation } from "../../utils/focusTerminalPane";
+import { useChatWiring } from "../usePaneRegistry/components/ChatSession/hooks/useSessionClient";
+
+export interface BackgroundChat {
+	terminalId: string;
+	title: string;
+	parkedAt: number;
+	paneData: TerminalPaneData;
+}
+
+/**
+ * A closed ACP chat pane keeps its agent running, as a closed terminal keeps
+ * its process: the host remembers the pane so a click reopens it as a chat.
+ */
+export function useForkBackgroundChats(workspaceId: string) {
+	const wiring = useChatWiring();
+	const utils = workspaceTrpc.useUtils();
+	const { data, isSuccess: loaded } = workspaceTrpc.agents.parkedChats.useQuery(
+		{ workspaceId },
+		{ refetchOnWindowFocus: false },
+	);
+	const { mutateAsync: parkAsync } =
+		workspaceTrpc.agents.parkChat.useMutation();
+	const { mutateAsync: unparkAsync } =
+		workspaceTrpc.agents.unparkChat.useMutation();
+
+	const chats = useMemo(
+		() => (data ?? []) as unknown as BackgroundChat[],
+		[data],
+	);
+	const refresh = useCallback(
+		() => utils.agents.parkedChats.invalidate({ workspaceId }),
+		[utils, workspaceId],
+	);
+	const closeChat = useCallback(
+		(paneData: Partial<TerminalPaneData>) =>
+			paneData.acpSessionId
+				? wiring.transport
+						.closeSession({ sessionId: paneData.acpSessionId })
+						.catch(() => undefined)
+				: Promise.resolve(),
+		[wiring.transport],
+	);
+
+	const park = useCallback(
+		async (pane: Pane<PaneViewerData>) => {
+			const {
+				pendingPrompt: _prompt,
+				pendingAttachments: _attachments,
+				...paneData
+			} = pane.data as TerminalPaneData;
+			if (pane.kind === "chat-v3") {
+				paneData.acpSessionId = (pane.data as ChatPaneData).sessionId;
+				paneData.agentSurface = "acp";
+			}
+			if (paneData.acpSessionId) markChatSessionClosed(paneData.acpSessionId);
+			if (!paneData.acpSessionId && !paneData.agent?.sessionId) return;
+			try {
+				const { evicted } = await parkAsync({
+					workspaceId,
+					terminalId: paneData.terminalId,
+					title:
+						pane.titleOverride ??
+						paneData.chatTitle ??
+						paneData.agent?.id ??
+						"",
+					paneData,
+				});
+				await Promise.all(evicted.map(closeChat));
+				void refresh();
+			} catch (error) {
+				console.warn("[acp-chat] could not keep the chat in background", error);
+				await closeChat(paneData);
+			}
+		},
+		[parkAsync, workspaceId, closeChat, refresh],
+	);
+
+	const reopen = useCallback(
+		(store: StoreApi<WorkspaceStore<PaneViewerData>>, chat: BackgroundChat) => {
+			if (findTerminalPaneLocation(store.getState(), chat.terminalId)) return;
+			if (chat.paneData.acpSessionId)
+				markChatSessionOpened(chat.paneData.acpSessionId);
+			store.getState().addTab({
+				panes: [
+					{
+						kind: "chat-v3",
+						...(chat.title ? { titleOverride: chat.title } : {}),
+						data: {
+							...chat.paneData,
+							sessionId: chat.paneData.acpSessionId ?? null,
+						} as ChatPaneData,
+					},
+				],
+			});
+			void unparkAsync({ terminalId: chat.terminalId }).then(refresh);
+		},
+		[unparkAsync, refresh],
+	);
+
+	/** Reopens a background chat that has no pane; false when there is none. */
+	const reopenParked = useCallback(
+		(store: StoreApi<WorkspaceStore<PaneViewerData>>, terminalId: string) => {
+			const chat = chats.find((parked) => parked.terminalId === terminalId);
+			if (!chat || findTerminalPaneLocation(store.getState(), terminalId))
+				return false;
+			reopen(store, chat);
+			return true;
+		},
+		[chats, reopen],
+	);
+
+	const stop = useCallback(
+		async (chat: BackgroundChat) => {
+			if (chat.paneData.acpSessionId)
+				await wiring.transport.closeSession({
+					sessionId: chat.paneData.acpSessionId,
+				});
+			await unparkAsync({ terminalId: chat.terminalId });
+			void refresh();
+		},
+		[wiring.transport, unparkAsync, refresh],
+	);
+
+	return { chats, loaded, park, reopen, reopenParked, stop };
+}

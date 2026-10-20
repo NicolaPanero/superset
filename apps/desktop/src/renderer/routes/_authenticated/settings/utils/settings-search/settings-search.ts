@@ -2,9 +2,16 @@ import {
 	INTEGRATIONS,
 	type IntegrationProvider,
 } from "@superset/shared/integrations";
+import { isForkProSetting } from "renderer/lib/fork-settings-visibility";
 import type { SettingsSection } from "renderer/stores/settings-state";
+import {
+	FORK_SETTING_ITEM_ID,
+	FORK_SETTING_ITEM_VARIANT,
+	FORK_SETTINGS_ITEMS,
+} from "./fork-settings-items";
 
 export const SETTING_ITEM_ID = {
+	...FORK_SETTING_ITEM_ID,
 	MOBILE_APP: "mobile-app",
 	ACCOUNT_PROFILE: "account-profile",
 	ACCOUNT_SIGNOUT: "account-signout",
@@ -157,6 +164,7 @@ const INTEGRATION_ITEM_VARIANTS = Object.fromEntries(
 
 export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	...INTEGRATION_ITEM_VARIANTS,
+	...FORK_SETTING_ITEM_VARIANT,
 
 	[SETTING_ITEM_ID.ACCOUNT_PROFILE]: "shared",
 	[SETTING_ITEM_ID.ACCOUNT_SIGNOUT]: "shared",
@@ -343,6 +351,7 @@ const INTEGRATION_SEARCH_ITEMS: SettingsItem[] = INTEGRATIONS.map(
 );
 
 export const SETTINGS_ITEMS: SettingsItem[] = [
+	...FORK_SETTINGS_ITEMS,
 	{
 		id: SETTING_ITEM_ID.MOBILE_APP,
 		section: "mobile",
@@ -2073,11 +2082,13 @@ export function getVisibleMatchCountBySection(
 	isV2: boolean,
 	cloudWorkspaces: boolean,
 	mobileEnabled = false,
+	hideProFeatures = false,
 ): Partial<Record<SettingsSection, number>> {
 	const matches = searchSettings(query).filter(
 		(item) =>
 			isItemOffered(item, isV2, cloudWorkspaces) &&
-			(item.section !== "mobile" || mobileEnabled),
+			(item.section !== "mobile" || mobileEnabled) &&
+			(!hideProFeatures || !isForkProSetting(item)),
 	);
 	const counts: Partial<Record<SettingsSection, number>> = {};
 	for (const item of matches) {
@@ -2094,10 +2105,15 @@ export function getVisibleMatchCountBySection(
 export function getAllowedSectionsForVariant(
 	isV2: boolean,
 	cloudWorkspaces: boolean,
+	hideProFeatures = false,
 ): Set<SettingsSection> {
 	const sections = new Set<SettingsSection>();
 	for (const item of SETTINGS_ITEMS) {
-		if (isItemOffered(item, isV2, cloudWorkspaces)) sections.add(item.section);
+		if (
+			isItemOffered(item, isV2, cloudWorkspaces) &&
+			(!hideProFeatures || !isForkProSetting(item))
+		)
+			sections.add(item.section);
 	}
 	return sections;
 }

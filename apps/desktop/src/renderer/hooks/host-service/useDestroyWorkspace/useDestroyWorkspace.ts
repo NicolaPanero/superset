@@ -37,7 +37,9 @@ export interface DestroyWorkspaceSuccess {
  * can't accidentally treat `{ canDelete: false, reason: null }` as a no-op
  * — that combination is unrepresentable.
  */
-export type DestroyWorkspacePreview =
+export type DestroyWorkspacePreview = {
+	branchDeletion?: { branch: string | null; eligible: boolean; reason: string };
+} & (
 	| {
 			canDelete: true;
 			reason: null;
@@ -52,7 +54,8 @@ export type DestroyWorkspacePreview =
 			reason: string;
 			hasChanges: false;
 			hasUnpushedCommits: false;
-	  };
+	  }
+);
 
 export type DestroyWorkspaceError =
 	| { kind: "conflict"; message: string }

@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import {
 	readBookkeeping,
 	transcriptItemKey,
@@ -8,18 +8,18 @@ import type { AvailableCommand, UserMessage } from "@superset/chat/protocol";
 import { Message, MessageContent } from "@superset/ui/ai-elements/message";
 import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { useRef } from "react";
+import type { ChatForkTarget } from "../../../../types";
 import { parseAttachmentTags } from "../../../../utils/attachmentTags";
 import { LEADING_COMMAND } from "../../../../utils/commandChip";
+import type { EarlierUserMessage } from "../../../../utils/earlierHistory";
 import {
 	type MessageSegment,
 	splitByElements,
 } from "../../../../utils/messageElements";
-import { CopyButton } from "../../../CopyButton";
 import { AttachmentImage } from "../AttachmentImage";
-import { MessageTime } from "../MessageTime";
+import { ForkMessageActions } from "../ForkMessageActions";
 import { PastedTextBlock } from "./components/PastedTextBlock";
 import { UserMessageText } from "./components/UserMessageText";
 import { useFitsOneLine } from "./hooks/useFitsOneLine";
@@ -39,18 +39,27 @@ export type PendingPrompt = {
 };
 
 export function UserMessageRow({
+	onFork,
+	canForkInWorkspace,
+	forkFromHere,
+	onRewind,
+	canForkToWorktree,
 	commands,
 	harness,
 	item,
 	pending,
 }: {
 	item: UserMessage;
+	onRewind?: ((itemId: string) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
+	canForkInWorkspace?: boolean | undefined;
+	forkFromHere?: boolean | undefined;
+	canForkToWorktree?: boolean | undefined;
 	commands?: ReadonlyMap<string, AvailableCommand> | undefined;
 	/** Which harness spelled this turn; its reader decides what is bookkeeping. */
 	harness: string | undefined;
 	pending?: PendingPrompt | undefined;
 }) {
-	const { t } = useLingui();
 	const raw = userMessageText(item);
 	const note = readBookkeeping(harness, raw);
 	const { text, attachments, pastedTexts } = parseAttachmentTags(raw);
@@ -86,14 +95,18 @@ export function UserMessageRow({
 				: [],
 		),
 	];
-	const copyable = (text.length > 0 || pastedTexts.length > 0) && !pending;
+	const earlierImages = (item as EarlierUserMessage).earlierImages ?? [];
+	const showActions = !pending && !item.queued;
 	const copyText = [text, ...pastedTexts].filter(Boolean).join("\n\n");
 	return (
 		<Message
-			className={cn("group/message pt-1.5 pl-10", copyable ? "pb-0" : "pb-5")}
+			className={cn(
+				"group/message pt-1.5 pl-10",
+				showActions ? "pb-0" : "pb-5",
+			)}
 			from="user"
 		>
-			{images.length > 0 && (
+			{images.length + earlierImages.length > 0 && (
 				<div
 					className={cn(
 						"ml-auto flex max-w-[min(100%,36rem)] flex-wrap justify-end gap-2 transition-opacity",
@@ -108,6 +121,23 @@ export function UserMessageRow({
 							type={image.type}
 						/>
 					))}
+					{earlierImages.map((image, index) =>
+						image.data ? (
+							<AttachmentImage
+								// biome-ignore lint/suspicious/noArrayIndexKey: an earlier turn's images never reorder
+								key={index}
+								owner={transcriptItemKey(item)}
+								path={`image-${index + 1}.${image.mediaType.split("/")[1] ?? "png"}`}
+								src={`data:${image.mediaType};base64,${image.data}`}
+								type={image.mediaType}
+							/>
+						) : (
+							// biome-ignore lint/suspicious/noArrayIndexKey: an earlier turn's images never reorder
+							<Badge key={index} variant="secondary">
+								<Trans>Image too large to show</Trans>
+							</Badge>
+						),
+					)}
 				</div>
 			)}
 			{pastedTexts.length > 0 && (
@@ -151,23 +181,17 @@ export function UserMessageRow({
 					)}
 				</MessageContent>
 			)}
-			{copyable && (
-				<div className="-mt-1.5 flex items-center justify-end gap-2 text-muted-foreground/60 opacity-0 transition-opacity focus-within:opacity-100 group-hover/message:opacity-100">
-					<MessageTime atMs={item.startedAtMs} />
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<span>
-								<CopyButton
-									label={t({ message: "Copy message" })}
-									text={copyText}
-								/>
-							</span>
-						</TooltipTrigger>
-						<TooltipContent>
-							<Trans>Copy message</Trans>
-						</TooltipContent>
-					</Tooltip>
-				</div>
+			{showActions && (
+				<ForkMessageActions
+					canForkInWorkspace={canForkInWorkspace}
+					forkFromHere={forkFromHere}
+					onRewind={onRewind ? () => onRewind(item.id) : undefined}
+					className="-mt-1.5 self-end"
+					item={item}
+					text={copyText}
+					onFork={onFork}
+					canForkToWorktree={canForkToWorktree}
+				/>
 			)}
 			{pending?.failed && (
 				<div className="flex items-center gap-2 self-end">

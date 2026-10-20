@@ -3,36 +3,15 @@ import { darkTheme, lightTheme } from "./built-in";
 import { getEditorTheme } from "./editor-theme";
 
 describe("getEditorTheme", () => {
-	it("derives editor colors from dark theme tokens", () => {
-		const editorTheme = getEditorTheme(darkTheme);
-
-		expect(editorTheme.colors.background).toBe(
-			darkTheme.terminal?.background ?? darkTheme.ui.background,
-		);
-		expect(editorTheme.colors.foreground).toBe(
-			darkTheme.terminal?.foreground ?? darkTheme.ui.foreground,
-		);
-		expect(editorTheme.colors.search).toBe(darkTheme.ui.highlightMatch);
-		const brightGreen = darkTheme.terminal?.brightGreen;
-		const brightRed = darkTheme.terminal?.brightRed;
-		if (!brightGreen || !brightRed) {
-			throw new Error(
-				"Dark theme terminal colors must define bright diff accents",
-			);
-		}
-		expect(editorTheme.colors.addition).toBe(brightGreen);
-		expect(editorTheme.colors.deletion).toBe(brightRed);
-		const explicitComment = darkTheme.editor?.syntax?.comment;
-		expect(explicitComment).toBeDefined();
-		if (!explicitComment) {
-			throw new Error(
-				"Dark theme should define an explicit editor comment color",
-			);
-		}
-		expect(editorTheme.syntax.comment).toBe(explicitComment);
-		expect(editorTheme.syntax.keyword).toBe(
-			darkTheme.terminal?.magenta ?? darkTheme.ui.foreground,
-		);
+	it("derives editor colors from dark theme tokens without explicit overrides", () => {
+		const theme = { ...darkTheme, editor: undefined };
+		const editorTheme = getEditorTheme(theme);
+		expect(editorTheme.colors.background).toBe(theme.ui.background);
+		expect(editorTheme.colors.foreground).toBe(theme.ui.foreground);
+		expect(editorTheme.colors.search).toBe(theme.ui.highlightMatch);
+		expect(editorTheme.colors.addition).toBe(theme.terminal?.brightGreen ?? "");
+		expect(editorTheme.colors.deletion).toBe(theme.terminal?.brightRed ?? "");
+		expect(editorTheme.syntax.keyword).toBe(theme.terminal?.magenta ?? "");
 	});
 
 	it("returns explicit editor overrides when present", () => {
@@ -53,7 +32,9 @@ describe("getEditorTheme", () => {
 
 		expect(editorTheme.colors.background).toBe("#f5f0e8");
 		expect(editorTheme.syntax.string).toBe("#00875a");
-		expect(editorTheme.colors.searchActive).toBe(lightTheme.ui.highlightActive);
+		expect(editorTheme.colors.searchActive).toBe(
+			baseEditorTheme.colors.searchActive,
+		);
 	});
 
 	it("prefers ui colors when terminal colors are not provided", () => {

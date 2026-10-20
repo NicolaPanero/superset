@@ -26,6 +26,7 @@ type SdkOptions = NonNullable<SdkParams["options"]>;
 export type ClaudeQueryOptions = Pick<
 	SdkOptions,
 	| "abortController"
+	| "additionalDirectories"
 	| "allowDangerouslySkipPermissions"
 	| "canUseTool"
 	| "cwd"
@@ -235,6 +236,7 @@ export class ClaudeAdapter implements HarnessAdapter {
 			prompt: this.prompts.stream(),
 			options: {
 				cwd: startOptions.cwd,
+				additionalDirectories: startOptions.additionalDirectories,
 				model: startOptions.modelId,
 				pathToClaudeCodeExecutable:
 					launch?.pathToClaudeCodeExecutable ??

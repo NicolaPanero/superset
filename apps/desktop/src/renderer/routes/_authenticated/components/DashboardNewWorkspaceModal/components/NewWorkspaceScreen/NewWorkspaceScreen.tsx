@@ -20,16 +20,10 @@ import { Button } from "@superset/ui/button";
 import { applyAttachmentConstraints } from "@superset/ui/lib/attachment-constraints";
 import { isEnterSubmit } from "@superset/ui/lib/keyboard";
 import { toast } from "@superset/ui/sonner";
-import { Spinner } from "@superset/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	ArrowUpIcon,
-	HistoryIcon,
-	PaperclipIcon,
-	Settings2Icon,
-} from "lucide-react";
+import { HistoryIcon, PaperclipIcon, Settings2Icon } from "lucide-react";
 import {
 	type DragEvent as ReactDragEvent,
 	useCallback,
@@ -43,7 +37,16 @@ import { HiOutlineCheckCircle } from "react-icons/hi2";
 import { LuGitPullRequest } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import { AgentModelSelect } from "renderer/components/AgentModelSelect";
-import { AgentSelect } from "renderer/components/AgentSelect";
+import {
+	ForkAccountPicker,
+	ForkAccountSubmenu,
+	useForkCreationAccount,
+} from "renderer/components/ForkAccountPicker";
+import {
+	ForkHomeBackground,
+	ForkHomeBrand,
+} from "renderer/components/ForkHomeBackground";
+import { ForkJiraIssueLinkButton } from "renderer/components/ForkIntegrations/components/ForkJiraIssueLinkButton";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { IssueLinkCommand } from "renderer/components/IssueLinkCommand";
 import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
@@ -62,6 +65,7 @@ import { CLOUD_AGENT_CHOICES } from "renderer/hooks/useV2AgentChoices/cloud-agen
 import { track } from "renderer/lib/analytics";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkHostId } from "renderer/lib/fork-host-visibility";
 import { showHostServiceUnavailableToast } from "renderer/lib/host-service-unavailable";
 import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components/PageHeader";
 import { AgentComposer } from "renderer/routes/_authenticated/components/AgentComposer";
@@ -71,7 +75,6 @@ import { useLocalHostService } from "renderer/routes/_authenticated/providers/Lo
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
-	NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
 	NEW_WORKSPACE_SCREEN_MAX_WIDTH,
 	NEW_WORKSPACE_SCREEN_MIN_WIDTH,
 	useNewWorkspaceWidthStore,
@@ -113,6 +116,9 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
 import { SymmetricResizeHandles } from "../SymmetricResizeHandles";
 import { AttachmentCard } from "./components/AttachmentCard";
+import { ForkCreateWorkspaceButton } from "./components/ForkCreateWorkspaceButton";
+import { ForkCreationModelPicker } from "./components/ForkCreationModelPicker";
+import { ForkImportFromHome } from "./components/ForkImportFromHome/ForkImportFromHome";
 import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
 import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
@@ -160,12 +166,17 @@ export function NewWorkspaceScreen({
 	const openInFinderMutation = electronTrpc.external.openInFinder.useMutation();
 	const {
 		closeModal,
-		draft,
+		draft: savedDraft,
 		updateDraft,
 		selectProject,
 		selectSession,
 		resetKey,
 	} = useDashboardNewWorkspaceDraft();
+	const hostId = useForkHostId(savedDraft.hostId);
+	const draft = useMemo(
+		() => ({ ...savedDraft, hostId }),
+		[savedDraft, hostId],
+	);
 	const attachments = useProviderAttachments();
 	const composerRef = useRef<PromptInputHandle>(null);
 	const addAttachments = useCallback(
@@ -342,7 +353,10 @@ export function NewWorkspaceScreen({
 	const [liveComposerWidth, setLiveComposerWidth] = useState<number | null>(
 		null,
 	);
-	const composerWidth = liveComposerWidth ?? storedComposerWidth;
+	const composerWidth = Math.min(
+		liveComposerWidth ?? storedComposerWidth ?? NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+		NEW_WORKSPACE_SCREEN_MAX_WIDTH,
+	);
 
 	// One suggestion per open. resetKey only bumps on resetDraft, so ordinary
 	// modal reopens roll their own counter; the tiptap Placeholder extension
@@ -655,6 +669,13 @@ export function NewWorkspaceScreen({
 		linkedPR: draft.linkedPR,
 		linkedIssues: draft.linkedIssues,
 	});
+	const forkAccount = useForkCreationAccount(
+		draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl,
+		selectedAgent,
+		selectedPresetId,
+		selectedModel,
+		resetKey,
+	);
 	const { submitWorkspace: createWorkspace, isCreating } = useSubmitWorkspace(
 		projectId,
 		selectedAgent,
@@ -669,6 +690,7 @@ export function NewWorkspaceScreen({
 			repositoryId: defaultRepository?.id ?? null,
 			repositoryFullName: draft.isSession ? null : projectRepositoryFullName,
 		},
+		forkAccount,
 	);
 
 	const submitBlocker = useMemo<string | null>(() => {
@@ -792,6 +814,7 @@ export function NewWorkspaceScreen({
 			onDragOver={handleDragOver}
 			onDrop={handleDrop}
 		>
+			<ForkHomeBackground active={isOpen} />
 			<AnimatePresence>
 				{isDraggingFiles && (
 					<motion.div
@@ -835,6 +858,10 @@ export function NewWorkspaceScreen({
 								</TooltipContent>
 							</Tooltip>
 						)}
+						<ForkImportFromHome
+							hostUrl={draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl}
+							projectId={projectId}
+						/>
 						<PromptHistoryCommand
 							onSelect={applyPrompt}
 							tooltipLabel={t({
@@ -857,17 +884,25 @@ export function NewWorkspaceScreen({
 				}
 			/>
 			<div className="flex flex-1 flex-col items-center justify-center gap-8">
-				<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				<ForkHomeBrand>
+					<SupersetIcon className="h-10 w-auto text-muted-foreground/70" />
+				</ForkHomeBrand>
 				<h1 className="text-center text-3xl font-medium text-foreground/90">
 					<Trans>What should we build next?</Trans>
 				</h1>
+				<p className="-mt-5 text-center text-sm text-muted-foreground">
+					<Trans>
+						Each task gets its own workspace and branch. The agent starts in a
+						chat.
+					</Trans>
+				</p>
 				<GitHubStarPill surface="new_workspace" reserveSpace />
 			</div>
 			<div className="flex w-full flex-col items-center px-6 pb-8">
 				<div
 					className="relative flex w-full flex-col"
 					style={{
-						maxWidth: composerWidth ?? NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH,
+						maxWidth: composerWidth,
 					}}
 				>
 					<AnimatePresence initial={false}>
@@ -982,45 +1017,7 @@ export function NewWorkspaceScreen({
 						placeholder={promptPlaceholder}
 						ref={composerRef}
 						toolbar={
-							<div className="flex min-w-0 items-center gap-1.5">
-								<AgentSelect<WorkspaceCreateAgent>
-									agents={v2Agents}
-									value={selectedAgent}
-									placeholder={t({
-										message: "No agent",
-									})}
-									onValueChange={setSelectedAgent}
-									onBeforeConfigureAgents={closeModal}
-									triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									iconClassName="size-3 object-contain"
-									allowNone
-									noneLabel={t({
-										message: "No agent",
-									})}
-									noneValue="none"
-								/>
-								{modelSupport && (
-									<AgentModelSelect
-										models={modelSupport.models}
-										value={selectedModel}
-										onValueChange={setSelectedModel}
-										defaultLabel={t({
-											message: "Default model",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									/>
-								)}
-								{effortSupport && effortOptions.length > 0 && (
-									<AgentModelSelect
-										models={effortOptions}
-										value={selectedEffort}
-										onValueChange={setSelectedEffort}
-										defaultLabel={t({
-											message: "Default effort",
-										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
-									/>
-								)}
+							<div className="flex min-w-0 flex-wrap items-center gap-1.5">
 								{modeSupport && (
 									<AgentModelSelect
 										models={modeSupport.modes}
@@ -1029,7 +1026,7 @@ export function NewWorkspaceScreen({
 										defaultLabel={t({
 											message: "Direct mode",
 										})}
-										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto max-w-[160px]`}
+										triggerClassName={`${PILL_BUTTON_CLASS} px-1.5 gap-1 text-foreground w-auto shrink-0 max-w-[160px]`}
 									/>
 								)}
 							</div>
@@ -1061,6 +1058,9 @@ export function NewWorkspaceScreen({
 										</PromptInputButton>
 									</IssueLinkCommand>
 								)}
+								<ForkJiraIssueLinkButton
+									className={`${PILL_BUTTON_CLASS} w-[22px]`}
+								/>
 								<GitHubIssueLinkCommand
 									onSelect={(issue) =>
 										addLinkedGitHubIssue(
@@ -1118,20 +1118,43 @@ export function NewWorkspaceScreen({
 										<Trans>Add attachment</Trans>
 									</TooltipContent>
 								</Tooltip>
-								<PromptInputButton
-									className="size-[22px] rounded-full border border-transparent bg-foreground/10 shadow-none p-[5px] hover:bg-foreground/20"
-									disabled={needsSetup || isCreating}
-									onClick={(e) => {
-										e.preventDefault();
-										handleSubmit();
-									}}
-								>
-									{isCreating ? (
-										<Spinner className="size-3.5 text-muted-foreground" />
-									) : (
-										<ArrowUpIcon className="size-3.5 text-muted-foreground" />
+								<ForkCreationModelPicker
+									agents={v2Agents}
+									selectedAgent={selectedAgent}
+									onSelectAgent={setSelectedAgent}
+									selectedModel={modelSupport ? selectedModel : null}
+									onModelChange={setSelectedModel}
+									efforts={effortSupport ? effortOptions : []}
+									selectedEffort={selectedEffort}
+									onEffortChange={setSelectedEffort}
+									renderAccountItem={(rowClassName, panelClassName) => (
+										<ForkAccountSubmenu
+											account={forkAccount}
+											provider={selectedPresetId}
+											model={selectedModel ?? undefined}
+											className={rowClassName}
+											contentClassName={panelClassName}
+										/>
 									)}
-								</PromptInputButton>
+								/>
+								<ForkAccountPicker
+									account={forkAccount}
+									provider={selectedPresetId}
+									model={selectedModel ?? undefined}
+									compact
+								/>
+								<ForkCreateWorkspaceButton
+									kind={
+										draft.isSession
+											? "chat"
+											: selectedAgent === "none"
+												? "workspace"
+												: "agent"
+									}
+									disabled={needsSetup || isCreating}
+									isCreating={isCreating}
+									onSubmit={handleSubmit}
+								/>
 							</div>
 						}
 					/>
@@ -1242,7 +1265,7 @@ export function NewWorkspaceScreen({
 						)}
 					</div>
 					<SymmetricResizeHandles
-						currentWidth={composerWidth ?? NEW_WORKSPACE_SCREEN_DEFAULT_WIDTH}
+						currentWidth={composerWidth}
 						minWidth={NEW_WORKSPACE_SCREEN_MIN_WIDTH}
 						maxWidth={NEW_WORKSPACE_SCREEN_MAX_WIDTH}
 						onWidthChange={setLiveComposerWidth}

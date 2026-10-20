@@ -33,6 +33,7 @@ import { LuGitBranch, LuKeyboard, LuKeyRound, LuLink } from "react-icons/lu";
 import { useHostsNeedingUpdateCount } from "renderer/hooks/host-version/useHostsNeedingUpdate";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import type { SettingsSection } from "renderer/stores/settings-state";
 import { getAllowedSectionsForVariant } from "../../utils/settings-search";
 import { settingsListItemClass } from "../SettingsListSidebar";
@@ -42,6 +43,7 @@ interface GeneralSettingsProps {
 }
 
 type SettingsRoute =
+	| "/settings/fork"
 	| "/settings/mobile"
 	| "/settings/account"
 	| "/settings/connections"
@@ -50,6 +52,7 @@ type SettingsRoute =
 	| "/settings/appearance"
 	| "/settings/ringtones"
 	| "/settings/usage"
+	| "/settings/local-agent-accounts"
 	| "/settings/keyboard"
 	| "/settings/behavior"
 	| "/settings/browser"
@@ -135,6 +138,13 @@ const SECTION_GROUPS: SectionGroup[] = [
 				section: "mobile",
 				label: msg({ message: "Mobile" }),
 				icon: <HiOutlineDevicePhoneMobile className="h-4 w-4" />,
+			},
+			{
+				id: "/settings/local-agent-accounts",
+				section: "localAgentAccounts",
+				label: msg({ message: "Local agent accounts" }),
+				icon: <LuKeyRound className="h-4 w-4" />,
+				fullWidth: true,
 			},
 		],
 	},
@@ -296,6 +306,12 @@ const SECTION_GROUPS: SectionGroup[] = [
 		}),
 		items: [
 			{
+				id: "/settings/fork",
+				section: "fork",
+				label: msg({ message: "Fork Settings" }),
+				icon: <LuGitBranch className="h-4 w-4" />,
+			},
+			{
 				id: "/settings/security",
 				section: "security",
 				label: msg({
@@ -342,12 +358,17 @@ export function GeneralSettings({ matchCounts }: GeneralSettingsProps) {
 	const { data: platform } = electronTrpc.window.getPlatform.useQuery();
 	const isMac = platform === "darwin";
 	const isV2CloudEnabled = useIsV2CloudEnabled();
+	const showProFeatures = useForkProFeatures();
 	const cloudWorkspacesEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
 	const allowedSections = useMemo(
 		() =>
-			getAllowedSectionsForVariant(isV2CloudEnabled, cloudWorkspacesEnabled),
-		[isV2CloudEnabled, cloudWorkspacesEnabled],
+			getAllowedSectionsForVariant(
+				isV2CloudEnabled,
+				cloudWorkspacesEnabled,
+				!showProFeatures,
+			),
+		[isV2CloudEnabled, cloudWorkspacesEnabled, showProFeatures],
 	);
 
 	return (

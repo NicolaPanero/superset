@@ -7,7 +7,6 @@
 
 import { randomUUID } from "node:crypto";
 import {
-	existsSync,
 	linkSync,
 	mkdirSync,
 	readFileSync,
@@ -61,8 +60,10 @@ function ambientCodexHome(): string {
 	const fromEnv = process.env.CODEX_HOME?.trim();
 	const supersetInjected = process.env.SUPERSET_DEFAULT_CODEX_HOME?.trim();
 	const preservedAmbient = process.env.SUPERSET_AMBIENT_CODEX_HOME?.trim();
+	const pinned = process.env.SUPERSET_PINNED_ACCOUNT_ENV === "CODEX_HOME";
 	if (
 		fromEnv &&
+		!pinned &&
 		(!supersetInjected ||
 			canonicalAccountHome(fromEnv) !== canonicalAccountHome(supersetInjected))
 	) {
@@ -259,8 +260,7 @@ export function resolveDefaultAccountTerminalEnv(
 
 /**
  * Env to overlay on an agent launch so it runs on the host-default account.
- * A pointer whose profile dir has vanished is skipped: falling back to the
- * system-default login beats booting the agent signed out.
+ * A vanished profile stays selected so no launch silently uses another login.
  */
 export function resolveDefaultAccountEnv(
 	db: HostDb,
@@ -268,11 +268,7 @@ export function resolveDefaultAccountEnv(
 ): Record<string, string> {
 	if (presetId !== "claude" && presetId !== "codex") return {};
 	const selections = getDefaultAccountSelections(db);
-	if (
-		presetId === "claude" &&
-		selections.claudeConfigDir &&
-		existsSync(selections.claudeConfigDir)
-	) {
+	if (presetId === "claude" && selections.claudeConfigDir) {
 		// The SUPERSET_DEFAULT_* twin marks the value as Superset-injected, so
 		// the agent wrapper can re-resolve a later switch without ever
 		// overriding a value the user exported by hand.
@@ -284,7 +280,7 @@ export function resolveDefaultAccountEnv(
 	if (presetId === "codex") {
 		const ambientCodex = ambientCodexHome();
 		const ambient = { SUPERSET_AMBIENT_CODEX_HOME: ambientCodex };
-		if (!selections.codexHome || !existsSync(selections.codexHome)) {
+		if (!selections.codexHome) {
 			return {
 				...ambient,
 				CODEX_HOME: ambientCodex,

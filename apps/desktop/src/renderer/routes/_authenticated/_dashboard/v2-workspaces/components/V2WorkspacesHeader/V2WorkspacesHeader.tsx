@@ -68,6 +68,8 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore";
 import { BOARD_COLUMN_LABELS } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/utils/deriveBoardColumn";
 import { PRIcon } from "renderer/screens/main/components/PRIcon/PRIcon";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
+import { useForkWorkspacesDeviceFilter } from "../../hooks/useForkWorkspacesDeviceFilter";
 import { V2WorkspaceProjectIcon } from "../V2WorkspaceProjectIcon";
 import { DeviceOptionLabel } from "./components/DeviceOptionLabel";
 
@@ -122,13 +124,12 @@ export function V2WorkspacesHeader({
 	projectsById,
 }: V2WorkspacesHeaderProps) {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const searchQuery = useV2WorkspacesFilterStore((state) => state.searchQuery);
 	const setSearchQuery = useV2WorkspacesFilterStore(
 		(state) => state.setSearchQuery,
 	);
-	const deviceFilter = useV2WorkspacesFilterStore(
-		(state) => state.deviceFilter,
-	);
+	const deviceFilter = useForkWorkspacesDeviceFilter();
 	const setDeviceFilter = useV2WorkspacesFilterStore(
 		(state) => state.setDeviceFilter,
 	);
@@ -285,70 +286,76 @@ export function V2WorkspacesHeader({
 				className="-mx-6 mb-1"
 				contentClassName="gap-3 px-6"
 				start={
-					<DropdownMenu modal={false}>
-						<DropdownMenuTrigger asChild>
-							<Button
-								variant="ghost"
-								aria-label={t({
-									message: "Filter by device",
-								})}
-								className="-ml-2 h-9 gap-2 px-2 text-lg font-semibold"
-							>
-								<DeviceIcon className="size-4 text-muted-foreground" />
-								<span className="min-w-0 truncate">{deviceLabel}</span>
-								<LuChevronDown className="size-4 text-muted-foreground" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="start" className="min-w-[14rem]">
-							<DropdownMenuRadioGroup
-								value={deviceFilter}
-								onValueChange={setDeviceFilter}
-							>
-								<DropdownMenuRadioItem value={DEVICE_FILTER_ALL_DEVICES}>
-									<DeviceOptionLabel
-										icon={<LuMonitorSmartphone className="size-3.5" />}
-										label={t({
-											message: "All devices",
-										})}
-									/>
-								</DropdownMenuRadioItem>
-								<DropdownMenuRadioItem value={DEVICE_FILTER_THIS_DEVICE}>
-									<DeviceOptionLabel
-										icon={<LuLaptop className="size-3.5" />}
-										label={
-											localHostName
-												? t({
-														message: `${localHostName} (this device)`,
-													})
-												: t({
-														message: "This device",
-													})
-										}
-									/>
-								</DropdownMenuRadioItem>
-								{remoteHosts.length > 0 ? (
-									<>
-										<DropdownMenuSeparator />
-										<DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
-											<Trans>Other devices</Trans>
-										</DropdownMenuLabel>
-										{remoteHosts.map((host) => (
-											<DropdownMenuRadioItem
-												key={host.hostId}
-												value={host.hostId}
-											>
-												<DeviceOptionLabel
-													icon={<LuMonitor className="size-3.5" />}
-													label={host.hostName}
-													isOnline={host.isOnline}
-												/>
-											</DropdownMenuRadioItem>
-										))}
-									</>
-								) : null}
-							</DropdownMenuRadioGroup>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					showProFeatures ? (
+						<DropdownMenu modal={false}>
+							<DropdownMenuTrigger asChild>
+								<Button
+									variant="ghost"
+									aria-label={t({
+										message: "Filter by device",
+									})}
+									className="-ml-2 h-9 gap-2 px-2 text-lg font-semibold"
+								>
+									<DeviceIcon className="size-4 text-muted-foreground" />
+									<span className="min-w-0 truncate">{deviceLabel}</span>
+									<LuChevronDown className="size-4 text-muted-foreground" />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="start" className="min-w-[14rem]">
+								<DropdownMenuRadioGroup
+									value={deviceFilter}
+									onValueChange={setDeviceFilter}
+								>
+									<DropdownMenuRadioItem value={DEVICE_FILTER_ALL_DEVICES}>
+										<DeviceOptionLabel
+											icon={<LuMonitorSmartphone className="size-3.5" />}
+											label={t({
+												message: "All devices",
+											})}
+										/>
+									</DropdownMenuRadioItem>
+									<DropdownMenuRadioItem value={DEVICE_FILTER_THIS_DEVICE}>
+										<DeviceOptionLabel
+											icon={<LuLaptop className="size-3.5" />}
+											label={
+												localHostName
+													? t({
+															message: `${localHostName} (this device)`,
+														})
+													: t({
+															message: "This device",
+														})
+											}
+										/>
+									</DropdownMenuRadioItem>
+									{remoteHosts.length > 0 ? (
+										<>
+											<DropdownMenuSeparator />
+											<DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+												<Trans>Other devices</Trans>
+											</DropdownMenuLabel>
+											{remoteHosts.map((host) => (
+												<DropdownMenuRadioItem
+													key={host.hostId}
+													value={host.hostId}
+												>
+													<DeviceOptionLabel
+														icon={<LuMonitor className="size-3.5" />}
+														label={host.hostName}
+														isOnline={host.isOnline}
+													/>
+												</DropdownMenuRadioItem>
+											))}
+										</>
+									) : null}
+								</DropdownMenuRadioGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : (
+						<span className="text-lg font-semibold">
+							<Trans>Workspaces</Trans>
+						</span>
+					)
 				}
 				end={
 					<Button

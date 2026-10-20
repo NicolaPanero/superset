@@ -13,12 +13,14 @@ import { Button } from "@superset/ui/button";
 export function AcpRecovery({
 	detail,
 	onResume,
+	onRetry,
 	onStartNew,
 	reason,
 }: {
 	reason: "no-transcript" | "stopped" | "in-terminal";
 	detail?: string | undefined;
 	onResume?: () => void;
+	onRetry?: () => void;
 	onStartNew: () => void;
 }) {
 	return (
@@ -40,11 +42,14 @@ export function AcpRecovery({
 				)}
 			</p>
 			{detail && (
-				<p className="max-w-lg font-mono text-[11px] text-muted-foreground/60">
-					{detail}
-				</p>
+				<p className="max-w-lg text-xs text-muted-foreground">{detail}</p>
 			)}
 			<div className="flex gap-2">
+				{onRetry && (
+					<Button onClick={onRetry} size="sm" variant="outline">
+						<Trans>Retry</Trans>
+					</Button>
+				)}
 				{onResume && (
 					<Button onClick={onResume} size="sm">
 						<Trans>Resume</Trans>

@@ -316,6 +316,23 @@ describe("shareCodexSessionState", () => {
 		).toEqual(["rollout-personal.jsonl", "rollout-work.jsonl"]);
 	});
 
+	it("leaves a home alone when main already links back into it", () => {
+		const { profile, main } = makeDirs();
+		const day = join(profile, "sessions", "2026", "10", "16");
+		mkdirSync(day, { recursive: true });
+		writeFileSync(join(day, "rollout-live.jsonl"), "live");
+		writeFileSync(join(profile, "history.jsonl"), '{"t":"live"}\n');
+		for (const name of ["sessions", "history.jsonl"]) {
+			symlinkSync(join(profile, name), join(main, name));
+		}
+		shareCodexSessionState(profile, main);
+
+		expect(lstatSync(join(profile, "sessions")).isDirectory()).toBe(true);
+		expect(readdirSync(day)).toEqual(["rollout-live.jsonl"]);
+		expect(lstatSync(join(profile, "history.jsonl")).isFile()).toBe(true);
+		expect(lstatOrNull(join(profile, "sessions.superset-merge"))).toBeNull();
+	});
+
 	it("appends an existing Codex prompt history instead of dropping it", () => {
 		const { profile, main } = makeDirs();
 		writeFileSync(join(profile, "history.jsonl"), '{"t":"from-profile"}\n');

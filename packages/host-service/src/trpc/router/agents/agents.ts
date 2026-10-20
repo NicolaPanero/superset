@@ -47,6 +47,8 @@ import { protectedProcedure, router } from "../../index";
 import { resolveAttachmentPath } from "../attachments/storage";
 import { toTerminalSessionError } from "../terminal/errors";
 import { seedAgentFolderTrust } from "../workspace-creation/shared/seed-agent-trust";
+import { applyForkLaunchChoices, recordLaunchDetails } from "./fork-launch";
+import { forkAgentProcedures } from "./fork-procedures";
 
 /**
  * Build a shell command string that runs the resolved agent config with the
@@ -132,6 +134,11 @@ function buildAttachmentBlock(
 }
 
 export interface AgentRunInput {
+	accountSelection?: string | null;
+	launchSnapshot?: {
+		config: ResolvedHostAgentConfig;
+		env: Record<string, string>;
+	};
 	colors?: TerminalColors;
 	workspaceId: string;
 	agent: string;
@@ -388,7 +395,8 @@ export function buildTerminalAgentLaunch(
 	db: HostDb,
 	input: AgentRunInput,
 ): { fullCommand: string; label: string } {
-	const config = resolveHostAgentConfig(db, input.agent);
+	const config =
+		input.launchSnapshot?.config ?? resolveHostAgentConfig(db, input.agent);
 	if (!config) {
 		// Worded for end users (automation run errors show this verbatim), but
 		// keep "No host agent config matching" — the desktop matches on it to
@@ -457,7 +465,7 @@ export function buildTerminalAgentLaunch(
 	);
 	const modelEnv = buildAgentModelEnv(launchPresetId, input.model);
 	return {
-		fullCommand: `${envOverlayPrefix({ ...agentLaunchEnv(db, config), ...modelEnv })}${command}`,
+		fullCommand: `${envOverlayPrefix({ ...(input.launchSnapshot?.env ?? agentLaunchEnv(db, config)), ...modelEnv })}${command}`,
 		label: config.label,
 	};
 }
@@ -478,7 +486,9 @@ export function bindResumedSession(
 	terminalId: string,
 ): void {
 	if (!input.resumeSessionId) return;
-	const presetId = resolveHostAgentConfig(ctx.db, input.agent)?.presetId;
+	const presetId =
+		input.launchSnapshot?.config.presetId ??
+		resolveHostAgentConfig(ctx.db, input.agent)?.presetId;
 	if (!presetId || !isBuiltinAgentId(presetId)) return;
 
 	ctx.terminalAgentStore.recordEvent({
@@ -512,7 +522,7 @@ async function runTerminalAgent(
 	}
 
 	bindResumedSession(ctx, input, result.terminalId);
-
+	recordLaunchDetails(ctx.db, input, result.terminalId, label);
 	return {
 		kind: "terminal",
 		sessionId: result.terminalId,
@@ -584,6 +594,7 @@ function continuationConfig(
 	// These all pick something about how the process starts, and the process is
 	// already started. Launching is the only way to honour them.
 	if (
+		input.accountSelection !== undefined ||
 		input.model ||
 		input.effort ||
 		input.mode ||
@@ -688,7 +699,7 @@ function continueChatAgent(
 	};
 }
 
-function launchChatAgent(
+export function launchChatAgent(
 	ctx: Pick<HostServiceContext, "db" | "runtime">,
 	input: AgentRunInput,
 	cwd: string,
@@ -703,6 +714,10 @@ function launchChatAgent(
 		commandId: crypto.randomUUID(),
 		scopeId: input.workspaceId,
 		harness: target.harness,
+		agentConfigId:
+			input.launchSnapshot?.config.id ??
+			resolveHostAgentConfig(ctx.db, input.agent)?.id,
+		accountSelection: input.accountSelection,
 		cwd,
 		terminalId,
 		...(input.model ? { modelId: input.model } : {}),
@@ -798,6 +813,7 @@ export async function runAgentInWorkspace(
 			message: `Workspace ${input.workspaceId} not found on this host — it may have been deleted.`,
 		});
 	}
+	input = await applyForkLaunchChoices(ctx.db, input);
 	// Ahead of the launch path: continuing costs no pty and no trust seeding.
 	const continued =
 		continueChatAgent(ctx, input) ?? (await continueTerminalAgent(ctx, input));
@@ -809,9 +825,17 @@ export async function runAgentInWorkspace(
 	// interactive boot skips the trust dialog. Worktree workspaces inherit
 	// trust from the main checkout and need nothing.
 	if (workspace.projectId === null) {
-		const config = resolveHostAgentConfig(ctx.db, input.agent);
+		const config =
+			input.launchSnapshot?.config ??
+			resolveHostAgentConfig(ctx.db, input.agent);
 		if (config) {
-			await seedAgentFolderTrust(ctx.db, workspace.worktreePath, config);
+			await seedAgentFolderTrust(
+				ctx.db,
+				workspace.worktreePath,
+				input.launchSnapshot
+					? { ...config, env: input.launchSnapshot.env }
+					: config,
+			);
 		}
 	}
 	return (
@@ -821,6 +845,7 @@ export async function runAgentInWorkspace(
 }
 
 export const agentsRouter = router({
+	...forkAgentProcedures,
 	run: protectedProcedure
 		.input(
 			z.object({
@@ -837,6 +862,7 @@ export const agentsRouter = router({
 				resumeSessionId: z.string().min(1).optional(),
 				forkSessionId: z.string().min(1).optional(),
 				continueTerminalId: z.string().min(1).optional(),
+				accountSelection: z.string().min(1).max(4096).nullable().optional(),
 				surface: z.enum(["terminal", "chat"]).optional(),
 			}),
 		)

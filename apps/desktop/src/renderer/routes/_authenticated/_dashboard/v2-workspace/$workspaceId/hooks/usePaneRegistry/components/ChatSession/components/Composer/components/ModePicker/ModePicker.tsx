@@ -1,5 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
 import {
+	AGENT_DEFAULT_MODE,
+	FULL_ACCESS_CHAT_MODE,
+} from "@superset/chat/protocol";
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -34,7 +38,7 @@ type ModeCopy = {
 	unrestricted?: boolean;
 };
 
-const HIDDEN_MODE_IDS = new Set(["plan", "acceptEdits", "workspace-write"]);
+const HIDDEN_MODE_IDS = new Set(["acceptEdits", "workspace-write"]);
 const SOLID_ICONS = new Set<LucideIcon>([Pause, Play, FastForward]);
 const UNRESTRICTED_TINT = "text-highlight";
 
@@ -56,6 +60,23 @@ export function ModePicker({
 	if (offeredModes.length < 2) return null;
 
 	const knownModes: Record<string, ModeCopy> = {
+		[FULL_ACCESS_CHAT_MODE]: {
+			title: t({ message: "Full access" }),
+			description: t({
+				message: "Approves tool actions automatically in this chat.",
+			}),
+			icon: FastForward,
+		},
+		[AGENT_DEFAULT_MODE]: {
+			title: t({ message: "Ask for approval" }),
+			description: t({ message: "Asks before edits and commands" }),
+			icon: Pause,
+		},
+		yolo: {
+			title: t({ message: "Full access" }),
+			description: t({ message: "Never asks before acting" }),
+			icon: FastForward,
+		},
 		default: {
 			title: t({ message: "Ask for approval" }),
 			description: t({ message: "Asks before edits and commands" }),

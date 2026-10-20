@@ -1,5 +1,57 @@
 <div align="center">
 
+<img src="apps/desktop/src/resources/build/fork-icons/icon.png" alt="Superset++ app icon" width="96" height="96" />
+
+# Superset++
+
+Fork personale di [Superset](https://github.com/superset-sh/superset) per lavorare con più agenti e account, conservando le conversazioni.
+
+[**Scarica Superset++ per Mac e Windows**](https://github.com/NicolaPanero/superset/releases/latest) &nbsp;&bull;&nbsp; [Guida del fork](FORK.md) &nbsp;&bull;&nbsp; [Profili account](docs/fork-accounts.md) &nbsp;&bull;&nbsp; [Progetto ufficiale](https://github.com/superset-sh/superset)
+
+</div>
+
+## Cosa aggiunge Superset++
+
+- **Account prima dell’avvio**: scegli il profilo Claude o Codex e consulta la quota; il suggerimento resta una scelta manuale.
+- **Profili indipendenti**: cambiare login nel CLI esterno non sostituisce gli account salvati in Superset++. Il login CLI rimane una scelta separata.
+- **Continuazione automatica per Claude**: scegli, per la chat corrente, se passare all’account suggerito o attendere il reset della quota. Le opzioni si salvano subito e possono essere attivate anche dopo il limite su una sessione ancora attiva.
+- **Conversazioni recuperabili e trasferibili**: cerca le chat locali, riapri quelle in background e trasferisci la cronologia nativa tra agenti compatibili tramite [txcript](https://github.com/NicolaPanero/txcript).
+- **Branch protetti durante la cancellazione**: la preferenza “Elimina branch” si applica solo ai branch nuovi con provenienza verificata dal fork; i workspace sulla cartella del progetto conservano branch e file.
+- **Identità e aggiornamenti del fork**: nome e icona Superset++, dati separati dall’app ufficiale e aggiornamenti dalle release di questo repository.
+
+La chat ACP e il passaggio **CLI / CHAT** provengono da Superset ufficiale. Il fork estende la gestione di account e conversazioni. Comportamenti, compatibilità e limiti sono descritti in [FORK.md](FORK.md).
+
+## Installare Superset++
+
+Le release includono **macOS Apple Silicon** e **Windows x64**. Su Windows scarica `Superset-fork-x64.exe` dalle [release](https://github.com/NicolaPanero/superset/releases/latest) e aprilo: installa Superset++ per il tuo utente, con dati separati dall’app ufficiale. L’installer Windows non è firmato.
+
+Su Mac, chiudi l’app prima di installarla o aggiornarla:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
+```
+
+Lo script scarica l’ultima release del fork e installa **Superset++.app**. Per il download manuale, scegli `Superset-fork-arm64.zip` nelle [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
+
+Chat, impostazioni e profili del fork restano conservati durante gli aggiornamenti. Le build pubblicate controllano gli aggiornamenti del fork; **Check for Updates** ripropone anche un aggiornamento rimandato. Per passare da una build locale a questo canale, installa una release del fork. [Installazione e compatibilità dei dati →](FORK.md#installazione-e-compatibilità-dei-dati)
+
+## Da dove iniziare
+
+1. Crea un workspace e scegli agente, modello e account.
+2. Nella chat, apri **Agent · Account**: **Chat corrente** gestisce la continuazione automatica; **Cambia agente o account** applica il cambio manuale con **Continue**.
+3. Usa **+ → Agent** per una nuova sessione e l’icona **Find a chat** per cercare una conversazione esistente.
+
+Le estensioni per account locali richiedono un host aggiornato del fork. I profili del tuo computer non sono disponibili nei workspace cloud. [Guida completa →](FORK.md)
+
+## Documentazione di Superset ufficiale
+
+Il fork si allinea alle release stabili ufficiali. La documentazione seguente descrive Superset; i suoi pulsanti di download portano all’app originale. Per Superset++ usa i link e l’installazione sopra.
+
+<details>
+<summary>Mostra il README di Superset ufficiale</summary>
+
+<div align="center">
+
 <img src="apps/desktop/src/resources/build/icons/icon.png" alt="Superset app icon" width="96" height="96" />
 
 ### Superset
@@ -333,3 +385,5 @@ Join the Superset community to get help, share feedback, and connect with other 
 **The desktop app is free forever.** Running agents in parallel on your own machine will never require payment. Anything we charge for will be an optional service on top.
 
 The whole app is in this repo under the [Elastic License 2.0](LICENSE.md): use it, fork it, modify it, self-host it for your team. The only thing off the table is repackaging Superset itself as a service you sell to others.
+
+</details>

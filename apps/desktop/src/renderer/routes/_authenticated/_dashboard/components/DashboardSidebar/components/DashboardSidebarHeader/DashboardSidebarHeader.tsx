@@ -31,6 +31,8 @@ import {
 	VscNewFolder,
 } from "react-icons/vsc";
 import { useFrameStackStore } from "renderer/commandPalette";
+import { useForkConnections } from "renderer/components/ForkIntegrations/hooks/useForkConnections";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { SidebarKbdHint } from "renderer/components/SidebarKbdHint";
 import { ZoomStable } from "renderer/components/ZoomStable";
@@ -76,6 +78,7 @@ import {
 	useOpenNewProjectModal,
 	useOpenTemplateGalleryModal,
 } from "renderer/stores/add-repository-modal";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { COLLAPSED_WORKSPACE_SIDEBAR_WIDTH } from "renderer/stores/workspace-sidebar-state";
 
 interface DashboardSidebarHeaderProps {
@@ -158,8 +161,11 @@ export function DashboardSidebarHeader({
 		fuzzy: true,
 	});
 	const isProjectsOpen = !!matchRoute({ to: "/projects", fuzzy: true });
+	const showProFeatures = useForkProFeatures();
+	const { jiraConfigured } = useForkConnections();
 	const isCloudEnabled =
-		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
+		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true &&
+		showProFeatures;
 	const v2WorkspaceMatch = matchRoute({
 		to: "/v2-workspace/$workspaceId",
 		fuzzy: true,
@@ -251,6 +257,10 @@ export function DashboardSidebarHeader({
 	};
 
 	const handleTasksClick = () => {
+		if (jiraConfigured) {
+			void navigate({ to: "/tasks", search: { forkSource: "jira" } });
+			return;
+		}
 		gateFeature(GATED_FEATURES.TASKS, () => {
 			navigate({
 				to: "/tasks",
@@ -440,68 +450,72 @@ export function DashboardSidebarHeader({
 						</Tooltip>
 					)}
 
-					<Tooltip delayDuration={300}>
-						<TooltipTrigger asChild>
-							<button
-								type="button"
-								onClick={handleAutomationsClick}
-								aria-label={
-									myFailedCount > 0
-										? t({
-												message: `Automations, ${myFailedCount} failing`,
-											})
-										: t({
-												message: "Automations",
-											})
-								}
-								className={cn(
-									"relative flex size-7 items-center justify-center rounded-md transition-colors",
-									isAutomationsOpen
-										? "bg-fill-selected text-muted-foreground"
-										: "text-muted-foreground hover:bg-fill-hover",
+					<ForkProFeature>
+						<Tooltip delayDuration={300}>
+							<TooltipTrigger asChild>
+								<button
+									type="button"
+									onClick={handleAutomationsClick}
+									aria-label={
+										myFailedCount > 0
+											? t({
+													message: `Automations, ${myFailedCount} failing`,
+												})
+											: t({
+													message: "Automations",
+												})
+									}
+									className={cn(
+										"relative flex size-7 items-center justify-center rounded-md transition-colors",
+										isAutomationsOpen
+											? "bg-fill-selected text-muted-foreground"
+											: "text-muted-foreground hover:bg-fill-hover",
+									)}
+								>
+									<LuClock className="size-3.5" strokeWidth={1.5} />
+									{myFailedCount > 0 && (
+										<span
+											aria-hidden="true"
+											className="absolute right-1 top-1 size-1.5 rounded-full bg-red-500"
+										/>
+									)}
+								</button>
+							</TooltipTrigger>
+							<TooltipContent side="right">
+								{myFailedCount > 0 ? (
+									<Trans>Automations ({myFailedCount} failing)</Trans>
+								) : (
+									<Trans>Automations</Trans>
 								)}
-							>
-								<LuClock className="size-3.5" strokeWidth={1.5} />
-								{myFailedCount > 0 && (
-									<span
-										aria-hidden="true"
-										className="absolute right-1 top-1 size-1.5 rounded-full bg-red-500"
-									/>
-								)}
-							</button>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							{myFailedCount > 0 ? (
-								<Trans>Automations ({myFailedCount} failing)</Trans>
-							) : (
-								<Trans>Automations</Trans>
-							)}
-						</TooltipContent>
-					</Tooltip>
+							</TooltipContent>
+						</Tooltip>
+					</ForkProFeature>
 
-					<Tooltip delayDuration={300}>
-						<TooltipTrigger asChild>
-							<button
-								type="button"
-								onClick={handleTasksClick}
-								aria-label={t({
-									message: "Tasks",
-								})}
-								aria-current={isTasksOpen ? "page" : undefined}
-								className={cn(
-									"flex size-7 items-center justify-center rounded-md transition-colors",
-									isTasksOpen
-										? "bg-fill-selected text-muted-foreground"
-										: "text-muted-foreground hover:bg-fill-hover",
-								)}
-							>
-								<HiOutlineClipboardDocumentList className="size-3.5" />
-							</button>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							<Trans>Tasks</Trans>
-						</TooltipContent>
-					</Tooltip>
+					<ForkProFeature available={jiraConfigured}>
+						<Tooltip delayDuration={300}>
+							<TooltipTrigger asChild>
+								<button
+									type="button"
+									onClick={handleTasksClick}
+									aria-label={t({
+										message: "Tasks",
+									})}
+									aria-current={isTasksOpen ? "page" : undefined}
+									className={cn(
+										"flex size-7 items-center justify-center rounded-md transition-colors",
+										isTasksOpen
+											? "bg-fill-selected text-muted-foreground"
+											: "text-muted-foreground hover:bg-fill-hover",
+									)}
+								>
+									<HiOutlineClipboardDocumentList className="size-3.5" />
+								</button>
+							</TooltipTrigger>
+							<TooltipContent side="right">
+								<Trans>Tasks</Trans>
+							</TooltipContent>
+						</Tooltip>
+					</ForkProFeature>
 
 					<Tooltip delayDuration={300}>
 						<TooltipTrigger asChild>
@@ -788,58 +802,62 @@ export function DashboardSidebarHeader({
 				</button>
 			)}
 
-			<div className="relative">
+			<ForkProFeature>
+				<div className="relative">
+					<button
+						type="button"
+						onClick={handleAutomationsClick}
+						className={cn(
+							"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
+							isAutomationsOpen
+								? "bg-fill-selected text-foreground"
+								: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
+						)}
+					>
+						<LuClock
+							className="size-4 shrink-0 text-muted-foreground"
+							strokeWidth={1.5}
+						/>
+						<span className="flex-1 text-left">
+							<Trans>Automations</Trans>
+						</span>
+					</button>
+					{myFailedCount > 0 && (
+						<button
+							type="button"
+							onClick={handleFailedAutomationsClick}
+							title={t({
+								message: `${myFailedCount} of your automations failed their last run`,
+							})}
+							className="absolute right-2 top-1/2 flex h-4 min-w-4 -translate-y-1/2 items-center justify-center rounded-full bg-red-500/15 px-1 text-[10px] font-medium tabular-nums text-red-600 transition-colors hover:bg-red-500/25 dark:text-red-400"
+						>
+							{myFailedCount > 9 ? "9+" : myFailedCount}
+						</button>
+					)}
+				</div>
+			</ForkProFeature>
+
+			<ForkProFeature available={jiraConfigured}>
 				<button
 					type="button"
-					onClick={handleAutomationsClick}
+					onClick={handleTasksClick}
+					aria-label={t({
+						message: "Tasks",
+					})}
+					aria-current={isTasksOpen ? "page" : undefined}
 					className={cn(
 						"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-						isAutomationsOpen
+						isTasksOpen
 							? "bg-fill-selected text-foreground"
 							: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
 					)}
 				>
-					<LuClock
-						className="size-4 shrink-0 text-muted-foreground"
-						strokeWidth={1.5}
-					/>
+					<HiOutlineClipboardDocumentList className="size-4 shrink-0 text-muted-foreground" />
 					<span className="flex-1 text-left">
-						<Trans>Automations</Trans>
+						<Trans>Tasks</Trans>
 					</span>
 				</button>
-				{myFailedCount > 0 && (
-					<button
-						type="button"
-						onClick={handleFailedAutomationsClick}
-						title={t({
-							message: `${myFailedCount} of your automations failed their last run`,
-						})}
-						className="absolute right-2 top-1/2 flex h-4 min-w-4 -translate-y-1/2 items-center justify-center rounded-full bg-red-500/15 px-1 text-[10px] font-medium tabular-nums text-red-600 transition-colors hover:bg-red-500/25 dark:text-red-400"
-					>
-						{myFailedCount > 9 ? "9+" : myFailedCount}
-					</button>
-				)}
-			</div>
-
-			<button
-				type="button"
-				onClick={handleTasksClick}
-				aria-label={t({
-					message: "Tasks",
-				})}
-				aria-current={isTasksOpen ? "page" : undefined}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					isTasksOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<HiOutlineClipboardDocumentList className="size-4 shrink-0 text-muted-foreground" />
-				<span className="flex-1 text-left">
-					<Trans>Tasks</Trans>
-				</span>
-			</button>
+			</ForkProFeature>
 
 			<button
 				type="button"

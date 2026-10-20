@@ -1,3 +1,5 @@
+// Before any import that opens ~/.superset-fork.
+import "./lib/fork-data-migration/run";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -53,6 +55,7 @@ import { installDevRunnerExit } from "./lib/dev-runner-exit";
 import { resolveDevWorkspaceName } from "./lib/dev-workspace-name";
 import { setWorkspaceDockIcon } from "./lib/dock-icon";
 import { loadWebviewBrowserExtension } from "./lib/extensions";
+import { setupForkUpdates } from "./lib/fork-updates";
 import { getHostServiceCoordinator } from "./lib/host-service-coordinator";
 import { resolveAppLocale } from "./lib/language";
 import { localDb } from "./lib/local-db";
@@ -437,6 +440,7 @@ protocol.registerSchemesAsPrivileged([
 			secure: true,
 			bypassCSP: true,
 			supportFetchAPI: true,
+			corsEnabled: true,
 		},
 	},
 ]);
@@ -649,6 +653,7 @@ if (!gotTheLock) {
 			restoreWindows,
 		);
 		setupAutoUpdater();
+		setupForkUpdates();
 		initTray();
 		startResourceJournal();
 

@@ -22,8 +22,11 @@ export type ItemRowProps = {
 	commands?: ReadonlyMap<string, AvailableCommand> | undefined;
 	pending?: PendingPrompt | undefined;
 	onRespond: (approvalId: string, decision: Decision) => void;
-	onFork?: ((target: ChatForkTarget) => void) | undefined;
+	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
 	canForkToWorktree?: boolean;
+	onRewind?: ((itemId: string) => void) | undefined;
+	canForkInWorkspace?: boolean;
+	forkFromHere?: boolean;
 	lastReply?: boolean;
 	pagesShownEarlier?: string | undefined;
 };
@@ -37,6 +40,9 @@ export const ItemRow = memo(function ItemRow({
 	harness,
 	item,
 	onFork,
+	onRewind,
+	canForkInWorkspace,
+	forkFromHere,
 	onRespond,
 	pagesShownEarlier,
 	pending,
@@ -49,6 +55,11 @@ export const ItemRow = memo(function ItemRow({
 		case "user_message":
 			return (
 				<UserMessageRow
+					onRewind={onRewind}
+					onFork={onFork}
+					canForkInWorkspace={canForkInWorkspace}
+					forkFromHere={forkFromHere}
+					canForkToWorktree={canForkToWorktree}
 					commands={commands}
 					harness={harness}
 					item={item}
@@ -62,6 +73,8 @@ export const ItemRow = memo(function ItemRow({
 					lastReply={lastReply}
 					item={item}
 					onFork={onFork}
+					canForkInWorkspace={canForkInWorkspace}
+					forkFromHere={forkFromHere}
 					pagesShownEarlier={pagesShownEarlier}
 					text={text}
 				/>

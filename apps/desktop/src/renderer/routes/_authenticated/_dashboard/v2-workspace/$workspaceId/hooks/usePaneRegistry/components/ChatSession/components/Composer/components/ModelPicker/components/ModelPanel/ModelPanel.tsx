@@ -36,12 +36,14 @@ const SHORTCUT_MODIFIER =
 
 export function ModelPanel({
 	agentSwitcher,
+	keepOpen = false,
 	model,
 	onLeave,
 	onPick,
 	searchRef,
 }: {
 	agentSwitcher?: AgentSwitcher;
+	keepOpen?: boolean;
 	model: SessionConfigOption | undefined;
 	/** Tab past the last agent tab (or Shift+Tab before the first) leaves the panel. */
 	onLeave?: (direction: 1 | -1) => void;
@@ -52,7 +54,11 @@ export function ModelPanel({
 	const isDark = useIsDarkTheme();
 	const currentPresetId = agentSwitcher?.currentPresetId ?? "";
 	const [query, setQuery] = useState("");
-	const [tab, setTab] = useState(currentPresetId);
+	const [tab, setTab] = useState(() =>
+		agentSwitcher?.agents.some((agent) => agent.presetId === currentPresetId)
+			? currentPresetId
+			: (agentSwitcher?.agents[0]?.presetId ?? currentPresetId),
+	);
 	const { favorites, toggle } = useFavoriteModels();
 	const listRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +133,7 @@ export function ModelPanel({
 		if (next === tab) return;
 		setTab(next);
 		setQuery("");
+		agentSwitcher?.onBrowse?.(next);
 	};
 	const cycleTab = (direction: 1 | -1) => {
 		const index = tabs.findIndex((entry) => entry.presetId === tab);
@@ -179,7 +186,10 @@ export function ModelPanel({
 				aria-current={selected ? "true" : undefined}
 				className={cn(MENU_ROW_CLASS, "pr-1")}
 				key={rowKey(row)}
-				onSelect={() => pickRow(row)}
+				onSelect={(event) => {
+					if (keepOpen) event.preventDefault();
+					pickRow(row);
+				}}
 				title={row.description}
 			>
 				<span className="min-w-0 flex-1 truncate">{row.label}</span>
@@ -236,7 +246,7 @@ export function ModelPanel({
 		<div className="flex min-h-0 flex-col" onKeyDownCapture={onPanelKeyDown}>
 			{tabs.length > 0 ? (
 				<div
-					className="flex shrink-0 items-center gap-0.5 border-b px-1.5 py-1.5"
+					className="flex shrink-0 items-center gap-0.5 overflow-x-auto border-b px-1.5 py-1.5 [scrollbar-width:none]"
 					role="tablist"
 				>
 					{tabs.map((entry) => {
@@ -244,7 +254,8 @@ export function ModelPanel({
 						const icon =
 							entry.presetId === FAVORITES_TAB
 								? null
-								: getPresetIcon(entry.presetId, isDark);
+								: (("icon" in entry ? entry.icon : undefined) ??
+									getPresetIcon(entry.presetId, isDark));
 						return (
 							<button
 								aria-label={entry.label}

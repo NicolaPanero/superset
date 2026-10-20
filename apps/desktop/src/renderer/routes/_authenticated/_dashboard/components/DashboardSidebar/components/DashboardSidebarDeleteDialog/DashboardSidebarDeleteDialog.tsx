@@ -34,6 +34,7 @@ export function DashboardSidebarDeleteDialog({
 	const {
 		deleteBranch,
 		setDeleteBranch,
+		branchDeletion,
 		hasChanges,
 		hasUnpushedCommits,
 		sharesProjectCheckout,
@@ -76,6 +77,7 @@ export function DashboardSidebarDeleteDialog({
 			isSession={isSession}
 			sharesProjectCheckout={sharesProjectCheckout}
 			deleteBranch={deleteBranch}
+			branchDeletion={branchDeletion}
 			onDeleteBranchChange={setDeleteBranch}
 			hasChanges={hasChanges}
 			hasUnpushedCommits={hasUnpushedCommits}

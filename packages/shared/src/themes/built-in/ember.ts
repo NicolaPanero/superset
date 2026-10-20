@@ -1,3 +1,5 @@
+import { FORK_DARK_TERMINAL_PALETTE } from "../fork-terminal-palette";
+import { FORK_VSCODE_DARK_EDITOR } from "../fork-vscode-editor";
 import type { Theme } from "../types";
 
 /**
@@ -80,35 +82,13 @@ export const darkTheme: Theme = {
 
 	terminal: {
 		background: "#151110",
-		foreground: "#eae8e6",
+		foreground: "#ffffff",
 		cursor: "#e07850",
 		cursorAccent: "#151110",
 		selectionBackground: "rgba(224, 120, 80, 0.25)",
 
-		// Standard ANSI colors - warm tinted
-		black: "#151110",
-		red: "#dc6b6b",
-		green: "#7ec699",
-		yellow: "#e5c07b",
-		blue: "#61afef",
-		magenta: "#c678dd",
-		cyan: "#56b6c2",
-		white: "#eae8e6",
-
-		// Bright ANSI colors
-		brightBlack: "#5c5856",
-		brightRed: "#e88888",
-		brightGreen: "#98d1a8",
-		brightYellow: "#ecd08f",
-		brightBlue: "#7ec0f5",
-		brightMagenta: "#d494e6",
-		brightCyan: "#73c7d3",
-		brightWhite: "#ffffff",
+		...FORK_DARK_TERMINAL_PALETTE,
 	},
 
-	editor: {
-		syntax: {
-			comment: "#a8a5a3",
-		},
-	},
+	editor: FORK_VSCODE_DARK_EDITOR,
 };

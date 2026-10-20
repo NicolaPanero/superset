@@ -3,6 +3,7 @@ import { z } from "zod";
 const itemBaseFields = {
 	id: z.string().min(1),
 	parentItemId: z.string().min(1).optional(),
+	nativeMessageId: z.string().min(1).optional(),
 	startedAtMs: z.number(),
 	completedAtMs: z.number().optional(),
 };
@@ -83,7 +84,18 @@ export const decisionSchema = z.discriminatedUnion("type", [
 	z.looseObject({ type: z.literal("accept_for_session") }),
 	z.looseObject({ type: z.literal("decline") }),
 	z.looseObject({ type: z.literal("cancel") }),
-	z.looseObject({ type: z.literal("option"), optionId: z.string().min(1) }),
+	z.looseObject({
+		type: z.literal("option"),
+		optionId: z.string().min(1),
+		answers: z
+			.array(
+				z.object({
+					questionId: z.string().min(1),
+					selectedOptionIds: z.array(z.string().min(1)),
+				}),
+			)
+			.optional(),
+	}),
 	z.looseObject({
 		type: z.literal("form"),
 		values: z.record(z.string(), z.union([z.string(), z.array(z.string())])),
@@ -212,6 +224,16 @@ export const approvalRequestSchema = z.looseObject({
 				kind: z
 					.enum(["allow_once", "allow_always", "reject_once", "reject_always"])
 					.optional(),
+			}),
+		)
+		.optional(),
+	questions: z
+		.array(
+			z.object({
+				id: z.string(),
+				prompt: z.string(),
+				options: z.array(z.object({ id: z.string(), label: z.string() })),
+				allowMultiple: z.boolean().optional(),
 			}),
 		)
 		.optional(),

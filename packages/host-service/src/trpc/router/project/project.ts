@@ -78,8 +78,8 @@ export interface FindByPathCandidate {
 }
 
 export const projectRouter = router({
-	listGitHubRepositories: machineOnlyProcedure.query(() =>
-		listGitHubRepositories(),
+	listGitHubRepositories: machineOnlyProcedure.query(({ ctx }) =>
+		listGitHubRepositories(ctx.execGh),
 	),
 
 	list: protectedProcedure.query(({ ctx }) => {

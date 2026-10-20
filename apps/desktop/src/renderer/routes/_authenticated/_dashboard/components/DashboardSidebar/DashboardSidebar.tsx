@@ -11,6 +11,8 @@ import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { ForkServiceNotices } from "renderer/components/ForkIntegrations/components/ForkServiceNotices";
+import { ForkProFeature } from "renderer/components/ForkProFeature";
 import {
 	SidebarCardSlot,
 	useHiringCard,
@@ -512,6 +514,9 @@ export function DashboardSidebar({
 												status={githubStatus}
 												isCollapsed={isCollapsed}
 											/>
+											<ForkServiceNotices
+												hidden={isCollapsed || workspacesListCollapsed}
+											/>
 											{(isCollapsed || !workspacesListCollapsed) && (
 												<DashboardSidebarPinnedSection
 													pinnedWorkspaces={displayedPinnedWorkspaces}
@@ -520,10 +525,12 @@ export function DashboardSidebar({
 												/>
 											)}
 											{!inlineCloudWorkspaces && (
-												<DashboardSidebarCloudSection
-													isCollapsed={isCollapsed}
-													onWorkspaceHover={refreshWorkspacePullRequest}
-												/>
+												<ForkProFeature>
+													<DashboardSidebarCloudSection
+														isCollapsed={isCollapsed}
+														onWorkspaceHover={refreshWorkspacePullRequest}
+													/>
+												</ForkProFeature>
 											)}
 											<DashboardSidebarSessionsSection
 												sessionWorkspaces={displayedSessionWorkspaces}

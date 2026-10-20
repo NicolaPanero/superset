@@ -7,6 +7,7 @@ import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import { toast } from "@superset/ui/sonner";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
+import { useForkAfterWorkspaceSubmit } from "renderer/components/ForkIntegrations/hooks/useForkAfterWorkspaceSubmit";
 import { useAwaitAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { cloudTrpc, cloudTrpcClient } from "renderer/lib/cloud-trpc";
@@ -45,12 +46,17 @@ export function useSubmitWorkspace(
 		/** The project's repository; a named environment must still open on it. */
 		repositoryFullName: string | null;
 	} = { environmentId: null, repositoryId: null, repositoryFullName: null },
+	accountLaunch?: {
+		selection?: string | null;
+		confirm: () => Promise<boolean>;
+	},
 ) {
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const matchRoute = useMatchRoute();
 	const { closeAndResetDraft, draft } = useDashboardNewWorkspaceDraft();
 	const { submit } = useWorkspaceCreates();
+	const forkAfterSubmit = useForkAfterWorkspaceSubmit();
 	const { machineId } = useLocalHostService();
 	const activeOrganizationId = useActiveOrganizationId();
 	const awaitAcpChatEnabled = useAwaitAcpChatEnabled();
@@ -203,6 +209,7 @@ export function useSubmitWorkspace(
 								model: selectedModel ?? undefined,
 								effort: selectedEffort ?? undefined,
 								mode: selectedMode ?? undefined,
+								accountSelection: accountLaunch?.selection,
 							}
 						: {}),
 				});
@@ -285,6 +292,8 @@ export function useSubmitWorkspace(
 			wantAgent &&
 			Boolean(acpHarnessForPreset(selectedPresetId)) &&
 			(await awaitAcpChatEnabled());
+		if (wantAgent && accountLaunch && !(await accountLaunch.confirm())) return;
+
 		const agents = wantAgent
 			? [
 					{
@@ -294,6 +303,7 @@ export function useSubmitWorkspace(
 						model: selectedModel ?? undefined,
 						effort: openAsChat ? undefined : (selectedEffort ?? undefined),
 						mode: selectedMode ?? undefined,
+						accountSelection: accountLaunch?.selection,
 						...(openAsChat ? { surface: "chat" as const } : {}),
 					},
 				]
@@ -359,14 +369,17 @@ export function useSubmitWorkspace(
 			usePromptHistoryStore.getState().recordPrompt(trimmedPrompt);
 		}
 
-		closeAndResetDraft();
 		const { completed } = submit({ hostId, snapshot });
-		void navigate({
+		forkAfterSubmit(hostId, draft.linkedIssues, completed);
+		// Navigation is a transition: the old screen stays up until the
+		// workspace route loads, so the draft is kept on it until then.
+		await navigate({
 			to: "/v2-workspace/$workspaceId",
 			params: { workspaceId },
 		}).catch((error) => {
 			console.error("[useSubmitWorkspace] failed to open workspace", error);
 		});
+		closeAndResetDraft();
 
 		const isViewingOptimisticWorkspace = () => {
 			const workspaceMatch = matchRoute({
@@ -397,6 +410,8 @@ export function useSubmitWorkspace(
 		});
 	}, [
 		activeOrganizationId,
+		forkAfterSubmit,
+		accountLaunch,
 		awaitAcpChatEnabled,
 		selectedPresetId,
 		closeAndResetDraft,

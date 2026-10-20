@@ -51,6 +51,7 @@ import { useCollections } from "renderer/routes/_authenticated/providers/Collect
 import { getV2NotificationSourcesForPane } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
 import { V2NotificationStatusIndicator } from "../../components/V2NotificationStatusIndicator";
+import { WorkspaceGitStatusProvider } from "../../providers/WorkspaceGitStatusProvider";
 import {
 	getDocument,
 	useSharedFileDocument,
@@ -60,6 +61,7 @@ import {
 	type ChatPaneData,
 	type CommentPaneData,
 	type DevtoolsPaneData,
+	type DiffPaneData,
 	type FilePaneData,
 	type PagePaneData,
 	type PaneViewerData,
@@ -72,12 +74,17 @@ import {
 	findTerminalPaneLocation,
 	focusOrAddTerminalPane,
 } from "../../utils/focusTerminalPane";
+import {
+	consumeChatStopped,
+	markChatStopped,
+} from "../../utils/forkChatCloseIntent/forkChatCloseIntent";
 import { openPagePaneInStore } from "../../utils/openPagePaneInStore";
 import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
+import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
-import { AccountUsage } from "./components/AccountUsage";
+import { useWorkspaceFolders } from "../useWorkspaceFolders";
 import {
 	AgentSurfaceToggle,
 	AgentTerminalPane,
@@ -95,6 +102,8 @@ import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneH
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
+import { ForkChatExtras } from "./components/ForkChatExtras";
+import { ForkChatOrigin } from "./components/ForkChatOrigin";
 import { MobilePane } from "./components/MobilePane";
 import { PagePane } from "./components/PagePane";
 import { PagePaneHeaderExtras } from "./components/PagePaneHeaderExtras";
@@ -178,11 +187,14 @@ export function usePaneRegistry({
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
+	const { workspaceKeyForPath } = useWorkspaceFolders(workspaceId);
 	const agentSurface = useAgentSurfaceSwitch(workspaceId);
+	const { park: parkChat } = useForkBackgroundChats(workspaceId);
 	const closeChatWithUndo = useUndoableChatClose({
 		workspaceId,
 		store,
 		stopChat: agentSurface.stopChat,
+		onExpire: parkChat,
 	});
 	const host = useWorkspaceHostTarget(workspaceId);
 	const desktopUrl =
@@ -241,9 +253,8 @@ export function usePaneRegistry({
 		[collections.v2WorkspaceLocalState, workspaceId],
 	);
 
-	const { createNewAgentSession, focusAgentTerminal } = useAgentSessionLauncher(
-		{ workspaceId, store },
-	);
+	const { createNewAgentSession, openAgentChat, focusAgentTerminal } =
+		useAgentSessionLauncher({ workspaceId, store });
 
 	return useMemo<PaneRegistry<PaneViewerData>>(
 		() => ({
@@ -261,15 +272,25 @@ export function usePaneRegistry({
 							filePath={data.filePath}
 							isActive={ctx.isActive}
 							pinned={Boolean(ctx.pane.pinned)}
-							workspaceId={workspaceId}
+							workspaceId={workspaceKeyForPath(data.filePath)}
 						/>
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<FilePane context={ctx} workspaceId={workspaceId} />
+					<FilePane
+						context={ctx}
+						workspaceId={workspaceKeyForPath(
+							(ctx.pane.data as FilePaneData).filePath,
+						)}
+					/>
 				),
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<FilePaneHeaderExtras context={ctx} workspaceId={workspaceId} />
+					<FilePaneHeaderExtras
+						context={ctx}
+						workspaceId={workspaceKeyForPath(
+							(ctx.pane.data as FilePaneData).filePath,
+						)}
+					/>
 				),
 				onHeaderClick: (ctx: RendererContext<PaneViewerData>) =>
 					ctx.actions.pin(),
@@ -350,16 +371,29 @@ export function usePaneRegistry({
 			diff: {
 				getIcon: () => <GitCompareArrows className="size-3.5" />,
 				getTitle: () => t({ message: "Changes" }),
-				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPane
-						context={ctx}
-						workspaceId={workspaceId}
-						onOpenFile={onOpenFile}
-						onCreateNewAgentSession={createNewAgentSession}
-					/>
-				),
+				renderPane: (ctx: RendererContext<PaneViewerData>) => {
+					const { repoKey } = ctx.pane.data as DiffPaneData;
+					const pane = (
+						<DiffPane
+							context={ctx}
+							workspaceId={repoKey ?? workspaceId}
+							onOpenFile={onOpenFile}
+							onCreateNewAgentSession={createNewAgentSession}
+						/>
+					);
+					return repoKey ? (
+						<WorkspaceGitStatusProvider workspaceId={repoKey}>
+							{pane}
+						</WorkspaceGitStatusProvider>
+					) : (
+						pane
+					);
+				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPaneHeaderExtras workspaceId={workspaceId} store={ctx.store} />
+					<DiffPaneHeaderExtras
+						workspaceId={(ctx.pane.data as DiffPaneData).repoKey ?? workspaceId}
+						store={ctx.store}
+					/>
 				),
 				contextMenuActions: (_ctx, defaults) =>
 					defaults.map((d) =>
@@ -383,10 +417,9 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Terminal",
-					}),
+				getTitle: (pane) =>
+					(pane.data as TerminalPaneData).cliTitle ??
+					t({ message: "Terminal" }),
 				titleSource: (pane) => {
 					const { terminalId } = pane.data as TerminalPaneData;
 					const instanceId = pane.id;
@@ -422,8 +455,17 @@ export function usePaneRegistry({
 					);
 				},
 				onAfterClose: (pane, closedPanes) => {
-					const { terminalId } = pane.data as TerminalPaneData;
-					if ((pane.data as { agentSurface?: string }).agentSurface === "acp") {
+					const {
+						acpSessionId,
+						agentSurface: surface,
+						terminalId,
+					} = pane.data as TerminalPaneData;
+					// On the ACP surface the adapter is the only process the close has
+					// left to end: the pty was either stopped by the switch or — for a
+					// chat opened from the launcher — never started, and asking the
+					// host to kill an id it has never seen only logs a failure.
+					if (surface === "acp") {
+						if (acpSessionId) void parkChat(pane);
 						return;
 					}
 					const firstClosed = closedPanes.find(
@@ -475,6 +517,12 @@ export function usePaneRegistry({
 							<TerminalPaneHeaderExtras
 								workspaceId={workspaceId}
 								terminalId={terminalId}
+								fork={{
+									ctx,
+									paneData: data,
+									openAgentChat,
+									createNewAgentSession,
+								}}
 								terminalInstanceId={ctx.pane.id}
 								onNewShell={() =>
 									replaceEndedTerminal({
@@ -511,12 +559,19 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<AgentTerminalPane
+					<ForkChatExtras
 						ctx={ctx}
-						onOpenFile={onOpenFile}
-						onRevealPath={onRevealPath}
 						workspaceId={workspaceId}
-					/>
+						openAgentChat={openAgentChat}
+					>
+						<AgentTerminalPane
+							onSwitchSurface={agentSurface.switchSurface}
+							ctx={ctx}
+							onOpenFile={onOpenFile}
+							onRevealPath={onRevealPath}
+							workspaceId={workspaceId}
+						/>
+					</ForkChatExtras>
 				),
 				contextMenuActions: (_ctx, defaults) => {
 					const terminalActions: ContextMenuActionConfig<PaneViewerData>[] = [
@@ -798,10 +853,8 @@ export function usePaneRegistry({
 						/>
 					);
 				},
-				getTitle: () =>
-					t({
-						message: "Chat",
-					}),
+				getTitle: (pane) =>
+					(pane.data as ChatPaneData).agentLabel ?? t({ message: "Chat" }),
 				titleSource: (pane) => {
 					const { chatTitle } = pane.data as ChatPaneData;
 					return {
@@ -809,16 +862,22 @@ export function usePaneRegistry({
 						getSnapshot: () => chatTitle,
 					};
 				},
-				onAfterClose: closeChatWithUndo,
+				onAfterClose: (pane) => {
+					const { terminalId } = pane.data as ChatPaneData;
+					if (consumeChatStopped(terminalId)) return;
+					if (
+						[store, ...(linkedStores ?? [])].some((candidate) =>
+							findTerminalPaneLocation(candidate.getState(), terminalId),
+						)
+					)
+						return;
+					closeChatWithUndo(pane);
+				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
 					const data = ctx.pane.data as ChatPaneData;
 					return (
 						<div className="flex items-center gap-1">
-							<AccountUsage
-								key={`${workspaceId}:${data.terminalId}`}
-								workspaceId={workspaceId}
-								terminalId={data.terminalId}
-							/>
+							<ForkChatOrigin ctx={ctx} workspaceId={workspaceId} />
 							<AgentSurfaceToggle
 								pane={{ kind: "chat", data }}
 								onChange={(surface, agent) =>
@@ -830,27 +889,45 @@ export function usePaneRegistry({
 					);
 				},
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
-					<ChatPane
+					<ForkChatExtras
 						ctx={ctx}
-						onOpenFile={onOpenFile}
-						onRevealPath={onRevealPath}
 						workspaceId={workspaceId}
-					/>
+						openAgentChat={openAgentChat}
+					>
+						<ChatPane
+							ctx={ctx}
+							onOpenFile={onOpenFile}
+							onRevealPath={onRevealPath}
+							workspaceId={workspaceId}
+						/>
+					</ForkChatExtras>
 				),
 				contextMenuActions: (
 					_ctx: RendererContext<PaneViewerData>,
 					defaults: ContextMenuActionConfig<PaneViewerData>[],
-				) =>
-					defaults.map((d) =>
+				) => [
+					{
+						key: "stop-chat",
+						label: t({ message: "Stop" }),
+						onSelect: async (ctx: RendererContext<PaneViewerData>) => {
+							const data = ctx.pane.data as ChatPaneData;
+							if (
+								data.sessionId &&
+								!(await agentSurface.stopChat(data.sessionId))
+							)
+								return;
+							markChatStopped(data.terminalId);
+							ctx.store
+								.getState()
+								.closePane({ tabId: ctx.tab.id, paneId: ctx.pane.id });
+						},
+					},
+					...defaults.map((d) =>
 						d.key === "close-pane"
-							? {
-									...d,
-									label: t({
-										message: "Close Chat",
-									}),
-								}
+							? { ...d, label: t({ message: "Close Chat" }) }
 							: d,
 					),
+				],
 			},
 			comment: {
 				getIcon: (ctx: RendererContext<PaneViewerData>) => {
@@ -1000,7 +1077,9 @@ export function usePaneRegistry({
 			store,
 			linkedStores,
 			workspaceId,
+			workspaceKeyForPath,
 			agentSurface,
+			parkChat,
 			closeChatWithUndo,
 			clearWorkspaceRunTerminal,
 			clearShortcut,
@@ -1014,6 +1093,7 @@ export function usePaneRegistry({
 			onRevealPath,
 			onSearch,
 			createNewAgentSession,
+			openAgentChat,
 			focusAgentTerminal,
 			workspaceTrpcUtils,
 			t,

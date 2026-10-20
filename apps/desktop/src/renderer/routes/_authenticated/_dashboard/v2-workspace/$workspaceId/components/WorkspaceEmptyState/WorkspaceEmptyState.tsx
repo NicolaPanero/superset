@@ -1,16 +1,21 @@
 import { useLingui } from "@lingui/react/macro";
+import { Bot } from "lucide-react";
 import { useMemo } from "react";
 import type { IconType } from "react-icons";
 import { BsTerminalPlus } from "react-icons/bs";
 import { LuGitCompareArrows, LuSearch } from "react-icons/lu";
 import { TbWorld } from "react-icons/tb";
+import {
+	ForkHomeBackground,
+	ForkHomeBrand,
+} from "renderer/components/ForkHomeBackground";
+import { ForkProductMark } from "renderer/components/ForkProductMark";
 import { GitHubStarPill } from "renderer/components/GitHubStarPill";
 import { useHotkeyDisplay } from "renderer/hotkeys";
-import supersetEmptyStateWordmark from "renderer/screens/main/components/WorkspaceView/ContentView/TabsContent/assets/superset-empty-state-wordmark.svg";
 import { EmptyTabActionButton } from "renderer/screens/main/components/WorkspaceView/ContentView/TabsContent/components/EmptyTabActionButton";
-import { useTheme } from "renderer/stores/theme";
 
 interface WorkspaceEmptyStateProps {
+	onOpenAgent: () => void;
 	onOpenBrowser: () => void;
 	onOpenChanges: () => void;
 	onOpenQuickOpen: () => void;
@@ -26,13 +31,14 @@ interface WorkspaceEmptyStateAction {
 }
 
 export function WorkspaceEmptyState({
+	onOpenAgent,
 	onOpenBrowser,
 	onOpenChanges,
 	onOpenQuickOpen,
 	onOpenTerminal,
 }: WorkspaceEmptyStateProps) {
 	const { t } = useLingui();
-	const activeTheme = useTheme();
+	const { keys: newAgentDisplay } = useHotkeyDisplay("NEW_AGENT");
 	const { keys: newGroupDisplay } = useHotkeyDisplay("NEW_GROUP");
 	const { keys: newBrowserDisplay } = useHotkeyDisplay("NEW_BROWSER");
 	const { keys: quickOpenDisplay } = useHotkeyDisplay("QUICK_OPEN");
@@ -40,6 +46,15 @@ export function WorkspaceEmptyState({
 
 	const actions = useMemo<Array<WorkspaceEmptyStateAction>>(
 		() => [
+			{
+				id: "agent",
+				label: t({
+					message: "New Agent",
+				}),
+				display: newAgentDisplay,
+				icon: Bot,
+				onClick: onOpenAgent,
+			},
 			{
 				id: "terminal",
 				label: t({
@@ -78,9 +93,11 @@ export function WorkspaceEmptyState({
 			},
 		],
 		[
+			newAgentDisplay,
 			newBrowserDisplay,
 			newGroupDisplay,
 			onOpenBrowser,
+			onOpenAgent,
 			onOpenChanges,
 			onOpenQuickOpen,
 			onOpenTerminal,
@@ -91,19 +108,13 @@ export function WorkspaceEmptyState({
 	);
 
 	return (
-		<div className="flex h-full flex-1 items-center justify-center px-6 py-10">
+		<div className="relative isolate flex h-full flex-1 items-center justify-center px-6 py-10">
+			<ForkHomeBackground active />
 			<div className="w-full max-w-xl">
 				<div className="mb-7 flex items-center justify-center py-3">
-					<img
-						alt="Superset"
-						className={`h-8 w-auto select-none ${
-							activeTheme?.type === "dark"
-								? "opacity-85"
-								: "brightness-0 opacity-75"
-						}`}
-						draggable={false}
-						src={supersetEmptyStateWordmark}
-					/>
+					<ForkHomeBrand compact>
+						<ForkProductMark className="h-8 w-auto select-none text-foreground/80" />
+					</ForkHomeBrand>
 				</div>
 				<div className="mx-auto grid w-full max-w-md gap-0.5">
 					{actions.map((action) => (

@@ -4,6 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef } from "react";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { useHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
+import { useForkHostId } from "renderer/lib/fork-host-visibility";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useWorkspaceHostOptions } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/components/DevicePicker/hooks/useWorkspaceHostOptions";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
@@ -22,9 +23,10 @@ interface V2ProjectSettingsProps {
 
 export function V2ProjectSettings({
 	projectId,
-	hostId,
+	hostId: requestedHostId,
 	focusField,
 }: V2ProjectSettingsProps) {
+	const hostId = useForkHostId(requestedHostId);
 	const navigate = useNavigate();
 	const { t } = useLingui();
 	const { machineId } = useLocalHostService();

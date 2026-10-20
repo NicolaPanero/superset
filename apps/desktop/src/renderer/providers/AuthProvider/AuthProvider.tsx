@@ -1,11 +1,11 @@
 import { type ReactNode, useEffect, useState } from "react";
+import { ForkWordmark } from "renderer/components/ForkWordmark";
 import {
 	authClient,
 	getAuthToken,
 	setAuthToken,
 	setJwt,
 } from "renderer/lib/auth-client";
-import { SupersetLogo } from "renderer/routes/sign-in/components/SupersetLogo/SupersetLogo";
 import { electronTrpc } from "../../lib/electron-trpc";
 
 const HYDRATION_TIMEOUT_MS = 15_000;
@@ -128,7 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		return (
 			<div className="relative flex h-screen w-screen items-center justify-center bg-background">
 				<div className="drag absolute inset-x-0 top-0 h-12" />
-				<SupersetLogo className="h-8 w-auto" gradient />
+				<ForkWordmark className="h-8 w-auto" gradient />
 			</div>
 		);
 	}

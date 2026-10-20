@@ -17,7 +17,7 @@ import {
 import { ChatClosedToast } from "./components/ChatClosedToast";
 import { createClosedChatBatches } from "./utils/closedChatBatches";
 
-const UNDO_WINDOW_MS = 10_000;
+const UNDO_WINDOW_MS = 5_000;
 
 interface ClosedChat {
 	pane: Pane<PaneViewerData>;
@@ -31,14 +31,16 @@ export function useUndoableChatClose({
 	workspaceId,
 	store,
 	stopChat,
+	onExpire,
 }: {
 	workspaceId: string;
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	stopChat: (sessionId: string) => Promise<boolean>;
+	onExpire?: (pane: Pane<PaneViewerData>) => Promise<void>;
 }): (pane: Pane<PaneViewerData>) => void {
 	const { t } = useLingui();
-	const latest = useRef({ store, stopChat, t });
-	latest.current = { store, stopChat, t };
+	const latest = useRef({ store, stopChat, onExpire, t });
+	latest.current = { store, stopChat, onExpire, t };
 	const previousTabs = useRef(store.getState().tabs);
 
 	useEffect(
@@ -98,7 +100,14 @@ export function useUndoableChatClose({
 				if (chat.slot) state.insertTab(chat.slot);
 				else state.addTab({ panes: [chat.pane] });
 			},
-			stop: (chat) => stopSession(chat.sessionId),
+			stop: (chat) => {
+				const expire = latest.current.onExpire;
+				if (expire)
+					void expire(chat.pane).finally(() =>
+						removePendingChatStop(chat.sessionId),
+					);
+				else stopSession(chat.sessionId);
+			},
 		});
 		return { closed, stopSession };
 	});
@@ -120,7 +129,7 @@ export function useUndoableChatClose({
 				(tab) => tab.panes[pane.id] !== undefined,
 			);
 			const tab = previousTabs.current[index];
-			addPendingChatStop(workspaceId, sessionId);
+			if (!latest.current.onExpire) addPendingChatStop(workspaceId, sessionId);
 			batches.closed.add({
 				pane,
 				slot:

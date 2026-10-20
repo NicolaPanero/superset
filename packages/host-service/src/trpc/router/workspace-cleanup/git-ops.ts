@@ -74,6 +74,7 @@ export const cleanupGitOps = {
 	deleteLocalBranch(input: {
 		repoPath: string;
 		branch: string;
+		workspaceId?: string;
 		gitEnv: GitTaskEnv;
 	}): Promise<{ deleted: boolean }> {
 		return getHostWorkerPool().run(gitDeleteBranchTask, input);

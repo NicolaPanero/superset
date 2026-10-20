@@ -13,6 +13,7 @@ import { cn } from "@superset/ui/utils";
 import { ShieldQuestion, SquareTerminal } from "lucide-react";
 import { ToolContentList } from "../ToolContentList";
 import { OptionButtons } from "./components/OptionButtons";
+import { QuestionAnswers } from "./components/QuestionAnswers";
 import { QuestionForm } from "./components/QuestionForm";
 import type { ApprovalOption } from "./utils/optionRole";
 
@@ -132,7 +133,11 @@ export function ApprovalRow({
 				<ToolContentList itemId={item.id} items={item.detail} />
 			)}
 			{pending &&
-				(options.length > 0 ? (
+				(item.form ? (
+					<QuestionForm item={item} form={item.form} onRespond={onRespond} />
+				) : item.questions?.length ? (
+					<QuestionAnswers item={item} onRespond={onRespond} />
+				) : options.length > 0 ? (
 					<OptionButtons item={{ ...item, options }} onRespond={onRespond} />
 				) : (
 					<div className="flex items-center justify-end gap-2">

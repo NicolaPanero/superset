@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect } from "react";
+import { ForkWhatsNewNotice } from "renderer/components/ForkWhatsNewNotice";
 import { UpdateRequiredPage } from "renderer/components/UpdateRequiredPage";
 import { env } from "renderer/env.renderer";
 import { useDesktopNotices } from "renderer/hooks/useDesktopNotices";
@@ -11,7 +12,7 @@ import { NoticeDialog } from "./components/NoticeDialog";
  * render as a modal over it.
  */
 export function DesktopNoticesGate({ children }: { children: ReactNode }) {
-	const { current, dismiss } = useDesktopNotices();
+	const { ready, current, dismiss } = useDesktopNotices();
 	const preview = useDesktopNoticePreviewStore((s) => s.preview);
 	const setPreview = useDesktopNoticePreviewStore((s) => s.setPreview);
 
@@ -39,7 +40,11 @@ export function DesktopNoticesGate({ children }: { children: ReactNode }) {
 	return (
 		<>
 			{children}
-			{current && <NoticeDialog notice={current} onDismiss={dismiss} />}
+			{current ? (
+				<NoticeDialog notice={current} onDismiss={dismiss} />
+			) : ready ? (
+				<ForkWhatsNewNotice />
+			) : null}
 		</>
 	);
 }

@@ -50,6 +50,7 @@ import type {
 	PromptResult,
 	QueueState,
 } from "../../sessions";
+import { forkMessagePoint } from "../forkMessagePoint";
 
 export const createSessionCommandSchema = createSessionInputSchema
 	.omit({ workspaceId: true })
@@ -226,6 +227,9 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 						modeId: parsed.modeId,
 						modelId: parsed.modelId,
 						resume: parsed.resume,
+						agentConfigId: parsed.agentConfigId,
+						accountSelection: parsed.accountSelection,
+						strictResume: parsed.strictResume,
 						terminalId: parsed.terminalId,
 					});
 				} catch (error) {
@@ -323,18 +327,44 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 		 */
 		async forkSession(input) {
 			const parsed = forkSessionCommandSchema.parse(input);
-			const live = options.live.require(parsed.sessionId);
-			const forked = await live.fork();
-			if (!forked) return null;
-			const source = options.sessions.get(parsed.sessionId);
-			if (!source) return null;
-			return this.createSession({
-				commandId: parsed.commandId,
-				scopeId: source.scopeId,
-				cwd: parsed.cwd,
-				harness: parsed.harness ?? source.harness,
-				resume: { harnessSessionId: forked },
-				terminalId: live.terminalId,
+			return options.dedupe.run(`forkSession:${parsed.commandId}`, async () => {
+				const live = options.live.require(parsed.sessionId);
+				const selected = parsed.fromItemId;
+				if (selected && live.state.forkAtMessage !== true) return null;
+				if (
+					selected &&
+					(live.state.status !== "idle" ||
+						live.turn?.status === "running" ||
+						live.queuedCount > 0 ||
+						live.state.backgroundTasks?.length)
+				)
+					throw new Error(
+						"Wait for the agent and queued work to finish before branching",
+					);
+				const replayed = selected ? replaySession(parsed.sessionId) : undefined;
+				if (replayed && !replayed.ok)
+					throw new Error("Could not read the source conversation");
+				const resolved =
+					selected && replayed?.ok
+						? forkMessagePoint(replayed.snapshot, selected)
+						: undefined;
+				const forked =
+					resolved && !resolved.point ? null : await live.fork(resolved?.point);
+				if ((!resolved || resolved.point) && !forked) return null;
+				const source = options.sessions.get(parsed.sessionId);
+				if (!source) return null;
+				return this.createSession({
+					...live.launchOptions,
+					commandId: parsed.commandId,
+					scopeId: source.scopeId,
+					cwd: parsed.cwd,
+					harness: parsed.harness ?? source.harness,
+					modeId: live.state.modeId ?? live.launchOptions?.modeId,
+					modelId: live.state.modelId ?? live.launchOptions?.modelId,
+					resume: forked ? { harnessSessionId: forked } : undefined,
+					strictResume: Boolean(forked),
+					terminalId: live.terminalId,
+				});
 			});
 		},
 

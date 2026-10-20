@@ -22,6 +22,7 @@ import {
 	WORKSPACE_ATTACHMENTS_DIR,
 } from "@superset/shared/workspace-attachments";
 import mimeTypes from "mime-types";
+import { touchAttachment } from "../fork-attachments/fork-attachment-retention";
 
 const NAME_HASH_CHARS = 12;
 
@@ -102,6 +103,7 @@ function storeImage(
 	const fileName = `${stemFor(name)}-${hash}.${extensionFor(source.mimeType, name)}`;
 	const target = join(attachmentsDir(cwd), fileName);
 	if (!existsSync(target)) writeFileSync(target, bytes);
+	else touchAttachment(target);
 	return { path: `${WORKSPACE_ATTACHMENTS_DIR}/${fileName}` };
 }
 
