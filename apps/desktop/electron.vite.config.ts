@@ -221,6 +221,7 @@ export default defineConfig({
 				process.env.NEXT_PUBLIC_WEB_URL,
 				"https://app.superset.sh",
 			),
+			"process.env.MEDIA_URL": defineEnv(process.env.MEDIA_URL, ""),
 			"process.env.NEXT_PUBLIC_MARKETING_URL": defineEnv(
 				process.env.NEXT_PUBLIC_MARKETING_URL,
 				"https://superset.sh",
