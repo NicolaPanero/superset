@@ -19,6 +19,7 @@ import {
 	AGENT_DEFAULT_MODE,
 	FULL_ACCESS_CHAT_MODE,
 	isFullAccessMode,
+	normalizePlanEntryStatus,
 } from "@superset/chat/protocol";
 import { z } from "zod";
 import { BackgroundTasks } from "../backgroundTasks";
@@ -40,6 +41,7 @@ import {
 	isTerminalAirState,
 } from "./air";
 import { cursorApproval } from "./cursorExtensions";
+import { ForkCursorModelSelection } from "./forkCursorModelSelection";
 import {
 	fullAccessAllowOption,
 	fullAccessModes,
@@ -152,17 +154,12 @@ function toolCallSettled(status: string | null | undefined): boolean {
 	);
 }
 
-function planEntryStatus(status: string): Plan["entries"][number]["status"] {
-	if (status === "in_progress" || status === "completed") return status;
-	return "pending";
-}
-
 function planEntryItems(
 	entries: ReadonlyArray<{ content: string; status: string }>,
 ): Plan["entries"] {
 	return entries.map((entry) => ({
 		text: entry.content,
-		status: planEntryStatus(entry.status),
+		status: normalizePlanEntryStatus(entry.status),
 	}));
 }
 
@@ -251,6 +248,7 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	authMethodId?: string;
 	forkPlanReadPermissions?: boolean;
 	forkAtMessage?: boolean;
+	forkCursorModelSelection?: boolean;
 	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
 	wholeUserMessageReplay?: boolean;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
@@ -481,6 +479,7 @@ export class AcpAdapter implements HarnessAdapter {
 	private autoApprovePermissions = false;
 	private modeChangeVersion = 0;
 	private readonly selectionsInFlight = new Set<Promise<void>>();
+	private readonly cursorModels: ForkCursorModelSelection | null;
 	private configOptions: SessionConfigOption[] = [];
 	private replaying = false;
 	private agentName: string | null = null;
@@ -495,6 +494,9 @@ export class AcpAdapter implements HarnessAdapter {
 	private shellPoll: ReturnType<typeof setInterval> | null = null;
 
 	constructor(private readonly options: AcpAdapterOptions) {
+		this.cursorModels = options.forkCursorModelSelection
+			? new ForkCursorModelSelection()
+			: null;
 		this.backgroundTasks = new BackgroundTasks(
 			(tasks) => {
 				const live = new Set(tasks.map((task) => task.id));
@@ -536,6 +538,7 @@ export class AcpAdapter implements HarnessAdapter {
 	canSteer(): boolean {
 		return (
 			this.supportsSteering &&
+			(this.cursorModels?.confirmed ?? true) &&
 			this.currentTurn?.status === "running" &&
 			this.heldTurnId !== this.currentTurn.id
 		);
@@ -545,9 +548,12 @@ export class AcpAdapter implements HarnessAdapter {
 		const client = this.client;
 		const sessionId = this.sessionId;
 		if (!client || !sessionId || !this.canSteer()) return false;
+		const prompt = await this.toAcpPrompt(content);
+		await this.selectionsApplied();
+		if (!this.canSteer()) return false;
 		const response = await client.request(ACP_STEERING_METHOD, {
 			sessionId,
-			prompt: await this.toAcpPrompt(content),
+			prompt,
 			_meta: { steering: { idleBehavior: "promptRequired" } },
 		});
 		const outcome = acpSteeringResponseSchema.safeParse(response).data?.outcome;
@@ -732,11 +738,12 @@ export class AcpAdapter implements HarnessAdapter {
 
 	/** An agent may run a prompt before it applies a mode or model it was just sent. */
 	private async selectionsApplied(): Promise<void> {
-		if (this.selectionsInFlight.size === 0) return;
-		await Promise.all(this.selectionsInFlight);
+		while (this.selectionsInFlight.size > 0) {
+			await Promise.all(this.selectionsInFlight);
+		}
 	}
 
-	setConfigOption(configId: string, value: string): void {
+	setConfigOption(configId: string, value: string): Promise<void> | undefined {
 		if (configId === this.modeConfigId) {
 			this.setMode(value);
 			return;
@@ -754,22 +761,47 @@ export class AcpAdapter implements HarnessAdapter {
 			configOptions: this.configOptions,
 			...(configId === this.modeConfigId ? { modeId: value } : {}),
 		});
-		const request = client.request(
-			"session/set_config_option",
-			{
-				sessionId,
-				configId,
-				value,
-				...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
-			},
-			this.requestTimeoutMs(),
-		);
+		const send = () =>
+			client.request(
+				"session/set_config_option",
+				{
+					sessionId,
+					configId,
+					value,
+					...(this.negotiatedVersion >= 2 ? { type: "id" } : {}),
+				},
+				this.requestTimeoutMs(),
+			);
+		const cursorModels = previous.some(
+			(option) =>
+				option.id === configId &&
+				["model", "thought_level", "model_config"].includes(
+					option.category ?? "",
+				),
+		)
+			? this.cursorModels
+			: null;
+		const request = cursorModels
+			? cursorModels.select(
+					configId,
+					value,
+					send,
+					previous.some(
+						(option) => option.id === configId && option.category === "model",
+					),
+				)
+			: send();
 		this.trackSelection(request);
-		request
+		return request
 			.then((response) => this.handleConfigOptions(response))
 			.catch((error: Error) => {
 				if (error instanceof AcpTimeoutError) {
-					this.emitNotice("error", unconfirmedSelectionMessage(error));
+					this.emitNotice(
+						"error",
+						cursorModels
+							? "Cursor model selection timed out. Reopen this chat before sending another message."
+							: unconfirmedSelectionMessage(error),
+					);
 					return;
 				}
 				this.configOptions = previous;
@@ -892,14 +924,23 @@ export class AcpAdapter implements HarnessAdapter {
 					clientInfo: CLIENT_INFO,
 					// v2 moved fs and terminal out of client capabilities entirely.
 					// Without form elicitation, claude-agent-acp drops AskUserQuestion.
-					capabilities: { elicitation: { form: {} }, _meta: AIR_CLIENT_META },
+					capabilities: {
+						elicitation: { form: {} },
+						_meta: {
+							...AIR_CLIENT_META,
+							...(this.cursorModels ? { parameterizedModelPicker: true } : {}),
+						},
+					},
 					// Do not advertise fs/terminal: the agent falls back to its own
 					// Read/Edit/Bash tools, which run headless in the workspace.
 					clientCapabilities: {
 						fs: { readTextFile: false, writeTextFile: false },
 						terminal: false,
 						elicitation: { form: {} },
-						_meta: AIR_CLIENT_META,
+						_meta: {
+							...AIR_CLIENT_META,
+							...(this.cursorModels ? { parameterizedModelPicker: true } : {}),
+						},
 					},
 				},
 				startupTimeoutMs,
@@ -1064,15 +1105,17 @@ export class AcpAdapter implements HarnessAdapter {
 		this.emitTurn({ id: turnId, status: "running", startedAtMs: this.now() });
 		this.emitSession({ status: "running" });
 		this.heldTurnId = turnId;
-		await this.selectionsApplied();
-		if (this.heldTurnId !== turnId) return;
-		this.heldTurnId = null;
-		const client = this.client;
-		if (!client || !this.sessionId || this.currentTurn?.id !== turnId) return;
 		try {
+			const prompt = await this.toAcpPrompt(content);
+			await this.selectionsApplied();
+			if (this.heldTurnId !== turnId) return;
+			this.heldTurnId = null;
+			const client = this.client;
+			if (!client || !this.sessionId || this.currentTurn?.id !== turnId) return;
+			this.cursorModels?.assertConfirmed();
 			const response = await client.request("session/prompt", {
 				sessionId: this.sessionId,
-				prompt: await this.toAcpPrompt(content),
+				prompt,
 			});
 			this.flushOpenText();
 			const stopReason =
@@ -1952,13 +1995,27 @@ export class AcpAdapter implements HarnessAdapter {
 		resumed: boolean,
 	): void {
 		const modeId = this.startModeId(startOptions, resumed);
+		if (this.cursorModels) {
+			const applying = this.cursorModels.start(
+				this.configOptions,
+				startOptions.modelId,
+				async (id, value) => {
+					await this.setConfigOption(id, value);
+					return this.configOptions;
+				},
+			);
+			this.trackSelection(applying);
+			void applying.catch((error: Error) =>
+				this.emitNotice("error", error.message),
+			);
+		}
 		if (modeId === FULL_ACCESS_CHAT_MODE) this.setMode(modeId);
 		else if (isFullAccessMode(modeId) && modeId === this.nativeModeId) {
 			this.autoApprovePermissions = true;
 			this.approvePendingToolPermissions();
 		}
 		for (const [category, value] of [
-			["model", startOptions.modelId],
+			["model", this.cursorModels ? undefined : startOptions.modelId],
 			["mode", this.options.clientApprovalModes ? undefined : modeId],
 		] as const) {
 			const option = this.configOptions.find(

@@ -67,6 +67,7 @@ export function acpHarnessFactory(
 					command: entry.binary,
 					forkPlanReadPermissions: harness === "claude-acp",
 					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
+					forkCursorModelSelection: harness === "cursor-acp",
 					get authMethodId() {
 						return authMethodId;
 					},

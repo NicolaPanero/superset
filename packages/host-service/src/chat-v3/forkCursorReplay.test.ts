@@ -33,6 +33,7 @@ test.each([
 		harness === "cursor-acp" ? true : undefined,
 	);
 	expect(options?.launch).toBeTypeOf("function");
+	expect(options?.forkCursorModelSelection).toBe(harness === "cursor-acp");
 });
 
 test("every chat preset is recognized by both the renderer and the workspace launcher", async () => {

@@ -154,3 +154,46 @@ test("Switch asks for the dialog only after the menu has closed", async () => {
 	await switchAndClose(view);
 	expect(menuOpenAtRequest).toEqual([false]);
 });
+
+test("Cursor's native effort levels appear in the picker and reach the session", async () => {
+	const onSelect = mock();
+	const view = render(
+		<ForkSessionModelPicker
+			configs={[{ id: "cursor", label: "Cursor", presetId: "cursor-agent" }]}
+			data={
+				{
+					...data,
+					acpAgentConfigId: "cursor",
+					agent: { id: "cursor-agent", sessionId: "session-cursor" },
+				} as TerminalPaneData
+			}
+			configOptions={[
+				{
+					id: "model",
+					label: "Model",
+					category: "model",
+					currentValue: "claude-opus-5-5",
+					options: [{ id: "claude-opus-5-5", label: "Claude Opus 5.5" }],
+				},
+				{
+					id: "effort",
+					label: "Effort",
+					category: "thought_level",
+					currentValue: "medium",
+					options: ["low", "medium", "high", "xhigh", "max"].map((id) => ({
+						id,
+						label: id,
+					})),
+				},
+			]}
+			onSelect={onSelect}
+			onRequestSwitch={mock()}
+		/>,
+	);
+	await openPicker(view);
+	const slider = view.getByRole("slider");
+	expect(slider.getAttribute("aria-valuemax")).toBe("4");
+	fireEvent.keyDown(slider, { key: "End", code: "End" });
+	await flush();
+	expect(onSelect).toHaveBeenCalledWith("effort", "max");
+});
