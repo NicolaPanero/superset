@@ -23,17 +23,42 @@ export async function forkFetch<T>(
 	fetcher: typeof fetch = fetch,
 ): Promise<T> {
 	let response: Response;
-	try {
-		response = await fetcher(url, {
-			...init,
-			redirect: "error",
-			signal: init.signal ?? AbortSignal.timeout(15_000),
-		});
-	} catch {
-		throw new TRPCError({
-			code: "BAD_GATEWAY",
-			message: "The service could not be reached",
-		});
+	let target = new URL(url);
+	const origin = target.origin;
+	const readOnly = ["GET", "HEAD"].includes(
+		(init.method ?? "GET").toUpperCase(),
+	);
+	const signal = init.signal ?? AbortSignal.timeout(15_000);
+	for (let redirects = 0; ; redirects++) {
+		try {
+			response = await fetcher(target.href, {
+				...init,
+				redirect: readOnly ? "manual" : "error",
+				signal,
+			});
+		} catch {
+			throw new TRPCError({
+				code: "BAD_GATEWAY",
+				message: "The service could not be reached",
+			});
+		}
+		if (!readOnly || ![301, 302, 303, 307, 308].includes(response.status))
+			break;
+		await response.body?.cancel();
+		const location = response.headers.get("location");
+		const next = location ? URL.parse(location, target.href) : null;
+		if (
+			!next ||
+			next.origin !== origin ||
+			next.username ||
+			next.password ||
+			redirects >= 3
+		)
+			throw new TRPCError({
+				code: "BAD_GATEWAY",
+				message: "Invalid service redirect",
+			});
+		target = next;
 	}
 	if (!response.ok) {
 		const code =

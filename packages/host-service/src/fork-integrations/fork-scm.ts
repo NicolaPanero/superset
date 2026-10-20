@@ -182,14 +182,16 @@ function ghPR(
 function nextPath(
 	next: string | undefined,
 	base: string,
-	prefix: string,
+	prefix: string | readonly string[],
 ): string | null {
 	if (!next) return null;
 	const url = new URL(next),
 		expected = new URL(base);
 	if (
 		url.origin !== expected.origin ||
-		!url.pathname.startsWith(expected.pathname + prefix)
+		!(typeof prefix === "string" ? [prefix] : prefix).some((path) =>
+			url.pathname.startsWith(expected.pathname + path),
+		)
 	)
 		throw new TRPCError({
 			code: "BAD_GATEWAY",
@@ -650,7 +652,10 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 				additions += file.lines_added ?? 0;
 				deletions += file.lines_removed ?? 0;
 			}
-			cursor = nextPath(data.next, "https://api.bitbucket.org/2.0", prefix);
+			cursor = nextPath(data.next, "https://api.bitbucket.org/2.0", [
+				prefix,
+				`${repoPath(r)}/diffstat/`,
+			]);
 		}
 		if (cursor)
 			throw new TRPCError({
