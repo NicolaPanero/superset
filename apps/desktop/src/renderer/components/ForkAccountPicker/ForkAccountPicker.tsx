@@ -30,6 +30,7 @@ export function ForkAccountPicker({
 	compact = false,
 	extraItems,
 	hidden,
+	hostUrl,
 	disabled = false,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
@@ -38,6 +39,7 @@ export function ForkAccountPicker({
 	compact?: boolean;
 	extraItems?: ReactNode;
 	hidden?: string | null;
+	hostUrl?: string | null;
 	disabled?: boolean;
 }) {
 	const { t } = useLingui();
@@ -121,6 +123,7 @@ export function ForkAccountPicker({
 						afterClose={menuDialog.afterClose}
 						extraItems={extraItems}
 						hidden={hidden}
+						hostUrl={hostUrl}
 					/>
 				</DropdownMenuContent>
 			</DropdownMenu>

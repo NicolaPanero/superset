@@ -11,6 +11,7 @@ import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { LuCheck, LuPlus, LuRefreshCw, LuSettings2 } from "react-icons/lu";
+import { ForkAccountResets } from "renderer/components/ForkAccountResets";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { ForkUsageSummary } from "../../../ForkUsageSummary";
 import { useForkAccountChoices } from "../../useForkAccountChoices";
@@ -23,6 +24,7 @@ export function ForkAccountMenuItems({
 	afterClose,
 	extraItems,
 	hidden,
+	hostUrl,
 }: {
 	account: ReturnType<typeof useForkCreationAccount>;
 	provider: string | null;
@@ -31,6 +33,8 @@ export function ForkAccountMenuItems({
 	extraItems?: ReactNode;
 	/** An account not to offer, such as the one a chat already uses. */
 	hidden?: string | null;
+	/** Host used for reset actions on the active account detail block. */
+	hostUrl?: string | null;
 }) {
 	const navigate = useNavigate();
 	const { choices, selected, suggested } = useForkAccountChoices(
@@ -88,12 +92,29 @@ export function ForkAccountMenuItems({
 								)}
 							</div>
 							<div className="col-start-2 flex min-w-0 flex-wrap items-center gap-x-2">
-								<ForkUsageSummary account={usage} model={model} compact />
-								{(usage?.status === "signed_out" ||
-									usage?.status === "token_expired") && (
-									<span className="text-xs text-warning">
-										<Trans>Reconnect account</Trans>
-									</span>
+								{chosen ? (
+									usage && (
+										<div className="w-full space-y-2 py-1">
+											<ForkUsageSummary account={usage} model={model} />
+											{hostUrl && (
+												<ForkAccountResets
+													hostUrl={hostUrl}
+													account={usage}
+													hideEmail
+												/>
+											)}
+										</div>
+									)
+								) : (
+									<>
+										<ForkUsageSummary account={usage} model={model} compact />
+										{(usage?.status === "signed_out" ||
+											usage?.status === "token_expired") && (
+											<span className="text-xs text-warning">
+												<Trans>Reconnect account</Trans>
+											</span>
+										)}
+									</>
 								)}
 							</div>
 						</DropdownMenuItem>
