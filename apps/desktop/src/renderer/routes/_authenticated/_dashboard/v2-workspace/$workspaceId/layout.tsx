@@ -2,7 +2,6 @@ import { eq } from "@tanstack/db";
 import { useLiveQuery } from "@tanstack/react-db";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef } from "react";
-import { ForkWorkspaceLinks } from "renderer/components/ForkIntegrations/components/ForkWorkspaceLinks/ForkWorkspaceLinks";
 import type { HostShapedWorkspace } from "renderer/hooks/host-workspaces/useHostWorkspaces";
 import {
 	type CloudWorkspaceRow,
@@ -242,12 +241,7 @@ function V2WorkspaceLayout() {
 
 	return (
 		<WorkspaceProvider workspace={workspace}>
-			<div className="flex min-h-0 min-w-0 flex-1 flex-col">
-				<ForkWorkspaceLinks />
-				<div className="flex min-h-0 flex-1">
-					<Outlet />
-				</div>
-			</div>
+			<Outlet />
 		</WorkspaceProvider>
 	);
 }

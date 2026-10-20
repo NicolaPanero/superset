@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { orderForkDefaultAgentPresets } from "./fork-agent-order";
 import {
+	AGENT_PRESET_FEATURE_FLAGS,
 	getDefaultSeedPresets,
 	HOST_AGENT_PRESETS,
 } from "./host-agent-presets";
@@ -8,13 +9,16 @@ import {
 test("new hosts start with Claude, Codex, Cursor Agent, OpenCode and Amp", () => {
 	const initial = getDefaultSeedPresets().map((preset) => preset.presetId);
 	const priority = ["claude", "codex", "cursor-agent", "opencode", "amp"];
+	const seedable = HOST_AGENT_PRESETS.filter(
+		(preset) => !AGENT_PRESET_FEATURE_FLAGS.has(preset.presetId),
+	);
 	expect(initial.slice(0, 5)).toEqual(priority);
 	expect(initial.slice(5)).toEqual(
-		HOST_AGENT_PRESETS.filter(
-			(preset) => !priority.includes(preset.presetId),
-		).map((preset) => preset.presetId),
+		seedable
+			.filter((preset) => !priority.includes(preset.presetId))
+			.map((preset) => preset.presetId),
 	);
-	expect(initial).toHaveLength(HOST_AGENT_PRESETS.length);
+	expect(initial).toHaveLength(seedable.length);
 });
 
 test("future agents retain their catalog order without modifying the source", () => {

@@ -108,7 +108,6 @@ export function AcpChatPane({
 	const harness = acpHarnessForPreset(agent?.id);
 	const [runtimeDead, setRuntimeDead] = useState(false);
 	const [failure, setFailure] = useState<string | null>(null);
-	const [unreachable, setUnreachable] = useState(false);
 	const [replacement, setReplacement] = useState<string | null>(null);
 
 	// The stored session outlives its process — after a host restart the row
@@ -182,9 +181,6 @@ export function AcpChatPane({
 							isReachableFailure: (error) =>
 								error instanceof TRPCClientError && error.data != null,
 							shouldContinue: () => isChatCreateWatched(createKey),
-							onUnreachable: (next) => {
-								if (mounted.current) setUnreachable(next);
-							},
 						}),
 					(orphan) => {
 						void wiring.transport
@@ -466,7 +462,7 @@ export function AcpChatPane({
 			const branched = forkReplacement.current;
 			forkReplacement.current = null;
 			if (branched?.draftText)
-				prependToDraft(`chat-v3-draft:${terminalId}`, branched.draftText);
+				prependToDraft(`chat-v3-draft:${terminalId}`, [branched.draftText]);
 			recoveryInFlight.current = false;
 			onSessionCreated(replacement);
 			if (branched)
@@ -569,9 +565,7 @@ export function AcpChatPane({
 		<DraftChat
 			draftKey={draftKey}
 			isActive={isActive}
-			notice={
-				unreachable ? <Trans>Connecting to the host service…</Trans> : notice
-			}
+			notice={notice}
 			onQueue={onQueuePrompt}
 			queued={pendingPrompts}
 			workspaceId={workspaceId}
@@ -632,11 +626,7 @@ export function AcpChatPane({
 			{...(recovering
 				? {
 						held: {
-							notice: unreachable ? (
-								<Trans>Connecting to the host service…</Trans>
-							) : (
-								<Trans>Resuming the conversation…</Trans>
-							),
+							notice: <Trans>Resuming the conversation…</Trans>,
 							queued: pendingPrompts,
 							onQueue: onQueuePrompt,
 						},

@@ -1,4 +1,11 @@
+import { Button } from "@superset/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@superset/ui/dropdown-menu";
 import { OverflowFadeContainer } from "@superset/ui/overflow-fade-container";
+import { PlusIcon } from "lucide-react";
 import {
 	type ComponentProps,
 	type ReactNode,
@@ -14,9 +21,8 @@ import {
 	transferTabToIndex,
 } from "../../../../../core/transfer";
 import type { Tab } from "../../../../../types";
-import type { PaneRegistry, WorkspaceProps } from "../../../../types";
+import type { AddTabMenuActions, PaneRegistry } from "../../../../types";
 import { PANE_DRAG_TYPE } from "../Tab/components/Pane/components/PaneHeader";
-import { AddTabButton } from "./components/AddTabButton";
 import { TAB_DRAG_TYPE, TabItem } from "./components/TabItem";
 import { computeInsertIndex, TAB_WIDTH } from "./utils";
 
@@ -33,7 +39,7 @@ interface TabBarProps<TData> {
 	onReorderTab: (tabId: string, toIndex: number) => void;
 	onMovePaneToNewTab: (paneId: string, toIndex: number) => void;
 	renderTabIcon?: (tab: Tab<TData>) => ReactNode;
-	renderAddTabMenu?: WorkspaceProps<TData>["renderAddTabMenu"];
+	renderAddTabMenu?: (actions: AddTabMenuActions) => ReactNode;
 	renderTabBarLeading?: () => ReactNode;
 	renderTabBarTrailing?: () => ReactNode;
 	renderTabAccessory?: (tab: Tab<TData>) => ReactNode;
@@ -41,6 +47,51 @@ interface TabBarProps<TData> {
 
 type TabDragItem = { tabId: string; store?: unknown };
 type PaneDragItem = { paneId: string; store?: unknown };
+
+function AddTabButton<_TData>({
+	renderAddTabMenu,
+}: {
+	renderAddTabMenu?: (actions: AddTabMenuActions) => ReactNode;
+}) {
+	const pendingActionRef = useRef<(() => void) | null>(null);
+	const button = (
+		<Button
+			className="ml-1.5 size-7 rounded-md border border-border/60 bg-muted/30 px-1 text-muted-foreground shadow-none hover:bg-accent/60 hover:text-foreground"
+			size="icon"
+			type="button"
+			variant="ghost"
+		>
+			<PlusIcon className="size-3.5" />
+		</Button>
+	);
+
+	if (renderAddTabMenu) {
+		return (
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>{button}</DropdownMenuTrigger>
+				<DropdownMenuContent
+					align="end"
+					className="w-56"
+					onCloseAutoFocus={(event) => {
+						const action = pendingActionRef.current;
+						if (!action) return;
+						pendingActionRef.current = null;
+						event.preventDefault();
+						action();
+					}}
+				>
+					{renderAddTabMenu({
+						runAfterClose: (action) => {
+							pendingActionRef.current = action;
+						},
+					})}
+				</DropdownMenuContent>
+			</DropdownMenu>
+		);
+	}
+
+	return button;
+}
 
 export function TabBar<TData>({
 	store,

@@ -1,5 +1,9 @@
 import { Trans } from "@lingui/react/macro";
-import { readBookkeeping, userMessageText } from "@superset/chat/core";
+import {
+	readBookkeeping,
+	transcriptItemKey,
+	userMessageText,
+} from "@superset/chat/core";
 import type { AvailableCommand, UserMessage } from "@superset/chat/protocol";
 import { Message, MessageContent } from "@superset/ui/ai-elements/message";
 import { Badge } from "@superset/ui/badge";
@@ -16,6 +20,7 @@ import {
 } from "../../../../utils/messageElements";
 import { AttachmentImage } from "../AttachmentImage";
 import { ForkMessageActions } from "../ForkMessageActions";
+import { PastedTextBlock } from "./components/PastedTextBlock";
 import { UserMessageText } from "./components/UserMessageText";
 import { useFitsOneLine } from "./hooks/useFitsOneLine";
 
@@ -57,7 +62,7 @@ export function UserMessageRow({
 }) {
 	const raw = userMessageText(item);
 	const note = readBookkeeping(harness, raw);
-	const { text, attachments } = parseAttachmentTags(raw);
+	const { text, attachments, pastedTexts } = parseAttachmentTags(raw);
 	const elements = item.content.find((part) => part.type === "text")?.elements;
 	const leading = LEADING_COMMAND.exec(text)?.[1];
 	const segments: MessageSegment[] = elements?.length
@@ -77,7 +82,6 @@ export function UserMessageRow({
 	const images = attachments.filter((attachment) =>
 		attachment.type.startsWith("image/"),
 	);
-	const earlierImages = (item as EarlierUserMessage).earlierImages ?? [];
 	const files = [
 		...attachments
 			.filter((attachment) => !attachment.type.startsWith("image/"))
@@ -91,8 +95,17 @@ export function UserMessageRow({
 				: [],
 		),
 	];
+	const earlierImages = (item as EarlierUserMessage).earlierImages ?? [];
+	const showActions = !pending && !item.queued;
+	const copyText = [text, ...pastedTexts].filter(Boolean).join("\n\n");
 	return (
-		<Message className="group/message pt-1.5 pb-5 pl-10" from="user">
+		<Message
+			className={cn(
+				"group/message pt-1.5 pl-10",
+				showActions ? "pb-0" : "pb-5",
+			)}
+			from="user"
+		>
 			{images.length + earlierImages.length > 0 && (
 				<div
 					className={cn(
@@ -103,6 +116,7 @@ export function UserMessageRow({
 					{images.map((image) => (
 						<AttachmentImage
 							key={image.path}
+							owner={transcriptItemKey(item)}
 							path={image.path}
 							type={image.type}
 						/>
@@ -112,6 +126,7 @@ export function UserMessageRow({
 							<AttachmentImage
 								// biome-ignore lint/suspicious/noArrayIndexKey: an earlier turn's images never reorder
 								key={index}
+								owner={transcriptItemKey(item)}
 								path={`image-${index + 1}.${image.mediaType.split("/")[1] ?? "png"}`}
 								src={`data:${image.mediaType};base64,${image.data}`}
 								type={image.mediaType}
@@ -123,6 +138,19 @@ export function UserMessageRow({
 							</Badge>
 						),
 					)}
+				</div>
+			)}
+			{pastedTexts.length > 0 && (
+				<div
+					className={cn(
+						"ml-auto flex w-full flex-col items-end gap-1.5 transition-opacity",
+						pending && !pending.failed && "opacity-60",
+					)}
+				>
+					{pastedTexts.map((pasted, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: pastes have no identity beyond their order
+						<PastedTextBlock key={index} text={pasted} />
+					))}
 				</div>
 			)}
 			{(text || files.length > 0) && (
@@ -153,14 +181,14 @@ export function UserMessageRow({
 					)}
 				</MessageContent>
 			)}
-			{!pending && !item.queued && (
+			{showActions && (
 				<ForkMessageActions
 					canForkInWorkspace={canForkInWorkspace}
 					forkFromHere={forkFromHere}
 					onRewind={onRewind ? () => onRewind(item.id) : undefined}
-					className="self-end"
+					className="-mt-1.5 self-end"
 					item={item}
-					text={text}
+					text={copyText}
 					onFork={onFork}
 					canForkToWorktree={canForkToWorktree}
 				/>
