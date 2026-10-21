@@ -23,6 +23,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   configurato: ricerca, filtri rapidi, lista/board e dettaglio affiancato;
   JQL resta disponibile nei controlli avanzati.
   La board Jira permette di spostare le card con le transizioni consentite;
+  scegliendo una board e uno sprint usa le colonne configurate in Jira, anche
+  quando raggruppano più stati. Il badge di stato apre le azioni in lista,
+  board e dettaglio; un trascinamento con più stati possibili chiede quale usare.
+  Il dettaglio mostra i workspace collegati con azioni compatte; **Link existing
+  workspace** cerca per nome, progetto o branch e riconosce quelli già collegati.
   **Automations** configura regole JQL locali all’host. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
@@ -122,6 +127,12 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 ## Configurazione guidata di Grok e Cursor
 
+Una nuova installazione parte con quattro agenti: Claude, Codex, Cursor Agent e
+Grok. Solo questi compaiono nelle tendine e in **Settings → Agents**. Gli altri
+preset restano in **Add agent**, già configurati, e compaiono negli elenchi dopo
+l’aggiunta. **Reset to defaults** torna agli stessi quattro. Le installazioni
+esistenti mantengono i propri agenti.
+
 In **Settings → Agents**, la scheda di Grok o Cursor mostra uno stato compatto.
 **Configure** apre installazione, login e **Apply recommended settings**;
 **Advanced configuration** conserva i controlli manuali. Questa prima versione
@@ -155,10 +166,31 @@ configurazioni API esistenti. **API key configured** indica presenza, non validi
 la verifica non usa richieste a pagamento.
 
 Ogni persona installa il proprio CLI e collega il proprio account o chiave.
+La configurazione dell’agente e la finestra di aggiunta account ricordano questo
+passaggio e collegano le guide ufficiali dei CLI principali. L’onboarding distingue
+il login a Superset dall’accesso locale ai repository GitHub; un account CLI già
+autenticato può essere riutilizzato senza ripetere il login. GitHub resta opzionale
+per progetti locali o su altri provider.
+Le credenziali Git salvate vengono ricontrollate all’apertura delle connessioni e
+al ritorno nell’app dopo un controllo fallito, senza riattivare account disconnessi.
+Se manca `gh`, un riquadro distinto lo indica anche con l’account già riconosciuto:
+con Homebrew avvia l’installazione guidata, altrimenti apre la guida ufficiale e
+permette di ricontrollare dopo l’installazione manuale. Il login a Superset non
+installa `gh`.
 L’esportazione di preset condivisibili rimane un passaggio successivo.
 Riferimenti: [Grok ACP](https://docs.x.ai/build/cli/headless-scripting),
 [Grok API e priorità delle credenziali](https://docs.x.ai/build/enterprise),
 [Cursor ACP](https://cursor.com/docs/cli/acp).
+
+## Base dei confronti Git e remote Bitbucket
+
+I contatori Git e i diff usano una base distinta per ogni branch. La scelta
+salvata in `branch.<nome>.base` prevale; altrimenti l’app recupera e conserva
+l’origine dal reflog quando è verificabile. Nei casi incerti mostra le sole
+modifiche locali e chiede la base nel pannello Changes. Il cambio manuale
+aggiorna anche contatori e liste dei commit. I remote SSH Bitbucket con
+`bitbucket.org` e `ssh.bitbucket.org` identificano lo stesso repository;
+restano valide le configurazioni SSH e `insteadOf` del computer.
 
 ## Account prima dell’avvio e quote
 

@@ -111,6 +111,11 @@ test("Bitbucket HTTPS uses its own credential while SSH keeps the existing trans
 		expect(
 			await credentials.getCredentials("git@bitbucket.org:company/repo.git"),
 		).toEqual({ env: { EXISTING_HELPER: "yes" } });
+		expect(
+			await credentials.getCredentials(
+				"git@ssh.bitbucket.org:company/repo.git",
+			),
+		).toEqual({ env: { EXISTING_HELPER: "yes" } });
 		store.disconnect(c.id);
 		expect(await credentials.getToken("bitbucket.org")).toBeNull();
 	} finally {

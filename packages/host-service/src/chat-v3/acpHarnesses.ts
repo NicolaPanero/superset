@@ -67,6 +67,7 @@ export function acpHarnessFactory(
 					command: entry.binary,
 					forkPlanReadPermissions: harness === "claude-acp",
 					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
+					forkCursorModelSelection: harness === "cursor-acp",
 					get authMethodId() {
 						return authMethodId;
 					},
@@ -77,6 +78,7 @@ export function acpHarnessFactory(
 					...(entry.fullAccessModeId
 						? { defaultModeId: entry.fullAccessModeId }
 						: {}),
+					...(entry.clientApprovalModes ? { clientApprovalModes: true } : {}),
 					onSpawn: (pid) => agents?.spawned(options.sessionId, pid),
 					launch: async () => {
 						const choices = forkLaunchChoices(db, harness, {

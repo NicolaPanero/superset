@@ -8,6 +8,7 @@ import {
 	accountQuotaState,
 	accountQuotaWindows,
 } from "@superset/shared/fork-account-usage";
+import { ForkUsageStatus } from "renderer/components/ForkUsageStatus";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 import { formatResetLabel } from "renderer/utils/usage/formatResetIn";
 import { UsageWindowChip } from "./components/UsageWindowChip";
@@ -25,25 +26,15 @@ export function ForkUsageSummary({
 	account,
 	model,
 	compact = false,
+	hideStatus = false,
 }: {
 	account?: UsageAccount;
 	model?: string;
 	compact?: boolean;
+	/** The status is shown elsewhere, such as a chip beside the account name. */
+	hideStatus?: boolean;
 }) {
 	const state = accountQuotaState(account, model);
-	const status =
-		account?.status === "signed_out" ? (
-			<Trans>Signed out</Trans>
-		) : state.reason === "api" ? (
-			<Trans>API billing</Trans>
-		) : state.reason === "exhausted" ? (
-			<Trans>Quota exhausted</Trans>
-		) : state.reason === "stale" ? (
-			<Trans>Last known</Trans>
-		) : state.reason === "unknown" ? (
-			<Trans>Unverified</Trans>
-		) : null;
-	const statusClass = state.warning ? "text-warning" : "text-muted-foreground";
 	const showsWindows =
 		!!account &&
 		account.status !== "signed_out" &&
@@ -61,7 +52,7 @@ export function ForkUsageSummary({
 		);
 		return (
 			<span className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap text-xs">
-				{status && <span className={statusClass}>{status}</span>}
+				{!hideStatus && <ForkUsageStatus account={account} model={model} />}
 				{showsWindows &&
 					chips.map((window) => (
 						<UsageWindowChip key={window.id} window={window} dimmed={dimmed} />
@@ -79,9 +70,9 @@ export function ForkUsageSummary({
 		: null;
 	return (
 		<div className="space-y-2 text-xs">
-			{status && (
-				<div className={`shrink-0 whitespace-nowrap ${statusClass}`}>
-					{status}
+			{!hideStatus && (
+				<div>
+					<ForkUsageStatus account={account} model={model} />
 				</div>
 			)}
 			{showsWindows &&

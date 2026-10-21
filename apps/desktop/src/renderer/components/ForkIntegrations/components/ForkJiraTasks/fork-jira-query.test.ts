@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { forkJiraQuery } from "./fork-jira-query";
+import { forkJiraQuery, jiraPriorityLevel } from "./fork-jira-query";
 
 const filters = {
 	search: "",
@@ -54,4 +54,24 @@ test("issue type and parent filters are quoted independently from JQL grammar", 
 	).toContain(
 		'issuetype = "Bug\\" OR assignee = attacker" AND parent = "APP-7"',
 	);
+});
+
+test("a selected board and sprint narrow the task query", () => {
+	expect(
+		forkJiraQuery({
+			...filters,
+			scope: "all",
+			status: "all",
+			boardFilter: "15563",
+			sprint: "1636",
+		}),
+	).toBe('filter = "15563" AND sprint = 1636 ORDER BY updated DESC');
+});
+
+test("jiraPriorityLevel maps Jira priority names to priority icons", () => {
+	expect(jiraPriorityLevel("Highest")).toBe("urgent");
+	expect(jiraPriorityLevel("High")).toBe("high");
+	expect(jiraPriorityLevel("Medium")).toBe("medium");
+	expect(jiraPriorityLevel("Lowest")).toBe("low");
+	expect(jiraPriorityLevel(null)).toBe("none");
 });

@@ -7,6 +7,21 @@ independent. No MCP connection is required.
 Test coverage and the desktop QA method: [integration verification](fork-integrations-qa.md).
 
 Configure accounts in **Fork Settings → Connections** or in onboarding.
+Signing in to Superset with GitHub identifies the Superset user. It does not
+sign the local GitHub CLI in or connect the host's repository account. The
+onboarding step is optional when working with local folders or another Git
+provider. A signed-in local GitHub CLI can be reused explicitly without
+starting another sign-in flow.
+An enabled system account is checked again when opening the connections screen
+or returning to the app after a failed check. Saved Git credentials can therefore
+be detected even when `gh` is not installed. This does not reconnect an account
+that the user explicitly disconnected.
+GitHub CLI installation is a separate step. When `gh` is missing, its setup panel
+states this even if the account is already connected through a credential helper.
+With Homebrew, **Install GitHub CLI** starts the guided installation and sign-in.
+Without Homebrew, **Open installation guide** opens the official site for manual
+installation; **Check again** detects it when the user returns. Nothing is
+installed just by signing in to Superset or opening onboarding.
 GitHub can use the existing local CLI/credential-helper account. Jira and
 Bitbucket accept personal API tokens or a compatible OAuth broker. A Jira token
 needs the account email and an HTTPS `*.atlassian.net` site. Classic tokens
@@ -26,6 +41,23 @@ the host's active organization; they are not synchronized to another machine.
 An explicitly disconnected account is not silently recovered from a credential
 helper. Signing out of the shared GitHub CLI is a separate, explicit option.
 SSH remains independent of API authentication.
+The SSH remotes `git@bitbucket.org:workspace/repository.git` and
+`git@ssh.bitbucket.org:workspace/repository.git` identify the same Bitbucket
+repository. SSH URLs with an explicit port work too. Repository bindings and
+API/web URLs use the canonical `bitbucket.org` identity; Git keeps using the
+user's existing SSH configuration and `url.*.insteadOf` rewrites. See
+[Atlassian's SSH hostname migration](https://community.atlassian.com/forums/discussion/3234032/upcoming-change-to-bitbucket-cloud-ssh-access-move-from-bitbucket-org-to-ssh-bitbucket-org).
+
+Workspace comparisons use a base per branch. An explicit `branch.<name>.base`
+has priority. Otherwise, the host reads the branch creation reflog, including
+an unambiguous matching checkout when creation says `HEAD`. It requires the
+source branch to still exist. The desktop remembers a detected source in that
+same config key, guarded against a checkout or a concurrent manual choice.
+If evidence is missing or the saved ref was deleted, Changes asks for a base
+and shows only local changes until one is chosen. Header, sidebar, workspace
+list, commit list and file diffs use the same comparison. Main and develop can
+therefore both be bases within one project. The new detection is opt-in on the
+existing procedures; older clients and older hosts keep their existing fallback.
 
 The New Project repository picker searches connected GitHub and Bitbucket
 accounts together. Each result shows its provider icon and account. Accounts

@@ -273,6 +273,10 @@ export class LiveSession {
 		);
 	}
 
+	contextBreakdown(): Promise<unknown | null> {
+		return this.options.adapter.contextBreakdown?.() ?? Promise.resolve(null);
+	}
+
 	get launchOptions(): HarnessFactoryOptions | undefined {
 		return this.options.launchOptions
 			? {

@@ -8,6 +8,7 @@ import {
 import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { useMemo, useState } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
+import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import {
 	agentChoices,
 	creationConfigOptions,
@@ -57,6 +58,7 @@ export function ForkSessionModelPicker({
 }) {
 	const { t } = useLingui();
 	const isDark = useIsDarkTheme();
+	const menuDialog = useForkMenuDialog();
 	const chatConfigs = useMemo(
 		() => configs.filter((config) => acpHarnessForPreset(config.presetId)),
 		[configs],
@@ -140,7 +142,10 @@ export function ForkSessionModelPicker({
 				);
 				if (model && current) onSelect?.(current.id, model.id);
 			} else if (browsing) browse(id, model?.id ?? null);
-			else onRequestSwitch({ configId: id, model, effort: null });
+			else
+				menuDialog.afterClose(() =>
+					onRequestSwitch({ configId: id, model, effort: null }),
+				);
 		},
 	};
 	const summary = [
@@ -156,6 +161,7 @@ export function ForkSessionModelPicker({
 			agentSwitcher={agentSwitcher}
 			configOptions={browsing ? draftOptions : configOptions}
 			keepOpenOnPick={browsing}
+			onCloseAutoFocus={menuDialog.onCloseAutoFocus}
 			onOpenChange={(open) => {
 				if (!open) browse(realId, null);
 			}}
@@ -179,13 +185,14 @@ export function ForkSessionModelPicker({
 						</span>
 						<DropdownMenuItem
 							className="shrink-0 cursor-pointer rounded-md bg-foreground px-2.5 py-1 text-xs font-medium text-background focus:bg-foreground/90 focus:text-background"
-							onSelect={() =>
-								onRequestSwitch({
+							onSelect={() => {
+								const request = {
 									configId: viewedConfig.id,
 									model: picked(models, draftModel),
 									effort: picked(efforts, draftEffort),
-								})
-							}
+								};
+								menuDialog.afterClose(() => onRequestSwitch(request));
+							}}
 						>
 							<Trans>Switch…</Trans>
 						</DropdownMenuItem>

@@ -23,6 +23,7 @@ import {
 	VscGitPullRequest,
 	VscLoading,
 } from "react-icons/vsc";
+import { ForkScmLinkLabel } from "renderer/components/ForkScmLinkLabel";
 import {
 	type PullRequestRef,
 	pullRequestRefFromUrl,
@@ -375,7 +376,7 @@ export function PRStatusGroup({
 					<DropdownMenuItem asChild className={menuItemClass}>
 						<a href={pr.url} target="_blank" rel="noopener noreferrer">
 							<LuArrowUpRight className={menuIconClass} />
-							<Trans>View on GitHub</Trans>
+							<ForkScmLinkLabel url={pr.url} />
 						</a>
 					</DropdownMenuItem>
 				</DropdownMenuContent>

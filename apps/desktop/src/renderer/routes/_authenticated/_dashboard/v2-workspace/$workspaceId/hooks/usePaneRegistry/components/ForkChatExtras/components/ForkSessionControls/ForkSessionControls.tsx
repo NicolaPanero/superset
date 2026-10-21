@@ -9,7 +9,7 @@ import {
 	DropdownMenuSubTrigger,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LuCopy, LuRepeat2 } from "react-icons/lu";
 import { ForkAccountPicker } from "renderer/components/ForkAccountPicker";
 import { ForkAccountResets } from "renderer/components/ForkAccountResets";
@@ -32,6 +32,7 @@ import {
 	ForkChatSwitchDialog,
 	type ForkSwitchRequest,
 } from "../ForkChatSwitchDialog";
+import { ForkContextMeter } from "../ForkContextMeter";
 import { ForkQuotaRecoveryControls } from "../ForkQuotaRecoveryControls";
 import { ForkSessionModelPicker } from "../ForkSessionModelPicker";
 
@@ -67,9 +68,13 @@ export function ForkSessionControls({
 	const usage = account.quota.data?.find(
 		(row) => row.agent === provider && row.selection === account.selection,
 	);
-
+	// A Claude chat resumed from another agent's transcript (switch, account
+	// change, automatic continuation) reports that agent's model; select Default.
+	const resetTried = useRef(new Set<string>());
 	useEffect(() => {
-		if (!onSelect || !hasPendingModelReset(data.terminalId)) return;
+		if (!onSelect) return;
+		const pending = hasPendingModelReset(data.terminalId);
+		if (!pending && provider !== "claude") return;
 		if (
 			!configOptions.some(
 				(entry) => entry.category === "model" && entry.options.length > 0,
@@ -78,8 +83,11 @@ export function ForkSessionControls({
 			return;
 		clearPendingModelReset(data.terminalId);
 		const change = pendingModelResetChange(configOptions);
-		if (change) onSelect(change.configId, change.value);
-	}, [configOptions, data.terminalId, onSelect]);
+		const key = `${data.terminalId}:${modelId ?? ""}`;
+		if (!change || resetTried.current.has(key)) return;
+		resetTried.current.add(key);
+		onSelect(change.configId, change.value);
+	}, [configOptions, data.terminalId, onSelect, provider, modelId]);
 
 	// The effort picked before a switch reaches the new session once it lists it.
 	useEffect(() => {
@@ -147,6 +155,7 @@ export function ForkSessionControls({
 				onSelect={onSelect}
 				onRequestSwitch={setRequest}
 			/>
+			<ForkContextMeter terminalId={data.terminalId} agent={provider} />
 			<ForkAccountPicker
 				account={account}
 				provider={provider}

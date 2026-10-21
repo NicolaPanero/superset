@@ -52,6 +52,30 @@ test("Bitbucket diff counts include every page and cache requests within the sam
 	expect(calls).toBe(4);
 });
 
+test("Bitbucket diff counts follow pagination on the redirected diffstat endpoint", async () => {
+	const paths: string[] = [];
+	const next = "/repositories/team/app/diffstat/head%0Dbase?pagelen=100&page=2";
+	const scm = new ForkScmProvider(
+		api("bitbucket", async (_id, path) => {
+			paths.push(path);
+			return paths.length === 1
+				? {
+						values: [{ lines_added: 3, lines_removed: 1 }],
+						next: `https://api.bitbucket.org/2.0${next}`,
+					}
+				: { values: [{ lines_added: 7, lines_removed: 2 }] };
+		}),
+	);
+	expect(await scm.diffstat("canonical-pagination", repository, 4)).toEqual({
+		additions: 10,
+		deletions: 3,
+	});
+	expect(paths).toEqual([
+		"/repositories/team/app/pullrequests/4/diffstat?pagelen=100",
+		next,
+	]);
+});
+
 test("a comment on a removed line sends the old-side coordinate to Bitbucket", async () => {
 	let sent: unknown;
 	const scm = new ForkScmProvider(

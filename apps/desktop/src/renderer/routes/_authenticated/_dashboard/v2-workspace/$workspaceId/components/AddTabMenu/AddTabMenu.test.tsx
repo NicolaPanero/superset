@@ -21,10 +21,10 @@ function AgentMenuFixture() {
 			<Workspace
 				store={store}
 				registry={{}}
-				renderAddTabMenu={({ afterClose }) => (
+				renderAddTabMenu={({ runAfterClose }) => (
 					<AddTabMenu
 						onAddAgent={() =>
-							afterClose(() => {
+							runAfterClose(() => {
 								expect(
 									document.querySelector('[data-slot="dropdown-menu-content"]'),
 								).toBeNull();
@@ -32,6 +32,7 @@ function AgentMenuFixture() {
 							})
 						}
 						onAddTerminal={noop}
+						runAfterClose={runAfterClose}
 						onAddBrowser={noop}
 						onAddChanges={noop}
 						showPresetsBar={false}

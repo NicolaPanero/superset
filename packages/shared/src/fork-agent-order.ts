@@ -1,18 +1,12 @@
-// Initial order only. Existing hosts keep their persisted, user-defined order.
-// Other and future upstream agents retain their relative catalog order.
-const PRIORITY = new Map(
-	["claude", "codex", "cursor-agent", "opencode", "amp"].map((id, index) => [
-		id,
-		index,
-	]),
-);
+// New hosts start with these agents only. The other presets stay in
+// "Add agent", ready to add with their bundled settings.
+const FORK_DEFAULT_AGENTS = ["claude", "codex", "cursor-agent", "grok"];
 
-export function orderForkDefaultAgentPresets<T extends { presetId: string }>(
+export function forkDefaultAgentPresets<T extends { presetId: string }>(
 	presets: readonly T[],
 ): T[] {
-	return [...presets].sort(
-		(a, b) =>
-			(PRIORITY.get(a.presetId) ?? PRIORITY.size) -
-			(PRIORITY.get(b.presetId) ?? PRIORITY.size),
+	const chosen = FORK_DEFAULT_AGENTS.flatMap((id) =>
+		presets.filter((preset) => preset.presetId === id),
 	);
+	return chosen.length ? chosen : [...presets];
 }

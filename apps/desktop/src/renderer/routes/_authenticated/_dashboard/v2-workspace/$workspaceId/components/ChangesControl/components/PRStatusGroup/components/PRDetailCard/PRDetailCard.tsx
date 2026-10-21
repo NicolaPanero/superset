@@ -9,6 +9,7 @@ import {
 	LuCircleX,
 	LuGitBranch,
 } from "react-icons/lu";
+import { ForkScmLinkLabel } from "renderer/components/ForkScmLinkLabel";
 import type { ChecksRollup } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/utils/computeChecksStatus";
 import { PRIcon, type PRState } from "renderer/screens/main/components/PRIcon";
 import type { PullRequest } from "../../../../../../utils/getPRFlowState";
@@ -96,7 +97,7 @@ export function PRDetailCard({ pr, checks, linkState }: PRDetailCardProps) {
 				className="group flex items-center justify-between border-t border-border/60 px-3 py-2 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 			>
 				<span>
-					<Trans>View on GitHub</Trans>
+					<ForkScmLinkLabel url={pr.url} />
 				</span>
 				<LuArrowUpRight
 					aria-hidden="true"

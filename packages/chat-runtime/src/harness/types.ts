@@ -57,5 +57,7 @@ export interface HarnessAdapter {
 	fork?(point?: { messageId: string }): Promise<string | null>;
 	forkOptions?(): { accountSelection?: string | null };
 	stopBackgroundTask?(taskId: string): Promise<boolean>;
+	/** The agent's context breakdown, when it can report one; never blocks a turn. */
+	contextBreakdown?(): Promise<unknown | null>;
 	dispose(): Promise<void>;
 }

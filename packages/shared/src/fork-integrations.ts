@@ -162,7 +162,9 @@ export const FORK_PROVIDER_DEFINITIONS = {
 		capabilities: readonly string[];
 	}
 >;
-export const FORK_INTEGRATIONS_VERSION = 4;
+export type { ForkJiraBoardContext, ForkJiraColumn } from "./fork-jira-board";
+
+export const FORK_INTEGRATIONS_VERSION = 5;
 
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");
@@ -173,7 +175,11 @@ export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 		return null;
 	}
 	if (!["https:", "ssh:", "git:"].includes(url.protocol)) return null;
-	const host = url.hostname.toLowerCase();
+	const hostname = url.hostname.toLowerCase();
+	const host =
+		url.protocol === "ssh:" && hostname === "ssh.bitbucket.org"
+			? "bitbucket.org"
+			: hostname;
 	const provider =
 		host === "github.com"
 			? "github"

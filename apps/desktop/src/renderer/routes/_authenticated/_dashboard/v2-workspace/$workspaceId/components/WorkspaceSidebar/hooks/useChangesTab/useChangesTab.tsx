@@ -4,6 +4,7 @@ import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useMemo } from "react";
 import { LuGitCompareArrows } from "react-icons/lu";
+import { useForkBranchBase } from "renderer/hooks/host-service/useForkBranchBase";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useChangeset } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useChangeset";
 import { useOpenInExternalEditor } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useOpenInExternalEditor";
@@ -47,6 +48,8 @@ interface UseChangesTabParams {
  * change through useSidebarDiffRef's whole-row live query, so the plain
  * collection reads below stay fresh.
  */
+const ALL_CHANGES: ChangesFilter = { kind: "all" };
+
 export function useChangesTab({
 	workspaceId,
 	selectedDiffTarget,
@@ -58,17 +61,13 @@ export function useChangesTab({
 	const collections = useCollections();
 	const utils = workspaceTrpc.useUtils();
 	const localState = collections.v2WorkspaceLocalState.get(workspaceId);
-	const filter: ChangesFilter = localState?.sidebarState?.changesFilter ?? {
-		kind: "all",
-	};
+	const filter: ChangesFilter =
+		localState?.sidebarState?.changesFilter ?? ALL_CHANGES;
 	const { preferences, setChangesViewMode: setViewMode } =
 		useV2UserPreferences();
 	const viewMode = preferences.changesViewMode;
 
-	const baseBranchQuery = workspaceTrpc.git.getBaseBranch.useQuery(
-		{ workspaceId },
-		{ staleTime: Number.POSITIVE_INFINITY },
-	);
+	const baseBranchQuery = useForkBranchBase(workspaceId);
 	const baseBranch = baseBranchQuery.data?.baseBranch ?? null;
 
 	const ref = useSidebarDiffRef(workspaceId);
@@ -181,6 +180,22 @@ export function useChangesTab({
 	// unstaged). Under the default scope that is the top-bar control's total;
 	// a narrower scope (uncommitted, one commit, a range) counts what the tab
 	// lists instead.
+	// Query results are new objects on every render; pass stable views so the
+	// memoized list skips renders that change nothing it shows.
+	const statusView = useMemo(
+		() => ({
+			data: status.data,
+			isFetching: status.isFetching,
+			isLoading: status.isLoading,
+		}),
+		[status.data, status.isFetching, status.isLoading],
+	);
+	const commitsView = useMemo(() => ({ data: commits.data }), [commits.data]);
+	const branchesView = useMemo(
+		() => ({ data: branches.data }),
+		[branches.data],
+	);
+
 	const changedPathCount = useMemo(
 		() => new Set(files.map((file) => file.path)).size,
 		[files],
@@ -189,9 +204,9 @@ export function useChangesTab({
 	const content = (
 		<ChangesTabContent
 			workspaceId={workspaceId}
-			status={status}
-			commits={commits}
-			branches={branches}
+			status={statusView}
+			commits={commitsView}
+			branches={branchesView}
 			filter={filter}
 			viewMode={viewMode}
 			baseBranch={baseBranch}

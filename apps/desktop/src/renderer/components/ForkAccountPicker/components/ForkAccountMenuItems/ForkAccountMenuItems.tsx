@@ -12,6 +12,7 @@ import { useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { LuCheck, LuPlus, LuRefreshCw, LuSettings2 } from "react-icons/lu";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
+import { ForkUsageStatus } from "../../../ForkUsageStatus";
 import { ForkUsageSummary } from "../../../ForkUsageSummary";
 import { useForkAccountChoices } from "../../useForkAccountChoices";
 import type { useForkCreationAccount } from "../../useForkCreationAccount";
@@ -81,6 +82,7 @@ export function ForkAccountMenuItems({
 										<Trans>Default</Trans>
 									</span>
 								)}
+								<ForkUsageStatus account={usage} model={model} chip />
 								{suggested?.option.selection === option.selection && (
 									<span className="shrink-0 rounded bg-muted px-1 text-[10px] text-muted-foreground">
 										<Trans>Suggested</Trans>
@@ -88,7 +90,12 @@ export function ForkAccountMenuItems({
 								)}
 							</div>
 							<div className="col-start-2 flex min-w-0 flex-wrap items-center gap-x-2">
-								<ForkUsageSummary account={usage} model={model} compact />
+								<ForkUsageSummary
+									account={usage}
+									model={model}
+									compact
+									hideStatus
+								/>
 								{(usage?.status === "signed_out" ||
 									usage?.status === "token_expired") && (
 									<span className="text-xs text-warning">

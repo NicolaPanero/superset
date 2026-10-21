@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "provider-integrations-2026-10";
+export const FORK_WHATS_NEW_ID = "context-meter-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -32,23 +32,23 @@ export function ForkWhatsNewNotice() {
 	const highlights = [
 		t({
 			message:
-				"**Jira and Bitbucket in the app**: tasks, boards, pull requests, reviews, builds and automations.",
+				"**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons.",
 		}),
 		t({
 			message:
-				"**Better agent switching**: pick the model and effort before you switch, Grok 4.7 included.",
+				"**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar.",
 		}),
 		t({
 			message:
-				"**Quotas under control**: usage per account, supported free resets and automatic continuation.",
+				"**Jira boards that match Jira**: grouped workflow statuses stay in the same columns.",
 		}),
 		t({
 			message:
-				"**Safer workflows**: separate accounts per repository and more protection for branches and concurrent requests.",
+				"**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude.",
 		}),
 		t({
 			message:
-				"**Tidy workspaces**: pasted images and files are deleted after 30 days. Change it in Fork Settings.",
+				"**Clearer setup**: find CLI installation guides for your agents and understand repository connections.",
 		}),
 	];
 	const notice: DesktopNotice = {

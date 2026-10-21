@@ -13,6 +13,7 @@ export type ForkJiraFilters = Pick<
 	| "forkScope"
 	| "forkStatus"
 	| "forkJiraProject"
+	| "forkJiraBoard"
 	| "forkSprint"
 	| "forkIssueType"
 	| "forkParent"
@@ -24,6 +25,7 @@ const KEYS = [
 	"forkScope",
 	"forkStatus",
 	"forkJiraProject",
+	"forkJiraBoard",
 	"forkSprint",
 	"forkIssueType",
 	"forkParent",

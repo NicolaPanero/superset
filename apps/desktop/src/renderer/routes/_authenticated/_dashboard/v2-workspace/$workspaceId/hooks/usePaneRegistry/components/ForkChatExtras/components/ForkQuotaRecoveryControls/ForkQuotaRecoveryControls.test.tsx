@@ -48,6 +48,7 @@ function fixture(
 												i18nParams: null,
 												teardownFailure: undefined,
 												projectNotSetup: undefined,
+												projectDirMissing: undefined,
 												deleteInProgress: undefined,
 											},
 										},

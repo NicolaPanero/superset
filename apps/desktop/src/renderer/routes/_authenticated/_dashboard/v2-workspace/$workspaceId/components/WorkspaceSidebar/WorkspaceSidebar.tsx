@@ -1,7 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { eq } from "@tanstack/db";
 import { useLiveQuery } from "@tanstack/react-db";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { LuFile } from "react-icons/lu";
 import type { PullRequestRef } from "renderer/lib/github/pullRequestRef";
 import { useWorkspaceGitStatus } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/providers/WorkspaceGitStatusProvider";
@@ -117,15 +123,17 @@ export function WorkspaceSidebar({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [compact, setCompact] = useState(false);
 
+	const selectChangedFile = useCallback(
+		(path: string, openInNewTab?: boolean, changeKey?: string) =>
+			onSelectDiffFile?.(path, openInNewTab, undefined, undefined, changeKey),
+		[onSelectDiffFile],
+	);
 	const changesTab = useChangesTab({
 		workspaceId,
 		selectedDiffTarget: selectedDiffTarget?.repoKey
 			? undefined
 			: selectedDiffTarget,
-		onSelectFile: onSelectDiffFile
-			? (path, openInNewTab, changeKey) =>
-					onSelectDiffFile(path, openInNewTab, undefined, undefined, changeKey)
-			: undefined,
+		onSelectFile: onSelectDiffFile ? selectChangedFile : undefined,
 		onOpenFile: onSelectFile,
 	});
 

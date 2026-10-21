@@ -42,12 +42,7 @@ export function ForkAccountPicker({
 }) {
 	const { t } = useLingui();
 	const menuDialog = useForkMenuDialog();
-	const { choices, selected } = useForkAccountChoices(
-		account,
-		provider,
-		model,
-		hidden,
-	);
+	const { selected } = useForkAccountChoices(account, provider, model, hidden);
 	if (!account.enabled) return null;
 	const label = account.forcedApi
 		? t({ message: "API billing" })
@@ -70,12 +65,7 @@ export function ForkAccountPicker({
 						data-fork-account-picker
 						aria-label={label}
 						title={label}
-						disabled={
-							disabled ||
-							!account.available ||
-							account.forcedApi ||
-							(choices.length === 1 && !!selected)
-						}
+						disabled={disabled || !account.available || account.forcedApi}
 						className="flex h-7 shrink-0 cursor-pointer items-center rounded-lg px-1 outline-none transition-colors hover:bg-foreground/[0.07] focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-default disabled:hover:bg-transparent data-[state=open]:bg-foreground/[0.07]"
 					>
 						<ForkAccountAvatar

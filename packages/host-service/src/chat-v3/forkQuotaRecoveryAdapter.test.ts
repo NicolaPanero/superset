@@ -15,6 +15,7 @@ import {
 import {
 	isAccountQuotaFailure,
 	isClaudeQuotaFailure,
+	isClaudeQuotaMessage,
 	suggestedRecoveryAccount,
 } from "./forkQuotaRecoveryPolicy";
 import type {
@@ -107,6 +108,18 @@ class Worker implements HarnessAdapter {
 			},
 		});
 		this.queue.push({ kind: "session", session: { status: "idle" } });
+	}
+	say(text: string) {
+		this.queue.push({
+			kind: "item",
+			turnId: "turn-1",
+			item: {
+				id: `message-${text.length}`,
+				kind: "agent_message",
+				text,
+				startedAtMs: NOW,
+			},
+		});
 	}
 	finish() {
 		this.queue.push({
@@ -347,6 +360,65 @@ test("switches once to the best verified quota, resumes strictly and preserves t
 		await f.close();
 	}
 });
+test("a limit notice that ends a completed Claude turn switches accounts", async () => {
+	const f = fixture();
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "original task" }]);
+		await until(() => f.events.some((e) => e.kind === "turn"));
+		f.worker(0).say(
+			"You've hit your session limit · resets 11:10pm (Europe/Rome)",
+		);
+		f.worker(0).finish();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(f.moves).toEqual(["/b"]);
+		expect(f.worker(1).starts[0]).toMatchObject({
+			resume: { harnessSessionId: "native-id" },
+			strictResume: true,
+		});
+	} finally {
+		await f.close();
+	}
+});
+
+test("enabling account switching after a mid-turn limit notice continues the chat", async () => {
+	const f = fixture({ switchAccounts: false, resumeAtReset: false });
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "original task" }]);
+		await until(() => f.events.some((e) => e.kind === "turn"));
+		f.worker(0).say(
+			"You've hit your session limit · resets 11:10pm (Europe/Rome)",
+		);
+		f.worker(0).finish();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "completed"),
+		);
+		f.prefs.switchAccounts = true;
+		f.adapter.changed();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(f.moves).toEqual(["/b"]);
+	} finally {
+		await f.close();
+	}
+});
+
+test("only a whole limit notice counts as a mid-turn quota failure", () => {
+	expect(
+		isClaudeQuotaMessage(
+			"You've hit your session limit · resets 11:10pm (Europe/Rome)",
+		),
+	).toBe(true);
+	expect(isClaudeQuotaMessage("You've hit your weekly limit")).toBe(true);
+	for (const text of [
+		"",
+		"Example: You've hit your session limit",
+		"You've hit your session limit · resets 11pm\n\nHere is the rest of the plan.",
+		"I fixed the case where you've hit your limit.",
+	])
+		expect(isClaudeQuotaMessage(text)).toBe(false);
+});
+
 test("no continuation with options off, an API source, or an ordinary rate limit", async () => {
 	for (const mode of ["off", "api", "429"]) {
 		const f = fixture(

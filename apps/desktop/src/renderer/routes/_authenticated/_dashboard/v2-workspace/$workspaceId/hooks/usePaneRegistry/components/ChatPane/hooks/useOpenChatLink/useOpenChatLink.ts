@@ -3,12 +3,16 @@ import type { RendererContext } from "@superset/panes";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useCallback, useRef } from "react";
+import { env } from "renderer/env.renderer";
+import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import {
 	tierFor,
 	useInlineFilePolicy,
 	useTerminalFolderPolicy,
 	useUrlLinkAction,
 } from "renderer/lib/clickPolicy";
+import { electronTrpc } from "renderer/lib/electron-trpc";
+import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useOpenInExternalEditor } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useOpenInExternalEditor";
 import { useRecentlyViewedFiles } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useRecentlyViewedFiles";
 import { useRevealInFinder } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/useRevealInFinder";
@@ -26,8 +30,24 @@ import {
 import type { OpenLink } from "../../../ChatSession/providers/ChatPaneActionsProvider";
 import { type LocatedPath, locatePath } from "./utils/locatePath";
 import { parseFileHref } from "./utils/parseFileHref";
+import {
+	parseTicketedMediaLink,
+	rewriteTicketedMediaUrl,
+} from "./utils/parseTicketedMediaLink";
 
 const WEB_URL = /^https?:\/\//i;
+
+function mediaBaseUrl(): string {
+	const fromEnv = process.env.MEDIA_URL;
+	if (fromEnv) return fromEnv;
+	try {
+		const web = new URL(env.NEXT_PUBLIC_WEB_URL);
+		if (web.hostname === "localhost" || web.hostname === "127.0.0.1") {
+			return `http://media.usercontent.localhost:${web.port || "8787"}`;
+		}
+	} catch {}
+	return "http://media.usercontent.localhost:8787";
+}
 
 export function useOpenChatLink({
 	store,
@@ -55,6 +75,9 @@ export function useOpenChatLink({
 	const statPath = workspaceTrpc.filesystem.statPath.useMutation();
 	const hostClient = workspaceTrpc.useUtils().client;
 	const { recentFiles } = useRecentlyViewedFiles(workspaceId);
+	const hostUrl = useWorkspaceHostUrl(workspaceId);
+	const saveToDownloads = electronTrpc.external.saveToDownloads.useMutation();
+	const openSavedPath = electronTrpc.external.openFolderInFinder.useMutation();
 	const locateRef = useRef<(path: string) => Promise<LocatedPath | null>>(
 		async () => null,
 	);
@@ -88,13 +111,44 @@ export function useOpenChatLink({
 		rightPane,
 	};
 
+	const openHostAttachment = useCallback(
+		async (attachmentId: string) => {
+			if (!hostUrl) {
+				toast.error(t({ message: "Could not reach the workspace host" }));
+				return;
+			}
+			try {
+				const file = await getHostServiceClientByUrl(
+					hostUrl,
+				).attachments.read.query({ attachmentId });
+				const ext = file.mediaType.split("/")[1] ?? "bin";
+				const { path } = await saveToDownloads.mutateAsync({
+					filename: `attachment-${attachmentId.slice(0, 8)}.${ext}`,
+					dataBase64: file.data,
+				});
+				await openSavedPath.mutateAsync(path);
+			} catch (error) {
+				console.error("Failed to open chat attachment:", attachmentId, error);
+				toast.error(t({ message: "Could not open file" }));
+			}
+		},
+		[hostUrl, openSavedPath, saveToDownloads, t],
+	);
+
 	return useCallback(
 		(href, event) => {
 			const isPlain = tierFor(event, "2-tier") === "plain";
 			if (WEB_URL.test(href)) {
-				const action = getUrlAction(event, href) ?? (isPlain ? "pane" : null);
+				const parsedMedia = parseTicketedMediaLink(href);
+				if (parsedMedia?.kind === "host-attachment") {
+					void openHostAttachment(parsedMedia.attachmentId);
+					return true;
+				}
+				const remapped = rewriteTicketedMediaUrl(href, mediaBaseUrl()) ?? href;
+				const action =
+					getUrlAction(event, remapped) ?? (isPlain ? "pane" : null);
 				if (action === null) showHint(event.clientX, event.clientY);
-				else runUrlLinkAction(depsRef.current, href, action);
+				else runUrlLinkAction(depsRef.current, remapped, action);
 				return true;
 			}
 
@@ -135,6 +189,6 @@ export function useOpenChatLink({
 			);
 			return true;
 		},
-		[getUrlAction, filePolicy, folderPolicy, showHint, t],
+		[getUrlAction, filePolicy, folderPolicy, showHint, t, openHostAttachment],
 	);
 }

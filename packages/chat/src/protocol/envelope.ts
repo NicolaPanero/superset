@@ -76,6 +76,13 @@ export const sessionStateSchema = z.looseObject({
 	queueControls: z.boolean().optional(),
 	backgroundTasks: z.array(backgroundTaskSchema).optional(),
 	awaitingBackground: z.boolean().optional(),
+	/** Tokens in the agent's context window, from its latest usage report. */
+	contextUsage: z
+		.looseObject({
+			used: z.number().nonnegative(),
+			size: z.number().positive(),
+		})
+		.optional(),
 });
 export type SessionState = z.infer<typeof sessionStateSchema>;
 

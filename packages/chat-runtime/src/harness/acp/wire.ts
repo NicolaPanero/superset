@@ -30,6 +30,7 @@ export type AcpContentBlock = z.infer<typeof acpContentBlockSchema>;
  */
 export const acpInitializeResponseSchema = z.looseObject({
 	protocolVersion: z.number().optional(),
+	agentInfo: z.looseObject({ name: z.string().optional() }).optional(),
 	agentCapabilities: z.looseObject({}).optional(),
 	capabilities: z.looseObject({}).optional(),
 	authMethods: z.array(z.unknown()).optional(),
@@ -59,7 +60,12 @@ export const acpPromptResponseSchema = z.looseObject({
 
 export const acpUsageUpdateSchema = z.looseObject({
 	cost: z.unknown().optional(),
+	used: z.number().nonnegative().optional(),
+	size: z.number().positive().optional(),
 });
+
+/** Superset's request on the patched Claude adapter; other agents lack it. */
+export const ACP_CONTEXT_USAGE_METHOD = "_superset/context_usage";
 
 export const ACP_STEERING_METHOD = "_session/steering";
 

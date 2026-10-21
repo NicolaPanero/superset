@@ -1,48 +1,40 @@
-import type { ForkTask } from "@superset/shared/fork-integrations";
+import type {
+	ForkJiraColumn,
+	ForkTask,
+} from "@superset/shared/fork-integrations";
+import { Avatar } from "@superset/ui/atoms/Avatar";
 import { cn } from "@superset/ui/utils";
-import { LuArrowUp, LuCheck, LuCircle, LuCircleDot } from "react-icons/lu";
-import { jiraStatusTone } from "../../fork-jira-query";
+import { PriorityIcon } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/components/shared/PriorityIcon";
+import { ForkTaskStatus } from "../../../ForkTaskStatus";
+import { jiraPriorityLevel, jiraStatusType } from "../../fork-jira-query";
 
 export function ForkJiraTaskCard({
 	task,
 	selected,
-	board,
+	columns,
+	showSprint,
 	onClick,
 }: {
 	task: ForkTask;
 	selected: boolean;
-	board?: boolean;
+	columns?: ForkJiraColumn[];
+	showSprint?: boolean;
 	onClick: () => void;
 }) {
-	const Icon =
-		task.status.category === "done"
-			? LuCheck
-			: task.status.category === "indeterminate"
-				? LuCircleDot
-				: LuCircle;
 	return (
-		<button
-			type="button"
-			aria-current={selected ? "true" : undefined}
-			onClick={onClick}
+		<div
 			className={cn(
-				"group w-full min-w-0 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
-				board
-					? "space-y-3 rounded-xl border bg-background p-3.5 shadow-sm hover:border-primary/30"
-					: "flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-accent/50",
-				selected && "bg-accent ring-1 ring-inset ring-border",
+				"group relative rounded-lg border border-border/60 bg-card shadow-xs transition-colors hover:border-border hover:bg-accent/30",
+				selected && "border-primary/60 bg-accent/40 ring-1 ring-primary/40",
 			)}
 		>
-			{!board && (
-				<Icon
-					className={cn(
-						"size-4 shrink-0 rounded-full",
-						jiraStatusTone(task.status.category),
-					)}
-				/>
-			)}
-			<div className="min-w-0 flex-1 space-y-1.5">
-				<div className="flex min-w-0 items-center gap-2">
+			<button
+				type="button"
+				aria-current={selected ? "true" : undefined}
+				onClick={onClick}
+				className="block w-full min-w-0 space-y-2 px-3 pt-2.5 pb-9 text-left focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+			>
+				<div className="flex min-w-0 items-center gap-1.5 pr-6">
 					{task.type?.iconUrl && (
 						<img
 							alt={task.type.name}
@@ -51,91 +43,61 @@ export function ForkJiraTaskCard({
 							src={task.type.iconUrl}
 						/>
 					)}
-					<span className="font-mono text-[11px] text-muted-foreground">
+					<span className="shrink-0 font-mono text-[11px] text-muted-foreground">
 						{task.key}
 					</span>
 					{task.parent && (
 						<span
-							className="min-w-0 truncate text-[10px] text-muted-foreground"
+							className="min-w-0 truncate text-[11px] text-muted-foreground/70"
 							title={task.parent.title}
 						>
-							{task.parent.key}
+							· {task.parent.key}
 						</span>
-					)}
-					{!board && (
-						<span
-							className={cn(
-								"inline-flex rounded-md px-1.5 py-0.5 text-[10px]",
-								jiraStatusTone(task.status.category),
-							)}
-						>
-							{task.status.name}
-						</span>
-					)}
-					{board && (
-						<Icon
-							className={cn(
-								"ml-auto size-3.5",
-								jiraStatusTone(task.status.category),
-							)}
-						/>
 					)}
 				</div>
-				<p
-					className={cn(
-						"text-[13px] font-medium leading-relaxed",
-						board ? "line-clamp-3" : "truncate",
-					)}
-				>
+				<p className="line-clamp-3 text-[13px] font-medium leading-snug">
 					{task.title}
 				</p>
-			</div>
-			<div
-				className={cn(
-					"flex shrink-0 items-center gap-2 text-muted-foreground",
-					board && "border-t border-border/50 pt-2.5",
-				)}
-			>
-				{board && (
-					<div className="flex min-w-0 flex-1 gap-1 overflow-hidden">
-						{task.sprint && (
-							<span className="truncate rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
+				{(task.labels.length > 0 || (showSprint && task.sprint)) && (
+					<div className="flex min-w-0 flex-wrap gap-1">
+						{showSprint && task.sprint && (
+							<span className="max-w-full truncate rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
 								{task.sprint}
 							</span>
 						)}
-						{task.labels.slice(0, 2).map((label) => (
+						{task.labels.slice(0, 3).map((label) => (
 							<span
 								key={label}
-								className="truncate rounded bg-muted px-1.5 py-0.5 text-[10px]"
+								className="max-w-32 truncate rounded-full border border-border/70 px-1.5 py-0.5 text-[10px] text-muted-foreground"
 							>
 								{label}
 							</span>
 						))}
 					</div>
 				)}
-				{task.priority && (
-					<span
-						title={task.priority}
-						className="inline-flex items-center gap-1 text-[10px]"
-					>
-						<LuArrowUp className="size-3" />
-						{board && task.priority}
-					</span>
-				)}
-				{task.assignee && (
-					<span
-						title={task.assignee.name}
-						className="flex size-6 items-center justify-center rounded-full bg-muted text-[9px] font-medium text-foreground ring-1 ring-border"
-					>
-						{task.assignee.name
-							.split(/\s+/)
-							.map((part) => part[0])
-							.slice(0, 2)
-							.join("")
-							.toUpperCase()}
-					</span>
-				)}
+			</button>
+			{task.assignee && (
+				<Avatar
+					size="xs"
+					fullName={task.assignee.name}
+					className="pointer-events-none absolute top-2 right-2.5 rounded-full"
+				/>
+			)}
+			<div className="absolute right-2.5 bottom-2 left-3 flex items-center gap-2">
+				<span
+					title={task.priority ?? undefined}
+					className="flex items-center gap-1 text-[11px] text-muted-foreground"
+				>
+					<PriorityIcon
+						priority={jiraPriorityLevel(task.priority)}
+						statusType={jiraStatusType(task.status.category)}
+						className="size-3.5"
+					/>
+				</span>
+				<div className="ml-auto min-w-0 max-w-[70%]">
+					<ForkTaskStatus task={task} columns={columns} />
+				</div>
 			</div>
-		</button>
+		</div>
 	);
 }

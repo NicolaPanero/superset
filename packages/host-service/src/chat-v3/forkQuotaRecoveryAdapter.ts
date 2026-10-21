@@ -10,6 +10,7 @@ import type { SessionAccount } from "../trpc/router/usage/session-account/sessio
 import type { UsageAccount } from "../trpc/router/usage/types";
 import {
 	isAccountQuotaFailure,
+	isClaudeQuotaMessage,
 	recoveryResetAt,
 	suggestedRecoveryAccount,
 } from "./forkQuotaRecoveryPolicy";
@@ -86,6 +87,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		selection: string | null;
 	};
 	private recoveringQuota = false;
+	private lastAgentText = "";
 	private waitingForQuota = false;
 	constructor(
 		private deps: RecoveryDependencies,
@@ -226,23 +228,25 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 						this.emit(event);
 					continue;
 				}
-				if (
-					event.kind === "turn" &&
-					event.turn.status === "failed" &&
-					isAccountQuotaFailure(this.deps.agent ?? "claude", event.turn.error)
-				) {
+				if (event.kind === "item" && event.item.kind === "agent_message")
+					this.lastAgentText = String(event.item.text ?? "");
+				const quotaTurn =
+					event.kind === "turn" ? this.quotaFailedTurn(event.turn) : undefined;
+				if (event.kind === "turn" && event.turn.status !== "running")
+					this.lastAgentText = "";
+				if (quotaTurn) {
 					const account = this.deps.account();
 					this.quotaFailure =
 						this.nativeId && account?.credentialKind === "subscription"
 							? {
-									turn: event.turn,
+									turn: quotaTurn,
 									at: this.now(),
 									nativeId: this.nativeId,
 									identity: account.identity,
 									selection: account.selection,
 								}
 							: undefined;
-					if (await this.recover(event.turn)) {
+					if (await this.recover(quotaTurn)) {
 						this.quotaFailure = undefined;
 						break;
 					}
@@ -261,6 +265,22 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			this.failRecovery();
 			this.queue.push({ kind: "session", session: { status: "dead" } });
 		}
+	}
+	private quotaFailedTurn(turn: Turn): Turn | undefined {
+		const agent = this.deps.agent ?? "claude";
+		if (turn.status === "failed" && isAccountQuotaFailure(agent, turn.error))
+			return turn;
+		if (
+			turn.status === "completed" &&
+			agent === "claude" &&
+			isClaudeQuotaMessage(this.lastAgentText)
+		)
+			return {
+				...turn,
+				status: "failed",
+				error: { message: this.lastAgentText.trim() },
+			};
+		return undefined;
 	}
 	private failRecovery() {
 		if (this.heldTurn)
@@ -536,6 +556,9 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 	}
 	fork(point?: { messageId: string }) {
 		return this.child.fork?.(point) ?? Promise.resolve(null);
+	}
+	contextBreakdown() {
+		return this.child.contextBreakdown?.() ?? Promise.resolve(null);
 	}
 	stopBackgroundTask(id: string) {
 		return this.child.stopBackgroundTask?.(id) ?? Promise.resolve(false);

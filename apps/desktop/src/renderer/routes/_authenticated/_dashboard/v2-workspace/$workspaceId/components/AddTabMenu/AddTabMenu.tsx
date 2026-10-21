@@ -13,6 +13,7 @@ import { HotkeyMenuShortcut } from "renderer/components/HotkeyMenuShortcut";
 interface AddTabMenuProps {
 	onAddAgent: () => void;
 	onAddTerminal: () => void;
+	runAfterClose: (action: () => void) => void;
 	onAddBrowser: () => void;
 	onAddChanges: () => void;
 	onAddDesktop?: (() => void) | undefined;
@@ -23,6 +24,7 @@ interface AddTabMenuProps {
 export function AddTabMenu({
 	onAddAgent,
 	onAddTerminal,
+	runAfterClose,
 	onAddBrowser,
 	onAddChanges,
 	onAddDesktop,
@@ -38,7 +40,10 @@ export function AddTabMenu({
 				</span>
 				<HotkeyMenuShortcut hotkeyId="NEW_AGENT" />
 			</DropdownMenuItem>
-			<DropdownMenuItem className="gap-2" onClick={onAddTerminal}>
+			<DropdownMenuItem
+				className="gap-2"
+				onClick={() => runAfterClose(onAddTerminal)}
+			>
 				<BsTerminalPlus className="size-4" />
 				<span>
 					<Trans>Terminal</Trans>

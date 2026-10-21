@@ -12,6 +12,7 @@ import type { FoldSignal } from "../ChangesFileList";
 import { ChangesFileList } from "../ChangesFileList";
 import { ChangesToolbar } from "../ChangesToolbar";
 import { ChangesSearchInput } from "./components/ChangesSearchInput";
+import { ForkBranchBaseNotice } from "./components/ForkBranchBaseNotice";
 import { filterChangesetFiles } from "./filterChangesetFiles";
 import { shouldShowChangesLoading } from "./shouldShowChangesLoading";
 
@@ -132,6 +133,7 @@ export const ChangesTabContent = memo(function ChangesTabContent({
 
 	return (
 		<div className="flex h-full min-h-0 flex-col">
+			<ForkBranchBaseNotice workspaceId={workspaceId} />
 			<div className="pt-1">
 				<ChangesToolbar
 					filter={filter}
@@ -148,15 +150,7 @@ export const ChangesTabContent = memo(function ChangesTabContent({
 					onToggleSearch={toggleSearch}
 					baseBranch={baseBranch ?? status.data.defaultBranch.name}
 					branches={branches.data?.branches ?? []}
-					// Picking the repo default clears the override (null) instead of
-					// pinning it, so the workspace follows a later default change.
-					onBaseBranchChange={(branchName) =>
-						onBaseBranchChange(
-							branchName === status.data?.defaultBranch.name
-								? null
-								: branchName,
-						)
-					}
+					onBaseBranchChange={onBaseBranchChange}
 					currentBranchName={status.data.currentBranch.name}
 					canRenameBranch={canRenameBranch}
 					onRenameBranch={onRenameBranch}

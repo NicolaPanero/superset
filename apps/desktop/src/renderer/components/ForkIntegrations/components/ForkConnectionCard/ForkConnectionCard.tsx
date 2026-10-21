@@ -19,6 +19,8 @@ import { ForkSegmentedControl } from "renderer/components/ForkSegmentedControl";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { GhAuthDialog } from "renderer/routes/_authenticated/onboarding/components/GhAuthDialog";
 import { useForkConnections } from "../../hooks/useForkConnections";
+import { useForkGithubDiscovery } from "../../hooks/useForkGithubDiscovery";
+import { ForkGithubCliSetup } from "./components/ForkGithubCliSetup";
 
 export function ForkConnectionCard({
 	provider,
@@ -34,6 +36,7 @@ export function ForkConnectionCard({
 	const { t } = useLingui();
 	const gh = electronTrpc.system.detectGhCli.useQuery(undefined, {
 		enabled: provider === "github",
+		refetchOnWindowFocus: true,
 	});
 	const brew = electronTrpc.system.detectBrew.useQuery(undefined, {
 		enabled: provider === "github",
@@ -46,6 +49,9 @@ export function ForkConnectionCard({
 		rows.find((c) => c.enabled && c.isDefault) ??
 		rows.find((c) => c.enabled && c.mode !== "system") ??
 		rows[0];
+	const discovery = useForkGithubDiscovery(
+		provider === "github" ? current : undefined,
+	);
 	const [editing, setEditing] = useState(false),
 		[add, setAdd] = useState(false),
 		[ghOpen, setGhOpen] = useState(false);
@@ -99,6 +105,7 @@ export function ForkConnectionCard({
 	useEffect(() => {
 		if (
 			provider !== "github" ||
+			current?.mode === "system" ||
 			discovered.current ||
 			!client ||
 			!current?.enabled ||
@@ -123,6 +130,7 @@ export function ForkConnectionCard({
 	const connected = current?.enabled && current.state === "connected";
 	const expired = current?.state === "expired";
 	const showForm = editing || add;
+	const needsGhCli = provider === "github" && gh.data?.installed === false;
 	const openForm = (adding: boolean) => {
 		setConfirmation(false);
 		setAdd(adding);
@@ -135,20 +143,23 @@ export function ForkConnectionCard({
 		setToken("");
 	};
 	const connectGithub = () => {
-		if (!gh.data?.installed && !brew.data?.installed)
+		if (gh.data?.authenticated) action.mutate("enable");
+		else if (!gh.data?.installed && !brew.data?.installed)
 			window.open("https://cli.github.com/", "_blank", "noopener,noreferrer");
 		else setGhOpen(true);
 	};
-	const status = connected
-		? { tone: "bg-emerald-500", label: t({ message: "Connected" }) }
-		: expired
-			? { tone: "bg-amber-500", label: t({ message: "Expired" }) }
-			: current?.error
-				? { tone: "bg-destructive", label: t({ message: "Error" }) }
-				: {
-						tone: "bg-muted-foreground/40",
-						label: t({ message: "Not connected" }),
-					};
+	const status = discovery.isFetching
+		? { tone: "bg-muted-foreground/40", label: t({ message: "Checking…" }) }
+		: connected
+			? { tone: "bg-emerald-500", label: t({ message: "Connected" }) }
+			: expired
+				? { tone: "bg-amber-500", label: t({ message: "Expired" }) }
+				: current?.error
+					? { tone: "bg-destructive", label: t({ message: "Error" }) }
+					: {
+							tone: "bg-muted-foreground/40",
+							label: t({ message: "Not connected" }),
+						};
 	const method =
 		current?.mode === "system"
 			? current.source
@@ -210,9 +221,28 @@ export function ForkConnectionCard({
 				)}
 				{!showForm &&
 					!connected &&
+					!needsGhCli &&
 					(provider === "github" ? (
-						<Button size="sm" disabled={!client} onClick={connectGithub}>
-							<Trans>Connect GitHub</Trans>
+						<Button
+							size="sm"
+							disabled={
+								!client ||
+								action.isPending ||
+								gh.isPending ||
+								brew.isPending ||
+								discovery.isFetching
+							}
+							onClick={connectGithub}
+						>
+							{gh.isPending || brew.isPending || discovery.isFetching ? (
+								<Trans>Checking…</Trans>
+							) : gh.data?.authenticated ? (
+								<Trans>Use local GitHub account</Trans>
+							) : gh.data?.installed ? (
+								<Trans>Connect GitHub repositories</Trans>
+							) : (
+								<Trans>Install GitHub CLI</Trans>
+							)}
 						</Button>
 					) : (
 						<Button size="sm" onClick={() => openForm(!current)}>
@@ -274,7 +304,22 @@ export function ForkConnectionCard({
 					</DropdownMenu>
 				)}
 			</div>
-			{current?.error && !showForm && (
+			{needsGhCli && !showForm && (
+				<ForkGithubCliSetup
+					brewAvailable={brew.isPending ? undefined : !!brew.data?.installed}
+					busy={
+						!client || action.isPending || gh.isFetching || discovery.isFetching
+					}
+					onInstall={connectGithub}
+					onCheck={() => {
+						void gh.refetch();
+						void brew.refetch();
+						if (current?.mode === "system" && current.enabled && !connected)
+							void discovery.refetch({ cancelRefetch: false });
+					}}
+				/>
+			)}
+			{current?.error && !showForm && !discovery.isFetching && (
 				<p className="mt-2 break-words pl-13 text-xs text-destructive">
 					{current.error}
 				</p>
@@ -438,7 +483,10 @@ export function ForkConnectionCard({
 				open={ghOpen}
 				mode={gh.data?.installed ? "auth" : "install"}
 				onOpenChange={setGhOpen}
-				onExit={() => action.mutate("enable")}
+				onExit={() => {
+					void gh.refetch();
+					action.mutate("enable");
+				}}
 			/>
 		</section>
 	);

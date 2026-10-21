@@ -19,6 +19,27 @@ test("SSH and HTTPS remotes identify the same repository without mixing provider
 	).toBeNull();
 	expect(parseForkRemote("file:///org/repo")).toBeNull();
 });
+
+test("both Bitbucket SSH hostnames retain the HTTPS repository identity", () => {
+	const expected = parseForkRemote(
+		"https://bitbucket.org/example-team/example-repo.git",
+	);
+	for (const remote of [
+		"git@bitbucket.org:example-team/example-repo.git",
+		"git@ssh.bitbucket.org:example-team/example-repo.git",
+		"ssh://git@ssh.bitbucket.org:22/example-team/example-repo.git",
+	]) {
+		expect(parseForkRemote(remote)).toEqual(expected);
+	}
+	expect(
+		parseForkRemote("https://ssh.bitbucket.org/example-team/example-repo"),
+	).toBeNull();
+	expect(
+		parseForkRemote(
+			"ssh://git@ssh.bitbucket.org.attacker.example/example-team/example-repo",
+		),
+	).toBeNull();
+});
 test("Jira branch names preserve the issue key and remove unsafe title characters", () => {
 	expect(forkTaskBranch("APP-12", "Fix à / issue: one")).toBe(
 		"APP-12-fix-a-issue-one",

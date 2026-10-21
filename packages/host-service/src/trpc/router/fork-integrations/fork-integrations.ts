@@ -50,6 +50,7 @@ import { runAgentInWorkspace } from "../agents";
 import { createFromClone } from "../project/handlers";
 import { workspacesRouter } from "../workspaces/workspaces";
 import { forkJiraAutomationProcedures } from "./fork-jira-automations";
+import { forkJiraBoardProcedures } from "./fork-jira-board-procedures";
 
 const exec = promisify(execFile);
 const provider = z.enum(["github", "bitbucket", "jira"]);
@@ -800,6 +801,7 @@ export const forkScmRouter = router({
 });
 export const forkTasksRouter = router({
 	...forkJiraAutomationProcedures,
+	...forkJiraBoardProcedures,
 	createWorkspace: local
 		.input(
 			taskTarget.extend({

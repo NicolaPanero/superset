@@ -129,7 +129,6 @@ export function ForkPullRequests({
 					key={detail.data.url + connectionId}
 					pullRequest={detail.data}
 					hostUrl={hostUrl}
-					onBack={() => void navigate({ to: "/pull-requests", search: {} })}
 				/>
 			) : (
 				<div className="flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center text-sm text-muted-foreground">

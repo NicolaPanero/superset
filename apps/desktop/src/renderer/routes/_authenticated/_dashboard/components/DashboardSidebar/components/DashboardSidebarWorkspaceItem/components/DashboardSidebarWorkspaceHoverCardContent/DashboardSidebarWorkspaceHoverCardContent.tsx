@@ -2,13 +2,13 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
 import { Kbd, KbdGroup } from "@superset/ui/kbd";
 import { formatDistanceToNow } from "date-fns";
-import { FaGithub } from "react-icons/fa";
 import {
 	LuExternalLink,
 	LuGlobe,
 	LuPencil,
 	LuTriangleAlert,
 } from "react-icons/lu";
+import { ForkScmLinkLabel } from "renderer/components/ForkScmLinkLabel";
 import type { DiffStats } from "renderer/hooks/host-service/useDiffStats";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import type { DashboardSidebarWorkspace } from "../../../../types";
@@ -196,8 +196,7 @@ export function DashboardSidebarWorkspaceHoverCardContent({
 						asChild
 					>
 						<a href={pullRequest.url} target="_blank" rel="noopener noreferrer">
-							<FaGithub className="size-3" />
-							<Trans>View on GitHub</Trans>
+							<ForkScmLinkLabel url={pullRequest.url} showIcon />
 							{hasOpenPRShortcut && (
 								<KbdGroup className="ml-auto">
 									{openPRDisplay.map((key) => (

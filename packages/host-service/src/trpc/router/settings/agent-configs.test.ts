@@ -48,6 +48,18 @@ async function listFirst(
 	return first;
 }
 
+/** The fork seeds four agents; add the other presets a test reads. */
+async function listWithPresets(
+	caller: ReturnType<typeof agentConfigsRouter.createCaller>,
+	presetIds: string[],
+) {
+	const seeded = await caller.list();
+	for (const presetId of presetIds)
+		if (!seeded.some((row) => row.presetId === presetId))
+			await caller.add(presetBody(presetId));
+	return caller.list();
+}
+
 const DEFAULT_PRESET_IDS = getDefaultSeedPresets().map((p) => p.presetId);
 const DEFAULT_PRESET_ORDERS = DEFAULT_PRESET_IDS.map((_, i) => i);
 
@@ -59,12 +71,11 @@ describe("agentConfigsRouter", () => {
 			const result = await caller.list();
 
 			expect(result.map((row) => row.presetId)).toEqual(DEFAULT_PRESET_IDS);
-			expect(result.slice(0, 5).map((row) => row.presetId)).toEqual([
+			expect(result.map((row) => row.presetId)).toEqual([
 				"claude",
 				"codex",
 				"cursor-agent",
-				"opencode",
-				"amp",
+				"grok",
 			]);
 			expect(result.map((row) => row.order)).toEqual(DEFAULT_PRESET_ORDERS);
 		});
@@ -73,6 +84,12 @@ describe("agentConfigsRouter", () => {
 			const caller = createCaller();
 			const result = await caller.list();
 			expect(result.find((row) => row.presetId === "superset")).toBeUndefined();
+		});
+
+		it("does not seed pdev, which a feature flag gates", async () => {
+			const caller = createCaller();
+			const result = await caller.list();
+			expect(result.find((row) => row.presetId === "pdev")).toBeUndefined();
 		});
 
 		it("seeds Claude with its most permissive flag", async () => {
@@ -101,7 +118,7 @@ describe("agentConfigsRouter", () => {
 
 		it("seeds resume args for agents with an id-based resume", async () => {
 			const caller = createCaller();
-			const result = await caller.list();
+			const result = await listWithPresets(caller, ["amp"]);
 
 			const claude = result.find((row) => row.presetId === "claude");
 			expect(claude?.resumeArgs).toEqual(["--resume"]);
@@ -115,7 +132,14 @@ describe("agentConfigsRouter", () => {
 
 		it("seeds native fork args for every harness whose CLI has them", async () => {
 			const caller = createCaller();
-			const result = await caller.list();
+			const result = await listWithPresets(caller, [
+				"opencode",
+				"pi",
+				"droid",
+				"amp",
+				"gemini",
+				"copilot",
+			]);
 
 			const claude = result.find((row) => row.presetId === "claude");
 			expect(claude?.forkArgs).toEqual([
@@ -160,7 +184,7 @@ describe("agentConfigsRouter", () => {
 
 		it("backfills fork args onto an install seeded before the preset had them", async () => {
 			const { caller, db } = createCallerWithDb();
-			const seeded = await caller.list();
+			const seeded = await listWithPresets(caller, ["opencode"]);
 			const opencode = seeded.find((row) => row.presetId === "opencode");
 			// Simulate the pre-existing install: the row was seeded when the
 			// preset had no fork support.
@@ -177,7 +201,7 @@ describe("agentConfigsRouter", () => {
 
 		it("leaves a customised agent's fork args alone", async () => {
 			const { caller, db } = createCallerWithDb();
-			const seeded = await caller.list();
+			const seeded = await listWithPresets(caller, ["opencode"]);
 			const opencode = seeded.find((row) => row.presetId === "opencode");
 			// Cleared fork args on a row whose launch command the user edited:
 			// their row, their settings.
@@ -632,9 +656,8 @@ describe("agentConfigsRouter", () => {
 
 			expect(result.map((row) => row.presetId)).toEqual(DEFAULT_PRESET_IDS);
 			expect(result.find((row) => row.label === "Renamed")).toBeUndefined();
-			// `omp` is in defaults now, so reset re-seeds exactly one — the
-			// extra row added above is dropped.
-			expect(result.filter((row) => row.presetId === "omp")).toHaveLength(1);
+			// `omp` is not a fork default, so reset drops the row added above.
+			expect(result.filter((row) => row.presetId === "omp")).toHaveLength(0);
 		});
 	});
 });

@@ -5,16 +5,21 @@ import { Button } from "@superset/ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { LuSparkles } from "react-icons/lu";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
+import type { PullRequestInfoVariant } from "renderer/routes/_authenticated/_dashboard/pull-requests/components/PullRequestInfo";
 import { useForkConnections } from "../../../../hooks/useForkConnections";
 import { required } from "../../../../utils/required";
+import { ForkInfoSection } from "../../../ForkInfoSection";
 
 export function ForkFixFindings({
 	pr,
 	hostUrl,
+	variant,
 }: {
 	pr: ForkPullRequest;
 	hostUrl: string | null;
+	variant: PullRequestInfoVariant;
 }) {
 	const { t } = useLingui();
 	const { client, data } = useForkConnections(hostUrl);
@@ -50,11 +55,15 @@ export function ForkFixFindings({
 	});
 	if ((data?.version ?? 0) < 4) return null;
 	return (
-		<div className="space-y-2">
-			<div className="flex flex-wrap items-center gap-2">
+		<ForkInfoSection
+			variant={variant}
+			label={t({ message: "Agent" })}
+			icon={<LuSparkles className="size-4" />}
+		>
+			<div className="flex min-w-0 flex-wrap items-center gap-1.5">
 				<select
 					aria-label={t({ message: "Agent" })}
-					className="h-8 rounded-md border bg-background px-2 text-xs"
+					className="h-7 min-w-0 max-w-40 flex-1 rounded-md border border-border/60 bg-background px-2 text-xs"
 					value={agentId || agents[0]?.id || ""}
 					onChange={(event) => setAgentId(event.target.value)}
 				>
@@ -65,11 +74,12 @@ export function ForkFixFindings({
 					))}
 				</select>
 				<Button
-					size="sm"
-					variant="outline"
+					size="xs"
+					variant="secondary"
 					disabled={!project || !agents.length || fix.isPending}
 					onClick={() => fix.mutate()}
 				>
+					<LuSparkles className="size-3.5" />
 					{fix.isPending ? (
 						<Trans>Handing to agent…</Trans>
 					) : (
@@ -78,10 +88,10 @@ export function ForkFixFindings({
 				</Button>
 			</div>
 			{(fix.error || projects.error) && (
-				<p role="alert" className="text-sm text-destructive">
+				<p role="alert" className="text-xs text-destructive">
 					{(fix.error ?? projects.error)?.message}
 				</p>
 			)}
-		</div>
+		</ForkInfoSection>
 	);
 }

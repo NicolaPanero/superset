@@ -21,6 +21,7 @@ export function forkJiraQuery({
 	sprint,
 	issueType,
 	parent,
+	boardFilter,
 }: {
 	search: string;
 	scope: JiraScope;
@@ -28,12 +29,14 @@ export function forkJiraQuery({
 	project: string;
 	jql: string;
 	projectKeys?: string[];
-	sprint?: "current";
+	sprint?: string;
+	boardFilter?: string;
 	issueType?: string;
 	parent?: string;
 }) {
 	if (jql.trim()) return jql.trim();
 	const terms: string[] = [];
+	if (boardFilter) terms.push(`filter = ${JSON.stringify(boardFilter)}`);
 	if (scope === "mine") terms.push("assignee = currentUser()");
 	if (project) terms.push(`project = ${JSON.stringify(project)}`);
 	if (status === "open")
@@ -41,6 +44,8 @@ export function forkJiraQuery({
 	else if (status !== "all")
 		terms.push(`statusCategory = ${STATUS_CATEGORY_ID[status]}`);
 	if (sprint === "current") terms.push("sprint in openSprints()");
+	else if (sprint && /^[1-9]\d{0,9}$/.test(sprint))
+		terms.push(`sprint = ${sprint}`);
 	if (issueType?.trim())
 		terms.push(`issuetype = ${JSON.stringify(issueType.trim())}`);
 	if (parent?.trim()) terms.push(`parent = ${JSON.stringify(parent.trim())}`);
@@ -67,13 +72,45 @@ export function jiraStatusTone(category: string) {
 			: "text-muted-foreground bg-muted";
 }
 
+export function jiraStatusType(
+	category: string | undefined,
+): "unstarted" | "started" | "completed" | "backlog" {
+	return category === "done"
+		? "completed"
+		: category === "indeterminate"
+			? "started"
+			: category === "new"
+				? "unstarted"
+				: "backlog";
+}
+
+export function jiraStatusColor(category: string | undefined) {
+	return category === "done"
+		? "#10b981"
+		: category === "indeterminate"
+			? "#3b82f6"
+			: "#a3a3a3";
+}
+
+export function jiraPriorityLevel(
+	name: string | null | undefined,
+): "urgent" | "high" | "medium" | "low" | "none" {
+	const value = name?.toLowerCase() ?? "";
+	if (/highest|blocker|critical|urgent/.test(value)) return "urgent";
+	if (/high|major/.test(value)) return "high";
+	if (/medium|normal/.test(value)) return "medium";
+	if (/low|minor|trivial/.test(value)) return "low";
+	return "none";
+}
+
 export interface ForkJiraTaskFilters {
 	forkTask?: string;
 	forkConnection?: string;
 	forkView?: "board" | "list";
 	forkScope?: JiraScope;
 	forkStatus?: JiraStatus;
-	forkSprint?: "current";
+	forkSprint?: string;
+	forkJiraBoard?: string;
 	forkJiraProject?: string;
 	forkJql?: string;
 	forkIssueType?: string;

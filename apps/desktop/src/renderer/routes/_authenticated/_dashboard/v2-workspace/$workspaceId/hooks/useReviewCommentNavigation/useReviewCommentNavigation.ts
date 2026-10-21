@@ -1,4 +1,4 @@
-import { workspaceTrpc } from "@superset/workspace-client";
+import { useForkBranchBase } from "renderer/hooks/host-service/useForkBranchBase";
 import { useSettings } from "renderer/stores/settings";
 import type { DiffFocusSide } from "../../types";
 import { getChangesetFileKey } from "../useChangeset";
@@ -15,10 +15,7 @@ export function useReviewCommentNavigation(
 	workspaceId: string,
 	onSelectDiffFile?: OpenReviewDiff,
 ) {
-	const baseBranchQuery = workspaceTrpc.git.getBaseBranch.useQuery(
-		{ workspaceId },
-		{ staleTime: Number.POSITIVE_INFINITY },
-	);
+	const baseBranchQuery = useForkBranchBase(workspaceId);
 	return onSelectDiffFile
 		? (
 				path: string,

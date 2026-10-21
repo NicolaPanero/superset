@@ -8,7 +8,7 @@ import type {
 	Turn,
 	UserContent,
 } from "@superset/chat/protocol";
-import { isKnownItem } from "@superset/chat/protocol";
+import { isKnownItem, normalizePlanEntryStatus } from "@superset/chat/protocol";
 import { EventQueue } from "../../eventQueue";
 import type {
 	AdapterEvent,
@@ -369,7 +369,7 @@ export class CodexAdapter implements HarnessAdapter {
 					startedAtMs: this.now(),
 					entries: update.plan.map((step) => ({
 						text: step.step,
-						status: step.status === "inProgress" ? "in_progress" : step.status,
+						status: normalizePlanEntryStatus(step.status),
 					})),
 				},
 				update.turnId,
