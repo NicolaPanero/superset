@@ -6,6 +6,7 @@ import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { useForkExternalSessions } from "renderer/hooks/host-service/useForkExternalSessions";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
@@ -50,9 +51,9 @@ export function ForkImportChatDialog({
 	});
 	const navigate = useNavigate();
 	const [busy, setBusy] = useState<string | null>(null);
-	const listing = workspaceTrpc.sessionTransfer.externalSessions.useQuery(
+	const listing = useForkExternalSessions(
 		{ workspaceId },
-		{ enabled: open || Boolean(resume), retry: false, staleTime: 30_000 },
+		open || Boolean(resume),
 	);
 	const { data: capabilities } =
 		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
@@ -271,6 +272,7 @@ export function ForkImportChatDialog({
 			isPending={listing.isPending}
 			isFetching={listing.isFetching}
 			error={listing.error?.message}
+			loadingPreviews={listing.loadingPreviews}
 			onRefresh={() => void listing.refetch()}
 			configs={configs}
 			verified={verified}

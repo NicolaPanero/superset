@@ -22,6 +22,7 @@ import {
 	runTxcriptCli,
 	txcriptCliPath,
 } from "../../../session-transfer/externalSessions";
+import { createExternalSessionsCache } from "../../../session-transfer/fork-external-sessions-cache";
 import { TransferJobs } from "../../../session-transfer/jobs";
 import {
 	type LineageNode,
@@ -259,6 +260,11 @@ function earlierHistoryPage(
 		...(before !== undefined ? { before } : {}),
 	});
 }
+
+const externalSessionsCache =
+	createExternalSessionsCache<
+		Awaited<ReturnType<typeof listExternalSessions>>
+	>();
 
 export const sessionTransferRouter = router({
 	context: protectedProcedure
@@ -686,6 +692,8 @@ export const sessionTransferRouter = router({
 				.object({
 					workspaceId: z.string().uuid().optional(),
 					projectId: z.string().min(1).optional(),
+					preview: z.boolean().optional(),
+					refresh: z.boolean().optional(),
 				})
 				.refine((value) => value.workspaceId || value.projectId),
 		)
@@ -717,19 +725,27 @@ export const sessionTransferRouter = router({
 					message: "workspace_unavailable",
 				});
 			const cwd = await realpath(root);
-			const folders = await projectFolders(cwd);
-			const codexHomes = await discoverCodexHomes();
+			const [folders, codexHomes, claudeProfiles] = await Promise.all([
+				projectFolders(cwd),
+				discoverCodexHomes(),
+				discoverClaudeProfiles(),
+			]);
 			const baseEnv = { ...process.env, CODEX_HOME: codexHomes[0]?.home };
-			const sessions = await listExternalSessions({
+			const sessions = await externalSessionsCache(
 				cwd,
-				folders,
-				claudeProfiles: (await discoverClaudeProfiles()).map(
-					(profile) => profile.configDir,
-				),
-				codexHomes: codexHomes.slice(1).map((home) => home.home),
-				baseEnv,
-				run: runTxcriptCli(txcriptCliPath()),
-			}).catch((error: Error) => {
+				input.preview ?? true,
+				input.refresh ?? false,
+				() =>
+					listExternalSessions({
+						cwd,
+						folders,
+						claudeProfiles: claudeProfiles.map((profile) => profile.configDir),
+						codexHomes: codexHomes.slice(1).map((home) => home.home),
+						baseEnv,
+						run: runTxcriptCli(txcriptCliPath()),
+						preview: input.preview ?? true,
+					}),
+			).catch((error: Error) => {
 				throw new TRPCError({
 					code: "PRECONDITION_FAILED",
 					message: error.message,

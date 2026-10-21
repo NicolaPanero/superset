@@ -103,6 +103,7 @@ export async function listExternalSessions({
 	run,
 	baseEnv = process.env,
 	limit = 80,
+	preview = true,
 }: {
 	cwd: string;
 	/** The project's folders; txcript before fork.8 only reads `cwd`. */
@@ -112,6 +113,8 @@ export async function listExternalSessions({
 	run: RunCli;
 	baseEnv?: NodeJS.ProcessEnv;
 	limit?: number;
+	/** Reading each chat's first prompt is most of the scan's time. */
+	preview?: boolean;
 }): Promise<ExternalSession[]> {
 	const { CLAUDE_CONFIG_DIR: _claude, ...env } = baseEnv;
 	const scans: {
@@ -132,31 +135,25 @@ export async function listExternalSessions({
 		})),
 	];
 	const byIdentity = new Map<string, ExternalSession>();
-	// `--under` and `--preview` arrived together in txcript fork.8.
-	let current = true;
+	// `--under` and `--preview` arrived together in txcript fork.8; an older
+	// CLI rejects them and each scan falls back to `--cwd`.
 	const list = async (scan: (typeof scans)[number]) => {
 		const args = ["list", "--json", "-n", String(limit)];
-		if (current)
-			try {
-				return await run(
-					[
-						...args,
-						...folders.flatMap((folder) => ["--under", folder]),
-						"--preview",
-						...scan.args,
-					],
-					scan.env,
-				);
-			} catch {
-				current = false;
-			}
-		return run([...args, "--cwd", cwd, ...scan.args], scan.env);
+		try {
+			return await run(
+				[
+					...args,
+					...folders.flatMap((folder) => ["--under", folder]),
+					...(preview ? ["--preview"] : []),
+					...scan.args,
+				],
+				scan.env,
+			);
+		} catch {
+			return run([...args, "--cwd", cwd, ...scan.args], scan.env);
+		}
 	};
-	// The first scan settles which flags the CLI takes; the rest run at once.
-	const [first, ...rest] = scans;
-	const results = first
-		? [await list(first), ...(await Promise.all(rest.map(list)))]
-		: [];
+	const results = await Promise.all(scans.map(list));
 	for (const [index, scan] of scans.entries()) {
 		const listed = listedSchema.parse(results[index]);
 		for (const entry of listed) {

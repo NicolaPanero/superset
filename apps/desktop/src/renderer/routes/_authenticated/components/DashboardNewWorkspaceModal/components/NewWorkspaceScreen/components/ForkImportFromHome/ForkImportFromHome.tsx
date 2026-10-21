@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { Import } from "lucide-react";
 import { useState } from "react";
+import { useForkExternalSessions } from "renderer/hooks/host-service/useForkExternalSessions";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import {
 	getHostServiceHeaders,
@@ -92,10 +93,7 @@ function HomeChatSearch({
 	const navigate = useNavigate();
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const [busy, setBusy] = useState<string | null>(null);
-	const listing = workspaceTrpc.sessionTransfer.externalSessions.useQuery(
-		{ projectId },
-		{ retry: false, staleTime: 30_000 },
-	);
+	const listing = useForkExternalSessions({ projectId });
 	const { data: capabilities } =
 		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
 			retry: false,
@@ -136,6 +134,7 @@ function HomeChatSearch({
 			isPending={listing.isPending}
 			isFetching={listing.isFetching}
 			error={listing.error?.message}
+			loadingPreviews={listing.loadingPreviews}
 			onRefresh={() => void listing.refetch()}
 			configs={configs}
 			verified={verified}

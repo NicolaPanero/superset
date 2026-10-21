@@ -48,6 +48,7 @@ export function ForkChatSearchDialog({
 	sessions,
 	isPending,
 	isFetching,
+	loadingPreviews = false,
 	error,
 	onRefresh,
 	configs,
@@ -61,6 +62,8 @@ export function ForkChatSearchDialog({
 	sessions: ExternalSession[];
 	isPending: boolean;
 	isFetching: boolean;
+	/** The list is shown; the first prompts are still being read. */
+	loadingPreviews?: boolean;
 	error: string | undefined;
 	onRefresh: () => void;
 	configs: ForkChatConfig[];
@@ -174,6 +177,12 @@ export function ForkChatSearchDialog({
 							);
 						})}
 					</fieldset>
+				)}
+				{loadingPreviews && (
+					<p className="-mt-2 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+						<Spinner className="size-3" />
+						<Trans>Loading previews…</Trans>
+					</p>
 				)}
 				<div className="-mx-2 min-h-40 flex-1 overflow-y-auto px-2">
 					{isPending ? (

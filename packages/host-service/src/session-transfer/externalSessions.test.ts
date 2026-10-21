@@ -29,6 +29,29 @@ describe("listExternalSessions", () => {
 		]);
 	});
 
+	test("runs every store at once and skips previews when asked", async () => {
+		let running = 0;
+		let peak = 0;
+		const seen: string[][] = [];
+		const run: RunCli = async (args) => {
+			seen.push(args);
+			running++;
+			peak = Math.max(peak, running);
+			await Bun.sleep(5);
+			running--;
+			return [];
+		};
+		await listExternalSessions({
+			cwd: "/repo",
+			claudeProfiles: ["/a", "/b"],
+			codexHomes: ["/c"],
+			run,
+			preview: false,
+		});
+		expect(peak).toBe(4);
+		expect(seen.every((args) => !args.includes("--preview"))).toBe(true);
+	});
+
 	test("keeps independent account copies of a session", async () => {
 		const calls: { args: string[]; claude?: string }[] = [];
 		const run: RunCli = async (args, env) => {

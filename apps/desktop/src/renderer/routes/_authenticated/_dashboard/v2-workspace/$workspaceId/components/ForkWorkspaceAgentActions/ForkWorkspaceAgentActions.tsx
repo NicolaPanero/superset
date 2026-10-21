@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { WorkspaceStore } from "@superset/panes";
 import { Button } from "@superset/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
+import { workspaceTrpc } from "@superset/workspace-client";
 import { Import } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useHotkey } from "renderer/hotkeys";
@@ -51,6 +52,11 @@ export function ForkWorkspaceAgentActions({
 }) {
 	const { t } = useLingui();
 	const [importOpen, setImportOpen] = useState(false);
+	const utils = workspaceTrpc.useUtils();
+	const warmChats = () =>
+		void utils.sessionTransfer.externalSessions
+			.prefetch({ workspaceId, preview: false }, { staleTime: 30_000 })
+			.catch(() => undefined);
 	useEffect(() => {
 		if (!importRequested) return;
 		setImportOpen(true);
@@ -67,6 +73,8 @@ export function ForkWorkspaceAgentActions({
 						size="icon"
 						className="size-7"
 						aria-label={t({ message: "Find a chat" })}
+						onPointerEnter={warmChats}
+						onFocus={warmChats}
 						onClick={() => setImportOpen(true)}
 					>
 						<Import className="size-4" />
