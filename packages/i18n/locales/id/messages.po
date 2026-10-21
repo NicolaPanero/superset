@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**Chat dan rencana**: nama Chat Baru, pratinjau rencana dan panel samping, serta kontrol mulai ulang dan percabangan yang lebih jelas."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**Indikator lebih jelas**: cincin terpisah untuk kuota 5 jam dan mingguan, dengan kontrol konteks yang selalu terlihat untuk setiap agen."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Otomatisasi Jira**: chat ACP dengan pilihan akun dan model."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**Filter visual**: konfigurasikan otomatisasi Jira dengan filter atau JQL."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**Pembuatan workspace**: mikrofon sebelum Buat dan mulai, tautan tugas berbayar disembunyikan bersama fitur berbayar."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "Perintah..."
 
 msgid "Commands"
 msgstr "Perintah"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Di Plan, perintah dan alat MCP berjalan tanpa meminta izin."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Perintah yang dijalankan untuk setup workspace, teardown, dan tombol Run."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Paket"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan kini mencakup akses penuh ke alat."
+
 msgid "Plan progress"
 msgstr "Kemajuan rencana"
 
@@ -13381,6 +13372,9 @@ msgstr "Paket dipulihkan"
 
 msgid "Plan updated"
 msgstr "Paket diperbarui"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Rencanakan dengan akses penuh; tindakan alat disetujui secara otomatis."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "Pertanyaan"
 msgid "Questions"
 msgstr "Pertanyaan"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Pertanyaan dan persetujuan akhir rencana tetap menunggu jawaban Anda."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Pertanyaan, masukan, dukungan, atau apa pun. Kirim pesan dan kami akan meneruskannya ke orang yang tepat."
 
@@ -14105,9 +14102,6 @@ msgstr "Mengaktifkan kembali…"
 
 msgid "Read"
 msgstr "Dibaca"
-
-msgid "Read and plan without changing anything"
-msgstr "Baca dan rencanakan tanpa mengubah apa pun"
 
 msgid "Read and send mail"
 msgstr "Baca dan kirim email"

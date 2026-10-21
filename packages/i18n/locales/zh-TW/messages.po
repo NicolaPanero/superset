@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全價計費"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**聊天與計畫**：統一使用「新增聊天」，新增計畫預覽和側邊面板，並改善重新啟動與分支操作。"
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**更清楚的指示器**：分別顯示 5 小時和每週配額環，所有代理程式始終顯示上下文按鈕。"
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Jira 自動化**：支援選擇帳戶和模型的 ACP 聊天。"
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**視覺化篩選**：使用篩選條件或 JQL 設定 Jira 自動化。"
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**建立 workspace**：麥克風位於建立並啟動按鈕之前，隱藏付費功能時也隱藏付費任務連結。"
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "命令..."
 
 msgid "Commands"
 msgstr "命令"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "在 Plan 中，命令和 MCP 工具無須權限確認即可執行。"
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "用於工作區初始化、清理和「執行」按鈕的命令。"
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "方案"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan 現在包含工具的完整存取權限。"
+
 msgid "Plan progress"
 msgstr "計畫進度"
 
@@ -13381,6 +13372,9 @@ msgstr "方案已恢復"
 
 msgid "Plan updated"
 msgstr "方案已更新"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "以完整存取權限規劃；工具操作將自動核准。"
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "問題"
 msgid "Questions"
 msgstr "常見問題"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "問題和計畫的最終核准仍需等待你的回覆。"
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "問題、回饋、支援，或者別的什麼都行。寫給我們，我們會轉給合適的人。"
 
@@ -14105,9 +14102,6 @@ msgstr "正在重新啟用…"
 
 msgid "Read"
 msgstr "已讀取"
-
-msgid "Read and plan without changing anything"
-msgstr "只讀取和規劃，不做任何變更"
 
 msgid "Read and send mail"
 msgstr "讀取和傳送郵件"

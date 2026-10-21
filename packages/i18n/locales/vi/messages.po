@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* nếu tính theo giá API đầy đủ"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**Trò chuyện và kế hoạch**: tên Cuộc trò chuyện mới, bản xem trước kế hoạch và bảng bên, cùng các thao tác khởi động lại và phân nhánh rõ ràng hơn."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**Chỉ báo rõ ràng hơn**: vòng riêng cho hạn mức 5 giờ và hằng tuần, với nút ngữ cảnh luôn hiển thị cho mọi tác tử."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Tự động hóa Jira**: trò chuyện ACP với lựa chọn tài khoản và mô hình."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**Bộ lọc trực quan**: cấu hình tự động hóa Jira bằng bộ lọc hoặc JQL."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**Tạo workspace**: micrô nằm trước Tạo và bắt đầu, liên kết tác vụ trả phí được ẩn cùng các tính năng trả phí."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "Lệnh..."
 
 msgid "Commands"
 msgstr "Lệnh"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Trong Plan, các lệnh và công cụ MCP chạy mà không yêu cầu cấp quyền."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Các lệnh chạy khi thiết lập, dọn dẹp workspace và khi nhấn nút Chạy."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Gói"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan hiện bao gồm toàn quyền truy cập công cụ."
+
 msgid "Plan progress"
 msgstr "Tiến độ kế hoạch"
 
@@ -13381,6 +13372,9 @@ msgstr "Đã khôi phục gói"
 
 msgid "Plan updated"
 msgstr "Đã cập nhật gói"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Lập kế hoạch với toàn quyền truy cập; các thao tác công cụ được phê duyệt tự động."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "Câu hỏi"
 msgid "Questions"
 msgstr "Câu hỏi"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Các câu hỏi và phê duyệt kế hoạch cuối cùng vẫn chờ câu trả lời của bạn."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Câu hỏi, góp ý, hỗ trợ hay bất cứ điều gì. Gửi một tin nhắn và chúng tôi sẽ chuyển đến đúng người."
 
@@ -14105,9 +14102,6 @@ msgstr "Đang kích hoạt lại…"
 
 msgid "Read"
 msgstr "Đã đọc"
-
-msgid "Read and plan without changing anything"
-msgstr "Đọc và lập kế hoạch mà không thay đổi gì"
 
 msgid "Read and send mail"
 msgstr "Đọc và gửi thư"

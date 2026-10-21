@@ -82,7 +82,7 @@ test("an advertised Plan mode is selectable beside permissions and shown in the 
 	});
 	await flush();
 	const plan = view.getByRole("menuitem", {
-		name: /Plan Read and plan without changing anything/,
+		name: /Plan Plan with full access; tool actions are approved automatically\./,
 	});
 	fireEvent.click(plan);
 	await flush();
@@ -126,7 +126,7 @@ test("Cursor modes have descriptions and run from read-only Ask to Full access r
 	expect(view.getAllByRole("menuitem").map((item) => item.textContent)).toEqual(
 		[
 			"AskExplore code and answer questions without making changes.",
-			"PlanRead and plan without changing anything",
+			"PlanPlan with full access; tool actions are approved automatically.",
 			"Ask for approvalAsks before edits and commands",
 			"Approve for meAsks only for risky actions",
 			"Full accessApproves tool actions automatically in this chat.",

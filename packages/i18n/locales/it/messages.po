@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se fatturato alla tariffa API piena"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**Chat e piani**: comando Nuova chat, anteprime dei piani e pannello laterale, con controlli più chiari per ripartire e creare diramazioni."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**Indicatori più chiari**: anelli separati per le quote di 5 ore e settimanale, con controllo del contesto sempre visibile per ogni agente."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Automazioni Jira**: chat ACP con scelta di account e modello."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**Filtri grafici**: configura le automazioni Jira con filtri o JQL."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**Creazione workspace**: microfono prima di Crea e avvia, collegamenti ai task a pagamento nascosti con le funzioni a pagamento."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "Comando..."
 
 msgid "Commands"
 msgstr "Comandi"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "In Plan, comandi e strumenti MCP vengono eseguiti senza richieste di autorizzazione."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Comandi eseguiti per il setup del workspace, il teardown e il pulsante Esegui."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Piano"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan ora include l’accesso completo agli strumenti."
+
 msgid "Plan progress"
 msgstr "Avanzamento del piano"
 
@@ -13381,6 +13372,9 @@ msgstr "Piano ripristinato"
 
 msgid "Plan updated"
 msgstr "Piano aggiornato"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Pianifica con accesso completo; le azioni degli strumenti sono approvate automaticamente."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "Domanda"
 msgid "Questions"
 msgstr "Domande"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Le domande e l’approvazione finale del piano richiedono ancora la tua risposta."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Domande, feedback, supporto o altro. Mandaci un messaggio e lo inoltreremo alla persona giusta."
 
@@ -14105,9 +14102,6 @@ msgstr "Riattivazione…"
 
 msgid "Read"
 msgstr "Letto"
-
-msgid "Read and plan without changing anything"
-msgstr "Leggi e pianifica senza modificare nulla"
 
 msgid "Read and send mail"
 msgstr "Leggi e invia email"

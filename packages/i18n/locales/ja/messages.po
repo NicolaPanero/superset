@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* API定価で課金された場合"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**チャットとプラン**：「新しいチャット」への名称統一、プランのプレビューとサイドパネル、再開と分岐の操作を改善しました。"
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**わかりやすいメーター**：5時間枠と週間枠を別々のリングで表示し、すべてのエージェントでコンテキストボタンを常に表示します。"
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Jiraの自動化**：アカウントとモデルを選んでACPチャットを開始。"
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**視覚的なフィルター**：フィルターまたはJQLでJiraの自動化を設定。"
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**workspaceの作成**：マイクを作成・開始ボタンの前に配置し、有料機能を非表示にすると有料タスクのリンクも非表示に。"
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "コマンド..."
 
 msgid "Commands"
 msgstr "コマンド"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Planでは、コマンドとMCPツールが権限の確認なしで実行されます。"
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "ワークスペースのセットアップ、ティアダウン、実行ボタンで実行されるコマンド。"
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "プラン"
 
+msgid "Plan now includes full access to tools."
+msgstr "Planでツールへのフルアクセスが利用できるようになりました。"
+
 msgid "Plan progress"
 msgstr "プランの進捗"
 
@@ -13381,6 +13372,9 @@ msgstr "プランを復元しました"
 
 msgid "Plan updated"
 msgstr "プランを更新しました"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "フルアクセスで計画し、ツールの操作を自動的に承認します。"
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "質問"
 msgid "Questions"
 msgstr "よくある質問"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "質問と計画の最終承認には、引き続き回答が必要です。"
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "ご質問、フィードバック、サポート、その他何でも。メッセージをお送りいただければ、適切な担当者にお繋ぎします。"
 
@@ -14105,9 +14102,6 @@ msgstr "再有効化中…"
 
 msgid "Read"
 msgstr "読み取り"
-
-msgid "Read and plan without changing anything"
-msgstr "何も変更せずに読み取りと計画のみ"
 
 msgid "Read and send mail"
 msgstr "メールの閲覧と送信"

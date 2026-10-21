@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 전액 API 요금으로 청구될 경우"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**채팅과 계획**: 새 채팅 명칭, 계획 미리보기와 측면 패널, 더 명확한 재시작 및 분기 제어를 제공합니다."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**더 명확한 표시**: 5시간 및 주간 할당량을 별도 링으로 표시하고 모든 에이전트에서 컨텍스트 버튼을 항상 표시합니다."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Jira 자동화**: 계정과 모델을 선택하는 ACP 채팅."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**시각적 필터**: 필터 또는 JQL로 Jira 자동화를 설정합니다."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**workspace 만들기**: 마이크를 만들기 및 시작 버튼 앞에 배치하고 유료 기능을 숨기면 유료 작업 링크도 숨깁니다."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "명령..."
 
 msgid "Commands"
 msgstr "명령"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Plan에서는 명령과 MCP 도구가 권한 확인 없이 실행됩니다."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "워크스페이스 설정, 정리, 실행 버튼에 사용되는 명령입니다."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "플랜"
 
+msgid "Plan now includes full access to tools."
+msgstr "이제 Plan에 도구에 대한 전체 액세스가 포함됩니다."
+
 msgid "Plan progress"
 msgstr "계획 진행 상황"
 
@@ -13381,6 +13372,9 @@ msgstr "플랜이 복원되었습니다"
 
 msgid "Plan updated"
 msgstr "플랜이 업데이트되었습니다"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "전체 액세스로 계획하며, 도구 작업은 자동으로 승인됩니다."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "질문"
 msgid "Questions"
 msgstr "자주 묻는 질문"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "질문과 최종 계획 승인은 여전히 사용자의 응답을 기다립니다."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "질문, 피드백, 지원 등 무엇이든 좋습니다. 메시지를 보내 주시면 담당자에게 전달하겠습니다."
 
@@ -14105,9 +14102,6 @@ msgstr "다시 활성화하는 중…"
 
 msgid "Read"
 msgstr "읽음"
-
-msgid "Read and plan without changing anything"
-msgstr "아무것도 변경하지 않고 읽고 계획만"
 
 msgid "Read and send mail"
 msgstr "메일 읽기 및 보내기"

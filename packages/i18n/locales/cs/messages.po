@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**Chaty a plány**: příkaz Nový chat, náhledy plánů a boční panel s přehlednějším ovládáním restartu a větvení."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**Přehlednější ukazatele**: samostatné kruhy pro pětihodinovou a týdenní kvótu a vždy viditelné ovládání kontextu pro každého agenta."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Automatizace Jira**: ACP chaty s výběrem účtu a modelu."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**Vizuální filtry**: nastavte automatizace Jira pomocí filtrů nebo JQL."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**Vytvoření workspace**: mikrofon před Vytvořit a spustit, odkazy na placené úkoly se skrývají s placenými funkcemi."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "Příkaz..."
 
 msgid "Commands"
 msgstr "Příkazy"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "V režimu Plan se příkazy a nástroje MCP spouštějí bez žádostí o oprávnění."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Příkazy spouštěné při setupu a teardownu pracovního prostoru a tlačítkem Spustit."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Tarif"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan nyní zahrnuje plný přístup k nástrojům."
+
 msgid "Plan progress"
 msgstr "Průběh plánu"
 
@@ -13381,6 +13372,9 @@ msgstr "Tarif obnoven"
 
 msgid "Plan updated"
 msgstr "Tarif byl aktualizován"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Plánujte s plným přístupem; akce nástrojů se schvalují automaticky."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "Otázka"
 msgid "Questions"
 msgstr "Otázky"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Otázky a konečné schválení plánu stále čekají na vaši odpověď."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Dotazy, zpětná vazba, podpora nebo cokoli jiného. Napište nám a předáme to správnému člověku."
 
@@ -14105,9 +14102,6 @@ msgstr "Obnovování…"
 
 msgid "Read"
 msgstr "Přečteno"
-
-msgid "Read and plan without changing anything"
-msgstr "Číst a plánovat bez jakýchkoli změn"
 
 msgid "Read and send mail"
 msgstr "Čtení a odesílání pošty"

@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "chat-plans-controls-2026-10";
+export const FORK_WHATS_NEW_ID = "plan-full-access-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -30,25 +30,12 @@ export function ForkWhatsNewNotice() {
 	const [seen, setSeen] = useState(() => hasSeenForkWhatsNew(localStorage));
 	if (seen) return null;
 	const highlights = [
+		t({ message: "Plan now includes full access to tools." }),
 		t({
-			message:
-				"**Jira automations**: ACP chats with account and model selection.",
+			message: "Commands and MCP tools run without permission prompts in Plan.",
 		}),
 		t({
-			message:
-				"**Visual filters**: configure Jira automations with filters or JQL.",
-		}),
-		t({
-			message:
-				"**Workspace creation**: microphone before Create & start, paid task links hidden with paid features.",
-		}),
-		t({
-			message:
-				"**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls.",
-		}),
-		t({
-			message:
-				"**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent.",
+			message: "Questions and final plan approval still wait for your answer.",
 		}),
 	];
 	const notice: DesktopNotice = {

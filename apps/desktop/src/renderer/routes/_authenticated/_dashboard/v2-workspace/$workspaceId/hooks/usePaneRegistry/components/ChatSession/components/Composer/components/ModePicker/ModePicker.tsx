@@ -101,7 +101,10 @@ export function ModePicker({
 		},
 		plan: {
 			title: t({ message: "Plan" }),
-			description: t({ message: "Read and plan without changing anything" }),
+			description: t({
+				message:
+					"Plan with full access; tool actions are approved automatically.",
+			}),
 			icon: NotebookPen,
 		},
 		"read-only": {

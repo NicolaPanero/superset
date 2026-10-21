@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* tam API tarifesiyle faturalandırılsaydı"
 
-msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
-msgstr "**Sohbetler ve planlar**: Yeni Sohbet adı, plan önizlemeleri ve yan panel ile daha anlaşılır yeniden başlatma ve dallandırma denetimleri."
-
-msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
-msgstr "**Daha anlaşılır göstergeler**: 5 saatlik ve haftalık kotalar için ayrı halkalar ve her ajan için her zaman görünür bağlam denetimi."
-
-msgid "**Jira automations**: ACP chats with account and model selection."
-msgstr "**Jira otomasyonları**: hesap ve model seçimiyle ACP sohbetleri."
-
-msgid "**Visual filters**: configure Jira automations with filters or JQL."
-msgstr "**Görsel filtreler**: Jira otomasyonlarını filtreler veya JQL ile yapılandırın."
-
-msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
-msgstr "**Workspace oluşturma**: mikrofon Oluştur ve başlat düğmesinden önce gelir, ücretli özelliklerle birlikte ücretli görev bağlantıları da gizlenir."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -4385,6 +4370,9 @@ msgstr "Komut..."
 
 msgid "Commands"
 msgstr "Komutlar"
+
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Plan modunda komutlar ve MCP araçları izin istemeden çalışır."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Çalışma alanı kurulumu, kapatması ve Çalıştır düğmesi için çalıştırılan komutlar."
@@ -13373,6 +13361,9 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan artık araçlara tam erişim içeriyor."
+
 msgid "Plan progress"
 msgstr "Plan ilerlemesi"
 
@@ -13381,6 +13372,9 @@ msgstr "Plan geri yüklendi"
 
 msgid "Plan updated"
 msgstr "Plan güncellendi"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Tam erişimle planlayın; araç işlemleri otomatik olarak onaylanır."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13979,6 +13973,9 @@ msgstr "Soru"
 msgid "Questions"
 msgstr "Sorular"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Sorular ve son plan onayı yine yanıtınızı bekler."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Sorular, geri bildirim, destek veya başka herhangi bir şey. Bir not gönderin, doğru kişiye yönlendirelim."
 
@@ -14105,9 +14102,6 @@ msgstr "Yeniden etkinleştiriliyor…"
 
 msgid "Read"
 msgstr "Okundu"
-
-msgid "Read and plan without changing anything"
-msgstr "Hiçbir şeyi değiştirmeden oku ve planla"
 
 msgid "Read and send mail"
 msgstr "E-postaları okuyun ve gönderin"

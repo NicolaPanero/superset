@@ -81,15 +81,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   partenza resta aperta finché la nuova non è avviata; il cambio account
   Claude mantiene la chat nello stesso pannello.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
-  espone questa modalità. Usa la pianificazione nativa. Per Claude approva
-  automaticamente le letture e le ricerche nel workspace e i comandi di
-  esplorazione riconosciuti, verificando anche pipe, concatenazioni e percorsi
-  reali. Le approvazioni valgono per una sola chiamata. Modifiche, uscita da
-  Plan, tool MCP, percorsi esterni e comandi non riconosciuti richiedono
-  conferma; le domande sulle scelte progettuali restano visibili.
-  Le letture shell con percorsi relativi devono iniziare con
-  `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
-  servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
+  espone questa modalità. Usa la pianificazione nativa con **Full access**:
+  approva automaticamente le richieste degli strumenti, inclusi comandi,
+  tool MCP e accessi fuori dal workspace, per tutti gli agenti ACP.
+  Le domande all'utente e l'approvazione finale del piano restano manuali.
+  La modalità nativa resta Plan; i limiti del provider e del sistema restano validi.
 - **New Chat** (⌘⇧A) apre una nuova chat nelle schede. L’icona **Find a chat**
   nell’intestazione cerca per titolo, modello o branch nei depositi locali di
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del

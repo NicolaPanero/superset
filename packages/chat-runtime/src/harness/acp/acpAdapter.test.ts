@@ -389,7 +389,6 @@ function startAdapter(
 		| "shellPollMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
-		| "forkPlanReadPermissions"
 		| "forkGrokContextUsage"
 	> = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
@@ -4213,7 +4212,7 @@ describe("per-chat Full access", () => {
 	});
 	it.each([
 		1, 2,
-	])("ACP %s entering Plan stops automatic tool approvals while the native mode change is pending", async (version) => {
+	])("ACP %s Plan waits for native confirmation, then approves tools automatically", async (version) => {
 		const agent = new FakeAcpAgent();
 		agent.protocolVersion = version;
 		const modes = [
@@ -4267,7 +4266,9 @@ describe("per-chat Full access", () => {
 		);
 		agent.releaseSelections();
 		await flush(32);
-		expect(agent.lastPermissionResponse()).toBeUndefined();
+		expect(agent.lastPermissionResponse()?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "allow" },
+		});
 		agent.holdSelections = false;
 		adapter.setMode("bypassPermissions");
 		await flush(32);
@@ -4279,7 +4280,7 @@ describe("per-chat Full access", () => {
 
 	it.each([
 		1, 2,
-	])("ACP %s Plan approves workspace reads once and keeps implementation approval manual", async (version) => {
+	])("ACP %s Plan has full tool access and keeps plan approval and questions manual", async (version) => {
 		const agent = new FakeAcpAgent();
 		agent.protocolVersion = version;
 		agent.newSessionModes = {
@@ -4295,7 +4296,7 @@ describe("per-chat Full access", () => {
 			agent,
 			undefined,
 			{ cwd, modeId: "plan" },
-			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+			{ defaultModeId: "bypassPermissions" },
 		);
 		await flush(32);
 		agent.notify("sess-1", {
@@ -4335,8 +4336,14 @@ describe("per-chat Full access", () => {
 		ask(9101, { name: "ExitPlanMode", rawInput: {} });
 		ask(9102, { name: "Edit", rawInput: { file_path: `${cwd}/package.json` } });
 		ask(9103, read, "another-session");
+		ask(9105, { name: "AskUserQuestion", rawInput: {} });
+		ask(9106, { name: "mcp__service__search", rawInput: {} });
 		await flush();
-		for (const id of [9101, 9102, 9103])
+		for (const id of [9102, 9106])
+			expect(agent.responseTo(id)?.result).toEqual({
+				outcome: { outcome: "selected", optionId: "once" },
+			});
+		for (const id of [9101, 9103, 9105])
 			expect(agent.responseTo(id)).toBeUndefined();
 		adapter.setMode("default");
 		await flush(32);
@@ -4346,7 +4353,7 @@ describe("per-chat Full access", () => {
 		await adapter.dispose();
 	});
 
-	it("Plan keeps another harness's read permissions manual", async () => {
+	it("Plan approves tool permissions for other harnesses too", async () => {
 		const agent = new FakeAcpAgent();
 		agent.newSessionModes = { currentModeId: "plan", availableModes: [] };
 		const cwd = process.cwd();
@@ -4365,7 +4372,9 @@ describe("per-chat Full access", () => {
 			9150,
 		);
 		await flush();
-		expect(agent.responseTo(9150)).toBeUndefined();
+		expect(agent.responseTo(9150)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "once" },
+		});
 		await adapter.dispose();
 	});
 
@@ -4379,7 +4388,7 @@ describe("per-chat Full access", () => {
 			agent,
 			undefined,
 			{ cwd: process.cwd() },
-			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+			{ defaultModeId: "bypassPermissions" },
 		);
 		await flush(32);
 		agent.notify("sess-1", {
@@ -4402,7 +4411,7 @@ describe("per-chat Full access", () => {
 		await adapter.dispose();
 	});
 
-	it("Plan read approvals wait for mode confirmation and stay disabled after a rejected change", async () => {
+	it("Plan tool approvals wait for mode confirmation and stay disabled after a rejected change", async () => {
 		const agent = new FakeAcpAgent();
 		agent.newSessionModes = { currentModeId: "default", availableModes: [] };
 		const cwd = process.cwd();
@@ -4410,7 +4419,7 @@ describe("per-chat Full access", () => {
 			agent,
 			undefined,
 			{ cwd },
-			{ defaultModeId: "bypassPermissions", forkPlanReadPermissions: true },
+			{ defaultModeId: "bypassPermissions" },
 		);
 		await flush(32);
 		agent.holdSelections = true;
