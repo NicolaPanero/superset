@@ -248,7 +248,8 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 							: undefined;
 					if (await this.recover(quotaTurn)) {
 						this.quotaFailure = undefined;
-						break;
+						if (child !== this.child) break;
+						continue;
 					}
 				} else if (event.kind === "turn") {
 					this.quotaFailure = undefined;
@@ -321,7 +322,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 			!account ||
 			account.credentialKind !== "subscription" ||
 			account.agent !== (this.deps.agent ?? "claude") ||
-			this.activeBackground ||
+			(this.activeBackground && !settings.resumeAtReset) ||
 			this.attempts >= 4 ||
 			this.disposed
 		)
@@ -372,7 +373,8 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 				)
 					break;
 				const now = this.now();
-				const other = prefs.switchAccounts
+				const canSwitch = prefs.switchAccounts && !this.activeBackground;
+				const other = canSwitch
 					? suggestedRecoveryAccount(
 							rows.filter(
 								(a) =>
@@ -396,11 +398,19 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					prefs.resumeAtReset &&
 					own &&
 					own.fetchedAt.getTime() > this.failureAt &&
-					(this.blocked.get(own.accountKey) ?? Infinity) <= now &&
+					(this.blocked.get(own.accountKey) ??
+						recoveryResetAt(undefined, failureAt, this.model)) <= now &&
 					accountQuotaState(own, this.model, now).reason === "ready";
 				const target = other ?? (readyOwn ? own : undefined);
 				if (target) {
 					if (this.deps.validate && !(await this.deps.validate())) break;
+					if (!other && this.activeBackground) {
+						if (this.cancelled || !this.deps.settings().resumeAtReset) break;
+						this.attempts++;
+						this.deps.status({ phase: "idle" });
+						this.child.prompt(CONTINUE);
+						return true;
+					}
 					if (this.abort.signal.aborted) this.abort = new AbortController();
 					this.deps.status({
 						phase: "switching",
@@ -429,6 +439,11 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					this.pendingContinue = true;
 					this.recoveryOption = other ? "switchAccounts" : "resumeAtReset";
 					this.child = this.deps.create(target.selection);
+					this.activeBackground = false;
+					this.queue.push({
+						kind: "session",
+						session: { backgroundTasks: [] },
+					});
 					this.deps.status({
 						phase: "idle",
 						accountLabel: target.email ?? target.sourceLabel,
@@ -443,31 +458,23 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 					return true;
 				}
 				if (!prefs.resumeAtReset) break;
+				const candidates = rows.filter(
+					(a) =>
+						a.agent === (this.deps.agent ?? "claude") &&
+						a.credentialKind === "subscription" &&
+						(canSwitch || a.selection === this.selection),
+				);
 				const retryAt = Math.max(
-					...rows
-						.filter(
-							(a) =>
-								a.agent === (this.deps.agent ?? "claude") &&
-								a.credentialKind === "subscription" &&
-								(prefs.switchAccounts || a.selection === this.selection),
-						)
-						.map((a) => a.retryAt?.getTime() ?? 0),
+					...candidates.map((a) => a.retryAt?.getTime() ?? 0),
 					0,
 				);
 				const earliest = Math.min(
-					...rows
-						.filter(
-							(a) =>
-								a.agent === (this.deps.agent ?? "claude") &&
-								a.credentialKind === "subscription" &&
-								(prefs.switchAccounts || a.selection === this.selection),
-						)
-						.map(
-							(a) =>
-								this.blocked.get(a.accountKey) ??
-								recoveryResetAt(a, now, this.model),
-						),
-					expires,
+					...candidates.map(
+						(a) =>
+							this.blocked.get(a.accountKey) ??
+							recoveryResetAt(a, now, this.model),
+					),
+					candidates.length ? expires : now + 5 * 60_000,
 				);
 				const nextCheckAt = Math.max(
 					now + 5 * 60_000,

@@ -1202,20 +1202,20 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* se fatturato alla tariffa API piena"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Configurazione più chiara**: guide per installare le CLI degli agenti e spiegazioni sui collegamenti ai repository."
+msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
+msgstr "**Chat e piani**: comando Nuova chat, anteprime dei piani e pannello laterale, con controlli più chiari per ripartire e creare diramazioni."
 
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Contesto a colpo d'occhio**: un anello nel composer mostra quanto è pieno il contesto, con la suddivisione per categoria per Claude."
+msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
+msgstr "**Indicatori più chiari**: anelli separati per le quote di 5 ore e settimanale, con controllo del contesto sempre visibile per ogni agente."
 
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Task Jira più rapidi**: la lista raggruppa i task per stato, righe e card sono compatte e tutti i filtri stanno in una sola barra."
+msgid "**Jira automations**: ACP chats with account and model selection."
+msgstr "**Automazioni Jira**: chat ACP con scelta di account e modello."
 
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Board fedeli a Jira**: gli stati raggruppati del workflow restano nelle stesse colonne."
+msgid "**Visual filters**: configure Jira automations with filters or JQL."
+msgstr "**Filtri grafici**: configura le automazioni Jira con filtri o JQL."
 
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Pull request Bitbucket ridisegnate**: intestazione e colonna informazioni come su GitHub, con i menu Review, Merge e Altro al posto dei pulsanti sparsi."
+msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
+msgstr "**Creazione workspace**: microfono prima di Crea e avvia, collegamenti ai task a pagamento nascosti con le funzioni a pagamento."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2672,6 +2672,9 @@ msgstr "Ultimo valore riportato. L'host deve essere online per aggiornarsi."
 
 msgid "ascending"
 msgstr "crescente"
+
+msgid "Ask"
+msgstr "Chiedi"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Chiedi a un agente un documento di design o un report. Crea la pagina e la pubblica."
@@ -4822,6 +4825,12 @@ msgstr "Context Menu"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "Il trasferimento del contesto include solo i messaggi e può omettere la cronologia precedente."
 
+msgid "Context usage unavailable"
+msgstr "Uso del contesto non disponibile"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "L’uso del contesto comparirà quando l’agente lo comunicherà."
+
 msgid "Continue"
 msgstr "Continua"
 
@@ -4933,6 +4942,9 @@ msgstr "Copiato negli appunti."
 
 msgid "Copied!"
 msgstr "Copiato!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Copia solo il testo dei messaggi. Lo stato degli strumenti e i file non vengono ripristinati."
 
 msgid "Copy"
 msgstr "Copia"
@@ -5584,11 +5596,11 @@ msgstr "Impossibile preparare il feedback di design"
 msgid "Couldn't stage file"
 msgstr "Impossibile aggiungere il file allo stage"
 
-msgid "Couldn't start a new agent session"
-msgstr "Impossibile avviare una nuova sessione dell'agente"
+msgid "Couldn't start a new chat"
+msgstr "Impossibile avviare una nuova chat"
 
-msgid "Couldn't start agent session"
-msgstr "Impossibile avviare la sessione dell'agente"
+msgid "Couldn't start chat"
+msgstr "Impossibile avviare la chat"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Impossibile avviare il workspace cloud"
@@ -6093,14 +6105,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Predefinita ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Account predefinito"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Base predefinita dei nuovi spazi di lavoro. Modificabile singolarmente alla creazione."
 
 msgid "Default effort"
 msgstr "Effort predefinito"
 
-msgid "Default for new agents"
-msgstr "Predefinito per i nuovi agenti"
+msgid "Default for new chats"
+msgstr "Predefinito per le nuove chat"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Posizione predefinita per i nuovi workspace worktree su questo host."
@@ -6918,6 +6933,9 @@ msgstr "Hai ottenuto {name} ×{tier}"
 msgid "Edit"
 msgstr "Modifica"
 
+msgid "Edit and restart from here"
+msgstr "Modifica e riparti da qui"
+
 msgid "Edit comment"
 msgstr "Modifica il commento"
 
@@ -7307,6 +7325,9 @@ msgstr "Spiegami come funziona questo repository"
 
 msgid "Explore"
 msgstr "Esplora"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Esplora il codice e risponde alle domande senza apportare modifiche."
 
 msgid "Explore Pages"
 msgstr "Scopri Pagine"
@@ -9625,6 +9646,9 @@ msgstr "Board Jira"
 msgid "Jira issues"
 msgstr "Issue Jira"
 
+msgid "Jira project"
+msgstr "Progetto Jira"
+
 msgid "Join"
 msgstr "Unisciti"
 
@@ -10242,6 +10266,9 @@ msgstr "Caricamento di altri..."
 msgid "Loading more…"
 msgstr "Caricamento di altri…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "Caricamento anteprime…"
 
@@ -10693,6 +10720,9 @@ msgstr "Unione in corso…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Messaggio"
+
 msgid "Message in channel"
 msgstr "Messaggio in un canale"
 
@@ -11080,17 +11110,8 @@ msgstr "I nuovi agenti {providerLabel} useranno {accountLabel}."
 msgid "New agent"
 msgstr "Nuovo agente"
 
-msgid "New Agent"
-msgstr "Nuovo agente"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "I nuovi avvii di agenti usano questo account. Riavvia un agente in esecuzione per cambiarlo."
-
 msgid "New agent session"
 msgstr "Nuova sessione dell'agente"
-
-msgid "New agent sessions"
-msgstr "Nuove sessioni degli agenti"
 
 msgid "New automation"
 msgstr "Nuova automazione"
@@ -11100,6 +11121,21 @@ msgstr "Nuovo browser"
 
 msgid "new challengers"
 msgstr "nuovi sfidanti"
+
+msgid "New chat"
+msgstr "Nuova chat"
+
+msgid "New Chat"
+msgstr "Nuova chat"
+
+msgid "New chat from loaded messages"
+msgstr "Nuova chat dai messaggi caricati"
+
+msgid "New chats"
+msgstr "Nuove chat"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "Le nuove chat usano questo account. Riavvia una chat in corso per cambiarlo."
 
 msgid "New cloud workspace"
 msgstr "Nuovo workspace cloud"
@@ -11625,6 +11661,9 @@ msgstr "Nessun commento di revisione aperto."
 
 msgid "No organization selected"
 msgstr "Nessuna organizzazione selezionata"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "Nessuna pagina corrisponde"
@@ -12256,6 +12295,9 @@ msgstr "Solo le persone invitate"
 msgid "Only people who opted in appear here."
 msgstr "Qui compaiono solo le persone che hanno scelto di partecipare."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "È possibile modificare e riprendere solo i messaggi di testo."
+
 msgid "Only the author can change a comment"
 msgstr "Solo l’autore può modificare un commento"
 
@@ -12584,6 +12626,9 @@ msgstr "Apri localhost:{0} nel browser esterno"
 msgid "Open menu"
 msgstr "Apri il menu"
 
+msgid "Open message in side panel"
+msgstr "Apri il messaggio nel pannello laterale"
+
 msgid "Open navigation"
 msgstr "Apri la navigazione"
 
@@ -12598,6 +12643,12 @@ msgstr "Apri la pagina nel browser predefinito"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Apri le pagine e rispondi ai commenti dall'app Superset su iPhone e iPad."
+
+msgid "Open plan file"
+msgstr "Apri il file del piano"
+
+msgid "Open plan in side panel"
+msgstr "Apri il piano nel pannello laterale"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Apri Plugin nell'app Superset e scegline uno. L'installazione viene salvata nel tuo account."
@@ -12716,8 +12767,8 @@ msgstr "Apri la palette dei comandi globale"
 msgid "Open the guide"
 msgstr "Apri la guida"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Apri la finestra di nuovo agente nel workspace corrente"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Apri la finestra di nuova chat nel workspace corrente"
 
 msgid "Open the new workspace modal"
 msgstr "Apri la finestra Nuovo workspace"
@@ -12932,6 +12983,9 @@ msgstr "Schema di output"
 
 msgid "Output truncated"
 msgstr "Output troncato"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13318,6 +13372,9 @@ msgstr "Piano"
 msgctxt "billing"
 msgid "Plan"
 msgstr "Piano"
+
+msgid "Plan progress"
+msgstr "Avanzamento del piano"
 
 msgid "Plan restored"
 msgstr "Piano ripristinato"
@@ -13989,6 +14046,12 @@ msgstr "Quota esaurita"
 msgid "Quota is shown when the provider supports it."
 msgstr "I limiti vengono mostrati quando il provider lo supporta."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Quota usata · anello esterno 5h: {fiveHour} · anello interno settimanale: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Quota usata: anello esterno 5h, anello interno settimanale."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14263,6 +14326,9 @@ msgstr "Aggiorna repository"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Si aggiorna alla prossima esecuzione di OpenCode."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "Rigenera"
@@ -15054,9 +15120,6 @@ msgstr "Riavvolgi solo la chat"
 
 msgid "Rewind conversation?"
 msgstr "Riavvolgere la conversazione?"
-
-msgid "Rewind from here"
-msgstr "Riavvolgi da qui"
 
 msgid "Rewrote it and published version 2."
 msgstr "Riscritto e pubblicata la versione 2."
@@ -16338,6 +16401,9 @@ msgstr "Mostra la scheda di utilizzo nella barra laterale"
 msgid "showArrow opt-in"
 msgstr "showArrow opzionale"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "Mostrati"
 
@@ -16449,6 +16515,9 @@ msgstr "Accesso scaduto"
 msgid "Sign-in expired — run"
 msgstr "Accesso scaduto — esegui"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "Accesso non riuscito"
 
@@ -16460,6 +16529,9 @@ msgstr "Hai effettuato l'accesso come <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Disconnesso"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "Siti con accesso effettuato"
@@ -16893,11 +16965,11 @@ msgstr "Avvia una conversazione per vedere i messaggi qui"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Avvia una nuova sessione dell'agente con il contesto recente di questo terminale. I file dello spazio di lavoro restano la fonte di verità."
 
-msgid "Start a new agent session each run"
-msgstr "Avvia una nuova sessione di agente a ogni esecuzione"
-
 msgid "Start a new chat"
 msgstr "Avvia una nuova chat"
+
+msgid "Start a new chat each run"
+msgstr "Avvia una nuova chat a ogni esecuzione"
 
 msgid "Start a session"
 msgstr "Avvia una sessione"
@@ -17604,8 +17676,8 @@ msgstr "Portami alla home"
 msgid "Taken"
 msgstr "Non disponibile"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Ha effetto nelle nuove sessioni degli agenti."
+msgid "Takes effect in new chats."
+msgstr "Ha effetto nelle nuove chat."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Ci sta mettendo più del solito. Continua anche se esci."
@@ -18166,6 +18238,9 @@ msgstr "Il provider ha risposto {0}."
 msgid "The provider refused it."
 msgstr "Il provider l'ha rifiutata."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "Il periodo di recupero è terminato. Contatta support@superset.sh."
 
@@ -18316,6 +18391,9 @@ msgstr "Questo agente non può essere eseguito in un workspace cloud"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "Questo agente non può aprire una chat. Attiva le opzioni CLI avanzate per usarlo nel terminale."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "Questo agente non supporta il ritorno a un messaggio specifico."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Questo agente non esiste più sul dispositivo selezionato (i suoi agenti potrebbero essere stati reimpostati). Le esecuzioni falliranno finché non ne scegli uno nuovo."
@@ -18476,6 +18554,9 @@ msgstr "Questo Mac"
 
 msgid "This machine"
 msgstr "Questo computer"
+
+msgid "This message cannot be used as a restart point."
+msgstr "Questo messaggio non può essere usato come punto di ripartenza."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Questo tenant Microsoft è già collegato da {detail}. Chiedi di scollegarlo prima."
@@ -19458,6 +19539,9 @@ msgstr "Identificatore adatto agli URL, univoco all'interno della tua organizzaz
 msgid "Usage"
 msgstr "Utilizzo"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "L’utilizzo viene letto al massimo ogni 5 minuti per account. Prossimo aggiornamento alle {next}."
+
 msgid "Usage sections"
 msgstr "Sezioni di utilizzo"
 
@@ -19492,8 +19576,8 @@ msgstr "Usa Claude Code, Codex, OpenCode o qualsiasi agente di programmazione pe
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Usa Claude Code, Codex o qualsiasi agente di programmazione. Scegli per ogni task o falli girare affiancati."
 
-msgid "Use for new agents"
-msgstr "Usa per i nuovi agenti"
+msgid "Use for new chats"
+msgstr "Usa per le nuove chat"
 
 msgid "Use global default"
 msgstr "Usa il valore predefinito globale"
@@ -19759,6 +19843,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Attendi che l’agente e il lavoro in coda siano terminati."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Attendi che l'agente finisca prima del passaggio."

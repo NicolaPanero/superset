@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useForkContextUsage } from "../../../ChatSession/providers/ForkContextUsageProvider";
 import { ForkContextBreakdown } from "./components/ForkContextBreakdown";
 
-const RADIUS = 6;
+const RADIUS = 10.5;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 function tone(ratio: number) {
@@ -34,7 +34,7 @@ export function ForkContextMeter({
 	const breakdown = workspaceTrpc.agents.contextBreakdown.useQuery(
 		{ terminalId },
 		{
-			enabled: open && claude && !running,
+			enabled: open && claude && !!context && !running,
 			staleTime: 0,
 			retry: false,
 			placeholderData: (previous) => previous,
@@ -44,50 +44,67 @@ export function ForkContextMeter({
 	useEffect(() => {
 		if (open && claude && !running && usage) void refetch();
 	}, [open, claude, running, usage, refetch]);
-	if (!usage) return null;
-	const ratio = Math.min(1, usage.used / usage.size);
+	const ratio = usage ? Math.min(1, usage.used / usage.size) : 0;
 	const percent = formatPercent(ratio, { maximumFractionDigits: 0 });
-	const amounts = `${formatCompactNumber(usage.used)} / ${formatCompactNumber(usage.size)}`;
+	const amounts = usage
+		? `${formatCompactNumber(usage.used)} / ${formatCompactNumber(usage.size)}`
+		: "—";
+	const unavailable = t({ message: "Context usage unavailable" });
 	const data = breakdown.data?.usage ?? null;
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<button
 					type="button"
-					aria-label={t({ message: `Context ${percent} used` })}
-					title={`${percent} · ${amounts}`}
+					aria-label={
+						usage ? t({ message: `Context ${percent} used` }) : unavailable
+					}
+					title={usage ? `${percent} · ${amounts}` : unavailable}
 					className={cn(
-						"flex h-7 shrink-0 items-center gap-1 rounded-lg px-1.5 text-[11px] tabular-nums outline-none transition-colors hover:bg-foreground/[0.07] focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-foreground/[0.07]",
+						"relative grid size-7 shrink-0 place-items-center rounded-lg tabular-nums outline-none transition-colors hover:bg-foreground/[0.07] focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-foreground/[0.07]",
 						tone(ratio),
 					)}
 				>
-					<svg
-						aria-hidden="true"
-						viewBox="0 0 16 16"
-						className="size-4 -rotate-90"
-					>
-						<circle
-							cx="8"
-							cy="8"
-							r={RADIUS}
-							fill="none"
-							stroke="currentColor"
-							strokeOpacity={0.2}
-							strokeWidth={2}
-						/>
-						<circle
-							cx="8"
-							cy="8"
-							r={RADIUS}
-							fill="none"
-							stroke="currentColor"
-							strokeWidth={2}
-							strokeLinecap="round"
-							strokeDasharray={CIRCUMFERENCE}
-							strokeDashoffset={CIRCUMFERENCE * (1 - ratio)}
-						/>
+					<svg aria-hidden="true" viewBox="0 0 24 24" className="size-6">
+						<g transform="rotate(-90 12 12)">
+							<circle
+								cx="12"
+								cy="12"
+								r={RADIUS}
+								fill="none"
+								stroke="currentColor"
+								strokeOpacity={0.2}
+								strokeDasharray={usage ? undefined : "2 2"}
+								strokeWidth={1.5}
+							/>
+							{usage && (
+								<circle
+									cx="12"
+									cy="12"
+									r={RADIUS}
+									fill="none"
+									stroke="currentColor"
+									strokeWidth={1.5}
+									strokeLinecap="round"
+									strokeDasharray={CIRCUMFERENCE}
+									strokeDashoffset={CIRCUMFERENCE * (1 - ratio)}
+								/>
+							)}
+						</g>
+						{usage && (
+							<text
+								x="12"
+								y="12"
+								dominantBaseline="central"
+								textAnchor="middle"
+								textLength={percent.length > 3 ? 17 : undefined}
+								lengthAdjust="spacingAndGlyphs"
+								className="fill-current text-[8px] font-semibold"
+							>
+								{percent}
+							</text>
+						)}
 					</svg>
-					{ratio >= 0.7 && <span>{percent}</span>}
 				</button>
 			</PopoverTrigger>
 			<PopoverContent align="end" side="top" className="w-80 space-y-3 p-3">
@@ -100,18 +117,22 @@ export function ForkContextMeter({
 					</p>
 				</div>
 				<p className={cn("text-xs", tone(ratio))}>
-					<Trans>{percent} used</Trans>
+					{usage ? (
+						<Trans>{percent} used</Trans>
+					) : (
+						<Trans>Context usage will appear when the agent reports it.</Trans>
+					)}
 				</p>
 				{data ? (
 					<ForkContextBreakdown usage={data} />
-				) : (
+				) : usage ? (
 					<div className="h-1.5 overflow-hidden rounded-full bg-muted">
 						<div
 							className="h-full rounded-full bg-blue-500"
 							style={{ width: `${ratio * 100}%` }}
 						/>
 					</div>
-				)}
+				) : null}
 				{claude && running && (
 					<p className="text-[11px] text-muted-foreground">
 						<Trans>The breakdown updates when the agent finishes.</Trans>
@@ -122,7 +143,7 @@ export function ForkContextMeter({
 						<Trans>Loading breakdown…</Trans>
 					</p>
 				)}
-				{!claude && (
+				{usage && !claude && (
 					<p className="text-[11px] text-muted-foreground">
 						<Trans>A breakdown by category is available for Claude.</Trans>
 					</p>

@@ -18,11 +18,13 @@ export const airAsyncTaskSpawnedSchema = z.looseObject({
 	name: z.string().nullable().optional(),
 	description: z.string().nullable().optional(),
 	canStop: z.boolean().nullable().optional(),
+	outputFilePath: z.string().nullable().optional(),
 });
 
 export const airAsyncTaskProgressSchema = z.looseObject({
 	asyncTaskId: z.string().min(1),
 	summary: z.string().nullable().optional(),
+	outputFilePath: z.string().nullable().optional(),
 });
 
 export const airAsyncTaskStateSchema = z.looseObject({

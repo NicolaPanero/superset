@@ -136,7 +136,7 @@ export function DesignModePopover({
 				if (!onCreateNewAgentSession) {
 					toast.error(
 						t({
-							message: "Couldn't start a new agent session",
+							message: "Couldn't start a new chat",
 						}),
 					);
 					return;

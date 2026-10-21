@@ -70,6 +70,7 @@ describe("Cursor ACP blocking extensions", () => {
 			plan: "Read files first",
 		});
 		if (!a) throw new Error("Missing plan approval");
+		expect(a.item.presentation).toBe("plan");
 		expect(a.item.detail).toEqual([{ type: "text", text: "Read files first" }]);
 		expect(a.respond({ type: "accept" })).toEqual({
 			outcome: { outcome: "accepted" },

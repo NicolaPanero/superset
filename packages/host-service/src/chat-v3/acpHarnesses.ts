@@ -68,6 +68,7 @@ export function acpHarnessFactory(
 					forkPlanReadPermissions: harness === "claude-acp",
 					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
 					forkCursorModelSelection: harness === "cursor-acp",
+					forkGrokContextUsage: harness === "grok-acp",
 					get authMethodId() {
 						return authMethodId;
 					},

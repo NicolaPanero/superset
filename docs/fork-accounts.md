@@ -61,3 +61,110 @@ The pane's Account usage popover, the chat session menu and Settings → Local a
 References: [Codex app-server](https://learn.chatgpt.com/docs/app-server), [Claude limit resets](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset).
 
 The macOS menu bar uses separate monochrome `forkIconTemplate.png` and `forkIconTemplate@2x.png` assets under `apps/desktop/src/resources/tray`, with the same central plus. macOS template rendering adapts them to light, dark and selected states; official builds keep their original tray icon. The adjacent SVG is the editable vector source.
+
+
+## Message restart and context meters
+
+The desktop keeps native restart separate from a text branch. Claude and Codex
+use the adapter's message-point fork extension. The installed Grok 1.0.62 and
+Cursor 2026.10.01 do not advertise standard ACP session/fork; enabling the same
+message-point metadata for them would not implement a rewind. Their message
+menu can open a new chat from the loaded message text through the selected
+message. The confirmation states that tool state and files are not restored.
+It preserves the current agent configuration, explicit account, model and mode.
+
+Grok's `_x.ai/session/info` provides context usage without a model request.
+The adapter reads it after attaching, after a turn and after a configuration
+change. An older CLI returning method-not-found is probed once. Standard ACP
+usage notifications remain supported for every agent. The verified Cursor
+build exposes model selection but no context metrics over ACP; its context
+control shows an unavailable state rather than an estimated percentage.
+
+Account avatar rings measure used quota, with fixed periods: outer 5-hour,
+inner weekly. Rings show the provider's general windows; model-specific
+limits remain in the menu and automatic continuation. Codex periods are matched by their reported window labels, rather than
+assuming primary always means five hours. Missing periods and stale samples
+have no filled arc. Automatic continuation still uses the most restrictive
+applicable quota independently of this display.
+
+## Chat plans and naming
+
+New Chat is the workspace action (Cmd+Shift+A); agent still names the provider
+and its configuration. The context control stays visible before the first prompt
+and keeps the same width once usage arrives. Its ring matches the account avatar’s
+outer ring; the percentage appears inside for every reported value, including 0%.
+Unknown usage remains dashed without an estimated percentage. Account quota rings
+and the compact menu both show quota consumed; compact percentages explicitly
+say used.
+
+Structured plans share a Markdown preview and a side sheet, with progress for
+item lists. Cursor plan approval details stay visible after a decision, including
+old approvals whose target identifies Create Plan. Cursor replay also restores the
+plan from the Create Plan tool input when it omits the approval event. ACP Markdown and file plan
+updates are retained; a file reference opens through the existing workspace file
+action. No plan file is read automatically. Agents that only send a task list
+show that list; ordinary assistant prose stays in the chat and can also open in a side sheet
+from its message actions, so plans written as prose work with every agent.
+
+## Assessment: conversation and file rollback
+
+This change retains chat-only restart. The runtime has no per-turn file
+snapshot ledger. Grok exposes separate native rewind points and file restore
+modes, but these do not provide a shared implementation for Cursor and the
+other adapters. The desktop would also need to reconcile its journal after
+an in-place native rewind; the current restart instead preserves the original
+conversation and loads a fork.
+
+A shared implementation needs checkpoints before each turn, handling for new,
+deleted, binary and untracked files, and conflict detection when the user or
+another chat has changed the workspace since the checkpoint. A simple git
+reset or stash would not establish which changes belong to the selected turn.
+There are no existing checkpoints to restore older sessions. This is deferred
+as a separate feature; no file rollback or repository reset is performed here.
+
+Native Grok interfaces were checked against the installed CLI and
+[xAI's rewind handlers](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-shell/src/extensions/rewind.rs).
+Cursor was checked against its installed ACP implementation and
+[the official ACP documentation](https://cursor.com/docs/cli/acp).
+
+
+Reset waiting remains available when the chat has background processes. Once
+fresh quota confirms availability on the same account, it sends the continuation
+to the existing worker, preserving those processes. Account rotation still waits
+for background work to finish. This also applies when reset waiting is enabled
+after the quota error.
+
+ACP plan documents use the same card and side panel across providers. Codex
+receives the draft `plan` capability and full document updates; removed plans
+remain archived in the transcript. Claude and Cursor tool input is also read on
+history replay. Grok's `x.ai/exit_plan_mode` approval carries the document and
+receives its native approved, abandoned or cancelled outcome. These cards require
+an explicit plan event or tool; ordinary prose is not classified as a plan.
+
+The background activity menu includes detached terminals as well as ACP tasks.
+A detached terminal can be an idle shell. Clicking an ACP process opens its full
+name and latest progress details, with a button to open the owning chat, including
+chats in the right pane. A confirmed successful stop removes the task immediately;
+a refused stop keeps it visible. Async events from unrelated sessions are ignored.
+Some adapters reconcile running processes only on subsequent session activity;
+age alone is not evidence that a process has finished, so there is no age-based
+termination or automatic dismissal.
+
+The chat mode menu is ordered by increasing permissions: Ask (read-only Q&A),
+Plan, Ask for approval, Approve for me, and Full access, using only modes offered
+by the agent. New chats use Full access when no explicit or saved per-agent mode
+exists. The bounded `chatModeByAgent` preference still takes precedence, and
+resuming a native conversation without an explicit mode keeps its own mode.
+
+Queued messages have a direct Edit pencil, including messages with images and
+files. Editing first reloads workspace and stored attachments, then removes the
+queued message and restores text, pasted text cards and files into the composer.
+An attachment read or queue removal failure leaves the queue entry intact. Existing
+composer text and files are kept, and restored files use the same draft retention
+as newly attached files. The queue's `e` shortcut also accepts attachment messages.
+
+Agent handoff keeps the selected transfer mode while native capability checks
+load or fail. Full history cannot silently become Summary only: Switch remains
+disabled until native handoff is available, and the dialog displays the pending
+or unavailable status. A messages-only continuation requires selecting Summary
+only explicitly, including on hosts without the native transfer helper.

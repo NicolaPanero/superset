@@ -61,6 +61,7 @@ function sameTasks(
 				task.id === prior[index]?.id &&
 				task.name === prior[index]?.name &&
 				task.canStop === prior[index]?.canStop &&
+				task.outputPath === prior[index]?.outputPath &&
 				(!withDetail || task.detail === prior[index]?.detail),
 		)
 	);
@@ -260,12 +261,11 @@ export function createChatAgentBridge(
 				return;
 			}
 			if (event.type !== "session") return;
-			const tasks = event.session.backgroundTasks;
-			if (
-				tasks &&
-				!sameTasks(tasks, chat.backgroundTasks, { withDetail: true })
-			) {
-				const listChanged = !sameTasks(tasks, chat.backgroundTasks, {
+			const tasks = event.session.backgroundTasks ?? [];
+			const shown =
+				ctx.terminalAgentStore.getChat(chat.terminalId)?.backgroundTasks ?? [];
+			if (!sameTasks(tasks, shown, { withDetail: true })) {
+				const listChanged = !sameTasks(tasks, shown, {
 					withDetail: false,
 				});
 				chat.backgroundTasks = tasks;

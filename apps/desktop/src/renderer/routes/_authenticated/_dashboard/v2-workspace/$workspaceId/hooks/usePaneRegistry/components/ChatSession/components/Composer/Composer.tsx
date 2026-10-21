@@ -129,11 +129,18 @@ export const Composer = memo(function Composer({
 	const attachmentPreview = useAttachmentPreview();
 	const { storedDraft, onChange, clearDraft } = useComposerDraft(draftKey);
 	const promptInputRef = useRef<PromptInputHandle>(null);
-	const queueActions = useQueueActions(promptQueue, promptInputRef);
+	const queueActions = useQueueActions(
+		promptQueue,
+		promptInputRef,
+		workspaceId,
+		draftKey,
+	);
 	useImperativeHandle(
 		inputRef,
 		() => ({
 			appendText: (text: string) => promptInputRef.current?.appendText(text),
+			appendFiles: (files: File[]) =>
+				promptInputRef.current?.appendFiles(files),
 			focus: () => promptInputRef.current?.focus(),
 		}),
 		[],

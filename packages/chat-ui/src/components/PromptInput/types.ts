@@ -115,6 +115,7 @@ export type PromptInputDictation = {
 
 export type PromptInputHandle = {
 	appendText(text: string): void;
+	appendFiles(files: File[]): void;
 	openFileDialog(): void;
 	focus(): void;
 };
@@ -131,6 +132,7 @@ export type PromptInputProps = {
 	dictation?: PromptInputDictation;
 	toolbar?: ReactNode;
 	toolbarEnd?: ReactNode;
+	submitAction?: ReactNode;
 	// Attachments to open with and each change to them, for a host that keeps
 	// them with the draft. Read once on mount, like defaultValue.
 	draftFiles?: { initial: File[]; onChange: (files: File[]) => void };

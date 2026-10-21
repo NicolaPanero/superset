@@ -25,11 +25,15 @@ import type {
 import type { ChatForkTarget } from "../../../ChatSession/types";
 import { isUnrestrictedMode } from "../../../ChatSession/utils/isUnrestrictedMode";
 import { useForkChat } from "../../hooks/useForkChat";
-import { readSavedChatMode } from "../../utils/savedChatMode";
+import {
+	readSavedChatMode,
+	resolveChatStartMode,
+} from "../../utils/savedChatMode";
 import { AcpRecovery } from "./components/AcpRecovery";
 import { DraftChat } from "./components/DraftChat";
 import { createWhenReachable } from "./utils/createWhenReachable";
 import { forkRecoveryFailure } from "./utils/forkRecoveryFailure";
+import { forkTextBranchPrompt } from "./utils/forkTextBranchPrompt";
 import {
 	isChatCreateWatched,
 	sharedChatCreate,
@@ -49,6 +53,8 @@ export interface AgentSwitchTarget {
 	model: { id: string; label: string } | null;
 	modeId: string | undefined;
 	handoffPrompt: string | null;
+	agentConfigId?: string;
+	accountSelection?: string | null;
 }
 
 export function AcpChatPane({
@@ -155,9 +161,11 @@ export function AcpChatPane({
 			setFailure(null);
 			setRuntimeDead(false);
 			try {
-				const startModeId =
-					modeId ??
-					(resume || !agent ? undefined : readSavedChatMode(agent.id));
+				const startModeId = resolveChatStartMode(
+					modeId,
+					agent ? readSavedChatMode(agent.id) : undefined,
+					Boolean(resume),
+				);
 				const commandId = crypto.randomUUID();
 				const createdId = await sharedChatCreate(
 					createKey,
@@ -640,6 +648,40 @@ export function AcpChatPane({
 			canForkToWorktree={canForkToWorktree}
 			isActive={isActive}
 			onFork={fork}
+			onTextBranch={
+				onForkAgent && agent
+					? (transcript, state) => {
+							alert({
+								title: t({ message: "New chat from loaded messages" }),
+								description: t({
+									message:
+										"Copies message text only. Tool state and files are not restored.",
+								}),
+								actions: [
+									{
+										label: t({ message: "Fork to new chat" }),
+										variant: "default",
+										onClick: () =>
+											onForkAgent({
+												presetId: agent.id,
+												label: agentLabel ?? agent.id,
+												model: state?.modelId
+													? { id: state.modelId, label: state.modelId }
+													: modelId
+														? { id: modelId, label: modelLabel ?? modelId }
+														: null,
+												modeId: state?.modeId ?? modeId,
+												agentConfigId,
+												accountSelection,
+												handoffPrompt: forkTextBranchPrompt(transcript),
+											}),
+									},
+									{ label: t({ message: "Cancel" }), variant: "ghost" },
+								],
+							});
+						}
+					: undefined
+			}
 			onRewind={(itemId, text) => {
 				void forkHere(itemId, text);
 			}}

@@ -177,17 +177,19 @@ export const acpPlanEntriesSchema = z.array(
 	}),
 );
 
-/**
- * v2 `plan_update`, also present in v1 1.5.x as an unstable variant and
- * identical in both. Entries are a whole replacement for the named plan; the
- * `file` and `markdown` plan bodies have no entries and are not rendered.
- */
 export const acpPlanUpdateSchema = z.looseObject({
 	plan: z.looseObject({
 		type: z.string(),
 		planId: z.string().min(1),
 		entries: acpPlanEntriesSchema.optional(),
+		content: z.string().optional(),
+		uri: z.string().optional(),
+		title: z.string().optional(),
 	}),
+});
+
+export const acpPlanRemovedSchema = z.looseObject({
+	planId: z.string().min(1),
 });
 
 /**

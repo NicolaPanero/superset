@@ -43,7 +43,7 @@ function AgentMenuFixture() {
 			{open && (
 				<Dialog open onOpenChange={setOpen}>
 					<DialogContent aria-describedby={undefined}>
-						<DialogTitle>New agent</DialogTitle>
+						<DialogTitle>New chat</DialogTitle>
 						<input aria-label="Agent name" />
 					</DialogContent>
 				</Dialog>
@@ -62,7 +62,7 @@ test.each([
 	const trigger = view.getByRole("button");
 	fireEvent.keyDown(trigger, { key: "ArrowDown", code: "ArrowDown" });
 	await flush();
-	const item = view.getByRole("menuitem", { name: /^Agent/ });
+	const item = view.getByRole("menuitem", { name: /^New chat/ });
 	const menu = view.getByRole("menu");
 	if (target === "keyboard") {
 		fireEvent.focus(item);

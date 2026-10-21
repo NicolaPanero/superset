@@ -262,7 +262,7 @@ export function useAgentSessionLauncher({
 				);
 				toast.error(
 					t({
-						message: "Couldn't start agent session",
+						message: "Couldn't start chat",
 					}),
 					{ description },
 				);

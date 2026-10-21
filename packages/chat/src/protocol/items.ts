@@ -183,6 +183,10 @@ export type ToolCall = z.infer<typeof toolCallSchema>;
 export const planSchema = z.looseObject({
 	...itemBaseFields,
 	kind: z.literal("plan"),
+	title: z.string().optional(),
+	markdown: z.string().optional(),
+	path: z.string().optional(),
+	removed: z.boolean().optional(),
 	entries: z.array(
 		z.looseObject({
 			text: z.string(),
@@ -213,6 +217,7 @@ export type FormField = z.infer<typeof formFieldSchema>;
 export const approvalRequestSchema = z.looseObject({
 	...itemBaseFields,
 	kind: z.literal("approval_request"),
+	presentation: z.literal("plan").optional(),
 	targetItemId: z.string().min(1).nullable(),
 	title: z.string(),
 	detail: z.array(toolContentSchema).optional(),

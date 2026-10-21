@@ -178,7 +178,11 @@ export function ForkJiraTasks() {
 					</>
 				}
 				automations={
-					<ForkJiraAutomations connectionId={connectionId} jql={jql} />
+					<ForkJiraAutomations
+						connectionId={connectionId}
+						jql={jql}
+						initialFilters={{ ...search, search: text }}
+					/>
 				}
 			/>
 			{unavailable && (

@@ -49,7 +49,7 @@ export function WorkspaceEmptyState({
 			{
 				id: "agent",
 				label: t({
-					message: "New Agent",
+					message: "New Chat",
 				}),
 				display: newAgentDisplay,
 				icon: Bot,

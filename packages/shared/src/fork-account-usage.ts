@@ -70,3 +70,35 @@ export function accountQuotaState(
 		warning: used !== null && used > 90,
 	};
 }
+
+export function accountQuotaRings(
+	account: AccountQuota | undefined,
+	model?: string,
+	now = Date.now(),
+) {
+	const general = new Set(["five_hour", "seven_day", "primary", "secondary"]);
+	const windows =
+		account?.windows.filter((window) => general.has(window.id)) ?? [];
+	const used = (
+		matches: (window: AccountQuota["windows"][number]) => boolean,
+	) => {
+		if (!account) return null;
+		const state = accountQuotaState(
+			{ ...account, windows: windows.filter(matches) },
+			model,
+			now,
+		);
+		return (state.reason === "ready" || state.reason === "exhausted") &&
+			state.remaining !== null
+			? 100 - state.remaining
+			: null;
+	};
+	return {
+		fiveHourUsed: used(
+			(w) => w.id === "five_hour" || /^Session \(5h\)(?: ·|$)/.test(w.label),
+		),
+		weeklyUsed: used(
+			(w) => w.id === "seven_day" || /^Weekly(?: ·|$)/.test(w.label),
+		),
+	};
+}

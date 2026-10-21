@@ -111,6 +111,7 @@ export function useHostUsageQuota(
 			isolated: true,
 		});
 		queryClient.setQueryData(queryKey, fresh);
+		return fresh;
 	}, [hostUrl, queryClient, queryKey, clientForHost]);
 
 	return { ...query, refresh };

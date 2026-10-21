@@ -65,8 +65,7 @@ function creditsLine(account: UsageAccount): string | null {
 }
 
 const DEFAULT_TITLE = msg({
-	message:
-		"New agent launches use this account. Relaunch a running agent to switch it.",
+	message: "New chats use this account. Restart a running chat to switch it.",
 });
 
 export function AccountCard({
@@ -247,6 +246,24 @@ export function AccountCard({
 						</a>
 					)}
 				</div>
+			) : (account.status === "signed_out" ||
+					account.status === "token_expired") &&
+				onSwitchSignIn ? (
+				<div className="mt-1.5 flex items-center gap-2 text-[11px] text-warning">
+					{account.status === "signed_out" ? (
+						<Trans>Signed out.</Trans>
+					) : (
+						<Trans>Sign-in expired.</Trans>
+					)}
+					<Button
+						variant="outline"
+						size="sm"
+						className="h-6 px-2 text-[11px]"
+						onClick={onSwitchSignIn}
+					>
+						<Trans>Reconnect account</Trans>
+					</Button>
+				</div>
 			) : account.windows.length > 0 ? (
 				<div className="mt-2">
 					<ForkUsageSummary account={account} />
@@ -313,7 +330,7 @@ export function AccountCard({
 								title={i18n._(DEFAULT_TITLE)}
 							>
 								<LuCircleCheck className="size-3" />
-								<Trans>Default for new agents</Trans>
+								<Trans>Default for new chats</Trans>
 							</span>
 						)
 					) : onMakeDefault ? (

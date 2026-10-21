@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { ForkAgentProcesses } from "../../forkAgentProcesses";
 import {
 	CODEX_CLIENT_NAME,
 	type CodexInitializeResponse,
@@ -39,6 +40,7 @@ export function spawnCodexTransport(
 			stdio: ["pipe", "pipe", "pipe"],
 		},
 	);
+	const processes = new ForkAgentProcesses(child.pid);
 
 	let pending = "";
 	child.stdout.setEncoding("utf8");
@@ -54,7 +56,10 @@ export function spawnCodexTransport(
 	});
 	child.stderr.setEncoding("utf8");
 	child.stderr.on("data", (chunk: string) => handlers.onStderr(chunk));
-	child.on("exit", (code, signal) => handlers.onExit(code, signal));
+	child.on("exit", (code, signal) => {
+		void processes.reap();
+		handlers.onExit(code, signal);
+	});
 
 	let exited = false;
 	child.on("close", () => {
@@ -66,7 +71,9 @@ export function spawnCodexTransport(
 			if (!exited) child.stdin.write(`${line}\n`);
 		},
 		close: async () => {
-			if (exited) return;
+			if (exited) return processes.reap();
+			await processes.sample();
+			const reaped = processes.reap();
 			child.stdin.end();
 			await new Promise<void>((resolve) => {
 				const timer = setTimeout(() => {
@@ -78,6 +85,7 @@ export function spawnCodexTransport(
 					resolve();
 				});
 			});
+			await reaped;
 		},
 	};
 }

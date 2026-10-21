@@ -38,7 +38,13 @@ function OnboardingDashboardPage() {
 		refetch: refetchGh,
 		isPending: isPendingGh,
 	} = electronTrpc.system.detectGhCli.useQuery(undefined, statusPolling);
-	const { data: brewStatus } = electronTrpc.system.detectBrew.useQuery();
+	const { data: brewStatus } = electronTrpc.system.detectBrew.useQuery(
+		undefined,
+		{
+			refetchInterval: (query) =>
+				query.state.data?.installed ? false : PREREQ_POLL_MS,
+		},
+	);
 
 	const ghInstalled = ghStatus?.installed === true;
 	const ghReady = ghInstalled && ghStatus?.authenticated === true;

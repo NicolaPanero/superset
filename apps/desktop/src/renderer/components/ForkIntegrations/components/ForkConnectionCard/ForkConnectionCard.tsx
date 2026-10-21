@@ -40,6 +40,7 @@ export function ForkConnectionCard({
 	});
 	const brew = electronTrpc.system.detectBrew.useQuery(undefined, {
 		enabled: provider === "github",
+		refetchOnWindowFocus: true,
 	});
 	const { client, connections, refresh } = useForkConnections();
 	const rows = connections.filter((c) => c.provider === provider);

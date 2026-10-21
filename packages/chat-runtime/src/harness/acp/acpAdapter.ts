@@ -47,6 +47,8 @@ import {
 	fullAccessModes,
 	fullAccessNativeMode,
 } from "./forkFullAccess";
+import { forkGrokContextUsage } from "./forkGrokContextUsage";
+import { forkGrokPlanApproval } from "./forkGrokPlanApproval";
 import { acpMcpServers } from "./forkMcpServers";
 import { ForkPlanReadPermissions } from "./forkPlanReadPermissions";
 import { forkPromptError } from "./forkPromptError";
@@ -82,6 +84,7 @@ import {
 	acpInitializeResponseSchema,
 	acpMessageSchema,
 	acpNewSessionResponseSchema,
+	acpPlanRemovedSchema,
 	acpPlanSchema,
 	acpPlanUpdateSchema,
 	acpPromptResponseSchema,
@@ -250,6 +253,7 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	forkPlanReadPermissions?: boolean;
 	forkAtMessage?: boolean;
 	forkCursorModelSelection?: boolean;
+	forkGrokContextUsage?: boolean;
 	/** Cursor replay emits a complete user prompt when notifications carry no message id. */
 	wholeUserMessageReplay?: boolean;
 	launch?: () => Promise<Pick<SpawnAcpOptions, "command" | "args" | "env">>;
@@ -453,7 +457,10 @@ export class AcpAdapter implements HarnessAdapter {
 	private readonly subagentTasks = new Map<string, Set<string>>();
 	private readonly backgroundTasks: BackgroundTasks;
 	/** Start of each named v2 plan, so a revision keeps its place in the order. */
-	private readonly planItems = new Map<string, number>();
+	private readonly planItems = new Map<
+		string,
+		{ item: Plan; turnId: string }
+	>();
 	private client: AcpRpcClient | null = null;
 	private sessionId: string | null = null;
 	private loadingSessionId: string | null = null;
@@ -469,6 +476,8 @@ export class AcpAdapter implements HarnessAdapter {
 	private supportsSteering = false;
 	private cycleEnded = false;
 	private steeredCyclePending = false;
+	private grokContextUnsupported = false;
+	private grokContextPending = false;
 	private contextUsage: { used: number; size: number } | undefined;
 	private contextBreakdownUnsupported = false;
 	private readonly backgroundTaskTurns = new Map<string, string | undefined>();
@@ -796,7 +805,10 @@ export class AcpAdapter implements HarnessAdapter {
 			: send();
 		this.trackSelection(request);
 		return request
-			.then((response) => this.handleConfigOptions(response))
+			.then((response) => {
+				this.handleConfigOptions(response);
+				void this.refreshGrokContextUsage();
+			})
 			.catch((error: Error) => {
 				if (error instanceof AcpTimeoutError) {
 					this.emitNotice(
@@ -849,7 +861,10 @@ export class AcpAdapter implements HarnessAdapter {
 			{ sessionId: this.sessionId, asyncTaskId: taskId },
 			this.requestTimeoutMs(),
 		);
-		return (response as { stopped?: unknown } | null)?.stopped === true;
+		const stopped =
+			(response as { stopped?: unknown } | null)?.stopped === true;
+		if (stopped) this.backgroundTasks.end(taskId);
+		return stopped;
 	}
 
 	/**
@@ -952,6 +967,7 @@ export class AcpAdapter implements HarnessAdapter {
 					// Without form elicitation, claude-agent-acp drops AskUserQuestion.
 					capabilities: {
 						elicitation: { form: {} },
+						plan: {},
 						_meta: {
 							...AIR_CLIENT_META,
 							...(this.cursorModels ? { parameterizedModelPicker: true } : {}),
@@ -963,6 +979,7 @@ export class AcpAdapter implements HarnessAdapter {
 						fs: { readTextFile: false, writeTextFile: false },
 						terminal: false,
 						elicitation: { form: {} },
+						plan: {},
 						_meta: {
 							...AIR_CLIENT_META,
 							...(this.cursorModels ? { parameterizedModelPicker: true } : {}),
@@ -1113,6 +1130,7 @@ export class AcpAdapter implements HarnessAdapter {
 				resumed,
 			);
 
+			void this.selectionsApplied().then(() => this.refreshGrokContextUsage());
 			const queued = this.queuedPrompts.splice(0, this.queuedPrompts.length);
 			for (const content of queued) await this.runTurn(content);
 		} catch (error) {
@@ -1157,6 +1175,7 @@ export class AcpAdapter implements HarnessAdapter {
 			this.cancelPendingApprovals(turnId);
 			this.emitSession({ status: "idle" });
 			this.sendCustomAnswer();
+			void this.refreshGrokContextUsage();
 		} catch (error) {
 			this.customAnswer = null;
 			this.flushOpenText();
@@ -1170,6 +1189,38 @@ export class AcpAdapter implements HarnessAdapter {
 			});
 			this.emitNotice("error", (error as Error).message);
 			this.emitSession({ status: "idle" });
+		}
+	}
+
+	private async refreshGrokContextUsage(): Promise<void> {
+		const client = this.client;
+		const sessionId = this.sessionId;
+		if (
+			!this.options.forkGrokContextUsage ||
+			!client ||
+			!sessionId ||
+			this.dead ||
+			this.grokContextUnsupported ||
+			this.grokContextPending
+		)
+			return;
+		this.grokContextPending = true;
+		try {
+			const response = await client.request(
+				"_x.ai/session/info",
+				{ sessionId },
+				Math.min(this.requestTimeoutMs(), 1500),
+			);
+			const usage = forkGrokContextUsage(response);
+			if (usage && this.sessionId === sessionId && !this.dead) {
+				this.contextUsage = usage;
+				this.emitSession({ contextUsage: usage });
+			}
+		} catch (error) {
+			if (error instanceof AcpRpcError && error.code === -32601)
+				this.grokContextUnsupported = true;
+		} finally {
+			this.grokContextPending = false;
 		}
 	}
 
@@ -1227,6 +1278,13 @@ export class AcpAdapter implements HarnessAdapter {
 				);
 			return;
 		}
+
+		if (
+			variant.startsWith("async_task_") &&
+			this.isForeignSession(outer.data.sessionId) &&
+			!this.subagents.has(outer.data.sessionId)
+		)
+			return;
 
 		switch (variant) {
 			case "async_task_spawned":
@@ -1342,6 +1400,17 @@ export class AcpAdapter implements HarnessAdapter {
 			case "plan_update":
 				this.handlePlanUpdate(outer.data.update, turnId);
 				return;
+			case "plan_removed": {
+				const parsed = acpPlanRemovedSchema.safeParse(outer.data.update);
+				const prior = parsed.success
+					? this.planItems.get(parsed.data.planId)
+					: undefined;
+				if (prior) {
+					prior.item = { ...prior.item, removed: true };
+					this.emitItem(prior.item, prior.turnId);
+				}
+				return;
+			}
 			case "available_commands_update":
 				this.handleAvailableCommands(outer.data.update);
 				return;
@@ -1816,29 +1885,32 @@ export class AcpAdapter implements HarnessAdapter {
 		);
 	}
 
-	/**
-	 * v2 replaced `plan` with a named plan carrying one of several bodies, and
-	 * only the entry list maps to a plan item — a `file` or `markdown` body has
-	 * no entries and is left alone.
-	 */
 	private handlePlanUpdate(raw: unknown, turnId: string): void {
 		const parsed = acpPlanUpdateSchema.safeParse(raw);
 		if (!parsed.success) return;
-		const { planId, entries } = parsed.data.plan;
-		if (!entries) return;
+		const { planId, entries, type, content, uri, title } = parsed.data.plan;
+		if (
+			!entries &&
+			!(type === "markdown" && content !== undefined) &&
+			!(type === "file" && uri)
+		)
+			return;
 		this.flushOpenText();
 		const prior = this.planItems.get(planId);
-		const startedAtMs = prior ?? this.nextStartMs();
-		this.planItems.set(planId, startedAtMs);
-		this.emitItem(
-			{
-				id: `plan:${turnId}:${planId}`,
-				kind: "plan",
-				startedAtMs,
-				entries: planEntryItems(entries),
-			},
-			turnId,
-		);
+		const startedAtMs = prior?.item.startedAtMs ?? this.nextStartMs();
+		const item: Plan = {
+			id: `plan:${turnId}:${planId}`,
+			kind: "plan",
+			startedAtMs,
+			entries: planEntryItems(entries ?? []),
+			...(title ? { title } : {}),
+			...(type === "markdown" && content !== undefined
+				? { markdown: content }
+				: {}),
+			...(type === "file" && uri ? { path: uri } : {}),
+		};
+		this.planItems.set(planId, { item, turnId });
+		this.emitItem(item, turnId);
 	}
 
 	private handleStateUpdate(raw: unknown): void {
@@ -1949,7 +2021,8 @@ export class AcpAdapter implements HarnessAdapter {
 	private handleAsyncTaskSpawned(sessionId: string, raw: unknown): void {
 		const parsed = airAsyncTaskSpawnedSchema.safeParse(raw);
 		if (!parsed.success) return;
-		const { asyncTaskId, name, description, canStop } = parsed.data;
+		const { asyncTaskId, name, description, canStop, outputFilePath } =
+			parsed.data;
 		if (this.finishedSubagents.has(sessionId)) return;
 		if (this.subagents.has(sessionId)) {
 			const tasks = this.subagentTasks.get(sessionId) ?? new Set<string>();
@@ -1960,6 +2033,7 @@ export class AcpAdapter implements HarnessAdapter {
 			kind: "process",
 			name: name || description || "",
 			canStop: canStop ?? false,
+			...(outputFilePath ? { outputPath: outputFilePath } : {}),
 			startedAtMs: this.now(),
 		});
 	}
@@ -1967,7 +2041,9 @@ export class AcpAdapter implements HarnessAdapter {
 	private handleAsyncTaskProgress(raw: unknown): void {
 		const parsed = airAsyncTaskProgressSchema.safeParse(raw);
 		if (!parsed.success) return;
-		const { asyncTaskId, summary } = parsed.data;
+		const { asyncTaskId, summary, outputFilePath } = parsed.data;
+		if (outputFilePath)
+			this.backgroundTasks.update(asyncTaskId, { outputPath: outputFilePath });
 		if (summary) this.backgroundTasks.update(asyncTaskId, { detail: summary });
 	}
 
@@ -2079,11 +2155,26 @@ export class AcpAdapter implements HarnessAdapter {
 	private handleServerRequest(request: AcpServerRequest): void {
 		if (
 			request.method === "cursor/ask_question" ||
-			request.method === "cursor/create_plan"
+			request.method === "cursor/create_plan" ||
+			request.method === "_x.ai/exit_plan_mode" ||
+			request.method === "x.ai/exit_plan_mode"
 		) {
 			try {
-				const extension = cursorApproval(request.method, request.params);
+				const extension = request.method.includes("exit_plan_mode")
+					? forkGrokPlanApproval(request.params)
+					: cursorApproval(request.method, request.params);
 				if (!extension) return;
+				if (
+					"sessionId" in extension &&
+					this.isForeignSession(extension.sessionId)
+				) {
+					this.client?.respondWithError(
+						request.id,
+						-32602,
+						"foreign plan session",
+					);
+					return;
+				}
 				const turnId = this.resolveTurnId();
 				const id = `approval:${request.id}:${this.mintId()}`;
 				const item: ApprovalRequest = {
@@ -2103,7 +2194,7 @@ export class AcpAdapter implements HarnessAdapter {
 				this.client?.respondWithError(
 					request.id,
 					-32602,
-					"invalid Cursor request",
+					"invalid interaction request",
 				);
 			}
 			return;

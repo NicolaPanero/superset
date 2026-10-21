@@ -11,6 +11,8 @@ import { Badge } from "@superset/ui/badge";
 import { Button } from "@superset/ui/button";
 import { cn } from "@superset/ui/utils";
 import { ShieldQuestion, SquareTerminal } from "lucide-react";
+import { forkApprovalPlan, forkToolPlan } from "../../utils/forkPlanDocument";
+import { ForkPlanCard } from "../ForkPlanCard";
 import { ToolContentList } from "../ToolContentList";
 import { OptionButtons } from "./components/OptionButtons";
 import { QuestionAnswers } from "./components/QuestionAnswers";
@@ -63,6 +65,7 @@ export function ApprovalRow({
 	if (item.form) {
 		return <QuestionForm form={item.form} item={item} onRespond={onRespond} />;
 	}
+	const plan = forkToolPlan(target) ? null : forkApprovalPlan(item, target);
 	const pending = item.status === "pending";
 	const options = item.options ?? [];
 	const command =
@@ -129,7 +132,8 @@ export function ApprovalRow({
 				) : (
 					<p className="text-muted-foreground text-sm">{item.title}</p>
 				))}
-			{pending && item.detail && (
+			{plan && <ForkPlanCard item={plan} />}
+			{pending && !plan && item.detail && (
 				<ToolContentList itemId={item.id} items={item.detail} />
 			)}
 			{pending &&

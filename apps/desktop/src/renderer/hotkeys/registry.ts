@@ -574,10 +574,10 @@ export const HOTKEYS_REGISTRY = {
 			windows: L("ctrl+shift+alt+a"),
 			linux: L("ctrl+shift+alt+a"),
 		},
-		label: msg({ message: "New Agent" }),
+		label: msg({ message: "New Chat" }),
 		category: "Chat",
 		description: msg({
-			message: "Open the new agent dialog in the current workspace",
+			message: "Open the new chat dialog in the current workspace",
 		}),
 	},
 	CLOSE_TERMINAL: {

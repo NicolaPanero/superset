@@ -1,3 +1,5 @@
+import { FULL_ACCESS_CHAT_MODE } from "@superset/chat/protocol";
+
 const STORAGE_KEY = "chatModeByAgent";
 const MAX_AGENTS = 32;
 
@@ -42,4 +44,14 @@ export function saveChatMode(presetId: string, modeId: string): void {
 			JSON.stringify(withSavedMode(readSavedModes(), presetId, modeId)),
 		);
 	} catch {}
+}
+
+export function resolveChatStartMode(
+	modeId: string | undefined,
+	savedModeId: string | undefined,
+	resuming: boolean,
+): string | undefined {
+	return (
+		modeId ?? (resuming ? undefined : (savedModeId ?? FULL_ACCESS_CHAT_MODE))
+	);
 }

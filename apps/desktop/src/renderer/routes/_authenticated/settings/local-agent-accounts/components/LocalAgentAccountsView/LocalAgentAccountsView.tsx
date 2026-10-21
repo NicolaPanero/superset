@@ -303,7 +303,9 @@ export function LocalAgentAccountsView({
 										key={`${hostUrl}:${config.id}`}
 										config={config}
 										hostUrl={hostUrl}
-										onChanged={() => quotaQuery.refresh()}
+										onChanged={async () => {
+											await quotaQuery.refresh();
+										}}
 									/>
 								))}
 						{agent === "cursor-agent" ||

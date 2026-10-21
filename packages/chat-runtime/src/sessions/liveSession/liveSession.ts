@@ -509,7 +509,11 @@ export class LiveSession {
 	private emitSession(partial: Partial<SessionState>): void {
 		const merged: SessionState = { ...this.sessionState, ...partial };
 		const status = this.hasPendingWork() ? "running" : merged.status;
-		this.sessionState = sessionStateSchema.parse({ ...merged, status });
+		this.sessionState = sessionStateSchema.parse({
+			...merged,
+			status,
+			...(status === "dead" ? { backgroundTasks: [] } : {}),
+		});
 		this.appendDurable({ type: "session", session: this.sessionState });
 	}
 

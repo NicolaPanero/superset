@@ -41,7 +41,7 @@ export async function validateAccountLaunch(
 	} catch (error) {
 		const code = (error as { data?: { code?: string } }).data?.code;
 		if (code !== "NOT_FOUND" || request.selection !== undefined) {
-			toast.error(i18n._(msg({ message: "Couldn't start agent session" })), {
+			toast.error(i18n._(msg({ message: "Couldn't start chat" })), {
 				description:
 					(error as { message?: string }).message ===
 					"account_reconnect_required"

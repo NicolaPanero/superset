@@ -1,7 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { SessionClient } from "@superset/chat/client";
 import {
-	deriveQueuedPrompts,
 	runningTurnId as findRunningTurnId,
 	launchConfigSelections,
 	userMessageText,
@@ -34,6 +33,7 @@ import {
 	type OpenPage,
 } from "../../providers/ChatPaneActionsProvider";
 import { ForkContextUsageProvider } from "../../providers/ForkContextUsageProvider";
+import { ForkMessageActionsProvider } from "../../providers/ForkMessageActionsProvider";
 import type { ChatForkTarget } from "../../types";
 import { buildChatHandoffTranscript } from "../../utils/chatHandoffTranscript";
 import { heldPromptQueue } from "../../utils/heldPromptQueue";
@@ -49,6 +49,7 @@ import { ConnectionNotice } from "../ConnectionNotice";
 import { ForkRewindDialog } from "../ForkRewindDialog";
 import { SessionHeader } from "../SessionHeader";
 import { Transcript } from "../Transcript";
+import { useForkPromptQueue } from "./hooks/useForkPromptQueue";
 import { useStableList } from "./hooks/useStableList";
 
 const RESUME_FOLLOW_PX = 24;
@@ -78,6 +79,7 @@ export function SessionView({
 	onPendingPromptsSent,
 	onFork,
 	onRewind,
+	onTextBranch,
 	onSessionState,
 	openFile,
 	openPage,
@@ -115,6 +117,7 @@ export function SessionView({
 		  ) => void)
 		| undefined;
 	onRewind?: ((fromItemId: string, draftText: string) => void) | undefined;
+	onTextBranch?: (transcript: string, state: SessionState | undefined) => void;
 	canForkToWorktree?: boolean;
 	/** Names the speaker in a handed-over transcript. */
 	agentLabel?: string;
@@ -135,6 +138,11 @@ export function SessionView({
 }) {
 	const { t } = useLingui();
 	const session = useChatSession({ client });
+	const {
+		sendPrompt,
+		prompts: displayedQueue,
+		outbox: displayedOutbox,
+	} = useForkPromptQueue(session, client);
 	const composerRef =
 		useRef<Pick<PromptInputHandle, "appendText" | "focus">>(null);
 	const { outbox, discardPrompt } = session;
@@ -230,9 +238,16 @@ export function SessionView({
 		if (held || pendingPrompts.length === 0 || pendingSentRef.current) return;
 		if (session.status !== "ready" || !modelSettled) return;
 		pendingSentRef.current = true;
-		for (const prompt of pendingPrompts) session.sendPrompt(prompt);
+		for (const prompt of pendingPrompts) sendPrompt(prompt);
 		onPendingPromptsSent();
-	}, [held, pendingPrompts, session, onPendingPromptsSent, modelSettled]);
+	}, [
+		held,
+		pendingPrompts,
+		session.status,
+		sendPrompt,
+		onPendingPromptsSent,
+		modelSettled,
+	]);
 
 	const sessionState = session.snapshot.session;
 	const promptTitle = rail.find((message) => message.role === "user")?.preview;
@@ -245,13 +260,7 @@ export function SessionView({
 		[session.snapshot.turns],
 	);
 
-	const snapshotItems = session.snapshot.items;
-	const queuedPrompts = useStableList(
-		useMemo(
-			() => deriveQueuedPrompts({ items: snapshotItems }),
-			[snapshotItems],
-		),
-	);
+	const queuedPrompts = useStableList(displayedQueue);
 
 	const focusComposer = useCallback(() => composerRef.current?.focus(), []);
 	const timelineRef = useRef(timeline);
@@ -280,6 +289,48 @@ export function SessionView({
 			);
 		},
 		[onFork, agentLabel],
+	);
+
+	const messageActions = useMemo(
+		() => ({
+			nativeFork: session.snapshot.session?.forkAtMessage === true,
+			busy:
+				session.snapshot.session?.status !== "idle" ||
+				!!runningTurnId ||
+				!!held ||
+				session.outbox.length > 0 ||
+				queuedPrompts.length > 0 ||
+				!!session.snapshot.session?.backgroundTasks?.length,
+			textBranch: onTextBranch
+				? (itemId: string) => {
+						try {
+							onTextBranch(
+								buildChatHandoffTranscript(
+									timelineRef.current,
+									snapshotRef.current,
+									agentLabel ?? "Agent",
+									itemId,
+								),
+								snapshotRef.current.session ?? undefined,
+							);
+						} catch {
+							toast.error(t({ message: "Couldn't branch the conversation" }));
+						}
+					}
+				: undefined,
+		}),
+		[
+			session.snapshot.session?.forkAtMessage,
+			session.snapshot.session?.status,
+			runningTurnId,
+			held,
+			session.outbox.length,
+			queuedPrompts.length,
+			session.snapshot.session?.backgroundTasks?.length,
+			onTextBranch,
+			agentLabel,
+			t,
+		],
 	);
 
 	const [rewindItemId, setRewindItemId] = useState<string | null>(null);
@@ -343,14 +394,8 @@ export function SessionView({
 			},
 		[agentSwitch, agentLabel],
 	);
-	const {
-		cancelTurn,
-		loadOlder,
-		respondToApproval,
-		sendPrompt,
-		setConfigOption,
-		setMode,
-	} = session;
+	const { cancelTurn, loadOlder, respondToApproval, setConfigOption, setMode } =
+		session;
 	const onRespond = useCallback(
 		(approvalId: string, decision: Decision) =>
 			void respondToApproval(approvalId, decision),
@@ -463,33 +508,35 @@ export function SessionView({
 					scrollPreviousItemPeek={0}
 				>
 					<div className="@container relative flex min-h-0 flex-1">
-						<Transcript
-							approvals={approvals}
-							canForkToWorktree={canForkToWorktree}
-							groups={timeline}
-							hasOlder={session.hasOlder}
-							isActive={isActive}
-							onCloseFind={focusComposer}
-							onDiscardPrompt={session.discardPrompt}
-							onFork={
-								onFork &&
-								!runningTurnId &&
-								!held &&
-								queuedPrompts.length === 0 &&
-								session.outbox.length === 0
-									? forkWithTranscript
-									: undefined
-							}
-							onRewind={onRewind ? setRewindItemId : undefined}
-							rewindableItemIds={rewindableItemIds}
-							onLoadOlder={loadOlder}
-							onRequestItemBodies={session.requestItemBodies}
-							onRespond={onRespond}
-							onRetryPrompt={session.retryPrompt}
-							outbox={session.outbox}
-							snapshot={displaySnapshot}
-							earlier={earlier}
-						/>
+						<ForkMessageActionsProvider value={messageActions}>
+							<Transcript
+								approvals={approvals}
+								canForkToWorktree={canForkToWorktree}
+								groups={timeline}
+								hasOlder={session.hasOlder}
+								isActive={isActive}
+								onCloseFind={focusComposer}
+								onDiscardPrompt={session.discardPrompt}
+								onFork={
+									onFork &&
+									!runningTurnId &&
+									!held &&
+									queuedPrompts.length === 0 &&
+									session.outbox.length === 0
+										? forkWithTranscript
+										: undefined
+								}
+								onRewind={onRewind ? setRewindItemId : undefined}
+								rewindableItemIds={rewindableItemIds}
+								onLoadOlder={loadOlder}
+								onRequestItemBodies={session.requestItemBodies}
+								onRespond={onRespond}
+								onRetryPrompt={session.retryPrompt}
+								outbox={displayedOutbox}
+								snapshot={displaySnapshot}
+								earlier={earlier}
+							/>
+						</ForkMessageActionsProvider>
 						{rail.length > 1 && (
 							<ChatHistorySidebarScroller
 								className="absolute inset-y-0 left-0 my-auto hidden h-fit max-h-full flex-col pl-3 @[56rem]:flex"

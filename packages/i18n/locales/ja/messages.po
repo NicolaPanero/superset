@@ -1202,20 +1202,20 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* API定価で課金された場合"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**わかりやすいセットアップ**: エージェントのCLIインストールガイドとリポジトリ接続の説明を確認できます。"
+msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
+msgstr "**チャットとプラン**：「新しいチャット」への名称統一、プランのプレビューとサイドパネル、再開と分岐の操作を改善しました。"
 
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**コンテキストをひと目で**: チャット入力欄のリングでコンテキストの使用量を表示。Claude ではカテゴリ別の内訳も確認できます。"
+msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
+msgstr "**わかりやすいメーター**：5時間枠と週間枠を別々のリングで表示し、すべてのエージェントでコンテキストボタンを常に表示します。"
 
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Jira タスクをより速く**: リストはステータスごとにまとまり、行とカードはコンパクトに、フィルターは 1 本のバーに集約。"
+msgid "**Jira automations**: ACP chats with account and model selection."
+msgstr "**Jiraの自動化**：アカウントとモデルを選んでACPチャットを開始。"
 
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Jiraと一致するボード**：まとめられたワークフローの状態は、同じ列に表示されます。"
+msgid "**Visual filters**: configure Jira automations with filters or JQL."
+msgstr "**視覚的なフィルター**：フィルターまたはJQLでJiraの自動化を設定。"
 
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Bitbucket のプルリクエストを刷新**: GitHub と同じヘッダーと情報欄、散らばったボタンの代わりに Review・Merge・その他メニュー。"
+msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
+msgstr "**workspaceの作成**：マイクを作成・開始ボタンの前に配置し、有料機能を非表示にすると有料タスクのリンクも非表示に。"
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2672,6 +2672,9 @@ msgstr "最後に報告された値です。更新するにはホストがオン
 
 msgid "ascending"
 msgstr "昇順"
+
+msgid "Ask"
+msgstr "質問"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "エージェントにデザインドキュメントやレポートを頼みます。ページを作って公開します。"
@@ -4822,6 +4825,12 @@ msgstr "Context Menu"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "コンテキストの転送にはメッセージのみが含まれ、以前の履歴が省略される場合があります。"
 
+msgid "Context usage unavailable"
+msgstr "コンテキスト使用量は取得できません"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "エージェントが報告するとコンテキスト使用量が表示されます。"
+
 msgid "Continue"
 msgstr "続行"
 
@@ -4933,6 +4942,9 @@ msgstr "クリップボードにコピーしました。"
 
 msgid "Copied!"
 msgstr "コピーしました!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "メッセージのテキストのみをコピーします。ツールの状態とファイルは復元されません。"
 
 msgid "Copy"
 msgstr "コピー"
@@ -5584,11 +5596,11 @@ msgstr "デザインフィードバックを準備できませんでした"
 msgid "Couldn't stage file"
 msgstr "ファイルをステージできませんでした"
 
-msgid "Couldn't start a new agent session"
-msgstr "新しいエージェントセッションを開始できませんでした"
+msgid "Couldn't start a new chat"
+msgstr "新しいチャットを開始できませんでした"
 
-msgid "Couldn't start agent session"
-msgstr "エージェントセッションを開始できませんでした"
+msgid "Couldn't start chat"
+msgstr "チャットを開始できませんでした"
 
 msgid "Couldn't start cloud workspace"
 msgstr "クラウドワークスペースを開始できませんでした"
@@ -6093,14 +6105,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "デフォルト({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "デフォルトのアカウント"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "新しいワークスペースの既定のベース。作成時に個別に変更できます。"
 
 msgid "Default effort"
 msgstr "デフォルトのエフォート"
 
-msgid "Default for new agents"
-msgstr "新規エージェントのデフォルト"
+msgid "Default for new chats"
+msgstr "新しいチャットの既定"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "このホストの新規ワークツリーワークスペースの既定の場所。"
@@ -6918,6 +6933,9 @@ msgstr "「{name}」×{tier} を獲得"
 msgid "Edit"
 msgstr "編集"
 
+msgid "Edit and restart from here"
+msgstr "編集してここから再開"
+
 msgid "Edit comment"
 msgstr "コメントを編集"
 
@@ -7307,6 +7325,9 @@ msgstr "このリポジトリの仕組みを教えて"
 
 msgid "Explore"
 msgstr "探す"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "コードを調べ、変更を加えずに質問に回答します。"
 
 msgid "Explore Pages"
 msgstr "ページを見る"
@@ -9625,6 +9646,9 @@ msgstr "Jiraボード"
 msgid "Jira issues"
 msgstr "Jira 課題"
 
+msgid "Jira project"
+msgstr "Jiraプロジェクト"
+
 msgid "Join"
 msgstr "参加"
 
@@ -10242,6 +10266,9 @@ msgstr "さらに読み込み中..."
 msgid "Loading more…"
 msgstr "さらに読み込み中…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "プレビューを読み込み中…"
 
@@ -10693,6 +10720,9 @@ msgstr "マージ中…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "メッセージ"
+
 msgid "Message in channel"
 msgstr "チャンネルのメッセージ"
 
@@ -11080,17 +11110,8 @@ msgstr "新規の{providerLabel}エージェントは{accountLabel}を使用し�
 msgid "New agent"
 msgstr "新しいエージェント"
 
-msgid "New Agent"
-msgstr "新しいエージェント"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "新規エージェントの起動でこのアカウントを使用します。実行中のエージェントを切り替えるには再起動してください。"
-
 msgid "New agent session"
 msgstr "新規エージェントセッション"
-
-msgid "New agent sessions"
-msgstr "新しいエージェントセッション"
 
 msgid "New automation"
 msgstr "新規オートメーション"
@@ -11100,6 +11121,21 @@ msgstr "新規ブラウザ"
 
 msgid "new challengers"
 msgstr "別の対戦相手"
+
+msgid "New chat"
+msgstr "新しいチャット"
+
+msgid "New Chat"
+msgstr "新しいチャット"
+
+msgid "New chat from loaded messages"
+msgstr "読み込んだメッセージから新しいチャット"
+
+msgid "New chats"
+msgstr "新しいチャット"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "新しいチャットはこのアカウントを使用します。変更するには実行中のチャットを再起動してください。"
 
 msgid "New cloud workspace"
 msgstr "新規クラウドワークスペース"
@@ -11625,6 +11661,9 @@ msgstr "未解決のレビューコメントはありません。"
 
 msgid "No organization selected"
 msgstr "組織が選択されていません"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "一致するページがありません"
@@ -12256,6 +12295,9 @@ msgstr "招待したユーザーのみ"
 msgid "Only people who opted in appear here."
 msgstr "参加を選んだ人だけがここに表示されます。"
 
+msgid "Only text messages can be edited and restarted."
+msgstr "編集して再開できるのはテキストメッセージのみです。"
+
 msgid "Only the author can change a comment"
 msgstr "コメントを変更できるのは作成者だけです"
 
@@ -12584,6 +12626,9 @@ msgstr "localhost:{0}を外部ブラウザで開く"
 msgid "Open menu"
 msgstr "メニューを開く"
 
+msgid "Open message in side panel"
+msgstr "メッセージをサイドパネルで開く"
+
 msgid "Open navigation"
 msgstr "ナビゲーションを開く"
 
@@ -12598,6 +12643,12 @@ msgstr "ページを既定のブラウザで開く"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Superset の iPhone・iPad アプリからページを開き、コメントに返信できます。"
+
+msgid "Open plan file"
+msgstr "プランファイルを開く"
+
+msgid "Open plan in side panel"
+msgstr "プランをサイドパネルで開く"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "SupersetアプリでPluginsを開いて、1つ選びます。インストールはアカウントに保存されます。"
@@ -12716,8 +12767,8 @@ msgstr "グローバルコマンドパレットを開く"
 msgid "Open the guide"
 msgstr "ガイドを開く"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "現在のワークスペースで新しいエージェントのダイアログを開く"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "現在のワークスペースで新しいチャットのダイアログを開く"
 
 msgid "Open the new workspace modal"
 msgstr "新規ワークスペースのモーダルを開く"
@@ -12932,6 +12983,9 @@ msgstr "出力スキーマ"
 
 msgid "Output truncated"
 msgstr "出力は省略されました"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13318,6 +13372,9 @@ msgstr "計画"
 msgctxt "billing"
 msgid "Plan"
 msgstr "プラン"
+
+msgid "Plan progress"
+msgstr "プランの進捗"
 
 msgid "Plan restored"
 msgstr "プランを復元しました"
@@ -13989,6 +14046,12 @@ msgstr "使用枠を使い切りました"
 msgid "Quota is shown when the provider supports it."
 msgstr "プロバイダーが対応している場合に利用枠を表示します。"
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "割り当て使用量 · 外側のリングは5時間：{fiveHour} · 内側のリングは週間：{weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "割り当て使用量：外側のリングは5時間、内側のリングは週間。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14263,6 +14326,9 @@ msgstr "リポジトリを更新"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "次に OpenCode を実行すると更新されます。"
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "再生成"
@@ -15054,9 +15120,6 @@ msgstr "チャットのみ巻き戻す"
 
 msgid "Rewind conversation?"
 msgstr "会話を巻き戻しますか？"
-
-msgid "Rewind from here"
-msgstr "ここから巻き戻す"
 
 msgid "Rewrote it and published version 2."
 msgstr "書き直してバージョン2を公開しました。"
@@ -16338,6 +16401,9 @@ msgstr "サイドバーに使用状況タブを表示"
 msgid "showArrow opt-in"
 msgstr "showArrowで有効化"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "表示中"
 
@@ -16449,6 +16515,9 @@ msgstr "サインインの期限切れ"
 msgid "Sign-in expired — run"
 msgstr "サインインの期限切れ — 次を実行:"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "サインインに失敗しました"
 
@@ -16460,6 +16529,9 @@ msgstr "<0>{userName}</0>としてサインイン中"
 
 msgid "Signed out"
 msgstr "サインアウトしました"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "サインイン中のサイト"
@@ -16893,11 +16965,11 @@ msgstr "会話を始めるとここにメッセージが表示されます"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "このターミナルの直近のコンテキストを引き継いで、新しいエージェントセッションを開始します。ワークスペースのファイルが引き続き信頼できる情報源です。"
 
-msgid "Start a new agent session each run"
-msgstr "実行ごとに新しいエージェントセッションを開始"
-
 msgid "Start a new chat"
 msgstr "新しいチャットを開始"
+
+msgid "Start a new chat each run"
+msgstr "実行ごとに新しいチャットを開始"
 
 msgid "Start a session"
 msgstr "セッションを開始"
@@ -17604,8 +17676,8 @@ msgstr "ホームに戻る"
 msgid "Taken"
 msgstr "使用済み"
 
-msgid "Takes effect in new agent sessions."
-msgstr "新しいエージェントセッションから有効になります。"
+msgid "Takes effect in new chats."
+msgstr "新しいチャットに適用されます。"
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "いつもより時間がかかっています。画面を離れても処理は続きます。"
@@ -18166,6 +18238,9 @@ msgstr "プロバイダーが{0}を返しました。"
 msgid "The provider refused it."
 msgstr "プロバイダーに拒否されました。"
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "復元期間は終了しました。support@superset.shまでご連絡ください。"
 
@@ -18316,6 +18391,9 @@ msgstr "このエージェントはクラウドワークスペースで実行で
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "このエージェントはチャットを開けません。ターミナルで使用するには高度なCLIオプションを有効にしてください。"
+
+msgid "This agent does not support returning to a specific message."
+msgstr "このエージェントは特定のメッセージへの巻き戻しに対応していません。"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "選択したデバイスにこのエージェントは存在しません(エージェントがリセットされた可能性があります)。新しいエージェントを選ぶまで実行は失敗します。"
@@ -18476,6 +18554,9 @@ msgstr "このMac"
 
 msgid "This machine"
 msgstr "このマシン"
+
+msgid "This message cannot be used as a restart point."
+msgstr "このメッセージは再開地点として使用できません。"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "このMicrosoftテナントは{detail}がすでに接続しています。先に接続を解除してもらってください。"
@@ -19458,6 +19539,9 @@ msgstr "組織内で一意のURLフレンドリーな識別子。"
 msgid "Usage"
 msgstr "使用量"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "使用量はアカウントごとに最大 5 分に 1 回読み取られます。次回の更新は {next} です。"
+
 msgid "Usage sections"
 msgstr "使用量セクション"
 
@@ -19492,8 +19576,8 @@ msgstr "タスクごとにClaude Code、Codex、OpenCode、その他どのコー
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Claude Code、Codex、その他どのコーディングエージェントでも使えます。タスクごとに選ぶことも、複数を並べて実行することもできます。"
 
-msgid "Use for new agents"
-msgstr "新規エージェントに使用"
+msgid "Use for new chats"
+msgstr "新しいチャットに使用"
 
 msgid "Use global default"
 msgstr "グローバルのデフォルトを使用"
@@ -19759,6 +19843,9 @@ msgstr "音量"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "エージェントとキュー内の作業が完了するまでお待ちください。"
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "引き継ぐ前に、エージェントの処理が終わるまでお待ちください。"

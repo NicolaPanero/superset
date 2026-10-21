@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { ForkAgentProcesses } from "../../forkAgentProcesses";
 
 export type AcpTransport = {
 	pid?: number;
@@ -40,6 +41,7 @@ export function spawnAcpTransport(
 		stdio: ["pipe", "pipe", "pipe"],
 		detached: OWN_PROCESS_GROUP,
 	});
+	const processes = new ForkAgentProcesses(child.pid);
 
 	let exited = false;
 	let reported = false;
@@ -50,6 +52,7 @@ export function spawnAcpTransport(
 		if (reported) return;
 		reported = true;
 		killProcessGroup(child.pid);
+		void processes.reap();
 		handlers.onExit(code, signal);
 	};
 
@@ -88,7 +91,9 @@ export function spawnAcpTransport(
 			if (!exited && child.stdin.writable) child.stdin.write(`${line}\n`);
 		},
 		close: async () => {
-			if (exited) return;
+			if (exited) return processes.reap();
+			await processes.sample();
+			const reaped = processes.reap();
 			child.stdin.end();
 			await new Promise<void>((resolve) => {
 				const timer = setTimeout(() => {
@@ -101,6 +106,7 @@ export function spawnAcpTransport(
 					resolve();
 				});
 			});
+			await reaped;
 		},
 	};
 }

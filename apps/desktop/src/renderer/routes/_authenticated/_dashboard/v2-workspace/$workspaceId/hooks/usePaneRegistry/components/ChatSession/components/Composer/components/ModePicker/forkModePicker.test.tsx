@@ -103,3 +103,33 @@ test("the picker is available when Plan is the only alternative to the current m
 	);
 	expect(view.getByRole("button", { name: "Plan" })).toBeDefined();
 });
+
+test("Cursor modes have descriptions and run from read-only Ask to Full access regardless of provider order", async () => {
+	const view = render(
+		<ModePicker
+			currentModeId={FULL_ACCESS_CHAT_MODE}
+			modes={[
+				{ id: "agent", label: "Agent" },
+				{ id: "plan", label: "Plan" },
+				{ id: "ask", label: "Ask" },
+				{ id: FULL_ACCESS_CHAT_MODE, label: "Full access" },
+				{ id: "default", label: "Default" },
+			]}
+			onSelect={() => {}}
+		/>,
+	);
+	fireEvent.keyDown(view.getByRole("button", { name: "Full access" }), {
+		key: "ArrowDown",
+		code: "ArrowDown",
+	});
+	await flush();
+	expect(view.getAllByRole("menuitem").map((item) => item.textContent)).toEqual(
+		[
+			"AskExplore code and answer questions without making changes.",
+			"PlanRead and plan without changing anything",
+			"Ask for approvalAsks before edits and commands",
+			"Approve for meAsks only for risky actions",
+			"Full accessApproves tool actions automatically in this chat.",
+		],
+	);
+});

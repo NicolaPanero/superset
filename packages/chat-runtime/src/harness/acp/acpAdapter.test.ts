@@ -57,7 +57,9 @@ class FakeAcpAgent {
 	steeringOutcome: string | null = null;
 	/** Answer for `_superset/context_usage`; undefined answers "method not found". */
 	contextUsage: unknown;
+	grokContextUsage: unknown;
 	contextUsageRequests = 0;
+	stopTaskResult = true;
 	/** Leave session/prompt unanswered, as a turn still running does. */
 	holdPrompts = false;
 	private handlers!: AcpTransportHandlers;
@@ -316,6 +318,14 @@ class FakeAcpAgent {
 				}
 				// ACP returns null after replaying history; adapter keeps the id.
 				this.respond(frame.id as number, null);
+			} else if (frame.method === "_x.ai/session/info") {
+				if (this.grokContextUsage === undefined)
+					this.deliver({
+						jsonrpc: "2.0",
+						id: frame.id,
+						error: { code: -32601, message: "Method not found" },
+					});
+				else this.respond(frame.id as number, this.grokContextUsage);
 			} else if (frame.method === "_superset/context_usage") {
 				this.contextUsageRequests++;
 				if (this.contextUsage === undefined)
@@ -325,6 +335,8 @@ class FakeAcpAgent {
 						error: { code: -32601, message: "Method not found" },
 					});
 				else this.respond(frame.id as number, { usage: this.contextUsage });
+			} else if (frame.method === "_session/async_task/stop") {
+				this.respond(frame.id as number, { stopped: this.stopTaskResult });
 			} else if (frame.method === "_session/steering") {
 				this.respond(frame.id as number, { outcome: this.steeringOutcome });
 			} else if (frame.method === "session/prompt" && this.holdPrompts) {
@@ -378,6 +390,7 @@ function startAdapter(
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
 		| "forkPlanReadPermissions"
+		| "forkGrokContextUsage"
 	> = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
 	let counter = 0;
@@ -2322,6 +2335,42 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("keeps the output file a background task reports, at spawn or later", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "task-1",
+			name: "bun run dev",
+			canStop: true,
+			outputFilePath: "/tmp/task-1.output",
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "task-2",
+			name: "watch",
+			canStop: true,
+		});
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "async_task_progress",
+			asyncTaskId: "task-2",
+			outputFilePath: "/tmp/task-2.output",
+		});
+		await flush();
+
+		const lists = events.flatMap((event) =>
+			event.kind === "session" && event.session.backgroundTasks
+				? [event.session.backgroundTasks.map((task) => task.outputPath)]
+				: [],
+		);
+		expect(lists.at(-1)).toEqual(["/tmp/task-1.output", "/tmp/task-2.output"]);
+
+		await adapter.dispose();
+	});
+
 	it("ends a subagent's background task with the subagent", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(agent);
@@ -2417,6 +2466,58 @@ describe("AcpAdapter on protocol v2", () => {
 		await flush();
 		expect(awaiting()).toEqual([true, false]);
 
+		await adapter.dispose();
+	});
+
+	it("reads Grok context on attach and refreshes it after a turn without prompting for metrics", async () => {
+		const agent = new FakeAcpAgent();
+		agent.grokContextUsage = {
+			result: { context: { used: 120, total: 2000 } },
+		};
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ forkGrokContextUsage: true },
+		);
+		await flush(30);
+		expect(
+			sessionsOf(events)
+				.flatMap((s) => (s.contextUsage ? [s.contextUsage] : []))
+				.at(-1),
+		).toEqual({ used: 120, size: 2000 });
+		agent.grokContextUsage = {
+			result: { context: { used: 500, total: 2000 } },
+		};
+		adapter.prompt([{ type: "text", text: "hello" }]);
+		await flush(30);
+		expect(
+			sessionsOf(events)
+				.flatMap((s) => (s.contextUsage ? [s.contextUsage] : []))
+				.at(-1),
+		).toEqual({ used: 500, size: 2000 });
+		expect(
+			agent.sent.filter((f) => f.method === "session/prompt"),
+		).toHaveLength(1);
+		await adapter.dispose();
+	});
+
+	it("older Grok agents can work without context reporting and are probed only once", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ forkGrokContextUsage: true },
+		);
+		await flush(30);
+		adapter.prompt([{ type: "text", text: "hello" }]);
+		await flush(30);
+		expect(
+			agent.sent.filter((f) => f.method === "_x.ai/session/info"),
+		).toHaveLength(1);
+		expect(sessionsOf(events).some((s) => s.contextUsage)).toBe(false);
+		expect(sessionsOf(events).some((s) => s.status === "dead")).toBe(false);
 		await adapter.dispose();
 	});
 
@@ -2834,6 +2935,37 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("removes a confirmed stopped task without requiring a second event, but retains refused stops", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("foreign", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "stray",
+			name: "Unrelated",
+			canStop: true,
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "task",
+			name: "dev server",
+			canStop: true,
+		});
+		await flush();
+		const tasks = () =>
+			sessionsOf(events)
+				.filter((session) => session.backgroundTasks)
+				.at(-1)?.backgroundTasks;
+		expect(tasks()?.map((task) => task.id)).toEqual(["task"]);
+		agent.stopTaskResult = false;
+		expect(await adapter.stopBackgroundTask("task")).toBe(false);
+		expect(tasks()?.map((task) => task.id)).toEqual(["task"]);
+		agent.stopTaskResult = true;
+		expect(await adapter.stopBackgroundTask("task")).toBe(true);
+		expect(tasks()).toEqual([]);
+		await adapter.dispose();
+	});
+
 	it("refuses to stop a task it does not know", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter } = startAdapter(agent);
@@ -2975,6 +3107,125 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("preserves Markdown plans across full replacement updates", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		for (const content of [
+			"# First draft",
+			"# Final draft\n\n- Verify the result",
+		]) {
+			agent.notify("sess-1", {
+				sessionUpdate: "plan_update",
+				plan: { type: "markdown", planId: "document", content },
+			});
+			await flush();
+		}
+		const plans = itemsOf(events).filter((item) => item.kind === "plan");
+		expect(plans.length).toBe(2);
+		expect(plans[1]).toMatchObject({
+			id: plans[0]?.id,
+			startedAtMs: plans[0]?.startedAtMs,
+			markdown: "# Final draft\n\n- Verify the result",
+			entries: [],
+		});
+		await adapter.dispose();
+	});
+
+	it("routes Grok plan approval and rejects plans belonging to another session", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.requestServer(
+			"x.ai/exit_plan_mode",
+			{
+				sessionId: "sess-1",
+				toolCallId: "grok-plan",
+				planContent: "# Implementation plan",
+			},
+			9400,
+		);
+		await flush();
+		const approval = itemsOf(events).find(
+			(item) => item.kind === "approval_request",
+		);
+		expect(approval).toMatchObject({
+			presentation: "plan",
+			detail: [{ type: "text", text: "# Implementation plan" }],
+		});
+		adapter.respondToApproval(approval?.id ?? "", { type: "accept" });
+		await flush();
+		expect(agent.responseTo(9400)?.result).toEqual({ outcome: "approved" });
+		agent.requestServer(
+			"_x.ai/exit_plan_mode",
+			{
+				sessionId: "foreign",
+				toolCallId: "foreign-plan",
+				planContent: "Unrelated",
+			},
+			9401,
+		);
+		await flush();
+		expect(agent.responseTo(9401)?.error).toMatchObject({ code: -32602 });
+		expect(
+			itemsOf(events).some(
+				(item) =>
+					item.kind === "approval_request" &&
+					item.targetItemId === "foreign-plan",
+			),
+		).toBe(false);
+		await adapter.dispose();
+	});
+
+	it("negotiates full plan documents and archives removed plans without losing their text", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		const initialize = agent.sent.find(
+			(frame) => frame.method === "initialize",
+		);
+		expect(initialize?.params).toMatchObject({
+			clientCapabilities: { plan: {} },
+			capabilities: { plan: {} },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "plan_update",
+			plan: { type: "markdown", planId: "p1", content: "# Complete plan" },
+		});
+		agent.notify("sess-1", { sessionUpdate: "plan_removed", planId: "p1" });
+		await flush();
+		const plans = itemsOf(events).filter((item) => item.kind === "plan");
+		expect(plans.at(-1)).toMatchObject({
+			id: plans[0]?.id,
+			markdown: "# Complete plan",
+			removed: true,
+		});
+		await adapter.dispose();
+	});
+
+	it("keeps file plans as references and ignores unknown plan content", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "plan_update",
+			plan: {
+				type: "file",
+				planId: "file-plan",
+				uri: "file:///tmp/My%20plan.md",
+			},
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "plan_update",
+			plan: { type: "_future", planId: "future", content: "Not Markdown" },
+		});
+		await flush();
+		expect(
+			itemsOf(events).filter((item) => item.kind === "plan"),
+		).toMatchObject([{ path: "file:///tmp/My%20plan.md", entries: [] }]);
+		await adapter.dispose();
+	});
+
 	it("advertises the client info v2 requires in initialize", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter } = startAdapter(agent);
@@ -2993,6 +3244,7 @@ describe("AcpAdapter on protocol v2", () => {
 		// v2 renamed the field; v1 agents still read the old name.
 		expect(params.capabilities).toEqual({
 			elicitation: { form: {} },
+			plan: {},
 			_meta: AIR_CLIENT_META,
 		});
 		expect(params.clientCapabilities).toBeDefined();

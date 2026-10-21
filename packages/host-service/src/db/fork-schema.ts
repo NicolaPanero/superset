@@ -26,6 +26,18 @@ export const forkJiraAutomations = sqliteTable("fork_jira_automations", {
 	error: text(),
 });
 
+export const forkJiraAutomationLaunches = sqliteTable(
+	"fork_jira_automation_launches",
+	{
+		ruleId: text("rule_id")
+			.primaryKey()
+			.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+		surface: text().notNull().$type<"terminal" | "chat">(),
+		model: text(),
+		accountSelection: text("account_selection"),
+	},
+);
+
 export const forkJiraAutomationRuns = sqliteTable(
 	"fork_jira_automation_runs",
 	{

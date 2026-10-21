@@ -1202,20 +1202,20 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 전액 API 요금으로 청구될 경우"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**더 명확한 설정**: 에이전트의 CLI 설치 안내와 저장소 연결 방식을 확인하세요."
+msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
+msgstr "**채팅과 계획**: 새 채팅 명칭, 계획 미리보기와 측면 패널, 더 명확한 재시작 및 분기 제어를 제공합니다."
 
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**컨텍스트를 한눈에**: 채팅 입력창의 링이 컨텍스트 사용량을 보여 주며, Claude는 카테고리별 분석도 제공합니다."
+msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
+msgstr "**더 명확한 표시**: 5시간 및 주간 할당량을 별도 링으로 표시하고 모든 에이전트에서 컨텍스트 버튼을 항상 표시합니다."
 
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**더 빠른 Jira 작업**: 목록이 상태별로 작업을 묶고, 행과 카드가 간결해졌으며, 모든 필터가 한 줄에 모였습니다."
+msgid "**Jira automations**: ACP chats with account and model selection."
+msgstr "**Jira 자동화**: 계정과 모델을 선택하는 ACP 채팅."
 
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Jira와 일치하는 보드**: 그룹화된 워크플로 상태가 같은 열에 유지됩니다."
+msgid "**Visual filters**: configure Jira automations with filters or JQL."
+msgstr "**시각적 필터**: 필터 또는 JQL로 Jira 자동화를 설정합니다."
 
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**새롭게 디자인된 Bitbucket 풀 리퀘스트**: GitHub와 같은 헤더와 정보 열, 흩어진 버튼 대신 Review·Merge·더 보기 메뉴."
+msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
+msgstr "**workspace 만들기**: 마이크를 만들기 및 시작 버튼 앞에 배치하고 유료 기능을 숨기면 유료 작업 링크도 숨깁니다."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2672,6 +2672,9 @@ msgstr "마지막으로 보고된 값입니다. 업데이트하려면 호스트�
 
 msgid "ascending"
 msgstr "오름차순"
+
+msgid "Ask"
+msgstr "질문"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "에이전트에게 디자인 문서나 보고서를 요청하세요. 페이지를 만들고 게시합니다."
@@ -4822,6 +4825,12 @@ msgstr "컨텍스트 메뉴"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "컨텍스트 전송에는 메시지만 포함되며 이전 기록이 생략될 수 있습니다."
 
+msgid "Context usage unavailable"
+msgstr "컨텍스트 사용량을 확인할 수 없음"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "에이전트가 보고하면 컨텍스트 사용량이 표시됩니다."
+
 msgid "Continue"
 msgstr "계속"
 
@@ -4933,6 +4942,9 @@ msgstr "클립보드에 복사했습니다."
 
 msgid "Copied!"
 msgstr "복사됨!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "메시지 텍스트만 복사합니다. 도구 상태와 파일은 복원되지 않습니다."
 
 msgid "Copy"
 msgstr "복사"
@@ -5584,11 +5596,11 @@ msgstr "디자인 피드백을 준비하지 못했습니다"
 msgid "Couldn't stage file"
 msgstr "파일을 스테이징하지 못했습니다"
 
-msgid "Couldn't start a new agent session"
-msgstr "새 에이전트 세션을 시작할 수 없습니다"
+msgid "Couldn't start a new chat"
+msgstr "새 채팅을 시작할 수 없습니다"
 
-msgid "Couldn't start agent session"
-msgstr "에이전트 세션을 시작하지 못했습니다"
+msgid "Couldn't start chat"
+msgstr "채팅을 시작할 수 없습니다"
 
 msgid "Couldn't start cloud workspace"
 msgstr "클라우드 워크스페이스를 시작하지 못했습니다"
@@ -6093,14 +6105,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "기본값({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "기본 계정"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "새 작업 공간의 기본 기준 브랜치입니다. 생성 시 작업 공간별로 변경할 수 있습니다."
 
 msgid "Default effort"
 msgstr "기본 강도"
 
-msgid "Default for new agents"
-msgstr "새 에이전트 기본값"
+msgid "Default for new chats"
+msgstr "새 채팅의 기본값"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "이 호스트에서 새 worktree 워크스페이스의 기본 위치입니다."
@@ -6918,6 +6933,9 @@ msgstr "{name} ×{tier} 획득"
 msgid "Edit"
 msgstr "편집"
 
+msgid "Edit and restart from here"
+msgstr "편집하고 여기서 다시 시작"
+
 msgid "Edit comment"
 msgstr "코멘트 수정"
 
@@ -7307,6 +7325,9 @@ msgstr "이 리포지토리가 어떻게 동작하는지 설명해 줘"
 
 msgid "Explore"
 msgstr "살펴보기"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "코드를 탐색하고 변경 없이 질문에 답합니다."
 
 msgid "Explore Pages"
 msgstr "페이지 살펴보기"
@@ -9625,6 +9646,9 @@ msgstr "Jira 보드"
 msgid "Jira issues"
 msgstr "Jira 이슈"
 
+msgid "Jira project"
+msgstr "Jira 프로젝트"
+
 msgid "Join"
 msgstr "참가"
 
@@ -10242,6 +10266,9 @@ msgstr "더 불러오는 중..."
 msgid "Loading more…"
 msgstr "더 불러오는 중…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "미리보기 불러오는 중…"
 
@@ -10693,6 +10720,9 @@ msgstr "머지 중…"
 msgid "Mesh Gradient"
 msgstr "메시 그라데이션"
 
+msgid "Message"
+msgstr "메시지"
+
 msgid "Message in channel"
 msgstr "채널 내 메시지"
 
@@ -11080,16 +11110,7 @@ msgstr "새 {providerLabel} 에이전트는 {accountLabel}을(를) 사용합니�
 msgid "New agent"
 msgstr "새 에이전트"
 
-msgid "New Agent"
-msgstr "새 에이전트"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "새 에이전트는 이 계정으로 실행됩니다. 실행 중인 에이전트는 다시 실행해야 바뀝니다."
-
 msgid "New agent session"
-msgstr "새 에이전트 세션"
-
-msgid "New agent sessions"
 msgstr "새 에이전트 세션"
 
 msgid "New automation"
@@ -11100,6 +11121,21 @@ msgstr "새 브라우저"
 
 msgid "new challengers"
 msgstr "새 도전자"
+
+msgid "New chat"
+msgstr "새 채팅"
+
+msgid "New Chat"
+msgstr "새 채팅"
+
+msgid "New chat from loaded messages"
+msgstr "불러온 메시지로 새 채팅"
+
+msgid "New chats"
+msgstr "새 채팅"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "새 채팅은 이 계정을 사용합니다. 변경하려면 실행 중인 채팅을 다시 시작하세요."
 
 msgid "New cloud workspace"
 msgstr "새 클라우드 워크스페이스"
@@ -11625,6 +11661,9 @@ msgstr "열린 리뷰 코멘트가 없습니다."
 
 msgid "No organization selected"
 msgstr "선택된 조직이 없습니다"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "일치하는 페이지 없음"
@@ -12256,6 +12295,9 @@ msgstr "초대된 사람만"
 msgid "Only people who opted in appear here."
 msgstr "참여를 선택한 사람만 여기에 표시됩니다."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "텍스트 메시지만 편집하고 다시 시작할 수 있습니다."
+
 msgid "Only the author can change a comment"
 msgstr "작성자만 댓글을 변경할 수 있습니다"
 
@@ -12584,6 +12626,9 @@ msgstr "외부 브라우저에서 localhost:{0} 열기"
 msgid "Open menu"
 msgstr "메뉴 열기"
 
+msgid "Open message in side panel"
+msgstr "측면 패널에서 메시지 열기"
+
 msgid "Open navigation"
 msgstr "내비게이션 열기"
 
@@ -12598,6 +12643,12 @@ msgstr "기본 브라우저에서 페이지 열기"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "iPhone 및 iPad용 Superset 앱에서 페이지를 열고 댓글에 답글을 남기세요."
+
+msgid "Open plan file"
+msgstr "계획 파일 열기"
+
+msgid "Open plan in side panel"
+msgstr "측면 패널에서 계획 열기"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Superset 앱에서 플러그인을 열고 하나를 고르세요. 설치 내역은 계정에 저장됩니다."
@@ -12716,8 +12767,8 @@ msgstr "전역 명령 팔레트를 엽니다"
 msgid "Open the guide"
 msgstr "가이드 열기"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "현재 워크스페이스에서 새 에이전트 대화상자 열기"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "현재 워크스페이스에서 새 채팅 대화상자 열기"
 
 msgid "Open the new workspace modal"
 msgstr "새 워크스페이스 모달을 엽니다"
@@ -12932,6 +12983,9 @@ msgstr "출력 스키마"
 
 msgid "Output truncated"
 msgstr "출력이 잘렸습니다"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "오버플로 페이드"
@@ -13318,6 +13372,9 @@ msgstr "계획"
 msgctxt "billing"
 msgid "Plan"
 msgstr "플랜"
+
+msgid "Plan progress"
+msgstr "계획 진행 상황"
 
 msgid "Plan restored"
 msgstr "플랜이 복원되었습니다"
@@ -13989,6 +14046,12 @@ msgstr "한도 소진"
 msgid "Quota is shown when the provider supports it."
 msgstr "공급자가 지원하는 경우 할당량이 표시됩니다."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "할당량 사용 · 바깥쪽 링 5시간: {fiveHour} · 안쪽 링 주간: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "할당량 사용: 바깥쪽 링은 5시간, 안쪽 링은 주간입니다."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14263,6 +14326,9 @@ msgstr "리포지토리 새로 고침"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "다음에 OpenCode를 실행하면 갱신됩니다."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "다시 생성"
@@ -15054,9 +15120,6 @@ msgstr "채팅만 되돌리기"
 
 msgid "Rewind conversation?"
 msgstr "대화를 되돌릴까요?"
-
-msgid "Rewind from here"
-msgstr "여기서 되돌리기"
 
 msgid "Rewrote it and published version 2."
 msgstr "다시 작성하고 버전 2를 게시했습니다."
@@ -16338,6 +16401,9 @@ msgstr "사이드바에 사용량 탭 표시"
 msgid "showArrow opt-in"
 msgstr "showArrow 선택 사용"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "표시됨"
 
@@ -16449,6 +16515,9 @@ msgstr "로그인 만료됨"
 msgid "Sign-in expired — run"
 msgstr "로그인이 만료되었습니다 — 다음 명령을 실행하세요:"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "로그인 실패"
 
@@ -16460,6 +16529,9 @@ msgstr "<0>{userName}</0>(으)로 로그인됨"
 
 msgid "Signed out"
 msgstr "로그아웃됨"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "로그인한 사이트"
@@ -16893,11 +16965,11 @@ msgstr "대화를 시작하면 메시지가 여기에 표시됩니다"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "이 터미널의 최근 컨텍스트를 넘겨받아 새 에이전트 세션을 시작합니다. 워크스페이스의 파일이 여전히 기준입니다."
 
-msgid "Start a new agent session each run"
-msgstr "실행할 때마다 새 에이전트 세션 시작"
-
 msgid "Start a new chat"
 msgstr "새 채팅 시작"
+
+msgid "Start a new chat each run"
+msgstr "실행할 때마다 새 채팅 시작"
 
 msgid "Start a session"
 msgstr "세션 시작"
@@ -17604,8 +17676,8 @@ msgstr "홈으로 가기"
 msgid "Taken"
 msgstr "사용 중"
 
-msgid "Takes effect in new agent sessions."
-msgstr "새 에이전트 세션부터 적용됩니다."
+msgid "Takes effect in new chats."
+msgstr "새 채팅에 적용됩니다."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "평소보다 오래 걸리고 있습니다. 화면을 나가도 계속 진행됩니다."
@@ -18166,6 +18238,9 @@ msgstr "제공사가 {0}을(를) 반환했습니다."
 msgid "The provider refused it."
 msgstr "제공사가 거부했습니다."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "복구 기간이 끝났습니다. support@superset.sh로 문의하세요."
 
@@ -18316,6 +18391,9 @@ msgstr "이 에이전트는 클라우드 워크스페이스에서 실행할 수 
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "이 에이전트는 채팅을 열 수 없습니다. 터미널에서 사용하려면 고급 CLI 옵션을 활성화하세요."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "이 에이전트는 특정 메시지로 돌아가는 기능을 지원하지 않습니다."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "이 에이전트는 선택한 기기에 더 이상 존재하지 않습니다 (에이전트가 초기화되었을 수 있습니다). 새 에이전트를 선택할 때까지 실행이 실패합니다."
@@ -18476,6 +18554,9 @@ msgstr "이 Mac"
 
 msgid "This machine"
 msgstr "이 컴퓨터"
+
+msgid "This message cannot be used as a restart point."
+msgstr "이 메시지는 재시작 지점으로 사용할 수 없습니다."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "이 Microsoft 테넌트는 이미 {detail}이(가) 연결했습니다. 먼저 연결을 해제해 달라고 요청하세요."
@@ -19458,6 +19539,9 @@ msgstr "URL에 쓰기 좋은 식별자로, 조직 안에서 고유해야 합니�
 msgid "Usage"
 msgstr "사용량"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "사용량은 계정마다 최대 5분에 한 번 읽습니다. 다음 업데이트: {next}."
+
 msgid "Usage sections"
 msgstr "사용량 섹션"
 
@@ -19492,8 +19576,8 @@ msgstr "작업마다 Claude Code, Codex, OpenCode 등 어떤 코딩 에이전트
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Claude Code, Codex 등 어떤 코딩 에이전트든 사용하세요. 작업마다 고르거나 여러 개를 나란히 돌리세요."
 
-msgid "Use for new agents"
-msgstr "새 에이전트에 사용"
+msgid "Use for new chats"
+msgstr "새 채팅에 사용"
 
 msgid "Use global default"
 msgstr "전역 기본값 사용"
@@ -19759,6 +19843,9 @@ msgstr "볼륨"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "에이전트와 대기 중인 작업이 완료될 때까지 기다리세요."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "전달하기 전에 에이전트가 끝날 때까지 기다리세요."

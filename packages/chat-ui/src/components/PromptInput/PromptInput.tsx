@@ -44,6 +44,7 @@ export function PromptInput({
 	placement = "top",
 	toolbar,
 	toolbarEnd,
+	submitAction,
 	defaultValue,
 	draftFiles,
 	findChips,
@@ -85,6 +86,7 @@ export function PromptInput({
 					placement={placement}
 					toolbar={toolbar}
 					toolbarEnd={toolbarEnd}
+					submitAction={submitAction}
 					defaultValue={defaultValue}
 					draftFiles={draftFiles}
 					findChips={findChips}

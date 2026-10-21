@@ -13,8 +13,10 @@ import type { ReactNode } from "react";
 import type { ChatForkTarget } from "../../../../types";
 import type { PageLink } from "../../../../utils/pageLinks";
 import { PageLinkCard } from "../../../PageLinkCard";
+import { forkToolPlan } from "../../utils/forkPlanDocument";
 import type { TranscriptRow } from "../../utils/transcriptRows";
 import { AttachmentRail, type RailImage } from "../AttachmentRail";
+import { ForkPlanCard } from "../ForkPlanCard";
 import { ItemRow } from "./components/ItemRow";
 import { ToolRunRow } from "./components/ToolRunRow";
 import { TurnStatusRow } from "./components/TurnStatusRow";
@@ -160,6 +162,10 @@ export function TurnGroupSection({
 						onToggle={onToggleEntry}
 						rowKey={row.key}
 					/>
+					{row.items.map((tool) => {
+						const plan = forkToolPlan(tool);
+						return plan ? <ForkPlanCard item={plan} key={plan.id} /> : null;
+					})}
 					{imageRail(row.items)}
 					{pageCards(row.pages)}
 				</>

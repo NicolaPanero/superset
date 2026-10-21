@@ -1202,20 +1202,20 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* bij facturering tegen het volle API-tarief"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Duidelijkere installatie**: vind CLI-installatiegidsen voor je agenten en begrijp verbindingen met repositories."
+msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
+msgstr "**Chats en plannen**: Nieuwe chat, planvoorbeelden en een zijpaneel, met duidelijkere bediening voor herstarten en vertakkingen."
 
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Context in één oogopslag**: een ring in het invoerveld toont hoe vol de context is, met een uitsplitsing per categorie voor Claude."
+msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
+msgstr "**Duidelijkere meters**: aparte ringen voor de quota van 5 uur en per week, met een altijd zichtbare contextknop voor elke agent."
 
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Snellere Jira-taken**: de lijst groepeert taken op status, rijen en kaarten zijn compact en alle filters staan in één balk."
+msgid "**Jira automations**: ACP chats with account and model selection."
+msgstr "**Jira-automatiseringen**: ACP-chats met account- en modelkeuze."
 
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Borden zoals in Jira**: gegroepeerde workflowstatussen blijven in dezelfde kolommen."
+msgid "**Visual filters**: configure Jira automations with filters or JQL."
+msgstr "**Visuele filters**: configureer Jira-automatiseringen met filters of JQL."
 
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Vernieuwde Bitbucket-pull requests**: een koptekst en infokolom zoals op GitHub, met de menu's Review, Merge en Meer in plaats van verspreide knoppen."
+msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
+msgstr "**Workspace aanmaken**: microfoon vóór Aanmaken en starten, betaalde taaklinks worden samen met betaalde functies verborgen."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2672,6 +2672,9 @@ msgstr "Zoals laatst gemeld. De host moet online zijn om bij te werken."
 
 msgid "ascending"
 msgstr "oplopend"
+
+msgid "Ask"
+msgstr "Vragen"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Vraag een agent om een ontwerpdocument of rapport. Hij maakt de pagina en publiceert die."
@@ -4822,6 +4825,12 @@ msgstr "Contextmenu"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "De contextoverdracht bevat alleen berichten en kan eerdere geschiedenis weglaten."
 
+msgid "Context usage unavailable"
+msgstr "Contextgebruik niet beschikbaar"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "Het contextgebruik verschijnt zodra de agent dit doorgeeft."
+
 msgid "Continue"
 msgstr "Doorgaan"
 
@@ -4933,6 +4942,9 @@ msgstr "Gekopieerd naar klembord."
 
 msgid "Copied!"
 msgstr "Gekopieerd!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Kopieert alleen berichttekst. De toestand van tools en bestanden wordt niet hersteld."
 
 msgid "Copy"
 msgstr "Kopiëren"
@@ -5584,11 +5596,11 @@ msgstr "Kan designfeedback niet klaarzetten"
 msgid "Couldn't stage file"
 msgstr "Kan bestand niet stagen"
 
-msgid "Couldn't start a new agent session"
-msgstr "Kan geen nieuwe agentsessie starten"
+msgid "Couldn't start a new chat"
+msgstr "Kan geen nieuwe chat starten"
 
-msgid "Couldn't start agent session"
-msgstr "Kan agentsessie niet starten"
+msgid "Couldn't start chat"
+msgstr "Kan chat niet starten"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Kan cloudwerkruimte niet starten"
@@ -6093,14 +6105,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Standaard ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Standaardaccount"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Standaardbasis voor nieuwe werkruimten. Per werkruimte te wijzigen bij het aanmaken."
 
 msgid "Default effort"
 msgstr "Standaard-effort"
 
-msgid "Default for new agents"
-msgstr "Standaard voor nieuwe agents"
+msgid "Default for new chats"
+msgstr "Standaard voor nieuwe chats"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Standaardlocatie voor nieuwe worktree-werkruimtes op deze host."
@@ -6918,6 +6933,9 @@ msgstr "{name} ×{tier} behaald"
 msgid "Edit"
 msgstr "Bewerken"
 
+msgid "Edit and restart from here"
+msgstr "Bewerken en vanaf hier opnieuw starten"
+
 msgid "Edit comment"
 msgstr "Opmerking bewerken"
 
@@ -7307,6 +7325,9 @@ msgstr "Leg me uit hoe deze repository werkt"
 
 msgid "Explore"
 msgstr "Ontdekken"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Verkent de code en beantwoordt vragen zonder wijzigingen aan te brengen."
 
 msgid "Explore Pages"
 msgstr "Ontdek Pagina's"
@@ -9625,6 +9646,9 @@ msgstr "Jira-bord"
 msgid "Jira issues"
 msgstr "Jira-issues"
 
+msgid "Jira project"
+msgstr "Jira-project"
+
 msgid "Join"
 msgstr "Meedoen"
 
@@ -10242,6 +10266,9 @@ msgstr "Meer laden..."
 msgid "Loading more…"
 msgstr "Meer laden…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "Voorbeelden laden…"
 
@@ -10693,6 +10720,9 @@ msgstr "Bezig met mergen…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Bericht"
+
 msgid "Message in channel"
 msgstr "Bericht in kanaal"
 
@@ -11080,17 +11110,8 @@ msgstr "Nieuwe {providerLabel}-agents gebruiken {accountLabel}."
 msgid "New agent"
 msgstr "Nieuwe agent"
 
-msgid "New Agent"
-msgstr "Nieuwe agent"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "Nieuwe agentstarts gebruiken dit account. Herstart een draaiende agent om te wisselen."
-
 msgid "New agent session"
 msgstr "Nieuwe agentsessie"
-
-msgid "New agent sessions"
-msgstr "Nieuwe agentsessies"
 
 msgid "New automation"
 msgstr "Nieuwe automatisering"
@@ -11100,6 +11121,21 @@ msgstr "Nieuwe browser"
 
 msgid "new challengers"
 msgstr "nieuwe uitdagers"
+
+msgid "New chat"
+msgstr "Nieuwe chat"
+
+msgid "New Chat"
+msgstr "Nieuwe chat"
+
+msgid "New chat from loaded messages"
+msgstr "Nieuwe chat uit geladen berichten"
+
+msgid "New chats"
+msgstr "Nieuwe chats"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "Nieuwe chats gebruiken dit account. Herstart een actieve chat om het te wijzigen."
 
 msgid "New cloud workspace"
 msgstr "Nieuwe cloudwerkruimte"
@@ -11625,6 +11661,9 @@ msgstr "Geen open reviewopmerkingen."
 
 msgid "No organization selected"
 msgstr "Geen organisatie geselecteerd"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "Geen overeenkomende pagina's"
@@ -12256,6 +12295,9 @@ msgstr "Alleen uitgenodigde personen"
 msgid "Only people who opted in appear here."
 msgstr "Alleen mensen die zich hebben aangemeld verschijnen hier."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "Alleen tekstberichten kunnen worden bewerkt en opnieuw gestart."
+
 msgid "Only the author can change a comment"
 msgstr "Alleen de auteur kan een reactie wijzigen"
 
@@ -12584,6 +12626,9 @@ msgstr "localhost:{0} openen in externe browser"
 msgid "Open menu"
 msgstr "Menu openen"
 
+msgid "Open message in side panel"
+msgstr "Bericht in zijpaneel openen"
+
 msgid "Open navigation"
 msgstr "Navigatie openen"
 
@@ -12598,6 +12643,12 @@ msgstr "Pagina openen in standaardbrowser"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Open pages en reageer op opmerkingen in de Superset-app op iPhone en iPad."
+
+msgid "Open plan file"
+msgstr "Planbestand openen"
+
+msgid "Open plan in side panel"
+msgstr "Plan in zijpaneel openen"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Open Plugins in de Superset-app en kies er een. De installatie wordt bij je account opgeslagen."
@@ -12716,8 +12767,8 @@ msgstr "Het globale opdrachtenpalet openen"
 msgid "Open the guide"
 msgstr "Handleiding openen"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Het dialoogvenster voor een nieuwe agent openen in de huidige workspace"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Het dialoogvenster voor een nieuwe chat in de huidige workspace openen"
 
 msgid "Open the new workspace modal"
 msgstr "Het venster voor een nieuwe werkruimte openen"
@@ -12932,6 +12983,9 @@ msgstr "Outputschema"
 
 msgid "Output truncated"
 msgstr "Uitvoer afgekapt"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13318,6 +13372,9 @@ msgstr "Plan"
 msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
+
+msgid "Plan progress"
+msgstr "Voortgang van het plan"
 
 msgid "Plan restored"
 msgstr "Plan hersteld"
@@ -13989,6 +14046,12 @@ msgstr "Limiet bereikt"
 msgid "Quota is shown when the provider supports it."
 msgstr "Het quotum wordt getoond als de provider dit ondersteunt."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Quotum gebruikt · buitenste ring 5h: {fiveHour} · binnenste ring wekelijks: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Quotum gebruikt: buitenste ring 5h, binnenste ring wekelijks."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14263,6 +14326,9 @@ msgstr "Repositories vernieuwen"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Wordt vernieuwd zodra OpenCode opnieuw draait."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "Opnieuw genereren"
@@ -15054,9 +15120,6 @@ msgstr "Alleen chat terugzetten"
 
 msgid "Rewind conversation?"
 msgstr "Gesprek terugzetten?"
-
-msgid "Rewind from here"
-msgstr "Vanaf hier terugzetten"
 
 msgid "Rewrote it and published version 2."
 msgstr "Herschreven en versie 2 gepubliceerd."
@@ -16338,6 +16401,9 @@ msgstr "Gebruikstabblad tonen in zijbalk"
 msgid "showArrow opt-in"
 msgstr "showArrow inschakelen"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "Weergegeven"
 
@@ -16449,6 +16515,9 @@ msgstr "Login verlopen"
 msgid "Sign-in expired — run"
 msgstr "Login verlopen — voer"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "Inloggen mislukt"
 
@@ -16460,6 +16529,9 @@ msgstr "Ingelogd als <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Uitgelogd"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "Sites waarop je bent ingelogd"
@@ -16893,11 +16965,11 @@ msgstr "Begin een gesprek om hier berichten te zien"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Start een nieuwe agentsessie met de recente context van deze terminal. De bestanden in de workspace blijven de bron van waarheid."
 
-msgid "Start a new agent session each run"
-msgstr "Start bij elke run een nieuwe agentsessie"
-
 msgid "Start a new chat"
 msgstr "Nieuwe chat starten"
+
+msgid "Start a new chat each run"
+msgstr "Bij elke uitvoering een nieuwe chat starten"
 
 msgid "Start a session"
 msgstr "Sessie starten"
@@ -17604,8 +17676,8 @@ msgstr "Naar de homepage"
 msgid "Taken"
 msgstr "Bezet"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Geldt voor nieuwe agentsessies."
+msgid "Takes effect in new chats."
+msgstr "Geldt voor nieuwe chats."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Duurt langer dan gewoonlijk. Het gaat door als je weggaat."
@@ -18166,6 +18238,9 @@ msgstr "De provider antwoordde {0}."
 msgid "The provider refused it."
 msgstr "De provider heeft het geweigerd."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "De herstelperiode is voorbij. Neem contact op via support@superset.sh."
 
@@ -18316,6 +18391,9 @@ msgstr "Deze agent kan niet in een cloudwerkruimte draaien"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "Deze agent kan geen chat openen. Schakel de geavanceerde CLI-opties in om hem in een terminal te gebruiken."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "Deze agent ondersteunt geen terugkeer naar een specifiek bericht."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Deze agent bestaat niet meer op het gekozen apparaat (de agents zijn mogelijk gereset). Runs mislukken totdat je een nieuwe kiest."
@@ -18476,6 +18554,9 @@ msgstr "Deze Mac"
 
 msgid "This machine"
 msgstr "Deze computer"
+
+msgid "This message cannot be used as a restart point."
+msgstr "Dit bericht kan niet als herstartpunt worden gebruikt."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Deze Microsoft-tenant is al gekoppeld door {detail}. Vraag hen om eerst los te koppelen."
@@ -19458,6 +19539,9 @@ msgstr "URL-vriendelijke identifier, uniek binnen je organisatie."
 msgid "Usage"
 msgstr "Gebruik"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "Gebruik wordt per account hooguit elke 5 minuten gelezen. Volgende update om {next}."
+
 msgid "Usage sections"
 msgstr "Onderdelen van gebruik"
 
@@ -19492,8 +19576,8 @@ msgstr "Gebruik Claude Code, Codex, OpenCode of welke coding agent dan ook voor 
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Gebruik Claude Code, Codex of welke coding agent dan ook. Kies per taak of laat er meerdere naast elkaar draaien."
 
-msgid "Use for new agents"
-msgstr "Gebruiken voor nieuwe agents"
+msgid "Use for new chats"
+msgstr "Gebruiken voor nieuwe chats"
 
 msgid "Use global default"
 msgstr "Globale standaard gebruiken"
@@ -19759,6 +19843,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Wacht tot de agent en het werk in de wachtrij klaar zijn."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Wacht tot de agent klaar is voordat u overdraagt."

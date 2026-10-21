@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "context-meter-2026-10";
+export const FORK_WHATS_NEW_ID = "chat-plans-controls-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -32,23 +32,23 @@ export function ForkWhatsNewNotice() {
 	const highlights = [
 		t({
 			message:
-				"**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons.",
+				"**Jira automations**: ACP chats with account and model selection.",
 		}),
 		t({
 			message:
-				"**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar.",
+				"**Visual filters**: configure Jira automations with filters or JQL.",
 		}),
 		t({
 			message:
-				"**Jira boards that match Jira**: grouped workflow statuses stay in the same columns.",
+				"**Workspace creation**: microphone before Create & start, paid task links hidden with paid features.",
 		}),
 		t({
 			message:
-				"**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude.",
+				"**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls.",
 		}),
 		t({
 			message:
-				"**Clearer setup**: find CLI installation guides for your agents and understand repository connections.",
+				"**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent.",
 		}),
 	];
 	const notice: DesktopNotice = {

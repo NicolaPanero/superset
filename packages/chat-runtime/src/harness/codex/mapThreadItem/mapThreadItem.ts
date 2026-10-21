@@ -191,6 +191,7 @@ export function mapThreadItem(
 			return {
 				...base,
 				kind: "plan",
+				markdown: known.text,
 				entries: [
 					{
 						text: known.text,

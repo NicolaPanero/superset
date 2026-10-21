@@ -1,5 +1,9 @@
 import { expect, test } from "bun:test";
-import { type AccountQuota, accountQuotaState } from "./fork-account-usage";
+import {
+	type AccountQuota,
+	accountQuotaRings,
+	accountQuotaState,
+} from "./fork-account-usage";
 
 const now = Date.now();
 const account: AccountQuota = {
@@ -236,4 +240,63 @@ test("the warning boundary is independent of whether quota is exhausted", () => 
 		remaining: 100,
 		warning: false,
 	});
+});
+
+test("quota rings show provider windows independently from model-specific restrictions", () => {
+	const sample = {
+		...account,
+		windows: [
+			{
+				id: "five_hour",
+				label: "Session (5h)",
+				usedPercent: 20,
+				resetsAt: null,
+			},
+			{ id: "seven_day", label: "Weekly", usedPercent: 35, resetsAt: null },
+			{
+				id: "seven_day_sonnet",
+				label: "Sonnet",
+				usedPercent: 80,
+				resetsAt: null,
+			},
+		],
+	};
+	expect(accountQuotaRings(sample, "sonnet", now)).toEqual({
+		fiveHourUsed: 20,
+		weeklyUsed: 35,
+	});
+	expect(accountQuotaRings(sample, "opus", now)).toEqual({
+		fiveHourUsed: 20,
+		weeklyUsed: 35,
+	});
+	expect(
+		accountQuotaRings({ ...sample, status: "unavailable" }, "sonnet", now),
+	).toEqual({ fiveHourUsed: null, weeklyUsed: null });
+});
+
+test("Codex ring periods come from the window duration labels rather than primary order", () => {
+	const sample = {
+		...account,
+		agent: "codex",
+		windows: [
+			{ id: "primary", label: "Weekly", usedPercent: 70, resetsAt: null },
+			{
+				id: "secondary",
+				label: "Session (5h)",
+				usedPercent: 10,
+				resetsAt: null,
+			},
+		],
+	};
+	expect(accountQuotaRings(sample, undefined, now)).toEqual({
+		fiveHourUsed: 10,
+		weeklyUsed: 70,
+	});
+	expect(
+		accountQuotaRings(
+			{ ...sample, windows: sample.windows.slice(0, 1) },
+			undefined,
+			now,
+		),
+	).toEqual({ fiveHourUsed: null, weeklyUsed: 70 });
 });

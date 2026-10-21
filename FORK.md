@@ -28,7 +28,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   board e dettaglio; un trascinamento con più stati possibili chiede quale usare.
   Il dettaglio mostra i workspace collegati con azioni compatte; **Link existing
   workspace** cerca per nome, progetto o branch e riconosce quelli già collegati.
-  **Automations** configura regole JQL locali all’host. **Start in workspace**
+  **Automations** configura regole locali all’host con filtri grafici o JQL;
+  può avviare una chat ACP scegliendo agente, modello e account oppure un terminale. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
   [docs/fork-integrations.md](docs/fork-integrations.md).
@@ -89,7 +90,7 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Le letture shell con percorsi relativi devono iniziare con
   `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
   servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
-- **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
+- **New Chat** (⌘⇧A) apre una nuova chat nelle schede. L’icona **Find a chat**
   nell’intestazione cerca per titolo, modello o branch nei depositi locali di
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del
   progetto, inclusi i worktree. Se una chat è già collegata a Superset, la riapre
@@ -101,12 +102,33 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
-- I messaggi utente mostrano ora, copia e diramazione al passaggio del mouse.
-  Con Claude e Codex, **Fork from here** riparte dal messaggio scelto:
-  se è un messaggio utente, ne rimette il testo nella bozza. **Rewind from here**
-  chiede conferma e riavvolge solo la chat; i file restano invariati.
-  La sessione originale resta nella cronologia e viene lasciata aperta se
-  la copia non si carica. Gli altri agenti mantengono il fork dell’intera sessione.
+- I messaggi mostrano copia, diramazione e ora. **Edit and restart from here**
+  resta visibile sui messaggi utente e spiega perché non è disponibile:
+  agente occupato, allegati o assenza di un punto nativo. Con Claude e Codex
+  riparte prima del messaggio e ne rimette il testo nella bozza; i file restano
+  invariati e la sessione originale resta nella cronologia. Per Grok e Cursor,
+  **New chat from loaded messages** apre una chat separata dal testo caricato
+  fino al messaggio scelto, mantenendo configurazione, account, modello e modalità.
+  Il passaggio non ricostruisce lo stato degli strumenti e non ripristina i file.
+- I **piani** hanno un’anteprima Markdown nella chat e il pulsante per aprirli
+  in un pannello laterale, con avanzamento dei passi. Il documento resta leggibile
+  dopo l’approvazione, anche nei piani Cursor già salvati quando il testo è nella
+  cronologia. La stessa vista mostra i piani strutturati degli altri agenti;
+  se l’agente fornisce solo passi, mostra quelli. Anche un piano scritto come
+  risposta normale si apre a lato dal pulsante accanto alla copia del messaggio. Un riferimento a file ha il
+  comando per aprire il file, senza leggerlo automaticamente.
+- Il contatore del **contesto** resta visibile fin dalla bozza, con dimensioni
+  fisse per non spostare gli altri controlli, anche quando l’agente non comunica
+  i token: in quel caso è tratteggiato e segnala il dato non disponibile. Grok
+  usa la lettura nativa `session/info` all’avvio e alla fine del turno, senza
+  inviare prompt per ottenere le metriche. La versione Cursor verificata non
+  espone il consumo tramite ACP. Claude mantiene il dettaglio per categoria.
+- Il tondino dell’**account** ha due anelli di consumo: esterno per le **5 ore**,
+  interno per la **settimana**. Tooltip e menu indicano la corrispondenza.
+  Gli anelli mostrano le due quote generali; i limiti specifici del modello
+  restano nel menu e nella continuazione automatica. Dati assenti, scaduti o non applicabili hanno un anello tratteggiato;
+  non vengono presentati come quota libera.
+
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
 - I terminali usano **SF Mono a 12 px** su macOS, caricato dal sistema come nel

@@ -1202,20 +1202,20 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* při účtování plnou sazbou API"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Srozumitelnější nastavení**: najděte návody k instalaci CLI agentů a pochopte připojení repozitářů."
+msgid "**Chats and plans**: New Chat naming, plan previews and a side panel, plus clearer restart and branch controls."
+msgstr "**Chaty a plány**: příkaz Nový chat, náhledy plánů a boční panel s přehlednějším ovládáním restartu a větvení."
 
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Kontext na první pohled**: kroužek v poli zprávy ukazuje zaplnění kontextu, u Claude i rozpis podle kategorií."
+msgid "**Clearer meters**: separate 5-hour and weekly quota rings, with an always-visible context control for every agent."
+msgstr "**Přehlednější ukazatele**: samostatné kruhy pro pětihodinovou a týdenní kvótu a vždy viditelné ovládání kontextu pro každého agenta."
 
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Rychlejší úkoly v Jira**: seznam seskupuje úkoly podle stavu, řádky a karty jsou kompaktní a všechny filtry jsou v jednom pruhu."
+msgid "**Jira automations**: ACP chats with account and model selection."
+msgstr "**Automatizace Jira**: ACP chaty s výběrem účtu a modelu."
 
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Nástěnky odpovídající Jira**: seskupené stavy pracovního postupu zůstávají ve stejných sloupcích."
+msgid "**Visual filters**: configure Jira automations with filters or JQL."
+msgstr "**Vizuální filtry**: nastavte automatizace Jira pomocí filtrů nebo JQL."
 
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Přepracované pull requesty v Bitbucketu**: záhlaví a informační sloupec jako na GitHubu, s nabídkami Review, Merge a Další místo roztroušených tlačítek."
+msgid "**Workspace creation**: microphone before Create & start, paid task links hidden with paid features."
+msgstr "**Vytvoření workspace**: mikrofon před Vytvořit a spustit, odkazy na placené úkoly se skrývají s placenými funkcemi."
 
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
@@ -2672,6 +2672,9 @@ msgstr "Podle posledního hlášení. Hostitel musí být online, aby se mohl ak
 
 msgid "ascending"
 msgstr "vzestupně"
+
+msgid "Ask"
+msgstr "Zeptat se"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Požádejte agenta o designový dokument nebo report. Vytvoří stránku a publikuje ji."
@@ -4822,6 +4825,12 @@ msgstr "Kontextová nabídka"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "Přenos kontextu zahrnuje pouze zprávy a může vynechat dřívější historii."
 
+msgid "Context usage unavailable"
+msgstr "Využití kontextu není k dispozici"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "Využití kontextu se zobrazí, jakmile jej agent nahlásí."
+
 msgid "Continue"
 msgstr "Pokračovat"
 
@@ -4933,6 +4942,9 @@ msgstr "Zkopírováno do schránky."
 
 msgid "Copied!"
 msgstr "Zkopírováno!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Kopíruje pouze text zpráv. Stav nástrojů a soubory se neobnovují."
 
 msgid "Copy"
 msgstr "Kopírovat"
@@ -5584,11 +5596,11 @@ msgstr "Nepodařilo se připravit designovou zpětnou vazbu"
 msgid "Couldn't stage file"
 msgstr "Nepodařilo se připravit soubor"
 
-msgid "Couldn't start a new agent session"
-msgstr "Nepodařilo se spustit novou relaci agenta"
+msgid "Couldn't start a new chat"
+msgstr "Nový chat se nepodařilo spustit"
 
-msgid "Couldn't start agent session"
-msgstr "Nepodařilo se spustit relaci agenta"
+msgid "Couldn't start chat"
+msgstr "Chat se nepodařilo spustit"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Nepodařilo se spustit cloudový pracovní prostor"
@@ -6093,14 +6105,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Výchozí ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Výchozí účet"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Výchozí základ nových pracovních prostorů. Lze jej změnit při vytváření jednotlivých prostorů."
 
 msgid "Default effort"
 msgstr "Výchozí úsilí"
 
-msgid "Default for new agents"
-msgstr "Výchozí pro nové agenty"
+msgid "Default for new chats"
+msgstr "Výchozí pro nové chaty"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Výchozí umístění nových pracovních prostorů s worktree na tomto hostu."
@@ -6918,6 +6933,9 @@ msgstr "Získáno: {name} ×{tier}"
 msgid "Edit"
 msgstr "Upravit"
 
+msgid "Edit and restart from here"
+msgstr "Upravit a začít znovu odsud"
+
 msgid "Edit comment"
 msgstr "Upravit komentář"
 
@@ -7307,6 +7325,9 @@ msgstr "Vysvětlit mi, jak tento repozitář funguje"
 
 msgid "Explore"
 msgstr "Prozkoumat"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Prozkoumává kód a odpovídá na otázky bez provádění změn."
 
 msgid "Explore Pages"
 msgstr "Prozkoumat Stránky"
@@ -9625,6 +9646,9 @@ msgstr "Nástěnka Jira"
 msgid "Jira issues"
 msgstr "Úkoly Jira"
 
+msgid "Jira project"
+msgstr "Projekt Jira"
+
 msgid "Join"
 msgstr "Připojit se"
 
@@ -10242,6 +10266,9 @@ msgstr "Načítám další..."
 msgid "Loading more…"
 msgstr "Načítám další…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "Načítání náhledů…"
 
@@ -10693,6 +10720,9 @@ msgstr "Slučování…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Zpráva"
+
 msgid "Message in channel"
 msgstr "Zpráva v kanálu"
 
@@ -11080,17 +11110,8 @@ msgstr "Noví agenti {providerLabel} použijí {accountLabel}."
 msgid "New agent"
 msgstr "Nový agent"
 
-msgid "New Agent"
-msgstr "Nový agent"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "Nová spuštění agentů použijí tento účet. Běžícího agenta přepnete jeho novým spuštěním."
-
 msgid "New agent session"
 msgstr "Nová relace agenta"
-
-msgid "New agent sessions"
-msgstr "Nové relace agentů"
 
 msgid "New automation"
 msgstr "Nová automatizace"
@@ -11100,6 +11121,21 @@ msgstr "Nový prohlížeč"
 
 msgid "new challengers"
 msgstr "noví vyzyvatelé"
+
+msgid "New chat"
+msgstr "Nový chat"
+
+msgid "New Chat"
+msgstr "Nový chat"
+
+msgid "New chat from loaded messages"
+msgstr "Nový chat z načtených zpráv"
+
+msgid "New chats"
+msgstr "Nové chaty"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "Nové chaty používají tento účet. Pro jeho změnu restartujte běžící chat."
 
 msgid "New cloud workspace"
 msgstr "Nový cloudový pracovní prostor"
@@ -11625,6 +11661,9 @@ msgstr "Žádné otevřené komentáře z revize."
 
 msgid "No organization selected"
 msgstr "Není vybraná žádná organizace"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "Žádná stránka neodpovídá"
@@ -12256,6 +12295,9 @@ msgstr "Jen pozvaní lidé"
 msgid "Only people who opted in appear here."
 msgstr "Objevují se tu jen lidé, kteří se sami přihlásili."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "Upravit a znovu spustit lze pouze textové zprávy."
+
 msgid "Only the author can change a comment"
 msgstr "Komentář může upravit jen jeho autor"
 
@@ -12584,6 +12626,9 @@ msgstr "Otevřít localhost:{0} v externím prohlížeči"
 msgid "Open menu"
 msgstr "Otevřít nabídku"
 
+msgid "Open message in side panel"
+msgstr "Otevřít zprávu v bočním panelu"
+
 msgid "Open navigation"
 msgstr "Otevřít navigaci"
 
@@ -12598,6 +12643,12 @@ msgstr "Otevřít stránku ve výchozím prohlížeči"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Otevírejte stránky a odpovídejte na komentáře v aplikaci Superset na iPhonu a iPadu."
+
+msgid "Open plan file"
+msgstr "Otevřít soubor plánu"
+
+msgid "Open plan in side panel"
+msgstr "Otevřít plán v bočním panelu"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Otevřete Pluginy v aplikaci Superset a vyberte jeden. Instalace se uloží do vašeho účtu."
@@ -12716,8 +12767,8 @@ msgstr "Otevřít globální paletu příkazů"
 msgid "Open the guide"
 msgstr "Otevřít průvodce"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Otevřít dialog nového agenta v aktuálním workspacu"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Otevřít dialog nového chatu v aktuálním workspace"
 
 msgid "Open the new workspace modal"
 msgstr "Otevřít okno nového pracovního prostoru"
@@ -12932,6 +12983,9 @@ msgstr "Výstupní schéma"
 
 msgid "Output truncated"
 msgstr "Výstup zkrácen"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13318,6 +13372,9 @@ msgstr "Tarif"
 msgctxt "billing"
 msgid "Plan"
 msgstr "Tarif"
+
+msgid "Plan progress"
+msgstr "Průběh plánu"
 
 msgid "Plan restored"
 msgstr "Tarif obnoven"
@@ -13989,6 +14046,12 @@ msgstr "Kvóta vyčerpána"
 msgid "Quota is shown when the provider supports it."
 msgstr "Kvóta se zobrazuje, pokud ji poskytovatel podporuje."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Využitá kvóta · vnější kruh 5h: {fiveHour} · vnitřní kruh týdně: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Využitá kvóta: vnější kruh 5h, vnitřní kruh týdně."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14263,6 +14326,9 @@ msgstr "Obnovit repozitáře"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Obnoví se při příštím spuštění OpenCode."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "Vygenerovat znovu"
@@ -15054,9 +15120,6 @@ msgstr "Vrátit zpět pouze chat"
 
 msgid "Rewind conversation?"
 msgstr "Vrátit konverzaci zpět?"
-
-msgid "Rewind from here"
-msgstr "Vrátit zpět odtud"
 
 msgid "Rewrote it and published version 2."
 msgstr "Přepsáno a publikována verze 2."
@@ -16338,6 +16401,9 @@ msgstr "Zobrazit kartu využití v postranním panelu"
 msgid "showArrow opt-in"
 msgstr "showArrow zapnuto"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "Zobrazené"
 
@@ -16449,6 +16515,9 @@ msgstr "Přihlášení vypršelo"
 msgid "Sign-in expired — run"
 msgstr "Přihlášení vypršelo — spusťte"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "Přihlášení selhalo"
 
@@ -16460,6 +16529,9 @@ msgstr "Přihlášeni jako <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Odhlášeno"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "Weby, kde jste přihlášeni"
@@ -16893,11 +16965,11 @@ msgstr "Začněte konverzaci a zprávy se objeví tady"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Spustí novou relaci agenta s nedávným kontextem tohoto terminálu. Zdrojem pravdy zůstávají soubory v pracovním prostoru."
 
-msgid "Start a new agent session each run"
-msgstr "Při každém spuštění začít novou relaci agenta"
-
 msgid "Start a new chat"
 msgstr "Zahájit nový chat"
+
+msgid "Start a new chat each run"
+msgstr "Při každém spuštění zahájit nový chat"
 
 msgid "Start a session"
 msgstr "Spustit relaci"
@@ -17604,8 +17676,8 @@ msgstr "Zpět na úvod"
 msgid "Taken"
 msgstr "Obsazeno"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Projeví se v nových relacích agenta."
+msgid "Takes effect in new chats."
+msgstr "Platí pro nové chaty."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Trvá to déle než obvykle. Pokračuje to, i když odejdete."
@@ -18166,6 +18238,9 @@ msgstr "Poskytovatel odpověděl {0}."
 msgid "The provider refused it."
 msgstr "Poskytovatel jej odmítl."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "Lhůta pro obnovení skončila. Napište na support@superset.sh."
 
@@ -18316,6 +18391,9 @@ msgstr "Tento agent nemůže běžet v cloudovém pracovním prostoru"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "Tento agent nemůže otevřít chat. Zapněte pokročilé možnosti CLI, abyste ho mohli používat v terminálu."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "Tento agent nepodporuje návrat ke konkrétní zprávě."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Tento agent už na vybraném zařízení neexistuje (jeho agenti mohli být resetováni). Běhy budou selhávat, dokud nevyberete jiného."
@@ -18476,6 +18554,9 @@ msgstr "Tento Mac"
 
 msgid "This machine"
 msgstr "Tento počítač"
+
+msgid "This message cannot be used as a restart point."
+msgstr "Tuto zprávu nelze použít jako bod restartu."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tento tenant Microsoftu už má připojený {detail}. Požádejte je, ať se nejdřív odpojí."
@@ -19458,6 +19539,9 @@ msgstr "Identifikátor vhodný do URL, jedinečný v rámci vaší organizace."
 msgid "Usage"
 msgstr "Využití"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "Využití se načítá nejvýše jednou za 5 minut pro každý účet. Další aktualizace v {next}."
+
 msgid "Usage sections"
 msgstr "Sekce využití"
 
@@ -19492,8 +19576,8 @@ msgstr "Pro každý úkol použijte Claude Code, Codex, OpenCode nebo libovolné
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Použijte Claude Code, Codex nebo libovolného kódovacího agenta. Vyberte podle úkolu nebo jich spusťte několik vedle sebe."
 
-msgid "Use for new agents"
-msgstr "Použít pro nové agenty"
+msgid "Use for new chats"
+msgstr "Použít pro nové chaty"
 
 msgid "Use global default"
 msgstr "Použít globální výchozí"
@@ -19759,6 +19843,9 @@ msgstr "Hlasitost"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Počkejte, až agent a úlohy ve frontě skončí."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Před předáním počkejte, až agent dokončí práci."
