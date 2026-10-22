@@ -138,3 +138,20 @@ export class ForkAgentProcesses {
 		send(await alive(), "SIGKILL");
 	}
 }
+
+export function killProcessGroup(pid: number | undefined): void {
+	if (process.platform === "win32" || pid === undefined) return;
+	try {
+		process.kill(-pid, "SIGKILL");
+	} catch {}
+}
+
+export function reapGroup(
+	processes: ForkAgentProcesses,
+	pid: number | undefined,
+): Promise<void> {
+	return processes
+		.reap()
+		.catch(() => {})
+		.then(() => killProcessGroup(pid));
+}

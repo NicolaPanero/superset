@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { ForkAgentProcesses } from "../../forkAgentProcesses";
+import { ForkAgentProcesses, reapGroup } from "../../forkAgentProcesses";
 import {
 	CODEX_CLIENT_NAME,
 	type CodexInitializeResponse,
@@ -38,6 +38,7 @@ export function spawnCodexTransport(
 			cwd: options.cwd,
 			env: options.env ?? process.env,
 			stdio: ["pipe", "pipe", "pipe"],
+			detached: process.platform !== "win32",
 		},
 	);
 	const processes = new ForkAgentProcesses(child.pid);
@@ -57,7 +58,7 @@ export function spawnCodexTransport(
 	child.stderr.setEncoding("utf8");
 	child.stderr.on("data", (chunk: string) => handlers.onStderr(chunk));
 	child.on("exit", (code, signal) => {
-		void processes.reap();
+		void reapGroup(processes, child.pid);
 		handlers.onExit(code, signal);
 	});
 
@@ -73,7 +74,7 @@ export function spawnCodexTransport(
 		close: async () => {
 			if (exited) return processes.reap();
 			await processes.sample();
-			const reaped = processes.reap();
+			const reaped = reapGroup(processes, child.pid);
 			child.stdin.end();
 			await new Promise<void>((resolve) => {
 				const timer = setTimeout(() => {

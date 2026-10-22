@@ -1,1 +1,5 @@
-export { ForkAgentProcesses } from "./forkAgentProcesses";
+export {
+	ForkAgentProcesses,
+	killProcessGroup,
+	reapGroup,
+} from "./forkAgentProcesses";
