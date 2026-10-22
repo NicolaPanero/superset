@@ -1,0 +1,1 @@
+export { forkRevealChatLink } from "./forkRevealChatLink";
