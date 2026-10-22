@@ -82,7 +82,7 @@ test("a superseded push skips platform builds, while the latest push remains eli
 test("a completed build cannot publish after fork/main moves forward", () => {
 	const result = runStep(
 		"publish",
-		"Publish both verified platforms together",
+		"Publish the verified build",
 		{ TEST_HEAD: "abcdef0123456789", SHA: "1111111111111111" },
 	);
 	expect(result.code).toBe(0);
@@ -105,7 +105,7 @@ test("only the platform build restores packages, with exact commit and helper ke
 	expect(cache?.with?.key).toContain("needs.check.outputs.txcript_tag");
 	for (const name of [
 		"Compile app and bundle transfer tools",
-		"Verify installed Windows runtime and updater",
+		"Package macOS",
 	]) {
 		expect(
 			workflow.jobs.build?.steps.find((step) => step.name === name)?.if,

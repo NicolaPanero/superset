@@ -57,7 +57,7 @@ jobs:
             echo "Superseded push: $EVENT_SHA; fork/main is now $sha"
             build=false
           fi
-          if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft,assets --jq '.isDraft == false and ([.assets[].name] | contains(["Superset-fork-arm64.zip", "Superset-fork-x64.exe"]))' 2>/dev/null | grep -qx true; then
+          if [ "$FORCE" != "true" ] && gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft,assets --jq '.isDraft == false and ([.assets[].name] | contains(["Superset-fork-arm64.zip"]))' 2>/dev/null | grep -qx true; then
             build=false
           fi
           echo "fork/main at $sha (Superset $version), txcript $txcript_tag: tag $tag, build=$build"
@@ -126,9 +126,6 @@ jobs:
           - os: macos-15
             platform: mac
             suffix: ""
-          - os: windows-2022
-            platform: windows
-            suffix: .exe
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
@@ -139,10 +136,6 @@ jobs:
       DESKTOP_NOTIFICATIONS_PORT: "51742"
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
     steps:
-      - name: Enable Windows long paths
-        if: runner.os == 'Windows'
-        shell: powershell
-        run: git config --global core.longpaths true
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
         with:
           ref: ${{ needs.check.outputs.sha }}
@@ -165,13 +158,6 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-bun-${{ hashFiles('.bun-version', 'bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-bun-
-      - name: Verify Windows process checks before building
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        run: bun test scripts/fork/fork-native-probe.test.ts
-      - name: Verify Windows updater handoff before building
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        shell: powershell
-        run: ./scripts/fork/windows-updater-smoke.ps1 -Script "$env:GITHUB_WORKSPACE/scripts/fork/install-windows.ps1"
       - name: Install dependencies
         if: steps.package-cache.outputs.cache-hit != 'true'
         run: |
@@ -195,15 +181,6 @@ jobs:
       - name: Verify all native conversion directions
         if: steps.package-cache.outputs.cache-hit != 'true'
         run: bun run test:fork:native "$RUNNER_TEMP/helper/bin/txcript-transfer${{ matrix.suffix }}"
-      - name: Windows update and path regressions
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        run: |
-          bun test packages/agent-setup/src/fork-windows-shell.test.ts scripts/fork/txcript-assets.test.ts packages/host-service/src/session-transfer/fork-tool-path.test.ts packages/host-service/src/session-transfer/fork-native-paths.test.ts packages/host-service/src/trpc/router/project/utils/fork-git-setup.test.ts
-          cd apps/desktop
-          bun test src/main/lib/fork-windows-update.test.ts src/main/lib/fork-update-install.test.ts src/main/lib/fork-update-check.test.ts src/main/lib/fork-update-schedule.test.ts src/main/lib/fork-release-lookup.test.ts src/renderer/routes/_authenticated/settings/usage/components/UsageView/utils/forkWindowsLogin/forkWindowsLogin.test.ts
-      - name: Verify isolated account logins on Windows
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        run: bun scripts/fork/windows-login-smoke.ts
       - name: Rebuild Electron dependencies
         if: steps.package-cache.outputs.cache-hit != 'true'
         working-directory: apps/desktop
@@ -224,31 +201,11 @@ jobs:
           bunx electron-builder --config electron-builder.ts --publish never --mac zip --arm64
           zip=$(ls release/*-arm64-mac.zip | head -n 1)
           mv "$zip" release/Superset-fork-arm64.zip
-      - name: Package Windows
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        working-directory: apps/desktop
-        run: bunx electron-builder --config fork-windows-builder.ts --publish never --win nsis --x64
-      - name: Verify installed Windows runtime and updater
-        if: runner.os == 'Windows' && steps.package-cache.outputs.cache-hit != 'true'
-        shell: powershell
-        run: ./scripts/fork/windows-smoke.ps1 -Installer "$env:GITHUB_WORKSPACE/apps/desktop/release/Superset-fork-x64.exe"
-      - name: Preserve Windows diagnostics on failure
-        if: failure() && runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: fork-windows-diagnostics
-          path: |
-            ${{ runner.temp }}/windows-native-*.log
-            ${{ runner.temp }}/fork-window-*.log
-            ${{ runner.temp }}/updater à fixture/update.log
-          if-no-files-found: ignore
-          retention-days: 7
       - uses: actions/upload-artifact@v4
         with:
           name: fork-package-${{ matrix.platform }}
           path: |
             apps/desktop/release/Superset-fork-arm64.zip
-            apps/desktop/release/Superset-fork-x64.exe
           if-no-files-found: error
 
   publish:
@@ -259,7 +216,7 @@ jobs:
         with:
           pattern: fork-package-*
           merge-multiple: true
-      - name: Publish both verified platforms together
+      - name: Publish the verified build
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.check.outputs.tag }}
@@ -272,16 +229,14 @@ jobs:
             exit 0
           fi
           test -s Superset-fork-arm64.zip
-          test -s Superset-fork-x64.exe
           cat > notes.md <<EOF
           Superset++ ${VERSION}, from fork/main at ${SHA}.
 
           - Mac Apple Silicon: Superset-fork-arm64.zip
-          - Windows x64: Superset-fork-x64.exe (per-user installer)
 
-          Both builds use this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Superset++ can coexist with the official app.
+          This build uses this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Superset++ can coexist with the official app.
 
-          The Windows installer is unsigned; Windows may show a publisher warning on the first installation. The Mac build is not notarized.
+          Windows is not supported yet. The Mac build is not notarized.
           EOF
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
@@ -289,7 +244,7 @@ jobs:
           else
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$SHA" --title "Superset++ ${VERSION} (${SHA:0:7})" --notes-file notes.md --draft
           fi
-          gh release upload "$TAG" Superset-fork-arm64.zip Superset-fork-x64.exe --repo "$GITHUB_REPOSITORY" --clobber
+          gh release upload "$TAG" Superset-fork-arm64.zip --repo "$GITHUB_REPOSITORY" --clobber
           current_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/fork/main" --jq .sha)
           if [ "$current_sha" != "$SHA" ]; then
             echo "Keeping outdated build as a draft: fork/main advanced during upload"

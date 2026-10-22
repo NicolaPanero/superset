@@ -416,19 +416,13 @@ prove usano archivi temporanei ed eseguono il motore fissato prima della build.
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Le release includono **macOS Apple Silicon** e **Windows x64**. Su Mac chiudi l’app prima di eseguire
+Le release includono **macOS Apple Silicon**. Su Mac chiudi l’app prima di eseguire
 lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
 
-Su Windows scarica `Superset-fork-x64.exe` dalla stessa release e aprilo.
-L’installazione è per utente, non richiede privilegi amministrativi e usa
-il nome Superset++, il protocollo `superset-fork://` e dati separati dal Superset
-ufficiale. Gli agenti e Git devono essere disponibili sul PC; l’installer include
-il CLI Superset e i due strumenti txcript nativi x64. L’installer Windows non
-è firmato e al primo avvio Windows può mostrare un avviso sull’editore.
-Gli aggiornamenti successivi arrivano dall’app, con gli stessi avvisi del Mac:
-il download viene verificato prima della chiusura, i servizi vengono arrestati,
-l’installer aggiorna lo stesso percorso e riapre l’app. Chat e profili sono conservati.
+**Windows non è ancora supportato.** La build e l’installer Windows sono sospesi:
+le release non contengono più `Superset-fork-x64.exe` e i workflow non li compilano.
+Il codice degli script Windows resta nel repository, non collegato alla CI, per riprendere il lavoro.
 
 L’app Mac si chiama **Superset++.app**, usa l’icona con il **+** e convive con Superset
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
@@ -510,26 +504,18 @@ Le pull request usano il workflow di regressione e salvano per 30 giorni il tree
 Git verificato. Dopo il merge, la release riusa il risultato se il contenuto è
 identico e l'esecuzione della PR nello stesso repository è conclusa con successo,
 anche se lo SHA cambia per merge, squash o rebase. Se la prova manca, è scaduta o
-il contenuto è diverso, esegue la validazione prima delle build. Le prove native
-Mac e Windows restano obbligatorie.
+il contenuto è diverso, esegue la validazione prima delle build. La prova nativa
+Mac resta obbligatoria.
 I controlli completi della release possono essere riusati in un nuovo tentativo
 solo per il medesimo commit già validato. Download e helper fissati sono in cache;
-le prove native delle due piattaforme restano obbligatorie prima di memorizzare
-un pacchetto verificato. Se una piattaforma fallisce, un nuovo tentativo dello
-stesso commit può riusare l’archivio già verificato dell’altra piattaforma.
+la prova nativa Mac resta obbligatoria prima di memorizzare un pacchetto verificato.
 L’opzione manuale `force` permette una ricompilazione completa.
 La conclusione del sync non avvia una build: solo il merge della proposta su
 `fork/main` avvia il workflow di release. Prima della pubblicazione viene verificato che il commit
 sia ancora l’ultimo di `fork/main`. Il workflow controlla traduzioni,
-tipi e test del fork prima di avviare le build Mac e Windows. Ogni piattaforma
-esegue le 20 conversioni native; Windows verifica anche l’installer NSIS, i moduli
-nativi nel runtime Electron installato, lo script di aggiornamento e l’import dei
-progetti tramite l’host service installato (con e senza Git, e senza identità Git).
-Per provare su Windows un exe già pubblicato, senza macchina virtuale, avvia
-`fork-windows-import.yml` (input `release`, vuoto per l’ultima) oppure fai push su un
-ramo `fork/windows-probe/…`: installa l’exe su un runner pulito e importa i progetti. La release
-viene pubblicata solo quando entrambe le piattaforme hanno superato i controlli,
-con tutti e due i download: una build fallita lascia disponibile la release precedente.
+tipi e test del fork prima di avviare la build Mac. La build
+esegue le 20 conversioni native. La release viene pubblicata solo quando la build
+ha superato i controlli: una build fallita lascia disponibile la release precedente.
 Se il merge upstream presenta conflitti, il sync apre una pull request in bozza
 che punta al commit ufficiale: va riconciliata con `fork/main` prima di completare
 il merge. Una proposta già aperta o chiusa non viene ricreata al controllo successivo.

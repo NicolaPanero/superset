@@ -6,7 +6,7 @@
 
 Fork personale di [Superset](https://github.com/superset-sh/superset) per lavorare con più agenti e account, conservando le conversazioni.
 
-[**Scarica Superset++ per Mac e Windows**](https://github.com/NicolaPanero/superset/releases/latest) &nbsp;&bull;&nbsp; [Guida del fork](FORK.md) &nbsp;&bull;&nbsp; [Profili account](docs/fork-accounts.md) &nbsp;&bull;&nbsp; [Progetto ufficiale](https://github.com/superset-sh/superset)
+[**Scarica Superset++ per Mac**](https://github.com/NicolaPanero/superset/releases/latest) &nbsp;&bull;&nbsp; [Guida del fork](FORK.md) &nbsp;&bull;&nbsp; [Profili account](docs/fork-accounts.md) &nbsp;&bull;&nbsp; [Progetto ufficiale](https://github.com/superset-sh/superset)
 
 </div>
 
@@ -23,7 +23,7 @@ La chat ACP e il passaggio **CLI / CHAT** provengono da Superset ufficiale. Il f
 
 ## Installare Superset++
 
-Le release includono **macOS Apple Silicon** e **Windows x64**. Su Windows scarica `Superset-fork-x64.exe` dalle [release](https://github.com/NicolaPanero/superset/releases/latest) e aprilo: installa Superset++ per il tuo utente, con dati separati dall’app ufficiale. L’installer Windows non è firmato.
+Le release includono **macOS Apple Silicon**. **Windows non è ancora supportato.**
 
 Su Mac, chiudi l’app prima di installarla o aggiornarla:
 
