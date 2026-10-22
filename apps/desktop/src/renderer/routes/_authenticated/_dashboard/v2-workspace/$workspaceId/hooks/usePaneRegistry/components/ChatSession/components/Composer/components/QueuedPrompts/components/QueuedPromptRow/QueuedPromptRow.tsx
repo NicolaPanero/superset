@@ -8,18 +8,12 @@ import {
 	QueueItemActions,
 	QueueItemContent,
 } from "@superset/ui/ai-elements/queue";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@superset/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import {
 	CornerDownRight,
-	Ellipsis,
 	FileTextIcon,
 	ListEnd,
+	Pencil,
 	Trash2,
 } from "lucide-react";
 import { parseAttachmentTags } from "../../../../../../utils/attachmentTags";
@@ -27,12 +21,14 @@ import { parseAttachmentTags } from "../../../../../../utils/attachmentTags";
 export function QueuedPromptRow({
 	prompt,
 	actionable,
+	pending = false,
 	onEdit,
 	onRemove,
 	onSteer,
 }: {
 	prompt: UserMessage;
 	actionable: boolean;
+	pending?: boolean;
 	onEdit: (prompt: UserMessage) => void;
 	onRemove: (id: string) => void;
 	onSteer: (id: string) => void;
@@ -85,6 +81,7 @@ export function QueuedPromptRow({
 						<TooltipTrigger asChild>
 							<QueueItemAction
 								className="gap-1 px-1.5 py-0.5 font-normal text-xs opacity-100"
+								disabled={pending}
 								onClick={() => onSteer(prompt.id)}
 							>
 								<CornerDownRight className="size-3.5" />
@@ -98,28 +95,26 @@ export function QueuedPromptRow({
 					<QueueItemAction
 						aria-label={t({ message: "Remove queued message" })}
 						className="size-6 opacity-100"
+						disabled={pending}
 						onClick={() => onRemove(prompt.id)}
 					>
 						<Trash2 className="size-3.5" />
 					</QueueItemAction>
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
+					<Tooltip>
+						<TooltipTrigger asChild>
 							<QueueItemAction
-								aria-label={t({ message: "More actions" })}
+								aria-label={t({ message: "Edit" })}
 								className="size-6 opacity-100"
+								disabled={pending}
+								onClick={() => onEdit(prompt)}
 							>
-								<Ellipsis className="size-3.5" />
+								<Pencil className="size-3.5" />
 							</QueueItemAction>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							<DropdownMenuItem
-								disabled={attachmentNames.length > 0}
-								onSelect={() => onEdit(prompt)}
-							>
-								<Trans>Edit</Trans>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+						</TooltipTrigger>
+						<TooltipContent>
+							<Trans>Edit</Trans>
+						</TooltipContent>
+					</Tooltip>
 				</QueueItemActions>
 			)}
 		</QueueItem>

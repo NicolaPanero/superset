@@ -113,7 +113,15 @@ export function ChatPane({
 						...(handoffPrompt ? { pendingPrompt: handoffPrompt } : {}),
 					});
 				}}
-				onForkAgent={({ presetId, label, model, modeId, handoffPrompt }) =>
+				onForkAgent={({
+					presetId,
+					label,
+					model,
+					modeId,
+					handoffPrompt,
+					agentConfigId,
+					accountSelection,
+				}) =>
 					ctx.store.getState().addTab({
 						panes: [
 							{
@@ -127,6 +135,10 @@ export function ChatPane({
 										? { chatModelId: model.id, chatModelLabel: model.label }
 										: {}),
 									...(modeId ? { chatModeId: modeId } : {}),
+									...(agentConfigId ? { acpAgentConfigId: agentConfigId } : {}),
+									...(accountSelection !== undefined
+										? { acpAccountSelection: accountSelection }
+										: {}),
 									pendingPrompt: handoffPrompt,
 								} satisfies ChatPaneData,
 							},

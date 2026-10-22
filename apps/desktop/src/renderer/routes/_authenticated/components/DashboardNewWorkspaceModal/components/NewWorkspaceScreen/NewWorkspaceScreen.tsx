@@ -72,6 +72,7 @@ import { AgentComposer } from "renderer/routes/_authenticated/components/AgentCo
 import { EnvironmentEditorDialog } from "renderer/routes/_authenticated/components/EnvironmentEditorDialog";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { newWorkspaceAttachmentPaths } from "renderer/stores/new-workspace-attachments";
 import { useNewWorkspacePromptContext } from "renderer/stores/new-workspace-prompt-context";
 import {
@@ -161,6 +162,7 @@ export function NewWorkspaceScreen({
 	preSelectedHostId = null,
 }: NewWorkspaceScreenProps) {
 	const { t } = useLingui();
+	const showProFeatures = useForkProFeatures();
 	const navigate = useNavigate();
 	const [promptSeed, setPromptSeed] = useState(0);
 	const openInFinderMutation = electronTrpc.external.openInFinder.useMutation();
@@ -1031,9 +1033,24 @@ export function NewWorkspaceScreen({
 								)}
 							</div>
 						}
+						submitAction={
+							<ForkCreateWorkspaceButton
+								kind={
+									draft.isSession
+										? "chat"
+										: selectedAgent === "none"
+											? "workspace"
+											: "agent"
+								}
+								disabled={needsSetup || isCreating}
+								isCreating={isCreating}
+								onSubmit={handleSubmit}
+							/>
+						}
 						toolbarEnd={
 							<div className="flex items-center gap-2">
-								{!taskTracker ? null : taskTracker === "linear" ? (
+								{!showProFeatures || !taskTracker ? null : taskTracker ===
+									"linear" ? (
 									<LinearIssueLinkCommand
 										onSelect={addLinkedLinearIssue}
 										tooltipLabel={t({ message: "Link Linear issue" })}
@@ -1142,18 +1159,6 @@ export function NewWorkspaceScreen({
 									provider={selectedPresetId}
 									model={selectedModel ?? undefined}
 									compact
-								/>
-								<ForkCreateWorkspaceButton
-									kind={
-										draft.isSession
-											? "chat"
-											: selectedAgent === "none"
-												? "workspace"
-												: "agent"
-									}
-									disabled={needsSetup || isCreating}
-									isCreating={isCreating}
-									onSubmit={handleSubmit}
 								/>
 							</div>
 						}

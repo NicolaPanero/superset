@@ -4,10 +4,14 @@ import {
 	forkTaskBranch,
 } from "@superset/shared/fork-integrations";
 import { and, eq } from "drizzle-orm";
-import { forkJiraAutomationRuns, forkJiraAutomations } from "../db/fork-schema";
-import { runAgentInWorkspace } from "../trpc/router/agents";
+import {
+	forkJiraAutomationLaunches,
+	forkJiraAutomationRuns,
+	forkJiraAutomations,
+} from "../db/fork-schema";
 import { workspacesRouter } from "../trpc/router/workspaces/workspaces";
 import type { HostServiceContext } from "../types";
+import { launchForkJiraAgent, prepareForkJiraLaunch } from "./fork-jira-launch";
 import { forkAdvanceLinkedTasks, forkLinkTask } from "./fork-jira-workflow";
 import { forkServices } from "./fork-services";
 
@@ -123,6 +127,18 @@ export function startForkJiraAutomations(ctx: HostServiceContext) {
 			return tasks;
 		},
 		launch: async (rule, summary, workspaceId) => {
+			const options = ctx.db
+				.select()
+				.from(forkJiraAutomationLaunches)
+				.where(eq(forkJiraAutomationLaunches.ruleId, rule.id))
+				.get();
+			const launch = options
+				? await prepareForkJiraLaunch(ctx, rule.agent, {
+						surface: options.surface,
+						model: options.model ?? undefined,
+						accountSelection: options.accountSelection ?? undefined,
+					})
+				: {};
 			const task = await forkServices(ctx).jira.get(
 				rule.connectionId,
 				summary.key,
@@ -143,7 +159,8 @@ export function startForkJiraAutomations(ctx: HostServiceContext) {
 				url: task.url,
 			});
 			if (stopped) throw new Error("Host is stopping");
-			await runAgentInWorkspace(ctx, {
+			await launchForkJiraAgent(ctx, {
+				...launch,
 				workspaceId: created.workspace.id,
 				agent: rule.agent,
 				prompt: [

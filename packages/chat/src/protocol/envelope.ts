@@ -50,6 +50,7 @@ export const backgroundTaskSchema = z.looseObject({
 	kind: backgroundTaskKindSchema,
 	name: z.string(),
 	detail: z.string().optional(),
+	outputPath: z.string().optional(),
 	canStop: z.boolean(),
 	startedAtMs: z.number(),
 });

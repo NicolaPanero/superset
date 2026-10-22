@@ -28,13 +28,17 @@ export class BackgroundTasks {
 
 	update(
 		id: string,
-		patch: Partial<Pick<BackgroundTask, "name" | "detail" | "canStop">>,
+		patch: Partial<
+			Pick<BackgroundTask, "name" | "detail" | "canStop" | "outputPath">
+		>,
 	): void {
 		const prior = this.tasks.get(id);
 		if (!prior) return;
 		const next = { ...prior, ...patch };
 		const nameChanged =
-			next.name !== prior.name || next.canStop !== prior.canStop;
+			next.name !== prior.name ||
+			next.canStop !== prior.canStop ||
+			next.outputPath !== prior.outputPath;
 		if (!nameChanged && next.detail === prior.detail) return;
 		this.tasks.set(id, next);
 		if (nameChanged) this.emit();

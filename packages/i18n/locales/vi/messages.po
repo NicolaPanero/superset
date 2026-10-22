@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* nếu tính theo giá API đầy đủ"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Thiết lập rõ ràng hơn**: tìm hướng dẫn cài đặt CLI cho tác nhân và hiểu cách kết nối kho mã."
-
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Ngữ cảnh trong nháy mắt**: vòng tròn trong khung soạn tin cho biết ngữ cảnh đã dùng bao nhiêu, kèm phân tích theo danh mục cho Claude."
-
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Tác vụ Jira nhanh hơn**: danh sách nhóm tác vụ theo trạng thái, hàng và thẻ gọn hơn, mọi bộ lọc nằm trên một thanh."
-
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Bảng khớp với Jira**: các trạng thái quy trình được nhóm vẫn nằm trong cùng các cột."
-
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Pull request Bitbucket được thiết kế lại**: tiêu đề và cột thông tin như GitHub, với các menu Review, Merge và Thêm thay cho các nút rời rạc."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -2672,6 +2657,9 @@ msgstr "Theo báo cáo gần nhất. Máy chủ phải trực tuyến để cậ
 
 msgid "ascending"
 msgstr "tăng dần"
+
+msgid "Ask"
+msgstr "Hỏi"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Nhờ agent viết tài liệu thiết kế hoặc báo cáo. Agent tạo trang và xuất bản."
@@ -4383,6 +4371,9 @@ msgstr "Lệnh..."
 msgid "Commands"
 msgstr "Lệnh"
 
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Trong Plan, các lệnh và công cụ MCP chạy mà không yêu cầu cấp quyền."
+
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Các lệnh chạy khi thiết lập, dọn dẹp workspace và khi nhấn nút Chạy."
 
@@ -4822,6 +4813,12 @@ msgstr "Context Menu"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "Chuyển ngữ cảnh chỉ bao gồm tin nhắn và có thể bỏ qua lịch sử trước đó."
 
+msgid "Context usage unavailable"
+msgstr "Không có dữ liệu sử dụng ngữ cảnh"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "Mức sử dụng ngữ cảnh sẽ xuất hiện khi tác tử báo cáo."
+
 msgid "Continue"
 msgstr "Tiếp tục"
 
@@ -4933,6 +4930,9 @@ msgstr "Đã sao chép vào clipboard."
 
 msgid "Copied!"
 msgstr "Đã sao chép!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Chỉ sao chép văn bản tin nhắn. Trạng thái công cụ và tệp không được khôi phục."
 
 msgid "Copy"
 msgstr "Sao chép"
@@ -5584,11 +5584,11 @@ msgstr "Không thể chuẩn bị góp ý thiết kế"
 msgid "Couldn't stage file"
 msgstr "Không thể stage tệp"
 
-msgid "Couldn't start a new agent session"
-msgstr "Không thể bắt đầu phiên agent mới"
+msgid "Couldn't start a new chat"
+msgstr "Không thể bắt đầu cuộc trò chuyện mới"
 
-msgid "Couldn't start agent session"
-msgstr "Không thể bắt đầu phiên agent"
+msgid "Couldn't start chat"
+msgstr "Không thể bắt đầu cuộc trò chuyện"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Không thể khởi động workspace trên cloud"
@@ -6093,14 +6093,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Mặc định ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Tài khoản mặc định"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Nhánh cơ sở mặc định cho không gian làm việc mới. Có thể ghi đè riêng khi tạo."
 
 msgid "Default effort"
 msgstr "Mức nỗ lực mặc định"
 
-msgid "Default for new agents"
-msgstr "Mặc định cho agent mới"
+msgid "Default for new chats"
+msgstr "Mặc định cho cuộc trò chuyện mới"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Vị trí mặc định cho workspace worktree mới trên host này."
@@ -6918,6 +6921,9 @@ msgstr "Đã đạt {name} ×{tier}"
 msgid "Edit"
 msgstr "Sửa"
 
+msgid "Edit and restart from here"
+msgstr "Chỉnh sửa và bắt đầu lại từ đây"
+
 msgid "Edit comment"
 msgstr "Sửa bình luận"
 
@@ -7307,6 +7313,9 @@ msgstr "Giải thích cho tôi repository này hoạt động thế nào"
 
 msgid "Explore"
 msgstr "Khám phá"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Khám phá mã và trả lời câu hỏi mà không thực hiện thay đổi."
 
 msgid "Explore Pages"
 msgstr "Khám phá Trang"
@@ -9625,6 +9634,9 @@ msgstr "Bảng Jira"
 msgid "Jira issues"
 msgstr "Issue Jira"
 
+msgid "Jira project"
+msgstr "Dự án Jira"
+
 msgid "Join"
 msgstr "Tham gia"
 
@@ -10242,6 +10254,9 @@ msgstr "Đang tải thêm..."
 msgid "Loading more…"
 msgstr "Đang tải thêm…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "Đang tải bản xem trước…"
 
@@ -10693,6 +10708,9 @@ msgstr "Đang merge…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Tin nhắn"
+
 msgid "Message in channel"
 msgstr "Tin nhắn trong kênh"
 
@@ -11080,17 +11098,8 @@ msgstr "Các agent {providerLabel} mới sẽ dùng {accountLabel}."
 msgid "New agent"
 msgstr "Agent mới"
 
-msgid "New Agent"
-msgstr "Agent mới"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "Các agent khởi chạy mới sẽ dùng tài khoản này. Khởi chạy lại agent đang chạy để đổi sang tài khoản này."
-
 msgid "New agent session"
 msgstr "Phiên agent mới"
-
-msgid "New agent sessions"
-msgstr "Phiên tác nhân mới"
 
 msgid "New automation"
 msgstr "Tự động hóa mới"
@@ -11100,6 +11109,21 @@ msgstr "Trình duyệt mới"
 
 msgid "new challengers"
 msgstr "đối thủ mới"
+
+msgid "New chat"
+msgstr "Cuộc trò chuyện mới"
+
+msgid "New Chat"
+msgstr "Cuộc trò chuyện mới"
+
+msgid "New chat from loaded messages"
+msgstr "Chat mới từ các tin nhắn đã tải"
+
+msgid "New chats"
+msgstr "Cuộc trò chuyện mới"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "Cuộc trò chuyện mới dùng tài khoản này. Khởi động lại cuộc trò chuyện đang chạy để đổi tài khoản."
 
 msgid "New cloud workspace"
 msgstr "Workspace cloud mới"
@@ -11625,6 +11649,9 @@ msgstr "Không có bình luận review nào đang mở."
 
 msgid "No organization selected"
 msgstr "Chưa chọn tổ chức nào"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "Không có trang nào khớp"
@@ -12256,6 +12283,9 @@ msgstr "Chỉ những người được mời"
 msgid "Only people who opted in appear here."
 msgstr "Chỉ những người đã chọn tham gia mới xuất hiện ở đây."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "Chỉ có thể chỉnh sửa và bắt đầu lại tin nhắn văn bản."
+
 msgid "Only the author can change a comment"
 msgstr "Chỉ tác giả mới có thể sửa bình luận"
 
@@ -12584,6 +12614,9 @@ msgstr "Mở localhost:{0} trong trình duyệt ngoài"
 msgid "Open menu"
 msgstr "Mở menu"
 
+msgid "Open message in side panel"
+msgstr "Mở tin nhắn trong bảng bên"
+
 msgid "Open navigation"
 msgstr "Mở điều hướng"
 
@@ -12598,6 +12631,12 @@ msgstr "Mở trang trong trình duyệt mặc định"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Mở trang và trả lời bình luận từ ứng dụng Superset trên iPhone và iPad."
+
+msgid "Open plan file"
+msgstr "Mở tệp kế hoạch"
+
+msgid "Open plan in side panel"
+msgstr "Mở kế hoạch trong bảng bên"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Mở Plugin trong ứng dụng Superset và chọn một plugin. Bản cài đặt được lưu vào tài khoản của bạn."
@@ -12716,8 +12755,8 @@ msgstr "Mở bảng lệnh toàn cục"
 msgid "Open the guide"
 msgstr "Mở hướng dẫn"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Mở hộp thoại agent mới trong workspace hiện tại"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Mở hộp thoại cuộc trò chuyện mới trong workspace hiện tại"
 
 msgid "Open the new workspace modal"
 msgstr "Mở hộp thoại tạo workspace mới"
@@ -12932,6 +12971,9 @@ msgstr "Schema đầu ra"
 
 msgid "Output truncated"
 msgstr "Kết quả đã bị cắt bớt"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13319,11 +13361,20 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Gói"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan hiện bao gồm toàn quyền truy cập công cụ."
+
+msgid "Plan progress"
+msgstr "Tiến độ kế hoạch"
+
 msgid "Plan restored"
 msgstr "Đã khôi phục gói"
 
 msgid "Plan updated"
 msgstr "Đã cập nhật gói"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Lập kế hoạch với toàn quyền truy cập; các thao tác công cụ được phê duyệt tự động."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13922,6 +13973,9 @@ msgstr "Câu hỏi"
 msgid "Questions"
 msgstr "Câu hỏi"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Các câu hỏi và phê duyệt kế hoạch cuối cùng vẫn chờ câu trả lời của bạn."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Câu hỏi, góp ý, hỗ trợ hay bất cứ điều gì. Gửi một tin nhắn và chúng tôi sẽ chuyển đến đúng người."
 
@@ -13989,6 +14043,12 @@ msgstr "Đã hết hạn mức"
 msgid "Quota is shown when the provider supports it."
 msgstr "Hạn mức được hiển thị khi nhà cung cấp hỗ trợ."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Hạn mức đã dùng · vòng ngoài 5 giờ: {fiveHour} · vòng trong hàng tuần: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Hạn mức đã dùng: vòng ngoài 5 giờ, vòng trong hàng tuần."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14042,9 +14102,6 @@ msgstr "Đang kích hoạt lại…"
 
 msgid "Read"
 msgstr "Đã đọc"
-
-msgid "Read and plan without changing anything"
-msgstr "Đọc và lập kế hoạch mà không thay đổi gì"
 
 msgid "Read and send mail"
 msgstr "Đọc và gửi thư"
@@ -14263,6 +14320,9 @@ msgstr "Làm mới repository"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Làm mới khi OpenCode chạy lần tiếp theo."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "Tạo lại"
@@ -15054,9 +15114,6 @@ msgstr "Chỉ tua lại trò chuyện"
 
 msgid "Rewind conversation?"
 msgstr "Tua lại cuộc trò chuyện?"
-
-msgid "Rewind from here"
-msgstr "Tua lại từ đây"
 
 msgid "Rewrote it and published version 2."
 msgstr "Đã viết lại và xuất bản phiên bản 2."
@@ -16338,6 +16395,9 @@ msgstr "Hiển thị thẻ mức sử dụng trên thanh bên"
 msgid "showArrow opt-in"
 msgstr "bật showArrow"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "Đang hiển thị"
 
@@ -16449,6 +16509,9 @@ msgstr "Đăng nhập đã hết hạn"
 msgid "Sign-in expired — run"
 msgstr "Đăng nhập đã hết hạn — hãy chạy"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "Đăng nhập thất bại"
 
@@ -16460,6 +16523,9 @@ msgstr "Đang đăng nhập với <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Đã đăng xuất"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "Trang đang đăng nhập"
@@ -16893,11 +16959,11 @@ msgstr "Bắt đầu một cuộc trò chuyện để thấy tin nhắn ở đâ
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Bắt đầu một phiên agent mới với ngữ cảnh gần đây của terminal này. Tệp trong workspace vẫn là nguồn đáng tin cậy."
 
-msgid "Start a new agent session each run"
-msgstr "Bắt đầu một phiên agent mới mỗi lần chạy"
-
 msgid "Start a new chat"
 msgstr "Bắt đầu trò chuyện mới"
+
+msgid "Start a new chat each run"
+msgstr "Bắt đầu cuộc trò chuyện mới mỗi lần chạy"
 
 msgid "Start a session"
 msgstr "Bắt đầu một phiên"
@@ -17604,8 +17670,8 @@ msgstr "Về trang chủ"
 msgid "Taken"
 msgstr "Đã dùng"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Có hiệu lực ở các phiên agent mới."
+msgid "Takes effect in new chats."
+msgstr "Có hiệu lực trong cuộc trò chuyện mới."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Lâu hơn bình thường. Nó vẫn tiếp tục nếu bạn rời đi."
@@ -18166,6 +18232,9 @@ msgstr "Nhà cung cấp trả về {0}."
 msgid "The provider refused it."
 msgstr "Nhà cung cấp đã từ chối."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "Thời hạn khôi phục đã kết thúc. Hãy liên hệ support@superset.sh."
 
@@ -18316,6 +18385,9 @@ msgstr "Agent này không thể chạy trong workspace cloud"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "Tác nhân này không thể mở trò chuyện. Bật tùy chọn CLI nâng cao để sử dụng trong terminal."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "Tác tử này không hỗ trợ quay lại một tin nhắn cụ thể."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agent này không còn tồn tại trên thiết bị đã chọn (agent trên đó có thể đã bị đặt lại). Các lần chạy sẽ thất bại cho đến khi bạn chọn agent khác."
@@ -18476,6 +18548,9 @@ msgstr "Mac này"
 
 msgid "This machine"
 msgstr "Máy này"
+
+msgid "This message cannot be used as a restart point."
+msgstr "Không thể dùng tin nhắn này làm điểm bắt đầu lại."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tenant Microsoft này đã được {detail} kết nối. Hãy nhờ họ ngắt kết nối trước."
@@ -19458,6 +19533,9 @@ msgstr "Định danh thân thiện với URL, duy nhất trong tổ chức của
 msgid "Usage"
 msgstr "Mức sử dụng"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "Mức sử dụng được đọc tối đa 5 phút một lần cho mỗi tài khoản. Lần cập nhật tiếp theo lúc {next}."
+
 msgid "Usage sections"
 msgstr "Các mục mức sử dụng"
 
@@ -19492,8 +19570,8 @@ msgstr "Dùng Claude Code, Codex, OpenCode hay bất kỳ coding agent nào cho 
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Dùng Claude Code, Codex hay bất kỳ coding agent nào. Chọn theo từng tác vụ hoặc chạy nhiều agent cạnh nhau."
 
-msgid "Use for new agents"
-msgstr "Dùng cho agent mới"
+msgid "Use for new chats"
+msgstr "Dùng cho cuộc trò chuyện mới"
 
 msgid "Use global default"
 msgstr "Dùng mặc định toàn cục"
@@ -19759,6 +19837,9 @@ msgstr "Âm lượng"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Chờ tác tử và công việc trong hàng đợi hoàn tất."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Hãy đợi tác tử hoàn tất trước khi chuyển."

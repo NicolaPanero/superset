@@ -31,7 +31,7 @@ export function useSkillMutations() {
 						}),
 				{
 					description: t({
-						message: "Takes effect in new agent sessions.",
+						message: "Takes effect in new chats.",
 					}),
 				},
 			);

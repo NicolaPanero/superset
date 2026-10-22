@@ -335,6 +335,14 @@ test("switches once to the best verified quota, resumes strictly and preserves t
 		await until(() => f.workers[1]?.prompts.length === 1);
 		expect(f.moves).toEqual(["/b"]);
 		expect(f.selected).toEqual(["/b"]);
+		expect(
+			f.events
+				.filter(
+					(e) =>
+						e.kind === "session" && e.session.backgroundTasks !== undefined,
+				)
+				.at(-1),
+		).toMatchObject({ session: { backgroundTasks: [] } });
 		expect(f.worker(1).starts[0]).toMatchObject({
 			resume: { harnessSessionId: "native-id" },
 			strictResume: true,
@@ -1318,3 +1326,180 @@ test("Codex JSON-RPC error data survives the ACP runtime for quota recovery", as
 		await pump;
 	}
 });
+
+test.each([
+	false,
+	true,
+])("Codex reset wait with background processes keeps the live worker (already enabled: %s)", async (alreadyEnabled) => {
+	let time = NOW,
+		polls = 0;
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: alreadyEnabled },
+		{
+			agent: "codex",
+			now: () => time,
+			quota: async () => [
+				quota(null, ++polls === 1 ? 100 : 10, {
+					agent: "codex",
+					fetchedAt: new Date(time),
+					windows: [
+						{
+							id: "primary",
+							label: "Session",
+							usedPercent: polls === 1 ? 100 : 10,
+							resetsAt: new Date(time + 300000),
+						},
+					],
+				}),
+				quota("/other", 0, { agent: "codex", fetchedAt: new Date(time) }),
+			],
+			wait: async (ms) => {
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.worker(0).queue.push({
+			kind: "session",
+			session: {
+				backgroundTasks: [
+					{
+						id: "server",
+						kind: "process",
+						name: "dev server",
+						startedAtMs: NOW,
+						canStop: true,
+					},
+				],
+			},
+		});
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail(
+			"session/prompt: Internal error: Your workspace is out of credits.",
+			"usageLimitExceeded",
+		);
+		if (!alreadyEnabled) {
+			await until(() =>
+				f.events.some((e) => e.kind === "turn" && e.turn.status === "failed"),
+			);
+			f.prefs.resumeAtReset = true;
+			f.adapter.changed();
+		}
+		await until(() => f.worker(0).prompts.length === 2);
+		expect(polls).toBe(2);
+		expect(f.workers).toHaveLength(1);
+		expect(f.worker(0).disposed).toBe(false);
+		expect(f.moves).toEqual([]);
+		expect(f.statuses.some((s) => s.phase === "waiting")).toBe(true);
+		f.worker(0).finish();
+		await until(() =>
+			f.events.some((e) => e.kind === "turn" && e.turn.status === "completed"),
+		);
+	} finally {
+		await f.close();
+	}
+});
+
+test.each([
+	false,
+	true,
+])("reset recovery tolerates missing initial quota (switch also enabled: %s)", async (switchAccounts) => {
+	let time = NOW,
+		polls = 0;
+	const f = fixture(
+		{ switchAccounts, resumeAtReset: true },
+		{
+			now: () => time,
+			quota: async () =>
+				++polls === 1
+					? []
+					: [
+							quota(null, 10, {
+								fetchedAt: new Date(time),
+								windows: [
+									{
+										id: "five_hour",
+										label: "Session",
+										usedPercent: 10,
+										resetsAt: new Date(time + 300_000),
+									},
+								],
+							}),
+						],
+			wait: async (ms) => {
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(f.selected).toEqual([null]);
+		expect(f.moves).toEqual([]);
+	} finally {
+		await f.close();
+	}
+});
+
+for (const agent of ["claude", "codex"] as const) {
+	for (const initiallyAvailable of [true, false]) {
+		test(`${agent} Switch, or wait ${initiallyAvailable ? "switches immediately" : "waits then switches"} to a verified account`, async () => {
+			let time = NOW,
+				polls = 0;
+			const waits: number[] = [];
+			const f = fixture(
+				{ switchAccounts: true, resumeAtReset: true },
+				{
+					agent,
+					now: () => time,
+					quota: async () => {
+						polls++;
+						return [
+							quota(null, 100, { agent, fetchedAt: new Date(time) }),
+							quota("/other", initiallyAvailable || polls > 1 ? 10 : 100, {
+								agent,
+								fetchedAt: new Date(time),
+								windows: [
+									{
+										id: "five_hour",
+										label: "Session",
+										usedPercent: initiallyAvailable || polls > 1 ? 10 : 100,
+										resetsAt: new Date(time + 300_000),
+									},
+								],
+							}),
+						];
+					},
+					wait: async (ms) => {
+						waits.push(ms);
+						time += ms;
+					},
+				},
+			);
+			try {
+				await until(() => f.events.length > 0);
+				f.adapter.prompt([{ type: "text", text: "task" }]);
+				if (agent === "codex")
+					f.worker(0).fail(
+						"session/prompt: Internal error",
+						"usageLimitExceeded",
+					);
+				else f.worker(0).fail();
+				await until(() => f.workers[1]?.prompts.length === 1);
+				expect(f.moves).toEqual(["/other"]);
+				expect(waits.length).toBe(initiallyAvailable ? 0 : 1);
+				expect(f.worker(1).starts[0]).toMatchObject({
+					strictResume: true,
+					resume: { harnessSessionId: "native-id" },
+					modelId: "sonnet",
+					modeId: "plan",
+				});
+			} finally {
+				await f.close();
+			}
+		});
+	}
+}

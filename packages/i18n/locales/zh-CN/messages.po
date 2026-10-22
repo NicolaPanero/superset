@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* 如按API全价计费"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**更清晰的设置**：查看智能体的 CLI 安装指南，了解如何连接代码仓库。"
-
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**上下文一目了然**：聊天输入框中的圆环显示上下文的占用情况，Claude 还可按类别查看细分。"
-
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**更快的 Jira 任务**：列表按状态分组任务，行和卡片更紧凑，所有筛选器都在一个栏中。"
-
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**与 Jira 一致的看板**：已分组的工作流状态保持在同一列中。"
-
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**重新设计的 Bitbucket 拉取请求**：与 GitHub 相同的标题和信息栏，用 Review、Merge 和更多菜单取代分散的按钮。"
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -2672,6 +2657,9 @@ msgstr "上次报告的版本。主机必须在线才能更新。"
 
 msgid "ascending"
 msgstr "升序"
+
+msgid "Ask"
+msgstr "提问"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "让智能体写一份设计文档或报告。它会生成页面并发布。"
@@ -4383,6 +4371,9 @@ msgstr "命令..."
 msgid "Commands"
 msgstr "命令"
 
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "在 Plan 中，命令和 MCP 工具无需权限确认即可运行。"
+
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "用于工作区初始化、清理和“运行”按钮的命令。"
 
@@ -4822,6 +4813,12 @@ msgstr "右键菜单"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "上下文转移仅包含消息，可能会省略较早的历史记录。"
 
+msgid "Context usage unavailable"
+msgstr "上下文使用量不可用"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "代理报告后将显示上下文使用量。"
+
 msgid "Continue"
 msgstr "继续"
 
@@ -4933,6 +4930,9 @@ msgstr "已复制到剪贴板。"
 
 msgid "Copied!"
 msgstr "已复制！"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "仅复制消息文本。不会恢复工具状态和文件。"
 
 msgid "Copy"
 msgstr "复制"
@@ -5584,11 +5584,11 @@ msgstr "无法暂存设计反馈"
 msgid "Couldn't stage file"
 msgstr "无法暂存文件"
 
-msgid "Couldn't start a new agent session"
-msgstr "无法启动新的智能体会话"
+msgid "Couldn't start a new chat"
+msgstr "无法开始新聊天"
 
-msgid "Couldn't start agent session"
-msgstr "无法启动智能体会话"
+msgid "Couldn't start chat"
+msgstr "无法开始聊天"
 
 msgid "Couldn't start cloud workspace"
 msgstr "无法启动云端工作区"
@@ -6093,14 +6093,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "默认（{defaultWorktreePath}）"
 
+msgid "Default account"
+msgstr "默认账户"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "新工作区的默认基础分支。可在创建时为各工作区单独覆盖。"
 
 msgid "Default effort"
 msgstr "默认推理强度"
 
-msgid "Default for new agents"
-msgstr "新智能体的默认账户"
+msgid "Default for new chats"
+msgstr "新聊天的默认账户"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "此主机上新建worktree工作区的默认位置。"
@@ -6918,6 +6921,9 @@ msgstr "已获得「{name}」×{tier}"
 msgid "Edit"
 msgstr "编辑"
 
+msgid "Edit and restart from here"
+msgstr "编辑并从此处重新开始"
+
 msgid "Edit comment"
 msgstr "编辑评论"
 
@@ -7307,6 +7313,9 @@ msgstr "讲讲这个仓库是怎么运作的"
 
 msgid "Explore"
 msgstr "探索"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "探索代码并回答问题，不进行任何修改。"
 
 msgid "Explore Pages"
 msgstr "了解页面"
@@ -9625,6 +9634,9 @@ msgstr "Jira 看板"
 msgid "Jira issues"
 msgstr "Jira 事务"
 
+msgid "Jira project"
+msgstr "Jira 项目"
+
 msgid "Join"
 msgstr "加入"
 
@@ -10242,6 +10254,9 @@ msgstr "正在加载更多..."
 msgid "Loading more…"
 msgstr "正在加载更多…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "正在加载预览…"
 
@@ -10693,6 +10708,9 @@ msgstr "正在合并…"
 msgid "Mesh Gradient"
 msgstr "网格渐变"
 
+msgid "Message"
+msgstr "消息"
+
 msgid "Message in channel"
 msgstr "频道中的消息"
 
@@ -11080,17 +11098,8 @@ msgstr "新的{providerLabel}智能体将使用{accountLabel}。"
 msgid "New agent"
 msgstr "新建智能体"
 
-msgid "New Agent"
-msgstr "新建智能体"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "新启动的智能体使用此账户。重新启动运行中的智能体才能切换。"
-
 msgid "New agent session"
 msgstr "新建智能体会话"
-
-msgid "New agent sessions"
-msgstr "新智能体会话"
 
 msgid "New automation"
 msgstr "新建自动化"
@@ -11100,6 +11109,21 @@ msgstr "新建浏览器"
 
 msgid "new challengers"
 msgstr "换对手"
+
+msgid "New chat"
+msgstr "新建聊天"
+
+msgid "New Chat"
+msgstr "新建聊天"
+
+msgid "New chat from loaded messages"
+msgstr "从已加载的消息新建聊天"
+
+msgid "New chats"
+msgstr "新聊天"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "新聊天使用此账户。要切换账户，请重启正在运行的聊天。"
 
 msgid "New cloud workspace"
 msgstr "新建云端工作区"
@@ -11625,6 +11649,9 @@ msgstr "没有未解决的审查评论。"
 
 msgid "No organization selected"
 msgstr "未选择组织"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "没有匹配的页面"
@@ -12256,6 +12283,9 @@ msgstr "仅受邀者"
 msgid "Only people who opted in appear here."
 msgstr "只有选择加入的人才会出现在这里。"
 
+msgid "Only text messages can be edited and restarted."
+msgstr "只能编辑文本消息并重新开始。"
+
 msgid "Only the author can change a comment"
 msgstr "只有作者可以修改评论"
 
@@ -12584,6 +12614,9 @@ msgstr "在外部浏览器中打开localhost:{0}"
 msgid "Open menu"
 msgstr "打开菜单"
 
+msgid "Open message in side panel"
+msgstr "在侧边面板中打开消息"
+
 msgid "Open navigation"
 msgstr "打开导航"
 
@@ -12598,6 +12631,12 @@ msgstr "在默认浏览器中打开页面"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "在 Superset 的 iPhone 和 iPad 应用中打开页面并回复评论。"
+
+msgid "Open plan file"
+msgstr "打开计划文件"
+
+msgid "Open plan in side panel"
+msgstr "在侧边面板中打开计划"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "在 Superset 应用中打开“插件”并选择一个。安装记录会保存到你的账号。"
@@ -12716,8 +12755,8 @@ msgstr "打开全局命令面板"
 msgid "Open the guide"
 msgstr "打开指南"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "在当前工作区打开新建智能体对话框"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "在当前工作区打开新建聊天对话框"
 
 msgid "Open the new workspace modal"
 msgstr "打开新建工作区弹窗"
@@ -12932,6 +12971,9 @@ msgstr "输出结构"
 
 msgid "Output truncated"
 msgstr "输出已截断"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "溢出渐隐"
@@ -13319,11 +13361,20 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "方案"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan 现在包含工具的完全访问权限。"
+
+msgid "Plan progress"
+msgstr "计划进度"
+
 msgid "Plan restored"
 msgstr "方案已恢复"
 
 msgid "Plan updated"
 msgstr "方案已更新"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "以完全访问权限规划；工具操作将自动获批。"
 
 msgctxt "project state"
 msgid "Planned"
@@ -13922,6 +13973,9 @@ msgstr "问题"
 msgid "Questions"
 msgstr "常见问题"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "问题和计划的最终批准仍需等待你的答复。"
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "问题、反馈、支持，或者别的什么都行。写给我们，我们会转给合适的人。"
 
@@ -13989,6 +14043,12 @@ msgstr "配额已耗尽"
 msgid "Quota is shown when the provider supports it."
 msgstr "提供商支持时会显示配额。"
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "配额使用量 · 外环5小时：{fiveHour} · 内环每周：{weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "配额使用量：外环为5小时，内环为每周。"
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14042,9 +14102,6 @@ msgstr "正在重新激活…"
 
 msgid "Read"
 msgstr "已读取"
-
-msgid "Read and plan without changing anything"
-msgstr "只读取和规划，不做任何更改"
 
 msgid "Read and send mail"
 msgstr "读取和发送邮件"
@@ -14263,6 +14320,9 @@ msgstr "刷新仓库"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "下次运行 OpenCode 时刷新。"
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "重新生成"
@@ -15054,9 +15114,6 @@ msgstr "仅回退聊天"
 
 msgid "Rewind conversation?"
 msgstr "回退对话？"
-
-msgid "Rewind from here"
-msgstr "从此处回退"
 
 msgid "Rewrote it and published version 2."
 msgstr "已重写并发布版本 2。"
@@ -16338,6 +16395,9 @@ msgstr "在侧边栏显示用量选项卡"
 msgid "showArrow opt-in"
 msgstr "showArrow按需开启"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "已显示"
 
@@ -16449,6 +16509,9 @@ msgstr "登录已过期"
 msgid "Sign-in expired — run"
 msgstr "登录已过期——请运行"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "登录失败"
 
@@ -16460,6 +16523,9 @@ msgstr "已登录为<0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "已退出登录"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "已登录的站点"
@@ -16893,11 +16959,11 @@ msgstr "开始一段对话，消息会显示在这里"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "以该终端最近的上下文启动一个新的智能体会话。工作区中的文件仍是准确来源。"
 
-msgid "Start a new agent session each run"
-msgstr "每次运行都启动新的智能体会话"
-
 msgid "Start a new chat"
 msgstr "开始新的聊天"
+
+msgid "Start a new chat each run"
+msgstr "每次运行开始新聊天"
 
 msgid "Start a session"
 msgstr "开始一个会话"
@@ -17604,8 +17670,8 @@ msgstr "回到首页"
 msgid "Taken"
 msgstr "已被占用"
 
-msgid "Takes effect in new agent sessions."
-msgstr "会在新的智能体会话中生效。"
+msgid "Takes effect in new chats."
+msgstr "在新聊天中生效。"
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "比平时久一些。你离开后它也会继续。"
@@ -18166,6 +18232,9 @@ msgstr "提供商返回了{0}。"
 msgid "The provider refused it."
 msgstr "提供商拒绝了它。"
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "恢复期已结束。请联系support@superset.sh。"
 
@@ -18316,6 +18385,9 @@ msgstr "此智能体无法在云端工作区中运行"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "此智能体无法打开聊天。请启用高级 CLI 选项以在终端中使用它。"
+
+msgid "This agent does not support returning to a specific message."
+msgstr "此代理不支持返回特定消息。"
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "所选设备上已不存在这个智能体（它的智能体可能被重置过）。在你选择新的智能体之前，运行都会失败。"
@@ -18476,6 +18548,9 @@ msgstr "这台Mac"
 
 msgid "This machine"
 msgstr "本机"
+
+msgid "This message cannot be used as a restart point."
+msgstr "无法将此消息用作重新开始的位置。"
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "这个Microsoft租户已被{detail}连接。请让对方先断开连接。"
@@ -19458,6 +19533,9 @@ msgstr "URL友好的标识符，在你的组织内唯一。"
 msgid "Usage"
 msgstr "用量"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "每个账户的用量最多每 5 分钟读取一次。下次更新时间：{next}。"
+
 msgid "Usage sections"
 msgstr "用量分区"
 
@@ -19492,8 +19570,8 @@ msgstr "每个任务都可以用Claude Code、Codex、OpenCode或任何编码智
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "使用Claude Code、Codex或任何编码智能体。按任务选择，或让多个并行运行。"
 
-msgid "Use for new agents"
-msgstr "用于新智能体"
+msgid "Use for new chats"
+msgstr "用于新聊天"
 
 msgid "Use global default"
 msgstr "使用全局默认值"
@@ -19759,6 +19837,9 @@ msgstr "音量"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "请等待代理和排队任务完成。"
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "请等待代理完成后再交接。"

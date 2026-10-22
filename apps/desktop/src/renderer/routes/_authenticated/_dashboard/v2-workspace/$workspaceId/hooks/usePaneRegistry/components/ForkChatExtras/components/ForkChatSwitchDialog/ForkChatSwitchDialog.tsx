@@ -42,6 +42,10 @@ import { contextHandoff } from "../../utils/contextHandoff/contextHandoff";
 import { setPendingEffort } from "../../utils/pendingEffort";
 import { setPendingModelReset } from "../../utils/pendingModelReset";
 import { rememberPreviousChat } from "../../utils/previousChat";
+import {
+	forkTransferPolicy,
+	runForkTransfer,
+} from "./utils/forkTransferPolicy";
 
 type Placement = "this-chat" | "split-pane" | "new-tab";
 type Transfer = "native" | "context";
@@ -114,7 +118,7 @@ export function ForkChatSwitchDialog({
 	const prepareFromChat =
 		workspaceTrpc.sessionTransfer.prepareFromChat.useMutation();
 	const cancelTransfer = workspaceTrpc.sessionTransfer.cancel.useMutation();
-	const { data: capabilities } =
+	const { data: capabilities, isPending: checkingCapabilities } =
 		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
 			enabled: open,
 			retry: false,
@@ -170,7 +174,11 @@ export function ForkChatSwitchDialog({
 			verified(target?.presetId) &&
 			target?.resumeArgs?.length,
 	);
-	const useNative = sameAgent || (nativeAvailable && transfer === "native");
+	const transferPolicy = forkTransferPolicy(
+		sameAgent ? "native" : transfer,
+		sameAgent || nativeAvailable,
+	);
+	const useNative = transferPolicy.mode === "native";
 	const choices = visibleForkAccountOptions(options.data ?? [], showCliOptions);
 	const configuredSelection = quota.data?.find(
 		(row) =>
@@ -247,7 +255,7 @@ export function ForkChatSwitchDialog({
 			accountSwitcher.onSwitch(pickedSelection);
 			return;
 		}
-		if (!target || !sourceSessionId) return;
+		if (!target || !sourceSessionId || !nativeAvailable) return;
 		const accountSelection = managed ? pickedSelection : undefined;
 		if (
 			placement === "this-chat" &&
@@ -573,6 +581,17 @@ export function ForkChatSwitchDialog({
 									{ value: "context", label: <Trans>Summary only</Trans> },
 								]}
 							/>
+							{!nativeAvailable && transfer === "native" && (
+								<output className="text-muted-foreground text-xs">
+									{checkingCapabilities ? (
+										<Trans>Checking…</Trans>
+									) : (
+										<Trans>
+											Native handoff is unavailable for this agent pair or host.
+										</Trans>
+									)}
+								</output>
+							)}
 							<p className="text-muted-foreground text-xs">
 								{useNative ? (
 									<Trans>
@@ -599,9 +618,18 @@ export function ForkChatSwitchDialog({
 					</Button>
 					<Button
 						onClick={() =>
-							void (useNative ? switchNatively() : switchWithContext())
+							void runForkTransfer(transferPolicy, {
+								native: switchNatively,
+								context: switchWithContext,
+							})
 						}
-						disabled={stage !== null || busy || !target || accountMissing}
+						disabled={
+							stage !== null ||
+							busy ||
+							!target ||
+							accountMissing ||
+							!transferPolicy.allowed
+						}
 					>
 						{stage === "converting" ? (
 							<Trans>Converting…</Trans>

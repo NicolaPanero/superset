@@ -1,1 +1,5 @@
-export { readSavedChatMode, saveChatMode } from "./savedChatMode";
+export {
+	readSavedChatMode,
+	resolveChatStartMode,
+	saveChatMode,
+} from "./savedChatMode";

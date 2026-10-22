@@ -146,6 +146,12 @@ export function transcriptRows(
 
 	for (const entry of outbox) {
 		if (echoedClientIds.has(entry.clientId)) continue;
+		if (
+			"forkQueued" in entry &&
+			entry.forkQueued === true &&
+			entry.state !== "failed"
+		)
+			continue;
 		rows.push({ kind: "outbox", key: entry.clientId, groupStart: true, entry });
 	}
 	return rows;

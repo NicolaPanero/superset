@@ -28,6 +28,7 @@ import {
 	PILL_TRIGGER_CLASS,
 } from "../../constants";
 import { useOptimisticSelections } from "../../hooks/useOptimisticSelections";
+import { forkModeOrder } from "./utils/forkModeOrder";
 
 export type SessionMode = { id: string; label: string };
 
@@ -56,7 +57,9 @@ export function ModePicker({
 	const { t } = useLingui();
 	const { shown, select } = useOptimisticSelections({ mode: currentModeId });
 	const shownModeId = shown("mode");
-	const offeredModes = modes.filter((mode) => !HIDDEN_MODE_IDS.has(mode.id));
+	const offeredModes = modes
+		.filter((mode) => !HIDDEN_MODE_IDS.has(mode.id))
+		.sort((a, b) => forkModeOrder(a.id) - forkModeOrder(b.id));
 	if (offeredModes.length < 2) return null;
 
 	const knownModes: Record<string, ModeCopy> = {
@@ -89,9 +92,19 @@ export function ModePicker({
 			}),
 			icon: FilePen,
 		},
+		ask: {
+			title: t({ message: "Ask" }),
+			description: t({
+				message: "Explore code and answer questions without making changes.",
+			}),
+			icon: Pause,
+		},
 		plan: {
 			title: t({ message: "Plan" }),
-			description: t({ message: "Read and plan without changing anything" }),
+			description: t({
+				message:
+					"Plan with full access; tool actions are approved automatically.",
+			}),
 			icon: NotebookPen,
 		},
 		"read-only": {

@@ -4,7 +4,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@superset/ui/dropdown-menu";
-import { Bot } from "lucide-react";
+import { MessageSquarePlus } from "lucide-react";
 import { BsTerminalPlus } from "react-icons/bs";
 import { LuGitCompareArrows } from "react-icons/lu";
 import { TbDeviceDesktop, TbWorld } from "react-icons/tb";
@@ -34,9 +34,9 @@ export function AddTabMenu({
 	return (
 		<>
 			<DropdownMenuItem className="gap-2" onSelect={onAddAgent}>
-				<Bot className="size-4" />
+				<MessageSquarePlus className="size-4" />
 				<span>
-					<Trans>Agent</Trans>
+					<Trans>New chat</Trans>
 				</span>
 				<HotkeyMenuShortcut hotkeyId="NEW_AGENT" />
 			</DropdownMenuItem>

@@ -15,6 +15,36 @@ function binding(fields: Partial<TerminalAgentBinding>): TerminalAgentBinding {
 }
 
 describe("collectBackgroundWork", () => {
+	it("marks only chat tasks with a reported output file as openable", () => {
+		const { processes } = collectBackgroundWork([
+			binding({
+				terminalId: "chat",
+				chatSessionId: "s1",
+				backgroundTasks: [
+					{
+						id: "with-output",
+						kind: "process",
+						name: "dev server",
+						outputPath: "/tmp/task.output",
+						canStop: true,
+						startedAtMs: 1,
+					},
+					{
+						id: "plain",
+						kind: "process",
+						name: "watcher",
+						canStop: true,
+						startedAtMs: 2,
+					},
+				],
+			}),
+		]);
+		expect(processes.map((work) => work.outputTaskId)).toEqual([
+			"with-output",
+			undefined,
+		]);
+	});
+
 	it("splits a chat's tasks by kind and lists a terminal's subagent roster", () => {
 		const { processes, subagents } = collectBackgroundWork(
 			[

@@ -1,4 +1,4 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { formatPercent } from "@superset/i18n/format";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
@@ -57,7 +57,7 @@ export function UsageWindowChip({
 							tone === "ok" && "text-muted-foreground",
 						)}
 					>
-						{used}
+						<Trans>{used} used</Trans>
 					</span>
 					{resetsIn && (
 						<span className="inline-flex items-center gap-0.5 text-muted-foreground tabular-nums">

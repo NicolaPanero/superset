@@ -1,8 +1,6 @@
-import { userMessageText } from "@superset/chat/core";
 import type { UserMessage } from "@superset/chat/protocol";
 import { Queue } from "@superset/ui/ai-elements/queue";
 import type { KeyboardEvent, RefObject } from "react";
-import { parseAttachmentTags } from "../../../../utils/attachmentTags";
 import { QueuedPromptRow } from "./components/QueuedPromptRow";
 import { QueuePausedBar } from "./components/QueuePausedBar";
 
@@ -40,9 +38,7 @@ export function QueuedPrompts({
 			event.target instanceof HTMLElement ? rows.indexOf(event.target) : -1;
 		const prompt = prompts[index];
 		if (!prompt) return;
-		const hasAttachments =
-			prompt.content.some((content) => content.type === "attachment") ||
-			parseAttachmentTags(userMessageText(prompt)).attachments.length > 0;
+
 		switch (event.key) {
 			case "ArrowUp":
 				rows[Math.max(0, index - 1)]?.focus();
@@ -52,11 +48,13 @@ export function QueuedPrompts({
 				else onExit();
 				break;
 			case "Enter":
+				if (prompt.forkPending === true) return;
 				onSteer(prompt.id);
 				onExit();
 				break;
 			case "Backspace":
 			case "Delete": {
+				if (prompt.forkPending === true) return;
 				const neighbor = rows[index + 1] ?? rows[index - 1];
 				onRemove(prompt.id);
 				if (neighbor) neighbor.focus();
@@ -64,7 +62,7 @@ export function QueuedPrompts({
 				break;
 			}
 			case "e":
-				if (hasAttachments) return;
+				if (prompt.forkPending === true) return;
 				onEdit(prompt);
 				break;
 			case "Escape":
@@ -81,7 +79,9 @@ export function QueuedPrompts({
 		<Queue className="mx-4 max-h-56 gap-0 overflow-y-auto rounded-t-2xl rounded-b-none border-border/60 border-b-0 bg-muted/40 px-0 py-1 shadow-none">
 			{paused && (
 				<QueuePausedBar
-					actionable={actionable}
+					actionable={
+						actionable && !prompts.some((prompt) => prompt.forkPending === true)
+					}
 					onClear={onClear}
 					onResume={onResume}
 				/>
@@ -90,7 +90,8 @@ export function QueuedPrompts({
 				{prompts.map((prompt) => (
 					<QueuedPromptRow
 						actionable={actionable}
-						key={prompt.id}
+						pending={prompt.forkPending === true}
+						key={prompt.clientId ?? prompt.id}
 						onEdit={onEdit}
 						onRemove={onRemove}
 						onSteer={onSteer}

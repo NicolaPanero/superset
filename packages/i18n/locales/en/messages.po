@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* if billed at full API rate"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -2672,6 +2657,9 @@ msgstr "As last reported. The host must be online to update."
 
 msgid "ascending"
 msgstr "ascending"
+
+msgid "Ask"
+msgstr "Ask"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Ask an agent for a design doc or a report. It builds the page and publishes it."
@@ -4383,6 +4371,9 @@ msgstr "Command..."
 msgid "Commands"
 msgstr "Commands"
 
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Commands and MCP tools run without permission prompts in Plan."
+
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Commands run for workspace setup, teardown, and the Run button."
 
@@ -4822,6 +4813,12 @@ msgstr "Context Menu"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "Context transfer includes only messages and may omit earlier history."
 
+msgid "Context usage unavailable"
+msgstr "Context usage unavailable"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "Context usage will appear when the agent reports it."
+
 msgid "Continue"
 msgstr "Continue"
 
@@ -4933,6 +4930,9 @@ msgstr "Copied to clipboard."
 
 msgid "Copied!"
 msgstr "Copied!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Copies message text only. Tool state and files are not restored."
 
 msgid "Copy"
 msgstr "Copy"
@@ -5584,11 +5584,11 @@ msgstr "Couldn't stage design feedback"
 msgid "Couldn't stage file"
 msgstr "Couldn't stage file"
 
-msgid "Couldn't start a new agent session"
-msgstr "Couldn't start a new agent session"
+msgid "Couldn't start a new chat"
+msgstr "Couldn't start a new chat"
 
-msgid "Couldn't start agent session"
-msgstr "Couldn't start agent session"
+msgid "Couldn't start chat"
+msgstr "Couldn't start chat"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Couldn't start cloud workspace"
@@ -6093,14 +6093,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Default ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Default account"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Default base for new workspaces. Override per-workspace at creation."
 
 msgid "Default effort"
 msgstr "Default effort"
 
-msgid "Default for new agents"
-msgstr "Default for new agents"
+msgid "Default for new chats"
+msgstr "Default for new chats"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Default location for new worktree workspaces on this host."
@@ -6918,6 +6921,9 @@ msgstr "Earned {name} ×{tier}"
 msgid "Edit"
 msgstr "Edit"
 
+msgid "Edit and restart from here"
+msgstr "Edit and restart from here"
+
 msgid "Edit comment"
 msgstr "Edit comment"
 
@@ -7307,6 +7313,9 @@ msgstr "Explain to me how this repository works"
 
 msgid "Explore"
 msgstr "Explore"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Explore code and answer questions without making changes."
 
 msgid "Explore Pages"
 msgstr "Explore Pages"
@@ -9625,6 +9634,9 @@ msgstr "Jira board"
 msgid "Jira issues"
 msgstr "Jira issues"
 
+msgid "Jira project"
+msgstr "Jira project"
+
 msgid "Join"
 msgstr "Join"
 
@@ -10242,6 +10254,9 @@ msgstr "Loading more..."
 msgid "Loading more…"
 msgstr "Loading more…"
 
+msgid "Loading output…"
+msgstr "Loading output…"
+
 msgid "Loading previews…"
 msgstr "Loading previews…"
 
@@ -10693,6 +10708,9 @@ msgstr "Merging…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Message"
+
 msgid "Message in channel"
 msgstr "Message in channel"
 
@@ -11080,17 +11098,8 @@ msgstr "New {providerLabel} agents will use {accountLabel}."
 msgid "New agent"
 msgstr "New agent"
 
-msgid "New Agent"
-msgstr "New Agent"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "New agent launches use this account. Relaunch a running agent to switch it."
-
 msgid "New agent session"
 msgstr "New agent session"
-
-msgid "New agent sessions"
-msgstr "New agent sessions"
 
 msgid "New automation"
 msgstr "New automation"
@@ -11100,6 +11109,21 @@ msgstr "New Browser"
 
 msgid "new challengers"
 msgstr "new challengers"
+
+msgid "New chat"
+msgstr "New chat"
+
+msgid "New Chat"
+msgstr "New Chat"
+
+msgid "New chat from loaded messages"
+msgstr "New chat from loaded messages"
+
+msgid "New chats"
+msgstr "New chats"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "New chats use this account. Restart a running chat to switch it."
 
 msgid "New cloud workspace"
 msgstr "New cloud workspace"
@@ -11625,6 +11649,9 @@ msgstr "No open review comments."
 
 msgid "No organization selected"
 msgstr "No organization selected"
+
+msgid "No output yet."
+msgstr "No output yet."
 
 msgid "No pages match"
 msgstr "No pages match"
@@ -12256,6 +12283,9 @@ msgstr "Only people invited"
 msgid "Only people who opted in appear here."
 msgstr "Only people who opted in appear here."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "Only text messages can be edited and restarted."
+
 msgid "Only the author can change a comment"
 msgstr "Only the author can change a comment"
 
@@ -12584,6 +12614,9 @@ msgstr "Open localhost:{0} in external browser"
 msgid "Open menu"
 msgstr "Open menu"
 
+msgid "Open message in side panel"
+msgstr "Open message in side panel"
+
 msgid "Open navigation"
 msgstr "Open navigation"
 
@@ -12598,6 +12631,12 @@ msgstr "Open Page in Default Browser"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Open pages and reply to comments from the Superset app on iPhone and iPad."
+
+msgid "Open plan file"
+msgstr "Open plan file"
+
+msgid "Open plan in side panel"
+msgstr "Open plan in side panel"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Open Plugins in the Superset app and pick one. The install is saved to your account."
@@ -12716,8 +12755,8 @@ msgstr "Open the global command palette"
 msgid "Open the guide"
 msgstr "Open the guide"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Open the new agent dialog in the current workspace"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Open the new chat dialog in the current workspace"
 
 msgid "Open the new workspace modal"
 msgstr "Open the new workspace modal"
@@ -12932,6 +12971,9 @@ msgstr "Output Schema"
 
 msgid "Output truncated"
 msgstr "Output truncated"
+
+msgid "Output unavailable."
+msgstr "Output unavailable."
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13319,11 +13361,20 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan now includes full access to tools."
+
+msgid "Plan progress"
+msgstr "Plan progress"
+
 msgid "Plan restored"
 msgstr "Plan restored"
 
 msgid "Plan updated"
 msgstr "Plan updated"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Plan with full access; tool actions are approved automatically."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13922,6 +13973,9 @@ msgstr "Question"
 msgid "Questions"
 msgstr "Questions"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Questions and final plan approval still wait for your answer."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 
@@ -13989,6 +14043,12 @@ msgstr "Quota exhausted"
 msgid "Quota is shown when the provider supports it."
 msgstr "Quota is shown when the provider supports it."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Quota used: outer ring 5h, inner ring weekly."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14042,9 +14102,6 @@ msgstr "Reactivating…"
 
 msgid "Read"
 msgstr "Read"
-
-msgid "Read and plan without changing anything"
-msgstr "Read and plan without changing anything"
 
 msgid "Read and send mail"
 msgstr "Read and send mail"
@@ -14263,6 +14320,9 @@ msgstr "Refresh repositories"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Refreshes when OpenCode next runs."
+
+msgid "Refreshing…"
+msgstr "Refreshing…"
 
 msgid "Regenerate"
 msgstr "Regenerate"
@@ -15054,9 +15114,6 @@ msgstr "Rewind chat only"
 
 msgid "Rewind conversation?"
 msgstr "Rewind conversation?"
-
-msgid "Rewind from here"
-msgstr "Rewind from here"
 
 msgid "Rewrote it and published version 2."
 msgstr "Rewrote it and published version 2."
@@ -16338,6 +16395,9 @@ msgstr "Show usage tab on sidebar"
 msgid "showArrow opt-in"
 msgstr "showArrow opt-in"
 
+msgid "Showing the latest output."
+msgstr "Showing the latest output."
+
 msgid "Shown"
 msgstr "Shown"
 
@@ -16449,6 +16509,9 @@ msgstr "Sign-in expired"
 msgid "Sign-in expired — run"
 msgstr "Sign-in expired — run"
 
+msgid "Sign-in expired."
+msgstr "Sign-in expired."
+
 msgid "Sign-in failed"
 msgstr "Sign-in failed"
 
@@ -16460,6 +16523,9 @@ msgstr "Signed in as <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Signed out"
+
+msgid "Signed out."
+msgstr "Signed out."
 
 msgid "Signed-in sites"
 msgstr "Signed-in sites"
@@ -16893,11 +16959,11 @@ msgstr "Start a conversation to see messages here"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 
-msgid "Start a new agent session each run"
-msgstr "Start a new agent session each run"
-
 msgid "Start a new chat"
 msgstr "Start a new chat"
+
+msgid "Start a new chat each run"
+msgstr "Start a new chat each run"
 
 msgid "Start a session"
 msgstr "Start a session"
@@ -17604,8 +17670,8 @@ msgstr "Take me home"
 msgid "Taken"
 msgstr "Taken"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Takes effect in new agent sessions."
+msgid "Takes effect in new chats."
+msgstr "Takes effect in new chats."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Taking longer than usual. It keeps going if you leave."
@@ -18166,6 +18232,9 @@ msgstr "The provider answered {0}."
 msgid "The provider refused it."
 msgstr "The provider refused it."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "The provider returned no new usage. The last known values are shown."
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "The recovery period has ended. Contact support@superset.sh."
 
@@ -18316,6 +18385,9 @@ msgstr "This agent can't run in a cloud workspace"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "This agent does not support returning to a specific message."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
@@ -18476,6 +18548,9 @@ msgstr "This Mac"
 
 msgid "This machine"
 msgstr "This machine"
+
+msgid "This message cannot be used as a restart point."
+msgstr "This message cannot be used as a restart point."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
@@ -19458,6 +19533,9 @@ msgstr "URL-friendly identifier, unique within your organization."
 msgid "Usage"
 msgstr "Usage"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "Usage is read at most every 5 minutes per account. Next update at {next}."
+
 msgid "Usage sections"
 msgstr "Usage sections"
 
@@ -19492,8 +19570,8 @@ msgstr "Use Claude Code, Codex, OpenCode, or any coding agent for each task. You
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 
-msgid "Use for new agents"
-msgstr "Use for new agents"
+msgid "Use for new chats"
+msgstr "Use for new chats"
 
 msgid "Use global default"
 msgstr "Use global default"
@@ -19759,6 +19837,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Wait for the agent and queued work to finish."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Wait for the agent to finish before handing off."

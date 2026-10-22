@@ -1202,21 +1202,6 @@ msgstr "@superset"
 msgid "* if billed at full API rate"
 msgstr "* jika ditagih pada tarif API penuh"
 
-msgid "**Clearer setup**: find CLI installation guides for your agents and understand repository connections."
-msgstr "**Penyiapan lebih jelas**: temukan panduan pemasangan CLI agen dan pahami koneksi repositori."
-
-msgid "**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude."
-msgstr "**Konteks sekilas pandang**: cincin di kolom obrolan menunjukkan seberapa penuh konteks, dengan rincian per kategori untuk Claude."
-
-msgid "**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar."
-msgstr "**Tugas Jira lebih cepat**: daftar mengelompokkan tugas menurut status, baris dan kartu lebih ringkas, dan semua filter ada dalam satu bilah."
-
-msgid "**Jira boards that match Jira**: grouped workflow statuses stay in the same columns."
-msgstr "**Papan yang sesuai dengan Jira**: status alur kerja yang dikelompokkan tetap berada di kolom yang sama."
-
-msgid "**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons."
-msgstr "**Pull request Bitbucket yang didesain ulang**: header dan kolom info seperti di GitHub, dengan menu Review, Merge, dan Lainnya menggantikan tombol yang tersebar."
-
 #. placeholder {0}: detail.pullRequest.number
 #. placeholder {1}: detail.pullRequest.title
 #. placeholder {2}: detail.pullRequest.baseBranch
@@ -2672,6 +2657,9 @@ msgstr "Sesuai laporan terakhir. Host harus online untuk memperbarui."
 
 msgid "ascending"
 msgstr "menaik"
+
+msgid "Ask"
+msgstr "Tanya"
 
 msgid "Ask an agent for a design doc or a report. It builds the page and publishes it."
 msgstr "Minta agen membuat dokumen desain atau laporan. Agen membuat halamannya lalu menerbitkannya."
@@ -4383,6 +4371,9 @@ msgstr "Perintah..."
 msgid "Commands"
 msgstr "Perintah"
 
+msgid "Commands and MCP tools run without permission prompts in Plan."
+msgstr "Di Plan, perintah dan alat MCP berjalan tanpa meminta izin."
+
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Perintah yang dijalankan untuk setup workspace, teardown, dan tombol Run."
 
@@ -4822,6 +4813,12 @@ msgstr "Menu Konteks"
 msgid "Context transfer includes only messages and may omit earlier history."
 msgstr "Transfer konteks hanya menyertakan pesan dan mungkin mengabaikan riwayat sebelumnya."
 
+msgid "Context usage unavailable"
+msgstr "Penggunaan konteks tidak tersedia"
+
+msgid "Context usage will appear when the agent reports it."
+msgstr "Penggunaan konteks akan muncul saat agen melaporkannya."
+
 msgid "Continue"
 msgstr "Lanjutkan"
 
@@ -4933,6 +4930,9 @@ msgstr "Disalin ke clipboard."
 
 msgid "Copied!"
 msgstr "Tersalin!"
+
+msgid "Copies message text only. Tool state and files are not restored."
+msgstr "Hanya menyalin teks pesan. Status alat dan file tidak dipulihkan."
 
 msgid "Copy"
 msgstr "Salin"
@@ -5584,11 +5584,11 @@ msgstr "Tidak bisa menyiapkan masukan desain"
 msgid "Couldn't stage file"
 msgstr "Tidak bisa men-stage file"
 
-msgid "Couldn't start a new agent session"
-msgstr "Tidak bisa memulai sesi agen baru"
+msgid "Couldn't start a new chat"
+msgstr "Tidak dapat memulai chat baru"
 
-msgid "Couldn't start agent session"
-msgstr "Tidak bisa memulai sesi agen"
+msgid "Couldn't start chat"
+msgstr "Tidak dapat memulai chat"
 
 msgid "Couldn't start cloud workspace"
 msgstr "Tidak bisa memulai workspace cloud"
@@ -6093,14 +6093,17 @@ msgstr "default · secondary · outline · ghost · link · destructive"
 msgid "Default ({defaultWorktreePath})"
 msgstr "Bawaan ({defaultWorktreePath})"
 
+msgid "Default account"
+msgstr "Akun default"
+
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Dasar default untuk ruang kerja baru. Dapat diganti per ruang kerja saat dibuat."
 
 msgid "Default effort"
 msgstr "Effort bawaan"
 
-msgid "Default for new agents"
-msgstr "Bawaan untuk agen baru"
+msgid "Default for new chats"
+msgstr "Default untuk chat baru"
 
 msgid "Default location for new worktree workspaces on this host."
 msgstr "Lokasi bawaan untuk workspace worktree baru di host ini."
@@ -6918,6 +6921,9 @@ msgstr "{name} ×{tier} diraih"
 msgid "Edit"
 msgstr "Edit"
 
+msgid "Edit and restart from here"
+msgstr "Edit dan mulai ulang dari sini"
+
 msgid "Edit comment"
 msgstr "Edit komentar"
 
@@ -7307,6 +7313,9 @@ msgstr "Jelaskan cara kerja repositori ini"
 
 msgid "Explore"
 msgstr "Jelajahi"
+
+msgid "Explore code and answer questions without making changes."
+msgstr "Menjelajahi kode dan menjawab pertanyaan tanpa membuat perubahan."
 
 msgid "Explore Pages"
 msgstr "Jelajahi Halaman"
@@ -9625,6 +9634,9 @@ msgstr "Papan Jira"
 msgid "Jira issues"
 msgstr "Isu Jira"
 
+msgid "Jira project"
+msgstr "Proyek Jira"
+
 msgid "Join"
 msgstr "Gabung"
 
@@ -10242,6 +10254,9 @@ msgstr "Memuat lagi..."
 msgid "Loading more…"
 msgstr "Memuat lagi…"
 
+msgid "Loading output…"
+msgstr "{'cs': 'Načítání výstupu…', 'de': 'Ausgabe wird geladen…', 'es': 'Cargando salida…', 'fr': 'Chargement de la sortie…', 'id': 'Memuat output…', 'it': 'Caricamento output…', 'ja': '出力を読み込み中…', 'ko': '출력을 불러오는 중…', 'nl': 'Uitvoer laden…', 'pl': 'Wczytywanie wyjścia…', 'pt-BR': 'Carregando saída…', 'ru': 'Загрузка вывода…', 'tr': 'Çıktı yükleniyor…', 'vi': 'Đang tải đầu ra…', 'zh-CN': '正在加载输出…', 'zh-TW': '正在載入輸出…'}"
+
 msgid "Loading previews…"
 msgstr "Memuat pratinjau…"
 
@@ -10693,6 +10708,9 @@ msgstr "Melakukan merge…"
 msgid "Mesh Gradient"
 msgstr "Mesh Gradient"
 
+msgid "Message"
+msgstr "Pesan"
+
 msgid "Message in channel"
 msgstr "Pesan di channel"
 
@@ -11080,16 +11098,7 @@ msgstr "Agen {providerLabel} yang baru akan memakai {accountLabel}."
 msgid "New agent"
 msgstr "Agen baru"
 
-msgid "New Agent"
-msgstr "Agen Baru"
-
-msgid "New agent launches use this account. Relaunch a running agent to switch it."
-msgstr "Peluncuran agen baru memakai akun ini. Jalankan ulang agen yang sedang berjalan untuk menggantinya."
-
 msgid "New agent session"
-msgstr "Sesi agen baru"
-
-msgid "New agent sessions"
 msgstr "Sesi agen baru"
 
 msgid "New automation"
@@ -11100,6 +11109,21 @@ msgstr "Browser Baru"
 
 msgid "new challengers"
 msgstr "penantang baru"
+
+msgid "New chat"
+msgstr "Chat baru"
+
+msgid "New Chat"
+msgstr "Chat Baru"
+
+msgid "New chat from loaded messages"
+msgstr "Chat baru dari pesan yang dimuat"
+
+msgid "New chats"
+msgstr "Chat baru"
+
+msgid "New chats use this account. Restart a running chat to switch it."
+msgstr "Chat baru menggunakan akun ini. Mulai ulang chat yang berjalan untuk menggantinya."
 
 msgid "New cloud workspace"
 msgstr "Workspace cloud baru"
@@ -11625,6 +11649,9 @@ msgstr "Tidak ada komentar review yang terbuka."
 
 msgid "No organization selected"
 msgstr "Tidak ada organisasi yang dipilih"
+
+msgid "No output yet."
+msgstr "{'cs': 'Zatím žádný výstup.', 'de': 'Noch keine Ausgabe.', 'es': 'Aún no hay salida.', 'fr': 'Aucune sortie pour l’instant.', 'id': 'Belum ada output.', 'it': 'Ancora nessun output.', 'ja': 'まだ出力はありません。', 'ko': '아직 출력이 없습니다.', 'nl': 'Nog geen uitvoer.', 'pl': 'Brak wyjścia.', 'pt-BR': 'Ainda não há saída.', 'ru': 'Вывода пока нет.', 'tr': 'Henüz çıktı yok.', 'vi': 'Chưa có đầu ra.', 'zh-CN': '暂无输出。', 'zh-TW': '尚無輸出。'}"
 
 msgid "No pages match"
 msgstr "Tidak ada halaman yang cocok"
@@ -12256,6 +12283,9 @@ msgstr "Hanya orang yang diundang"
 msgid "Only people who opted in appear here."
 msgstr "Hanya orang yang memilih ikut serta yang muncul di sini."
 
+msgid "Only text messages can be edited and restarted."
+msgstr "Hanya pesan teks yang dapat diedit dan dimulai ulang."
+
 msgid "Only the author can change a comment"
 msgstr "Hanya penulis yang bisa mengubah komentar"
 
@@ -12584,6 +12614,9 @@ msgstr "Buka localhost:{0} di browser eksternal"
 msgid "Open menu"
 msgstr "Buka menu"
 
+msgid "Open message in side panel"
+msgstr "Buka pesan di panel samping"
+
 msgid "Open navigation"
 msgstr "Buka navigasi"
 
@@ -12598,6 +12631,12 @@ msgstr "Buka Halaman di Browser Bawaan"
 
 msgid "Open pages and reply to comments from the Superset app on iPhone and iPad."
 msgstr "Buka halaman dan balas komentar dari aplikasi Superset di iPhone dan iPad."
+
+msgid "Open plan file"
+msgstr "Buka file rencana"
+
+msgid "Open plan in side panel"
+msgstr "Buka rencana di panel samping"
 
 msgid "Open Plugins in the Superset app and pick one. The install is saved to your account."
 msgstr "Buka Plugin di aplikasi Superset dan pilih salah satu. Instalasi tersimpan di akun Anda."
@@ -12716,8 +12755,8 @@ msgstr "Buka command palette global"
 msgid "Open the guide"
 msgstr "Buka panduan"
 
-msgid "Open the new agent dialog in the current workspace"
-msgstr "Buka dialog agen baru di workspace saat ini"
+msgid "Open the new chat dialog in the current workspace"
+msgstr "Buka dialog chat baru di workspace saat ini"
 
 msgid "Open the new workspace modal"
 msgstr "Buka modal workspace baru"
@@ -12932,6 +12971,9 @@ msgstr "Skema Output"
 
 msgid "Output truncated"
 msgstr "Output dipotong"
+
+msgid "Output unavailable."
+msgstr "{'cs': 'Výstup není k dispozici.', 'de': 'Ausgabe nicht verfügbar.', 'es': 'Salida no disponible.', 'fr': 'Sortie indisponible.', 'id': 'Output tidak tersedia.', 'it': 'Output non disponibile.', 'ja': '出力を利用できません。', 'ko': '출력을 사용할 수 없습니다.', 'nl': 'Uitvoer niet beschikbaar.', 'pl': 'Wyjście niedostępne.', 'pt-BR': 'Saída indisponível.', 'ru': 'Вывод недоступен.', 'tr': 'Çıktı kullanılamıyor.', 'vi': 'Không có đầu ra.', 'zh-CN': '输出不可用。', 'zh-TW': '無法使用輸出。'}"
 
 msgid "Overflow Fade"
 msgstr "Overflow Fade"
@@ -13319,11 +13361,20 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Paket"
 
+msgid "Plan now includes full access to tools."
+msgstr "Plan kini mencakup akses penuh ke alat."
+
+msgid "Plan progress"
+msgstr "Kemajuan rencana"
+
 msgid "Plan restored"
 msgstr "Paket dipulihkan"
 
 msgid "Plan updated"
 msgstr "Paket diperbarui"
+
+msgid "Plan with full access; tool actions are approved automatically."
+msgstr "Rencanakan dengan akses penuh; tindakan alat disetujui secara otomatis."
 
 msgctxt "project state"
 msgid "Planned"
@@ -13922,6 +13973,9 @@ msgstr "Pertanyaan"
 msgid "Questions"
 msgstr "Pertanyaan"
 
+msgid "Questions and final plan approval still wait for your answer."
+msgstr "Pertanyaan dan persetujuan akhir rencana tetap menunggu jawaban Anda."
+
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Pertanyaan, masukan, dukungan, atau apa pun. Kirim pesan dan kami akan meneruskannya ke orang yang tepat."
 
@@ -13989,6 +14043,12 @@ msgstr "Kuota habis"
 msgid "Quota is shown when the provider supports it."
 msgstr "Kuota ditampilkan jika penyedia mendukungnya."
 
+msgid "Quota used · outer ring 5h: {fiveHour} · inner ring weekly: {weekly}"
+msgstr "Kuota terpakai · lingkaran luar 5j: {fiveHour} · lingkaran dalam mingguan: {weekly}"
+
+msgid "Quota used: outer ring 5h, inner ring weekly."
+msgstr "Kuota terpakai: lingkaran luar 5j, lingkaran dalam mingguan."
+
 msgid "Radix Primitives"
 msgstr "Radix Primitives"
 
@@ -14042,9 +14102,6 @@ msgstr "Mengaktifkan kembali…"
 
 msgid "Read"
 msgstr "Dibaca"
-
-msgid "Read and plan without changing anything"
-msgstr "Baca dan rencanakan tanpa mengubah apa pun"
 
 msgid "Read and send mail"
 msgstr "Baca dan kirim email"
@@ -14263,6 +14320,9 @@ msgstr "Segarkan repositori"
 
 msgid "Refreshes when OpenCode next runs."
 msgstr "Diperbarui saat OpenCode berikutnya dijalankan."
+
+msgid "Refreshing…"
+msgstr "{'cs': 'Obnovování…', 'de': 'Wird aktualisiert…', 'es': 'Actualizando…', 'fr': 'Actualisation…', 'id': 'Memperbarui…', 'it': 'Aggiornamento…', 'ja': '更新中…', 'ko': '새로 고치는 중…', 'nl': 'Vernieuwen…', 'pl': 'Odświeżanie…', 'pt-BR': 'Atualizando…', 'ru': 'Обновление…', 'tr': 'Yenileniyor…', 'vi': 'Đang làm mới…', 'zh-CN': '正在刷新…', 'zh-TW': '正在重新整理…'}"
 
 msgid "Regenerate"
 msgstr "Buat ulang"
@@ -15054,9 +15114,6 @@ msgstr "Putar balik chat saja"
 
 msgid "Rewind conversation?"
 msgstr "Putar balik percakapan?"
-
-msgid "Rewind from here"
-msgstr "Putar balik dari sini"
 
 msgid "Rewrote it and published version 2."
 msgstr "Sudah ditulis ulang dan versi 2 diterbitkan."
@@ -16338,6 +16395,9 @@ msgstr "Tampilkan tab penggunaan di bilah samping"
 msgid "showArrow opt-in"
 msgstr "showArrow opsional"
 
+msgid "Showing the latest output."
+msgstr "{'cs': 'Zobrazuje se nejnovější výstup.', 'de': 'Die neueste Ausgabe wird angezeigt.', 'es': 'Se muestra la salida más reciente.', 'fr': 'Affichage de la sortie la plus récente.', 'id': 'Menampilkan output terbaru.', 'it': 'Viene mostrato l’output più recente.', 'ja': '最新の出力を表示しています。', 'ko': '최신 출력을 표시합니다.', 'nl': 'De nieuwste uitvoer wordt getoond.', 'pl': 'Wyświetlane jest najnowsze wyjście.', 'pt-BR': 'Mostrando a saída mais recente.', 'ru': 'Показан последний вывод.', 'tr': 'En son çıktı gösteriliyor.', 'vi': 'Đang hiển thị đầu ra mới nhất.', 'zh-CN': '显示最新输出。', 'zh-TW': '顯示最新輸出。'}"
+
 msgid "Shown"
 msgstr "Ditampilkan"
 
@@ -16449,6 +16509,9 @@ msgstr "Sesi masuk kedaluwarsa"
 msgid "Sign-in expired — run"
 msgstr "Sesi masuk kedaluwarsa — jalankan"
 
+msgid "Sign-in expired."
+msgstr "{'cs': 'Přihlášení vypršelo.', 'de': 'Anmeldung abgelaufen.', 'es': 'El inicio de sesión ha caducado.', 'fr': 'La connexion a expiré.', 'id': 'Sesi masuk kedaluwarsa.', 'it': 'Accesso scaduto.', 'ja': 'サインインの有効期限が切れました。', 'ko': '로그인이 만료되었습니다.', 'nl': 'Aanmelding verlopen.', 'pl': 'Logowanie wygasło.', 'pt-BR': 'O login expirou.', 'ru': 'Срок входа истёк.', 'tr': 'Oturum açmanın süresi doldu.', 'vi': 'Phiên đăng nhập đã hết hạn.', 'zh-CN': '登录已过期。', 'zh-TW': '登入已過期。'}"
+
 msgid "Sign-in failed"
 msgstr "Gagal masuk"
 
@@ -16460,6 +16523,9 @@ msgstr "Masuk sebagai <0>{userName}</0>"
 
 msgid "Signed out"
 msgstr "Sudah keluar"
+
+msgid "Signed out."
+msgstr "{'cs': 'Odhlášeno.', 'de': 'Abgemeldet.', 'es': 'Sesión cerrada.', 'fr': 'Déconnecté.', 'id': 'Keluar.', 'it': 'Disconnesso.', 'ja': 'サインアウトしています。', 'ko': '로그아웃되었습니다.', 'nl': 'Afgemeld.', 'pl': 'Wylogowano.', 'pt-BR': 'Sessão encerrada.', 'ru': 'Выполнен выход.', 'tr': 'Oturum kapatıldı.', 'vi': 'Đã đăng xuất.', 'zh-CN': '已退出登录。', 'zh-TW': '已登出。'}"
 
 msgid "Signed-in sites"
 msgstr "Situs yang sedang masuk"
@@ -16893,11 +16959,11 @@ msgstr "Mulai percakapan untuk melihat pesan di sini"
 msgid "Start a fresh agent session seeded with this terminal's recent context. Workspace files remain the source of truth."
 msgstr "Memulai sesi agen baru dengan konteks terbaru dari terminal ini. Berkas di ruang kerja tetap menjadi sumber kebenaran."
 
-msgid "Start a new agent session each run"
-msgstr "Mulai sesi agen baru setiap kali dijalankan"
-
 msgid "Start a new chat"
 msgstr "Mulai chat baru"
+
+msgid "Start a new chat each run"
+msgstr "Mulai chat baru setiap kali dijalankan"
 
 msgid "Start a session"
 msgstr "Mulai sesi"
@@ -17604,8 +17670,8 @@ msgstr "Bawa saya ke beranda"
 msgid "Taken"
 msgstr "Sudah dipakai"
 
-msgid "Takes effect in new agent sessions."
-msgstr "Berlaku pada sesi agen yang baru."
+msgid "Takes effect in new chats."
+msgstr "Berlaku pada chat baru."
 
 msgid "Taking longer than usual. It keeps going if you leave."
 msgstr "Lebih lama dari biasanya. Prosesnya tetap jalan kalau Anda keluar."
@@ -18166,6 +18232,9 @@ msgstr "Penyedia menjawab {0}."
 msgid "The provider refused it."
 msgstr "Penyedia menolaknya."
 
+msgid "The provider returned no new usage. The last known values are shown."
+msgstr "{'cs': 'Poskytovatel nevrátil nové údaje o využití. Zobrazují se poslední známé hodnoty.', 'de': 'Der Anbieter hat keine neue Nutzung geliefert. Die zuletzt bekannten Werte werden angezeigt.', 'es': 'El proveedor no devolvió un uso nuevo. Se muestran los últimos valores conocidos.', 'fr': 'Le fournisseur n’a renvoyé aucune nouvelle utilisation. Les dernières valeurs connues sont affichées.', 'id': 'Penyedia tidak mengembalikan penggunaan baru. Nilai terakhir yang diketahui ditampilkan.', 'it': 'Il provider non ha restituito un nuovo utilizzo. Sono mostrati gli ultimi valori noti.', 'ja': 'プロバイダーから新しい使用量が返されませんでした。最後に取得した値を表示しています。', 'ko': '공급자가 새 사용량을 반환하지 않았습니다. 마지막으로 알려진 값을 표시합니다.', 'nl': 'De provider gaf geen nieuw gebruik terug. De laatst bekende waarden worden getoond.', 'pl': 'Dostawca nie zwrócił nowego użycia. Wyświetlane są ostatnie znane wartości.', 'pt-BR': 'O provedor não retornou um novo uso. Os últimos valores conhecidos são exibidos.', 'ru': 'Поставщик не вернул новых данных об использовании. Показаны последние известные значения.', 'tr': 'Sağlayıcı yeni kullanım döndürmedi. Bilinen son değerler gösteriliyor.', 'vi': 'Nhà cung cấp không trả về mức sử dụng mới. Đang hiển thị các giá trị đã biết gần nhất.', 'zh-CN': '提供商未返回新的用量。显示的是最近一次已知的数值。', 'zh-TW': '供應商未傳回新的用量。顯示的是最近一次已知的數值。'}"
+
 msgid "The recovery period has ended. Contact support@superset.sh."
 msgstr "Masa pemulihan sudah berakhir. Hubungi support@superset.sh."
 
@@ -18316,6 +18385,9 @@ msgstr "Agen ini tidak bisa berjalan di workspace cloud"
 
 msgid "This agent cannot open a chat. Enable advanced CLI options to use it in a terminal."
 msgstr "Agen ini tidak dapat membuka chat. Aktifkan opsi CLI lanjutan untuk menggunakannya di terminal."
+
+msgid "This agent does not support returning to a specific message."
+msgstr "Agen ini tidak mendukung kembali ke pesan tertentu."
 
 msgid "This agent no longer exists on the selected device (its agents may have been reset). Runs will fail until you pick a new one."
 msgstr "Agen ini sudah tidak ada di perangkat yang dipilih (agennya mungkin telah direset). Run akan gagal sampai Anda memilih yang baru."
@@ -18476,6 +18548,9 @@ msgstr "Mac ini"
 
 msgid "This machine"
 msgstr "Mesin ini"
+
+msgid "This message cannot be used as a restart point."
+msgstr "Pesan ini tidak dapat digunakan sebagai titik mulai ulang."
 
 msgid "This Microsoft tenant is already connected by {detail}. Ask them to disconnect first."
 msgstr "Tenant Microsoft ini sudah terhubung oleh {detail}. Minta mereka memutuskannya dulu."
@@ -19458,6 +19533,9 @@ msgstr "Pengenal ramah URL, unik di dalam organisasi Anda."
 msgid "Usage"
 msgstr "Penggunaan"
 
+msgid "Usage is read at most every 5 minutes per account. Next update at {next}."
+msgstr "Penggunaan dibaca paling sering setiap 5 menit per akun. Pembaruan berikutnya pukul {next}."
+
 msgid "Usage sections"
 msgstr "Bagian penggunaan"
 
@@ -19492,8 +19570,8 @@ msgstr "Pakai Claude Code, Codex, OpenCode, atau agen coding apa pun untuk tiap 
 msgid "Use Claude Code, Codex, or any coding agent. Choose per task or run several side by side."
 msgstr "Pakai Claude Code, Codex, atau agen coding apa pun. Pilih per tugas atau jalankan beberapa berdampingan."
 
-msgid "Use for new agents"
-msgstr "Pakai untuk agen baru"
+msgid "Use for new chats"
+msgstr "Gunakan untuk chat baru"
 
 msgid "Use global default"
 msgstr "Pakai bawaan global"
@@ -19759,6 +19837,9 @@ msgstr "Volume"
 
 msgid "VS Code"
 msgstr "VS Code"
+
+msgid "Wait for the agent and queued work to finish."
+msgstr "Tunggu hingga agen dan pekerjaan dalam antrean selesai."
 
 msgid "Wait for the agent to finish before handing off."
 msgstr "Tunggu hingga agen selesai sebelum mentransfer."

@@ -6,6 +6,10 @@ CREATE TABLE IF NOT EXISTS fork_jira_automations (
  enabled integer NOT NULL DEFAULT 0, initialized integer NOT NULL DEFAULT 0,
  checked_at integer, error text
 );
+CREATE TABLE IF NOT EXISTS fork_jira_automation_launches (
+ rule_id text PRIMARY KEY NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
+ surface text NOT NULL, model text, account_selection text
+);
 CREATE TABLE IF NOT EXISTS fork_jira_automation_runs (
  rule_id text NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
  task_id text NOT NULL, task_key text NOT NULL, workspace_id text, error text,

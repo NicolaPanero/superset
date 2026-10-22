@@ -28,7 +28,7 @@ export function AgentSessionPlacementSetting({
 					className="text-sm font-medium"
 				>
 					<HighlightText
-						text={t({ message: "New agent sessions" })}
+						text={t({ message: "New chats" })}
 						query={searchQuery}
 					/>
 				</Label>

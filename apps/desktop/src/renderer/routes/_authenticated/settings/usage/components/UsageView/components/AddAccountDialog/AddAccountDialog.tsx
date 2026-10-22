@@ -70,7 +70,7 @@ interface AddAccountDialogProps {
 	agent: Agent;
 	/** Called once when the new sign-in is detected, to refresh quota. */
 	onAccountAdded: () => void;
-	/** Called after "Use for new agents" makes the added account the default;
+	/** Called after "Use for new chats" makes the added account the default;
 	 * the owner toasts, or offers to restart running agents onto it. */
 	onDefaultSwitched: (agent: Agent, accountLabel: string) => void;
 	/** When set, the dialog re-signs this existing login instead of adding a
@@ -475,7 +475,7 @@ export function AddAccountDialog({
 										);
 									}}
 								>
-									<Trans>Use for new agents</Trans>
+									<Trans>Use for new chats</Trans>
 								</Button>
 							)}
 						</div>

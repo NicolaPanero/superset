@@ -121,6 +121,7 @@ export type ComposerBodyProps = Required<
 		| "dictation"
 		| "toolbar"
 		| "toolbarEnd"
+		| "submitAction"
 		| "defaultValue"
 		| "findChips"
 		| "onChange"
@@ -180,6 +181,7 @@ export function ComposerBody({
 	placement,
 	toolbar,
 	toolbarEnd,
+	submitAction,
 	defaultValue,
 	findChips,
 	onChange,
@@ -256,6 +258,9 @@ export function ComposerBody({
 					}
 				});
 				editor.focus();
+			},
+			appendFiles(files: File[]) {
+				addFilesRef.current(files);
 			},
 			openFileDialog() {
 				fileInputRef.current?.click();
@@ -1090,6 +1095,7 @@ export function ComposerBody({
 								<MicIcon className="size-4" />
 							</button>
 						)}
+						{submitAction}
 						{hideSubmit ? null : status === "streaming" &&
 							!(submitWhileStreaming && canSend) ? (
 							<button

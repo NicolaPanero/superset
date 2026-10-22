@@ -1,7 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
-import { formatPercent } from "@superset/i18n/format";
-import { accountQuotaState } from "@superset/shared/fork-account-usage";
+import { accountQuotaRings } from "@superset/shared/fork-account-usage";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,11 +13,7 @@ import { LuChevronDown } from "react-icons/lu";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { AddAccountDialog } from "renderer/routes/_authenticated/settings/usage/components/UsageView/components/AddAccountDialog";
-import {
-	ForkAccountAvatar,
-	QUOTA_TONE_TEXT,
-	quotaTone,
-} from "./components/ForkAccountAvatar";
+import { ForkAccountAvatar } from "./components/ForkAccountAvatar";
 import { ForkAccountMenuItems } from "./components/ForkAccountMenuItems";
 import { useForkAccountChoices } from "./useForkAccountChoices";
 import type { useForkCreationAccount } from "./useForkCreationAccount";
@@ -49,7 +44,7 @@ export function ForkAccountPicker({
 		: selected
 			? forkAccountLabel(selected.option, selected.usage?.email)
 			: t({ message: "Choose an account" });
-	const quota = accountQuotaState(selected?.usage, model);
+	const rings = accountQuotaRings(selected?.usage, model);
 	return (
 		<>
 			<DropdownMenu
@@ -68,10 +63,7 @@ export function ForkAccountPicker({
 						disabled={disabled || !account.available || account.forcedApi}
 						className="flex h-7 shrink-0 cursor-pointer items-center rounded-lg px-1 outline-none transition-colors hover:bg-foreground/[0.07] focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-default disabled:hover:bg-transparent data-[state=open]:bg-foreground/[0.07]"
 					>
-						<ForkAccountAvatar
-							label={selected ? label : null}
-							remaining={quota.remaining}
-						/>
+						<ForkAccountAvatar label={selected ? label : null} {...rings} />
 					</DropdownMenuTrigger>
 				) : (
 					<DropdownMenuTrigger
@@ -79,28 +71,13 @@ export function ForkAccountPicker({
 						disabled={disabled || !account.available || account.forcedApi}
 						className="flex h-9 w-full min-w-0 items-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50"
 					>
-						<ForkAccountAvatar
-							label={selected ? label : null}
-							remaining={quota.remaining}
-						/>
+						<ForkAccountAvatar label={selected ? label : null} {...rings} />
 						<span
 							className={cn("truncate", !selected && "text-muted-foreground")}
 						>
 							{label}
 						</span>
 						<span className="ml-auto flex shrink-0 items-center gap-2">
-							{selected && !account.forcedApi && quota.remaining !== null && (
-								<span
-									className={cn(
-										"text-xs",
-										QUOTA_TONE_TEXT[quotaTone(quota.remaining)],
-									)}
-								>
-									{formatPercent(quota.remaining / 100, {
-										maximumFractionDigits: 0,
-									})}
-								</span>
-							)}
 							<LuChevronDown className="size-4 text-muted-foreground" />
 						</span>
 					</DropdownMenuTrigger>
@@ -138,6 +115,9 @@ export function ForkAccountPicker({
 							}
 						}}
 						onAccountAdded={() => {
+							const reconnected = account.reconnect;
+							if (reconnected && reconnected.selection !== account.selection)
+								account.choose(reconnected.selection);
 							void account.quota
 								.refresh()
 								.catch((error) => toast.error(errorMessage(error)));

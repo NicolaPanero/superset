@@ -18,8 +18,8 @@ const SHELL_ENV_TIMEOUT_MS = 8_000;
 let fallbackCacheTtlMs = FALLBACK_CACHE_TTL_MS;
 
 // Track PATH fix state for macOS GUI app PATH fix
-let pathFixAttempted = false;
 let pathFixSucceeded = false;
+let pathFix: Promise<Record<string, string>> | null = null;
 
 class ShellEnvTimeoutError extends Error {
 	constructor(timeoutMs: number) {
@@ -130,8 +130,8 @@ export function clearShellEnvCache(): void {
 	cacheTime = 0;
 	isFallbackCache = false;
 	fallbackCacheTtlMs = FALLBACK_CACHE_TTL_MS;
-	pathFixAttempted = false;
 	pathFixSucceeded = false;
+	pathFix = null;
 }
 
 function copyStringEnv(
@@ -220,12 +220,11 @@ export async function execWithShellEnv(
 			env: await getProcessEnvWithShellEnv(baseEnv),
 		});
 	} catch (error) {
-		// Only retry on ENOENT (command not found), only on macOS
-		// Skip if we've already successfully fixed PATH, or if a fix attempt is in progress
+		// Only retry on ENOENT (command not found), only on macOS.
+		// Concurrent lookups share one derivation instead of failing.
 		if (
 			process.platform !== "darwin" ||
 			pathFixSucceeded ||
-			pathFixAttempted ||
 			!(error instanceof Error) ||
 			!("code" in error) ||
 			error.code !== "ENOENT"
@@ -233,11 +232,13 @@ export async function execWithShellEnv(
 			throw error;
 		}
 
-		pathFixAttempted = true;
 		console.log("[shell-env] Command not found, deriving shell environment");
 
 		try {
-			const shellEnvResult = await getShellEnvironment({ forceRefresh: true });
+			pathFix ??= getShellEnvironment({ forceRefresh: true }).finally(() => {
+				pathFix = null;
+			});
+			const shellEnvResult = await pathFix;
 			const mergedShellEnv = await getProcessEnvWithShellEnv(
 				baseEnv,
 				shellEnvResult,
@@ -260,11 +261,9 @@ export async function execWithShellEnv(
 				pathFixSucceeded = true;
 				console.log("[shell-env] Fixed process.env.PATH for GUI app");
 			}
-			pathFixAttempted = false;
 			return result;
 		} catch (retryError) {
 			// Shell env derivation or retry failed - allow future retries
-			pathFixAttempted = false;
 			pathFixSucceeded = false;
 			console.error("[shell-env] Retry failed:", retryError);
 			throw retryError;

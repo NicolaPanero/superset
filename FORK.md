@@ -28,7 +28,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   board e dettaglio; un trascinamento con più stati possibili chiede quale usare.
   Il dettaglio mostra i workspace collegati con azioni compatte; **Link existing
   workspace** cerca per nome, progetto o branch e riconosce quelli già collegati.
-  **Automations** configura regole JQL locali all’host. **Start in workspace**
+  **Automations** configura regole locali all’host con filtri grafici o JQL;
+  può avviare una chat ACP scegliendo agente, modello e account oppure un terminale. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
   [docs/fork-integrations.md](docs/fork-integrations.md).
@@ -80,16 +81,12 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   partenza resta aperta finché la nuova non è avviata; il cambio account
   Claude mantiene la chat nello stesso pannello.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
-  espone questa modalità. Usa la pianificazione nativa. Per Claude approva
-  automaticamente le letture e le ricerche nel workspace e i comandi di
-  esplorazione riconosciuti, verificando anche pipe, concatenazioni e percorsi
-  reali. Le approvazioni valgono per una sola chiamata. Modifiche, uscita da
-  Plan, tool MCP, percorsi esterni e comandi non riconosciuti richiedono
-  conferma; le domande sulle scelte progettuali restano visibili.
-  Le letture shell con percorsi relativi devono iniziare con
-  `cd <percorso assoluto nel workspace> && …`. Per le patch di `git diff`
-  servono `--no-ext-diff --no-textconv`, per evitare helper configurati.
-- **+ → Agent** nelle schede avvia una nuova sessione. L’icona **Find a chat**
+  espone questa modalità. Usa la pianificazione nativa con **Full access**:
+  approva automaticamente le richieste degli strumenti, inclusi comandi,
+  tool MCP e accessi fuori dal workspace, per tutti gli agenti ACP.
+  Le domande all'utente e l'approvazione finale del piano restano manuali.
+  La modalità nativa resta Plan; i limiti del provider e del sistema restano validi.
+- **New Chat** (⌘⇧A) apre una nuova chat nelle schede. L’icona **Find a chat**
   nell’intestazione cerca per titolo, modello o branch nei depositi locali di
   Claude, Codex, Cursor CLI, Grok e OpenCode, nei profili e nelle cartelle del
   progetto, inclusi i worktree. Se una chat è già collegata a Superset, la riapre
@@ -101,12 +98,33 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
-- I messaggi utente mostrano ora, copia e diramazione al passaggio del mouse.
-  Con Claude e Codex, **Fork from here** riparte dal messaggio scelto:
-  se è un messaggio utente, ne rimette il testo nella bozza. **Rewind from here**
-  chiede conferma e riavvolge solo la chat; i file restano invariati.
-  La sessione originale resta nella cronologia e viene lasciata aperta se
-  la copia non si carica. Gli altri agenti mantengono il fork dell’intera sessione.
+- I messaggi mostrano copia, diramazione e ora. **Edit and restart from here**
+  resta visibile sui messaggi utente e spiega perché non è disponibile:
+  agente occupato, allegati o assenza di un punto nativo. Con Claude e Codex
+  riparte prima del messaggio e ne rimette il testo nella bozza; i file restano
+  invariati e la sessione originale resta nella cronologia. Per Grok e Cursor,
+  **New chat from loaded messages** apre una chat separata dal testo caricato
+  fino al messaggio scelto, mantenendo configurazione, account, modello e modalità.
+  Il passaggio non ricostruisce lo stato degli strumenti e non ripristina i file.
+- I **piani** hanno un’anteprima Markdown nella chat e il pulsante per aprirli
+  in un pannello laterale, con avanzamento dei passi. Il documento resta leggibile
+  dopo l’approvazione, anche nei piani Cursor già salvati quando il testo è nella
+  cronologia. La stessa vista mostra i piani strutturati degli altri agenti;
+  se l’agente fornisce solo passi, mostra quelli. Anche un piano scritto come
+  risposta normale si apre a lato dal pulsante accanto alla copia del messaggio. Un riferimento a file ha il
+  comando per aprire il file, senza leggerlo automaticamente.
+- Il contatore del **contesto** resta visibile fin dalla bozza, con dimensioni
+  fisse per non spostare gli altri controlli, anche quando l’agente non comunica
+  i token: in quel caso è tratteggiato e segnala il dato non disponibile. Grok
+  usa la lettura nativa `session/info` all’avvio e alla fine del turno, senza
+  inviare prompt per ottenere le metriche. La versione Cursor verificata non
+  espone il consumo tramite ACP. Claude mantiene il dettaglio per categoria.
+- Il tondino dell’**account** ha due anelli di consumo: esterno per le **5 ore**,
+  interno per la **settimana**. Tooltip e menu indicano la corrispondenza.
+  Gli anelli mostrano le due quote generali; i limiti specifici del modello
+  restano nel menu e nella continuazione automatica. Dati assenti, scaduti o non applicabili hanno un anello tratteggiato;
+  non vengono presentati come quota libera.
+
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
 - I terminali usano **SF Mono a 12 px** su macOS, caricato dal sistema come nel
@@ -398,19 +416,13 @@ prove usano archivi temporanei ed eseguono il motore fissato prima della build.
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Le release includono **macOS Apple Silicon** e **Windows x64**. Su Mac chiudi l’app prima di eseguire
+Le release includono **macOS Apple Silicon**. Su Mac chiudi l’app prima di eseguire
 lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
 
-Su Windows scarica `Superset-fork-x64.exe` dalla stessa release e aprilo.
-L’installazione è per utente, non richiede privilegi amministrativi e usa
-il nome Superset++, il protocollo `superset-fork://` e dati separati dal Superset
-ufficiale. Gli agenti e Git devono essere disponibili sul PC; l’installer include
-il CLI Superset e i due strumenti txcript nativi x64. L’installer Windows non
-è firmato e al primo avvio Windows può mostrare un avviso sull’editore.
-Gli aggiornamenti successivi arrivano dall’app, con gli stessi avvisi del Mac:
-il download viene verificato prima della chiusura, i servizi vengono arrestati,
-l’installer aggiorna lo stesso percorso e riapre l’app. Chat e profili sono conservati.
+**Windows non è ancora supportato.** La build e l’installer Windows sono sospesi:
+le release non contengono più `Superset-fork-x64.exe` e i workflow non li compilano.
+Il codice degli script Windows resta nel repository, non collegato alla CI, per riprendere il lavoro.
 
 L’app Mac si chiama **Superset++.app**, usa l’icona con il **+** e convive con Superset
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
@@ -492,26 +504,18 @@ Le pull request usano il workflow di regressione e salvano per 30 giorni il tree
 Git verificato. Dopo il merge, la release riusa il risultato se il contenuto è
 identico e l'esecuzione della PR nello stesso repository è conclusa con successo,
 anche se lo SHA cambia per merge, squash o rebase. Se la prova manca, è scaduta o
-il contenuto è diverso, esegue la validazione prima delle build. Le prove native
-Mac e Windows restano obbligatorie.
+il contenuto è diverso, esegue la validazione prima delle build. La prova nativa
+Mac resta obbligatoria.
 I controlli completi della release possono essere riusati in un nuovo tentativo
 solo per il medesimo commit già validato. Download e helper fissati sono in cache;
-le prove native delle due piattaforme restano obbligatorie prima di memorizzare
-un pacchetto verificato. Se una piattaforma fallisce, un nuovo tentativo dello
-stesso commit può riusare l’archivio già verificato dell’altra piattaforma.
+la prova nativa Mac resta obbligatoria prima di memorizzare un pacchetto verificato.
 L’opzione manuale `force` permette una ricompilazione completa.
 La conclusione del sync non avvia una build: solo il merge della proposta su
 `fork/main` avvia il workflow di release. Prima della pubblicazione viene verificato che il commit
 sia ancora l’ultimo di `fork/main`. Il workflow controlla traduzioni,
-tipi e test del fork prima di avviare le build Mac e Windows. Ogni piattaforma
-esegue le 20 conversioni native; Windows verifica anche l’installer NSIS, i moduli
-nativi nel runtime Electron installato, lo script di aggiornamento e l’import dei
-progetti tramite l’host service installato (con e senza Git, e senza identità Git).
-Per provare su Windows un exe già pubblicato, senza macchina virtuale, avvia
-`fork-windows-import.yml` (input `release`, vuoto per l’ultima) oppure fai push su un
-ramo `fork/windows-probe/…`: installa l’exe su un runner pulito e importa i progetti. La release
-viene pubblicata solo quando entrambe le piattaforme hanno superato i controlli,
-con tutti e due i download: una build fallita lascia disponibile la release precedente.
+tipi e test del fork prima di avviare la build Mac. La build
+esegue le 20 conversioni native. La release viene pubblicata solo quando la build
+ha superato i controlli: una build fallita lascia disponibile la release precedente.
 Se il merge upstream presenta conflitti, il sync apre una pull request in bozza
 che punta al commit ufficiale: va riconciliata con `fork/main` prima di completare
 il merge. Una proposta già aperta o chiusa non viene ricreata al controllo successivo.

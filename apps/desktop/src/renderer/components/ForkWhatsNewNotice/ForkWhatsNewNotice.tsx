@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "context-meter-2026-10";
+export const FORK_WHATS_NEW_ID = "plan-full-access-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -30,25 +30,12 @@ export function ForkWhatsNewNotice() {
 	const [seen, setSeen] = useState(() => hasSeenForkWhatsNew(localStorage));
 	if (seen) return null;
 	const highlights = [
+		t({ message: "Plan now includes full access to tools." }),
 		t({
-			message:
-				"**Redesigned Bitbucket pull requests**: a header and info column like GitHub, with Review, Merge and More menus instead of scattered buttons.",
+			message: "Commands and MCP tools run without permission prompts in Plan.",
 		}),
 		t({
-			message:
-				"**Faster Jira tasks**: the list groups tasks by status, rows and cards are compact, and every filter sits in one bar.",
-		}),
-		t({
-			message:
-				"**Jira boards that match Jira**: grouped workflow statuses stay in the same columns.",
-		}),
-		t({
-			message:
-				"**Context at a glance**: a ring in the chat composer shows how full the context is, with a breakdown by category for Claude.",
-		}),
-		t({
-			message:
-				"**Clearer setup**: find CLI installation guides for your agents and understand repository connections.",
+			message: "Questions and final plan approval still wait for your answer.",
 		}),
 	];
 	const notice: DesktopNotice = {

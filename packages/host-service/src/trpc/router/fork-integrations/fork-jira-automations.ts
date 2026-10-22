@@ -3,10 +3,15 @@ import { TRPCError } from "@trpc/server";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import {
+	forkJiraAutomationLaunches,
 	forkJiraAutomationRuns,
 	forkJiraAutomations,
 } from "../../../db/fork-schema";
 import { projects } from "../../../db/schema";
+import {
+	forkJiraLaunchSchema,
+	prepareForkJiraLaunch,
+} from "../../../fork-integrations/fork-jira-launch";
 import { forkServices } from "../../../fork-integrations/fork-services";
 import { machineOnlyProcedure } from "../../index";
 
@@ -32,7 +37,16 @@ export const forkJiraAutomationProcedures = {
 						eq(forkJiraAutomations.connectionId, input.connectionId),
 					),
 				)
-				.all(),
+				.all()
+				.map((rule) => ({
+					...rule,
+					launch:
+						ctx.db
+							.select()
+							.from(forkJiraAutomationLaunches)
+							.where(eq(forkJiraAutomationLaunches.ruleId, rule.id))
+							.get() ?? null,
+				})),
 		),
 	automationCreate: local
 		.input(
@@ -43,6 +57,7 @@ export const forkJiraAutomationProcedures = {
 				jql: z.string().trim().min(1).max(4000),
 				agent: z.string().min(1).max(200),
 				prompt: z.string().trim().min(1).max(20000),
+				launch: forkJiraLaunchSchema.optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -69,14 +84,23 @@ export const forkJiraAutomationProcedures = {
 					message: "At most 100 Jira automations per host",
 				});
 			await forkServices(ctx).jira.list(input.connectionId, input.jql);
+			if (input.launch)
+				await prepareForkJiraLaunch(ctx, input.agent, input.launch);
+			const { launch, ...fields } = input;
 			const rule = {
-				...input,
+				...fields,
 				id: randomUUID(),
 				scope: ctx.organizationId,
 				enabled: false,
 				initialized: false,
 			};
-			ctx.db.insert(forkJiraAutomations).values(rule).run();
+			ctx.db.transaction((tx) => {
+				tx.insert(forkJiraAutomations).values(rule).run();
+				if (launch)
+					tx.insert(forkJiraAutomationLaunches)
+						.values({ ruleId: rule.id, ...launch })
+						.run();
+			});
 			return { id: rule.id };
 		}),
 	automationEnable: local

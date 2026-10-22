@@ -137,10 +137,18 @@ and [Jira's transition API](https://developer.atlassian.com/cloud/jira/platform/
 
 ## Local Jira automations
 
-Open **Automations** in the Jira Tasks view. A rule contains a JQL query, target
-project, agent and instructions. Rules are local to this host and organization;
-they use the existing workspace and agent launch paths, with the configured
-agent's account. They do not use the hosted automation service.
+Open **Automations** in the Jira Tasks view. Filters start from the current
+board or list: Jira project, assignee, status, issue type, text, parent, board
+and sprint. Switch to JQL for a custom query. Choose the target repository
+project, agent configuration and instructions.
+
+On hosts with integration version 6, choose **ACP chat** or **Terminal**, a
+model and an account. The default account uses the agent configuration and
+host default at launch; an explicit account stays pinned. ACP uses the normal chat lifecycle and
+account handling. Unavailable ACP support or an invalid model/account rejects
+the launch before creating a workspace. Existing rules retain terminal launches.
+Older hosts retain the original agent selector. Rules are local to this host
+and organization; they do not use the hosted automation service.
 
 Rules are saved paused. After enabling, the first successful poll records
 existing matches without launching them. The host checks once a minute while
@@ -251,6 +259,10 @@ No provider endpoint is built into the fork.
 New host APIs are additive: `forkConnections`, `forkScm`, `forkTasks`.
 The renderer probes `forkConnections.list` and leaves legacy GitHub flows
 available on older hosts. No released upstream procedure changes its shape.
+
+Version 6 adds optional automation launch settings for ACP chat, model and
+account selection. The desktop sends these only when advertised by the host;
+older rules and hosts retain terminal launches.
 
 Version 4 adds local Jira automations, review repair and board transition
 destinations. These controls are gated by `forkConnections.list.version` and

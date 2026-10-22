@@ -70,11 +70,19 @@ export function claudeProbe(
 			],
 			{ cwd, env, cols: 120, rows: 40, name: "xterm-256color" },
 		);
-		let inputTimer: ReturnType<typeof setTimeout> | undefined;
+		const inputTimers = new Set<ReturnType<typeof setTimeout>>();
 		const writeWhenReady = (value: string) => {
-			inputTimer = setTimeout(() => {
-				if (!done) pty.write(value);
+			if (done) return;
+			const inputTimer = setTimeout(() => {
+				inputTimers.delete(inputTimer);
+				if (done) return;
+				try {
+					pty.write(value);
+				} catch (error) {
+					finish(new Error("probe_exited", { cause: error }));
+				}
 			}, inputDelayMs);
+			inputTimers.add(inputTimer);
 		};
 		let output = "",
 			sent = false,
@@ -84,15 +92,22 @@ export function claudeProbe(
 			if (done) return;
 			done = true;
 			clearTimeout(timer);
-			clearTimeout(inputTimer);
-			pty.kill("SIGKILL");
-			error ? reject(error) : resolve();
+			for (const inputTimer of inputTimers) clearTimeout(inputTimer);
+			inputTimers.clear();
+			try {
+				pty.kill("SIGKILL");
+			} catch (cause) {
+				error ??= new Error("probe_exited", { cause });
+			} finally {
+				error ? reject(error) : resolve();
+			}
 		};
 		const timer = setTimeout(
 			() => finish(new Error("probe_timeout")),
 			timeoutMs,
 		);
 		pty.onData((chunk) => {
+			if (done) return;
 			output = (output + chunk)
 				.slice(-65536)
 				.replace(

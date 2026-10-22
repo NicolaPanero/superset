@@ -27,7 +27,13 @@ export function cursorApproval(
 ): {
 	item: Pick<
 		ApprovalRequest,
-		"kind" | "targetItemId" | "title" | "status" | "detail" | "questions"
+		| "kind"
+		| "targetItemId"
+		| "title"
+		| "status"
+		| "detail"
+		| "questions"
+		| "presentation"
 	>;
 	respond: (decision: Decision) => unknown;
 } | null {
@@ -76,6 +82,7 @@ export function cursorApproval(
 		return {
 			item: {
 				kind: "approval_request",
+				presentation: "plan",
 				targetItemId: p.toolCallId,
 				title: p.name ?? "Plan",
 				status: "pending",

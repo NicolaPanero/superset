@@ -125,6 +125,63 @@ describe("createChatAgentBridge", () => {
 		bridge.stopped("chat-1");
 	});
 
+	it("drops tasks the chat no longer reports, also after the chat restarts", () => {
+		const { bridge, terminalAgentStore, start, publish, status } = setup();
+		const withTask = () =>
+			publish("chat-1", {
+				type: "session",
+				session: {
+					status: "running",
+					harness: "claude-acp",
+					backgroundTasks: [
+						{
+							id: "task-1",
+							kind: "process",
+							name: "dev server",
+							canStop: true,
+							startedAtMs: 0,
+						},
+					],
+				},
+			});
+		const listed = () =>
+			terminalAgentStore.listByWorkspace(WORKSPACE)[0]?.backgroundTasks;
+		start("chat-1");
+		withTask();
+		status("chat-1", "idle");
+		expect(listed()).toBeUndefined();
+		withTask();
+		start("chat-1");
+		expect(listed()).toHaveLength(1);
+		status("chat-1", "starting");
+		expect(listed()).toBeUndefined();
+		bridge.stopped("chat-1");
+	});
+
+	it("adds a task's output file when the agent reports it after the spawn", () => {
+		const { bridge, terminalAgentStore, start, publish } = setup();
+		const task = {
+			id: "task-1",
+			kind: "process",
+			name: "dev server",
+			canStop: true,
+			startedAtMs: 0,
+		};
+		const withTasks = (backgroundTasks: unknown[]) =>
+			publish("chat-1", {
+				type: "session",
+				session: { status: "running", harness: "claude-acp", backgroundTasks },
+			});
+		start("chat-1");
+		withTasks([task]);
+		withTasks([{ ...task, outputPath: "/tmp/task-1.output" }]);
+		expect(
+			terminalAgentStore.listByWorkspace(WORKSPACE)[0]?.backgroundTasks?.[0]
+				?.outputPath,
+		).toBe("/tmp/task-1.output");
+		bridge.stopped("chat-1");
+	});
+
 	it("counts the chat's queued prompts on its binding", () => {
 		const { bridge, terminalAgentStore, start, status, session } = setup();
 		start("chat-1");

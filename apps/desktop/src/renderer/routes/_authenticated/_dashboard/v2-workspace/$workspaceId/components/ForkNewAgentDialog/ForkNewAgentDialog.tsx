@@ -95,7 +95,7 @@ export function ForkNewAgentDialog({
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
-						<Trans>New agent</Trans>
+						<Trans>New chat</Trans>
 					</DialogTitle>
 					<DialogDescription>{workspaceName}</DialogDescription>
 				</DialogHeader>

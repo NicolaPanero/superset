@@ -6,6 +6,8 @@ export type BackgroundWork = {
 	kind: BackgroundTaskKind;
 	name: string;
 	detail?: string;
+	/** Set when the agent reported an output file for a chat task. */
+	outputTaskId?: string;
 	startedAtMs: number;
 	terminalId: string;
 	stop?:
@@ -46,6 +48,7 @@ export function collectBackgroundWork(
 				kind: task.kind,
 				name: task.name,
 				...(task.detail ? { detail: task.detail } : {}),
+				...(task.outputPath ? { outputTaskId: task.id } : {}),
 				startedAtMs: task.startedAtMs,
 				terminalId: binding.terminalId,
 				...(task.canStop && binding.chatSessionId

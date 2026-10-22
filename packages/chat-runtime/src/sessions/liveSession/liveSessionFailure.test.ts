@@ -94,6 +94,45 @@ describe("live session adapter failures", () => {
 		await runtime.dispose();
 	});
 
+	test("a dead worker leaves no background task listed as running", async () => {
+		const { runtime, sessionId } = startSession(
+			failingStream(
+				[
+					{
+						kind: "session",
+						session: {
+							status: "running",
+							backgroundTasks: [
+								{
+									id: "task-1",
+									kind: "process",
+									name: "dev server",
+									canStop: true,
+									startedAtMs: 1,
+								},
+							],
+						},
+					},
+				],
+				"stream exploded",
+			),
+		);
+		await waitFor(() =>
+			statuses(journalEnvelopes(runtime, sessionId)).includes("dead"),
+		);
+		const sessions = journalEnvelopes(runtime, sessionId).flatMap((envelope) =>
+			envelope.event.type === "session" ? [envelope.event.session] : [],
+		);
+		expect(sessions.some((session) => session.backgroundTasks?.length)).toBe(
+			true,
+		);
+		expect(sessions.at(-1)).toMatchObject({
+			status: "dead",
+			backgroundTasks: [],
+		});
+		await runtime.dispose();
+	});
+
 	test("a session whose stream died still disposes cleanly", async () => {
 		const { runtime, sessionId } = startSession(
 			failingStream([], "stream exploded"),

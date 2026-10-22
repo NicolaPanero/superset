@@ -2,9 +2,11 @@ import type { AvailableCommand, Decision, Item } from "@superset/chat/protocol";
 import { isKnownItem } from "@superset/chat/protocol";
 import { memo } from "react";
 import type { ChatForkTarget } from "../../../../../../types";
+import { forkToolPlan } from "../../../../utils/forkPlanDocument";
 import { rowKindForItem } from "../../../../utils/rowKind";
 import { AgentMessageRow } from "../../../AgentMessageRow";
 import { ApprovalRow } from "../../../ApprovalRow";
+import { ForkPlanCard } from "../../../ForkPlanCard";
 import { NoticeRow } from "../../../NoticeRow";
 import { PlanRow } from "../../../PlanRow";
 import { ReasoningRow } from "../../../ReasoningRow";
@@ -81,12 +83,15 @@ export const ItemRow = memo(function ItemRow({
 			);
 		case "reasoning":
 			return <ReasoningRow item={item} text={text} />;
-		case "tool_call":
+		case "tool_call": {
+			const plan = forkToolPlan(item);
+			if (plan) return <ForkPlanCard item={plan} />;
 			return (
 				<RailStep>
 					<ToolCallRow item={item} />
 				</RailStep>
 			);
+		}
 		case "plan":
 			return <PlanRow item={item} />;
 		case "approval_request":

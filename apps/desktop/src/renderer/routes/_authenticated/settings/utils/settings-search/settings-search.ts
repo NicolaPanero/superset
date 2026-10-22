@@ -872,7 +872,7 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 	{
 		id: SETTING_ITEM_ID.BEHAVIOR_AGENT_SESSION_PLACEMENT,
 		section: "behavior",
-		title: "New agent sessions",
+		title: "New chats",
 		description:
 			"Choose where agents started from comments, design mode, and Pages open.",
 		keywords: [

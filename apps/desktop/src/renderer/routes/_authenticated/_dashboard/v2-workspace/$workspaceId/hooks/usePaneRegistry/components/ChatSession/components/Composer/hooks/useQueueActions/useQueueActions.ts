@@ -1,19 +1,27 @@
 import { useLingui } from "@lingui/react/macro";
-import { userMessageText } from "@superset/chat/core";
 import type { UserMessage } from "@superset/chat/protocol";
 import type { PromptInputHandle } from "@superset/chat-ui/PromptInput";
 import { errorMessage, rawErrorMessage } from "@superset/i18n/errors";
+import { MAX_ATTACHMENT_BYTES } from "@superset/shared/attachment-limits";
 import { toast } from "@superset/ui/sonner";
-import { type RefObject, useCallback } from "react";
+import { workspaceTrpc } from "@superset/workspace-client";
+import { type RefObject, useCallback, useRef } from "react";
+import { forkDraftFiles } from "../../../../utils/forkDraftFiles";
 import type { ComposerProps } from "../../Composer";
+import { prependToDraft } from "../useComposerDraft";
+import { forkQueuedDraft, forkQueuedFile } from "./utils/forkQueuedDraft";
 
 const ALREADY_GONE = /is not queued$/;
 
 export function useQueueActions(
 	promptQueue: ComposerProps["promptQueue"],
 	promptInputRef: RefObject<PromptInputHandle | null>,
+	workspaceId: string,
+	draftKey: string,
 ) {
 	const { t } = useLingui();
+	const utils = workspaceTrpc.useUtils();
+	const editing = useRef(new Set<string>());
 
 	const runQueueAction = useCallback(
 		async (action: () => Promise<void>) => {
@@ -32,11 +40,58 @@ export function useQueueActions(
 
 	const editQueued = useCallback(
 		async (prompt: UserMessage) => {
-			if (!promptQueue) return;
-			if (!(await runQueueAction(() => promptQueue.remove(prompt.id)))) return;
-			promptInputRef.current?.appendText(userMessageText(prompt));
+			if (
+				!promptQueue ||
+				!promptInputRef.current ||
+				editing.current.has(prompt.id)
+			)
+				return;
+			editing.current.add(prompt.id);
+			try {
+				await runQueueAction(async () => {
+					const draft = await forkQueuedDraft(prompt, {
+						workspace: async (attachment) => {
+							const workspace = await utils.workspace.get.fetch({
+								id: workspaceId,
+							});
+							if (!workspace?.worktreePath)
+								throw new Error("Workspace is not ready");
+							const file = await utils.filesystem.readFile.fetch({
+								workspaceId,
+								absolutePath: `${workspace.worktreePath}/${attachment.path}`,
+								maxBytes: MAX_ATTACHMENT_BYTES,
+							});
+							if (file.exceededLimit)
+								throw new Error("Attachment exceeds the file size limit");
+							return forkQueuedFile(
+								file.content,
+								attachment.path.split("/").pop() ?? attachment.path,
+								attachment.type,
+							);
+						},
+						stored: async (attachment) => {
+							const file = await utils.attachments.read.fetch({
+								attachmentId: attachment.attachmentId,
+							});
+							return forkQueuedFile(file.data, attachment.name, file.mediaType);
+						},
+					});
+					if (!promptInputRef.current) return;
+					await promptQueue.remove(prompt.id);
+					if (promptInputRef.current) {
+						promptInputRef.current.appendFiles(draft.files);
+						promptInputRef.current.appendText(draft.text);
+					} else {
+						const files = forkDraftFiles(draftKey);
+						files.onChange([...files.initial, ...draft.files]);
+						prependToDraft(draftKey, [draft.text]);
+					}
+				});
+			} finally {
+				editing.current.delete(prompt.id);
+			}
 		},
-		[promptQueue, runQueueAction, promptInputRef],
+		[promptQueue, runQueueAction, promptInputRef, utils, workspaceId, draftKey],
 	);
 
 	const clearQueued = useCallback(async () => {

@@ -46,7 +46,7 @@ il comando fallisce invece di ometterla. I test vanno collocati accanto al codic
 
 La suite aggiuntiva usa il binario `txcript-transfer` fissato in
 `scripts/fork/txcript-version.json`. È separata perché il binario distribuito
-è per Mac Apple Silicon e Windows x64 e non è richiesto per i test veloci Linux.
+è per Mac Apple Silicon e non è richiesto per i test veloci Linux.
 
 Con il helper già compilato nel checkout:
 
@@ -80,23 +80,17 @@ SQLite di prova. Non verifica una specifica versione del CLI OpenCode installato
 - **Fork - regression tests** esegue gli stessi controlli di `scripts/fork/validate.sh` sulle pull
   request verso `fork/main` e avvio manuale. Richiede solo lettura del repository.
 - **Fork - build release** attende un minuto dopo un push, così quelli ravvicinati
-  vengono raggruppati prima di occupare i runner Mac/Windows. Annulla le esecuzioni superate da un nuovo push e
+  vengono raggruppati prima di occupare il runner Mac. Annulla le esecuzioni superate da un nuovo push e
   impedisce la pubblicazione di un commit che non è più l’ultimo di `fork/main`.
   I test del workflow verificano entrambi i casi senza chiamare GitHub.
   Controlli e pacchetti già verificati possono essere riusati sullo stesso
-  commit; una modifica al codice invalida la cache. La verifica del runtime
-  Windows legge il codice d’uscita tramite Bun, evitando il valore vuoto
-  restituito da `Start-Process` con output reindirizzato.
+  commit; una modifica al codice invalida la cache.
   Esegue lo stesso comando prima del packaging e la
   suite nativa dopo il download del helper verificato. Un errore ferma la build.
-- La build Windows installa e reinstalla il pacchetto in una cartella temporanea
-  con spazi e Unicode, verifica SQLite, PTY, watcher e ast-grep nel runtime
-  Electron installato e controlla attesa dell’uscita, argomenti NSIS e riavvio
-  dello script di aggiornamento con processi sintetici. Avvia infine l’app
-  installata e verifica che apra una finestra con un profilo temporaneo. Tutto avviene sul runner,
-  senza profili reali. Un’ulteriore prova esegue l’aggiunta degli account Claude e
-  Codex da CMD e PowerShell con CLI simulati: verifica la cartella isolata, i
-  marker solo dopo successo e la chiave API su stdin senza login reali. Le due build devono riuscire prima della pubblicazione.
+- Windows non è ancora supportato: la build e le prove native Windows sono state
+  tolte dai workflow. Il codice di installazione e aggiornamento per Windows
+  (`scripts/fork/install-windows.ps1`, `windows-smoke.ps1`, `fork-windows-builder.ts`)
+  resta nel repository ma non viene compilato né pubblicato.
 - **Fork - sync with upstream** propone solo release stabili pubblicate tramite
   pull request. Se trova conflitti apre una bozza; non aggiorna `fork/main` e
   non avvia build. Le prove coprono proposta riuscita, conflitti, rilancio senza

@@ -25,6 +25,7 @@ import { ensureIsolatedDefault } from "../usage/fork-isolated-default";
 import { validateSessionAccount } from "../usage/session-account/session-account";
 import { agentAccountOptions } from "./account-selection";
 import { forkBackgroundChatProcedures } from "./fork-background-chats";
+import { forkBackgroundOutputProcedures } from "./fork-background-output";
 import { forkChatAccountProcedures } from "./fork-chat-account";
 import { forkContextBreakdownProcedures } from "./fork-context-breakdown";
 import {
@@ -267,4 +268,5 @@ export const forkAgentProcedures = {
 	...forkChatAccountProcedures,
 	...forkQuotaRecoveryProcedures,
 	...forkContextBreakdownProcedures,
+	...forkBackgroundOutputProcedures,
 };

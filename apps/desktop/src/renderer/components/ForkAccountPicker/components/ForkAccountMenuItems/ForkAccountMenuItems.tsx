@@ -1,6 +1,7 @@
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import { formatDate } from "@superset/i18n/format";
+import { ACCOUNT_QUOTA_PROVIDER_MS } from "@superset/shared/fork-account-usage";
 import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -9,13 +10,17 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { LuCheck, LuPlus, LuRefreshCw, LuSettings2 } from "react-icons/lu";
 import { forkAccountLabel } from "renderer/lib/fork-account-label";
 import { ForkUsageStatus } from "../../../ForkUsageStatus";
 import { ForkUsageSummary } from "../../../ForkUsageSummary";
 import { useForkAccountChoices } from "../../useForkAccountChoices";
 import type { useForkCreationAccount } from "../../useForkCreationAccount";
+import {
+	forkReconnectTarget,
+	needsReconnect,
+} from "./utils/forkReconnectTarget";
 
 export function ForkAccountMenuItems({
 	account,
@@ -33,7 +38,9 @@ export function ForkAccountMenuItems({
 	/** An account not to offer, such as the one a chat already uses. */
 	hidden?: string | null;
 }) {
+	const { t } = useLingui();
 	const navigate = useNavigate();
+	const [refreshing, setRefreshing] = useState(false);
 	const { choices, selected, suggested } = useForkAccountChoices(
 		account,
 		provider,
@@ -53,6 +60,9 @@ export function ForkAccountMenuItems({
 			<DropdownMenuLabel>
 				<Trans>Account</Trans>
 			</DropdownMenuLabel>
+			<p className="px-2 pb-2 text-[11px] text-muted-foreground">
+				<Trans>Quota used: outer ring 5h, inner ring weekly.</Trans>
+			</p>
 			{account.options.isSuccess && choices.length === 0 && (
 				<p className="px-2 py-2 text-xs text-muted-foreground">
 					<Trans>Add an account to start chatting.</Trans>
@@ -64,7 +74,14 @@ export function ForkAccountMenuItems({
 					<div key={option.selection ?? "system"}>
 						{option.selection === null && <DropdownMenuSeparator />}
 						<DropdownMenuItem
-							onSelect={() => account.choose(option.selection)}
+							onSelect={() => {
+								const target =
+									canSignIn && needsReconnect(usage)
+										? forkReconnectTarget(provider, option, usage)
+										: null;
+								if (target) afterClose(() => account.setReconnect(target));
+								else account.choose(option.selection);
+							}}
 							className="grid cursor-pointer grid-cols-[1rem_minmax(0,1fr)] items-start gap-x-2 gap-y-1 py-1.5"
 						>
 							<LuCheck
@@ -122,18 +139,13 @@ export function ForkAccountMenuItems({
 					<DropdownMenuItem
 						onSelect={() =>
 							afterClose(() =>
-								account.setReconnect({
-									agent: provider,
-									credentialKind:
-										selected.usage?.credentialKind === "api_key"
-											? "api_key"
-											: "subscription",
-									selection: selected.option.selection,
-									label:
-										selected.option.alias ??
-										selected.usage?.email ??
-										selected.option.label,
-								}),
+								account.setReconnect(
+									forkReconnectTarget(
+										provider,
+										selected.option,
+										selected.usage,
+									),
+								),
 							)
 						}
 					>
@@ -149,15 +161,52 @@ export function ForkAccountMenuItems({
 				</DropdownMenuItem>
 			)}
 			<DropdownMenuItem
+				disabled={refreshing}
 				onSelect={(event) => {
 					event.preventDefault();
+					const startedAt = Date.now();
+					setRefreshing(true);
 					void account.quota
 						.refresh()
-						.catch((error) => toast.error(errorMessage(error)));
+						.then((rows) => {
+							const checked = (rows ?? []).filter(
+								(row) => row.agent === provider && row.status !== "signed_out",
+							);
+							const latest = Math.max(
+								0,
+								...checked.map((row) => row.fetchedAt.getTime()),
+							);
+							if (checked.length === 0 || latest >= startedAt) return;
+							const nextAt = latest + ACCOUNT_QUOTA_PROVIDER_MS;
+							if (nextAt > Date.now()) {
+								const next = formatDate(new Date(nextAt), {
+									hour: "numeric",
+									minute: "2-digit",
+								});
+								toast.info(
+									t({
+										message: `Usage is read at most every 5 minutes per account. Next update at ${next}.`,
+									}),
+								);
+							} else
+								toast.warning(
+									t({
+										message:
+											"The provider returned no new usage. The last known values are shown.",
+									}),
+								);
+						})
+						.catch((error) => toast.error(errorMessage(error)))
+						.finally(() => setRefreshing(false));
 				}}
 			>
-				<LuRefreshCw className="size-3.5 shrink-0 text-muted-foreground" />
-				<Trans>Refresh</Trans>
+				<LuRefreshCw
+					className={cn(
+						"size-3.5 shrink-0 text-muted-foreground",
+						refreshing && "animate-spin",
+					)}
+				/>
+				{refreshing ? <Trans>Refreshing…</Trans> : <Trans>Refresh</Trans>}
 				{date && (
 					<span className="ml-auto text-[10px] text-muted-foreground">
 						<Trans>Updated {date}</Trans>

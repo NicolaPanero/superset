@@ -42,6 +42,7 @@ export function BackgroundWorkRow({
 			<button
 				type="button"
 				onClick={() => onOpen(work)}
+				title={[label, subtitle].filter(Boolean).join("\n")}
 				className="flex min-w-0 flex-1 items-center gap-2 rounded-sm text-left outline-none focus-visible:ring-1 focus-visible:ring-ring"
 			>
 				<Icon className="size-3.5 shrink-0 text-muted-foreground" />

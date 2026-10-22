@@ -13,16 +13,27 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { LuZap } from "react-icons/lu";
-import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
+import {
+	type ForkJiraTaskFilters,
+	forkJiraQuery,
+} from "../ForkJiraTasks/fork-jira-query";
+import { useForkJiraBoardContext } from "../ForkJiraTasks/hooks/useForkJiraBoardContext";
+import {
+	type ForkJiraAgentChoice,
+	ForkJiraAutomationAgent,
+} from "./components/ForkJiraAutomationAgent";
+import { ForkJiraAutomationFilters } from "./components/ForkJiraAutomationFilters";
 
 export function ForkJiraAutomations({
 	connectionId,
 	jql,
+	initialFilters,
 }: {
 	connectionId: string;
 	jql: string;
+	initialFilters: ForkJiraTaskFilters;
 }) {
 	const { t } = useLingui();
 	const { client, hostUrl, data } = useForkConnections();
@@ -32,10 +43,46 @@ export function ForkJiraAutomations({
 	const [name, setName] = useState("");
 	const [query, setQuery] = useState("");
 	const [projectId, setProjectId] = useState("");
-	const [agent, setAgent] = useState("");
+	const [choice, setChoice] = useState<ForkJiraAgentChoice>({
+		agent: "",
+		surface: "chat",
+	});
+	const [filters, setFilters] = useState<ForkJiraTaskFilters>({
+		...initialFilters,
+		forkJql: undefined,
+	});
+	const [advanced, setAdvanced] = useState(!!initialFilters.forkJql);
+	const launchSupported = (data?.version ?? 0) >= 6;
+	const boardContext = useForkJiraBoardContext(
+		open ? connectionId : "",
+		filters.forkJiraBoard,
+		filters.forkJiraProject,
+	);
+	const jiraProjects = useQuery({
+		queryKey: ["fork-integrations", hostUrl, "jira-projects", connectionId],
+		queryFn: () => required(client).forkTasks.projects.query({ connectionId }),
+		enabled: open && !!client,
+		retry: false,
+	});
+	const filtersUnavailable =
+		jiraProjects.isFetching ||
+		jiraProjects.isError ||
+		boardContext.isFetching ||
+		(!!filters.forkJiraBoard && !boardContext.data?.board?.filterId);
+	const generatedQuery = forkJiraQuery({
+		search: filters.search ?? "",
+		scope: filters.forkScope ?? "mine",
+		status: filters.forkStatus ?? "open",
+		project: filters.forkJiraProject ?? "",
+		jql: "",
+		projectKeys: jiraProjects.data?.map((p) => p.key),
+		sprint: filters.forkSprint,
+		issueType: filters.forkIssueType,
+		parent: filters.forkParent,
+		boardFilter: boardContext.data?.board?.filterId ?? undefined,
+	});
 	const [prompt, setPrompt] = useState("");
 	const [historyId, setHistoryId] = useState("");
-	const { data: agents = [] } = useV2AgentConfigs(open ? hostUrl : null);
 	const rules = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "automations", connectionId],
 		queryFn: () =>
@@ -73,8 +120,17 @@ export function ForkJiraAutomations({
 					connectionId,
 					projectId,
 					name,
-					jql: query,
-					agent,
+					jql: advanced ? query : generatedQuery,
+					agent: choice.agent,
+					...(launchSupported
+						? {
+								launch: {
+									surface: choice.surface,
+									model: choice.model,
+									accountSelection: choice.accountSelection,
+								},
+							}
+						: {}),
 					prompt,
 				});
 			if (action.kind === "enable")
@@ -106,6 +162,8 @@ export function ForkJiraAutomations({
 				title={t({ message: "Automations" })}
 				onClick={() => {
 					setQuery(jql);
+					setFilters({ ...initialFilters, forkJql: undefined });
+					setAdvanced(!!initialFilters.forkJql);
 					setOpen(true);
 				}}
 			>
@@ -128,9 +186,19 @@ export function ForkJiraAutomations({
 							Rules are saved paused.
 						</Trans>
 					</p>
-					{(rules.error || projects.error || mutation.error) && (
+					{(rules.error ||
+						projects.error ||
+						jiraProjects.error ||
+						mutation.error) && (
 						<p role="alert" className="text-sm text-destructive">
-							{(rules.error ?? projects.error ?? mutation.error)?.message}
+							{
+								(
+									rules.error ??
+									projects.error ??
+									jiraProjects.error ??
+									mutation.error
+								)?.message
+							}
 						</p>
 					)}
 					<div className="space-y-2">
@@ -176,6 +244,16 @@ export function ForkJiraAutomations({
 										<Trans>Delete</Trans>
 									</Button>
 								</div>
+								{rule.launch && (
+									<p className="text-xs text-muted-foreground">
+										{rule.launch.surface === "chat" ? (
+											<Trans>ACP chat</Trans>
+										) : (
+											<Trans>Terminal</Trans>
+										)}
+										{rule.launch.model ? ` · ${rule.launch.model}` : ""}
+									</p>
+								)}
 								<p className="break-all font-mono text-xs text-muted-foreground">
 									{rule.jql}
 								</p>
@@ -243,13 +321,56 @@ export function ForkJiraAutomations({
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						/>
-						<Label htmlFor="jira-rule-query">JQL</Label>
-						<Textarea
-							id="jira-rule-query"
-							required
-							value={query}
-							onChange={(e) => setQuery(e.target.value)}
-						/>
+						<div className="flex gap-2">
+							<Button
+								type="button"
+								size="sm"
+								variant={!advanced ? "secondary" : "ghost"}
+								aria-pressed={!advanced}
+								onClick={() => setAdvanced(false)}
+							>
+								<Trans>Filters</Trans>
+							</Button>
+							<Button
+								type="button"
+								size="sm"
+								variant={advanced ? "secondary" : "ghost"}
+								aria-pressed={advanced}
+								disabled={!advanced && filtersUnavailable}
+								onClick={() => {
+									if (!advanced) setQuery(generatedQuery);
+									setAdvanced(true);
+								}}
+							>
+								JQL
+							</Button>
+						</div>
+						{advanced ? (
+							<>
+								<Label htmlFor="jira-rule-query">JQL</Label>
+								<Textarea
+									id="jira-rule-query"
+									required
+									value={query}
+									onChange={(e) => setQuery(e.target.value)}
+								/>
+							</>
+						) : (
+							<ForkJiraAutomationFilters
+								filters={filters}
+								update={(patch) =>
+									setFilters((current) => ({ ...current, ...patch }))
+								}
+								projects={jiraProjects.data ?? []}
+								context={boardContext}
+							/>
+						)}
+						{!advanced && (
+							<p className="break-all font-mono text-xs text-muted-foreground">
+								{generatedQuery}
+							</p>
+						)}
+
 						<Label htmlFor="jira-rule-project">
 							<Trans>Project</Trans>
 						</Label>
@@ -267,23 +388,11 @@ export function ForkJiraAutomations({
 								</option>
 							))}
 						</select>
-						<Label htmlFor="jira-rule-agent">
-							<Trans>Agent</Trans>
-						</Label>
-						<select
-							id="jira-rule-agent"
-							required
-							className="h-9 w-full rounded-md border bg-background px-2 text-sm"
-							value={agent}
-							onChange={(e) => setAgent(e.target.value)}
-						>
-							<option value="" />
-							{agents.map((config) => (
-								<option key={config.id} value={config.id}>
-									{config.label}
-								</option>
-							))}
-						</select>
+						<ForkJiraAutomationAgent
+							value={choice}
+							onChange={setChoice}
+							supported={launchSupported}
+						/>
 						<Label htmlFor="jira-rule-prompt">
 							<Trans>Instructions</Trans>
 						</Label>
@@ -294,7 +403,10 @@ export function ForkJiraAutomations({
 							onChange={(e) => setPrompt(e.target.value)}
 							placeholder={t({ message: "Describe what the agent should do" })}
 						/>
-						<Button type="submit" disabled={mutation.isPending}>
+						<Button
+							type="submit"
+							disabled={mutation.isPending || (!advanced && filtersUnavailable)}
+						>
 							<Trans>Save</Trans>
 						</Button>
 					</form>

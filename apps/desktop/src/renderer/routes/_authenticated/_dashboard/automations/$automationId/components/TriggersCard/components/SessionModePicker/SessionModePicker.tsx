@@ -55,7 +55,7 @@ export function SessionModePicker({
 					<DropdownMenuRadioItem value="new">
 						{i18n._(
 							msg({
-								message: "Start a new agent session each run",
+								message: "Start a new chat each run",
 							}),
 						)}
 					</DropdownMenuRadioItem>
