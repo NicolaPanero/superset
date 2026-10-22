@@ -285,8 +285,19 @@ and releases. These rules apply to every agent:
   `Nicola Panero <panero.nicola01.np@gmail.com>`.
 - Several agents can share this checkout. Stage your own files by path, and never reset,
   check out or delete changes you did not make.
-- Keep fork code in fork-owned files (`fork-*`, `scripts/fork/`, `FORK.md`) and keep the hooks
-  in upstream files small, as `FORK.md` ("Riduzione dei conflitti") explains.
+- Keep every change as far from upstream as possible. "Upstream" is `superset-sh/superset`, the
+  original project this fork was copied from (git remote `upstream`). The fork merges its
+  releases, and each upstream file that the fork edits can cause a merge conflict.
+  - Put new logic in new fork-owned files (`fork-*`, `Fork*`, `scripts/fork/`, `docs/fork-*`)
+    and put its tests there too.
+  - In an upstream file, make the smallest hook: one import and one call, a new optional
+    parameter at the end, or a `...fork` spread. Do not reformat, rename, move, reorder or clean
+    up upstream code. Do not delete upstream code when a hook can replace the call.
+  - Do not edit upstream tests. Add a `fork-*.test.ts` file.
+  - Before you finish, list the upstream files you changed:
+    `git diff --numstat fork/main...HEAD | grep -vi fork`. If one file has more than about 10
+    added lines, check if the logic can move into a fork file. `FORK.md` ("Riduzione dei conflitti") shows
+    the existing hook patterns.
 - Every PR to `fork/main` ships a release, so update the "what's new" popup in
   `apps/desktop/src/renderer/components/ForkWhatsNewNotice/ForkWhatsNewNotice.tsx` in the same PR:
   replace the highlights with the PR's main user-visible features (3–5 lines, English source,
