@@ -21,7 +21,7 @@ function fixture(running = true, awaitingBackground = false) {
 			...emptySnapshot(),
 			session: {
 				status: running ? "running" : "idle",
-					harness: "acp:test",
+				harness: "acp:test",
 				awaitingBackground,
 				queueControls: true,
 			},
