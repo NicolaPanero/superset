@@ -7963,6 +7963,9 @@ msgstr "파일 및 편집기"
 msgid "Files changed"
 msgstr "변경된 파일"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "숨김 폴더 안의 파일도 이제 채팅 링크로 열립니다."
+
 msgid "files to exclude (glob)"
 msgstr "제외할 파일(glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "리치 입력 ({hotkeyText})"
 
 msgid "right pane"
 msgstr "오른쪽 패널"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "채팅의 파일을 마우스 오른쪽 버튼으로 클릭하면 열거나 Finder에서 볼 수 있습니다."
 
 msgid "Right-click here"
 msgstr "여기를 오른쪽 클릭"

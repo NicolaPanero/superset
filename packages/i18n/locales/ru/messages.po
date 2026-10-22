@@ -7963,6 +7963,9 @@ msgstr "Файлы и редактор"
 msgid "Files changed"
 msgstr "Изменённые файлы"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "Файлы в скрытых папках теперь открываются по ссылкам из чата."
+
 msgid "files to exclude (glob)"
 msgstr "исключаемые файлы (glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "Расширенный ввод ({hotkeyText})"
 
 msgid "right pane"
 msgstr "правая панель"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "Щёлкните файл в чате правой кнопкой мыши, чтобы открыть его или показать в Finder."
 
 msgid "Right-click here"
 msgstr "Кликните здесь правой кнопкой"

@@ -7963,6 +7963,9 @@ msgstr "File ed editor"
 msgid "Files changed"
 msgstr "File modificati"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "I file nelle cartelle nascoste ora si aprono dai link della chat."
+
 msgid "files to exclude (glob)"
 msgstr "file da escludere (glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "Input avanzato ({hotkeyText})"
 
 msgid "right pane"
 msgstr "riquadro destro"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "Fai clic con il tasto destro su un file in una chat per aprirlo o mostrarlo nel Finder."
 
 msgid "Right-click here"
 msgstr "Clicca qui con il tasto destro"
