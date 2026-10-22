@@ -102,5 +102,13 @@ export async function resolveFileReference({
 	preferredRelativePaths?: readonly string[];
 }): Promise<FileReferenceMatch | null> {
 	const files = await getSearchIndex({ rootPath, includeHidden: false });
-	return pickFileReference(files, reference, rootPath, preferredRelativePaths);
+	return (
+		pickFileReference(files, reference, rootPath, preferredRelativePaths) ??
+		pickFileReference(
+			await getSearchIndex({ rootPath, includeHidden: true }),
+			reference,
+			rootPath,
+			preferredRelativePaths,
+		)
+	);
 }

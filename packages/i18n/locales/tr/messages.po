@@ -7963,6 +7963,9 @@ msgstr "Dosyalar ve Düzenleyici"
 msgid "Files changed"
 msgstr "Değişen dosyalar"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "Gizli klasörlerdeki dosyalar artık sohbet bağlantılarından açılıyor."
+
 msgid "files to exclude (glob)"
 msgstr "hariç tutulacak dosyalar (glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "Zengin giriş ({hotkeyText})"
 
 msgid "right pane"
 msgstr "sağ panel"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "Sohbetteki bir dosyaya sağ tıklayarak onu açabilir veya Finder’da gösterebilirsiniz."
 
 msgid "Right-click here"
 msgstr "Buraya sağ tıklayın"

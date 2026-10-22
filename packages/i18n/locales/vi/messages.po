@@ -7963,6 +7963,9 @@ msgstr "Tệp và trình soạn thảo"
 msgid "Files changed"
 msgstr "Tệp đã thay đổi"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "Tệp trong thư mục ẩn giờ đã mở được từ liên kết trò chuyện."
+
 msgid "files to exclude (glob)"
 msgstr "tệp cần loại trừ (glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "Nhập nâng cao ({hotkeyText})"
 
 msgid "right pane"
 msgstr "ngăn bên phải"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "Nhấp chuột phải vào một tệp trong cuộc trò chuyện để mở hoặc hiện nó trong Finder."
 
 msgid "Right-click here"
 msgstr "Nhấp chuột phải ở đây"

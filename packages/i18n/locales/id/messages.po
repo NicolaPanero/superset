@@ -7963,6 +7963,9 @@ msgstr "File & Editor"
 msgid "Files changed"
 msgstr "File yang berubah"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "File di folder tersembunyi kini bisa dibuka dari tautan chat."
+
 msgid "files to exclude (glob)"
 msgstr "file yang dikecualikan (glob)"
 
@@ -15126,6 +15129,9 @@ msgstr "Input kaya ({hotkeyText})"
 
 msgid "right pane"
 msgstr "panel kanan"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "Klik kanan file di chat untuk membukanya atau menampilkannya di Finder."
 
 msgid "Right-click here"
 msgstr "Klik kanan di sini"

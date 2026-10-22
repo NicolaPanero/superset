@@ -10,6 +10,7 @@ const suiteRoots = [
 	"packages/host-service/src",
 	"packages/host-service/test/integration",
 	"packages/chat-runtime/src",
+	"packages/workspace-fs/src",
 ];
 const extra = [
 	"apps/desktop/src/renderer/lib/editor-typography.test.ts",

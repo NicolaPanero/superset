@@ -7963,6 +7963,9 @@ msgstr "檔案與編輯器"
 msgid "Files changed"
 msgstr "更改的檔案"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "現在可以從聊天連結開啟隱藏資料夾中的檔案。"
+
 msgid "files to exclude (glob)"
 msgstr "排除的檔案（glob）"
 
@@ -15126,6 +15129,9 @@ msgstr "富輸入（{hotkeyText}）"
 
 msgid "right pane"
 msgstr "右側面板"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "在聊天中對檔案按右鍵，即可開啟或在 Finder 中顯示。"
 
 msgid "Right-click here"
 msgstr "在這裡右鍵點選"

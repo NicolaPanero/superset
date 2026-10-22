@@ -80,11 +80,10 @@ test("a superseded push skips platform builds, while the latest push remains eli
 	expect(current.output).toContain("build=true");
 });
 test("a completed build cannot publish after fork/main moves forward", () => {
-	const result = runStep(
-		"publish",
-		"Publish the verified build",
-		{ TEST_HEAD: "abcdef0123456789", SHA: "1111111111111111" },
-	);
+	const result = runStep("publish", "Publish the verified build", {
+		TEST_HEAD: "abcdef0123456789",
+		SHA: "1111111111111111",
+	});
 	expect(result.code).toBe(0);
 	expect(result.stdout).toContain("Skipping outdated release");
 	expect(result.stderr).not.toContain("Unexpected GitHub mutation");

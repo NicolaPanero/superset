@@ -5,6 +5,7 @@ import { FileIcon } from "renderer/lib/fileIcons";
 import { useIsInsideChatLink } from "../../providers/ChatLinkProvider";
 import { useChatPaneActions } from "../../providers/ChatPaneActionsProvider";
 import { isLocalPathText, pathFileName } from "../../utils/pathText";
+import { ForkChatFileMenu } from "../ForkChatFileMenu";
 
 const PlainInlineCode = chatMarkdownComponents.inlineCode;
 const FILE_CHIP_CLASSNAME =
@@ -44,7 +45,7 @@ export function ChatInlineCode(props: ComponentProps<typeof PlainInlineCode>) {
 			clientY: bottom,
 		});
 	};
-	return (
+	const chip = (
 		<code
 			{...rest}
 			className={cn(
@@ -64,5 +65,10 @@ export function ChatInlineCode(props: ComponentProps<typeof PlainInlineCode>) {
 			<FileIcon className="size-3.5 shrink-0 self-center" fileName={fileName} />
 			{children}
 		</code>
+	);
+	return openable ? (
+		<ForkChatFileMenu text={text}>{chip}</ForkChatFileMenu>
+	) : (
+		chip
 	);
 }

@@ -7963,6 +7963,9 @@ msgstr "ファイルとエディター"
 msgid "Files changed"
 msgstr "変更されたファイル"
 
+msgid "Files in hidden folders now open from chat links."
+msgstr "非表示フォルダ内のファイルも、チャットのリンクから開けるようになりました。"
+
 msgid "files to exclude (glob)"
 msgstr "除外するファイル（glob）"
 
@@ -15126,6 +15129,9 @@ msgstr "リッチ入力 ({hotkeyText})"
 
 msgid "right pane"
 msgstr "右ペイン"
+
+msgid "Right-click a file in a chat to open it or show it in Finder."
+msgstr "チャット内のファイルを右クリックすると、開くか Finder で表示できます。"
 
 msgid "Right-click here"
 msgstr "ここを右クリック"

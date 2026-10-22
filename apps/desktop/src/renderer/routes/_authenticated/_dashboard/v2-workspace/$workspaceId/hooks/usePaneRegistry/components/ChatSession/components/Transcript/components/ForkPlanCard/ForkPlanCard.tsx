@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { normalizePlanEntryStatus, type Plan } from "@superset/chat/protocol";
-import { Button } from "@superset/ui/button";
 import { Badge } from "@superset/ui/badge";
+import { Button } from "@superset/ui/button";
 import {
 	Sheet,
 	SheetContent,
@@ -88,7 +88,11 @@ export function ForkPlanCard({ item }: { item: PlanDocument }) {
 							<PanelRightOpen className="size-4" />
 						</Button>
 					</SheetTrigger>
-					{item.removed && <Badge variant="secondary"><Trans>Archived</Trans></Badge>}
+					{item.removed && (
+						<Badge variant="secondary">
+							<Trans>Archived</Trans>
+						</Badge>
+					)}
 				</div>
 				{total > 0 && (
 					<div
