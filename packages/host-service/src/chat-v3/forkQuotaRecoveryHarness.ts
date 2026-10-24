@@ -6,11 +6,7 @@ import type {
 } from "@superset/chat-runtime";
 import type { HostDb } from "../db";
 import { agentAccountOptions } from "../trpc/router/agents/account-selection";
-import {
-	assertIsolatedAccount,
-	isolatedAccountQuota,
-} from "../trpc/router/usage/fork-isolated-accounts";
-import { getQuota } from "../trpc/router/usage/fork-quota-cache";
+import { assertIsolatedAccount } from "../trpc/router/usage/fork-isolated-accounts";
 import {
 	type SessionAccount,
 	validateSessionAccount,
@@ -25,6 +21,7 @@ import {
 	recoveryKey,
 	writeRecovery,
 } from "./forkQuotaRecoveryStore";
+import { forkRecoveryQuota } from "./forkRecoveryQuota";
 
 export function forkQuotaRecoveryHarness(
 	db: HostDb,
@@ -77,7 +74,7 @@ export function forkQuotaRecoveryHarness(
 				!!account &&
 				account.agent === agent &&
 				(await validateSessionAccount(account)),
-			quota: async () => isolatedAccountQuota(await getQuota(true)),
+			quota: () => forkRecoveryQuota(agent, account),
 			move: async (sessionId, selection) => {
 				if (!account || !(await validateSessionAccount(account)))
 					throw new Error("source_account_unverified");

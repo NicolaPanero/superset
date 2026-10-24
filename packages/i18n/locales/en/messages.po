@@ -3129,6 +3129,9 @@ msgstr "Binary file hidden"
 msgid "Bio"
 msgstr "Bio"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Bitbucket pull requests now open in workspace panes."
+
 msgid "Block"
 msgstr "Block"
 
@@ -3869,6 +3872,9 @@ msgstr "Choose how the Changes view opens from the top bar"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Choose how to open file paths when Cmd+clicking in the terminal"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Choose models discovered directly from your agents."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choose what to clear from the in-app browser."
 
@@ -4370,9 +4376,6 @@ msgstr "Command..."
 
 msgid "Commands"
 msgstr "Commands"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Commands and MCP tools run without permission prompts in Plan."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Commands run for workspace setup, teardown, and the Run button."
@@ -6727,6 +6730,9 @@ msgstr "Download {name}"
 msgid "Download app"
 msgstr "Download app"
 
+msgid "Download chat responses as Markdown."
+msgstr "Download chat responses as Markdown."
+
 msgid "Download failed"
 msgstr "Download failed"
 
@@ -6747,6 +6753,9 @@ msgstr "Download logs"
 
 msgid "Download Manually"
 msgstr "Download Manually"
+
+msgid "Download Markdown"
+msgstr "Download Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Download our logos and product images for use in coverage of Superset."
@@ -7962,9 +7971,6 @@ msgstr "Files & Editor"
 
 msgid "Files changed"
 msgstr "Files changed"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Files in hidden folders now open from chat links."
 
 msgid "files to exclude (glob)"
 msgstr "files to exclude (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Link ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Link a GitHub repository on the project first to enable cloning."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Link Bitbucket pull requests when creating a workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Loading issues…"
 
 msgid "Loading members..."
 msgstr "Loading members..."
+
+msgid "Loading models…"
+msgstr "Loading models…"
 
 msgid "Loading more..."
 msgstr "Loading more..."
@@ -10685,6 +10697,9 @@ msgstr "Merge status"
 msgid "Merge status unknown"
 msgstr "Merge status unknown"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Merge, drafts and review comments now work with Bitbucket."
+
 msgid "Merged"
 msgstr "Merged"
 
@@ -10826,6 +10841,12 @@ msgstr "Model-suggested code appears in a majority of new files."
 
 msgid "Models"
 msgstr "Models"
+
+msgid "Models provided by the agent"
+msgstr "Models provided by the agent"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Models unavailable. Check the agent and host."
 
 msgid "Models used"
 msgstr "Models used"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan now includes full access to tools."
-
 msgid "Plan progress"
 msgstr "Plan progress"
 
@@ -13975,9 +13993,6 @@ msgstr "Question"
 
 msgid "Questions"
 msgstr "Questions"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Questions and final plan approval still wait for your answer."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
@@ -15129,9 +15144,6 @@ msgstr "Rich input ({hotkeyText})"
 
 msgid "right pane"
 msgstr "right pane"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Right-click a file in a chat to open it or show it in Finder."
 
 msgid "Right-click here"
 msgstr "Right-click here"
@@ -18192,6 +18204,12 @@ msgstr "The local host service just came up. Reconnecting to it now."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "The majority of merged agent PRs need review only, with zero human edits."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "The model connection timed out. Continue from the last saved part."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "The model provider reported an error. Wait and retry, or switch models."
+
 msgid "The name of your organization or team"
 msgstr "The name of your organization or team"
 
@@ -18554,6 +18572,9 @@ msgstr "This Mac"
 
 msgid "This machine"
 msgstr "This machine"
+
+msgid "This merge method is not available for the repository."
+msgstr "This merge method is not available for the repository."
 
 msgid "This message cannot be used as a restart point."
 msgstr "This message cannot be used as a restart point."
@@ -19452,6 +19473,9 @@ msgstr "Update Superset on this machine to attach files"
 
 msgid "update the branch prefix"
 msgstr "update the branch prefix"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Update the host to use Bitbucket drafts."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Update this host for guided setup, or use advanced configuration."

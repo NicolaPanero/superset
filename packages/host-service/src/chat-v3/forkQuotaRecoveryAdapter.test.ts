@@ -22,6 +22,7 @@ import type {
 	RecoverySettings,
 	RecoveryStatus,
 } from "./forkQuotaRecoveryStore";
+import { forkRecoveryQuota } from "./forkRecoveryQuota";
 
 const NOW = 1_800_000_000_000;
 function quota(
@@ -1503,3 +1504,106 @@ for (const agent of ["claude", "codex"] as const) {
 		});
 	}
 }
+
+test("reset continuation renews a stale login on the host without reopening the workspace", async () => {
+	let time = NOW;
+	let renewed = false;
+	const probes: unknown[] = [];
+	const source: SessionAccount = {
+		agent: "claude",
+		selection: null,
+		credentialKind: "subscription",
+		identity: "identity",
+	};
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: true },
+		{
+			now: () => time,
+			quota: () =>
+				forkRecoveryQuota("claude", source, {
+					read: async () => [
+						quota(null, renewed ? 10 : 100, {
+							status: time === NOW || renewed ? "ok" : "token_stale",
+							fetchedAt: new Date(time),
+							windows: [
+								{
+									id: "five_hour",
+									label: "Session",
+									usedPercent: renewed ? 10 : 100,
+									resetsAt: new Date(time + 300_000),
+								},
+							],
+						}),
+					],
+					probe: async (agent, selection) => {
+						probes.push({ agent, selection });
+						renewed = true;
+						return { status: "checked" };
+					},
+					validate: async () => true,
+				}),
+			wait: async (ms) => {
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(probes).toEqual([{ agent: "claude", selection: null }]);
+		expect(f.moves).toEqual([]);
+		expect(f.worker(1).prompts[0]?.[0]).toMatchObject({
+			type: "text",
+			text: expect.stringContaining("Continue the interrupted task"),
+		});
+	} finally {
+		await f.close();
+	}
+});
+
+test.each([
+	1, 2,
+])("a temporary quota-read failure keeps reset continuation scheduled without a UI refresh (read %s)", async (failedRead) => {
+	let time = NOW;
+	let reads = 0;
+	const f = fixture(
+		{ switchAccounts: false, resumeAtReset: true },
+		{
+			now: () => time,
+			quota: async () => {
+				if (++reads === failedRead)
+					throw new Error("network temporarily unavailable");
+				if (reads < failedRead) return [quota(null, 100)];
+				return [
+					quota(null, 10, {
+						fetchedAt: new Date(time),
+						windows: [
+							{
+								id: "five_hour",
+								label: "Session",
+								usedPercent: 10,
+								resetsAt: new Date(time + 300_000),
+							},
+						],
+					}),
+				];
+			},
+			wait: async (ms) => {
+				time += ms;
+			},
+		},
+	);
+	try {
+		await until(() => f.events.length > 0);
+		f.adapter.prompt([{ type: "text", text: "task" }]);
+		f.worker(0).fail();
+		await until(() => f.workers[1]?.prompts.length === 1);
+		expect(reads).toBe(failedRead + 1);
+		expect(time - NOW).toBe(failedRead * 300_000);
+		expect(f.moves).toEqual([]);
+	} finally {
+		await f.close();
+	}
+});

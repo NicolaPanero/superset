@@ -207,6 +207,7 @@ export function useSubmitWorkspace(
 						? {
 								agent: selectedAgent,
 								model: selectedModel ?? undefined,
+								modelCatalog: "agent" as const,
 								effort: selectedEffort ?? undefined,
 								mode: selectedMode ?? undefined,
 								accountSelection: accountLaunch?.selection,
@@ -301,7 +302,8 @@ export function useSubmitWorkspace(
 						prompt: finalPrompt ?? "",
 						attachmentIds: attachmentIds.length > 0 ? attachmentIds : undefined,
 						model: selectedModel ?? undefined,
-						effort: openAsChat ? undefined : (selectedEffort ?? undefined),
+						modelCatalog: "agent" as const,
+						effort: selectedEffort ?? undefined,
 						mode: selectedMode ?? undefined,
 						accountSelection: accountLaunch?.selection,
 						...(openAsChat ? { surface: "chat" as const } : {}),

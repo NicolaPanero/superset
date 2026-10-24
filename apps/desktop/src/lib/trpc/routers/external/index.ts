@@ -15,6 +15,7 @@ import { z } from "zod";
 import { publicProcedure, router } from "../..";
 import { getWorkspace } from "../workspaces/utils/db-helpers";
 import { getWorkspacePath } from "../workspaces/utils/worktree";
+import { forkChooseAndOpenEditor } from "./fork-editor-choice";
 import {
 	type ExternalApp,
 	getAppCommand,
@@ -338,10 +339,11 @@ export const createExternalRouter = () => {
 					const app = input.app ?? resolveDefaultEditor(input.projectId);
 
 					if (!app) {
-						// No preferred editor configured yet.
-						// Fall back to OS default file handler so Cmd/Ctrl+click still works
-						// even when Cursor (or any specific editor) isn't installed.
-						await shell.openPath(filePath);
+						await forkChooseAndOpenEditor(
+							filePath,
+							openPathInApp,
+							ensureGlobalDefaultEditor,
+						);
 						return;
 					}
 

@@ -3129,6 +3129,9 @@ msgstr "バイナリファイルは非表示"
 msgid "Bio"
 msgstr "自己紹介"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Bitbucket のプルリクエストが workspace のペインで開くようになりました。"
+
 msgid "Block"
 msgstr "ブロック"
 
@@ -3869,6 +3872,9 @@ msgstr "トップバーから変更ビューをどのように開くかを選択
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "ターミナルでCmd+クリックしたときのファイルパスの開き方"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "エージェントから直接取得したモデルを選択できます。"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
 
@@ -4370,9 +4376,6 @@ msgstr "コマンド..."
 
 msgid "Commands"
 msgstr "コマンド"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Planでは、コマンドとMCPツールが権限の確認なしで実行されます。"
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "ワークスペースのセットアップ、ティアダウン、実行ボタンで実行されるコマンド。"
@@ -6727,6 +6730,9 @@ msgstr "{name}をダウンロード"
 msgid "Download app"
 msgstr "アプリをダウンロード"
 
+msgid "Download chat responses as Markdown."
+msgstr "チャットの回答をMarkdownとしてダウンロードできます。"
+
 msgid "Download failed"
 msgstr "ダウンロードに失敗しました"
 
@@ -6747,6 +6753,9 @@ msgstr "ログをダウンロード"
 
 msgid "Download Manually"
 msgstr "手動でダウンロード"
+
+msgid "Download Markdown"
+msgstr "Markdownをダウンロード"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Superset に関する報道でご利用いただけるロゴと製品画像をダウンロードできます。"
@@ -7962,9 +7971,6 @@ msgstr "ファイルとエディター"
 
 msgid "Files changed"
 msgstr "変更されたファイル"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "非表示フォルダ内のファイルも、チャットのリンクから開けるようになりました。"
 
 msgid "files to exclude (glob)"
 msgstr "除外するファイル（glob）"
@@ -10083,6 +10089,9 @@ msgstr "リンク ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "クローンを有効にするには、先にプロジェクトにGitHubリポジトリをリンクしてください。"
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "workspace の作成時に Bitbucket のプルリクエストを関連付けられます。"
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Issueを読み込み中…"
 
 msgid "Loading members..."
 msgstr "メンバーを読み込み中..."
+
+msgid "Loading models…"
+msgstr "モデルを読み込み中…"
 
 msgid "Loading more..."
 msgstr "さらに読み込み中..."
@@ -10685,6 +10697,9 @@ msgstr "マージ状態"
 msgid "Merge status unknown"
 msgstr "マージ状態は不明です"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Bitbucket でマージ、下書き、レビューコメントが使えるようになりました。"
+
 msgid "Merged"
 msgstr "マージ済み"
 
@@ -10826,6 +10841,12 @@ msgstr "モデルが提案したコードが新規ファイルの過半数に現
 
 msgid "Models"
 msgstr "モデル"
+
+msgid "Models provided by the agent"
+msgstr "エージェントが提供するモデル"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "モデルを利用できません。エージェントとホストを確認してください。"
 
 msgid "Models used"
 msgstr "使用モデル"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "プラン"
 
-msgid "Plan now includes full access to tools."
-msgstr "Planでツールへのフルアクセスが利用できるようになりました。"
-
 msgid "Plan progress"
 msgstr "プランの進捗"
 
@@ -13975,9 +13993,6 @@ msgstr "質問"
 
 msgid "Questions"
 msgstr "よくある質問"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "質問と計画の最終承認には、引き続き回答が必要です。"
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "ご質問、フィードバック、サポート、その他何でも。メッセージをお送りいただければ、適切な担当者にお繋ぎします。"
@@ -15129,9 +15144,6 @@ msgstr "リッチ入力 ({hotkeyText})"
 
 msgid "right pane"
 msgstr "右ペイン"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "チャット内のファイルを右クリックすると、開くか Finder で表示できます。"
 
 msgid "Right-click here"
 msgstr "ここを右クリック"
@@ -18192,6 +18204,12 @@ msgstr "ローカルのホストサービスが起動しました。今すぐ再
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "マージされたエージェントのPRの過半数が、レビューのみで済み、人間の編集がゼロである。"
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "モデルへの接続がタイムアウトしました。最後に保存された部分から続けてください。"
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "モデルのプロバイダーがエラーを報告しました。しばらく待って再試行するか、モデルを切り替えてください。"
+
 msgid "The name of your organization or team"
 msgstr "組織またはチームの名前"
 
@@ -18554,6 +18572,9 @@ msgstr "このMac"
 
 msgid "This machine"
 msgstr "このマシン"
+
+msgid "This merge method is not available for the repository."
+msgstr "このリポジトリでは、このマージ方法は利用できません。"
 
 msgid "This message cannot be used as a restart point."
 msgstr "このメッセージは再開地点として使用できません。"
@@ -19452,6 +19473,9 @@ msgstr "ファイルを添付するには、このマシンでSupersetを更新�
 
 msgid "update the branch prefix"
 msgstr "ブランチのプレフィックスを更新する"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Bitbucket の下書きを使うにはホストを更新してください。"
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "ガイド付き設定を使用するにはホストを更新するか、詳細設定を使用してください。"

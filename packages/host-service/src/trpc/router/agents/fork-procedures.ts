@@ -33,10 +33,12 @@ import {
 	launchDetails,
 	terminalLaunchConfigId,
 } from "./fork-launch";
+import { forkModelCatalogProcedures } from "./fork-model-catalog";
 import { forkQuotaRecoveryProcedures } from "./fork-quota-recovery";
 
 /** The fork's agent procedures, served under the `agents` router. */
 export const forkAgentProcedures = {
+	...forkModelCatalogProcedures,
 	prepareCursorSurface: protectedProcedure
 		.input(
 			z.object({

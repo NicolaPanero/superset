@@ -13,11 +13,11 @@ export function UsageProgressRing({
 		? Math.min(100, Math.max(0, usedPercent))
 		: 0;
 	return (
-		<svg aria-hidden="true" viewBox="0 0 16 16" className="size-4" fill="none">
+		<svg aria-hidden="true" viewBox="0 0 24 24" className="size-6" fill="none">
 			<circle
-				cx="8"
-				cy="8"
-				r="6"
+				cx="12"
+				cy="12"
+				r="10.5"
 				stroke="currentColor"
 				strokeWidth="1.5"
 				opacity={unavailable ? 1 : 0.25}
@@ -25,15 +25,15 @@ export function UsageProgressRing({
 			/>
 			{!unavailable && percent > 0 && (
 				<circle
-					cx="8"
-					cy="8"
-					r="6"
+					cx="12"
+					cy="12"
+					r="10.5"
 					stroke="currentColor"
 					strokeWidth="1.5"
 					opacity={lastKnown ? 0.65 : undefined}
 					pathLength="100"
 					strokeDasharray={`${percent} 100`}
-					transform="rotate(-90 8 8)"
+					transform="rotate(-90 12 12)"
 				/>
 			)}
 		</svg>

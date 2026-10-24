@@ -265,6 +265,7 @@ export function useDashboardSidebarData({
 						name: project.name,
 						githubOwner: project.repoOwner,
 						githubRepoName: project.repoName,
+						repoUrl: project.repoUrl,
 						iconUrl: resolveProjectIconUrl(project),
 						color: project.color,
 						createdAt: new Date(project.createdAt),

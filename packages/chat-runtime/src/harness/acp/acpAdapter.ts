@@ -42,6 +42,7 @@ import {
 } from "./air";
 import { cursorApproval } from "./cursorExtensions";
 import { ForkCursorModelSelection } from "./forkCursorModelSelection";
+import { ForkCursorPromptFailure } from "./forkCursorPromptFailure";
 import {
 	fullAccessAllowOption,
 	fullAccessModes,
@@ -49,9 +50,14 @@ import {
 } from "./forkFullAccess";
 import { forkGrokContextUsage } from "./forkGrokContextUsage";
 import { forkGrokPlanApproval } from "./forkGrokPlanApproval";
+import { ForkLaunchEffort } from "./forkLaunchEffort";
 import { acpMcpServers } from "./forkMcpServers";
 import { forkPlanAllowOption } from "./forkPlanPermissions";
 import { forkPromptError } from "./forkPromptError";
+import {
+	type ForkCheckpointSchedule,
+	ForkTextCheckpoint,
+} from "./forkTextCheckpoint";
 import {
 	type AcpImageSource,
 	imageSourceOf,
@@ -262,6 +268,7 @@ export type AcpAdapterOptions = SpawnAcpOptions & {
 	shellPollMs?: number;
 	startupTimeoutMs?: number;
 	requestTimeoutMs?: number;
+	forkTextCheckpointSchedule?: ForkCheckpointSchedule;
 	resolveAttachment?: (attachmentId: string) => Promise<AcpAttachment | null>;
 	/** Without it, images the agent sends are dropped. */
 	storeImage?: (
@@ -504,8 +511,14 @@ export class AcpAdapter implements HarnessAdapter {
 	private heldTurnId: string | null = null;
 	private readonly shellPids = new Map<string, number>();
 	private shellPoll: ReturnType<typeof setInterval> | null = null;
+	private readonly forkTextCheckpoint: ForkTextCheckpoint;
+	private readonly forkCursorPromptFailure = new ForkCursorPromptFailure();
+	private readonly forkLaunchEffort = new ForkLaunchEffort();
 
 	constructor(private readonly options: AcpAdapterOptions) {
+		this.forkTextCheckpoint = new ForkTextCheckpoint(
+			options.forkTextCheckpointSchedule,
+		);
 		this.cursorModels = options.forkCursorModelSelection
 			? new ForkCursorModelSelection()
 			: null;
@@ -913,6 +926,7 @@ export class AcpAdapter implements HarnessAdapter {
 	async dispose(): Promise<void> {
 		if (this.disposed) return;
 		this.disposed = true;
+		this.flushOpenText();
 		this.stalePendingApprovals();
 		this.backgroundTasks.dispose();
 		if (this.shellPoll) clearInterval(this.shellPoll);
@@ -1161,10 +1175,12 @@ export class AcpAdapter implements HarnessAdapter {
 			const client = this.client;
 			if (!client || !this.sessionId || this.currentTurn?.id !== turnId) return;
 			this.cursorModels?.assertConfirmed();
+			this.forkLaunchEffort.assertConfirmed();
 			const response = await client.request("session/prompt", {
 				sessionId: this.sessionId,
 				prompt,
 			});
+			this.forkCursorPromptFailure.assertSucceeded(turnId);
 			this.flushOpenText();
 			const stopReason =
 				acpPromptResponseSchema.safeParse(response).data?.stopReason;
@@ -1191,7 +1207,7 @@ export class AcpAdapter implements HarnessAdapter {
 				startedAtMs: this.currentTurn?.startedAtMs ?? this.now(),
 				completedAtMs: this.now(),
 			});
-			this.emitNotice("error", (error as Error).message);
+			this.emitNotice("error", forkPromptError(error).message);
 			this.emitSession({ status: "idle" });
 		}
 	}
@@ -1485,6 +1501,8 @@ export class AcpAdapter implements HarnessAdapter {
 		}
 		const chunk = content?.type === "text" ? (content.text ?? "") : "";
 		if (!chunk) return;
+		if (kind === "agent_message" && this.cursorModels && !this.replaying)
+			this.forkCursorPromptFailure.capture(turnId, chunk);
 		const open = this.openMessage(kind, turnId, messageId);
 		if (kind === "agent_message" && model) open.model = model;
 		open.text += chunk;
@@ -1493,6 +1511,9 @@ export class AcpAdapter implements HarnessAdapter {
 			kind: "delta",
 			delta: { type: "text", itemId: open.itemId, append: chunk },
 		});
+		this.forkTextCheckpoint.track(open.itemId, open.text.length, () =>
+			this.emitItem(this.textItem(open, "open"), turnId),
+		);
 	}
 
 	/**
@@ -1572,6 +1593,7 @@ export class AcpAdapter implements HarnessAdapter {
 	}
 
 	private flushOpenText(): void {
+		this.forkTextCheckpoint.clear();
 		if (!this.openText) return;
 		const open = this.openText;
 		this.openText = null;
@@ -2154,6 +2176,14 @@ export class AcpAdapter implements HarnessAdapter {
 		) {
 			this.setMode(modeId);
 		}
+		this.trackSelection(
+			this.forkLaunchEffort.apply(
+				startOptions.forkEffort,
+				Promise.all([...this.selectionsInFlight]),
+				() => this.configOptions,
+				(id, value) => this.setConfigOption(id, value),
+			),
+		);
 	}
 
 	private handleServerRequest(request: AcpServerRequest): void {

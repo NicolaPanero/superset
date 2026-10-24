@@ -23,6 +23,7 @@ import {
 	VscGitPullRequest,
 	VscLoading,
 } from "react-icons/vsc";
+import { useForkWorkspacePrMutation } from "renderer/components/ForkIntegrations/hooks/useForkWorkspacePrMutation";
 import { ForkScmLinkLabel } from "renderer/components/ForkScmLinkLabel";
 import {
 	type PullRequestRef,
@@ -92,7 +93,7 @@ export function PRStatusGroup({
 	const refreshPRMutation =
 		workspaceTrpc.pullRequests.refreshByWorkspaces.useMutation();
 
-	const mergePRMutation = workspaceTrpc.github.mergePR.useMutation({
+	const githubMergePRMutation = workspaceTrpc.github.mergePR.useMutation({
 		onMutate: () => {
 			const toastId = toast.loading(t({ message: "Merging PR..." }));
 			return { toastId };
@@ -122,8 +123,15 @@ export function PRStatusGroup({
 			);
 		},
 	});
+	const mergePRMutation = useForkWorkspacePrMutation(
+		githubMergePRMutation,
+		workspaceId,
+		"merge",
+		onRefresh,
+		pr?.url,
+	);
 
-	const markReadyMutation =
+	const githubMarkReadyMutation =
 		workspaceTrpc.github.markPullRequestReady.useMutation({
 			onMutate: () => {
 				const toastId = toast.loading(
@@ -163,6 +171,13 @@ export function PRStatusGroup({
 				);
 			},
 		});
+	const markReadyMutation = useForkWorkspacePrMutation(
+		githubMarkReadyMutation,
+		workspaceId,
+		"ready",
+		onRefresh,
+		pr?.url,
+	);
 
 	const checks = useMemo(
 		() => (pr ? computeChecksRollup(pr.checks) : null),

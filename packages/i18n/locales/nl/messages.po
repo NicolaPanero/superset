@@ -3129,6 +3129,9 @@ msgstr "Binair bestand verborgen"
 msgid "Bio"
 msgstr "Bio"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Bitbucket-pull requests openen nu in workspacepanelen."
+
 msgid "Block"
 msgstr "Blok"
 
@@ -3869,6 +3872,9 @@ msgstr "Kies hoe de weergave Wijzigingen vanuit de bovenbalk wordt geopend"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Kies hoe bestandspaden openen bij Cmd+klik in de terminal"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Kies modellen die rechtstreeks bij je agents worden opgehaald."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Kies wat je uit de ingebouwde browser wilt wissen."
 
@@ -4370,9 +4376,6 @@ msgstr "Commando..."
 
 msgid "Commands"
 msgstr "Commando's"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "In Plan worden opdrachten en MCP-tools zonder toestemmingsvragen uitgevoerd."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Commando's voor setup en teardown van werkruimtes en voor de knop Uitvoeren."
@@ -6727,6 +6730,9 @@ msgstr "{name} downloaden"
 msgid "Download app"
 msgstr "App downloaden"
 
+msgid "Download chat responses as Markdown."
+msgstr "Download chatantwoorden als Markdown."
+
 msgid "Download failed"
 msgstr "Downloaden mislukt"
 
@@ -6747,6 +6753,9 @@ msgstr "Logs downloaden"
 
 msgid "Download Manually"
 msgstr "Handmatig downloaden"
+
+msgid "Download Markdown"
+msgstr "Markdown downloaden"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Download onze logo’s en productafbeeldingen voor gebruik in berichtgeving over Superset."
@@ -7962,9 +7971,6 @@ msgstr "Bestanden en editor"
 
 msgid "Files changed"
 msgstr "Gewijzigde bestanden"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Bestanden in verborgen mappen openen nu via chatlinks."
 
 msgid "files to exclude (glob)"
 msgstr "uit te sluiten bestanden (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Koppelen ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Koppel eerst een GitHub-repository aan het project om te kunnen klonen."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Koppel Bitbucket-pull requests bij het maken van een workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Issues laden…"
 
 msgid "Loading members..."
 msgstr "Leden laden..."
+
+msgid "Loading models…"
+msgstr "Modellen laden…"
 
 msgid "Loading more..."
 msgstr "Meer laden..."
@@ -10685,6 +10697,9 @@ msgstr "Mergestatus"
 msgid "Merge status unknown"
 msgstr "Mergestatus onbekend"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Mergen, concepten en reviewopmerkingen werken nu met Bitbucket."
+
 msgid "Merged"
 msgstr "Gemerged"
 
@@ -10826,6 +10841,12 @@ msgstr "Door een model voorgestelde code staat in een meerderheid van de nieuwe 
 
 msgid "Models"
 msgstr "Modellen"
+
+msgid "Models provided by the agent"
+msgstr "Modellen van de agent"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Modellen niet beschikbaar. Controleer de agent en host."
 
 msgid "Models used"
 msgstr "Gebruikte modellen"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan biedt nu volledige toegang tot tools."
-
 msgid "Plan progress"
 msgstr "Voortgang van het plan"
 
@@ -13975,9 +13993,6 @@ msgstr "Vraag"
 
 msgid "Questions"
 msgstr "Vragen"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Vragen en de definitieve goedkeuring van het plan wachten nog steeds op je antwoord."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Vragen, feedback, support of iets anders. Stuur een bericht, dan sturen we het door naar de juiste persoon."
@@ -15129,9 +15144,6 @@ msgstr "Uitgebreide invoer ({hotkeyText})"
 
 msgid "right pane"
 msgstr "rechterpaneel"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Klik met de rechtermuisknop op een bestand in een chat om het te openen of in Finder te tonen."
 
 msgid "Right-click here"
 msgstr "Klik hier met rechts"
@@ -18192,6 +18204,12 @@ msgstr "De lokale hostservice is net gestart. Er wordt nu opnieuw verbinding mee
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "De meeste gemergede agent-PR's hoeven alleen gereviewd te worden, zonder menselijke bewerkingen."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "De verbinding met het model is verlopen. Ga verder vanaf het laatst opgeslagen deel."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "De modelprovider heeft een fout gemeld. Wacht en probeer het opnieuw, of kies een ander model."
+
 msgid "The name of your organization or team"
 msgstr "De naam van je organisatie of team"
 
@@ -18554,6 +18572,9 @@ msgstr "Deze Mac"
 
 msgid "This machine"
 msgstr "Deze computer"
+
+msgid "This merge method is not available for the repository."
+msgstr "Deze mergemethode is niet beschikbaar voor de repository."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Dit bericht kan niet als herstartpunt worden gebruikt."
@@ -19452,6 +19473,9 @@ msgstr "Werk Superset op deze machine bij om bestanden toe te voegen"
 
 msgid "update the branch prefix"
 msgstr "de branchprefix bijwerken"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Werk de host bij om Bitbucket-concepten te gebruiken."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Werk deze host bij voor begeleide configuratie of gebruik de geavanceerde configuratie."

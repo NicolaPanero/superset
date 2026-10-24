@@ -3129,6 +3129,9 @@ msgstr "Plik binarny ukryty"
 msgid "Bio"
 msgstr "O sobie"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Pull requesty Bitbucket otwierają się teraz w panelach workspace."
+
 msgid "Block"
 msgstr "Blok"
 
@@ -3869,6 +3872,9 @@ msgstr "Wybierz, jak widok zmian otwiera się z górnego paska"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Wybierz, jak otwierać ścieżki plików po Cmd+kliknięciu w terminalu"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Wybieraj modele wykrywane bezpośrednio u Twoich agentów."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wybierz, co wyczyścić z przeglądarki w aplikacji."
 
@@ -4370,9 +4376,6 @@ msgstr "Polecenie..."
 
 msgid "Commands"
 msgstr "Polecenia"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "W trybie Plan polecenia i narzędzia MCP działają bez pytań o uprawnienia."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Polecenia uruchamiane przy konfiguracji i sprzątaniu obszaru roboczego oraz przyciskiem Uruchom."
@@ -6727,6 +6730,9 @@ msgstr "Pobierz {name}"
 msgid "Download app"
 msgstr "Pobierz aplikację"
 
+msgid "Download chat responses as Markdown."
+msgstr "Pobieraj odpowiedzi czatu w formacie Markdown."
+
 msgid "Download failed"
 msgstr "Pobieranie nie powiodło się"
 
@@ -6747,6 +6753,9 @@ msgstr "Pobierz logi"
 
 msgid "Download Manually"
 msgstr "Pobierz ręcznie"
+
+msgid "Download Markdown"
+msgstr "Pobierz Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Pobierz nasze logo i zdjęcia produktu do materiałów o Superset."
@@ -7962,9 +7971,6 @@ msgstr "Pliki i edytor"
 
 msgid "Files changed"
 msgstr "Zmienione pliki"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Pliki w ukrytych folderach otwierają się teraz z linków w czacie."
 
 msgid "files to exclude (glob)"
 msgstr "pliki do wykluczenia (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Powiąż ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Najpierw powiąż z projektem repozytorium GitHub, aby włączyć klonowanie."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Połącz pull requesty Bitbucket podczas tworzenia workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Wczytywanie zgłoszeń…"
 
 msgid "Loading members..."
 msgstr "Wczytywanie członków..."
+
+msgid "Loading models…"
+msgstr "Wczytywanie modeli…"
 
 msgid "Loading more..."
 msgstr "Wczytywanie kolejnych..."
@@ -10685,6 +10697,9 @@ msgstr "Stan scalania"
 msgid "Merge status unknown"
 msgstr "Stan scalania nieznany"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Scalanie, wersje robocze i komentarze do przeglądu działają teraz z Bitbucket."
+
 msgid "Merged"
 msgstr "Scalony"
 
@@ -10826,6 +10841,12 @@ msgstr "Kod podpowiedziany przez model pojawia się w większości nowych plikó
 
 msgid "Models"
 msgstr "Modele"
+
+msgid "Models provided by the agent"
+msgstr "Modele udostępnione przez agenta"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Modele niedostępne. Sprawdź agenta i hosta."
 
 msgid "Models used"
 msgstr "Użyte modele"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan obejmuje teraz pełny dostęp do narzędzi."
-
 msgid "Plan progress"
 msgstr "Postęp planu"
 
@@ -13975,9 +13993,6 @@ msgstr "Pytanie"
 
 msgid "Questions"
 msgstr "Pytania"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Pytania i końcowe zatwierdzenie planu nadal czekają na Twoją odpowiedź."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Pytania, opinie, wsparcie albo cokolwiek innego. Napisz, a skierujemy wiadomość do właściwej osoby."
@@ -15129,9 +15144,6 @@ msgstr "Rozbudowane pole tekstowe ({hotkeyText})"
 
 msgid "right pane"
 msgstr "prawy panel"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Kliknij prawym przyciskiem plik w czacie, aby go otworzyć lub pokazać w Finderze."
 
 msgid "Right-click here"
 msgstr "Kliknij tutaj prawym przyciskiem"
@@ -18192,6 +18204,12 @@ msgstr "Lokalna usługa hosta właśnie wstała. Trwa ponowne łączenie."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Większość scalonych PR-ów od agentów wymaga tylko przeglądu, bez żadnych poprawek człowieka."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Upłynął limit czasu połączenia z modelem. Kontynuuj od ostatniej zapisanej części."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Dostawca modelu zgłosił błąd. Poczekaj i spróbuj ponownie lub zmień model."
+
 msgid "The name of your organization or team"
 msgstr "Nazwa organizacji lub zespołu"
 
@@ -18554,6 +18572,9 @@ msgstr "Ten Mac"
 
 msgid "This machine"
 msgstr "Ten komputer"
+
+msgid "This merge method is not available for the repository."
+msgstr "Ta metoda scalania nie jest dostępna dla tego repozytorium."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Ta wiadomość nie może być punktem ponownego rozpoczęcia."
@@ -19452,6 +19473,9 @@ msgstr "Zaktualizuj Superset na tej maszynie, aby dołączać pliki"
 
 msgid "update the branch prefix"
 msgstr "zaktualizować prefiksu gałęzi"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Zaktualizuj hosta, aby używać wersji roboczych Bitbucket."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Zaktualizuj ten host, aby korzystać z konfiguracji z przewodnikiem, lub użyj konfiguracji zaawansowanej."

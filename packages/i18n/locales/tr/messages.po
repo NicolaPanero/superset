@@ -3129,6 +3129,9 @@ msgstr "İkili dosya gizlendi"
 msgid "Bio"
 msgstr "Hakkında"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Bitbucket pull request’leri artık workspace panellerinde açılıyor."
+
 msgid "Block"
 msgstr "Blok"
 
@@ -3869,6 +3872,9 @@ msgstr "Değişiklikler görünümünün üst çubuktan nasıl açılacağını 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağını seçin"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Doğrudan aracılarınızdan alınan modelleri seçin."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
 
@@ -4370,9 +4376,6 @@ msgstr "Komut..."
 
 msgid "Commands"
 msgstr "Komutlar"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Plan modunda komutlar ve MCP araçları izin istemeden çalışır."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Çalışma alanı kurulumu, kapatması ve Çalıştır düğmesi için çalıştırılan komutlar."
@@ -6727,6 +6730,9 @@ msgstr "{name} temasını indir"
 msgid "Download app"
 msgstr "Uygulamayı indir"
 
+msgid "Download chat responses as Markdown."
+msgstr "Sohbet yanıtlarını Markdown olarak indirin."
+
 msgid "Download failed"
 msgstr "İndirilemedi"
 
@@ -6747,6 +6753,9 @@ msgstr "Günlükleri indir"
 
 msgid "Download Manually"
 msgstr "Elle indir"
+
+msgid "Download Markdown"
+msgstr "Markdown indir"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Superset hakkındaki haberlerinizde kullanmak için logolarımızı ve ürün görsellerimizi indirin."
@@ -7962,9 +7971,6 @@ msgstr "Dosyalar ve Düzenleyici"
 
 msgid "Files changed"
 msgstr "Değişen dosyalar"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Gizli klasörlerdeki dosyalar artık sohbet bağlantılarından açılıyor."
 
 msgid "files to exclude (glob)"
 msgstr "hariç tutulacak dosyalar (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Bağla ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Klonlamayı etkinleştirmek için önce projeye bir GitHub deposu bağlayın."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Workspace oluştururken Bitbucket pull request’lerini bağlayın."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Issue'lar yükleniyor…"
 
 msgid "Loading members..."
 msgstr "Üyeler yükleniyor..."
+
+msgid "Loading models…"
+msgstr "Modeller yükleniyor…"
 
 msgid "Loading more..."
 msgstr "Daha fazlası yükleniyor..."
@@ -10685,6 +10697,9 @@ msgstr "Birleştirme durumu"
 msgid "Merge status unknown"
 msgstr "Birleştirme durumu bilinmiyor"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Birleştirme, taslaklar ve inceleme yorumları artık Bitbucket ile çalışıyor."
+
 msgid "Merged"
 msgstr "Birleştirildi"
 
@@ -10826,6 +10841,12 @@ msgstr "Model önerili kod, yeni dosyaların çoğunda görünür."
 
 msgid "Models"
 msgstr "Modeller"
+
+msgid "Models provided by the agent"
+msgstr "Aracının sağladığı modeller"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Modeller kullanılamıyor. Aracıyı ve ana makineyi kontrol edin."
 
 msgid "Models used"
 msgstr "Kullanılan modeller"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Plan"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan artık araçlara tam erişim içeriyor."
-
 msgid "Plan progress"
 msgstr "Plan ilerlemesi"
 
@@ -13975,9 +13993,6 @@ msgstr "Soru"
 
 msgid "Questions"
 msgstr "Sorular"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Sorular ve son plan onayı yine yanıtınızı bekler."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Sorular, geri bildirim, destek veya başka herhangi bir şey. Bir not gönderin, doğru kişiye yönlendirelim."
@@ -15129,9 +15144,6 @@ msgstr "Zengin giriş ({hotkeyText})"
 
 msgid "right pane"
 msgstr "sağ panel"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Sohbetteki bir dosyaya sağ tıklayarak onu açabilir veya Finder’da gösterebilirsiniz."
 
 msgid "Right-click here"
 msgstr "Buraya sağ tıklayın"
@@ -18192,6 +18204,12 @@ msgstr "Yerel host hizmeti yeni açıldı. Şimdi ona yeniden bağlanılıyor."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Birleştirilen ajan PR'larının çoğu yalnızca inceleme gerektirir, hiç insan düzenlemesi olmaz."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Model bağlantısı zaman aşımına uğradı. Son kaydedilen bölümden devam edin."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Model sağlayıcısı bir hata bildirdi. Bekleyip yeniden deneyin veya modeli değiştirin."
+
 msgid "The name of your organization or team"
 msgstr "Kuruluşunuzun veya takımınızın adı"
 
@@ -18554,6 +18572,9 @@ msgstr "Bu Mac"
 
 msgid "This machine"
 msgstr "Bu bilgisayar"
+
+msgid "This merge method is not available for the repository."
+msgstr "Bu birleştirme yöntemi depoda kullanılamıyor."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Bu mesaj yeniden başlatma noktası olarak kullanılamaz."
@@ -19452,6 +19473,9 @@ msgstr "Dosya eklemek için bu makinede Superset'i güncelleyin"
 
 msgid "update the branch prefix"
 msgstr "dal ön ekini güncelleme"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Bitbucket taslaklarını kullanmak için sunucuyu güncelleyin."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Rehberli kurulum için bu ana makineyi güncelleyin veya gelişmiş yapılandırmayı kullanın."

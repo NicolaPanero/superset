@@ -3129,6 +3129,9 @@ msgstr "바이너리 파일 숨김"
 msgid "Bio"
 msgstr "소개"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "이제 Bitbucket 풀 리퀘스트가 workspace 패널에서 열립니다."
+
 msgid "Block"
 msgstr "블록"
 
@@ -3869,6 +3872,9 @@ msgstr "상단 바에서 변경 사항 보기를 여는 방식을 선택합니�
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선택하세요"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "에이전트에서 직접 가져온 모델을 선택하세요."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
 
@@ -4370,9 +4376,6 @@ msgstr "명령..."
 
 msgid "Commands"
 msgstr "명령"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Plan에서는 명령과 MCP 도구가 권한 확인 없이 실행됩니다."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "워크스페이스 설정, 정리, 실행 버튼에 사용되는 명령입니다."
@@ -6727,6 +6730,9 @@ msgstr "{name} 다운로드"
 msgid "Download app"
 msgstr "앱 다운로드"
 
+msgid "Download chat responses as Markdown."
+msgstr "채팅 응답을 Markdown으로 다운로드하세요."
+
 msgid "Download failed"
 msgstr "다운로드 실패"
 
@@ -6747,6 +6753,9 @@ msgstr "로그 다운로드"
 
 msgid "Download Manually"
 msgstr "수동으로 다운로드"
+
+msgid "Download Markdown"
+msgstr "Markdown 다운로드"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Superset 관련 보도에 사용할 수 있는 로고와 제품 이미지를 내려받으세요."
@@ -7962,9 +7971,6 @@ msgstr "파일 및 편집기"
 
 msgid "Files changed"
 msgstr "변경된 파일"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "숨김 폴더 안의 파일도 이제 채팅 링크로 열립니다."
 
 msgid "files to exclude (glob)"
 msgstr "제외할 파일(glob)"
@@ -10083,6 +10089,9 @@ msgstr "연결 ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "클론하려면 먼저 프로젝트에 GitHub 리포지토리를 연결하세요."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "workspace를 만들 때 Bitbucket 풀 리퀘스트를 연결하세요."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "이슈 불러오는 중…"
 
 msgid "Loading members..."
 msgstr "멤버 불러오는 중..."
+
+msgid "Loading models…"
+msgstr "모델 불러오는 중…"
 
 msgid "Loading more..."
 msgstr "더 불러오는 중..."
@@ -10685,6 +10697,9 @@ msgstr "머지 상태"
 msgid "Merge status unknown"
 msgstr "머지 상태 알 수 없음"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "이제 Bitbucket에서 병합, 초안 및 리뷰 댓글을 사용할 수 있습니다."
+
 msgid "Merged"
 msgstr "머지됨"
 
@@ -10826,6 +10841,12 @@ msgstr "새로 만드는 파일 대부분에 모델이 제안한 코드가 들�
 
 msgid "Models"
 msgstr "모델"
+
+msgid "Models provided by the agent"
+msgstr "에이전트가 제공하는 모델"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "모델을 사용할 수 없습니다. 에이전트와 호스트를 확인하세요."
 
 msgid "Models used"
 msgstr "사용한 모델"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "플랜"
 
-msgid "Plan now includes full access to tools."
-msgstr "이제 Plan에 도구에 대한 전체 액세스가 포함됩니다."
-
 msgid "Plan progress"
 msgstr "계획 진행 상황"
 
@@ -13975,9 +13993,6 @@ msgstr "질문"
 
 msgid "Questions"
 msgstr "자주 묻는 질문"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "질문과 최종 계획 승인은 여전히 사용자의 응답을 기다립니다."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "질문, 피드백, 지원 등 무엇이든 좋습니다. 메시지를 보내 주시면 담당자에게 전달하겠습니다."
@@ -15129,9 +15144,6 @@ msgstr "리치 입력 ({hotkeyText})"
 
 msgid "right pane"
 msgstr "오른쪽 패널"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "채팅의 파일을 마우스 오른쪽 버튼으로 클릭하면 열거나 Finder에서 볼 수 있습니다."
 
 msgid "Right-click here"
 msgstr "여기를 오른쪽 클릭"
@@ -18192,6 +18204,12 @@ msgstr "로컬 호스트 서비스가 방금 올라왔습니다. 지금 다시 �
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "머지된 에이전트 PR의 대부분이 사람의 수정 없이 리뷰만으로 끝납니다."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "모델 연결 시간이 초과되었습니다. 마지막으로 저장된 부분부터 계속하세요."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "모델 제공업체에서 오류를 보고했습니다. 잠시 기다렸다가 다시 시도하거나 모델을 변경하세요."
+
 msgid "The name of your organization or team"
 msgstr "조직 또는 팀의 이름"
 
@@ -18554,6 +18572,9 @@ msgstr "이 Mac"
 
 msgid "This machine"
 msgstr "이 컴퓨터"
+
+msgid "This merge method is not available for the repository."
+msgstr "이 저장소에서는 이 병합 방식을 사용할 수 없습니다."
 
 msgid "This message cannot be used as a restart point."
 msgstr "이 메시지는 재시작 지점으로 사용할 수 없습니다."
@@ -19452,6 +19473,9 @@ msgstr "파일을 첨부하려면 이 컴퓨터에서 Superset을 업데이트�
 
 msgid "update the branch prefix"
 msgstr "브랜치 접두사를 업데이트할"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Bitbucket 초안을 사용하려면 호스트를 업데이트하세요."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "안내 설정을 위해 이 호스트를 업데이트하거나 고급 설정을 사용하세요."

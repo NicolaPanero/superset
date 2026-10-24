@@ -17,6 +17,7 @@ import {
 	SquarePlus,
 } from "lucide-react";
 import { LuArrowUpRight, LuCheck } from "react-icons/lu";
+import { forkReviewLinkLabel } from "renderer/lib/fork-review-comment-link";
 import { getMarkdownPreviewText } from "renderer/utils/markdownPreview";
 import type { CommentPaneData, DiffFocusSide } from "../../../../types";
 import type { NormalizedComment } from "../../types";
@@ -221,7 +222,7 @@ export function CommentRow({
 								onSelect={() => window.open(comment.url, "_blank", "noopener")}
 							>
 								<ExternalLink />
-								<Trans>Open on GitHub</Trans>
+								{forkReviewLinkLabel(comment.url)}
 							</DropdownMenuItem>
 						) : null}
 					</DropdownMenuContent>

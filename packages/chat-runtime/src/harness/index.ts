@@ -4,7 +4,12 @@ export type {
 	AcpImageStoreContext,
 	AcpStoredImage,
 } from "./acp";
-export { AcpAdapter, createAcpAdapter } from "./acp";
+export {
+	AcpAdapter,
+	AcpRpcClient,
+	createAcpAdapter,
+	spawnAcpTransport,
+} from "./acp";
 export { BackgroundTasks } from "./backgroundTasks";
 export type {
 	ClaudeAdapterOptions,

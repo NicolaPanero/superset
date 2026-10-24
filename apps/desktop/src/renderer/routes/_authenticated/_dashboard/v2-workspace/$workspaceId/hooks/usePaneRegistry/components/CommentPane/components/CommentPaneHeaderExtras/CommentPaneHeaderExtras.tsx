@@ -2,8 +2,9 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { RendererContext } from "@superset/panes";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FaGithub } from "react-icons/fa";
 import { LuCheck, LuCopy } from "react-icons/lu";
+import { ForkProviderIcon } from "renderer/components/ForkIntegrations/components/ForkProviderIcon";
+import { forkReviewLinkLabel } from "renderer/lib/fork-review-comment-link";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import type { CommentPaneData, PaneViewerData } from "../../../../../../types";
 
@@ -54,16 +55,21 @@ export function CommentPaneHeaderExtras({
 							href={data.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							aria-label={t({
-								message: "Open on GitHub",
-							})}
+							aria-label={forkReviewLinkLabel(data.url)}
 							className="rounded p-1 text-muted-foreground/60 transition-colors hover:text-muted-foreground"
 						>
-							<FaGithub className="size-3.5" />
+							<ForkProviderIcon
+								provider={
+									data.url.startsWith("https://bitbucket.org/")
+										? "bitbucket"
+										: "github"
+								}
+								className="size-3.5"
+							/>
 						</a>
 					</TooltipTrigger>
 					<TooltipContent side="bottom">
-						<Trans>Open on GitHub</Trans>
+						{forkReviewLinkLabel(data.url)}
 					</TooltipContent>
 				</Tooltip>
 			)}

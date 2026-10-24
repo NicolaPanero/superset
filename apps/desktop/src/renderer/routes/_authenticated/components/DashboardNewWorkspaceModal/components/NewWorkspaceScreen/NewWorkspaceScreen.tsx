@@ -4,12 +4,7 @@ import {
 	isDropHandled,
 	markDropHandled,
 } from "@superset/chat-ui/utils/handledDrops";
-import {
-	getAgentEffortSupport,
-	getAgentEfforts,
-	getAgentModelSupport,
-	getAgentModeSupport,
-} from "@superset/shared/agent-models";
+import { getAgentModeSupport } from "@superset/shared/agent-models";
 import { startableCloudEnvironments } from "@superset/shared/cloud-environments";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import {
@@ -40,7 +35,6 @@ import { AgentModelSelect } from "renderer/components/AgentModelSelect";
 import {
 	ForkAccountPicker,
 	ForkAccountSubmenu,
-	useForkCreationAccount,
 } from "renderer/components/ForkAccountPicker";
 import {
 	ForkHomeBackground,
@@ -53,9 +47,7 @@ import { LinkedIssuePill } from "renderer/components/LinkedIssuePill";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { resolveHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useAgentEffortPreference } from "renderer/hooks/useAgentEffortPreference";
 import { useAgentLaunchPreferences } from "renderer/hooks/useAgentLaunchPreferences";
-import { useAgentModelPreference } from "renderer/hooks/useAgentModelPreference";
 import { useAgentModePreference } from "renderer/hooks/useAgentModePreference";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useSelectedHostProjectIds } from "renderer/hooks/useSelectedHostProjectIds";
@@ -109,9 +101,7 @@ import {
 } from "../DashboardNewWorkspaceForm/PromptGroup/hooks/useUploadAttachments";
 import {
 	AGENT_STORAGE_KEY,
-	EFFORT_STORAGE_KEY,
 	MODE_STORAGE_KEY,
-	MODEL_STORAGE_KEY,
 	PILL_BUTTON_CLASS,
 	type WorkspaceCreateAgent,
 } from "../DashboardNewWorkspaceForm/PromptGroup/types";
@@ -124,6 +114,7 @@ import { SamplePromptCards } from "./components/SamplePromptCards";
 import { SamplePrompts } from "./components/SamplePrompts";
 import { PROMPT_PLACEHOLDERS } from "./components/SamplePrompts/constants";
 import { SupersetIcon } from "./components/SupersetIcon";
+import { useForkCreationSelections } from "./hooks/useForkCreationSelections";
 import { useGitHubRepositoryProjects } from "./hooks/useGitHubRepositoryProjects";
 import { useProjectPreselection } from "./hooks/useProjectPreselection";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
@@ -577,37 +568,25 @@ export function NewWorkspaceScreen({
 		const agent = v2Agents.find((candidate) => candidate.id === selectedAgent);
 		return agent?.launchPresetId ?? agent?.presetId ?? agent?.iconId ?? null;
 	}, [v2Agents, selectedAgent]);
-	const modelSupport = selectedPresetId
-		? getAgentModelSupport(selectedPresetId)
-		: undefined;
-	const { selectedModel, setSelectedModel } = useAgentModelPreference(
-		MODEL_STORAGE_KEY,
-		modelSupport ? selectedPresetId : null,
-	);
-	const effortSupport = selectedPresetId
-		? getAgentEffortSupport(selectedPresetId)
-		: undefined;
-	const { selectedEffort, setSelectedEffort } = useAgentEffortPreference(
-		EFFORT_STORAGE_KEY,
-		effortSupport ? selectedPresetId : null,
-	);
-	// Codex's top two efforts only exist on its GPT-5.6 models and cursor-agent
-	// has a ladder for only some models, so the offered list follows the model
-	// picker and the control disappears when there is nothing to offer. A
-	// remembered effort the current model rejects stays stored but shows (and
-	// launches) as the agent default.
-	const effortOptions = useMemo(
-		() =>
-			selectedPresetId
-				? getAgentEfforts(selectedPresetId, selectedModel ?? undefined)
-				: [],
-		[selectedPresetId, selectedModel],
-	);
-	const effortForLaunch = effortOptions.some(
-		(option) => option.id === selectedEffort,
-	)
-		? selectedEffort
-		: null;
+	const {
+		selectedModel,
+		setSelectedModel,
+		selectedEffort,
+		setSelectedEffort,
+		effortForLaunch,
+		modelSupport,
+		effortSupport,
+		effortOptions,
+		forkAccount,
+		catalog,
+	} = useForkCreationSelections({
+		hostUrl: draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl,
+		agent: selectedAgent,
+		presetId: selectedPresetId,
+		projectId,
+		resetKey,
+		enabled: isOpen,
+	});
 	const modeSupport = selectedPresetId
 		? getAgentModeSupport(selectedPresetId)
 		: undefined;
@@ -671,13 +650,6 @@ export function NewWorkspaceScreen({
 		linkedPR: draft.linkedPR,
 		linkedIssues: draft.linkedIssues,
 	});
-	const forkAccount = useForkCreationAccount(
-		draft.hostId === CLOUD_HOST_ID ? null : launchHostUrl,
-		selectedAgent,
-		selectedPresetId,
-		selectedModel,
-		resetKey,
-	);
 	const { submitWorkspace: createWorkspace, isCreating } = useSubmitWorkspace(
 		projectId,
 		selectedAgent,
@@ -727,6 +699,8 @@ export function NewWorkspaceScreen({
 				message: "Host service is not running",
 			});
 		}
+		if (selectedAgent !== "none" && catalog.isFetching)
+			return t({ message: "Loading models…" });
 		return null;
 	}, [
 		isProjectPreselectionPending,
@@ -739,6 +713,8 @@ export function NewWorkspaceScreen({
 		isCloudTargetLoading,
 		defaultHint,
 		projectRepositoryFullName,
+		selectedAgent,
+		catalog.isFetching,
 		t,
 	]);
 
@@ -1042,7 +1018,7 @@ export function NewWorkspaceScreen({
 											? "workspace"
 											: "agent"
 								}
-								disabled={needsSetup || isCreating}
+								disabled={needsSetup || isCreating || catalog.isFetching}
 								isCreating={isCreating}
 								onSubmit={handleSubmit}
 							/>
@@ -1137,6 +1113,7 @@ export function NewWorkspaceScreen({
 								</Tooltip>
 								<ForkCreationModelPicker
 									agents={v2Agents}
+									catalog={catalog}
 									selectedAgent={selectedAgent}
 									onSelectAgent={setSelectedAgent}
 									selectedModel={modelSupport ? selectedModel : null}

@@ -12,6 +12,10 @@ import { TRPCError } from "@trpc/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { projects, workspaces } from "../../../db/schema";
+import {
+	forkLinkPreparedPrWorkspace,
+	forkPreparePrWorkspace,
+} from "../../../fork-integrations/fork-prepare-pr-workspace";
 import { provisionFolderWorktrees } from "../../../project-folders";
 import { createGitEnvResolver } from "../../../runtime/git";
 import { getGitAuthorName } from "../../../runtime/git/identity";
@@ -43,6 +47,7 @@ import {
 	buildTerminalAgentLaunch,
 	validateAgentLaunchOptions,
 } from "../agents";
+import { prepareForkCatalogLaunch } from "../agents/fork-catalog-launch";
 import { applyForkLaunchChoices } from "../agents/fork-launch";
 import {
 	createLocalWorkspace,
@@ -678,14 +683,24 @@ export const workspacesRouter = router({
 		})
 		.mutation(async ({ ctx, input }) => {
 			for (const launch of input.agents ?? []) {
-				validateAgentLaunchOptions(ctx.db, launch);
-				await applyForkLaunchChoices(ctx.db, {
-					...launch,
-					workspaceId: input.id ?? "pending",
-				});
+				validateAgentLaunchOptions(
+					ctx.db,
+					await prepareForkCatalogLaunch(ctx.db, launch, {
+						projectId: input.projectId,
+					}),
+				);
+				await applyForkLaunchChoices(
+					ctx.db,
+					{
+						...launch,
+						workspaceId: input.id ?? "pending",
+					},
+					{ projectId: input.projectId },
+				);
 			}
 
 			const localProject = requireLocalProject(ctx, input.projectId);
+			input = await forkPreparePrWorkspace(ctx, input);
 			const repoPath = requireProjectRepoPath(localProject);
 
 			if (input.id && input.checkout !== "local") {
@@ -1307,6 +1322,7 @@ export const workspacesRouter = router({
 				}
 			}
 
+			forkLinkPreparedPrWorkspace(ctx, input, workspaceRow.id);
 			if (!alreadyExists && wantAi) {
 				setWorkspaceNamingState(ctx.db, workspaceRow.id, {
 					prompt: composerPrompt,
@@ -1481,7 +1497,7 @@ export const workspacesRouter = router({
 	 */
 	createEnqueued: protectedProcedure
 		.input(createInputSchema)
-		.mutation(({ ctx, input }) => {
+		.mutation(async ({ ctx, input }) => {
 			const workspaceId = input.id;
 			if (!workspaceId) {
 				throw new TRPCError({
@@ -1490,7 +1506,12 @@ export const workspacesRouter = router({
 				});
 			}
 			for (const launch of input.agents ?? []) {
-				validateAgentLaunchOptions(ctx.db, launch);
+				validateAgentLaunchOptions(
+					ctx.db,
+					await prepareForkCatalogLaunch(ctx.db, launch, {
+						projectId: input.projectId,
+					}),
+				);
 			}
 			requireProjectRepoPath(requireLocalProject(ctx, input.projectId));
 

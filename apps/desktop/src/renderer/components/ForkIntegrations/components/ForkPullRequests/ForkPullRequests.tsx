@@ -16,10 +16,14 @@ export function ForkPullRequests({
 	projectId,
 	number,
 	hostUrl,
+	embedded = false,
+	repoFullName,
 }: {
 	projectId: string;
 	number: number;
 	hostUrl: string | null;
+	embedded?: boolean;
+	repoFullName?: string;
 }) {
 	const { t } = useLingui();
 	const { client, connections, data } = useForkConnections(hostUrl);
@@ -32,7 +36,13 @@ export function ForkPullRequests({
 		queryFn: () => required(client).forkScm.projects.query(),
 		enabled: !!client && !!data?.version,
 	});
-	const project = projects.data?.find((p) => p.projectId === projectId);
+	const project = projects.data?.find(
+		(p) =>
+			p.projectId === projectId &&
+			(!repoFullName ||
+				`${p.repository.owner}/${p.repository.name}`.toLowerCase() ===
+					repoFullName.toLowerCase()),
+	);
 	const accounts = connections.filter(
 		(c) => c.provider === project?.repository.provider && c.enabled,
 	);
@@ -84,7 +94,7 @@ export function ForkPullRequests({
 	return (
 		<div className="flex min-h-0 min-w-0 flex-1 flex-col">
 			<PageHeader contentClassName="gap-2">
-				<PullRequestListToggle />
+				{!embedded && <PullRequestListToggle />}
 				<ForkProviderIcon provider="bitbucket" />
 				<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
 					{project
@@ -107,14 +117,16 @@ export function ForkPullRequests({
 						))}
 					</select>
 				)}
-				<Button
-					size="sm"
-					variant="outline"
-					disabled={!detail.data || checkout.isPending}
-					onClick={() => checkout.mutate()}
-				>
-					<Trans>Open in workspace</Trans>
-				</Button>
+				{!embedded && (
+					<Button
+						size="sm"
+						variant="outline"
+						disabled={!detail.data || checkout.isPending}
+						onClick={() => checkout.mutate()}
+					>
+						<Trans>Open in workspace</Trans>
+					</Button>
+				)}
 			</PageHeader>
 			{isForkServiceUnavailable(detail.error) && (
 				<div className="border-b p-3">

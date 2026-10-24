@@ -38,6 +38,7 @@ export interface CreateNewAgentSessionInput {
 	nativeTransferId?: string;
 	attachments?: Array<{ attachmentId: string; name: string; mimeType: string }>;
 	modelId?: string;
+	modelCatalog?: "agent";
 	modeId?: string;
 }
 
@@ -227,6 +228,9 @@ export function useAgentSessionLauncher({
 									}
 								: {}),
 							...(input.modelId ? { model: input.modelId } : {}),
+							...(input.modelCatalog
+								? { modelCatalog: input.modelCatalog }
+								: {}),
 							...(input.modeId ? { mode: input.modeId } : {}),
 							...(input.forkSessionId
 								? { forkSessionId: input.forkSessionId }

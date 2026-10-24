@@ -1,4 +1,5 @@
 import { SESSIONS_TAG_SCOPE } from "@superset/shared/workspace-tags";
+import { forkSidebarRepository } from "renderer/lib/fork-scm-browser";
 import {
 	getProjectFolderTagIndex,
 	resolveWorkspaceSectionId,
@@ -23,6 +24,7 @@ export interface SidebarProjectInput {
 	name: string;
 	githubOwner: string | null;
 	githubRepoName: string | null;
+	repoUrl?: string | null;
 	iconUrl: string | null;
 	/** Accent color as a `#rrggbb` hex, or null for the default. */
 	color: string | null;
@@ -91,7 +93,10 @@ export function partitionSidebarWorkspacesByPinned<
 
 function decorateSidebarWorkspace(
 	workspace: SidebarWorkspaceInput,
-	project: Pick<SidebarProjectInput, "githubOwner" | "githubRepoName">,
+	project: Pick<
+		SidebarProjectInput,
+		"githubOwner" | "githubRepoName" | "repoUrl"
+	>,
 	machineId: string,
 	pullRequestsByWorkspaceId: Map<string, SidebarPullRequest>,
 ): DashboardSidebarWorkspace {
@@ -115,6 +120,7 @@ function decorateSidebarWorkspace(
 				: null,
 		branchExistsOnRemote:
 			project.githubOwner !== null && project.githubRepoName !== null,
+		...forkSidebarRepository(project.repoUrl),
 		previewUrl: null,
 		needsRebase: null,
 		behindCount: null,

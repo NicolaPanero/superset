@@ -9,6 +9,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { projects } from "../../../db/schema";
 import type { TagSettingSnapshot } from "../../../events/types";
+import { forkProjectBrowserMetadata } from "../../../fork-integrations/fork-project-browser-metadata";
 import {
 	emitProjectChanged,
 	getLocalProject,
@@ -92,7 +93,7 @@ export const projectRouter = router({
 			settings.push(setting);
 			tagSettingsByProject.set(scope, settings);
 		}
-		return ctx.db
+		const rows = ctx.db
 			.select()
 			.from(projects)
 			.where(isNull(projects.deletedAt))
@@ -115,6 +116,7 @@ export const projectRouter = router({
 				createdAt: row.createdAt,
 				updatedAt: row.updatedAt || row.createdAt,
 			}));
+		return forkProjectBrowserMetadata(ctx, rows);
 	}),
 
 	/** Rename. Commits locally — projects have no cloud dependency. */
