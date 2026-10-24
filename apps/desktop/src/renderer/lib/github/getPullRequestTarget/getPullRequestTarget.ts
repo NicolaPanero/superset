@@ -1,3 +1,4 @@
+import { forkPullRequestTarget } from "renderer/lib/fork-pull-request-ref";
 import {
 	type PullRequestRef,
 	pullRequestRefFromUrl,
@@ -7,6 +8,7 @@ interface Project {
 	projectKey: string;
 	repoOwner: string | null;
 	repoName: string | null;
+	repoUrl?: string | null;
 }
 
 /**
@@ -20,6 +22,11 @@ export function getPullRequestTarget(
 ): { ref: PullRequestRef; projectId: string | null } | null {
 	const ref = pullRequestRefFromUrl(url);
 	if (!ref) return null;
+	if (ref.forkProvider)
+		return forkPullRequestTarget(
+			{ ...ref, forkProvider: ref.forkProvider },
+			projects,
+		);
 	const [owner, name] = ref.repoFullName.split("/");
 	const project = projects.find(
 		(candidate) =>

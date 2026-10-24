@@ -3,6 +3,7 @@ import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useForkDraftGuard } from "renderer/components/ForkIntegrations/hooks/useForkDraftGuard";
 import { useForkBranchBase } from "renderer/hooks/host-service/useForkBranchBase";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
@@ -32,6 +33,7 @@ export function useShipActions({
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const { workspace } = useWorkspace();
+	const assertDraftSupport = useForkDraftGuard(workspaceId);
 	const status = useWorkspaceGitStatus();
 	const canCreatePr = workspace.type !== "session";
 
@@ -186,6 +188,7 @@ export function useShipActions({
 			{ id: toastId },
 		);
 		try {
+			await assertDraftSupport(prDraft);
 			const created = await createPrMutation.mutateAsync({
 				workspaceId,
 				title,

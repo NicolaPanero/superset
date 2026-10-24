@@ -1,1 +1,1 @@
-export { PullRequestPane } from "./PullRequestPane";
+export { ForkWorkspacePullRequestPane as PullRequestPane } from "renderer/components/ForkIntegrations/components/ForkWorkspacePullRequestPane/ForkWorkspacePullRequestPane";

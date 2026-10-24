@@ -13,6 +13,7 @@ import { useForkMessageActions } from "../../../../providers/ForkMessageActionsP
 import type { ChatForkTarget } from "../../../../types";
 import { CopyButton } from "../../../CopyButton";
 import { MessageTime } from "../MessageTime";
+import { ForkDownloadMessage } from "./components/ForkDownloadMessage";
 import { ForkMessagePreview } from "./components/ForkMessagePreview";
 
 export function ForkMessageActions({
@@ -41,6 +42,9 @@ export function ForkMessageActions({
 	const textBranch = actions?.textBranch;
 	const native = actions?.nativeFork ?? (forkFromHere || !!onRewind);
 	const busy = actions?.busy ?? false;
+	const forkReason = busy
+		? t({ message: "Wait for the agent and queued work to finish." })
+		: undefined;
 	const editReason = busy
 		? t({ message: "Wait for the agent and queued work to finish." })
 		: !native
@@ -79,30 +83,37 @@ export function ForkMessageActions({
 				</TooltipContent>
 			</Tooltip>
 			{item.kind === "agent_message" && text && (
-				<ForkMessagePreview text={text} />
+				<>
+					<ForkMessagePreview text={text} />
+					<ForkDownloadMessage text={text} />
+				</>
 			)}
-			{(onFork || textBranch) && (
+			{(onFork || textBranch || (native && busy)) && (
 				<DropdownMenu>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<DropdownMenuTrigger
-								disabled={busy}
-								aria-label={
-									native
-										? t({ message: "Fork from here" })
-										: t({ message: "Branch this conversation" })
-								}
-								className="rounded p-1 transition-colors hover:bg-secondary hover:text-foreground"
-							>
-								<Split className="size-3.5" />
-							</DropdownMenuTrigger>
+							<span tabIndex={forkReason ? 0 : undefined}>
+								<DropdownMenuTrigger
+									disabled={busy}
+									title={forkReason}
+									aria-label={
+										native
+											? t({ message: "Fork from here" })
+											: t({ message: "Branch this conversation" })
+									}
+									className="rounded p-1 transition-colors hover:bg-secondary hover:text-foreground"
+								>
+									<Split className="size-3.5" />
+								</DropdownMenuTrigger>
+							</span>
 						</TooltipTrigger>
 						<TooltipContent>
-							{native ? (
-								<Trans>Fork from here</Trans>
-							) : (
-								<Trans>Branch this conversation</Trans>
-							)}
+							{forkReason ??
+								(native ? (
+									<Trans>Fork from here</Trans>
+								) : (
+									<Trans>Branch this conversation</Trans>
+								))}
 						</TooltipContent>
 					</Tooltip>
 					<DropdownMenuContent align="start" className="w-72">

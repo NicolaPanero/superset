@@ -3129,6 +3129,9 @@ msgstr "File biner disembunyikan"
 msgid "Bio"
 msgstr "Bio"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Pull request Bitbucket kini terbuka di panel workspace."
+
 msgid "Block"
 msgstr "Blok"
 
@@ -3869,6 +3872,9 @@ msgstr "Pilih cara membuka tampilan perubahan dari bilah atas"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Pilih model yang ditemukan langsung dari agen Anda."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
 
@@ -4370,9 +4376,6 @@ msgstr "Perintah..."
 
 msgid "Commands"
 msgstr "Perintah"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Di Plan, perintah dan alat MCP berjalan tanpa meminta izin."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Perintah yang dijalankan untuk setup workspace, teardown, dan tombol Run."
@@ -6727,6 +6730,9 @@ msgstr "Unduh {name}"
 msgid "Download app"
 msgstr "Unduh aplikasi"
 
+msgid "Download chat responses as Markdown."
+msgstr "Unduh respons chat sebagai Markdown."
+
 msgid "Download failed"
 msgstr "Unduhan gagal"
 
@@ -6747,6 +6753,9 @@ msgstr "Unduh log"
 
 msgid "Download Manually"
 msgstr "Unduh Manual"
+
+msgid "Download Markdown"
+msgstr "Unduh Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Unduh logo dan gambar produk kami untuk digunakan dalam liputan tentang Superset."
@@ -7962,9 +7971,6 @@ msgstr "File & Editor"
 
 msgid "Files changed"
 msgstr "File yang berubah"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "File di folder tersembunyi kini bisa dibuka dari tautan chat."
 
 msgid "files to exclude (glob)"
 msgstr "file yang dikecualikan (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Tautkan ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Tautkan dulu repositori GitHub ke proyeknya agar bisa di-clone."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Tautkan pull request Bitbucket saat membuat workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Memuat issue…"
 
 msgid "Loading members..."
 msgstr "Memuat anggota..."
+
+msgid "Loading models…"
+msgstr "Memuat model…"
 
 msgid "Loading more..."
 msgstr "Memuat lagi..."
@@ -10685,6 +10697,9 @@ msgstr "Status merge"
 msgid "Merge status unknown"
 msgstr "Status merge tidak diketahui"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Merge, draf, dan komentar tinjauan kini berfungsi dengan Bitbucket."
+
 msgid "Merged"
 msgstr "Di-merge"
 
@@ -10826,6 +10841,12 @@ msgstr "Kode saran model muncul di mayoritas file baru."
 
 msgid "Models"
 msgstr "Model"
+
+msgid "Models provided by the agent"
+msgstr "Model yang disediakan agen"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Model tidak tersedia. Periksa agen dan host."
 
 msgid "Models used"
 msgstr "Model yang dipakai"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Paket"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan kini mencakup akses penuh ke alat."
-
 msgid "Plan progress"
 msgstr "Kemajuan rencana"
 
@@ -13975,9 +13993,6 @@ msgstr "Pertanyaan"
 
 msgid "Questions"
 msgstr "Pertanyaan"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Pertanyaan dan persetujuan akhir rencana tetap menunggu jawaban Anda."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Pertanyaan, masukan, dukungan, atau apa pun. Kirim pesan dan kami akan meneruskannya ke orang yang tepat."
@@ -15129,9 +15144,6 @@ msgstr "Input kaya ({hotkeyText})"
 
 msgid "right pane"
 msgstr "panel kanan"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Klik kanan file di chat untuk membukanya atau menampilkannya di Finder."
 
 msgid "Right-click here"
 msgstr "Klik kanan di sini"
@@ -18192,6 +18204,12 @@ msgstr "Layanan host lokal baru saja aktif. Menyambungkan kembali sekarang."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Mayoritas PR agen yang di-merge hanya perlu direview, tanpa suntingan manusia."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Koneksi ke model kehabisan waktu. Lanjutkan dari bagian terakhir yang disimpan."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Penyedia model melaporkan kesalahan. Tunggu dan coba lagi, atau ganti model."
+
 msgid "The name of your organization or team"
 msgstr "Nama organisasi atau tim Anda"
 
@@ -18554,6 +18572,9 @@ msgstr "Mac ini"
 
 msgid "This machine"
 msgstr "Mesin ini"
+
+msgid "This merge method is not available for the repository."
+msgstr "Metode merge ini tidak tersedia untuk repositori ini."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Pesan ini tidak dapat digunakan sebagai titik mulai ulang."
@@ -19452,6 +19473,9 @@ msgstr "Perbarui Superset di mesin ini untuk melampirkan file"
 
 msgid "update the branch prefix"
 msgstr "memperbarui prefix branch"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Perbarui host untuk menggunakan draf Bitbucket."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Perbarui host ini untuk pengaturan terpandu atau gunakan konfigurasi lanjutan."

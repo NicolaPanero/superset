@@ -143,3 +143,18 @@ test("opens an ordinary assistant plan in a side panel without provider-specific
 		"Verify the migration.",
 	);
 });
+
+test("a running native fork stays visible and explains the same wait as rollback", async () => {
+	const view = render(
+		<ForkMessageActionsProvider value={{ nativeFork: true, busy: true }}>
+			<ForkMessageActions item={item} text="My prompt" />
+		</ForkMessageActionsProvider>,
+	);
+	const fork = view.getByRole("button", { name: "Fork from here" });
+	const rollback = view.getByRole("button", {
+		name: "Edit and restart from here",
+	});
+	expect(fork.hasAttribute("disabled")).toBe(true);
+	expect(fork.title).toBe(rollback.title);
+	expect(fork.parentElement?.tabIndex).toBe(0);
+});

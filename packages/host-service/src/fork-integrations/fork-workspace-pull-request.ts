@@ -29,6 +29,7 @@ export async function forkCreateWorkspacePullRequest(
 		title: string;
 		description: string;
 		target: string;
+		draft?: boolean;
 	},
 ) {
 	const workspace = ctx.db
@@ -111,6 +112,7 @@ export async function forkCreateWorkspacePullRequest(
 			description,
 			source: workspace.branch,
 			target: input.target,
+			draft: input.draft,
 		});
 		await forkAdvanceLinkedTasks(ctx, workspace.id, "review");
 	}
@@ -144,6 +146,7 @@ export async function forkBitbucketWorkspacePullRequest(
 		title: string;
 		body?: string;
 		base: string;
+		draft?: boolean;
 	},
 ): Promise<{ number: number; url: string } | null> {
 	const [project] = await forkScmProjects(ctx, [input.projectId]);
@@ -167,6 +170,7 @@ export async function forkBitbucketWorkspacePullRequest(
 		title: input.title,
 		description: input.body ?? "",
 		target: input.base,
+		draft: input.draft,
 	});
 	return { number: pr.number, url: pr.url };
 }

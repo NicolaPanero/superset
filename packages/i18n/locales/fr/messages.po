@@ -3129,6 +3129,9 @@ msgstr "Fichier binaire masqué"
 msgid "Bio"
 msgstr "Bio"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Les pull requests Bitbucket s’ouvrent désormais dans les panneaux du workspace."
+
 msgid "Block"
 msgstr "Bloc"
 
@@ -3869,6 +3872,9 @@ msgstr "Choisissez comment la vue des changements s'ouvre depuis la barre supér
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Choisissez comment ouvrir les chemins de fichiers lors d'un Cmd+clic dans le terminal"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Choisissez les modèles détectés directement auprès de vos agents."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choisissez ce qu'il faut effacer du navigateur intégré."
 
@@ -4370,9 +4376,6 @@ msgstr "Commande..."
 
 msgid "Commands"
 msgstr "Commandes"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "En mode Plan, les commandes et les outils MCP s’exécutent sans demande d’autorisation."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Commandes exécutées pour la configuration et le nettoyage de l'espace de travail, ainsi que pour le bouton Exécuter."
@@ -6727,6 +6730,9 @@ msgstr "Télécharger {name}"
 msgid "Download app"
 msgstr "Télécharger l'application"
 
+msgid "Download chat responses as Markdown."
+msgstr "Téléchargez les réponses du chat en Markdown."
+
 msgid "Download failed"
 msgstr "Échec du téléchargement"
 
@@ -6747,6 +6753,9 @@ msgstr "Télécharger les journaux"
 
 msgid "Download Manually"
 msgstr "Télécharger manuellement"
+
+msgid "Download Markdown"
+msgstr "Télécharger en Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Téléchargez nos logos et images produit pour vos articles sur Superset."
@@ -7962,9 +7971,6 @@ msgstr "Fichiers et éditeur"
 
 msgid "Files changed"
 msgstr "Fichiers modifiés"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Les fichiers situés dans des dossiers masqués s’ouvrent désormais depuis les liens du chat."
 
 msgid "files to exclude (glob)"
 msgstr "fichiers à exclure (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Lier ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Liez d'abord un dépôt GitHub au projet pour activer le clonage."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Associez des pull requests Bitbucket lors de la création d’un workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Chargement des issues…"
 
 msgid "Loading members..."
 msgstr "Chargement des membres..."
+
+msgid "Loading models…"
+msgstr "Chargement des modèles…"
 
 msgid "Loading more..."
 msgstr "Chargement..."
@@ -10685,6 +10697,9 @@ msgstr "Statut de fusion"
 msgid "Merge status unknown"
 msgstr "Statut de fusion inconnu"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "La fusion, les brouillons et les commentaires de revue fonctionnent désormais avec Bitbucket."
+
 msgid "Merged"
 msgstr "Fusionnée"
 
@@ -10826,6 +10841,12 @@ msgstr "Du code suggéré par un modèle apparaît dans la majorité des nouveau
 
 msgid "Models"
 msgstr "Modèles"
+
+msgid "Models provided by the agent"
+msgstr "Modèles fournis par l’agent"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Modèles indisponibles. Vérifiez l’agent et l’hôte."
 
 msgid "Models used"
 msgstr "Modèles utilisés"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Forfait"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan inclut désormais un accès complet aux outils."
-
 msgid "Plan progress"
 msgstr "Progression du plan"
 
@@ -13975,9 +13993,6 @@ msgstr "Question"
 
 msgid "Questions"
 msgstr "Questions"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Les questions et l’approbation finale du plan attendent toujours votre réponse."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Questions, retours, support ou autre. Écrivez-nous et nous transmettrons votre message à la bonne personne."
@@ -15129,9 +15144,6 @@ msgstr "Saisie enrichie ({hotkeyText})"
 
 msgid "right pane"
 msgstr "panneau de droite"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Faites un clic droit sur un fichier dans un chat pour l’ouvrir ou l’afficher dans le Finder."
 
 msgid "Right-click here"
 msgstr "Clic droit ici"
@@ -18192,6 +18204,12 @@ msgstr "Le service hôte local vient de démarrer. Reconnexion en cours."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "La majorité des PR d'agents fusionnées ne demandent qu'une revue, sans aucune retouche humaine."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "La connexion au modèle a expiré. Reprenez à partir de la dernière partie enregistrée."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Le fournisseur du modèle a signalé une erreur. Patientez et réessayez, ou changez de modèle."
+
 msgid "The name of your organization or team"
 msgstr "Le nom de votre organisation ou équipe"
 
@@ -18554,6 +18572,9 @@ msgstr "Ce Mac"
 
 msgid "This machine"
 msgstr "Cette machine"
+
+msgid "This merge method is not available for the repository."
+msgstr "Cette méthode de fusion n’est pas disponible pour le dépôt."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Ce message ne peut pas servir de point de reprise."
@@ -19452,6 +19473,9 @@ msgstr "Mettez à jour Superset sur cette machine pour joindre des fichiers"
 
 msgid "update the branch prefix"
 msgstr "mettre à jour le préfixe de branche"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Mettez à jour l’hôte pour utiliser les brouillons Bitbucket."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Mettez cet hôte à jour pour la configuration guidée ou utilisez la configuration avancée."

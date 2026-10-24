@@ -11,6 +11,7 @@ import {
 import { ForkScmLinkLabel } from "renderer/components/ForkScmLinkLabel";
 import type { DiffStats } from "renderer/hooks/host-service/useDiffStats";
 import { useHotkeyDisplay } from "renderer/hotkeys";
+import { forkBranchBrowserLink } from "renderer/lib/fork-scm-browser";
 import type { DashboardSidebarWorkspace } from "../../../../types";
 import { ChecksList } from "./components/ChecksList";
 import { ChecksSummary } from "./components/ChecksSummary";
@@ -106,6 +107,7 @@ export function DashboardSidebarWorkspaceHoverCardContent({
 								title={t({
 									message: "Open branch on GitHub",
 								})}
+								{...forkBranchBrowserLink(repoUrl, branch)}
 								onClick={(e) => e.stopPropagation()}
 							>
 								<LuExternalLink className="size-3" />

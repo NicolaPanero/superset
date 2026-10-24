@@ -54,9 +54,8 @@ export function ForkSessionControls({
 }) {
 	const { t } = useLingui();
 	const [request, setRequest] = useState<ForkSwitchRequest | null>(null);
-	const { data: configs = [] } = useV2AgentConfigs(
-		useWorkspaceHostUrl(workspaceId),
-	);
+	const hostUrl = useWorkspaceHostUrl(workspaceId);
+	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const configId = data.acpAgentConfigId ?? data.agent?.id ?? "";
 	const account = useForkSessionAccount(workspaceId, data, (selection) =>
 		setRequest({ configId, accountSelection: selection }),
@@ -149,6 +148,8 @@ export function ForkSessionControls({
 	return (
 		<>
 			<ForkSessionModelPicker
+				hostUrl={hostUrl}
+				workspaceId={workspaceId}
 				configs={configs}
 				data={data}
 				configOptions={configOptions}

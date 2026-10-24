@@ -28,6 +28,7 @@ export const createSessionInputSchema = z.object({
 	harness: z.string().min(1),
 	modeId: z.string().optional(),
 	modelId: z.string().optional(),
+	forkEffort: z.string().optional(),
 	resume: z.object({ harnessSessionId: z.string().min(1) }).optional(),
 	agentConfigId: z.string().min(1).optional(),
 	accountSelection: z.string().min(1).nullable().optional(),

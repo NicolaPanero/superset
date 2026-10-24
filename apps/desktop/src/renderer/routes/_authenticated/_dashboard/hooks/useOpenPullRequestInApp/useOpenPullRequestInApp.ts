@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
+import { useForkOpenPullRequestInApp } from "renderer/components/ForkIntegrations/hooks/useForkOpenPullRequestInApp/useForkOpenPullRequestInApp";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { getPullRequestTarget } from "renderer/lib/github/getPullRequestTarget";
@@ -8,7 +9,9 @@ export function useOpenPullRequestInApp() {
 	const navigate = useNavigate();
 	const { projects } = useHostProjects();
 	const openUrl = electronTrpc.external.openUrl.useMutation();
+	const openForkPullRequest = useForkOpenPullRequestInApp();
 	return (url: string) => {
+		if (openForkPullRequest(url)) return;
 		const target = getPullRequestTarget(url, projects);
 		if (target) {
 			usePullRequestsSplitViewStore.getState().expandDetail();

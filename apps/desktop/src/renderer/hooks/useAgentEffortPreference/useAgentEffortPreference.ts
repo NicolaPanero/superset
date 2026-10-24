@@ -22,10 +22,12 @@ function readStoredMap(storageKey: string): Record<string, string> {
 function readStoredEffort(
 	storageKey: string,
 	presetId: string | null,
+	dynamic = false,
 ): string | null {
 	if (!presetId) return null;
 	const stored = readStoredMap(storageKey)[presetId];
 	if (!stored) return null;
+	if (dynamic) return stored;
 	// Drop ids that fell out of the curated registry — "Default" beats a
 	// flag value the CLI no longer accepts.
 	const support = getAgentEffortSupport(presetId);
@@ -43,14 +45,15 @@ function readStoredEffort(
 export function useAgentEffortPreference(
 	storageKey: string,
 	presetId: string | null,
+	dynamic = false,
 ) {
 	const [selectedEffort, setSelectedEffortState] = useState<string | null>(() =>
-		readStoredEffort(storageKey, presetId),
+		readStoredEffort(storageKey, presetId, dynamic),
 	);
 
 	useEffect(() => {
-		setSelectedEffortState(readStoredEffort(storageKey, presetId));
-	}, [storageKey, presetId]);
+		setSelectedEffortState(readStoredEffort(storageKey, presetId, dynamic));
+	}, [storageKey, presetId, dynamic]);
 
 	const setSelectedEffort = useCallback(
 		(effort: string | null) => {

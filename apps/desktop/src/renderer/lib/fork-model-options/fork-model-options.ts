@@ -14,7 +14,11 @@ export function agentLaunchPreset(agent: AgentSelectAgent) {
 	return agent.launchPresetId ?? agent.presetId ?? agent.iconId ?? null;
 }
 
-export function agentChoices(agents: AgentSelectAgent[], isDark: boolean) {
+export function agentChoices(
+	agents: AgentSelectAgent[],
+	isDark: boolean,
+	catalogs?: Record<string, AgentModelOption[]>,
+) {
 	return agents.map((agent) => {
 		const preset = agentLaunchPreset(agent);
 		const iconId = agent.iconId ?? agent.presetId;
@@ -22,7 +26,9 @@ export function agentChoices(agents: AgentSelectAgent[], isDark: boolean) {
 			presetId: agent.id,
 			label: agent.label,
 			icon: iconId ? getPresetIcon(iconId, isDark) : undefined,
-			models: (preset ? getAgentModelSupport(preset)?.models : undefined) ?? [],
+			models: catalogs
+				? (catalogs[agent.id] ?? [])
+				: ((preset ? getAgentModelSupport(preset)?.models : undefined) ?? []),
 		};
 	});
 }
@@ -50,8 +56,10 @@ export function creationConfigOptions({
 	efforts,
 	selectedEffort,
 	labels,
+	alwaysShowModel = false,
 }: {
 	models: AgentModelOption[];
+	alwaysShowModel?: boolean;
 	selectedModel: string | null;
 	efforts: AgentModelOption[];
 	selectedEffort: string | null;
@@ -63,7 +71,7 @@ export function creationConfigOptions({
 	};
 }): SessionConfigOption[] {
 	const options: SessionConfigOption[] = [];
-	if (models.length > 0) {
+	if (models.length > 0 || alwaysShowModel) {
 		options.push({
 			id: MODEL_CONFIG_ID,
 			label: labels.model,

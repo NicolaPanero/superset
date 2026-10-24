@@ -1,5 +1,6 @@
 import type { UserContent } from "@superset/chat/protocol";
 import type { AgentIdentityId } from "@superset/shared/agent-catalog";
+import type { ForkPullRequestIdentity } from "renderer/lib/fork-pull-request-ref";
 export interface FilePosition {
 	line: number;
 	column?: number;
@@ -102,7 +103,7 @@ export interface CommentPaneData {
 	line?: number;
 }
 
-export interface PullRequestPaneData {
+export interface PullRequestPaneData extends ForkPullRequestIdentity {
 	repoFullName: string;
 	number: number;
 }

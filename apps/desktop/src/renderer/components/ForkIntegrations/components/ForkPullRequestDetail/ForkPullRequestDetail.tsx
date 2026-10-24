@@ -56,7 +56,7 @@ export function ForkPullRequestDetail({
 	hostUrl?: string | null;
 }) {
 	const { t } = useLingui(),
-		{ client, hostUrl } = useForkConnections(targetHostUrl),
+		{ client, hostUrl, data: capabilities } = useForkConnections(targetHostUrl),
 		cache = useQueryClient();
 	const target = {
 		connectionId: pullRequest.connectionId,
@@ -130,6 +130,7 @@ export function ForkPullRequestDetail({
 			required(client).forkScm.action.mutate({
 				...target,
 				action,
+				draft: action === "set-draft" ? !pr.isDraft : undefined,
 				head: pr.headCommit,
 				method: pr.repository.provider === "github" ? "merge" : method,
 				...(action === "edit" ? { title, body: description } : {}),
@@ -222,6 +223,7 @@ export function ForkPullRequestDetail({
 					mergeMethods={mergeMethods}
 					method={method}
 					onMethodChange={(value) => setMethod(value as MergeMethod)}
+					canSetDraft={bitbucket && (capabilities?.version ?? 0) >= 7}
 					onAction={(kind) => action.mutate({ action: kind })}
 					onEdit={startEdit}
 				/>

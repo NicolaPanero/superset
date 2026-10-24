@@ -114,6 +114,7 @@ export function ShadowRowHoverActions({
 		<div
 			className="contents"
 			onMouseOver={handleMouseOver}
+			onMouseMove={handleMouseOver}
 			onMouseLeave={handleMouseLeave}
 			onScrollCapture={handleScrollCapture}
 		>

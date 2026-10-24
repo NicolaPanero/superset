@@ -456,6 +456,7 @@ export const forkScmRouter = router({
 				title: z.string().min(1).max(500),
 				description: z.string().max(65000).default(""),
 				target: z.string().min(1).max(250),
+				draft: z.boolean().optional(),
 			}),
 		)
 		.mutation(({ ctx, input }) => forkCreateWorkspacePullRequest(ctx, input)),
@@ -741,6 +742,7 @@ export const forkScmRouter = router({
 				description: z.string().max(65000).default(""),
 				source: z.string().min(1).max(250),
 				target: z.string().min(1).max(250),
+				draft: z.boolean().optional(),
 			}),
 		)
 		.mutation(({ ctx, input }) =>
@@ -762,6 +764,7 @@ export const forkScmRouter = router({
 					"resolve",
 					"unresolve",
 					"edit",
+					"set-draft",
 				]),
 				side: z.enum(["old", "new"]).optional(),
 				commentId: z
@@ -769,6 +772,7 @@ export const forkScmRouter = router({
 					.regex(/^\d{1,20}$/)
 					.optional(),
 				body: z.string().max(65000).optional(),
+				draft: z.boolean().optional(),
 				title: z.string().min(1).max(500).optional(),
 				method: z
 					.enum([

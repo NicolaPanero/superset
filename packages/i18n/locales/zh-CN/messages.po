@@ -3129,6 +3129,9 @@ msgstr "二进制文件已隐藏"
 msgid "Bio"
 msgstr "简介"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Bitbucket 拉取请求现在可在 workspace 面板中打开。"
+
 msgid "Block"
 msgstr "方块"
 
@@ -3869,6 +3872,9 @@ msgstr "选择从顶栏打开更改视图的方式"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "选择在终端中Cmd+点击文件路径时的打开方式"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "选择直接从代理获取的模型。"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "选择要从应用内浏览器清除的内容。"
 
@@ -4370,9 +4376,6 @@ msgstr "命令..."
 
 msgid "Commands"
 msgstr "命令"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "在 Plan 中，命令和 MCP 工具无需权限确认即可运行。"
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "用于工作区初始化、清理和“运行”按钮的命令。"
@@ -6727,6 +6730,9 @@ msgstr "下载{name}"
 msgid "Download app"
 msgstr "下载应用"
 
+msgid "Download chat responses as Markdown."
+msgstr "将聊天回复下载为 Markdown。"
+
 msgid "Download failed"
 msgstr "下载失败"
 
@@ -6747,6 +6753,9 @@ msgstr "下载日志"
 
 msgid "Download Manually"
 msgstr "手动下载"
+
+msgid "Download Markdown"
+msgstr "下载 Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "下载我们的标志和产品图片，用于报道 Superset。"
@@ -7962,9 +7971,6 @@ msgstr "文件与编辑器"
 
 msgid "Files changed"
 msgstr "更改的文件"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "现在可以从聊天链接打开隐藏文件夹中的文件。"
 
 msgid "files to exclude (glob)"
 msgstr "排除的文件（glob）"
@@ -10083,6 +10089,9 @@ msgstr "关联 ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "请先为项目关联GitHub仓库才能克隆。"
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "创建 workspace 时可关联 Bitbucket 拉取请求。"
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "正在加载议题…"
 
 msgid "Loading members..."
 msgstr "正在加载成员..."
+
+msgid "Loading models…"
+msgstr "正在加载模型…"
 
 msgid "Loading more..."
 msgstr "正在加载更多..."
@@ -10685,6 +10697,9 @@ msgstr "合并状态"
 msgid "Merge status unknown"
 msgstr "合并状态未知"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Bitbucket 现在支持合并、草稿和审查评论。"
+
 msgid "Merged"
 msgstr "已合并"
 
@@ -10826,6 +10841,12 @@ msgstr "多数新文件中出现了模型建议的代码。"
 
 msgid "Models"
 msgstr "模型"
+
+msgid "Models provided by the agent"
+msgstr "代理提供的模型"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "模型不可用。请检查代理和主机。"
 
 msgid "Models used"
 msgstr "使用的模型"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "方案"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan 现在包含工具的完全访问权限。"
-
 msgid "Plan progress"
 msgstr "计划进度"
 
@@ -13975,9 +13993,6 @@ msgstr "问题"
 
 msgid "Questions"
 msgstr "常见问题"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "问题和计划的最终批准仍需等待你的答复。"
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "问题、反馈、支持，或者别的什么都行。写给我们，我们会转给合适的人。"
@@ -15129,9 +15144,6 @@ msgstr "富输入（{hotkeyText}）"
 
 msgid "right pane"
 msgstr "右侧面板"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "在聊天中右键单击文件，即可打开或在 Finder 中显示。"
 
 msgid "Right-click here"
 msgstr "在这里右键点击"
@@ -18192,6 +18204,12 @@ msgstr "本地主机服务刚刚启动。正在重新连接。"
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "多数已合并的智能体PR只需审查，无需任何人工修改。"
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "模型连接超时。请从上次保存的部分继续。"
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "模型提供商报告了错误。请稍后重试，或切换模型。"
+
 msgid "The name of your organization or team"
 msgstr "你的组织或团队的名称"
 
@@ -18554,6 +18572,9 @@ msgstr "这台Mac"
 
 msgid "This machine"
 msgstr "本机"
+
+msgid "This merge method is not available for the repository."
+msgstr "此仓库不支持这种合并方式。"
 
 msgid "This message cannot be used as a restart point."
 msgstr "无法将此消息用作重新开始的位置。"
@@ -19452,6 +19473,9 @@ msgstr "请在这台机器上更新Superset以附加文件"
 
 msgid "update the branch prefix"
 msgstr "更新分支前缀"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "请更新主机以使用 Bitbucket 草稿。"
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "更新此主机以使用引导配置，或使用高级配置。"

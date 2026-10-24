@@ -5,6 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { AppWindow } from "lucide-react";
 import { env } from "renderer/env.renderer";
 import { useHostProjects } from "renderer/hooks/host-projects/useHostProjects";
+import { forkPullRequestIdentity } from "renderer/lib/fork-pull-request-ref";
 import { getPullRequestTarget } from "renderer/lib/github/getPullRequestTarget";
 import { parseSupersetPageUrl } from "renderer/lib/parseSupersetPageUrl";
 import { usePullRequestsSplitViewStore } from "renderer/routes/_authenticated/_dashboard/pull-requests/stores/pullRequestsSplitViewStore";
@@ -53,6 +54,7 @@ export function OpenBrowserPageInAppButton({
 							to: "/pull-requests/$prNumber",
 							params: { prNumber: String(target.ref.number) },
 							search: {
+								...forkPullRequestIdentity(target.ref),
 								project: target.projectId ?? undefined,
 								repo: target.ref.repoFullName,
 							},

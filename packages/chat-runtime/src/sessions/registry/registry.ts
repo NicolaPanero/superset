@@ -10,6 +10,7 @@ export type HarnessFactoryOptions = {
 	cwd: string;
 	modeId?: string;
 	modelId?: string;
+	forkEffort?: string;
 	resume?: { harnessSessionId: string };
 	agentConfigId?: string;
 	accountSelection?: string | null;
@@ -75,6 +76,7 @@ export class LiveSessionRegistry {
 				cwd: options.cwd,
 				modeId: options.modeId,
 				modelId: options.modelId,
+				forkEffort: options.forkEffort,
 				resume: options.resume,
 				strictResume: options.strictResume,
 			});

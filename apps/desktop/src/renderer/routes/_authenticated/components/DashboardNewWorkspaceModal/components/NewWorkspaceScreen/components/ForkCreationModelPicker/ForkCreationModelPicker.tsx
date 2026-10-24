@@ -1,14 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
-import {
-	type AgentModelOption,
-	getAgentModelSupport,
-} from "@superset/shared/agent-models";
+import type { AgentModelOption } from "@superset/shared/agent-models";
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import type { AgentSelectAgent } from "renderer/components/AgentSelect";
+import { ForkModelCatalogStatus } from "renderer/components/ForkModelCatalogStatus";
+import type { useForkModelCatalog } from "renderer/hooks/useForkModelCatalog";
 import {
 	agentChoices,
-	agentLaunchPreset,
 	creationConfigOptions,
 	EFFORT_CONFIG_ID,
 	fromOptionValue,
@@ -27,6 +25,7 @@ const NO_AGENT = "none";
 
 export function ForkCreationModelPicker({
 	agents,
+	catalog,
 	selectedAgent,
 	onSelectAgent,
 	selectedModel,
@@ -37,6 +36,7 @@ export function ForkCreationModelPicker({
 	renderAccountItem,
 }: {
 	agents: AgentSelectAgent[];
+	catalog: ReturnType<typeof useForkModelCatalog>;
 	selectedAgent: string;
 	onSelectAgent: (agentId: string) => void;
 	selectedModel: string | null;
@@ -56,15 +56,16 @@ export function ForkCreationModelPicker({
 			agentChoices(
 				agents.filter((agent) => !agent.disabled || agent.id === selectedAgent),
 				isDark,
+				{ [selectedAgent]: catalog.models },
 			),
-		[agents, isDark, selectedAgent],
+		[agents, isDark, selectedAgent, catalog.models],
 	);
 	const current = agents.find((agent) => agent.id === selectedAgent);
-	const preset = current ? agentLaunchPreset(current) : null;
 	const configOptions = useMemo(
 		() =>
 			creationConfigOptions({
-				models: (preset ? getAgentModelSupport(preset)?.models : null) ?? [],
+				models: catalog.models,
+				alwaysShowModel: selectedAgent !== NO_AGENT,
 				selectedModel,
 				efforts,
 				selectedEffort,
@@ -75,7 +76,7 @@ export function ForkCreationModelPicker({
 					defaultEffort: t({ message: "Default effort" }),
 				},
 			}),
-		[preset, selectedModel, efforts, selectedEffort, t],
+		[catalog.models, selectedModel, efforts, selectedEffort, t, selectedAgent],
 	);
 
 	// The model preference is stored per agent, so a model picked from another
@@ -114,6 +115,15 @@ export function ForkCreationModelPicker({
 			}}
 			footer={
 				<div className="flex flex-col gap-px border-t p-1 empty:hidden">
+					{selectedAgent !== NO_AGENT && (
+						<ForkModelCatalogStatus
+							loading={catalog.isFetching}
+							error={catalog.isError}
+							refresh={() => {
+								void catalog.refetch();
+							}}
+						/>
+					)}
 					{renderAccountItem?.(MENU_ROW_CLASS, MENU_PANEL_CLASS)}
 				</div>
 			}
