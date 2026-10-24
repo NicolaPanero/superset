@@ -22,6 +22,16 @@ import {
 	runTxcriptCli,
 	txcriptCliPath,
 } from "../../../session-transfer/externalSessions";
+import {
+	buildContextHandoffPrompt,
+	contextHandoffBudget,
+	modelContextWindow,
+	selectHandoffHistory,
+} from "../../../session-transfer/fork-context-handoff";
+import {
+	readHandoffHistory,
+	readHandoffSourcePage,
+} from "../../../session-transfer/fork-context-history";
 import { createExternalSessionsCache } from "../../../session-transfer/fork-external-sessions-cache";
 import { TransferJobs } from "../../../session-transfer/jobs";
 import {
@@ -111,6 +121,94 @@ async function pinTargetProfile(
 	);
 }
 
+/** The source account's profile, or null for the default one. */
+async function sourceProfileOverride(
+	agent: LineageNode["agent"],
+	canonicalSourceRoot: string,
+): Promise<string | null> {
+	if (agent !== "claude" && agent !== "codex") return null;
+	const defaultPath = join(homedir(), TRANSFER_AGENTS[agent].home);
+	const defaultProfile = await realpath(defaultPath).catch(() => defaultPath);
+	return dirname(canonicalSourceRoot) !== defaultProfile
+		? dirname(canonicalSourceRoot)
+		: null;
+}
+
+/** Where a chat's native session is stored, for txcript to read. */
+async function resolveChatSource(
+	ctx: { db: HostDb },
+	input: {
+		workspaceId: string;
+		sourceConfigId: string;
+		sourceSessionId: string;
+		sourceAccountSelection?: string | null;
+		sourceExternal?: boolean;
+	},
+) {
+	const workspace = ctx.db
+		.select()
+		.from(workspaces)
+		.where(
+			and(eq(workspaces.id, input.workspaceId), isNull(workspaces.archivedAt)),
+		)
+		.get();
+	const sourceConfig = resolveHostAgentConfig(ctx.db, input.sourceConfigId);
+	if (!workspace || !sourceConfig) throw new Error("session_unavailable");
+	const sourceAgent = sourceConfig.presetId;
+	if (!isVerifiedNativeAgent(sourceAgent))
+		throw new Error("native_pair_unavailable");
+	const cwd = await realpath(workspace.worktreePath);
+	const sourceEnv = await pinTargetProfile(
+		sourceConfig,
+		agentLaunchEnv(ctx.db, sourceConfig),
+		input.sourceAccountSelection,
+	);
+	let sourceReference: string | null;
+	let sourceRoot: string;
+	if (sourceAgent === "claude" || sourceAgent === "codex") {
+		const files =
+			sourceAgent === "claude" ? claudeSessionFiles : codexSessionFiles;
+		sourceReference = files.locate({
+			sessionId: input.sourceSessionId,
+			worktreePath: cwd,
+			env: sourceEnv,
+		});
+		if (!sourceReference) throw new Error("source_unavailable");
+		sourceRoot = dirname(sourceReference);
+		const store = TRANSFER_AGENTS[sourceAgent].store;
+		while (basename(sourceRoot) !== store && dirname(sourceRoot) !== sourceRoot)
+			sourceRoot = dirname(sourceRoot);
+		if (basename(sourceRoot) !== store)
+			throw new Error("source_store_unavailable");
+	} else {
+		// Cursor keeps ACP chats apart from its CLI store, which is
+		// the one the converter reads.
+		if (sourceAgent === "cursor-agent" && !input.sourceExternal)
+			await bridgeCursorSession({
+				cwd: workspace.worktreePath,
+				sessionId: input.sourceSessionId,
+				from: "acp",
+			});
+		sourceRoot = await realpath(
+			defaultNativeStore(sourceAgent, { ...process.env, ...sourceEnv }),
+		);
+		sourceReference = peerSessionReference(
+			sourceAgent,
+			sourceRoot,
+			input.sourceSessionId,
+			cwd,
+		);
+	}
+	return {
+		workspace,
+		sourceConfig,
+		sourceAgent,
+		cwd,
+		sourceRoot,
+		sourceReference,
+	};
+}
+
 async function convertNative(
 	lineage: LocalLineageStore,
 	input: {
@@ -163,14 +261,10 @@ async function convertNative(
 		throw new Error("target_session_unavailable");
 	signal.throwIfAborted();
 	const canonicalSourceRoot = await realpath(source.root);
-	let sourceProfile: string | null = null;
-	if (source.agent === "claude" || source.agent === "codex") {
-		const adapter = TRANSFER_AGENTS[source.agent];
-		const defaultPath = join(homedir(), adapter.home);
-		const defaultProfile = await realpath(defaultPath).catch(() => defaultPath);
-		if (dirname(canonicalSourceRoot) !== defaultProfile)
-			sourceProfile = dirname(canonicalSourceRoot);
-	}
+	const sourceProfile = await sourceProfileOverride(
+		source.agent,
+		canonicalSourceRoot,
+	);
 	const edge = lineage.record({
 		id: input.transferId,
 		workspaceId: input.workspaceId,
@@ -519,81 +613,26 @@ export const sessionTransferRouter = router({
 						const lineage = new LocalLineageStore(ctx.db, ctx.organizationId);
 						if (lineage.edge(input.workspaceId, input.transferId))
 							throw new Error("transfer_already_recorded");
-						const workspace = ctx.db
-							.select()
-							.from(workspaces)
-							.where(
-								and(
-									eq(workspaces.id, input.workspaceId),
-									isNull(workspaces.archivedAt),
-								),
-							)
-							.get();
-						const sourceConfig = resolveHostAgentConfig(
+						const config = resolveHostAgentConfig(ctx.db, input.targetConfigId);
+						const sourcePreset = resolveHostAgentConfig(
 							ctx.db,
 							input.sourceConfigId,
-						);
-						const config = resolveHostAgentConfig(ctx.db, input.targetConfigId);
-						if (!workspace || !sourceConfig || !config)
-							throw new Error("session_unavailable");
-						const sourceAgent = sourceConfig.presetId;
+						)?.presetId;
+						if (!config) throw new Error("session_unavailable");
 						if (
-							!isVerifiedNativeAgent(sourceAgent) ||
 							!isVerifiedNativeAgent(config.presetId) ||
-							sourceAgent === config.presetId ||
+							sourcePreset === config.presetId ||
 							!config.resumeArgs.length
 						)
 							throw new Error("native_pair_unavailable");
-						const cwd = await realpath(workspace.worktreePath);
-						const sourceEnv = await pinTargetProfile(
+						const {
+							workspace,
 							sourceConfig,
-							agentLaunchEnv(ctx.db, sourceConfig),
-							input.sourceAccountSelection,
-						);
-						let sourceReference: string | null;
-						let sourceRoot: string;
-						if (sourceAgent === "claude" || sourceAgent === "codex") {
-							const files =
-								sourceAgent === "claude"
-									? claudeSessionFiles
-									: codexSessionFiles;
-							sourceReference = files.locate({
-								sessionId: input.sourceSessionId,
-								worktreePath: cwd,
-								env: sourceEnv,
-							});
-							if (!sourceReference) throw new Error("source_unavailable");
-							sourceRoot = dirname(sourceReference);
-							const store = TRANSFER_AGENTS[sourceAgent].store;
-							while (
-								basename(sourceRoot) !== store &&
-								dirname(sourceRoot) !== sourceRoot
-							)
-								sourceRoot = dirname(sourceRoot);
-							if (basename(sourceRoot) !== store)
-								throw new Error("source_store_unavailable");
-						} else {
-							// Cursor keeps ACP chats apart from its CLI store, which is
-							// the one the converter reads.
-							if (sourceAgent === "cursor-agent" && !input.sourceExternal)
-								await bridgeCursorSession({
-									cwd: workspace.worktreePath,
-									sessionId: input.sourceSessionId,
-									from: "acp",
-								});
-							sourceRoot = await realpath(
-								defaultNativeStore(sourceAgent, {
-									...process.env,
-									...sourceEnv,
-								}),
-							);
-							sourceReference = peerSessionReference(
-								sourceAgent,
-								sourceRoot,
-								input.sourceSessionId,
-								cwd,
-							);
-						}
+							sourceAgent,
+							cwd,
+							sourceRoot,
+							sourceReference,
+						} = await resolveChatSource(ctx, input);
 						const env = await pinTargetProfile(
 							config,
 							agentLaunchEnv(ctx.db, config),
@@ -683,6 +722,105 @@ export const sessionTransferRouter = router({
 				throw new TRPCError({
 					code: "PRECONDITION_FAILED",
 					message: error.message,
+				});
+			});
+		}),
+	prepareContextFromChat: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				sourceTerminalId: z.string().uuid(),
+				sourceConfigId: z.string().min(1),
+				sourceSessionId: z.string().min(1).max(128),
+				sourceAccountSelection: z.string().min(1).nullable().optional(),
+				sourceExternal: z.boolean().optional(),
+				/** Sizes the history budget when its context window is known. */
+				targetModelId: z.string().max(200).nullable().optional(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			try {
+				const source = await resolveChatSource(ctx, input);
+				const history = await readHandoffHistory((before) =>
+					new TxcriptTransferProvider().history({
+						sourceAgent: source.sourceAgent,
+						sourceSessionId: input.sourceSessionId,
+						sourceRoot: source.sourceRoot,
+						sourceReference: source.sourceReference,
+						all: true,
+						...(before !== undefined ? { before } : {}),
+					}),
+				);
+				const storeRoot = await realpath(source.sourceRoot);
+				const node = new LocalLineageStore(
+					ctx.db,
+					ctx.organizationId,
+				).ensureNode(input.workspaceId, {
+					agent: source.sourceAgent,
+					sessionId: input.sourceSessionId,
+					storeRoot,
+					reference: await realpath(source.sourceReference),
+					cwd: source.cwd,
+					configId: source.sourceConfig.id,
+					label: source.sourceConfig.label,
+					profileOverride: await sourceProfileOverride(
+						source.sourceAgent,
+						storeRoot,
+					),
+					lastTerminalId: input.sourceTerminalId,
+				});
+				const selection = selectHandoffHistory({
+					messages: history.messages,
+					budget: contextHandoffBudget(modelContextWindow(input.targetModelId)),
+					agentLabel: source.sourceConfig.label,
+					omittedUnknown: history.omittedUnknown,
+					recovery: { workspaceId: input.workspaceId, sourceNodeId: node.id },
+				});
+				if (selection.included === 0) throw new Error("context_unavailable");
+				return {
+					prompt: buildContextHandoffPrompt({
+						history: selection.text,
+						sourceAgentLabel: source.sourceConfig.label,
+					}),
+					included: selection.included,
+					omitted: selection.omitted,
+					omittedUnknown: selection.omittedUnknown,
+					cut: selection.cut,
+				};
+			} catch (error) {
+				throw new TRPCError({
+					code: "PRECONDITION_FAILED",
+					message:
+						error instanceof Error && /^[a-z_]{1,64}$/.test(error.message)
+							? error.message
+							: "context_transfer_failed",
+				});
+			}
+		}),
+	/** Read-only pages of a session a context handoff came from. */
+	handoffHistory: protectedProcedure
+		.input(
+			z.object({
+				workspaceId: z.string().uuid(),
+				sourceNodeId: z.string().uuid(),
+				before: z.number().int().nonnegative().optional(),
+			}),
+		)
+		.query(({ ctx, input }) => {
+			const provider = new TxcriptTransferProvider();
+			return readHandoffSourcePage({
+				...input,
+				lineage: new LocalLineageStore(ctx.db, ctx.organizationId),
+				history: (request) => provider.history(request),
+			}).catch((error: Error) => {
+				throw new TRPCError({
+					code:
+						error.message === "handoff_source_unavailable"
+							? "NOT_FOUND"
+							: "PRECONDITION_FAILED",
+					message: /^[a-z_]{1,64}$/.test(error.message)
+						? error.message
+						: "handoff_history_unavailable",
 				});
 			});
 		}),

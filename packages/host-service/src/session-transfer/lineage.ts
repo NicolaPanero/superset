@@ -99,35 +99,16 @@ export class LocalLineageStore {
 				return existing;
 			}
 			const createdAt = input.createdAt ?? Date.now();
-			const ensureNode = (node: LineageNodeInput) => {
-				tx.insert(sessionLineageNodes)
-					.values({
-						...node,
-						id: randomUUID(),
-						organizationId: this.organizationId,
-						workspaceId: input.workspaceId,
-						createdAt,
-					})
-					.onConflictDoNothing()
-					.run();
-				const row = tx
-					.select()
-					.from(sessionLineageNodes)
-					.where(
-						and(
-							eq(sessionLineageNodes.organizationId, this.organizationId),
-							eq(sessionLineageNodes.workspaceId, input.workspaceId),
-							eq(sessionLineageNodes.agent, node.agent),
-							eq(sessionLineageNodes.sessionId, node.sessionId),
-							eq(sessionLineageNodes.storeRoot, node.storeRoot),
-						),
-					)
-					.get();
-				if (!row) throw new Error("lineage_node_unavailable");
-				return row;
-			};
-			const source = ensureNode(input.source);
-			const target = ensureNode(input.target);
+			const source = store.ensureNode(
+				input.workspaceId,
+				input.source,
+				createdAt,
+			);
+			const target = store.ensureNode(
+				input.workspaceId,
+				input.target,
+				createdAt,
+			);
 			return tx
 				.insert(sessionLineageEdges)
 				.values({
@@ -143,6 +124,43 @@ export class LocalLineageStore {
 				.returning()
 				.get();
 		});
+	}
+
+	/**
+	 * The node for a session, created when missing. A context handoff records
+	 * only its source, which the recovery reader then accepts.
+	 */
+	ensureNode(
+		workspaceId: string,
+		node: LineageNodeInput,
+		createdAt = Date.now(),
+	): LineageNode {
+		this.db
+			.insert(sessionLineageNodes)
+			.values({
+				...node,
+				id: randomUUID(),
+				organizationId: this.organizationId,
+				workspaceId,
+				createdAt,
+			})
+			.onConflictDoNothing()
+			.run();
+		const row = this.db
+			.select()
+			.from(sessionLineageNodes)
+			.where(
+				and(
+					eq(sessionLineageNodes.organizationId, this.organizationId),
+					eq(sessionLineageNodes.workspaceId, workspaceId),
+					eq(sessionLineageNodes.agent, node.agent),
+					eq(sessionLineageNodes.sessionId, node.sessionId),
+					eq(sessionLineageNodes.storeRoot, node.storeRoot),
+				),
+			)
+			.get();
+		if (!row) throw new Error("lineage_node_unavailable");
+		return row;
 	}
 
 	setTerminal(workspaceId: string, nodeId: string, terminalId: string) {
