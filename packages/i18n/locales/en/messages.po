@@ -1506,6 +1506,9 @@ msgstr "A new version of Superset is required to continue. Please update to the 
 msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
 msgstr "A new workspace off this branch, with the conversation handed to a fresh agent"
 
+msgid "A notice shows how many messages a context handoff included."
+msgstr "A notice shows how many messages a context handoff included."
+
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "A page can save each reader's answer, so a poll works with no backend."
 
@@ -3129,9 +3132,6 @@ msgstr "Binary file hidden"
 msgid "Bio"
 msgstr "Bio"
 
-msgid "Bitbucket pull requests now open in workspace panes."
-msgstr "Bitbucket pull requests now open in workspace panes."
-
 msgid "Block"
 msgstr "Block"
 
@@ -3871,9 +3871,6 @@ msgstr "Choose how the Changes view opens from the top bar"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Choose how to open file paths when Cmd+clicking in the terminal"
-
-msgid "Choose models discovered directly from your agents."
-msgstr "Choose models discovered directly from your agents."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choose what to clear from the in-app browser."
@@ -4809,6 +4806,9 @@ msgstr "Context"
 
 msgid "Context {percent} used"
 msgstr "Context {percent} used"
+
+msgid "Context handoffs carry tool activity and grow with the target model's context window."
+msgstr "Context handoffs carry tool activity and grow with the target model's context window."
 
 msgid "Context Menu"
 msgstr "Context Menu"
@@ -6730,9 +6730,6 @@ msgstr "Download {name}"
 msgid "Download app"
 msgstr "Download app"
 
-msgid "Download chat responses as Markdown."
-msgstr "Download chat responses as Markdown."
-
 msgid "Download failed"
 msgstr "Download failed"
 
@@ -6901,6 +6898,15 @@ msgstr "Each surface has its own typography. Changes appear immediately in the l
 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Each task gets its own workspace and branch. The agent starts in a chat."
+
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Earlier context was omitted: {included} of {total} messages included."
+
+msgid "Earlier context was omitted."
+msgstr "Earlier context was omitted."
 
 msgid "Early 2024"
 msgstr "Early 2024"
@@ -10089,9 +10095,6 @@ msgstr "Link ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Link a GitHub repository on the project first to enable cloning."
 
-msgid "Link Bitbucket pull requests when creating a workspace."
-msgstr "Link Bitbucket pull requests when creating a workspace."
-
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10696,9 +10699,6 @@ msgstr "Merge status"
 
 msgid "Merge status unknown"
 msgstr "Merge status unknown"
-
-msgid "Merge, drafts and review comments now work with Bitbucket."
-msgstr "Merge, drafts and review comments now work with Bitbucket."
 
 msgid "Merged"
 msgstr "Merged"
@@ -17267,6 +17267,9 @@ msgstr "Summary"
 msgid "Summary only"
 msgstr "Summary only"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Summary only now keeps the original request and the latest messages whole."
+
 msgid "sun 11:00"
 msgstr "sun 11:00"
 
@@ -18215,6 +18218,12 @@ msgstr "The name of your organization or team"
 
 msgid "The network connection changed"
 msgstr "The network connection changed"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "The new agent can read omitted messages of the earlier chat when it needs them."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "The new agent can read the omitted messages when it needs them."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "The new agent resumes the whole conversation, tools included."

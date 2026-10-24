@@ -1506,6 +1506,9 @@ msgstr "続行するには新しいバージョンのSupersetが必要です。�
 msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
 msgstr "このブランチから新しいワークスペースを作り、会話を新しいエージェントに引き継ぎます"
 
+msgid "A notice shows how many messages a context handoff included."
+msgstr "コンテキスト引き継ぎに含まれたメッセージ数を通知で表示します。"
+
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "ページは読み手ごとの回答を保存できるので、バックエンドなしでアンケートが作れます。"
 
@@ -3129,9 +3132,6 @@ msgstr "バイナリファイルは非表示"
 msgid "Bio"
 msgstr "自己紹介"
 
-msgid "Bitbucket pull requests now open in workspace panes."
-msgstr "Bitbucket のプルリクエストが workspace のペインで開くようになりました。"
-
 msgid "Block"
 msgstr "ブロック"
 
@@ -3871,9 +3871,6 @@ msgstr "トップバーから変更ビューをどのように開くかを選択
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "ターミナルでCmd+クリックしたときのファイルパスの開き方"
-
-msgid "Choose models discovered directly from your agents."
-msgstr "エージェントから直接取得したモデルを選択できます。"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
@@ -4809,6 +4806,9 @@ msgstr "Context"
 
 msgid "Context {percent} used"
 msgstr "コンテキスト使用率 {percent}"
+
+msgid "Context handoffs carry tool activity and grow with the target model's context window."
+msgstr "コンテキスト引き継ぎにツールの実行内容が含まれ、引き継ぎ先モデルのコンテキストウィンドウに応じて拡大します。"
 
 msgid "Context Menu"
 msgstr "Context Menu"
@@ -6730,9 +6730,6 @@ msgstr "{name}をダウンロード"
 msgid "Download app"
 msgstr "アプリをダウンロード"
 
-msgid "Download chat responses as Markdown."
-msgstr "チャットの回答をMarkdownとしてダウンロードできます。"
-
 msgid "Download failed"
 msgstr "ダウンロードに失敗しました"
 
@@ -6901,6 +6898,15 @@ msgstr "サーフェスごとに独自のタイポグラフィがあります。
 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "タスクごとに専用のワークスペースとブランチが作成されます。エージェントはチャットで開始します。"
+
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "以前のコンテキストの一部が省略されました：{included} 件のメッセージを含み、{omitted} 件以上を省略しました。"
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "以前のコンテキストの一部が省略されました：{total} 件中 {included} 件のメッセージを含みます。"
+
+msgid "Earlier context was omitted."
+msgstr "以前のコンテキストの一部が省略されました。"
 
 msgid "Early 2024"
 msgstr "2024年前半"
@@ -10089,9 +10095,6 @@ msgstr "リンク ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "クローンを有効にするには、先にプロジェクトにGitHubリポジトリをリンクしてください。"
 
-msgid "Link Bitbucket pull requests when creating a workspace."
-msgstr "workspace の作成時に Bitbucket のプルリクエストを関連付けられます。"
-
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10696,9 +10699,6 @@ msgstr "マージ状態"
 
 msgid "Merge status unknown"
 msgstr "マージ状態は不明です"
-
-msgid "Merge, drafts and review comments now work with Bitbucket."
-msgstr "Bitbucket でマージ、下書き、レビューコメントが使えるようになりました。"
 
 msgid "Merged"
 msgstr "マージ済み"
@@ -17267,6 +17267,9 @@ msgstr "概要"
 msgid "Summary only"
 msgstr "要約のみ"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "「要約のみ」で最初のリクエストと最新のメッセージを省略せずに引き継ぐようになりました。"
+
 msgid "sun 11:00"
 msgstr "日 11:00"
 
@@ -18215,6 +18218,12 @@ msgstr "組織またはチームの名前"
 
 msgid "The network connection changed"
 msgstr "ネットワーク接続が変更されました"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "新しいエージェントは、必要に応じて以前のチャットの省略されたメッセージを読めます。"
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "新しいエージェントは、必要に応じて省略されたメッセージを読めます。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新しいエージェントがツールを含む会話全体を再開します。"

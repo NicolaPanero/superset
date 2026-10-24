@@ -1506,6 +1506,9 @@ msgstr "Se necesita una versión nueva de Superset para continuar. Actualiza a l
 msgid "A new workspace off this branch, with the conversation handed to a fresh agent"
 msgstr "Un nuevo espacio de trabajo desde esta rama, con la conversación entregada a un agente nuevo"
 
+msgid "A notice shows how many messages a context handoff included."
+msgstr "Un aviso muestra cuántos mensajes incluyó una transferencia de contexto."
+
 msgid "A page can save each reader's answer, so a poll works with no backend."
 msgstr "Una página puede guardar la respuesta de cada lector, así que una encuesta funciona sin backend."
 
@@ -3129,9 +3132,6 @@ msgstr "Archivo binario oculto"
 msgid "Bio"
 msgstr "Biografía"
 
-msgid "Bitbucket pull requests now open in workspace panes."
-msgstr "Las pull requests de Bitbucket ahora se abren en paneles del workspace."
-
 msgid "Block"
 msgstr "Bloque"
 
@@ -3871,9 +3871,6 @@ msgstr "Elige cómo se abre la vista de cambios desde la barra superior"
 
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Elige cómo abrir las rutas de archivo al hacer Cmd+clic en la terminal"
-
-msgid "Choose models discovered directly from your agents."
-msgstr "Elige los modelos detectados directamente en tus agentes."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Elige qué borrar del navegador integrado."
@@ -4809,6 +4806,9 @@ msgstr "Contexto"
 
 msgid "Context {percent} used"
 msgstr "Contexto usado al {percent}"
+
+msgid "Context handoffs carry tool activity and grow with the target model's context window."
+msgstr "Las transferencias de contexto incluyen la actividad de las herramientas y crecen con la ventana de contexto del modelo de destino."
 
 msgid "Context Menu"
 msgstr "Menú contextual"
@@ -6730,9 +6730,6 @@ msgstr "Descargar {name}"
 msgid "Download app"
 msgstr "Descargar la app"
 
-msgid "Download chat responses as Markdown."
-msgstr "Descarga las respuestas del chat en Markdown."
-
 msgid "Download failed"
 msgstr "Error al descargar"
 
@@ -6901,6 +6898,15 @@ msgstr "Cada superficie tiene su propia tipografía. Los cambios se ven al insta
 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Cada tarea tiene su propio espacio de trabajo y su propia rama. El agente empieza en un chat."
+
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Se omitió contexto anterior: {included} mensajes incluidos, más de {omitted} omitidos."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Se omitió contexto anterior: {included} de {total} mensajes incluidos."
+
+msgid "Earlier context was omitted."
+msgstr "Se omitió contexto anterior."
 
 msgid "Early 2024"
 msgstr "Principios de 2024"
@@ -10089,9 +10095,6 @@ msgstr "Enlazar ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Enlaza antes un repositorio de GitHub al proyecto para poder clonar."
 
-msgid "Link Bitbucket pull requests when creating a workspace."
-msgstr "Vincula pull requests de Bitbucket al crear un workspace."
-
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10696,9 +10699,6 @@ msgstr "Estado de fusión"
 
 msgid "Merge status unknown"
 msgstr "Estado de fusión desconocido"
-
-msgid "Merge, drafts and review comments now work with Bitbucket."
-msgstr "El merge, los borradores y los comentarios de revisión ya funcionan con Bitbucket."
 
 msgid "Merged"
 msgstr "Fusionada"
@@ -17267,6 +17267,9 @@ msgstr "Resumen"
 msgid "Summary only"
 msgstr "Solo resumen"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Solo resumen ahora conserva completos la solicitud original y los mensajes más recientes."
+
 msgid "sun 11:00"
 msgstr "dom 11:00"
 
@@ -18215,6 +18218,12 @@ msgstr "El nombre de la organización o equipo"
 
 msgid "The network connection changed"
 msgstr "Cambió la conexión de red"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "El nuevo agente puede leer los mensajes omitidos del chat anterior cuando los necesite."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "El nuevo agente puede leer los mensajes omitidos cuando los necesite."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "El nuevo agente retoma toda la conversación, incluidas las herramientas."

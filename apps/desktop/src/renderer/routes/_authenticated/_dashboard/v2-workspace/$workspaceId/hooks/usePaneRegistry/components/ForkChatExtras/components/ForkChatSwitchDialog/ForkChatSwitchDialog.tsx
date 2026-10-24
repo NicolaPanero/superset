@@ -38,10 +38,13 @@ import type { OpenAgentChat } from "../../../../../useAgentSessionLauncher/useAg
 import { useForkAgentSwitch } from "../../../AgentTerminalPane/hooks/useForkAgentSwitch";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../hooks/useForkAccountSwitch";
-import { contextHandoff } from "../../utils/contextHandoff/contextHandoff";
 import { setPendingEffort } from "../../utils/pendingEffort";
 import { setPendingModelReset } from "../../utils/pendingModelReset";
 import { rememberPreviousChat } from "../../utils/previousChat";
+import {
+	type ContextCoverage,
+	structuredContextHandoff,
+} from "../../utils/structuredContextHandoff";
 import {
 	forkTransferPolicy,
 	runForkTransfer,
@@ -117,6 +120,8 @@ export function ForkChatSwitchDialog({
 	const prepareAcpLaunch = workspaceTrpc.agents.prepareAcpLaunch.useMutation();
 	const prepareFromChat =
 		workspaceTrpc.sessionTransfer.prepareFromChat.useMutation();
+	const prepareContextFromChat =
+		workspaceTrpc.sessionTransfer.prepareContextFromChat.useMutation();
 	const cancelTransfer = workspaceTrpc.sessionTransfer.cancel.useMutation();
 	const { data: capabilities, isPending: checkingCapabilities } =
 		workspaceTrpc.sessionTransfer.capabilities.useQuery(undefined, {
@@ -230,8 +235,39 @@ export function ForkChatSwitchDialog({
 			(config) =>
 				config.id === data.acpAgentConfigId || config.presetId === sourcePreset,
 		)?.label ?? sourcePreset;
+	const sourceConfigId =
+		configs.find((config) => config.id === data.acpAgentConfigId)?.presetId ===
+		sourcePreset
+			? (data.acpAgentConfigId ?? sourcePreset)
+			: sourcePreset;
 	const model = request?.model ?? null;
 	const effort = request?.effort ?? null;
+	const announceCoverage = (coverage: ContextCoverage) => {
+		if (coverage.kind === "complete") return;
+		let title = t({ message: "Earlier context was omitted." });
+		if (coverage.kind === "counted") {
+			const { included, omitted } = coverage;
+			const total = included + omitted;
+			title = coverage.atLeast
+				? t({
+						message: `Earlier context was omitted: ${included} messages included, more than ${omitted} omitted.`,
+					})
+				: t({
+						message: `Earlier context was omitted: ${included} of ${total} messages included.`,
+					});
+		}
+		toast.info(title, {
+			duration: 10_000,
+			...(coverage.kind === "counted"
+				? {
+						description: t({
+							message:
+								"The new agent can read the omitted messages when it needs them.",
+						}),
+					}
+				: {}),
+		});
+	};
 	const rememberEffort = (terminalId: string) => {
 		if (effort) setPendingEffort(terminalId, effort.id);
 		if (!model) setPendingModelReset(terminalId);
@@ -308,11 +344,7 @@ export function ForkChatSwitchDialog({
 				workspaceId,
 				transferId,
 				sourceTerminalId: data.terminalId,
-				sourceConfigId:
-					configs.find((config) => config.id === data.acpAgentConfigId)
-						?.presetId === sourcePreset
-						? (data.acpAgentConfigId ?? sourcePreset)
-						: sourcePreset,
+				sourceConfigId,
 				sourceSessionId,
 				...(sourceSelection !== undefined
 					? { sourceAccountSelection: sourceSelection }
@@ -377,11 +409,26 @@ export function ForkChatSwitchDialog({
 		setStage("converting");
 		let restoreRecovery: (() => void) | undefined;
 		try {
-			const prompt = await contextHandoff(
-				wiring.transport,
+			const { prompt, coverage } = await structuredContextHandoff({
+				transport: wiring.transport,
 				chatSessionId,
-				sourceLabel,
-			);
+				agentLabel: sourceLabel,
+				...(sourceSessionId
+					? {
+							structured: () =>
+								prepareContextFromChat.mutateAsync({
+									workspaceId,
+									sourceTerminalId: data.terminalId,
+									sourceConfigId,
+									sourceSessionId,
+									...(sourceSelection !== undefined
+										? { sourceAccountSelection: sourceSelection }
+										: {}),
+									targetModelId: model?.id ?? null,
+								}),
+						}
+					: {}),
+			});
 			if (run !== runSequence.current) return;
 			const selected = managed ? pickedSelection : undefined;
 			const launch = await prepareAcpLaunch.mutateAsync({
@@ -433,6 +480,7 @@ export function ForkChatSwitchDialog({
 				rememberEffort(opened.terminalId);
 			}
 			onClose();
+			announceCoverage(coverage);
 		} catch (error) {
 			console.warn("[acp-chat] context handoff failed", error);
 			restoreRecovery?.();
