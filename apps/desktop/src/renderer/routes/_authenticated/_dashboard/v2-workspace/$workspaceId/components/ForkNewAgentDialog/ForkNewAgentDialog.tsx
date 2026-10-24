@@ -1,5 +1,4 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { getAgentModelSupport } from "@superset/shared/agent-models";
 import { Button } from "@superset/ui/button";
 import {
 	Dialog,
@@ -13,7 +12,9 @@ import { AgentModelSelect } from "renderer/components/AgentModelSelect";
 import { AgentSelect } from "renderer/components/AgentSelect";
 import { ForkAccountEmptyState } from "renderer/components/ForkAccountEmptyState";
 import { ForkAccountPicker } from "renderer/components/ForkAccountPicker";
+import { ForkModelCatalogStatus } from "renderer/components/ForkModelCatalogStatus";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { useForkModelCatalog } from "renderer/hooks/useForkModelCatalog";
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher";
@@ -44,9 +45,6 @@ export function ForkNewAgentDialog({
 	const selected = peers.find(
 		(config) => config.id === (configId ?? peers[0]?.id),
 	);
-	const models = selected
-		? (getAgentModelSupport(selected.presetId)?.models ?? [])
-		: [];
 	const managed =
 		selected?.presetId === "claude" || selected?.presetId === "codex";
 	const account = useForkNewAgentAccount(
@@ -55,6 +53,15 @@ export function ForkNewAgentDialog({
 		selected?.presetId,
 		open,
 	);
+	const catalog = useForkModelCatalog({
+		hostUrl,
+		agent: selected?.id,
+		workspaceId,
+		accountSelection: account.selection,
+		model,
+		enabled: open && (!managed || account.available),
+	});
+	const models = catalog.models;
 	const accountMissing =
 		managed &&
 		!showCliOptions &&
@@ -65,16 +72,20 @@ export function ForkNewAgentDialog({
 		setModel(null);
 	};
 	const launchSession = async () => {
-		if (!selected || accountMissing || launchLock.current) return;
+		if (!selected || accountMissing || catalog.isFetching || launchLock.current)
+			return;
 		launchLock.current = true;
 		setBusy(true);
 		try {
 			const result = await onCreateNewAgentSession({
 				configId: selected.id,
+				modelCatalog: "agent",
 				placement: "new-tab",
 				prompt: "",
 
-				...(model ? { modelId: model } : {}),
+				...(model && models.some((o) => o.id === model)
+					? { modelId: model }
+					: {}),
 				...(managed && !account.forcedApi && account.selection !== undefined
 					? { accountSelection: account.selection }
 					: {}),
@@ -140,6 +151,13 @@ export function ForkNewAgentDialog({
 						)}
 					</div>
 				)}
+				<ForkModelCatalogStatus
+					loading={catalog.isFetching}
+					error={catalog.isError}
+					refresh={() => {
+						void catalog.refetch();
+					}}
+				/>
 				{models.length > 0 && (
 					<div className="space-y-2">
 						<p className="text-sm">
@@ -164,6 +182,7 @@ export function ForkNewAgentDialog({
 					onClick={() => void launchSession()}
 					disabled={
 						busy ||
+						catalog.isFetching ||
 						!selected ||
 						accountMissing ||
 						(managed && !account.options.isSuccess)

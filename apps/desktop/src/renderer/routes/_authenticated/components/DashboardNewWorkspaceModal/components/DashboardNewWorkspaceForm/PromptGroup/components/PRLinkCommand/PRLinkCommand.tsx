@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { useEffect, useId, useRef, useState } from "react";
+import { forkPullRequestSearch } from "renderer/components/ForkIntegrations/utils/searchPullRequests";
 import { useHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -74,7 +75,7 @@ export function PRLinkCommand({
 		queryFn: async () => {
 			if (!hostUrl || !projectId) return { pullRequests: [] };
 			const client = getHostServiceClientByUrl(hostUrl);
-			return client.workspaceCreation.searchPullRequests.query({
+			return forkPullRequestSearch(client).query({
 				projectId,
 				query: debouncedTrimmed || undefined,
 				limit: 30,

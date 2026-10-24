@@ -2,6 +2,7 @@ import type { SelectionSide } from "@pierre/diffs";
 import type { DiffLineAnnotation } from "@pierre/diffs/react";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useMemo } from "react";
+import { forkReviewCommentUrl } from "renderer/lib/fork-review-comment-link";
 import { useSettings } from "renderer/stores/settings";
 
 export type DeferredDiffReason = "deferred" | "loading" | "error";
@@ -108,7 +109,7 @@ export function useDiffAnnotationsByPath({
 			// "Open on GitHub" at the PR is misleading when there's no anchor.
 			const url =
 				prUrl && firstDbId != null
-					? `${prUrl}#discussion_r${firstDbId}`
+					? forkReviewCommentUrl(prUrl, firstDbId)
 					: undefined;
 
 			const annotations = annotationsByPath.get(thread.path) ?? [];

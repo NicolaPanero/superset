@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { forkPullRequestIdentity } from "renderer/lib/fork-pull-request-ref";
 import type { PullRequestRef } from "renderer/lib/github/pullRequestRef";
 import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 
@@ -24,6 +25,7 @@ export function usePullRequestPaneIntentOpener({
 		const intent = usePullRequestPaneIntent.getState().consume(workspaceId);
 		if (!intent) return;
 		openPullRequestPane({
+			...forkPullRequestIdentity(intent),
 			repoFullName: intent.repoFullName,
 			number: intent.number,
 		});

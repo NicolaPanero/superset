@@ -14,11 +14,13 @@ export function ForkAccountAvatar({
 	label,
 	fiveHourUsed,
 	weeklyUsed,
+	lastKnown = false,
 	className,
 }: {
 	label: string | null;
 	fiveHourUsed: number | null;
 	weeklyUsed: number | null;
+	lastKnown?: boolean;
 	className?: string;
 }) {
 	const { t } = useLingui();
@@ -28,9 +30,12 @@ export function ForkAccountAvatar({
 			: formatPercent(used / 100, { maximumFractionDigits: 0 });
 	const fiveHour = amount(fiveHourUsed);
 	const weekly = amount(weeklyUsed);
-	const description = t({
+	const usageDescription = t({
 		message: `Quota used · outer ring 5h: ${fiveHour} · inner ring weekly: ${weekly}`,
 	});
+	const description = lastKnown
+		? `${usageDescription} · ${t({ message: "Last known" })}`
+		: usageDescription;
 	return (
 		<span
 			role="img"
@@ -62,7 +67,9 @@ export function ForkAccountAvatar({
 								r={radius}
 								fill="none"
 								strokeWidth="1.5"
-								strokeDasharray={fraction === null ? "1.5 2" : undefined}
+								strokeDasharray={
+									fraction === null || lastKnown ? "1.5 2" : undefined
+								}
 							/>
 							{fraction !== null && (
 								<circle
@@ -72,6 +79,7 @@ export function ForkAccountAvatar({
 									r={radius}
 									fill="none"
 									strokeWidth="1.5"
+									opacity={lastKnown ? 0.65 : undefined}
 									strokeDasharray={circumference}
 									strokeDashoffset={circumference * (1 - fraction)}
 									strokeLinecap="round"

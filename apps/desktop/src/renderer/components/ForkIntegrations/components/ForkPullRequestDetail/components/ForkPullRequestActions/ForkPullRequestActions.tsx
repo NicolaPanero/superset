@@ -30,7 +30,8 @@ export type ForkPullRequestAction =
 	| "approve"
 	| "unapprove"
 	| "request-changes"
-	| "unrequest-changes";
+	| "unrequest-changes"
+	| "set-draft";
 
 export function ForkPullRequestActions({
 	pr,
@@ -41,6 +42,7 @@ export function ForkPullRequestActions({
 	onMethodChange,
 	onAction,
 	onEdit,
+	canSetDraft = false,
 }: {
 	pr: ForkPullRequest;
 	busy: boolean;
@@ -50,6 +52,7 @@ export function ForkPullRequestActions({
 	onMethodChange: (method: string) => void;
 	onAction: (action: ForkPullRequestAction) => void;
 	onEdit: () => void;
+	canSetDraft?: boolean;
 }) {
 	const { t } = useLingui();
 	const [mergeOpen, setMergeOpen] = useState(false);
@@ -90,7 +93,7 @@ export function ForkPullRequestActions({
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)}
-			{open && (
+			{open && !pr.isDraft && (
 				<Popover open={mergeOpen} onOpenChange={setMergeOpen}>
 					<PopoverTrigger asChild>
 						<Button
@@ -146,6 +149,11 @@ export function ForkPullRequestActions({
 					</PopoverContent>
 				</Popover>
 			)}
+			{open && pr.isDraft && canSetDraft && (
+				<Button size="xs" disabled={busy} onClick={() => onAction("set-draft")}>
+					<Trans>Ready for review</Trans>
+				</Button>
+			)}
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
@@ -157,6 +165,12 @@ export function ForkPullRequestActions({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-52">
+					{open && !pr.isDraft && canSetDraft && (
+						<DropdownMenuItem onSelect={() => onAction("set-draft")}>
+							<LuPencil />
+							<Trans>Draft</Trans>
+						</DropdownMenuItem>
+					)}
 					<DropdownMenuItem onSelect={onEdit}>
 						<LuPencil />
 						<Trans>Edit</Trans>

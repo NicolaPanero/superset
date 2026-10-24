@@ -1,14 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { acpHarnessForPreset } from "@superset/chat/core";
 import type { SessionConfigOption } from "@superset/chat/protocol";
-import {
-	getAgentEfforts,
-	getAgentModelSupport,
-} from "@superset/shared/agent-models";
+import { resolveAgentLaunchPresetId } from "@superset/shared/agent-models";
 import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { useMemo, useState } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
+import { ForkModelCatalogStatus } from "renderer/components/ForkModelCatalogStatus";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
+import { useForkModelCatalog } from "renderer/hooks/useForkModelCatalog";
 import {
 	agentChoices,
 	creationConfigOptions,
@@ -40,16 +39,21 @@ export interface ForkSessionAgentConfig {
 	id: string;
 	label: string;
 	presetId: string;
+	command?: string;
 	iconId?: string | null;
 }
 
 export function ForkSessionModelPicker({
+	hostUrl = null,
+	workspaceId,
 	configs,
 	data,
 	configOptions,
 	onSelect,
 	onRequestSwitch,
 }: {
+	hostUrl?: string | null;
+	workspaceId?: string;
 	configs: ForkSessionAgentConfig[];
 	data: TerminalPaneData;
 	configOptions: SessionConfigOption[];
@@ -60,7 +64,12 @@ export function ForkSessionModelPicker({
 	const isDark = useIsDarkTheme();
 	const menuDialog = useForkMenuDialog();
 	const chatConfigs = useMemo(
-		() => configs.filter((config) => acpHarnessForPreset(config.presetId)),
+		() =>
+			configs.filter((config) =>
+				acpHarnessForPreset(
+					resolveAgentLaunchPresetId(config.presetId, config.command ?? ""),
+				),
+			),
 		[configs],
 	);
 	const realId =
@@ -73,24 +82,20 @@ export function ForkSessionModelPicker({
 	const shown = viewed ?? realId;
 	const browsing = shown !== null && shown !== realId;
 	const viewedConfig = chatConfigs.find((config) => config.id === shown);
-	const models = useMemo(
-		() =>
-			(viewedConfig
-				? getAgentModelSupport(viewedConfig.presetId)?.models
-				: null) ?? [],
-		[viewedConfig],
-	);
-	const efforts = useMemo(
-		() =>
-			viewedConfig
-				? getAgentEfforts(viewedConfig.presetId, draftModel ?? undefined)
-				: [],
-		[viewedConfig, draftModel],
-	);
+	const catalog = useForkModelCatalog({
+		hostUrl,
+		agent: viewedConfig?.id,
+		workspaceId,
+		model: draftModel,
+		enabled: browsing && !!workspaceId,
+	});
+	const models = catalog.models;
+	const efforts = catalog.efforts;
 	const draftOptions = useMemo(
 		() =>
 			creationConfigOptions({
 				models,
+				alwaysShowModel: true,
 				selectedModel: draftModel,
 				efforts,
 				selectedEffort: draftEffort,
@@ -113,8 +118,25 @@ export function ForkSessionModelPicker({
 					presetId: config.presetId,
 				})),
 				isDark,
+				{
+					...(realId
+						? {
+								[realId]:
+									configOptions.find((o) => o.category === "model")?.options ??
+									[],
+							}
+						: {}),
+					...(shown
+						? {
+								[shown]: browsing
+									? models
+									: (configOptions.find((o) => o.category === "model")
+											?.options ?? []),
+							}
+						: {}),
+				},
 			),
-		[chatConfigs, isDark],
+		[chatConfigs, isDark, realId, configOptions, shown, browsing, models],
 	);
 	const browse = (id: string, model: string | null) => {
 		setViewed(id === realId ? null : id);
@@ -179,23 +201,32 @@ export function ForkSessionModelPicker({
 			}}
 			footer={
 				browsing && viewedConfig ? (
-					<div className="flex items-center gap-2 border-t p-1.5 pl-3">
-						<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
-							{summary}
-						</span>
-						<DropdownMenuItem
-							className="shrink-0 cursor-pointer rounded-md bg-foreground px-2.5 py-1 text-xs font-medium text-background focus:bg-foreground/90 focus:text-background"
-							onSelect={() => {
-								const request = {
-									configId: viewedConfig.id,
-									model: picked(models, draftModel),
-									effort: picked(efforts, draftEffort),
-								};
-								menuDialog.afterClose(() => onRequestSwitch(request));
+					<div className="border-t">
+						<ForkModelCatalogStatus
+							loading={catalog.isFetching}
+							error={catalog.isError}
+							refresh={() => {
+								void catalog.refetch();
 							}}
-						>
-							<Trans>Switch…</Trans>
-						</DropdownMenuItem>
+						/>
+						<div className="flex items-center gap-2 p-1.5 pl-3">
+							<span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
+								{summary}
+							</span>
+							<DropdownMenuItem
+								className="shrink-0 cursor-pointer rounded-md bg-foreground px-2.5 py-1 text-xs font-medium text-background focus:bg-foreground/90 focus:text-background"
+								onSelect={() => {
+									const request = {
+										configId: viewedConfig.id,
+										model: picked(models, draftModel),
+										effort: picked(efforts, draftEffort),
+									};
+									menuDialog.afterClose(() => onRequestSwitch(request));
+								}}
+							>
+								<Trans>Switch…</Trans>
+							</DropdownMenuItem>
+						</div>
 					</div>
 				) : undefined
 			}

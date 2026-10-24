@@ -539,6 +539,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			description: string;
 			source: string;
 			target: string;
+			draft?: boolean;
 		},
 	) {
 		this.assert(id, r);
@@ -549,6 +550,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					body: data.description,
 					head: data.source,
 					base: data.target,
+					...(data.draft !== undefined ? { draft: data.draft } : {}),
 				}),
 				r,
 				id,
@@ -563,6 +565,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 					description: data.description,
 					source: { branch: { name: data.source } },
 					destination: { branch: { name: data.target } },
+					...(data.draft !== undefined ? { draft: data.draft } : {}),
 					reviewers: await this.defaultReviewers(id, r),
 				},
 			),
@@ -686,7 +689,8 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			| "reply"
 			| "resolve"
 			| "unresolve"
-			| "edit",
+			| "edit"
+			| "set-draft",
 		data: {
 			commentId?: string;
 			side?: "old" | "new";
@@ -696,6 +700,7 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			head?: string;
 			path?: string;
 			line?: number;
+			draft?: boolean;
 		},
 	) {
 		this.assert(id, r);
@@ -703,12 +708,21 @@ export class ForkScmProvider implements ForkSourceControlProvider {
 			repoPath(r) +
 			(r.provider === "github" ? "/pulls/" : "/pullrequests/") +
 			number;
+		if (action === "set-draft") {
+			if (r.provider !== "bitbucket" || data.draft === undefined)
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: "Invalid draft action",
+				});
+			return this.api.request(id, path, "PUT", { draft: data.draft });
+		}
 		if (action === "merge") {
 			const current = await this.get(id, r, number);
 			if (
 				!data.head ||
 				current.headCommit !== data.head ||
-				current.state !== "open"
+				current.state !== "open" ||
+				current.isDraft
 			)
 				throw new TRPCError({
 					code: "CONFLICT",

@@ -3129,6 +3129,9 @@ msgstr "Бинарный файл скрыт"
 msgid "Bio"
 msgstr "О себе"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Pull request Bitbucket теперь открываются в панелях workspace."
+
 msgid "Block"
 msgstr "Блок"
 
@@ -3869,6 +3872,9 @@ msgstr "Выберите, как открывается представлени
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Выберите, как открывать пути файлов при Cmd+клике в терминале"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Выбирайте модели, полученные напрямую от ваших агентов."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."
 
@@ -4370,9 +4376,6 @@ msgstr "Команда..."
 
 msgid "Commands"
 msgstr "Команды"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "В режиме Plan команды и инструменты MCP выполняются без запросов разрешений."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Команды для настройки и очистки рабочей области и для кнопки «Запустить»."
@@ -6727,6 +6730,9 @@ msgstr "Скачать {name}"
 msgid "Download app"
 msgstr "Скачать приложение"
 
+msgid "Download chat responses as Markdown."
+msgstr "Скачивайте ответы чата в формате Markdown."
+
 msgid "Download failed"
 msgstr "Не удалось скачать"
 
@@ -6747,6 +6753,9 @@ msgstr "Скачать логи"
 
 msgid "Download Manually"
 msgstr "Скачать вручную"
+
+msgid "Download Markdown"
+msgstr "Скачать Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Скачайте наши логотипы и изображения продукта для публикаций о Superset."
@@ -7962,9 +7971,6 @@ msgstr "Файлы и редактор"
 
 msgid "Files changed"
 msgstr "Изменённые файлы"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Файлы в скрытых папках теперь открываются по ссылкам из чата."
 
 msgid "files to exclude (glob)"
 msgstr "исключаемые файлы (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Привязать ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Сначала свяжите проект с репозиторием GitHub, чтобы включить клонирование."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Связывайте pull request Bitbucket при создании workspace."
+
 msgid "Link by Stripe"
 msgstr "Link от Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Загрузка задач…"
 
 msgid "Loading members..."
 msgstr "Загрузка участников..."
+
+msgid "Loading models…"
+msgstr "Загрузка моделей…"
 
 msgid "Loading more..."
 msgstr "Загружаем ещё..."
@@ -10685,6 +10697,9 @@ msgstr "Статус слияния"
 msgid "Merge status unknown"
 msgstr "Статус слияния неизвестен"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Слияние, черновики и комментарии к проверке теперь работают с Bitbucket."
+
 msgid "Merged"
 msgstr "Объединён"
 
@@ -10826,6 +10841,12 @@ msgstr "Код, предложенный моделью, появляется в
 
 msgid "Models"
 msgstr "Модели"
+
+msgid "Models provided by the agent"
+msgstr "Модели, предоставленные агентом"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Модели недоступны. Проверьте агента и хост."
 
 msgid "Models used"
 msgstr "Использованные модели"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Тариф"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan теперь включает полный доступ к инструментам."
-
 msgid "Plan progress"
 msgstr "Выполнение плана"
 
@@ -13975,9 +13993,6 @@ msgstr "Вопрос"
 
 msgid "Questions"
 msgstr "Вопросы"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Вопросы и окончательное утверждение плана по-прежнему требуют вашего ответа."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Вопросы, отзывы, поддержка или что угодно ещё. Напишите, и мы направим сообщение нужному человеку."
@@ -15129,9 +15144,6 @@ msgstr "Расширенный ввод ({hotkeyText})"
 
 msgid "right pane"
 msgstr "правая панель"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Щёлкните файл в чате правой кнопкой мыши, чтобы открыть его или показать в Finder."
 
 msgid "Right-click here"
 msgstr "Кликните здесь правой кнопкой"
@@ -18192,6 +18204,12 @@ msgstr "Локальная служба хоста только что подн�
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Большинству объединённых агентских PR нужно только ревью, без правок человека."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Время ожидания соединения с моделью истекло. Продолжите с последней сохранённой части."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Провайдер модели сообщил об ошибке. Подождите и повторите попытку или смените модель."
+
 msgid "The name of your organization or team"
 msgstr "Название организации или команды"
 
@@ -18554,6 +18572,9 @@ msgstr "Этот Mac"
 
 msgid "This machine"
 msgstr "Этот компьютер"
+
+msgid "This merge method is not available for the repository."
+msgstr "Этот способ слияния недоступен для репозитория."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Это сообщение нельзя использовать как точку перезапуска."
@@ -19452,6 +19473,9 @@ msgstr "Обновите Superset на этой машине, чтобы при�
 
 msgid "update the branch prefix"
 msgstr "обновить префикс ветки"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Обновите хост, чтобы использовать черновики Bitbucket."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Обновите этот хост для пошаговой настройки или используйте расширенные настройки."

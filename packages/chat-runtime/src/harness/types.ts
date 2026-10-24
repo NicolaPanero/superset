@@ -36,6 +36,7 @@ export type HarnessStartOptions = {
 	mcpServers?: HarnessMcpServer[];
 	modeId?: string;
 	modelId?: string;
+	forkEffort?: string;
 	resume?: { harnessSessionId: string };
 	strictResume?: boolean;
 };

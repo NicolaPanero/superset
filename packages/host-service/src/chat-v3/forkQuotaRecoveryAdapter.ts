@@ -349,7 +349,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		this.abort = new AbortController();
 		try {
 			this.deps.status({ phase: "waiting" });
-			let rows = await this.deps.quota();
+			let rows = await this.deps.quota().catch(() => []);
 			const failed = rows.find(
 				(a) =>
 					a.agent === (this.deps.agent ?? "claude") &&
@@ -492,7 +492,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 				if (this.disposed) return true;
 				if (this.cancelled) break;
 				if (this.abort.signal.aborted) this.abort = new AbortController();
-				rows = await this.deps.quota();
+				rows = await this.deps.quota().catch(() => []);
 			}
 		} catch {
 			/* Preserve the failed turn; never fall back to another credential. */

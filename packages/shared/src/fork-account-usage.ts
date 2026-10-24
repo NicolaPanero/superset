@@ -79,21 +79,28 @@ export function accountQuotaRings(
 	const general = new Set(["five_hour", "seven_day", "primary", "secondary"]);
 	const windows =
 		account?.windows.filter((window) => general.has(window.id)) ?? [];
+	const age = account ? now - account.fetchedAt.getTime() : Number.NaN;
+	const hasSample =
+		account &&
+		account.status !== "signed_out" &&
+		Number.isFinite(age) &&
+		age >= 0 &&
+		age < 24 * 60 * 60_000;
+	let lastKnown = false;
 	const used = (
 		matches: (window: AccountQuota["windows"][number]) => boolean,
 	) => {
-		if (!account) return null;
+		if (!hasSample) return null;
 		const state = accountQuotaState(
 			{ ...account, windows: windows.filter(matches) },
 			model,
 			now,
 		);
-		return (state.reason === "ready" || state.reason === "exhausted") &&
-			state.remaining !== null
-			? 100 - state.remaining
-			: null;
+		if (state.remaining === null) return null;
+		if (state.reason === "stale") lastKnown = true;
+		return 100 - state.remaining;
 	};
-	return {
+	const rings = {
 		fiveHourUsed: used(
 			(w) => w.id === "five_hour" || /^Session \(5h\)(?: ·|$)/.test(w.label),
 		),
@@ -101,4 +108,5 @@ export function accountQuotaRings(
 			(w) => w.id === "seven_day" || /^Weekly(?: ·|$)/.test(w.label),
 		),
 	};
+	return { ...rings, ...(lastKnown ? { lastKnown: true } : {}) };
 }

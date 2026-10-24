@@ -12,6 +12,7 @@ import {
 import { ensureIsolatedDefault } from "../usage/fork-isolated-default";
 import { selectedAccountEnv } from "./account-selection";
 import type { AgentRunInput } from "./agents";
+import { prepareForkCatalogLaunch } from "./fork-catalog-launch";
 
 // Runtime launch details are deliberately labelled as launch choices, not as
 // the active model (a CLI can change models later). Missing/evicted data is unknown.
@@ -71,6 +72,7 @@ export function recordLaunchDetails(
 export async function applyForkLaunchChoices(
 	db: HostDb,
 	input: AgentRunInput,
+	context: { projectId?: string } = {},
 ): Promise<AgentRunInput> {
 	if (
 		input.accountSelection === undefined &&
@@ -137,7 +139,7 @@ export async function applyForkLaunchChoices(
 			},
 		};
 	}
-	return input;
+	return prepareForkCatalogLaunch(db, input, context);
 }
 
 /**

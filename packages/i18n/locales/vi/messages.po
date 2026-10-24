@@ -3129,6 +3129,9 @@ msgstr "Đã ẩn tệp nhị phân"
 msgid "Bio"
 msgstr "Giới thiệu"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Pull request Bitbucket giờ mở trong các bảng của workspace."
+
 msgid "Block"
 msgstr "Khối"
 
@@ -3869,6 +3872,9 @@ msgstr "Chọn cách chế độ xem thay đổi mở từ thanh trên cùng"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Chọn các mô hình được lấy trực tiếp từ tác tử của bạn."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
 
@@ -4370,9 +4376,6 @@ msgstr "Lệnh..."
 
 msgid "Commands"
 msgstr "Lệnh"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "Trong Plan, các lệnh và công cụ MCP chạy mà không yêu cầu cấp quyền."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Các lệnh chạy khi thiết lập, dọn dẹp workspace và khi nhấn nút Chạy."
@@ -6727,6 +6730,9 @@ msgstr "Tải {name}"
 msgid "Download app"
 msgstr "Tải ứng dụng"
 
+msgid "Download chat responses as Markdown."
+msgstr "Tải phản hồi trò chuyện dưới dạng Markdown."
+
 msgid "Download failed"
 msgstr "Tải xuống thất bại"
 
@@ -6747,6 +6753,9 @@ msgstr "Tải nhật ký xuống"
 
 msgid "Download Manually"
 msgstr "Tải xuống thủ công"
+
+msgid "Download Markdown"
+msgstr "Tải xuống Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Tải logo và hình ảnh sản phẩm của chúng tôi để dùng trong các bài viết về Superset."
@@ -7962,9 +7971,6 @@ msgstr "Tệp và trình soạn thảo"
 
 msgid "Files changed"
 msgstr "Tệp đã thay đổi"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Tệp trong thư mục ẩn giờ đã mở được từ liên kết trò chuyện."
 
 msgid "files to exclude (glob)"
 msgstr "tệp cần loại trừ (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Liên kết ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Hãy liên kết một repository GitHub với dự án trước để có thể clone."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Liên kết pull request Bitbucket khi tạo workspace."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Đang tải issue…"
 
 msgid "Loading members..."
 msgstr "Đang tải thành viên..."
+
+msgid "Loading models…"
+msgstr "Đang tải mô hình…"
 
 msgid "Loading more..."
 msgstr "Đang tải thêm..."
@@ -10685,6 +10697,9 @@ msgstr "Trạng thái merge"
 msgid "Merge status unknown"
 msgstr "Trạng thái merge không xác định"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Hợp nhất, bản nháp và bình luận đánh giá giờ hoạt động với Bitbucket."
+
 msgid "Merged"
 msgstr "Đã merge"
 
@@ -10826,6 +10841,12 @@ msgstr "Code do mô hình gợi ý xuất hiện trong phần lớn tệp mới.
 
 msgid "Models"
 msgstr "Mô hình"
+
+msgid "Models provided by the agent"
+msgstr "Mô hình do tác tử cung cấp"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Không có mô hình. Hãy kiểm tra tác tử và máy chủ."
 
 msgid "Models used"
 msgstr "Mô hình đã dùng"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Gói"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan hiện bao gồm toàn quyền truy cập công cụ."
-
 msgid "Plan progress"
 msgstr "Tiến độ kế hoạch"
 
@@ -13975,9 +13993,6 @@ msgstr "Câu hỏi"
 
 msgid "Questions"
 msgstr "Câu hỏi"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Các câu hỏi và phê duyệt kế hoạch cuối cùng vẫn chờ câu trả lời của bạn."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Câu hỏi, góp ý, hỗ trợ hay bất cứ điều gì. Gửi một tin nhắn và chúng tôi sẽ chuyển đến đúng người."
@@ -15129,9 +15144,6 @@ msgstr "Nhập nâng cao ({hotkeyText})"
 
 msgid "right pane"
 msgstr "ngăn bên phải"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Nhấp chuột phải vào một tệp trong cuộc trò chuyện để mở hoặc hiện nó trong Finder."
 
 msgid "Right-click here"
 msgstr "Nhấp chuột phải ở đây"
@@ -18192,6 +18204,12 @@ msgstr "Dịch vụ host cục bộ vừa khởi động. Đang kết nối lạ
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Phần lớn PR của agent được merge chỉ cần review, không có chỉnh sửa của con người."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Kết nối đến mô hình đã hết thời gian chờ. Tiếp tục từ phần được lưu gần nhất."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Nhà cung cấp mô hình báo lỗi. Hãy đợi rồi thử lại hoặc chuyển mô hình."
+
 msgid "The name of your organization or team"
 msgstr "Tên tổ chức hoặc nhóm của bạn"
 
@@ -18554,6 +18572,9 @@ msgstr "Mac này"
 
 msgid "This machine"
 msgstr "Máy này"
+
+msgid "This merge method is not available for the repository."
+msgstr "Phương thức hợp nhất này không khả dụng cho kho lưu trữ."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Không thể dùng tin nhắn này làm điểm bắt đầu lại."
@@ -19452,6 +19473,9 @@ msgstr "Hãy cập nhật Superset trên máy này để đính kèm tệp"
 
 msgid "update the branch prefix"
 msgstr "cập nhật tiền tố nhánh"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Cập nhật máy chủ để dùng bản nháp Bitbucket."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Cập nhật máy chủ này để dùng thiết lập hướng dẫn hoặc dùng cấu hình nâng cao."

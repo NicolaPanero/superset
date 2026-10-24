@@ -1,5 +1,6 @@
 import type { AppRouter } from "@superset/host-service";
 import type { inferRouterOutputs } from "@trpc/server";
+import { forkReviewCommentUrl } from "renderer/lib/fork-review-comment-link";
 import type { NormalizedComment } from "../../types";
 
 type V2ThreadsData =
@@ -22,7 +23,7 @@ export function normalizeThreadsToComments(
 				createdAt: comment.createdAt,
 				url:
 					prUrl && comment.databaseId
-						? `${prUrl}#discussion_r${comment.databaseId}`
+						? forkReviewCommentUrl(prUrl, comment.databaseId)
 						: undefined,
 				kind: "review",
 				path: thread.path || undefined,

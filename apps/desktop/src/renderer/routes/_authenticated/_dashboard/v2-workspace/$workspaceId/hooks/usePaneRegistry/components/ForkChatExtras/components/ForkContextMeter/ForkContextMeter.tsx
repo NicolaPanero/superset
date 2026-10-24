@@ -97,9 +97,9 @@ export function ForkContextMeter({
 								y="12"
 								dominantBaseline="central"
 								textAnchor="middle"
-								textLength={percent.length > 3 ? 17 : undefined}
+								textLength={percent.length > 3 ? 15 : undefined}
 								lengthAdjust="spacingAndGlyphs"
-								className="fill-current text-[8px] font-semibold"
+								className="fill-current text-[7px] font-semibold"
 							>
 								{percent}
 							</text>

@@ -4,6 +4,12 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { pullRequests, workspaces } from "../../../db/schema";
+import {
+	forkReplyToWorkspaceThread,
+	forkSetWorkspaceThreadResolution,
+	forkWorkspacePullRequest,
+	forkWorkspacePullRequestThreads,
+} from "../../../fork-integrations/fork-workspace-review";
 import { createGitEnvResolver } from "../../../runtime/git";
 import { createUserSimpleGit } from "../../../runtime/git/simple-git";
 import type { HostServiceContext } from "../../../types";
@@ -993,7 +999,9 @@ export const gitRouter = router({
 
 	getPullRequest: queryProcedure
 		.input(z.object({ workspaceId: z.string() }))
-		.query(({ ctx, input }) => {
+		.query(async ({ ctx, input }) => {
+			const fork = await forkWorkspacePullRequest(ctx, input.workspaceId);
+			if (fork) return fork;
 			const workspace = ctx.db.query.workspaces
 				.findFirst({ where: eq(workspaces.id, input.workspaceId) })
 				.sync();
@@ -1104,6 +1112,11 @@ export const gitRouter = router({
 		.meta({ timeoutMs: 30_000 })
 		.input(z.object({ workspaceId: z.string() }))
 		.query(async ({ ctx, input }) => {
+			const fork = await forkWorkspacePullRequestThreads(
+				ctx,
+				input.workspaceId,
+			);
+			if (fork) return fork;
 			const workspace = ctx.db.query.workspaces
 				.findFirst({ where: eq(workspaces.id, input.workspaceId) })
 				.sync();
@@ -1212,6 +1225,8 @@ export const gitRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			const fork = await forkSetWorkspaceThreadResolution(ctx, input);
+			if (fork) return fork;
 			const workspace = ctx.db.query.workspaces
 				.findFirst({ where: eq(workspaces.id, input.workspaceId) })
 				.sync();
@@ -1260,6 +1275,8 @@ export const gitRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			const fork = await forkReplyToWorkspaceThread(ctx, input);
+			if (fork) return fork;
 			const workspace = ctx.db.query.workspaces
 				.findFirst({ where: eq(workspaces.id, input.workspaceId) })
 				.sync();

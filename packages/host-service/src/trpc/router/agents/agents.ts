@@ -47,6 +47,7 @@ import { protectedProcedure, router } from "../../index";
 import { resolveAttachmentPath } from "../attachments/storage";
 import { toTerminalSessionError } from "../terminal/errors";
 import { seedAgentFolderTrust } from "../workspace-creation/shared/seed-agent-trust";
+import { forkCatalogChoices } from "./fork-catalog-launch";
 import { applyForkLaunchChoices, recordLaunchDetails } from "./fork-launch";
 import { forkAgentProcedures } from "./fork-procedures";
 
@@ -134,6 +135,7 @@ function buildAttachmentBlock(
 }
 
 export interface AgentRunInput {
+	modelCatalog?: "agent";
 	accountSelection?: string | null;
 	launchSnapshot?: {
 		config: ResolvedHostAgentConfig;
@@ -183,8 +185,10 @@ export function validateAgentModelSelection(
 	presetId: string,
 	label: string,
 	model: string | undefined,
+	choices?: Array<{ id: string }>,
 ): void {
 	if (!model) return;
+	if (choices?.some((option) => option.id === model)) return;
 
 	const support = getAgentModelSupport(presetId);
 	if (!support) {
@@ -211,8 +215,10 @@ export function validateAgentEffortSelection(
 	label: string,
 	effort: string | undefined,
 	model?: string,
+	choices?: Array<{ id: string }>,
 ): void {
 	if (!effort) return;
+	if (choices?.some((option) => option.id === effort)) return;
 
 	const support = getAgentEffortSupport(presetId);
 	if (!support) {
@@ -375,12 +381,18 @@ export function validateAgentLaunchOptions(
 		config.presetId,
 		config.command,
 	);
-	validateAgentModelSelection(launchPresetId, config.label, input.model);
+	validateAgentModelSelection(
+		launchPresetId,
+		config.label,
+		input.model,
+		forkCatalogChoices(input)?.models,
+	);
 	validateAgentEffortSelection(
 		launchPresetId,
 		config.label,
 		input.effort,
 		input.model,
+		forkCatalogChoices(input)?.efforts,
 	);
 	validateAgentModeSelection(launchPresetId, config.label, input.mode);
 }
@@ -410,12 +422,18 @@ export function buildTerminalAgentLaunch(
 		config.presetId,
 		config.command,
 	);
-	validateAgentModelSelection(launchPresetId, config.label, input.model);
+	validateAgentModelSelection(
+		launchPresetId,
+		config.label,
+		input.model,
+		forkCatalogChoices(input)?.models,
+	);
 	validateAgentEffortSelection(
 		launchPresetId,
 		config.label,
 		input.effort,
 		input.model,
+		forkCatalogChoices(input)?.efforts,
 	);
 	validateAgentModeSelection(launchPresetId, config.label, input.mode);
 	// Ahead of the per-field validators: passing both is its own mistake, and
@@ -443,16 +461,12 @@ export function buildTerminalAgentLaunch(
 	}
 
 	const prompt = buildAttachmentBlock(input.prompt, resolvedAttachments);
-	const modelArgs = buildAgentModelArgs(
-		launchPresetId,
-		input.model,
-		input.effort,
-	);
-	const effortArgs = buildAgentEffortArgs(
-		launchPresetId,
-		input.effort,
-		input.model,
-	);
+	const modelArgs =
+		forkCatalogChoices(input)?.modelArgs ??
+		buildAgentModelArgs(launchPresetId, input.model, input.effort);
+	const effortArgs =
+		forkCatalogChoices(input)?.effortArgs ??
+		buildAgentEffortArgs(launchPresetId, input.effort, input.model);
 	const modeArgs = buildAgentModeArgs(launchPresetId, input.mode);
 	const command = buildAgentCommandString(
 		config,
@@ -633,7 +647,7 @@ export function chatLaunchTarget(
 } | null {
 	if (
 		input.surface !== "chat" ||
-		input.effort ||
+		(input.effort && input.modelCatalog !== "agent") ||
 		input.resumeSessionId ||
 		input.forkSessionId
 	) {
@@ -661,7 +675,12 @@ export function chatLaunchTarget(
 	);
 	const harness = acpHarnessForPreset(launchPresetId);
 	if (!harness) return null;
-	validateAgentModelSelection(launchPresetId, config.label, input.model);
+	validateAgentModelSelection(
+		launchPresetId,
+		config.label,
+		input.model,
+		forkCatalogChoices(input)?.models,
+	);
 	return { harness, label: config.label, attachments };
 }
 
@@ -721,6 +740,9 @@ export function launchChatAgent(
 		cwd,
 		terminalId,
 		...(input.model ? { modelId: input.model } : {}),
+		...(input.modelCatalog === "agent" && input.effort
+			? { forkEffort: input.effort }
+			: {}),
 		...(input.mode ? { modeId: input.mode } : {}),
 	});
 	const content = [
@@ -857,6 +879,7 @@ export const agentsRouter = router({
 				prompt: z.string().default(""),
 				attachmentIds: z.array(z.string().uuid()).optional(),
 				model: z.string().min(1).optional(),
+				modelCatalog: z.literal("agent").optional(),
 				effort: z.string().min(1).optional(),
 				mode: z.string().min(1).optional(),
 				resumeSessionId: z.string().min(1).optional(),

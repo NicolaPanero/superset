@@ -226,6 +226,7 @@ export function createCommands(options: CommandsOptions): ChatCommands {
 						cwd: parsed.cwd,
 						modeId: parsed.modeId,
 						modelId: parsed.modelId,
+						forkEffort: parsed.forkEffort,
 						resume: parsed.resume,
 						agentConfigId: parsed.agentConfigId,
 						accountSelection: parsed.accountSelection,

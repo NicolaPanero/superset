@@ -15,6 +15,7 @@ import type {
 } from "../../harness";
 import type { ChatJournal } from "../../journal";
 import type { HarnessFactoryOptions } from "../registry";
+import { forkPauseAfterFailure } from "./forkPauseAfterFailure";
 
 export type LiveSessionOptions = {
 	launchOptions?: HarnessFactoryOptions;
@@ -324,6 +325,13 @@ export class LiveSession {
 				return;
 			case "turn": {
 				this.currentTurn = event.turn;
+				if (
+					forkPauseAfterFailure(event.turn) &&
+					this.queue.length + this.pendingSteers.length > 0
+				) {
+					this.queuePaused = true;
+					this.emitSession({ queuePaused: true });
+				}
 				this.appendDurable({ type: "turn", turn: event.turn });
 				if (event.turn.status === "running") {
 					this.attributeAwaitingPrompt(event.turn.id);

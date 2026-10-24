@@ -1,4 +1,5 @@
 import type { WorkspaceStore } from "@superset/panes";
+import { forkPullRequestIdentity } from "renderer/lib/fork-pull-request-ref";
 import {
 	isSamePullRequest,
 	type PullRequestRef,
@@ -19,6 +20,7 @@ export function openPullRequestPaneInStore(
 ): void {
 	const state = store.getState();
 	const data: PullRequestPaneData = {
+		...forkPullRequestIdentity(ref),
 		repoFullName: ref.repoFullName,
 		number: ref.number,
 	};

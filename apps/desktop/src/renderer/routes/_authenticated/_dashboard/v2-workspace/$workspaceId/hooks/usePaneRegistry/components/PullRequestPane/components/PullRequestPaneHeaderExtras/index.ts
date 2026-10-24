@@ -1,1 +1,1 @@
-export { PullRequestPaneHeaderExtras } from "./PullRequestPaneHeaderExtras";
+export { ForkWorkspacePullRequestHeader as PullRequestPaneHeaderExtras } from "renderer/components/ForkIntegrations/components/ForkWorkspacePullRequestPane/ForkWorkspacePullRequestHeader";

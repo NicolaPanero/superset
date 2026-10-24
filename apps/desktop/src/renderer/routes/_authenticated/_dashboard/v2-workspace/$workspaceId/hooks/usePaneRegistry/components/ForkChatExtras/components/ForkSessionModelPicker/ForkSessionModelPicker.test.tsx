@@ -1,17 +1,62 @@
 import { afterEach, expect, mock, test } from "bun:test";
 import type { SessionConfigOption } from "@superset/chat/protocol";
-import { getAgentModelSupport } from "@superset/shared/agent-models";
+import type { ReactElement } from "react";
 import {
 	act,
 	cleanup,
 	fireEvent,
 	flush,
+	queryFixture,
 	render,
 } from "renderer/test-utils/fork-ui";
 import type { TerminalPaneData } from "../../../../../../types";
 import { ForkSessionModelPicker } from "./ForkSessionModelPicker";
 
 afterEach(cleanup);
+function renderPicker(element: ReactElement) {
+	const fixture = queryFixture();
+	for (const [agent, models, efforts] of [
+		["codex", [{ id: "gpt-next-dynamic", label: "GPT Next Dynamic" }], []],
+		[
+			"grok",
+			[{ id: "grok-4.7", label: "Grok 4.7" }],
+			[
+				{ id: "low", label: "Low" },
+				{ id: "high", label: "High" },
+				{ id: "xhigh", label: "xHigh" },
+			],
+		],
+	] as const) {
+		const configOptions = [
+			{
+				id: "model",
+				label: "Model",
+				category: "model",
+				currentValue: models[0].id,
+				options: models,
+			},
+			{
+				id: "effort",
+				label: "Effort",
+				category: "thought_level",
+				options: efforts,
+			},
+		];
+		fixture.client.setQueryData(
+			[
+				"fork-model-catalog",
+				null,
+				agent,
+				{ defaultAccount: true },
+				undefined,
+				undefined,
+				null,
+			],
+			{ configOptions },
+		);
+	}
+	return render(element, { wrapper: fixture.wrapper });
+}
 
 const configs = [
 	{ id: "claude", label: "Claude", presetId: "claude" },
@@ -61,7 +106,7 @@ async function openPicker(view: ReturnType<typeof render>) {
 test("another agent's model stays a draft until Switch asks to confirm", async () => {
 	const onSelect = mock();
 	const onRequestSwitch = mock();
-	const view = render(
+	const view = renderPicker(
 		<ForkSessionModelPicker
 			configs={configs}
 			data={data}
@@ -73,7 +118,7 @@ test("another agent's model stays a draft until Switch asks to confirm", async (
 	await openPicker(view);
 	fireEvent.click(view.getByLabelText("Codex"));
 	await flush();
-	const codexModel = getAgentModelSupport("codex")?.models[0];
+	const codexModel = { id: "gpt-next-dynamic", label: "GPT Next Dynamic" };
 	if (!codexModel) throw new Error("Codex has no catalog model");
 	fireEvent.click(row(view, codexModel.label));
 	await flush();
@@ -92,7 +137,7 @@ test("another agent's model stays a draft until Switch asks to confirm", async (
 
 test("the chat's own agent applies a model at once", async () => {
 	const onSelect = mock();
-	const view = render(
+	const view = renderPicker(
 		<ForkSessionModelPicker
 			configs={configs}
 			data={data}
@@ -110,7 +155,7 @@ test("the chat's own agent applies a model at once", async () => {
 
 test("a browsed Grok tab offers the efforts of the picked model", async () => {
 	const onRequestSwitch = mock();
-	const view = render(
+	const view = renderPicker(
 		<ForkSessionModelPicker
 			configs={configs}
 			data={data}
@@ -138,7 +183,7 @@ test("a browsed Grok tab offers the efforts of the picked model", async () => {
 
 test("Switch asks for the dialog only after the menu has closed", async () => {
 	const menuOpenAtRequest: boolean[] = [];
-	const view = render(
+	const view = renderPicker(
 		<ForkSessionModelPicker
 			configs={configs}
 			data={data}
@@ -157,7 +202,7 @@ test("Switch asks for the dialog only after the menu has closed", async () => {
 
 test("Cursor's native effort levels appear in the picker and reach the session", async () => {
 	const onSelect = mock();
-	const view = render(
+	const view = renderPicker(
 		<ForkSessionModelPicker
 			configs={[{ id: "cursor", label: "Cursor", presetId: "cursor-agent" }]}
 			data={

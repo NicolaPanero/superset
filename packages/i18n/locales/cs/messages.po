@@ -3129,6 +3129,9 @@ msgstr "Binární soubor skryt"
 msgid "Bio"
 msgstr "O mně"
 
+msgid "Bitbucket pull requests now open in workspace panes."
+msgstr "Pull requesty Bitbucket se nyní otevírají v panelech workspace."
+
 msgid "Block"
 msgstr "Blok"
 
@@ -3869,6 +3872,9 @@ msgstr "Zvolte, jak se zobrazení změn otevírá z horní lišty"
 msgid "Choose how to open file paths when Cmd+clicking in the terminal"
 msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v terminálu"
 
+msgid "Choose models discovered directly from your agents."
+msgstr "Vybírejte modely zjištěné přímo od vašich agentů."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
 
@@ -4370,9 +4376,6 @@ msgstr "Příkaz..."
 
 msgid "Commands"
 msgstr "Příkazy"
-
-msgid "Commands and MCP tools run without permission prompts in Plan."
-msgstr "V režimu Plan se příkazy a nástroje MCP spouštějí bez žádostí o oprávnění."
 
 msgid "Commands run for workspace setup, teardown, and the Run button."
 msgstr "Příkazy spouštěné při setupu a teardownu pracovního prostoru a tlačítkem Spustit."
@@ -6727,6 +6730,9 @@ msgstr "Stáhnout {name}"
 msgid "Download app"
 msgstr "Stáhnout aplikaci"
 
+msgid "Download chat responses as Markdown."
+msgstr "Stahujte odpovědi chatu ve formátu Markdown."
+
 msgid "Download failed"
 msgstr "Stažení selhalo"
 
@@ -6747,6 +6753,9 @@ msgstr "Stáhnout protokoly"
 
 msgid "Download Manually"
 msgstr "Stáhnout ručně"
+
+msgid "Download Markdown"
+msgstr "Stáhnout Markdown"
 
 msgid "Download our logos and product images for use in coverage of Superset."
 msgstr "Stáhněte si naše loga a obrázky produktu pro články o Superset."
@@ -7962,9 +7971,6 @@ msgstr "Soubory a editor"
 
 msgid "Files changed"
 msgstr "Změněné soubory"
-
-msgid "Files in hidden folders now open from chat links."
-msgstr "Soubory ve skrytých složkách se teď otevírají z odkazů v chatu."
 
 msgid "files to exclude (glob)"
 msgstr "soubory k vyloučení (glob)"
@@ -10083,6 +10089,9 @@ msgstr "Propojit ↵"
 msgid "Link a GitHub repository on the project first to enable cloning."
 msgstr "Klonování zapnete tím, že k projektu nejprve propojíte GitHub repozitář."
 
+msgid "Link Bitbucket pull requests when creating a workspace."
+msgstr "Při vytváření workspace propojte pull requesty Bitbucket."
+
 msgid "Link by Stripe"
 msgstr "Link by Stripe"
 
@@ -10250,6 +10259,9 @@ msgstr "Načítám issues…"
 
 msgid "Loading members..."
 msgstr "Načítám členy..."
+
+msgid "Loading models…"
+msgstr "Načítání modelů…"
 
 msgid "Loading more..."
 msgstr "Načítám další..."
@@ -10685,6 +10697,9 @@ msgstr "Stav sloučení"
 msgid "Merge status unknown"
 msgstr "Stav sloučení neznámý"
 
+msgid "Merge, drafts and review comments now work with Bitbucket."
+msgstr "Slučování, koncepty a komentáře k revizi nyní fungují s Bitbucket."
+
 msgid "Merged"
 msgstr "Sloučený"
 
@@ -10826,6 +10841,12 @@ msgstr "Kód navržený modelem se objeví ve většině nových souborů."
 
 msgid "Models"
 msgstr "Modely"
+
+msgid "Models provided by the agent"
+msgstr "Modely poskytované agentem"
+
+msgid "Models unavailable. Check the agent and host."
+msgstr "Modely nejsou dostupné. Zkontrolujte agenta a hostitele."
 
 msgid "Models used"
 msgstr "Použité modely"
@@ -13364,9 +13385,6 @@ msgctxt "billing"
 msgid "Plan"
 msgstr "Tarif"
 
-msgid "Plan now includes full access to tools."
-msgstr "Plan nyní zahrnuje plný přístup k nástrojům."
-
 msgid "Plan progress"
 msgstr "Průběh plánu"
 
@@ -13975,9 +13993,6 @@ msgstr "Otázka"
 
 msgid "Questions"
 msgstr "Otázky"
-
-msgid "Questions and final plan approval still wait for your answer."
-msgstr "Otázky a konečné schválení plánu stále čekají na vaši odpověď."
 
 msgid "Questions, feedback, support, or anything else. Send a note and we'll route it to the right person."
 msgstr "Dotazy, zpětná vazba, podpora nebo cokoli jiného. Napište nám a předáme to správnému člověku."
@@ -15129,9 +15144,6 @@ msgstr "Rozšířený vstup ({hotkeyText})"
 
 msgid "right pane"
 msgstr "pravý panel"
-
-msgid "Right-click a file in a chat to open it or show it in Finder."
-msgstr "Klikněte pravým tlačítkem na soubor v chatu a otevřete ho nebo ho zobrazte ve Finderu."
 
 msgid "Right-click here"
 msgstr "Klikněte sem pravým tlačítkem"
@@ -18192,6 +18204,12 @@ msgstr "Místní host service právě naběhla. Připojuji se k ní."
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Většina sloučených PR od agentů potřebuje jen revizi, bez jediné lidské úpravy."
 
+msgid "The model connection timed out. Continue from the last saved part."
+msgstr "Vypršel časový limit připojení k modelu. Pokračujte od poslední uložené části."
+
+msgid "The model provider reported an error. Wait and retry, or switch models."
+msgstr "Poskytovatel modelu nahlásil chybu. Počkejte a zkuste to znovu nebo změňte model."
+
 msgid "The name of your organization or team"
 msgstr "Název vaší organizace nebo týmu"
 
@@ -18554,6 +18572,9 @@ msgstr "Tento Mac"
 
 msgid "This machine"
 msgstr "Tento počítač"
+
+msgid "This merge method is not available for the repository."
+msgstr "Tento způsob sloučení není pro repozitář dostupný."
 
 msgid "This message cannot be used as a restart point."
 msgstr "Tuto zprávu nelze použít jako bod restartu."
@@ -19452,6 +19473,9 @@ msgstr "Aktualizujte na tomto počítači Superset, abyste mohli přikládat sou
 
 msgid "update the branch prefix"
 msgstr "aktualizovat prefix větve"
+
+msgid "Update the host to use Bitbucket drafts."
+msgstr "Chcete-li používat koncepty Bitbucket, aktualizujte hostitele."
 
 msgid "Update this host for guided setup, or use advanced configuration."
 msgstr "Aktualizujte tohoto hostitele pro průvodce nastavením nebo použijte pokročilou konfiguraci."

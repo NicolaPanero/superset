@@ -20,6 +20,7 @@ import {
 	LuLoaderCircle,
 } from "react-icons/lu";
 import { CommentMarkdown } from "renderer/components/CommentMarkdown";
+import { forkReviewLinkLabel } from "renderer/lib/fork-review-comment-link";
 import { ReviewThreadReplyComposer } from "renderer/routes/_authenticated/_dashboard/components/ReviewThreadReplyComposer";
 import "./comment-thread.css";
 import { msg } from "@lingui/core/macro";
@@ -207,9 +208,7 @@ export function CommentThread({
 						rel="noreferrer"
 						onClick={(e) => e.stopPropagation()}
 						className="shrink-0 text-muted-foreground hover:text-foreground"
-						aria-label={t({
-							message: "Open on GitHub",
-						})}
+						aria-label={forkReviewLinkLabel(url)}
 					>
 						<LuExternalLink className="size-3" />
 					</a>
