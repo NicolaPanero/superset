@@ -36,6 +36,7 @@ export const forkQuotaRecoveryProcedures = {
 		);
 		return {
 			supported: true,
+			manualAccountSwitch: true,
 			capabilities: chatRecoveryCapabilities(
 				input.agent ?? live?.agent ?? "claude",
 			),

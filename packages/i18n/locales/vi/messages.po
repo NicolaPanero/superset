@@ -17429,6 +17429,9 @@ msgstr "Dừng {name}"
 msgid "Stop all agent background processes"
 msgstr "Dừng tất cả tiến trình nền của tác tử"
 
+msgid "Stop and switch account"
+msgstr "Dừng và đổi tài khoản"
+
 msgid "Stop dictation"
 msgstr "Dừng đọc chính tả"
 
@@ -17908,6 +17911,9 @@ msgstr "Chuyển…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "Chuyển sang {nextPlanName} vào {0}."
 
+msgid "Switching account…"
+msgstr "Đang đổi tài khoản…"
+
 msgid "Symbol, light"
 msgstr "Biểu tượng, sáng"
 
@@ -18340,6 +18346,9 @@ msgstr "Cuộc trò chuyện tạm dừng cho đến khi bạn tiếp tục."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Cuộc trò chuyện sẽ mở khi phản hồi hiện tại hoàn tất."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "Cuộc trò chuyện sẽ mở lại bằng tài khoản đã chọn sau khi tác tử hiện tại dừng."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI đã có thiết lập mô hình tùy chỉnh. Hãy chỉnh sửa trong cấu hình nâng cao."

@@ -88,6 +88,8 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		selection: string | null;
 	};
 	private recoveringQuota = false;
+	private recovery: Promise<boolean> | undefined;
+	private readonly childStops = new WeakMap<HarnessAdapter, Promise<void>>();
 	private lastAgentText = "";
 	private waitingForQuota = false;
 	constructor(
@@ -197,7 +199,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 									kind: "session",
 									session: { status: "dead" },
 								});
-								await child.dispose();
+								await this.stopChild(child);
 								break;
 							}
 							this.deps.selected(account.selection, this.nativeId ?? "");
@@ -303,7 +305,8 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		if (this.recoveringQuota) return false;
 		this.recoveringQuota = true;
 		try {
-			return await this.recoverQuota(turn, failureAt, alreadyFailed);
+			this.recovery = this.recoverQuota(turn, failureAt, alreadyFailed);
+			return await this.recovery;
 		} catch {
 			return false;
 		} finally {
@@ -418,8 +421,8 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 						accountLabel: target.email ?? target.sourceLabel,
 					});
 					const old = this.child;
+					await this.stopChild(old);
 					this.workerStopped = true;
-					await old.dispose();
 					if (
 						this.disposed ||
 						this.cancelled ||
@@ -505,6 +508,7 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 		return false;
 	}
 	private restoreAfterFailedSwitch(turn: Turn) {
+		if (this.disposed) return true;
 		this.child = this.deps.create(this.selection);
 		this.restarting = true;
 		this.ready = false;
@@ -585,11 +589,19 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 	stopBackgroundTask(id: string) {
 		return this.child.stopBackgroundTask?.(id) ?? Promise.resolve(false);
 	}
+	private stopChild(child: HarnessAdapter): Promise<void> {
+		const previous = this.childStops.get(child);
+		if (previous) return previous;
+		const stopping = Promise.resolve().then(() => child.dispose());
+		this.childStops.set(child, stopping);
+		return stopping;
+	}
 	async dispose() {
 		this.quotaFailure = undefined;
 		this.disposed = true;
 		this.abort?.abort();
-		await this.child.dispose();
+		await this.stopChild(this.child);
+		await this.recovery;
 		this.queue.close();
 		this.deps.onDispose?.();
 	}

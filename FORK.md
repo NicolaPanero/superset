@@ -80,6 +80,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
   partenza resta aperta finché la nuova non è avviata; il cambio account
   Claude mantiene la chat nello stesso pannello.
+  Se Claude è occupato, **Stop and switch account** interrompe il turno e
+  attende l'arresto del processo prima di riaprire la cronologia sull'altro
+  account. I messaggi in coda restano in pausa e la scelta **Continue** non
+  cambia. Se l'arresto fallisce, il trasferimento non parte.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
   espone questa modalità. Usa la pianificazione nativa con **Full access**:
   approva automaticamente le richieste degli strumenti, inclusi comandi,

@@ -17429,6 +17429,9 @@ msgstr "Zastavit {name}"
 msgid "Stop all agent background processes"
 msgstr "Zastavit všechny procesy agentů na pozadí"
 
+msgid "Stop and switch account"
+msgstr "Zastavit a přepnout účet"
+
 msgid "Stop dictation"
 msgstr "Zastavit diktování"
 
@@ -17908,6 +17911,9 @@ msgstr "Přepnout…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "Přejde na {nextPlanName} dne {0}."
 
+msgid "Switching account…"
+msgstr "Přepínání účtu…"
+
 msgid "Symbol, light"
 msgstr "Symbol, světlý"
 
@@ -18340,6 +18346,9 @@ msgstr "Chat se pozastaví, dokud v něm nebudete pokračovat."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Chat se otevře po dokončení aktuální odpovědi."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "Chat se znovu otevře ve vybraném účtu, jakmile se aktuální agent zastaví."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI již má vlastní nastavení modelu. Upravte je v pokročilé konfiguraci."

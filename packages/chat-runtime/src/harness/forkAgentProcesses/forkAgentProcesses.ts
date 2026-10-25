@@ -29,15 +29,20 @@ export function parseProcessRows(output: string): ProcessRow[] {
 	return rows;
 }
 
-const listProcesses: ListProcesses = () =>
-	new Promise((resolve) => {
+const readProcesses: ListProcesses = () =>
+	new Promise((resolve, reject) => {
 		execFile(
 			"ps",
 			["-A", "-o", "pid=,ppid=,pgid=,lstart="],
 			{ maxBuffer: 8 * 1024 * 1024 },
-			(error, stdout) => resolve(error ? [] : parseProcessRows(stdout)),
+			(error, stdout) => {
+				if (error) reject(error);
+				else resolve(parseProcessRows(stdout));
+			},
 		);
 	});
+
+const listProcesses: ListProcesses = () => readProcesses().catch(() => []);
 
 export function descendantsOf(rootPid: number, rows: ProcessRow[]) {
 	const children = new Map<number, ProcessRow[]>();
@@ -69,6 +74,7 @@ export class ForkAgentProcesses {
 	private timer: ReturnType<typeof setInterval> | undefined;
 	private stopped = false;
 	private reaping: Promise<void> | undefined;
+	private confirming: Promise<void> | undefined;
 
 	constructor(
 		private readonly rootPid: number | undefined,
@@ -78,6 +84,8 @@ export class ForkAgentProcesses {
 			sampleMs?: number;
 			graceMs?: number;
 			wait?: (ms: number) => Promise<void>;
+			confirmAttempts?: number;
+			confirmDelayMs?: number;
 		} = {},
 	) {
 		if (!this.enabled) return;
@@ -92,9 +100,11 @@ export class ForkAgentProcesses {
 		return (SUPPORTED || this.options.list) && this.rootPid !== undefined;
 	}
 
-	async sample(): Promise<void> {
+	async sample({ strict = false }: { strict?: boolean } = {}): Promise<void> {
 		if (!this.enabled || this.stopped) return;
-		const rows = await (this.options.list ?? listProcesses)();
+		const rows = await (
+			this.options.list ?? (strict ? readProcesses : listProcesses)
+		)();
 		for (const row of descendantsOf(this.rootPid as number, rows))
 			this.known.set(row.pid, row);
 	}
@@ -103,6 +113,33 @@ export class ForkAgentProcesses {
 	reap(): Promise<void> {
 		this.reaping ??= this.stopKnown();
 		return this.reaping;
+	}
+
+	reapAndConfirm(): Promise<void> {
+		this.confirming ??= this.confirmStopped();
+		return this.confirming;
+	}
+
+	private async confirmStopped(): Promise<void> {
+		await this.reap();
+		if (!this.enabled || this.known.size === 0) return;
+		const list = this.options.list ?? readProcesses;
+		const wait =
+			this.options.wait ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
+		const attempts = this.options.confirmAttempts ?? 20;
+		let remaining: ProcessRow[] = [];
+		for (let attempt = 0; attempt <= attempts; attempt++) {
+			remaining = (await list()).filter(
+				(row) =>
+					row.pid !== process.pid &&
+					this.known.get(row.pid)?.started === row.started,
+			);
+			if (remaining.length === 0) return;
+			if (attempt < attempts) await wait(this.options.confirmDelayMs ?? 25);
+		}
+		throw new Error(
+			`Agent processes did not stop: ${remaining.map((row) => row.pid).join(", ")}`,
+		);
 	}
 
 	private async stopKnown(): Promise<void> {

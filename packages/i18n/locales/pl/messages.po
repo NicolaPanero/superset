@@ -17429,6 +17429,9 @@ msgstr "Zatrzymaj {name}"
 msgid "Stop all agent background processes"
 msgstr "Zatrzymaj wszystkie procesy agentów w tle"
 
+msgid "Stop and switch account"
+msgstr "Zatrzymaj i zmień konto"
+
 msgid "Stop dictation"
 msgstr "Zatrzymaj dyktowanie"
 
@@ -17908,6 +17911,9 @@ msgstr "Przełącz…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "Zmiana na {nextPlanName} dnia {0}."
 
+msgid "Switching account…"
+msgstr "Zmienianie konta…"
+
 msgid "Symbol, light"
 msgstr "Symbol, jasny"
 
@@ -18340,6 +18346,9 @@ msgstr "Czat wstrzymuje się, dopóki go nie wznowisz."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Czat otworzy się po zakończeniu bieżącej odpowiedzi."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "Czat otworzy się ponownie na wybranym koncie po zatrzymaniu bieżącego agenta."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI ma już niestandardowe ustawienia modelu. Edytuj je w konfiguracji zaawansowanej."

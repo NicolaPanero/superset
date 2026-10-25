@@ -17429,6 +17429,9 @@ msgstr "{name} 중지"
 msgid "Stop all agent background processes"
 msgstr "모든 에이전트 백그라운드 프로세스 중지"
 
+msgid "Stop and switch account"
+msgstr "중지하고 계정 전환"
+
 msgid "Stop dictation"
 msgstr "받아쓰기 중지"
 
@@ -17908,6 +17911,9 @@ msgstr "전환…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "{0}에 {nextPlanName}(으)로 전환됩니다."
 
+msgid "Switching account…"
+msgstr "계정 전환 중…"
+
 msgid "Symbol, light"
 msgstr "심볼, 밝은 색"
 
@@ -18340,6 +18346,9 @@ msgstr "직접 이어갈 때까지 채팅이 일시 중지됩니다."
 
 msgid "The chat will open when the current response finishes."
 msgstr "현재 응답이 완료되면 채팅이 열립니다."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "현재 에이전트가 중지되면 선택한 계정에서 채팅이 다시 열립니다."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI에 사용자 지정 모델 설정이 이미 있습니다. 고급 설정에서 수정하세요."

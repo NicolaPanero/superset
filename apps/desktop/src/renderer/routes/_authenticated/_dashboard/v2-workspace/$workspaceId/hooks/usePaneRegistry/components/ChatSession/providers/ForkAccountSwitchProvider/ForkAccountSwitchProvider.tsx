@@ -16,7 +16,8 @@ export interface ForkAccountSwitcher {
 	current: string | null | undefined;
 	accounts: ForkAccountChoice[];
 	switching: boolean;
-	onSwitch: (selection: string | null) => void;
+	canStop?: boolean;
+	onSwitch: (selection: string | null) => Promise<boolean>;
 }
 
 const ForkAccountSwitchContext = createContext<ForkAccountSwitcher | undefined>(

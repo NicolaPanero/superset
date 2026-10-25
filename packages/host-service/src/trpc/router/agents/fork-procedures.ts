@@ -35,9 +35,11 @@ import {
 } from "./fork-launch";
 import { forkModelCatalogProcedures } from "./fork-model-catalog";
 import { forkQuotaRecoveryProcedures } from "./fork-quota-recovery";
+import { forkSwitchChatAccountProcedures } from "./fork-switch-chat-account";
 
 /** The fork's agent procedures, served under the `agents` router. */
 export const forkAgentProcedures = {
+	...forkSwitchChatAccountProcedures,
 	...forkModelCatalogProcedures,
 	prepareCursorSurface: protectedProcedure
 		.input(

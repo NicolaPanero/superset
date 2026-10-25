@@ -17429,6 +17429,9 @@ msgstr "停止 {name}"
 msgid "Stop all agent background processes"
 msgstr "停止所有代理程式背景處理程序"
 
+msgid "Stop and switch account"
+msgstr "停止並切換帳號"
+
 msgid "Stop dictation"
 msgstr "停止語音輸入"
 
@@ -17908,6 +17911,9 @@ msgstr "切換…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "將於 {0} 切換至 {nextPlanName}。"
 
+msgid "Switching account…"
+msgstr "正在切換帳號…"
+
 msgid "Symbol, light"
 msgstr "圖形標誌，淺色"
 
@@ -18340,6 +18346,9 @@ msgstr "聊天會暫停，直到你繼續。"
 
 msgid "The chat will open when the current response finishes."
 msgstr "目前回覆完成後將開啟聊天。"
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "目前的代理程式停止後，聊天將使用所選帳號重新開啟。"
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI 已有自訂模型設定。請在進階設定中編輯。"

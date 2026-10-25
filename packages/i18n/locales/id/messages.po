@@ -17429,6 +17429,9 @@ msgstr "Hentikan {name}"
 msgid "Stop all agent background processes"
 msgstr "Hentikan semua proses latar belakang agen"
 
+msgid "Stop and switch account"
+msgstr "Hentikan dan ganti akun"
+
 msgid "Stop dictation"
 msgstr "Hentikan dikte"
 
@@ -17908,6 +17911,9 @@ msgstr "Ganti…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "Beralih ke {nextPlanName} pada {0}."
 
+msgid "Switching account…"
+msgstr "Mengganti akun…"
+
 msgid "Symbol, light"
 msgstr "Simbol, terang"
 
@@ -18340,6 +18346,9 @@ msgstr "Chat berhenti sampai Anda melanjutkannya."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Chat akan terbuka setelah respons saat ini selesai."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "Chat akan dibuka kembali dengan akun yang dipilih setelah agen saat ini berhenti."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI sudah memiliki pengaturan model khusus. Edit melalui konfigurasi lanjutan."

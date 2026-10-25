@@ -17429,6 +17429,9 @@ msgstr "{name} öğesini durdur"
 msgid "Stop all agent background processes"
 msgstr "Tüm ajan arka plan işlemlerini durdur"
 
+msgid "Stop and switch account"
+msgstr "Durdur ve hesap değiştir"
+
 msgid "Stop dictation"
 msgstr "Sesle yazmayı durdur"
 
@@ -17908,6 +17911,9 @@ msgstr "Değiştir…"
 msgid "Switches to {nextPlanName} on {0}."
 msgstr "{0} tarihinde {nextPlanName} planına geçer."
 
+msgid "Switching account…"
+msgstr "Hesap değiştiriliyor…"
+
 msgid "Symbol, light"
 msgstr "Sembol, açık"
 
@@ -18340,6 +18346,9 @@ msgstr "Siz devam ettirene kadar sohbet duraklar."
 
 msgid "The chat will open when the current response finishes."
 msgstr "Mevcut yanıt tamamlandığında sohbet açılacak."
+
+msgid "The chat will reopen on the selected account after the current agent stops."
+msgstr "Mevcut ajan durduktan sonra sohbet seçilen hesapta yeniden açılır."
 
 msgid "The CLI already has custom model settings. Edit them in advanced configuration."
 msgstr "CLI'de özel model ayarları zaten var. Bunları gelişmiş yapılandırmada düzenleyin."

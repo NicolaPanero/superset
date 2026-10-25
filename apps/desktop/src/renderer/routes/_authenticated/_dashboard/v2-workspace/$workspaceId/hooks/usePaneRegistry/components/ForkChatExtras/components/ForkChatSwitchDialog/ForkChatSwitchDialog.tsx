@@ -45,6 +45,7 @@ import {
 	type ContextCoverage,
 	structuredContextHandoff,
 } from "../../utils/structuredContextHandoff";
+import { ForkChatSwitchButton } from "./components/ForkChatSwitchButton";
 import {
 	forkTransferPolicy,
 	runForkTransfer,
@@ -229,6 +230,8 @@ export function ForkChatSwitchDialog({
 		(sameAgent &&
 			(pickedSelection === undefined ||
 				pickedSelection === accountSwitcher?.current));
+	const switchingAccount = accountSwitcher?.switching === true;
+	const canStopAccount = accountSwitcher?.canStop === true;
 	if (!sourcePreset) return null;
 	const sourceLabel =
 		configs.find(
@@ -274,7 +277,7 @@ export function ForkChatSwitchDialog({
 	};
 
 	const close = () => {
-		if (stage === "launching") return;
+		if (stage === "launching" || switchingAccount) return;
 		if (stage === "converting") {
 			++runSequence.current;
 			cancelTransfer.mutate({ transferId });
@@ -287,8 +290,7 @@ export function ForkChatSwitchDialog({
 	const switchNatively = async () => {
 		if (accountMissing) return;
 		if (sameAgent && accountSwitcher && pickedSelection !== undefined) {
-			onClose();
-			accountSwitcher.onSwitch(pickedSelection);
+			if (await accountSwitcher.onSwitch(pickedSelection)) onClose();
 			return;
 		}
 		if (!target || !sourceSessionId || !nativeAvailable) return;
@@ -535,13 +537,20 @@ export function ForkChatSwitchDialog({
 						)}
 					</DialogTitle>
 					<DialogDescription>
-						<Trans>
-							The current chat stays open until the new one is running.
-						</Trans>
+						{sameAgent ? (
+							<Trans>
+								The chat will reopen on the selected account after the current
+								agent stops.
+							</Trans>
+						) : (
+							<Trans>
+								The current chat stays open until the new one is running.
+							</Trans>
+						)}
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex flex-col gap-4">
-					{busy && (
+					{busy && (!sameAgent || !canStopAccount) && (
 						<p className="text-muted-foreground text-xs">
 							<Trans>Wait for the agent to finish before handing off.</Trans>
 						</p>
@@ -561,7 +570,7 @@ export function ForkChatSwitchDialog({
 								provider={target?.presetId ?? null}
 								model={model?.id}
 								hidden={sameAgent ? accountSwitcher?.current : undefined}
-								disabled={stage !== null}
+								disabled={stage !== null || switchingAccount}
 							/>
 							{options.isSuccess &&
 								choices.length === 0 &&
@@ -659,34 +668,25 @@ export function ForkChatSwitchDialog({
 				<DialogFooter>
 					<Button
 						variant="ghost"
-						disabled={stage === "launching"}
+						disabled={stage === "launching" || switchingAccount}
 						onClick={close}
 					>
 						<Trans>Cancel</Trans>
 					</Button>
-					<Button
-						onClick={() =>
+					<ForkChatSwitchButton
+						busy={busy}
+						sameAgent={sameAgent}
+						canStop={canStopAccount}
+						switching={switchingAccount}
+						stage={stage}
+						onSwitch={() =>
 							void runForkTransfer(transferPolicy, {
 								native: switchNatively,
 								context: switchWithContext,
 							})
 						}
-						disabled={
-							stage !== null ||
-							busy ||
-							!target ||
-							accountMissing ||
-							!transferPolicy.allowed
-						}
-					>
-						{stage === "converting" ? (
-							<Trans>Converting…</Trans>
-						) : stage === "launching" ? (
-							<Trans>Launching…</Trans>
-						) : (
-							<Trans>Switch</Trans>
-						)}
-					</Button>
+						blocked={!target || accountMissing || !transferPolicy.allowed}
+					/>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
