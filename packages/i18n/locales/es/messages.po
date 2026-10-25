@@ -7062,6 +7062,15 @@ msgstr "Cada superficie tiene su propia tipografía. Los cambios se ven al insta
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Cada tarea tiene su propio espacio de trabajo y su propia rama. El agente empieza en un chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Se omitió contexto anterior: {included} mensajes incluidos, más de {omitted} omitidos."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Se omitió contexto anterior: {included} de {total} mensajes incluidos."
+
+msgid "Earlier context was omitted."
+msgstr "Se omitió contexto anterior."
+
 msgid "Early 2024"
 msgstr "Principios de 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Elige uno en la app de Superset. Se guarda en tu cuenta."
 msgid "Pick the best agent."
 msgstr "Elige el mejor agente."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Elige los servidores MCP de un prompt con /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Elige la nueva carpeta del proyecto en {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Resumen"
 msgid "Summary only"
 msgstr "Solo resumen"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Solo resumen ahora conserva completos la solicitud original y los mensajes más recientes."
+
 msgid "sun 11:00"
 msgstr "dom 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "El nombre de la organización o equipo"
 
 msgid "The network connection changed"
 msgstr "Cambió la conexión de red"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "El nuevo agente puede leer los mensajes omitidos del chat anterior cuando los necesite."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "El nuevo agente puede leer los mensajes omitidos cuando los necesite."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "El nuevo agente retoma toda la conversación, incluidas las herramientas."

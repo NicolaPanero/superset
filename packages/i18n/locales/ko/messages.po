@@ -7062,6 +7062,15 @@ msgstr "각 화면마다 타이포그래피를 따로 설정합니다. 변경 �
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "작업마다 전용 워크스페이스와 브랜치가 생깁니다. 에이전트는 채팅에서 시작합니다."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "이전 컨텍스트 일부가 생략되었습니다: 메시지 {included}개 포함, {omitted}개 이상 생략."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "이전 컨텍스트 일부가 생략되었습니다: 메시지 {total}개 중 {included}개 포함."
+
+msgid "Earlier context was omitted."
+msgstr "이전 컨텍스트 일부가 생략되었습니다."
+
 msgid "Early 2024"
 msgstr "2024년 초"
 
@@ -13598,9 +13607,6 @@ msgstr "Superset 앱에서 하나를 고르세요. 계정에 저장됩니다."
 msgid "Pick the best agent."
 msgstr "최고의 에이전트를 고르세요."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "/mcp로 프롬프트에 사용할 MCP 서버를 고르세요."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "{hostName}에서 새 프로젝트 폴더를 선택하세요."
 
@@ -17548,6 +17554,9 @@ msgstr "요약"
 msgid "Summary only"
 msgstr "요약만"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "요약만 모드가 이제 원래 요청과 최신 메시지를 온전히 유지합니다."
+
 msgid "sun 11:00"
 msgstr "일 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "조직 또는 팀의 이름"
 
 msgid "The network connection changed"
 msgstr "네트워크 연결이 바뀌었습니다"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "새 에이전트는 필요할 때 이전 채팅의 생략된 메시지를 읽을 수 있습니다."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "새 에이전트는 필요할 때 생략된 메시지를 읽을 수 있습니다."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "새 에이전트가 도구를 포함한 전체 대화를 이어갑니다."

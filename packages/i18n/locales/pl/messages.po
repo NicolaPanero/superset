@@ -7062,6 +7062,15 @@ msgstr "Każda powierzchnia ma własną typografię. Zmiany widać od razu w pod
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Każde zadanie dostaje własny obszar roboczy i gałąź. Agent zaczyna w czacie."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Pominięto wcześniejszy kontekst: dołączono wiadomości: {included}, pominięto więcej niż {omitted}."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Pominięto wcześniejszy kontekst: dołączono {included} z {total} wiadomości."
+
+msgid "Earlier context was omitted."
+msgstr "Pominięto wcześniejszy kontekst."
+
 msgid "Early 2024"
 msgstr "Początek 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Wybierz jedną w aplikacji Superset. Zapisuje się na twoim koncie."
 msgid "Pick the best agent."
 msgstr "Wybierz najlepszego agenta."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Wybierz serwery MCP dla promptu poleceniem /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Wybierz nowy folder projektu na {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Podsumowanie"
 msgid "Summary only"
 msgstr "Tylko podsumowanie"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Tylko podsumowanie zachowuje teraz w całości pierwotne żądanie i najnowsze wiadomości."
+
 msgid "sun 11:00"
 msgstr "nd 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Nazwa organizacji lub zespołu"
 
 msgid "The network connection changed"
 msgstr "Połączenie sieciowe się zmieniło"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Nowy agent może w razie potrzeby przeczytać pominięte wiadomości z wcześniejszego czatu."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Nowy agent może w razie potrzeby przeczytać pominięte wiadomości."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Nowy agent wznawia całą rozmowę, łącznie z narzędziami."

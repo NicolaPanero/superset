@@ -7062,6 +7062,15 @@ msgstr "Her yüzeyin kendi tipografisi vardır. Değişiklikler canlı önizleme
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Her görev kendi çalışma alanını ve dalını alır. Ajan bir sohbette başlar."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Önceki bağlamın bir kısmı atlandı: {included} mesaj dahil edildi, {omitted} mesajdan fazlası atlandı."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Önceki bağlamın bir kısmı atlandı: {total} mesajdan {included} tanesi dahil edildi."
+
+msgid "Earlier context was omitted."
+msgstr "Önceki bağlamın bir kısmı atlandı."
+
 msgid "Early 2024"
 msgstr "2024 başı"
 
@@ -13598,9 +13607,6 @@ msgstr "Superset uygulamasında birini seçin. Hesabınıza kaydedilir."
 msgid "Pick the best agent."
 msgstr "En iyi ajanı seçin."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Bir istem için MCP sunucularını /mcp ile seçin."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "{hostName} üzerindeki yeni proje klasörünü seçin."
 
@@ -17548,6 +17554,9 @@ msgstr "Özet"
 msgid "Summary only"
 msgstr "Yalnızca özet"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Yalnızca özet artık ilk isteği ve en son mesajları eksiksiz tutar."
+
 msgid "sun 11:00"
 msgstr "paz 11.00"
 
@@ -18513,6 +18522,12 @@ msgstr "Kuruluşunuzun veya takımınızın adı"
 
 msgid "The network connection changed"
 msgstr "Ağ bağlantısı değişti"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Yeni ajan, önceki sohbetin atlanan mesajlarını gerektiğinde okuyabilir."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Yeni ajan, atlanan mesajları gerektiğinde okuyabilir."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Yeni ajan, araçlar dahil tüm konuşmaya devam eder."

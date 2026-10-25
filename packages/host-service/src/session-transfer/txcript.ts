@@ -261,6 +261,8 @@ export class TxcriptTransferProvider implements SessionTransferProvider {
 		sourceRoot: string;
 		sourceReference: string;
 		before?: number;
+		/** Include the newest messages, which a native transfer carries. */
+		all?: boolean;
 	}): Promise<EarlierHistory> {
 		return historySchema.parse(
 			await this.run(

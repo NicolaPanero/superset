@@ -7062,6 +7062,15 @@ msgstr "サーフェスごとに独自のタイポグラフィがあります。
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "タスクごとに専用のワークスペースとブランチが作成されます。エージェントはチャットで開始します。"
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "以前のコンテキストの一部が省略されました：{included} 件のメッセージを含み、{omitted} 件以上を省略しました。"
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "以前のコンテキストの一部が省略されました：{total} 件中 {included} 件のメッセージを含みます。"
+
+msgid "Earlier context was omitted."
+msgstr "以前のコンテキストの一部が省略されました。"
+
 msgid "Early 2024"
 msgstr "2024年前半"
 
@@ -13598,9 +13607,6 @@ msgstr "Supersetアプリで選ぶだけ。アカウントに保存されます�
 msgid "Pick the best agent."
 msgstr "最良のエージェントを選ぶ。"
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "/mcp でプロンプトに使う MCP サーバーを選べます。"
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "{hostName}の新しいプロジェクトフォルダを選択してください。"
 
@@ -17548,6 +17554,9 @@ msgstr "概要"
 msgid "Summary only"
 msgstr "要約のみ"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "「要約のみ」で最初のリクエストと最新のメッセージを省略せずに引き継ぐようになりました。"
+
 msgid "sun 11:00"
 msgstr "日 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "組織またはチームの名前"
 
 msgid "The network connection changed"
 msgstr "ネットワーク接続が変更されました"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "新しいエージェントは、必要に応じて以前のチャットの省略されたメッセージを読めます。"
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "新しいエージェントは、必要に応じて省略されたメッセージを読めます。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新しいエージェントがツールを含む会話全体を再開します。"

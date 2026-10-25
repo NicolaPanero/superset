@@ -7062,6 +7062,15 @@ msgstr "Chaque surface a sa propre typographie. Les changements apparaissent imm
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Chaque tâche a son propre espace de travail et sa propre branche. L'agent démarre dans un chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Une partie du contexte précédent a été omise : {included} messages inclus, plus de {omitted} omis."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Une partie du contexte précédent a été omise : {included} messages inclus sur {total}."
+
+msgid "Earlier context was omitted."
+msgstr "Une partie du contexte précédent a été omise."
+
 msgid "Early 2024"
 msgstr "Début 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Choisissez-en un dans l'application Superset. Il est enregistré dans vo
 msgid "Pick the best agent."
 msgstr "Choisissez le meilleur agent."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Choisissez les serveurs MCP d'un prompt avec /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Choisissez le nouveau dossier du projet sur {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Résumé"
 msgid "Summary only"
 msgstr "Résumé uniquement"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Résumé uniquement conserve désormais en entier la demande initiale et les messages les plus récents."
+
 msgid "sun 11:00"
 msgstr "dim 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Le nom de votre organisation ou équipe"
 
 msgid "The network connection changed"
 msgstr "La connexion réseau a changé"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Le nouvel agent peut lire les messages omis de la discussion précédente quand il en a besoin."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Le nouvel agent peut lire les messages omis quand il en a besoin."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Le nouvel agent reprend toute la conversation, outils compris."

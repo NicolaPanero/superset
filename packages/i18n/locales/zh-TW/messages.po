@@ -7062,6 +7062,15 @@ msgstr "每個介面都有各自的排版設定。更改會立即體現在即時
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "每個任務都有獨立的工作區和分支。代理程式會在聊天中啟動。"
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "已省略部分先前上下文：包含 {included} 則訊息，省略超過 {omitted} 則。"
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "已省略部分先前上下文：包含 {total} 則訊息中的 {included} 則。"
+
+msgid "Earlier context was omitted."
+msgstr "已省略部分先前上下文。"
+
 msgid "Early 2024"
 msgstr "2024年初"
 
@@ -13598,9 +13607,6 @@ msgstr "在 Superset 應用程式中選一個，它會儲存到你的帳號。"
 msgid "Pick the best agent."
 msgstr "挑選最合適的代理程式。"
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "使用 /mcp 為提示選擇 MCP 伺服器。"
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "在{hostName}上選擇新的專案資料夾。"
 
@@ -17548,6 +17554,9 @@ msgstr "摘要"
 msgid "Summary only"
 msgstr "僅摘要"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "「僅摘要」現在會完整保留原始請求與最新訊息。"
+
 msgid "sun 11:00"
 msgstr "週日11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "你的組織或團隊的名稱"
 
 msgid "The network connection changed"
 msgstr "網路連線已變更"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "新代理可在需要時讀取先前聊天中被省略的訊息。"
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "新代理可在需要時讀取被省略的訊息。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理會接續整段對話，包括工具呼叫。"

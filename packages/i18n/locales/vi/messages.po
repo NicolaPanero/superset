@@ -7062,6 +7062,15 @@ msgstr "Mỗi bề mặt có kiểu chữ riêng. Thay đổi hiện ra ngay tro
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Mỗi tác vụ có workspace và nhánh riêng. Agent bắt đầu trong một cuộc chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Một phần ngữ cảnh trước đó đã bị lược bỏ: đã bao gồm {included} tin nhắn, lược bỏ hơn {omitted} tin nhắn."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Một phần ngữ cảnh trước đó đã bị lược bỏ: đã bao gồm {included} trên {total} tin nhắn."
+
+msgid "Earlier context was omitted."
+msgstr "Một phần ngữ cảnh trước đó đã bị lược bỏ."
+
 msgid "Early 2024"
 msgstr "Đầu 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Chọn một plugin trong ứng dụng Superset. Plugin được lưu v�
 msgid "Pick the best agent."
 msgstr "Chọn agent tốt nhất."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Chọn máy chủ MCP cho lời nhắc bằng /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Chọn thư mục dự án mới trên {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Tóm tắt"
 msgid "Summary only"
 msgstr "Chỉ tóm tắt"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Chỉ tóm tắt giờ giữ nguyên vẹn yêu cầu ban đầu và các tin nhắn mới nhất."
+
 msgid "sun 11:00"
 msgstr "CN 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Tên tổ chức hoặc nhóm của bạn"
 
 msgid "The network connection changed"
 msgstr "Kết nối mạng đã thay đổi"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Tác nhân mới có thể đọc các tin nhắn bị lược bỏ của cuộc trò chuyện trước đó khi cần."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Tác nhân mới có thể đọc các tin nhắn bị lược bỏ khi cần."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Tác tử mới tiếp tục toàn bộ cuộc trò chuyện, kể cả công cụ."

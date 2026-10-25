@@ -7062,6 +7062,15 @@ msgstr "Každá plocha má vlastní typografii. Změny se okamžitě projeví v 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Každý úkol dostane vlastní pracovní prostor a větev. Agent se spustí v chatu."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Dřívější kontext byl vynechán: zahrnuto zpráv: {included}, vynecháno více než {omitted}."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Dřívější kontext byl vynechán: zahrnuto {included} z {total} zpráv."
+
+msgid "Earlier context was omitted."
+msgstr "Dřívější kontext byl vynechán."
+
 msgid "Early 2024"
 msgstr "Zač. 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Vyberte si jeden v aplikaci Superset. Uloží se k vašemu účtu."
 msgid "Pick the best agent."
 msgstr "Vyberte nejlepšího agenta."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Vyberte servery MCP pro prompt pomocí /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Vyberte novou složku projektu na {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Souhrn"
 msgid "Summary only"
 msgstr "Jen shrnutí"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Jen shrnutí nyní zachová celý původní požadavek i nejnovější zprávy."
+
 msgid "sun 11:00"
 msgstr "ne 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Název vaší organizace nebo týmu"
 
 msgid "The network connection changed"
 msgstr "Síťové připojení se změnilo"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Nový agent si může vynechané zprávy z dřívějšího chatu přečíst, když je potřebuje."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Nový agent si může vynechané zprávy přečíst, když je potřebuje."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."

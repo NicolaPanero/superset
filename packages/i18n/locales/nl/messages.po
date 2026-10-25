@@ -7062,6 +7062,15 @@ msgstr "Elk oppervlak heeft zijn eigen typografie. Wijzigingen zie je meteen in 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Elke taak krijgt een eigen werkruimte en branch. De agent start in een chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Eerdere context is weggelaten: {included} berichten opgenomen, meer dan {omitted} weggelaten."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Eerdere context is weggelaten: {included} van {total} berichten opgenomen."
+
+msgid "Earlier context was omitted."
+msgstr "Eerdere context is weggelaten."
+
 msgid "Early 2024"
 msgstr "Begin 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Kies er een in de Superset-app. Hij wordt in je account opgeslagen."
 msgid "Pick the best agent."
 msgstr "Kies de beste agent."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Kies de MCP-servers voor een prompt met /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Kies de nieuwe projectmap op {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Samenvatting"
 msgid "Summary only"
 msgstr "Alleen samenvatting"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Alleen samenvatting houdt nu het oorspronkelijke verzoek en de nieuwste berichten volledig."
+
 msgid "sun 11:00"
 msgstr "zo 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "De naam van je organisatie of team"
 
 msgid "The network connection changed"
 msgstr "De netwerkverbinding is gewijzigd"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "De nieuwe agent kan weggelaten berichten van de eerdere chat lezen wanneer dat nodig is."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "De nieuwe agent kan de weggelaten berichten lezen wanneer dat nodig is."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "De nieuwe agent hervat het hele gesprek, inclusief tools."

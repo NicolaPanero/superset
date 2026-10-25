@@ -7062,6 +7062,15 @@ msgstr "每个界面都有各自的排版设置。更改会立即体现在实时
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "每个任务都有独立的工作区和分支。智能体会在聊天中启动。"
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "已省略部分先前上下文：包含 {included} 条消息，省略超过 {omitted} 条。"
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "已省略部分先前上下文：包含 {total} 条消息中的 {included} 条。"
+
+msgid "Earlier context was omitted."
+msgstr "已省略部分先前上下文。"
+
 msgid "Early 2024"
 msgstr "2024年初"
 
@@ -13598,9 +13607,6 @@ msgstr "在 Superset 应用中选一个，它会保存到你的账号。"
 msgid "Pick the best agent."
 msgstr "挑选最合适的智能体。"
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "使用 /mcp 为提示选择 MCP 服务器。"
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "在{hostName}上选择新的项目文件夹。"
 
@@ -17548,6 +17554,9 @@ msgstr "摘要"
 msgid "Summary only"
 msgstr "仅摘要"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "“仅摘要”现在会完整保留原始请求和最新消息。"
+
 msgid "sun 11:00"
 msgstr "周日11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "你的组织或团队的名称"
 
 msgid "The network connection changed"
 msgstr "网络连接已变更"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "新智能体可在需要时读取先前聊天中被省略的消息。"
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "新智能体可在需要时读取被省略的消息。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理会继续整个对话，包括工具调用。"

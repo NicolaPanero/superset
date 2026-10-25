@@ -7062,6 +7062,15 @@ msgstr "Tiap permukaan punya tipografinya sendiri. Perubahan langsung terlihat d
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Setiap tugas mendapat workspace dan branch sendiri. Agen dimulai dalam chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Sebagian konteks sebelumnya dihilangkan: {included} pesan disertakan, lebih dari {omitted} dihilangkan."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Sebagian konteks sebelumnya dihilangkan: {included} dari {total} pesan disertakan."
+
+msgid "Earlier context was omitted."
+msgstr "Sebagian konteks sebelumnya dihilangkan."
+
 msgid "Early 2024"
 msgstr "Awal 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Pilih satu di aplikasi Superset. Tersimpan di akun Anda."
 msgid "Pick the best agent."
 msgstr "Pilih agen terbaik."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Pilih server MCP untuk prompt dengan /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Pilih folder proyek yang baru di {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Ringkasan"
 msgid "Summary only"
 msgstr "Ringkasan saja"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Ringkasan saja kini mempertahankan permintaan awal dan pesan terbaru secara utuh."
+
 msgid "sun 11:00"
 msgstr "min 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Nama organisasi atau tim Anda"
 
 msgid "The network connection changed"
 msgstr "Koneksi jaringan berubah"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Agen baru dapat membaca pesan yang dihilangkan dari chat sebelumnya saat diperlukan."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Agen baru dapat membaca pesan yang dihilangkan saat diperlukan."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."

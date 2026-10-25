@@ -383,9 +383,29 @@ disponibili anche nei trasferimenti successivi.
 
 Se il trasferimento nativo non è disponibile o fallisce, il pannello resta
 aperto e propone **Continua con il contesto**. Serve una scelta esplicita.
-Questo trasferimento invia soltanto i messaggi visibili e può omettere storia
-precedente: conserva il limite ufficiale di **36.000 caratteri** del contesto.
-Quel limite non si applica alla conversione nativa di txcript. La ricerca
+Questo trasferimento e **Solo riepilogo** leggono la sessione dall'archivio
+dell'agente tramite la cronologia txcript, per tutti e cinque gli agenti.
+I messaggi restano interi e sono scelti in quest'ordine: ultima richiesta,
+ultima risposta, richiesta iniziale, poi dal più recente al più vecchio fino
+al limite. Le chiamate agli strumenti diventano righe brevi (nome, input,
+output limitato, errore); il ragionamento è escluso e le immagini sono solo
+citate. Solo una richiesta o risposta più grande dell'intero limite viene
+tagliata, con un segno esplicito. La selezione è adattata da T3 Code (MIT).
+
+Il limite resta di **36.000 caratteri**; per un modello di destinazione con
+finestra di contesto nota (`fork-context-handoff.ts`) diventa un quarto della
+finestra, contando un carattere come un token, fino a 160.000 caratteri.
+Il contesto inizia con la copertura (messaggi inclusi e omessi) e con il
+comando per leggere i messaggi omessi a pagine, in sola lettura:
+`superset fork-handoff history --local --workspace <id> --source <id> --before <n>`.
+Il comando legge solo la sessione sorgente registrata nel database locale
+delle provenienze per quel workspace. Dopo il passaggio un avviso indica
+quanti messaggi sono stati inclusi.
+
+Serve txcript con il campo `all` della cronologia (da `v0.14.4-fork.24`, la versione fissata).
+Con un motore precedente, o se la lettura fallisce, il contesto torna al
+diario della chat con il vecchio taglio dei messaggi più vecchi.
+Il limite non si applica alla conversione nativa di txcript. La ricerca
 non fonde copie indipendenti in account diversi: l’identità comprende agente,
 percorso canonico del deposito e ID nativo; gli alias dello stesso deposito
 vengono unificati conservando la versione più recente.

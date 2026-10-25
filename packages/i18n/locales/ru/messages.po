@@ -7062,6 +7062,15 @@ msgstr "У каждой поверхности своя типографика. 
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Каждая задача получает свою рабочую область и ветку. Агент запускается в чате."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Часть предыдущего контекста опущена: включено сообщений: {included}, опущено больше {omitted}."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Часть предыдущего контекста опущена: включено {included} из {total} сообщений."
+
+msgid "Earlier context was omitted."
+msgstr "Часть предыдущего контекста опущена."
+
 msgid "Early 2024"
 msgstr "Начало 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Выберите плагин в приложении Superset. Он с�
 msgid "Pick the best agent."
 msgstr "Выберите лучшего агента."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Выбирайте MCP-серверы для промпта командой /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Выберите новую папку проекта на {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Сводка"
 msgid "Summary only"
 msgstr "Только краткое содержание"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Режим «Только краткое содержание» теперь сохраняет целиком исходный запрос и последние сообщения."
+
 msgid "sun 11:00"
 msgstr "вс 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Название организации или команды"
 
 msgid "The network connection changed"
 msgstr "Сетевое соединение изменилось"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Новый агент может при необходимости прочитать опущенные сообщения предыдущего чата."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Новый агент может при необходимости прочитать опущенные сообщения."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Новый агент продолжит весь разговор, включая инструменты."

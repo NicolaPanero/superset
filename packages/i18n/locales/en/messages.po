@@ -7062,6 +7062,15 @@ msgstr "Each surface has its own typography. Changes appear immediately in the l
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Each task gets its own workspace and branch. The agent starts in a chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Earlier context was omitted: {included} of {total} messages included."
+
+msgid "Earlier context was omitted."
+msgstr "Earlier context was omitted."
+
 msgid "Early 2024"
 msgstr "Early 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Pick one in the Superset app. It's saved to your account."
 msgid "Pick the best agent."
 msgstr "Pick the best agent."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Pick the MCP servers for a prompt with /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Pick the new project folder on {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Summary"
 msgid "Summary only"
 msgstr "Summary only"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Summary only now keeps the original request and the latest messages whole."
+
 msgid "sun 11:00"
 msgstr "sun 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "The name of your organization or team"
 
 msgid "The network connection changed"
 msgstr "The network connection changed"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "The new agent can read omitted messages of the earlier chat when it needs them."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "The new agent can read the omitted messages when it needs them."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "The new agent resumes the whole conversation, tools included."

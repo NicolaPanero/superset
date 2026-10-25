@@ -7062,6 +7062,15 @@ msgstr "Ogni superficie ha la sua tipografia. Le modifiche compaiono subito nell
 msgid "Each task gets its own workspace and branch. The agent starts in a chat."
 msgstr "Ogni task ha il suo workspace e il suo branch. L'agente parte in una chat."
 
+msgid "Earlier context was omitted: {included} messages included, more than {omitted} omitted."
+msgstr "Parte del contesto precedente è stata omessa: {included} messaggi inclusi, più di {omitted} omessi."
+
+msgid "Earlier context was omitted: {included} of {total} messages included."
+msgstr "Parte del contesto precedente è stata omessa: {included} messaggi inclusi su {total}."
+
+msgid "Earlier context was omitted."
+msgstr "Parte del contesto precedente è stata omessa."
+
 msgid "Early 2024"
 msgstr "Inizio 2024"
 
@@ -13598,9 +13607,6 @@ msgstr "Scegline uno nell'app Superset. Viene salvato nel tuo account."
 msgid "Pick the best agent."
 msgstr "Scegli l'agente migliore."
 
-msgid "Pick the MCP servers for a prompt with /mcp."
-msgstr "Scegli i server MCP per un prompt con /mcp."
-
 msgid "Pick the new project folder on {hostName}."
 msgstr "Scegli la nuova cartella del progetto su {hostName}."
 
@@ -17548,6 +17554,9 @@ msgstr "Riepilogo"
 msgid "Summary only"
 msgstr "Solo riepilogo"
 
+msgid "Summary only now keeps the original request and the latest messages whole."
+msgstr "Solo riepilogo ora mantiene interi la richiesta iniziale e i messaggi più recenti."
+
 msgid "sun 11:00"
 msgstr "dom 11:00"
 
@@ -18513,6 +18522,12 @@ msgstr "Il nome della tua organizzazione o del tuo team"
 
 msgid "The network connection changed"
 msgstr "La connessione di rete è cambiata"
+
+msgid "The new agent can read omitted messages of the earlier chat when it needs them."
+msgstr "Il nuovo agente può leggere i messaggi omessi della chat precedente quando gli servono."
+
+msgid "The new agent can read the omitted messages when it needs them."
+msgstr "Il nuovo agente può leggere i messaggi omessi quando gli servono."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Il nuovo agente riprende l'intera conversazione, strumenti compresi."
