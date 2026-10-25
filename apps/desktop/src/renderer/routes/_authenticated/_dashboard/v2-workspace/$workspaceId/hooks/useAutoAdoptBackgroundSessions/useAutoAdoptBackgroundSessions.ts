@@ -91,8 +91,9 @@ export function useAutoAdoptBackgroundSessions({
 		// adoption never steals focus.
 		const restoreActiveTabId = state.tabs.length > 0 ? state.activeTabId : null;
 		for (const session of toAdopt.reverse()) {
-			focusOrAddTerminalPane(store, session.terminalId);
-			if (isForkSetupTerminal(session)) {
+			const setup = isForkSetupTerminal(session);
+			focusOrAddTerminalPane(store, session.terminalId, { focus: setup });
+			if (setup) {
 				const location = store.getState().getActivePane();
 				if (location)
 					store.getState().setTabTitleOverride({

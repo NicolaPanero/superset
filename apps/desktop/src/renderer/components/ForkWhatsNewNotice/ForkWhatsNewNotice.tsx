@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "context-handoff-coverage-2026-10";
+export const FORK_WHATS_NEW_ID = "superset-1.40-context-handoff-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -30,20 +30,21 @@ export function ForkWhatsNewNotice() {
 	const [seen, setSeen] = useState(() => hasSeenForkWhatsNew(localStorage));
 	if (seen) return null;
 	const highlights = [
+		t({ message: "Edit a sent message and the agent continues from it." }),
+		t({
+			message:
+				"Queued prompts, subagents and background shells share one drawer above the composer.",
+		}),
+		t({
+			message: "Branched chats open in a new tab and keep their account.",
+		}),
 		t({
 			message:
 				"Summary only now keeps the original request and the latest messages whole.",
 		}),
 		t({
 			message:
-				"Context handoffs carry tool activity and grow with the target model's context window.",
-		}),
-		t({
-			message:
 				"The new agent can read omitted messages of the earlier chat when it needs them.",
-		}),
-		t({
-			message: "A notice shows how many messages a context handoff included.",
 		}),
 	];
 	const notice: DesktopNotice = {

@@ -574,7 +574,7 @@ export const HOTKEYS_REGISTRY = {
 			windows: L("ctrl+shift+alt+a"),
 			linux: L("ctrl+shift+alt+a"),
 		},
-		label: msg({ message: "New Chat" }),
+		label: msg({ message: "New Chat (Choose Agent)" }),
 		category: "Chat",
 		description: msg({
 			message: "Open the new chat dialog in the current workspace",
@@ -859,6 +859,15 @@ export const HOTKEYS_REGISTRY = {
 		label: msg({
 			message: "Focus Chat Input",
 		}),
+		category: "Chat",
+	},
+	NEW_CHAT: {
+		key: {
+			mac: L("meta+shift+j"),
+			windows: L("ctrl+shift+alt+j"),
+			linux: L("ctrl+shift+alt+j"),
+		},
+		label: msg({ message: "New Chat" }),
 		category: "Chat",
 	},
 	CHAT_ADD_ATTACHMENT: {

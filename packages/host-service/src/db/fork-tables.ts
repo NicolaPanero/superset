@@ -1,4 +1,18 @@
 const FORK_TABLES_SQL = `
+CREATE TABLE IF NOT EXISTS project_folders (
+ id text PRIMARY KEY NOT NULL,
+ project_id text NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+ path text NOT NULL, position integer DEFAULT 0 NOT NULL,
+ isolate_in_worktrees integer DEFAULT true NOT NULL, created_at integer NOT NULL
+);
+CREATE INDEX IF NOT EXISTS project_folders_project_id_idx ON project_folders (project_id);
+CREATE UNIQUE INDEX IF NOT EXISTS project_folders_project_path_unique ON project_folders (project_id, path);
+CREATE TABLE IF NOT EXISTS workspace_folder_worktrees (
+ workspace_id text NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+ folder_id text NOT NULL REFERENCES project_folders(id) ON DELETE CASCADE,
+ worktree_path text NOT NULL, branch text NOT NULL, created_at integer NOT NULL,
+ PRIMARY KEY(workspace_id, folder_id)
+);
 CREATE TABLE IF NOT EXISTS fork_jira_automations (
  id text PRIMARY KEY NOT NULL, scope text NOT NULL, connection_id text NOT NULL,
  project_id text NOT NULL REFERENCES projects(id) ON DELETE CASCADE,

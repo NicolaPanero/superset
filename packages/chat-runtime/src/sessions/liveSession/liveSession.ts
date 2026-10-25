@@ -1,15 +1,18 @@
 import { randomUUID } from "node:crypto";
-import type {
-	DurableEvent,
-	Envelope,
-	SessionState,
-	Turn,
-	UserContent,
-	UserMessage,
+import {
+	type DiscoverSessionsResult,
+	type DurableEvent,
+	type Envelope,
+	type SessionState,
+	sessionStateSchema,
+	type Turn,
+	type UserContent,
+	type UserMessage,
+	wrapHiddenText,
 } from "@superset/chat/protocol";
-import { sessionStateSchema } from "@superset/chat/protocol";
 import type {
 	AdapterEvent,
+	DiscoverNativeSessionsInput,
 	HarnessAdapter,
 	HarnessStartOptions,
 } from "../../harness";
@@ -45,6 +48,19 @@ export type QueueState = {
 	}[];
 };
 
+export type UnfinishedSession = {
+	sessionId: string;
+	scopeId: string;
+	harness: string;
+	harnessSessionId: string;
+	terminalId?: string;
+	modeId?: string;
+	modelId?: string;
+	interrupted: boolean;
+	prompts: UserContent[][];
+	pausedPrompts: UserContent[][];
+};
+
 type PendingPrompt = {
 	item: UserMessage;
 	content: UserContent[];
@@ -56,6 +72,14 @@ function withoutQueued(item: UserMessage): UserMessage {
 	const next = { ...item };
 	delete next.queued;
 	return next;
+}
+
+function withHiddenWrapped(content: UserContent[]): UserContent[] {
+	return content.map((part) =>
+		part.type === "text" && part.hidden
+			? { type: "text" as const, text: wrapHiddenText(part.text) }
+			: part,
+	);
 }
 
 export class LiveSession {
@@ -70,6 +94,12 @@ export class LiveSession {
 	private currentTurn: Turn | null = null;
 	private pump: Promise<void> | null = null;
 	private stopped = false;
+	private heldUntilStarted: UserContent[][] = [];
+	private heldPaused: UserContent[][] = [];
+	private onHeldReleased: (() => void) | null = null;
+	/** Turns a user prompt started, and those of them that have shown anything yet. */
+	private readonly promptedTurns = new Set<string>();
+	private readonly turnsWithOutput = new Set<string>();
 
 	constructor(private readonly options: LiveSessionOptions) {
 		this.sessionState = { status: "starting", harness: options.harness };
@@ -87,6 +117,22 @@ export class LiveSession {
 		return this.options.terminalId;
 	}
 
+	get harness(): string {
+		return this.options.harness;
+	}
+
+	supportsNativeDiscovery(): boolean {
+		return typeof this.options.adapter.discoverSessions === "function";
+	}
+
+	discoverSessions(
+		input: DiscoverNativeSessionsInput,
+	): Promise<DiscoverSessionsResult> {
+		const discover = this.options.adapter.discoverSessions;
+		if (!discover) return Promise.resolve({ supported: false, sessions: [] });
+		return discover.call(this.options.adapter, input);
+	}
+
 	get state(): SessionState {
 		return this.sessionState;
 	}
@@ -97,6 +143,50 @@ export class LiveSession {
 
 	get queuedCount(): number {
 		return this.queue.length;
+	}
+
+	unfinished(): UnfinishedSession | null {
+		const harnessSessionId = this.sessionState.harnessSessionId;
+		if (!harnessSessionId || this.sessionState.status === "dead") return null;
+		const interrupted =
+			this.currentTurn?.status === "running" ||
+			(this.sessionState.backgroundTasks?.length ?? 0) > 0;
+		const prompts = [
+			...(this.awaitingTurn ? [this.awaitingTurn] : []),
+			...this.pendingSteers,
+			...(this.queuePaused ? [] : this.queue),
+		]
+			.map((pending) => pending.content)
+			.concat(this.heldUntilStarted);
+		const pausedPrompts = (this.queuePaused ? this.queue : [])
+			.map((pending) => pending.content)
+			.concat(this.heldPaused);
+		if (!interrupted && prompts.length === 0 && pausedPrompts.length === 0) {
+			return null;
+		}
+		return {
+			sessionId: this.options.sessionId,
+			scopeId: this.options.scopeId,
+			harness: this.options.harness,
+			harnessSessionId,
+			terminalId: this.options.terminalId,
+			modeId: this.sessionState.modeId,
+			modelId: this.sessionState.modelId,
+			interrupted,
+			prompts,
+			pausedPrompts,
+		};
+	}
+
+	promptOnceStarted(
+		prompts: UserContent[][],
+		pausedPrompts: UserContent[][] = [],
+		onReleased?: () => void,
+	): void {
+		this.heldUntilStarted.push(...prompts);
+		this.heldPaused.push(...pausedPrompts);
+		this.onHeldReleased = onReleased ?? null;
+		this.releaseHeldPrompts();
 	}
 
 	start(startOptions: HarnessStartOptions): void {
@@ -119,6 +209,10 @@ export class LiveSession {
 	): PromptResult {
 		const itemId = this.mintId();
 		const seq = ++this.sent;
+		const shown = content.filter(
+			(part) => !(part.type === "text" && part.hidden),
+		);
+		const sent = withHiddenWrapped(content);
 		const wantsSteer =
 			steerTurnId !== undefined ||
 			this.sessionState.awaitingBackground === true;
@@ -132,11 +226,11 @@ export class LiveSession {
 				kind: "user_message",
 				clientId,
 				startedAtMs: this.now(),
-				content,
+				content: shown,
 			};
 			this.injectInto(running, {
 				item,
-				content,
+				content: sent,
 				turnId: this.mintId(),
 				seq,
 			});
@@ -148,12 +242,12 @@ export class LiveSession {
 			kind: "user_message",
 			clientId,
 			startedAtMs: this.now(),
-			content,
+			content: shown,
 			...(queued ? { queued: true } : {}),
 		};
 		const turnId = this.mintId();
 		if (queued) {
-			this.queue.push({ item, content, turnId, seq });
+			this.queue.push({ item, content: sent, turnId, seq });
 			this.appendDurable({ type: "item", item, turnId });
 			if (
 				steerTurnId &&
@@ -165,8 +259,13 @@ export class LiveSession {
 			return { itemId, queued: true };
 		}
 		this.appendDurable({ type: "item", item, turnId });
-		this.deliver({ item, content, turnId, seq });
+		this.deliver({ item, content: sent, turnId, seq });
 		return { itemId, queued: false };
+	}
+
+	/** Writes finished turns and items from another session's transcript into this one. */
+	seed(events: DurableEvent[]): void {
+		for (const event of events) this.appendDurable(event);
 	}
 
 	removeQueued(itemId: string): void {
@@ -286,18 +385,25 @@ export class LiveSession {
 				}
 			: undefined;
 	}
-	fork(point?: { messageId: string }): Promise<string | null> {
-		if (
-			point &&
-			(this.sessionState.status !== "idle" ||
-				this.currentTurn?.status === "running" ||
-				this.queuedCount > 0 ||
-				this.sessionState.backgroundTasks?.length)
-		)
-			throw new Error(
-				"Wait for the agent and queued work to finish before branching",
-			);
-		return this.options.adapter.fork?.(point) ?? Promise.resolve(null);
+
+	steerSubagent(taskId: string, content: UserContent[]): Promise<boolean> {
+		return (
+			this.options.adapter.steerSubagent?.(
+				taskId,
+				withHiddenWrapped(content),
+			) ?? Promise.resolve(false)
+		);
+	}
+
+	backgroundSubagent(taskId: string): Promise<boolean> {
+		return (
+			this.options.adapter.backgroundSubagent?.(taskId) ??
+			Promise.resolve(false)
+		);
+	}
+
+	fork(cut?: { upToMessageId: string }): Promise<string | null> {
+		return this.options.adapter.fork?.(cut) ?? Promise.resolve(null);
 	}
 
 	async dispose(): Promise<void> {
@@ -317,6 +423,9 @@ export class LiveSession {
 	private handle(event: AdapterEvent): void {
 		switch (event.kind) {
 			case "item":
+				if (event.item.kind !== "user_message") {
+					this.turnsWithOutput.add(event.turnId);
+				}
 				this.appendDurable({
 					type: "item",
 					item: event.item,
@@ -341,6 +450,7 @@ export class LiveSession {
 						this.options.adapter.cancelTurn();
 					}
 				} else {
+					this.noteSilentTurn(event.turn);
 					this.deliverNextQueued();
 				}
 				return;
@@ -348,6 +458,7 @@ export class LiveSession {
 			case "session":
 				if (event.session.status === "dead") this.discardPending();
 				this.emitSession(event.session);
+				this.releaseHeldPrompts();
 				if (event.session.awaitingBackground) this.steerQueueIntoHeldTurn();
 				return;
 			case "delta":
@@ -361,9 +472,65 @@ export class LiveSession {
 		}
 	}
 
+	private releaseHeldPrompts(): void {
+		const status = this.sessionState.status;
+		if (status === "starting") return;
+		const held = this.heldUntilStarted.splice(0);
+		const paused = this.heldPaused.splice(0);
+		const onReleased = this.onHeldReleased;
+		this.onHeldReleased = null;
+		if (status === "dead") return;
+		onReleased?.();
+		this.queue.unshift(...held.map((content) => this.queuedPrompt(content)));
+		if (this.currentTurn?.status !== "running" && !this.awaitingTurn) {
+			this.deliverNextQueued();
+		}
+		if (paused.length === 0) return;
+		this.queue.push(...paused.map((content) => this.queuedPrompt(content)));
+		if (!this.queuePaused) {
+			this.queuePaused = true;
+			this.emitSession({ queuePaused: true });
+		}
+	}
+
+	private queuedPrompt(content: UserContent[]): PendingPrompt {
+		const item: UserMessage = {
+			id: this.mintId(),
+			kind: "user_message",
+			clientId: this.mintId(),
+			startedAtMs: this.now(),
+			content,
+			queued: true,
+		};
+		const turnId = this.mintId();
+		this.appendDurable({ type: "item", item, turnId });
+		return { item, content, turnId, seq: ++this.sent };
+	}
+
+	/** A turn that ends as if it worked but shows nothing would otherwise read as success. */
+	private noteSilentTurn(turn: Turn): void {
+		const prompted = this.promptedTurns.delete(turn.id);
+		const showed = this.turnsWithOutput.delete(turn.id);
+		if (!prompted || showed || turn.status !== "completed") return;
+		const at = this.now();
+		this.appendDurable({
+			type: "item",
+			item: {
+				id: this.mintId(),
+				kind: "notice",
+				noticeKind: "error",
+				text: "The agent finished without replying. It may have failed to reach its model.",
+				startedAtMs: at,
+				completedAtMs: at,
+			},
+			turnId: turn.id,
+		});
+	}
+
 	private attributeAwaitingPrompt(turnId: string): void {
 		const awaiting = this.awaitingTurn;
 		if (!awaiting) return;
+		this.promptedTurns.add(turnId);
 		this.awaitingTurn = null;
 		this.appendDurable({
 			type: "item",
@@ -374,6 +541,10 @@ export class LiveSession {
 
 	private deliver(prompt: PendingPrompt): void {
 		this.awaitingTurn = prompt;
+		this.send(prompt);
+	}
+
+	private send(prompt: PendingPrompt): void {
 		try {
 			this.options.adapter.prompt(prompt.content);
 		} catch (error) {
@@ -541,7 +712,8 @@ export class LiveSession {
 		return (
 			this.currentTurn?.status === "running" ||
 			this.hasPendingWork() ||
-			this.pendingSteers.length > 0
+			this.pendingSteers.length > 0 ||
+			this.heldUntilStarted.length > 0
 		);
 	}
 

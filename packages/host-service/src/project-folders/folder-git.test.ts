@@ -7,6 +7,7 @@ import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import { simpleGit } from "simple-git";
 import type { HostDb } from "../db";
+import { ensureForkTables } from "../db/fork-tables";
 import * as schema from "../db/schema";
 import { projects, workspaces } from "../db/schema";
 import { gitRouter } from "../trpc/router/git";
@@ -19,12 +20,14 @@ afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 describe("git procedures on an extra project folder", () => {
 	test("status, stage and commit work through the folder's workspace key", async () => {
-		const db = drizzle(new Database(":memory:"), {
+		const sqlite = new Database(":memory:");
+		const db = drizzle(sqlite, {
 			schema,
 		}) as unknown as HostDb;
 		migrate(db as never, {
 			migrationsFolder: resolve(import.meta.dir, "../../drizzle"),
 		});
+		ensureForkTables(sqlite);
 		const main = join(root, "main");
 		const extra = join(root, "extra");
 		mkdirSync(main);

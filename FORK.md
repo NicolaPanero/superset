@@ -98,14 +98,17 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Chiudere il pannello mantiene la chat in **Background chats**. Il comando
   **Stop** ferma l’agente; se lo stop fallisce la chat resta recuperabile.
   Restano al massimo 20 chat in background per area di lavoro.
-- I messaggi mostrano copia, diramazione e ora. **Edit and restart from here**
-  resta visibile sui messaggi utente e spiega perché non è disponibile:
-  agente occupato, allegati o assenza di un punto nativo. Con Claude e Codex
-  riparte prima del messaggio e ne rimette il testo nella bozza; i file restano
-  invariati e la sessione originale resta nella cronologia. Per Grok e Cursor,
-  **New chat from loaded messages** apre una chat separata dal testo caricato
-  fino al messaggio scelto, mantenendo configurazione, account, modello e modalità.
-  Il passaggio non ricostruisce lo stato degli strumenti e non ripristina i file.
+- La modifica di un messaggio inviato è quella ufficiale (**Edit message**, da
+  Superset 1.40): Claude, Codex e pdev ripartono in modo nativo dal punto scelto,
+  gli altri agenti ricevono la conversazione come testo. Le risposte dell’agente
+  mantengono le azioni del fork: copia, ora, modello e diramazione **dal
+  messaggio scelto**, che apre una nuova scheda con configurazione, account,
+  modello e modalità. Per Grok e Cursor, **New chat from loaded messages** apre
+  una chat separata dal testo caricato fino a quel messaggio. Il passaggio non
+  ricostruisce lo stato degli strumenti e non ripristina i file.
+- Le cartelle extra dei progetti (`project_folders`) sono tabelle del fork in
+  `fork-schema.ts`, create da `ensureForkTables`: il journal delle migrazioni
+  resta quello ufficiale.
 - I **piani** hanno un’anteprima Markdown nella chat e il pulsante per aprirli
   in un pannello laterale, con avanzamento dei passi. Il documento resta leggibile
   dopo l’approvazione, anche nei piani Cursor già salvati quando il testo è nella

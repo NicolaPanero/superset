@@ -13,7 +13,7 @@
  * character budget, rendering and recovery command are ours.
  */
 
-import { TERMINAL_HANDOFF_MAX_CHARS } from "@superset/shared/terminal-session-handoff";
+import { TERMINAL_HANDOFF_MAX_CHARS } from "@superset/shared/session-handoff";
 
 export const CONTEXT_HANDOFF_DEFAULT_CHARS = TERMINAL_HANDOFF_MAX_CHARS;
 export const CONTEXT_HANDOFF_MAX_CHARS = 160_000;

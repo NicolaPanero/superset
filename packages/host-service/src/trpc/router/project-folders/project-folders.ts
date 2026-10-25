@@ -4,7 +4,8 @@ import { isAbsolute, resolve } from "node:path";
 import { TRPCError } from "@trpc/server";
 import { and, eq, max } from "drizzle-orm";
 import { z } from "zod";
-import { projectFolders, projects } from "../../../db/schema";
+import { projectFolders } from "../../../db/fork-schema";
+import { projects } from "../../../db/schema";
 import {
 	folderWorkspaceId,
 	isolateFolder,

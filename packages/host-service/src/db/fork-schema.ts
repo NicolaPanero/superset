@@ -234,3 +234,54 @@ export const backgroundChats = sqliteTable(
 		),
 	],
 );
+
+/**
+ * Extra folders attached to a project next to its primary `repoPath`. A
+ * folder is a plain absolute path: it may or may not be a git repository and
+ * is shared by every workspace of the project.
+ */
+export const projectFolders = sqliteTable(
+	"project_folders",
+	{
+		id: text().primaryKey(),
+		projectId: text("project_id")
+			.notNull()
+			.references(() => projects.id, { onDelete: "cascade" }),
+		path: text().notNull(),
+		position: integer().notNull().default(0),
+		// A git folder gets its own worktree, on the workspace's branch, in
+		// every worktree workspace. Off shares the folder itself.
+		isolateInWorktrees: integer("isolate_in_worktrees", { mode: "boolean" })
+			.notNull()
+			.default(true),
+		createdAt: integer("created_at")
+			.notNull()
+			.$defaultFn(() => Date.now()),
+	},
+	(table) => [
+		index("project_folders_project_id_idx").on(table.projectId),
+		uniqueIndex("project_folders_project_path_unique").on(
+			table.projectId,
+			table.path,
+		),
+	],
+);
+
+/** The worktree a workspace holds for one of its project's extra git folders. */
+export const workspaceFolderWorktrees = sqliteTable(
+	"workspace_folder_worktrees",
+	{
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		folderId: text("folder_id")
+			.notNull()
+			.references(() => projectFolders.id, { onDelete: "cascade" }),
+		worktreePath: text("worktree_path").notNull(),
+		branch: text().notNull(),
+		createdAt: integer("created_at")
+			.notNull()
+			.$defaultFn(() => Date.now()),
+	},
+	(table) => [primaryKey({ columns: [table.workspaceId, table.folderId] })],
+);

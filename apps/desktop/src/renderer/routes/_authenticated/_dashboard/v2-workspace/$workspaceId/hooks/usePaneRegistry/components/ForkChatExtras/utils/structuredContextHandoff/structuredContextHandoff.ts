@@ -1,5 +1,5 @@
 import type { ChatTransport } from "@superset/chat/client";
-import { TRANSCRIPT_TRUNCATION_NOTICE } from "@superset/shared/terminal-session-handoff";
+import { TRANSCRIPT_TRUNCATION_NOTICE } from "@superset/shared/session-handoff";
 import { contextHandoff } from "../contextHandoff/contextHandoff";
 
 export interface StructuredContext {

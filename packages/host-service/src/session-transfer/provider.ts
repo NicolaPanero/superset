@@ -1,7 +1,7 @@
 import {
 	buildTerminalSessionHandoffPrompt,
 	TRANSCRIPT_TRUNCATION_NOTICE,
-} from "@superset/shared/terminal-session-handoff";
+} from "@superset/shared/session-handoff";
 import type { TransferAgent } from "./registry";
 
 export interface TransferInput {

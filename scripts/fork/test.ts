@@ -23,7 +23,7 @@ const extra = [
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/hooks/useUndoableChatClose/utils/closedChatBatches/closedChatBatches.test.ts",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/utils/transcriptFind",
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/hooks/useTranscriptFind/useTranscriptFind.test.tsx",
-	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/components/Transcript/components/ApprovalRow/components/QuestionForm/utils/questionPages/questionPages.test.ts",
+	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/utils/questionPages/questionPages.test.ts",
 
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/utils/chatHandoffTranscript/chatHandoffTranscript.test.ts",
 	"packages/chat/src/core/harness/harness.test.ts",

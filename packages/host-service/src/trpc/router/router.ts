@@ -28,6 +28,7 @@ import { projectFoldersRouter } from "./project-folders";
 import { pullRequestsRouter } from "./pull-requests";
 import { sandboxRouter } from "./sandbox";
 import { sessionTransferRouter } from "./session-transfer";
+import { sessionsRouter } from "./sessions";
 import { settingsRouter } from "./settings";
 import { systemRouter } from "./system";
 import { tagFoldersRouter } from "./tag-folders";
@@ -46,6 +47,7 @@ export const appRouter = router({
 	forkScm: forkScmRouter,
 	forkTasks: forkTasksRouter,
 	agents: agentsRouter,
+	sessions: sessionsRouter,
 	agentTooling: agentToolingRouter,
 	attachments: attachmentsRouter,
 	browser: browserRouter,

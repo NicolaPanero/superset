@@ -4,9 +4,11 @@ import { memo } from "react";
 import type { ChatForkTarget } from "../../../../../../types";
 import { forkToolPlan } from "../../../../utils/forkPlanDocument";
 import { rowKindForItem } from "../../../../utils/rowKind";
+import { isNestedTool, subagentLines } from "../../../../utils/subagentLines";
 import { AgentMessageRow } from "../../../AgentMessageRow";
 import { ApprovalRow } from "../../../ApprovalRow";
 import { ForkPlanCard } from "../../../ForkPlanCard";
+import { NestedToolCallRow } from "../../../NestedToolCallRow";
 import { NoticeRow } from "../../../NoticeRow";
 import { PlanRow } from "../../../PlanRow";
 import { ReasoningRow } from "../../../ReasoningRow";
@@ -17,7 +19,9 @@ import { RailStep } from "../RailStep";
 
 export type ItemRowProps = {
 	item: Item;
+	childItems?: readonly Item[] | undefined;
 	approvalTarget?: Item | undefined;
+	asker?: string | undefined;
 	afterTarget?: boolean;
 	text: string;
 	harness: string | undefined;
@@ -26,7 +30,6 @@ export type ItemRowProps = {
 	onRespond: (approvalId: string, decision: Decision) => void;
 	onFork?: ((target: ChatForkTarget, fromItemId: string) => void) | undefined;
 	canForkToWorktree?: boolean;
-	onRewind?: ((itemId: string) => void) | undefined;
 	canForkInWorkspace?: boolean;
 	forkFromHere?: boolean;
 	lastReply?: boolean;
@@ -36,13 +39,14 @@ export type ItemRowProps = {
 export const ItemRow = memo(function ItemRow({
 	afterTarget = false,
 	approvalTarget,
+	asker,
 	canForkToWorktree,
+	childItems,
 	commands,
 	lastReply = false,
 	harness,
 	item,
 	onFork,
-	onRewind,
 	canForkInWorkspace,
 	forkFromHere,
 	onRespond,
@@ -57,11 +61,6 @@ export const ItemRow = memo(function ItemRow({
 		case "user_message":
 			return (
 				<UserMessageRow
-					onRewind={onRewind}
-					onFork={onFork}
-					canForkInWorkspace={canForkInWorkspace}
-					forkFromHere={forkFromHere}
-					canForkToWorktree={canForkToWorktree}
 					commands={commands}
 					harness={harness}
 					item={item}
@@ -86,9 +85,16 @@ export const ItemRow = memo(function ItemRow({
 		case "tool_call": {
 			const plan = forkToolPlan(item);
 			if (plan) return <ForkPlanCard item={plan} />;
+			if (subagentLines(item, childItems)) {
+				return <NestedToolCallRow item={item} />;
+			}
 			return (
 				<RailStep>
-					<ToolCallRow item={item} />
+					{isNestedTool(item, childItems) ? (
+						<NestedToolCallRow item={item} />
+					) : (
+						<ToolCallRow item={item} />
+					)}
 				</RailStep>
 			);
 		}
@@ -98,6 +104,7 @@ export const ItemRow = memo(function ItemRow({
 			return (
 				<ApprovalRow
 					afterTarget={afterTarget}
+					asker={asker}
 					item={item}
 					onRespond={onRespond}
 					target={approvalTarget}
