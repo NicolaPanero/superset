@@ -399,7 +399,7 @@ Il comando legge solo la sessione sorgente registrata nel database locale
 delle provenienze per quel workspace. Dopo il passaggio un avviso indica
 quanti messaggi sono stati inclusi.
 
-Serve txcript con il campo `all` della cronologia (dopo `v0.14.4-fork.23`).
+Serve txcript con il campo `all` della cronologia (da `v0.14.4-fork.24`, la versione fissata).
 Con un motore precedente, o se la lettura fallisce, il contesto torna al
 diario della chat con il vecchio taglio dei messaggi più vecchi.
 Il limite non si applica alla conversione nativa di txcript. La ricerca
