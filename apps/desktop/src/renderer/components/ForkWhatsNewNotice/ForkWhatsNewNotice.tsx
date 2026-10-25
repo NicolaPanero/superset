@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "dynamic-models-and-bitbucket-2026-10";
+export const FORK_WHATS_NEW_ID = "superset-1.40-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -30,13 +30,15 @@ export function ForkWhatsNewNotice() {
 	const [seen, setSeen] = useState(() => hasSeenForkWhatsNew(localStorage));
 	if (seen) return null;
 	const highlights = [
-		t({ message: "Bitbucket pull requests now open in workspace panes." }),
+		t({ message: "Edit a sent message and the agent continues from it." }),
 		t({
-			message: "Merge, drafts and review comments now work with Bitbucket.",
+			message:
+				"Queued prompts, subagents and background shells share one drawer above the composer.",
 		}),
-		t({ message: "Link Bitbucket pull requests when creating a workspace." }),
-		t({ message: "Download chat responses as Markdown." }),
-		t({ message: "Choose models discovered directly from your agents." }),
+		t({ message: "Pick the MCP servers for a prompt with /mcp." }),
+		t({
+			message: "Branched chats open in a new tab and keep their account.",
+		}),
 	];
 	const notice: DesktopNotice = {
 		id: `fork-whats-new:${FORK_WHATS_NEW_ID}`,

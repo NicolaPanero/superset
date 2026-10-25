@@ -10,20 +10,24 @@ import type {
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../db";
+import { projectFolders } from "../db/fork-schema";
+import { ensureForkTables } from "../db/fork-tables";
 import * as schema from "../db/schema";
-import { projectFolders, projects, workspaces } from "../db/schema";
+import { projects, workspaces } from "../db/schema";
 import { withProjectFolders } from "./withProjectFolders";
 
 const root = mkdtempSync(join(tmpdir(), "chat-folders-"));
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 function setup() {
-	const db = drizzle(new Database(":memory:"), {
+	const sqlite = new Database(":memory:");
+	const db = drizzle(sqlite, {
 		schema,
 	}) as unknown as HostDb;
 	migrate(db as never, {
 		migrationsFolder: resolve(import.meta.dir, "../../drizzle"),
 	});
+	ensureForkTables(sqlite);
 	const main = join(root, "main");
 	const extra = join(root, "extra");
 	mkdirSync(main, { recursive: true });

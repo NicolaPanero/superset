@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "88371f01-872e-4434-bc9d-25eabd582db1",
+  "id": "b482bc32-9f2b-47ab-99b6-78b75a60e5a1",
   "prevId": "6e31d154-2c43-47ea-9504-1311445e5bb8",
   "tables": {
     "host_agent_configs": {
@@ -178,78 +178,46 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "project_folders": {
-      "name": "project_folders",
+    "mobile_last_devices": {
+      "name": "mobile_last_devices",
       "columns": {
-        "id": {
-          "name": "id",
+        "workspace_id": {
+          "name": "workspace_id",
           "type": "text",
           "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
-        "project_id": {
-          "name": "project_id",
+        "platform": {
+          "name": "platform",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "path": {
-          "name": "path",
+        "device_key": {
+          "name": "device_key",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "position": {
-          "name": "position",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": 0
-        },
-        "isolate_in_worktrees": {
-          "name": "isolate_in_worktrees",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": true
-        },
-        "created_at": {
-          "name": "created_at",
+        "picked_at": {
+          "name": "picked_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         }
       },
-      "indexes": {
-        "project_folders_project_id_idx": {
-          "name": "project_folders_project_id_idx",
-          "columns": [
-            "project_id"
-          ],
-          "isUnique": false
-        },
-        "project_folders_project_path_unique": {
-          "name": "project_folders_project_path_unique",
-          "columns": [
-            "project_id",
-            "path"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
-        "project_folders_project_id_projects_id_fk": {
-          "name": "project_folders_project_id_projects_id_fk",
-          "tableFrom": "project_folders",
-          "tableTo": "projects",
+        "mobile_last_devices_workspace_id_workspaces_id_fk": {
+          "name": "mobile_last_devices_workspace_id_workspaces_id_fk",
+          "tableFrom": "mobile_last_devices",
+          "tableTo": "workspaces",
           "columnsFrom": [
-            "project_id"
+            "workspace_id"
           ],
           "columnsTo": [
             "id"
@@ -259,6 +227,45 @@
         }
       },
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "mobile_owned_devices": {
+      "name": "mobile_owned_devices",
+      "columns": {
+        "platform": {
+          "name": "platform",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "device_key": {
+          "name": "device_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "booted_at": {
+          "name": "booted_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "mobile_owned_devices_platform_device_key_pk": {
+          "columns": [
+            "platform",
+            "device_key"
+          ],
+          "name": "mobile_owned_devices_platform_device_key_pk"
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
@@ -888,86 +895,6 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "workspace_folder_worktrees": {
-      "name": "workspace_folder_worktrees",
-      "columns": {
-        "workspace_id": {
-          "name": "workspace_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "folder_id": {
-          "name": "folder_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "worktree_path": {
-          "name": "worktree_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "branch": {
-          "name": "branch",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "workspace_folder_worktrees_workspace_id_workspaces_id_fk": {
-          "name": "workspace_folder_worktrees_workspace_id_workspaces_id_fk",
-          "tableFrom": "workspace_folder_worktrees",
-          "tableTo": "workspaces",
-          "columnsFrom": [
-            "workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "workspace_folder_worktrees_folder_id_project_folders_id_fk": {
-          "name": "workspace_folder_worktrees_folder_id_project_folders_id_fk",
-          "tableFrom": "workspace_folder_worktrees",
-          "tableTo": "project_folders",
-          "columnsFrom": [
-            "folder_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "workspace_folder_worktrees_workspace_id_folder_id_pk": {
-          "columns": [
-            "workspace_id",
-            "folder_id"
-          ],
-          "name": "workspace_folder_worktrees_workspace_id_folder_id_pk"
-        }
-      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

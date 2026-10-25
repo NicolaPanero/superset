@@ -6,6 +6,7 @@ import { join, resolve } from "node:path";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../db";
+import { ensureForkTables } from "../../../db/fork-tables";
 import * as schema from "../../../db/schema";
 import { projects, workspaces } from "../../../db/schema";
 import {
@@ -21,12 +22,14 @@ const root = mkdtempSync(join(tmpdir(), "project-folders-"));
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 function setup() {
-	const db = drizzle(new Database(":memory:"), {
+	const sqlite = new Database(":memory:");
+	const db = drizzle(sqlite, {
 		schema,
 	}) as unknown as HostDb;
 	migrate(db as never, {
 		migrationsFolder: resolve(import.meta.dir, "../../../../drizzle"),
 	});
+	ensureForkTables(sqlite);
 	const dir = mkdtempSync(join(root, "case-"));
 	const repoPath = join(dir, "main");
 	mkdirSync(repoPath);

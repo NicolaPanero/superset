@@ -1,6 +1,7 @@
 import type { Decision, Turn, UserContent } from "@superset/chat/protocol";
 import {
 	type AdapterEvent,
+	type DiscoverNativeSessionsInput,
 	EventQueue,
 	type HarnessAdapter,
 	type HarnessStartOptions,
@@ -561,8 +562,22 @@ export class ForkQuotaRecoveryAdapter implements HarnessAdapter {
 	forkOptions() {
 		return { accountSelection: this.selection };
 	}
-	fork(point?: { messageId: string }) {
-		return this.child.fork?.(point) ?? Promise.resolve(null);
+	fork(cut?: { upToMessageId: string }) {
+		return this.child.fork?.(cut) ?? Promise.resolve(null);
+	}
+	steerSubagent(taskId: string, content: UserContent[]) {
+		return (
+			this.child.steerSubagent?.(taskId, content) ?? Promise.resolve(false)
+		);
+	}
+	backgroundSubagent(taskId: string) {
+		return this.child.backgroundSubagent?.(taskId) ?? Promise.resolve(false);
+	}
+	discoverSessions(input: DiscoverNativeSessionsInput) {
+		return (
+			this.child.discoverSessions?.(input) ??
+			Promise.resolve({ supported: false, sessions: [] })
+		);
 	}
 	contextBreakdown() {
 		return this.child.contextBreakdown?.() ?? Promise.resolve(null);

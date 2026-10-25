@@ -52,6 +52,7 @@ function nativePoint(
 ): { messageId: string } | undefined {
 	const prefix = `agent_message:${turnId}:`;
 	const messageId =
+		item.agentMessageId ??
 		item.nativeMessageId ??
 		(item.id.startsWith(prefix) ? item.id.slice(prefix.length) : undefined);
 	return messageId ? { messageId } : undefined;

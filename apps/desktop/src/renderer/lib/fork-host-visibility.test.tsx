@@ -1,9 +1,9 @@
 import { afterEach, expect, test } from "bun:test";
 import { useForkWorkspacesDeviceFilter } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/hooks/useForkWorkspacesDeviceFilter";
 import {
-	DEVICE_FILTER_ALL_DEVICES,
-	DEVICE_FILTER_THIS_DEVICE,
 	useV2WorkspacesFilterStore,
+	WHERE_FILTER_ANYWHERE,
+	WHERE_FILTER_THIS_DEVICE,
 } from "renderer/routes/_authenticated/_dashboard/v2-workspaces/stores/v2WorkspacesFilterStore";
 import { HostSelect } from "renderer/routes/_authenticated/settings/components/HostSelect";
 import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
@@ -11,36 +11,36 @@ import { act, render, renderHook } from "renderer/test-utils/fork-ui";
 import { useForkHostId } from "./fork-host-visibility";
 
 const originalFlags = useForkCliOptionsStore.getState();
-const originalFilter = useV2WorkspacesFilterStore.getState().deviceFilter;
+const originalFilter = useV2WorkspacesFilterStore.getState().whereFilter;
 
 afterEach(() => {
 	act(() => {
 		useForkCliOptionsStore.setState(originalFlags);
-		useV2WorkspacesFilterStore.setState({ deviceFilter: originalFilter });
+		useV2WorkspacesFilterStore.setState({ whereFilter: originalFilter });
 	});
 });
 
 test("hidden device controls use local targets even with remembered remote or all-device filters", () => {
 	useForkCliOptionsStore.setState({ hideProFeatures: true });
-	useV2WorkspacesFilterStore.setState({ deviceFilter: "remote-host" });
+	useV2WorkspacesFilterStore.setState({ whereFilter: "remote-host" });
 	const { result } = renderHook(() => ({
 		hostId: useForkHostId("remote-host"),
 		deviceFilter: useForkWorkspacesDeviceFilter(),
 	}));
 	expect(result.current).toEqual({
 		hostId: null,
-		deviceFilter: DEVICE_FILTER_THIS_DEVICE,
+		deviceFilter: WHERE_FILTER_THIS_DEVICE,
 	});
 	act(() =>
 		useV2WorkspacesFilterStore.setState({
-			deviceFilter: DEVICE_FILTER_ALL_DEVICES,
+			whereFilter: WHERE_FILTER_ANYWHERE,
 		}),
 	);
-	expect(result.current.deviceFilter).toBe(DEVICE_FILTER_THIS_DEVICE);
+	expect(result.current.deviceFilter).toBe(WHERE_FILTER_THIS_DEVICE);
 	act(() => useForkCliOptionsStore.setState({ hideProFeatures: false }));
 	expect(result.current).toEqual({
 		hostId: "remote-host",
-		deviceFilter: DEVICE_FILTER_ALL_DEVICES,
+		deviceFilter: WHERE_FILTER_ANYWHERE,
 	});
 });
 

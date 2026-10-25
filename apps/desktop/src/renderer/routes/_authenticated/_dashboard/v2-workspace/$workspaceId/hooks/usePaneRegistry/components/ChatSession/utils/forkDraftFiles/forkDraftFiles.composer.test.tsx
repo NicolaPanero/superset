@@ -40,7 +40,7 @@ test("restored queued files merge with an existing composer draft and survive a 
 		/>,
 	);
 	await flush();
-	ref.current?.appendFiles([queued]);
+	ref.current?.addFiles([queued]);
 	ref.current?.appendText("Edited message");
 	await flush();
 	expect(forkDraftFiles(key).initial).toEqual([existing, queued]);

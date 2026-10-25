@@ -13,8 +13,10 @@ import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import { simpleGit } from "simple-git";
 import type { HostDb } from "../db";
+import { projectFolders } from "../db/fork-schema";
+import { ensureForkTables } from "../db/fork-tables";
 import * as schema from "../db/schema";
-import { projectFolders, projects, workspaces } from "../db/schema";
+import { projects, workspaces } from "../db/schema";
 import type { HostServiceContext } from "../types";
 import { folderWorkspaceId } from "./folder-workspace-id";
 import {
@@ -69,12 +71,14 @@ async function initRepo(path: string) {
 }
 
 async function setup(type: "worktree" | "local" = "worktree") {
-	const db = drizzle(new Database(":memory:"), {
+	const sqlite = new Database(":memory:");
+	const db = drizzle(sqlite, {
 		schema,
 	}) as unknown as HostDb;
 	migrate(db as never, {
 		migrationsFolder: resolve(import.meta.dir, "../../drizzle"),
 	});
+	ensureForkTables(sqlite);
 	const dir = mkdtempSync(join(root, "case-"));
 	const main = join(dir, "main");
 	const workspaceDir = join(dir, "worktrees", "feature");

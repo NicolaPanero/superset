@@ -23,7 +23,7 @@ import {
 	Monitor,
 	Smartphone,
 } from "lucide-react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
 	LuArrowDownToLine,
 	LuBot,
@@ -73,13 +73,13 @@ import {
 import {
 	findTerminalPaneLocation,
 	focusOrAddTerminalPane,
+	focusTerminalPane,
 } from "../../utils/focusTerminalPane";
 import {
 	consumeChatStopped,
 	markChatStopped,
 } from "../../utils/forkChatCloseIntent/forkChatCloseIntent";
 import { openPagePaneInStore } from "../../utils/openPagePaneInStore";
-import { openSubagentPaneInStore } from "../../utils/openSubagentPaneInStore";
 import { useAgentSessionLauncher } from "../useAgentSessionLauncher";
 import { useForkBackgroundChats } from "../useForkBackgroundChats";
 import type { OpenReviewDiff } from "../useReviewCommentNavigation";
@@ -93,12 +93,18 @@ import {
 import { BrowserPane, BrowserPaneToolbar } from "./components/BrowserPane";
 import { ChangesListPane } from "./components/ChangesListPane";
 import { ChatPane } from "./components/ChatPane";
+import { ChatHistoryPicker } from "./components/ChatPane/components/ChatHistoryPicker";
+import { ChatPaneTitle } from "./components/ChatPaneTitle";
 import { CommentPane } from "./components/CommentPane";
 import { CommentPaneHeaderExtras } from "./components/CommentPane/components/CommentPaneHeaderExtras";
 import { CommentPaneTitle } from "./components/CommentPane/components/CommentPaneTitle";
 import { DesktopPane } from "./components/DesktopPane";
 import { DiffPane } from "./components/DiffPane";
-import { DiffPaneHeaderExtras } from "./components/DiffPane/components/DiffPaneHeaderExtras";
+import { DiffPaneHeaderSlot } from "./components/DiffPane/components/DiffPaneHeaderSlot";
+import {
+	diffPaneActionsSlotId,
+	diffPaneTitleSlotId,
+} from "./components/DiffPane/utils/headerSlots";
 import { FilePane } from "./components/FilePane";
 import { FilePaneHeaderExtras } from "./components/FilePane/components/FilePaneHeaderExtras";
 import { FilesTreePane } from "./components/FilesTreePane";
@@ -172,6 +178,7 @@ interface UsePaneRegistryOptions {
 	launcher: TerminalLauncher;
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	linkedStores?: StoreApi<WorkspaceStore<PaneViewerData>>[];
+	onOpenSubagent: (data: SubagentPaneData) => void;
 	onSearch?: () => void;
 }
 
@@ -182,6 +189,7 @@ export function usePaneRegistry({
 	launcher,
 	store,
 	linkedStores,
+	onOpenSubagent,
 	onSearch,
 }: UsePaneRegistryOptions): PaneRegistry<PaneViewerData> {
 	const { t } = useLingui();
@@ -193,7 +201,6 @@ export function usePaneRegistry({
 	const closeChatWithUndo = useUndoableChatClose({
 		workspaceId,
 		store,
-		stopChat: agentSurface.stopChat,
 		onExpire: parkChat,
 	});
 	const host = useWorkspaceHostTarget(workspaceId);
@@ -255,6 +262,17 @@ export function usePaneRegistry({
 
 	const { createNewAgentSession, openAgentChat, focusAgentTerminal } =
 		useAgentSessionLauncher({ workspaceId, store });
+
+	const chatPaneIcon = useCallback(
+		({ agent, terminalId }: ChatPaneData) => (
+			<TerminalPaneIcon
+				agentId={agent?.id}
+				workspaceId={workspaceId}
+				terminalId={terminalId}
+			/>
+		),
+		[workspaceId],
+	);
 
 	return useMemo<PaneRegistry<PaneViewerData>>(
 		() => ({
@@ -371,6 +389,14 @@ export function usePaneRegistry({
 			diff: {
 				getIcon: () => <GitCompareArrows className="size-3.5" />,
 				getTitle: () => t({ message: "Changes" }),
+				// With the right pane area, the pane fills its own header (scope on
+				// the left, view controls on the right) through these slots.
+				renderTitle: (ctx: RendererContext<PaneViewerData>) => (
+					<DiffPaneHeaderSlot
+						id={diffPaneTitleSlotId(ctx.pane.id)}
+						className="flex min-w-0 items-center"
+					/>
+				),
 				renderPane: (ctx: RendererContext<PaneViewerData>) => {
 					const { repoKey } = ctx.pane.data as DiffPaneData;
 					const pane = (
@@ -390,9 +416,9 @@ export function usePaneRegistry({
 					);
 				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => (
-					<DiffPaneHeaderExtras
-						workspaceId={(ctx.pane.data as DiffPaneData).repoKey ?? workspaceId}
-						store={ctx.store}
+					<DiffPaneHeaderSlot
+						id={diffPaneActionsSlotId(ctx.pane.id)}
+						className="flex shrink-0 items-center"
 					/>
 				),
 				contextMenuActions: (_ctx, defaults) =>
@@ -544,16 +570,7 @@ export function usePaneRegistry({
 									})
 								}
 								onCreateNewAgentSession={createNewAgentSession}
-								onOpenSubagent={(subagent) =>
-									openSubagentPaneInStore(ctx.store, subagent)
-								}
-							/>
-							<AgentSurfaceToggle
-								pane={{ kind: "terminal", data }}
-								onChange={(surface, agent) =>
-									void agentSurface.switchSurface(ctx, surface, agent)
-								}
-								workspaceId={workspaceId}
+								onOpenSubagent={onOpenSubagent}
 							/>
 						</div>
 					);
@@ -840,21 +857,14 @@ export function usePaneRegistry({
 					t({
 						message: "Mobile",
 					}),
-				renderPane: () => <MobilePane />,
+				renderPane: () => <MobilePane workspaceId={workspaceId} />,
 			},
 			"chat-v3": {
-				getIcon: (ctx) => {
-					const { agent, terminalId } = ctx.pane.data as ChatPaneData;
-					return (
-						<TerminalPaneIcon
-							agentId={agent?.id}
-							workspaceId={workspaceId}
-							terminalId={terminalId}
-						/>
-					);
-				},
-				getTitle: (pane) =>
-					(pane.data as ChatPaneData).agentLabel ?? t({ message: "Chat" }),
+				getIcon: (ctx) => chatPaneIcon(ctx.pane.data as ChatPaneData),
+				getTitle: () =>
+					t({
+						message: "Chat",
+					}),
 				titleSource: (pane) => {
 					const { chatTitle } = pane.data as ChatPaneData;
 					return {
@@ -873,11 +883,27 @@ export function usePaneRegistry({
 						return;
 					closeChatWithUndo(pane);
 				},
+				renderTitle: (ctx: RendererContext<PaneViewerData>) => {
+					const data = ctx.pane.data as ChatPaneData;
+					return (
+						<ChatPaneTitle
+							chatKey={data.terminalId}
+							icon={chatPaneIcon(data)}
+							isActive={ctx.isActive}
+							title={ctx.pane.titleOverride ?? t({ message: "Chat" })}
+						/>
+					);
+				},
 				renderHeaderExtras: (ctx: RendererContext<PaneViewerData>) => {
 					const data = ctx.pane.data as ChatPaneData;
 					return (
 						<div className="flex items-center gap-1">
 							<ForkChatOrigin ctx={ctx} workspaceId={workspaceId} />
+							<ChatHistoryPicker
+								context={ctx}
+								workspaceId={workspaceId}
+								linkedStores={linkedStores}
+							/>
 							<AgentSurfaceToggle
 								pane={{ kind: "chat", data }}
 								onChange={(surface, agent) =>
@@ -1008,12 +1034,13 @@ export function usePaneRegistry({
 				renderPane: (ctx: RendererContext<PaneViewerData>) => (
 					<SubagentPane
 						data={ctx.pane.data as SubagentPaneData}
-						onOpenParent={() =>
-							focusOrAddTerminalPane(
-								ctx.store,
-								(ctx.pane.data as SubagentPaneData).terminalId,
-							)
-						}
+						onOpenParent={() => {
+							const { terminalId } = ctx.pane.data as SubagentPaneData;
+							const focused = [store, ...(linkedStores ?? [])].some((s) =>
+								focusTerminalPane(s, terminalId),
+							);
+							if (!focused) focusOrAddTerminalPane(store, terminalId);
+						}}
 					/>
 				),
 			},
@@ -1098,6 +1125,8 @@ export function usePaneRegistry({
 			workspaceTrpcUtils,
 			t,
 			desktopUrl,
+			chatPaneIcon,
+			onOpenSubagent,
 		],
 	);
 }

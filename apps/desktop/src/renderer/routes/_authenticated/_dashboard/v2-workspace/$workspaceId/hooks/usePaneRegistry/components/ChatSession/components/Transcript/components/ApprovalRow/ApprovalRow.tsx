@@ -14,6 +14,7 @@ import { ShieldQuestion, SquareTerminal } from "lucide-react";
 import { forkApprovalPlan, forkToolPlan } from "../../utils/forkPlanDocument";
 import { ForkPlanCard } from "../ForkPlanCard";
 import { ToolContentList } from "../ToolContentList";
+import { AskerLabel } from "./components/AskerLabel";
 import { OptionButtons } from "./components/OptionButtons";
 import { QuestionAnswers } from "./components/QuestionAnswers";
 import { QuestionForm } from "./components/QuestionForm";
@@ -53,25 +54,26 @@ function decisionLabel(
 
 export function ApprovalRow({
 	afterTarget = false,
+	asker,
 	item,
 	onRespond,
 	target,
 }: {
 	afterTarget?: boolean;
+	asker?: string | undefined;
 	item: ApprovalRequest;
 	onRespond: (approvalId: string, decision: Decision) => void;
 	target?: Item | undefined;
 }) {
-	if (item.form) {
-		return <QuestionForm form={item.form} item={item} onRespond={onRespond} />;
-	}
 	const plan = forkToolPlan(target) ? null : forkApprovalPlan(item, target);
 	const pending = item.status === "pending";
 	const options = item.options ?? [];
 	const command =
 		target?.kind === "tool_call" && (target as ToolCall).toolKind === "execute";
 	const Icon = command ? SquareTerminal : ShieldQuestion;
-	return (
+	const card = item.form ? (
+		<QuestionForm form={item.form} item={item} onRespond={onRespond} />
+	) : (
 		<div
 			className={cn(
 				"flex flex-col gap-2.5",
@@ -167,6 +169,13 @@ export function ApprovalRow({
 						</Button>
 					</div>
 				))}
+		</div>
+	);
+	if (!asker) return card;
+	return (
+		<div className="flex flex-col gap-1">
+			<AskerLabel name={asker} />
+			{card}
 		</div>
 	);
 }

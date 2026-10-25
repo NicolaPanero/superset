@@ -29,19 +29,31 @@ export class BackgroundTasks {
 	update(
 		id: string,
 		patch: Partial<
-			Pick<BackgroundTask, "name" | "detail" | "canStop" | "outputPath">
+			Pick<
+				BackgroundTask,
+				| "name"
+				| "detail"
+				| "canStop"
+				| "outputPath"
+				| "canSteer"
+				| "canBackground"
+				| "subagentStatus"
+			>
 		>,
 	): void {
 		const prior = this.tasks.get(id);
 		if (!prior) return;
 		const next = { ...prior, ...patch };
-		const nameChanged =
+		const listChanged =
 			next.name !== prior.name ||
 			next.canStop !== prior.canStop ||
-			next.outputPath !== prior.outputPath;
-		if (!nameChanged && next.detail === prior.detail) return;
+			next.outputPath !== prior.outputPath ||
+			next.canSteer !== prior.canSteer ||
+			next.canBackground !== prior.canBackground ||
+			next.subagentStatus !== prior.subagentStatus;
+		if (!listChanged && next.detail === prior.detail) return;
 		this.tasks.set(id, next);
-		if (nameChanged) this.emit();
+		if (listChanged) this.emit();
 		else this.detailSoon(id);
 	}
 

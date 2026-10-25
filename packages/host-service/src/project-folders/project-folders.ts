@@ -1,12 +1,9 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { and, asc, eq } from "drizzle-orm";
+import { projectFolders, workspaceFolderWorktrees } from "../db/fork-schema.ts";
 import type { HostDb } from "../db/index.ts";
-import {
-	projectFolders,
-	workspaceFolderWorktrees,
-	workspaces,
-} from "../db/schema.ts";
+import { workspaces } from "../db/schema.ts";
 import { parseFolderWorkspaceId } from "./folder-workspace-id.ts";
 
 export interface ProjectFolderInfo {

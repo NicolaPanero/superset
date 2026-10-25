@@ -1,10 +1,10 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it, jest } from "bun:test";
 import { spawn } from "node:child_process";
 import type { Item } from "@superset/chat/protocol";
 import {
 	AGENT_DEFAULT_MODE,
 	FULL_ACCESS_CHAT_MODE,
-	userMessageSchema,
+	wrapHiddenText,
 } from "@superset/chat/protocol";
 import type { AdapterEvent } from "../types";
 import {
@@ -35,6 +35,8 @@ class FakeAcpAgent {
 	protocolVersion = 2;
 	/** agentInfo.name reported at initialize, as pdev reports "paradev". */
 	agentName: string | null = null;
+	/** v2 pdev names itself under `info`, not `agentInfo`. */
+	agentInfoField: "agentInfo" | "info" = "agentInfo";
 	/** _meta attached to the first scripted agent message chunk. */
 	chunkMeta: Record<string, unknown> | null = null;
 	/** Session capabilities advertised at initialize; both shipped agents fork. */
@@ -55,13 +57,25 @@ class FakeAcpAgent {
 	private heldPrompts: number[] = [];
 	/** Advertise `_session/steering` and answer it with this outcome. */
 	steeringOutcome: string | null = null;
-	/** Answer for `_superset/context_usage`; undefined answers "method not found". */
-	contextUsage: unknown;
-	grokContextUsage: unknown;
-	contextUsageRequests = 0;
-	stopTaskResult = true;
 	/** Leave session/prompt unanswered, as a turn still running does. */
 	holdPrompts = false;
+	/** Answer session/prompt once the message is inserted, as a v2 agent does. */
+	insertOnPrompt = false;
+	/** Report `idle` with this stop reason right behind the insertion response. */
+	idleWithInsertion: string | null = null;
+	/** Hold inserted prompts, echo and all, until `releaseInsertions`. */
+	holdInsertions = false;
+	private insertedPrompts = 0;
+	/** Reject a subagent's session/prompt, as pdev does once it has finished. */
+	finishedSubagents = new Set<string>();
+	/** Echo a subagent steer, send these parent updates, then reject the steer. */
+	updatesBeforeSteerError: Record<string, unknown>[] | null = null;
+	/** Leave subagent steers unanswered until the test answers them. */
+	holdChildPrompts = false;
+	readonly heldChildPrompts: number[] = [];
+	/** Refuse `_sh.superset/subagent/background`, as pdev does once the call returned. */
+	refuseBackground = false;
+	private heldInsertions: Array<{ id: number; prompt: unknown }> = [];
 	private handlers!: AcpTransportHandlers;
 
 	transport(handlers: AcpTransportHandlers): AcpTransport {
@@ -96,8 +110,51 @@ class FakeAcpAgent {
 		});
 	}
 
+	/** A permission request from a subagent's own session. */
+	requestSubagentPermission(
+		sessionId: string,
+		toolCallId: string,
+		id = 9101,
+	): number {
+		this.deliver({
+			jsonrpc: "2.0",
+			id,
+			method: "session/request_permission",
+			params: {
+				sessionId,
+				toolCall: { toolCallId, title: "Run tests" },
+				options: [
+					{ optionId: "allow", name: "Allow", kind: "allow_once" },
+					{ optionId: "reject", name: "Reject", kind: "reject_once" },
+				],
+			},
+		});
+		return id;
+	}
+
+	requestSubagentPermissionWithoutToolCall(
+		sessionId: string,
+		id = 9102,
+	): number {
+		this.deliver({
+			jsonrpc: "2.0",
+			id,
+			method: "session/request_permission",
+			params: {
+				sessionId,
+				toolCall: { title: "Run tests" },
+				options: [
+					{ optionId: "allow", name: "Allow", kind: "allow_once" },
+					{ optionId: "reject", name: "Reject", kind: "reject_once" },
+				],
+			},
+		});
+		return id;
+	}
+
 	/** Ask the agent to request a permission mid-turn; returns the request id. */
-	requestPermission(sessionId: string, toolCallId: string, id = 9001): number {
+	requestPermission(sessionId: string, toolCallId: string): number {
+		const id = 9001;
 		this.deliver({
 			jsonrpc: "2.0",
 			id,
@@ -185,6 +242,40 @@ class FakeAcpAgent {
 		});
 	}
 
+	private insert(id: number, prompt: unknown, idleBeforeResponse?: string) {
+		const messageId = `u${++this.insertedPrompts}`;
+		this.notify("sess-1", {
+			sessionUpdate: "user_message",
+			messageId,
+			content: prompt,
+		});
+		if (idleBeforeResponse) {
+			this.notify("sess-1", {
+				sessionUpdate: "state_update",
+				state: "idle",
+				stopReason: idleBeforeResponse,
+			});
+		}
+		this.respond(id, { messageId });
+	}
+
+	/** Insert held prompts; `idleBeforeResponse` ends the run between echo and answer. */
+	releaseInsertions(idleBeforeResponse?: string): void {
+		for (const { id, prompt } of this.heldInsertions.splice(0)) {
+			this.insert(id, prompt, idleBeforeResponse);
+		}
+	}
+
+	answerChildPrompt(id: number, outcome: "inserted" | "rejected"): void {
+		if (outcome === "inserted") this.respond(id, { messageId: `steer-${id}` });
+		else
+			this.deliver({
+				jsonrpc: "2.0",
+				id,
+				error: { code: -32600, message: "The subagent has stopped" },
+			});
+	}
+
 	releasePrompts(stopReason: string): void {
 		for (const id of this.heldPrompts.splice(0)) {
 			this.respond(id, { stopReason });
@@ -199,8 +290,9 @@ class FakeAcpAgent {
 		for (const id of this.heldSelections.splice(0)) this.respond(id, null);
 	}
 
-	requestServer(method: string, params: unknown, id: number): void {
-		this.deliver({ jsonrpc: "2.0", id, method, params });
+	releaseFirstSelection(): void {
+		const id = this.heldSelections.shift();
+		if (id !== undefined) this.respond(id, null);
 	}
 
 	lastPermissionResponse(): Record<string, unknown> | undefined {
@@ -217,14 +309,14 @@ class FakeAcpAgent {
 		if (frame.id === undefined || frame.method === undefined) return;
 		if (this.silent) return;
 
+		const resumes =
+			frame.method === "session/load" || frame.method === "session/resume";
 		queueMicrotask(() => {
-			if (frame.method === "authenticate") {
-				this.respond(frame.id as number, null);
-				return;
-			}
 			if (frame.method === "initialize") {
 				this.respond(frame.id as number, {
-					...(this.agentName ? { agentInfo: { name: this.agentName } } : {}),
+					...(this.agentName
+						? { [this.agentInfoField]: { name: this.agentName } }
+						: {}),
 					...(this.steeringOutcome
 						? { _meta: { steering: { supported: true } } }
 						: {}),
@@ -261,19 +353,19 @@ class FakeAcpAgent {
 				}
 			} else if (frame.method === "session/fork") {
 				this.respond(frame.id as number, { sessionId: "sess-forked" });
-			} else if (frame.method === "session/load" && this.loadError) {
+			} else if (resumes && this.loadError) {
 				this.deliver({ jsonrpc: "2.0", id: frame.id, error: this.loadError });
-			} else if (frame.method === "session/load" && this.loadFails) {
+			} else if (resumes && this.loadFails) {
 				this.deliver({
 					jsonrpc: "2.0",
 					id: frame.id,
 					error: { code: -32002, message: "Resource not found: sess-1" },
 				});
-			} else if (frame.method === "session/load" && this.replayUpdates) {
+			} else if (resumes && this.replayUpdates) {
 				const sessionId = (frame.params as { sessionId: string }).sessionId;
 				for (const update of this.replayUpdates) this.notify(sessionId, update);
 				this.respond(frame.id as number, null);
-			} else if (frame.method === "session/load" && this.wholeMessageReplay) {
+			} else if (resumes && this.wholeMessageReplay) {
 				const sessionId = (frame.params as { sessionId: string }).sessionId;
 				this.notify(sessionId, {
 					sessionUpdate: "user_message",
@@ -286,14 +378,14 @@ class FakeAcpAgent {
 					content: [{ type: "text", text: "On it." }],
 				});
 				this.respond(frame.id as number, null);
-			} else if (frame.method === "session/load" && this.loadConfigOptions) {
+			} else if (resumes && this.loadConfigOptions) {
 				const sessionId = (frame.params as { sessionId: string }).sessionId;
 				this.notify(sessionId, {
 					sessionUpdate: "config_option_update",
 					configOptions: this.loadConfigOptions,
 				});
 				this.respond(frame.id as number, null);
-			} else if (frame.method === "session/load") {
+			} else if (resumes) {
 				// A real agent replays the whole transcript — the user's turns
 				// included — before it answers.
 				const sessionId = (frame.params as { sessionId: string }).sessionId;
@@ -310,6 +402,10 @@ class FakeAcpAgent {
 					content: { type: "text", text: "now ship it" },
 				});
 				this.notify(sessionId, {
+					sessionUpdate: "user_message_chunk",
+					content: { type: "text", text: wrapHiddenText("MCP context") },
+				});
+				this.notify(sessionId, {
 					sessionUpdate: "agent_message_chunk",
 					content: { type: "text", text: "Shipped." },
 				});
@@ -318,27 +414,71 @@ class FakeAcpAgent {
 				}
 				// ACP returns null after replaying history; adapter keeps the id.
 				this.respond(frame.id as number, null);
-			} else if (frame.method === "_x.ai/session/info") {
-				if (this.grokContextUsage === undefined)
-					this.deliver({
-						jsonrpc: "2.0",
-						id: frame.id,
-						error: { code: -32601, message: "Method not found" },
-					});
-				else this.respond(frame.id as number, this.grokContextUsage);
-			} else if (frame.method === "_superset/context_usage") {
-				this.contextUsageRequests++;
-				if (this.contextUsage === undefined)
-					this.deliver({
-						jsonrpc: "2.0",
-						id: frame.id,
-						error: { code: -32601, message: "Method not found" },
-					});
-				else this.respond(frame.id as number, { usage: this.contextUsage });
-			} else if (frame.method === "_session/async_task/stop") {
-				this.respond(frame.id as number, { stopped: this.stopTaskResult });
 			} else if (frame.method === "_session/steering") {
 				this.respond(frame.id as number, { outcome: this.steeringOutcome });
+			} else if (
+				frame.method === "session/prompt" &&
+				String(frame.params?.sessionId).startsWith("child-")
+			) {
+				const childId = String(frame.params?.sessionId);
+				if (this.finishedSubagents.has(childId)) {
+					this.deliver({
+						jsonrpc: "2.0",
+						id: frame.id,
+						error: { code: -32600, message: "The subagent has finished" },
+					});
+					return;
+				}
+				if (this.holdChildPrompts) {
+					this.heldChildPrompts.push(frame.id as number);
+					return;
+				}
+				const messageId = `steer-${frame.id}`;
+				this.notify(childId, {
+					sessionUpdate: "user_message",
+					messageId,
+					content: frame.params?.prompt,
+				});
+				if (this.updatesBeforeSteerError) {
+					for (const update of this.updatesBeforeSteerError)
+						this.notify("sess-1", update);
+					this.deliver({
+						jsonrpc: "2.0",
+						id: frame.id,
+						error: { code: -32600, message: "The subagent has stopped" },
+					});
+					return;
+				}
+				this.respond(frame.id as number, { messageId });
+			} else if (frame.method === "_sh.superset/subagent/background") {
+				if (this.refuseBackground) {
+					this.deliver({
+						jsonrpc: "2.0",
+						id: frame.id,
+						error: {
+							code: -32600,
+							message: "The subagent c1 is not waiting in the foreground",
+						},
+					});
+					return;
+				}
+				this.respond(frame.id as number, {});
+			} else if (frame.method === "session/prompt" && this.insertOnPrompt) {
+				if (this.holdInsertions) {
+					this.heldInsertions.push({
+						id: frame.id as number,
+						prompt: frame.params?.prompt,
+					});
+					return;
+				}
+				this.insert(frame.id as number, frame.params?.prompt);
+				if (this.idleWithInsertion) {
+					this.notify("sess-1", {
+						sessionUpdate: "state_update",
+						state: "idle",
+						stopReason: this.idleWithInsertion,
+					});
+				}
 			} else if (frame.method === "session/prompt" && this.holdPrompts) {
 				this.heldPrompts.push(frame.id as number);
 			} else if (frame.method === "session/prompt") {
@@ -379,17 +519,15 @@ async function flush(times = 8): Promise<void> {
 function startAdapter(
 	agent: FakeAcpAgent,
 	resume?: string,
-	selections: { modelId?: string; modeId?: string; cwd?: string } = {},
+	selections: { modelId?: string; modeId?: string } = {},
 	adapterOptions: Pick<
 		AcpAdapterOptions,
-		| "authMethodId"
 		| "defaultModeId"
 		| "requestTimeoutMs"
 		| "clientApprovalModes"
 		| "shellPollMs"
 		| "backgroundDetailIntervalMs"
 		| "startupTimeoutMs"
-		| "forkGrokContextUsage"
 	> = {},
 ): { adapter: AcpAdapter; events: AdapterEvent[] } {
 	let counter = 0;
@@ -491,6 +629,7 @@ describe("AcpAdapter", () => {
 
 	it("steers a prompt into the running turn when the agent advertises it", async () => {
 		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
 		agent.steeringOutcome = "injected";
 		agent.holdPrompts = true;
 		const { adapter } = startAdapter(agent);
@@ -513,8 +652,175 @@ describe("AcpAdapter", () => {
 		await adapter.dispose();
 	});
 
+	it("v2 steering sends session/prompt while a turn runs", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+		const turns = () =>
+			events.flatMap((e) => (e.kind === "turn" ? [e.turn] : []));
+		const turnId = turns().at(-1)?.id;
+
+		expect(adapter.canSteer()).toBe(true);
+		expect(await adapter.steer([{ type: "text", text: "also X" }])).toBe(true);
+		const prompts = agent.sent.filter((f) => f.method === "session/prompt");
+		expect(prompts).toHaveLength(2);
+		expect(prompts[1]?.params).toEqual({
+			sessionId: "sess-1",
+			prompt: [{ type: "text", text: "also X" }],
+		});
+		expect(agent.sent.map((f) => f.method)).not.toContain("_session/steering");
+		expect(turns().every((turn) => turn.id === turnId)).toBe(true);
+		expect(turns().at(-1)?.status).toBe("running");
+
+		await adapter.dispose();
+	});
+
+	it("v2 idle in the same chunk as the insertion response completes the turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		agent.idleWithInsertion = "end_turn";
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		const turn = events
+			.flatMap((e) => (e.kind === "turn" ? [e.turn] : []))
+			.at(-1);
+		expect(turn?.status).toBe("completed");
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+
+		await adapter.dispose();
+	});
+
+	it("an idle from an earlier run does not end a v2 turn still in flight", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		agent.holdInsertions = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		const lastTurn = () =>
+			events.flatMap((e) => (e.kind === "turn" ? [e.turn] : [])).at(-1);
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		agent.releaseInsertions();
+		await flush();
+		expect(lastTurn()?.status).toBe("running");
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		await flush();
+		expect(lastTurn()?.status).toBe("completed");
+
+		await adapter.dispose();
+	});
+
+	it("v2 steer during the first prompt's flight tolerates a stopReason answer", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdPrompts = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+
+		expect(adapter.canSteer()).toBe(true);
+		const steered = adapter.steer([{ type: "text", text: "also X" }]);
+		await flush();
+		agent.releasePrompts("end_turn");
+
+		expect(await steered).toBe(true);
+		await flush();
+		const turns = events.flatMap((e) => (e.kind === "turn" ? [e.turn] : []));
+		expect(new Set(turns.map((turn) => turn.id)).size).toBe(1);
+		expect(turns.at(-1)?.status).toBe("completed");
+		expect(
+			agent.sent.filter((f) => f.method === "session/prompt"),
+		).toHaveLength(2);
+
+		await adapter.dispose();
+	});
+
+	it("v2 steer inserted after its run ended opens a new turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+		const turns = () =>
+			events.flatMap((e) => (e.kind === "turn" ? [e.turn] : []));
+		const firstId = turns().at(-1)?.id;
+
+		agent.holdInsertions = true;
+		const steered = adapter.steer([{ type: "text", text: "also X" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		agent.releaseInsertions();
+		expect(await steered).toBe(true);
+		await flush();
+
+		const second = turns().at(-1);
+		expect(turns().find((turn) => turn.id === firstId)).toBeDefined();
+		expect(second?.id).not.toBe(firstId);
+		expect(second?.status).toBe("running");
+		expect(sessionsOf(events).at(-1)?.status).toBe("running");
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		await flush();
+		expect(turns().at(-1)).toMatchObject({
+			id: second?.id,
+			status: "completed",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("v2 steer inserted before its run ended opens no new turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "first" }]);
+		await flush();
+
+		agent.holdInsertions = true;
+		const steered = adapter.steer([{ type: "text", text: "also X" }]);
+		await flush();
+		agent.releaseInsertions("end_turn");
+		expect(await steered).toBe(true);
+		await flush();
+
+		const turns = events.flatMap((e) => (e.kind === "turn" ? [e.turn] : []));
+		expect(new Set(turns.map((turn) => turn.id)).size).toBe(1);
+		expect(turns.at(-1)?.status).toBe("completed");
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+
+		await adapter.dispose();
+	});
+
 	it("does not steer an agent that does not advertise it", async () => {
 		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
 		agent.holdPrompts = true;
 		const { adapter } = startAdapter(agent);
 		await flush();
@@ -531,6 +837,7 @@ describe("AcpAdapter", () => {
 
 	it("reports a steer the agent hands back as not taken", async () => {
 		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
 		agent.steeringOutcome = "promptRequired";
 		agent.holdPrompts = true;
 		const { adapter } = startAdapter(agent);
@@ -582,22 +889,79 @@ describe("AcpAdapter", () => {
 		await adapter.dispose();
 	});
 
-	it("resumes an existing agent session via session/load", async () => {
+	it("v2 resume replays with session/resume", async () => {
 		const agent = new FakeAcpAgent();
-		const adapter = new AcpAdapter({
-			command: "fake",
-			createTransport: (_opts, handlers) => agent.transport(handlers),
-			now: () => 1,
-			mintId: () => "x",
+		const { adapter, events } = startAdapter(agent, "sess-1");
+		await flush(40);
+
+		expect(agent.sent.map((f) => f.method)).toEqual([
+			"initialize",
+			"session/resume",
+		]);
+		expect(agent.sent[1]?.params).toEqual({
+			sessionId: "sess-1",
+			cwd: "/work",
+			mcpServers: [],
+			replayFrom: { type: "start" },
 		});
-		const events: AdapterEvent[] = [];
-		void collect(
-			adapter.start({ cwd: "/work", resume: { harnessSessionId: "sess-1" } }),
-			events,
-		);
+		expect(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.map(textOf)
+				.filter(Boolean),
+		).toEqual(["On it.", "Shipped."]);
+		expect(sessionsOf(events).at(-1)?.harnessSessionId).toBe("sess-1");
+
+		await adapter.dispose();
+	});
+
+	it("v2 resume falls back to a new session when not found", async () => {
+		const agent = new FakeAcpAgent();
+		agent.loadFails = true;
+		const { adapter, events } = startAdapter(agent, "sess-1");
+		await flush(40);
+
+		expect(agent.sent.map((f) => f.method)).toEqual([
+			"initialize",
+			"session/resume",
+			"session/new",
+		]);
+		expect(sessionsOf(events).map((s) => s.status)).not.toContain("dead");
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+
+		await adapter.dispose();
+	});
+
+	it("resumes a v1 session via session/load", async () => {
+		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
+		const { adapter } = startAdapter(agent, "sess-1");
+		await flush(40);
+
+		expect(agent.sent.map((f) => f.method)).toEqual([
+			"initialize",
+			"session/load",
+		]);
+		expect(agent.sent[1]?.params).toEqual({
+			sessionId: "sess-1",
+			cwd: "/work",
+			mcpServers: [],
+		});
+
+		await adapter.dispose();
+	});
+
+	it("reads a v2 agent's name from info", async () => {
+		const agent = new FakeAcpAgent();
+		agent.agentName = "paradev";
+		agent.agentInfoField = "info";
+		const { adapter } = startAdapter(agent);
 		await flush();
 
-		expect(agent.sent.map((f) => f.method)).toContain("session/load");
+		expect((adapter as unknown as { agentName: string | null }).agentName).toBe(
+			"paradev",
+		);
+
 		await adapter.dispose();
 	});
 
@@ -728,6 +1092,7 @@ describe("AcpAdapter", () => {
 	it("opens a new session when there is no transcript to resume", async () => {
 		const agent = new FakeAcpAgent();
 		agent.loadFails = true;
+		agent.protocolVersion = 1;
 		const adapter = new AcpAdapter({
 			command: "fake",
 			createTransport: (_opts, handlers) => agent.transport(handlers),
@@ -851,44 +1216,89 @@ describe("AcpAdapter", () => {
 		await second.dispose();
 	});
 
-	it("sends an exact AIR fork point only for adapters configured to support it", async () => {
-		for (const supported of [true, false]) {
-			const agent = new FakeAcpAgent();
-			const adapter = new AcpAdapter({
-				command: "fake",
-				forkAtMessage: supported,
-				createTransport: (_opts, handlers) => agent.transport(handlers),
-			});
-			const events: AdapterEvent[] = [];
-			void collect(adapter.start({ cwd: "/work" }), events);
-			await flush(40);
-			expect(
-				events.some(
-					(event) =>
-						event.kind === "session" &&
-						event.session.forkAtMessage === supported,
-				),
-			).toBe(true);
-			expect(await adapter.fork({ messageId: "native:reply-1" })).toBe(
-				supported ? "sess-forked" : null,
-			);
-			const request = agent.sent.find(
-				(frame) => frame.method === "session/fork",
-			);
-			if (supported)
-				expect(request?.params).toEqual({
-					sessionId: "sess-1",
-					cwd: "/work",
-					mcpServers: [],
-					_meta: {
-						jetbrains: {
-							air: { fork: { version: 1, messageId: "native:reply-1" } },
-						},
-					},
-				});
-			else expect(request).toBeUndefined();
-			await adapter.dispose();
-		}
+	it("forks at a message only for an agent known to honour the cut, and resumes it quietly", async () => {
+		const cutting = new FakeAcpAgent();
+		const adapter = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => cutting.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+			forkAtMessage: true,
+		});
+		void collect(adapter.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await adapter.fork({ upToMessageId: "msg_1" })).toBe("sess-forked");
+		const forkFrame = cutting.sent.find((f) => f.method === "session/fork");
+		expect(
+			(forkFrame?.params as { _meta?: unknown } | undefined)?._meta,
+		).toEqual({
+			jetbrains: { air: { fork: { version: 1, messageId: "msg_1" } } },
+		});
+		await adapter.dispose();
+
+		const ignoring = new FakeAcpAgent();
+		const unsure = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => ignoring.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		void collect(unsure.start({ cwd: "/work" }), []);
+		await flush(40);
+		expect(await unsure.fork({ upToMessageId: "msg_1" })).toBeNull();
+		expect(ignoring.sent.map((f) => f.method)).not.toContain("session/fork");
+		await unsure.dispose();
+
+		const replayed = new FakeAcpAgent();
+		replayed.replayUpdates = [
+			{
+				sessionUpdate: "agent_message_chunk",
+				messageId: "msg_1",
+				content: { type: "text", text: "earlier reply" },
+			},
+			{
+				sessionUpdate: "agent_message_chunk",
+				messageId: "msg_1",
+				content: { type: "text", text: ", continued" },
+			},
+		];
+		const quiet = new AcpAdapter({
+			command: "fake",
+			createTransport: (_opts, handlers) => replayed.transport(handlers),
+			now: () => 1,
+			mintId: () => "x",
+		});
+		const quietEvents: AdapterEvent[] = [];
+		void collect(
+			quiet.start({
+				cwd: "/work",
+				resume: { harnessSessionId: "sess-forked", quiet: true },
+			}),
+			quietEvents,
+		);
+		await flush(40);
+		expect(replayed.sent.map((f) => f.method)).toContain("session/resume");
+		expect(itemsOf(quietEvents)).toEqual([]);
+		expect(quietEvents.filter((event) => event.kind === "delta")).toEqual([]);
+		await quiet.dispose();
+	});
+
+	it("keeps the agent's id on the messages it streams", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			messageId: "msg_7",
+			content: { type: "text", text: "hello" },
+		});
+		await flush();
+		expect(
+			itemsOf(events).find((item) => item.id.endsWith(":msg_7")),
+		).toMatchObject({ agentMessageId: "msg_7" });
+		await adapter.dispose();
 	});
 
 	it("surfaces the agent's own slash commands", async () => {
@@ -1452,6 +1862,138 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("v2 insertion response keeps the turn open until idle", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		const lastTurn = () =>
+			events.flatMap((e) => (e.kind === "turn" ? [e.turn] : [])).at(-1);
+
+		expect(lastTurn()?.status).toBe("running");
+		expect(sessionsOf(events).at(-1)?.status).toBe("running");
+
+		agent.notify("sess-1", { sessionUpdate: "state_update", state: "running" });
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "requires_action",
+		});
+		agent.notify("sess-1", { sessionUpdate: "state_update", state: "running" });
+		await flush();
+		expect(lastTurn()?.status).toBe("running");
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		await flush();
+		expect(lastTurn()?.status).toBe("completed");
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+
+		await adapter.dispose();
+	});
+
+	it("v2 idle cancelled interrupts the turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "cancelled",
+		});
+		await flush();
+		const turn = events
+			.flatMap((e) => (e.kind === "turn" ? [e.turn] : []))
+			.at(-1);
+		expect(turn?.status).toBe("interrupted");
+
+		await adapter.dispose();
+	});
+
+	it("v2 idle error fails the turn", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "error",
+			error: { message: "provider overloaded" },
+		});
+		await flush();
+		const turn = events
+			.flatMap((e) => (e.kind === "turn" ? [e.turn] : []))
+			.at(-1);
+		expect(turn?.status).toBe("failed");
+		expect(turn?.error?.message).toBe("provider overloaded");
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+
+		await adapter.dispose();
+	});
+
+	it("a v2 response with stopReason still ends the turn", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+
+		const turn = events
+			.flatMap((e) => (e.kind === "turn" ? [e.turn] : []))
+			.at(-1);
+		expect(turn?.status).toBe("completed");
+
+		await adapter.dispose();
+	});
+
+	it("an idle with no turn of ours only sets the session idle", async () => {
+		const agent = new FakeAcpAgent();
+		agent.insertOnPrompt = true;
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		adapter.prompt([{ type: "text", text: "hi" }]);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		await flush();
+		const turnEvents = () => events.filter((e) => e.kind === "turn").length;
+		const before = turnEvents();
+
+		agent.notify("sess-1", { sessionUpdate: "state_update", state: "running" });
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message",
+			messageId: "a9",
+			content: [{ type: "text", text: "Helper finished." }],
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "end_turn",
+		});
+		await flush();
+
+		expect(turnEvents()).toBe(before);
+		expect(sessionsOf(events).at(-1)?.status).toBe("idle");
+		expect(textOf(itemsOf(events).at(-1))).toBe("Helper finished.");
+
+		await adapter.dispose();
+	});
+
 	it("starts in the harness default mode when the client asks for none", async () => {
 		const agent = new FakeAcpAgent();
 		agent.newSessionConfigOptions = [
@@ -1511,6 +2053,122 @@ describe("AcpAdapter on protocol v2", () => {
 			modeId: "bypassPermissions",
 		});
 		expect(sessionsOf(events).pop()?.modeId).toBe("bypassPermissions");
+
+		await adapter.dispose();
+	});
+
+	const v2Permission = {
+		title: "Allow Bash: sleep 6?",
+		description: "sleep 6",
+		subject: {
+			type: "tool_call",
+			toolCall: { toolCallId: "pi-ui-7", title: "Allow Bash: sleep 6?" },
+		},
+		options: [
+			{ optionId: "choice-0", name: "Allow once", kind: "allow_once" },
+			{ optionId: "choice-1", name: "Deny", kind: "allow_once" },
+		],
+	};
+
+	it("a v2 permission shows its top-level title", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "default", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermissionWith(v2Permission, 9301);
+		await flush();
+
+		const approval = itemsOf(events).find(
+			(item) => item.kind === "approval_request",
+		);
+		expect(approval).toMatchObject({
+			title: "Allow Bash: sleep 6?",
+			detail: [{ type: "text", text: "sleep 6" }],
+			status: "pending",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("a v2 permission with a null title falls back to its tool call title", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "default", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermissionWith({ ...v2Permission, title: null }, 9303);
+		await flush();
+
+		expect(
+			itemsOf(events).find((item) => item.kind === "approval_request"),
+		).toMatchObject({ title: "Allow Bash: sleep 6?", status: "pending" });
+
+		await adapter.dispose();
+	});
+
+	it("a v2 permission with null description and subject still asks", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "default", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermissionWith(
+			{ ...v2Permission, description: null, subject: null },
+			9304,
+		);
+		agent.requestPermissionWith(
+			{ ...v2Permission, subject: { toolCall: { title: null } } },
+			9305,
+		);
+		await flush();
+
+		expect(
+			itemsOf(events).filter((item) => item.kind === "approval_request"),
+		).toHaveLength(2);
+
+		await adapter.dispose();
+	});
+
+	it("a v2 permission is auto-approved in an auto-approving mode", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions", clientApprovalModes: true },
+		);
+		await flush();
+		adapter.prompt([{ type: "text", text: "run" }]);
+		await flush();
+
+		agent.requestPermissionWith(v2Permission, 9302);
+		await flush();
+
+		expect(agent.sent.find((f) => f.id === 9302)?.result).toEqual({
+			outcome: { outcome: "selected", optionId: "choice-0" },
+		});
+		expect(
+			itemsOf(events).some((item) => item.kind === "approval_request"),
+		).toBe(false);
 
 		await adapter.dispose();
 	});
@@ -1828,7 +2486,7 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("drops the pdev/ prefix from pdev's own model option labels", async () => {
+	it("drops the pdev/ prefix from pdev's labels and never names a message after the Auto alias", async () => {
 		const agent = new FakeAcpAgent();
 		agent.agentName = "paradev";
 		agent.newSessionConfigOptions = [
@@ -1852,15 +2510,38 @@ describe("AcpAdapter on protocol v2", () => {
 		);
 		expect(model?.options[0]).toMatchObject({ label: "Auto" });
 
-		// A message the agent did not name a model for falls back to that label.
 		adapter.prompt([{ type: "text", text: "hi" }]);
 		await flush();
-		expect(
-			itemsOf(events)
-				.filter((item) => item.kind === "agent_message")
-				.at(-1),
-		).toMatchObject({ model: "Auto" });
+		const message = itemsOf(events)
+			.filter((item) => item.kind === "agent_message")
+			.at(-1);
+		expect(message?.kind === "agent_message" && message.model).toBeFalsy();
 
+		await adapter.dispose();
+	});
+
+	it("keeps pdev notifications out of the transcript, except errors", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message",
+			messageId: "n1",
+			content: [{ type: "text", text: "MCP servers need attention" }],
+			_meta: { piAcp: { notify: { level: "warning" } } },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message",
+			messageId: "n2",
+			content: [{ type: "text", text: "extension crashed" }],
+			_meta: { piAcp: { notify: { level: "error" } } },
+		});
+		await flush();
+		const items = itemsOf(events);
+		expect(items.some((item) => item.kind === "agent_message")).toBe(false);
+		expect(
+			items.filter((item) => item.kind === "notice").map((item) => item.text),
+		).toEqual(["extension crashed"]);
 		await adapter.dispose();
 	});
 
@@ -2131,6 +2812,46 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("holds a prompt for a change made while it waits", async () => {
+		const agent = new FakeAcpAgent();
+		agent.holdSelections = true;
+		agent.newSessionConfigOptions = [
+			{
+				configId: "mode",
+				name: "Mode",
+				type: "select",
+				category: "mode",
+				currentValue: "default",
+				options: [
+					{ value: "default", name: "Ask for approval" },
+					{ value: "acceptEdits", name: "Approve edits" },
+					{ value: "bypassPermissions", name: "Full access" },
+				],
+			},
+		];
+		const { adapter } = startAdapter(
+			agent,
+			undefined,
+			{},
+			{ defaultModeId: "bypassPermissions" },
+		);
+		adapter.prompt([{ type: "text", text: "go" }]);
+		await flush(16);
+		adapter.setConfigOption("mode", "acceptEdits");
+		await flush(16);
+
+		const methods = () => agent.sent.map((f) => f.method);
+		agent.releaseFirstSelection();
+		await flush(16);
+		expect(methods()).not.toContain("session/prompt");
+
+		agent.releaseSelections();
+		await flush(16);
+		expect(methods()).toContain("session/prompt");
+
+		await adapter.dispose();
+	});
+
 	it("keeps an unanswered change selected after it times out, and sends the prompt", async () => {
 		const agent = new FakeAcpAgent();
 		agent.holdSelections = true;
@@ -2334,42 +3055,6 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("keeps the output file a background task reports, at spawn or later", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-
-		agent.notify("sess-1", {
-			sessionUpdate: "async_task_spawned",
-			asyncTaskId: "task-1",
-			name: "bun run dev",
-			canStop: true,
-			outputFilePath: "/tmp/task-1.output",
-		});
-		agent.notify("sess-1", {
-			sessionUpdate: "async_task_spawned",
-			asyncTaskId: "task-2",
-			name: "watch",
-			canStop: true,
-		});
-		await flush();
-		agent.notify("sess-1", {
-			sessionUpdate: "async_task_progress",
-			asyncTaskId: "task-2",
-			outputFilePath: "/tmp/task-2.output",
-		});
-		await flush();
-
-		const lists = events.flatMap((event) =>
-			event.kind === "session" && event.session.backgroundTasks
-				? [event.session.backgroundTasks.map((task) => task.outputPath)]
-				: [],
-		);
-		expect(lists.at(-1)).toEqual(["/tmp/task-1.output", "/tmp/task-2.output"]);
-
-		await adapter.dispose();
-	});
-
 	it("ends a subagent's background task with the subagent", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(agent);
@@ -2468,99 +3153,6 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("reads Grok context on attach and refreshes it after a turn without prompting for metrics", async () => {
-		const agent = new FakeAcpAgent();
-		agent.grokContextUsage = {
-			result: { context: { used: 120, total: 2000 } },
-		};
-		const { adapter, events } = startAdapter(
-			agent,
-			undefined,
-			{},
-			{ forkGrokContextUsage: true },
-		);
-		await flush(30);
-		expect(
-			sessionsOf(events)
-				.flatMap((s) => (s.contextUsage ? [s.contextUsage] : []))
-				.at(-1),
-		).toEqual({ used: 120, size: 2000 });
-		agent.grokContextUsage = {
-			result: { context: { used: 500, total: 2000 } },
-		};
-		adapter.prompt([{ type: "text", text: "hello" }]);
-		await flush(30);
-		expect(
-			sessionsOf(events)
-				.flatMap((s) => (s.contextUsage ? [s.contextUsage] : []))
-				.at(-1),
-		).toEqual({ used: 500, size: 2000 });
-		expect(
-			agent.sent.filter((f) => f.method === "session/prompt"),
-		).toHaveLength(1);
-		await adapter.dispose();
-	});
-
-	it("older Grok agents can work without context reporting and are probed only once", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(
-			agent,
-			undefined,
-			{},
-			{ forkGrokContextUsage: true },
-		);
-		await flush(30);
-		adapter.prompt([{ type: "text", text: "hello" }]);
-		await flush(30);
-		expect(
-			agent.sent.filter((f) => f.method === "_x.ai/session/info"),
-		).toHaveLength(1);
-		expect(sessionsOf(events).some((s) => s.contextUsage)).toBe(false);
-		expect(sessionsOf(events).some((s) => s.status === "dead")).toBe(false);
-		await adapter.dispose();
-	});
-
-	it("reports context usage and asks for the breakdown only between turns", async () => {
-		const agent = new FakeAcpAgent();
-		agent.holdPrompts = true;
-		agent.contextUsage = { totalTokens: 10, maxTokens: 100, categories: [] };
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		agent.notify("sess-1", {
-			sessionUpdate: "usage_update",
-			used: 10,
-			size: 100,
-		});
-		agent.notify("sess-1", {
-			sessionUpdate: "usage_update",
-			used: 10,
-			size: 100,
-		});
-		await flush();
-		expect(
-			sessionsOf(events).flatMap((s) =>
-				s.contextUsage ? [s.contextUsage] : [],
-			),
-		).toEqual([{ used: 10, size: 100 }]);
-
-		expect(await adapter.contextBreakdown()).toEqual(agent.contextUsage);
-		adapter.prompt([{ type: "text", text: "work" }]);
-		await flush();
-		expect(await adapter.contextBreakdown()).toBeNull();
-		expect(agent.contextUsageRequests).toBe(1);
-		await adapter.dispose();
-	});
-
-	it("stops asking for a breakdown an agent does not support", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter } = startAdapter(agent);
-		await flush();
-		expect(await adapter.contextBreakdown()).toBeNull();
-		expect(await adapter.contextBreakdown()).toBeNull();
-		expect(agent.contextUsageRequests).toBe(1);
-		await adapter.dispose();
-	});
-
 	it("records a reply in full when the agent's cycle ends, not when the next item starts", async () => {
 		const agent = new FakeAcpAgent();
 		agent.holdPrompts = true;
@@ -2596,6 +3188,7 @@ describe("AcpAdapter on protocol v2", () => {
 
 	it("treats a steered turn as working until the steered reply streams", async () => {
 		const agent = new FakeAcpAgent();
+		agent.protocolVersion = 1;
 		agent.steeringOutcome = "injected";
 		agent.holdPrompts = true;
 		const { adapter, events } = startAdapter(agent);
@@ -2701,7 +3294,7 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("shows a subagent from its spawn until its state ends, keeping its session out of the transcript", async () => {
+	it("shows a subagent from its spawn until its state ends, nesting its session under its tool call", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(
 			agent,
@@ -2734,7 +3327,12 @@ describe("AcpAdapter on protocol v2", () => {
 		await flush();
 
 		const toolCalls = itemsOf(events).filter((i) => i.kind === "tool_call");
-		expect(toolCalls.map((i) => i.id)).not.toContain("bash-1");
+		const nested = toolCalls.find((i) => i.id === "sub:child-1:bash-1");
+		expect(nested).toMatchObject({
+			parentItemId: "subagent:child-1",
+			title: "find . | wc -l",
+			toolKind: "execute",
+		});
 		expect(toolCalls.at(-1)).toMatchObject({
 			title: "Count files",
 			subagent: true,
@@ -2766,6 +3364,271 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("a subagent starting its own subagent leaves the main message whole", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Outer",
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "Hello " },
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-2",
+			name: "Inner",
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "world" },
+		});
+		await flush();
+		const mainMessageIds = new Set(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message" && !item.parentItemId)
+				.map((item) => item.id),
+		);
+		expect(mainMessageIds.size).toBe(1);
+		await adapter.dispose();
+	});
+
+	it("streams a subagent's messages and reasoning as nested items", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Review",
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "agent_message_chunk",
+			messageId: "m1",
+			content: { type: "text", text: "Looking " },
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "agent_message_chunk",
+			messageId: "m1",
+			content: { type: "text", text: "closer." },
+		});
+		await flush();
+
+		const textDeltas = events.flatMap((event) =>
+			event.kind === "delta" && event.delta.type === "text"
+				? [event.delta]
+				: [],
+		);
+		expect(textDeltas).toEqual([
+			{
+				type: "text",
+				itemId: "sub:child-1:agent_message:m1",
+				append: "Looking ",
+				parentItemId: "subagent:child-1",
+			},
+			{
+				type: "text",
+				itemId: "sub:child-1:agent_message:m1",
+				append: "closer.",
+				parentItemId: "subagent:child-1",
+			},
+		]);
+
+		agent.notify("child-1", {
+			sessionUpdate: "agent_thought_chunk",
+			content: { type: "text", text: "hmm" },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_state_update",
+			subagentSessionId: "child-1",
+			state: "completed",
+		});
+		await flush();
+
+		const messages = itemsOf(events).filter(
+			(i) =>
+				i.kind === "agent_message" && i.parentItemId === "subagent:child-1",
+		);
+		expect(messages.at(-1)).toMatchObject({
+			id: "sub:child-1:agent_message:m1",
+			text: "Looking closer.",
+		});
+
+		const reasoning = itemsOf(events).filter(
+			(i) => i.kind === "reasoning" && i.parentItemId === "subagent:child-1",
+		);
+		expect(reasoning.at(-1)).toMatchObject({ text: "hmm" });
+		// Finishing the subagent settles text that was still streaming.
+		expect(reasoning.at(-1)?.completedAtMs).toBeDefined();
+
+		await adapter.dispose();
+	});
+
+	it("nests a subagent's own subagent a level deeper", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Explore",
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "grand-1",
+			name: "Search",
+			task: "Find the file",
+		});
+		agent.notify("grand-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "grep-1",
+			title: "grep foo",
+			kind: "search",
+			status: "completed",
+		});
+		await flush();
+
+		const toolCalls = itemsOf(events).filter((i) => i.kind === "tool_call");
+		expect(toolCalls.find((i) => i.id === "subagent:grand-1")).toMatchObject({
+			parentItemId: "subagent:child-1",
+			subagent: true,
+		});
+		expect(toolCalls.find((i) => i.id === "sub:grand-1:grep-1")).toMatchObject({
+			parentItemId: "subagent:grand-1",
+			title: "grep foo",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("nests a subagent's permission request under its tool call", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Run tests",
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "bash-1",
+			title: "bun test",
+			kind: "execute",
+			status: "in_progress",
+		});
+		agent.requestSubagentPermission("child-1", "bash-1", 9101);
+		await flush();
+
+		const approvals = itemsOf(events).filter(
+			(i) => i.kind === "approval_request",
+		);
+		expect(approvals).toHaveLength(1);
+		expect(approvals[0]).toMatchObject({
+			parentItemId: "subagent:child-1",
+			targetItemId: "sub:child-1:bash-1",
+		});
+
+		await adapter.dispose();
+	});
+
+	it("a subagent permission without a toolCallId targets nothing", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Run tests",
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "tool_call",
+			toolCallId: "bash-1",
+			title: "bun test",
+			kind: "execute",
+			status: "in_progress",
+		});
+		agent.requestSubagentPermissionWithoutToolCall("child-1");
+		await flush();
+
+		const approvals = itemsOf(events).filter(
+			(i) => i.kind === "approval_request",
+		);
+		expect(approvals).toHaveLength(1);
+		expect(approvals[0]).toMatchObject({
+			parentItemId: "subagent:child-1",
+			targetItemId: null,
+		});
+
+		await adapter.dispose();
+	});
+
+	it("a subagent elicitation without a toolCallId targets nothing", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Run tests",
+		});
+		agent.requestElicitation({
+			sessionId: "child-1",
+			message: "Which database?",
+			requestedSchema: { type: "object", properties: {} },
+		});
+		await flush();
+
+		const approvals = itemsOf(events).filter(
+			(i) => i.kind === "approval_request",
+		);
+		expect(approvals).toHaveLength(1);
+		expect(approvals[0]).toMatchObject({
+			parentItemId: "subagent:child-1",
+			targetItemId: null,
+		});
+
+		await adapter.dispose();
+	});
+
+	it("links a subagent's background task to it as the parent", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_spawned",
+			subagentSessionId: "child-1",
+			name: "Wait",
+		});
+		agent.notify("child-1", {
+			sessionUpdate: "async_task_spawned",
+			asyncTaskId: "task-1",
+			name: "sleep 120",
+			canStop: true,
+		});
+		await flush();
+
+		const tasks = events.flatMap((event) =>
+			event.kind === "session" && event.session.backgroundTasks
+				? event.session.backgroundTasks
+				: [],
+		);
+		expect(tasks.find((task) => task.id === "task-1")).toMatchObject({
+			parentId: "subagent:child-1",
+		});
+
+		await adapter.dispose();
+	});
+
 	it("drops a parent update for a subagent call it never opened, but keeps an untitled new call", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(agent);
@@ -2790,6 +3653,37 @@ describe("AcpAdapter on protocol v2", () => {
 			.map((i) => i.id);
 		expect(ids).not.toContain("agent-1");
 		expect(ids).toContain("read-1");
+
+		await adapter.dispose();
+	});
+
+	it("a hidden subagent control call still ends the open message", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startAdapter(agent);
+		await flush();
+
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "Starting an agent." },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "tool_call_update",
+			toolCallId: "agent-1",
+			status: "in_progress",
+			_meta: { claudeCode: { toolName: "Agent" } },
+		});
+		agent.notify("sess-1", {
+			sessionUpdate: "agent_message_chunk",
+			content: { type: "text", text: "It is done." },
+		});
+		await flush();
+
+		const messages = new Set(
+			itemsOf(events)
+				.filter((item) => item.kind === "agent_message")
+				.map((item) => item.id),
+		);
+		expect(messages.size).toBe(2);
 
 		await adapter.dispose();
 	});
@@ -2934,37 +3828,6 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
-	it("removes a confirmed stopped task without requiring a second event, but retains refused stops", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		agent.notify("foreign", {
-			sessionUpdate: "async_task_spawned",
-			asyncTaskId: "stray",
-			name: "Unrelated",
-			canStop: true,
-		});
-		agent.notify("sess-1", {
-			sessionUpdate: "async_task_spawned",
-			asyncTaskId: "task",
-			name: "dev server",
-			canStop: true,
-		});
-		await flush();
-		const tasks = () =>
-			sessionsOf(events)
-				.filter((session) => session.backgroundTasks)
-				.at(-1)?.backgroundTasks;
-		expect(tasks()?.map((task) => task.id)).toEqual(["task"]);
-		agent.stopTaskResult = false;
-		expect(await adapter.stopBackgroundTask("task")).toBe(false);
-		expect(tasks()?.map((task) => task.id)).toEqual(["task"]);
-		agent.stopTaskResult = true;
-		expect(await adapter.stopBackgroundTask("task")).toBe(true);
-		expect(tasks()).toEqual([]);
-		await adapter.dispose();
-	});
-
 	it("refuses to stop a task it does not know", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter } = startAdapter(agent);
@@ -3000,6 +3863,1019 @@ describe("AcpAdapter on protocol v2", () => {
 		expect(statuses).toEqual(["running", "completed"]);
 
 		await adapter.dispose();
+	});
+
+	describe("Subagent Sessions RFD", () => {
+		const announce = (
+			sessionId: string,
+			extra: Record<string, unknown> = {},
+		) => ({
+			sessionUpdate: "subagent_update",
+			sessionId,
+			title: "explore: look around",
+			description: "Look around",
+			state: { state: "running" },
+			capabilities: { cancel: {}, _meta: { "sh.superset": { prompt: {} } } },
+			...extra,
+		});
+		const subagentTask = (events: AdapterEvent[], id: string) =>
+			sessionsOf(events)
+				.filter((session) => session.backgroundTasks)
+				.at(-1)
+				?.backgroundTasks?.find((task) => task.id === id);
+		const subagentItem = (events: AdapterEvent[], id: string) =>
+			itemsOf(events)
+				.filter((item) => item.id === id)
+				.at(-1);
+
+		it("subagent_update nests under the named tool call", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", {
+				sessionUpdate: "tool_call_update",
+				toolCallId: "task-1",
+				title: "task",
+				status: "in_progress",
+			});
+			agent.notify(
+				"sess-1",
+				announce("child-1", {
+					_meta: { "sh.superset": { toolCallId: "task-1" } },
+				}),
+			);
+			agent.notify("child-1", {
+				sessionUpdate: "tool_call_update",
+				toolCallId: "task-2",
+				title: "task",
+				status: "in_progress",
+			});
+			agent.notify(
+				"child-1",
+				announce("child-2", {
+					_meta: { "sh.superset": { toolCallId: "task-2" } },
+				}),
+			);
+			agent.notify("child-1", announce("child-3"));
+			agent.notify("sess-1", announce("child-4"));
+			await flush();
+
+			expect(subagentItem(events, "subagent:child-1")?.parentItemId).toBe(
+				"task-1",
+			);
+			expect(subagentItem(events, "subagent:child-2")?.parentItemId).toBe(
+				"sub:child-1:task-2",
+			);
+			expect(subagentItem(events, "subagent:child-3")?.parentItemId).toBe(
+				"subagent:child-1",
+			);
+			expect(
+				subagentItem(events, "subagent:child-4")?.parentItemId,
+			).toBeUndefined();
+			expect(subagentTask(events, "subagent:child-2")?.parentId).toBe(
+				"subagent:child-1",
+			);
+
+			await adapter.dispose();
+		});
+
+		it("capabilities set canStop and canSteer", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-2",
+				title: "plain",
+				state: { state: "running" },
+			});
+			await flush();
+
+			expect(subagentTask(events, "subagent:child-1")).toMatchObject({
+				kind: "subagent",
+				canStop: true,
+				canSteer: true,
+			});
+			expect(subagentTask(events, "subagent:child-2")).toMatchObject({
+				canStop: false,
+				canSteer: false,
+			});
+
+			expect(await adapter.stopBackgroundTask("subagent:child-1")).toBe(true);
+			expect(
+				agent.sent.find((frame) => frame.method === "session/cancel")?.params,
+			).toEqual({ sessionId: "child-1" });
+			expect(await adapter.stopBackgroundTask("subagent:child-2")).toBe(false);
+
+			await adapter.dispose();
+		});
+
+		it("steerSubagent prompts the child session", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			await flush();
+
+			expect(
+				await adapter.steerSubagent("subagent:child-1", [
+					{ type: "text", text: "check the tests too" },
+				]),
+			).toBe(true);
+			const sent = agent.sent.find((frame) => frame.method === "session/prompt")
+				?.params as { sessionId: string; prompt: unknown } | undefined;
+			expect(sent).toEqual({
+				sessionId: "child-1",
+				prompt: [{ type: "text", text: "check the tests too" }],
+			});
+			await flush();
+			expect(
+				itemsOf(events).some(
+					(item) => item.kind === "user_message" && !item.parentItemId,
+				),
+			).toBe(false);
+
+			await adapter.dispose();
+		});
+
+		it("renders a steer echo in the child", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("child-1", {
+				sessionUpdate: "user_message",
+				messageId: "steer-1",
+				content: [{ type: "text", text: "check the tests too" }],
+			});
+			await flush();
+
+			expect(
+				subagentItem(events, "sub:child-1:user_message:steer-1"),
+			).toMatchObject({
+				kind: "user_message",
+				parentItemId: "subagent:child-1",
+				content: [{ type: "text", text: "check the tests too" }],
+			});
+			expect(
+				itemsOf(events).some(
+					(item) => item.kind === "user_message" && !item.parentItemId,
+				),
+			).toBe(false);
+
+			await adapter.dispose();
+		});
+
+		it("steer on a finished subagent", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("sess-1", announce("child-2"));
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				state: { state: "idle", stopReason: "end_turn" },
+			});
+			await flush();
+
+			const content = [{ type: "text" as const, text: "more" }];
+			expect(await adapter.steerSubagent("subagent:child-1", content)).toBe(
+				false,
+			);
+			expect(await adapter.steerSubagent("unknown", content)).toBe(false);
+			expect(agent.sent.map((frame) => frame.method)).not.toContain(
+				"session/prompt",
+			);
+
+			agent.finishedSubagents.add("child-2");
+			expect(await adapter.steerSubagent("subagent:child-2", content)).toBe(
+				false,
+			);
+
+			await adapter.dispose();
+		});
+
+		it("does not steer a subagent without the prompt capability", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				title: "plain",
+				state: { state: "running" },
+				capabilities: { cancel: {} },
+			});
+			await flush();
+
+			expect(
+				await adapter.steerSubagent("subagent:child-1", [
+					{ type: "text", text: "more" },
+				]),
+			).toBe(false);
+			expect(agent.sent.map((frame) => frame.method)).not.toContain(
+				"session/prompt",
+			);
+
+			await adapter.dispose();
+		});
+
+		it("stopping a subagent cancels its session", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			await flush();
+
+			expect(await adapter.stopBackgroundTask("subagent:child-1")).toBe(true);
+			expect(
+				agent.sent
+					.filter((frame) => frame.method === "session/cancel")
+					.map((frame) => frame.params),
+			).toEqual([{ sessionId: "child-1" }]);
+
+			await adapter.dispose();
+		});
+
+		const approvalOf = (events: AdapterEvent[], id: string) =>
+			itemsOf(events)
+				.filter((item) => item.id === id)
+				.at(-1);
+		const statusOf = (events: AdapterEvent[]) =>
+			sessionsOf(events)
+				.filter((session) => session.status)
+				.at(-1)?.status;
+
+		it("answering a subagent's approval while the main session is idle leaves it idle", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.requestSubagentPermission("child-1", "bash-1", 9101);
+			await flush();
+			expect(statusOf(events)).toBe("awaiting_input");
+
+			adapter.respondToApproval("approval:sub:child-1:bash-1", {
+				type: "accept",
+			});
+			await flush();
+
+			expect(statusOf(events)).toBe("idle");
+			await adapter.dispose();
+		});
+
+		it("answering a subagent's approval during a main turn sets it running", async () => {
+			const agent = new FakeAcpAgent();
+			agent.holdPrompts = true;
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+			adapter.prompt([{ type: "text", text: "go" }]);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.requestSubagentPermission("child-1", "bash-1", 9101);
+			await flush();
+			adapter.respondToApproval("approval:sub:child-1:bash-1", {
+				type: "accept",
+			});
+			await flush();
+
+			expect(statusOf(events)).toBe("running");
+			await adapter.dispose();
+		});
+
+		it("keeps a running subagent's approval open when the parent turn ends", async () => {
+			const agent = new FakeAcpAgent();
+			agent.holdPrompts = true;
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+			adapter.prompt([{ type: "text", text: "go" }]);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.requestSubagentPermission("child-1", "bash-1", 9101);
+			await flush();
+			agent.releasePrompts("end_turn");
+			await flush();
+
+			expect(agent.responseTo(9101)).toBeUndefined();
+			expect(approvalOf(events, "approval:sub:child-1:bash-1")).toMatchObject({
+				status: "pending",
+			});
+			expect(statusOf(events)).toBe("awaiting_input");
+			await adapter.dispose();
+		});
+
+		it("stopping a subagent cancels its own and its subagents' approvals", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("child-1", announce("child-2"));
+			agent.notify("sess-1", announce("other"));
+			agent.requestSubagentPermission("child-1", "bash-1", 9101);
+			agent.requestSubagentPermission("child-2", "bash-2", 9102);
+			agent.requestSubagentPermission("other", "bash-3", 9103);
+			await flush();
+
+			expect(await adapter.stopBackgroundTask("subagent:child-1")).toBe(true);
+			await flush();
+
+			for (const id of [9101, 9102]) {
+				expect(agent.responseTo(id)?.result).toEqual({
+					outcome: { outcome: "cancelled" },
+				});
+			}
+			expect(agent.responseTo(9103)).toBeUndefined();
+			expect(approvalOf(events, "approval:sub:child-2:bash-2")).toMatchObject({
+				status: "stale",
+			});
+			expect(statusOf(events)).toBe("awaiting_input");
+			await adapter.dispose();
+		});
+
+		it("a subagent that ends answers its open approval as cancelled", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_spawned",
+				subagentSessionId: "child-1",
+				name: "Run tests",
+			});
+			agent.requestSubagentPermission("child-1", "bash-1", 9101);
+			await flush();
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_state_update",
+				subagentSessionId: "child-1",
+				state: "completed",
+			});
+			await flush();
+
+			expect(agent.responseTo(9101)?.result).toEqual({
+				outcome: { outcome: "cancelled" },
+			});
+			expect(approvalOf(events, "approval:sub:child-1:bash-1")).toMatchObject({
+				status: "stale",
+			});
+			expect(statusOf(events)).toBe("idle");
+			await adapter.dispose();
+		});
+
+		it("clearing sh.superset turns steering off", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				state: { state: "requires_action" },
+				capabilities: { cancel: {}, _meta: { "sh.superset": null } },
+			});
+			await flush();
+
+			expect(subagentTask(events, "subagent:child-1")).toMatchObject({
+				canStop: true,
+				canSteer: false,
+			});
+			expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+				status: "running",
+			});
+
+			await adapter.dispose();
+		});
+
+		it("idle error", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			for (const id of ["child-1", "child-2", "child-3"])
+				agent.notify("sess-1", announce(id));
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				state: { state: "idle", stopReason: "error" },
+				capabilities: { cancel: {}, _meta: { "sh.superset": null } },
+			});
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-2",
+				state: { state: "idle", stopReason: "cancelled" },
+			});
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-3",
+				state: { state: "idle", stopReason: "end_turn" },
+			});
+			await flush(40);
+
+			expect(subagentItem(events, "subagent:child-1")?.status).toBe("failed");
+			expect(subagentItem(events, "subagent:child-2")?.status).toBe("canceled");
+			expect(subagentItem(events, "subagent:child-3")?.status).toBe(
+				"completed",
+			);
+			expect(subagentTask(events, "subagent:child-1")).toBeUndefined();
+
+			await adapter.dispose();
+		});
+
+		it("session_message lands in the child", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("child-1", {
+				sessionUpdate: "session_message",
+				messageId: "subagent-task",
+				senderSessionId: "sess-1",
+				recipientSessionId: "child-1",
+				content: [{ type: "text", text: "Look around" }],
+			});
+			agent.notify("child-1", {
+				sessionUpdate: "session_message_chunk",
+				messageId: "subagent-task",
+				senderSessionId: "sess-1",
+				recipientSessionId: "child-1",
+				content: { type: "text", text: " carefully" },
+			});
+			await flush();
+
+			const task = subagentItem(
+				events,
+				"sub:child-1:user_message:subagent-task",
+			);
+			expect(task).toMatchObject({
+				kind: "user_message",
+				parentItemId: "subagent:child-1",
+				content: [{ type: "text", text: "Look around carefully" }],
+			});
+
+			await adapter.dispose();
+		});
+
+		it("does not render a subagent's report to its parent", async () => {
+			const agent = new FakeAcpAgent();
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("child-1", {
+				sessionUpdate: "agent_message",
+				messageId: "a1",
+				content: [{ type: "text", text: "Found it." }],
+			});
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				state: { state: "idle", stopReason: "end_turn" },
+			});
+			agent.notify("child-1", {
+				sessionUpdate: "session_message",
+				messageId: "subagent-report",
+				senderSessionId: "child-1",
+				recipientSessionId: "sess-1",
+				content: [{ type: "text", text: "Found it." }],
+			});
+			await flush();
+
+			const childTexts = itemsOf(events).filter(
+				(item) =>
+					item.parentItemId === "subagent:child-1" && item.kind !== "tool_call",
+			);
+			expect(new Set(childTexts.map((item) => item.id))).toEqual(
+				new Set(["sub:child-1:agent_message:a1"]),
+			);
+
+			await adapter.dispose();
+		});
+
+		it("keeps a child's state_update off the main session", async () => {
+			const agent = new FakeAcpAgent();
+			agent.holdPrompts = true;
+			const { adapter, events } = startAdapter(agent);
+			await flush();
+			adapter.prompt([{ type: "text", text: "go" }]);
+			await flush();
+
+			agent.notify("sess-1", announce("child-1"));
+			agent.notify("child-1", {
+				sessionUpdate: "state_update",
+				state: "idle",
+				stopReason: "end_turn",
+			});
+			await flush();
+
+			expect(
+				sessionsOf(events)
+					.filter((session) => session.status)
+					.at(-1)?.status,
+			).toBe("running");
+			expect(
+				events.some(
+					(event) => event.kind === "turn" && event.turn.status !== "running",
+				),
+			).toBe(false);
+			expect(subagentItem(events, "subagent:child-1")?.status).toBe("running");
+
+			await adapter.dispose();
+		});
+
+		it("resume clears capabilities", async () => {
+			const agent = new FakeAcpAgent();
+			agent.replayUpdates = [announce("child-1")];
+			const { adapter, events } = startAdapter(agent, "sess-1");
+			await flush(40);
+
+			expect(subagentTask(events, "subagent:child-1")).toMatchObject({
+				canStop: true,
+				canSteer: false,
+			});
+
+			agent.notify("sess-1", {
+				sessionUpdate: "subagent_update",
+				sessionId: "child-1",
+				capabilities: { cancel: {}, _meta: { "sh.superset": { prompt: {} } } },
+			});
+			await flush();
+			expect(subagentTask(events, "subagent:child-1")?.canSteer).toBe(true);
+
+			await adapter.dispose();
+		});
+		describe("resumable named subagents", () => {
+			type Status = "running" | "idle" | "stopped" | "failed";
+			const update = (
+				sessionId: string,
+				status: Status,
+				options: { closed?: boolean; background?: boolean } = {},
+			) => ({
+				sessionUpdate: "subagent_update",
+				sessionId,
+				state:
+					status === "running"
+						? { state: "running" }
+						: {
+								state: "idle",
+								stopReason:
+									status === "stopped"
+										? "cancelled"
+										: status === "failed"
+											? "error"
+											: "end_turn",
+							},
+				capabilities: {
+					cancel: status === "running" ? {} : null,
+					_meta: {
+						"sh.superset":
+							status === "stopped" || options.closed
+								? null
+								: {
+										prompt: {},
+										...(options.background ? { background: {} } : {}),
+									},
+					},
+				},
+				_meta: {
+					"sh.superset": {
+						toolCallId: "task-1",
+						name: `${sessionId}-name`,
+						status,
+					},
+				},
+			});
+			const start = (sessionId: string, background = false) => ({
+				...update(sessionId, "running", { background }),
+				title: "explore: look around",
+				description: "Look around",
+			});
+
+			it("the name titles the subagent", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				await flush();
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					title: "child-1-name",
+					status: "running",
+					subagentStatus: "running",
+				});
+				expect(subagentTask(events, "subagent:child-1")).toMatchObject({
+					name: "child-1-name",
+					subagentStatus: "running",
+				});
+
+				await adapter.dispose();
+			});
+
+			it("a running subagent's step is its latest child tool call", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(
+					agent,
+					undefined,
+					{},
+					{ backgroundDetailIntervalMs: 0 },
+				);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				agent.notify("child-1", {
+					sessionUpdate: "tool_call_update",
+					toolCallId: "bash-1",
+					name: "Bash",
+					title: "sleep 10",
+					kind: "execute",
+					status: "in_progress",
+					content: null,
+					locations: null,
+				});
+				agent.notify("child-1", {
+					sessionUpdate: "tool_call_update",
+					toolCallId: "bash-1",
+					status: "completed",
+				});
+				await flush();
+
+				const steps = events.flatMap((event) =>
+					event.kind === "delta" && event.delta.type === "background"
+						? [event.delta.append]
+						: [],
+				);
+				expect(steps).toEqual(["sleep 10"]);
+
+				await adapter.dispose();
+			});
+
+			it("an idle subagent can be steered", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				agent.notify("sess-1", update("child-1", "idle"));
+				await flush();
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					status: "completed",
+					subagentStatus: "idle",
+					canSteer: true,
+					canStop: false,
+					canBackground: false,
+				});
+				expect(subagentTask(events, "subagent:child-1")).toBeUndefined();
+
+				expect(
+					await adapter.steerSubagent("subagent:child-1", [
+						{ type: "text", text: "look at b too" },
+					]),
+				).toBe(true);
+				expect(
+					agent.sent.find((frame) => frame.method === "session/prompt")?.params,
+				).toMatchObject({ sessionId: "child-1" });
+
+				agent.notify("sess-1", update("child-1", "running"));
+				agent.notify("child-1", {
+					sessionUpdate: "agent_message",
+					messageId: "a2",
+					content: [{ type: "text", text: "Looked at b." }],
+				});
+				await flush();
+
+				const item = subagentItem(events, "subagent:child-1");
+				expect(item).toMatchObject({
+					status: "running",
+					subagentStatus: "running",
+				});
+				expect(item?.completedAtMs).toBeUndefined();
+				expect(
+					itemsOf(events).filter(
+						(each) => each.kind === "tool_call" && each.subagent,
+					).length,
+				).toBeGreaterThan(0);
+				expect(
+					new Set(
+						itemsOf(events)
+							.filter((each) => each.kind === "tool_call" && each.subagent)
+							.map((each) => each.id),
+					),
+				).toEqual(new Set(["subagent:child-1"]));
+				expect(
+					subagentItem(events, "sub:child-1:agent_message:a2"),
+				).toMatchObject({
+					parentItemId: "subagent:child-1",
+				});
+				expect(item).toMatchObject({ canStop: true, canSteer: true });
+				expect(subagentTask(events, "subagent:child-1")).toMatchObject({
+					canStop: true,
+					canSteer: true,
+					subagentStatus: "running",
+				});
+
+				await adapter.dispose();
+			});
+
+			it("an idle update without capabilities drops stop and background", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1", true));
+				const { capabilities: _capabilities, ...idle } = update(
+					"child-1",
+					"idle",
+				);
+				agent.notify("sess-1", idle);
+				await flush();
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					subagentStatus: "idle",
+					canSteer: true,
+					canStop: false,
+					canBackground: false,
+				});
+
+				await adapter.dispose();
+			});
+
+			it("a replayed idle subagent is closed", async () => {
+				const agent = new FakeAcpAgent();
+				agent.replayUpdates = [start("child-1"), update("child-1", "idle")];
+				const { adapter, events } = startAdapter(agent, "sess-1");
+				await flush(40);
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					status: "completed",
+					subagentStatus: "idle",
+					canSteer: false,
+					canStop: false,
+				});
+				expect(subagentTask(events, "subagent:child-1")).toBeUndefined();
+				expect(
+					await adapter.steerSubagent("subagent:child-1", [
+						{ type: "text", text: "more" },
+					]),
+				).toBe(false);
+
+				await adapter.dispose();
+			});
+
+			it("an open idle subagent stays finished when the agent exits", async () => {
+				const agent = new FakeAcpAgent();
+				const { events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				agent.notify("sess-1", update("child-1", "idle"));
+				await flush();
+				agent.exit(1);
+				await flush();
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					status: "completed",
+					subagentStatus: "idle",
+					canSteer: false,
+				});
+			});
+
+			it("a subagent steer waits past the request timeout", async () => {
+				jest.useFakeTimers();
+				try {
+					const agent = new FakeAcpAgent();
+					agent.holdChildPrompts = true;
+					const { adapter } = startAdapter(
+						agent,
+						undefined,
+						{},
+						{ requestTimeoutMs: 5 },
+					);
+					await flush();
+
+					agent.notify("sess-1", start("child-1"));
+					await flush();
+
+					const steered = adapter.steerSubagent("subagent:child-1", [
+						{ type: "text", text: "one" },
+					]);
+					await flush();
+					jest.advanceTimersByTime(20);
+					await flush();
+					agent.answerChildPrompt(
+						agent.heldChildPrompts[0] as number,
+						"inserted",
+					);
+
+					expect(await steered).toBe(true);
+
+					await adapter.dispose();
+				} finally {
+					jest.useRealTimers();
+				}
+			});
+
+			it("a steer that overlaps another is credited only by its own answer", async () => {
+				const agent = new FakeAcpAgent();
+				agent.holdChildPrompts = true;
+				const { adapter } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				await flush();
+
+				const first = adapter.steerSubagent("subagent:child-1", [
+					{ type: "text", text: "one" },
+				]);
+				const second = adapter.steerSubagent("subagent:child-1", [
+					{ type: "text", text: "two" },
+				]);
+				await flush();
+				const [firstId, secondId] = agent.heldChildPrompts;
+				agent.notify("child-1", {
+					sessionUpdate: "user_message",
+					messageId: `steer-${firstId}`,
+					content: [{ type: "text", text: "one" }],
+				});
+				agent.answerChildPrompt(firstId as number, "inserted");
+				agent.answerChildPrompt(secondId as number, "rejected");
+
+				expect(await first).toBe(true);
+				expect(await second).toBe(false);
+
+				await adapter.dispose();
+			});
+
+			it("a stopped or closed subagent cannot be steered, a failed one can", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				for (const id of ["child-1", "child-2", "child-3"])
+					agent.notify("sess-1", start(id));
+				agent.notify("sess-1", update("child-1", "stopped"));
+				agent.notify("sess-1", update("child-2", "failed"));
+				agent.notify("sess-1", update("child-3", "idle", { closed: true }));
+				await flush(40);
+
+				expect(subagentItem(events, "subagent:child-1")).toMatchObject({
+					status: "canceled",
+					subagentStatus: "stopped",
+				});
+				expect(subagentItem(events, "subagent:child-2")).toMatchObject({
+					status: "failed",
+					subagentStatus: "failed",
+				});
+				expect(subagentItem(events, "subagent:child-3")).toMatchObject({
+					status: "completed",
+					subagentStatus: "idle",
+				});
+				expect(subagentItem(events, "subagent:child-2")).toMatchObject({
+					canSteer: true,
+					canStop: false,
+				});
+				for (const id of ["child-1", "child-3"])
+					expect(subagentItem(events, `subagent:${id}`)).toMatchObject({
+						canSteer: false,
+						canStop: false,
+						canBackground: false,
+					});
+				for (const id of ["child-1", "child-3"]) {
+					expect(subagentTask(events, `subagent:${id}`)).toBeUndefined();
+					expect(
+						await adapter.steerSubagent(`subagent:${id}`, [
+							{ type: "text", text: "more" },
+						]),
+					).toBe(false);
+				}
+
+				await adapter.dispose();
+			});
+
+			it("a parent message is labelled", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				agent.notify("child-1", {
+					sessionUpdate: "session_message",
+					messageId: "subagent-message-1",
+					senderSessionId: "sess-1",
+					recipientSessionId: "child-1",
+					content: [{ type: "text", text: "look at b too" }],
+				});
+				agent.notify("child-1", {
+					sessionUpdate: "user_message",
+					messageId: "user-1",
+					content: [{ type: "text", text: "from the user" }],
+				});
+				agent.notify("child-1", {
+					sessionUpdate: "session_message",
+					messageId: "subagent-report-1",
+					senderSessionId: "child-1",
+					recipientSessionId: "sess-1",
+					content: [{ type: "text", text: "the report" }],
+				});
+				await flush();
+
+				expect(
+					subagentItem(events, "sub:child-1:user_message:subagent-message-1"),
+				).toMatchObject({
+					kind: "user_message",
+					from: "parent",
+					parentItemId: "subagent:child-1",
+					content: [{ type: "text", text: "look at b too" }],
+				});
+				const own = subagentItem(events, "sub:child-1:user_message:user-1");
+				expect(own).toMatchObject({ kind: "user_message" });
+				expect(own && "from" in own).toBe(false);
+				expect(
+					itemsOf(events).some(
+						(item) => item.id === "sub:child-1:user_message:subagent-report-1",
+					),
+				).toBe(false);
+
+				await adapter.dispose();
+			});
+
+			it("backgroundSubagent sends the extension request", async () => {
+				const agent = new FakeAcpAgent();
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1", true));
+				agent.notify("sess-1", start("child-2"));
+				await flush();
+
+				expect(subagentTask(events, "subagent:child-1")?.canBackground).toBe(
+					true,
+				);
+				expect(subagentTask(events, "subagent:child-2")?.canBackground).toBe(
+					false,
+				);
+				expect(await adapter.backgroundSubagent("subagent:child-2")).toBe(
+					false,
+				);
+				expect(await adapter.backgroundSubagent("subagent:child-1")).toBe(true);
+				expect(
+					agent.sent
+						.filter(
+							(frame) => frame.method === "_sh.superset/subagent/background",
+						)
+						.map((frame) => frame.params),
+				).toEqual([{ sessionId: "child-1" }]);
+
+				agent.refuseBackground = true;
+				expect(await adapter.backgroundSubagent("subagent:child-1")).toBe(
+					false,
+				);
+
+				agent.notify("sess-1", update("child-1", "running"));
+				await flush();
+				expect(subagentTask(events, "subagent:child-1")?.canBackground).toBe(
+					false,
+				);
+
+				await adapter.dispose();
+			});
+
+			it("a steer that landed is not reported as finished", async () => {
+				const agent = new FakeAcpAgent();
+				agent.updatesBeforeSteerError = [update("child-1", "stopped")];
+				const { adapter, events } = startAdapter(agent);
+				await flush();
+
+				agent.notify("sess-1", start("child-1"));
+				await flush();
+
+				expect(
+					await adapter.steerSubagent("subagent:child-1", [
+						{ type: "text", text: "wrap up" },
+					]),
+				).toBe(true);
+				await flush();
+				expect(subagentItem(events, "subagent:child-1")?.subagentStatus).toBe(
+					"stopped",
+				);
+
+				await adapter.dispose();
+			});
+		});
 	});
 
 	it("patches the streamed message a whole agent_message names", async () => {
@@ -3079,6 +4955,32 @@ describe("AcpAdapter on protocol v2", () => {
 		await adapter.dispose();
 	});
 
+	it("starts a prompt sent right after a replay after the replayed turns", async () => {
+		const agent = new FakeAcpAgent();
+		agent.wholeMessageReplay = true;
+		const { adapter, events } = startAdapter(agent, "sess-1");
+		await flush(40);
+		const replayed = new Set(
+			events.flatMap((e) => (e.kind === "turn" ? [e.turn.id] : [])),
+		);
+
+		adapter.prompt([{ type: "text", text: "continue" }]);
+		await flush(40);
+
+		const starts = (live: boolean) =>
+			events.flatMap((e) =>
+				e.kind === "turn" && replayed.has(e.turn.id) !== live
+					? [e.turn.startedAtMs]
+					: [],
+			);
+		expect(starts(true).length).toBeGreaterThan(0);
+		expect(Math.min(...starts(true))).toBeGreaterThan(
+			Math.max(...starts(false)),
+		);
+
+		await adapter.dispose();
+	});
+
 	it("maps a plan_update's entries", async () => {
 		const agent = new FakeAcpAgent();
 		const { adapter, events } = startAdapter(agent);
@@ -3103,125 +5005,6 @@ describe("AcpAdapter on protocol v2", () => {
 			{ text: "Fix it", status: "in_progress" },
 		]);
 
-		await adapter.dispose();
-	});
-
-	it("preserves Markdown plans across full replacement updates", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		for (const content of [
-			"# First draft",
-			"# Final draft\n\n- Verify the result",
-		]) {
-			agent.notify("sess-1", {
-				sessionUpdate: "plan_update",
-				plan: { type: "markdown", planId: "document", content },
-			});
-			await flush();
-		}
-		const plans = itemsOf(events).filter((item) => item.kind === "plan");
-		expect(plans.length).toBe(2);
-		expect(plans[1]).toMatchObject({
-			id: plans[0]?.id,
-			startedAtMs: plans[0]?.startedAtMs,
-			markdown: "# Final draft\n\n- Verify the result",
-			entries: [],
-		});
-		await adapter.dispose();
-	});
-
-	it("routes Grok plan approval and rejects plans belonging to another session", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		agent.requestServer(
-			"x.ai/exit_plan_mode",
-			{
-				sessionId: "sess-1",
-				toolCallId: "grok-plan",
-				planContent: "# Implementation plan",
-			},
-			9400,
-		);
-		await flush();
-		const approval = itemsOf(events).find(
-			(item) => item.kind === "approval_request",
-		);
-		expect(approval).toMatchObject({
-			presentation: "plan",
-			detail: [{ type: "text", text: "# Implementation plan" }],
-		});
-		adapter.respondToApproval(approval?.id ?? "", { type: "accept" });
-		await flush();
-		expect(agent.responseTo(9400)?.result).toEqual({ outcome: "approved" });
-		agent.requestServer(
-			"_x.ai/exit_plan_mode",
-			{
-				sessionId: "foreign",
-				toolCallId: "foreign-plan",
-				planContent: "Unrelated",
-			},
-			9401,
-		);
-		await flush();
-		expect(agent.responseTo(9401)?.error).toMatchObject({ code: -32602 });
-		expect(
-			itemsOf(events).some(
-				(item) =>
-					item.kind === "approval_request" &&
-					item.targetItemId === "foreign-plan",
-			),
-		).toBe(false);
-		await adapter.dispose();
-	});
-
-	it("negotiates full plan documents and archives removed plans without losing their text", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		const initialize = agent.sent.find(
-			(frame) => frame.method === "initialize",
-		);
-		expect(initialize?.params).toMatchObject({
-			clientCapabilities: { plan: {} },
-			capabilities: { plan: {} },
-		});
-		agent.notify("sess-1", {
-			sessionUpdate: "plan_update",
-			plan: { type: "markdown", planId: "p1", content: "# Complete plan" },
-		});
-		agent.notify("sess-1", { sessionUpdate: "plan_removed", planId: "p1" });
-		await flush();
-		const plans = itemsOf(events).filter((item) => item.kind === "plan");
-		expect(plans.at(-1)).toMatchObject({
-			id: plans[0]?.id,
-			markdown: "# Complete plan",
-			removed: true,
-		});
-		await adapter.dispose();
-	});
-
-	it("keeps file plans as references and ignores unknown plan content", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent);
-		await flush();
-		agent.notify("sess-1", {
-			sessionUpdate: "plan_update",
-			plan: {
-				type: "file",
-				planId: "file-plan",
-				uri: "file:///tmp/My%20plan.md",
-			},
-		});
-		agent.notify("sess-1", {
-			sessionUpdate: "plan_update",
-			plan: { type: "_future", planId: "future", content: "Not Markdown" },
-		});
-		await flush();
-		expect(
-			itemsOf(events).filter((item) => item.kind === "plan"),
-		).toMatchObject([{ path: "file:///tmp/My%20plan.md", entries: [] }]);
 		await adapter.dispose();
 	});
 
@@ -3532,6 +5315,36 @@ describe("AcpAdapter images", () => {
 			| Extract<Item, { kind: "agent_message" }>
 			| undefined;
 	};
+
+	it("keeps an image a subagent sends in its own message", async () => {
+		const agent = new FakeAcpAgent();
+		const { adapter, events } = startWithStore(agent, () => ({
+			path: ".superset/attachments/child-shot.png",
+		}));
+		await flush();
+		agent.notify("sess-1", {
+			sessionUpdate: "subagent_update",
+			sessionId: "child-1",
+			title: "explore",
+			state: { state: "running" },
+		});
+		await flush();
+		agent.notify("child-1", {
+			sessionUpdate: "agent_message_chunk",
+			messageId: "m1",
+			content: { type: "image", mimeType: "image/png", data: PNG_BASE64 },
+		});
+		await flush();
+		const message = itemsOf(events)
+			.filter(
+				(item) =>
+					item.kind === "agent_message" &&
+					item.parentItemId === "subagent:child-1",
+			)
+			.at(-1) as Extract<Item, { kind: "agent_message" }> | undefined;
+		expect(message?.attachments).toHaveLength(1);
+		await adapter.dispose();
+	});
 
 	it("keeps an image block from a tool result as a stored attachment, never its bytes", async () => {
 		const agent = new FakeAcpAgent();
@@ -3847,21 +5660,24 @@ describe("AcpAdapter when the agent fails", () => {
 	});
 
 	it("keeps a resume dead when the load fails for a reason other than a missing session", async () => {
-		const agent = new FakeAcpAgent();
-		agent.loadError = {
-			code: -32603,
-			message: "Internal error: model not found",
-		};
-		const { adapter, events } = startAdapter(agent, "sess-1");
-		await flush(40);
+		for (const [version, method] of [
+			[1, "session/load"],
+			[2, "session/resume"],
+		] as const) {
+			const agent = new FakeAcpAgent();
+			agent.protocolVersion = version;
+			agent.loadError = {
+				code: -32603,
+				message: "Internal error: model not found",
+			};
+			const { adapter, events } = startAdapter(agent, "sess-1");
+			await flush(40);
 
-		expect(agent.sent.map((f) => f.method)).toEqual([
-			"initialize",
-			"session/load",
-		]);
-		expect(sessionsOf(events).at(-1)?.status).toBe("dead");
+			expect(agent.sent.map((f) => f.method)).toEqual(["initialize", method]);
+			expect(sessionsOf(events).at(-1)?.status).toBe("dead");
 
-		await adapter.dispose();
+			await adapter.dispose();
+		}
 	});
 
 	it("opens a new session when the agent does not know the session id", async () => {
@@ -3911,764 +5727,6 @@ describe("AcpAdapter when the agent fails", () => {
 			outcome: { outcome: "cancelled" },
 		});
 
-		await adapter.dispose();
-	});
-});
-
-it("keeps an explicitly requested conversation intact when loading fails", async () => {
-	const agent = new FakeAcpAgent();
-	agent.loadFails = true;
-	const adapter = new AcpAdapter({
-		command: "fake",
-		createTransport: (_opts, handlers) => agent.transport(handlers),
-		now: () => 1,
-		mintId: () => "strict",
-	});
-	const events: AdapterEvent[] = [];
-	void collect(
-		adapter.start({
-			cwd: "/work",
-			resume: { harnessSessionId: "sess-1" },
-			strictResume: true,
-		}),
-		events,
-	);
-	await flush(40);
-	expect(agent.sent.map((f) => f.method)).toEqual([
-		"initialize",
-		"session/load",
-	]);
-	expect(sessionsOf(events).some((s) => s.status === "dead")).toBe(true);
-	await adapter.dispose();
-});
-
-it("ends startup and closes an agent that never answers initialize", async () => {
-	let closed = 0;
-	const adapter = new AcpAdapter({
-		command: "never",
-		startupTimeoutMs: 10,
-		createTransport: () => ({
-			send: () => {},
-			close: async () => {
-				closed++;
-			},
-		}),
-	});
-	const events: AdapterEvent[] = [];
-	const iterator = adapter.start({ cwd: "/tmp" });
-	const collected = (async () => {
-		for await (const event of iterator) events.push(event);
-	})();
-	await collected;
-	expect(
-		events.some((e) => e.kind === "session" && e.session.status === "dead"),
-	).toBe(true);
-	expect(closed).toBe(1);
-	await adapter.dispose();
-});
-
-describe("v1 user replay boundaries", () => {
-	for (const whole of [true, false]) {
-		it(
-			whole
-				? "Cursor v1 replay keeps consecutive prompts separate"
-				: "other v1 replay retains streaming chunks of one prompt",
-			async () => {
-				const agent = new FakeAcpAgent();
-				agent.protocolVersion = 1;
-				agent.replayUpdates = [
-					{
-						sessionUpdate: "user_message_chunk",
-						content: { type: "text", text: "first " },
-					},
-					{
-						sessionUpdate: "user_message_chunk",
-						content: { type: "text", text: "second" },
-					},
-					{
-						sessionUpdate: "agent_message_chunk",
-						content: { type: "text", text: "reply" },
-					},
-				];
-				const adapter = new AcpAdapter({
-					command: "fake",
-					wholeUserMessageReplay: whole,
-					createTransport: (_opts, handlers) => agent.transport(handlers),
-				});
-				const events: AdapterEvent[] = [];
-				void collect(
-					adapter.start({
-						cwd: "/work",
-						resume: { harnessSessionId: "sess-1" },
-					}),
-					events,
-				);
-				await flush(40);
-				const users = events.filter(
-					(event) =>
-						event.kind === "item" && event.item.kind === "user_message",
-				);
-				const texts = users.map((event) =>
-					event.kind === "item" && event.item.kind === "user_message"
-						? userMessageSchema
-								.parse(event.item)
-								.content.filter((content) => content.type === "text")
-								.map((content) => (content.type === "text" ? content.text : ""))
-								.join("")
-						: "",
-				);
-				expect(texts).toEqual(whole ? ["first ", "second"] : ["first second"]);
-				if (whole) {
-					expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
-						users[1]?.kind === "item" && users[1].turnId,
-					);
-				}
-				await adapter.dispose();
-			},
-		);
-	}
-});
-
-it("keeps named v2 user prompts separate while joining chunks with the same identity", async () => {
-	const agent = new FakeAcpAgent();
-	agent.protocolVersion = 2;
-	agent.replayUpdates = [
-		{
-			sessionUpdate: "user_message_chunk",
-			messageId: "u1",
-			content: { type: "text", text: "o" },
-		},
-		{
-			sessionUpdate: "user_message_chunk",
-			messageId: "u1",
-			content: { type: "text", text: "ne" },
-		},
-		{
-			sessionUpdate: "user_message_chunk",
-			messageId: "u2",
-			content: { type: "text", text: "t" },
-		},
-		{
-			sessionUpdate: "user_message_chunk",
-			messageId: "u2",
-			content: { type: "text", text: "wo" },
-		},
-	];
-	const adapter = new AcpAdapter({
-		command: "fake",
-		createTransport: (_opts, handlers) => agent.transport(handlers),
-	});
-	const events: AdapterEvent[] = [];
-	void collect(
-		adapter.start({ cwd: "/work", resume: { harnessSessionId: "sess-1" } }),
-		events,
-	);
-	await flush(40);
-	const users = events.filter(
-		(event) => event.kind === "item" && event.item.kind === "user_message",
-	);
-	expect(
-		users.map((event) =>
-			event.kind === "item" && event.item.kind === "user_message"
-				? userMessageSchema
-						.parse(event.item)
-						.content.filter((content) => content.type === "text")
-						.map((content) => (content.type === "text" ? content.text : ""))
-						.join("")
-				: "",
-		),
-	).toEqual(["one", "two"]);
-	expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
-		users[1]?.kind === "item" && users[1].turnId,
-	);
-	await adapter.dispose();
-});
-
-it("keeps Cursor whole user replay boundaries even when protocol v2 is negotiated without message ids", async () => {
-	const agent = new FakeAcpAgent();
-	agent.protocolVersion = 2;
-	agent.replayUpdates = [
-		{
-			sessionUpdate: "user_message_chunk",
-			content: { type: "text", text: "first" },
-		},
-		{
-			sessionUpdate: "user_message_chunk",
-			content: { type: "text", text: "second" },
-		},
-	];
-	const adapter = new AcpAdapter({
-		command: "fake",
-		wholeUserMessageReplay: true,
-		createTransport: (_opts, handlers) => agent.transport(handlers),
-	});
-	const events: AdapterEvent[] = [];
-	void collect(
-		adapter.start({ cwd: "/work", resume: { harnessSessionId: "sess-1" } }),
-		events,
-	);
-	await flush(40);
-	const users = events.filter(
-		(event) => event.kind === "item" && event.item.kind === "user_message",
-	);
-	expect(users).toHaveLength(2);
-	expect(users[0]?.kind === "item" && users[0].turnId).not.toBe(
-		users[1]?.kind === "item" && users[1].turnId,
-	);
-	await adapter.dispose();
-});
-
-// Google's native agents authenticate over ACP before creating or restoring a chat.
-describe("Google subscription authentication", () => {
-	it.each([
-		undefined,
-		"google-history",
-	])("authenticates before opening %s", async (resume) => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(
-			agent,
-			resume,
-			{},
-			{ authMethodId: "oauth-personal" },
-		);
-		await flush(24);
-		const auth = agent.sent.findIndex(
-			(frame) => frame.method === "authenticate",
-		);
-		const session = agent.sent.findIndex(
-			(frame) => frame.method === (resume ? "session/load" : "session/new"),
-		);
-		expect(auth).toBeGreaterThan(0);
-		expect(session).toBeGreaterThan(auth);
-		expect(agent.sent[auth]?.params).toEqual({ methodId: "oauth-personal" });
-		expect(events.some((event) => event.kind === "session")).toBe(true);
-		await adapter.dispose();
-	});
-});
-
-function cursorPermissionMode(
-	agent: FakeAcpAgent,
-	protocolVersion = 2,
-	current = "agent",
-) {
-	agent.protocolVersion = protocolVersion;
-	if (protocolVersion === 1)
-		agent.newSessionModes = {
-			currentModeId: current,
-			availableModes: [
-				{ id: "agent", name: "Agent" },
-				{ id: "ask", name: "Ask" },
-			],
-		};
-	else
-		agent.newSessionConfigOptions = [
-			{
-				configId: "mode",
-				name: "Mode",
-				type: "select",
-				category: "mode",
-				currentValue: current,
-				options: [
-					{ value: "agent", name: "Agent" },
-					{ value: "ask", name: "Ask" },
-				],
-			},
-		];
-}
-describe("per-chat Full access", () => {
-	it.each([
-		1, 2,
-	])("ACP %s adds full access without sending a made-up native mode", async (version) => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent, version);
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		expect(
-			sessionsOf(events)
-				.at(-1)
-				?.availableModes?.map((mode) => mode.id),
-		).toContain(FULL_ACCESS_CHAT_MODE);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		agent.requestPermission("sess-1", "tool-one", 9001);
-		agent.requestPermission("sess-1", "tool-two", 9002);
-		await flush(32);
-		for (const id of [9001, 9002])
-			expect(agent.sent.find((frame) => frame.id === id)?.result).toEqual({
-				outcome: { outcome: "selected", optionId: "allow" },
-			});
-		expect(
-			itemsOf(events).filter((item) => item.kind === "approval_request"),
-		).toHaveLength(0);
-		expect(
-			agent.sent.filter(
-				(frame) =>
-					frame.method === "session/set_mode" ||
-					frame.method === "session/set_config_option",
-			),
-		).toHaveLength(0);
-		expect(sessionsOf(events).at(-1)?.modeId).toBe(FULL_ACCESS_CHAT_MODE);
-		await adapter.dispose();
-	});
-	it.each([
-		1, 2,
-	])("ACP %s Plan waits for native confirmation, then approves tools automatically", async (version) => {
-		const agent = new FakeAcpAgent();
-		agent.protocolVersion = version;
-		const modes = [
-			{ id: "default", name: "Default" },
-			{ id: "plan", name: "Plan" },
-			{ id: "bypassPermissions", name: "Bypass permissions" },
-		];
-		if (version === 1)
-			agent.newSessionModes = {
-				currentModeId: "bypassPermissions",
-				availableModes: modes,
-			};
-		else
-			agent.newSessionConfigOptions = [
-				{
-					configId: "permission_mode",
-					name: "Mode",
-					type: "select",
-					category: "mode",
-					currentValue: "bypassPermissions",
-					options: modes.map((mode) => ({ value: mode.id, name: mode.name })),
-				},
-			];
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.availableModes)
-				.at(-1)?.availableModes,
-		).toContainEqual({ id: "plan", label: "Plan" });
-		agent.holdSelections = true;
-		adapter.setMode("plan");
-		await flush(32);
-		agent.requestPermission("sess-1", "plan-request");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.modeId)
-				.at(-1)?.modeId,
-		).toBe("plan");
-		const request = agent.sent.find(
-			(frame) =>
-				frame.method ===
-				(version === 1 ? "session/set_mode" : "session/set_config_option"),
-		);
-		expect(request?.params).toMatchObject(
-			version === 1
-				? { modeId: "plan" }
-				: { configId: "permission_mode", value: "plan" },
-		);
-		agent.releaseSelections();
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "allow" },
-		});
-		agent.holdSelections = false;
-		adapter.setMode("bypassPermissions");
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "allow" },
-		});
-		await adapter.dispose();
-	});
-
-	it.each([
-		1, 2,
-	])("ACP %s Plan has full tool access and keeps plan approval and questions manual", async (version) => {
-		const agent = new FakeAcpAgent();
-		agent.protocolVersion = version;
-		agent.newSessionModes = {
-			currentModeId: "plan",
-			availableModes: [
-				{ id: "plan", name: "Plan" },
-				{ id: "default", name: "Default" },
-				{ id: "bypassPermissions", name: "Full access" },
-			],
-		};
-		const cwd = process.cwd();
-		const { adapter, events } = startAdapter(
-			agent,
-			undefined,
-			{ cwd, modeId: "plan" },
-			{ defaultModeId: "bypassPermissions" },
-		);
-		await flush(32);
-		agent.notify("sess-1", {
-			sessionUpdate: "tool_call",
-			toolCallId: "plan-read",
-			_meta: { claudeCode: { toolName: "Bash" } },
-		});
-		const ask = (
-			id: number,
-			toolCall: Record<string, unknown>,
-			sessionId = "sess-1",
-		) =>
-			agent.requestServer(
-				"session/request_permission",
-				{
-					sessionId,
-					toolCall,
-					options: [
-						{ optionId: "always", name: "Always", kind: "allow_always" },
-						{ optionId: "once", name: "Yes", kind: "allow_once" },
-					],
-				},
-				id,
-			);
-		const read = {
-			toolCallId: "plan-read",
-			rawInput: { command: `cd '${cwd}' && git status --short` },
-		};
-		ask(9100, read);
-		await flush();
-		expect(agent.responseTo(9100)?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "once" },
-		});
-		expect(
-			itemsOf(events).filter((item) => item.kind === "approval_request"),
-		).toHaveLength(0);
-		ask(9101, { name: "ExitPlanMode", rawInput: {} });
-		ask(9102, { name: "Edit", rawInput: { file_path: `${cwd}/package.json` } });
-		ask(9103, read, "another-session");
-		ask(9105, { name: "AskUserQuestion", rawInput: {} });
-		ask(9106, { name: "mcp__service__search", rawInput: {} });
-		await flush();
-		for (const id of [9102, 9106])
-			expect(agent.responseTo(id)?.result).toEqual({
-				outcome: { outcome: "selected", optionId: "once" },
-			});
-		for (const id of [9101, 9103, 9105])
-			expect(agent.responseTo(id)).toBeUndefined();
-		adapter.setMode("default");
-		await flush(32);
-		ask(9104, read);
-		await flush();
-		expect(agent.responseTo(9104)).toBeUndefined();
-		await adapter.dispose();
-	});
-
-	it("Plan approves tool permissions for other harnesses too", async () => {
-		const agent = new FakeAcpAgent();
-		agent.newSessionModes = { currentModeId: "plan", availableModes: [] };
-		const cwd = process.cwd();
-		const { adapter } = startAdapter(agent, undefined, { cwd, modeId: "plan" });
-		await flush(32);
-		agent.requestServer(
-			"session/request_permission",
-			{
-				sessionId: "sess-1",
-				toolCall: {
-					name: "Read",
-					rawInput: { file_path: `${cwd}/package.json` },
-				},
-				options: [{ optionId: "once", name: "Yes", kind: "allow_once" }],
-			},
-			9150,
-		);
-		await flush();
-		expect(agent.responseTo(9150)?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "once" },
-		});
-		await adapter.dispose();
-	});
-
-	it("Plan does not inherit bypass approvals when Claude enters it through a native update", async () => {
-		const agent = new FakeAcpAgent();
-		agent.newSessionModes = {
-			currentModeId: "bypassPermissions",
-			availableModes: [],
-		};
-		const { adapter } = startAdapter(
-			agent,
-			undefined,
-			{ cwd: process.cwd() },
-			{ defaultModeId: "bypassPermissions" },
-		);
-		await flush(32);
-		agent.notify("sess-1", {
-			sessionUpdate: "current_mode_update",
-			currentModeId: "plan",
-		});
-		agent.requestServer(
-			"session/request_permission",
-			{
-				sessionId: "sess-1",
-				toolCall: { name: "ExitPlanMode", rawInput: {} },
-				options: [
-					{ optionId: "implement", name: "Implement", kind: "allow_once" },
-				],
-			},
-			9200,
-		);
-		await flush();
-		expect(agent.responseTo(9200)).toBeUndefined();
-		await adapter.dispose();
-	});
-
-	it("Plan tool approvals wait for mode confirmation and stay disabled after a rejected change", async () => {
-		const agent = new FakeAcpAgent();
-		agent.newSessionModes = { currentModeId: "default", availableModes: [] };
-		const cwd = process.cwd();
-		const { adapter } = startAdapter(
-			agent,
-			undefined,
-			{ cwd },
-			{ defaultModeId: "bypassPermissions" },
-		);
-		await flush(32);
-		agent.holdSelections = true;
-		adapter.setMode("plan");
-		const ask = (id: number) =>
-			agent.requestServer(
-				"session/request_permission",
-				{
-					sessionId: "sess-1",
-					toolCall: {
-						name: "Read",
-						rawInput: { file_path: `${cwd}/package.json` },
-					},
-					options: [{ optionId: "once", name: "Yes", kind: "allow_once" }],
-				},
-				id,
-			);
-		ask(9300);
-		await flush();
-		expect(agent.responseTo(9300)).toBeUndefined();
-		agent.releaseSelections();
-		await flush(32);
-		ask(9301);
-		await flush();
-		expect(agent.responseTo(9301)?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "once" },
-		});
-		agent.holdSelections = false;
-		adapter.setMode("default");
-		await flush(32);
-		agent.rejectSelections = true;
-		adapter.setMode("plan");
-		await flush(32);
-		ask(9302);
-		await flush();
-		expect(agent.responseTo(9302)).toBeUndefined();
-		await adapter.dispose();
-	});
-
-	it("selecting full access also resolves a tool's pending Allow request", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent);
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		agent.requestPermission("sess-1", "already-blocked");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toEqual({
-			outcome: { outcome: "selected", optionId: "allow" },
-		});
-		expect(
-			itemsOf(events)
-				.filter((item) => item.kind === "approval_request")
-				.at(-1)?.status,
-		).toBe("answered");
-		await adapter.dispose();
-	});
-	it("Ask immediately restores tool approvals", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent);
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		adapter.setMode("ask");
-		await flush(32);
-		agent.requestPermission("sess-1", "manual-again");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		expect(sessionsOf(events).at(-1)?.status).toBe("awaiting_input");
-		expect(
-			agent.sent.find((frame) => frame.method === "session/set_config_option")
-				?.params,
-		).toMatchObject({ value: "ask" });
-		await adapter.dispose();
-	});
-	it("full access moves Ask to the advertised tool mode before approving", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent, 2, "ask");
-		agent.holdSelections = true;
-		const { adapter } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		agent.requestPermission("sess-1", "pending-mode");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		expect(
-			agent.sent.find((frame) => frame.method === "session/set_config_option")
-				?.params,
-		).toMatchObject({ value: "agent" });
-		agent.releaseSelections();
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toBeDefined();
-		await adapter.dispose();
-	});
-	it("failed native mode selection restores Ask without approving anything", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent, 2, "ask");
-		agent.rejectSelections = true;
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		agent.requestPermission("sess-1", "after-rejection");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.modeId)
-				.at(-1)?.modeId,
-		).toBe("ask");
-		await adapter.dispose();
-	});
-	it("a late Full access confirmation cannot override a later Ask choice", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent, 2, "ask");
-		agent.holdSelections = true;
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush();
-		adapter.setMode("ask");
-		await flush();
-		agent.releaseSelections();
-		await flush(32);
-		agent.requestPermission("sess-1", "late-ack");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.modeId)
-				.at(-1)?.modeId,
-		).toBe("ask");
-		expect(
-			agent.sent
-				.filter((frame) => frame.method === "session/set_config_option")
-				.map((frame) => (frame.params as { value: string }).value),
-		).toEqual(["agent", "ask"]);
-		await adapter.dispose();
-	});
-	it("a loaded native conversation restores the explicitly saved Full access choice", async () => {
-		const agent = new FakeAcpAgent();
-		const { adapter, events } = startAdapter(agent, "saved-native", {
-			modeId: FULL_ACCESS_CHAT_MODE,
-		});
-		await flush(40);
-		agent.requestPermission("saved-native", "restored");
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toBeDefined();
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.modeId)
-				.at(-1)?.modeId,
-		).toBe(FULL_ACCESS_CHAT_MODE);
-		expect(agent.sent.some((frame) => frame.method === "session/new")).toBe(
-			false,
-		);
-		await adapter.dispose();
-	});
-	it("mode updates keep Full access active; requests from another conversation stay manual", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent);
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush();
-		agent.notify("sess-1", {
-			sessionUpdate: "config_option_update",
-			configOptions: [
-				{
-					configId: "mode",
-					name: "Mode",
-					type: "select",
-					category: "mode",
-					currentValue: "agent",
-					options: [
-						{ value: "agent", name: "Agent" },
-						{ value: "ask", name: "Ask" },
-					],
-				},
-			],
-		});
-		await flush();
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.modeId)
-				.at(-1)?.modeId,
-		).toBe(FULL_ACCESS_CHAT_MODE);
-		agent.requestPermission("different-session", "foreign");
-		await flush();
-		expect(agent.lastPermissionResponse()).toBeUndefined();
-		await adapter.dispose();
-	});
-	it("Full access approves tools while actual questions still need an answer", async () => {
-		const agent = new FakeAcpAgent();
-		cursorPermissionMode(agent);
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		agent.requestPermission("sess-1", "tool");
-		agent.requestServer(
-			"cursor/ask_question",
-			{
-				toolCallId: "question",
-				questions: [
-					{
-						id: "q",
-						prompt: "Which branch?",
-						options: [{ id: "main", label: "main" }],
-					},
-				],
-			},
-			9501,
-		);
-		await flush();
-		adapter.setMode(FULL_ACCESS_CHAT_MODE);
-		await flush(32);
-		expect(agent.lastPermissionResponse()?.result).toBeDefined();
-		expect(agent.sent.find((frame) => frame.id === 9501)).toBeUndefined();
-		expect(sessionsOf(events).at(-1)?.status).toBe("awaiting_input");
-		await adapter.dispose();
-	});
-	it("uses the real bypass mode when the agent advertises it", async () => {
-		const agent = new FakeAcpAgent();
-		agent.newSessionModes = {
-			currentModeId: "default",
-			availableModes: [
-				{ id: "default", name: "Default" },
-				{ id: "yolo", name: "YOLO" },
-			],
-		};
-		const { adapter, events } = startAdapter(agent);
-		await flush(32);
-		adapter.setMode("yolo");
-		await flush(32);
-		expect(
-			agent.sent.find((frame) => frame.method === "session/set_mode")?.params,
-		).toMatchObject({ modeId: "yolo" });
-		expect(
-			sessionsOf(events)
-				.filter((session) => session.availableModes)
-				.at(-1)
-				?.availableModes?.filter((mode) => mode.id === FULL_ACCESS_CHAT_MODE),
-		).toHaveLength(0);
-		agent.requestPermission("sess-1", "native-bypass");
-		await flush();
-		expect(agent.lastPermissionResponse()?.result).toBeDefined();
 		await adapter.dispose();
 	});
 });

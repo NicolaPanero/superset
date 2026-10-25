@@ -11,6 +11,7 @@ export interface PullRequestPaneIntent extends ForkPullRequestIdentity {
 	workspaceId: string;
 	repoFullName: string;
 	number: number;
+	placement?: "split" | "tab";
 }
 
 interface PullRequestPaneIntentState {

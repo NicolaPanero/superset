@@ -113,7 +113,7 @@ export function ChatPane({
 						...(handoffPrompt ? { pendingPrompt: handoffPrompt } : {}),
 					});
 				}}
-				onForkAgent={({
+				onOpenAgentChat={({
 					presetId,
 					label,
 					model,
@@ -139,18 +139,55 @@ export function ChatPane({
 									...(accountSelection !== undefined
 										? { acpAccountSelection: accountSelection }
 										: {}),
-									pendingPrompt: handoffPrompt,
+									...(handoffPrompt ? { pendingPrompt: handoffPrompt } : {}),
 								} satisfies ChatPaneData,
 							},
 						],
 					})
 				}
+				onOpenForkedChat={({ sessionId, terminalId }) => {
+					const { agent, chatModelId, chatModelLabel, chatModeId, chatTitle } =
+						latest.current;
+					ctx.store.getState().addTab({
+						panes: [
+							{
+								kind: "chat-v3",
+								data: {
+									terminalId,
+									sessionId,
+									...(agent ? { agent: { id: agent.id } } : {}),
+									...(chatModelId ? { chatModelId } : {}),
+									...(chatModelLabel ? { chatModelLabel } : {}),
+									...(chatModeId ? { chatModeId } : {}),
+									...(chatTitle ? { chatTitle } : {}),
+								} satisfies ChatPaneData,
+							},
+						],
+					});
+				}}
+				onRewound={(prompt) => {
+					const { agent, chatModelId, chatModelLabel, chatModeId } =
+						latest.current;
+					ctx.actions.updateData({
+						terminalId: latest.current.terminalId,
+						sessionId: null,
+						...(agent ? { agent: { id: agent.id } } : {}),
+						...(chatModelId ? { chatModelId } : {}),
+						...(chatModelLabel ? { chatModelLabel } : {}),
+						...(chatModeId ? { chatModeId } : {}),
+						pendingPrompt: prompt,
+					});
+				}}
 				onModeChange={(chatModeId) => {
 					if (data.agent) saveChatMode(data.agent.id, chatModeId);
 					ctx.actions.updateData({ ...data, chatModeId });
 				}}
-				onSessionCreated={(sessionId) =>
-					ctx.actions.updateData({ ...latest.current, sessionId })
+				onSessionCreated={(sessionId, pendingPrompt) =>
+					ctx.actions.updateData({
+						...latest.current,
+						sessionId,
+						...(pendingPrompt ? { pendingPrompt } : {}),
+					})
 				}
 				onOpenFile={onOpenFile}
 				onOpenPage={openPage}
