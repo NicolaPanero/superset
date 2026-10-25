@@ -14,7 +14,7 @@ import type { AcpTransport, AcpTransportHandlers } from "./rpcClient";
  * assertions.
  */
 /** v2 reopens a conversation with session/resume, v1 with session/load. */
-function isLoad(method: string | undefined): boolean {
+function isLoad(method: unknown): boolean {
 	return method === "session/load" || method === "session/resume";
 }
 
