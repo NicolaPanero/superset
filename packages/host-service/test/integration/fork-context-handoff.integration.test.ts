@@ -25,7 +25,7 @@ let host: TestHost | undefined;
  * released before the field.
  */
 function installHelper(mode: "new" | "old") {
-	const bin = join(process.env.SUPERSET_HOME_DIR ?? "", "bin");
+	const bin = join(dir, "superset-home", "bin");
 	mkdirSync(bin, { recursive: true });
 	const path = join(bin, "txcript-transfer");
 	writeFileSync(
@@ -117,13 +117,19 @@ const input = (workspaceId: string) => ({
 	targetModelId: null,
 });
 
+let previousHome: string | undefined;
+
+/** Other suites in the same process repoint the home; this one owns its own. */
 beforeEach(() => {
 	dir = realpathSync(mkdtempSync(join(tmpdir(), "fork-context-handoff-")));
+	previousHome = process.env.SUPERSET_HOME_DIR;
+	process.env.SUPERSET_HOME_DIR = join(dir, "superset-home");
 });
 
 afterEach(async () => {
 	await host?.dispose();
 	host = undefined;
+	process.env.SUPERSET_HOME_DIR = previousHome;
 	rmSync(dir, { recursive: true, force: true });
 });
 
