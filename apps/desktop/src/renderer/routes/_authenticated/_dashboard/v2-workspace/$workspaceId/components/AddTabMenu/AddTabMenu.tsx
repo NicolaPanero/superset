@@ -6,7 +6,7 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { MessageSquarePlus } from "lucide-react";
 import { BsTerminalPlus } from "react-icons/bs";
-import { LuGitCompareArrows } from "react-icons/lu";
+import { LuGitCompareArrows, LuMessageSquare } from "react-icons/lu";
 import { TbDeviceDesktop, TbWorld } from "react-icons/tb";
 import { HotkeyMenuShortcut } from "renderer/components/HotkeyMenuShortcut";
 
@@ -14,8 +14,9 @@ interface AddTabMenuProps {
 	onAddAgent: () => void;
 	onAddTerminal: () => void;
 	runAfterClose: (action: () => void) => void;
-	onAddBrowser: () => void;
-	onAddChanges: () => void;
+	onAddChat?: (() => void) | undefined;
+	onAddBrowser?: (() => void) | undefined;
+	onAddChanges?: (() => void) | undefined;
 	onAddDesktop?: (() => void) | undefined;
 	showPresetsBar: boolean;
 	onToggleShowPresetsBar: (enabled: boolean) => void;
@@ -25,6 +26,7 @@ export function AddTabMenu({
 	onAddAgent,
 	onAddTerminal,
 	runAfterClose,
+	onAddChat,
 	onAddBrowser,
 	onAddChanges,
 	onAddDesktop,
@@ -50,20 +52,33 @@ export function AddTabMenu({
 				</span>
 				<HotkeyMenuShortcut hotkeyId="NEW_GROUP" />
 			</DropdownMenuItem>
-			<DropdownMenuItem className="gap-2" onClick={onAddBrowser}>
-				<TbWorld className="size-4" />
-				<span>
-					<Trans>Browser</Trans>
-				</span>
-				<HotkeyMenuShortcut hotkeyId="NEW_BROWSER" />
-			</DropdownMenuItem>
-			<DropdownMenuItem className="gap-2" onClick={onAddChanges}>
-				<LuGitCompareArrows className="size-4" />
-				<span>
-					<Trans>Changes</Trans>
-				</span>
-				<HotkeyMenuShortcut hotkeyId="OPEN_DIFF_VIEWER" />
-			</DropdownMenuItem>
+			{onAddChat && (
+				<DropdownMenuItem className="gap-2" onClick={onAddChat}>
+					<LuMessageSquare className="size-4" />
+					<span>
+						<Trans>Chat</Trans>
+					</span>
+					<HotkeyMenuShortcut hotkeyId="NEW_CHAT" />
+				</DropdownMenuItem>
+			)}
+			{onAddBrowser && (
+				<DropdownMenuItem className="gap-2" onClick={onAddBrowser}>
+					<TbWorld className="size-4" />
+					<span>
+						<Trans>Browser</Trans>
+					</span>
+					<HotkeyMenuShortcut hotkeyId="NEW_BROWSER" />
+				</DropdownMenuItem>
+			)}
+			{onAddChanges && (
+				<DropdownMenuItem className="gap-2" onClick={onAddChanges}>
+					<LuGitCompareArrows className="size-4" />
+					<span>
+						<Trans>Changes</Trans>
+					</span>
+					<HotkeyMenuShortcut hotkeyId="OPEN_DIFF_VIEWER" />
+				</DropdownMenuItem>
+			)}
 			{onAddDesktop && (
 				<DropdownMenuItem className="gap-2" onClick={onAddDesktop}>
 					<TbDeviceDesktop className="size-4" />

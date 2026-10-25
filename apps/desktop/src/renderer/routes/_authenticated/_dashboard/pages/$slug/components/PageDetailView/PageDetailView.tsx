@@ -3,8 +3,8 @@ import { Button } from "@superset/ui/button";
 import {
 	CommentModeButton,
 	PageHeader as PageTitleBar,
-	PageViewers,
 } from "@superset/ui/page-comments";
+import { PagePresenceStack } from "@superset/ui/presence";
 import { Spinner } from "@superset/ui/spinner";
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
@@ -75,7 +75,7 @@ export function PageDetailView({
 						leading={backButton}
 						trailing={
 							<>
-								<PageViewers pageId={page.id} className="mr-1" />
+								<PagePresenceStack pageId={page.id} viewerId={currentUserId} />
 								{canComment ? (
 									<CommentModeButton
 										enabled={commentsEnabled}

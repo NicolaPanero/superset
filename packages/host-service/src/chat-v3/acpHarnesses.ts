@@ -65,7 +65,7 @@ export function acpHarnessFactory(
 				let authMethodId = entry.authMethodId;
 				return createAdapter({
 					command: entry.binary,
-					forkAtMessage: harness === "claude-acp" || harness === "codex-acp",
+					forkAtMessage: entry.forkAtMessage === true,
 					forkCursorModelSelection: harness === "cursor-acp",
 					forkGrokContextUsage: harness === "grok-acp",
 					get authMethodId() {

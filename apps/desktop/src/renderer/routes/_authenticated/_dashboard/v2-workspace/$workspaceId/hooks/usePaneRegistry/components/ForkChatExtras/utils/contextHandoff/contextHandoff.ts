@@ -4,7 +4,7 @@ import type { Cursor, Item, UserMessage } from "@superset/chat/protocol";
 import {
 	buildChatSessionHandoffPrompt,
 	TERMINAL_HANDOFF_MAX_CHARS,
-} from "@superset/shared/terminal-session-handoff";
+} from "@superset/shared/session-handoff";
 
 export async function contextHandoff(
 	transport: Pick<ChatTransport, "getItems">,

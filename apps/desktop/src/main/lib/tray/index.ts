@@ -12,6 +12,7 @@ import {
 import { loadToken } from "lib/trpc/routers/auth/utils/auth-functions";
 import { env } from "main/env.main";
 import { focusMainWindow, quitApp } from "main/index";
+import { getAppDisplayName } from "main/lib/app-display-name";
 import { checkForUpdatesInteractive } from "main/lib/auto-updater";
 import {
 	getHostServiceCoordinator,
@@ -258,6 +259,7 @@ async function updateTrayMenu(): Promise<void> {
 
 	const hostServiceSubmenu = buildHostServiceSubmenu(orgIds, infos);
 
+	const displayName = getAppDisplayName();
 	const menu = Menu.buildFromTemplate([
 		{
 			label: hostServiceLabel,
@@ -265,7 +267,7 @@ async function updateTrayMenu(): Promise<void> {
 		},
 		{ type: "separator" },
 		{
-			label: i18n._(msg({ message: "Open Superset" })),
+			label: i18n._(msg({ message: `Open ${displayName}` })),
 			click: focusMainWindow,
 		},
 		{
@@ -284,14 +286,14 @@ async function updateTrayMenu(): Promise<void> {
 		},
 		{ type: "separator" },
 		{
-			label: i18n._(msg({ message: "Close Superset" })),
+			label: i18n._(msg({ message: `Close ${displayName}` })),
 			click: () => quitApp(),
 		},
 		{ type: "separator" },
 		{
 			label: i18n._(
 				msg({
-					message: "Quit Superset Completely",
+					message: `Quit ${displayName} Completely`,
 				}),
 			),
 			click: () => {
@@ -328,7 +330,7 @@ export function initTray(): void {
 		}
 
 		tray = new Tray(icon);
-		tray.setToolTip(app.getName());
+		tray.setToolTip(getAppDisplayName());
 
 		void updateTrayMenu();
 

@@ -95,7 +95,7 @@ test("point forks keep launch credentials, deduplicate retries and preserve the 
 			runtime.commands.forkSession(command),
 		]);
 		expect(first).toEqual(retry);
-		expect(points).toEqual([{ messageId: "native-1" }]);
+		expect(points).toEqual([{ upToMessageId: "native-1" }]);
 		expect(launches.at(-1)).toMatchObject({
 			agentConfigId: "configured",
 			accountSelection: "account-after-recovery",

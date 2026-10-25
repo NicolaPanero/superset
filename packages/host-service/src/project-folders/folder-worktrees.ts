@@ -1,10 +1,7 @@
 import { basename, dirname, join } from "node:path";
 import { and, eq } from "drizzle-orm";
-import {
-	projectFolders,
-	workspaceFolderWorktrees,
-	workspaces,
-} from "../db/schema.ts";
+import { projectFolders, workspaceFolderWorktrees } from "../db/fork-schema.ts";
+import { workspaces } from "../db/schema.ts";
 import { createGitEnvResolver } from "../runtime/git/git.ts";
 import type { HostServiceContext } from "../types.ts";
 import { getHostWorkerPool } from "../workers/host-worker-pool.ts";

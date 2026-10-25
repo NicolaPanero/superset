@@ -39,7 +39,7 @@ function fixture(supported: boolean) {
 		db: db as unknown as HostDb,
 		runtime: {
 			chat: () => ({
-				live: { supports: () => supported },
+				live: { supports: () => supported, get: () => undefined },
 				commands: {
 					createSession: (input: unknown) => {
 						sessions.push(input);

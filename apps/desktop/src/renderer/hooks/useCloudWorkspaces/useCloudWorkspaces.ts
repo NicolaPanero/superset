@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useArchivingCloudWorkspaceIds } from "renderer/hooks/useArchivingCloudWorkspaceIds";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 export type CloudWorkspaceRow = RouterOutputs["cloudWorkspace"]["list"][number];
 
@@ -21,6 +22,8 @@ export interface CloudWorkspacesValue {
 	organizationId: string | null;
 	/** False until the server has answered; a copy restored from disk is stale. */
 	isFresh: boolean;
+	/** True only while the first fetch is in flight with nothing to show; false once it answered, failed, or never runs. */
+	isLoading: boolean;
 }
 
 /**
@@ -37,7 +40,8 @@ export interface CloudWorkspacesValue {
 export function useCloudWorkspaces(): CloudWorkspacesValue {
 	const flagEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES);
 	const organizationId = useActiveOrganizationId();
-	const enabled = Boolean(flagEnabled && organizationId);
+	const forkProFeatures = useForkProFeatures();
+	const enabled = Boolean(flagEnabled && organizationId && forkProFeatures);
 
 	const query = cloudTrpc.cloudWorkspace.list.useQuery(
 		{ organizationId: organizationId ?? "" },
@@ -68,5 +72,6 @@ export function useCloudWorkspaces(): CloudWorkspacesValue {
 		workspaces: enabled ? workspaces : [],
 		organizationId,
 		isFresh: query.isSuccess && !query.isStale,
+		isLoading: query.isLoading,
 	};
 }

@@ -6,7 +6,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.2",
-		"@types/bun": "1.4.2",
+		"@types/bun": "1.4.3",
 		"@types/semver": "7.7.1",
 		"@vercel/sandbox": "3.2.2",
 		"babel-plugin-macros": "3.1.0",
@@ -19,7 +19,7 @@
 	"description": "Superset Monorepo",
 	"homepage": "https://superset.sh",
 	"license": "Elastic-2.0",
-	"packageManager": "bun@1.4.2",
+	"packageManager": "bun@1.4.3",
 	"private": true,
 	"scripts": {
 		"predev": "bun scripts/check-dev-ports.ts",
@@ -105,6 +105,7 @@
 		"workerd"
 	],
 	"patchedDependencies": {
+		"@better-auth/oauth-provider@1.6.22": "patches/@better-auth%2Foauth-provider@1.6.22.patch",
 		"metro@0.84.5": "patches/metro@0.84.5.patch",
 		"metro@0.84.6": "patches/metro@0.84.6.patch",
 		"metro@0.87.1": "patches/metro@0.87.1.patch",
@@ -117,6 +118,7 @@
 		"@xterm/xterm@6.1.0-beta.315": "patches/@xterm%2Fxterm@6.1.0-beta.315.patch",
 		"@xterm/addon-webgl@0.20.0-beta.309": "patches/@xterm%2Faddon-webgl@0.20.0-beta.309.patch",
 		"@xterm/addon-ligatures@0.11.0-beta.310": "patches/@xterm%2Faddon-ligatures@0.11.0-beta.310.patch",
-		"@agentclientprotocol/claude-agent-acp@0.85.0": "patches/@agentclientprotocol%2Fclaude-agent-acp@0.85.0.patch"
+		"@agentclientprotocol/claude-agent-acp@0.85.0": "patches/@agentclientprotocol%2Fclaude-agent-acp@0.85.0.patch",
+		"@xterm/addon-serialize@0.15.0-beta.310": "patches/@xterm%2Faddon-serialize@0.15.0-beta.310.patch"
 	}
 }

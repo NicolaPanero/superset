@@ -15,6 +15,8 @@ export type AcpHarness = {
 	fullAccessModeId?: string;
 	clientApprovalModes?: boolean;
 	wholeUserMessageReplay?: boolean;
+	/** Forks a session up to a given message (JetBrains AIR fork point), so a rewind keeps the agent's own history. */
+	forkAtMessage?: boolean;
 	note: string;
 } & AcpTranslator;
 
@@ -30,6 +32,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		executableEnv: "CLAUDE_CODE_EXECUTABLE",
 		upgrade: "npm i -g @anthropic-ai/claude-code@latest",
 		fullAccessModeId: "bypassPermissions",
+		forkAtMessage: true,
 		note: "2.1.226 verified against adapter 0.85.0: session/new returns the same modes and configOptions as 2.1.286.",
 	},
 	"codex-acp": {
@@ -41,6 +44,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		executableEnv: "CODEX_PATH",
 		upgrade: "npm i -g @openai/codex@latest",
 		fullAccessModeId: "agent-full-access",
+		forkAtMessage: true,
 		note: "0.159.0 verified against adapter 2.1.0; the adapter drives the installed Codex app-server.",
 	},
 	"gemini-acp": {
@@ -102,6 +106,7 @@ export const ACP_HARNESSES: Record<string, AcpHarness> = {
 		minVersion: UNGATED_VERSION,
 		fullAccessModeId: "bypassPermissions",
 		clientApprovalModes: true,
+		forkAtMessage: true,
 		note: "Ungated: every release, from 0.1.0 on, ships `pdev acp`, so there is no older build to reject and no upgrade command. `pdev acp` is its own ACP server, so no adapter. The desktop bundles it and needs no env: pdev signs in to the router through the superset CLI on PATH.",
 	},
 };
