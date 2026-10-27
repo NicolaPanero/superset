@@ -41,6 +41,10 @@ export function ForkWhatsNewNotice() {
 		t({
 			message: "Closing the lid still puts the Mac to sleep.",
 		}),
+		t({
+			message:
+				"The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again.",
+		}),
 	];
 	const notice: DesktopNotice = {
 		id: `fork-whats-new:${FORK_WHATS_NEW_ID}`,

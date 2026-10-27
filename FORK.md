@@ -464,8 +464,7 @@ lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 le release non contengono più `Superset-fork-x64.exe` e i workflow non li compilano.
 Il codice degli script Windows resta nel repository, non collegato alla CI, per riprendere il lavoro.
 
-L’app Mac si chiama **Paradev++** (il pacchetto resta `Superset++.app` per compatibilità
-con gli aggiornamenti esistenti), usa l’icona con il **+** e convive con Paradev
+L’app Mac si chiama **Paradev++** (pacchetto `Paradev++.app`), usa l’icona con il **+** e convive con Paradev
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
 porta locale 51742 e cartelle `~/.superset-fork` e
 `~/Library/Application Support/Superset Fork`. Chat, impostazioni e login
@@ -739,31 +738,31 @@ esplicitamente le nuove capacità.
 
 ## Identità e nomi tecnici
 
-Il nome mostrato dall’app, dai menu, dalla home e dagli aggiornamenti è
-**Paradev++**. Non cambiano, perché i dati e gli installer già distribuiti li
-cercano per nome:
+Su macOS l’app si chiama **Paradev++** anche nel pacchetto: `Paradev++.app`, con
+l’eseguibile `Paradev++`. Non cambiano, perché i dati, il Portachiavi e gli
+installer già distribuiti li cercano per nome:
 
 | Elemento | Valore conservato |
 |---|---|
-| Pacchetto e eseguibile | `Superset++.app`, `Superset++`, `Superset++.exe` |
+| Nome interno (`app.name`) | `Superset++`: voce del Portachiavi e cartella dei log |
+| Eseguibile Windows | `Superset++.exe`: l’installer Windows accetta solo questo nome |
 | Bundle ID e protocollo | `com.superset.desktop.fork`, `superset-fork://` |
 | Cartelle dati | `~/.superset-fork`, `~/Library/Application Support/Superset Fork` |
 | Registro aggiornamenti | `~/Library/Logs/Superset++/fork-update.log` |
 | Asset di release | `Superset-fork-arm64.zip` |
 | Pacchetti e CLI | `@superset/*`, comando `superset` (alias `paradev`) |
 
-### Rilascio ponte verso `Paradev++.app`
+`forkIdentity` separa il nome del pacchetto (`productName`) dal nome interno
+(`runtimeName`, scritto in `extraMetadata.productName`).
 
-Questa release contiene ancora `Superset++.app`, così i client già installati
-possono aggiornarsi con il loro installer. Il suo installer però riconosce
-anche `Paradev++.app`, nello zip e nel percorso dell’app in esecuzione. Quando
-una release futura conterrà `Paradev++.app`, l’aggiornamento la installa nella
-stessa cartella, rilancia il nuovo percorso e sposta la vecchia app nel
-Cestino. Se un passaggio fallisce, la vecchia app resta al suo posto.
+### Da `Superset++.app` a `Paradev++.app`
 
-Chi salta la release ponte non può aggiornarsi dall’app a una release con il
-nuovo nome: deve prima installare la release ponte, oppure usare lo script di
-installazione. La release con il nuovo nome va pubblicata solo dopo il ponte.
+L’installer della 2.0.0 e delle versioni successive riconosce `Paradev++.app`
+nello zip: installa la nuova app nella stessa cartella, la rilancia e sposta
+`Superset++.app` nel Cestino. Se un passaggio fallisce, la vecchia app resta al
+suo posto. Una versione precedente alla 2.0.0 non può aggiornarsi dall’app:
+serve lo script di installazione. Dopo l’aggiornamento l’icona nel Dock va
+fissata di nuovo.
 
 La sorgente delle release ufficiali è in `scripts/fork/upstream.json`
 (`ParadevAI/Paradev`); script e workflow la leggono da lì.

@@ -18376,6 +18376,9 @@ msgstr "Ogłoszenie przedstawia też rundę seed o wartości 11,5 mln USD prowad
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Aplikację można pobrać bezpłatnie. Wymaga iOS 26 lub nowszego oraz Paradev Pro. Następny będzie Android."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Aplikacja to teraz Paradev++.app. Aktualizacja przenosi Superset++.app do kosza, więc ponownie przypnij nową aplikację w Docku."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikacja jest w wersji {appVersion}, ale podłączona do usługi hosta uruchomionej przez coś innego, prawdopodobnie starszą CLI lub inną kompilację Paradev. Ponowne uruchomienie zastąpi ją kopią z tej aplikacji."
 

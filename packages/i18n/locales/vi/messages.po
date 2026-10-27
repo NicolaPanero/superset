@@ -18376,6 +18376,9 @@ msgstr "Thông báo cũng chia sẻ vòng gọi vốn hạt giống 11,5 triệu
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Ứng dụng được tải miễn phí. Yêu cầu iOS 26 trở lên và Paradev Pro. Tiếp theo sẽ là Android."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Ứng dụng giờ là Paradev++.app. Bản cập nhật chuyển Superset++.app vào Thùng rác, vì vậy hãy ghim lại ứng dụng mới vào Dock."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Ứng dụng đang ở {appVersion} nhưng kết nối với dịch vụ máy chủ do thứ khác khởi động, có thể là CLI cũ hoặc bản dựng Paradev khác. Khởi động lại sẽ thay thế nó bằng bản của ứng dụng này."
 

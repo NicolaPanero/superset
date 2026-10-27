@@ -8,10 +8,11 @@ afterEach(() => {
 	if (previous === undefined) delete process.env.SUPERSET_WORKSPACE_NAME;
 	else process.env.SUPERSET_WORKSPACE_NAME = previous;
 });
-test("fork branding keeps its established data and login identity", () => {
+test("the fork bundle is Paradev++ and keeps its data and login identity", () => {
 	process.env.SUPERSET_WORKSPACE_NAME = "fork";
 	expect(forkIdentity("Superset")).toEqual({
-		productName: "Superset++",
+		productName: "Paradev++",
+		runtimeName: "Superset++",
 		appId: "com.superset.desktop.fork",
 		scheme: "superset-fork",
 	});
@@ -19,7 +20,8 @@ test("fork branding keeps its established data and login identity", () => {
 test("upstream branding cannot rename the fork's technical product", () => {
 	process.env.SUPERSET_WORKSPACE_NAME = "fork";
 	expect(forkIdentity("Paradev")).toEqual({
-		productName: "Superset++",
+		productName: "Paradev++",
+		runtimeName: "Superset++",
 		appId: "com.superset.desktop.fork",
 		scheme: "superset-fork",
 	});
@@ -32,6 +34,7 @@ test.each([
 	else process.env.SUPERSET_WORKSPACE_NAME = value;
 	expect(forkIdentity("Superset")).toEqual({
 		productName: "Superset",
+		runtimeName: "Superset",
 		appId: "com.superset.desktop",
 		scheme: "superset",
 	});

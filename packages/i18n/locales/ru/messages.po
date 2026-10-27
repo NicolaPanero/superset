@@ -18376,6 +18376,9 @@ msgstr "В анонсе также рассказывается о посевн�
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Приложение можно скачать бесплатно. Требуются iOS 26 или новее и Paradev Pro. Следующей будет версия для Android."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Теперь приложение называется Paradev++.app. Обновление перемещает Superset++.app в корзину, поэтому закрепите новое приложение в Dock заново."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Приложение версии {appVersion}, но подключено к службе хоста, запущенной чем-то другим, вероятно старой CLI или другой сборкой Paradev. Перезапуск заменит её копией из этого приложения."
 

@@ -18376,6 +18376,9 @@ msgstr "De aankondiging deelt ook de seedronde van $11,5 miljoen onder leiding v
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "De app is gratis te downloaden. Vereist iOS 26 of nieuwer en Paradev Pro. Android volgt hierna."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "De app heet nu Paradev++.app. De update verplaatst Superset++.app naar de prullenmand, dus zet de nieuwe app opnieuw vast in het Dock."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "De app is op {appVersion}, maar gekoppeld aan een hostservice die door iets anders is gestart, waarschijnlijk een oudere CLI of een andere Paradev-build. Opnieuw starten vervangt die door de kopie van deze app."
 

@@ -18376,6 +18376,9 @@ msgstr "公告也介紹了由 Union Square Ventures 領投、Y Combinator 與 Pa
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "此 App 可免費下載。需要 iOS 26 或更新版本以及 Paradev Pro。接下來將推出 Android 版。"
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "App 現在名為 Paradev++.app。更新會將 Superset++.app 移到垃圾桶，請重新將新的 App 固定到 Dock。"
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "應用程式版本為 {appVersion}，但連接的是由其他程式（可能是舊版 CLI 或另一個 Paradev 版本）啟動的主機服務。重新啟動會將其替換為此應用程式自帶的副本。"
 

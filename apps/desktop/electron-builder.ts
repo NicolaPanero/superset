@@ -18,8 +18,8 @@ import { localizeMacDisplayName } from "./scripts/localize-display-name";
 const currentYear = new Date().getFullYear();
 const identity = forkIdentity(pkg.productName);
 const productName = identity.productName;
-// productName names the bundle, userData, logs and the keychain entry, so it
-// never changes; the menu bar, Dock and launchers show displayName.
+// productName names the bundle; runtimeName names app.name, userData, logs and
+// the keychain entry, so it never changes. The UI shows displayName.
 export const displayName =
 	forkAppDisplayName(productName, identity.scheme === "superset-fork") ??
 	(process.env.DESKTOP_DISPLAY_NAME || productName);
@@ -36,7 +36,7 @@ const dmgBackgroundPath = join(
 const config: Configuration = {
 	appId: identity.appId,
 	productName,
-	extraMetadata: { productName },
+	extraMetadata: { productName: identity.runtimeName },
 	afterPack: localizeMacDisplayName(displayName),
 	copyright: `Copyright © ${currentYear} Superset Inc.`,
 	electronVersion: pkg.devDependencies.electron.replace(/^\^/, ""),
