@@ -46,6 +46,7 @@ import {
 	structuredContextHandoff,
 } from "../../utils/structuredContextHandoff";
 import { ForkChatSwitchButton } from "./components/ForkChatSwitchButton";
+import { forkSwitchTarget } from "./utils/forkSwitchTarget";
 import {
 	forkTransferPolicy,
 	runForkTransfer,
@@ -149,12 +150,12 @@ export function ForkChatSwitchDialog({
 				capabilities?.adapters.find((adapter) => adapter.agent === preset)
 					?.verified,
 		);
+	const chatConfig =
+		configs.find((config) => config.id === data.acpAgentConfigId) ??
+		configs.find((config) => config.presetId === sourcePreset);
 	// The chat's own agent is a target only to move it to another account.
-	const sameAgentConfig = accountSwitcher
-		? (configs.find((config) => config.id === data.acpAgentConfigId) ??
-			configs.find((config) => config.presetId === sourcePreset))
-		: undefined;
-	const target = configs.find((config) => config.id === request?.configId);
+	const sameAgentConfig = accountSwitcher ? chatConfig : undefined;
+	const target = forkSwitchTarget(configs, request?.configId, chatConfig);
 	const sameAgent = target !== undefined && target === sameAgentConfig;
 	const managed = target?.presetId === "claude" || target?.presetId === "codex";
 	const quota = useHostUsageQuota(open && managed ? hostUrl : null);
@@ -178,6 +179,7 @@ export function ForkChatSwitchDialog({
 			sourceSessionId &&
 			verified(sourcePreset) &&
 			verified(target?.presetId) &&
+			target?.presetId !== sourcePreset &&
 			target?.resumeArgs?.length,
 	);
 	const transferPolicy = forkTransferPolicy(
