@@ -4382,9 +4382,6 @@ msgstr "Ditutup"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Menutup layar tetap membuat Mac tidur"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Menutup layar tetap membuat Mac tidur."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Menutup port ini akan menghentikan proses yang memakainya."
 
@@ -11128,6 +11125,9 @@ msgstr "model"
 
 msgid "Model"
 msgstr "Model"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Daftar model dan upaya langsung terbuka: Paradev++ mengingatnya dan memperbaruinya di latar belakang."
 
 msgid "Model context usage"
 msgstr "Penggunaan konteks model"

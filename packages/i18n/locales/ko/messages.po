@@ -4382,9 +4382,6 @@ msgstr "닫힘"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "덮개를 닫으면 Mac은 여전히 잠자기 상태가 됩니다"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "덮개를 닫으면 Mac은 여전히 잠자기 상태가 됩니다."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "이 포트들을 닫으면 해당 포트를 사용하는 프로세스가 종료됩니다."
 
@@ -11128,6 +11125,9 @@ msgstr "모델"
 
 msgid "Model"
 msgstr "모델"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "모델과 추론 강도 목록이 바로 열립니다. Paradev++가 목록을 기억하고 백그라운드에서 새로 고칩니다."
 
 msgid "Model context usage"
 msgstr "모델 컨텍스트 사용량"

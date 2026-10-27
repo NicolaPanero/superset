@@ -4382,9 +4382,6 @@ msgstr "Geschlossen"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Wenn du den Deckel schließt, geht der Mac trotzdem in den Ruhezustand"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Wenn du den Deckel schließt, geht der Mac trotzdem in den Ruhezustand."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Das Schließen dieser Ports beendet die Prozesse, die sie nutzen."
 
@@ -11128,6 +11125,9 @@ msgstr "Modell"
 
 msgid "Model"
 msgstr "Modell"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Modell- und Aufwand-Listen öffnen sich sofort: Paradev++ merkt sie sich und aktualisiert sie im Hintergrund."
 
 msgid "Model context usage"
 msgstr "Kontextnutzung des Modells"

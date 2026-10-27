@@ -85,6 +85,14 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   annulla. Grok offre Grok 4.7, 4.6 e 4.5. Grok 4.7 arriva fino a xHigh
   quando il suo override locale dichiara `reasoning_efforts`; Grok 4.5 arriva
   fino a High.
+  Modelli ed effort arrivano dall’ultima lettura salvata dall’host in
+  `$SUPERSET_HOME_DIR/fork/model-catalog.json`, una per agente e account, valida
+  per tutti i workspace (64 voci, 30 giorni). Leggere i modelli avvia l’agente,
+  quindi l’host lo fa solo alla prima apertura, dopo 24 ore (in background,
+  mostrando intanto la lista salvata) o con il refresh del selettore; ogni
+  lettura riuscita aggiorna il file. La lista cambia se cambiano configurazione,
+  variabili o account dell’agente. Cambiando modello resta visibile l’effort
+  attuale finché arrivano le opzioni del nuovo modello.
   Il tondino elenca gli account con la quota, la continuazione
   automatica, i reset del provider e la copia dell’ID sessione. In una chat
   Claude, scegliere un altro account sposta subito la chat su quell’account con

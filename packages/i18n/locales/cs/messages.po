@@ -4382,9 +4382,6 @@ msgstr "Uzavřeno"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Zavření víka Mac i tak uspí"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Zavření víka Mac i tak uspí."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Zavřením těchto portů ukončíte procesy, které je používají."
 
@@ -11128,6 +11125,9 @@ msgstr "model"
 
 msgid "Model"
 msgstr "Model"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Seznamy modelů a úsilí se otevřou okamžitě: Paradev++ si je pamatuje a aktualizuje je na pozadí."
 
 msgid "Model context usage"
 msgstr "Využití kontextu modelu"

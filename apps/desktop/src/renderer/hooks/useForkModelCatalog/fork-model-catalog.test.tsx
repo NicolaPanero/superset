@@ -65,3 +65,57 @@ test("cached model options and native efforts stay scoped to the selected host a
 	view.rerender({ hostUrl: "http://host-a", accountSelection: null });
 	expect(view.result.current.models).toEqual([]);
 });
+
+test("picking a model keeps an effort on screen until its own efforts load", () => {
+	const fixture = queryFixture();
+	const key = [
+		"fork-model-catalog",
+		"http://host-a",
+		"claude",
+		{ defaultAccount: true },
+		undefined,
+		undefined,
+	];
+	const options = (model: string, effort: string) => [
+		{
+			id: "model",
+			label: "Model",
+			category: "model" as const,
+			currentValue: model,
+			options: [
+				{ id: "opus", label: "Opus" },
+				{ id: "sonnet", label: "Sonnet" },
+			],
+		},
+		{
+			id: "effort",
+			label: "Effort",
+			category: "thought_level" as const,
+			currentValue: effort,
+			options: [{ id: effort, label: effort }],
+		},
+	];
+	fixture.client.setQueryData([...key, null], {
+		configOptions: options("opus", "xhigh"),
+	});
+	const view = renderHook(
+		() =>
+			useForkModelCatalog({
+				hostUrl: "http://host-a",
+				agent: "claude",
+				model: "sonnet",
+				enabled: false,
+			}),
+		{ wrapper: fixture.wrapper },
+	);
+	expect(view.result.current.efforts.map((o) => o.id)).toEqual(["xhigh"]);
+	expect(
+		view.result.current.configOptions.find((o) => o.category === "model")
+			?.currentValue,
+	).toBe("sonnet");
+	fixture.client.setQueryData([...key, "sonnet"], {
+		configOptions: options("sonnet", "high"),
+	});
+	view.rerender({});
+	expect(view.result.current.efforts.map((o) => o.id)).toEqual(["high"]);
+});

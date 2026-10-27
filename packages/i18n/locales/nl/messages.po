@@ -4382,9 +4382,6 @@ msgstr "Gesloten"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Als je het deksel sluit, gaat de Mac toch in sluimerstand"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Als je het deksel sluit, gaat de Mac toch in sluimerstand."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Als je deze poorten sluit, worden de processen die ze gebruiken beëindigd."
 
@@ -11128,6 +11125,9 @@ msgstr "model"
 
 msgid "Model"
 msgstr "Model"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Lijsten met modellen en effort openen direct: Paradev++ onthoudt ze en werkt ze op de achtergrond bij."
 
 msgid "Model context usage"
 msgstr "Contextgebruik van model"

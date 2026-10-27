@@ -4382,9 +4382,6 @@ msgstr "已关闭"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "合上盖子时 Mac 仍会进入睡眠"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "合上盖子时 Mac 仍会进入睡眠。"
-
 msgid "Closing these ports will end the processes using them."
 msgstr "关闭这些端口会结束正在使用它们的进程。"
 
@@ -11128,6 +11125,9 @@ msgstr "模型"
 
 msgid "Model"
 msgstr "模型"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "模型和推理强度列表即时打开：Paradev++ 会记住它们并在后台刷新。"
 
 msgid "Model context usage"
 msgstr "模型上下文用量"

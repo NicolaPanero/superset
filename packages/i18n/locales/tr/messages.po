@@ -4382,9 +4382,6 @@ msgstr "Kapalı"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Kapağı kapatmak Mac’i yine de uyku moduna alır"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Kapağı kapatmak Mac’i yine de uyku moduna alır."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Bu portları kapatmak, onları kullanan süreçleri sonlandırır."
 
@@ -11128,6 +11125,9 @@ msgstr "model"
 
 msgid "Model"
 msgstr "Model"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Model ve çaba listeleri anında açılır: Paradev++ bunları hatırlar ve arka planda yeniler."
 
 msgid "Model context usage"
 msgstr "Model bağlam kullanımı"

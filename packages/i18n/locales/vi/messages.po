@@ -4382,9 +4382,6 @@ msgstr "Đã đóng"
 msgid "Closing the lid still puts the Mac to sleep"
 msgstr "Gập nắp máy vẫn đưa máy Mac vào chế độ ngủ"
 
-msgid "Closing the lid still puts the Mac to sleep."
-msgstr "Gập nắp máy vẫn đưa máy Mac vào chế độ ngủ."
-
 msgid "Closing these ports will end the processes using them."
 msgstr "Đóng các cổng này sẽ kết thúc những tiến trình đang dùng chúng."
 
@@ -11128,6 +11125,9 @@ msgstr "mô hình"
 
 msgid "Model"
 msgstr "Mô hình"
+
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Danh sách mô hình và mức nỗ lực mở ngay: Paradev++ ghi nhớ và làm mới chúng ở chế độ nền."
 
 msgid "Model context usage"
 msgstr "Mức dùng ngữ cảnh của mô hình"

@@ -39,7 +39,8 @@ export function ForkWhatsNewNotice() {
 				"Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar.",
 		}),
 		t({
-			message: "Closing the lid still puts the Mac to sleep.",
+			message:
+				"Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background.",
 		}),
 		t({
 			message:
