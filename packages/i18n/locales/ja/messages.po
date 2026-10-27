@@ -9449,6 +9449,9 @@ msgstr "エージェント向け指示を改善"
 msgid "Improved diff viewer"
 msgstr "差分ビューアの改善"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Claudeのチャットでは、入力欄で別のアカウントを選ぶと、履歴をすべて保ったままチャットがすぐにそのアカウントへ移動します。"
+
 msgid "in a new session"
 msgstr "新しいセッションで"
 
@@ -17706,6 +17709,9 @@ msgstr "応答を停止"
 msgid "Stop the agent and send this now"
 msgstr "エージェントを停止して今すぐ送信"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "エージェントを停止して{accountName}に切り替えますか？"
+
 msgid "Stop the agent before you edit a message"
 msgstr "メッセージを編集する前にエージェントを停止してください"
 
@@ -18432,6 +18438,9 @@ msgstr "新しいチャットが起動するまで、現在のチャットは開
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "現在のプロンプトが選択したバージョンで置き換えられます。履歴に新しい「復元済み」エントリが追加されるので、元に戻せます。"
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "実行中のターンは停止します。チャットは履歴をすべて保ったまま新しいアカウントで再び開きます。"
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "デーモンは実行中のセッションを新しいバイナリに引き継げませんでした。理由:"

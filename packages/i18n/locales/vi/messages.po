@@ -9449,6 +9449,9 @@ msgstr "Cải thiện hướng dẫn cho agent"
 msgid "Improved diff viewer"
 msgstr "Khung xem diff cải tiến"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Trong cuộc trò chuyện Claude, hãy chọn tài khoản khác trong ô soạn để chuyển ngay cuộc trò chuyện sang đó, kèm toàn bộ lịch sử."
+
 msgid "in a new session"
 msgstr "trong phiên mới"
 
@@ -17706,6 +17709,9 @@ msgstr "Dừng phản hồi"
 msgid "Stop the agent and send this now"
 msgstr "Dừng tác tử và gửi ngay"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Dừng agent và chuyển sang {accountName}?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "Hãy dừng tác tử trước khi chỉnh sửa tin nhắn"
 
@@ -18432,6 +18438,9 @@ msgstr "Cuộc trò chuyện hiện tại vẫn mở cho đến khi cuộc mới
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt hiện tại sẽ được thay bằng phiên bản đã chọn. Một mục \"Đã khôi phục\" sẽ được thêm vào lịch sử để bạn có thể hoàn tác."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Lượt hiện tại sẽ dừng. Cuộc trò chuyện mở lại trên tài khoản mới với toàn bộ lịch sử."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Daemon không chuyển được các phiên đang chạy sang bản binary mới. Lý do:"

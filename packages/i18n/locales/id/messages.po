@@ -9449,6 +9449,9 @@ msgstr "Perbaiki instruksi agen"
 msgid "Improved diff viewer"
 msgstr "Penampil diff yang lebih baik"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Di chat Claude, pilih akun lain di composer untuk langsung memindahkan chat ke sana, beserta seluruh riwayatnya."
+
 msgid "in a new session"
 msgstr "dalam sesi baru"
 
@@ -17706,6 +17709,9 @@ msgstr "Hentikan respons"
 msgid "Stop the agent and send this now"
 msgstr "Hentikan agen dan kirim sekarang"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Hentikan agen dan beralih ke {accountName}?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "Hentikan agen sebelum mengedit pesan"
 
@@ -18432,6 +18438,9 @@ msgstr "Chat saat ini tetap terbuka sampai chat baru berjalan."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt saat ini akan diganti dengan versi yang dipilih. Entri \"Dipulihkan\" yang baru akan ditambahkan ke riwayat sehingga Anda bisa membatalkannya."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Giliran saat ini berhenti. Chat dibuka kembali di akun baru dengan seluruh riwayatnya."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Daemon tidak bisa menyerahkan sesi aktif Anda ke biner yang baru. Alasan:"

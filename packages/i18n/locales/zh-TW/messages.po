@@ -9449,6 +9449,9 @@ msgstr "改進代理程式說明"
 msgid "Improved diff viewer"
 msgstr "更好的差異檢視器"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "在 Claude 聊天中，於輸入區選擇其他帳號，即可立即將聊天連同完整記錄移到該帳號。"
+
 msgid "in a new session"
 msgstr "在新的工作階段中"
 
@@ -17706,6 +17709,9 @@ msgstr "停止回覆"
 msgid "Stop the agent and send this now"
 msgstr "停止代理並立即傳送"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "要停止代理程式並切換到 {accountName} 嗎？"
+
 msgid "Stop the agent before you edit a message"
 msgstr "編輯訊息前請先停止代理程式"
 
@@ -18432,6 +18438,9 @@ msgstr "新聊天執行前，目前的聊天會保持開啟。"
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "目前提示詞會被所選版本替換。歷史中會新增一條「已恢復」記錄，方便你復原。"
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "目前的回合會停止。聊天會連同完整記錄在新帳號中重新開啟。"
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "守護程式無法將你的活動會話移交給新的二進位檔案。原因："

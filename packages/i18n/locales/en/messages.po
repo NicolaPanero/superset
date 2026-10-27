@@ -9449,6 +9449,9 @@ msgstr "Improve the agent instructions"
 msgid "Improved diff viewer"
 msgstr "Improved diff viewer"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+
 msgid "in a new session"
 msgstr "in a new session"
 
@@ -17706,6 +17709,9 @@ msgstr "Stop response"
 msgid "Stop the agent and send this now"
 msgstr "Stop the agent and send this now"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Stop the agent and switch to {accountName}?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "Stop the agent before you edit a message"
 
@@ -18432,6 +18438,9 @@ msgstr "The current chat stays open until the new one is running."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "The current turn stops. The chat reopens on the new account with its full history."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "The daemon couldn't hand off your live sessions to the new binary. Reason:"

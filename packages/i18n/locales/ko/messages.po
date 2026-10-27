@@ -9449,6 +9449,9 @@ msgstr "에이전트 지침 개선하기"
 msgid "Improved diff viewer"
 msgstr "차이 뷰어 개선"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Claude 채팅에서 입력창의 다른 계정을 선택하면 전체 기록과 함께 채팅이 즉시 그 계정으로 이동합니다."
+
 msgid "in a new session"
 msgstr "새 세션에서"
 
@@ -17706,6 +17709,9 @@ msgstr "응답 중지"
 msgid "Stop the agent and send this now"
 msgstr "에이전트를 중지하고 지금 보내기"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "에이전트를 중지하고 {accountName}(으)로 전환할까요?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "메시지를 편집하기 전에 에이전트를 중지하세요"
 
@@ -18432,6 +18438,9 @@ msgstr "새 채팅이 실행될 때까지 현재 채팅은 열린 상태로 유�
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "현재 프롬프트가 선택한 버전으로 교체됩니다. 기록에 \"복원됨\" 항목이 새로 추가되므로 되돌릴 수 있습니다."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "현재 턴이 중지됩니다. 채팅은 전체 기록과 함께 새 계정에서 다시 열립니다."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "데몬이 실행 중인 세션을 새 바이너리로 넘기지 못했습니다. 이유:"

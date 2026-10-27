@@ -9449,6 +9449,9 @@ msgstr "Ajan yönergelerini iyileştir"
 msgid "Improved diff viewer"
 msgstr "Geliştirilmiş fark görüntüleyici"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Bir Claude sohbetinde, sohbeti tüm geçmişiyle hemen oraya taşımak için yazma alanından başka bir hesap seçin."
+
 msgid "in a new session"
 msgstr "yeni bir oturumda"
 
@@ -17706,6 +17709,9 @@ msgstr "Yanıtı durdur"
 msgid "Stop the agent and send this now"
 msgstr "Ajanı durdur ve şimdi gönder"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Ajan durdurulup {accountName} hesabına geçilsin mi?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "Bir mesajı düzenlemeden önce ajanı durdurun"
 
@@ -18432,6 +18438,9 @@ msgstr "Yeni sohbet çalışana kadar mevcut sohbet açık kalır."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Geçerli istem, seçilen sürümle değiştirilecek. Bunu geri alabilmeniz için geçmişe yeni bir \"Geri yüklendi\" kaydı eklenecek."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Geçerli tur durur. Sohbet, tüm geçmişiyle yeni hesapta yeniden açılır."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Daemon, canlı oturumlarınızı yeni ikili dosyaya devredemedi. Nedeni:"

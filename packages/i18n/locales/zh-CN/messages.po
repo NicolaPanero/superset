@@ -9449,6 +9449,9 @@ msgstr "改进智能体说明"
 msgid "Improved diff viewer"
 msgstr "更好的差异查看器"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "在 Claude 聊天中，在输入框里选择其他账户，即可立即将聊天连同完整历史移到该账户。"
+
 msgid "in a new session"
 msgstr "在新会话中"
 
@@ -17706,6 +17709,9 @@ msgstr "停止回复"
 msgid "Stop the agent and send this now"
 msgstr "停止智能体并立即发送"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "停止智能体并切换到 {accountName}？"
+
 msgid "Stop the agent before you edit a message"
 msgstr "编辑消息前请先停止智能体"
 
@@ -18432,6 +18438,9 @@ msgstr "新聊天运行前，当前聊天会保持打开。"
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "当前提示词会被所选版本替换。历史中会新增一条“已恢复”记录，方便你撤销。"
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "当前轮次将停止。聊天会连同完整历史在新账户中重新打开。"
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "守护进程无法将你的活动会话移交给新的二进制文件。原因："

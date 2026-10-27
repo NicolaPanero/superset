@@ -9449,6 +9449,9 @@ msgstr "Vylepšit instrukce pro agenty"
 msgid "Improved diff viewer"
 msgstr "Vylepšený prohlížeč rozdílů"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "V chatu Claude vyberte v poli zprávy jiný účet a chat se na něj hned přesune i s celou historií."
+
 msgid "in a new session"
 msgstr "v nové relaci"
 
@@ -17706,6 +17709,9 @@ msgstr "Zastavit odpověď"
 msgid "Stop the agent and send this now"
 msgstr "Zastavit agenta a odeslat hned"
 
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Zastavit agenta a přepnout na {accountName}?"
+
 msgid "Stop the agent before you edit a message"
 msgstr "Před úpravou zprávy zastavte agenta"
 
@@ -18432,6 +18438,9 @@ msgstr "Aktuální chat zůstane otevřený, dokud nový nepoběží."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Současný prompt bude nahrazen vybranou verzí. Do historie přibude nový záznam „Obnoveno“, takže půjde vrátit zpět."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Aktuální tah se zastaví. Chat se znovu otevře v novém účtu s celou historií."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Démon nedokázal předat vaše živé relace nové binárce. Důvod:"

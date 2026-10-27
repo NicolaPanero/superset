@@ -43,6 +43,10 @@ export function ForkWhatsNewNotice() {
 		}),
 		t({
 			message:
+				"In a Claude chat, pick another account in the composer to move the chat there at once, with its full history.",
+		}),
+		t({
+			message:
 				"The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again.",
 		}),
 	];

@@ -86,8 +86,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   quando il suo override locale dichiara `reasoning_efforts`; Grok 4.5 arriva
   fino a High.
   Il tondino elenca gli account con la quota, la continuazione
-  automatica, i reset del provider e la copia dell’ID sessione; scegliere un
-  altro account apre la stessa conferma.
+  automatica, i reset del provider e la copia dell’ID sessione. In una chat
+  Claude, scegliere un altro account sposta subito la chat su quell’account con
+  tutta la cronologia; se l’agente sta lavorando chiede prima di interrompere il
+  turno. Per Codex scegliere un altro account apre la stessa conferma.
 - La conferma sceglie account, posizione (stessa chat, pannello affiancato o
   nuova scheda) e trasferimento: **Full history** riprende la conversazione
   nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
