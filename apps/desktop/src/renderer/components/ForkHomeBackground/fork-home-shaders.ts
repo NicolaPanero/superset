@@ -1,3 +1,4 @@
+import { FORK_DISPLAY_NAME } from "~/fork-display-name";
 import { RIPPLE_LIMIT } from "./fork-home-ripples";
 
 export const VERTEX_SHADER = `#version 300 es
@@ -99,7 +100,7 @@ uniform ivec2 uCellPixels;
 uniform float uHeight;
 uniform float uTime;
 uniform int uGlyphs;
-uniform int uLogoGlyphs[10];
+uniform int uLogoGlyphs[${FORK_DISPLAY_NAME.length}];
 uniform float uLogoRest;
 uniform float uDriftAlpha;
 uniform vec3 uInk;
@@ -117,7 +118,7 @@ void main() {
 	bool logo = field.a > 0.5;
 	int glyph;
 	if (logo) {
-		glyph = uLogoGlyphs[(cell.x + cell.y * 3) % 10];
+		glyph = uLogoGlyphs[(cell.x + cell.y * 3) % ${FORK_DISPLAY_NAME.length}];
 	} else {
 		float roll = floor(uTime * (0.04 + field.g * 7.0) + hash(id) * 13.0);
 		glyph = int(hash(id + roll * 0.37) * float(uGlyphs));

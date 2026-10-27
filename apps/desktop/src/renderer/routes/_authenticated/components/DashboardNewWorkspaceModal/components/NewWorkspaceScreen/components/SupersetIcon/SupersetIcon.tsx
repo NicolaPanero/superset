@@ -1,4 +1,5 @@
 import { cn } from "@superset/ui/utils";
+import { FORK_DISPLAY_NAME } from "~/fork-display-name";
 
 interface SupersetIconProps {
 	className?: string;
@@ -11,9 +12,9 @@ export function SupersetIcon({ className }: SupersetIconProps) {
 			shapeRendering="crispEdges"
 			xmlns="http://www.w3.org/2000/svg"
 			className={cn("text-[#eae8e6]", className)}
-			aria-label="Superset++"
+			aria-label={FORK_DISPLAY_NAME}
 		>
-			<title>{"Superset++"}</title>
+			<title>{FORK_DISPLAY_NAME}</title>
 			<path d="M2 5h4v2H4v2H2v4h2v2h2v2H2v-4H0V9h2V5Z" />
 			<path d="M7 5h3v2H9v2H7v4h2v2h1v2H7v-4H5V9h2V5Z" />
 			<path d="M12 5h3v4h2v4h-2v4h-3v-2h1v-2h2V9h-2V7h-1V5Z" />

@@ -1,13 +1,14 @@
 import { Trans } from "@lingui/react/macro";
 import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
+import { useAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
+import { useAcpChatStore } from "renderer/stores/acp-chat";
 import { useForkCliOptions } from "renderer/stores/fork-cli-options";
-import { useSettings } from "renderer/stores/settings";
 
 export function AcpChatSetting() {
 	const showCliOptions = useForkCliOptions();
-	const acpChatEnabled = useSettings((state) => state.acpChatEnabled !== false);
-	const updateSettings = useSettings((state) => state.update);
+	const acpChatEnabled = useAcpChatEnabled() === "enabled";
+	const setAcpChatEnabled = useAcpChatStore((state) => state.setEnabled);
 	if (!showCliOptions) return null;
 	return (
 		<div className="flex items-center justify-between gap-6">
@@ -25,7 +26,7 @@ export function AcpChatSetting() {
 			<Switch
 				id="local-acp-chat"
 				checked={acpChatEnabled}
-				onCheckedChange={(enabled) => updateSettings("acpChatEnabled", enabled)}
+				onCheckedChange={setAcpChatEnabled}
 			/>
 		</div>
 	);

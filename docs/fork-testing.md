@@ -1,4 +1,4 @@
-# Test delle funzionalità Superset++
+# Test delle funzionalità Paradev++
 
 ## Eseguire le regressioni
 

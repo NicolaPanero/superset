@@ -55,6 +55,7 @@ test("settings search offers Fork Settings and omits hidden Pro sections", () =>
 		true,
 		false,
 		true,
+		true,
 	);
 	expect(hidden.fork).toBe(6);
 	expect(hidden.billing).toBeUndefined();
@@ -66,6 +67,7 @@ test("settings search offers Fork Settings and omits hidden Pro sections", () =>
 		true,
 		true,
 		true,
+		false,
 		false,
 		false,
 	);

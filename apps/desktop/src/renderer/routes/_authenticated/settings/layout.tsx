@@ -11,7 +11,10 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { CheckResourcesHotkeyMount } from "renderer/commandPalette";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { useHistoryNavigationShortcuts } from "renderer/routes/_authenticated/_dashboard/hooks/useHistoryNavigationShortcuts";
-import { useForkProFeatures } from "renderer/stores/fork-cli-options";
+import {
+	useForkCliOptions,
+	useForkProFeatures,
+} from "renderer/stores/fork-cli-options";
 import {
 	type SettingsSection,
 	useSetSettingsSearchQuery,
@@ -124,6 +127,7 @@ function SettingsLayout() {
 		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
 	const rightPaneAreaFlag =
 		useFeatureFlagEnabled(FEATURE_FLAGS.RIGHT_PANE_AREA) === true;
+	const acpChatFlag = useForkCliOptions();
 	const searchQuery = useSettingsSearchQuery();
 	const setSearchQuery = useSetSettingsSearchQuery();
 	const originRoute = useSettingsOriginRoute();
@@ -145,6 +149,7 @@ function SettingsLayout() {
 						cloudWorkspacesEnabled,
 						mobileEnabled,
 						rightPaneAreaFlag,
+						acpChatFlag,
 						!showProFeatures,
 					)
 				: {},
@@ -155,6 +160,7 @@ function SettingsLayout() {
 			cloudWorkspacesEnabled,
 			mobileEnabled,
 			rightPaneAreaFlag,
+			acpChatFlag,
 			showProFeatures,
 		],
 	);

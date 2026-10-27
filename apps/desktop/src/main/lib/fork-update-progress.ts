@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
 import { BrowserWindow, nativeTheme } from "electron";
+import { FORK_DISPLAY_NAME } from "../../../fork-display-name";
 
 const escapeHtml = (text: string) =>
 	text.replace(
@@ -21,7 +22,7 @@ export async function showForkUpdateProgress(cancel: () => void) {
 		minimizable: false,
 		maximizable: false,
 		fullscreenable: false,
-		title: "Superset++",
+		title: FORK_DISPLAY_NAME,
 		...(parent ? { parent, modal: true } : {}),
 		backgroundColor: dark ? "#1d1c1b" : "#ffffff",
 		webPreferences: {

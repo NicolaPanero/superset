@@ -3,7 +3,7 @@ import { Bot } from "lucide-react";
 import { useMemo } from "react";
 import type { IconType } from "react-icons";
 import { BsTerminalPlus } from "react-icons/bs";
-import { LuGitCompareArrows, LuSearch } from "react-icons/lu";
+import { LuGitCompareArrows, LuMessageSquare, LuSearch } from "react-icons/lu";
 import { TbWorld } from "react-icons/tb";
 import {
 	ForkHomeBackground,
@@ -18,6 +18,7 @@ interface WorkspaceEmptyStateProps {
 	onOpenAgent: () => void;
 	onOpenBrowser: () => void;
 	onOpenChanges: () => void;
+	onOpenChat?: (() => void) | undefined;
 	onOpenQuickOpen: () => void;
 	onOpenTerminal: () => void;
 }
@@ -34,12 +35,14 @@ export function WorkspaceEmptyState({
 	onOpenAgent,
 	onOpenBrowser,
 	onOpenChanges,
+	onOpenChat,
 	onOpenQuickOpen,
 	onOpenTerminal,
 }: WorkspaceEmptyStateProps) {
 	const { t } = useLingui();
 	const { keys: newAgentDisplay } = useHotkeyDisplay("NEW_AGENT");
 	const { keys: newGroupDisplay } = useHotkeyDisplay("NEW_GROUP");
+	const { keys: newChatDisplay } = useHotkeyDisplay("NEW_CHAT");
 	const { keys: newBrowserDisplay } = useHotkeyDisplay("NEW_BROWSER");
 	const { keys: quickOpenDisplay } = useHotkeyDisplay("QUICK_OPEN");
 	const { keys: openChangesDisplay } = useHotkeyDisplay("OPEN_DIFF_VIEWER");
@@ -64,6 +67,17 @@ export function WorkspaceEmptyState({
 				icon: BsTerminalPlus,
 				onClick: onOpenTerminal,
 			},
+			...(onOpenChat
+				? [
+						{
+							id: "chat",
+							label: t({ message: "Open Chat" }),
+							display: newChatDisplay,
+							icon: LuMessageSquare,
+							onClick: onOpenChat,
+						},
+					]
+				: []),
 			{
 				id: "browser",
 				label: t({
@@ -95,10 +109,12 @@ export function WorkspaceEmptyState({
 		[
 			newAgentDisplay,
 			newBrowserDisplay,
+			newChatDisplay,
 			newGroupDisplay,
 			onOpenBrowser,
 			onOpenAgent,
 			onOpenChanges,
+			onOpenChat,
 			onOpenQuickOpen,
 			onOpenTerminal,
 			openChangesDisplay,

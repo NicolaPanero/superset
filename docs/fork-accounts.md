@@ -1,7 +1,7 @@
-# Superset++ account profiles
+# Paradev++ account profiles
 
 Add an account from the workspace account menu or Settings → Usage. Sign in with
-the provider’s own CLI; each profile stores its own login. Superset++ does not
+the provider’s own CLI; each profile stores its own login. Paradev++ does not
 copy credentials or refresh tokens from the external CLI login.
 
 The profile name is optional when adding an account on an updated fork host.
@@ -27,7 +27,7 @@ profile or inherit its quota. To use another identity, add another profile with 
 different name. Missing profiles remain visible until explicitly removed.
 
 The secondary **CLI login** entry follows the external CLI’s current sign-in.
-It is available as an explicit launch choice, but cannot become the Superset++
+It is available as an explicit launch choice, but cannot become the Paradev++
 default and is excluded from suggested automatic recovery targets. Changing the
 external CLI login does not change independent profiles or stop running chats.
 
@@ -56,7 +56,7 @@ The pane's Account usage popover, the chat session menu and Settings → Local a
 - Redemption requires an explicit confirmation and a registered, independent subscription profile. The host checks the profile identity and the CLI's account email before redeeming. API billing and mutable external logins cannot use the direct action.
 - Requests and five-minute caches are shared across visible views, with at most two account probes running together. No prompt, model turn, hook, or MCP call is used. The selected account's quota is refreshed after redemption; other account caches and `Retry-After` backoff remain intact.
 - Each logical redemption uses the same UUID on retries. A private host journal stores at most 128 operation records for 24 hours, with no credentials, to recover an uncertain result after a host restart. Successful, previously redeemed, unavailable-credit and ineligible-window responses remain distinct.
-- Claude's free-reset offer currently has no documented Claude Code interface equivalent. The action opens Claude's official Settings → Usage page and asks the user to check the account email in the browser. A reset applied there also restores the same account's Claude Code allowance; Superset++ does not infer offer counts or redeem it through undocumented browser endpoints.
+- Claude's free-reset offer currently has no documented Claude Code interface equivalent. The action opens Claude's official Settings → Usage page and asks the user to check the account email in the browser. A reset applied there also restores the same account's Claude Code allowance; Paradev++ does not infer offer counts or redeem it through undocumented browser endpoints.
 
 References: [Codex app-server](https://learn.chatgpt.com/docs/app-server), [Claude limit resets](https://support.claude.com/en/articles/17007452-what-is-a-limit-reset).
 

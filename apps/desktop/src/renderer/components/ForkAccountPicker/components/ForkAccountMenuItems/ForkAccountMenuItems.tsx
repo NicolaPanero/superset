@@ -80,7 +80,7 @@ export function ForkAccountMenuItems({
 										? forkReconnectTarget(provider, option, usage)
 										: null;
 								if (target) afterClose(() => account.setReconnect(target));
-								else account.choose(option.selection);
+								else afterClose(() => account.choose(option.selection));
 							}}
 							className="grid cursor-pointer grid-cols-[1rem_minmax(0,1fr)] items-start gap-x-2 gap-y-1 py-1.5"
 						>

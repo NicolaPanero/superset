@@ -16,7 +16,10 @@ import {
 	WINDOW_CONTROLS_ROW_HEIGHT,
 	WINDOW_CONTROLS_ROW_TOP,
 } from "renderer/routes/_authenticated/_dashboard/components/WindowChrome";
-import { useForkProFeatures } from "renderer/stores/fork-cli-options";
+import {
+	useForkCliOptions,
+	useForkProFeatures,
+} from "renderer/stores/fork-cli-options";
 import {
 	useSetSettingsSearchQuery,
 	useSettingsOriginRoute,
@@ -41,6 +44,7 @@ export function SettingsSidebar() {
 		useFeatureFlagEnabled(FEATURE_FLAGS.CLOUD_WORKSPACES) === true;
 	const rightPaneAreaFlag =
 		useFeatureFlagEnabled(FEATURE_FLAGS.RIGHT_PANE_AREA) === true;
+	const acpChatFlag = useForkCliOptions();
 	const normalizedSearchQuery = searchQuery.trim();
 	const matchCounts = normalizedSearchQuery
 		? getVisibleMatchCountBySection(
@@ -49,6 +53,7 @@ export function SettingsSidebar() {
 				cloudWorkspacesEnabled,
 				mobileEnabled,
 				rightPaneAreaFlag,
+				acpChatFlag,
 				!showProFeatures,
 			)
 		: null;

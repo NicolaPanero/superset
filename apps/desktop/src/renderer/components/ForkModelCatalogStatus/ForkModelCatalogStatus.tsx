@@ -4,10 +4,12 @@ import { Button } from "@superset/ui/button";
 export function ForkModelCatalogStatus({
 	loading,
 	error,
+	signedOut = false,
 	refresh,
 }: {
 	loading: boolean;
 	error: boolean;
+	signedOut?: boolean;
 	refresh: () => void;
 }) {
 	return (
@@ -18,6 +20,8 @@ export function ForkModelCatalogStatus({
 			<span>
 				{loading ? (
 					<Trans>Loading models…</Trans>
+				) : signedOut ? (
+					<Trans>Reconnect an account to load models.</Trans>
 				) : error ? (
 					<Trans>Models unavailable. Check the agent and host.</Trans>
 				) : (
@@ -29,7 +33,7 @@ export function ForkModelCatalogStatus({
 				variant="ghost"
 				size="sm"
 				className="h-6 shrink-0 px-2 text-xs"
-				disabled={loading}
+				disabled={loading || signedOut}
 				onClick={refresh}
 			>
 				<Trans>Refresh</Trans>

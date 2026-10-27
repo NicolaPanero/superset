@@ -1,0 +1,8 @@
+{
+	"id": "paradev",
+	"repository": "ParadevAI/Paradev",
+	"gitUrl": "https://github.com/ParadevAI/Paradev.git",
+	"branch": "main",
+	"stableTagPattern": "^desktop-v[0-9]+\\.[0-9]+\\.[0-9]+$",
+	"mirrorMain": true
+}

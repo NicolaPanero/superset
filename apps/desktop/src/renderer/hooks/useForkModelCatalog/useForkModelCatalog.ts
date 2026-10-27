@@ -1,6 +1,6 @@
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 
 type Input = {
@@ -12,21 +12,27 @@ type Input = {
 	model?: string | null;
 	enabled?: boolean;
 };
-export function useForkModelCatalog(input: Input) {
+export function useForkModelCatalog(
+	input: Input,
+	clientForHost = getHostServiceClientByUrl,
+) {
 	const { hostUrl, enabled = true, model, ...selection } = input;
 	const active =
 		enabled && !!hostUrl && !!selection.agent && selection.agent !== "none";
+	const forced = useRef(false);
 	const fetch = async (model?: string) => {
+		const refresh = forced.current;
+		forced.current = false;
 		if (!hostUrl || !selection.agent)
 			return {
 				configOptions: [] as SessionConfigOption[],
 				modelConfigOptions: undefined,
 			};
-		return getHostServiceClientByUrl(hostUrl).agents.modelCatalog.query({
+		return clientForHost(hostUrl).agents.modelCatalog.query({
 			...selection,
 			agent: selection.agent,
 			model,
-			refresh: true,
+			refresh,
 		});
 	};
 	const key = [
@@ -90,8 +96,10 @@ export function useForkModelCatalog(input: Input) {
 		isFetching:
 			base.isFetching || (!!requested && !nativeTraits && traits.isFetching),
 		isError: base.isError || (!!requested && !nativeTraits && traits.isError),
-		refetch: () =>
-			requested && !nativeTraits ? traits.refetch() : base.refetch(),
+		refetch: () => {
+			forced.current = true;
+			return requested && !nativeTraits ? traits.refetch() : base.refetch();
+		},
 		isSuccess:
 			base.isSuccess && (!requested || !!nativeTraits || traits.isSuccess),
 	};

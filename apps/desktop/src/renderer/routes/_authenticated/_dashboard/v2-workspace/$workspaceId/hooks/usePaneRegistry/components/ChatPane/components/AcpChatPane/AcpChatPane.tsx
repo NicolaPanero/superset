@@ -73,6 +73,7 @@ export function AcpChatPane({
 	onOpenFile,
 	onOpenPage,
 	onOpenLink,
+	onOpenHistory,
 	onModeChange,
 	onSessionCreated,
 	onSwitchAgent,
@@ -104,6 +105,8 @@ export function AcpChatPane({
 	onOpenFile?: OpenFile;
 	onOpenPage?: OpenPage;
 	onOpenLink?: OpenLink;
+	/** Opens the pane header's chat history picker, as `/resume` does. */
+	onOpenHistory?: () => void;
 	onSwitchAgent?: (target: AgentSwitchTarget) => void;
 	agentConfigId?: string;
 	accountSelection?: string | null;
@@ -588,6 +591,7 @@ export function AcpChatPane({
 			draftKey={draftKey}
 			isActive={isActive}
 			notice={notice}
+			onOpenHistory={onOpenHistory}
 			onQueue={onQueuePrompt}
 			queued={pendingPrompts}
 			workspaceId={workspaceId}
@@ -703,6 +707,7 @@ export function AcpChatPane({
 			openFile={onOpenFile}
 			openPage={onOpenPage}
 			openLink={onOpenLink}
+			onOpenHistory={onOpenHistory}
 			onSessionState={(state, promptTitle) => {
 				// A resume that found no transcript lands on a different agent
 				// session. Keep the pane pointed at the live one, or the trip back

@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "superset-1.40-context-handoff-2026-10";
+export const FORK_WHATS_NEW_ID = "paradev-2.0-migration-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -30,21 +30,22 @@ export function ForkWhatsNewNotice() {
 	const [seen, setSeen] = useState(() => hasSeenForkWhatsNew(localStorage));
 	if (seen) return null;
 	const highlights = [
-		t({ message: "Edit a sent message and the agent continues from it." }),
 		t({
-			message:
-				"Queued prompts, subagents and background shells share one drawer above the composer.",
-		}),
-		t({
-			message: "Branched chats open in a new tab and keep their account.",
+			message: "Superset++ is now Paradev++, with the same logo and your data.",
 		}),
 		t({
 			message:
-				"Summary only now keeps the original request and the latest messages whole.",
+				"The new workspace layout keeps your account, model and repository controls.",
+		}),
+		t({
+			message: "Open chat history directly from the composer.",
 		}),
 		t({
 			message:
-				"The new agent can read omitted messages of the earlier chat when it needs them.",
+				"Stop a busy Claude chat and switch accounts while keeping its history.",
+		}),
+		t({
+			message: "Existing accounts, settings and update channels are preserved.",
 		}),
 	];
 	const notice: DesktopNotice = {
@@ -52,7 +53,7 @@ export function ForkWhatsNewNotice() {
 		severity: "info",
 		trigger: "post-update",
 		body: [
-			`### ${t({ message: "What's new in Superset++" })}`,
+			`### ${t({ message: "What's new in Paradev++" })}`,
 			highlights.map((line) => `- ${line}`).join("\n"),
 			t({
 				message:

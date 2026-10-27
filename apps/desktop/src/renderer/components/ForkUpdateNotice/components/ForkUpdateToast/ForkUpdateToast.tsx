@@ -36,7 +36,7 @@ export function ForkUpdateToast({
 				/>
 				<div className="min-w-0 flex-1">
 					<p className="text-sm font-medium">
-						<Trans>A Superset++ update is available.</Trans>
+						<Trans>A Paradev++ update is available.</Trans>
 					</p>
 					<p
 						className="mt-1 truncate text-xs text-muted-foreground"

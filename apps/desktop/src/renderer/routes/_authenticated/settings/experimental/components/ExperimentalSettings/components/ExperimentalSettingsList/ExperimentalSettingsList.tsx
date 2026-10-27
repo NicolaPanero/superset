@@ -4,7 +4,10 @@ import { Button } from "@superset/ui/button";
 import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
 import { useFeatureFlagEnabled } from "posthog-js/react";
+import { useAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
+import { useAcpChatStore } from "renderer/stores/acp-chat";
+import { useForkCliOptions } from "renderer/stores/fork-cli-options";
 import {
 	useInlineWorkspacePortsStore,
 	usePortsDisplayMode,
@@ -24,7 +27,6 @@ import {
 	SETTING_ITEM_ID,
 	type SettingItemId,
 } from "../../../../../utils/settings-search";
-import { AcpChatSetting } from "../AcpChatSetting";
 import { WaitForSetupBeforeAgentSetting } from "../WaitForSetupBeforeAgentSetting";
 
 interface ExperimentalSettingsListProps {
@@ -59,6 +61,12 @@ export function ExperimentalSettingsList({
 	const setRightPaneAreaEnabled = useRightPaneAreaStore(
 		(state) => state.setEnabled,
 	);
+	const acpChatFlag = useForkCliOptions();
+	const showAcpChat =
+		acpChatFlag &&
+		isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT, visibleItems);
+	const acpChatEnabled = useAcpChatEnabled() === "enabled";
+	const setAcpChatEnabled = useAcpChatStore((state) => state.setEnabled);
 	const showWaitForSetupBeforeAgent = isItemVisible(
 		SETTING_ITEM_ID.EXPERIMENTAL_WAIT_FOR_SETUP_BEFORE_AGENT,
 		visibleItems,
@@ -85,9 +93,6 @@ export function ExperimentalSettingsList({
 			</div>
 
 			<div className="space-y-6">
-				{isItemVisible(SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT, visibleItems) && (
-					<AcpChatSetting />
-				)}
 				{showV1Migration && !isV2OnlyUser && (
 					<div className="flex items-center justify-between gap-6">
 						<div className="min-w-0 flex-1 space-y-0.5">
@@ -206,6 +211,32 @@ export function ExperimentalSettingsList({
 							id="right-pane-area"
 							checked={rightPaneAreaEnabled}
 							onCheckedChange={setRightPaneAreaEnabled}
+						/>
+					</div>
+				)}
+				{showAcpChat && (
+					<div className="flex items-center justify-between gap-6">
+						<div className="min-w-0 flex-1 space-y-0.5">
+							<Label htmlFor="acp-chat" className="text-sm font-medium">
+								<HighlightText
+									text={t({ message: "Chat" })}
+									query={searchQuery}
+								/>
+							</Label>
+							<p className="text-xs text-muted-foreground">
+								<HighlightText
+									text={t({
+										message:
+											"Open Claude and Codex sessions in a chat pane instead of a terminal.",
+									})}
+									query={searchQuery}
+								/>
+							</p>
+						</div>
+						<Switch
+							id="acp-chat"
+							checked={acpChatEnabled}
+							onCheckedChange={setAcpChatEnabled}
 						/>
 					</div>
 				)}
