@@ -107,6 +107,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   attende l'arresto del processo prima di riaprire la cronologia sull'altro
   account. I messaggi in coda restano in pausa e la scelta **Continue** non
   cambia. Se l'arresto fallisce, il trasferimento non parte.
+- Ogni chat parte in **Full access**, anche quando riprende una sessione o
+  riceve la conversazione da un altro agente o account, se non è stata scelta
+  un’altra modalità. Gli agenti senza una modalità nativa di accesso completo
+  usano l’approvazione automatica dell’app.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
   espone questa modalità. Usa la pianificazione nativa con **Full access**:
   approva automaticamente le richieste degli strumenti, inclusi comandi,

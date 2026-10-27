@@ -18,6 +18,7 @@ import {
 } from "./forkAntigravityRuntime";
 import { chatAccountUsesApiCredentials } from "./forkChatAccount";
 import { forkConfiguredCli } from "./forkConfiguredCli";
+import { startInFullAccess } from "./forkFullAccessStart";
 import { forkGeminiAuthMethod } from "./forkGeminiAuth";
 import { forkLaunchChoices } from "./forkLaunchChoices";
 import { forkQuotaRecoveryHarness } from "./forkQuotaRecoveryHarness";
@@ -63,7 +64,7 @@ export function acpHarnessFactory(
 			options,
 			(accountSelection, captured) => {
 				let authMethodId = entry.authMethodId;
-				return createAdapter({
+				const adapter = createAdapter({
 					command: entry.binary,
 					forkAtMessage: entry.forkAtMessage === true,
 					forkCursorModelSelection: harness === "cursor-acp",
@@ -158,6 +159,7 @@ export function acpHarnessFactory(
 						};
 					},
 				});
+				return startInFullAccess(adapter, entry.fullAccessModeId);
 			},
 		);
 }
