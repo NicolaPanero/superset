@@ -2428,6 +2428,10 @@ msgstr "Juga: @superset/ui/radio-group, @superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "Juga: @superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Selalu"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Selalu tahu agen mana yang membutuhkan Anda, dengan notifikasi yang langsung menuju agen yang terhambat."
 
@@ -4029,6 +4033,9 @@ msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Pilih server MCP untuk pesan ini"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "Pilih Tidak pernah, Saat agen bekerja, atau Selalu dari ikon Paradev++ di bar menu."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
 
@@ -4371,6 +4378,12 @@ msgstr "Ditutup"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Ditutup"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Menutup layar tetap membuat Mac tidur"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "Menutup layar tetap membuat Mac tidur."
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Menutup port ini akan menghentikan proses yang memakainya."
@@ -7472,9 +7485,6 @@ msgstr "Semua yang Anda publikasikan dihapus, bukan disembunyikan. Anda bisa ber
 msgid "Executable"
 msgstr "File eksekusi"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Akun, pengaturan, dan kanal pembaruan yang ada tetap dipertahankan."
-
 msgid "Existing repo path"
 msgstr "Path repo yang sudah ada"
 
@@ -9986,6 +9996,9 @@ msgstr "Jaga dokumentasi tetap segar"
 msgid "Keep editing"
 msgstr "Lanjutkan mengedit"
 
+msgid "Keep the Mac Awake"
+msgstr "Biarkan Mac tetap aktif"
+
 msgid "Keep typing an email to invite"
 msgstr "Terus ketik email untuk mengundang"
 
@@ -11389,6 +11402,10 @@ msgstr "Jaringan Berubah"
 msgid "Never"
 msgstr "Tidak pernah"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "Tidak pernah"
+
 msgid "Never asks before acting"
 msgstr "Tidak pernah bertanya dulu"
 
@@ -12741,9 +12758,6 @@ msgstr "Buka Perubahan"
 msgid "Open Chat"
 msgstr "Buka Chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Buka riwayat obrolan langsung dari kotak penulisan."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Buka pengaturan admin ChatGPT"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev bekerja dengan agen coding berbasis CLI mana pun, termasuk Claud
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Aplikasi seluler Paradev memungkinkan saya menjaga agen tetap bekerja dan mengatasi hambatannya dari mana saja, bahkan saat saya jauh dari komputer."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ menjaga Mac tetap aktif saat agen Anda bekerja, sehingga tugas panjang tidak berhenti saat Mac menganggur."
 
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -17667,9 +17684,6 @@ msgstr "Hentikan {label}"
 msgid "Stop {name}"
 msgstr "Hentikan {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Hentikan obrolan Claude yang sedang sibuk dan ganti akun tanpa kehilangan riwayatnya."
-
 msgid "Stop all agent background processes"
 msgstr "Hentikan semua proses latar belakang agen"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile hadir di iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ kini bernama Paradev++, dengan logo yang sama dan data Anda."
 
 msgid "Supervised"
 msgstr "Diawasi"
@@ -18568,6 +18579,12 @@ msgstr "Layanan host lokal tidak berjalan, jadi tidak ada yang bisa melayani wor
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Layanan host lokal baru saja aktif. Menyambungkan kembali sekarang."
 
+msgid "The Mac can sleep now"
+msgstr "Mac sekarang boleh tidur"
+
+msgid "The Mac stays awake now"
+msgstr "Mac sekarang tetap aktif"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Mayoritas PR agen yang di-merge hanya perlu direview, tanpa suntingan manusia."
 
@@ -18588,9 +18605,6 @@ msgstr "Agen baru dapat membaca pesan yang dihilangkan saat diperlukan."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Tata letak ruang kerja yang baru mempertahankan kontrol akun, model, dan repositori."
 
 msgid "The overnight shift"
 msgstr "Shift malam"
@@ -20635,6 +20649,9 @@ msgstr "Agen coding AI mana saja yang didukung?"
 
 msgid "Which plans include automations?"
 msgstr "Paket mana yang menyertakan otomatisasi?"
+
+msgid "While Agents Work"
+msgstr "Saat agen bekerja"
 
 msgid "Who can open it"
 msgstr "Siapa yang bisa membuka"

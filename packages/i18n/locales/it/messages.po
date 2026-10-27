@@ -2428,6 +2428,10 @@ msgstr "Anche: @superset/ui/radio-group, @superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "Anche: @superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Sempre"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Sai sempre quale agente ha bisogno di te, con notifiche che portano dritte all'agente bloccato."
 
@@ -4029,6 +4033,9 @@ msgstr "Scegli come aprire i percorsi dei file con Cmd+clic nel terminale"
 msgid "Choose MCP servers for this message"
 msgstr "Scegli i server MCP per questo messaggio"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "Scegli Mai, Mentre gli agenti lavorano o Sempre dall’icona di Paradev++ nella barra dei menu."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Scegli cosa cancellare dal browser interno."
 
@@ -4371,6 +4378,12 @@ msgstr "Chiusa"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Chiusa"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Chiudendo il coperchio il Mac va comunque in stop"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "Chiudendo il coperchio il Mac va comunque in stop."
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Chiudendo queste porte terminerai i processi che le usano."
@@ -7472,9 +7485,6 @@ msgstr "Tutto ciò che hai pubblicato viene eliminato, non nascosto. Puoi rientr
 msgid "Executable"
 msgstr "Eseguibile"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Account, impostazioni e canali di aggiornamento esistenti vengono conservati."
-
 msgid "Existing repo path"
 msgstr "Percorso del repo esistente"
 
@@ -9986,6 +9996,9 @@ msgstr "Mantieni la documentazione aggiornata"
 msgid "Keep editing"
 msgstr "Continua a modificare"
 
+msgid "Keep the Mac Awake"
+msgstr "Tieni sveglio il Mac"
+
 msgid "Keep typing an email to invite"
 msgstr "Continua a digitare un’email per invitare"
 
@@ -11389,6 +11402,10 @@ msgstr "Rete cambiata"
 msgid "Never"
 msgstr "Mai"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "Mai"
+
 msgid "Never asks before acting"
 msgstr "Non chiede mai prima di agire"
 
@@ -12741,9 +12758,6 @@ msgstr "Apri le modifiche"
 msgid "Open Chat"
 msgstr "Apri la chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Apri la cronologia delle chat direttamente dal composer."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Apri le impostazioni di amministrazione di ChatGPT"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev funziona con qualsiasi agente di programmazione da CLI, inclusi 
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "L’app mobile di Paradev mi permette di far avanzare i miei agenti e sbloccarli ovunque, anche quando sono lontano dal computer."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ tiene sveglio il Mac mentre i tuoi agenti lavorano, così un’attività lunga non si interrompe quando il Mac è inattivo."
 
 msgid "Paragraph"
 msgstr "Paragrafo"
@@ -17667,9 +17684,6 @@ msgstr "Interrompi {label}"
 msgid "Stop {name}"
 msgstr "Interrompi {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Ferma una chat Claude occupata e cambia account mantenendo la cronologia."
-
 msgid "Stop all agent background processes"
 msgstr "Interrompi tutti i processi in background degli agenti"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile arriva su iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ ora si chiama Paradev++, con lo stesso logo e i tuoi dati."
 
 msgid "Supervised"
 msgstr "Supervisionato"
@@ -18568,6 +18579,12 @@ msgstr "Il servizio host locale non è in esecuzione, quindi niente su questo di
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Il servizio host locale è appena partito. Riconnessione in corso."
 
+msgid "The Mac can sleep now"
+msgstr "Ora il Mac può andare in stop"
+
+msgid "The Mac stays awake now"
+msgstr "Ora il Mac resta sveglio"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "La maggior parte delle PR degli agenti unite richiede solo revisione, senza modifiche umane."
 
@@ -18588,9 +18605,6 @@ msgstr "Il nuovo agente può leggere i messaggi omessi quando gli servono."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Il nuovo agente riprende l'intera conversazione, strumenti compresi."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Il nuovo layout del workspace mantiene i controlli di account, modello e repository."
 
 msgid "The overnight shift"
 msgstr "Il turno di notte"
@@ -20635,6 +20649,9 @@ msgstr "Quali agenti di programmazione AI sono supportati?"
 
 msgid "Which plans include automations?"
 msgstr "Quali piani includono le automazioni?"
+
+msgid "While Agents Work"
+msgstr "Mentre gli agenti lavorano"
 
 msgid "Who can open it"
 msgstr "Chi può aprire"

@@ -2428,6 +2428,10 @@ msgstr "Ayrıca: @superset/ui/radio-group, @superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "Ayrıca: @superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Her zaman"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Doğrudan engellenen ajana bağlanan bildirimlerle, hangi ajanın size ihtiyacı olduğunu her zaman bilin."
 
@@ -4029,6 +4033,9 @@ msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağ
 msgid "Choose MCP servers for this message"
 msgstr "Bu ileti için MCP sunucularını seçin"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "Menü çubuğundaki Paradev++ simgesinden Asla, Ajanlar çalışırken veya Her zaman seçeneğini seçin."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
 
@@ -4371,6 +4378,12 @@ msgstr "Kapalı"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Kapalı"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Kapağı kapatmak Mac’i yine de uyku moduna alır"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "Kapağı kapatmak Mac’i yine de uyku moduna alır."
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Bu portları kapatmak, onları kullanan süreçleri sonlandırır."
@@ -7472,9 +7485,6 @@ msgstr "Yayımladığınız her şey gizlenmez, silinir. Daha sonra yeniden kat�
 msgid "Executable"
 msgstr "Çalıştırılabilir dosya"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Mevcut hesaplar, ayarlar ve güncelleme kanalları korunur."
-
 msgid "Existing repo path"
 msgstr "Mevcut depo yolu"
 
@@ -9986,6 +9996,9 @@ msgstr "Belgeleri güncel tut"
 msgid "Keep editing"
 msgstr "Düzenlemeye devam et"
 
+msgid "Keep the Mac Awake"
+msgstr "Mac’i uyanık tut"
+
 msgid "Keep typing an email to invite"
 msgstr "Davet etmek için e-postayı yazmaya devam edin"
 
@@ -11389,6 +11402,10 @@ msgstr "Ağ değişti"
 msgid "Never"
 msgstr "Hiç"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "Asla"
+
 msgid "Never asks before acting"
 msgstr "Hiç sormadan çalışır"
 
@@ -12741,9 +12758,6 @@ msgstr "Değişiklikleri aç"
 msgid "Open Chat"
 msgstr "Sohbeti aç"
 
-msgid "Open chat history directly from the composer."
-msgstr "Sohbet geçmişini doğrudan yazma alanından açın."
-
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT yönetici ayarlarını aç"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev, Claude Code, OpenCode, OpenAI Codex ve daha fazlası dahil olma
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev'in mobil uygulaması, bilgisayarımdan çok uzakta olsam bile ajanlarımı her yerden çalışır durumda tutmamı ve önlerindeki engelleri kaldırmamı sağlıyor."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++, ajanlarınız çalışırken Mac’i uyanık tutar; böylece Mac boşta kaldığında uzun bir görev durmaz."
 
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -17667,9 +17684,6 @@ msgstr "{label} öğesini durdur"
 msgid "Stop {name}"
 msgstr "{name} öğesini durdur"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Meşgul bir Claude sohbetini durdurun ve geçmişini koruyarak hesap değiştirin."
-
 msgid "Stop all agent background processes"
 msgstr "Tüm ajan arka plan işlemlerini durdur"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile iPhone'da yayında"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ artık Paradev++; aynı logo ve verileriniz korunuyor."
 
 msgid "Supervised"
 msgstr "Gözetimli"
@@ -18568,6 +18579,12 @@ msgstr "Yerel host hizmeti çalışmıyor, bu yüzden bu cihazda hiçbir şey ç
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Yerel host hizmeti yeni açıldı. Şimdi ona yeniden bağlanılıyor."
 
+msgid "The Mac can sleep now"
+msgstr "Mac şimdi uyku moduna geçebilir"
+
+msgid "The Mac stays awake now"
+msgstr "Mac şimdi uyanık kalıyor"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Birleştirilen ajan PR'larının çoğu yalnızca inceleme gerektirir, hiç insan düzenlemesi olmaz."
 
@@ -18588,9 +18605,6 @@ msgstr "Yeni ajan, atlanan mesajları gerektiğinde okuyabilir."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Yeni ajan, araçlar dahil tüm konuşmaya devam eder."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Yeni çalışma alanı düzeni hesap, model ve depo denetimlerini korur."
 
 msgid "The overnight shift"
 msgstr "Gece vardiyası"
@@ -20635,6 +20649,9 @@ msgstr "Hangi AI kodlama ajanları destekleniyor?"
 
 msgid "Which plans include automations?"
 msgstr "Hangi planlar otomasyonları içerir?"
+
+msgid "While Agents Work"
+msgstr "Ajanlar çalışırken"
 
 msgid "Who can open it"
 msgstr "Kimler açabilir"

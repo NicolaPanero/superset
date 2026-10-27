@@ -2428,6 +2428,10 @@ msgstr "참고: @superset/ui/radio-group, @superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "참고: @superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "항상"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "어떤 에이전트가 나를 필요로 하는지 항상 알 수 있습니다. 알림을 누르면 막힌 에이전트로 바로 이동합니다."
 
@@ -4029,6 +4033,9 @@ msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선�
 msgid "Choose MCP servers for this message"
 msgstr "이 메시지에 사용할 MCP 서버 선택"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "메뉴 막대의 Paradev++ 아이콘에서 안 함, 에이전트 작업 중, 항상 중 하나를 선택하세요."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
 
@@ -4371,6 +4378,12 @@ msgstr "닫힘"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "닫힘"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "덮개를 닫으면 Mac은 여전히 잠자기 상태가 됩니다"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "덮개를 닫으면 Mac은 여전히 잠자기 상태가 됩니다."
 
 msgid "Closing these ports will end the processes using them."
 msgstr "이 포트들을 닫으면 해당 포트를 사용하는 프로세스가 종료됩니다."
@@ -7472,9 +7485,6 @@ msgstr "게시한 모든 내용이 숨겨지는 것이 아니라 삭제됩니다
 msgid "Executable"
 msgstr "실행 파일"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "기존 계정, 설정, 업데이트 채널이 그대로 유지됩니다."
-
 msgid "Existing repo path"
 msgstr "기존 리포지토리 경로"
 
@@ -9986,6 +9996,9 @@ msgstr "문서 최신 상태 유지"
 msgid "Keep editing"
 msgstr "계속 편집"
 
+msgid "Keep the Mac Awake"
+msgstr "Mac 잠자기 방지"
+
 msgid "Keep typing an email to invite"
 msgstr "초대하려면 이메일을 계속 입력하세요"
 
@@ -11389,6 +11402,10 @@ msgstr "네트워크 변경됨"
 msgid "Never"
 msgstr "없음"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "안 함"
+
 msgid "Never asks before acting"
 msgstr "묻지 않고 실행"
 
@@ -12741,9 +12758,6 @@ msgstr "변경 열기"
 msgid "Open Chat"
 msgstr "채팅 열기"
 
-msgid "Open chat history directly from the composer."
-msgstr "입력창에서 바로 채팅 기록을 열 수 있습니다."
-
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT 관리자 설정 열기"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev는 Claude Code, OpenCode, OpenAI Codex 등 CLI 기반 코딩 에
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev 모바일 앱 덕분에 컴퓨터에서 멀리 떨어져 있어도 어디서든 에이전트가 계속 작업하도록 돕고 막힌 부분을 해결할 수 있습니다."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++는 에이전트가 작업하는 동안 Mac이 잠자지 않게 하므로, Mac이 유휴 상태여도 긴 작업이 멈추지 않습니다."
 
 msgid "Paragraph"
 msgstr "본문"
@@ -17667,9 +17684,6 @@ msgstr "{label} 중지"
 msgid "Stop {name}"
 msgstr "{name} 중지"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "작업 중인 Claude 채팅을 중지하고 기록을 유지한 채 계정을 전환할 수 있습니다."
-
 msgid "Stop all agent background processes"
 msgstr "모든 에이전트 백그라운드 프로세스 중지"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile, iPhone 출시"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++가 Paradev++로 바뀌었습니다. 로고와 데이터는 그대로입니다."
 
 msgid "Supervised"
 msgstr "감독"
@@ -18568,6 +18579,12 @@ msgstr "로컬 호스트 서비스가 실행 중이 아니어서 이 기기에�
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "로컬 호스트 서비스가 방금 올라왔습니다. 지금 다시 연결하는 중입니다."
 
+msgid "The Mac can sleep now"
+msgstr "지금은 Mac이 잠자기 상태로 전환될 수 있습니다"
+
+msgid "The Mac stays awake now"
+msgstr "지금은 Mac이 깨어 있습니다"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "머지된 에이전트 PR의 대부분이 사람의 수정 없이 리뷰만으로 끝납니다."
 
@@ -18588,9 +18605,6 @@ msgstr "새 에이전트는 필요할 때 생략된 메시지를 읽을 수 있�
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "새 에이전트가 도구를 포함한 전체 대화를 이어갑니다."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "새 워크스페이스 레이아웃에서도 계정, 모델, 저장소 컨트롤을 그대로 사용할 수 있습니다."
 
 msgid "The overnight shift"
 msgstr "야간 근무"
@@ -20635,6 +20649,9 @@ msgstr "어떤 AI 코딩 에이전트를 지원하나요?"
 
 msgid "Which plans include automations?"
 msgstr "어떤 플랜에 자동화가 포함되나요?"
+
+msgid "While Agents Work"
+msgstr "에이전트 작업 중"
 
 msgid "Who can open it"
 msgstr "열 수 있는 사람"

@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "paradev-2.0-migration-2026-10";
+export const FORK_WHATS_NEW_ID = "keep-awake-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -31,21 +31,15 @@ export function ForkWhatsNewNotice() {
 	if (seen) return null;
 	const highlights = [
 		t({
-			message: "Superset++ is now Paradev++, with the same logo and your data.",
+			message:
+				"Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle.",
 		}),
 		t({
 			message:
-				"The new workspace layout keeps your account, model and repository controls.",
+				"Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar.",
 		}),
 		t({
-			message: "Open chat history directly from the composer.",
-		}),
-		t({
-			message:
-				"Stop a busy Claude chat and switch accounts while keeping its history.",
-		}),
-		t({
-			message: "Existing accounts, settings and update channels are preserved.",
+			message: "Closing the lid still puts the Mac to sleep.",
 		}),
 	];
 	const notice: DesktopNotice = {

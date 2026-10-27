@@ -2428,6 +2428,10 @@ msgstr "另有：@superset/ui/radio-group、@superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "另有：@superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "永遠"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "隨時知道哪個代理程式需要你，通知可直接跳轉到被阻塞的代理程式。"
 
@@ -4029,6 +4033,9 @@ msgstr "選擇在終端中Cmd+點選檔案路徑時的開啟方式"
 msgid "Choose MCP servers for this message"
 msgstr "為這則訊息選擇MCP伺服器"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "從選單列的 Paradev++ 圖示中選擇「永不」、「代理程式工作時」或「永遠」。"
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "選擇要從應用程式內瀏覽器清除的內容。"
 
@@ -4371,6 +4378,12 @@ msgstr "已關閉"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "已關閉"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "闔上螢幕時 Mac 仍會進入睡眠"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "闔上螢幕時 Mac 仍會進入睡眠。"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "關閉這些埠會結束正在使用它們的處理程序。"
@@ -7472,9 +7485,6 @@ msgstr "你釋出過的所有內容都會被刪除，而不是隱藏。你之後
 msgid "Executable"
 msgstr "執行檔"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "現有帳號、設定和更新管道都會保留。"
-
 msgid "Existing repo path"
 msgstr "已有儲存庫路徑"
 
@@ -9986,6 +9996,9 @@ msgstr "讓文件保持最新"
 msgid "Keep editing"
 msgstr "繼續編輯"
 
+msgid "Keep the Mac Awake"
+msgstr "防止 Mac 睡眠"
+
 msgid "Keep typing an email to invite"
 msgstr "繼續輸入電子郵件以邀請"
 
@@ -11389,6 +11402,10 @@ msgstr "網路已變更"
 msgid "Never"
 msgstr "從未"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "永不"
+
 msgid "Never asks before acting"
 msgstr "執行前從不詢問"
 
@@ -12741,9 +12758,6 @@ msgstr "開啟更改"
 msgid "Open Chat"
 msgstr "開啟聊天"
 
-msgid "Open chat history directly from the composer."
-msgstr "可直接從輸入框開啟聊天記錄。"
-
 msgid "Open ChatGPT admin settings"
 msgstr "開啟 ChatGPT 管理員設定"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev支援任何基於CLI的編碼代理程式，包括Claude Code、
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev 手機應用程式讓我可以隨時隨地推動代理程式工作、解決它們的阻礙，即使我離電腦很遠也沒問題。"
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ 會在代理程式工作時防止 Mac 睡眠，因此 Mac 閒置時長時間任務也不會停止。"
 
 msgid "Paragraph"
 msgstr "段落"
@@ -17667,9 +17684,6 @@ msgstr "停止 {label}"
 msgid "Stop {name}"
 msgstr "停止 {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "可停止執行中的 Claude 聊天，並在保留歷史記錄的情況下切換帳號。"
-
 msgid "Stop all agent background processes"
 msgstr "停止所有代理程式背景處理程序"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile 登上 iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ 現已更名為 Paradev++，標誌和資料維持不變。"
 
 msgid "Supervised"
 msgstr "監督"
@@ -18568,6 +18579,12 @@ msgstr "本地主機服務未執行，因此此裝置上沒有任何服務能提
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "本地主機服務剛剛啟動。正在重新連線。"
 
+msgid "The Mac can sleep now"
+msgstr "Mac 現在可以進入睡眠"
+
+msgid "The Mac stays awake now"
+msgstr "Mac 現在保持喚醒"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "多數已合併的代理程式PR只需審查，無需任何人工修改。"
 
@@ -18588,9 +18605,6 @@ msgstr "新代理可在需要時讀取被省略的訊息。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理會接續整段對話，包括工具呼叫。"
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "新的工作區版面保留了帳號、模型和儲存庫控制項。"
 
 msgid "The overnight shift"
 msgstr "夜班"
@@ -20635,6 +20649,9 @@ msgstr "支援哪些AI編碼代理程式？"
 
 msgid "Which plans include automations?"
 msgstr "哪些方案包含自動化？"
+
+msgid "While Agents Work"
+msgstr "代理程式工作時"
 
 msgid "Who can open it"
 msgstr "誰可以開啟"

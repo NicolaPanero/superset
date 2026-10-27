@@ -15,6 +15,12 @@ import { focusMainWindow, quitApp } from "main/index";
 import { getAppDisplayName } from "main/lib/app-display-name";
 import { checkForUpdatesInteractive } from "main/lib/auto-updater";
 import {
+	disposeForkKeepAwake,
+	forkKeepAwakeMenuItem,
+	forkKeepAwakeToolTip,
+	setupForkKeepAwake,
+} from "main/lib/fork-keep-awake";
+import {
 	getHostServiceCoordinator,
 	type HostServiceStatus,
 	type HostServiceStatusEvent,
@@ -265,6 +271,7 @@ async function updateTrayMenu(): Promise<void> {
 			label: hostServiceLabel,
 			submenu: hostServiceSubmenu,
 		},
+		forkKeepAwakeMenuItem(),
 		{ type: "separator" },
 		{
 			label: i18n._(msg({ message: `Open ${displayName}` })),
@@ -303,6 +310,7 @@ async function updateTrayMenu(): Promise<void> {
 	]);
 
 	tray.setContextMenu(menu);
+	tray.setToolTip(forkKeepAwakeToolTip(displayName));
 }
 
 /** Rebuild the tray menu in place (e.g. after the display language changes). */
@@ -332,6 +340,7 @@ export function initTray(): void {
 		tray = new Tray(icon);
 		tray.setToolTip(getAppDisplayName());
 
+		setupForkKeepAwake(refreshTrayMenu);
 		void updateTrayMenu();
 
 		const manager = getHostServiceCoordinator();
@@ -351,6 +360,7 @@ export function initTray(): void {
 
 /** Call on app quit */
 export function disposeTray(): void {
+	disposeForkKeepAwake();
 	if (tray) {
 		tray.destroy();
 		tray = null;

@@ -2428,6 +2428,10 @@ msgstr "Ngoài ra: @superset/ui/radio-group, @superset/ui/switch"
 msgid "Also: @superset/ui/spinner"
 msgstr "Ngoài ra: @superset/ui/spinner"
 
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Luôn luôn"
+
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Luôn biết agent nào cần bạn, với thông báo dẫn thẳng tới agent đang bị chặn."
 
@@ -4029,6 +4033,9 @@ msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Chọn server MCP cho tin nhắn này"
 
+msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
+msgstr "Chọn Không bao giờ, Khi agent đang làm việc hoặc Luôn luôn từ biểu tượng Paradev++ trên thanh menu."
+
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
 
@@ -4371,6 +4378,12 @@ msgstr "Đã đóng"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Đã đóng"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Gập nắp máy vẫn đưa máy Mac vào chế độ ngủ"
+
+msgid "Closing the lid still puts the Mac to sleep."
+msgstr "Gập nắp máy vẫn đưa máy Mac vào chế độ ngủ."
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Đóng các cổng này sẽ kết thúc những tiến trình đang dùng chúng."
@@ -7472,9 +7485,6 @@ msgstr "Mọi thứ bạn đã đăng sẽ bị xóa, không phải ẩn đi. B�
 msgid "Executable"
 msgstr "Tệp thực thi"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Tài khoản, cài đặt và kênh cập nhật hiện có được giữ nguyên."
-
 msgid "Existing repo path"
 msgstr "Đường dẫn repo có sẵn"
 
@@ -9986,6 +9996,9 @@ msgstr "Giữ tài liệu luôn mới"
 msgid "Keep editing"
 msgstr "Tiếp tục chỉnh sửa"
 
+msgid "Keep the Mac Awake"
+msgstr "Giữ máy Mac luôn thức"
+
 msgid "Keep typing an email to invite"
 msgstr "Tiếp tục nhập email để mời"
 
@@ -11389,6 +11402,10 @@ msgstr "Mạng đã thay đổi"
 msgid "Never"
 msgstr "Chưa bao giờ"
 
+msgctxt "keep awake"
+msgid "Never"
+msgstr "Không bao giờ"
+
 msgid "Never asks before acting"
 msgstr "Không bao giờ hỏi trước"
 
@@ -12741,9 +12758,6 @@ msgstr "Mở thay đổi"
 msgid "Open Chat"
 msgstr "Mở chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Mở lịch sử trò chuyện trực tiếp từ khung soạn tin."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Mở cài đặt quản trị ChatGPT"
 
@@ -13607,6 +13621,9 @@ msgstr "Paradev làm việc với mọi coding agent dạng CLI, gồm Claude Co
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Ứng dụng di động Paradev giúp tôi duy trì công việc của các agent và gỡ vướng cho chúng từ bất cứ đâu, ngay cả khi tôi ở xa máy tính."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ giữ máy Mac luôn thức khi các agent của bạn đang làm việc, để tác vụ dài không bị dừng khi máy Mac không hoạt động."
 
 msgid "Paragraph"
 msgstr "Đoạn văn"
@@ -17667,9 +17684,6 @@ msgstr "Dừng {label}"
 msgid "Stop {name}"
 msgstr "Dừng {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Dừng cuộc trò chuyện Claude đang bận và đổi tài khoản mà vẫn giữ lịch sử."
-
 msgid "Stop all agent background processes"
 msgstr "Dừng tất cả tiến trình nền của tác tử"
 
@@ -17824,9 +17838,6 @@ msgstr "Superset Mobile ra mắt trên iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ nay là Paradev++, giữ nguyên logo và dữ liệu của bạn."
 
 msgid "Supervised"
 msgstr "Có giám sát"
@@ -18568,6 +18579,12 @@ msgstr "Dịch vụ host cục bộ không chạy nên không có gì trên thi�
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Dịch vụ host cục bộ vừa khởi động. Đang kết nối lại tới nó."
 
+msgid "The Mac can sleep now"
+msgstr "Máy Mac giờ có thể ngủ"
+
+msgid "The Mac stays awake now"
+msgstr "Máy Mac giờ luôn thức"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Phần lớn PR của agent được merge chỉ cần review, không có chỉnh sửa của con người."
 
@@ -18588,9 +18605,6 @@ msgstr "Tác nhân mới có thể đọc các tin nhắn bị lược bỏ khi 
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Tác tử mới tiếp tục toàn bộ cuộc trò chuyện, kể cả công cụ."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Bố cục workspace mới giữ nguyên các điều khiển tài khoản, mô hình và kho mã."
 
 msgid "The overnight shift"
 msgstr "Ca đêm"
@@ -20635,6 +20649,9 @@ msgstr "Những coding agent AI nào được hỗ trợ?"
 
 msgid "Which plans include automations?"
 msgstr "Gói nào có automation?"
+
+msgid "While Agents Work"
+msgstr "Khi agent đang làm việc"
 
 msgid "Who can open it"
 msgstr "Ai có thể mở"

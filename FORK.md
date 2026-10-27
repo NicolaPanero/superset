@@ -44,6 +44,16 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   i terminali `claude` e `codex` lo ricevono dai wrapper (`--mcp-config` e `-c`).
   Header e variabili restano sull'host: l'interfaccia mostra solo i nomi.
 
+- **Icona nella barra dei menu → Keep the Mac Awake** (solo macOS) impedisce lo
+  stop per inattività: **While Agents Work** (predefinito) lo fa solo quando
+  almeno un agente ha un turno in corso, **Always** finché l’app è aperta,
+  **Never** mai. Usa `powerSaveBlocker` di Electron, come `caffeinate -i`: lo
+  schermo si spegne lo stesso e il blocco termina con l’app. Lo stato degli
+  agenti si legge ogni 30 secondi da `terminalAgents.list` dell’host-service,
+  anche con la finestra chiusa; un turno senza eventi da 3 ore non conta più.
+  La scelta è salvata in `$SUPERSET_HOME_DIR/fork/keep-awake.json`. Chiudendo il
+  coperchio il Mac va comunque in stop.
+
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
   e nella schermata di un workspace senza schede aperte.
