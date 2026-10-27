@@ -6,6 +6,7 @@ import { DropdownMenuItem } from "@superset/ui/dropdown-menu";
 import { useMemo, useState } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { ForkModelCatalogStatus } from "renderer/components/ForkModelCatalogStatus";
+import { useForkCatalogAccount } from "renderer/hooks/useForkCatalogAccount";
 import { useForkMenuDialog } from "renderer/hooks/useForkMenuDialog";
 import { useForkModelCatalog } from "renderer/hooks/useForkModelCatalog";
 import {
@@ -82,12 +83,22 @@ export function ForkSessionModelPicker({
 	const shown = viewed ?? realId;
 	const browsing = shown !== null && shown !== realId;
 	const viewedConfig = chatConfigs.find((config) => config.id === shown);
+	const catalogAccount = useForkCatalogAccount(
+		hostUrl,
+		viewedConfig?.presetId ?? null,
+		browsing,
+	);
 	const catalog = useForkModelCatalog({
 		hostUrl,
 		agent: viewedConfig?.id,
 		workspaceId,
+		accountSelection: catalogAccount.selection,
 		model: draftModel,
-		enabled: browsing && !!workspaceId,
+		enabled:
+			browsing &&
+			!!workspaceId &&
+			catalogAccount.ready &&
+			!catalogAccount.blocked,
 	});
 	const models = catalog.models;
 	const efforts = catalog.efforts;
@@ -203,8 +214,9 @@ export function ForkSessionModelPicker({
 				browsing && viewedConfig ? (
 					<div className="border-t">
 						<ForkModelCatalogStatus
-							loading={catalog.isFetching}
+							loading={catalog.isFetching || !catalogAccount.ready}
 							error={catalog.isError}
+							signedOut={catalogAccount.blocked}
 							refresh={() => {
 								void catalog.refetch();
 							}}

@@ -43,6 +43,7 @@ app="$(find release -maxdepth 2 -name "$name" -path 'release/mac*' | head -n 1)"
 	echo "build produced no $name" >&2
 	exit 1
 }
+/bin/sh "$root/scripts/fork/install.sh" --check-macos "$app"
 
 backup="$HOME/.superset-fork/previous-app"
 if [[ -d "/Applications/$name" ]]; then

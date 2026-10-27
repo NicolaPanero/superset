@@ -128,22 +128,4 @@ export const FORK_SETTINGS_ITEMS: SettingsItem[] = [
 			"default",
 		],
 	},
-	{
-		id: FORK_SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT,
-		section: "experimental",
-		title: "ACP chat",
-		description: "Open new supported agents in a shared chat interface",
-		keywords: [
-			"acp",
-			"chat",
-			"agent",
-			"claude",
-			"codex",
-			"cursor",
-			"grok",
-			"opencode",
-			"terminal",
-			"toggle",
-		],
-	},
 ];

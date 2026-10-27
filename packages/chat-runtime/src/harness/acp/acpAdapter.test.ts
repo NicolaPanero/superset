@@ -2082,6 +2082,10 @@ describe("AcpAdapter on protocol v2", () => {
 		adapter.prompt([{ type: "text", text: "run" }]);
 		await flush();
 
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "requires_action",
+		});
 		agent.requestPermissionWith(v2Permission, 9301);
 		await flush();
 
@@ -2093,6 +2097,7 @@ describe("AcpAdapter on protocol v2", () => {
 			detail: [{ type: "text", text: "sleep 6" }],
 			status: "pending",
 		});
+		expect(sessionsOf(events).at(-1)?.status).toBe("awaiting_input");
 
 		await adapter.dispose();
 	});
@@ -2160,7 +2165,12 @@ describe("AcpAdapter on protocol v2", () => {
 		adapter.prompt([{ type: "text", text: "run" }]);
 		await flush();
 
+		agent.notify("sess-1", {
+			sessionUpdate: "state_update",
+			state: "requires_action",
+		});
 		agent.requestPermissionWith(v2Permission, 9302);
+		agent.notify("sess-1", { sessionUpdate: "state_update", state: "running" });
 		await flush();
 
 		expect(agent.sent.find((f) => f.id === 9302)?.result).toEqual({
@@ -2169,6 +2179,9 @@ describe("AcpAdapter on protocol v2", () => {
 		expect(
 			itemsOf(events).some((item) => item.kind === "approval_request"),
 		).toBe(false);
+		expect(sessionsOf(events).map((s) => s.status)).not.toContain(
+			"awaiting_input",
+		);
 
 		await adapter.dispose();
 	});

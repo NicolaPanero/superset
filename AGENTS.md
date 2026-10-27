@@ -116,7 +116,8 @@ Details: `docs/plugins.md`.
 
 When work wants a fresh isolated environment, a parallel agent, or a long-running job, reach for the
 `superset` CLI instead of hand-rolling git worktrees or doing it all serially in this one. It's
-already on `PATH` in Superset terminals, and we dogfood it.
+already on `PATH` in Superset terminals, and we dogfood it. `paradev` is an alias for the same
+binary; write `superset` in code and docs here.
 
 Replace the capitalized placeholders before running these:
 
@@ -273,7 +274,7 @@ review.
   // whichever was compiled first. Same fix as 3833 on the Metal side.
 ```
 
-## Superset++ fork rules
+## Paradev++ fork rules
 
 This checkout is the `NicolaPanero/superset` fork. `FORK.md` describes its features, branches
 and releases. These rules apply to every agent:
@@ -285,7 +286,7 @@ and releases. These rules apply to every agent:
   `Nicola Panero <panero.nicola01.np@gmail.com>`.
 - Several agents can share this checkout. Stage your own files by path, and never reset,
   check out or delete changes you did not make.
-- Keep every change as far from upstream as possible. "Upstream" is `superset-sh/superset`, the
+- Keep every change as far from upstream as possible. "Upstream" is `ParadevAI/Paradev` (formerly `superset-sh/superset`), the
   original project this fork was copied from (git remote `upstream`). The fork merges its
   releases, and each upstream file that the fork edits can cause a merge conflict.
   - Put new logic in new fork-owned files (`fork-*`, `Fork*`, `scripts/fork/`, `docs/fork-*`)

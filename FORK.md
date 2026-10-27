@@ -1,7 +1,10 @@
-# Superset++
+# Paradev++
 
-Fork personale di [superset-sh/superset](https://github.com/superset-sh/superset),
-basato sul tag desktop **1.38.0**. Usa i servizi ufficiali per
+Paradev++ è il nuovo nome di Superset++. Fork personale di
+[ParadevAI/Paradev](https://github.com/ParadevAI/Paradev) (già Superset),
+basato sul tag desktop **2.0.0**. Il logo, i dati e gli aggiornamenti restano
+gli stessi: per compatibilità alcuni nomi tecnici sono invariati, come descritto
+in [Identità e nomi tecnici](#identità-e-nomi-tecnici). Usa i servizi ufficiali per
 login e sincronizzazione; le estensioni del fork girano sull’host locale.
 
 [Installazione](#installazione-e-compatibilità-dei-dati) ·
@@ -47,7 +50,7 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   A riposo onde grigie, lente e tenui nascono in punti casuali e si
   allargano; muovendo il mouse se ne generano altre lungo il percorso. Ogni
   click genera un’onda arancione dal profilo irregolare, con increspature
-  secondarie; i caratteri cambiano sulla cresta. Il logo Superset++ fa parte
+  secondarie; i caratteri cambiano sulla cresta. Il logo Paradev++ fa parte
   dello sfondo: caratteri fermi e tenui che diventano arancio pieno dove passa
   un’onda da click, seguendone la forma. Al massimo tre onde da click restano
   attive insieme, con almeno 0,4 secondi fra un click e il successivo; un nuovo
@@ -80,6 +83,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
   partenza resta aperta finché la nuova non è avviata; il cambio account
   Claude mantiene la chat nello stesso pannello.
+  Se Claude è occupato, **Stop and switch account** interrompe il turno e
+  attende l'arresto del processo prima di riaprire la cronologia sull'altro
+  account. I messaggi in coda restano in pausa e la scelta **Continue** non
+  cambia. Se l'arresto fallisce, il trasferimento non parte.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
   espone questa modalità. Usa la pianificazione nativa con **Full access**:
   approva automaticamente le richieste degli strumenti, inclusi comandi,
@@ -225,11 +232,11 @@ Lo stesso riepilogo compare nel menu account, nelle intestazioni e in Usage.
 
 Aggiungi un account dal selettore della chat o da **Settings → Usage** e accedi
 con il CLI del provider. Ogni nuovo profilo conserva il proprio login nella
-cartella dedicata del fork. Superset++ non copia credenziali o token dal login CLI
+cartella dedicata del fork. Paradev++ non copia credenziali o token dal login CLI
 esterno. I profili nominati già indipendenti sono adottati nel loro percorso.
 
 L’identità verificata del profilo resta associata a quell’account. Cambiare login
-nel CLI esterno non cambia il predefinito di Superset++. Se un profilo manca o
+nel CLI esterno non cambia il predefinito di Paradev++. Se un profilo manca o
 risulta disconnesso, rimane visibile: usa **Reconnect account** con la stessa
 identità oppure scegli un altro profilo. Per una nuova identità, aggiungi un
 nuovo profilo; le quote del vecchio account non vengono riutilizzate.
@@ -352,7 +359,7 @@ per computer, in `~/.superset/fork/attachment-retention.json`.
 
 ## Cosa è ufficiale e cosa mantiene il fork
 
-| Funzione | Base ufficiale 1.38 | Estensione Superset++ |
+| Funzione | Base ufficiale 2.0 | Estensione Paradev++ |
 |---|---|---|
 | Chat ACP e CLI/CHAT | Pannelli, protocolli, ripresa e passaggio tra viste | Account/configurazione persistenti e ponte Cursor CLI/ACP |
 | Ripresa e fork dello stesso agente | Azioni ufficiali | Conservazione dei profili nelle operazioni locali |
@@ -447,7 +454,8 @@ lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 le release non contengono più `Superset-fork-x64.exe` e i workflow non li compilano.
 Il codice degli script Windows resta nel repository, non collegato alla CI, per riprendere il lavoro.
 
-L’app Mac si chiama **Superset++.app**, usa l’icona con il **+** e convive con Superset
+L’app Mac si chiama **Paradev++** (il pacchetto resta `Superset++.app` per compatibilità
+con gli aggiornamenti esistenti), usa l’icona con il **+** e convive con Paradev
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
 porta locale 51742 e cartelle `~/.superset-fork` e
 `~/Library/Application Support/Superset Fork`. Chat, impostazioni e login
@@ -466,7 +474,7 @@ Per compilare e installare dal checkout: `bun run fork:install`.
 La compilazione usa i servizi di produzione e richiede che l’app precedente
 sia chiusa. Per ricevere gli aggiornamenti automatici dopo una build locale,
 installa una release pubblicata dal fork con lo script sopra: i dati restano
-nelle stesse cartelle. Installare l’app ufficiale non aggiorna Superset++ e
+nelle stesse cartelle. Installare l’app ufficiale non aggiorna Paradev++ e
 non trasferisce automaticamente i suoi dati nell’app ufficiale.
 
 Le build pubblicate usano l’aggiornatore del fork: il primo controllo avviene
@@ -501,7 +509,7 @@ in background: attendere qualche minuto prima di riaprire o interrompere l’app
 
 ## Branch, motore e aggiornamenti
 
-- `main` segue senza modifiche `superset-sh/superset`.
+- `main` segue senza modifiche `ParadevAI/Paradev`.
 - `fork/main` integra le release stabili `desktop-v*` e le estensioni locali.
 - `feature/*` conserva lo storico degli sviluppi già integrati.
 
@@ -511,11 +519,11 @@ release del motore non vengono adottate implicitamente. Aggiornare il file,
 eseguire i controlli e solo allora creare una build. Per installare il
 motore fissato localmente: `bun scripts/build-txcript-transfer.ts`.
 Zed è stato dismesso. La pubblicazione di txcript non cambia il motore usato
-da Superset++: serve aggiornare esplicitamente il pin. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
+da Paradev++: serve aggiornare esplicitamente il pin. Il repository remoto di Zed conserva lo storico con Actions disabilitate.
 
 `fork-sync-upstream.yml` segue quotidianamente le release stabili pubblicate.
 Mantiene `main` come specchio ufficiale e propone ogni nuova release con una
-pull request da `fork/sync-desktop-v…` verso `fork/main`. Non aggiorna direttamente
+pull request da `fork/sync-paradev-desktop-v…` verso `fork/main`. Non aggiorna direttamente
 `fork/main` e non abilita il merge automatico. I controlli richiesti vengono
 eseguiti sulla pull request; il merge resta una tua decisione.
 I tag preparati prima della pubblicazione di una release non vengono proposti. `fork-release.yml` parte
@@ -718,3 +726,34 @@ il requisito mancante. Le quote lette da altri store o provider non vengono
 attribuite automaticamente alla sessione ACP attuale. Gli host precedenti
 continuano a gestire Claude; Codex viene abilitato solo quando l'host espone
 esplicitamente le nuove capacità.
+
+## Identità e nomi tecnici
+
+Il nome mostrato dall’app, dai menu, dalla home e dagli aggiornamenti è
+**Paradev++**. Non cambiano, perché i dati e gli installer già distribuiti li
+cercano per nome:
+
+| Elemento | Valore conservato |
+|---|---|
+| Pacchetto e eseguibile | `Superset++.app`, `Superset++`, `Superset++.exe` |
+| Bundle ID e protocollo | `com.superset.desktop.fork`, `superset-fork://` |
+| Cartelle dati | `~/.superset-fork`, `~/Library/Application Support/Superset Fork` |
+| Registro aggiornamenti | `~/Library/Logs/Superset++/fork-update.log` |
+| Asset di release | `Superset-fork-arm64.zip` |
+| Pacchetti e CLI | `@superset/*`, comando `superset` (alias `paradev`) |
+
+### Rilascio ponte verso `Paradev++.app`
+
+Questa release contiene ancora `Superset++.app`, così i client già installati
+possono aggiornarsi con il loro installer. Il suo installer però riconosce
+anche `Paradev++.app`, nello zip e nel percorso dell’app in esecuzione. Quando
+una release futura conterrà `Paradev++.app`, l’aggiornamento la installa nella
+stessa cartella, rilancia il nuovo percorso e sposta la vecchia app nel
+Cestino. Se un passaggio fallisce, la vecchia app resta al suo posto.
+
+Chi salta la release ponte non può aggiornarsi dall’app a una release con il
+nuovo nome: deve prima installare la release ponte, oppure usare lo script di
+installazione. La release con il nuovo nome va pubblicata solo dopo il ponte.
+
+La sorgente delle release ufficiali è in `scripts/fork/upstream.json`
+(`ParadevAI/Paradev`); script e workflow la leggono da lì.

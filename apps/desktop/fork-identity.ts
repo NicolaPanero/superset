@@ -1,3 +1,5 @@
+import { FORK_PRODUCT_NAME } from "./fork-display-name";
+
 /**
  * The fork's release identity. Built with SUPERSET_WORKSPACE_NAME=fork, the
  * app installs beside the official one as "Superset++": its own bundle id,
@@ -8,7 +10,7 @@ export function forkIdentity(productName: string) {
 	if (process.env.SUPERSET_WORKSPACE_NAME !== "fork")
 		return { productName, appId: "com.superset.desktop", scheme: "superset" };
 	return {
-		productName: `${productName}++`,
+		productName: FORK_PRODUCT_NAME,
 		appId: "com.superset.desktop.fork",
 		scheme: "superset-fork",
 	};

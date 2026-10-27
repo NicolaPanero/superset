@@ -7,7 +7,7 @@ const FALLBACK_IDENTITY = {
 };
 
 export const GIT_MISSING_MESSAGE =
-	"Git is not installed or Superset++ cannot find it. Install Git (on Windows: https://git-scm.com/download/win), then restart Superset++.";
+	"Git is not installed or Paradev++ cannot find it. Install Git (on Windows: https://git-scm.com/download/win), then restart Paradev++.";
 
 export function isGitMissing(error: unknown): boolean {
 	if ((error as NodeJS.ErrnoException | null)?.code === "ENOENT") return true;

@@ -39,7 +39,7 @@ export function forkInstallAsset(
 }
 export function installedForkAppPath(executable: string) {
 	const path = dirname(dirname(dirname(executable)));
-	if (basename(path) !== "Superset++.app")
+	if (!["Superset++.app", "Paradev++.app"].includes(basename(path)))
 		throw new Error("Unexpected fork app installation path");
 	return path;
 }

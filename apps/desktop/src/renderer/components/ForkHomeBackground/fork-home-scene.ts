@@ -1,3 +1,4 @@
+import { FORK_DISPLAY_NAME } from "~/fork-display-name";
 import { ForkHomeRipples, RIPPLE_LIMIT } from "./fork-home-ripples";
 import {
 	COMPOSE_SHADER,
@@ -10,7 +11,7 @@ const CELL_WIDTH = 7;
 const CELL_HEIGHT = 14;
 const GLYPHS =
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}<>/+=*";
-const LOGO_TEXT = "SUPERSET++";
+const LOGO_TEXT = FORK_DISPLAY_NAME.toUpperCase();
 const LOGO_PATHS = [
 	"M2 5h4v2H4v2H2v4h2v2h2v2H2v-4H0V9h2V5Z",
 	"M7 5h3v2H9v2H7v4h2v2h1v2H7v-4H5V9h2V5Z",

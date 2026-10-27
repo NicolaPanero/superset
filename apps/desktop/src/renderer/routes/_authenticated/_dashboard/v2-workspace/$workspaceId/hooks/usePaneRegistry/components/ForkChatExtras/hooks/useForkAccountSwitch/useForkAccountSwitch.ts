@@ -5,7 +5,8 @@ import { AGENT_IDENTITY_LABELS } from "@superset/shared/agent-catalog";
 import { accountQuotaState } from "@superset/shared/fork-account-usage";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
-import { useMemo, useState } from "react";
+import { TRPCClientError } from "@trpc/client";
+import { useMemo, useRef, useState } from "react";
 import { useHostUsageQuota } from "renderer/hooks/host-service/useHostUsageQuota";
 import { useTerminalAgentBinding } from "renderer/hooks/host-service/useTerminalAgentBindings";
 import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHostUrl";
@@ -44,8 +45,15 @@ export function useForkAccountSwitch(
 	const binding = useTerminalAgentBinding(workspaceId, data.terminalId);
 	const { mutateAsync: moveChat } =
 		workspaceTrpc.agents.moveChatToAccount.useMutation();
+	const { mutateAsync: switchChat } =
+		workspaceTrpc.agents.switchChatAccount.useMutation();
+	const recovery = workspaceTrpc.agents.quotaRecovery.useQuery(
+		{ workspaceId, terminalId: data.terminalId, agent: "claude" },
+		{ enabled, retry: false, staleTime: 60_000 },
+	);
 	const wiring = useChatWiring();
 	const [switching, setSwitching] = useState(false);
+	const switchInFlight = useRef(false);
 
 	const accounts = useMemo<ForkAccountChoice[]>(
 		() =>
@@ -91,54 +99,111 @@ export function useForkAccountSwitch(
 		binding?.account?.agent === "claude"
 			? binding.account.selection
 			: data.acpAccountSelection;
+	const nativeSessionId = binding?.agentSessionId ?? data.agent?.sessionId;
 
-	const onSwitch = async (selection: string | null) => {
+	const canStop = recovery.data?.manualAccountSwitch === true;
+	const onSwitch = async (selection: string | null): Promise<boolean> => {
 		if (
-			switching ||
+			switchInFlight.current ||
 			selection === current ||
 			(selection === null && !showCliOptions)
 		)
-			return;
-		if (
-			!hostUrl ||
-			!(await validateAccountLaunch({
-				hostUrl,
-				agent: data.acpAgentConfigId ?? "claude",
-				provider: "claude",
-				selection,
-			}))
-		)
-			return;
-		const target = accounts.find((account) => account.selection === selection);
-		const { acpSessionId, ...rest } = data;
-		const restoreRecovery = acpSessionId
-			? markChatSessionClosed(acpSessionId)
-			: () => {};
+			return false;
+		switchInFlight.current = true;
 		setSwitching(true);
-		// No agent while moving, so the closed chat does not resume itself.
-		ctx.actions.updateData({ ...rest, agent: undefined });
+		let suspended = false;
+		let sourceClosed = false;
+		let restoreSource = () => {};
 		try {
-			if (acpSessionId)
-				await wiring.transport.closeSession({ sessionId: acpSessionId });
-			if (data.agent?.sessionId)
-				await moveChat({
-					agent: "claude",
-					sessionId: data.agent.sessionId,
-					targetSelection: selection,
+			if (
+				!hostUrl ||
+				!(await validateAccountLaunch({
+					hostUrl,
+					agent: data.acpAgentConfigId ?? "claude",
+					provider: "claude",
+					selection,
+				}))
+			)
+				return false;
+			const target = accounts.find(
+				(account) => account.selection === selection,
+			);
+			const { acpSessionId, ...rest } = data;
+			const source = acpSessionId
+				? await wiring.transport.getSession({ sessionId: acpSessionId })
+				: null;
+			const sessionId = source?.session?.harnessSessionId ?? nativeSessionId;
+			if (
+				source?.live &&
+				((canStop && !sessionId) ||
+					(!canStop &&
+						(source.session?.status === "running" ||
+							source.session?.status === "awaiting_input")))
+			)
+				throw new Error(
+					t({ message: "Wait for the agent to finish before handing off." }),
+				);
+			if (acpSessionId) restoreSource = markChatSessionClosed(acpSessionId);
+			suspended = true;
+			ctx.actions.updateData({ ...data, agent: undefined });
+			if (canStop && source?.live && acpSessionId && sessionId) {
+				const result = await switchChat({
 					workspaceId,
 					terminalId: data.terminalId,
+					chatSessionId: acpSessionId,
+					sessionId,
+					targetSelection: selection,
 				});
-			ctx.actions.updateData({ ...rest, acpAccountSelection: selection });
+				ctx.actions.updateData({
+					...data,
+					acpSessionId: result.sessionId,
+					acpAccountSelection: result.switched ? selection : current,
+				});
+				if (!result.switched) {
+					toast.error(t({ message: "Couldn't switch account" }), {
+						description: result.error,
+					});
+					return false;
+				}
+			} else {
+				if (acpSessionId)
+					await wiring.transport.closeSession({ sessionId: acpSessionId });
+				sourceClosed = true;
+				if (sessionId)
+					await moveChat({
+						agent: "claude",
+						sessionId,
+						targetSelection: selection,
+						workspaceId,
+						terminalId: data.terminalId,
+					});
+				ctx.actions.updateData({ ...rest, acpAccountSelection: selection });
+			}
 			toast.success(
 				t({ message: `Chat moved to ${target?.name ?? selection ?? ""}` }),
 			);
+			return true;
 		} catch (error) {
-			restoreRecovery();
-			ctx.actions.updateData(data);
+			if (suspended) {
+				if (
+					sourceClosed ||
+					(error instanceof TRPCClientError &&
+						[
+							"BAD_REQUEST",
+							"PRECONDITION_FAILED",
+							"CONFLICT",
+							"NOT_FOUND",
+						].includes(error.data?.code))
+				)
+					restoreSource();
+				ctx.actions.updateData(data);
+			}
 			toast.error(t({ message: "Couldn't switch account" }), {
 				description: errorMessage(error, t({ message: "Unknown error" })),
 			});
+			return false;
 		} finally {
+			switchInFlight.current = false;
 			setSwitching(false);
 		}
 	};
@@ -148,6 +213,7 @@ export function useForkAccountSwitch(
 		current,
 		accounts,
 		switching,
-		onSwitch: (selection) => void onSwitch(selection),
+		canStop,
+		onSwitch,
 	};
 }

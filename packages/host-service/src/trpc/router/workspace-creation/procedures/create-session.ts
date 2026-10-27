@@ -17,6 +17,7 @@ import {
 import { setWorkspaceNamingState } from "../../../../workspaces/workspace-naming-state";
 import { protectedProcedure } from "../../../index";
 import { validateAgentLaunchOptions } from "../../agents";
+import { prepareForkCatalogLaunch } from "../../agents/fork-catalog-launch";
 import { applyForkLaunchChoices } from "../../agents/fork-launch";
 import { initEmptyRepo } from "../../project/utils/resolve-repo";
 import { startCommandTerminal } from "../shared/command-terminal";
@@ -74,11 +75,17 @@ export const createSession = protectedProcedure
 	.input(createSessionInputSchema)
 	.mutation(async ({ ctx, input }) => {
 		for (const launch of input.agents ?? []) {
-			validateAgentLaunchOptions(ctx.db, launch);
-			await applyForkLaunchChoices(ctx.db, {
-				...launch,
-				workspaceId: input.id ?? "pending",
-			});
+			validateAgentLaunchOptions(
+				ctx.db,
+				await prepareForkCatalogLaunch(ctx.db, launch, {
+					pendingWorkspace: true,
+				}),
+			);
+			await applyForkLaunchChoices(
+				ctx.db,
+				{ ...launch, workspaceId: input.id ?? "pending" },
+				{ pendingWorkspace: true },
+			);
 		}
 
 		// Idempotency: a retry carrying the same optimistic id must return the

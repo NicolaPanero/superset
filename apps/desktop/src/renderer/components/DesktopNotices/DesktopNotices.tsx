@@ -3,8 +3,11 @@ import { ForkWhatsNewNotice } from "renderer/components/ForkWhatsNewNotice";
 import { UpdateRequiredPage } from "renderer/components/UpdateRequiredPage";
 import { env } from "renderer/env.renderer";
 import { useDesktopNotices } from "renderer/hooks/useDesktopNotices";
+import { BRAND_RENAME_NOTICE_ID } from "renderer/hooks/useDesktopNotices/utils/brandRenameNotice";
 import { useDesktopNoticePreviewStore } from "renderer/stores/desktop-notice-preview";
+import { BrandRenameDialog } from "./components/BrandRenameDialog";
 import { NoticeDialog } from "./components/NoticeDialog";
+import { useForkDesktopNotices } from "./fork-notices";
 
 /**
  * Server-driven version notices (plans/done/20260720-remote-version-notices.md).
@@ -12,7 +15,9 @@ import { NoticeDialog } from "./components/NoticeDialog";
  * render as a modal over it.
  */
 export function DesktopNoticesGate({ children }: { children: ReactNode }) {
-	const { ready, current, dismiss } = useDesktopNotices();
+	const { ready, current, dismiss } = useForkDesktopNotices(
+		useDesktopNotices(),
+	);
 	const preview = useDesktopNoticePreviewStore((s) => s.preview);
 	const setPreview = useDesktopNoticePreviewStore((s) => s.setPreview);
 
@@ -40,7 +45,9 @@ export function DesktopNoticesGate({ children }: { children: ReactNode }) {
 	return (
 		<>
 			{children}
-			{current ? (
+			{current?.id === BRAND_RENAME_NOTICE_ID ? (
+				<BrandRenameDialog onDismiss={() => dismiss(current.id)} />
+			) : current ? (
 				<NoticeDialog notice={current} onDismiss={dismiss} />
 			) : ready ? (
 				<ForkWhatsNewNotice />

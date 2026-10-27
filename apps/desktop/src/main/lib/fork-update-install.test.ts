@@ -49,6 +49,11 @@ test("install targets the actual app bundle, including user Applications with sp
 			"/Users/Fake User/Applications/Superset++.app/Contents/MacOS/Superset++",
 		),
 	).toBe("/Users/Fake User/Applications/Superset++.app");
+	expect(
+		installedForkAppPath(
+			"/Applications/Paradev++.app/Contents/MacOS/Paradev++",
+		),
+	).toBe("/Applications/Paradev++.app");
 	expect(() =>
 		installedForkAppPath("/Applications/Superset.app/Contents/MacOS/Superset"),
 	).toThrow();

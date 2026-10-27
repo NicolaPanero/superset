@@ -8,6 +8,11 @@ on:
   schedule:
     - cron: "17 5 * * *"
   workflow_dispatch:
+    inputs:
+      retry:
+        description: Propose the release again after its previous proposal was closed without merge
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,39 +29,33 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Check out fork/main
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1 (Node 24)
+        with:
+          ref: fork/main
+          fetch-depth: 0
+          token: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
+
       - name: Mirror upstream main
         env:
           GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
-        run: |
-          gh api --method POST "repos/$GITHUB_REPOSITORY/merge-upstream" \
-            -f branch=main --jq '"\(.merge_type): \(.message)"'
+        run: bash scripts/fork/fork-upstream-source.sh mirror
 
       - name: Check whether a published release needs merging
         id: upstream
         env:
           GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
         run: |
-          tag=$(gh api --paginate 'repos/superset-sh/superset/releases?per_page=100' --jq '.[] | select(.draft == false and .prerelease == false) | .tag_name' |
-            grep -E '^desktop-v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
-          test -n "$tag"
-          sha=$(gh api "repos/superset-sh/superset/commits/$tag" --jq .sha)
-          status=$(gh api "repos/$GITHUB_REPOSITORY/compare/$sha...fork/main" --jq .status 2>/dev/null || true)
+          set -o pipefail
+          source scripts/fork/fork-upstream-source.sh
+          fork_upstream_load
+          fork_upstream_resolve ""
+          fork_upstream_fetch
           merge=true
-          if [ "$status" = ahead ] || [ "$status" = identical ]; then merge=false; fi
-          head="fork/sync-$tag"
-          existing=$(gh pr list --repo "$GITHUB_REPOSITORY" --base fork/main --head "$head" --state all --json url --jq '.[0].url // empty')
-          if [ -n "$existing" ]; then merge=false; echo "Release already proposed: $existing"; fi
-          echo "Published upstream release: $tag; comparison: $status; prepare=$merge"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          if fork_upstream_ancestor "$FORK_UPSTREAM_SHA" origin/fork/main; then merge=false; fi
+          echo "Published upstream release: $FORK_UPSTREAM_REPOSITORY $FORK_UPSTREAM_TAG ($FORK_UPSTREAM_SHA); prepare=$merge"
+          echo "tag=$FORK_UPSTREAM_TAG" >> "$GITHUB_OUTPUT"
           echo "merge=$merge" >> "$GITHUB_OUTPUT"
-
-      - name: Check out fork/main
-        if: steps.upstream.outputs.merge == 'true'
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1 (Node 24)
-        with:
-          ref: fork/main
-          fetch-depth: 0
-          token: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
 
       - name: Setup Bun
         if: steps.upstream.outputs.merge == 'true'
@@ -81,6 +80,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FORK_SYNC_TOKEN || github.token }}
           UPSTREAM_TAG: ${{ steps.upstream.outputs.tag }}
+          FORK_SYNC_RETRY: ${{ inputs.retry || false }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -86,7 +86,7 @@ export default defineConfig({
 			),
 			"process.env.NEXT_PUBLIC_WEB_URL": defineEnv(
 				process.env.NEXT_PUBLIC_WEB_URL,
-				`https://app.${rootDomain}`,
+				"https://app.superset.sh",
 			),
 			"process.env.NEXT_PUBLIC_MARKETING_URL": defineEnv(
 				process.env.NEXT_PUBLIC_MARKETING_URL,
@@ -225,7 +225,7 @@ export default defineConfig({
 			),
 			"process.env.NEXT_PUBLIC_WEB_URL": defineEnv(
 				process.env.NEXT_PUBLIC_WEB_URL,
-				`https://app.${rootDomain}`,
+				"https://app.superset.sh",
 			),
 			"process.env.MEDIA_URL": defineEnv(process.env.MEDIA_URL, ""),
 			"process.env.NEXT_PUBLIC_MARKETING_URL": defineEnv(
@@ -262,6 +262,10 @@ export default defineConfig({
 			),
 			"process.env.SUPERSET_WORKSPACE_NAME": defineEnv(
 				process.env.SUPERSET_WORKSPACE_NAME,
+			),
+			"process.env.DESKTOP_DISPLAY_NAME": defineEnv(
+				process.env.DESKTOP_DISPLAY_NAME,
+				"Superset",
 			),
 		},
 

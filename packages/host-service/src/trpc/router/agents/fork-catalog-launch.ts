@@ -17,6 +17,10 @@ type Launch = {
 	accountSelection?: string | null;
 	workspaceId?: string;
 };
+export interface ForkCatalogLaunchContext {
+	projectId?: string;
+	pendingWorkspace?: boolean;
+}
 interface Choices {
 	models: SessionConfigOption["options"];
 	efforts: SessionConfigOption["options"];
@@ -29,7 +33,7 @@ export const forkCatalogChoices = (input: object) => verified.get(input);
 export async function prepareForkCatalogLaunch<T extends Launch>(
 	db: HostDb,
 	input: T,
-	context: { projectId?: string } = {},
+	context: ForkCatalogLaunchContext = {},
 	load: typeof getForkModelCatalog = getForkModelCatalog,
 ): Promise<T> {
 	if (input.modelCatalog !== "agent" || (!input.model && !input.effort))
@@ -46,7 +50,10 @@ export async function prepareForkCatalogLaunch<T extends Launch>(
 		accountSelection: input.accountSelection,
 		projectId: context.projectId,
 		workspaceId:
-			!context.projectId && input.workspaceId && input.workspaceId !== "pending"
+			!context.pendingWorkspace &&
+			!context.projectId &&
+			input.workspaceId &&
+			input.workspaceId !== "pending"
 				? input.workspaceId
 				: undefined,
 		model: input.model,

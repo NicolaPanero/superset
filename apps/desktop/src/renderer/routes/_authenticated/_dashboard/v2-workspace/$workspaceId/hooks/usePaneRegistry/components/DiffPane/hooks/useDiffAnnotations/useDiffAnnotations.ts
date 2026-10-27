@@ -1,5 +1,6 @@
 import type { SelectionSide } from "@pierre/diffs";
 import type { DiffLineAnnotation } from "@pierre/diffs/react";
+import { useIsTabVisible } from "@superset/panes";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { useMemo } from "react";
 import { forkReviewCommentUrl } from "renderer/lib/fork-review-comment-link";
@@ -64,10 +65,11 @@ export function useDiffAnnotationsByPath({
 	DiffLineAnnotation<DiffAnnotationMetadata>[]
 > {
 	const showDiffComments = useSettings((s) => s.showDiffComments);
+	const isTabVisible = useIsTabVisible();
 	const prQuery = workspaceTrpc.git.getPullRequest.useQuery(
 		{ workspaceId },
 		{
-			enabled: !!workspaceId && showDiffComments,
+			enabled: !!workspaceId && showDiffComments && isTabVisible,
 			refetchInterval: 10_000,
 			refetchOnWindowFocus: true,
 			staleTime: 10_000,
@@ -77,7 +79,7 @@ export function useDiffAnnotationsByPath({
 	const threadsQuery = workspaceTrpc.git.getPullRequestThreads.useQuery(
 		{ workspaceId },
 		{
-			enabled: !!workspaceId && hasPR && showDiffComments,
+			enabled: !!workspaceId && hasPR && showDiffComments && isTabVisible,
 			refetchInterval: 30_000,
 			refetchOnWindowFocus: true,
 		},

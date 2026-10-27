@@ -18,6 +18,7 @@ import type {
 } from "../../harness";
 import type { ChatJournal } from "../../journal";
 import type { HarnessFactoryOptions } from "../registry";
+import { forkDisposeOnce } from "./forkDisposeOnce";
 import { forkPauseAfterFailure } from "./forkPauseAfterFailure";
 
 export type LiveSessionOptions = {
@@ -406,11 +407,13 @@ export class LiveSession {
 		return this.options.adapter.fork?.(cut) ?? Promise.resolve(null);
 	}
 
-	async dispose(): Promise<void> {
-		this.stopped = true;
-		this.discardPending();
-		await this.options.adapter.dispose();
-		await this.pump;
+	dispose(): Promise<void> {
+		return forkDisposeOnce(this, async () => {
+			this.stopped = true;
+			this.discardPending();
+			await this.options.adapter.dispose();
+			await this.pump;
+		});
 	}
 
 	private async run(stream: AsyncIterable<AdapterEvent>): Promise<void> {

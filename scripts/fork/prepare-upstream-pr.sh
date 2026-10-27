@@ -1,22 +1,37 @@
 #!/usr/bin/env bash
 # Prepare a reviewable upstream release. Never updates fork/main or enables auto-merge.
 set -euo pipefail
-tag="${1:?Pass a published desktop release tag}"
-[[ "$tag" =~ ^desktop-v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Invalid desktop release tag" >&2; exit 64; }
+requested="${1:-}"
 repository="${GITHUB_REPOSITORY:?Set GITHUB_REPOSITORY}"
-head="fork/sync-$tag"
 cd "$(git rev-parse --show-toplevel)"
-existing=$(gh pr list --repo "$repository" --base fork/main --head "$head" --state all --json url --jq '.[0].url // empty')
+source scripts/fork/fork-upstream-source.sh
+fork_upstream_load
+fork_upstream_resolve "$requested"
+if $FORK_UPSTREAM_DEVELOPMENT; then
+ echo "Proposals are prepared only from published stable releases" >&2
+ exit 64
+fi
+tag="$FORK_UPSTREAM_TAG"
+sha="$FORK_UPSTREAM_SHA"
+head="$FORK_UPSTREAM_HEAD"
+existing=$(gh pr list --repo "$repository" --base fork/main --head "$head" --state all --json url,state --jq '[.[] | select(.state == "OPEN" or .state == "MERGED")][0].url // empty')
 if [[ -n "$existing" ]]; then
  echo "Release already proposed: $existing"
  exit 0
 fi
+closed=$(gh pr list --repo "$repository" --base fork/main --head "$head" --state closed --json url --jq '.[0].url // empty')
+if [[ -n "$closed" && "${FORK_SYNC_RETRY:-false}" != true ]]; then
+ echo "Proposal closed without merge: $closed. Run the sync again with retry to propose it again."
+ exit 0
+fi
+fork_upstream_require_proposal "$head"
+fork_upstream_require_origin "$repository"
 conflicted=false
 if git ls-remote --exit-code --heads origin "refs/heads/$head" >/dev/null; then
  # Recover a prior push whose PR creation failed; preserve any manual fixes.
  git fetch --quiet origin "refs/heads/$head"
  git checkout -b "$head" FETCH_HEAD
- if ! git merge-base --is-ancestor origin/fork/main HEAD; then
+ if ! fork_upstream_ancestor origin/fork/main HEAD; then
   conflicted=true
   echo "merge conflicts: recovered branch needs reconciliation with fork/main" >sync.log
  fi
@@ -24,7 +39,7 @@ else
  git checkout -b "$head"
  before=$(git rev-parse HEAD)
  set +e
- bash scripts/fork/sync-upstream.sh "$tag" >sync.log 2>&1
+ bash scripts/fork/sync-upstream.sh --expected-sha "$sha" "$tag" >sync.log 2>&1
  status=$?
  set -e
  cat sync.log
@@ -37,8 +52,7 @@ else
    # The merge was aborted. Propose the official commit so GitHub shows the
    # conflicts against fork/main; resolving them preserves both histories.
    conflicted=true
-   release_sha=$(git rev-parse "$tag^{commit}")
-   git push origin "$release_sha:refs/heads/$head"
+   git push origin "$sha:refs/heads/$head"
    ;;
   *) echo "Upstream preparation failed; fork/main was not updated" >&2; exit "$status" ;;
  esac
@@ -46,7 +60,7 @@ fi
 body=$(mktemp)
 trap 'rm -f "$body"' EXIT
 cat > "$body" <<BODY
-Integrates the published upstream release [$tag](https://github.com/superset-sh/superset/releases/tag/$tag).
+Integrates the published upstream release [$tag](https://github.com/$FORK_UPSTREAM_REPOSITORY/releases/tag/$tag) from \`$FORK_UPSTREAM_REPOSITORY\` at commit \`$sha\`.
 
 Review the changes before merging into \`fork/main\`. Its required checks and owner review remain in force. The release build starts only after that merge.
 BODY

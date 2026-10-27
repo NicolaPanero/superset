@@ -16,6 +16,14 @@ test("fork branding keeps its established data and login identity", () => {
 		scheme: "superset-fork",
 	});
 });
+test("upstream branding cannot rename the fork's technical product", () => {
+	process.env.SUPERSET_WORKSPACE_NAME = "fork";
+	expect(forkIdentity("Paradev")).toEqual({
+		productName: "Superset++",
+		appId: "com.superset.desktop.fork",
+		scheme: "superset-fork",
+	});
+});
 test.each([
 	undefined,
 	"local-worktree",

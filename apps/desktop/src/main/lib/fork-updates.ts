@@ -101,7 +101,7 @@ function installAndRestart(tag: string): Promise<boolean> {
 					message: i18n._(
 						msg({
 							message:
-								"Could not install the update. Superset++ is still open. Try again from Check for Updates.",
+								"Could not install the update. Paradev++ is still open. Try again from Check for Updates.",
 						}),
 					),
 					detail: logPath,
@@ -119,9 +119,7 @@ async function offerUpdate(tag: string): Promise<boolean> {
 	const { response } = await dialog.showMessageBox({
 		type: "info",
 		title: i18n._(msg({ message: "Update available" })),
-		message: i18n._(
-			msg({ message: "A new build of this Superset fork is available." }),
-		),
+		message: i18n._(msg({ message: "A new build of Paradev++ is available." })),
 		detail: i18n._({
 			...msg({
 				message:

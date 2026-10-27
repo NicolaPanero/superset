@@ -170,9 +170,10 @@ export class LiveSessionRegistry {
 	async dispose(sessionId: string): Promise<void> {
 		const session = this.live.get(sessionId);
 		if (!session) return;
+		await session.dispose();
+		if (this.live.get(sessionId) !== session) return;
 		this.live.delete(sessionId);
 		this.observe(() => this.options.observer?.stopped(sessionId));
-		await session.dispose();
 	}
 
 	async disposeAll(): Promise<void> {
@@ -187,12 +188,8 @@ export class LiveSessionRegistry {
 		matches: (session: LiveSession) => boolean,
 	): Promise<string[]> {
 		const sessions = [...this.live.values()].filter(matches);
-		for (const session of sessions) this.live.delete(session.sessionId);
-		for (const session of sessions) {
-			this.observe(() => this.options.observer?.stopped(session.sessionId));
-		}
 		const results = await Promise.allSettled(
-			sessions.map((session) => session.dispose()),
+			sessions.map((session) => this.dispose(session.sessionId)),
 		);
 		const failure = results.find((result) => result.status === "rejected");
 		if (failure?.status === "rejected") throw failure.reason;

@@ -1,4 +1,4 @@
-# Builds Superset++ from fork/main using the txcript version pinned in scripts/fork/txcript-version.json.
+# Builds Paradev++ from fork/main using the txcript version pinned in scripts/fork/txcript-version.json.
 # Pushes reuse successful PR validation for identical content; changing the txcript pin is explicit.
 # Bundle id, login scheme, data paths and update asset names stay compatible with existing forks.
 
@@ -230,11 +230,13 @@ jobs:
           fi
           test -s Superset-fork-arm64.zip
           cat > notes.md <<EOF
-          Superset++ ${VERSION}, from fork/main at ${SHA}.
+          Paradev++ ${VERSION}, from fork/main at ${SHA}.
 
           - Mac Apple Silicon: Superset-fork-arm64.zip
 
-          This build uses this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Superset++ can coexist with the official app.
+          This is a bridge build: its installer also accepts Paradev++.app, the name used by a later release.
+
+          This build uses this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Paradev++ can coexist with the official app.
 
           Windows is not supported yet. The Mac build is not notarized.
           EOF
@@ -242,7 +244,7 @@ jobs:
             draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
             test "$draft" = true || { echo "Published release preserved"; exit 0; }
           else
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$SHA" --title "Superset++ ${VERSION} (${SHA:0:7})" --notes-file notes.md --draft
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$SHA" --title "Paradev++ ${VERSION} (${SHA:0:7})" --notes-file notes.md --draft
           fi
           gh release upload "$TAG" Superset-fork-arm64.zip --repo "$GITHUB_REPOSITORY" --clobber
           current_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/fork/main" --jq .sha)

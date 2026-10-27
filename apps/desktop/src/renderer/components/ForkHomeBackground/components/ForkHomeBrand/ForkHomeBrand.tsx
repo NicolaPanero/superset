@@ -1,6 +1,7 @@
 import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
 import { useForkHomeAppearance } from "renderer/stores/fork-home-appearance";
+import { FORK_DISPLAY_NAME } from "~/fork-display-name";
 import { supportsForkHomeScene } from "../../fork-home-support";
 
 export function ForkHomeBrand({
@@ -16,7 +17,7 @@ export function ForkHomeBrand({
 		<div
 			className={cn("fork-home-brand", compact && "fork-home-brand--compact")}
 			role="img"
-			aria-label="Superset++"
+			aria-label={FORK_DISPLAY_NAME}
 		/>
 	) : (
 		children

@@ -8,12 +8,10 @@ import {
 	type WorkspaceInteractionState,
 	type WorkspaceStore,
 } from "@superset/panes";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { LuMaximize2, LuMinimize2 } from "react-icons/lu";
 import { reportRendererError } from "renderer/lib/report-renderer-error";
-import { RightSidebarToggle } from "renderer/routes/_authenticated/_dashboard/components/RightSidebarToggle";
 import { WindowChrome } from "renderer/routes/_authenticated/_dashboard/components/WindowChrome";
-import { WindowControlsInset } from "renderer/routes/_authenticated/_dashboard/components/WindowControlsInset";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import type { StoreApi } from "zustand/vanilla";
@@ -27,6 +25,8 @@ import { RightPaneHeaderButton } from "./components/RightPaneHeaderButton";
 import type { RightPaneGates } from "./paneOptions";
 import type { RightPaneKind } from "./types";
 
+const RIGHT_PANE_KEPT_TABS = 2;
+
 interface RightPaneAreaProps {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	registry: PaneRegistry<PaneViewerData>;
@@ -36,14 +36,11 @@ interface RightPaneAreaProps {
 	contextMenuActions: ContextMenuActionConfig<PaneViewerData>[];
 	onBeforeCloseTab: (tab: Tab<PaneViewerData>) => boolean | Promise<boolean>;
 	onInteractionStateChange?: (state: WorkspaceInteractionState) => void;
-	workspaceControls: ReactNode;
+	toolbar: ReactNode;
 	isFullScreen: boolean;
 	onToggleFullScreen: () => void;
-	onToggleSidebar: () => void;
-	onActivate: () => void;
 	onAdd: (kind: RightPaneKind) => void;
 	gates: RightPaneGates;
-	showWindowControls: boolean;
 }
 
 export function RightPaneArea({
@@ -53,26 +50,24 @@ export function RightPaneArea({
 	contextMenuActions,
 	onBeforeCloseTab,
 	onInteractionStateChange,
-	workspaceControls,
+	toolbar,
 	isFullScreen,
 	onToggleFullScreen,
-	onToggleSidebar,
-	onActivate,
 	onAdd,
 	gates,
-	showWindowControls,
 }: RightPaneAreaProps) {
 	const { t } = useLingui();
 	const { workspace } = useWorkspace();
+	useEffect(() => {
+		if (!isFullScreen) return;
+		const active = store.getState().getActivePane();
+		if (active) store.getState().focusPane(active.pane.id);
+	}, [isFullScreen, store]);
 
 	return (
-		<div
-			className="contents"
-			data-pane-area="right"
-			onPointerDownCapture={onActivate}
-			onFocusCapture={onActivate}
-		>
+		<div className="contents" data-pane-area="right">
 			<Workspace<PaneViewerData>
+				keepAliveTabs={RIGHT_PANE_KEPT_TABS}
 				registry={registry}
 				paneActions={paneActions}
 				contextMenuActions={contextMenuActions}
@@ -101,6 +96,7 @@ export function RightPaneArea({
 									? t({ message: "Restore width" })
 									: t({ message: "Expand" })
 							}
+							hotkeyId="TOGGLE_RIGHT_PANE_FULL_SCREEN"
 							onClick={onToggleFullScreen}
 						>
 							{isFullScreen ? (
@@ -109,9 +105,7 @@ export function RightPaneArea({
 								<LuMaximize2 className="size-4" strokeWidth={1.5} />
 							)}
 						</RightPaneHeaderButton>
-						{workspaceControls}
-						<RightSidebarToggle compact isOpen onToggle={onToggleSidebar} />
-						{showWindowControls && <WindowControlsInset />}
+						{toolbar}
 					</div>
 				)}
 				renderEmptyState={() => (

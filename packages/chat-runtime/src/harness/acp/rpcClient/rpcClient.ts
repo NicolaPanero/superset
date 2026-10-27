@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { ForkAgentProcesses } from "../../forkAgentProcesses";
+import { forkAcpTransportCloser } from "./fork-close-acp-transport";
 
 export type AcpTransport = {
 	pid?: number;
@@ -21,7 +22,6 @@ export type SpawnAcpOptions = {
 };
 
 const OWN_PROCESS_GROUP = process.platform !== "win32";
-const CLOSE_GRACE_MS = 2000;
 const EXIT_FLUSH_MS = 500;
 
 function killProcessGroup(pid: number | undefined): void {
@@ -90,24 +90,7 @@ export function spawnAcpTransport(
 		send: (line) => {
 			if (!exited && child.stdin.writable) child.stdin.write(`${line}\n`);
 		},
-		close: async () => {
-			if (exited) return processes.reap();
-			await processes.sample();
-			const reaped = processes.reap();
-			child.stdin.end();
-			await new Promise<void>((resolve) => {
-				const timer = setTimeout(() => {
-					killProcessGroup(child.pid);
-					child.kill("SIGKILL");
-					resolve();
-				}, CLOSE_GRACE_MS);
-				child.once("close", () => {
-					clearTimeout(timer);
-					resolve();
-				});
-			});
-			await reaped;
-		},
+		close: forkAcpTransportCloser(child, processes),
 	};
 }
 
@@ -167,6 +150,7 @@ export class AcpRpcClient {
 	private readonly pending = new Map<number, PendingRequest>();
 	private nextId = 1;
 	private closed = false;
+	private closing: Promise<void> | undefined;
 
 	constructor(private readonly options: AcpRpcClientOptions) {
 		this.transport = options.createTransport({
@@ -221,11 +205,16 @@ export class AcpRpcClient {
 		this.write({ jsonrpc: "2.0", id, error: { code, message } });
 	}
 
-	async close(): Promise<void> {
-		if (this.closed) return;
-		this.closed = true;
-		await this.transport.close();
-		this.rejectPending("acp agent closed");
+	close(): Promise<void> {
+		this.closing ??= (async () => {
+			this.closed = true;
+			try {
+				await this.transport.close();
+			} finally {
+				this.rejectPending("acp agent closed");
+			}
+		})();
+		return this.closing;
 	}
 
 	private write(frame: unknown): void {

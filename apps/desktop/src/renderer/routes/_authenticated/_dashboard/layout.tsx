@@ -257,10 +257,6 @@ function DashboardLayout() {
 							</div>
 						</div>
 					</div>
-					<div
-						id="workspace-right-sidebar-slot"
-						className="flex h-full shrink-0"
-					/>
 					<AddRepositoryModals />
 					<SaveAsEnvironmentMount />
 					<RestoreCloudWorkspaceMount />
