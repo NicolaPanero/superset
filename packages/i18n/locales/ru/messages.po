@@ -1740,6 +1740,9 @@ msgstr "Аккаунт ожидает удаления"
 msgid "Account usage"
 msgstr "Использование аккаунта"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Кольца использования аккаунтов обновляются после каждого хода агента и сохраняют последнее значение, а не тускнеют."
+
 msgid "Achievements"
 msgstr "Достижения"
 
@@ -4032,9 +4035,6 @@ msgstr "Выберите, как открывать пути файлов при
 
 msgid "Choose MCP servers for this message"
 msgstr "Выбрать серверы MCP для этого сообщения"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Выберите «Никогда», «Пока агенты работают» или «Всегда» в значке Paradev++ в строке меню."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Выберите, что очистить во встроенном браузере."

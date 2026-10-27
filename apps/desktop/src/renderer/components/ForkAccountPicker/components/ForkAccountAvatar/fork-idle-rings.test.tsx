@@ -3,7 +3,7 @@ import { accountQuotaRings } from "@superset/shared/fork-account-usage";
 import { render } from "renderer/test-utils/fork-ui";
 import { ForkAccountAvatar } from "./ForkAccountAvatar";
 
-test("returning after inactivity keeps both arcs visible until a new quota sample arrives", () => {
+test("an idle sample keeps both arcs current; failed refreshes dim them after 30 minutes", () => {
 	const now = Date.now();
 	const account = {
 		agent: "codex",
@@ -15,17 +15,27 @@ test("returning after inactivity keeps both arcs visible until a new quota sampl
 			{ id: "secondary", label: "Weekly", usedPercent: 60, resetsAt: null },
 		],
 	};
-	const idle = now + 10 * 60_000;
+	const idle = now + 31 * 60_000;
 	const view = render(
 		<ForkAccountAvatar
 			label="Work"
-			{...accountQuotaRings(account, undefined, now)}
+			{...accountQuotaRings(account, undefined, idle)}
 		/>,
 	);
+	expect(view.getByRole("img").getAttribute("aria-label")).not.toContain(
+		"Last known",
+	);
+	expect(
+		view.container.querySelectorAll('circle[opacity="0.65"]'),
+	).toHaveLength(0);
 	view.rerender(
 		<ForkAccountAvatar
 			label="Work"
-			{...accountQuotaRings(account, undefined, idle)}
+			{...accountQuotaRings(
+				{ ...account, status: "unavailable" },
+				undefined,
+				idle,
+			)}
 		/>,
 	);
 	expect(view.getByRole("img").getAttribute("aria-label")).toContain(

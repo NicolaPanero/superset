@@ -4,6 +4,7 @@ import { workspaces } from "../../../db/schema";
 import type { AgentLifecycleEventType } from "../../../events";
 import type { HostServiceContext } from "../../../types";
 import { touchLocalWorkspaceActivity } from "../../../workspaces/local-workspace-store";
+import { refreshQuotaAfterTurn } from "../usage/fork-quota-refresh";
 import { continueWorkspaceNaming } from "../workspace-creation/utils/workspace-naming-job";
 
 // Tasks already nudged to "started" this process. `Start` fires on every
@@ -49,6 +50,7 @@ export function fanOutAgentLifecycle(
 ): void {
 	const { workspaceId, eventType, preview, occurredAt } = event;
 	ctx.eventBus.broadcastAgentLifecycle(event);
+	if (eventType === "Stop" || eventType === "Failed") refreshQuotaAfterTurn();
 
 	// Every lifecycle event is activity for the sidebar's "Last active"
 	// ranking. Best-effort: a failed write must not fail the caller, which

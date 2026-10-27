@@ -1,5 +1,6 @@
 import { expect, spyOn, test } from "bun:test";
 import {
+	expireQuotaFetches,
 	invalidateQuotaFetch,
 	quotaFetch,
 	quotaResponseTiming,
@@ -92,6 +93,36 @@ test("a reset invalidates only its own cached quota, preserving other accounts",
 		await quotaFetch(url, {}, "profile-a");
 		await quotaFetch(url, {}, "profile-b");
 		expect(calls).toBe(3);
+	} finally {
+		await server.stop(true);
+	}
+});
+
+test("expiring reads refetches usage but keeps a provider's Retry-After", async () => {
+	const calls = { ok: 0, limited: 0 };
+	const server = Bun.serve({
+		port: 0,
+		fetch: (request) => {
+			if (new URL(request.url).pathname === "/limited") {
+				calls.limited++;
+				return new Response("limited", {
+					status: 429,
+					headers: { "Retry-After": "600" },
+				});
+			}
+			calls.ok++;
+			return Response.json({ used: calls.ok });
+		},
+	});
+	try {
+		const base = `http://localhost:${server.port}`;
+		const init = { headers: { Authorization: "Bearer test-only" } };
+		await quotaFetch(`${base}/usage`, init, "expire-profile");
+		await quotaFetch(`${base}/limited`, init, "expire-profile");
+		expireQuotaFetches();
+		await quotaFetch(`${base}/usage`, init, "expire-profile");
+		await quotaFetch(`${base}/limited`, init, "expire-profile");
+		expect(calls).toEqual({ ok: 2, limited: 1 });
 	} finally {
 		await server.stop(true);
 	}

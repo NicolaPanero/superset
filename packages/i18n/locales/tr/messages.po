@@ -1740,6 +1740,9 @@ msgstr "Hesap silinmeyi bekliyor"
 msgid "Account usage"
 msgstr "Hesap kullanımı"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Hesap kullanım halkaları her ajan turundan sonra güncellenir ve solmak yerine son okumayı korur."
+
 msgid "Achievements"
 msgstr "Başarımlar"
 
@@ -4032,9 +4035,6 @@ msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağ
 
 msgid "Choose MCP servers for this message"
 msgstr "Bu ileti için MCP sunucularını seçin"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Menü çubuğundaki Paradev++ simgesinden Asla, Ajanlar çalışırken veya Her zaman seçeneğini seçin."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."

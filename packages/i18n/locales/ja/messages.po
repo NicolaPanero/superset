@@ -1740,6 +1740,9 @@ msgstr "アカウントは削除待ちです"
 msgid "Account usage"
 msgstr "アカウントの使用状況"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "アカウントの使用量リングはエージェントのターンごとに更新され、薄く消えずに最後の読み取り値を保持します。"
+
 msgid "Achievements"
 msgstr "実績"
 
@@ -4032,9 +4035,6 @@ msgstr "ターミナルでCmd+クリックしたときのファイルパスの�
 
 msgid "Choose MCP servers for this message"
 msgstr "このメッセージで使うMCPサーバーを選択"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "メニューバーのParadev++アイコンから「しない」「エージェントの作業中」「常に」を選択できます。"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"

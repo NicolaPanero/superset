@@ -7,6 +7,7 @@ import {
 import {
 	accountQuotaState,
 	accountQuotaWindows,
+	accountQuotaWithResets,
 } from "@superset/shared/fork-account-usage";
 import { ForkUsageStatus } from "renderer/components/ForkUsageStatus";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
@@ -34,7 +35,8 @@ export function ForkUsageSummary({
 	/** The status is shown elsewhere, such as a chip beside the account name. */
 	hideStatus?: boolean;
 }) {
-	const state = accountQuotaState(account, model);
+	const state = accountQuotaState(account, model, undefined, "display");
+	const shown = account && accountQuotaWithResets(account);
 	const showsWindows =
 		!!account &&
 		account.status !== "signed_out" &&
@@ -42,7 +44,7 @@ export function ForkUsageSummary({
 		state.reason !== "unknown";
 	const dimmed = state.reason === "stale";
 	if (compact) {
-		const modelWindows = account ? accountQuotaWindows(account, model) : [];
+		const modelWindows = shown ? accountQuotaWindows(shown, model) : [];
 		const general = modelWindows.filter((window) =>
 			GENERAL_WINDOW_IDS.has(window.id),
 		);
@@ -76,7 +78,7 @@ export function ForkUsageSummary({
 				</div>
 			)}
 			{showsWindows &&
-				account?.windows.map((window) => (
+				shown?.windows.map((window) => (
 					<UsageWindowRow key={window.id} window={window} dimmed={dimmed} />
 				))}
 			{account?.creditsBalance !== null &&

@@ -1740,6 +1740,9 @@ msgstr "Account wordt verwijderd"
 msgid "Account usage"
 msgstr "Accountgebruik"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "De verbruiksringen van accounts worden na elke beurt van een agent bijgewerkt en houden de laatste meting vast in plaats van te vervagen."
+
 msgid "Achievements"
 msgstr "Prestaties"
 
@@ -4032,9 +4035,6 @@ msgstr "Kies hoe bestandspaden openen bij Cmd+klik in de terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Kies MCP-servers voor dit bericht"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Kies Nooit, Terwijl agents werken of Altijd via het Paradev++-symbool in de menubalk."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Kies wat je uit de ingebouwde browser wilt wissen."

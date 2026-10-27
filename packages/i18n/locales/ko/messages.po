@@ -1740,6 +1740,9 @@ msgstr "삭제 예정 계정"
 msgid "Account usage"
 msgstr "계정 사용량"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "계정 사용량 링은 에이전트 턴이 끝날 때마다 업데이트되며, 흐려지지 않고 마지막 측정값을 유지합니다."
+
 msgid "Achievements"
 msgstr "업적"
 
@@ -4032,9 +4035,6 @@ msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선�
 
 msgid "Choose MCP servers for this message"
 msgstr "이 메시지에 사용할 MCP 서버 선택"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "메뉴 막대의 Paradev++ 아이콘에서 안 함, 에이전트 작업 중, 항상 중 하나를 선택하세요."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."

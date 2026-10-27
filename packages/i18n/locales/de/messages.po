@@ -1740,6 +1740,9 @@ msgstr "Konto zur Löschung vorgemerkt"
 msgid "Account usage"
 msgstr "Kontonutzung"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Die Verbrauchsringe der Konten werden nach jedem Agentendurchlauf aktualisiert und behalten den letzten Wert, statt zu verblassen."
+
 msgid "Achievements"
 msgstr "Auszeichnungen"
 
@@ -4032,9 +4035,6 @@ msgstr "Lege fest, wie Dateipfade beim Cmd+Klick im Terminal geöffnet werden"
 
 msgid "Choose MCP servers for this message"
 msgstr "MCP-Server für diese Nachricht wählen"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Wähle „Nie“, „Während Agenten arbeiten“ oder „Immer“ über das Paradev++-Symbol in der Menüleiste."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wähle, was aus dem In-App-Browser gelöscht werden soll."

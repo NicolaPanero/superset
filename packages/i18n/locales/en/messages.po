@@ -1740,6 +1740,9 @@ msgstr "Account pending deletion"
 msgid "Account usage"
 msgstr "Account usage"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+
 msgid "Achievements"
 msgstr "Achievements"
 
@@ -4032,9 +4035,6 @@ msgstr "Choose how to open file paths when Cmd+clicking in the terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Choose MCP servers for this message"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choose what to clear from the in-app browser."

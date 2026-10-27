@@ -1740,6 +1740,9 @@ msgstr "Akun menunggu penghapusan"
 msgid "Account usage"
 msgstr "Penggunaan akun"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Cincin penggunaan akun diperbarui setelah setiap giliran agen dan mempertahankan pembacaan terakhir alih-alih memudar."
+
 msgid "Achievements"
 msgstr "Pencapaian"
 
@@ -4032,9 +4035,6 @@ msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Pilih server MCP untuk pesan ini"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Pilih Tidak pernah, Saat agen bekerja, atau Selalu dari ikon Paradev++ di bar menu."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."

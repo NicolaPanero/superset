@@ -1740,6 +1740,9 @@ msgstr "帳戶待刪除"
 msgid "Account usage"
 msgstr "帳戶用量"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "帳號用量圓環會在每次代理程式回合結束後更新，並保留最近一次讀數，而不會變淡。"
+
 msgid "Achievements"
 msgstr "成就"
 
@@ -4032,9 +4035,6 @@ msgstr "選擇在終端中Cmd+點選檔案路徑時的開啟方式"
 
 msgid "Choose MCP servers for this message"
 msgstr "為這則訊息選擇MCP伺服器"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "從選單列的 Paradev++ 圖示中選擇「永不」、「代理程式工作時」或「永遠」。"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "選擇要從應用程式內瀏覽器清除的內容。"

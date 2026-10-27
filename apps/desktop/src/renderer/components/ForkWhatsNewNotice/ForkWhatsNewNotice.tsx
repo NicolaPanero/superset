@@ -36,7 +36,7 @@ export function ForkWhatsNewNotice() {
 		}),
 		t({
 			message:
-				"Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar.",
+				"Account usage rings update after each agent turn and keep the last reading instead of fading out.",
 		}),
 		t({
 			message:

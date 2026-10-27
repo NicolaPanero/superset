@@ -1740,6 +1740,9 @@ msgstr "Konto oczekuje na usunięcie"
 msgid "Account usage"
 msgstr "Wykorzystanie konta"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Pierścienie użycia kont odświeżają się po każdej turze agenta i zachowują ostatni odczyt zamiast blednąć."
+
 msgid "Achievements"
 msgstr "Osiągnięcia"
 
@@ -4032,9 +4035,6 @@ msgstr "Wybierz, jak otwierać ścieżki plików po Cmd+kliknięciu w terminalu"
 
 msgid "Choose MCP servers for this message"
 msgstr "Wybierz serwery MCP dla tej wiadomości"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Wybierz Nigdy, Gdy agenci pracują lub Zawsze w ikonie Paradev++ na pasku menu."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Wybierz, co wyczyścić z przeglądarki w aplikacji."

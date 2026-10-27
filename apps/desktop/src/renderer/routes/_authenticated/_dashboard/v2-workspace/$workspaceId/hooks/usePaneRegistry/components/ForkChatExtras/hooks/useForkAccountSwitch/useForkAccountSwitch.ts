@@ -2,7 +2,10 @@ import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@superset/i18n/errors";
 import type { RendererContext } from "@superset/panes";
 import { AGENT_IDENTITY_LABELS } from "@superset/shared/agent-catalog";
-import { accountQuotaState } from "@superset/shared/fork-account-usage";
+import {
+	accountQuotaState,
+	accountQuotaWithResets,
+} from "@superset/shared/fork-account-usage";
 import { toast } from "@superset/ui/sonner";
 import { workspaceTrpc } from "@superset/workspace-client";
 import { TRPCClientError } from "@trpc/client";
@@ -64,7 +67,7 @@ export function useForkAccountSwitch(
 						account.selection === option.selection &&
 						account.credentialKind === "subscription",
 				);
-				const tightest = usage?.windows
+				const tightest = (usage && accountQuotaWithResets(usage))?.windows
 					.filter(
 						(window) =>
 							GENERAL_WINDOWS.includes(window.id) &&
@@ -86,7 +89,8 @@ export function useForkAccountSwitch(
 					plan: usage?.plan ?? null,
 					isSystemDefault,
 					usage:
-						accountQuotaState(usage).reason === "ready" && tightest
+						accountQuotaState(usage, undefined, undefined, "display").reason ===
+							"ready" && tightest
 							? { label: tightest.label, usedPercent: tightest.usedPercent }
 							: null,
 				};

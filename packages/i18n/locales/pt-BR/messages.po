@@ -1740,6 +1740,9 @@ msgstr "Conta com exclusão pendente"
 msgid "Account usage"
 msgstr "Uso da conta"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Os anéis de uso das contas são atualizados após cada turno de um agente e mantêm a última leitura em vez de esmaecer."
+
 msgid "Achievements"
 msgstr "Conquistas"
 
@@ -4032,9 +4035,6 @@ msgstr "Escolha como abrir caminhos de arquivo ao dar Cmd+clique no terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Escolher servidores MCP para esta mensagem"
-
-msgid "Choose Never, While Agents Work or Always from the Paradev++ icon in the menu bar."
-msgstr "Escolha Nunca, Enquanto os agentes trabalham ou Sempre no ícone do Paradev++ na barra de menus."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Escolha o que limpar do navegador do app."

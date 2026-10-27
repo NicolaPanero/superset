@@ -156,8 +156,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Il tondino dell’**account** ha due anelli di consumo: esterno per le **5 ore**,
   interno per la **settimana**. Tooltip e menu indicano la corrispondenza.
   Gli anelli mostrano le due quote generali; i limiti specifici del modello
-  restano nel menu e nella continuazione automatica. Dati assenti, scaduti o non applicabili hanno un anello tratteggiato;
-  non vengono presentati come quota libera.
+  restano nel menu e nella continuazione automatica. Una lettura resta piena
+  finché gli aggiornamenti riescono, perché il consumo cambia solo usando
+  l’account; una finestra oltre l’orario di reset vale 0%. L’anello diventa
+  tratteggiato con dati assenti o non applicabili, con aggiornamenti falliti da
+  30 minuti o con una lettura più vecchia di 6 ore; non è mai quota libera.
 
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
@@ -285,9 +288,13 @@ Dettagli in [docs/fork-accounts.md](docs/fork-accounts.md).
 
 ### Letture della quota
 
-La schermata controlla la cache condivisa all’apertura, al ritorno e ogni trenta
-secondi mentre è visibile. La cache dell’host dura quindici secondi; le richieste
-al provider restano distanziate di cinque minuti per account, con backoff su 429. Dati vecchi o mancanti restano segnalati; non equivalgono a quota libera.
+La schermata controlla la cache condivisa all’apertura, al ritorno e ogni quindici
+secondi mentre è visibile. La cache dell’host dura quindici secondi. L’host legge
+la quota anche da solo, ogni minuto, e 5 secondi dopo la fine di ogni turno di
+un agente (al massimo una volta al minuto); le richieste periodiche al provider
+restano distanziate di cinque minuti per account e un 429 con `Retry-After` non
+viene anticipato. La scelta dell’account e la continuazione automatica usano
+solo letture degli ultimi sei minuti; dati mancanti non equivalgono a quota libera.
 Il rinnovo passa dal CLI del profilo, senza richieste al modello, hook o MCP:
 Claude usa soltanto `/usage`, Codex soltanto le procedure RPC dell’account.
 Ogni verifica ha un limite di 15 secondi, al massimo due possono essere attive e

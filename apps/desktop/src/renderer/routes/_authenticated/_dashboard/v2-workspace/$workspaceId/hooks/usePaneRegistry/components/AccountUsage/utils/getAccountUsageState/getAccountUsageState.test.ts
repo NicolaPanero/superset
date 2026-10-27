@@ -71,13 +71,30 @@ describe("pane quota selection", () => {
 	test("model-specific caps do not set the general usage severity", () => {
 		expect(getAccountUsageState(input).tightest?.usedPercent).toBe(25);
 	});
-	test("reset, old observations and provider failures are stale", () => {
-		expect(getAccountUsageState({ ...input, now: now + 3600001 }).state).toBe(
-			"stale",
-		);
+	test("a passed reset empties its window and an idle sample stays current", () => {
+		const reset = getAccountUsageState({ ...input, now: now + 3600001 });
+		expect(reset.state).toBe("ready");
+		expect(reset.tightest?.usedPercent).toBe(0);
 		expect(getAccountUsageState({ ...input, now: now + 600001 }).state).toBe(
-			"stale",
+			"ready",
 		);
+	});
+	test("failed refreshes read as last known only after 30 minutes", () => {
+		const failing = { ...account, status: "unavailable" as const };
+		expect(
+			getAccountUsageState({
+				...input,
+				accounts: [failing],
+				now: now + 60_000,
+			}).state,
+		).toBe("ready");
+		expect(
+			getAccountUsageState({
+				...input,
+				accounts: [failing],
+				now: now + 30 * 60_000,
+			}).state,
+		).toBe("stale");
 		expect(getAccountUsageState({ ...input, failed: true }).state).toBe(
 			"stale",
 		);

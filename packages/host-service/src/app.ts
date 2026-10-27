@@ -14,6 +14,7 @@ import {
 import { forkExecGh } from "./fork-integrations/fork-exec-gh";
 import { startForkJiraAutomations } from "./fork-integrations/fork-jira-automations";
 import { ForkConnectionStore } from "./fork-integrations/fork-store";
+import { startQuotaRefresh } from "./trpc/router/usage/fork-quota-refresh";
 
 /** One frame of a 1920x1200 display is ~9 MB; this is a stalled reader, not a burst. */
 const MAX_DISPLAY_BUFFER_BYTES = 32 * 1024 * 1024;
@@ -382,6 +383,10 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		isLocalCaller: true,
 	});
 	const stopAttachmentRetention = startAttachmentRetention(db);
+	const stopQuotaRefresh =
+		process.env.SUPERSET_HOST_RUN_MODE === "sandbox"
+			? () => {}
+			: startQuotaRefresh();
 
 	// Startup sweeps run in the background so they don't block server
 	// startup.
@@ -574,6 +579,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 
 	const ownsDb = options.db === undefined;
 	const dispose = async (): Promise<void> => {
+		stopQuotaRefresh();
 		await stopForkJiraAutomations();
 		stopAttachmentRetention();
 		if (projectPurgeTimer) clearInterval(projectPurgeTimer);

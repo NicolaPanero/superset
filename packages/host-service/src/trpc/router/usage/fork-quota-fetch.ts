@@ -13,7 +13,12 @@ interface FetchResponse {
 const TTL = ACCOUNT_QUOTA_PROVIDER_MS;
 const entries = new Map<
 	string,
-	{ until: number; credentialKey: string; promise: Promise<FetchResponse> }
+	{
+		until: number;
+		credentialKey: string;
+		promise: Promise<FetchResponse>;
+		limited?: boolean;
+	}
 >();
 
 export function retryAfterMs(value: string | null, now = Date.now()) {
@@ -44,12 +49,18 @@ export async function quotaFetch(
 	}
 	for (const [id, entry] of entries) if (now >= entry.until) entries.delete(id);
 	if (entries.size >= 384) throw new Error("quota_request_capacity");
-	const entry = {
+	const entry: {
+		until: number;
+		credentialKey: string;
+		promise: Promise<FetchResponse>;
+		limited?: boolean;
+	} = {
 		until: now + TTL,
 		credentialKey,
 		promise: Promise.resolve(new Response()),
 	};
 	entry.promise = fetch(url, init).then(async (response) => {
+		if (response.status === 429) entry.limited = true;
 		if (response.status === 429)
 			entry.until =
 				now +
@@ -93,4 +104,9 @@ export async function invalidateQuotaFetch(url: string, identity: string) {
 		if ((await entry.promise).status === 429) return;
 	} catch {}
 	if (entries.get(key) === entry) entries.delete(key);
+}
+
+/** Lets the next read reach the provider again, except where it asked to wait. */
+export function expireQuotaFetches() {
+	for (const [id, entry] of entries) if (!entry.limited) entries.delete(id);
 }
