@@ -28,6 +28,7 @@ import { acpHarnessEntries } from "./acpHarnesses";
 import { resolveAgentCli } from "./agentCli";
 import { buildChatAgentEnv } from "./agentEnv";
 import type { ChatAgentBridge } from "./chatAgentBridge";
+import { pruneSessionEventsOnce } from "./forkJournalCleanup";
 import { createResolveCwd } from "./resolveCwd";
 import {
 	recordUnfinishedChats,
@@ -145,7 +146,9 @@ export function createChatV3Mount(options: {
 			harnesses: harnessRegistry(options.db, options.agents),
 			observer: options.agents,
 			onSessionChanged: options.onSessionChanged,
+			forkKeepLatestSessionEvent: true,
 		});
+		pruneSessionEventsOnce(built.db, dirname(options.dbPath));
 		return built;
 	};
 
