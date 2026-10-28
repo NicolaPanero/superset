@@ -271,17 +271,35 @@ test("quota rings show provider windows independently from model-specific restri
 	});
 	expect(
 		accountQuotaRings({ ...sample, status: "unavailable" }, "sonnet", now),
+	).toEqual({ fiveHourUsed: 20, weeklyUsed: 35 });
+	expect(
+		accountQuotaRings(
+			{ ...sample, status: "unavailable" },
+			"sonnet",
+			now + 30 * 60_000,
+		),
 	).toEqual({ fiveHourUsed: 20, weeklyUsed: 35, lastKnown: true });
 });
 
-test("idle quota rings retain a bounded last sample while account selection still treats it as stale", () => {
+test("an idle sample stays current on screen while account selection treats it as stale", () => {
 	const idle = now + 10 * 60_000;
 	expect(accountQuotaRings(account, "opus", idle)).toEqual({
 		fiveHourUsed: 99.6,
 		weeklyUsed: null,
-		lastKnown: true,
 	});
 	expect(accountQuotaState(account, "opus", idle).reason).toBe("stale");
+	expect(accountQuotaState(account, "opus", idle, "display").reason).toBe(
+		"ready",
+	);
+	const noReset = {
+		...account,
+		windows: account.windows.map((window) => ({ ...window, resetsAt: null })),
+	};
+	expect(accountQuotaRings(noReset, "opus", now + 6 * 60 * 60_000)).toEqual({
+		fiveHourUsed: 99.6,
+		weeklyUsed: null,
+		lastKnown: true,
+	});
 	for (const sample of [
 		{ ...account, status: "signed_out" },
 		{ ...account, credentialKind: "api_key" },
@@ -320,4 +338,17 @@ test("Codex ring periods come from the window duration labels rather than primar
 			now,
 		),
 	).toEqual({ fiveHourUsed: null, weeklyUsed: 70 });
+});
+
+test("a window past its reset shows empty instead of last known", () => {
+	const later = now + 2 * 3600_000;
+	expect(accountQuotaRings(account, "opus", later)).toEqual({
+		fiveHourUsed: 0,
+		weeklyUsed: null,
+	});
+	expect(accountQuotaState(account, "opus", later, "display")).toMatchObject({
+		reason: "ready",
+		remaining: 100,
+	});
+	expect(accountQuotaState(account, "opus", later).reason).toBe("stale");
 });

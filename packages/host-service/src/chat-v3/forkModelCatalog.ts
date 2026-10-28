@@ -1,5 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
+import { dirname, join } from "node:path";
+import { resolveSupersetHomeDir } from "@superset/agent-setup";
 import type { SessionConfigOption } from "@superset/chat/protocol";
 import {
 	createAcpAdapter,
@@ -36,8 +39,69 @@ type Entry = {
 	expires: number;
 	value: Promise<ForkModelCatalog>;
 	pending: boolean;
+	/** The last catalog read, answered at once while a newer one loads. */
+	settled?: ForkModelCatalog;
 };
 const caches = new WeakMap<HostDb, Map<string, Entry>>();
+const FRESH_MS = 24 * 60 * 60_000;
+const MAX_ENTRIES = 64;
+
+/** Catalogs kept across host restarts, so the picker never starts empty. */
+export interface ForkModelCatalogStore {
+	read(key: string): ForkModelCatalog | undefined;
+	write(key: string, catalog: ForkModelCatalog): void;
+}
+
+export function fileModelCatalogStore(
+	file = () => join(resolveSupersetHomeDir(), "fork", "model-catalog.json"),
+	maxAgeMs = 30 * 24 * 60 * 60_000,
+	now = Date.now,
+): ForkModelCatalogStore {
+	let entries: Map<string, ForkModelCatalog> | undefined;
+	const load = () => {
+		if (entries) return entries;
+		entries = new Map();
+		try {
+			const saved = JSON.parse(readFileSync(file(), "utf8")) as {
+				entries?: Record<string, ForkModelCatalog>;
+			};
+			for (const [key, catalog] of Object.entries(saved.entries ?? {}))
+				if (
+					Array.isArray(catalog?.configOptions) &&
+					typeof catalog.fetchedAt === "number" &&
+					now() - catalog.fetchedAt < maxAgeMs
+				)
+					entries.set(key, catalog);
+		} catch {}
+		return entries;
+	};
+	return {
+		read: (key) => load().get(key),
+		write: (key, catalog) => {
+			const saved = load();
+			saved.delete(key);
+			saved.set(key, catalog);
+			while (saved.size > MAX_ENTRIES) {
+				const oldest = saved.keys().next().value;
+				if (oldest) saved.delete(oldest);
+			}
+			try {
+				const path = file();
+				mkdirSync(dirname(path), { recursive: true });
+				const temporary = `${path}.${process.pid}.tmp`;
+				writeFileSync(
+					temporary,
+					JSON.stringify({ entries: Object.fromEntries(saved) }),
+					{ mode: 0o600 },
+				);
+				renameSync(temporary, path);
+			} catch (error) {
+				console.warn("[fork-model-catalog] failed to save the cache:", error);
+			}
+		},
+	};
+}
+const defaultStore = fileModelCatalogStore();
 let running = 0;
 const waiting: Array<() => void> = [];
 async function withProbeSlot<T>(probe: () => Promise<T>): Promise<T> {
@@ -127,6 +191,7 @@ export async function getForkModelCatalog(
 	db: HostDb,
 	input: ForkModelCatalogInput,
 	createFactory: typeof acpHarnessFactory = acpHarnessFactory,
+	store: ForkModelCatalogStore = defaultStore,
 ): Promise<ForkModelCatalog> {
 	const config = resolveHostAgentConfig(db, input.agent);
 	if (!config)
@@ -176,6 +241,8 @@ export async function getForkModelCatalog(
 				.concat(parameters),
 		};
 	};
+	// One catalog per agent and account for every workspace: probing starts the
+	// agent, and its models do not depend on the folder.
 	const key = createHash("sha256")
 		.update(
 			JSON.stringify([
@@ -183,7 +250,6 @@ export async function getForkModelCatalog(
 				agentLaunchEnv(db, config),
 				input.accountSelection ?? null,
 				input.accountSelection === undefined,
-				cwd,
 				cursor ? null : input.model,
 			]),
 		)
@@ -193,12 +259,26 @@ export async function getForkModelCatalog(
 		cache = new Map();
 		caches.set(db, cache);
 	}
-	const previous = cache.get(key);
-	if (
-		previous &&
-		(previous.pending || (!input.refresh && previous.expires > Date.now()))
-	)
-		return previous.value.then(selected);
+	let previous = cache.get(key);
+	if (!previous) {
+		const saved = store.read(key);
+		if (saved) {
+			previous = {
+				expires: saved.fetchedAt + FRESH_MS,
+				value: Promise.resolve(saved),
+				pending: false,
+				settled: saved,
+			};
+			cache.set(key, previous);
+		}
+	}
+	if (previous && !input.refresh) {
+		if (previous.pending && previous.settled)
+			return Promise.resolve(previous.settled).then(selected);
+		if (previous.pending || previous.expires > Date.now())
+			return previous.value.then(selected);
+	}
+	if (previous?.pending) return previous.value.then(selected);
 	const factory = createFactory(harness, db, undefined, (options) =>
 		cursor
 			? new ForkCursorModelCatalogAdapter(options)
@@ -230,20 +310,33 @@ export async function getForkModelCatalog(
 				: {}),
 		};
 	});
-	const entry = { expires: Date.now() + 5 * 60_000, value, pending: true };
+	const stale = previous?.settled;
+	const entry: Entry = {
+		expires: Date.now() + FRESH_MS,
+		value,
+		pending: true,
+		...(stale ? { settled: stale } : {}),
+	};
+	cache.delete(key);
 	cache.set(key, entry);
-	while (cache.size > 64) {
+	while (cache.size > MAX_ENTRIES) {
 		const oldest = cache.keys().next().value;
 		if (oldest) cache.delete(oldest);
 	}
 	void value.then(
-		() => {
+		(catalog) => {
 			entry.pending = false;
+			entry.settled = catalog;
+			store.write(key, catalog);
 		},
 		() => {
 			entry.pending = false;
 			entry.expires = Date.now() + 10_000;
+			// A failed refresh keeps answering with the last good catalog.
+			if (stale) entry.value = Promise.resolve(stale);
 		},
 	);
+	// An expired catalog answers now; the probe above replaces it for later reads.
+	if (stale && !input.refresh) return Promise.resolve(stale).then(selected);
 	return value.then(selected);
 }

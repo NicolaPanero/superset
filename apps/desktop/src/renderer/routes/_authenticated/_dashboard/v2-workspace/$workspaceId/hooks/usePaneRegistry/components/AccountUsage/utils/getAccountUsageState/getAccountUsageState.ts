@@ -1,4 +1,7 @@
-import { accountQuotaState } from "@superset/shared/fork-account-usage";
+import {
+	accountQuotaState,
+	accountQuotaWithResets,
+} from "@superset/shared/fork-account-usage";
 import type { UsageAccount } from "renderer/hooks/host-service/useHostUsageQuota";
 
 interface Identity {
@@ -35,7 +38,10 @@ export function getAccountUsageState({
 				)
 			: undefined;
 	const windows =
-		account?.windows.filter(
+		(account
+			? accountQuotaWithResets(account, now)
+			: undefined
+		)?.windows.filter(
 			(w) => Number.isFinite(w.usedPercent) && w.usedPercent >= 0,
 		) ?? [];
 	const generalWindows = windows.filter((w) =>
@@ -48,8 +54,7 @@ export function getAccountUsageState({
 	const stale =
 		account &&
 		(failed ||
-			accountQuotaState(account, undefined, now).reason === "stale" ||
-			windows.some((w) => w.resetsAt && new Date(w.resetsAt).getTime() <= now));
+			accountQuotaState(account, undefined, now, "display").reason === "stale");
 	const state = !supported
 		? "unavailable"
 		: loading
@@ -58,10 +63,10 @@ export function getAccountUsageState({
 				? "unverified"
 				: identity.credentialKind === "api_key"
 					? "api"
-					: stale && tightest
-						? "stale"
-						: !account || account.status !== "ok" || !tightest
-							? "unavailable"
+					: !account || !tightest || account.status === "signed_out"
+						? "unavailable"
+						: stale
+							? "stale"
 							: "ready";
 	return { account, tightest, state };
 }

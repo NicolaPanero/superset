@@ -1740,6 +1740,9 @@ msgstr "アカウントは削除待ちです"
 msgid "Account usage"
 msgstr "アカウントの使用状況"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "アカウントの使用量リングはエージェントのターンごとに更新され、薄く消えずに最後の読み取り値を保持します。"
+
 msgid "Achievements"
 msgstr "実績"
 
@@ -2427,6 +2430,10 @@ msgstr "その他: @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "その他: @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "常に"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "どのエージェントがあなたを必要としているかが常に分かります。通知からブロック中のエージェントへ直接ジャンプできます。"
@@ -4371,6 +4378,9 @@ msgstr "クローズ済み"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "クローズ済み"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "蓋を閉じるとMacはスリープします"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "これらのポートを閉じると、使用中のプロセスが終了します。"
@@ -7472,9 +7482,6 @@ msgstr "公開したものはすべて削除され、非表示になるわけで
 msgid "Executable"
 msgstr "実行ファイル"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "既存のアカウント、設定、アップデートチャンネルはそのまま引き継がれます。"
-
 msgid "Existing repo path"
 msgstr "既存リポジトリのパス"
 
@@ -9439,6 +9446,9 @@ msgstr "エージェント向け指示を改善"
 msgid "Improved diff viewer"
 msgstr "差分ビューアの改善"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Claudeのチャットでは、入力欄で別のアカウントを選ぶと、履歴をすべて保ったままチャットがすぐにそのアカウントへ移動します。"
+
 msgid "in a new session"
 msgstr "新しいセッションで"
 
@@ -9985,6 +9995,9 @@ msgstr "ドキュメントを最新に保つ"
 
 msgid "Keep editing"
 msgstr "編集を続ける"
+
+msgid "Keep the Mac Awake"
+msgstr "Macをスリープさせない"
 
 msgid "Keep typing an email to invite"
 msgstr "招待するにはメールアドレスを入力し続けてください"
@@ -11113,6 +11126,9 @@ msgstr "モデル"
 msgid "Model"
 msgstr "モデル"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "モデルと推論の強度の一覧はすぐに開きます。Paradev++が一覧を記憶し、バックグラウンドで更新します。"
+
 msgid "Model context usage"
 msgstr "モデルのコンテキスト使用量"
 
@@ -11388,6 +11404,10 @@ msgstr "ネットワークが変更されました"
 
 msgid "Never"
 msgstr "未使用"
+
+msgctxt "keep awake"
+msgid "Never"
+msgstr "しない"
 
 msgid "Never asks before acting"
 msgstr "確認なしで実行"
@@ -12741,9 +12761,6 @@ msgstr "変更を開く"
 msgid "Open Chat"
 msgstr "チャットを開く"
 
-msgid "Open chat history directly from the composer."
-msgstr "入力欄から直接チャット履歴を開けます。"
-
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT の管理者設定を開く"
 
@@ -13607,6 +13624,9 @@ msgstr "ParadevはClaude Code、OpenCode、OpenAI Codexなど、CLIベースの�
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradevのモバイルアプリなら、コンピューターから遠く離れていても、どこからでもエージェントの作業を進め、行き詰まりを解消できます。"
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++はエージェントの作業中にMacをスリープさせないため、Macがアイドル状態になっても長いタスクは止まりません。"
 
 msgid "Paragraph"
 msgstr "段落"
@@ -17667,9 +17687,6 @@ msgstr "{label} を停止"
 msgid "Stop {name}"
 msgstr "{name} を停止"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "処理中の Claude チャットを停止し、履歴を保ったままアカウントを切り替えられます。"
-
 msgid "Stop all agent background processes"
 msgstr "エージェントのバックグラウンドプロセスをすべて停止"
 
@@ -17691,6 +17708,9 @@ msgstr "応答を停止"
 
 msgid "Stop the agent and send this now"
 msgstr "エージェントを停止して今すぐ送信"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "エージェントを停止して{accountName}に切り替えますか？"
 
 msgid "Stop the agent before you edit a message"
 msgstr "メッセージを編集する前にエージェントを停止してください"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile が iPhone で登場"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ は Paradev++ になりました。ロゴとデータはそのままです。"
 
 msgid "Supervised"
 msgstr "監督付き"
@@ -18365,6 +18382,9 @@ msgstr "この発表では、Union Square Ventures が主導し、Y Combinator �
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "アプリは無料でダウンロードできます。iOS 26 以降と Paradev Pro が必要です。次は Android に対応予定です。"
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "アプリはParadev++.appになりました。アップデートでSuperset++.appはゴミ箱に移動するため、新しいアプリをDockに追加し直してください。"
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "アプリは{appVersion}ですが、別のもの（古いCLIや別のParadevビルドの可能性）が起動したホストサービスに接続しています。再起動するとこのアプリのコピーに置き換わります。"
 
@@ -18418,6 +18438,9 @@ msgstr "新しいチャットが起動するまで、現在のチャットは開
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "現在のプロンプトが選択したバージョンで置き換えられます。履歴に新しい「復元済み」エントリが追加されるので、元に戻せます。"
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "実行中のターンは停止します。チャットは履歴をすべて保ったまま新しいアカウントで再び開きます。"
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "デーモンは実行中のセッションを新しいバイナリに引き継げませんでした。理由:"
@@ -18568,6 +18591,12 @@ msgstr "ローカルのホストサービスが実行されていないため、
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "ローカルのホストサービスが起動しました。今すぐ再接続します。"
 
+msgid "The Mac can sleep now"
+msgstr "現在Macはスリープできます"
+
+msgid "The Mac stays awake now"
+msgstr "現在Macはスリープしません"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "マージされたエージェントのPRの過半数が、レビューのみで済み、人間の編集がゼロである。"
 
@@ -18588,9 +18617,6 @@ msgstr "新しいエージェントは、必要に応じて省略されたメッ
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新しいエージェントがツールを含む会話全体を再開します。"
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "新しいワークスペースのレイアウトでも、アカウント、モデル、リポジトリの操作はそのまま使えます。"
 
 msgid "The overnight shift"
 msgstr "夜間シフト"
@@ -20635,6 +20661,9 @@ msgstr "どのAIコーディングエージェントに対応していますか?
 
 msgid "Which plans include automations?"
 msgstr "オートメーションはどのプランに含まれますか？"
+
+msgid "While Agents Work"
+msgstr "エージェントの作業中"
 
 msgid "Who can open it"
 msgstr "開ける人"

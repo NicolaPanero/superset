@@ -1740,6 +1740,9 @@ msgstr "Účet čeká na smazání"
 msgid "Account usage"
 msgstr "Využití účtu"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Kroužky využití účtů se aktualizují po každém tahu agenta a místo vyblednutí si ponechají poslední údaj."
+
 msgid "Achievements"
 msgstr "Úspěchy"
 
@@ -2427,6 +2430,10 @@ msgstr "Také: @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "Také: @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Vždy"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Vždy víte, který agent vás potřebuje — oznámení vedou přímo na zablokovaného agenta."
@@ -4371,6 +4378,9 @@ msgstr "Uzavřený"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Uzavřeno"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Zavření víka Mac i tak uspí"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Zavřením těchto portů ukončíte procesy, které je používají."
@@ -7472,9 +7482,6 @@ msgstr "Všechno, co jste zveřejnili, se smaže, ne jen skryje. Můžete se poz
 msgid "Executable"
 msgstr "Spustitelný soubor"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Stávající účty, nastavení a kanály aktualizací zůstávají zachovány."
-
 msgid "Existing repo path"
 msgstr "Cesta k existujícímu repozitáři"
 
@@ -9439,6 +9446,9 @@ msgstr "Vylepšit instrukce pro agenty"
 msgid "Improved diff viewer"
 msgstr "Vylepšený prohlížeč rozdílů"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "V chatu Claude vyberte v poli zprávy jiný účet a chat se na něj hned přesune i s celou historií."
+
 msgid "in a new session"
 msgstr "v nové relaci"
 
@@ -9985,6 +9995,9 @@ msgstr "Udržovat dokumentaci aktuální"
 
 msgid "Keep editing"
 msgstr "Pokračovat v úpravách"
+
+msgid "Keep the Mac Awake"
+msgstr "Nenechat Mac usnout"
 
 msgid "Keep typing an email to invite"
 msgstr "Pokračujte v psaní e-mailu pro pozvání"
@@ -11113,6 +11126,9 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Seznamy modelů a úsilí se otevřou okamžitě: Paradev++ si je pamatuje a aktualizuje je na pozadí."
+
 msgid "Model context usage"
 msgstr "Využití kontextu modelu"
 
@@ -11386,6 +11402,10 @@ msgstr "Síť"
 msgid "Network Changed"
 msgstr "Síť se změnila"
 
+msgid "Never"
+msgstr "Nikdy"
+
+msgctxt "keep awake"
 msgid "Never"
 msgstr "Nikdy"
 
@@ -12741,9 +12761,6 @@ msgstr "Otevřít změny"
 msgid "Open Chat"
 msgstr "Otevřít chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Otevřete historii chatu přímo z pole pro psaní."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Otevřít nastavení správce ChatGPT"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev funguje s libovolným kódovacím agentem v CLI, včetně Claude
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Mobilní aplikace Paradev mi umožňuje udržovat agenty v chodu a odblokovat je odkudkoli, i když jsem daleko od počítače."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ nenechá Mac usnout, když vaši agenti pracují, takže se dlouhý úkol nezastaví, když je Mac nečinný."
 
 msgid "Paragraph"
 msgstr "Odstavec"
@@ -17667,9 +17687,6 @@ msgstr "Zastavit {label}"
 msgid "Stop {name}"
 msgstr "Zastavit {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Zastavte zaneprázdněný chat Claude a přepněte účet se zachováním historie."
-
 msgid "Stop all agent background processes"
 msgstr "Zastavit všechny procesy agentů na pozadí"
 
@@ -17691,6 +17708,9 @@ msgstr "Zastavit odpověď"
 
 msgid "Stop the agent and send this now"
 msgstr "Zastavit agenta a odeslat hned"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Zastavit agenta a přepnout na {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Před úpravou zprávy zastavte agenta"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile přichází na iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ je nyní Paradev++, se stejným logem a vašimi daty."
 
 msgid "Supervised"
 msgstr "Pod dohledem"
@@ -18365,6 +18382,9 @@ msgstr "Oznámení zároveň představuje seed kolo ve výši 11,5 mil. USD vede
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Aplikaci lze stáhnout zdarma. Vyžaduje iOS 26 nebo novější a Paradev Pro. Dalším na řadě je Android."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Aplikace je nyní Paradev++.app. Aktualizace přesune Superset++.app do koše, proto novou aplikaci znovu připněte do Docku."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Paradev. Restart ji nahradí kopií této aplikace."
 
@@ -18418,6 +18438,9 @@ msgstr "Aktuální chat zůstane otevřený, dokud nový nepoběží."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Současný prompt bude nahrazen vybranou verzí. Do historie přibude nový záznam „Obnoveno“, takže půjde vrátit zpět."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Aktuální tah se zastaví. Chat se znovu otevře v novém účtu s celou historií."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Démon nedokázal předat vaše živé relace nové binárce. Důvod:"
@@ -18568,6 +18591,12 @@ msgstr "Místní host service neběží, takže pracovní prostor nemá na tomto
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Místní host service právě naběhla. Připojuji se k ní."
 
+msgid "The Mac can sleep now"
+msgstr "Mac teď může přejít do režimu spánku"
+
+msgid "The Mac stays awake now"
+msgstr "Mac teď zůstane vzhůru"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Většina sloučených PR od agentů potřebuje jen revizi, bez jediné lidské úpravy."
 
@@ -18588,9 +18617,6 @@ msgstr "Nový agent si může vynechané zprávy přečíst, když je potřebuje
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Nové rozvržení pracovního prostoru zachovává ovládání účtu, modelu a repozitáře."
 
 msgid "The overnight shift"
 msgstr "Noční směna"
@@ -20635,6 +20661,9 @@ msgstr "Kteří AI kódovací agenti jsou podporovaní?"
 
 msgid "Which plans include automations?"
 msgstr "Které plány zahrnují automatizace?"
+
+msgid "While Agents Work"
+msgstr "Když agenti pracují"
 
 msgid "Who can open it"
 msgstr "Kdo to může otevřít"

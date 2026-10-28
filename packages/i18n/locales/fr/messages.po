@@ -1740,6 +1740,9 @@ msgstr "Compte en attente de suppression"
 msgid "Account usage"
 msgstr "Utilisation du compte"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Les anneaux d’utilisation des comptes se mettent à jour après chaque tour d’agent et gardent la dernière lecture au lieu de s’estomper."
+
 msgid "Achievements"
 msgstr "Distinctions"
 
@@ -2427,6 +2430,10 @@ msgstr "Également : @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "Également : @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Toujours"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Sachez toujours quel agent a besoin de vous, grâce à des notifications qui mènent directement à l'agent bloqué."
@@ -4371,6 +4378,9 @@ msgstr "Fermée"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Fermée"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Rabattre l’écran met quand même le Mac en veille"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Fermer ces ports mettra fin aux processus qui les utilisent."
@@ -7472,9 +7482,6 @@ msgstr "Tout ce que vous avez publié est supprimé, pas masqué. Vous pourrez r
 msgid "Executable"
 msgstr "Exécutable"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Les comptes, réglages et canaux de mise à jour existants sont conservés."
-
 msgid "Existing repo path"
 msgstr "Chemin du dépôt existant"
 
@@ -9439,6 +9446,9 @@ msgstr "Améliorer les instructions de l'agent"
 msgid "Improved diff viewer"
 msgstr "Visualiseur de diff amélioré"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Dans une discussion Claude, choisissez un autre compte dans la zone de saisie pour y déplacer la discussion immédiatement, avec tout son historique."
+
 msgid "in a new session"
 msgstr "dans une nouvelle session"
 
@@ -9985,6 +9995,9 @@ msgstr "Garder la documentation à jour"
 
 msgid "Keep editing"
 msgstr "Continuer à modifier"
+
+msgid "Keep the Mac Awake"
+msgstr "Garder le Mac éveillé"
 
 msgid "Keep typing an email to invite"
 msgstr "Continuez à saisir un e-mail pour inviter"
@@ -11113,6 +11126,9 @@ msgstr "modèle"
 msgid "Model"
 msgstr "Modèle"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Les listes de modèles et d’effort s’ouvrent immédiatement : Paradev++ les mémorise et les actualise en arrière-plan."
+
 msgid "Model context usage"
 msgstr "Utilisation du contexte du modèle"
 
@@ -11386,6 +11402,10 @@ msgstr "Réseau"
 msgid "Network Changed"
 msgstr "Réseau modifié"
 
+msgid "Never"
+msgstr "Jamais"
+
+msgctxt "keep awake"
 msgid "Never"
 msgstr "Jamais"
 
@@ -12741,9 +12761,6 @@ msgstr "Ouvrir les modifications"
 msgid "Open Chat"
 msgstr "Ouvrir le chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Ouvrez l’historique du chat directement depuis la zone de saisie."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Ouvrir les paramètres d’administration de ChatGPT"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev fonctionne avec n'importe quel agent de code en ligne de command
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "L’application mobile Paradev me permet de faire avancer mes agents et de les débloquer où que je sois, même loin de mon ordinateur."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ garde le Mac éveillé pendant que vos agents travaillent, pour qu’une longue tâche ne s’arrête pas quand le Mac est inactif."
 
 msgid "Paragraph"
 msgstr "Paragraphe"
@@ -17667,9 +17687,6 @@ msgstr "Arrêter {label}"
 msgid "Stop {name}"
 msgstr "Arrêter {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Arrêtez un chat Claude occupé et changez de compte en conservant son historique."
-
 msgid "Stop all agent background processes"
 msgstr "Arrêter tous les processus en arrière-plan des agents"
 
@@ -17691,6 +17708,9 @@ msgstr "Arrêter la réponse"
 
 msgid "Stop the agent and send this now"
 msgstr "Arrêter l'agent et envoyer maintenant"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Arrêter l’agent et passer à {accountName} ?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Arrêtez l'agent avant de modifier un message"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile arrive sur iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ devient Paradev++, avec le même logo et vos données."
 
 msgid "Supervised"
 msgstr "Supervisé"
@@ -18365,6 +18382,9 @@ msgstr "L’annonce présente aussi le tour d’amorçage de 11,5 M$ mené par U
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "L’app est gratuite à télécharger. Elle nécessite iOS 26 ou version ultérieure et Paradev Pro. Android arrive ensuite."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "L’app s’appelle désormais Paradev++.app. La mise à jour place Superset++.app dans la corbeille : épinglez à nouveau la nouvelle app dans le Dock."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "L'application est en {appVersion} mais reliée à un service d'hôte lancé par autre chose, probablement une ancienne CLI ou une autre version de Paradev. Le redémarrage le remplace par la copie de cette application."
 
@@ -18418,6 +18438,9 @@ msgstr "Le chat actuel reste ouvert jusqu'à ce que le nouveau soit lancé."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Le prompt actuel sera remplacé par la version sélectionnée. Une nouvelle entrée « Restauré » sera ajoutée à l'historique pour vous permettre d'annuler."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Le tour en cours s’arrête. La discussion se rouvre sur le nouveau compte avec tout son historique."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Le démon n'a pas pu transférer vos sessions actives vers le nouveau binaire. Raison :"
@@ -18568,6 +18591,12 @@ msgstr "Le service hôte local n'est pas en cours d'exécution, donc rien sur ce
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Le service hôte local vient de démarrer. Reconnexion en cours."
 
+msgid "The Mac can sleep now"
+msgstr "Le Mac peut se mettre en veille maintenant"
+
+msgid "The Mac stays awake now"
+msgstr "Le Mac reste éveillé maintenant"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "La majorité des PR d'agents fusionnées ne demandent qu'une revue, sans aucune retouche humaine."
 
@@ -18588,9 +18617,6 @@ msgstr "Le nouvel agent peut lire les messages omis quand il en a besoin."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Le nouvel agent reprend toute la conversation, outils compris."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "La nouvelle disposition de l’espace de travail conserve les commandes de compte, de modèle et de dépôt."
 
 msgid "The overnight shift"
 msgstr "L'équipe de nuit"
@@ -20635,6 +20661,9 @@ msgstr "Quels agents de code IA sont pris en charge ?"
 
 msgid "Which plans include automations?"
 msgstr "Quels plans incluent les automatisations ?"
+
+msgid "While Agents Work"
+msgstr "Pendant que les agents travaillent"
 
 msgid "Who can open it"
 msgstr "Qui peut l’ouvrir"

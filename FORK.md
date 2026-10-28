@@ -44,6 +44,16 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   i terminali `claude` e `codex` lo ricevono dai wrapper (`--mcp-config` e `-c`).
   Header e variabili restano sull'host: l'interfaccia mostra solo i nomi.
 
+- **Icona nella barra dei menu → Keep the Mac Awake** (solo macOS) impedisce lo
+  stop per inattività: **While Agents Work** (predefinito) lo fa solo quando
+  almeno un agente ha un turno in corso, **Always** finché l’app è aperta,
+  **Never** mai. Usa `powerSaveBlocker` di Electron, come `caffeinate -i`: lo
+  schermo si spegne lo stesso e il blocco termina con l’app. Lo stato degli
+  agenti si legge ogni 30 secondi da `terminalAgents.list` dell’host-service,
+  anche con la finestra chiusa; un turno senza eventi da 3 ore non conta più.
+  La scelta è salvata in `$SUPERSET_HOME_DIR/fork/keep-awake.json`. Chiudendo il
+  coperchio il Mac va comunque in stop.
+
 - **Settings → Fork → Interactive home background** attiva uno sfondo di
   caratteri nella home di creazione dei workspace, anche sotto la barra in alto,
   e nella schermata di un workspace senza schede aperte.
@@ -75,9 +85,19 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   annulla. Grok offre Grok 4.7, 4.6 e 4.5. Grok 4.7 arriva fino a xHigh
   quando il suo override locale dichiara `reasoning_efforts`; Grok 4.5 arriva
   fino a High.
+  Modelli ed effort arrivano dall’ultima lettura salvata dall’host in
+  `$SUPERSET_HOME_DIR/fork/model-catalog.json`, una per agente e account, valida
+  per tutti i workspace (64 voci, 30 giorni). Leggere i modelli avvia l’agente,
+  quindi l’host lo fa solo alla prima apertura, dopo 24 ore (in background,
+  mostrando intanto la lista salvata) o con il refresh del selettore; ogni
+  lettura riuscita aggiorna il file. La lista cambia se cambiano configurazione,
+  variabili o account dell’agente. Cambiando modello resta visibile l’effort
+  attuale finché arrivano le opzioni del nuovo modello.
   Il tondino elenca gli account con la quota, la continuazione
-  automatica, i reset del provider e la copia dell’ID sessione; scegliere un
-  altro account apre la stessa conferma.
+  automatica, i reset del provider e la copia dell’ID sessione. In una chat
+  Claude, scegliere un altro account sposta subito la chat su quell’account con
+  tutta la cronologia; se l’agente sta lavorando chiede prima di interrompere il
+  turno. Per Codex scegliere un altro account apre la stessa conferma.
 - La conferma sceglie account, posizione (stessa chat, pannello affiancato o
   nuova scheda) e trasferimento: **Full history** riprende la conversazione
   nativa con gli strumenti, **Summary only** passa solo i messaggi. La chat di
@@ -87,6 +107,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   attende l'arresto del processo prima di riaprire la cronologia sull'altro
   account. I messaggi in coda restano in pausa e la scelta **Continue** non
   cambia. Se l'arresto fallisce, il trasferimento non parte.
+- Ogni chat parte in **Full access**, anche quando riprende una sessione o
+  riceve la conversazione da un altro agente o account, se non è stata scelta
+  un’altra modalità. Gli agenti senza una modalità nativa di accesso completo
+  usano l’approvazione automatica dell’app.
 - Nel selettore dei permessi della chat compare **Plan** quando l’agente
   espone questa modalità. Usa la pianificazione nativa con **Full access**:
   approva automaticamente le richieste degli strumenti, inclusi comandi,
@@ -132,8 +156,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
 - Il tondino dell’**account** ha due anelli di consumo: esterno per le **5 ore**,
   interno per la **settimana**. Tooltip e menu indicano la corrispondenza.
   Gli anelli mostrano le due quote generali; i limiti specifici del modello
-  restano nel menu e nella continuazione automatica. Dati assenti, scaduti o non applicabili hanno un anello tratteggiato;
-  non vengono presentati come quota libera.
+  restano nel menu e nella continuazione automatica. Una lettura resta piena
+  finché gli aggiornamenti riescono, perché il consumo cambia solo usando
+  l’account; una finestra oltre l’orario di reset vale 0%. L’anello diventa
+  tratteggiato con dati assenti o non applicabili, con aggiornamenti falliti da
+  30 minuti o con una lettura più vecchia di 6 ore; non è mai quota libera.
 
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
   riuscita. La chat usata per crearla rimane una sessione separata.
@@ -261,9 +288,13 @@ Dettagli in [docs/fork-accounts.md](docs/fork-accounts.md).
 
 ### Letture della quota
 
-La schermata controlla la cache condivisa all’apertura, al ritorno e ogni trenta
-secondi mentre è visibile. La cache dell’host dura quindici secondi; le richieste
-al provider restano distanziate di cinque minuti per account, con backoff su 429. Dati vecchi o mancanti restano segnalati; non equivalgono a quota libera.
+La schermata controlla la cache condivisa all’apertura, al ritorno e ogni quindici
+secondi mentre è visibile. La cache dell’host dura quindici secondi. L’host legge
+la quota anche da solo, ogni minuto, e 5 secondi dopo la fine di ogni turno di
+un agente (al massimo una volta al minuto); le richieste periodiche al provider
+restano distanziate di cinque minuti per account e un 429 con `Retry-After` non
+viene anticipato. La scelta dell’account e la continuazione automatica usano
+solo letture degli ultimi sei minuti; dati mancanti non equivalgono a quota libera.
 Il rinnovo passa dal CLI del profilo, senza richieste al modello, hook o MCP:
 Claude usa soltanto `/usage`, Codex soltanto le procedure RPC dell’account.
 Ogni verifica ha un limite di 15 secondi, al massimo due possono essere attive e
@@ -454,8 +485,7 @@ lo script. Per installare manualmente, scarica `Superset-fork-arm64.zip` dalle
 le release non contengono più `Superset-fork-x64.exe` e i workflow non li compilano.
 Il codice degli script Windows resta nel repository, non collegato alla CI, per riprendere il lavoro.
 
-L’app Mac si chiama **Paradev++** (il pacchetto resta `Superset++.app` per compatibilità
-con gli aggiornamenti esistenti), usa l’icona con il **+** e convive con Paradev
+L’app Mac si chiama **Paradev++** (pacchetto `Paradev++.app`), usa l’icona con il **+** e convive con Paradev
 ufficiale. Rispetto al fork precedente restano invariati bundle ID, schema `superset-fork://`,
 porta locale 51742 e cartelle `~/.superset-fork` e
 `~/Library/Application Support/Superset Fork`. Chat, impostazioni e login
@@ -729,31 +759,31 @@ esplicitamente le nuove capacità.
 
 ## Identità e nomi tecnici
 
-Il nome mostrato dall’app, dai menu, dalla home e dagli aggiornamenti è
-**Paradev++**. Non cambiano, perché i dati e gli installer già distribuiti li
-cercano per nome:
+Su macOS l’app si chiama **Paradev++** anche nel pacchetto: `Paradev++.app`, con
+l’eseguibile `Paradev++`. Non cambiano, perché i dati, il Portachiavi e gli
+installer già distribuiti li cercano per nome:
 
 | Elemento | Valore conservato |
 |---|---|
-| Pacchetto e eseguibile | `Superset++.app`, `Superset++`, `Superset++.exe` |
+| Nome interno (`app.name`) | `Superset++`: voce del Portachiavi e cartella dei log |
+| Eseguibile Windows | `Superset++.exe`: l’installer Windows accetta solo questo nome |
 | Bundle ID e protocollo | `com.superset.desktop.fork`, `superset-fork://` |
 | Cartelle dati | `~/.superset-fork`, `~/Library/Application Support/Superset Fork` |
 | Registro aggiornamenti | `~/Library/Logs/Superset++/fork-update.log` |
 | Asset di release | `Superset-fork-arm64.zip` |
 | Pacchetti e CLI | `@superset/*`, comando `superset` (alias `paradev`) |
 
-### Rilascio ponte verso `Paradev++.app`
+`forkIdentity` separa il nome del pacchetto (`productName`) dal nome interno
+(`runtimeName`, scritto in `extraMetadata.productName`).
 
-Questa release contiene ancora `Superset++.app`, così i client già installati
-possono aggiornarsi con il loro installer. Il suo installer però riconosce
-anche `Paradev++.app`, nello zip e nel percorso dell’app in esecuzione. Quando
-una release futura conterrà `Paradev++.app`, l’aggiornamento la installa nella
-stessa cartella, rilancia il nuovo percorso e sposta la vecchia app nel
-Cestino. Se un passaggio fallisce, la vecchia app resta al suo posto.
+### Da `Superset++.app` a `Paradev++.app`
 
-Chi salta la release ponte non può aggiornarsi dall’app a una release con il
-nuovo nome: deve prima installare la release ponte, oppure usare lo script di
-installazione. La release con il nuovo nome va pubblicata solo dopo il ponte.
+L’installer della 2.0.0 e delle versioni successive riconosce `Paradev++.app`
+nello zip: installa la nuova app nella stessa cartella, la rilancia e sposta
+`Superset++.app` nel Cestino. Se un passaggio fallisce, la vecchia app resta al
+suo posto. Una versione precedente alla 2.0.0 non può aggiornarsi dall’app:
+serve lo script di installazione. Dopo l’aggiornamento l’icona nel Dock va
+fissata di nuovo.
 
 La sorgente delle release ufficiali è in `scripts/fork/upstream.json`
 (`ParadevAI/Paradev`); script e workflow la leggono da lì.

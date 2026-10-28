@@ -12,7 +12,7 @@ export function ForkUsageStatus({
 	model?: string;
 	chip?: boolean;
 }) {
-	const state = accountQuotaState(account, model);
+	const state = accountQuotaState(account, model, undefined, "display");
 	const status =
 		account?.status === "signed_out" ? (
 			<Trans>Signed out</Trans>

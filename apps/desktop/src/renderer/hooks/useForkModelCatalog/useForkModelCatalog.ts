@@ -49,7 +49,8 @@ export function useForkModelCatalog(
 		queryKey: [...key, null],
 		enabled: active,
 		queryFn: () => fetch(),
-		staleTime: 60_000,
+		staleTime: 5 * 60_000,
+		gcTime: 30 * 60_000,
 		retry: false,
 	});
 	const models = useMemo(
@@ -72,18 +73,22 @@ export function useForkModelCatalog(
 		queryKey: [...key, requested ?? null],
 		enabled: active && !!requested && !nativeTraits,
 		queryFn: () => fetch(requested),
-		staleTime: 60_000,
+		staleTime: 5 * 60_000,
+		gcTime: 30 * 60_000,
 		retry: false,
 	});
-	const detail = requested && !nativeTraits ? traits : base;
+	const withRequestedModel = (options: SessionConfigOption[]) =>
+		options.map((o) =>
+			o.category === "model" ? { ...o, currentValue: requested } : o,
+		);
+	// Until the picked model's options arrive, the default model's effort stays
+	// on screen instead of disappearing.
 	const configOptions = nativeTraits
-		? [
-				...(base.data?.configOptions ?? []).map((o) =>
-					o.category === "model" ? { ...o, currentValue: requested } : o,
-				),
-				...nativeTraits,
-			]
-		: (detail.data?.configOptions ?? []);
+		? [...withRequestedModel(base.data?.configOptions ?? []), ...nativeTraits]
+		: requested
+			? (traits.data?.configOptions ??
+				withRequestedModel(base.data?.configOptions ?? []))
+			: (base.data?.configOptions ?? []);
 	const efforts = useMemo(
 		() =>
 			configOptions.find((o) => o.category === "thought_level")?.options ?? [],

@@ -1740,6 +1740,9 @@ msgstr "Akun menunggu penghapusan"
 msgid "Account usage"
 msgstr "Penggunaan akun"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Cincin penggunaan akun diperbarui setelah setiap giliran agen dan mempertahankan pembacaan terakhir alih-alih memudar."
+
 msgid "Achievements"
 msgstr "Pencapaian"
 
@@ -2427,6 +2430,10 @@ msgstr "Juga: @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "Juga: @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Selalu"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Selalu tahu agen mana yang membutuhkan Anda, dengan notifikasi yang langsung menuju agen yang terhambat."
@@ -4371,6 +4378,9 @@ msgstr "Ditutup"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Ditutup"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Menutup layar tetap membuat Mac tidur"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Menutup port ini akan menghentikan proses yang memakainya."
@@ -7472,9 +7482,6 @@ msgstr "Semua yang Anda publikasikan dihapus, bukan disembunyikan. Anda bisa ber
 msgid "Executable"
 msgstr "File eksekusi"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Akun, pengaturan, dan kanal pembaruan yang ada tetap dipertahankan."
-
 msgid "Existing repo path"
 msgstr "Path repo yang sudah ada"
 
@@ -9439,6 +9446,9 @@ msgstr "Perbaiki instruksi agen"
 msgid "Improved diff viewer"
 msgstr "Penampil diff yang lebih baik"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Di chat Claude, pilih akun lain di composer untuk langsung memindahkan chat ke sana, beserta seluruh riwayatnya."
+
 msgid "in a new session"
 msgstr "dalam sesi baru"
 
@@ -9985,6 +9995,9 @@ msgstr "Jaga dokumentasi tetap segar"
 
 msgid "Keep editing"
 msgstr "Lanjutkan mengedit"
+
+msgid "Keep the Mac Awake"
+msgstr "Biarkan Mac tetap aktif"
 
 msgid "Keep typing an email to invite"
 msgstr "Terus ketik email untuk mengundang"
@@ -11113,6 +11126,9 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Daftar model dan upaya langsung terbuka: Paradev++ mengingatnya dan memperbaruinya di latar belakang."
+
 msgid "Model context usage"
 msgstr "Penggunaan konteks model"
 
@@ -11386,6 +11402,10 @@ msgstr "Jaringan"
 msgid "Network Changed"
 msgstr "Jaringan Berubah"
 
+msgid "Never"
+msgstr "Tidak pernah"
+
+msgctxt "keep awake"
 msgid "Never"
 msgstr "Tidak pernah"
 
@@ -12741,9 +12761,6 @@ msgstr "Buka Perubahan"
 msgid "Open Chat"
 msgstr "Buka Chat"
 
-msgid "Open chat history directly from the composer."
-msgstr "Buka riwayat obrolan langsung dari kotak penulisan."
-
 msgid "Open ChatGPT admin settings"
 msgstr "Buka pengaturan admin ChatGPT"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev bekerja dengan agen coding berbasis CLI mana pun, termasuk Claud
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Aplikasi seluler Paradev memungkinkan saya menjaga agen tetap bekerja dan mengatasi hambatannya dari mana saja, bahkan saat saya jauh dari komputer."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ menjaga Mac tetap aktif saat agen Anda bekerja, sehingga tugas panjang tidak berhenti saat Mac menganggur."
 
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -17667,9 +17687,6 @@ msgstr "Hentikan {label}"
 msgid "Stop {name}"
 msgstr "Hentikan {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Hentikan obrolan Claude yang sedang sibuk dan ganti akun tanpa kehilangan riwayatnya."
-
 msgid "Stop all agent background processes"
 msgstr "Hentikan semua proses latar belakang agen"
 
@@ -17691,6 +17708,9 @@ msgstr "Hentikan respons"
 
 msgid "Stop the agent and send this now"
 msgstr "Hentikan agen dan kirim sekarang"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Hentikan agen dan beralih ke {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Hentikan agen sebelum mengedit pesan"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile hadir di iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ kini bernama Paradev++, dengan logo yang sama dan data Anda."
 
 msgid "Supervised"
 msgstr "Diawasi"
@@ -18365,6 +18382,9 @@ msgstr "Pengumuman ini juga membagikan putaran pendanaan awal senilai $11,5 juta
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Aplikasi ini gratis untuk diunduh. Memerlukan iOS 26 atau lebih baru dan Paradev Pro. Android menyusul berikutnya."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Aplikasi kini bernama Paradev++.app. Pembaruan memindahkan Superset++.app ke Tong Sampah, jadi sematkan lagi aplikasi baru di Dock."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikasi berada di {appVersion} tetapi terhubung ke layanan host yang dimulai oleh hal lain, kemungkinan CLI lama atau build Paradev lain. Memulai ulang akan menggantinya dengan salinan dari aplikasi ini."
 
@@ -18418,6 +18438,9 @@ msgstr "Chat saat ini tetap terbuka sampai chat baru berjalan."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Prompt saat ini akan diganti dengan versi yang dipilih. Entri \"Dipulihkan\" yang baru akan ditambahkan ke riwayat sehingga Anda bisa membatalkannya."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Giliran saat ini berhenti. Chat dibuka kembali di akun baru dengan seluruh riwayatnya."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Daemon tidak bisa menyerahkan sesi aktif Anda ke biner yang baru. Alasan:"
@@ -18568,6 +18591,12 @@ msgstr "Layanan host lokal tidak berjalan, jadi tidak ada yang bisa melayani wor
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Layanan host lokal baru saja aktif. Menyambungkan kembali sekarang."
 
+msgid "The Mac can sleep now"
+msgstr "Mac sekarang boleh tidur"
+
+msgid "The Mac stays awake now"
+msgstr "Mac sekarang tetap aktif"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Mayoritas PR agen yang di-merge hanya perlu direview, tanpa suntingan manusia."
 
@@ -18588,9 +18617,6 @@ msgstr "Agen baru dapat membaca pesan yang dihilangkan saat diperlukan."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Tata letak ruang kerja yang baru mempertahankan kontrol akun, model, dan repositori."
 
 msgid "The overnight shift"
 msgstr "Shift malam"
@@ -20635,6 +20661,9 @@ msgstr "Agen coding AI mana saja yang didukung?"
 
 msgid "Which plans include automations?"
 msgstr "Paket mana yang menyertakan otomatisasi?"
+
+msgid "While Agents Work"
+msgstr "Saat agen bekerja"
 
 msgid "Who can open it"
 msgstr "Siapa yang bisa membuka"

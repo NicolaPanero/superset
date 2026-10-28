@@ -31,7 +31,7 @@ Su Mac, chiudi l’app prima di installarla o aggiornarla:
 curl -fsSL https://raw.githubusercontent.com/NicolaPanero/superset/fork/main/scripts/fork/install.sh | sh
 ```
 
-Lo script scarica l’ultima release del fork e installa l’app **Paradev++**. Per compatibilità con gli aggiornamenti esistenti il pacchetto si chiama ancora `Superset++.app`. Per il download manuale, scegli `Superset-fork-arm64.zip` nelle [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
+Lo script scarica l’ultima release del fork e installa `Paradev++.app`, sostituendo un eventuale `Superset++.app`. Per il download manuale, scegli `Superset-fork-arm64.zip` nelle [release del fork](https://github.com/NicolaPanero/superset/releases/latest).
 
 Chat, impostazioni e profili del fork restano conservati durante gli aggiornamenti. Le build pubblicate controllano gli aggiornamenti del fork; **Check for Updates** ripropone anche un aggiornamento rimandato. Per passare da una build locale a questo canale, installa una release del fork. [Installazione e compatibilità dei dati →](FORK.md#installazione-e-compatibilità-dei-dati)
 

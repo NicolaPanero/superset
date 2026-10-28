@@ -1740,6 +1740,9 @@ msgstr "Hesap silinmeyi bekliyor"
 msgid "Account usage"
 msgstr "Hesap kullanımı"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "Hesap kullanım halkaları her ajan turundan sonra güncellenir ve solmak yerine son okumayı korur."
+
 msgid "Achievements"
 msgstr "Başarımlar"
 
@@ -2427,6 +2430,10 @@ msgstr "Ayrıca: @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "Ayrıca: @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Her zaman"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Doğrudan engellenen ajana bağlanan bildirimlerle, hangi ajanın size ihtiyacı olduğunu her zaman bilin."
@@ -4371,6 +4378,9 @@ msgstr "Kapalı"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Kapalı"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Kapağı kapatmak Mac’i yine de uyku moduna alır"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Bu portları kapatmak, onları kullanan süreçleri sonlandırır."
@@ -7472,9 +7482,6 @@ msgstr "Yayımladığınız her şey gizlenmez, silinir. Daha sonra yeniden kat�
 msgid "Executable"
 msgstr "Çalıştırılabilir dosya"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Mevcut hesaplar, ayarlar ve güncelleme kanalları korunur."
-
 msgid "Existing repo path"
 msgstr "Mevcut depo yolu"
 
@@ -9439,6 +9446,9 @@ msgstr "Ajan yönergelerini iyileştir"
 msgid "Improved diff viewer"
 msgstr "Geliştirilmiş fark görüntüleyici"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Bir Claude sohbetinde, sohbeti tüm geçmişiyle hemen oraya taşımak için yazma alanından başka bir hesap seçin."
+
 msgid "in a new session"
 msgstr "yeni bir oturumda"
 
@@ -9985,6 +9995,9 @@ msgstr "Belgeleri güncel tut"
 
 msgid "Keep editing"
 msgstr "Düzenlemeye devam et"
+
+msgid "Keep the Mac Awake"
+msgstr "Mac’i uyanık tut"
 
 msgid "Keep typing an email to invite"
 msgstr "Davet etmek için e-postayı yazmaya devam edin"
@@ -11113,6 +11126,9 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Model ve çaba listeleri anında açılır: Paradev++ bunları hatırlar ve arka planda yeniler."
+
 msgid "Model context usage"
 msgstr "Model bağlam kullanımı"
 
@@ -11388,6 +11404,10 @@ msgstr "Ağ değişti"
 
 msgid "Never"
 msgstr "Hiç"
+
+msgctxt "keep awake"
+msgid "Never"
+msgstr "Asla"
 
 msgid "Never asks before acting"
 msgstr "Hiç sormadan çalışır"
@@ -12741,9 +12761,6 @@ msgstr "Değişiklikleri aç"
 msgid "Open Chat"
 msgstr "Sohbeti aç"
 
-msgid "Open chat history directly from the composer."
-msgstr "Sohbet geçmişini doğrudan yazma alanından açın."
-
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT yönetici ayarlarını aç"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev, Claude Code, OpenCode, OpenAI Codex ve daha fazlası dahil olma
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev'in mobil uygulaması, bilgisayarımdan çok uzakta olsam bile ajanlarımı her yerden çalışır durumda tutmamı ve önlerindeki engelleri kaldırmamı sağlıyor."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++, ajanlarınız çalışırken Mac’i uyanık tutar; böylece Mac boşta kaldığında uzun bir görev durmaz."
 
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -17667,9 +17687,6 @@ msgstr "{label} öğesini durdur"
 msgid "Stop {name}"
 msgstr "{name} öğesini durdur"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Meşgul bir Claude sohbetini durdurun ve geçmişini koruyarak hesap değiştirin."
-
 msgid "Stop all agent background processes"
 msgstr "Tüm ajan arka plan işlemlerini durdur"
 
@@ -17691,6 +17708,9 @@ msgstr "Yanıtı durdur"
 
 msgid "Stop the agent and send this now"
 msgstr "Ajanı durdur ve şimdi gönder"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "Ajan durdurulup {accountName} hesabına geçilsin mi?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Bir mesajı düzenlemeden önce ajanı durdurun"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile iPhone'da yayında"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ artık Paradev++; aynı logo ve verileriniz korunuyor."
 
 msgid "Supervised"
 msgstr "Gözetimli"
@@ -18365,6 +18382,9 @@ msgstr "Duyuru ayrıca Union Square Ventures liderliğinde, Y Combinator ve Paul
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Uygulama ücretsiz indirilebilir. iOS 26 veya sonrası ve Paradev Pro gerekir. Sırada Android var."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "Uygulama artık Paradev++.app. Güncelleme Superset++.app’i Çöp Sepeti’ne taşır; yeni uygulamayı Dock’a yeniden sabitleyin."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Uygulama {appVersion} sürümünde, ancak başka bir şeyin (muhtemelen eski bir CLI veya başka bir Paradev derlemesi) başlattığı bir ana makine hizmetine bağlı. Yeniden başlatmak onu bu uygulamanın kopyasıyla değiştirir."
 
@@ -18418,6 +18438,9 @@ msgstr "Yeni sohbet çalışana kadar mevcut sohbet açık kalır."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "Geçerli istem, seçilen sürümle değiştirilecek. Bunu geri alabilmeniz için geçmişe yeni bir \"Geri yüklendi\" kaydı eklenecek."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "Geçerli tur durur. Sohbet, tüm geçmişiyle yeni hesapta yeniden açılır."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "Daemon, canlı oturumlarınızı yeni ikili dosyaya devredemedi. Nedeni:"
@@ -18568,6 +18591,12 @@ msgstr "Yerel host hizmeti çalışmıyor, bu yüzden bu cihazda hiçbir şey ç
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "Yerel host hizmeti yeni açıldı. Şimdi ona yeniden bağlanılıyor."
 
+msgid "The Mac can sleep now"
+msgstr "Mac şimdi uyku moduna geçebilir"
+
+msgid "The Mac stays awake now"
+msgstr "Mac şimdi uyanık kalıyor"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "Birleştirilen ajan PR'larının çoğu yalnızca inceleme gerektirir, hiç insan düzenlemesi olmaz."
 
@@ -18588,9 +18617,6 @@ msgstr "Yeni ajan, atlanan mesajları gerektiğinde okuyabilir."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Yeni ajan, araçlar dahil tüm konuşmaya devam eder."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "Yeni çalışma alanı düzeni hesap, model ve depo denetimlerini korur."
 
 msgid "The overnight shift"
 msgstr "Gece vardiyası"
@@ -20635,6 +20661,9 @@ msgstr "Hangi AI kodlama ajanları destekleniyor?"
 
 msgid "Which plans include automations?"
 msgstr "Hangi planlar otomasyonları içerir?"
+
+msgid "While Agents Work"
+msgstr "Ajanlar çalışırken"
 
 msgid "Who can open it"
 msgstr "Kimler açabilir"

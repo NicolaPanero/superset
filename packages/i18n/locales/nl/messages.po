@@ -1740,6 +1740,9 @@ msgstr "Account wordt verwijderd"
 msgid "Account usage"
 msgstr "Accountgebruik"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "De verbruiksringen van accounts worden na elke beurt van een agent bijgewerkt en houden de laatste meting vast in plaats van te vervagen."
+
 msgid "Achievements"
 msgstr "Prestaties"
 
@@ -2427,6 +2430,10 @@ msgstr "Ook: @superset/ui/radio-group, @superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "Ook: @superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "Altijd"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "Weet altijd welke agent jou nodig heeft, met meldingen die rechtstreeks naar de vastgelopen agent linken."
@@ -4371,6 +4378,9 @@ msgstr "Gesloten"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "Gesloten"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "Als je het deksel sluit, gaat de Mac toch in sluimerstand"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "Als je deze poorten sluit, worden de processen die ze gebruiken beëindigd."
@@ -7472,9 +7482,6 @@ msgstr "Alles wat je hebt gepubliceerd wordt verwijderd, niet verborgen. Je kunt
 msgid "Executable"
 msgstr "Uitvoerbaar bestand"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "Bestaande accounts, instellingen en updatekanalen blijven behouden."
-
 msgid "Existing repo path"
 msgstr "Pad van bestaande repo"
 
@@ -9439,6 +9446,9 @@ msgstr "De agentinstructies verbeteren"
 msgid "Improved diff viewer"
 msgstr "Verbeterde diff-viewer"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "Kies in een Claude-chat een ander account in het invoerveld om de chat er direct heen te verplaatsen, met de volledige geschiedenis."
+
 msgid "in a new session"
 msgstr "in een nieuwe sessie"
 
@@ -9985,6 +9995,9 @@ msgstr "Docs actueel houden"
 
 msgid "Keep editing"
 msgstr "Verder bewerken"
+
+msgid "Keep the Mac Awake"
+msgstr "Mac wakker houden"
 
 msgid "Keep typing an email to invite"
 msgstr "Typ verder een e-mailadres om uit te nodigen"
@@ -11113,6 +11126,9 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "Lijsten met modellen en effort openen direct: Paradev++ onthoudt ze en werkt ze op de achtergrond bij."
+
 msgid "Model context usage"
 msgstr "Contextgebruik van model"
 
@@ -11386,6 +11402,10 @@ msgstr "Netwerk"
 msgid "Network Changed"
 msgstr "Netwerk gewijzigd"
 
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "keep awake"
 msgid "Never"
 msgstr "Nooit"
 
@@ -12741,9 +12761,6 @@ msgstr "Wijzigingen openen"
 msgid "Open Chat"
 msgstr "Chat openen"
 
-msgid "Open chat history directly from the composer."
-msgstr "Open de chatgeschiedenis rechtstreeks vanuit het invoerveld."
-
 msgid "Open ChatGPT admin settings"
 msgstr "ChatGPT-beheerdersinstellingen openen"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev werkt met elke CLI-gebaseerde coding agent, waaronder Claude Cod
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Met de mobiele app van Paradev kan ik mijn agents overal aan het werk houden en blokkades oplossen, zelfs als ik ver van mijn computer ben."
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ houdt de Mac wakker terwijl je agents werken, zodat een lange taak niet stopt als de Mac inactief is."
 
 msgid "Paragraph"
 msgstr "Alinea"
@@ -17667,9 +17687,6 @@ msgstr "{label} stoppen"
 msgid "Stop {name}"
 msgstr "{name} stoppen"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "Stop een bezig Claude-chat en wissel van account met behoud van de geschiedenis."
-
 msgid "Stop all agent background processes"
 msgstr "Alle achtergrondprocessen van agents stoppen"
 
@@ -17691,6 +17708,9 @@ msgstr "Antwoord stoppen"
 
 msgid "Stop the agent and send this now"
 msgstr "Agent stoppen en nu verzenden"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "De agent stoppen en overschakelen naar {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Stop de agent voordat je een bericht bewerkt"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile verschijnt op iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ heet nu Paradev++, met hetzelfde logo en je gegevens."
 
 msgid "Supervised"
 msgstr "Begeleid"
@@ -18365,6 +18382,9 @@ msgstr "De aankondiging deelt ook de seedronde van $11,5 miljoen onder leiding v
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "De app is gratis te downloaden. Vereist iOS 26 of nieuwer en Paradev Pro. Android volgt hierna."
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "De app heet nu Paradev++.app. De update verplaatst Superset++.app naar de prullenmand, dus zet de nieuwe app opnieuw vast in het Dock."
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "De app is op {appVersion}, maar gekoppeld aan een hostservice die door iets anders is gestart, waarschijnlijk een oudere CLI of een andere Paradev-build. Opnieuw starten vervangt die door de kopie van deze app."
 
@@ -18418,6 +18438,9 @@ msgstr "De huidige chat blijft open tot de nieuwe draait."
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "De huidige prompt wordt vervangen door de geselecteerde versie. Er wordt een nieuw item \"Hersteld\" aan de geschiedenis toegevoegd, zodat je dit ongedaan kunt maken."
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "De huidige beurt stopt. De chat wordt opnieuw geopend op het nieuwe account met de volledige geschiedenis."
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "De daemon kon je actieve sessies niet overdragen aan de nieuwe binary. Reden:"
@@ -18568,6 +18591,12 @@ msgstr "De lokale hostservice draait niet, dus niets op dit apparaat kan de werk
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "De lokale hostservice is net gestart. Er wordt nu opnieuw verbinding mee gemaakt."
 
+msgid "The Mac can sleep now"
+msgstr "De Mac kan nu in sluimerstand gaan"
+
+msgid "The Mac stays awake now"
+msgstr "De Mac blijft nu wakker"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "De meeste gemergede agent-PR's hoeven alleen gereviewd te worden, zonder menselijke bewerkingen."
 
@@ -18588,9 +18617,6 @@ msgstr "De nieuwe agent kan de weggelaten berichten lezen wanneer dat nodig is."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "De nieuwe agent hervat het hele gesprek, inclusief tools."
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "De nieuwe werkruimte-indeling behoudt de bediening voor account, model en repository."
 
 msgid "The overnight shift"
 msgstr "De nachtploeg"
@@ -20635,6 +20661,9 @@ msgstr "Welke AI-coding agents worden ondersteund?"
 
 msgid "Which plans include automations?"
 msgstr "Welke abonnementen bevatten automatiseringen?"
+
+msgid "While Agents Work"
+msgstr "Terwijl agents werken"
 
 msgid "Who can open it"
 msgstr "Wie het kan openen"

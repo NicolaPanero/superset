@@ -234,7 +234,7 @@ jobs:
 
           - Mac Apple Silicon: Superset-fork-arm64.zip
 
-          This is a bridge build: its installer also accepts Paradev++.app, the name used by a later release.
+          The archive contains Paradev++.app. Updating from Superset++ 2.0.0 or later replaces Superset++.app and moves it to the Trash. Older builds must first update to 2.0.0 or use the install script.
 
           This build uses this fork's automatic update notifications. Settings, conversations and profiles are kept during updates. Paradev++ can coexist with the official app.
 

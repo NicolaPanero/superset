@@ -1740,6 +1740,9 @@ msgstr "账户待删除"
 msgid "Account usage"
 msgstr "账户用量"
 
+msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
+msgstr "账户用量圆环会在每次智能体轮次结束后更新，并保留最近一次读数，而不会变淡。"
+
 msgid "Achievements"
 msgstr "成就"
 
@@ -2427,6 +2430,10 @@ msgstr "另有：@superset/ui/radio-group、@superset/ui/switch"
 
 msgid "Also: @superset/ui/spinner"
 msgstr "另有：@superset/ui/spinner"
+
+msgctxt "keep awake"
+msgid "Always"
+msgstr "始终"
 
 msgid "Always know which agent needs you, with notifications that deep-link straight to the blocked agent."
 msgstr "随时知道哪个智能体需要你，通知可直接跳转到被阻塞的智能体。"
@@ -4371,6 +4378,9 @@ msgstr "已关闭"
 msgctxt "pull request or issue state"
 msgid "Closed"
 msgstr "已关闭"
+
+msgid "Closing the lid still puts the Mac to sleep"
+msgstr "合上盖子时 Mac 仍会进入睡眠"
 
 msgid "Closing these ports will end the processes using them."
 msgstr "关闭这些端口会结束正在使用它们的进程。"
@@ -7472,9 +7482,6 @@ msgstr "你发布过的所有内容都会被删除，而不是隐藏。你之后
 msgid "Executable"
 msgstr "可执行文件"
 
-msgid "Existing accounts, settings and update channels are preserved."
-msgstr "现有账户、设置和更新渠道都会保留。"
-
 msgid "Existing repo path"
 msgstr "已有仓库路径"
 
@@ -9439,6 +9446,9 @@ msgstr "改进智能体说明"
 msgid "Improved diff viewer"
 msgstr "更好的差异查看器"
 
+msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
+msgstr "在 Claude 聊天中，在输入框里选择其他账户，即可立即将聊天连同完整历史移到该账户。"
+
 msgid "in a new session"
 msgstr "在新会话中"
 
@@ -9985,6 +9995,9 @@ msgstr "让文档保持最新"
 
 msgid "Keep editing"
 msgstr "继续编辑"
+
+msgid "Keep the Mac Awake"
+msgstr "防止 Mac 睡眠"
 
 msgid "Keep typing an email to invite"
 msgstr "继续输入邮箱以邀请"
@@ -11113,6 +11126,9 @@ msgstr "模型"
 msgid "Model"
 msgstr "模型"
 
+msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
+msgstr "模型和推理强度列表即时打开：Paradev++ 会记住它们并在后台刷新。"
+
 msgid "Model context usage"
 msgstr "模型上下文用量"
 
@@ -11388,6 +11404,10 @@ msgstr "网络已变更"
 
 msgid "Never"
 msgstr "从未"
+
+msgctxt "keep awake"
+msgid "Never"
+msgstr "从不"
 
 msgid "Never asks before acting"
 msgstr "执行前从不询问"
@@ -12741,9 +12761,6 @@ msgstr "打开更改"
 msgid "Open Chat"
 msgstr "打开聊天"
 
-msgid "Open chat history directly from the composer."
-msgstr "可直接从输入框打开聊天记录。"
-
 msgid "Open ChatGPT admin settings"
 msgstr "打开 ChatGPT 管理员设置"
 
@@ -13607,6 +13624,9 @@ msgstr "Paradev支持任何基于CLI的编码智能体，包括Claude Code、Ope
 
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev 手机应用让我可以随时随地推动智能体工作、解决它们的阻碍，即使我离电脑很远也没问题。"
+
+msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
+msgstr "Paradev++ 会在智能体工作时防止 Mac 睡眠，这样 Mac 闲置时长任务也不会停止。"
 
 msgid "Paragraph"
 msgstr "段落"
@@ -17667,9 +17687,6 @@ msgstr "停止 {label}"
 msgid "Stop {name}"
 msgstr "停止 {name}"
 
-msgid "Stop a busy Claude chat and switch accounts while keeping its history."
-msgstr "可停止正在运行的 Claude 聊天，并在保留历史记录的情况下切换账户。"
-
 msgid "Stop all agent background processes"
 msgstr "停止所有代理后台进程"
 
@@ -17691,6 +17708,9 @@ msgstr "停止回复"
 
 msgid "Stop the agent and send this now"
 msgstr "停止智能体并立即发送"
+
+msgid "Stop the agent and switch to {accountName}?"
+msgstr "停止智能体并切换到 {accountName}？"
 
 msgid "Stop the agent before you edit a message"
 msgstr "编辑消息前请先停止智能体"
@@ -17824,9 +17844,6 @@ msgstr "Superset Mobile 登陆 iPhone"
 
 msgid "superset.sh"
 msgstr "superset.sh"
-
-msgid "Superset++ is now Paradev++, with the same logo and your data."
-msgstr "Superset++ 现已更名为 Paradev++，标志和数据保持不变。"
 
 msgid "Supervised"
 msgstr "监督"
@@ -18365,6 +18382,9 @@ msgstr "公告还介绍了由 Union Square Ventures 领投、Y Combinator 和 Pa
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "该应用可免费下载。需要 iOS 26 或更高版本以及 Paradev Pro。接下来将推出 Android 版。"
 
+msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
+msgstr "应用现在名为 Paradev++.app。更新会将 Superset++.app 移到废纸篓，请重新将新应用固定到程序坞。"
+
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "应用版本为 {appVersion}，但连接的是由其他程序（可能是旧版 CLI 或另一个 Paradev 版本）启动的主机服务。重启会将其替换为此应用自带的副本。"
 
@@ -18418,6 +18438,9 @@ msgstr "新聊天运行前，当前聊天会保持打开。"
 
 msgid "The current prompt will be replaced with the selected version. A new \"Restored\" entry will be added to history so you can undo this."
 msgstr "当前提示词会被所选版本替换。历史中会新增一条“已恢复”记录，方便你撤销。"
+
+msgid "The current turn stops. The chat reopens on the new account with its full history."
+msgstr "当前轮次将停止。聊天会连同完整历史在新账户中重新打开。"
 
 msgid "The daemon couldn't hand off your live sessions to the new binary. Reason:"
 msgstr "守护进程无法将你的活动会话移交给新的二进制文件。原因："
@@ -18568,6 +18591,12 @@ msgstr "本地主机服务未运行，因此此设备上没有任何服务能提
 msgid "The local host service just came up. Reconnecting to it now."
 msgstr "本地主机服务刚刚启动。正在重新连接。"
 
+msgid "The Mac can sleep now"
+msgstr "Mac 现在可以睡眠"
+
+msgid "The Mac stays awake now"
+msgstr "Mac 现在保持唤醒"
+
 msgid "The majority of merged agent PRs need review only, with zero human edits."
 msgstr "多数已合并的智能体PR只需审查，无需任何人工修改。"
 
@@ -18588,9 +18617,6 @@ msgstr "新智能体可在需要时读取被省略的消息。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理会继续整个对话，包括工具调用。"
-
-msgid "The new workspace layout keeps your account, model and repository controls."
-msgstr "新的工作区布局保留了账户、模型和仓库控件。"
 
 msgid "The overnight shift"
 msgstr "夜班"
@@ -20635,6 +20661,9 @@ msgstr "支持哪些AI编码智能体？"
 
 msgid "Which plans include automations?"
 msgstr "哪些套餐包含自动化？"
+
+msgid "While Agents Work"
+msgstr "智能体工作时"
 
 msgid "Who can open it"
 msgstr "谁可以打开"

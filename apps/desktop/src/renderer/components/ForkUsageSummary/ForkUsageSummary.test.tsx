@@ -58,15 +58,25 @@ test.each([
 	expect(view.container.textContent).toContain("Unverified");
 	expect(view.container.querySelector("[role=progressbar]")).toBeNull();
 });
-test("old readings retain their value but are visibly labelled last known", () => {
-	const view = render(
+test("an idle reading stays current; failing refreshes label it last known after 30 minutes", () => {
+	const idle = render(
 		<ForkUsageSummary
 			compact
 			account={account({ fetchedAt: new Date(Date.now() - 360000) })}
 		/>,
 	);
-	expect(view.container.textContent).toContain("Last known");
-	expect(view.container.querySelector("[role=progressbar]")).not.toBeNull();
+	expect(idle.container.textContent).not.toContain("Last known");
+	const failing = render(
+		<ForkUsageSummary
+			compact
+			account={account({
+				status: "unavailable",
+				fetchedAt: new Date(Date.now() - 31 * 60_000),
+			})}
+		/>,
+	);
+	expect(failing.container.textContent).toContain("Last known");
+	expect(failing.container.querySelector("[role=progressbar]")).not.toBeNull();
 });
 test("a signed-out identity takes precedence over a cached quota value", () => {
 	const view = render(

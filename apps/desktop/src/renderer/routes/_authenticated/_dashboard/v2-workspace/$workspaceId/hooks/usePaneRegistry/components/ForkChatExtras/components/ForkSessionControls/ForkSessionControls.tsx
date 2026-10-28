@@ -17,6 +17,8 @@ import { useWorkspaceHostUrl } from "renderer/hooks/host-service/useWorkspaceHos
 import { useV2AgentConfigs } from "renderer/hooks/useV2AgentConfigs";
 import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import type { OpenAgentChat } from "../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
+import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
+import { useForkAccountSwitch } from "../../hooks/useForkAccountSwitch";
 import { useForkSessionAccount } from "../../hooks/useForkSessionAccount";
 import {
 	clearPendingEffort,
@@ -28,6 +30,7 @@ import {
 	hasPendingModelReset,
 	pendingModelResetChange,
 } from "../../utils/pendingModelReset";
+import { ForkAccountStopConfirm } from "../ForkAccountStopConfirm";
 import {
 	ForkChatSwitchDialog,
 	type ForkSwitchRequest,
@@ -57,9 +60,40 @@ export function ForkSessionControls({
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const configId = data.acpAgentConfigId ?? data.agent?.id ?? "";
-	const account = useForkSessionAccount(workspaceId, data, (selection) =>
-		setRequest({ configId, accountSelection: selection }),
+	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
+	const wiring = useChatWiring();
+	const [stopFor, setStopFor] = useState<{ selection: string | null } | null>(
+		null,
 	);
+	// Moving a Claude chat to another login needs no options: only a running
+	// turn asks first, because the move stops it.
+	const chooseAccount = async (selection: string | null) => {
+		if (!accountSwitcher) {
+			setRequest({ configId, accountSelection: selection });
+			return;
+		}
+		const source = data.acpSessionId
+			? await wiring.transport
+					.getSession({ sessionId: data.acpSessionId })
+					.catch(() => null)
+			: null;
+		const status = source?.session?.status;
+		if (source?.live && (status === "running" || status === "awaiting_input")) {
+			setStopFor({ selection });
+			return;
+		}
+		await accountSwitcher.onSwitch(selection);
+	};
+	const account = useForkSessionAccount(
+		workspaceId,
+		data,
+		(selection) => void chooseAccount(selection),
+	);
+	const stopAccountName = stopFor
+		? (accountSwitcher?.accounts.find(
+				(choice) => choice.selection === stopFor.selection,
+			)?.name ?? "")
+		: null;
 	const provider = data.agent?.id ?? null;
 	const modelId = configOptions.find(
 		(option) => option.category === "model",
@@ -163,6 +197,17 @@ export function ForkSessionControls({
 				model={modelId}
 				compact
 				extraItems={extraItems}
+			/>
+			<ForkAccountStopConfirm
+				accountName={stopAccountName}
+				switching={accountSwitcher?.switching === true}
+				onCancel={() => setStopFor(null)}
+				onConfirm={() => {
+					if (!stopFor || !accountSwitcher) return;
+					void accountSwitcher
+						.onSwitch(stopFor.selection)
+						.finally(() => setStopFor(null));
+				}}
 			/>
 			<ForkChatSwitchDialog
 				ctx={ctx}
