@@ -12,6 +12,7 @@ import {
 	isResetEnvelope,
 } from "../../protocol/envelope";
 import type { Item } from "../../protocol/items";
+import { withStableSession } from "./fork-stable-session";
 
 export type StoredItem = {
 	item: Item;
@@ -121,7 +122,7 @@ function applyDurable(draft: Draft, event: DurableEvent): void {
 			return;
 		}
 		case "session": {
-			draft.session = event.session;
+			draft.session = withStableSession(draft.session, event.session);
 			const live = new Set(
 				(event.session.backgroundTasks ?? []).map((task) =>
 					streamKey("background", task.id),
