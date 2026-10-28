@@ -225,7 +225,7 @@ export function CommitInput({
 				placeholder={translate(msg({ message: "Commit message" }))}
 				value={commitMessage}
 				onChange={(e) => setCommitMessage(e.target.value)}
-				className="min-h-[52px] resize-none text-[10px] bg-background"
+				className="max-h-40 min-h-[52px] resize-none overflow-y-auto text-[10px] bg-background"
 				onKeyDown={(e) => {
 					if (
 						e.key === "Enter" &&

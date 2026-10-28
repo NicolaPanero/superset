@@ -30,7 +30,7 @@ export function CreatePrForm({ actions }: CreatePrFormProps) {
 				placeholder={t({
 					message: "Description (optional)",
 				})}
-				className="min-h-20 text-xs"
+				className="max-h-52 min-h-20 overflow-y-auto text-xs"
 			/>
 			<div className="flex items-center justify-between">
 				<Label className="flex items-center gap-1.5 text-xs text-muted-foreground">

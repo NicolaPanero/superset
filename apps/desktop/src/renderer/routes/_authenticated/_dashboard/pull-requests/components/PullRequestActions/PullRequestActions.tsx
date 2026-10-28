@@ -449,7 +449,7 @@ export function PullRequestActions({
 											onChange={(e) => setMergeComment(e.target.value)}
 											onKeyDown={(e) => e.stopPropagation()}
 											placeholder={t({ message: "Commit message (optional)" })}
-											className="min-h-16 resize-none rounded-[0.625rem] border-border/60 bg-background/60 text-xs shadow-none"
+											className="max-h-40 min-h-16 resize-none overflow-y-auto rounded-[0.625rem] border-border/60 bg-background/60 text-xs shadow-none"
 										/>
 									</div>
 									<PullRequestMenuLabel className="pt-1">
