@@ -27,6 +27,7 @@ const extra = [
 
 	"apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/hooks/usePaneRegistry/components/ChatSession/utils/chatHandoffTranscript/chatHandoffTranscript.test.ts",
 	"packages/chat/src/core/harness/harness.test.ts",
+	"packages/chat/src/core/reducer/fork-stable-session.test.ts",
 	"packages/chat-runtime/src/harness/acp/acpAdapter.test.ts",
 	"packages/agent-setup/src/shell-wrappers.test.ts",
 	"apps/desktop/fork-identity.test.ts",

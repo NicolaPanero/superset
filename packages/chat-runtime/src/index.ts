@@ -30,6 +30,7 @@ export type ChatRuntimeOptions = {
 	bootstrapLimit?: number;
 	dedupeCapacity?: number;
 	onSessionChanged?: ChatJournalOptions["onSessionChanged"];
+	forkKeepLatestSessionEvent?: boolean;
 };
 
 export type ChatRuntime = {
@@ -54,6 +55,7 @@ export function createChatRuntime(options: ChatRuntimeOptions): ChatRuntime {
 	});
 	const journal = new ChatJournal(db, {
 		onSessionChanged: options.onSessionChanged,
+		forkKeepLatestSessionEvent: options.forkKeepLatestSessionEvent,
 	});
 	const sessions = new ChatSessionStore(db);
 	const subagentItems = new SubagentItems(db);

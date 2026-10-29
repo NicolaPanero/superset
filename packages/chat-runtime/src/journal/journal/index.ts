@@ -1,3 +1,7 @@
+export {
+	keepLatestSessionEvent,
+	pruneStoredSessionEvents,
+} from "./fork-session-prune";
 export type {
 	ChatJournalOptions,
 	ChatSessionChange,

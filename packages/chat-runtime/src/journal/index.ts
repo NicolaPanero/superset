@@ -5,4 +5,8 @@ export type {
 	ChatSessionChange,
 	OpenedSession,
 } from "./journal";
-export { ChatJournal } from "./journal";
+export {
+	ChatJournal,
+	keepLatestSessionEvent,
+	pruneStoredSessionEvents,
+} from "./journal";

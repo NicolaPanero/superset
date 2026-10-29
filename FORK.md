@@ -107,6 +107,15 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   attende l'arresto del processo prima di riaprire la cronologia sull'altro
   account. I messaggi in coda restano in pausa e la scelta **Continue** non
   cambia. Se l'arresto fallisce, il trasferimento non parte.
+- Le chat lunghe restano reattive. Un cambio di stato della chat (in corso, ferma,
+  consumo del contesto) non ricrea più elenchi di comandi, modalità e opzioni
+  quando sono uguali, quindi menu e righe della trascrizione non si ridisegnano.
+  L’host conserva solo l’ultimo stato di ogni sessione nel journal: ogni stato
+  sostituisce il precedente e ripete l’elenco completo dei comandi, che in una
+  chat lunga occupava la maggior parte del database. Gli stati già salvati
+  vengono rimossi una volta, in background, 30 secondi dopo l’apertura del
+  database (`fork-session-events-pruned-v1` nella cartella dell’host). Lo spazio
+  liberato viene riusato; il file non si riduce senza un `VACUUM`.
 - Ogni chat parte in **Full access**, anche quando riprende una sessione o
   riceve la conversazione da un altro agente o account, se non è stata scelta
   un’altra modalità. Gli agenti senza una modalità nativa di accesso completo

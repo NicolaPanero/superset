@@ -17,6 +17,7 @@ import {
 import { readSince } from "../../replay";
 import type { ChatSessionInit } from "../epoch";
 import { openEpoch } from "../epoch";
+import { keepLatestSessionEvent } from "./fork-session-prune";
 
 export type OpenedSession = {
 	sessionId: string;
@@ -33,6 +34,8 @@ export type ChatSessionChange = {
 
 export type ChatJournalOptions = {
 	onSessionChanged?: (change: ChatSessionChange) => void | Promise<void>;
+	/** Store only the newest session event of each session. */
+	forkKeepLatestSessionEvent?: boolean;
 };
 
 function reportListenerFailure(error: unknown): void {
@@ -104,6 +107,8 @@ export class ChatJournal {
 					eventJson: JSON.stringify(parsed),
 				})
 				.run();
+			if (parsed.type === "session" && this.options.forkKeepLatestSessionEvent)
+				keepLatestSessionEvent(this.db, sessionId, cache.epoch, seq);
 			writeSessionProjection(this.db, sessionId, {
 				status: next.status,
 				...(parsed.type === "session" &&
