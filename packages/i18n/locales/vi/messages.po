@@ -760,6 +760,9 @@ msgstr "{behindCount, plural, one {Chậm hơn main # commit, cần rebase} othe
 msgid "{branchPosition} of {totalBranches}"
 msgstr "{branchPosition} trong {totalBranches}"
 
+msgid "{changedCount, plural, one {Changes · # file} other {Changes · # files}}"
+msgstr "{changedCount, plural, one {Thay đổi · # tệp} other {Thay đổi · # tệp}}"
+
 msgid "{closedCount, plural, one {Closed # port} other {Closed # ports}}"
 msgstr "{closedCount, plural, one {Đã đóng # cổng} other {Đã đóng # cổng}}"
 
@@ -921,6 +924,12 @@ msgstr "{failing}/{total} check đang thất bại"
 msgid "{failing} of {total} checks failing"
 msgstr "{failing}/{total} check đang thất bại"
 
+msgid "{fileCount, plural, one {# file changed in this workspace} other {# files changed in this workspace}}"
+msgstr "{fileCount, plural, one {# tệp đã thay đổi trong workspace này} other {# tệp đã thay đổi trong workspace này}}"
+
+msgid "{fileCount, plural, one {Edited # file} other {Edited # files}}"
+msgstr "{fileCount, plural, one {Đã sửa # tệp} other {Đã sửa # tệp}}"
+
 msgid "{focusShortcutText} to focus"
 msgstr "{focusShortcutText} để focus"
 
@@ -956,6 +965,9 @@ msgstr "{hidden, plural, one {Hiển thị # phản hồi} other {Hiển thị #
 
 msgid "{hidden, plural, one {View # more reply} other {View # more replies}}"
 msgstr "{hidden, plural, other {Xem thêm # phản hồi}}"
+
+msgid "{hiddenCount, plural, one {Show # more file} other {Show # more files}}"
+msgstr "{hiddenCount, plural, one {Hiện thêm # tệp} other {Hiện thêm # tệp}}"
 
 msgid "{hiddenCount, plural, one {Show # more frame} other {Show # more frames}}"
 msgstr "{hiddenCount, plural, one {Hiện thêm # frame} other {Hiện thêm # frame}}"
@@ -1080,6 +1092,9 @@ msgstr "{noun, select, repository {Hãy chỉ định ít nhất một repo.} ch
 msgid "{openCount} open"
 msgstr "{openCount} còn mở"
 
+msgid "{othersCount, plural, one {Also changed in this workspace: # file} other {Also changed in this workspace: # files}}"
+msgstr "{othersCount, plural, one {Cũng thay đổi trong workspace này: # tệp} other {Cũng thay đổi trong workspace này: # tệp}}"
+
 msgid "{pageTitle} can read and change data in your {pluginLabel} account as you, including in future versions of this page. It can send what it reads to other websites. Only allow pages you trust."
 msgstr "{pageTitle} có thể thay bạn đọc và thay đổi dữ liệu trong tài khoản {pluginLabel} của bạn, kể cả trong các phiên bản sau của trang này. Trang có thể gửi những gì nó đọc được đến các trang web khác. Chỉ cho phép những trang bạn tin tưởng."
 
@@ -1200,6 +1215,9 @@ msgstr "{received} trên {total}"
 
 msgid "{remaining} tokens left"
 msgstr "Còn {remaining} token"
+
+msgid "{restoredCount, plural, one {Undid the changes to # file.} other {Undid the changes to # files.}}"
+msgstr "{restoredCount, plural, one {Đã hoàn tác thay đổi ở # tệp.} other {Đã hoàn tác thay đổi ở # tệp.}}"
 
 msgid "{seconds}s"
 msgstr "{seconds} giây"
@@ -3674,6 +3692,18 @@ msgstr "Không thể mở đường dẫn workspace từ xa trong Finder"
 msgid "Can't reach the host"
 msgstr "Không thể kết nối với host"
 
+msgid "Can't undo while a chat in this workspace is working."
+msgstr "Không thể hoàn tác khi một chat trong workspace này đang làm việc."
+
+msgid "Can't undo: another chat worked in this workspace during this turn."
+msgstr "Không thể hoàn tác: một chat khác đã làm việc trong workspace này trong lượt này."
+
+msgid "Can't undo: HEAD moved since this turn, by a commit, pull or checkout."
+msgstr "Không thể hoàn tác: HEAD đã di chuyển kể từ lượt này, do commit, pull hoặc checkout."
+
+msgid "Can't undo: this turn's snapshots are missing."
+msgstr "Không thể hoàn tác: thiếu ảnh chụp của lượt này."
+
 msgid "Cancel"
 msgstr "Hủy"
 
@@ -5811,6 +5841,9 @@ msgstr "Không thể dừng trò chuyện"
 msgid "Couldn't take a screenshot"
 msgstr "Không chụp được màn hình"
 
+msgid "Couldn't undo the file changes."
+msgstr "Không thể hoàn tác thay đổi tệp."
+
 msgid "Couldn't unstage changes"
 msgstr "Không thể bỏ stage các thay đổi"
 
@@ -5831,6 +5864,9 @@ msgstr "Không tải lên được {name}"
 
 msgid "Couldn’t verify"
 msgstr "Không kiểm chứng được"
+
+msgid "Counted from the agent's file edits. Changes made by shell commands, notebook or MCP tools, or subagents are not included, and a file edited more than once can count a line twice."
+msgstr "Được đếm từ các lần sửa tệp của agent. Thay đổi qua lệnh shell, công cụ notebook hoặc MCP, hay agent con không được tính, và một dòng trong tệp được sửa nhiều lần có thể bị đếm hai lần."
 
 msgid "CPU"
 msgstr "CPU"
@@ -6453,6 +6489,10 @@ msgstr "Xóa workspace"
 
 msgid "Delete workspace \"{workspaceName}\"?"
 msgstr "Xóa workspace \"{workspaceName}\"?"
+
+msgctxt "changed file badge"
+msgid "deleted"
+msgstr "đã xóa"
 
 msgid "Deleted"
 msgstr "Đã xóa"
@@ -7385,6 +7425,9 @@ msgstr "Hằng ngày"
 msgid "Every day at <0>9:00 AM</0>"
 msgstr "Mỗi ngày lúc <0>9:00 sáng</0>"
 
+msgid "Every file changed again since this turn, so nothing was undone."
+msgstr "Mọi tệp đều đã thay đổi lại kể từ lượt này, nên không có gì được hoàn tác."
+
 msgid "Every Friday at 4pm, draft release notes from this week's merged PRs."
 msgstr "Mỗi thứ Sáu lúc 4h chiều, soạn ghi chú phát hành từ các PR đã merge trong tuần."
 
@@ -8132,6 +8175,9 @@ msgstr "Tạo và cập nhật issue"
 msgid "File changed on disk"
 msgstr "Tệp trên đĩa đã thay đổi"
 
+msgid "File changes undone"
+msgstr "Đã hoàn tác thay đổi tệp"
+
 msgid "File is too large to preview"
 msgstr "Tệp quá lớn để xem trước"
 
@@ -8590,6 +8636,15 @@ msgstr "Từ GitHub"
 
 msgid "from main agent"
 msgstr "từ agent chính"
+
+msgid "From snapshots of the worktree before and after this turn, so edits made by shell commands count too."
+msgstr "Lấy từ ảnh chụp worktree trước và sau lượt này, nên các sửa đổi bằng lệnh shell cũng được tính."
+
+msgid "From snapshots of the worktree before and after this turn. Another chat worked here at the same time, so some of these changes may be its own."
+msgstr "Lấy từ ảnh chụp worktree trước và sau lượt này. Một chat khác đã làm việc ở đây cùng lúc, nên một số thay đổi này có thể là của chat đó."
+
+msgid "From snapshots of the worktree before and after this turn. Another chat worked here at the same time, so this list has only the files this chat edited with its file tools. Other changes are listed apart."
+msgstr "Lấy từ ảnh chụp worktree trước và sau lượt này. Một chat khác đã làm việc ở đây cùng lúc, nên danh sách này chỉ có các tệp mà chat này đã sửa bằng công cụ tệp của nó. Các thay đổi khác được liệt kê riêng."
 
 msgid "Front matter hidden — switch to Markdown to edit it"
 msgstr "Front matter đang ẩn — chuyển sang Markdown để sửa"
@@ -10264,6 +10319,9 @@ msgstr "đã rời khỏi {channel} cùng với {others}."
 msgid "left {channel}."
 msgstr "đã rời khỏi {channel}."
 
+msgid "Left alone, changed since this turn: {skippedNames}"
+msgstr "Giữ nguyên, đã thay đổi kể từ lượt này: {skippedNames}"
+
 msgid "Left organization"
 msgstr "Đã rời tổ chức"
 
@@ -11370,6 +11428,10 @@ msgstr "Chưa bao giờ"
 msgid "Never asks before acting"
 msgstr "Không bao giờ hỏi trước"
 
+msgctxt "changed file badge"
+msgid "new"
+msgstr "mới"
+
 msgid "New"
 msgstr "Mới"
 
@@ -12235,6 +12297,9 @@ msgstr "Không ai review khác đi vì điều đó."
 
 msgid "None"
 msgstr "Không có"
+
+msgid "None of this turn's files have changes here"
+msgstr "Không tệp nào của lượt này có thay đổi ở đây"
 
 msgid "None selected"
 msgstr "Chưa chọn gì"
@@ -15595,6 +15660,9 @@ msgstr "Xem lại các lần chạy này trong Tất cả lần chạy"
 msgid "Review thread…"
 msgstr "Luồng review…"
 
+msgid "Review what this turn has changed so far"
+msgstr "Xem lượt này đã thay đổi gì đến giờ"
+
 msgid "reviewed"
 msgstr "đã review"
 
@@ -16747,6 +16815,9 @@ msgstr "Hiện nút Mức sử dụng trong thanh bên trang chủ, bên dưới
 msgid "Show all {count}"
 msgstr "Hiện tất cả {count}"
 
+msgid "Show all changes"
+msgstr "Hiện tất cả thay đổi"
+
 msgid "Show all comments"
 msgstr "Hiển thị tất cả bình luận"
 
@@ -16791,6 +16862,9 @@ msgstr "Hiển thị tất cả những người đã mở không gian làm vi�
 
 msgid "Show fewer"
 msgstr "Hiện ít hơn"
+
+msgid "Show fewer files"
+msgstr "Hiện ít tệp hơn"
 
 msgid "Show file tree"
 msgstr "Hiện cây tệp"
@@ -17156,6 +17230,9 @@ msgstr "Onboarding mượt hơn"
 
 msgid "Snapshot"
 msgstr "Snapshot"
+
+msgid "Snapshot the worktree before and after each chat turn, so its card lists every changed file, shell edits included, and can undo them. Each prompt waits for its snapshot first."
+msgstr "Chụp ảnh worktree trước và sau mỗi lượt chat, để thẻ của lượt liệt kê mọi tệp đã thay đổi, kể cả sửa đổi bằng shell, và có thể hoàn tác chúng. Mỗi prompt sẽ chờ ảnh chụp của nó xong trước."
 
 msgid "Snapshots this workspace as it is now, with everything installed in it. New workspaces from the environment start from that snapshot."
 msgstr "Chụp nhanh không gian làm việc này ở trạng thái hiện tại, cùng mọi thứ đã cài đặt. Các không gian làm việc mới từ môi trường này bắt đầu từ bản chụp đó."
@@ -18317,6 +18394,9 @@ msgstr "Nút giờ đã nổi bật. Tôi đã kiểm tra trong ngăn của bạ
 msgid "The change starts now. You pay only the difference for the rest of this period."
 msgstr "Thay đổi có hiệu lực ngay. Bạn chỉ trả phần chênh lệch cho thời gian còn lại của kỳ này."
 
+msgid "The chat stays as it is. Files edited since this turn, by anyone, are left alone and listed."
+msgstr "Chat vẫn giữ nguyên. Các tệp đã được bất kỳ ai sửa kể từ lượt này sẽ được giữ nguyên và liệt kê."
+
 msgid "The cloud workspace should have started but didn't answer in time. The next run tries again."
 msgstr "Workspace cloud lẽ ra đã khởi động nhưng không phản hồi kịp. Lần chạy tiếp theo sẽ thử lại."
 
@@ -18991,6 +19071,12 @@ msgstr "Luồng này không có bình luận nào để trả lời."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Luồng này chưa được chuyển cho agent. Ai đó phải chuyển nó từ trang trước."
 
+msgid "This turn"
+msgstr "Lượt này"
+
+msgid "This turn's files"
+msgstr "Tệp của lượt này"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "Bản cập nhật này đã khởi động lại terminal của bạn một lần duy nhất. Terminal mới mở trong cùng các thư mục."
 
@@ -19063,6 +19149,9 @@ msgstr "Workspace này có thể đã bị gỡ, hoặc bạn không còn quyề
 
 msgid "This workspace record still exists, but its worktree folder is no longer on this host. Terminals and file actions are unavailable."
 msgstr "Bản ghi workspace này vẫn còn, nhưng thư mục worktree của nó không còn trên host này. Terminal và các thao tác với tệp không dùng được."
+
+msgid "This workspace's host can't undo file changes yet."
+msgstr "Máy chủ của workspace này chưa thể hoàn tác thay đổi tệp."
 
 msgid "This workspace's host is offline"
 msgstr "Host của workspace này đang ngoại tuyến"
@@ -19316,6 +19405,9 @@ msgstr "Theo dõi ngân sách và chi tiêu"
 msgid "Track down that flaky test…"
 msgstr "Truy ra bài test chập chờn đó…"
 
+msgid "Track file changes per turn"
+msgstr "Theo dõi thay đổi tệp theo từng lượt"
+
 msgid "Track tasks in"
 msgstr "Theo dõi công việc trong"
 
@@ -19549,6 +19641,12 @@ msgstr "Đang diễn ra"
 
 msgid "Undo"
 msgstr "Hoàn tác"
+
+msgid "Undo changes"
+msgstr "Hoàn tác thay đổi"
+
+msgid "Undo the file changes in this card?"
+msgstr "Hoàn tác các thay đổi tệp trong thẻ này?"
 
 msgid "Undo the last archived workspace or closed chats"
 msgstr "Hoàn tác lần lưu trữ workspace hoặc đóng cuộc trò chuyện gần nhất"
