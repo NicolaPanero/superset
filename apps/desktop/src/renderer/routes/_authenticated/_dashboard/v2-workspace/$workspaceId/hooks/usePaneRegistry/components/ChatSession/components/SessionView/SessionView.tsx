@@ -9,7 +9,6 @@ import {
 } from "@superset/chat/core";
 import type {
 	AvailableCommand,
-	BackgroundTask,
 	Decision,
 	SessionConfigOption,
 	SessionState,
@@ -76,7 +75,6 @@ import { setupEnvironmentId } from "./utils/setupEnvironmentLink";
 const RESUME_FOLLOW_PX = 24;
 const NO_COMMANDS: AvailableCommand[] = [];
 const NO_CONFIG_OPTIONS: SessionConfigOption[] = [];
-const NO_TASKS: BackgroundTask[] = [];
 
 const MODEL_OPTIONS_GRACE_MS = 1000;
 
@@ -480,7 +478,6 @@ export function SessionView({
 			onBackgroundSubagent,
 		],
 	);
-	const backgroundTasks = sessionState?.backgroundTasks ?? NO_TASKS;
 	const awaitingBackground = sessionState?.awaitingBackground === true;
 	const onCancelTurn = useMemo(
 		() =>
@@ -632,17 +629,11 @@ export function SessionView({
 					)
 				)}
 				<WorkDrawer
-					approvals={approvals}
 					onAppendToComposer={appendToComposer}
 					onExit={returnToComposer}
-					onMoveToBackground={onBackgroundSubagent}
-					onOpenSubagent={openSubagent}
-					onStop={onStopTask}
 					paneRef={paneRef}
 					queue={drawerQueue}
 					ref={drawerRef}
-					snapshot={session.snapshot}
-					tasks={backgroundTasks}
 				/>
 				<Composer
 					presetId={presetId}

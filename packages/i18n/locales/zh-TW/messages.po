@@ -756,9 +756,6 @@ msgstr "{appName} Mobile屬於專業版"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile在你連線的電腦上執行代理程式。"
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {# 個需要核准}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落後main #個提交，需要變基} other {落後main #個提交，需要變基}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {使用了#個來源} other {使用了#個來源}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {使用了 # 個工具} other {使用了 # 個工具}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, other {正在等待 # 個子代理程式}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count}個GitHub星標"
@@ -1236,9 +1230,6 @@ msgstr "已選擇{selectedCount}項"
 msgid "{share}% human"
 msgstr "人類{share}%"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, other {# 個 shell}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown}/{total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {已啟動 # 個自動化} other {已啟動 # 個�
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# 個子代理程式執行中}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, other {# 個子代理程式}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {已建立#個工作區，{failCount}個失敗} other {已建立#個工作區，{failCount}個失敗}}"
@@ -6947,6 +6935,10 @@ msgstr "不儲存"
 msgid "Done"
 msgstr "完成"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "已完成"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "完成——預設欄使用的帶邊框chip樣式現在是所有tooltip的預設樣式，複製貼上出來的樣式覆蓋也都移除了（淨減90行）。"
 
@@ -9074,6 +9066,9 @@ msgstr "隱藏會話"
 
 msgid "Hide text"
 msgstr "隱藏文字"
+
+msgid "Hide workspace activity"
+msgstr "隱藏工作區動態"
 
 msgid "High"
 msgstr "高"
@@ -11391,9 +11386,6 @@ msgstr "需要重試"
 msgid "Needs Action"
 msgstr "需要處理"
 
-msgid "needs approval"
-msgstr "需要核准"
-
 msgid "Needs attention"
 msgstr "需要處理"
 
@@ -12158,6 +12150,9 @@ msgstr "此區間內沒有星標。"
 
 msgid "No Stripe customer found"
 msgstr "未找到Stripe客戶"
+
+msgid "No subagents yet"
+msgstr "尚無子代理程式"
 
 msgid "no tags"
 msgstr "無標籤"
@@ -16968,6 +16963,9 @@ msgstr "顯示譯文"
 msgid "Show usage tab on sidebar"
 msgstr "在側邊欄顯示用量分頁"
 
+msgid "Show workspace activity"
+msgstr "顯示工作區動態"
+
 msgid "showArrow opt-in"
 msgstr "showArrow按需開啟"
 
@@ -20713,6 +20711,10 @@ msgstr "工作區操作"
 
 msgid "Workspace activity"
 msgstr "工作區活動"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "工作區動態，拉取請求 #{0}"
 
 msgid "Workspace agents"
 msgstr "工作區代理程式"

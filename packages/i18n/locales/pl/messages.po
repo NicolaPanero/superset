@@ -756,9 +756,6 @@ msgstr "{appName} Mobile jest częścią planu Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile uruchamia agentów na komputerach, które podłączysz."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, one {# wymaga zatwierdzenia} few {# wymagają zatwierdzenia} many {# wymaga zatwierdzenia} other {# wymaga zatwierdzenia}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Za main o # commit, wymaga rebase} few {Za main o # commity, wymaga rebase} many {Za main o # commitów, wymaga rebase} other {Za main o # commita, wymaga rebase}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {Użyto # źródła} few {Użyto # źródeł} many {
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {użyto # narzędzia} few {użyto # narzędzi} many {użyto # narzędzi} other {użyto # narzędzia}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, one {czeka na # subagenta} few {czeka na # subagenty} many {czeka na # subagentów} other {czeka na # subagenta}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} gwiazdek GitHub"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount} zaznaczonych"
 msgid "{share}% human"
 msgstr "{share}% człowiek"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, one {# shell} few {# shelle} many {# shelli} other {# shella}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown} z {total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {Uruchomiono # automatyzację} few {Uruchomiono # 
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent działa} few {# subagenty działają} many {# subagentów działa} other {# subagenta działa}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, one {# subagent} few {# subagenty} many {# subagentów} other {# subagenta}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Utworzono # obszar roboczy, {failCount} nieudanych} few {Utworzono # obszary robocze, {failCount} nieudanych} many {Utworzono # obszarów roboczych, {failCount} nieudanych} other {Utworzono # obszaru roboczego, {failCount} nieudanych}}"
@@ -6947,6 +6935,10 @@ msgstr "Nie zapisuj"
 msgid "Done"
 msgstr "Gotowe"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Ukończono"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Gotowe — obramowany styl chipa używany przez pasek presetów jest teraz domyślny dla każdego tooltipa, a kopiowane nadpisania zostały usunięte (netto −90 wierszy)."
 
@@ -9074,6 +9066,9 @@ msgstr "Ukryj sesje"
 
 msgid "Hide text"
 msgstr "Ukryj tekst"
+
+msgid "Hide workspace activity"
+msgstr "Ukryj aktywność obszaru roboczego"
 
 msgid "High"
 msgstr "Wysoki"
@@ -11391,9 +11386,6 @@ msgstr "Wymaga ponowienia"
 msgid "Needs Action"
 msgstr "Wymaga działania"
 
-msgid "needs approval"
-msgstr "wymaga zatwierdzenia"
-
 msgid "Needs attention"
 msgstr "Wymaga uwagi"
 
@@ -12158,6 +12150,9 @@ msgstr "Brak gwiazdek w tym zakresie."
 
 msgid "No Stripe customer found"
 msgstr "Nie znaleziono klienta Stripe"
+
+msgid "No subagents yet"
+msgstr "Brak jeszcze subagentów"
 
 msgid "no tags"
 msgstr "brak tagów"
@@ -16968,6 +16963,9 @@ msgstr "Pokaż tłumaczenie"
 msgid "Show usage tab on sidebar"
 msgstr "Pokaż kartę użycia na pasku bocznym"
 
+msgid "Show workspace activity"
+msgstr "Pokaż aktywność obszaru roboczego"
+
 msgid "showArrow opt-in"
 msgstr "showArrow włączone"
 
@@ -20713,6 +20711,10 @@ msgstr "Akcje obszaru roboczego"
 
 msgid "Workspace activity"
 msgstr "Aktywność obszaru roboczego"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Aktywność obszaru roboczego, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Agenci obszaru roboczego"

@@ -756,9 +756,6 @@ msgstr "{appName} Mobile thuộc gói Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile chạy agent trên những máy tính bạn kết nối."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {# cần phê duyệt}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Chậm hơn main # commit, cần rebase} other {Chậm hơn main # commit, cần rebase}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {Đã dùng # nguồn} other {Đã dùng # nguồn}}
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {đã dùng # công cụ} other {đã dùng # công cụ}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, other {đang chờ # agent con}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} star GitHub"
@@ -1236,9 +1230,6 @@ msgstr "Đã chọn {selectedCount}"
 msgid "{share}% human"
 msgstr "{share}% con người"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, other {# shell}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown} trong {total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {Đã khởi chạy # tự động hóa} other {Đ
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# agent con đang chạy}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, other {# agent con}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Đã tạo # workspace, {failCount} thất bại} other {Đã tạo # workspace, {failCount} thất bại}}"
@@ -6947,6 +6935,10 @@ msgstr "Không lưu"
 msgid "Done"
 msgstr "Xong"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Xong"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Xong — kiểu chip có viền mà thanh preset dùng giờ là mặc định cho mọi tooltip, và các chỗ ghi đè sao chép lặp đã được gỡ (giảm ròng 90 dòng)."
 
@@ -9074,6 +9066,9 @@ msgstr "Ẩn phiên"
 
 msgid "Hide text"
 msgstr "Ẩn văn bản"
+
+msgid "Hide workspace activity"
+msgstr "Ẩn hoạt động của workspace"
 
 msgid "High"
 msgstr "Cao"
@@ -11391,9 +11386,6 @@ msgstr "Cần chạy lại"
 msgid "Needs Action"
 msgstr "Cần xử lý"
 
-msgid "needs approval"
-msgstr "cần phê duyệt"
-
 msgid "Needs attention"
 msgstr "Cần chú ý"
 
@@ -12158,6 +12150,9 @@ msgstr "Không có star nào trong khoảng này."
 
 msgid "No Stripe customer found"
 msgstr "Không tìm thấy khách hàng Stripe"
+
+msgid "No subagents yet"
+msgstr "Chưa có agent con nào"
 
 msgid "no tags"
 msgstr "không có thẻ"
@@ -16968,6 +16963,9 @@ msgstr "Xem bản dịch"
 msgid "Show usage tab on sidebar"
 msgstr "Hiển thị thẻ mức sử dụng trên thanh bên"
 
+msgid "Show workspace activity"
+msgstr "Hiện hoạt động của workspace"
+
 msgid "showArrow opt-in"
 msgstr "bật showArrow"
 
@@ -20713,6 +20711,10 @@ msgstr "Hành động workspace"
 
 msgid "Workspace activity"
 msgstr "Hoạt động của không gian làm việc"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Hoạt động của workspace, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Agent của workspace"

@@ -756,9 +756,6 @@ msgstr "{appName} Mobile termasuk dalam Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile menjalankan agen di komputer yang Anda hubungkan."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {# perlu persetujuan}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Tertinggal # commit dari main, perlu rebase} other {Tertinggal # commit dari main, perlu rebase}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {Memakai # sumber} other {Memakai # sumber}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {menggunakan # alat} other {menggunakan # alat}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, other {menunggu # subagen}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} star GitHub"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount} dipilih"
 msgid "{share}% human"
 msgstr "{share}% manusia"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, other {# shell}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown} dari {total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {# otomatisasi dimulai} other {# otomatisasi dimul
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# subagen berjalan}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, other {# subagen}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Membuat # workspace, {failCount} gagal} other {Membuat # workspace, {failCount} gagal}}"
@@ -6947,6 +6935,10 @@ msgstr "Jangan Simpan"
 msgid "Done"
 msgstr "Selesai"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Selesai"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Selesai — gaya chip bergaris yang dipakai presets bar kini menjadi bawaan untuk tiap tooltip, dan penimpaan salin-tempelnya sudah dihapus (bersih −90 baris)."
 
@@ -9074,6 +9066,9 @@ msgstr "Sembunyikan sesi"
 
 msgid "Hide text"
 msgstr "Sembunyikan teks"
+
+msgid "Hide workspace activity"
+msgstr "Sembunyikan aktivitas workspace"
 
 msgid "High"
 msgstr "Tinggi"
@@ -11391,9 +11386,6 @@ msgstr "Perlu dicoba ulang"
 msgid "Needs Action"
 msgstr "Perlu Tindakan"
 
-msgid "needs approval"
-msgstr "perlu persetujuan"
-
 msgid "Needs attention"
 msgstr "Perlu perhatian"
 
@@ -12158,6 +12150,9 @@ msgstr "Tidak ada star di rentang ini."
 
 msgid "No Stripe customer found"
 msgstr "Tidak ada pelanggan Stripe yang ditemukan"
+
+msgid "No subagents yet"
+msgstr "Belum ada subagen"
 
 msgid "no tags"
 msgstr "tanpa tag"
@@ -16968,6 +16963,9 @@ msgstr "Tampilkan terjemahan"
 msgid "Show usage tab on sidebar"
 msgstr "Tampilkan tab penggunaan di bilah samping"
 
+msgid "Show workspace activity"
+msgstr "Tampilkan aktivitas workspace"
+
 msgid "showArrow opt-in"
 msgstr "showArrow opsional"
 
@@ -20713,6 +20711,10 @@ msgstr "Aksi workspace"
 
 msgid "Workspace activity"
 msgstr "Aktivitas workspace"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Aktivitas workspace, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Agen workspace"

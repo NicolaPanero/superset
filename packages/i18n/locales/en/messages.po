@@ -756,9 +756,6 @@ msgstr "{appName} Mobile is part of Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile runs agents on the computers you connect."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {Used # source} other {Used # sources}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {used # tool} other {used # tools}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} GitHub stars"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount} selected"
 msgid "{share}% human"
 msgstr "{share}% human"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, one {# shell} other {# shells}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown} of {total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {Started # automation} other {Started # automation
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, one {# subagent} other {# subagents}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
@@ -6947,6 +6935,10 @@ msgstr "Don't Save"
 msgid "Done"
 msgstr "Done"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Done"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 
@@ -9074,6 +9066,9 @@ msgstr "Hide sessions"
 
 msgid "Hide text"
 msgstr "Hide text"
+
+msgid "Hide workspace activity"
+msgstr "Hide workspace activity"
 
 msgid "High"
 msgstr "High"
@@ -11391,9 +11386,6 @@ msgstr "Needs a retry"
 msgid "Needs Action"
 msgstr "Needs Action"
 
-msgid "needs approval"
-msgstr "needs approval"
-
 msgid "Needs attention"
 msgstr "Needs attention"
 
@@ -12158,6 +12150,9 @@ msgstr "No stars in this range."
 
 msgid "No Stripe customer found"
 msgstr "No Stripe customer found"
+
+msgid "No subagents yet"
+msgstr "No subagents yet"
 
 msgid "no tags"
 msgstr "no tags"
@@ -16968,6 +16963,9 @@ msgstr "Show translation"
 msgid "Show usage tab on sidebar"
 msgstr "Show usage tab on sidebar"
 
+msgid "Show workspace activity"
+msgstr "Show workspace activity"
+
 msgid "showArrow opt-in"
 msgstr "showArrow opt-in"
 
@@ -20713,6 +20711,10 @@ msgstr "Workspace actions"
 
 msgid "Workspace activity"
 msgstr "Workspace activity"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Workspace activity, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Workspace agents"

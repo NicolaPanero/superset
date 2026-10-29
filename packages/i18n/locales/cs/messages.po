@@ -756,9 +756,6 @@ msgstr "{appName} Mobile je součástí tarifu Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile spouští agenty na počítačích, které připojíte."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, one {# čeká na schválení} few {# čekají na schválení} many {# čeká na schválení} other {# čeká na schválení}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Zaostává za main o # commit, je potřeba rebase} few {Zaostává za main o # commity, je potřeba rebase} many {Zaostává za main o # commitu, je potřeba rebase} other {Zaostává za main o # commitů, je potřeba rebase}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {Použit # zdroj} few {Použity # zdroje} many {Pou�
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {použit # nástroj} few {použity # nástroje} many {použito # nástroje} other {použito # nástrojů}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, one {čeká na # subagenta} few {čeká na # subagenty} many {čeká na # subagenta} other {čeká na # subagentů}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} hvězd na GitHubu"
@@ -1236,9 +1230,6 @@ msgstr "vybráno: {selectedCount}"
 msgid "{share}% human"
 msgstr "{share} % člověk"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, one {# shell} few {# shelly} many {# shellu} other {# shellů}}"
-
 msgid "{shown} of {total}"
 msgstr "{shown} z {total}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {Spuštěna # automatizace} few {Spuštěny # auto
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# subagent běží} few {# subagenti běží} many {# subagenta běží} other {# subagentů běží}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, one {# subagent} few {# subagenti} many {# subagenta} other {# subagentů}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {Vytvořen # pracovní prostor, {failCount} selhalo} few {Vytvořeny # pracovní prostory, {failCount} selhalo} many {Vytvořeno # pracovního prostoru, {failCount} selhalo} other {Vytvořeno # pracovních prostorů, {failCount} selhalo}}"
@@ -6947,6 +6935,10 @@ msgstr "Neukládat"
 msgid "Done"
 msgstr "Hotovo"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Hotovo"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Hotovo — orámovaný styl čipu z lišty přednastavení je teď výchozí pro každý tooltip a zkopírované přepisy jsou pryč (čistě −90 řádků)."
 
@@ -9074,6 +9066,9 @@ msgstr "Skrýt relace"
 
 msgid "Hide text"
 msgstr "Skrýt text"
+
+msgid "Hide workspace activity"
+msgstr "Skrýt aktivitu pracovního prostoru"
 
 msgid "High"
 msgstr "Vysoká"
@@ -11391,9 +11386,6 @@ msgstr "Vyžaduje opakování"
 msgid "Needs Action"
 msgstr "Vyžaduje akci"
 
-msgid "needs approval"
-msgstr "čeká na schválení"
-
 msgid "Needs attention"
 msgstr "Vyžaduje pozornost"
 
@@ -12158,6 +12150,9 @@ msgstr "V tomto období žádné hvězdy."
 
 msgid "No Stripe customer found"
 msgstr "Nenalezen žádný zákazník ve Stripe"
+
+msgid "No subagents yet"
+msgstr "Zatím žádní subagenti"
 
 msgid "no tags"
 msgstr "žádné štítky"
@@ -16968,6 +16963,9 @@ msgstr "Zobrazit překlad"
 msgid "Show usage tab on sidebar"
 msgstr "Zobrazit kartu využití v postranním panelu"
 
+msgid "Show workspace activity"
+msgstr "Zobrazit aktivitu pracovního prostoru"
+
 msgid "showArrow opt-in"
 msgstr "showArrow zapnuto"
 
@@ -20713,6 +20711,10 @@ msgstr "Akce pracovního prostoru"
 
 msgid "Workspace activity"
 msgstr "Aktivita pracovního prostoru"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Aktivita pracovního prostoru, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Agenti pracovního prostoru"

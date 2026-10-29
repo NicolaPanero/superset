@@ -756,9 +756,6 @@ msgstr "{appName} Mobile, Pro'nun bir parçasıdır"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile, ajanları bağladığınız bilgisayarlarda çalıştırır."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {# onay bekliyor}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main dalının # commit gerisinde, rebase gerekiyor} other {main dalının # commit gerisinde, rebase gerekiyor}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {# kaynak kullanıldı} other {# kaynak kullanıldı
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {# araç kullanıldı} other {# araç kullanıldı}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, one {# alt ajan bekleniyor} other {# alt ajan bekleniyor}}"
 
 msgid "{count} GitHub stars"
 msgstr "{count} GitHub yıldızı"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount} seçildi"
 msgid "{share}% human"
 msgstr "%{share} insan"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, one {# shell} other {# shell}}"
-
 msgid "{shown} of {total}"
 msgstr "{total} içinden {shown}"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {# otomasyon başlatıldı} other {# otomasyon ba�
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, one {# alt ajan çalışıyor} other {# alt ajan çalışıyor}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, one {# alt ajan} other {# alt ajan}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {# çalışma alanı oluşturuldu, {failCount} başarısız} other {# çalışma alanı oluşturuldu, {failCount} başarısız}}"
@@ -6947,6 +6935,10 @@ msgstr "Kaydetme"
 msgid "Done"
 msgstr "Tamamlandı"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "Tamamlandı"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "Tamam — hazır ayarlar çubuğunun kullandığı çerçeveli çip stili artık her tooltip için varsayılan ve kopyala-yapıştır geçersiz kılmalar kaldırıldı (net −90 satır)."
 
@@ -9074,6 +9066,9 @@ msgstr "Oturumları gizle"
 
 msgid "Hide text"
 msgstr "Metni gizle"
+
+msgid "Hide workspace activity"
+msgstr "Çalışma alanı etkinliğini gizle"
 
 msgid "High"
 msgstr "Yüksek"
@@ -11391,9 +11386,6 @@ msgstr "Yeniden denenmeli"
 msgid "Needs Action"
 msgstr "İşlem gerekiyor"
 
-msgid "needs approval"
-msgstr "onay gerekiyor"
-
 msgid "Needs attention"
 msgstr "İlgi bekliyor"
 
@@ -12158,6 +12150,9 @@ msgstr "Bu aralıkta yıldız yok."
 
 msgid "No Stripe customer found"
 msgstr "Stripe müşterisi bulunamadı"
+
+msgid "No subagents yet"
+msgstr "Henüz alt ajan yok"
 
 msgid "no tags"
 msgstr "etiket yok"
@@ -16968,6 +16963,9 @@ msgstr "Çeviriyi göster"
 msgid "Show usage tab on sidebar"
 msgstr "Kenar çubuğunda kullanım sekmesini göster"
 
+msgid "Show workspace activity"
+msgstr "Çalışma alanı etkinliğini göster"
+
 msgid "showArrow opt-in"
 msgstr "showArrow açık"
 
@@ -20713,6 +20711,10 @@ msgstr "Çalışma alanı eylemleri"
 
 msgid "Workspace activity"
 msgstr "Çalışma alanı etkinliği"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "Çalışma alanı etkinliği, pull request #{0}"
 
 msgid "Workspace agents"
 msgstr "Çalışma alanı ajanları"

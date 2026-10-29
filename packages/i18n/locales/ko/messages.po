@@ -756,9 +756,6 @@ msgstr "{appName} Mobile은 Pro에 포함되어 있습니다"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile은 연결한 컴퓨터에서 에이전트를 실행합니다."
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {#개 승인 필요}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main보다 커밋 #개 뒤처짐, 리베이스 필요} other {main보다 커밋 #개 뒤처짐, 리베이스 필요}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {출처 #개 사용} other {출처 #개 사용}}"
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {도구 #개 사용} other {도구 #개 사용}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, other {#개의 서브 에이전트를 기다리는 중}}"
 
 msgid "{count} GitHub stars"
 msgstr "GitHub 스타 {count}개"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount}개 선택됨"
 msgid "{share}% human"
 msgstr "사람 {share}%"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, other {셸 #개}}"
-
 msgid "{shown} of {total}"
 msgstr "{total}개 중 {shown}개"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {자동화 #개를 시작했습니다} other {자�
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {서브 에이전트 #개 실행 중}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, other {서브 에이전트 #개}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {워크스페이스 #개를 만들었고 {failCount}개는 실패했습니다} other {워크스페이스 #개를 만들었고 {failCount}개는 실패했습니다}}"
@@ -6947,6 +6935,10 @@ msgstr "저장 안 함"
 msgid "Done"
 msgstr "완료"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "완료"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "완료 — 프리셋 바에서 쓰던 테두리 칩 스타일이 이제 모든 툴팁의 기본값이 되었고, 복사해 붙여 넣은 재정의는 제거했습니다 (총 −90줄)."
 
@@ -9074,6 +9066,9 @@ msgstr "세션 숨기기"
 
 msgid "Hide text"
 msgstr "텍스트 숨기기"
+
+msgid "Hide workspace activity"
+msgstr "워크스페이스 활동 숨기기"
 
 msgid "High"
 msgstr "높음"
@@ -11391,9 +11386,6 @@ msgstr "재시도 필요"
 msgid "Needs Action"
 msgstr "조치 필요"
 
-msgid "needs approval"
-msgstr "승인 필요"
-
 msgid "Needs attention"
 msgstr "확인 필요"
 
@@ -12158,6 +12150,9 @@ msgstr "이 기간에는 스타가 없습니다."
 
 msgid "No Stripe customer found"
 msgstr "Stripe 고객을 찾을 수 없습니다"
+
+msgid "No subagents yet"
+msgstr "아직 서브 에이전트가 없습니다"
 
 msgid "no tags"
 msgstr "태그 없음"
@@ -16968,6 +16963,9 @@ msgstr "번역 보기"
 msgid "Show usage tab on sidebar"
 msgstr "사이드바에 사용량 탭 표시"
 
+msgid "Show workspace activity"
+msgstr "워크스페이스 활동 표시"
+
 msgid "showArrow opt-in"
 msgstr "showArrow 선택 사용"
 
@@ -20713,6 +20711,10 @@ msgstr "워크스페이스 동작"
 
 msgid "Workspace activity"
 msgstr "워크스페이스 활동"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "워크스페이스 활동, 풀 리퀘스트 #{0}"
 
 msgid "Workspace agents"
 msgstr "워크스페이스 에이전트"

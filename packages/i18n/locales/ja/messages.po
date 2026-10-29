@@ -756,9 +756,6 @@ msgstr "{appName} MobileはProの一部です"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobileは、接続したコンピュータ上でエージェントを実行します。"
 
-msgid "{approvalCount, plural, one {# needs approval} other {# need approval}}"
-msgstr "{approvalCount, plural, other {#件が承認待ち}}"
-
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 
@@ -870,9 +867,6 @@ msgstr "{count, plural, one {#件のソースを使用} other {#件のソース�
 
 msgid "{count, plural, one {used # tool} other {used # tools}}"
 msgstr "{count, plural, one {#件のツールを使用} other {#件のツールを使用}}"
-
-msgid "{count, plural, one {waiting on # subagent} other {waiting on # subagents}}"
-msgstr "{count, plural, other {# 件のサブエージェントを待機中}}"
 
 msgid "{count} GitHub stars"
 msgstr "GitHubスター{count}件"
@@ -1236,9 +1230,6 @@ msgstr "{selectedCount}件選択中"
 msgid "{share}% human"
 msgstr "人間{share}%"
 
-msgid "{shellCount, plural, one {# shell} other {# shells}}"
-msgstr "{shellCount, plural, other {# 件のシェル}}"
-
 msgid "{shown} of {total}"
 msgstr "{total}件中{shown}件"
 
@@ -1258,9 +1249,6 @@ msgstr "{started, plural, one {#件のオートメーションを開始しまし
 
 msgid "{subagentCount, plural, one {# subagent running} other {# subagents running}}"
 msgstr "{subagentCount, plural, other {# 件のサブエージェントが実行中}}"
-
-msgid "{subagentCount, plural, one {# subagent} other {# subagents}}"
-msgstr "{subagentCount, plural, other {# 件のサブエージェント}}"
 
 msgid "{successCount, plural, one {Created # workspace, {failCount} failed} other {Created # workspaces, {failCount} failed}}"
 msgstr "{successCount, plural, one {#件のワークスペースを作成、{failCount}件失敗} other {#件のワークスペースを作成、{failCount}件失敗}}"
@@ -6947,6 +6935,10 @@ msgstr "保存しない"
 msgid "Done"
 msgstr "完了"
 
+msgctxt "subagent status"
+msgid "Done"
+msgstr "完了"
+
 msgid "Done — the bordered chip style used by the presets bar is now the default for every tooltip, and the copy-pasted overrides are removed (net −90 lines)."
 msgstr "完了 — プリセットバーで使っていた枠線付きチップスタイルをすべてのtooltipのデフォルトにし、コピペされたオーバーライドを削除しました(差し引き−90行)。"
 
@@ -9074,6 +9066,9 @@ msgstr "セッションを隠す"
 
 msgid "Hide text"
 msgstr "テキストを隠す"
+
+msgid "Hide workspace activity"
+msgstr "ワークスペースのアクティビティを隠す"
 
 msgid "High"
 msgstr "高"
@@ -11391,9 +11386,6 @@ msgstr "再実行が必要"
 msgid "Needs Action"
 msgstr "対応が必要"
 
-msgid "needs approval"
-msgstr "承認が必要"
-
 msgid "Needs attention"
 msgstr "要対応"
 
@@ -12158,6 +12150,9 @@ msgstr "この期間にスターはありません。"
 
 msgid "No Stripe customer found"
 msgstr "Stripeの顧客が見つかりません"
+
+msgid "No subagents yet"
+msgstr "サブエージェントはまだありません"
 
 msgid "no tags"
 msgstr "タグなし"
@@ -16968,6 +16963,9 @@ msgstr "翻訳を表示"
 msgid "Show usage tab on sidebar"
 msgstr "サイドバーに使用状況タブを表示"
 
+msgid "Show workspace activity"
+msgstr "ワークスペースのアクティビティを表示"
+
 msgid "showArrow opt-in"
 msgstr "showArrowで有効化"
 
@@ -20713,6 +20711,10 @@ msgstr "ワークスペースの操作"
 
 msgid "Workspace activity"
 msgstr "ワークスペースのアクティビティ"
+
+#. placeholder {0}: currentPr.number
+msgid "Workspace activity, pull request #{0}"
+msgstr "ワークスペースのアクティビティ、プルリクエスト #{0}"
 
 msgid "Workspace agents"
 msgstr "ワークスペースのエージェント"
