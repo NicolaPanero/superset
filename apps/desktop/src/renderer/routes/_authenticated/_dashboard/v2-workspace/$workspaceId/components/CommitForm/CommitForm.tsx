@@ -15,7 +15,7 @@ export function CommitForm({ actions }: CommitFormProps) {
 				value={actions.commitMessage}
 				onChange={(e) => actions.setCommitMessage(e.target.value)}
 				placeholder={actions.defaultCommitMessage}
-				className="min-h-20 text-xs"
+				className="max-h-52 min-h-20 overflow-y-auto text-xs"
 				onKeyDown={(e) => {
 					if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
 						e.preventDefault();
