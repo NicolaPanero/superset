@@ -3931,6 +3931,9 @@ msgstr "El chat se está rehaciendo"
 msgid "Chat Launch"
 msgstr "Lanzamiento de chat"
 
+msgid "Chat mode"
+msgstr "Modo chat"
+
 msgid "Chat session not found"
 msgstr "Sesión de chat no encontrada"
 
@@ -4217,6 +4220,9 @@ msgstr "CLI y SDK"
 
 msgid "CLI docs"
 msgstr "Documentación de la CLI"
+
+msgid "CLI mode"
+msgstr "Modo CLI"
 
 msgid "CLI reference"
 msgstr "Referencia de la CLI"
@@ -5655,6 +5661,9 @@ msgstr "No se pudo editar el mensaje"
 
 msgid "Couldn’t finish deleting workspaces"
 msgstr "No se pudo terminar de eliminar los espacios de trabajo"
+
+msgid "Couldn't fork into a chat"
+msgstr "No se pudo bifurcar en un chat"
 
 msgid "Couldn't hand this to an agent"
 msgstr "No se pudo entregar a un agente"
@@ -8571,11 +8580,26 @@ msgstr "Argumentos de fork"
 msgid "Fork conversation"
 msgstr "Bifurcar conversación"
 
+msgid "Fork into chat"
+msgstr "Bifurcar en un chat"
+
+msgid "Fork into chat in a new tab"
+msgstr "Bifurcar en un chat en una nueva pestaña"
+
+msgid "Fork into CLI"
+msgstr "Bifurcar en la CLI"
+
+msgid "Fork into CLI in a new tab"
+msgstr "Bifurcar en la CLI en una nueva pestaña"
+
 msgid "Fork session"
 msgstr "Bifurcar sesión"
 
 msgid "Fork session…"
 msgstr "Bifurcar sesión…"
+
+msgid "Forking into a chat…"
+msgstr "Bifurcando en un chat…"
 
 msgid "Form controls and field composition"
 msgstr "Controles de formulario y composición de campos"
@@ -12407,6 +12431,9 @@ msgstr "Aún no has publicado nada en los últimos 30 días. Tu puesto aparecer�
 msgid "Nothing running"
 msgstr "No hay nada en ejecución"
 
+msgid "Nothing to fork yet. Send a message first."
+msgstr "Todavía no hay nada que bifurcar. Envía un mensaje primero."
+
 msgid "Nothing was missed"
 msgstr "No se perdió nada"
 
@@ -13200,6 +13227,9 @@ msgstr "Abrir páginas"
 
 msgid "Opening worktree..."
 msgstr "Abriendo el worktree..."
+
+msgid "Opens beside this pane. This one keeps running."
+msgstr "Se abre junto a este panel. Este sigue en ejecución."
 
 msgid "Operator"
 msgstr "Operario"
@@ -15684,12 +15714,6 @@ msgstr "Revocar la clave"
 
 msgid "Rewrote it and published version 2."
 msgstr "Lo reescribí y publiqué la versión 2."
-
-msgid "Rich input"
-msgstr "Entrada enriquecida"
-
-msgid "Rich input ({hotkeyText})"
-msgstr "Entrada enriquecida ({hotkeyText})"
 
 msgid "right pane"
 msgstr "panel derecho"
