@@ -7228,6 +7228,10 @@ msgctxt "github release action"
 msgid "Edited"
 msgstr "Изменён"
 
+msgctxt "shell intent"
+msgid "Edited"
+msgstr "Изменён"
+
 msgid "Edited {ago}"
 msgstr "Изменено {ago}"
 
@@ -7235,6 +7239,10 @@ msgid "Editing"
 msgstr "Редактирование"
 
 msgctxt "file change"
+msgid "Editing"
+msgstr "Редактирование"
+
+msgctxt "shell intent"
 msgid "Editing"
 msgstr "Редактирование"
 
@@ -9509,6 +9517,10 @@ msgstr "Улучшить инструкции для агентов"
 msgid "Improved diff viewer"
 msgstr "Улучшенный просмотр diff"
 
+#. placeholder {0}: intent.path
+msgid "in {0}"
+msgstr "в {0}"
+
 msgid "in a new session"
 msgstr "в новой сессии"
 
@@ -10516,6 +10528,10 @@ msgstr "Показывать, создавать, обновлять и удал
 msgid "List, get, create, update, and delete tasks; track status."
 msgstr "Показывать, получать, создавать, обновлять и удалять задачи; отслеживать статус."
 
+msgctxt "shell intent"
+msgid "Listed"
+msgstr "Выведен список"
+
 msgid "Listening"
 msgstr "Слушаю"
 
@@ -10527,6 +10543,10 @@ msgstr "Слушаем сообщения в каналах и новые кан
 
 msgid "Listening status unavailable"
 msgstr "Статус получения комментариев недоступен"
+
+msgctxt "shell intent"
+msgid "Listing"
+msgstr "Список"
 
 msgid "Listing sessions in {what}"
 msgstr "Получаю список сессий в {what}"
@@ -14706,6 +14726,10 @@ msgstr "Активация…"
 msgid "Read"
 msgstr "Прочитано"
 
+msgctxt "shell intent"
+msgid "Read"
+msgstr "Прочитан"
+
 msgid "Read and plan without changing anything"
 msgstr "Читать и планировать, ничего не меняя"
 
@@ -14756,6 +14780,10 @@ msgstr "Читать руководство по настройке"
 
 msgid "Read the source and every pull request."
 msgstr "Читайте исходный код и каждый pull request."
+
+msgctxt "shell intent"
+msgid "Reading"
+msgstr "Чтение"
 
 msgid "Reading {what}"
 msgstr "Читаю {what}"
@@ -16275,8 +16303,16 @@ msgstr "Поиск по заметкам со встреч"
 msgid "Search..."
 msgstr "Поиск..."
 
+msgctxt "shell intent"
+msgid "Searched"
+msgstr "Выполнен поиск"
+
 msgid "Searched for tooltip overrides"
 msgstr "Искали переопределения tooltip"
+
+msgctxt "shell intent"
+msgid "Searching"
+msgstr "Поиск"
 
 msgid "Searching for Kbd usages"
 msgstr "Ищем использования Kbd"
@@ -20901,6 +20937,10 @@ msgstr "Напиши документацию по той части, о кот�
 msgid "Write once. Runs in every agent."
 msgstr "Напишите один раз. Работает в любом агенте."
 
+msgctxt "shell intent"
+msgid "Writing"
+msgstr "Запись"
+
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Написание кода больше не там, куда уходят инженерные часы. Туда уходит чтение. Команды, перешедшие на параллельных агентов в 2025 году, упёрлись в стену первыми: десять агентов до обеда выдают больше diff, чем команда способна честно проверить до пятницы."
 
@@ -20909,6 +20949,10 @@ msgstr "Запись файла..."
 
 msgid "Wrote"
 msgstr "Записано"
+
+msgctxt "shell intent"
+msgid "Wrote"
+msgstr "Записан"
 
 msgid "X handle"
 msgstr "Хендл в X"

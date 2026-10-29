@@ -7228,6 +7228,10 @@ msgctxt "github release action"
 msgid "Edited"
 msgstr "Bewerkt"
 
+msgctxt "shell intent"
+msgid "Edited"
+msgstr "Bewerkt"
+
 msgid "Edited {ago}"
 msgstr "Bewerkt {ago}"
 
@@ -7235,6 +7239,10 @@ msgid "Editing"
 msgstr "Bewerken"
 
 msgctxt "file change"
+msgid "Editing"
+msgstr "Bewerken"
+
+msgctxt "shell intent"
 msgid "Editing"
 msgstr "Bewerken"
 
@@ -9509,6 +9517,10 @@ msgstr "De agentinstructies verbeteren"
 msgid "Improved diff viewer"
 msgstr "Verbeterde diff-viewer"
 
+#. placeholder {0}: intent.path
+msgid "in {0}"
+msgstr "in {0}"
+
 msgid "in a new session"
 msgstr "in een nieuwe sessie"
 
@@ -10516,6 +10528,10 @@ msgstr "Werkruimtes op een host opsommen, aanmaken, bijwerken en verwijderen."
 msgid "List, get, create, update, and delete tasks; track status."
 msgstr "Taken opsommen, ophalen, aanmaken, bijwerken en verwijderen; status volgen."
 
+msgctxt "shell intent"
+msgid "Listed"
+msgstr "Weergegeven"
+
 msgid "Listening"
 msgstr "Luistert"
 
@@ -10527,6 +10543,10 @@ msgstr "Luistert naar kanaalberichten en nieuwe kanalen."
 
 msgid "Listening status unavailable"
 msgstr "Luisterstatus niet beschikbaar"
+
+msgctxt "shell intent"
+msgid "Listing"
+msgstr "Weergeven"
 
 msgid "Listing sessions in {what}"
 msgstr "Sessies in {what} weergeven"
@@ -14706,6 +14726,10 @@ msgstr "Reactiveren…"
 msgid "Read"
 msgstr "Gelezen"
 
+msgctxt "shell intent"
+msgid "Read"
+msgstr "Gelezen"
+
 msgid "Read and plan without changing anything"
 msgstr "Lezen en plannen zonder iets te wijzigen"
 
@@ -14756,6 +14780,10 @@ msgstr "Lees de installatiegids"
 
 msgid "Read the source and every pull request."
 msgstr "Lees de broncode en elke pull request."
+
+msgctxt "shell intent"
+msgid "Reading"
+msgstr "Lezen"
 
 msgid "Reading {what}"
 msgstr "{what} lezen"
@@ -16275,8 +16303,16 @@ msgstr "Doorzoek je vergadernotities"
 msgid "Search..."
 msgstr "Zoeken..."
 
+msgctxt "shell intent"
+msgid "Searched"
+msgstr "Gezocht"
+
 msgid "Searched for tooltip overrides"
 msgstr "Gezocht naar tooltip-overrides"
+
+msgctxt "shell intent"
+msgid "Searching"
+msgstr "Zoeken"
 
 msgid "Searching for Kbd usages"
 msgstr "Zoeken naar Kbd-gebruik"
@@ -20901,12 +20937,20 @@ msgstr "Schrijf docs voor het onderdeel waar iedereen naar vraagt…"
 msgid "Write once. Runs in every agent."
 msgstr "Eén keer schrijven. Draait in elke agent."
 
+msgctxt "shell intent"
+msgid "Writing"
+msgstr "Schrijven"
+
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Code schrijven is niet meer waar de uren van engineers heen gaan. Code lezen wel. Teams die in 2025 parallelle agents omarmden, liepen als eerste tegen de muur: tien agents produceren voor de lunch meer diffs dan een team eerlijk kan reviewen vóór vrijdag."
 
 msgid "Writing file..."
 msgstr "Bestand schrijven..."
 
+msgid "Wrote"
+msgstr "Geschreven"
+
+msgctxt "shell intent"
 msgid "Wrote"
 msgstr "Geschreven"
 

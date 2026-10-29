@@ -7228,6 +7228,10 @@ msgctxt "github release action"
 msgid "Edited"
 msgstr "Edited"
 
+msgctxt "shell intent"
+msgid "Edited"
+msgstr "Edited"
+
 msgid "Edited {ago}"
 msgstr "Edited {ago}"
 
@@ -7235,6 +7239,10 @@ msgid "Editing"
 msgstr "Editing"
 
 msgctxt "file change"
+msgid "Editing"
+msgstr "Editing"
+
+msgctxt "shell intent"
 msgid "Editing"
 msgstr "Editing"
 
@@ -9509,6 +9517,10 @@ msgstr "Improve the agent instructions"
 msgid "Improved diff viewer"
 msgstr "Improved diff viewer"
 
+#. placeholder {0}: intent.path
+msgid "in {0}"
+msgstr "in {0}"
+
 msgid "in a new session"
 msgstr "in a new session"
 
@@ -10516,6 +10528,10 @@ msgstr "List, create, update, and delete workspaces on a host."
 msgid "List, get, create, update, and delete tasks; track status."
 msgstr "List, get, create, update, and delete tasks; track status."
 
+msgctxt "shell intent"
+msgid "Listed"
+msgstr "Listed"
+
 msgid "Listening"
 msgstr "Listening"
 
@@ -10527,6 +10543,10 @@ msgstr "Listening for channel messages and new channels."
 
 msgid "Listening status unavailable"
 msgstr "Listening status unavailable"
+
+msgctxt "shell intent"
+msgid "Listing"
+msgstr "Listing"
 
 msgid "Listing sessions in {what}"
 msgstr "Listing sessions in {what}"
@@ -14706,6 +14726,10 @@ msgstr "Reactivating…"
 msgid "Read"
 msgstr "Read"
 
+msgctxt "shell intent"
+msgid "Read"
+msgstr "Read"
+
 msgid "Read and plan without changing anything"
 msgstr "Read and plan without changing anything"
 
@@ -14756,6 +14780,10 @@ msgstr "Read the setup guide"
 
 msgid "Read the source and every pull request."
 msgstr "Read the source and every pull request."
+
+msgctxt "shell intent"
+msgid "Reading"
+msgstr "Reading"
 
 msgid "Reading {what}"
 msgstr "Reading {what}"
@@ -16275,8 +16303,16 @@ msgstr "Search your meeting notes"
 msgid "Search..."
 msgstr "Search..."
 
+msgctxt "shell intent"
+msgid "Searched"
+msgstr "Searched"
+
 msgid "Searched for tooltip overrides"
 msgstr "Searched for tooltip overrides"
+
+msgctxt "shell intent"
+msgid "Searching"
+msgstr "Searching"
 
 msgid "Searching for Kbd usages"
 msgstr "Searching for Kbd usages"
@@ -20901,12 +20937,20 @@ msgstr "Write docs for the part everyone asks about…"
 msgid "Write once. Runs in every agent."
 msgstr "Write once. Runs in every agent."
 
+msgctxt "shell intent"
+msgid "Writing"
+msgstr "Writing"
+
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 
 msgid "Writing file..."
 msgstr "Writing file..."
 
+msgid "Wrote"
+msgstr "Wrote"
+
+msgctxt "shell intent"
 msgid "Wrote"
 msgstr "Wrote"
 
