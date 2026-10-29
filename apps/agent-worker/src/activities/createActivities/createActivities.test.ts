@@ -72,6 +72,7 @@ interface PdevLogEntry {
 	env: Record<string, string | undefined>;
 	settings: string;
 	appendSystem: string | null;
+	mcp: string | null;
 }
 
 function pdevLog(): PdevLogEntry[] {
@@ -337,6 +338,48 @@ describe("runTurn", () => {
 		expect((error as ApplicationFailure).nonRetryable).toBe(false);
 		expect(pdevLog().some((e) => e.method === "session/cancel")).toBe(false);
 	});
+	test("a provider error fails the attempt for a retry; a bad request fails the turn", async () => {
+		const { activities } = setup();
+		const attempt = async (text: string) => {
+			await activities.beginTurn({ ...turn, promptId: text, text });
+			const error = await new MockActivityEnvironment()
+				.run(activities.runTurn, {
+					...turn,
+					prompts: [{ promptId: text, text }],
+					steersFrom: 0,
+				})
+				.catch((e: unknown) => e);
+			expect(error).toBeInstanceOf(ApplicationFailure);
+			return error as ApplicationFailure;
+		};
+		const outage = await attempt("model error: 529 overloaded");
+		expect(outage.nonRetryable).toBe(false);
+		expect(outage.message).toBe("529 overloaded");
+		const bad = await attempt("model error: 400 invalid_request_error");
+		expect(bad.nonRetryable).toBe(true);
+	});
+	test("a main session gets the Dev's prompt and its tools, and no machine", async () => {
+		const { activities } = setup({
+			credentials: {
+				...withBox,
+				host: null,
+				dev: { name: "Ada", description: "backend", instructions: "Be brief." },
+				session: { kind: "main", role: null, title: null },
+				tools: { mcpUrl: "http://api/mcp/agent" },
+				agentToken: "turn-token",
+			},
+		});
+		await runOne(activities, "hello");
+		const start = pdevLog().find((e) => e.event === "start");
+		expect(start?.env.PDEV_NO_WORKSPACE).toBe("1");
+		expect(start?.appendSystem).toContain("You are Ada");
+		expect(start?.appendSystem).toContain("Be brief.");
+		const mcp = JSON.parse(start?.mcp ?? "{}");
+		expect(mcp.mcpServers.dev.url).toBe("http://api/mcp/agent");
+		expect(mcp.mcpServers.dev.headersHelper).toContain(
+			"dev-tools-headers.json",
+		);
+	});
 });
 
 describe("settleTurn", () => {
@@ -363,6 +406,22 @@ describe("settleTurn", () => {
 		expect(posted).toEqual([
 			{ body: "reply to: hello", idempotencyKey: "t1:reply" },
 		]);
+	});
+
+	test("does not post the final reply again when the Dev replied with its tool", async () => {
+		const { activities, posted } = setup({
+			credentials: {
+				...withBox,
+				room: { channelId: "c1", threadRootId: null },
+			},
+		});
+		await runOne(activities, "please use the reply tool");
+		await activities.settleTurn({
+			...turn,
+			outcome: "completed",
+			steersConsumed: 0,
+		});
+		expect(posted).toEqual([]);
 	});
 
 	test("counts only this turn and closes calls a stop left open", async () => {

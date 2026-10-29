@@ -48,6 +48,9 @@ log({
 	appendSystem: existsSync(join(agentDir, "APPEND_SYSTEM.md"))
 		? readFileSync(join(agentDir, "APPEND_SYSTEM.md"), "utf8")
 		: null,
+	mcp: existsSync(join(agentDir, "mcp.json"))
+		? readFileSync(join(agentDir, "mcp.json"), "utf8")
+		: null,
 });
 
 function run(text: string) {
@@ -128,6 +131,51 @@ function run(text: string) {
 			});
 		}, 300);
 		return;
+	}
+	const modelError = /model error: (.*)/.exec(text)?.[1];
+	if (modelError) {
+		entry({
+			type: "message",
+			message: {
+				role: "assistant",
+				content: [],
+				stopReason: "error",
+				errorMessage: modelError,
+				usage: { input: 0, output: 0, cost: { total: 0 } },
+			},
+		});
+		update({
+			sessionUpdate: "state_update",
+			state: "idle",
+			stopReason: "error",
+		});
+		return;
+	}
+	if (text.includes("use the reply tool")) {
+		entry({
+			type: "message",
+			message: {
+				role: "assistant",
+				content: [
+					{
+						type: "toolCall",
+						id: "call_r",
+						name: "mcp__dev__reply",
+						arguments: { target: "channel:x", body: "hi" },
+					},
+				],
+				usage: { input: 1, output: 1, cost: { total: 0 } },
+			},
+		});
+		entry({
+			type: "message",
+			message: {
+				role: "toolResult",
+				toolCallId: "call_r",
+				toolName: "mcp__dev__reply",
+				content: [{ type: "text", text: "{}" }],
+			},
+		});
 	}
 	const reply = `reply to: ${text}`;
 	update({
