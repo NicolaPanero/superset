@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "keep-awake-2026-10";
+export const FORK_WHATS_NEW_ID = "local-automations-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -32,23 +32,23 @@ export function ForkWhatsNewNotice() {
 	const highlights = [
 		t({
 			message:
-				"Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle.",
+				"Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run.",
 		}),
 		t({
 			message:
-				"Account usage rings update after each agent turn and keep the last reading instead of fading out.",
+				"New local triggers: pull request comments, failed checks and a schedule, with ready-made templates.",
 		}),
 		t({
 			message:
-				"Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background.",
+				"Log time on a Jira issue from its details, with your time of today and the issue history.",
 		}),
 		t({
 			message:
-				"In a Claude chat, pick another account in the composer to move the chat there at once, with its full history.",
+				"The new Today view shows the agents waiting for you, the runs to check, your reviews and your time.",
 		}),
 		t({
 			message:
-				"The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again.",
+				"Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests.",
 		}),
 	];
 	const notice: DesktopNotice = {

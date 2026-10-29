@@ -1,6 +1,7 @@
 const PRO_ROUTES = [
 	"/tasks",
 	"/automations",
+	"/pages",
 	"/cloud-workspaces",
 	"/settings/billing",
 	"/settings/mobile",

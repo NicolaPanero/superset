@@ -57,7 +57,7 @@ test("settings search offers Fork Settings and omits hidden Pro sections", () =>
 		true,
 		true,
 	);
-	expect(hidden.fork).toBe(6);
+	expect(hidden.fork).toBe(7);
 	expect(hidden.billing).toBeUndefined();
 	expect(hidden.teams).toBeUndefined();
 	expect(hidden.mobile).toBeUndefined();

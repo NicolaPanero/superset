@@ -607,6 +607,9 @@ msgstr "占全部token的{0}% · {1}个token"
 msgid "{0}% of total cost · {1} tokens · * at API list rates"
 msgstr "占总费用的{0}% · {1}个token · * 按API标价计算"
 
+msgid "{active} in progress"
+msgstr "{active} 个进行中"
+
 msgid "{actor} added the label {label}"
 msgstr "{actor} 添加了标签 {label}"
 
@@ -973,6 +976,9 @@ msgstr "{kind} · 作者{author}"
 msgid "{kindLabel} theme"
 msgstr "{kindLabel}主题"
 
+msgid "{label} {installed} to {latest}"
+msgstr "{label} {installed} → {latest}"
+
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1202,6 +1208,9 @@ msgstr "{seconds} 秒"
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
+msgid "{selectedCount} entries · {selectedDuration}"
+msgstr "{selectedCount} 条记录 · {selectedDuration}"
+
 msgid "{selectedCount} selected"
 msgstr "已选择{selectedCount}项"
 
@@ -1263,6 +1272,9 @@ msgstr "{toolName}已中断"
 
 msgid "{total, plural, one {The check passed} other {All # checks passed}}"
 msgstr "{total, plural, one {#项检查全部通过} other {#项检查全部通过}}"
+
+msgid "{total} worklogs on this issue · mine among those shown: {myDuration}"
+msgstr "此事务共有 {total} 条工作日志 · 所显示条目中我的工时：{myDuration}"
 
 msgid "{totalCount, plural, one {GitHub issue} other {GitHub issues}}"
 msgstr "{totalCount, plural, one {GitHub议题} other {GitHub议题}}"
@@ -1630,6 +1642,9 @@ msgstr "此终端中仍有进程在运行"
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "一个提示词、几个触发器，每次运行一个工作区"
 
+msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
+msgstr "根据你关闭时未记录工时的任务和仍在进行中的任务，为低于最低工时的工作日生成建议。在你确认之前，不会向 Jira 发送任何内容。未指定日期时：最近 30 天。"
+
 msgid "A pull request always gets its own worktree"
 msgstr "拉取请求总是使用自己的 worktree"
 
@@ -1651,6 +1666,9 @@ msgstr "按 token 计费的独立配置文件。密钥保存在 {0} CLI 中。"
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "共享你的技能、插件、MCP服务器和设置的独立配置文件。"
+
+msgid "A summary file of tasks and pull requests that need attention."
+msgstr "需要关注的任务和拉取请求的摘要文件。"
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "任务键为 1 到 5 个字母或数字，且以字母开头。"
@@ -1739,9 +1757,6 @@ msgstr "账户待删除"
 
 msgid "Account usage"
 msgstr "账户用量"
-
-msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
-msgstr "账户用量圆环会在每次智能体轮次结束后更新，并保留最近一次读数，而不会变淡。"
 
 msgid "Achievements"
 msgstr "成就"
@@ -2125,6 +2140,9 @@ msgstr "智能体设置"
 msgid "Agent setup"
 msgstr "配置智能体"
 
+msgid "Agent updates"
+msgstr "智能体更新"
+
 msgid "Agent usage rankings"
 msgstr "智能体使用量排行"
 
@@ -2133,6 +2151,9 @@ msgstr "由智能体驱动的预览"
 
 msgid "Agents"
 msgstr "智能体"
+
+msgid "Agents at the same time"
+msgstr "同时运行的智能体"
 
 msgid "Agents complete routine tickets with no mid-task intervention."
 msgstr "智能体无需中途干预即可完成常规工单。"
@@ -2154,6 +2175,9 @@ msgstr "同时运行的智能体数"
 
 msgid "Agents use this account when they call Linear tools."
 msgstr "智能体调用 Linear 工具时会使用此账号。"
+
+msgid "Agents waiting for you"
+msgstr "等待你的智能体"
 
 msgid "Aggregate agent usage across every developer on the Paradev leaderboard — tokens, cost, cache behaviour and which models people actually reach for."
 msgstr "Paradev 排行榜上所有开发者的智能体使用汇总 —— token、成本、缓存表现，以及大家实际常用的模型。"
@@ -2299,6 +2323,9 @@ msgstr "全部文章"
 msgid "All projects"
 msgstr "所有项目"
 
+msgid "All pull requests"
+msgstr "所有拉取请求"
+
 msgid "All releases"
 msgstr "全部版本"
 
@@ -2392,6 +2419,9 @@ msgstr "已迁移到另一个组织。切换到该组织即可查看此项目。
 msgid "Already brought over to another organization. Switch to it to see this workspace."
 msgstr "已迁移到另一个组织。切换到该组织即可查看此工作区。"
 
+msgid "Already handled"
+msgstr "已处理"
+
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "已有账户？<0>登录</0>"
 
@@ -2458,6 +2488,9 @@ msgstr "发生未知错误"
 
 msgid "An update is ready to install."
 msgstr "更新已准备好安装。"
+
+msgid "Analysis, open questions and a plan. No ticket changes."
+msgstr "分析、待解决的问题和计划。不修改工单。"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android 版即将到来。发布时第一时间通知你。"
@@ -3007,6 +3040,9 @@ msgstr "自动化任务"
 
 msgid "Automate workspace setup for {projectName}"
 msgstr "为{projectName}自动化工作区初始化"
+
+msgid "Automatic"
+msgstr "自动"
 
 msgid "Automatic (email address)"
 msgstr "自动（邮箱地址）"
@@ -3865,6 +3901,12 @@ msgstr "聊天界面：消息、推理、建议"
 msgid "Check again"
 msgstr "重新检查"
 
+msgid "Check command (optional)"
+msgstr "检查命令（可选）"
+
+msgid "Check for agent updates every day"
+msgstr "每天检查智能体更新"
+
 msgid "Check for Update"
 msgstr "检查更新"
 
@@ -3877,8 +3919,14 @@ msgstr "检查更新"
 msgid "Check for Updates..."
 msgstr "检查更新..."
 
+msgid "Check now"
+msgstr "立即检查"
+
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "在 iPhone 或 iPad 上查看运行中的智能体，并阅读它们做出的更改。"
+
+msgid "Check output"
+msgstr "检查输出"
 
 msgid "Check plans and balances"
 msgstr "查看套餐和余额"
@@ -3915,6 +3963,12 @@ msgstr "查收你的邮箱"
 
 msgid "Checkbox · Radio · Switch"
 msgstr "复选框 · 单选框 · 开关"
+
+msgid "checked"
+msgstr "检查于"
+
+msgid "Checking"
+msgstr "检查中"
 
 msgid "Checking agents…"
 msgstr "正在检查智能体…"
@@ -4035,6 +4089,9 @@ msgstr "选择在终端中Cmd+点击文件路径时的打开方式"
 
 msgid "Choose MCP servers for this message"
 msgstr "为这条消息选择MCP服务器"
+
+msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
+msgstr "选择工作开始时以及拉取请求打开时 Superset 将事务移至的状态。如未选择，它会查找名称类似“review”的状态。"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "选择要从应用内浏览器清除的内容。"
@@ -4549,6 +4606,9 @@ msgstr "用于工作区初始化、清理和“运行”按钮的命令。"
 
 msgid "Comment"
 msgstr "评论"
+
+msgid "Comment (optional)"
+msgstr "备注（可选）"
 
 msgid "Comment actions"
 msgstr "评论操作"
@@ -6236,6 +6296,9 @@ msgstr "每天9:00"
 msgid "Daily at {time}"
 msgstr "每天{time}"
 
+msgid "Daily digest"
+msgstr "每日摘要"
+
 msgid "Daily practice for our team and our heaviest users."
 msgstr "这是我们团队和重度用户的日常。"
 
@@ -6272,11 +6335,26 @@ msgstr "日期范围"
 msgid "Day"
 msgstr "按天"
 
+msgid "Day ends"
+msgstr "一天结束"
+
 msgid "Day One"
 msgstr "元老"
 
+msgid "Day starts"
+msgstr "上班时间"
+
 msgid "days"
 msgstr "天"
+
+msgid "Days"
+msgstr "日期"
+
+msgid "Days already full:"
+msgstr "已满的日期："
+
+msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
+msgstr "休息日（每行一个，YYYY-MM-DD 或 YYYY-MM-DD:YYYY-MM-DD）"
 
 msgid "days running three agents at once"
 msgstr "同时运行三个智能体的天数"
@@ -6687,6 +6765,9 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "页面旁的 DevTools"
 
+msgid "Diagnoses the failure and tries a fix, at most twice per pull request."
+msgstr "诊断失败原因并尝试修复，每个拉取请求最多两次。"
+
 msgid "Dialog"
 msgstr "对话框"
 
@@ -6780,6 +6861,9 @@ msgstr "放弃对“{discardBasename}”的更改？"
 
 msgid "Discard changes?"
 msgstr "放弃更改？"
+
+msgid "Discard my changes"
+msgstr "放弃我的更改"
 
 msgid "Discard recording"
 msgstr "放弃录音"
@@ -7099,6 +7183,9 @@ msgstr "每个附件最大为{0} MB。"
 msgid "Each in its own new tab"
 msgstr "每条各占一个新标签页"
 
+msgid "Each issue that starts to match the query gets a new workspace."
+msgstr "每个开始匹配查询的事务都会获得一个新工作区。"
+
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "每天早上8点，查看昨天失败的CI运行，诊断最常见的失败原因，并提一个修复PR。"
 
@@ -7153,6 +7240,9 @@ msgstr "编辑"
 
 msgid "Edit and restart from here"
 msgstr "编辑并从此处重新开始"
+
+msgid "Edit automation"
+msgstr "编辑自动化"
 
 msgid "Edit comment"
 msgstr "编辑评论"
@@ -7638,6 +7728,12 @@ msgstr "失败"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "失败"
+
+msgid "Failed checks"
+msgstr "失败的检查"
+
+msgid "Failed checks on a linked pull request run the agent in its workspace, once per commit."
+msgstr "关联拉取请求上的检查失败时，会在其工作区中运行智能体，每个提交一次。"
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "失败运行 <0>· 7天</0>"
@@ -8358,6 +8454,9 @@ msgstr "修复评审问题"
 msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
 msgstr "修复 web 中的新错误。每个错误都用测试复现，并开一个草稿 pull request。"
 
+msgid "Fix review comments"
+msgstr "修复评审评论"
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
 
@@ -8582,6 +8681,9 @@ msgstr "免费重置：{formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "常见<0/>问题"
+
+msgid "Fri"
+msgstr "周五"
 
 msgid "from"
 msgstr "基于"
@@ -9307,6 +9409,9 @@ msgstr "空闲 · 分支已推送"
 msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
 msgstr "如果尚未安装 CLI，请先在运行此智能体的计算机上安装，再登录。"
 
+msgid "If the computer is off or asleep at the scheduled time, the run starts when it wakes within this window, otherwise it is skipped. Time zone: {timeZone}."
+msgstr "如果计算机在计划时间处于关机或睡眠状态，在此时间窗口内唤醒时会开始运行，否则跳过。时区：{timeZone}。"
+
 msgid "If you're enjoying Paradev so far, a GitHub star helps other developers discover it."
 msgstr "如果你觉得Paradev还不错，一个GitHub星标能帮助更多开发者发现它。"
 
@@ -9446,9 +9551,6 @@ msgstr "改进智能体说明"
 msgid "Improved diff viewer"
 msgstr "更好的差异查看器"
 
-msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
-msgstr "在 Claude 聊天中，在输入框里选择其他账户，即可立即将聊天连同完整历史移到该账户。"
-
 msgid "in a new session"
 msgstr "在新会话中"
 
@@ -9463,6 +9565,9 @@ msgstr "短短几个月，<0>数万名工程师</0>把Paradev当作主力IDE，�
 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "在旧金山办公室线下办公，每周五天。你将直接与创始人共事。"
+
+msgid "in progress"
+msgstr "进行中"
 
 msgid "In progress"
 msgstr "进行中"
@@ -9500,6 +9605,12 @@ msgstr "应用内浏览器"
 
 msgid "In-app PR merge"
 msgstr "应用内合并PR"
+
+msgid "Include"
+msgstr "包含"
+
+msgid "Include tasks still in progress"
+msgstr "包含仍在进行中的任务"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "在分支名中包含提示词里的Linear工单ID（例如bin-344-fix-login）。根据任务为分支加上fix/或feat/前缀。"
@@ -9831,6 +9942,9 @@ msgstr "议题评论"
 msgid "Issue created"
 msgstr "问题已创建"
 
+msgid "Issue key"
+msgstr "议题编号"
+
 msgid "Issue not found."
 msgstr "未找到议题。"
 
@@ -9873,6 +9987,9 @@ msgstr "机器恢复后它会自动重新连接。下拉可再次检查。"
 msgid "Italic"
 msgstr "斜体"
 
+msgid "Italy"
+msgstr "意大利"
+
 msgid "Item"
 msgstr "条目"
 
@@ -9909,6 +10026,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 自动化"
 
+msgid "Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run."
+msgstr "Jira 自动化现在会全程跟踪：队列、同时运行的智能体数量上限、重试、预览和手动运行。"
+
 msgid "Jira board"
 msgstr "Jira 看板"
 
@@ -9917,6 +10037,12 @@ msgstr "Jira 事务"
 
 msgid "Jira project"
 msgstr "Jira 项目"
+
+msgid "Jira project key"
+msgstr "Jira 项目键"
+
+msgid "Jira triage"
+msgstr "Jira 分类"
 
 msgid "Join"
 msgstr "加入"
@@ -10181,6 +10307,9 @@ msgstr "启动"
 
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "在新功能、缺陷修复和重构上同时启动智能体，全部并行。状态一眼可见：哪些在干活、哪些被阻塞、哪些在等你。"
+
+msgid "Launch attempts"
+msgstr "启动尝试"
 
 msgid "Launch mode"
 msgstr "启动方式"
@@ -10636,6 +10765,9 @@ msgstr "位置"
 msgid "Location & checkout"
 msgstr "位置与检出"
 
+msgid "Log {logDuration}"
+msgstr "记录 {logDuration}"
+
 msgid "Log levels"
 msgstr "日志级别"
 
@@ -10644,6 +10776,21 @@ msgstr "退出登录"
 
 msgid "Log out?"
 msgstr "退出登录？"
+
+msgid "Log time"
+msgstr "记录时间"
+
+msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgstr "在 Jira 事务详情中记录工时，同时查看你今天的工时和事务历史。"
+
+msgid "Logged"
+msgstr "已记录"
+
+msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
+msgstr "以 {account} 身份记录 · {timeZone}。剩余估算不会改变。"
+
+msgid "Logged today: {total}"
+msgstr "今日已记录：{total}"
 
 msgid "Login unverified"
 msgstr "登录未验证"
@@ -10706,6 +10853,12 @@ msgstr "低"
 msgid "Low severity"
 msgstr "低严重性"
 
+msgid "Lunch ends"
+msgstr "午休结束"
+
+msgid "Lunch starts"
+msgstr "午休开始"
+
 msgid "Machine resources"
 msgstr "机器资源"
 
@@ -10747,6 +10900,9 @@ msgstr "公开此页面？"
 
 msgid "make this the main action on the page"
 msgstr "把它变成页面上的主要操作"
+
+msgid "Makes the requested changes as commits. Posts no comments."
+msgstr "以提交的形式完成所需更改。不发布评论。"
 
 msgid "Makes the Run button launch this terminal script for matching projects."
 msgstr "让匹配项目的“运行”按钮启动此终端脚本。"
@@ -10830,6 +10986,9 @@ msgstr "标为已读"
 msgid "Mark as Unread"
 msgstr "标为未读"
 
+msgid "Mark as verified"
+msgstr "标记为已验证"
+
 msgid "Mark as viewed"
 msgstr "标记为已查看"
 
@@ -10874,6 +11033,9 @@ msgstr "最大"
 
 msgid "Maximum"
 msgstr "最大"
+
+msgid "Maximum hours a day"
+msgstr "每天最多小时数"
 
 msgid "Maximum reasoning effort"
 msgstr "最大的推理投入"
@@ -11086,6 +11248,9 @@ msgstr "最小化GitHub议题"
 msgid "Minimum contrast"
 msgstr "最小对比度"
 
+msgid "Minimum hours a day"
+msgstr "每天最少小时数"
+
 msgid "missed"
 msgstr "已错过"
 
@@ -11126,9 +11291,6 @@ msgstr "模型"
 msgid "Model"
 msgstr "模型"
 
-msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
-msgstr "模型和推理强度列表即时打开：Paradev++ 会记住它们并在后台刷新。"
-
 msgid "Model context usage"
 msgstr "模型上下文用量"
 
@@ -11158,6 +11320,15 @@ msgstr "使用的模型"
 
 msgid "Moderate reasoning effort"
 msgstr "适中的推理投入"
+
+msgid "Module field (optional)"
+msgstr "模块字段（可选）"
+
+msgid "Modules (comma separated)"
+msgstr "模块（用逗号分隔）"
+
+msgid "Mon"
+msgstr "周一"
 
 msgid "Monitor agents from your phone."
 msgstr "在手机上监控智能体。"
@@ -11295,6 +11466,9 @@ msgstr "我的 Jira 事务"
 
 msgid "My Tasks"
 msgstr "我的任务"
+
+msgid "My time today: {todayDuration}"
+msgstr "我今天的工时：{todayDuration}"
 
 msgid "Mystery Machinist"
 msgstr "神秘机械师"
@@ -11479,6 +11653,12 @@ msgstr "以此工作区新建分组"
 msgid "New issue"
 msgstr "新建议题"
 
+msgid "New Jira issue"
+msgstr "新建 Jira 事务"
+
+msgid "New local triggers: pull request comments, failed checks and a schedule, with ready-made templates."
+msgstr "新的本地触发器：拉取请求评论、失败的检查和计划，并附带现成模板。"
+
 msgid "New page"
 msgstr "新建页面"
 
@@ -11490,6 +11670,9 @@ msgstr "新建项目"
 
 msgid "New push to branch"
 msgstr "向分支推送了新提交"
+
+msgid "New review comments on a pull request linked to a workspace of the project run the agent in that workspace."
+msgstr "与项目工作区关联的拉取请求收到新的审查评论时，会在该工作区中运行智能体。"
 
 msgid "New session"
 msgstr "新建会话"
@@ -11652,6 +11835,9 @@ msgstr "无智能体"
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
 
+msgid "No agent is waiting."
+msgstr "没有正在等待的智能体。"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}上没有配置智能体"
@@ -11682,6 +11868,9 @@ msgstr "没有附件"
 
 msgid "No authors found."
 msgstr "未找到作者。"
+
+msgid "No automation is running."
+msgstr "没有正在运行的自动化。"
 
 msgid "No automations match"
 msgstr "没有匹配的自动化"
@@ -12107,6 +12296,9 @@ msgstr "没有“{query}”的结果"
 msgid "No results found."
 msgstr "未找到结果。"
 
+msgid "No review requested."
+msgstr "没有审查请求。"
+
 msgid "No reviewers"
 msgstr "无审阅者"
 
@@ -12124,6 +12316,9 @@ msgstr "没有适合我的职位，还可以联系你们吗？"
 
 msgid "No runs yet"
 msgstr "还没有运行过"
+
+msgid "No runs yet."
+msgstr "暂无运行。"
 
 msgid "No screenshots yet"
 msgstr "暂无截图"
@@ -12326,6 +12521,9 @@ msgstr "未授予"
 msgid "Not included"
 msgstr "不包含"
 
+msgid "Not installed on this computer."
+msgstr "此电脑上未安装。"
+
 msgid "Not loaded"
 msgstr "未加载"
 
@@ -12381,6 +12579,9 @@ msgstr "没有任何东西在运行。归档它，再建一个。"
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}下没有任何内容。"
 
+msgid "Nothing matches right now."
+msgstr "目前没有匹配项。"
+
 msgid "Nothing needs a retry"
 msgstr "没有需要重试的运行"
 
@@ -12389,6 +12590,12 @@ msgstr "最近30天还没有已公开的数据。待本机用量同步后，你�
 
 msgid "Nothing running"
 msgstr "没有正在运行的内容"
+
+msgid "Nothing to check."
+msgstr "没有需要检查的内容。"
+
+msgid "Nothing to propose in this period."
+msgstr "此期间没有可建议的内容。"
 
 msgid "Nothing was missed"
 msgstr "没有错过的运行"
@@ -12457,6 +12664,9 @@ msgstr "占全部token"
 
 msgid "Off"
 msgstr "关闭"
+
+msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
+msgstr "默认关闭。开启后，仅在你提出请求时，“今天”视图才会为低于最低工时的工作日准备工时记录提案。未经你确认不会记录任何内容，任何自动化也无法准备或发送它。"
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "已关闭。不足时购买更多 GB 小时。"
@@ -13064,6 +13274,9 @@ msgstr "打开侧边面板"
 msgid "Open ship options"
 msgstr "打开发布选项"
 
+msgid "Open source"
+msgstr "开源"
+
 msgid "Open System Settings"
 msgstr "打开系统设置"
 
@@ -13414,6 +13627,9 @@ msgstr "页面"
 msgid "Pages could not be loaded"
 msgstr "无法加载页面"
 
+msgid "Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests."
+msgstr "Pages 会与其他云功能一起隐藏，被隐藏的云功能不再发出请求。"
+
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "页面以网格显示，并支持浮动键盘。需要 iPadOS 26 或更高版本。"
 
@@ -13625,8 +13841,8 @@ msgstr "Paradev支持任何基于CLI的编码智能体，包括Claude Code、Ope
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradev 手机应用让我可以随时随地推动智能体工作、解决它们的阻碍，即使我离电脑很远也没问题。"
 
-msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
-msgstr "Paradev++ 会在智能体工作时防止 Mac 睡眠，这样 Mac 闲置时长任务也不会停止。"
+msgid "Paradev++ looks for new versions once a day and shows a popup. It never updates anything by itself."
+msgstr "Paradev++ 每天检查一次新版本并显示弹窗。它绝不会自行更新任何内容。"
 
 msgid "Paragraph"
 msgstr "段落"
@@ -13761,6 +13977,9 @@ msgstr "每个合并 PR"
 
 msgid "per merged PR, lower is better"
 msgstr "每个合并 PR 的成本，越低越好"
+
+msgid "Per project"
+msgstr "每个项目"
 
 msgid "per session"
 msgstr "每次会话"
@@ -14390,6 +14609,12 @@ msgstr "你提交过的提示词会显示在这里。"
 msgid "Properties"
 msgstr "属性"
 
+msgid "Propose hours"
+msgstr "建议工时"
+
+msgid "Propose hours for my timesheet"
+msgstr "为我的工时表建议工时"
+
 msgid "Provide either id or slug"
 msgstr "请提供id或slug"
 
@@ -14405,6 +14630,9 @@ msgstr "PR/周"
 
 msgid "Public"
 msgstr "公开"
+
+msgid "Public holidays"
+msgstr "公共假日"
 
 msgid "Public leaderboard"
 msgstr "公开排行榜"
@@ -14448,11 +14676,17 @@ msgstr "拉取请求#{0}，{1}"
 msgid "Pull request actions"
 msgstr "拉取请求操作"
 
+msgid "Pull request comments"
+msgstr "拉取请求评论"
+
 msgid "Pull request detail tabs"
 msgstr "拉取请求详情标签页"
 
 msgid "Pull request not found"
 msgstr "未找到拉取请求"
+
+msgid "Pull request opened"
+msgstr "拉取请求已打开"
 
 msgid "Pull request title"
 msgstr "拉取请求标题"
@@ -14465,6 +14699,9 @@ msgstr "拉取请求"
 
 msgid "Pull Requests"
 msgstr "拉取请求"
+
+msgid "Pull requests waiting for your review"
+msgstr "等待你审查的拉取请求"
 
 msgid "Purple"
 msgstr "紫色"
@@ -14814,6 +15051,9 @@ msgstr "正在重新连接…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "正在重新连接… 对话会保留。"
 
+msgid "Recorded on enable, not started"
+msgstr "启用时已记录，未启动"
+
 msgid "Recording"
 msgstr "正在录音"
 
@@ -14876,6 +15116,9 @@ msgstr "重新生成"
 
 msgid "Region"
 msgstr "区域"
+
+msgid "Register on Jira"
+msgstr "登记到 Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "在该智能体的全局配置中注册生命周期钩子，以便Paradev显示状态并发送通知。关闭后会在所有位置移除Paradev的条目，该智能体的状态和通知都会停止，包括在Paradev内部。"
@@ -15150,6 +15393,9 @@ msgstr "正在重新打开…"
 
 msgid "reorder agents"
 msgstr "重新排序智能体"
+
+msgid "Repair failed checks"
+msgstr "修复失败的检查"
 
 msgid "Replace"
 msgstr "替换"
@@ -15520,6 +15766,9 @@ msgstr "正在恢复{0}…"
 msgid "Resuming the conversation…"
 msgstr "正在继续对话…"
 
+msgid "Retried"
+msgstr "已重试"
+
 msgid "Retry"
 msgstr "重试"
 
@@ -15735,6 +15984,9 @@ msgstr "在你的机器上并行运行10个以上的编码智能体。"
 msgid "Run again"
 msgstr "重新运行"
 
+msgid "Run again on the same issue"
+msgstr "在同一事务上重新运行"
+
 msgid "Run agents on a schedule or when something happens."
 msgstr "按计划或在发生某件事时运行智能体。"
 
@@ -15763,9 +16015,6 @@ msgstr "在Sentry问题发生变化时运行自动化。"
 msgid "Run commands and navigate the application."
 msgstr "运行命令并在应用中导航。"
 
-msgid "Run history"
-msgstr "运行历史"
-
 msgid "Run History"
 msgstr "运行历史"
 
@@ -15780,6 +16029,12 @@ msgstr "在工作区中运行"
 
 msgid "run issues in workspaces"
 msgstr "在工作区中运行议题"
+
+msgid "Run late for up to (minutes)"
+msgstr "最多延迟运行（分钟）"
+
+msgid "Run limit reached"
+msgstr "已达运行上限"
 
 msgid "Run now"
 msgstr "立即运行"
@@ -15847,17 +16102,29 @@ msgstr "正在运行"
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "运行中的终端进程会继续，但重启应用后可能无法再看到较早的输出。"
 
+msgid "Runs"
+msgstr "运行"
+
 msgid "Runs a local command on your machine"
 msgstr "在你的机器上运行本地命令"
 
 msgid "Runs appear here once an automation fires."
 msgstr "自动化触发后，运行将显示在这里。"
 
+msgid "Runs beyond these limits wait in the queue and start when an agent finishes."
+msgstr "超出这些上限的运行会在队列中等待，并在某个智能体完成后开始。"
+
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "运行在该设备的 Paradev 应用内，因此更新它意味着更新那台设备上的应用。"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "运行结果会落在一个工作区里。审查差异，把合适的合并进去。"
+
+msgid "Runs on the chosen days at the chosen time in a new workspace."
+msgstr "在所选日期的所选时间于新工作区中运行。"
+
+msgid "Runs per pull request at most"
+msgstr "每个拉取请求最多运行次数"
 
 msgid "Runs that found no host online"
 msgstr "未找到在线主机的运行"
@@ -15867,6 +16134,9 @@ msgstr "过去 7 天内启动了工作区的运行"
 
 msgid "Runs the tests and reviews each pull request you're asked to review."
 msgstr "运行测试，并评审每个请你评审的 pull request。"
+
+msgid "Runs to check"
+msgstr "待检查的运行"
 
 msgid "Runs when a new workspace is created."
 msgstr "创建新工作区时运行。"
@@ -15886,6 +16156,9 @@ msgstr "旧金山"
 msgid "Sandbox stopped responding"
 msgstr "沙箱已停止响应"
 
+msgid "Sat"
+msgstr "周六"
+
 msgid "Save"
 msgstr "保存"
 
@@ -15894,6 +16167,9 @@ msgstr "保存并创建工作区"
 
 msgid "Save All"
 msgstr "全部保存"
+
+msgid "Save anyway"
+msgstr "仍然保存"
 
 msgid "Save as environment"
 msgstr "保存为环境"
@@ -15909,6 +16185,9 @@ msgstr "保存环境"
 
 msgid "Save failed: {message}"
 msgstr "保存失败：{message}"
+
+msgid "Save limits"
+msgstr "保存上限"
 
 msgid "Save preferences"
 msgstr "保存偏好设置"
@@ -16921,6 +17200,9 @@ msgstr "为此智能体显示状态并发送通知。"
 msgid "Show text"
 msgstr "显示文本"
 
+msgid "Show the prompt"
+msgstr "显示提示词"
+
 msgid "Show the triggering payload"
 msgstr "显示触发负载"
 
@@ -17225,6 +17507,9 @@ msgstr "部分代理专用元数据无法转移。"
 msgid "Some chat history could not be loaded."
 msgstr "部分聊天历史无法加载。"
 
+msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
+msgstr "部分日期超出工时限制。请手动或在 Jira 中修正；登记已停用。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "部分文件的类型不被允许，未添加。"
 
@@ -17255,6 +17540,9 @@ msgstr "部分 v1 工作需要你处理"
 
 msgid "Someone"
 msgstr "某人"
+
+msgid "Someone changed this issue in Jira while you were editing. Your save would replace their changes."
+msgstr "你编辑期间，有人在 Jira 中修改了此议题。保存将覆盖对方的更改。"
 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByColleague"
@@ -17522,6 +17810,9 @@ msgstr "开始新的聊天"
 msgid "Start a new chat each run"
 msgstr "每次运行开始新聊天"
 
+msgid "Start a run"
+msgstr "开始运行"
+
 msgid "Start a session"
 msgstr "开始一个会话"
 
@@ -17575,6 +17866,9 @@ msgstr "用标签栏中的+新建一个。"
 
 msgid "Start or stop the workspace run command"
 msgstr "启动或停止工作区运行命令"
+
+msgid "Start time"
+msgstr "开始时间"
 
 msgid "Start voice mode"
 msgstr "开始语音模式"
@@ -17655,6 +17949,9 @@ msgstr "保持连接（刷新令牌）"
 msgid "Steer"
 msgstr "引导"
 
+msgid "Step"
+msgstr "步骤"
+
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "第{0}步，共2步"
@@ -17714,6 +18011,9 @@ msgstr "停止智能体并切换到 {accountName}？"
 
 msgid "Stop the agent before you edit a message"
 msgstr "编辑消息前请先停止智能体"
+
+msgid "Stop tracking"
+msgstr "停止跟踪"
 
 msgid "Stop watching"
 msgstr "停止关注"
@@ -17820,6 +18120,9 @@ msgstr "摘要"
 
 msgid "Summary only"
 msgstr "仅摘要"
+
+msgid "Sun"
+msgstr "周日"
 
 msgid "sun 11:00"
 msgstr "周日11:00"
@@ -18133,6 +18436,9 @@ msgstr "任务和项目"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "在Paradev中创建的任务会同步到这个Linear团队。"
 
+msgid "Tasks with much more time than their share:"
+msgstr "工时远超其应占份额的任务："
+
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "任务、CLI 和智能体都遵循此设置。每位成员使用自己的 Linear 账户。"
 
@@ -18340,6 +18646,9 @@ msgstr "该名称不被允许。"
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "这次运行会被错过，且不会重试。之后可用“立即运行”启动它。"
 
+msgid "That time happens twice on this day because the clock moves back. Jira received the first one."
+msgstr "由于时钟回拨，该时间在这一天出现两次。Jira 收到的是第一次。"
+
 msgid "The 2026 bet"
 msgstr "2026年的赌注"
 
@@ -18381,9 +18690,6 @@ msgstr "公告还介绍了由 Union Square Ventures 领投、Y Combinator 和 Pa
 
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "该应用可免费下载。需要 iOS 26 或更高版本以及 Paradev Pro。接下来将推出 Android 版。"
-
-msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
-msgstr "应用现在名为 Paradev++.app。更新会将 Superset++.app 移到废纸篓，请重新将新应用固定到程序坞。"
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "应用版本为 {appVersion}，但连接的是由其他程序（可能是旧版 CLI 或另一个 Paradev 版本）启动的主机服务。重启会将其替换为此应用自带的副本。"
@@ -18524,9 +18830,6 @@ msgstr "引导式终端会通过 Homebrew 安装 gh 并打开 GitHub 登录页�
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "主机以 {0} 而非 {targetVersion} 恢复。"
 
-msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
-msgstr "主机每分钟检查一次。启用规则时会记录现有匹配项；每个新匹配的事务会启动一个工作区和代理。规则保存时处于暂停状态。"
-
 msgid "The host did not come back within fifteen minutes."
 msgstr "主机未在十五分钟内恢复。"
 
@@ -18617,6 +18920,9 @@ msgstr "新智能体可在需要时读取被省略的消息。"
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理会继续整个对话，包括工具调用。"
+
+msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
+msgstr "新的“今天”视图显示等待你的智能体、待检查的运行、你的审查和你的工时。"
 
 msgid "The overnight shift"
 msgstr "夜班"
@@ -18772,6 +19078,9 @@ msgstr "主题"
 
 msgid "Themes and agents"
 msgstr "主题与智能体"
+
+msgid "These automations run on this computer, not in the cloud. The host checks every minute. Enabling a rule records what already matches; only later matches start an agent. Rules are saved paused."
+msgstr "这些自动化在这台计算机上运行，而不是在云端。主机每分钟检查一次。启用规则时会记录已匹配的内容；只有之后的匹配才会启动智能体。规则保存后处于暂停状态。"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "创建工作区时会自动运行这些命令。<0>阅读文档<1/></0>"
@@ -19122,6 +19431,9 @@ msgstr "这个讨论里没有可回复的评论。"
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "此讨论串尚未对智能体开放。需要先有人评论，智能体才能回复。"
 
+msgid "This time was already logged in Jira"
+msgstr "这段时间已在 Jira 中记录"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "此次更新仅重启了一次你的终端。新终端会在相同文件夹中打开。"
 
@@ -19222,6 +19534,9 @@ msgstr "三个步骤 · 涉及packages/ui和apps/desktop"
 msgid "Threshold"
 msgstr "阈值"
 
+msgid "Thu"
+msgstr "周四"
+
 msgid "Ticket to production under one day, median"
 msgstr "从工单到上线中位不足一天"
 
@@ -19230,6 +19545,18 @@ msgstr "等级"
 
 msgid "Time"
 msgstr "时间"
+
+msgid "Time logged"
+msgstr "已记录时间"
+
+msgid "Time tracking is turned off on this Jira site."
+msgstr "此 Jira 站点已关闭时间跟踪。"
+
+msgid "Time zone: {timeZone}"
+msgstr "时区：{timeZone}"
+
+msgid "Timesheet proposals"
+msgstr "工时表建议"
 
 msgid "Tinted"
 msgstr "色调"
@@ -19245,6 +19572,9 @@ msgstr "到"
 
 msgid "to {name}"
 msgstr "发给 {name}"
+
+msgid "To check"
+msgstr "待检查"
 
 msgid "To do"
 msgstr "待办"
@@ -19347,6 +19677,9 @@ msgstr "每次会话的 Token，近 30 天"
 
 msgid "Tokens stay off your machine"
 msgstr "令牌不会留在你的设备上"
+
+msgid "Too late, skipped"
+msgstr "太晚，已跳过"
 
 msgid "Too many dictations. Try again later."
 msgstr "语音输入次数过多，请稍后再试。"
@@ -19530,6 +19863,9 @@ msgstr "试试看"
 
 msgid "Try now"
 msgstr "立即试用"
+
+msgid "Tue"
+msgstr "周二"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -19881,6 +20217,9 @@ msgstr "更新主机服务"
 msgid "Update in the App Store"
 msgstr "在 App Store 中更新"
 
+msgid "Update it with the same tool you used to install it."
+msgstr "请使用你安装它时所用的同一工具进行更新。"
+
 msgid "Update naming instructions"
 msgstr "更新命名规则"
 
@@ -19937,6 +20276,9 @@ msgstr "刚刚从 {0} 更新。"
 
 msgid "Updates"
 msgstr "更新"
+
+msgid "Updates are available for your agent tools."
+msgstr "你的智能体工具有可用更新。"
 
 #. placeholder {0}: update.progress.target
 msgid "Updating to {0}"
@@ -20149,6 +20491,9 @@ msgstr "Vercel AI Gateway"
 msgid "Vercel AI Gateway rejected this key."
 msgstr "Vercel AI Gateway 拒绝了此密钥。"
 
+msgid "Verified"
+msgstr "已验证"
+
 msgid "Verified and saved"
 msgstr "已验证并保存"
 
@@ -20173,6 +20518,12 @@ msgstr "版本"
 #. placeholder {0}: entry.version
 msgid "Version {0}"
 msgstr "版本{0}"
+
+msgid "Version {installed}, {latest} is available."
+msgstr "版本 {installed}，{latest} 可用。"
+
+msgid "Version {installed}, up to date."
+msgstr "版本 {installed}，已是最新。"
 
 msgid "Version {sharedVersion}"
 msgstr "版本 {sharedVersion}"
@@ -20356,6 +20707,9 @@ msgstr "等待你的输入"
 msgid "Waits for the reset when no other account has quota."
 msgstr "没有其他账户有配额时等待重置。"
 
+msgid "Waits for you"
+msgstr "等待你处理"
+
 msgid "Waking up workspace"
 msgstr "正在唤醒工作区"
 
@@ -20470,6 +20824,9 @@ msgstr "Webhook触发"
 msgid "Website"
 msgstr "官网"
 
+msgid "Wed"
+msgstr "周三"
+
 msgid "Week"
 msgstr "按周"
 
@@ -20551,6 +20908,9 @@ msgstr "什么是Paradev Enterprise？"
 msgid "What is wrong?"
 msgstr "哪里有问题？"
 
+msgid "What needs you now, all from this computer."
+msgstr "现在需要你处理的事项，全部来自这台计算机。"
+
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradev 是什么、由谁打造、为谁而建。一支由三位前 YC CTO 带领的旧金山团队，正在打造并行编码智能体的工作区。"
 
@@ -20611,6 +20971,9 @@ msgstr "Paradev++ 新功能"
 msgid "What's next"
 msgstr "接下来"
 
+msgid "When"
+msgstr "触发时机"
+
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "触发器触发时，你选的 Mac 会打开一个新工作区，智能体开始执行你的提示词。由事件触发的运行会带上该事件，所以智能体知道要看什么。在运行中回复即可继续。"
 
@@ -20620,11 +20983,17 @@ msgstr "当购买的 GB 小时低于"
 msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 msgstr "剩余不足 {topupThreshold} GB 小时时，充值 {topupPrice}（{topupGbHours} GB 小时）。"
 
+msgid "When its status changes and it still matches"
+msgstr "当其状态变化且仍然匹配时"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "关闭后，其他设备无法访问本设备上的文件和工具。你仍可以从这里连接到远程沙箱。<0>了解更多<1/></0>"
 
 msgid "When quota runs out"
 msgstr "配额用完时"
+
+msgid "When the agent finishes, the check command runs in the workspace. Exit code 0 marks the run as verified. Without a command, you mark it yourself. A launch that fails is retried after 1, 5 and 15 minutes; three failures in a row pause the rule."
+msgstr "智能体完成后，检查命令会在工作区中运行。退出码 0 会将该运行标记为已验证。没有命令时，由你自己标记。启动失败会在 1、5 和 15 分钟后重试；连续失败三次会暂停该规则。"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "点击侧边栏中检测到的端口标记时打开的位置。"
@@ -20716,6 +21085,9 @@ msgstr "工作邮箱"
 msgid "Work from tickets"
 msgstr "从工单开始工作"
 
+msgid "Work started"
+msgstr "工作已开始"
+
 msgid "Work the action items from a call"
 msgstr "处理通话中的待办事项"
 
@@ -20732,6 +21104,9 @@ msgstr "用时 {seconds} 秒"
 
 msgid "Workflow run completed…"
 msgstr "工作流运行完成…"
+
+msgid "Workflow statuses"
+msgstr "工作流状态"
 
 msgid "Workflow Tutorials"
 msgstr "工作流教程"
@@ -20892,6 +21267,9 @@ msgstr "Worktree"
 msgid "Worktrees are removed from disk; workspaces on the project's checkout only close. Files in the checkout stay as they are."
 msgstr "worktree 会从磁盘中删除；位于项目检出上的工作区仅会关闭。检出中的文件保持不变。"
 
+msgid "Would start"
+msgstr "将会启动"
+
 msgid "Would you like to reassign it?"
 msgstr "要重新分配吗？"
 
@@ -20921,6 +21299,9 @@ msgstr "给大家最常问的那部分写文档…"
 
 msgid "Write once. Runs in every agent."
 msgstr "编写一次，在每个智能体中运行。"
+
+msgid "Write the duration as 45m, 1h 30m or 2h."
+msgstr "时长格式为 45m、1h 30m 或 2h。"
 
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "工程师的时间不再花在写代码上，而是花在读代码上。2025年就用上并行智能体的团队最先撞墙：十个智能体在午饭前产出的差异，一个团队到周五也认真审不完。"
@@ -21157,6 +21538,9 @@ msgstr "你的 GitHub 账户无法访问此环境中的某个仓库"
 
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "你的 GitHub 链接来自登录所用的账号，因此显示为已验证，无法在此编辑。"
+
+msgid "Your Jira account cannot log time on this issue."
+msgstr "你的 Jira 账户无法在此事务上记录工时。"
 
 msgid "Your last payment failed. Update your payment method to keep Pro."
 msgstr "上次付款失败。请更新支付方式以继续使用 Pro。"

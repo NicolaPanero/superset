@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Label } from "@superset/ui/label";
 import { Switch } from "@superset/ui/switch";
+import { ForkAgentCliUpdatesSettings } from "renderer/components/ForkAgentCliUpdates";
 import { ForkCliOptionsSetting } from "renderer/components/ForkCliOptionsSetting";
 import { ForkIntegrations } from "renderer/components/ForkIntegrations";
 import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
@@ -104,6 +105,13 @@ export function ForkSettings() {
 					<div className="rounded-lg border">
 						<ForkAttachmentRetention />
 					</div>
+				</SettingsSection>
+			)}
+			{matches.some(
+				(item) => item.id === SETTING_ITEM_ID.FORK_AGENT_CLI_UPDATES,
+			) && (
+				<SettingsSection title={t({ message: "Agent updates" })}>
+					<ForkAgentCliUpdatesSettings />
 				</SettingsSection>
 			)}
 			{matches.some((item) => item.id === "fork-connections") && (

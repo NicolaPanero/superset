@@ -607,6 +607,9 @@ msgstr "{0} % všech tokenů · {1} tokenů"
 msgid "{0}% of total cost · {1} tokens · * at API list rates"
 msgstr "{0} % celkových nákladů · {1} tokenů · * v ceníkových sazbách API"
 
+msgid "{active} in progress"
+msgstr "probíhá: {active}"
+
 msgid "{actor} added the label {label}"
 msgstr "{actor} přidal(a) štítek {label}"
 
@@ -973,6 +976,9 @@ msgstr "{kind} · autor: {author}"
 msgid "{kindLabel} theme"
 msgstr "{kindLabel} motiv"
 
+msgid "{label} {installed} to {latest}"
+msgstr "{label} {installed} na {latest}"
+
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1202,6 +1208,9 @@ msgstr "{seconds} s"
 msgid "{seconds}s ago"
 msgstr "před {seconds} s"
 
+msgid "{selectedCount} entries · {selectedDuration}"
+msgstr "{selectedCount} záznamů · {selectedDuration}"
+
 msgid "{selectedCount} selected"
 msgstr "vybráno: {selectedCount}"
 
@@ -1263,6 +1272,9 @@ msgstr "{toolName} přerušeno"
 
 msgid "{total, plural, one {The check passed} other {All # checks passed}}"
 msgstr "{total, plural, one {Kontrola prošla} few {Všechny # kontroly prošly} many {Všech # kontroly prošlo} other {Všech # kontrol prošlo}}"
+
+msgid "{total} worklogs on this issue · mine among those shown: {myDuration}"
+msgstr "Výkazy práce u tohoto úkolu: {total} · moje mezi zobrazenými: {myDuration}"
 
 msgid "{totalCount, plural, one {GitHub issue} other {GitHub issues}}"
 msgstr "{totalCount, plural, one {GitHub issue} few {GitHub issues} many {GitHub issues} other {GitHub issues}}"
@@ -1630,6 +1642,9 @@ msgstr "V tomto terminálu pořád běží proces"
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Prompt, pár spouštěčů a pracovní prostor pro každý běh"
 
+msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
+msgstr "Návrh pro pracovní dny pod minimem z úkolů, které jste uzavřeli bez vykázaného času, a z úkolů, které ještě probíhají. Do Jira se nic neodešle, dokud to nepotvrdíte. Bez dat: posledních 30 dní."
+
 msgid "A pull request always gets its own worktree"
 msgstr "Pull request má vždy vlastní worktree"
 
@@ -1651,6 +1666,9 @@ msgstr "Samostatný profil účtovaný za tokeny. Klíč zůstává v CLI {0}."
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "Samostatný profil, který sdílí vaše skills, pluginy, MCP servery i nastavení."
+
+msgid "A summary file of tasks and pull requests that need attention."
+msgstr "Souhrnný soubor úkolů a pull requestů, které vyžadují pozornost."
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "Klíč úkolů má 1 až 5 písmen nebo číslic a začíná písmenem."
@@ -1739,9 +1757,6 @@ msgstr "Účet čeká na smazání"
 
 msgid "Account usage"
 msgstr "Využití účtu"
-
-msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
-msgstr "Kroužky využití účtů se aktualizují po každém tahu agenta a místo vyblednutí si ponechají poslední údaj."
 
 msgid "Achievements"
 msgstr "Úspěchy"
@@ -2125,6 +2140,9 @@ msgstr "nastavení agenta"
 msgid "Agent setup"
 msgstr "Nastavení agenta"
 
+msgid "Agent updates"
+msgstr "Aktualizace agentů"
+
 msgid "Agent usage rankings"
 msgstr "Žebříček využití agentů"
 
@@ -2133,6 +2151,9 @@ msgstr "Náhledy řízené agenty"
 
 msgid "Agents"
 msgstr "Agenti"
+
+msgid "Agents at the same time"
+msgstr "Agenti současně"
 
 msgid "Agents complete routine tickets with no mid-task intervention."
 msgstr "Agenti dokončí rutinní tickety bez zásahu uprostřed úkolu."
@@ -2154,6 +2175,9 @@ msgstr "Agentů běžících najednou"
 
 msgid "Agents use this account when they call Linear tools."
 msgstr "Agenti používají tento účet, když volají nástroje Linear."
+
+msgid "Agents waiting for you"
+msgstr "Agenti, kteří na vás čekají"
 
 msgid "Aggregate agent usage across every developer on the Paradev leaderboard — tokens, cost, cache behaviour and which models people actually reach for."
 msgstr "Souhrnné využití agentů napříč všemi vývojáři v žebříčku Paradev — tokeny, náklady, chování cache a modely, po kterých lidé skutečně sahají."
@@ -2299,6 +2323,9 @@ msgstr "Všechny články"
 msgid "All projects"
 msgstr "Všechny projekty"
 
+msgid "All pull requests"
+msgstr "Všechny pull requesty"
+
 msgid "All releases"
 msgstr "Všechna vydání"
 
@@ -2392,6 +2419,9 @@ msgstr "Už přeneseno do jiné organizace. Přepněte se do ní, abyste tento p
 msgid "Already brought over to another organization. Switch to it to see this workspace."
 msgstr "Už přeneseno do jiné organizace. Přepněte se do ní, abyste tento pracovní prostor viděli."
 
+msgid "Already handled"
+msgstr "Už zpracováno"
+
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Už máte účet? <0>Přihlaste se</0>"
 
@@ -2458,6 +2488,9 @@ msgstr "Došlo k neznámé chybě"
 
 msgid "An update is ready to install."
 msgstr "Aktualizace je připravena k instalaci."
+
+msgid "Analysis, open questions and a plan. No ticket changes."
+msgstr "Analýza, otevřené otázky a plán. Bez změn v tiketu."
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android je na cestě. Dozvíte se jako první, až vyjde."
@@ -3007,6 +3040,9 @@ msgstr "Automatizujte úkoly"
 
 msgid "Automate workspace setup for {projectName}"
 msgstr "Zautomatizujte nastavení pracovního prostoru pro {projectName}"
+
+msgid "Automatic"
+msgstr "Automaticky"
 
 msgid "Automatic (email address)"
 msgstr "Automaticky (e-mailová adresa)"
@@ -3865,6 +3901,12 @@ msgstr "Plochy chatu: zprávy, uvažování, návrhy"
 msgid "Check again"
 msgstr "Zkontrolovat znovu"
 
+msgid "Check command (optional)"
+msgstr "Kontrolní příkaz (volitelné)"
+
+msgid "Check for agent updates every day"
+msgstr "Kontrolovat aktualizace agentů každý den"
+
 msgid "Check for Update"
 msgstr "Zkontrolovat aktualizace"
 
@@ -3877,8 +3919,14 @@ msgstr "Zkontrolovat aktualizace"
 msgid "Check for Updates..."
 msgstr "Zkontrolovat aktualizace..."
 
+msgid "Check now"
+msgstr "Zkontrolovat nyní"
+
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "Kontrolujte běžící agenty a čtěte, co změnili, na iPhonu nebo iPadu."
+
+msgid "Check output"
+msgstr "Výstup kontroly"
 
 msgid "Check plans and balances"
 msgstr "Kontrolujte tarify a zůstatky"
@@ -3915,6 +3963,12 @@ msgstr "Zkontrolujte schránku"
 
 msgid "Checkbox · Radio · Switch"
 msgstr "Zaškrtávátko · Přepínač · Vypínač"
+
+msgid "checked"
+msgstr "zkontrolováno"
+
+msgid "Checking"
+msgstr "Kontroluje se"
 
 msgid "Checking agents…"
 msgstr "Kontroluji agenty…"
@@ -4035,6 +4089,9 @@ msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v termin
 
 msgid "Choose MCP servers for this message"
 msgstr "Vyberte MCP servery pro tuto zprávu"
+
+msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
+msgstr "Vyberte stavy, do kterých Superset přesune úkol, když začne práce a když se otevře pull request. Bez výběru hledá stav s názvem podobným „review“."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
@@ -4549,6 +4606,9 @@ msgstr "Příkazy spouštěné při setupu a teardownu pracovního prostoru a tl
 
 msgid "Comment"
 msgstr "Okomentovat"
+
+msgid "Comment (optional)"
+msgstr "Komentář (volitelné)"
 
 msgid "Comment actions"
 msgstr "Akce komentáře"
@@ -6236,6 +6296,9 @@ msgstr "denně 9:00"
 msgid "Daily at {time}"
 msgstr "Denně v {time}"
 
+msgid "Daily digest"
+msgstr "Denní přehled"
+
 msgid "Daily practice for our team and our heaviest users."
 msgstr "Denní praxe našeho týmu a našich nejaktivnějších uživatelů."
 
@@ -6272,11 +6335,26 @@ msgstr "Časové období"
 msgid "Day"
 msgstr "Den"
 
+msgid "Day ends"
+msgstr "Konec dne"
+
 msgid "Day One"
 msgstr "První den"
 
+msgid "Day starts"
+msgstr "Začátek dne"
+
 msgid "days"
 msgstr "dní"
+
+msgid "Days"
+msgstr "Dny"
+
+msgid "Days already full:"
+msgstr "Dny, které už jsou plné:"
+
+msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
+msgstr "Dny volna (jeden na řádek, YYYY-MM-DD nebo YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "dní se třemi agenty najednou"
@@ -6687,6 +6765,9 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools vedle stránky"
 
+msgid "Diagnoses the failure and tries a fix, at most twice per pull request."
+msgstr "Diagnostikuje selhání a zkusí opravu, nejvýše dvakrát na pull request."
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -6780,6 +6861,9 @@ msgstr "Zahodit změny v souboru „{discardBasename}“?"
 
 msgid "Discard changes?"
 msgstr "Zahodit změny?"
+
+msgid "Discard my changes"
+msgstr "Zahodit moje změny"
 
 msgid "Discard recording"
 msgstr "Zahodit nahrávku"
@@ -7099,6 +7183,9 @@ msgstr "Každá příloha může mít nejvýše {0} MB."
 msgid "Each in its own new tab"
 msgstr "Každý ve vlastní nové kartě"
 
+msgid "Each issue that starts to match the query gets a new workspace."
+msgstr "Každý úkol, který začne odpovídat dotazu, dostane nový pracovní prostor."
+
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "Každé ráno v 8:00 se podívej na včerejší neúspěšné běhy CI, urči nejčastější příčinu selhání a otevři PR s opravou."
 
@@ -7153,6 +7240,9 @@ msgstr "Upravit"
 
 msgid "Edit and restart from here"
 msgstr "Upravit a začít znovu odsud"
+
+msgid "Edit automation"
+msgstr "Upravit automatizaci"
 
 msgid "Edit comment"
 msgstr "Upravit komentář"
@@ -7638,6 +7728,12 @@ msgstr "Selhalo"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "Selhalo"
+
+msgid "Failed checks"
+msgstr "Neúspěšné kontroly"
+
+msgid "Failed checks on a linked pull request run the agent in its workspace, once per commit."
+msgstr "Neúspěšné kontroly v propojeném pull requestu spustí agenta v jeho pracovním prostoru, jednou na commit."
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "Neúspěšná spuštění <0>· 7 d</0>"
@@ -8358,6 +8454,9 @@ msgstr "Opravit nálezy"
 msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
 msgstr "Opravuj nové chyby ve web. Každou zreprodukuj testem a otevři draft pull request."
 
+msgid "Fix review comments"
+msgstr "Opravit komentáře z review"
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
 
@@ -8582,6 +8681,9 @@ msgstr "Bezplatné resety: {formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "Často<0/>kladené otázky"
+
+msgid "Fri"
+msgstr "Pá"
 
 msgid "from"
 msgstr "z"
@@ -9307,6 +9409,9 @@ msgstr "Nečinné · větev odeslána"
 msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
 msgstr "Pokud CLI ještě není nainstalováno, před přihlášením jej nainstalujte na počítač, na kterém bude tento agent spuštěn."
 
+msgid "If the computer is off or asleep at the scheduled time, the run starts when it wakes within this window, otherwise it is skipped. Time zone: {timeZone}."
+msgstr "Pokud je počítač v naplánovaný čas vypnutý nebo v režimu spánku, běh začne po probuzení v rámci tohoto okna, jinak se přeskočí. Časové pásmo: {timeZone}."
+
 msgid "If you're enjoying Paradev so far, a GitHub star helps other developers discover it."
 msgstr "Pokud se vám Paradev zatím líbí, hvězda na GitHubu pomůže dalším vývojářům ho objevit."
 
@@ -9446,9 +9551,6 @@ msgstr "Vylepšit instrukce pro agenty"
 msgid "Improved diff viewer"
 msgstr "Vylepšený prohlížeč rozdílů"
 
-msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
-msgstr "V chatu Claude vyberte v poli zprávy jiný účet a chat se na něj hned přesune i s celou historií."
-
 msgid "in a new session"
 msgstr "v nové relaci"
 
@@ -9463,6 +9565,9 @@ msgstr "Za pouhých pár měsíců používají Paradev jako hlavní IDE <0>des�
 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Osobně v San Franciscu, pět dní v týdnu. Pracujete přímo se zakladateli."
+
+msgid "in progress"
+msgstr "probíhá"
 
 msgid "In progress"
 msgstr "Probíhá"
@@ -9500,6 +9605,12 @@ msgstr "Prohlížeč v aplikaci"
 
 msgid "In-app PR merge"
 msgstr "Slučování PR přímo v aplikaci"
+
+msgid "Include"
+msgstr "Zahrnout"
+
+msgid "Include tasks still in progress"
+msgstr "Zahrnout úkoly, které ještě probíhají"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Zahrň do názvu větve id ticketu z Linearu uvedené v promptu (např. bin-344-fix-login). Podle úkolu předřaď větvi fix/ nebo feat/."
@@ -9831,6 +9942,9 @@ msgstr "Komentář u issue"
 msgid "Issue created"
 msgstr "Issue vytvořena"
 
+msgid "Issue key"
+msgstr "Klíč úkolu"
+
 msgid "Issue not found."
 msgstr "Issue nenalezena."
 
@@ -9873,6 +9987,9 @@ msgstr "Připojí se sám, jakmile bude počítač zpět. Zkontrolujte znovu sta
 msgid "Italic"
 msgstr "Kurzíva"
 
+msgid "Italy"
+msgstr "Itálie"
+
 msgid "Item"
 msgstr "Položka"
 
@@ -9909,6 +10026,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Automatizace Jira"
 
+msgid "Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run."
+msgstr "Automatizace Jira se teď sledují až do konce: fronta, limit současně běžících agentů, opakované pokusy, náhled a ruční spuštění."
+
 msgid "Jira board"
 msgstr "Nástěnka Jira"
 
@@ -9917,6 +10037,12 @@ msgstr "Úkoly Jira"
 
 msgid "Jira project"
 msgstr "Projekt Jira"
+
+msgid "Jira project key"
+msgstr "Klíč projektu Jira"
+
+msgid "Jira triage"
+msgstr "Třídění Jira"
 
 msgid "Join"
 msgstr "Připojit se"
@@ -10181,6 +10307,9 @@ msgstr "Spuštění"
 
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Spouštějte agenty na funkce, opravy chyb i refaktory, všechno paralelně. Stav na první pohled ukáže, kteří agenti pracují, kteří jsou zablokovaní a kteří čekají na vás."
+
+msgid "Launch attempts"
+msgstr "Pokusy o spuštění"
 
 msgid "Launch mode"
 msgstr "Režim spuštění"
@@ -10636,6 +10765,9 @@ msgstr "Umístění"
 msgid "Location & checkout"
 msgstr "Umístění a checkout"
 
+msgid "Log {logDuration}"
+msgstr "Vykázat {logDuration}"
+
 msgid "Log levels"
 msgstr "Úrovně protokolu"
 
@@ -10644,6 +10776,21 @@ msgstr "Odhlásit se"
 
 msgid "Log out?"
 msgstr "Odhlásit se?"
+
+msgid "Log time"
+msgstr "Zapsat čas"
+
+msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgstr "Vykazujte čas na úkolu Jira přímo z jeho detailu, s vaším dnešním časem a historií úkolu."
+
+msgid "Logged"
+msgstr "Vykázáno"
+
+msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
+msgstr "Zapsáno jako {account} · {timeZone}. Zbývající odhad se nemění."
+
+msgid "Logged today: {total}"
+msgstr "Dnes vykázáno: {total}"
 
 msgid "Login unverified"
 msgstr "Přihlášení neověřeno"
@@ -10706,6 +10853,12 @@ msgstr "Nízká"
 msgid "Low severity"
 msgstr "Nízká závažnost"
 
+msgid "Lunch ends"
+msgstr "Konec oběda"
+
+msgid "Lunch starts"
+msgstr "Začátek oběda"
+
 msgid "Machine resources"
 msgstr "Prostředky počítače"
 
@@ -10747,6 +10900,9 @@ msgstr "Zveřejnit tuto stránku?"
 
 msgid "make this the main action on the page"
 msgstr "udělej z toho hlavní akci na stránce"
+
+msgid "Makes the requested changes as commits. Posts no comments."
+msgstr "Provede požadované změny jako commity. Nepřidává žádné komentáře."
 
 msgid "Makes the Run button launch this terminal script for matching projects."
 msgstr "Tlačítko Spustit bude u odpovídajících projektů spouštět tento terminálový skript."
@@ -10830,6 +10986,9 @@ msgstr "Označit jako přečtené"
 msgid "Mark as Unread"
 msgstr "Označit jako nepřečtené"
 
+msgid "Mark as verified"
+msgstr "Označit jako ověřené"
+
 msgid "Mark as viewed"
 msgstr "Označit jako zobrazené"
 
@@ -10874,6 +11033,9 @@ msgstr "Max"
 
 msgid "Maximum"
 msgstr "Maximum"
+
+msgid "Maximum hours a day"
+msgstr "Maximum hodin za den"
 
 msgid "Maximum reasoning effort"
 msgstr "Maximální míra uvažování"
@@ -11086,6 +11248,9 @@ msgstr "Minimalizovat GitHub issues"
 msgid "Minimum contrast"
 msgstr "Minimální kontrast"
 
+msgid "Minimum hours a day"
+msgstr "Minimum hodin za den"
+
 msgid "missed"
 msgstr "zmeškáno"
 
@@ -11126,9 +11291,6 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
-msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
-msgstr "Seznamy modelů a úsilí se otevřou okamžitě: Paradev++ si je pamatuje a aktualizuje je na pozadí."
-
 msgid "Model context usage"
 msgstr "Využití kontextu modelu"
 
@@ -11158,6 +11320,15 @@ msgstr "Použité modely"
 
 msgid "Moderate reasoning effort"
 msgstr "Střední míra uvažování"
+
+msgid "Module field (optional)"
+msgstr "Pole modulu (volitelné)"
+
+msgid "Modules (comma separated)"
+msgstr "Moduly (oddělené čárkou)"
+
+msgid "Mon"
+msgstr "Po"
 
 msgid "Monitor agents from your phone."
 msgstr "Sledujte agenty z telefonu."
@@ -11295,6 +11466,9 @@ msgstr "Moje úkoly Jira"
 
 msgid "My Tasks"
 msgstr "Moje úkoly"
+
+msgid "My time today: {todayDuration}"
+msgstr "Můj dnešní čas: {todayDuration}"
 
 msgid "Mystery Machinist"
 msgstr "Záhadný strojník"
@@ -11479,6 +11653,12 @@ msgstr "Nová skupina z pracovního prostoru"
 msgid "New issue"
 msgstr "Nová issue"
 
+msgid "New Jira issue"
+msgstr "Nový úkol Jira"
+
+msgid "New local triggers: pull request comments, failed checks and a schedule, with ready-made templates."
+msgstr "Nové lokální spouštěče: komentáře v pull requestech, neúspěšné kontroly a plán, s hotovými šablonami."
+
 msgid "New page"
 msgstr "Nová stránka"
 
@@ -11490,6 +11670,9 @@ msgstr "Nový projekt"
 
 msgid "New push to branch"
 msgstr "Nový push do větve"
+
+msgid "New review comments on a pull request linked to a workspace of the project run the agent in that workspace."
+msgstr "Nové komentáře z revize v pull requestu propojeném s pracovním prostorem projektu spustí agenta v tomto pracovním prostoru."
 
 msgid "New session"
 msgstr "Nová relace"
@@ -11652,6 +11835,9 @@ msgstr "Žádný agent"
 msgid "No agent is configured on this host"
 msgstr "Na tomto hostiteli není nakonfigurován žádný agent"
 
+msgid "No agent is waiting."
+msgstr "Žádný agent nečeká."
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Na {0} nejsou nastavení žádní agenti"
@@ -11682,6 +11868,9 @@ msgstr "Žádné přílohy"
 
 msgid "No authors found."
 msgstr "Nenalezeni žádní autoři."
+
+msgid "No automation is running."
+msgstr "Žádná automatizace neběží."
 
 msgid "No automations match"
 msgstr "Žádná automatizace neodpovídá"
@@ -12107,6 +12296,9 @@ msgstr "Žádné výsledky pro „{query}“"
 msgid "No results found."
 msgstr "Nenalezeny žádné výsledky."
 
+msgid "No review requested."
+msgstr "Žádná žádost o revizi."
+
 msgid "No reviewers"
 msgstr "Žádní recenzenti"
 
@@ -12124,6 +12316,9 @@ msgstr "Žádná pozice mi nesedí. Mám se i tak ozvat?"
 
 msgid "No runs yet"
 msgstr "Zatím žádné běhy"
+
+msgid "No runs yet."
+msgstr "Zatím žádné běhy."
 
 msgid "No screenshots yet"
 msgstr "Zatím žádné snímky obrazovky"
@@ -12326,6 +12521,9 @@ msgstr "Nepovoleno"
 msgid "Not included"
 msgstr "Není zahrnuto"
 
+msgid "Not installed on this computer."
+msgstr "Na tomto počítači není nainstalováno."
+
 msgid "Not loaded"
 msgstr "Nenačteno"
 
@@ -12381,6 +12579,9 @@ msgstr "Nic neběží. Archivujte ho a vytvořte nový."
 msgid "Nothing lives at {pathname}."
 msgstr "Na {pathname} nic není."
 
+msgid "Nothing matches right now."
+msgstr "Teď nic neodpovídá."
+
 msgid "Nothing needs a retry"
 msgstr "Není co opakovat"
 
@@ -12389,6 +12590,12 @@ msgstr "Za posledních 30 dní zatím nebylo nic publikováno. Vaše pozice se o
 
 msgid "Nothing running"
 msgstr "Nic neběží"
+
+msgid "Nothing to check."
+msgstr "Není co kontrolovat."
+
+msgid "Nothing to propose in this period."
+msgstr "V tomto období není co navrhnout."
 
 msgid "Nothing was missed"
 msgstr "Nic nebylo zmeškáno"
@@ -12457,6 +12664,9 @@ msgstr "ze všech tokenů"
 
 msgid "Off"
 msgstr "Vypnuto"
+
+msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
+msgstr "Ve výchozím stavu vypnuto. Když je zapnuto, může zobrazení Dnes na vyžádání připravit návrh výkazů práce pro pracovní dny pod minimem. Nic se nezapíše bez tvého potvrzení a žádná automatizace ho nemůže připravit ani odeslat."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Vypnuto. Koupí další GB-hodiny, když docházejí."
@@ -13064,6 +13274,9 @@ msgstr "Otevřít sheet"
 msgid "Open ship options"
 msgstr "Otevřít možnosti odeslání"
 
+msgid "Open source"
+msgstr "Otevřít zdroj"
+
 msgid "Open System Settings"
 msgstr "Otevřít Nastavení systému"
 
@@ -13414,6 +13627,9 @@ msgstr "Stránky"
 msgid "Pages could not be loaded"
 msgstr "Stránky se nepodařilo načíst"
 
+msgid "Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests."
+msgstr "Pages je skryto spolu s ostatními cloudovými funkcemi a skryté cloudové funkce už neposílají žádné požadavky."
+
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "Stránky se otevírají v mřížce a plovoucí klávesnice fungují. Vyžaduje iPadOS 26 nebo novější."
 
@@ -13625,8 +13841,8 @@ msgstr "Paradev funguje s libovolným kódovacím agentem v CLI, včetně Claude
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Mobilní aplikace Paradev mi umožňuje udržovat agenty v chodu a odblokovat je odkudkoli, i když jsem daleko od počítače."
 
-msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
-msgstr "Paradev++ nenechá Mac usnout, když vaši agenti pracují, takže se dlouhý úkol nezastaví, když je Mac nečinný."
+msgid "Paradev++ looks for new versions once a day and shows a popup. It never updates anything by itself."
+msgstr "Paradev++ hledá nové verze jednou denně a zobrazí vyskakovací okno. Nikdy nic neaktualizuje sám."
 
 msgid "Paragraph"
 msgstr "Odstavec"
@@ -13761,6 +13977,9 @@ msgstr "na sloučený PR"
 
 msgid "per merged PR, lower is better"
 msgstr "na sloučený PR, čím méně, tím lépe"
+
+msgid "Per project"
+msgstr "Na projekt"
 
 msgid "per session"
 msgstr "na relaci"
@@ -14390,6 +14609,12 @@ msgstr "Prompty, které odešlete, se objeví tady."
 msgid "Properties"
 msgstr "Vlastnosti"
 
+msgid "Propose hours"
+msgstr "Navrhnout hodiny"
+
+msgid "Propose hours for my timesheet"
+msgstr "Navrhnout hodiny do mého výkazu"
+
 msgid "Provide either id or slug"
 msgstr "Zadejte buď id, nebo slug"
 
@@ -14405,6 +14630,9 @@ msgstr "PR týdně"
 
 msgid "Public"
 msgstr "Veřejný"
+
+msgid "Public holidays"
+msgstr "Státní svátky"
 
 msgid "Public leaderboard"
 msgstr "Veřejný žebříček"
@@ -14448,11 +14676,17 @@ msgstr "Pull request #{0}, {1}"
 msgid "Pull request actions"
 msgstr "Akce pull requestu"
 
+msgid "Pull request comments"
+msgstr "Komentáře v pull requestech"
+
 msgid "Pull request detail tabs"
 msgstr "Karty detailu pull requestu"
 
 msgid "Pull request not found"
 msgstr "Pull request nenalezen"
+
+msgid "Pull request opened"
+msgstr "Pull request otevřen"
 
 msgid "Pull request title"
 msgstr "Název pull requestu"
@@ -14465,6 +14699,9 @@ msgstr "Pull requesty"
 
 msgid "Pull Requests"
 msgstr "Pull requesty"
+
+msgid "Pull requests waiting for your review"
+msgstr "Pull requesty čekající na vaši revizi"
 
 msgid "Purple"
 msgstr "Fialová"
@@ -14814,6 +15051,9 @@ msgstr "Připojuji znovu…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "Připojuji znovu… konverzace zůstává zachována."
 
+msgid "Recorded on enable, not started"
+msgstr "Zaznamenáno při zapnutí, nespuštěno"
+
 msgid "Recording"
 msgstr "Nahrávání"
 
@@ -14876,6 +15116,9 @@ msgstr "Vygenerovat znovu"
 
 msgid "Region"
 msgstr "Region"
+
+msgid "Register on Jira"
+msgstr "Zapsat do Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Zaregistruje lifecycle hooky do globální konfigurace tohoto agenta, aby Paradev mohl zobrazovat stav a posílat oznámení. Vypnutím se záznamy Paradev odeberou všude — stav a oznámení pro tohoto agenta přestanou fungovat, i uvnitř Paradev."
@@ -15150,6 +15393,9 @@ msgstr "Znovuotevírání…"
 
 msgid "reorder agents"
 msgstr "změnit pořadí agentů"
+
+msgid "Repair failed checks"
+msgstr "Opravit neúspěšné kontroly"
 
 msgid "Replace"
 msgstr "Nahradit"
@@ -15520,6 +15766,9 @@ msgstr "Obnovuji {0}…"
 msgid "Resuming the conversation…"
 msgstr "Obnovuji konverzaci…"
 
+msgid "Retried"
+msgstr "Zopakováno"
+
 msgid "Retry"
 msgstr "Zkusit znovu"
 
@@ -15735,6 +15984,9 @@ msgstr "Spusťte na svém stroji 10+ paralelních programovacích agentů."
 msgid "Run again"
 msgstr "Spustit znovu"
 
+msgid "Run again on the same issue"
+msgstr "Spustit znovu na stejném úkolu"
+
 msgid "Run agents on a schedule or when something happens."
 msgstr "Spouštějte agenty podle plánu nebo když se něco stane."
 
@@ -15763,9 +16015,6 @@ msgstr "Spouštějte automatizace při změnách issues v Sentry."
 msgid "Run commands and navigate the application."
 msgstr "Spouštějte příkazy a procházejte aplikaci."
 
-msgid "Run history"
-msgstr "Historie spuštění"
-
 msgid "Run History"
 msgstr "Historie běhů"
 
@@ -15780,6 +16029,12 @@ msgstr "Spustit v pracovním prostoru"
 
 msgid "run issues in workspaces"
 msgstr "spustit issues v pracovních prostorech"
+
+msgid "Run late for up to (minutes)"
+msgstr "Spustit se zpožděním až o (minuty)"
+
+msgid "Run limit reached"
+msgstr "Dosažen limit běhů"
 
 msgid "Run now"
 msgstr "Spustit teď"
@@ -15847,17 +16102,29 @@ msgstr "Spouštím"
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Běžící procesy v terminálu poběží dál, ale starší výstup po restartu aplikace už nemusí být k dispozici."
 
+msgid "Runs"
+msgstr "Běhy"
+
 msgid "Runs a local command on your machine"
 msgstr "Spouští lokální příkaz na vašem počítači"
 
 msgid "Runs appear here once an automation fires."
 msgstr "Běhy se zde objeví, jakmile se automatizace spustí."
 
+msgid "Runs beyond these limits wait in the queue and start when an agent finishes."
+msgstr "Běhy nad tyto limity čekají ve frontě a začnou, až některý agent skončí."
+
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "Běží uvnitř aplikace Paradev na tom zařízení, takže aktualizace znamená aktualizovat tam aplikaci."
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Běhy skončí v pracovním prostoru. Projděte rozdíly a slučte, co je dobré."
+
+msgid "Runs on the chosen days at the chosen time in a new workspace."
+msgstr "Spouští se ve zvolené dny ve zvolený čas v novém pracovním prostoru."
+
+msgid "Runs per pull request at most"
+msgstr "Nejvýše běhů na pull request"
 
 msgid "Runs that found no host online"
 msgstr "Běhy, které nenašly hostitele online"
@@ -15867,6 +16134,9 @@ msgstr "Spuštění, která v posledních 7 dnech spustila svůj workspace"
 
 msgid "Runs the tests and reviews each pull request you're asked to review."
 msgstr "Spustí testy a zreviduje každý pull request, ke kterému vás požádají o review."
+
+msgid "Runs to check"
+msgstr "Běhy ke kontrole"
 
 msgid "Runs when a new workspace is created."
 msgstr "Spouští se při vytvoření pracovního prostoru."
@@ -15886,6 +16156,9 @@ msgstr "San Francisco"
 msgid "Sandbox stopped responding"
 msgstr "Sandbox přestal odpovídat"
 
+msgid "Sat"
+msgstr "So"
+
 msgid "Save"
 msgstr "Uložit"
 
@@ -15894,6 +16167,9 @@ msgstr "Uložit a vytvořit pracovní prostor"
 
 msgid "Save All"
 msgstr "Uložit vše"
+
+msgid "Save anyway"
+msgstr "Přesto uložit"
 
 msgid "Save as environment"
 msgstr "Uložit jako prostředí"
@@ -15909,6 +16185,9 @@ msgstr "Uložit prostředí"
 
 msgid "Save failed: {message}"
 msgstr "Uložení selhalo: {message}"
+
+msgid "Save limits"
+msgstr "Uložit limity"
 
 msgid "Save preferences"
 msgstr "Uložit předvolby"
@@ -16921,6 +17200,9 @@ msgstr "Zobrazovat stav a posílat oznámení pro tohoto agenta."
 msgid "Show text"
 msgstr "Zobrazit text"
 
+msgid "Show the prompt"
+msgstr "Zobrazit prompt"
+
 msgid "Show the triggering payload"
 msgstr "Zobrazit spouštěcí data"
 
@@ -17225,6 +17507,9 @@ msgstr "Některá metadata specifická pro agenta nebylo možné přenést."
 msgid "Some chat history could not be loaded."
 msgstr "Část historie chatů se nepodařilo načíst."
 
+msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
+msgstr "Některé dny zůstávají mimo limity hodin. Opravte je ručně nebo v Jira; zápis je vypnutý."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Některé soubory nemají povolený typ a nebyly přidány."
 
@@ -17255,6 +17540,9 @@ msgstr "Část vaší práce z v1 vyžaduje pozornost"
 
 msgid "Someone"
 msgstr "Někdo"
+
+msgid "Someone changed this issue in Jira while you were editing. Your save would replace their changes."
+msgstr "Spustit běh"
 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByColleague"
@@ -17522,6 +17810,9 @@ msgstr "Zahájit nový chat"
 msgid "Start a new chat each run"
 msgstr "Při každém spuštění zahájit nový chat"
 
+msgid "Start a run"
+msgstr "Úkol byl v Jira změněn, zatímco jsi ho upravoval. Tvé uložení by přepsalo jejich změny."
+
 msgid "Start a session"
 msgstr "Spustit relaci"
 
@@ -17575,6 +17866,9 @@ msgstr "Spusťte ji pomocí + v liště karet."
 
 msgid "Start or stop the workspace run command"
 msgstr "Spustit nebo zastavit spouštěcí příkaz pracovního prostoru"
+
+msgid "Start time"
+msgstr "Čas zahájení"
 
 msgid "Start voice mode"
 msgstr "Spustit hlasový režim"
@@ -17655,6 +17949,9 @@ msgstr "zůstat připojená (obnovovací tokeny)"
 msgid "Steer"
 msgstr "Usměrnit"
 
+msgid "Step"
+msgstr "Krok"
+
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "Krok {0} ze 2"
@@ -17714,6 +18011,9 @@ msgstr "Zastavit agenta a přepnout na {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Před úpravou zprávy zastavte agenta"
+
+msgid "Stop tracking"
+msgstr "Přestat sledovat"
 
 msgid "Stop watching"
 msgstr "Přestat sledovat"
@@ -17820,6 +18120,9 @@ msgstr "Souhrn"
 
 msgid "Summary only"
 msgstr "Jen shrnutí"
+
+msgid "Sun"
+msgstr "Ne"
 
 msgid "sun 11:00"
 msgstr "ne 11:00"
@@ -18133,6 +18436,9 @@ msgstr "Úkoly a projekty"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Úkoly vytvořené v Paradev se budou synchronizovat do tohoto týmu v Linearu."
 
+msgid "Tasks with much more time than their share:"
+msgstr "Úkoly s mnohem více časem, než jim připadá:"
+
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Řídí se tím úkoly, CLI i agenti. Každý člen používá svůj vlastní účet Linear."
 
@@ -18340,6 +18646,9 @@ msgstr "Takový název není povolený."
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "Tento běh se vynechá a neopakuje se. Později ho spustíte tlačítkem Spustit teď."
 
+msgid "That time happens twice on this day because the clock moves back. Jira received the first one."
+msgstr "Tento čas nastane v tento den dvakrát, protože se hodiny posouvají zpět. Jira dostala ten první."
+
 msgid "The 2026 bet"
 msgstr "Sázka na rok 2026"
 
@@ -18381,9 +18690,6 @@ msgstr "Oznámení zároveň představuje seed kolo ve výši 11,5 mil. USD vede
 
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Aplikaci lze stáhnout zdarma. Vyžaduje iOS 26 nebo novější a Paradev Pro. Dalším na řadě je Android."
-
-msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
-msgstr "Aplikace je nyní Paradev++.app. Aktualizace přesune Superset++.app do koše, proto novou aplikaci znovu připněte do Docku."
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Paradev. Restart ji nahradí kopií této aplikace."
@@ -18524,9 +18830,6 @@ msgstr "Průvodce v terminálu nainstaluje gh přes Homebrew a otevře přihlá�
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Hostitel se vrátil s verzí {0}, ne {targetVersion}."
 
-msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
-msgstr "Host kontroluje každou minutu. Zapnutí pravidla zaznamená stávající shody; každý nový odpovídající úkol spustí jeden workspace a agenta. Pravidla se ukládají pozastavená."
-
 msgid "The host did not come back within fifteen minutes."
 msgstr "Hostitel se neobnovil do patnácti minut."
 
@@ -18617,6 +18920,9 @@ msgstr "Nový agent si může vynechané zprávy přečíst, když je potřebuje
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."
+
+msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
+msgstr "Nové zobrazení Dnes ukazuje agenty, kteří na vás čekají, běhy ke kontrole, vaše revize a váš čas."
 
 msgid "The overnight shift"
 msgstr "Noční směna"
@@ -18772,6 +19078,9 @@ msgstr "Motivy"
 
 msgid "Themes and agents"
 msgstr "Motivy a agenti"
+
+msgid "These automations run on this computer, not in the cloud. The host checks every minute. Enabling a rule records what already matches; only later matches start an agent. Rules are saved paused."
+msgstr "Tyto automatizace běží na tomto počítači, ne v cloudu. Host kontroluje každou minutu. Zapnutí pravidla zaznamená, co už odpovídá; agenta spustí jen pozdější shody. Pravidla se ukládají pozastavená."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Tyto příkazy se spustí automaticky při vytvoření pracovního prostoru. <0>Přečtěte si dokumentaci<1/></0>"
@@ -19122,6 +19431,9 @@ msgstr "V tomto vlákně není komentář, na který by šlo odpovědět."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Toto vlákno nebylo předáno agentovi. Nejprve ho někdo musí ze stránky předat."
 
+msgid "This time was already logged in Jira"
+msgstr "Tento čas už byl v Jira zapsán"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "Tato aktualizace jednorázově restartovala vaše terminály. Nové se otevírají ve stejných složkách."
 
@@ -19222,6 +19534,9 @@ msgstr "Tři kroky · dotýká se packages/ui a apps/desktop"
 msgid "Threshold"
 msgstr "Práh"
 
+msgid "Thu"
+msgstr "Čt"
+
 msgid "Ticket to production under one day, median"
 msgstr "Od ticketu do produkce pod jeden den, medián"
 
@@ -19230,6 +19545,18 @@ msgstr "Tarif"
 
 msgid "Time"
 msgstr "Čas"
+
+msgid "Time logged"
+msgstr "Zapsaný čas"
+
+msgid "Time tracking is turned off on this Jira site."
+msgstr "Sledování času je na tomto webu Jira vypnuté."
+
+msgid "Time zone: {timeZone}"
+msgstr "Časové pásmo: {timeZone}"
+
+msgid "Timesheet proposals"
+msgstr "Návrhy výkazu práce"
 
 msgid "Tinted"
 msgstr "Tónovaný"
@@ -19245,6 +19572,9 @@ msgstr "Do"
 
 msgid "to {name}"
 msgstr "pro {name}"
+
+msgid "To check"
+msgstr "Ke kontrole"
 
 msgid "To do"
 msgstr "K vyřízení"
@@ -19347,6 +19677,9 @@ msgstr "tokenů na relaci, posledních 30 dní"
 
 msgid "Tokens stay off your machine"
 msgstr "Tokeny zůstávají mimo váš počítač"
+
+msgid "Too late, skipped"
+msgstr "Příliš pozdě, přeskočeno"
 
 msgid "Too many dictations. Try again later."
 msgstr "Příliš mnoho diktování. Zkuste to později."
@@ -19530,6 +19863,9 @@ msgstr "Vyzkoušejte to"
 
 msgid "Try now"
 msgstr "Vyzkoušet"
+
+msgid "Tue"
+msgstr "Út"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -19881,6 +20217,9 @@ msgstr "Aktualizovat službu hostitele"
 msgid "Update in the App Store"
 msgstr "Aktualizovat v App Storu"
 
+msgid "Update it with the same tool you used to install it."
+msgstr "Aktualizuj ho stejným nástrojem, kterým jsi ho nainstaloval."
+
 msgid "Update naming instructions"
 msgstr "Upravit pravidla pojmenování"
 
@@ -19937,6 +20276,9 @@ msgstr "Právě aktualizováno z {0}."
 
 msgid "Updates"
 msgstr "Aktualizace"
+
+msgid "Updates are available for your agent tools."
+msgstr "Pro tvé agentní nástroje jsou k dispozici aktualizace."
 
 #. placeholder {0}: update.progress.target
 msgid "Updating to {0}"
@@ -20149,6 +20491,9 @@ msgstr "Vercel AI Gateway"
 msgid "Vercel AI Gateway rejected this key."
 msgstr "Vercel AI Gateway tento klíč odmítl."
 
+msgid "Verified"
+msgstr "Ověřeno"
+
 msgid "Verified and saved"
 msgstr "Ověřeno a uloženo"
 
@@ -20173,6 +20518,12 @@ msgstr "Verze"
 #. placeholder {0}: entry.version
 msgid "Version {0}"
 msgstr "Verze {0}"
+
+msgid "Version {installed}, {latest} is available."
+msgstr "Verze {installed}, je k dispozici {latest}."
+
+msgid "Version {installed}, up to date."
+msgstr "Verze {installed}, aktuální."
 
 msgid "Version {sharedVersion}"
 msgstr "Verze {sharedVersion}"
@@ -20356,6 +20707,9 @@ msgstr "Čeká na váš vstup"
 msgid "Waits for the reset when no other account has quota."
 msgstr "Počká na obnovení, když žádný jiný účet nemá kvótu."
 
+msgid "Waits for you"
+msgstr "Čeká na vás"
+
 msgid "Waking up workspace"
 msgstr "Probouzení pracovního prostoru"
 
@@ -20470,6 +20824,9 @@ msgstr "Webhook spuštěn"
 msgid "Website"
 msgstr "Web"
 
+msgid "Wed"
+msgstr "St"
+
 msgid "Week"
 msgstr "Týden"
 
@@ -20551,6 +20908,9 @@ msgstr "Co je Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Co je špatně?"
 
+msgid "What needs you now, all from this computer."
+msgstr "Co teď potřebuje vaši pozornost, vše z tohoto počítače."
+
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Co je Paradev, kdo ho staví a pro koho je. Sanfranciský tým vedený třemi bývalými YC CTO, který staví pracovní prostor pro paralelní kódovací agenty."
 
@@ -20611,6 +20971,9 @@ msgstr "Co je nového v Paradev++"
 msgid "What's next"
 msgstr "Co bude dál"
 
+msgid "When"
+msgstr "Kdy"
+
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Když se spouštěč spustí, Mac, který jste vybrali, otevře nový pracovní prostor a agent začne pracovat na vašem promptu. Běhy z událostí obsahují i danou událost, takže agent ví, na co se podívat. Odpovězte v běhu a agent bude pokračovat."
 
@@ -20620,11 +20983,17 @@ msgstr "Když koupené GB-hodiny klesnou pod"
 msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 msgstr "Když zbývá méně než {topupThreshold} GB-hodin, dobít {topupPrice} ({topupGbHours} GB-hodin)."
 
+msgid "When its status changes and it still matches"
+msgstr "Když se změní jeho stav a stále odpovídá"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Když je vypnuto, nic jiného se nedostane k souborům a nástrojům na tomto zařízení. Odsud se stále můžete připojovat ke vzdáleným sandboxům. <0>Zjistit více<1/></0>"
 
 msgid "When quota runs out"
 msgstr "Když dojde kvóta"
+
+msgid "When the agent finishes, the check command runs in the workspace. Exit code 0 marks the run as verified. Without a command, you mark it yourself. A launch that fails is retried after 1, 5 and 15 minutes; three failures in a row pause the rule."
+msgstr "Když agent skončí, v pracovním prostoru se spustí kontrolní příkaz. Návratový kód 0 označí běh jako ověřený. Bez příkazu ho označíte sami. Neúspěšné spuštění se zopakuje po 1, 5 a 15 minutách; tři selhání za sebou pravidlo pozastaví."
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Kam vedou odznaky rozpoznaných portů v postranním panelu po kliknutí."
@@ -20716,6 +21085,9 @@ msgstr "Pracovní e-mail"
 msgid "Work from tickets"
 msgstr "Práce z ticketů"
 
+msgid "Work started"
+msgstr "Práce zahájena"
+
 msgid "Work the action items from a call"
 msgstr "Plnění úkolů z hovoru"
 
@@ -20732,6 +21104,9 @@ msgstr "Pracoval {seconds} s"
 
 msgid "Workflow run completed…"
 msgstr "Dokončen běh workflow…"
+
+msgid "Workflow statuses"
+msgstr "Stavy workflow"
 
 msgid "Workflow Tutorials"
 msgstr "Návody k workflow"
@@ -20892,6 +21267,9 @@ msgstr "Worktrees"
 msgid "Worktrees are removed from disk; workspaces on the project's checkout only close. Files in the checkout stay as they are."
 msgstr "Worktree se odstraní z disku; pracovní prostory na checkoutu projektu se pouze zavřou. Soubory v checkoutu zůstanou beze změny."
 
+msgid "Would start"
+msgstr "Spustilo by se"
+
 msgid "Would you like to reassign it?"
 msgstr "Chcete zkratku přiřadit znovu?"
 
@@ -20921,6 +21299,9 @@ msgstr "Napiš dokumentaci k části, na kterou se všichni ptají…"
 
 msgid "Write once. Runs in every agent."
 msgstr "Napište jednou. Běží v každém agentovi."
+
+msgid "Write the duration as 45m, 1h 30m or 2h."
+msgstr "Zadejte dobu trvání jako 45m, 1h 30m nebo 2h."
 
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Psaní kódu už není to, kam jdou hodiny inženýrů. Jde do jeho čtení. Týmy, které v roce 2025 nasadily paralelní agenty, narazily první: deset agentů vyprodukuje do oběda víc diffů, než tým poctivě zreviduje do pátku."
@@ -21157,6 +21538,9 @@ msgstr "Váš účet GitHub nemá přístup k repozitáři tohoto prostředí"
 
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Odkaz na GitHub pochází z účtu, kterým jste se přihlásili, proto je označen jako ověřený a nelze ho zde upravit."
+
+msgid "Your Jira account cannot log time on this issue."
+msgstr "Váš účet Jira nemůže na tento úkol vykazovat čas."
 
 msgid "Your last payment failed. Update your payment method to keep Pro."
 msgstr "Poslední platba se nezdařila. Aktualizujte způsob platby, abyste si Pro zachovali."

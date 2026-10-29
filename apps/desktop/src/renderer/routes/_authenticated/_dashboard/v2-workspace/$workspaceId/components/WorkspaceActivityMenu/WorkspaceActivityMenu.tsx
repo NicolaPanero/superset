@@ -28,6 +28,7 @@ import { usePageFavorites } from "renderer/routes/_authenticated/_dashboard/hook
 import { usePagesList } from "renderer/routes/_authenticated/_dashboard/hooks/usePagesList";
 import { pagesListInput } from "renderer/routes/_authenticated/_dashboard/utils/pagesListInput";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import type { StoreApi } from "zustand/vanilla";
 import type { CreateNewAgentSession } from "../../hooks/useAgentSessionLauncher";
 import { useChatWiring } from "../../hooks/usePaneRegistry/components/ChatSession/hooks/useSessionClient";
@@ -262,14 +263,17 @@ export function WorkspaceActivityMenu({
 		() => pagesListInput(workspaceFilter),
 		[workspaceFilter],
 	);
+	const showPages = useForkProFeatures();
 	const workspacePagesQuery = usePagesList(workspaceFilter, {
+		enabled: showPages,
 		staleTime: 60_000,
 	});
 	// Only the pins, by id — this menu never needed the rest of the org.
 	const pinnedPagesQuery = usePagesList(
 		{ ids: favoritePageIds, limit: MENU_PAGE_LIMIT },
 		{
-			enabled: open && !paneAreaStyle && favoritePageIds.length > 0,
+			enabled:
+				showPages && open && !paneAreaStyle && favoritePageIds.length > 0,
 			staleTime: 60_000,
 		},
 	);
@@ -653,6 +657,7 @@ export function WorkspaceActivityMenu({
 								</MenuGroup>
 							)}
 							<MenuGroup
+								hidden={!showPages}
 								title={<Trans>Pages</Trans>}
 								addLabel={t({ message: "New page" })}
 								onAdd={() => setComposing(true)}

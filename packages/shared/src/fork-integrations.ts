@@ -106,6 +106,15 @@ export interface ForkTask {
 	parent?: { key: string; title: string } | null;
 	sprint?: string | null;
 }
+export interface ForkWorklog {
+	id: string;
+	author: { id: string; name: string };
+	mine: boolean;
+	started: string;
+	timeSpentSeconds: number;
+	comment: string;
+	created: string;
+}
 export interface ForkTaskLink {
 	connectionId: string;
 	taskId: string;
@@ -164,7 +173,7 @@ export const FORK_PROVIDER_DEFINITIONS = {
 >;
 export type { ForkJiraBoardContext, ForkJiraColumn } from "./fork-jira-board";
 
-export const FORK_INTEGRATIONS_VERSION = 7;
+export const FORK_INTEGRATIONS_VERSION = 10;
 
 export function parseForkRemote(remote: string): ForkRepositoryRef | null {
 	const normalized = remote.trim().replace(/^git@([^:]+):/, "ssh://git@$1/");

@@ -21,6 +21,7 @@ import {
 	readSubagentSearch,
 } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { CommandPalette } from "renderer/screens/main/components/CommandPalette";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useRightPaneAreaEnabled } from "renderer/stores/right-pane-area";
 import { getV2NotificationSourcesForTab } from "renderer/stores/v2-notifications";
 import { useStore } from "zustand";
@@ -230,6 +231,7 @@ function V2WorkspaceContent() {
 		workspaceId,
 		isPaneAreaEnabled: isRightPaneAreaEnabled,
 	});
+	const showProFeatures = useForkProFeatures();
 	const isMobilePaneEnabled =
 		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
 	const { store: rightStore, isLayoutReady: isRightLayoutReady } =
@@ -644,7 +646,11 @@ function V2WorkspaceContent() {
 			isFullScreen={rightPaneMode === "expanded"}
 			onToggleFullScreen={toggleRightPaneAreaFullScreen}
 			onAdd={addRightPane}
-			gates={{ sandbox: isSandbox, mobilePane: isMobilePaneEnabled }}
+			gates={{
+				sandbox: isSandbox,
+				mobilePane: isMobilePaneEnabled,
+				pages: showProFeatures,
+			}}
 		/>
 	);
 

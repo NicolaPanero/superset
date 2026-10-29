@@ -7,15 +7,17 @@ export function MenuGroup({
 	addLabel,
 	onAdd,
 	children,
+	hidden,
 }: {
 	title: ReactNode;
 	actions?: ReactNode;
 	addLabel?: string;
 	onAdd?: () => void;
 	children: ReactNode;
+	hidden?: boolean;
 }) {
 	return (
-		<section className="py-1">
+		<section className="py-1" hidden={hidden}>
 			<div className="flex h-7 items-center justify-between pl-2 pr-1">
 				<span className="text-[11px] font-medium text-muted-foreground">
 					{title}

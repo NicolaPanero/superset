@@ -20,6 +20,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import {
 	LuArrowUpRight,
+	LuClock,
 	LuEllipsis,
 	LuPencil,
 	LuTrash2,
@@ -37,7 +38,15 @@ import { ForkServiceNotice } from "../ForkServiceNotice";
 import { ForkTaskStatus } from "../ForkTaskStatus";
 import { ForkUserAvatar } from "../ForkUserAvatar";
 import { ForkTaskInfo } from "./components/ForkTaskInfo";
+import { ForkTaskWorklog } from "./components/ForkTaskWorklog";
 import { ForkTaskWorkspaces } from "./components/ForkTaskWorkspaces";
+import {
+	type ForkTaskDraft,
+	type ForkTaskEditField,
+	forkTaskDraft,
+	forkTaskEditConflicts,
+	forkTaskEditPatch,
+} from "./utils/forkTaskEditPatch";
 
 export function ForkTaskDetail({
 	task,
@@ -52,14 +61,28 @@ export function ForkTaskDetail({
 		{ client, hostUrl } = useForkConnections(),
 		cache = useQueryClient();
 	const target = { connectionId: task.connectionId, key: task.key };
-	const [editing, setEditing] = useState(false);
-	const [title, setTitle] = useState(task.title),
-		[description, setDescription] = useState(task.description),
-		[labels, setLabels] = useState(task.labels.join(", "));
+	const [edit, setEdit] = useState<{
+		base: ForkTaskDraft;
+		draft: ForkTaskDraft;
+	} | null>(null);
+	const [conflict, setConflict] = useState<ForkTaskEditField[] | null>(null);
+	const editing = edit !== null;
+	const draft = edit?.draft ?? forkTaskDraft(task);
+	const setField = (field: ForkTaskEditField, value: string) =>
+		setEdit((current) =>
+			current
+				? { ...current, draft: { ...current.draft, [field]: value } }
+				: null,
+		);
+	const startEdit = () => {
+		const base = forkTaskDraft(task);
+		setConflict(null);
+		setEdit({ base, draft: base });
+	};
 	const [confirmDelete, setConfirmDelete] = useState(false);
-	const [assigneeId, setAssigneeId] = useState(task.assignee?.id ?? ""),
-		[assigneeQuery, setAssigneeQuery] = useState(""),
-		[priorityId, setPriorityId] = useState(task.priorityId ?? "");
+	const [logTime, setLogTime] = useState(false);
+	const [assigneeQuery, setAssigneeQuery] = useState("");
+	const taskKey = ["fork-integrations", hostUrl, "task", task.connectionId];
 	const debouncedAssigneeQuery = useDebouncedValue(assigneeQuery, 300);
 	const metadata = useQuery({
 		refetchOnReconnect: true,
@@ -67,7 +90,7 @@ export function ForkTaskDetail({
 		retry: false,
 		queryKey: ["fork-integrations", hostUrl, "edit-metadata", target],
 		queryFn: () => required(client).forkTasks.editMetadata.query(target),
-		enabled: !!client,
+		enabled: !!client && editing,
 	});
 	const assignees = useQuery({
 		refetchOnReconnect: true,
@@ -102,33 +125,33 @@ export function ForkTaskDetail({
 		mutationFn: async ({
 			kind,
 			body,
+			force,
 		}: {
 			kind: "save" | "comment" | "delete";
 			body?: string;
-		}) => {
+			force?: boolean;
+		}): Promise<"saved" | "unchanged" | "conflict" | undefined> => {
 			if (!client) return;
-			if (kind === "save")
-				return client.forkTasks.edit.mutate({
-					...target,
-					title,
-					description:
-						description === task.description ? undefined : description,
-					assigneeId:
-						assigneeId === (task.assignee?.id ?? "")
-							? undefined
-							: assigneeId || null,
-					priorityId:
-						priorityId && priorityId !== task.priorityId
-							? priorityId
-							: undefined,
-					labels:
-						labels === task.labels.join(", ")
-							? undefined
-							: labels
-									.split(",")
-									.map((s) => s.trim())
-									.filter(Boolean),
-				});
+			if (kind === "save") {
+				if (!edit) return;
+				const patch = forkTaskEditPatch(edit);
+				if (Object.keys(patch).length === 0) return "unchanged";
+				if (!force) {
+					const fresh = await client.forkTasks.get.query(target);
+					const fields = forkTaskEditConflicts({
+						base: edit.base,
+						fresh,
+						patch,
+					});
+					if (fields.length > 0) {
+						cache.setQueryData([...taskKey, task.key], fresh);
+						setConflict(fields);
+						return "conflict";
+					}
+				}
+				await client.forkTasks.edit.mutate({ ...target, ...patch });
+				return "saved";
+			}
 			if (kind === "comment")
 				await client.forkTasks.comment.mutate({ ...target, body: body ?? "" });
 			if (kind === "delete") {
@@ -136,12 +159,29 @@ export function ForkTaskDetail({
 				onBack();
 			}
 		},
-		onSuccess: (_, { kind }) => {
+		onSuccess: (result, { kind }) => {
+			if (result === "conflict") return;
 			if (kind === "save") {
-				setEditing(false);
-				toast.success(t({ message: "Saved" }));
+				setEdit(null);
+				setConflict(null);
+				if (result === "saved") toast.success(t({ message: "Saved" }));
 			}
-			void cache.invalidateQueries({ queryKey: ["fork-integrations"] });
+			if (kind === "comment") {
+				void comments.refetch();
+				return;
+			}
+			if (kind === "delete") {
+				void cache.invalidateQueries({ queryKey: taskKey });
+				void cache.invalidateQueries({
+					queryKey: ["fork-integrations", hostUrl, "tasks", task.connectionId],
+				});
+				return;
+			}
+			if (result !== "saved") return;
+			void cache.invalidateQueries({ queryKey: taskKey });
+			void cache.invalidateQueries({
+				queryKey: ["fork-integrations", hostUrl, "tasks", task.connectionId],
+			});
 		},
 	});
 	const unavailable = [
@@ -151,12 +191,8 @@ export function ForkTaskDetail({
 		comments.error,
 	].some(isForkServiceUnavailable);
 	const cancelEdit = () => {
-		setTitle(task.title);
-		setDescription(task.description);
-		setLabels(task.labels.join(", "));
-		setAssigneeId(task.assignee?.id ?? "");
-		setPriorityId(task.priorityId ?? "");
-		setEditing(false);
+		setEdit(null);
+		setConflict(null);
 	};
 	return (
 		<div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -181,7 +217,7 @@ export function ForkTaskDetail({
 				</a>
 				<div className="ml-auto" />
 				{!editing && (
-					<Button size="xs" variant="outline" onClick={() => setEditing(true)}>
+					<Button size="xs" variant="outline" onClick={startEdit}>
 						<LuPencil className="size-3.5" />
 						<Trans>Edit</Trans>
 					</Button>
@@ -203,6 +239,10 @@ export function ForkTaskDetail({
 								<Trans>Open in Jira</Trans>
 							</a>
 						</DropdownMenuItem>
+						<DropdownMenuItem onSelect={() => setLogTime(true)}>
+							<LuClock />
+							<Trans>Log time</Trans>
+						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							variant="destructive"
@@ -216,6 +256,7 @@ export function ForkTaskDetail({
 			</div>
 			{(unavailable ||
 				confirmDelete ||
+				conflict ||
 				(action.isError && !isForkServiceUnavailable(action.error))) && (
 				<div className="space-y-2 border-b px-4 py-3">
 					{unavailable && (
@@ -252,6 +293,30 @@ export function ForkTaskDetail({
 							</Button>
 						</div>
 					)}
+					{conflict && (
+						<div
+							role="alert"
+							className="flex flex-wrap items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-sm"
+						>
+							<span className="min-w-0 flex-1">
+								<Trans>
+									Someone changed this issue in Jira while you were editing.
+									Your save would replace their changes.
+								</Trans>
+							</span>
+							<Button size="xs" variant="ghost" onClick={startEdit}>
+								<Trans>Discard my changes</Trans>
+							</Button>
+							<Button
+								size="xs"
+								variant="outline"
+								disabled={action.isPending}
+								onClick={() => action.mutate({ kind: "save", force: true })}
+							>
+								<Trans>Save anyway</Trans>
+							</Button>
+						</div>
+					)}
 					{action.isError && !isForkServiceUnavailable(action.error) && (
 						<p role="alert" className="text-sm text-destructive">
 							{action.error.message}
@@ -268,8 +333,8 @@ export function ForkTaskDetail({
 						{editing ? (
 							<Input
 								aria-label={t({ message: "Title" })}
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
+								value={draft.title}
+								onChange={(e) => setField("title", e.target.value)}
 								className="mt-3 h-auto py-1.5 text-xl font-semibold"
 							/>
 						) : (
@@ -285,15 +350,15 @@ export function ForkTaskDetail({
 					<section className="space-y-4 rounded-xl border border-border/60 bg-muted/10 p-4">
 						<Textarea
 							aria-label={t({ message: "Description" })}
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
+							value={draft.description}
+							onChange={(e) => setField("description", e.target.value)}
 							className="min-h-40"
 						/>
 						<Input
 							aria-label={t({ message: "Labels" })}
 							placeholder={t({ message: "Labels" })}
-							value={labels}
-							onChange={(e) => setLabels(e.target.value)}
+							value={draft.labels}
+							onChange={(e) => setField("labels", e.target.value)}
 						/>
 						<div className="grid gap-4 sm:grid-cols-2">
 							{!!metadata.data?.priorities.length && (
@@ -304,8 +369,8 @@ export function ForkTaskDetail({
 									<select
 										id="jira-priority"
 										className="h-9 w-full rounded-md border bg-background px-2 text-sm"
-										value={priorityId}
-										onChange={(e) => setPriorityId(e.target.value)}
+										value={draft.priorityId}
+										onChange={(e) => setField("priorityId", e.target.value)}
 									>
 										{metadata.data.priorities.map((p) => (
 											<option key={p.id} value={p.id}>
@@ -329,8 +394,8 @@ export function ForkTaskDetail({
 									<select
 										id="jira-assignee"
 										className="h-9 w-full rounded-md border bg-background px-2 text-sm"
-										value={assigneeId}
-										onChange={(e) => setAssigneeId(e.target.value)}
+										value={draft.assigneeId}
+										onChange={(e) => setField("assigneeId", e.target.value)}
 									>
 										<option value="">{t({ message: "Unassigned" })}</option>
 										{task.assignee &&
@@ -356,7 +421,7 @@ export function ForkTaskDetail({
 							</Button>
 							<Button
 								size="sm"
-								disabled={action.isPending || !title.trim()}
+								disabled={action.isPending || !draft.title.trim()}
 								onClick={() => action.mutate({ kind: "save" })}
 							>
 								<Trans>Save</Trans>
@@ -377,6 +442,11 @@ export function ForkTaskDetail({
 				<div className="mt-8">
 					<ForkTaskWorkspaces task={task} />
 				</div>
+				<ForkTaskWorklog
+					task={task}
+					formOpen={logTime}
+					onFormOpenChange={setLogTime}
+				/>
 				<section className="mt-8 space-y-3">
 					<h2 className="text-sm font-medium">
 						<Trans>Activity</Trans>

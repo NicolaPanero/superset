@@ -10,7 +10,6 @@ import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { Textarea } from "@superset/ui/textarea";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { LuZap } from "react-icons/lu";
 import { useForkConnections } from "../../hooks/useForkConnections";
@@ -20,11 +19,22 @@ import {
 	forkJiraQuery,
 } from "../ForkJiraTasks/fork-jira-query";
 import { useForkJiraBoardContext } from "../ForkJiraTasks/hooks/useForkJiraBoardContext";
+import { ForkAutomationLimits } from "./components/ForkAutomationLimits";
+import {
+	FORK_AUTOMATION_DEFAULT_OPTIONS,
+	ForkAutomationOptions,
+	type ForkAutomationOptionsValue,
+} from "./components/ForkAutomationOptions";
+import { ForkAutomationRuleCard } from "./components/ForkAutomationRuleCard";
 import {
 	type ForkJiraAgentChoice,
 	ForkJiraAutomationAgent,
 } from "./components/ForkJiraAutomationAgent";
 import { ForkJiraAutomationFilters } from "./components/ForkJiraAutomationFilters";
+import {
+	FORK_AUTOMATION_SOURCES,
+	FORK_AUTOMATION_TEMPLATES,
+} from "./utils/forkAutomationTemplates";
 
 export function ForkJiraAutomations({
 	connectionId,
@@ -35,11 +45,19 @@ export function ForkJiraAutomations({
 	jql: string;
 	initialFilters: ForkJiraTaskFilters;
 }) {
-	const { t } = useLingui();
+	const { t, i18n } = useLingui();
 	const { client, hostUrl, data } = useForkConnections();
 	const cache = useQueryClient();
-	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
+	const v2 = (data?.version ?? 0) >= 9;
+	const [editingId, setEditingId] = useState<string | null>(null);
+	const [options, setOptions] = useState<ForkAutomationOptionsValue>(
+		FORK_AUTOMATION_DEFAULT_OPTIONS,
+	);
+	const isJira = options.sourceKind === "jira";
+	const sourceInfo = FORK_AUTOMATION_SOURCES.find(
+		(source) => source.kind === options.sourceKind,
+	);
 	const [name, setName] = useState("");
 	const [query, setQuery] = useState("");
 	const [projectId, setProjectId] = useState("");
@@ -82,7 +100,6 @@ export function ForkJiraAutomations({
 		boardFilter: boardContext.data?.board?.filterId ?? undefined,
 	});
 	const [prompt, setPrompt] = useState("");
-	const [historyId, setHistoryId] = useState("");
 	const rules = useQuery({
 		queryKey: ["fork-integrations", hostUrl, "automations", connectionId],
 		queryFn: () =>
@@ -98,60 +115,117 @@ export function ForkJiraAutomations({
 		enabled: open && !!client,
 		retry: false,
 	});
-	const runs = useQuery({
-		queryKey: ["fork-integrations", hostUrl, "automation-runs", historyId],
-		queryFn: () =>
-			required(client).forkTasks.automationRuns.query({ id: historyId }),
-		enabled: open && !!historyId,
-		retry: false,
-		refetchInterval: open ? 15000 : false,
-	});
 	const mutation = useMutation({
 		networkMode: "always",
 		retry: false,
-		mutationFn: async (
-			action:
-				| { kind: "save" }
-				| { kind: "enable"; id: string; enabled: boolean }
-				| { kind: "delete"; id: string },
-		) => {
-			if (action.kind === "save")
-				return required(client).forkTasks.automationCreate.mutate({
-					connectionId,
+		mutationFn: async () => {
+			const launch = launchSupported
+				? {
+						launch: {
+							surface: choice.surface,
+							model: choice.model,
+							accountSelection: choice.accountSelection,
+						},
+					}
+				: {};
+			const jqlValue = isJira ? (advanced ? query : generatedQuery) : "";
+			const ruleOptions = {
+				sourceKind: options.sourceKind,
+				...(options.sourceKind === "schedule"
+					? {
+							schedule: {
+								days: options.days,
+								time: options.time,
+								timeZone: options.timeZone,
+							},
+						}
+					: {}),
+				refire: options.refire,
+				catchupMinutes: options.catchupMinutes,
+				verifyCommand: options.verifyCommand.trim() || null,
+				retryLimit: options.retryLimit,
+				targetLimit: options.targetLimit,
+			};
+			if (editingId)
+				return required(client).forkTasks.automationUpdate.mutate({
+					id: editingId,
 					projectId,
 					name,
-					jql: advanced ? query : generatedQuery,
+					jql: jqlValue,
 					agent: choice.agent,
-					...(launchSupported
-						? {
-								launch: {
-									surface: choice.surface,
-									model: choice.model,
-									accountSelection: choice.accountSelection,
-								},
-							}
-						: {}),
 					prompt,
+					...launch,
+					options: ruleOptions,
 				});
-			if (action.kind === "enable")
-				return required(client).forkTasks.automationEnable.mutate({
-					id: action.id,
-					enabled: action.enabled,
-				});
-			return required(client).forkTasks.automationDelete.mutate({
-				id: action.id,
+			return required(client).forkTasks.automationCreate.mutate({
+				connectionId,
+				projectId,
+				name,
+				jql: jqlValue,
+				agent: choice.agent,
+				...launch,
+				prompt,
+				...(v2 ? { options: ruleOptions } : {}),
 			});
 		},
-		onSuccess: (_, action) => {
-			if (action.kind === "save") {
-				setName("");
-				setPrompt("");
-			}
+		onSuccess: () => {
+			resetForm();
 			void cache.invalidateQueries({
 				queryKey: ["fork-integrations", hostUrl, "automations"],
 			});
 		},
 	});
+	const resetForm = () => {
+		setEditingId(null);
+		setName("");
+		setPrompt("");
+		setOptions(FORK_AUTOMATION_DEFAULT_OPTIONS);
+	};
+	const applyTemplate = (templateId: string) => {
+		const template = FORK_AUTOMATION_TEMPLATES.find(
+			(tp) => tp.id === templateId,
+		);
+		if (!template) return;
+		setName(i18n._(template.name));
+		setPrompt(template.prompt);
+		setOptions((current) => ({
+			...current,
+			sourceKind: template.sourceKind,
+			retryLimit: template.retryLimit,
+			targetLimit: template.targetLimit,
+		}));
+	};
+	type ListedRule = NonNullable<typeof rules.data>[number];
+	const startEdit = (rule: ListedRule) => {
+		setEditingId(rule.id);
+		setName(rule.name);
+		setPrompt(rule.prompt);
+		setProjectId(rule.projectId);
+		setQuery(rule.jql);
+		setAdvanced(true);
+		setChoice({
+			agent: rule.agent,
+			surface: rule.launch?.surface === "terminal" ? "terminal" : "chat",
+			model: rule.launch?.model ?? undefined,
+			accountSelection: rule.launch?.accountSelection ?? undefined,
+		});
+		const config = (rule.options?.sourceConfig ?? {}) as {
+			days?: number[];
+			time?: string;
+			timeZone?: string;
+		};
+		setOptions({
+			sourceKind: rule.options?.sourceKind ?? "jira",
+			refire: rule.options?.refire ?? "never",
+			verifyCommand: rule.options?.verifyCommand ?? "",
+			retryLimit: rule.options?.retryLimit ?? 3,
+			targetLimit: rule.options?.targetLimit ?? null,
+			catchupMinutes: rule.options?.catchupMinutes ?? 120,
+			days: config.days ?? FORK_AUTOMATION_DEFAULT_OPTIONS.days,
+			time: config.time ?? FORK_AUTOMATION_DEFAULT_OPTIONS.time,
+			timeZone: config.timeZone ?? FORK_AUTOMATION_DEFAULT_OPTIONS.timeZone,
+		});
+	};
 	if ((data?.version ?? 0) < 4 || !connectionId) return null;
 	return (
 		<>
@@ -161,6 +235,7 @@ export function ForkJiraAutomations({
 				className="h-8 gap-1.5 px-2 text-xs"
 				title={t({ message: "Automations" })}
 				onClick={() => {
+					resetForm();
 					setQuery(jql);
 					setFilters({ ...initialFilters, forkJql: undefined });
 					setAdvanced(!!initialFilters.forkJql);
@@ -181,9 +256,9 @@ export function ForkJiraAutomations({
 					</DialogHeader>
 					<p className="text-xs text-muted-foreground">
 						<Trans>
-							The host checks every minute. Enabling a rule records existing
-							matches; each new matching issue starts one workspace and agent.
-							Rules are saved paused.
+							These automations run on this computer, not in the cloud. The host
+							checks every minute. Enabling a rule records what already matches;
+							only later matches start an agent. Rules are saved paused.
 						</Trans>
 					</p>
 					{(rules.error ||
@@ -201,117 +276,95 @@ export function ForkJiraAutomations({
 							}
 						</p>
 					)}
+					{v2 && <ForkAutomationLimits />}
 					<div className="space-y-2">
 						{rules.data?.map((rule) => (
-							<div key={rule.id} className="space-y-2 rounded-lg border p-3">
-								<div className="flex flex-wrap items-center gap-2">
-									<span className="flex-1 text-sm font-medium">
-										{rule.name}
-									</span>
-									<Button
-										size="sm"
-										variant="outline"
-										disabled={mutation.isPending}
-										onClick={() =>
-											mutation.mutate({
-												kind: "enable",
-												id: rule.id,
-												enabled: !rule.enabled,
-											})
-										}
-									>
-										{rule.enabled ? (
-											<Trans>Pause</Trans>
-										) : (
-											<Trans>Enable</Trans>
-										)}
-									</Button>
-									<Button
-										size="sm"
-										variant="ghost"
-										onClick={() => setHistoryId(rule.id)}
-									>
-										<Trans>Run history</Trans>
-									</Button>
-									<Button
-										size="sm"
-										variant="ghost"
-										disabled={mutation.isPending}
-										onClick={() =>
-											mutation.mutate({ kind: "delete", id: rule.id })
-										}
-									>
-										<Trans>Delete</Trans>
-									</Button>
-								</div>
-								{rule.launch && (
-									<p className="text-xs text-muted-foreground">
-										{rule.launch.surface === "chat" ? (
-											<Trans>ACP chat</Trans>
-										) : (
-											<Trans>Terminal</Trans>
-										)}
-										{rule.launch.model ? ` · ${rule.launch.model}` : ""}
-									</p>
-								)}
-								<p className="break-all font-mono text-xs text-muted-foreground">
-									{rule.jql}
-								</p>
-								{rule.error && (
-									<p role="alert" className="text-xs text-destructive">
-										{rule.error}
-									</p>
-								)}
-							</div>
+							<ForkAutomationRuleCard
+								key={rule.id}
+								rule={rule}
+								onEdit={() => startEdit(rule)}
+							/>
 						))}
 					</div>
-					{historyId && (
-						<div className="space-y-2 rounded-lg border p-3">
-							<h3 className="text-sm font-medium">
-								<Trans>Run history</Trans>
-							</h3>
-							{runs.error && (
-								<p role="alert" className="text-xs text-destructive">
-									{runs.error.message}
-								</p>
-							)}
-							{runs.data
-								?.filter((run) => run.workspaceId || run.error)
-								.map((run) => (
-									<div
-										key={`${run.taskKey}:${run.createdAt}`}
-										className="text-xs"
-									>
-										{run.workspaceId ? (
-											<Button
-												size="sm"
-												variant="link"
-												onClick={() =>
-													void navigate({
-														to: "/v2-workspace/$workspaceId",
-														params: { workspaceId: required(run.workspaceId) },
-													})
-												}
-											>
-												{run.taskKey}
-											</Button>
-										) : (
-											run.taskKey
-										)}
-										{run.error && (
-											<span className="text-destructive">{run.error}</span>
-										)}
-									</div>
-								))}
-						</div>
-					)}
 					<form
 						className="space-y-3 border-t pt-4"
 						onSubmit={(event) => {
 							event.preventDefault();
-							mutation.mutate({ kind: "save" });
+							mutation.mutate();
 						}}
 					>
+						<div className="flex items-center gap-2">
+							<h3 className="flex-1 text-sm font-medium">
+								{editingId ? (
+									<Trans>Edit automation</Trans>
+								) : (
+									<Trans>New automation</Trans>
+								)}
+							</h3>
+							{editingId && (
+								<Button
+									type="button"
+									size="xs"
+									variant="ghost"
+									onClick={resetForm}
+								>
+									<Trans>Cancel</Trans>
+								</Button>
+							)}
+						</div>
+						{v2 && (
+							<>
+								{!editingId && (
+									<>
+										<Label htmlFor="fork-automation-template">
+											<Trans>Start from a template</Trans>
+										</Label>
+										<select
+											id="fork-automation-template"
+											className="h-9 w-full rounded-md border bg-background px-2 text-sm"
+											value=""
+											onChange={(e) => applyTemplate(e.target.value)}
+										>
+											<option value="">{t({ message: "Empty" })}</option>
+											{FORK_AUTOMATION_TEMPLATES.map((template) => (
+												<option key={template.id} value={template.id}>
+													{i18n._(template.name)} ·{" "}
+													{i18n._(template.description)}
+												</option>
+											))}
+										</select>
+									</>
+								)}
+								<Label htmlFor="fork-automation-source">
+									<Trans>When</Trans>
+								</Label>
+								<select
+									id="fork-automation-source"
+									className="h-9 w-full rounded-md border bg-background px-2 text-sm"
+									value={options.sourceKind}
+									onChange={(e) =>
+										setOptions((current) => ({
+											...current,
+											sourceKind:
+												FORK_AUTOMATION_SOURCES.find(
+													(source) => source.kind === e.target.value,
+												)?.kind ?? "jira",
+										}))
+									}
+								>
+									{FORK_AUTOMATION_SOURCES.map((source) => (
+										<option key={source.kind} value={source.kind}>
+											{i18n._(source.label)}
+										</option>
+									))}
+								</select>
+								{sourceInfo && (
+									<p className="text-xs text-muted-foreground">
+										{i18n._(sourceInfo.description)}
+									</p>
+								)}
+							</>
+						)}
 						<Label htmlFor="jira-rule-name">
 							<Trans>Name</Trans>
 						</Label>
@@ -321,54 +374,58 @@ export function ForkJiraAutomations({
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						/>
-						<div className="flex gap-2">
-							<Button
-								type="button"
-								size="sm"
-								variant={!advanced ? "secondary" : "ghost"}
-								aria-pressed={!advanced}
-								onClick={() => setAdvanced(false)}
-							>
-								<Trans>Filters</Trans>
-							</Button>
-							<Button
-								type="button"
-								size="sm"
-								variant={advanced ? "secondary" : "ghost"}
-								aria-pressed={advanced}
-								disabled={!advanced && filtersUnavailable}
-								onClick={() => {
-									if (!advanced) setQuery(generatedQuery);
-									setAdvanced(true);
-								}}
-							>
-								JQL
-							</Button>
-						</div>
-						{advanced ? (
+						{isJira && (
 							<>
-								<Label htmlFor="jira-rule-query">JQL</Label>
-								<Textarea
-									id="jira-rule-query"
-									required
-									value={query}
-									onChange={(e) => setQuery(e.target.value)}
-								/>
+								<div className="flex gap-2">
+									<Button
+										type="button"
+										size="sm"
+										variant={!advanced ? "secondary" : "ghost"}
+										aria-pressed={!advanced}
+										onClick={() => setAdvanced(false)}
+									>
+										<Trans>Filters</Trans>
+									</Button>
+									<Button
+										type="button"
+										size="sm"
+										variant={advanced ? "secondary" : "ghost"}
+										aria-pressed={advanced}
+										disabled={!advanced && filtersUnavailable}
+										onClick={() => {
+											if (!advanced) setQuery(generatedQuery);
+											setAdvanced(true);
+										}}
+									>
+										JQL
+									</Button>
+								</div>
+								{advanced ? (
+									<>
+										<Label htmlFor="jira-rule-query">JQL</Label>
+										<Textarea
+											id="jira-rule-query"
+											required
+											value={query}
+											onChange={(e) => setQuery(e.target.value)}
+										/>
+									</>
+								) : (
+									<ForkJiraAutomationFilters
+										filters={filters}
+										update={(patch) =>
+											setFilters((current) => ({ ...current, ...patch }))
+										}
+										projects={jiraProjects.data ?? []}
+										context={boardContext}
+									/>
+								)}
+								{!advanced && (
+									<p className="break-all font-mono text-xs text-muted-foreground">
+										{generatedQuery}
+									</p>
+								)}
 							</>
-						) : (
-							<ForkJiraAutomationFilters
-								filters={filters}
-								update={(patch) =>
-									setFilters((current) => ({ ...current, ...patch }))
-								}
-								projects={jiraProjects.data ?? []}
-								context={boardContext}
-							/>
-						)}
-						{!advanced && (
-							<p className="break-all font-mono text-xs text-muted-foreground">
-								{generatedQuery}
-							</p>
 						)}
 
 						<Label htmlFor="jira-rule-project">
@@ -393,6 +450,14 @@ export function ForkJiraAutomations({
 							onChange={setChoice}
 							supported={launchSupported}
 						/>
+						{v2 && (
+							<ForkAutomationOptions
+								value={options}
+								onChange={(patch) =>
+									setOptions((current) => ({ ...current, ...patch }))
+								}
+							/>
+						)}
 						<Label htmlFor="jira-rule-prompt">
 							<Trans>Instructions</Trans>
 						</Label>
@@ -405,7 +470,10 @@ export function ForkJiraAutomations({
 						/>
 						<Button
 							type="submit"
-							disabled={mutation.isPending || (!advanced && filtersUnavailable)}
+							disabled={
+								mutation.isPending ||
+								(isJira && !advanced && filtersUnavailable)
+							}
 						>
 							<Trans>Save</Trans>
 						</Button>

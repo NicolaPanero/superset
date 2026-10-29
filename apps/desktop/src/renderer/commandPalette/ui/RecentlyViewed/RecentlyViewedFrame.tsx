@@ -27,6 +27,7 @@ import {
 	type StatusType,
 } from "renderer/routes/_authenticated/_dashboard/tasks/components/TasksView/components/shared/StatusIcon";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { useFrameStackStore } from "../../core/frames";
 
 export function RecentlyViewedFrame() {
@@ -72,8 +73,12 @@ export function RecentlyViewedFrame() {
 		});
 	}, [hostWorkspaces, v2ProjectData]);
 
-	const { data: automations = [] } =
-		cloudTrpc.automation.list.useQuery(undefined);
+	const { data: automations = [] } = cloudTrpc.automation.list.useQuery(
+		undefined,
+		{
+			enabled: useForkProFeatures(),
+		},
+	);
 	const automationData = useMemo(
 		() =>
 			automations.map((automation) => ({

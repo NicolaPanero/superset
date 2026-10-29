@@ -607,6 +607,9 @@ msgstr "{0}% de todos os tokens · {1} tokens"
 msgid "{0}% of total cost · {1} tokens · * at API list rates"
 msgstr "{0}% do custo total · {1} tokens · * a preços de tabela da API"
 
+msgid "{active} in progress"
+msgstr "{active} em andamento"
+
 msgid "{actor} added the label {label}"
 msgstr "{actor} adicionou o rótulo {label}"
 
@@ -973,6 +976,9 @@ msgstr "{kind} · por {author}"
 msgid "{kindLabel} theme"
 msgstr "Tema {kindLabel}"
 
+msgid "{label} {installed} to {latest}"
+msgstr "{label} {installed} para {latest}"
+
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1202,6 +1208,9 @@ msgstr "{seconds} s"
 msgid "{seconds}s ago"
 msgstr "há {seconds}s"
 
+msgid "{selectedCount} entries · {selectedDuration}"
+msgstr "{selectedCount} registros · {selectedDuration}"
+
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} selecionadas"
 
@@ -1263,6 +1272,9 @@ msgstr "{toolName} interrompida"
 
 msgid "{total, plural, one {The check passed} other {All # checks passed}}"
 msgstr "{total, plural, one {A verificação passou} other {Todas as # verificações passaram}}"
+
+msgid "{total} worklogs on this issue · mine among those shown: {myDuration}"
+msgstr "{total} registros de trabalho nesta issue · meus entre os exibidos: {myDuration}"
 
 msgid "{totalCount, plural, one {GitHub issue} other {GitHub issues}}"
 msgstr "{totalCount, plural, one {issue do GitHub} other {issues do GitHub}}"
@@ -1630,6 +1642,9 @@ msgstr "Ainda há um processo rodando neste terminal"
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Um prompt, alguns gatilhos e uma área de trabalho para cada execução"
 
+msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
+msgstr "Uma proposta para dias úteis abaixo do mínimo, a partir de tarefas que você fechou sem horas e tarefas ainda em andamento. Nada vai para o Jira até você confirmar. Sem datas: os últimos 30 dias."
+
 msgid "A pull request always gets its own worktree"
 msgstr "Um pull request sempre tem seu próprio worktree"
 
@@ -1651,6 +1666,9 @@ msgstr "Um perfil separado cobrado por token. A chave fica na CLI do {0}."
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "Um perfil separado que compartilha suas skills, plugins, servidores MCP e configurações."
+
+msgid "A summary file of tasks and pull requests that need attention."
+msgstr "Um arquivo de resumo de tarefas e pull requests que precisam de atenção."
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "Uma chave de tarefa tem de 1 a 5 letras ou números e começa com uma letra."
@@ -1739,9 +1757,6 @@ msgstr "Conta com exclusão pendente"
 
 msgid "Account usage"
 msgstr "Uso da conta"
-
-msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
-msgstr "Os anéis de uso das contas são atualizados após cada turno de um agente e mantêm a última leitura em vez de esmaecer."
 
 msgid "Achievements"
 msgstr "Conquistas"
@@ -2125,6 +2140,9 @@ msgstr "configurações do agente"
 msgid "Agent setup"
 msgstr "Configurar agente"
 
+msgid "Agent updates"
+msgstr "Atualizações de agentes"
+
 msgid "Agent usage rankings"
 msgstr "Rankings de uso de agentes"
 
@@ -2133,6 +2151,9 @@ msgstr "Prévias controladas pelo agente"
 
 msgid "Agents"
 msgstr "Agentes"
+
+msgid "Agents at the same time"
+msgstr "Agentes simultâneos"
 
 msgid "Agents complete routine tickets with no mid-task intervention."
 msgstr "Os agentes concluem tickets rotineiros sem intervenção no meio da tarefa."
@@ -2154,6 +2175,9 @@ msgstr "Agentes rodando ao mesmo tempo"
 
 msgid "Agents use this account when they call Linear tools."
 msgstr "Os agentes usam esta conta quando chamam as ferramentas do Linear."
+
+msgid "Agents waiting for you"
+msgstr "Agentes esperando por você"
 
 msgid "Aggregate agent usage across every developer on the Paradev leaderboard — tokens, cost, cache behaviour and which models people actually reach for."
 msgstr "Uso agregado de agentes por todos os desenvolvedores do ranking do Paradev — tokens, custo, comportamento de cache e quais modelos as pessoas realmente usam."
@@ -2299,6 +2323,9 @@ msgstr "Todos os posts"
 msgid "All projects"
 msgstr "Todos os projetos"
 
+msgid "All pull requests"
+msgstr "Todos os pull requests"
+
 msgid "All releases"
 msgstr "Todas as versões"
 
@@ -2392,6 +2419,9 @@ msgstr "Já foi transferido para outra organização. Mude para ela para ver est
 msgid "Already brought over to another organization. Switch to it to see this workspace."
 msgstr "Já foi transferido para outra organização. Mude para ela para ver este workspace."
 
+msgid "Already handled"
+msgstr "Já tratada"
+
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Já tem uma conta? <0>Entre</0>"
 
@@ -2458,6 +2488,9 @@ msgstr "Ocorreu um erro desconhecido"
 
 msgid "An update is ready to install."
 msgstr "Há uma atualização pronta para instalar."
+
+msgid "Analysis, open questions and a plan. No ticket changes."
+msgstr "Análise, perguntas em aberto e um plano. Sem alterações no ticket."
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "O Android está a caminho. Seja o primeiro a saber quando for lançado."
@@ -3007,6 +3040,9 @@ msgstr "Automatizar tarefas"
 
 msgid "Automate workspace setup for {projectName}"
 msgstr "Automatize a preparação das áreas de trabalho de {projectName}"
+
+msgid "Automatic"
+msgstr "Automático"
 
 msgid "Automatic (email address)"
 msgstr "Automático (endereço de e-mail)"
@@ -3865,6 +3901,12 @@ msgstr "Superfícies de chat: mensagens, raciocínio, sugestões"
 msgid "Check again"
 msgstr "Verificar novamente"
 
+msgid "Check command (optional)"
+msgstr "Comando de verificação (opcional)"
+
+msgid "Check for agent updates every day"
+msgstr "Verificar atualizações de agentes todos os dias"
+
 msgid "Check for Update"
 msgstr "Verificar atualização"
 
@@ -3877,8 +3919,14 @@ msgstr "Verificar atualizações"
 msgid "Check for Updates..."
 msgstr "Verificar atualizações..."
 
+msgid "Check now"
+msgstr "Verificar agora"
+
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "Acompanhe os agentes em execução e leia o que eles mudaram pelo seu iPhone ou iPad."
+
+msgid "Check output"
+msgstr "Saída da verificação"
 
 msgid "Check plans and balances"
 msgstr "Consulte planos e saldos"
@@ -3915,6 +3963,12 @@ msgstr "Confira sua caixa de entrada"
 
 msgid "Checkbox · Radio · Switch"
 msgstr "Checkbox · Radio · Switch"
+
+msgid "checked"
+msgstr "verificada"
+
+msgid "Checking"
+msgstr "Verificando"
 
 msgid "Checking agents…"
 msgstr "Verificando os agentes…"
@@ -4035,6 +4089,9 @@ msgstr "Escolha como abrir caminhos de arquivo ao dar Cmd+clique no terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Escolher servidores MCP para esta mensagem"
+
+msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
+msgstr "Escolha os status para os quais o Superset move uma issue quando o trabalho começa e quando um pull request é aberto. Sem escolha, ele procura um status com nome parecido com “review”."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Escolha o que limpar do navegador do app."
@@ -4549,6 +4606,9 @@ msgstr "Comandos executados no setup e no teardown da área de trabalho e no bot
 
 msgid "Comment"
 msgstr "Comentar"
+
+msgid "Comment (optional)"
+msgstr "Comentário (opcional)"
 
 msgid "Comment actions"
 msgstr "Ações do comentário"
@@ -6236,6 +6296,9 @@ msgstr "diário 9:00"
 msgid "Daily at {time}"
 msgstr "Diariamente às {time}"
 
+msgid "Daily digest"
+msgstr "Resumo diário"
+
 msgid "Daily practice for our team and our heaviest users."
 msgstr "Prática diária no nosso time e entre nossos usuários mais intensos."
 
@@ -6272,11 +6335,26 @@ msgstr "Intervalo de datas"
 msgid "Day"
 msgstr "Dia"
 
+msgid "Day ends"
+msgstr "Fim do dia"
+
 msgid "Day One"
 msgstr "Dia um"
 
+msgid "Day starts"
+msgstr "Início do dia"
+
 msgid "days"
 msgstr "dias"
+
+msgid "Days"
+msgstr "Dias"
+
+msgid "Days already full:"
+msgstr "Dias já completos:"
+
+msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
+msgstr "Dias de folga (um por linha, YYYY-MM-DD ou YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "dias rodando três agentes ao mesmo tempo"
@@ -6687,6 +6765,9 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools ao lado da página"
 
+msgid "Diagnoses the failure and tries a fix, at most twice per pull request."
+msgstr "Diagnostica a falha e tenta uma correção, no máximo duas vezes por pull request."
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -6780,6 +6861,9 @@ msgstr "Descartar as alterações em \"{discardBasename}\"?"
 
 msgid "Discard changes?"
 msgstr "Descartar as alterações?"
+
+msgid "Discard my changes"
+msgstr "Descartar minhas alterações"
 
 msgid "Discard recording"
 msgstr "Descartar gravação"
@@ -7099,6 +7183,9 @@ msgstr "Cada anexo tem no máximo {0} MB."
 msgid "Each in its own new tab"
 msgstr "Cada um em sua própria aba"
 
+msgid "Each issue that starts to match the query gets a new workspace."
+msgstr "Cada issue que passa a corresponder à consulta ganha uma nova área de trabalho."
+
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "Toda manhã às 8h, veja as execuções de CI que falharam ontem, diagnostique a falha mais comum e abra um PR com a correção."
 
@@ -7153,6 +7240,9 @@ msgstr "Editar"
 
 msgid "Edit and restart from here"
 msgstr "Editar e reiniciar daqui"
+
+msgid "Edit automation"
+msgstr "Editar automação"
 
 msgid "Edit comment"
 msgstr "Editar comentário"
@@ -7638,6 +7728,12 @@ msgstr "Falhou"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "Falhou"
+
+msgid "Failed checks"
+msgstr "Verificações com falha"
+
+msgid "Failed checks on a linked pull request run the agent in its workspace, once per commit."
+msgstr "Verificações com falha em um pull request vinculado executam o agente na área de trabalho dele, uma vez por commit."
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "Execuções com falha <0>· 7d</0>"
@@ -8358,6 +8454,9 @@ msgstr "Corrigir apontamentos"
 msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
 msgstr "Corrija os erros novos em web. Reproduza cada um em um teste e abra um pull request em rascunho."
 
+msgid "Fix review comments"
+msgstr "Corrigir comentários de revisão"
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
 
@@ -8582,6 +8681,9 @@ msgstr "Redefinições gratuitas: {formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "Perguntas<0/>frequentes"
+
+msgid "Fri"
+msgstr "Sex"
 
 msgid "from"
 msgstr "de"
@@ -9307,6 +9409,9 @@ msgstr "Ocioso · push da branch feito"
 msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
 msgstr "Se a CLI ainda não estiver instalada, instale-a no computador em que este agente será executado antes de entrar na conta."
 
+msgid "If the computer is off or asleep at the scheduled time, the run starts when it wakes within this window, otherwise it is skipped. Time zone: {timeZone}."
+msgstr "Se o computador estiver desligado ou em repouso no horário agendado, a execução começa quando ele acordar dentro desta janela; caso contrário, é ignorada. Fuso horário: {timeZone}."
+
 msgid "If you're enjoying Paradev so far, a GitHub star helps other developers discover it."
 msgstr "Se você está curtindo o Paradev até aqui, uma estrela no GitHub ajuda outras pessoas a descobri-lo."
 
@@ -9446,9 +9551,6 @@ msgstr "Melhorar as instruções do agente"
 msgid "Improved diff viewer"
 msgstr "Visualizador de diff melhorado"
 
-msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
-msgstr "Em um chat do Claude, escolha outra conta no compositor para mover o chat para lá na hora, com todo o histórico."
-
 msgid "in a new session"
 msgstr "em uma nova sessão"
 
@@ -9463,6 +9565,9 @@ msgstr "Em poucos meses, <0>dezenas de milhares de pessoas de engenharia</0> pas
 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Presencial em San Francisco, cinco dias por semana. Você trabalha diretamente com os fundadores."
+
+msgid "in progress"
+msgstr "em andamento"
 
 msgid "In progress"
 msgstr "Em andamento"
@@ -9500,6 +9605,12 @@ msgstr "Navegador integrado"
 
 msgid "In-app PR merge"
 msgstr "Merge de PR dentro do app"
+
+msgid "Include"
+msgstr "Incluir"
+
+msgid "Include tasks still in progress"
+msgstr "Incluir tarefas ainda em andamento"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Inclua o id do ticket do Linear que está no prompt no nome da branch (ex.: bin-344-fix-login). Prefixe as branches com fix/ ou feat/ conforme a tarefa."
@@ -9831,6 +9942,9 @@ msgstr "Comentário em issue"
 msgid "Issue created"
 msgstr "Issue criada"
 
+msgid "Issue key"
+msgstr "Chave da issue"
+
 msgid "Issue not found."
 msgstr "Issue não encontrada."
 
@@ -9873,6 +9987,9 @@ msgstr "Ele reconecta sozinho quando a máquina voltar. Puxe para verificar de n
 msgid "Italic"
 msgstr "Itálico"
 
+msgid "Italy"
+msgstr "Itália"
+
 msgid "Item"
 msgstr "Item"
 
@@ -9909,6 +10026,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Automações do Jira"
 
+msgid "Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run."
+msgstr "As automações do Jira agora são acompanhadas até o fim: uma fila, um limite de agentes simultâneos, novas tentativas, uma prévia e uma execução manual."
+
 msgid "Jira board"
 msgstr "Quadro Jira"
 
@@ -9917,6 +10037,12 @@ msgstr "Issues do Jira"
 
 msgid "Jira project"
 msgstr "Projeto do Jira"
+
+msgid "Jira project key"
+msgstr "Chave do projeto Jira"
+
+msgid "Jira triage"
+msgstr "Triagem do Jira"
 
 msgid "Join"
 msgstr "Entrar"
@@ -10181,6 +10307,9 @@ msgstr "Execução"
 
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Dispare agentes em funcionalidades, correções e refatorações, tudo em paralelo. O status mostra de relance quais agentes estão trabalhando, quais estão travados e quais esperam por você."
+
+msgid "Launch attempts"
+msgstr "Tentativas de início"
 
 msgid "Launch mode"
 msgstr "Modo de execução"
@@ -10636,6 +10765,9 @@ msgstr "Local"
 msgid "Location & checkout"
 msgstr "Local e checkout"
 
+msgid "Log {logDuration}"
+msgstr "Registrar {logDuration}"
+
 msgid "Log levels"
 msgstr "Níveis de log"
 
@@ -10644,6 +10776,21 @@ msgstr "Sair"
 
 msgid "Log out?"
 msgstr "Sair?"
+
+msgid "Log time"
+msgstr "Registrar tempo"
+
+msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgstr "Registre horas em uma issue do Jira a partir dos detalhes, com seu tempo de hoje e o histórico da issue."
+
+msgid "Logged"
+msgstr "Registrado"
+
+msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
+msgstr "Registrado como {account} · {timeZone}. A estimativa restante não muda."
+
+msgid "Logged today: {total}"
+msgstr "Registrado hoje: {total}"
 
 msgid "Login unverified"
 msgstr "Login não verificado"
@@ -10706,6 +10853,12 @@ msgstr "Baixa"
 msgid "Low severity"
 msgstr "Gravidade baixa"
 
+msgid "Lunch ends"
+msgstr "Fim do almoço"
+
+msgid "Lunch starts"
+msgstr "Início do almoço"
+
 msgid "Machine resources"
 msgstr "Recursos da máquina"
 
@@ -10747,6 +10900,9 @@ msgstr "Tornar esta página pública?"
 
 msgid "make this the main action on the page"
 msgstr "faça desta a ação principal da página"
+
+msgid "Makes the requested changes as commits. Posts no comments."
+msgstr "Faz as alterações pedidas como commits. Não publica comentários."
 
 msgid "Makes the Run button launch this terminal script for matching projects."
 msgstr "Faz o botão Executar lançar este script de terminal nos projetos correspondentes."
@@ -10830,6 +10986,9 @@ msgstr "Marcar como lida"
 msgid "Mark as Unread"
 msgstr "Marcar como não lida"
 
+msgid "Mark as verified"
+msgstr "Marcar como verificada"
+
 msgid "Mark as viewed"
 msgstr "Marcar como visto"
 
@@ -10874,6 +11033,9 @@ msgstr "Máx."
 
 msgid "Maximum"
 msgstr "Máximo"
+
+msgid "Maximum hours a day"
+msgstr "Máximo de horas por dia"
 
 msgid "Maximum reasoning effort"
 msgstr "Esforço de raciocínio máximo"
@@ -11086,6 +11248,9 @@ msgstr "Minimizar as issues do GitHub"
 msgid "Minimum contrast"
 msgstr "Contraste mínimo"
 
+msgid "Minimum hours a day"
+msgstr "Mínimo de horas por dia"
+
 msgid "missed"
 msgstr "perdida"
 
@@ -11126,9 +11291,6 @@ msgstr "modelo"
 msgid "Model"
 msgstr "Modelo"
 
-msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
-msgstr "As listas de modelos e de esforço abrem na hora: o Paradev++ as guarda e as atualiza em segundo plano."
-
 msgid "Model context usage"
 msgstr "Uso do contexto do modelo"
 
@@ -11158,6 +11320,15 @@ msgstr "Modelos usados"
 
 msgid "Moderate reasoning effort"
 msgstr "Esforço de raciocínio moderado"
+
+msgid "Module field (optional)"
+msgstr "Campo de módulo (opcional)"
+
+msgid "Modules (comma separated)"
+msgstr "Módulos (separados por vírgula)"
+
+msgid "Mon"
+msgstr "Seg"
 
 msgid "Monitor agents from your phone."
 msgstr "Acompanhe os agentes pelo celular."
@@ -11295,6 +11466,9 @@ msgstr "Minhas issues do Jira"
 
 msgid "My Tasks"
 msgstr "Minhas tarefas"
+
+msgid "My time today: {todayDuration}"
+msgstr "Meu tempo hoje: {todayDuration}"
 
 msgid "Mystery Machinist"
 msgstr "Maquinista Misterioso"
@@ -11479,6 +11653,12 @@ msgstr "Novo grupo a partir da área de trabalho"
 msgid "New issue"
 msgstr "Nova issue"
 
+msgid "New Jira issue"
+msgstr "Nova issue do Jira"
+
+msgid "New local triggers: pull request comments, failed checks and a schedule, with ready-made templates."
+msgstr "Novos gatilhos locais: comentários em pull requests, verificações com falha e agenda, com modelos prontos."
+
 msgid "New page"
 msgstr "Nova página"
 
@@ -11490,6 +11670,9 @@ msgstr "Novo projeto"
 
 msgid "New push to branch"
 msgstr "Novo push na branch"
+
+msgid "New review comments on a pull request linked to a workspace of the project run the agent in that workspace."
+msgstr "Novos comentários de revisão em um pull request vinculado a uma área de trabalho do projeto executam o agente nessa área de trabalho."
 
 msgid "New session"
 msgstr "Nova sessão"
@@ -11652,6 +11835,9 @@ msgstr "Nenhum agente"
 msgid "No agent is configured on this host"
 msgstr "Nenhum agente está configurado neste host"
 
+msgid "No agent is waiting."
+msgstr "Nenhum agente está esperando."
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Nenhum agente configurado em {0}"
@@ -11682,6 +11868,9 @@ msgstr "Nenhum anexo"
 
 msgid "No authors found."
 msgstr "Nenhum autor encontrado."
+
+msgid "No automation is running."
+msgstr "Nenhuma automação em execução."
 
 msgid "No automations match"
 msgstr "Nenhuma automação corresponde"
@@ -12107,6 +12296,9 @@ msgstr "Nenhum resultado para “{query}”"
 msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
+msgid "No review requested."
+msgstr "Nenhuma revisão solicitada."
+
 msgid "No reviewers"
 msgstr "Nenhum revisor"
 
@@ -12124,6 +12316,9 @@ msgstr "Nenhuma vaga combina comigo. Ainda assim devo entrar em contato?"
 
 msgid "No runs yet"
 msgstr "Nenhuma execução ainda"
+
+msgid "No runs yet."
+msgstr "Nenhuma execução ainda."
 
 msgid "No screenshots yet"
 msgstr "Nenhuma captura de tela ainda"
@@ -12326,6 +12521,9 @@ msgstr "Não concedida"
 msgid "Not included"
 msgstr "Não incluído"
 
+msgid "Not installed on this computer."
+msgstr "Não instalado neste computador."
+
 msgid "Not loaded"
 msgstr "Não carregado"
 
@@ -12381,6 +12579,9 @@ msgstr "Nada está rodando. Arquive e crie outra."
 msgid "Nothing lives at {pathname}."
 msgstr "Não há nada em {pathname}."
 
+msgid "Nothing matches right now."
+msgstr "Nada corresponde no momento."
+
 msgid "Nothing needs a retry"
 msgstr "Nada precisa de nova tentativa"
 
@@ -12389,6 +12590,12 @@ msgstr "Nada publicado nos últimos 30 dias ainda. Sua posição aparece assim q
 
 msgid "Nothing running"
 msgstr "Nada em execução"
+
+msgid "Nothing to check."
+msgstr "Nada para verificar."
+
+msgid "Nothing to propose in this period."
+msgstr "Nada a propor neste período."
 
 msgid "Nothing was missed"
 msgstr "Nada foi perdido"
@@ -12457,6 +12664,9 @@ msgstr "de todos os tokens"
 
 msgid "Off"
 msgstr "Desligado"
+
+msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
+msgstr "Desativado por padrão. Quando ativado, a visualização Hoje pode preparar, somente quando você pedir, uma proposta de registros de trabalho para dias úteis abaixo do mínimo. Nada é registrado sem a sua confirmação, e nenhuma automação pode prepará-la ou enviá-la."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Desativada. Compra mais GB-horas quando estão acabando."
@@ -13064,6 +13274,9 @@ msgstr "Abrir sheet"
 msgid "Open ship options"
 msgstr "Abrir opções de envio"
 
+msgid "Open source"
+msgstr "Código aberto"
+
 msgid "Open System Settings"
 msgstr "Abrir Ajustes do Sistema"
 
@@ -13414,6 +13627,9 @@ msgstr "Páginas"
 msgid "Pages could not be loaded"
 msgstr "Não foi possível carregar as páginas"
 
+msgid "Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests."
+msgstr "Pages fica oculto junto com os outros recursos de nuvem, e os recursos de nuvem ocultos não fazem mais requisições."
+
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "As páginas abrem em grade, e teclados flutuantes funcionam. Requer iPadOS 26 ou posterior."
 
@@ -13625,8 +13841,8 @@ msgstr "O Paradev funciona com qualquer agente de código baseado em CLI, inclui
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "O aplicativo móvel do Paradev me permite manter meus agentes trabalhando e desbloqueá-los de qualquer lugar, mesmo longe do computador."
 
-msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
-msgstr "O Paradev++ mantém o Mac ativo enquanto seus agentes trabalham, para que uma tarefa longa não pare quando o Mac fica ocioso."
+msgid "Paradev++ looks for new versions once a day and shows a popup. It never updates anything by itself."
+msgstr "O Paradev++ procura novas versões uma vez por dia e mostra um pop-up. Ele nunca atualiza nada por conta própria."
 
 msgid "Paragraph"
 msgstr "Parágrafo"
@@ -13761,6 +13977,9 @@ msgstr "por PR mesclado"
 
 msgid "per merged PR, lower is better"
 msgstr "por PR mesclado, quanto menor melhor"
+
+msgid "Per project"
+msgstr "Por projeto"
 
 msgid "per session"
 msgstr "por sessão"
@@ -14390,6 +14609,12 @@ msgstr "Os prompts que você enviar aparecem aqui."
 msgid "Properties"
 msgstr "Propriedades"
 
+msgid "Propose hours"
+msgstr "Propor horas"
+
+msgid "Propose hours for my timesheet"
+msgstr "Propor horas para minha folha de horas"
+
 msgid "Provide either id or slug"
 msgstr "Forneça id ou slug"
 
@@ -14405,6 +14630,9 @@ msgstr "PRs por semana"
 
 msgid "Public"
 msgstr "Público"
+
+msgid "Public holidays"
+msgstr "Feriados"
 
 msgid "Public leaderboard"
 msgstr "Ranking público"
@@ -14448,11 +14676,17 @@ msgstr "Pull request #{0}, {1}"
 msgid "Pull request actions"
 msgstr "Ações do pull request"
 
+msgid "Pull request comments"
+msgstr "Comentários em pull requests"
+
 msgid "Pull request detail tabs"
 msgstr "Abas do detalhe do pull request"
 
 msgid "Pull request not found"
 msgstr "Pull request não encontrado"
+
+msgid "Pull request opened"
+msgstr "Pull request aberto"
 
 msgid "Pull request title"
 msgstr "Título do pull request"
@@ -14465,6 +14699,9 @@ msgstr "Pull requests"
 
 msgid "Pull Requests"
 msgstr "Pull requests"
+
+msgid "Pull requests waiting for your review"
+msgstr "Pull requests aguardando sua revisão"
 
 msgid "Purple"
 msgstr "Roxo"
@@ -14814,6 +15051,9 @@ msgstr "Reconectando…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "Reconectando… sua conversa foi mantida."
 
+msgid "Recorded on enable, not started"
+msgstr "Registrada ao ativar, não iniciada"
+
 msgid "Recording"
 msgstr "Gravando"
 
@@ -14876,6 +15116,9 @@ msgstr "Gerar novamente"
 
 msgid "Region"
 msgstr "Região"
+
+msgid "Register on Jira"
+msgstr "Registrar no Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Registra hooks de ciclo de vida na configuração global deste agente para o Paradev mostrar o status e enviar notificações. Desligar isso remove as entradas do Paradev em todo lugar — status e notificações param para este agente, inclusive dentro do Paradev."
@@ -15150,6 +15393,9 @@ msgstr "Reabrindo…"
 
 msgid "reorder agents"
 msgstr "reordenar os agentes"
+
+msgid "Repair failed checks"
+msgstr "Reparar verificações com falha"
 
 msgid "Replace"
 msgstr "Substituir"
@@ -15520,6 +15766,9 @@ msgstr "Retomando {0}…"
 msgid "Resuming the conversation…"
 msgstr "Retomando a conversa…"
 
+msgid "Retried"
+msgstr "Repetida"
+
 msgid "Retry"
 msgstr "Tentar de novo"
 
@@ -15735,6 +15984,9 @@ msgstr "Rode mais de 10 agentes de código em paralelo na sua máquina."
 msgid "Run again"
 msgstr "Executar novamente"
 
+msgid "Run again on the same issue"
+msgstr "Executar novamente na mesma issue"
+
 msgid "Run agents on a schedule or when something happens."
 msgstr "Execute agentes por agenda ou quando algo acontecer."
 
@@ -15763,9 +16015,6 @@ msgstr "Rode automações quando issues do Sentry mudarem."
 msgid "Run commands and navigate the application."
 msgstr "Execute comandos e navegue pelo aplicativo."
 
-msgid "Run history"
-msgstr "Histórico de execuções"
-
 msgid "Run History"
 msgstr "Histórico de execuções"
 
@@ -15780,6 +16029,12 @@ msgstr "Executar na área de trabalho"
 
 msgid "run issues in workspaces"
 msgstr "executar issues em áreas de trabalho"
+
+msgid "Run late for up to (minutes)"
+msgstr "Executar com atraso de até (minutos)"
+
+msgid "Run limit reached"
+msgstr "Limite de execuções atingido"
 
 msgid "Run now"
 msgstr "Executar agora"
@@ -15847,17 +16102,29 @@ msgstr "Executando agora"
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Os processos de terminal em execução continuam, mas a saída mais antiga pode não estar mais disponível depois de reiniciar o app."
 
+msgid "Runs"
+msgstr "Execuções"
+
 msgid "Runs a local command on your machine"
 msgstr "Executa um comando local na sua máquina"
 
 msgid "Runs appear here once an automation fires."
 msgstr "As execuções aparecem aqui assim que uma automação é disparada."
 
+msgid "Runs beyond these limits wait in the queue and start when an agent finishes."
+msgstr "Execuções além desses limites aguardam na fila e começam quando um agente termina."
+
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "Executa dentro do app Paradev naquele dispositivo, então atualizá-lo significa atualizar o app lá."
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "As execuções chegam em uma área de trabalho. Revise o diff e mescle o que estiver bom."
+
+msgid "Runs on the chosen days at the chosen time in a new workspace."
+msgstr "Executa nos dias escolhidos, no horário escolhido, em uma nova área de trabalho."
+
+msgid "Runs per pull request at most"
+msgstr "Máximo de execuções por pull request"
 
 msgid "Runs that found no host online"
 msgstr "Execuções que não encontraram host online"
@@ -15867,6 +16134,9 @@ msgstr "Execuções que iniciaram seu workspace nos últimos 7 dias"
 
 msgid "Runs the tests and reviews each pull request you're asked to review."
 msgstr "Roda os testes e revisa cada pull request que pedem para você revisar."
+
+msgid "Runs to check"
+msgstr "Execuções para verificar"
 
 msgid "Runs when a new workspace is created."
 msgstr "Executado quando um espaço de trabalho é criado."
@@ -15886,6 +16156,9 @@ msgstr "São Francisco"
 msgid "Sandbox stopped responding"
 msgstr "O sandbox parou de responder"
 
+msgid "Sat"
+msgstr "Sáb"
+
 msgid "Save"
 msgstr "Salvar"
 
@@ -15894,6 +16167,9 @@ msgstr "Salvar e criar a área de trabalho"
 
 msgid "Save All"
 msgstr "Salvar tudo"
+
+msgid "Save anyway"
+msgstr "Salvar mesmo assim"
 
 msgid "Save as environment"
 msgstr "Salvar como ambiente"
@@ -15909,6 +16185,9 @@ msgstr "Salvar ambiente"
 
 msgid "Save failed: {message}"
 msgstr "Falha ao salvar: {message}"
+
+msgid "Save limits"
+msgstr "Salvar limites"
 
 msgid "Save preferences"
 msgstr "Salvar preferências"
@@ -16921,6 +17200,9 @@ msgstr "Mostra o status e envia notificações para este agente."
 msgid "Show text"
 msgstr "Mostrar texto"
 
+msgid "Show the prompt"
+msgstr "Mostrar o prompt"
+
 msgid "Show the triggering payload"
 msgstr "Mostrar a carga útil que disparou"
 
@@ -17225,6 +17507,9 @@ msgstr "Alguns metadados específicos do agente não puderam ser transferidos."
 msgid "Some chat history could not be loaded."
 msgstr "Não foi possível carregar parte do histórico de chats."
 
+msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
+msgstr "Alguns dias ficam fora dos limites de horas. Corrija-os manualmente ou no Jira; o registro está desativado."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Alguns arquivos não são de um tipo aceito e não foram adicionados."
 
@@ -17255,6 +17540,9 @@ msgstr "Parte do seu trabalho da v1 precisa de atenção"
 
 msgid "Someone"
 msgstr "Alguém"
+
+msgid "Someone changed this issue in Jira while you were editing. Your save would replace their changes."
+msgstr "Alguém alterou esta issue no Jira enquanto você editava. Se você salvar, as alterações dessa pessoa serão substituídas."
 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByColleague"
@@ -17522,6 +17810,9 @@ msgstr "Iniciar um novo chat"
 msgid "Start a new chat each run"
 msgstr "Iniciar um novo chat a cada execução"
 
+msgid "Start a run"
+msgstr "Iniciar uma execução"
+
 msgid "Start a session"
 msgstr "Iniciar uma sessão"
 
@@ -17575,6 +17866,9 @@ msgstr "Comece uma com o + na barra de abas."
 
 msgid "Start or stop the workspace run command"
 msgstr "Iniciar ou parar o comando de execução da área de trabalho"
+
+msgid "Start time"
+msgstr "Horário de início"
 
 msgid "Start voice mode"
 msgstr "Iniciar o modo de voz"
@@ -17655,6 +17949,9 @@ msgstr "Manter a conexão (refresh tokens)"
 msgid "Steer"
 msgstr "Redirecionar"
 
+msgid "Step"
+msgstr "Etapa"
+
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "Etapa {0} de 2"
@@ -17714,6 +18011,9 @@ msgstr "Parar o agente e mudar para {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Pare o agente antes de editar uma mensagem"
+
+msgid "Stop tracking"
+msgstr "Parar de acompanhar"
 
 msgid "Stop watching"
 msgstr "Parar de observar"
@@ -17820,6 +18120,9 @@ msgstr "Resumo"
 
 msgid "Summary only"
 msgstr "Somente resumo"
+
+msgid "Sun"
+msgstr "Dom"
 
 msgid "sun 11:00"
 msgstr "dom 11:00"
@@ -18133,6 +18436,9 @@ msgstr "Tarefas e projetos"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "As tarefas criadas no Paradev serão sincronizadas com esta equipe do Linear."
 
+msgid "Tasks with much more time than their share:"
+msgstr "Tarefas com muito mais tempo do que sua parte:"
+
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "As tarefas, a CLI e os agentes seguem esta opção. Cada membro usa a própria conta do Linear."
 
@@ -18340,6 +18646,9 @@ msgstr "Esse nome não é permitido."
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "Essa execução é perdida e não é repetida. Use Executar agora para iniciá-la depois."
 
+msgid "That time happens twice on this day because the clock moves back. Jira received the first one."
+msgstr "Esse horário ocorre duas vezes neste dia porque o relógio é atrasado. O Jira recebeu o primeiro."
+
 msgid "The 2026 bet"
 msgstr "A aposta de 2026"
 
@@ -18381,9 +18690,6 @@ msgstr "O anúncio também apresenta a rodada seed de US$ 11,5 milhões liderada
 
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "O app é gratuito para baixar. Requer iOS 26 ou posterior e Paradev Pro. O Android vem a seguir."
-
-msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
-msgstr "Agora o app é Paradev++.app. A atualização move o Superset++.app para o Lixo, então fixe o novo app no Dock novamente."
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "O app está na {appVersion}, mas conectado a um serviço de host iniciado por outra coisa, provavelmente uma CLI antiga ou outro build do Paradev. Reiniciar o substitui pela cópia deste app."
@@ -18524,9 +18830,6 @@ msgstr "O terminal guiado instala o gh com o Homebrew e abre o login do GitHub."
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "O host voltou na {0}, não na {targetVersion}."
 
-msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
-msgstr "O host verifica a cada minuto. Ativar uma regra registra as correspondências existentes; cada nova issue correspondente inicia um workspace e um agente. As regras são salvas pausadas."
-
 msgid "The host did not come back within fifteen minutes."
 msgstr "O host não voltou a ficar disponível em quinze minutos."
 
@@ -18617,6 +18920,9 @@ msgstr "O novo agente pode ler as mensagens omitidas quando precisar."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "O novo agente retoma toda a conversa, incluindo as ferramentas."
+
+msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
+msgstr "A nova visão Hoje mostra os agentes esperando por você, as execuções para verificar, suas revisões e seu tempo."
 
 msgid "The overnight shift"
 msgstr "O turno da noite"
@@ -18772,6 +19078,9 @@ msgstr "Temas"
 
 msgid "Themes and agents"
 msgstr "Temas e agentes"
+
+msgid "These automations run on this computer, not in the cloud. The host checks every minute. Enabling a rule records what already matches; only later matches start an agent. Rules are saved paused."
+msgstr "Estas automações rodam neste computador, não na nuvem. O host verifica a cada minuto. Ativar uma regra registra o que já corresponde; só correspondências posteriores iniciam um agente. As regras são salvas pausadas."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Esses comandos rodam automaticamente quando uma área de trabalho é criada. <0>Leia a documentação<1/></0>"
@@ -19122,6 +19431,9 @@ msgstr "Esta thread não tem comentário para responder."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Esta thread não foi passada para um agente. Alguém precisa repassá-la pela página primeiro."
 
+msgid "This time was already logged in Jira"
+msgstr "Este tempo já foi registrado no Jira"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "Esta atualização reiniciou seus terminais uma única vez. Os novos abrem nas mesmas pastas."
 
@@ -19222,6 +19534,9 @@ msgstr "Três passos · mexe em packages/ui e apps/desktop"
 msgid "Threshold"
 msgstr "Limite"
 
+msgid "Thu"
+msgstr "Qui"
+
 msgid "Ticket to production under one day, median"
 msgstr "Do ticket à produção em menos de um dia, na mediana"
 
@@ -19230,6 +19545,18 @@ msgstr "Plano"
 
 msgid "Time"
 msgstr "Tempo"
+
+msgid "Time logged"
+msgstr "Tempo registrado"
+
+msgid "Time tracking is turned off on this Jira site."
+msgstr "O controle de tempo está desativado neste site do Jira."
+
+msgid "Time zone: {timeZone}"
+msgstr "Fuso horário: {timeZone}"
+
+msgid "Timesheet proposals"
+msgstr "Propostas de folha de horas"
 
 msgid "Tinted"
 msgstr "Colorido"
@@ -19245,6 +19572,9 @@ msgstr "Para"
 
 msgid "to {name}"
 msgstr "para {name}"
+
+msgid "To check"
+msgstr "A verificar"
 
 msgid "To do"
 msgstr "A fazer"
@@ -19347,6 +19677,9 @@ msgstr "tokens por sessão, últimos 30 dias"
 
 msgid "Tokens stay off your machine"
 msgstr "Os tokens ficam fora da sua máquina"
+
+msgid "Too late, skipped"
+msgstr "Tarde demais, ignorada"
 
 msgid "Too many dictations. Try again later."
 msgstr "Ditados demais. Tente novamente mais tarde."
@@ -19530,6 +19863,9 @@ msgstr "Experimente"
 
 msgid "Try now"
 msgstr "Testar agora"
+
+msgid "Tue"
+msgstr "Ter"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -19881,6 +20217,9 @@ msgstr "Atualizar serviço de host"
 msgid "Update in the App Store"
 msgstr "Atualizar na App Store"
 
+msgid "Update it with the same tool you used to install it."
+msgstr "Atualize com a mesma ferramenta usada para instalá-lo."
+
 msgid "Update naming instructions"
 msgstr "Atualizar as instruções de nomenclatura"
 
@@ -19937,6 +20276,9 @@ msgstr "Atualizado agora mesmo a partir da {0}."
 
 msgid "Updates"
 msgstr "Atualizações"
+
+msgid "Updates are available for your agent tools."
+msgstr "Há atualizações disponíveis para suas ferramentas de agente."
 
 #. placeholder {0}: update.progress.target
 msgid "Updating to {0}"
@@ -20149,6 +20491,9 @@ msgstr "Vercel AI Gateway"
 msgid "Vercel AI Gateway rejected this key."
 msgstr "O Vercel AI Gateway rejeitou esta chave."
 
+msgid "Verified"
+msgstr "Verificada"
+
 msgid "Verified and saved"
 msgstr "Verificado e salvo"
 
@@ -20173,6 +20518,12 @@ msgstr "Versão"
 #. placeholder {0}: entry.version
 msgid "Version {0}"
 msgstr "Versão {0}"
+
+msgid "Version {installed}, {latest} is available."
+msgstr "Versão {installed}, {latest} está disponível."
+
+msgid "Version {installed}, up to date."
+msgstr "Versão {installed}, atualizada."
 
 msgid "Version {sharedVersion}"
 msgstr "Versão {sharedVersion}"
@@ -20356,6 +20707,9 @@ msgstr "Aguardando sua resposta"
 msgid "Waits for the reset when no other account has quota."
 msgstr "Aguarda a redefinição quando nenhuma outra conta tem cota."
 
+msgid "Waits for you"
+msgstr "Aguarda você"
+
 msgid "Waking up workspace"
 msgstr "Ativando a área de trabalho"
 
@@ -20470,6 +20824,9 @@ msgstr "Webhook disparado"
 msgid "Website"
 msgstr "Site"
 
+msgid "Wed"
+msgstr "Qua"
+
 msgid "Week"
 msgstr "Semana"
 
@@ -20551,6 +20908,9 @@ msgstr "O que é o Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Qual é o problema?"
 
+msgid "What needs you now, all from this computer."
+msgstr "O que precisa de você agora, tudo deste computador."
+
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "O que é o Paradev, quem o constrói e para quem ele é. Uma equipe de San Francisco liderada por três ex-CTOs da YC construindo a área de trabalho para agentes de código paralelos."
 
@@ -20611,6 +20971,9 @@ msgstr "Novidades do Paradev++"
 msgid "What's next"
 msgstr "O que vem a seguir"
 
+msgid "When"
+msgstr "Quando"
+
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Quando um gatilho dispara, o Mac escolhido abre uma nova área de trabalho e o agente começa pelo seu prompt. Execuções por evento incluem o evento, então o agente sabe o que olhar. Responda na execução para continuar."
 
@@ -20620,11 +20983,17 @@ msgstr "Quando as GB-horas compradas ficarem abaixo de"
 msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 msgstr "Quando restarem menos de {topupThreshold} GB-horas, adicionar {topupPrice} ({topupGbHours} GB-horas)."
 
+msgid "When its status changes and it still matches"
+msgstr "Quando o status muda e ela ainda corresponde"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Quando desativado, nada mais consegue acessar os arquivos e ferramentas deste dispositivo. Você ainda pode se conectar a sandboxes remotos daqui. <0>Saiba mais<1/></0>"
 
 msgid "When quota runs out"
 msgstr "Quando a cota acabar"
+
+msgid "When the agent finishes, the check command runs in the workspace. Exit code 0 marks the run as verified. Without a command, you mark it yourself. A launch that fails is retried after 1, 5 and 15 minutes; three failures in a row pause the rule."
+msgstr "Quando o agente termina, o comando de verificação roda na área de trabalho. Código de saída 0 marca a execução como verificada. Sem comando, você mesmo a marca. Um início que falha é tentado de novo após 1, 5 e 15 minutos; três falhas seguidas pausam a regra."
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Onde os selos de porta detectada na barra lateral abrem ao serem clicados."
@@ -20716,6 +21085,9 @@ msgstr "E-mail profissional"
 msgid "Work from tickets"
 msgstr "Trabalhar a partir de tickets"
 
+msgid "Work started"
+msgstr "Trabalho iniciado"
+
 msgid "Work the action items from a call"
 msgstr "Resolver os itens de ação de uma chamada"
 
@@ -20732,6 +21104,9 @@ msgstr "Trabalhou {seconds} s"
 
 msgid "Workflow run completed…"
 msgstr "Execução de workflow concluída…"
+
+msgid "Workflow statuses"
+msgstr "Status do fluxo de trabalho"
 
 msgid "Workflow Tutorials"
 msgstr "Tutoriais de fluxo de trabalho"
@@ -20892,6 +21267,9 @@ msgstr "Worktrees"
 msgid "Worktrees are removed from disk; workspaces on the project's checkout only close. Files in the checkout stay as they are."
 msgstr "Os worktrees são removidos do disco; as áreas de trabalho no checkout do projeto apenas são fechadas. Os arquivos do checkout permanecem como estão."
 
+msgid "Would start"
+msgstr "Seria iniciada"
+
 msgid "Would you like to reassign it?"
 msgstr "Quer reatribuir?"
 
@@ -20921,6 +21299,9 @@ msgstr "Escreva a documentação da parte que todo mundo pergunta…"
 
 msgid "Write once. Runs in every agent."
 msgstr "Escreva uma vez. Funciona em todos os agentes."
+
+msgid "Write the duration as 45m, 1h 30m or 2h."
+msgstr "Escreva a duração como 45m, 1h 30m ou 2h."
 
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Escrever código já não é onde vão as horas de quem desenvolve. Ler código é. Os times que adotaram agentes em paralelo em 2025 bateram na parede primeiro: dez agentes produzem mais diffs antes do almoço do que um time consegue revisar com honestidade até sexta."
@@ -21157,6 +21538,9 @@ msgstr "Sua conta do GitHub não consegue acessar um repositório deste ambiente
 
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Seu link do GitHub vem da conta com que você entrou, por isso aparece como verificado e não pode ser editado aqui."
+
+msgid "Your Jira account cannot log time on this issue."
+msgstr "Sua conta do Jira não pode registrar horas nesta issue."
 
 msgid "Your last payment failed. Update your payment method to keep Pro."
 msgstr "Seu último pagamento falhou. Atualize sua forma de pagamento para manter o Pro."

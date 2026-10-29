@@ -2,6 +2,7 @@ import type { AgentIdentity } from "@superset/shared/agent-identity";
 import { eq } from "drizzle-orm";
 import { workspaces } from "../../../db/schema";
 import type { AgentLifecycleEventType } from "../../../events";
+import { forkTrackAutomationLifecycle } from "../../../fork-integrations/fork-automation-lifecycle";
 import type { HostServiceContext } from "../../../types";
 import { touchLocalWorkspaceActivity } from "../../../workspaces/local-workspace-store";
 import { refreshQuotaAfterTurn } from "../usage/fork-quota-refresh";
@@ -50,6 +51,7 @@ export function fanOutAgentLifecycle(
 ): void {
 	const { workspaceId, eventType, preview, occurredAt } = event;
 	ctx.eventBus.broadcastAgentLifecycle(event);
+	forkTrackAutomationLifecycle(ctx, event);
 	if (eventType === "Stop" || eventType === "Failed") refreshQuotaAfterTurn();
 
 	// Every lifecycle event is activity for the sidebar's "Last active"

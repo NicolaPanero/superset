@@ -1,8 +1,10 @@
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 export function usePullRequestEvidence(workspaceId: string, enabled: boolean) {
+	const showProFeatures = useForkProFeatures();
 	const options = {
-		enabled,
+		enabled: enabled && showProFeatures,
 		refetchInterval: 30_000,
 		refetchOnWindowFocus: true,
 	};

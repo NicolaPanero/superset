@@ -29,6 +29,58 @@ CREATE TABLE IF NOT EXISTS fork_jira_automation_runs (
  task_id text NOT NULL, task_key text NOT NULL, workspace_id text, error text,
  created_at integer NOT NULL, PRIMARY KEY(rule_id, task_id)
 );
+CREATE TABLE IF NOT EXISTS fork_jira_status_mappings (
+ scope text NOT NULL, connection_id text NOT NULL, project_key text NOT NULL,
+ progress_status_id text, review_status_id text,
+ PRIMARY KEY(scope, connection_id, project_key)
+);
+CREATE TABLE IF NOT EXISTS fork_jira_worklog_ops (
+ id text PRIMARY KEY NOT NULL, scope text NOT NULL, connection_id text NOT NULL,
+ issue_key text NOT NULL, started text NOT NULL, seconds integer NOT NULL,
+ comment text, state text NOT NULL, worklog_id text, created_at integer NOT NULL
+);
+CREATE TABLE IF NOT EXISTS fork_automation_rule_options (
+ rule_id text PRIMARY KEY NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
+ source_kind text NOT NULL DEFAULT 'jira', source_config text NOT NULL DEFAULT '{}',
+ refire text NOT NULL DEFAULT 'never', catchup_minutes integer NOT NULL DEFAULT 120,
+ verify_command text, retry_limit integer NOT NULL DEFAULT 3, target_limit integer,
+ paused_reason text, failures integer NOT NULL DEFAULT 0
+);
+CREATE TABLE IF NOT EXISTS fork_automation_settings (
+ scope text PRIMARY KEY NOT NULL, max_running integer NOT NULL DEFAULT 2,
+ max_per_project integer NOT NULL DEFAULT 1
+);
+CREATE TABLE IF NOT EXISTS fork_automation_seen (
+ rule_id text NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
+ item_key text NOT NULL, created_at integer NOT NULL, PRIMARY KEY(rule_id, item_key)
+);
+CREATE TABLE IF NOT EXISTS fork_automation_attempts (
+ id text PRIMARY KEY NOT NULL,
+ rule_id text NOT NULL REFERENCES fork_jira_automations(id) ON DELETE CASCADE,
+ event_key text NOT NULL, target text, title text NOT NULL, url text,
+ prompt text NOT NULL, workspace_id text, terminal_id text,
+ state text NOT NULL, previous_attempt_id text, retry_count integer NOT NULL DEFAULT 0,
+ next_attempt_at integer, manual integer NOT NULL DEFAULT 0,
+ error text, verify_output text, created_at integer NOT NULL, updated_at integer NOT NULL
+);
+CREATE INDEX IF NOT EXISTS fork_automation_attempts_rule ON fork_automation_attempts(rule_id, created_at);
+CREATE INDEX IF NOT EXISTS fork_automation_attempts_state ON fork_automation_attempts(state);
+CREATE INDEX IF NOT EXISTS fork_automation_attempts_terminal ON fork_automation_attempts(terminal_id);
+CREATE TABLE IF NOT EXISTS fork_agent_cli_updates (
+ agent text PRIMARY KEY NOT NULL, checked_at integer NOT NULL,
+ latest text, snoozed_until integer
+);
+CREATE TABLE IF NOT EXISTS fork_agent_cli_settings (
+ scope text PRIMARY KEY NOT NULL, enabled integer NOT NULL DEFAULT 1
+);
+CREATE TABLE IF NOT EXISTS fork_timesheet_settings (
+ scope text NOT NULL, connection_id text NOT NULL, settings text NOT NULL,
+ PRIMARY KEY(scope, connection_id)
+);
+CREATE TABLE IF NOT EXISTS fork_timesheet_proposals (
+ id text PRIMARY KEY NOT NULL, scope text NOT NULL, connection_id text NOT NULL,
+ data text NOT NULL, created_at integer NOT NULL
+);
 CREATE TABLE IF NOT EXISTS fork_integration_settings (
  scope text PRIMARY KEY NOT NULL, broker_url text NOT NULL
 );

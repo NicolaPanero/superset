@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Analisi del fork Paradev++ al 30 ottobre 2026: Tasks, worklog Jira, automazioni, Pages, prestazioni e roadmap.">
+  <title>Paradev++ · Dal potenziale al flusso quotidiano</title>
+  <style>
+    :root{--bg:#101114;--surface:#181a1e;--raised:#202329;--ink:#f3f1eb;--muted:#b0b4be;--line:#353943;--accent:#ffab73;--accent-bg:#3b281d;--green:#9edbb7;--green-bg:#20382b;--blue:#a7c8ff;--shadow:0 20px 70px #0003;--radius:18px;--side:242px;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+    [data-theme="light"]{--bg:#f4f2ed;--surface:#fffefa;--raised:#eceae4;--ink:#20242b;--muted:#525b69;--line:#d0d1cc;--accent:#94400d;--accent-bg:#fff0df;--green:#226642;--green-bg:#e4f3e9;--blue:#23579c;--shadow:0 20px 70px #3123100d}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.65}button,input,select,textarea{font:inherit}button,a,input,select,textarea,summary{-webkit-tap-highlight-color:transparent}a{color:var(--accent);text-underline-offset:3px}button{cursor:pointer}button:disabled{cursor:default;opacity:.65}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}::selection{background:var(--accent-bg);color:var(--ink)}button,select,input,textarea{color:var(--ink)}
+    .skip{position:fixed;top:-80px;left:16px;z-index:20;padding:10px 16px;background:var(--surface);border:1px solid var(--line);border-radius:8px}.skip:focus{top:10px}.shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:30px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;background:var(--bg);z-index:5}.brand{display:flex;align-items:center;gap:10px;font-weight:750;font-size:18px;letter-spacing:-.6px}.brand-mark{display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--accent);border-radius:10px;color:var(--accent);font-family:var(--mono);font-size:17px}.edition{color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;margin:10px 0 30px}.nav{display:flex;flex-direction:column;gap:5px}.nav a{display:flex;align-items:center;gap:12px;color:var(--muted);padding:10px 12px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:550;border:1px solid transparent}.nav a:hover{background:var(--raised);color:var(--ink)}.nav a[aria-current="page"]{color:var(--ink);background:var(--surface);border-color:var(--line)}.nav-index{font:11px var(--mono);color:var(--accent);width:20px}.sidebar-bottom{margin-top:auto;padding-top:28px}.controls{display:flex;gap:8px}.small-button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 11px;font-size:12px;font-weight:600;color:var(--ink)}.small-button:hover{border-color:var(--accent)}.sidebar-note{font-size:11px;color:var(--muted);line-height:1.65;margin-top:18px}.main{min-width:0;padding:48px clamp(24px,5vw,82px) 40px;max-width:1510px}.eyebrow{color:var(--accent);font-family:var(--mono);text-transform:uppercase;font-size:11px;letter-spacing:1.8px;margin:0 0 18px}.hero{padding-bottom:34px;margin-bottom:32px;border-bottom:1px solid var(--line);position:relative}.hero:before{content:"";position:absolute;right:0;top:0;width:180px;height:180px;background:radial-gradient(circle,var(--accent-bg),transparent 70%);z-index:-1}.hero h1{font-size:clamp(34px,4.4vw,59px);line-height:1.08;letter-spacing:-2.5px;max-width:850px;margin:0 0 23px;font-weight:720}.hero h1 span{color:var(--accent)}.lead{font-size:17px;color:var(--muted);max-width:850px;margin:0;line-height:1.75}.meta{display:flex;gap:10px 18px;flex-wrap:wrap;margin-top:23px;color:var(--muted);font-size:11px;font-family:var(--mono)}.meta strong{color:var(--ink);font-weight:500}.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle}.report-panel{scroll-margin-top:22px}.js-ready .report-panel{display:none}.js-ready .report-panel.is-active{display:block;animation:appear .16s ease-out}@keyframes appear{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}.section-kicker{color:var(--muted);font:11px var(--mono);letter-spacing:1.4px;text-transform:uppercase;margin:0 0 8px}h2{font-size:clamp(25px,3vw,36px);line-height:1.2;letter-spacing:-1.1px;margin:0 0 16px}h3{font-size:18px;line-height:1.35;letter-spacing:-.3px;margin:0 0 12px}h4{font-size:14px;margin:0 0 8px}p{margin:0 0 16px}p:last-child{margin-bottom:0}.intro{font-size:16px;max-width:900px;color:var(--muted);margin-bottom:25px}.grid{display:grid;gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{padding:25px;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);min-width:0}.card p,.card li{color:var(--muted)}.card strong,.card b{color:var(--ink)}.card.accent{background:var(--accent-bg);border-color:color-mix(in srgb,var(--accent) 38%,var(--line))}.card.accent p{color:var(--ink)}.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:6px;font:10px var(--mono);letter-spacing:.2px;color:var(--muted);background:var(--raised);border:1px solid var(--line);white-space:nowrap}.tag.actual{color:var(--green);background:var(--green-bg);border-color:transparent}.tag.proposal{color:var(--accent);background:var(--accent-bg);border-color:transparent}.tag.target{color:var(--blue)}.card .tag{margin-bottom:15px}.spacer{margin-top:25px}.block{margin-top:35px}.callout{border-left:3px solid var(--accent);padding:3px 0 3px 18px;margin:25px 0;color:var(--muted)}.callout strong{color:var(--ink)}.callout.good{border-color:var(--green)}.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:25px 0}.flow-step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 12px;min-width:0}.flow-step small{font:10px var(--mono);color:var(--accent);display:block;margin-bottom:7px}.flow-step b{display:block;font-size:13px}.flow-step span{display:block;font-size:11px;color:var(--muted);margin-top:3px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px;margin:20px 0;background:var(--surface)}table{border-collapse:collapse;width:100%;text-align:left;font-size:13px;min-width:620px}th{font:11px var(--mono);text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:var(--raised);padding:15px 17px;white-space:nowrap}td{padding:17px;border-top:1px solid var(--line);vertical-align:top}td:first-child{font-weight:650}td p{font-size:12px;color:var(--muted);margin-top:5px}ul,ol{margin:12px 0;padding-left:21px}li{margin:8px 0}code{font-family:var(--mono);font-size:.85em;background:var(--raised);padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:14px 0 0;padding:17px;background:var(--bg);border:1px solid var(--line);border-radius:10px;white-space:pre-wrap;font:12px/1.7 var(--mono);overflow-wrap:anywhere}.source-link{font-size:11px;font-family:var(--mono);overflow-wrap:anywhere}.fine{font-size:12px;color:var(--muted)}.big-quote{font-size:clamp(22px,2.4vw,31px);line-height:1.45;letter-spacing:-.65px;max-width:880px;margin:0}.score-label{font:11px var(--mono);color:var(--accent);margin-bottom:10px}.number{font:12px var(--mono);color:var(--accent);margin-right:7px}.decision{display:flex;gap:16px;align-items:flex-start}.decision-index{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--accent);font:12px var(--mono)}.decision+.decision{border-top:1px solid var(--line);padding-top:20px;margin-top:20px}.decision p{color:var(--muted);font-size:14px}.demo{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin:27px 0}.demo-banner{padding:13px 22px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.2px;border-bottom:1px solid var(--line)}.demo-inner{display:grid;grid-template-columns:1.15fr 1fr;background:var(--surface)}.demo-form{padding:25px;border-right:1px solid var(--line)}.demo-preview{padding:25px;background:color-mix(in srgb,var(--surface) 70%,var(--bg))}.issue-heading{display:flex;gap:10px;align-items:center;margin-bottom:17px}.issue-symbol{width:27px;height:27px;border-radius:6px;background:var(--green-bg);color:var(--green);display:grid;place-items:center;font-size:13px}.issue-heading b{font:12px var(--mono)}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:15px}.field label{font-size:12px;font-weight:600}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 11px;background:var(--bg);min-height:44px}.field textarea{min-height:90px;resize:vertical}.field-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.primary{width:100%;border:1px solid var(--accent);border-radius:8px;background:var(--accent-bg);color:var(--accent);font-size:13px;font-weight:750;padding:11px 15px}.primary:hover{filter:brightness(1.08)}.preview-duration{font-size:42px;letter-spacing:-1.5px;line-height:1.15;font-weight:700;margin:20px 0 7px}.preview-caption{font-size:11px;color:var(--muted)}dl{margin:20px 0}dl div{padding:11px 0;border-bottom:1px solid var(--line)}dt{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}dd{margin:4px 0 0;font-size:13px;overflow-wrap:anywhere}.preview-comment{padding:13px;border:1px solid var(--line);border-radius:9px;font-size:12px;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.notice{min-height:24px;margin:12px 0 0;font-size:12px;color:var(--muted)}.notice.error{color:var(--accent)}.notice.success{color:var(--green)}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.metric{padding:19px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.metric .value{font-size:29px;line-height:1.2;letter-spacing:-1px;color:var(--accent)}.metric p{font-size:12px;color:var(--muted);margin-top:8px}.roadmap{display:grid;gap:15px}.lot{display:grid;grid-template-columns:55px 1fr;gap:15px;padding:25px;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius)}.lot-number{font:25px var(--mono);color:var(--accent)}.lot-header{display:flex;align-items:center;gap:12px;justify-content:space-between}.lot-header h3{margin-bottom:0}.lot ul{color:var(--muted);font-size:14px}.done{padding:12px 15px;background:var(--green-bg);color:var(--green);border-radius:8px;font-size:12px}.source-list{display:grid;grid-template-columns:1fr 1fr;gap:13px}.source{padding:20px;border:1px solid var(--line);background:var(--surface);border-radius:12px;min-width:0}.source h3{font-size:14px}.source p{font-size:12px;color:var(--muted)}.source a{font:11px/1.7 var(--mono);display:block;overflow-wrap:anywhere}.source blockquote{font:11px/1.7 var(--mono);margin:10px 0 0;color:var(--muted);padding-left:10px;border-left:2px solid var(--line)}details{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:17px 20px;margin:13px 0}summary{cursor:pointer;font-weight:650;font-size:14px}details[open] summary{margin-bottom:13px}.panel-next{display:flex;justify-content:space-between;gap:15px;align-items:center;border-top:1px solid var(--line);padding-top:22px;margin-top:33px;color:var(--muted);font-size:12px}.panel-next a{font-weight:650;text-decoration:none}.footer{margin-top:45px;padding-top:18px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.print-only{display:none}.inbox{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:20px 0}.inbox-row{display:flex;align-items:flex-start;gap:13px;padding:17px 19px;background:var(--surface)}.inbox-row .inbox-icon{font:12px var(--mono);color:var(--accent);width:24px;padding-top:2px}.inbox-row strong{font-size:13px;display:block}.inbox-row span{color:var(--muted);font-size:12px}.inbox-action{margin-left:auto;font-size:11px;border:1px solid var(--line);padding:4px 8px;border-radius:6px;white-space:nowrap;color:var(--muted)}
+    @media(min-width:1600px){.main{margin:0 auto;width:100%}}
+    @media(max-width:1050px){:root{--side:205px}.sidebar{padding:24px 14px}.main{padding:35px 25px}.grid.three{grid-template-columns:1fr}.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.demo-inner{grid-template-columns:1fr}.demo-form{border-right:0;border-bottom:1px solid var(--line)}.metrics{grid-template-columns:1fr}.metric .value{font-size:25px}.hero h1{letter-spacing:-1.7px}.source-list{grid-template-columns:1fr}}
+    @media(max-width:700px){.shell{display:block}.sidebar{position:relative;height:auto;padding:17px 19px;border-right:0;border-bottom:1px solid var(--line);gap:10px}.brand{font-size:16px}.brand-mark{width:28px;height:28px;font-size:14px}.edition{margin:2px 0 7px;font-size:9px}.nav{display:flex;flex-direction:row;overflow-x:auto;padding-bottom:5px;gap:5px}.nav a{flex:0 0 auto;font-size:11px;padding:8px}.nav-index{display:none}.sidebar-bottom{position:absolute;right:18px;top:17px;padding:0}.sidebar-note{display:none}.controls .small-button{font-size:10px;padding:6px 8px}.main{padding:30px 19px}.hero h1{font-size:36px;letter-spacing:-1.7px}.lead{font-size:15px}.meta{font-size:10px;gap:6px 12px}.hero{padding-bottom:27px;margin-bottom:27px}.grid.two{grid-template-columns:1fr}.card{padding:20px}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.lot{grid-template-columns:35px 1fr;padding:20px 15px;gap:10px}.lot-header{align-items:flex-start}.lot-header h3{font-size:16px}.lot-number{font-size:21px}.demo-form,.demo-preview{padding:20px}.inbox-action{display:none}.field-pair{gap:10px}.source{padding:17px}.panel-next{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js-ready .report-panel.is-active{animation:none}}
+    @media print{*{box-shadow:none!important;animation:none!important}body{font-size:10pt;background:#fff!important;color:#111!important;--bg:#fff;--surface:#fff;--raised:#f5f5f5;--ink:#111;--muted:#444;--line:#ccc;--accent:#843705;--accent-bg:#fff7ec;--green:#205d39;--green-bg:#f0f7f2;--blue:#23579c}.shell{display:block}.sidebar,.panel-next,.controls,.demo-form .primary{display:none!important}.main{max-width:none;padding:0}.hero{padding-bottom:15px;margin-bottom:20px}.hero:before{display:none}.hero h1{font-size:30pt}.lead{font-size:11pt}.report-panel,.js-ready .report-panel{display:block!important;break-before:page}.report-panel:first-of-type{break-before:auto}h2{font-size:23pt}h3{font-size:14pt}p,li{orphans:3;widows:3}.card,.source,.lot,.metric,.flow-step{break-inside:avoid}.grid.two,.grid.three,.source-list{grid-template-columns:1fr 1fr}.card{padding:15px}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}th,td{padding:9px}.demo{break-inside:avoid}.demo-inner{grid-template-columns:1fr 1fr}.demo-form{border-right:1px solid var(--line);border-bottom:0}.demo-form,.demo-preview{padding:15px}.field input,.field select,.field textarea{min-height:0;padding:6px}.field textarea{min-height:55px}.flow{grid-template-columns:repeat(3,1fr)}.metrics{grid-template-columns:repeat(3,1fr)}.print-only{display:block}.source a{font-size:8pt}.footer{margin-top:20px}a{color:inherit}details{break-inside:avoid}details>*{display:block!important}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#content">Vai al rapporto</a>
+<div class="shell">
+  <aside class="sidebar" aria-label="Navigazione del rapporto">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">P++</span>Paradev++</div>
+    <div class="edition">Product audit · 30.10.2026</div>
+    <nav class="nav" aria-label="Sezioni">
+      <a href="#vision" data-panel="vision" aria-current="page"><span class="nav-index">01</span>La direzione</a>
+      <a href="#state" data-panel="state"><span class="nav-index">02</span>Il livello attuale</a>
+      <a href="#jira" data-panel="jira"><span class="nav-index">03</span>Tasks + worklog</a>
+      <a href="#automations" data-panel="automations"><span class="nav-index">04</span>Automazioni</a>
+      <a href="#pages" data-panel="pages"><span class="nav-index">05</span>Il posto di Pages</a>
+      <a href="#speed" data-panel="speed"><span class="nav-index">06</span>Usabilità e velocità</a>
+      <a href="#roadmap" data-panel="roadmap"><span class="nav-index">07</span>La roadmap</a>
+      <a href="#evidence" data-panel="evidence"><span class="nav-index">08</span>Fonti e verifiche</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="controls">
+        <button class="small-button" id="theme-toggle" type="button" aria-label="Passa al tema chiaro">Tema chiaro</button>
+        <button class="small-button" id="print-button" type="button">Stampa</button>
+      </div>
+      <p class="sidebar-note">Rapporto locale e autonomo.<br>Nessun dato inviato.<br>Le proposte non sono funzionalità già implementate.</p>
+    </div>
+  </aside>
+  <main class="main" id="content">
+    <header class="hero">
+      <p class="eyebrow">Analisi del prodotto e delle implementazioni</p>
+      <h1>Dal potenziale al<br><span>flusso quotidiano.</span></h1>
+      <p class="lead">Il fork ha già una base ricca. Il prossimo salto consiste nel collegare task, agenti e risultati in un percorso affidabile, veloce e facile da riprendere ogni giorno.</p>
+      <div class="meta"><span><span class="status-dot" aria-hidden="true"></span>Audit del codice</span><span>Commit <strong>2d26d8d716</strong></span><span><strong>30 ottobre 2026</strong></span><span>HTML offline · nessuna pubblicazione</span></div>
+    </header>
+
+    <section class="report-panel is-active" id="vision" aria-labelledby="vision-title">
+      <p class="section-kicker">01 / La direzione</p>
+      <h2 id="vision-title">Meno passaggi. Più lavoro che arriva a conclusione.</h2>
+      <p class="intro">La mia valutazione è netta: investirei prima nell’integrità dei flussi, poi nel worklog Jira e nell’affidabilità delle automazioni. La varietà di agenti, account e integrazioni è già un punto forte; oggi serve rendere visibile e governabile ciò che succede fra un avvio e il risultato finale.</p>
+      <div class="card accent"><p class="big-quote">Apri un task. Avvia il lavoro. Verifica il risultato. Chiudi il ciclo, comprese le ore. Il contesto ti segue.</p></div>
+      <div class="flow" aria-label="Flusso di lavoro proposto">
+        <div class="flow-step"><small>01</small><b>Task</b><span>obiettivo e priorità</span></div>
+        <div class="flow-step"><small>02</small><b>Workspace</b><span>repository e branch</span></div>
+        <div class="flow-step"><small>03</small><b>Agente</b><span>account e capacità</span></div>
+        <div class="flow-step"><small>04</small><b>Verifica</b><span>test ed evidenze</span></div>
+        <div class="flow-step"><small>05</small><b>Pull request</b><span>review e consegna</span></div>
+        <div class="flow-step"><small>06</small><b>Worklog</b><span>tempo confermato</span></div>
+      </div>
+      <p class="fine">Il percorso completo è la visione proposta. Molti collegamenti intermedi esistono già; il worklog e il monitoraggio del completamento delle automazioni locali sono ancora da costruire.</p>
+      <div class="grid three block">
+        <article class="card"><span class="tag actual">Base avanzata</span><h3>L’ambiente per gli agenti c’è.</h3><p>Chat ACP, account, quote, trasferimenti di sessione, MCP e workspace offrono già capacità concrete. Consoliderei questi investimenti e la compatibilità con upstream.</p></article>
+        <article class="card"><span class="tag proposal">Priorità immediata</span><h3>Tasks diventa il punto di partenza.</h3><p>Jira ha già ricerca, board, transizioni e collegamenti ai workspace. Registrare ore nel dettaglio del task è il tassello naturale successivo.</p></article>
+        <article class="card"><span class="tag proposal">Investimento strategico</span><h3>Automazioni da controllare a colpo d’occhio.</h3><p>Una sola vista per capire cosa parte, cosa aspetta, cosa è fallito e cosa è davvero finito, distinguendo l’esecuzione locale da quella hosted.</p></article>
+      </div>
+      <div class="block">
+        <p class="section-kicker">Il salto di esperienza</p>
+        <h3>Una Inbox che ti restituisce il controllo.</h3>
+        <p>La home ideale mostra il lavoro che richiede attenzione. Non un altro elenco di risorse: una coda di decisioni, con il contesto già pronto.</p>
+        <div class="inbox" aria-label="Esempi concettuali per una futura Inbox, non dati reali">
+          <div class="inbox-row"><span class="inbox-icon" aria-hidden="true">→</span><div><strong>Un agente aspetta una decisione</strong><span>Apri direttamente la domanda nella chat giusta.</span></div><span class="inbox-action">Rispondi</span></div>
+          <div class="inbox-row"><span class="inbox-icon" aria-hidden="true">↗</span><div><strong>Una pull request richiede review</strong><span>Diff, issue Jira e risultati dei test nello stesso contesto.</span></div><span class="inbox-action">Esamina</span></div>
+          <div class="inbox-row"><span class="inbox-icon" aria-hidden="true">!</span><div><strong>Un’automazione non ha completato il lavoro</strong><span>Errore, tentativo e prossima azione, senza cercare nei terminali.</span></div><span class="inbox-action">Risolvi</span></div>
+          <div class="inbox-row"><span class="inbox-icon" aria-hidden="true">◷</span><div><strong>Un worklog aspetta la tua conferma</strong><span>Una bozza modificabile, con ore e data decise da te.</span></div><span class="inbox-action">Completa</span></div>
+        </div>
+        <p class="fine">Proposta di prodotto. Queste righe descrivono comportamenti desiderati e non rappresentano attività del tuo account.</p>
+      </div>
+      <div class="panel-next"><span>Prima consolidare, poi ampliare.</span><a href="#state" data-panel="state">Leggi il livello attuale →</a></div>
+    </section>
+
+    <section class="report-panel" id="state" aria-labelledby="state-title">
+      <p class="section-kicker">02 / Il livello attuale</p>
+      <h2 id="state-title">Ricco di capacità, disomogeneo nella continuità dei flussi.</h2>
+      <p class="intro">“Implementato” non significa sempre “completo per l’uso quotidiano”. Distinguo le funzioni presenti nel codice dalla capacità di seguirne tutto il ciclo di vita.</p>
+      <div class="table-wrap"><table><thead><tr><th>Area</th><th>Livello raggiunto</th><th>Prossimo miglioramento</th></tr></thead><tbody>
+        <tr><td>Chat, account e sessioni</td><td>Base avanzata<p>Chat ACP, scelta di modelli e account, quote, ripresa e trasferimenti di cronologia.</p></td><td>Uniformare il recupero dagli errori e rendere espliciti i limiti dei singoli agenti.</td></tr>
+        <tr><td>Workspace, Git e PR</td><td>Integrazione ampia<p>Isolamento del lavoro, collegamenti Jira, provider GitHub e Bitbucket e avvio da contesto.</p></td><td>Rendere riconoscibile il percorso task → verifica → PR e, in seguito, il repository attivo nei workspace con più cartelle.</td></tr>
+        <tr><td>MCP sull’host</td><td>Base strutturata<p>Configurazione del fork condivisa fra agenti e account; applicazione ai percorsi ACP e CLI supportati.</p></td><td>Mostrare disponibilità, ultimo errore e capacità effettive senza esporre credenziali.</td></tr>
+        <tr><td>Tasks / Jira</td><td>Funzionalità ricche<p>Filtri grafici/JQL, lista e board, dettagli, modifica, commenti, transizioni e workspace collegati.</p></td><td>Correggere l’editing obsoleto e introdurre worklog manuale con storico e gestione dei casi ambigui.</td></tr>
+        <tr><td>Automazioni Jira locali</td><td>Motore iniziale funzionante<p>Ricerca periodica, deduplica persistente e avvio di workspace con agente o terminale.</p></td><td>Stato di completamento, coda, concorrenza, anteprima, avvio manuale e ripetizione controllata.</td></tr>
+        <tr><td>Automazioni ufficiali</td><td>Prodotto più esteso<p>Schedule, eventi, versioni del prompt, storico e run-now, con vincoli del servizio hosted.</p></td><td>Presentarle nella stessa vista del motore locale, con origine, requisiti e destinazione chiari.</td></tr>
+        <tr><td>Pages</td><td>Pubblicazione collaborativa avanzata<p>HTML, asset, versioni, condivisione, commenti agli agenti, storage e tool dei plugin.</p></td><td>Renderla opzionale e contestuale a report, design e consegne.</td></tr>
+      </tbody></table></div>
+      <div class="callout good"><strong>Da preservare:</strong> il fork investe in piccoli agganci al codice upstream e file propri. È una scelta di manutenzione preziosa: le prossime funzionalità dovrebbero continuare su questa strada.</div>
+      <div class="grid two block">
+        <article class="card"><h3>I trasferimenti sono una capacità seria.</h3><p>Il progetto documenta la conversione tra formati di sessione e test sulle <strong>20 direzioni di codec</strong>. Questo dimostra la copertura dei percorsi di conversione; non certifica l’esecuzione reale di ogni combinazione di CLI, modello e versione.</p><p class="fine">La distinzione conta: compatibilità del formato e ripresa nativa nel processo del provider sono due verifiche diverse. Alcune note di validazione nel documento sono storiche.</p><a class="source-link" href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/FORK.md#L418" target="_blank" rel="noreferrer">FORK.md:418 · capacità e limiti →</a></article>
+        <article class="card"><h3>Le chat lunghe hanno già ricevuto interventi mirati.</h3><p>Il reducer mantiene stabili porzioni dello stato della sessione e il journal del fork rimuove stati precedenti ridondanti. Eviterei di ricostruire queste soluzioni: misurerei il beneficio e cercherei il prossimo costo concreto.</p><a class="source-link" href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/chat/src/core/reducer/fork-stable-session.ts#L25" target="_blank" rel="noreferrer">fork-stable-session.ts:25 →</a><br><a class="source-link" href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/chat-runtime/src/journal/journal/fork-session-prune.ts#L15" target="_blank" rel="noreferrer">fork-session-prune.ts:15 →</a></article>
+      </div>
+      <div class="card block"><h3>Opportunità successiva: più repository, una scelta esplicita.</h3><p>Il fork ha già un documento di proposta per le PR nei workspace con più cartelle. Il flusso PR continua a passare il workspace principale: aggiungerei in seguito una scelta del repository attivo, con diff, branch e PR coerenti. È una proposta già documentata, ancora da implementare; la posizionerei dopo Jira e automazioni.</p><a class="source-link" href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/docs/fork-workspace-pr-repositories.md#L1" target="_blank" rel="noreferrer">docs/fork-workspace-pr-repositories.md:1 →</a></div>
+      <div class="panel-next"><span>Il primo tassello visibile: completare Tasks.</span><a href="#jira" data-panel="jira">Esplora il worklog Jira →</a></div>
+    </section>
+
+    <section class="report-panel" id="jira" aria-labelledby="jira-title">
+      <p class="section-kicker">03 / Tasks + Jira</p>
+      <h2 id="jira-title">Sì: registrare ore qui ha molto senso.</h2>
+      <p class="intro">Il dettaglio Jira è già abbastanza ricco da ospitare il worklog senza introdurre una schermata scollegata. Il primo rilascio dovrebbe permettere di inserire, controllare e confermare il tempo manualmente. Il supporto a timer o proposte automatiche viene dopo.</p>
+      <div class="grid two">
+        <article class="card"><span class="tag actual">Già presente</span><h3>Il contesto è pronto.</h3><p>Issue, account della connessione, descrizione, commenti, stato e workspace collegati sono già nel flusso. Il worklog può riusare la connessione Jira dell’host e seguire gli stessi confini di sicurezza.</p></article>
+        <article class="card"><span class="tag proposal">Da costruire</span><h3>Un pannello Ore nel dettaglio.</h3><p>Durata, giorno, ora di inizio, account e commento. Storico paginato e distinzione fra <strong>le mie ore di oggi</strong> e <strong>tempo complessivo dell’issue</strong>, che può includere altre persone.</p></article>
+      </div>
+      <div class="callout"><strong>Prima va corretto un problema di integrità.</strong> I campi del dettaglio sono inizializzati con <code>useState(task…)</code> una sola volta. Con la stessa issue aggiornata nel frattempo, Edit riapre lo stato precedente e Save invia comunque il titolo. Si può quindi riscrivere un valore obsoleto. Serve acquisire uno snapshot fresco al click su Edit e inviare solo i campi modificati; gli aggiornamenti concorrenti vanno riconciliati, non sovrascritti in silenzio.</div>
+      <p class="fine">Rischio individuato dal codice, non riprodotto oggi nell’app. Fonte: <a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/components/ForkIntegrations/components/ForkTaskDetail/ForkTaskDetail.tsx#L55" target="_blank" rel="noreferrer">ForkTaskDetail.tsx:55, 109, 184</a>.</p>
+
+      <div class="demo" id="worklog-demo">
+        <div class="demo-banner">Proposta UX · dati dimostrativi · nessun invio a Jira</div>
+        <div class="demo-inner">
+          <form class="demo-form" id="worklog-form">
+            <div class="issue-heading"><span class="issue-symbol" aria-hidden="true">✓</span><b>DEMO-42</b><span class="fine">Esempio di task</span></div>
+            <h3>Registra tempo</h3>
+            <div class="field"><label for="wl-account">Account Jira</label><select id="wl-account" name="account"><option>Account personale · dimostrativo</option><option>Secondo account · dimostrativo</option></select></div>
+            <div class="field"><label for="wl-duration">Durata</label><input id="wl-duration" name="duration" value="1h 30m" autocomplete="off" spellcheck="false" aria-describedby="wl-duration-help wl-message" required><span class="fine" id="wl-duration-help">Esempi: 45m, 1h 30m, 2h. Inserisci il tempo che vuoi dichiarare.</span></div>
+            <div class="field-pair"><div class="field"><label for="wl-date">Giorno</label><input id="wl-date" name="date" type="date" value="2026-10-30" required></div><div class="field"><label for="wl-time">Ora di inizio</label><input id="wl-time" name="time" type="time" value="09:00" required></div></div>
+            <div class="field"><label for="wl-comment">Commento</label><textarea id="wl-comment" name="comment" maxlength="2000">Analisi del task e verifica del risultato.</textarea></div>
+            <button class="primary" type="submit">Conferma solo nella simulazione</button>
+            <p class="notice" id="wl-message" role="status" aria-live="polite">La compilazione aggiorna solo l’anteprima in questo file.</p>
+          </form>
+          <div class="demo-preview" aria-label="Anteprima locale del worklog">
+            <span class="tag proposal">Anteprima · non salvata</span>
+            <div class="preview-duration" id="wl-preview-duration">1h 30m</div>
+            <div class="preview-caption">tempo da registrare su DEMO-42</div>
+            <dl>
+              <div><dt>Account</dt><dd id="wl-preview-account">Account personale · dimostrativo</dd></div>
+              <div><dt>Inizio</dt><dd id="wl-preview-start">30/10/2026 alle 09:00 · Europe/Rome</dd></div>
+              <div><dt>Stima residua</dt><dd>Invariata · adjustEstimate=leave</dd></div>
+              <div><dt>Le mie ore di oggi / Totale issue</dt><dd>Da leggere separatamente da Jira nel prodotto reale.</dd></div>
+            </dl>
+            <div class="preview-comment" id="wl-preview-comment">Analisi del task e verifica del risultato.</div>
+            <p class="fine spacer">Questa demo non legge account, worklog o permessi reali. L’app dovrà risolvere e validare l’offset del fuso orario, inclusi i cambi d’ora legale.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="block">Le condizioni per farlo bene</h3>
+      <div class="table-wrap"><table><thead><tr><th>Aspetto</th><th>Comportamento da progettare</th></tr></thead><tbody>
+        <tr><td>Permessi e disponibilità</td><td>Rilevare time tracking e permessi Jira. Se non puoi registrare tempo, spiegare il motivo e offrire l’apertura dell’issue. Non mostrare un errore generico dopo la compilazione.</td></tr>
+        <tr><td>Data e ora</td><td>Account, giorno e ora espliciti; il backend risolve il fuso e l’offset corretto per quella data. Gestire gli orari inesistenti o ambigui durante il cambio dell’ora legale.</td></tr>
+        <tr><td>Stima residua</td><td>Impostare inizialmente <code>adjustEstimate=leave</code>. La registrazione del lavoro non deve cambiare una stima del team senza una scelta esplicita.</td></tr>
+        <tr><td>Doppio click e timeout</td><td>Disabilitare l’invio in corso e salvare un’operazione locale persistente. Dopo un timeout, riconciliare con Jira prima di riprovare. Un POST può essere riuscito anche se la risposta non arriva.</td></tr>
+        <tr><td>Storico</td><td>Paginare i worklog e distinguere autore, data del lavoro e data di inserimento. Conteggi personali, giornalieri e dell’issue devono dichiarare cosa sommano.</td></tr>
+        <tr><td>Proposte dell’agente</td><td>Una bozza modificabile con provenienza delle informazioni. Tempo di esecuzione dell’agente, attività sul branch e durata della chat non dimostrano le ore lavorate dalla persona.</td></tr>
+      </tbody></table></div>
+      <div class="card"><h3>La skill personale jira-worklog può diventare un acceleratore.</h3><p>Nel seguito, la sua logica può preparare una bozza di timesheet da rivedere nella UI. Restano separati il tempo effettivamente osservato, quando esiste una rilevazione affidabile, e le proposte da confermare. Nessun riempimento automatico delle giornate e nessun invio a Jira basato soltanto sulle attività degli agenti.</p><p class="fine">La skill personale non equivale a una funzionalità nativa già presente nel fork. La proposta è integrarne il flusso di revisione, senza confondere suggerimenti e misurazione.</p></div>
+      <p class="fine block">Contratto API: <a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/" target="_blank" rel="noreferrer">Atlassian · Issue worklogs</a>. L’API offre il punto di integrazione; non fornisce una garanzia universale di idempotenza per un nuovo inserimento.</p>
+      <div class="panel-next"><span>Il worklog manuale viene prima del timesheet assistito.</span><a href="#automations" data-panel="automations">Approfondisci le automazioni →</a></div>
+    </section>
+
+    <section class="report-panel" id="automations" aria-labelledby="automations-title">
+      <p class="section-kicker">04 / Automazioni</p>
+      <h2 id="automations-title">Due motori. Una sola esperienza da costruire.</h2>
+      <p class="intro">Nel repository convivono il motore Jira locale del fork e il sistema ufficiale hosted. Hanno capacità, stato e requisiti diversi. Il modo migliore per estenderli è renderli riconoscibili nella stessa vista e consolidare l’esecuzione locale con componenti propri del fork.</p>
+      <div class="table-wrap"><table><thead><tr><th></th><th>Locale · fork Jira</th><th>Hosted · ufficiale</th></tr></thead><tbody>
+        <tr><td>Attivazione</td><td>Polling Jira ogni 60 secondi; filtri/JQL.</td><td>Schedule RRULE con timezone ed eventi di più provider.</td></tr>
+        <tr><td>Avvio</td><td>Crea workspace collegato all’issue e avvia chat ACP o terminale con agente, modello e account selezionabili.</td><td>Destinazioni e percorsi di dispatch previsti dal servizio ufficiale.</td></tr>
+        <tr><td>Controlli</td><td>Abilitazione/disabilitazione, creazione e storico essenziale dei tentativi.</td><td>Versioni del prompt, storico, modifica e run-now.</td></tr>
+        <tr><td>Requisiti</td><td>Host disponibile e connessione Jira configurata.</td><td>Servizio ufficiale e vincolo Pro applicato sul server.</td></tr>
+        <tr><td>Limite decisivo</td><td>L’avvio riuscito non segue il completamento del lavoro.</td><td>Non è il motore locale del fork: non basta riusarne la UI per averne capacità e requisiti.</td></tr>
+      </tbody></table></div>
+      <div class="callout"><strong>Una scelta chiara:</strong> la vista può essere unica, il luogo di esecuzione deve restare esplicito. Estendere il motore locale con nuove capacità non richiede aggirare o replicare il paywall delle automazioni ufficiali.</div>
+      <div class="block"><h3>Il motore locale, esattamente oggi</h3><div class="grid two">
+        <article class="card"><h4>Cosa protegge già</h4><ul><li>La prima scansione acquisisce una baseline delle issue esistenti e non avvia agenti.</li><li>Il claim persistente precede l’avvio: dopo un crash non si riparte in silenzio creando un altro agente.</li><li>Le scansioni dello stesso processo non si sovrappongono.</li><li>Ogni regola lancia al massimo 5 issue per scansione; la ricerca accetta al massimo 1.000 issue.</li></ul></article>
+        <article class="card"><h4>Cosa rende il flusso incompleto</h4><ul><li>La deduplica permanente usa regola + issue: una riapertura o un nuovo aggiornamento non sono un nuovo evento.</li><li>Un lancio fallito consuma quel claim; non c’è una ripetizione automatica controllata.</li><li>Mancano preview, run-now, editing completo e retry dalla UI locale.</li><li>Non c’è un limite globale di agenti concorrenti né uno stato che certifichi la fine del lavoro.</li></ul></article>
+      </div><p class="fine spacer">I limiti di scansione sono difese utili, non una coda globale. Il sesto elemento resta disponibile al giro successivo se soddisfa ancora la query, ma non viene accodato in modo persistente. Una issue entrata e uscita dalla query tra due scansioni può non essere osservata. Un “nessun errore di lancio” non significa che l’agente abbia risolto il task. Fonte: <a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira-automations.ts#L25" target="_blank" rel="noreferrer">fork-jira-automations.ts:25–194</a>.</p></div>
+      <div class="card block"><h3>Il prossimo motore locale: prima osservabile, poi più potente.</h3><p>Separerei l’evento, la regola e il tentativo di esecuzione. L’evento conserva origine e versione; la regola definisce condizioni e azione; ogni tentativo ha uno stato persistente e un collegamento a workspace e sessione.</p><pre>Evento → Regola → Coda → Tentativo → Risultato
+
+queued → launching → running → succeeded
+                         ↘ waiting_input
+                         ↘ failed / cancelled / unknown
+
+Esecuzione: locale oppure hosted, sempre dichiarata.
+Ripetizione: nuovo tentativo collegato al precedente.</pre><p class="fine spacer">Schema proposto. Il completamento deve derivare da segnali della sessione e da un contratto di risultato verificabile. L’uscita del processo o il silenzio del terminale non bastano a dichiarare il task completato.</p></div>
+      <div class="grid two block">
+        <article class="card"><h3>Controlli che danno fiducia</h3><ul><li>Anteprima delle issue che verrebbero selezionate e spiegazione del motivo.</li><li>Run-now con scelta tra prova senza effetti e avvio reale.</li><li>Concorrenza globale e per progetto; coda ispezionabile.</li><li>Budget e tentativi limitati; pausa dopo errori ripetuti.</li><li>Gestione esplicita di host offline, attese dell’utente e riavvii.</li><li>Errori strutturati, prossimo tentativo e azione suggerita.</li></ul><p class="fine">Il keep-awake durante i turni degli agenti non assicura che l’host sia sveglio prima del trigger. Servono ultimo poll visibile e una politica al risveglio: esegui solo entro una finestra massima, salta oppure chiedi.</p></article>
+        <article class="card"><h3>Trigger da estendere con ordine</h3><p>Partirei da polling incrementale Jira con riconciliazione periodica, poi aggiungerei adattatori per PR, CI e schedule. Un unico contratto evento evita un secondo motore per ogni provider.</p><p>I webhook Jira richiedono un progetto di integrazione preciso: l’API REST per i webhook dinamici è disponibile per app Connect/OAuth, non per il semplice token API locale. Occorrono inoltre un endpoint raggiungibile e il rinnovo dei webhook dinamici entro 30 giorni.</p><p class="fine">Riferimenti: <a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-webhooks/" target="_blank" rel="noreferrer">Atlassian · Webhooks</a>, <a href="https://developer.atlassian.com/cloud/jira/platform/rate-limiting/" target="_blank" rel="noreferrer">Rate limiting</a>.</p></article>
+      </div>
+      <h3 class="block">Template che userei davvero</h3>
+      <div class="table-wrap"><table><thead><tr><th>Template</th><th>Trigger e risultato</th><th>Confine iniziale</th></tr></thead><tbody>
+        <tr><td>Triage Jira</td><td>Nuova issue che soddisfa una regola → analisi, domande aperte e proposta di intervento.</td><td>Bozza da esaminare prima di modificare ticket o avviare implementazioni estese.</td></tr>
+        <tr><td>Preparazione della review PR</td><td>Avvio manuale su una PR → sintesi delle modifiche, rischi e controlli da verificare.</td><td>Review preparata per te; nessun commento pubblicato automaticamente.</td></tr>
+        <tr><td>CI fallita</td><td>Fallimento sul branch pertinente → diagnosi e, se previsto dalla regola, tentativo di correzione.</td><td>Numero di tentativi limitato, nessun ciclo di retry senza fine.</td></tr>
+        <tr><td>Digest di lavoro</td><td>Schedule → riepilogo di task, PR e run che richiedono attenzione.</td><td>Fonti e collegamenti disponibili; pubblicazione esterna separata dalla generazione.</td></tr>
+        <tr><td>Timesheet assistito</td><td>Schedule o avvio manuale → bozza di worklog da rivedere.</td><td>Durata mai dedotta come fatto dal tempo degli agenti; conferma umana prima dell’invio.</td></tr>
+      </tbody></table></div>
+      <div class="panel-next"><span>Estensibilità utile significa esecuzioni comprensibili.</span><a href="#pages" data-panel="pages">Dove mettere Pages →</a></div>
+    </section>
+
+    <section class="report-panel" id="pages" aria-labelledby="pages-title">
+      <p class="section-kicker">05 / Il posto di Pages</p>
+      <h2 id="pages-title">Un modo per consegnare risultati agli altri.</h2>
+      <p class="intro">Pages pubblica report, design e piccoli strumenti HTML con un link persistente. I lettori possono commentare punti precisi e un agente in ascolto può aggiornare la pagina. È il prodotto Paradev per condividere artefatti; non è ChatGPT Pages/Spaces e non è un archivio automatico delle chat.</p>
+      <div class="flow" aria-label="Ciclo di una Page">
+        <div class="flow-step"><small>01</small><b>Produci</b><span>HTML e asset</span></div>
+        <div class="flow-step"><small>02</small><b>Pubblica</b><span>URL persistente</span></div>
+        <div class="flow-step"><small>03</small><b>Condividi</b><span>lettori e permessi</span></div>
+        <div class="flow-step"><small>04</small><b>Commenta</b><span>feedback ancorato</span></div>
+        <div class="flow-step"><small>05</small><b>Aggiorna</b><span>agente in ascolto</span></div>
+        <div class="flow-step"><small>06</small><b>Ripubblica</b><span>stesso link, versione nuova</span></div>
+      </div>
+      <div class="grid two">
+        <article class="card"><span class="tag actual">Implementazione ampia</span><h3>Serve quando qualcuno deve leggere il risultato.</h3><p>Analisi tecnica da discutere, confronto di alternative, report di un’automazione, anteprima di un design o piccolo dashboard. Supporta versioni, condivisione, storage e chiamate ai tool dei plugin con l’identità del lettore.</p><p>Per un uso prevalentemente personale e concentrato sul codice, non deve occupare per forza la navigazione principale.</p></article>
+        <article class="card"><span class="tag proposal">Scelta consigliata</span><h3>Opzionale, pronta al momento giusto.</h3><p>Metterei Pages sotto “Altro / Condividi risultati” e la offrirei alla fine di un’analisi o di una run. Il flusso principale resta visibile: Workspaces, Tasks, Automations e Pull Requests.</p><p>Non costruirei un secondo motore di documenti nel fork: c’è già un sistema upstream esteso da mantenere compatibile.</p></article>
+      </div>
+      <div class="callout"><strong>Il flag esistente oggi non la nasconde.</strong> Pages non compare in <code>PRO_ROUTES</code>, i due pulsanti della sidebar sono incondizionati, e ci sono ingressi anche nel menu attività e nel selettore del pannello destro. Nascondere solo la voce principale lascerebbe un’esperienza incoerente.</div>
+      <div class="card"><h3>Come collegherei Pages alle impostazioni del fork</h3><div class="decision"><div class="decision-index">1</div><div><h4>Intervento minimo</h4><p>Far seguire Pages al flag di visibilità già presente, coprendo tutti gli ingressi e le query dedicate. Le pagine pubblicate restano conservate e i link espliciti continuano ad avere una politica chiara di accesso.</p></div></div><div class="decision"><div class="decision-index">2</div><div><h4>Modello più chiaro nel tempo</h4><p>Separare visibilità delle funzioni cloud e strumenti avanzati, con un’opzione specifica per Pages. “A pagamento” mescola oggi navigazione, abbonamento e posizione di esecuzione: non è una descrizione stabile delle capacità.</p></div></div></div>
+      <details><summary>Cloud, visibilità e ascolto: cosa aspettarsi</summary><p>La lista passa da <code>cloudTrpc</code>; file e metadati sono pubblicati sui servizi ufficiali. Le nuove pagine sono visibili per default all’organizzazione. La chat che crea la pagina rimane una sessione distinta.</p><p>Pubblicazione riuscita e agente in ascolto sono due risultati distinti: il link può funzionare anche se il watcher non si registra. Per ricevere automaticamente i commenti servono host e sessione disponibili.</p><p>Non ho trovato un paywall specifico in create/publish del router Pages. Questo audit del codice non determina il piano commerciale del servizio.</p></details>
+      <p class="fine block">Questo rapporto è deliberatamente un file locale: non è stato pubblicato su Pages né condiviso con un’organizzazione.</p>
+      <div class="panel-next"><span>La visibilità deve guidare anche il caricamento dei dati.</span><a href="#speed" data-panel="speed">Le opportunità di velocità →</a></div>
+    </section>
+
+    <section class="report-panel" id="speed" aria-labelledby="speed-title">
+      <p class="section-kicker">06 / Usabilità e velocità</p>
+      <h2 id="speed-title">Rendere l’app rapida significa togliere lavoro inutile.</h2>
+      <p class="intro">Ho individuato costi evitabili e punti fragili nel codice. Non li trasformo in percentuali di accelerazione: senza un profilo dell’app reale non sappiamo quali pesino di più sul tuo utilizzo.</p>
+      <div class="table-wrap"><table><thead><tr><th>Osservazione</th><th>Effetto possibile</th><th>Intervento proposto</th></tr></thead><tbody>
+        <tr><td>Invalidazione molto ampia</td><td>Dopo operazioni Jira si invalida la radice <code>fork-integrations</code>: anche dati estranei all’issue possono essere richiesti di nuovo.</td><td>Chiavi cache per host, connessione, issue e lista; aggiornamento puntuale e invalidazione delle sole aggregazioni coinvolte.</td></tr>
+        <tr><td>Metadata di modifica in sola lettura</td><td>Aprire un dettaglio chiede <code>editMetadata</code> anche senza premere Edit.</td><td>Caricare i metadati quando servono alla modifica, mantenendo il dettaglio leggibile rapidamente.</td></tr>
+        <tr><td>Lista Jira senza virtualizzazione</td><td>I task caricati restano nel DOM. Il costo può aumentare con liste lunghe.</td><td>Misurare scroll e render; virtualizzare le righe quando i dati confermano il beneficio, senza alterare raggruppamenti e navigazione da tastiera.</td></tr>
+        <tr><td>Pages richiede dati a menu chiuso</td><td>La query delle pagine del workspace parte senza <code>enabled: open</code>; le pinned invece hanno già quel gate.</td><td>Richieste solo con funzione disponibile e superficie utile, con prefetch mirato se misurato necessario.</td></tr>
+        <tr><td>Automazioni cloud nascoste, query attiva</td><td>Il componente sidebar chiama <code>useFailedAutomations</code> anche quando il flag nasconde la funzione.</td><td>Gate della query allineato alla capacità, non soltanto JSX invisibile.</td></tr>
+        <tr><td>Errori HTTP poco informativi</td><td>Lo status è conservato; corpo diagnostico e <code>Retry-After</code> non vengono mantenuti dal client generico.</td><td>Errori strutturati con diagnostica filtrata, classificazione e attesa del provider; retry solo quando l’operazione lo consente.</td></tr>
+        <tr><td>Mappatura review basata su nomi inglesi</td><td>Le regex possono non riconoscere stati Jira personalizzati o tradotti.</td><td>Mappatura esplicita per progetto/board e transizioni consentite; chiedere una scelta quando più destinazioni sono plausibili.</td></tr>
+      </tbody></table></div>
+      <div class="grid two block">
+        <article class="card"><h3>Una capacità, la stessa regola ovunque.</h3><p>Centralizzerei disponibilità e visibilità in un modulo del fork: sidebar, route, command palette, pannelli e query devono conoscere la stessa decisione. Jira locale resta disponibile anche con le funzioni hosted nascoste.</p><p>Questo riduce le “mezze funzioni”: pulsanti che aprono route bloccate, impostazioni difficili da trovare e richieste cloud senza una superficie visibile.</p></article>
+        <article class="card"><h3>Azioni vicine al lavoro.</h3><p>Nel task: apri workspace, registra ore, crea regola. Nella run: apri la sessione, controlla il risultato, riprendi o annulla. Nella Inbox: rispondi e torna esattamente al punto utile.</p><p>Scelte avanzate dietro disclosure leggibili; percorso principale breve, impostazioni disponibili quando servono.</p></article>
+      </div>
+      <h3 class="block">Target da misurare, non prestazioni rilevate</h3>
+      <div class="metrics">
+        <div class="metric"><span class="tag target">Target proposto</span><div class="value spacer">p95 &lt; 150 ms</div><p>Cambio di workspace già caricato, in uno scenario e su una macchina definiti.</p></div>
+        <div class="metric"><span class="tag target">Target proposto</span><div class="value spacer">p95 &lt; 50 ms</div><p>Latenza di digitazione nel composer, inclusa una chat lunga rappresentativa.</p></div>
+        <div class="metric"><span class="tag target">Target proposto</span><div class="value spacer">0 richieste inutili</div><p>API dedicate a una funzione nascosta e non utilizzata, escluse attività esplicitamente lasciate attive.</p></div>
+      </div>
+      <p class="fine spacer">Prima si acquisisce una baseline; poi si confrontano gli stessi percorsi, con cache calda/fredda separate e carico definito. In questo audit non sono stati eseguiti benchmark o verifiche UI end-to-end.</p>
+      <div class="panel-next"><span>Le metriche devono scegliere l’ottimizzazione successiva.</span><a href="#roadmap" data-panel="roadmap">Ordine di implementazione →</a></div>
+    </section>
+
+    <section class="report-panel" id="roadmap" aria-labelledby="roadmap-title">
+      <p class="section-kicker">07 / La roadmap</p>
+      <h2 id="roadmap-title">Quattro lotti, ciascuno con un risultato riconoscibile.</h2>
+      <p class="intro">S/M/L indicano dimensioni relative e incertezza di implementazione, non giorni o una data di consegna. I lotti seguono le dipendenze: prima evitare perdita e duplicazione dei dati, poi rendere i flussi più autonomi.</p>
+      <div class="roadmap">
+        <article class="lot"><div class="lot-number">01</div><div><div class="lot-header"><h3>Integrità, caricamento e visibilità</h3><span class="tag">S–M</span></div><ul><li>Correggere lo snapshot di editing Jira e l’invio dei soli campi modificati.</li><li>Caricare metadata su richiesta e ridurre le invalidazioni globali.</li><li>Allineare gate di route, navigazione e query; rendere Pages opzionale.</li><li>Misurare i percorsi UI e intervenire sulla lista lunga se il profilo lo giustifica.</li></ul><div class="done">Criterio di completamento: il refresh non porta a salvare campi obsoleti; le funzioni nascoste non producono richieste dedicate inutili.</div></div></article>
+        <article class="lot"><div class="lot-number">02</div><div><div class="lot-header"><h3>Worklog Jira manuale</h3><span class="tag">M</span></div><ul><li>Inserimento con account, durata, giorno, ora e commento.</li><li>Storico paginato e conteggi personali distinti dal totale issue.</li><li>Permessi, time tracking, timezone e stima residua invariata.</li><li>Operazione persistente e riconciliazione degli inserimenti con esito incerto.</li></ul><div class="done">Criterio di completamento: un doppio click non duplica le ore; un timeout mostra un esito da riconciliare prima di un nuovo tentativo.</div></div></article>
+        <article class="lot"><div class="lot-number">03</div><div><div class="lot-header"><h3>Automazioni locali affidabili</h3><span class="tag">L</span></div><ul><li>Eventi, regole e tentativi distinti; stati persistenti fino al risultato.</li><li>Coda con limite globale e per progetto, ripresa dopo riavvio e cancellazione.</li><li>Preview, run-now, editing e ripetizione controllata.</li><li>Vista unica Locale/Hosted con destinazione, stato e requisiti evidenti.</li></ul><div class="done">Criterio di completamento: una run interrotta si può capire e gestire; “Agente terminato”, “Verifica riuscita” e un eventuale “Accettato” sono esiti distinti, sostenuti dalle rispettive evidenze.</div></div></article>
+        <article class="lot"><div class="lot-number">04</div><div><div class="lot-header"><h3>Trigger estensibili e Inbox</h3><span class="tag">L</span></div><ul><li>Adattatori per Jira incrementale, schedule, PR e CI, con deduplica per evento.</li><li>Template d’uso con anteprima e tentativi limitati.</li><li>Today/Inbox per agenti in attesa, PR, errori e ore da confermare.</li><li>Bozze di timesheet e report condivisibili, con Pages su richiesta.</li></ul><div class="done">Criterio di completamento: ogni elemento della Inbox porta a un’azione concreta e ogni proposta di ore rimane modificabile prima dell’invio.</div></div></article>
+      </div>
+      <div class="card block"><h3>Un’architettura che continui a reggere gli aggiornamenti upstream.</h3><p>La nuova logica va in file del fork; agli upstream bastano piccoli hook. Stato delle operazioni, code e tentativi appartengono a SQLite sull’host. Le procedure tRPC restano additive, con rilevamento delle capacità e fallback per host meno recenti.</p><p>La UI deve distinguere ciò che il server supporta da ciò che è solo una proposta nel client. I controlli e le nuove stringhe richiedono le 17 traduzioni del fork. La schermata “What’s new” si aggiorna quando vengono implementate e rilasciate capacità visibili, non per questo rapporto.</p></div>
+      <div class="callout"><strong>La prima consegna che farei:</strong> un dettaglio Jira affidabile, più rapido da aprire, con “Registra tempo” ben integrato e Pages fuori dal percorso principale. Subito dopo porterei le automazioni locali da “lancio automatico” a “lavoro tracciato fino all’esito”.</div>
+      <div class="panel-next"><span>Le priorità derivano dai limiti osservati nel codice.</span><a href="#evidence" data-panel="evidence">Controlla fonti e verifiche →</a></div>
+    </section>
+
+    <section class="report-panel" id="evidence" aria-labelledby="evidence-title">
+      <p class="section-kicker">08 / Fonti e verifiche</p>
+      <h2 id="evidence-title">Cosa sostiene le conclusioni.</h2>
+      <p class="intro">Audit del checkout al commit <code>2d26d8d716</code>, con lettura di implementazioni, test e documentazione. I collegamenti del codice sono ancorati a quel commit; la documentazione Atlassian descrive il contratto del servizio e può evolvere.</p>
+      <div class="grid two">
+        <article class="card"><span class="tag actual">Eseguito</span><h3>Typecheck e suite del fork</h3><p>Typecheck desktop e host-service completati con successo. La suite finale del fork ha completato <strong>1.356 test in 249 file, 0 fallimenti</strong>: 432 desktop, 896 runtime e 28 integrazione host.</p><p class="fine">Il primo tentativo della suite aveva un asset di icone generato mancante; dopo la generazione dei prerequisiti, il rerun è terminato con exit 0. Cataloghi e asset generati sono prerequisiti della verifica.</p></article>
+        <article class="card"><span class="tag">Limiti dell’audit</span><h3>Da verificare nell’app reale</h3><p>Oggi non sono stati eseguiti benchmark, test UI end-to-end dell’app o un inserimento worklog reale. La simulazione in questo rapporto non verifica Jira. Non è stata esercitata ogni combinazione di agenti e CLI.</p><p class="fine">Il rapporto HTML è stato verificato in Chrome isolato, offline: navigazione, anteprima e conferma dimostrativa, durata non valida, cambio tema e assenza di overflow mobile nelle otto sezioni; nessuna eccezione JavaScript. Questa verifica riguarda il documento, non le funzionalità proposte.</p><p class="fine">I test passati attestano la suite eseguita, non certificano ogni proposta. L’audit non modifica funzioni dell’app e non pubblica contenuti all’esterno.</p></article>
+      </div>
+      <div class="source-list block">
+        <article class="source"><h3>Trasferimenti e relativo limite della validazione</h3><p>Capacità documentate e distinzione tra codec testati e CLI reali.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/FORK.md#L418" target="_blank" rel="noreferrer">FORK.md:418</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/FORK.md#L467" target="_blank" rel="noreferrer">FORK.md:467</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/docs/fork-testing.md#L50" target="_blank" rel="noreferrer">docs/fork-testing.md:50</a></article>
+        <article class="source"><h3>Jira: stato del form e invalidazione</h3><p>Valori inizializzati dalle props, Edit senza nuova acquisizione e cache invalidata alla radice.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/components/ForkIntegrations/components/ForkTaskDetail/ForkTaskDetail.tsx#L55" target="_blank" rel="noreferrer">ForkTaskDetail.tsx:55</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/components/ForkIntegrations/components/ForkTaskDetail/ForkTaskDetail.tsx#L109" target="_blank" rel="noreferrer">ForkTaskDetail.tsx:109</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/components/ForkIntegrations/components/ForkTaskDetail/ForkTaskDetail.tsx#L184" target="_blank" rel="noreferrer">ForkTaskDetail.tsx:184</a><blockquote>const [title, setTitle] = useState(task.title)</blockquote></article>
+        <article class="source"><h3>Automazioni locali: claim, limiti e polling</h3><p>Baseline, claim prima del lancio, massimo per regola e limite della ricerca.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira-automations.ts#L59" target="_blank" rel="noreferrer">fork-jira-automations.ts:59</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira-automations.ts#L91" target="_blank" rel="noreferrer">fork-jira-automations.ts:91</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira-automations.ts#L122" target="_blank" rel="noreferrer">fork-jira-automations.ts:122</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira-automations.ts#L187" target="_blank" rel="noreferrer">fork-jira-automations.ts:187</a><blockquote>const timer = setInterval(tick, 60_000)</blockquote></article>
+        <article class="source"><h3>Automazioni ufficiali: piano, schedule e run-now</h3><p>Il vincolo Pro è sul server; il router offre versioni e avvio manuale.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/automation/automation.ts#L116" target="_blank" rel="noreferrer">automation.ts:116</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/automation/automation.ts#L399" target="_blank" rel="noreferrer">automation.ts:399</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/automation/automation.ts#L436" target="_blank" rel="noreferrer">automation.ts:436</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/automation/automation.ts#L917" target="_blank" rel="noreferrer">automation.ts:917</a></article>
+        <article class="source"><h3>Pages: scopo e dipendenze</h3><p>Pubblicazione collaborativa, versioni, condizioni per il watcher e visibilità iniziale.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/docs/content/docs/pages.mdx#L6" target="_blank" rel="noreferrer">pages.mdx:6</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/docs/content/docs/pages.mdx#L74" target="_blank" rel="noreferrer">pages.mdx:74</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/page/page.ts#L444" target="_blank" rel="noreferrer">page.ts:444</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/trpc/src/router/page/storage.ts#L35" target="_blank" rel="noreferrer">storage.ts:35</a></article>
+        <article class="source"><h3>Pages: il gate non c’è</h3><p>Le route Pro non includono Pages; i pulsanti sidebar sono incondizionati.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/lib/fork-settings-visibility.ts#L1" target="_blank" rel="noreferrer">fork-settings-visibility.ts:1</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/components/DashboardSidebarHeader/DashboardSidebarHeader.tsx#L492" target="_blank" rel="noreferrer">DashboardSidebarHeader.tsx:492</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/components/RightPaneArea/paneOptions.ts#L47" target="_blank" rel="noreferrer">paneOptions.ts:47</a></article>
+        <article class="source"><h3>Richieste cloud evitabili</h3><p>La query workspace Pages manca del gate di apertura; latestRuns non segue la visibilità Pro.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/components/WorkspaceActivityMenu/WorkspaceActivityMenu.tsx#L265" target="_blank" rel="noreferrer">WorkspaceActivityMenu.tsx:265</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/apps/desktop/src/renderer/routes/_authenticated/_dashboard/hooks/useFailedAutomations/useFailedAutomations.ts#L46" target="_blank" rel="noreferrer">useFailedAutomations.ts:46</a></article>
+        <article class="source"><h3>HTTP e mapping degli stati</h3><p>Status conservato nel cause, diagnostica e Retry-After non preservati; mapping review con regex inglesi.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-http.ts#L63" target="_blank" rel="noreferrer">fork-http.ts:63</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/host-service/src/fork-integrations/fork-jira.ts#L214" target="_blank" rel="noreferrer">fork-jira.ts:214</a></article>
+        <article class="source"><h3>Chat: stabilità dello stato e journal</h3><p>Ottimizzazioni esistenti da conservare e misurare prima di ulteriori interventi.</p><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/chat/src/core/reducer/fork-stable-session.ts#L25" target="_blank" rel="noreferrer">fork-stable-session.ts:25</a><a href="https://github.com/NicolaPanero/superset/blob/2d26d8d716/packages/chat-runtime/src/journal/journal/fork-session-prune.ts#L15" target="_blank" rel="noreferrer">fork-session-prune.ts:15</a></article>
+        <article class="source"><h3>Atlassian: contratti dell’integrazione proposta</h3><p>Worklog, limitazione delle richieste e requisiti dei webhook. Documentazione ufficiale.</p><a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/" target="_blank" rel="noreferrer">Jira REST API v3 · Issue worklogs</a><a href="https://developer.atlassian.com/cloud/jira/platform/rate-limiting/" target="_blank" rel="noreferrer">Jira Cloud · Rate limiting</a><a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-webhooks/" target="_blank" rel="noreferrer">Jira Cloud · Webhooks</a></article>
+      </div>
+      <div class="panel-next"><span>Il valore sta nel completare il percorso.</span><a href="#vision" data-panel="vision">Torna alla direzione proposta ↑</a></div>
+    </section>
+    <footer class="footer"><span>Paradev++ · Audit del prodotto · 30 ottobre 2026</span><span>Fatti dal codice, proposte dichiarate, misure da acquisire.</span></footer>
+  </main>
+</div>
+<script>
+  (() => {
+    const root = document.documentElement;
+    const panels = Array.from(document.querySelectorAll('.report-panel'));
+    const navLinks = Array.from(document.querySelectorAll('.nav a[data-panel]'));
+    const validPanelIds = new Set(panels.map(panel => panel.id));
+    const setPanel = (panelId, shouldScroll) => {
+      const selectedId = validPanelIds.has(panelId) ? panelId : 'vision';
+      for (const panel of panels) panel.classList.toggle('is-active', panel.id === selectedId);
+      for (const link of navLinks) {
+        if (link.dataset.panel === selectedId) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      }
+      if (shouldScroll) document.getElementById(selectedId).scrollIntoView({block: 'start'});
+    };
+    root.classList.add('js-ready');
+    setPanel(location.hash.slice(1), false);
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a[data-panel]');
+      if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const nextId = link.dataset.panel;
+      if (!validPanelIds.has(nextId)) return;
+      if (location.hash !== '#' + nextId) history.pushState(null, '', '#' + nextId);
+      setPanel(nextId, true);
+    });
+    addEventListener('hashchange', () => setPanel(location.hash.slice(1), true));
+    const themeButton = document.getElementById('theme-toggle');
+    const applyTheme = theme => {
+      root.dataset.theme = theme;
+      const next = theme === 'dark' ? 'chiaro' : 'scuro';
+      themeButton.textContent = 'Tema ' + next;
+      themeButton.setAttribute('aria-label', 'Passa al tema ' + next);
+    };
+    applyTheme(matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    themeButton.addEventListener('click', () => applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+    document.getElementById('print-button').addEventListener('click', () => window.print());
+    const form = document.getElementById('worklog-form');
+    const durationInput = document.getElementById('wl-duration');
+    const message = document.getElementById('wl-message');
+    const parseDuration = value => {
+      const normalized = value.trim().toLowerCase().replace(/\s+/g, '');
+      const match = /^(?:(\d+)h)?(?:(\d+)m)?$/.exec(normalized);
+      if (!match || (!match[1] && !match[2])) return null;
+      const minutes = Number(match[1] || 0) * 60 + Number(match[2] || 0);
+      if (!Number.isSafeInteger(minutes) || minutes <= 0 || minutes > 24 * 60) return null;
+      return minutes;
+    };
+    const formatDuration = minutes => {
+      const hours = Math.floor(minutes / 60);
+      const remaining = minutes % 60;
+      return [hours ? hours + 'h' : '', remaining ? remaining + 'm' : ''].filter(Boolean).join(' ');
+    };
+    const updatePreview = () => {
+      const minutes = parseDuration(durationInput.value);
+      const date = document.getElementById('wl-date').value;
+      const time = document.getElementById('wl-time').value;
+      const dayParts = date.split('-');
+      const day = dayParts.length === 3 ? dayParts.reverse().join('/') : 'Giorno da scegliere';
+      document.getElementById('wl-preview-duration').textContent = minutes === null ? 'Durata da verificare' : formatDuration(minutes);
+      document.getElementById('wl-preview-account').textContent = document.getElementById('wl-account').value;
+      document.getElementById('wl-preview-start').textContent = day + ' alle ' + (time || '—') + ' · Europe/Rome';
+      document.getElementById('wl-preview-comment').textContent = document.getElementById('wl-comment').value.trim() || 'Nessun commento';
+      durationInput.setAttribute('aria-invalid', String(minutes === null));
+      message.className = 'notice';
+      message.textContent = 'La compilazione aggiorna solo l’anteprima in questo file.';
+      return minutes;
+    };
+    form.addEventListener('input', updatePreview);
+    form.addEventListener('change', updatePreview);
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const minutes = updatePreview();
+      if (minutes === null) {
+        message.className = 'notice error';
+        message.textContent = 'Inserisci una durata positiva, ad esempio 1h 30m. Questa demo accetta fino a 24 ore per inserimento.';
+        durationInput.focus();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      message.className = 'notice success';
+      message.textContent = 'Simulazione confermata: ' + formatDuration(minutes) + ' su DEMO-42. Nessun dato è stato inviato o salvato in Jira.';
+    });
+    updatePreview();
+  })();
+</script>
+</body>
+</html>

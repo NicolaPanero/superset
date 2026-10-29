@@ -607,6 +607,9 @@ msgstr "全トークンの{0}% · {1}トークン"
 msgid "{0}% of total cost · {1} tokens · * at API list rates"
 msgstr "総コストの{0}% · {1}トークン · * API定価換算"
 
+msgid "{active} in progress"
+msgstr "{active}件が進行中"
+
 msgid "{actor} added the label {label}"
 msgstr "{actor}がラベル {label} を追加しました"
 
@@ -973,6 +976,9 @@ msgstr "{kind} · 作者: {author}"
 msgid "{kindLabel} theme"
 msgstr "{kindLabel}テーマ"
 
+msgid "{label} {installed} to {latest}"
+msgstr "{label} {installed} → {latest}"
+
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1202,6 +1208,9 @@ msgstr "{seconds}秒"
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
+msgid "{selectedCount} entries · {selectedDuration}"
+msgstr "{selectedCount} 件 · {selectedDuration}"
+
 msgid "{selectedCount} selected"
 msgstr "{selectedCount}件選択中"
 
@@ -1263,6 +1272,9 @@ msgstr "{toolName}が中断されました"
 
 msgid "{total, plural, one {The check passed} other {All # checks passed}}"
 msgstr "{total, plural, one {#件のチェックにすべて成功しました} other {#件のチェックにすべて成功しました}}"
+
+msgid "{total} worklogs on this issue · mine among those shown: {myDuration}"
+msgstr "この課題の作業ログ {total}件 · 表示中のうち自分の分: {myDuration}"
 
 msgid "{totalCount, plural, one {GitHub issue} other {GitHub issues}}"
 msgstr "{totalCount, plural, one {GitHub issue} other {GitHub issue}}"
@@ -1630,6 +1642,9 @@ msgstr "このターミナルではプロセスがまだ実行中です"
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "プロンプトとトリガー、そして実行ごとのワークスペース"
 
+msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
+msgstr "最低時間に満たない稼働日について、時間を記録せずに完了したタスクと進行中のタスクから提案を作成します。確定するまで Jira には何も送信されません。日付を指定しない場合: 過去30日間。"
+
 msgid "A pull request always gets its own worktree"
 msgstr "プルリクエストには常に専用のワークツリーが作られます"
 
@@ -1651,6 +1666,9 @@ msgstr "トークン単位で課金される別プロファイルです。キー
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "スキル、プラグイン、MCPサーバー、設定を共有する別プロファイルです。"
+
+msgid "A summary file of tasks and pull requests that need attention."
+msgstr "対応が必要なタスクとプルリクエストをまとめたファイルです。"
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "タスクキーは英字で始まる 1〜5 文字の英数字です。"
@@ -1739,9 +1757,6 @@ msgstr "アカウントは削除待ちです"
 
 msgid "Account usage"
 msgstr "アカウントの使用状況"
-
-msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
-msgstr "アカウントの使用量リングはエージェントのターンごとに更新され、薄く消えずに最後の読み取り値を保持します。"
 
 msgid "Achievements"
 msgstr "実績"
@@ -2125,6 +2140,9 @@ msgstr "エージェント設定"
 msgid "Agent setup"
 msgstr "エージェントの設定"
 
+msgid "Agent updates"
+msgstr "エージェントのアップデート"
+
 msgid "Agent usage rankings"
 msgstr "エージェント使用量ランキング"
 
@@ -2133,6 +2151,9 @@ msgstr "エージェントが操作するプレビュー"
 
 msgid "Agents"
 msgstr "エージェント"
+
+msgid "Agents at the same time"
+msgstr "同時実行エージェント数"
 
 msgid "Agents complete routine tickets with no mid-task intervention."
 msgstr "エージェントが定型チケットを途中の介入なしに完了する。"
@@ -2154,6 +2175,9 @@ msgstr "同時に動かしているエージェント数"
 
 msgid "Agents use this account when they call Linear tools."
 msgstr "エージェントは、Linearのツールを呼び出すときにこのアカウントを使います。"
+
+msgid "Agents waiting for you"
+msgstr "あなたを待っているエージェント"
 
 msgid "Aggregate agent usage across every developer on the Paradev leaderboard — tokens, cost, cache behaviour and which models people actually reach for."
 msgstr "Paradevリーダーボード上の全開発者を横断したエージェント利用の集計 — トークン、コスト、キャッシュの挙動、実際に選ばれているモデル。"
@@ -2299,6 +2323,9 @@ msgstr "すべての投稿"
 msgid "All projects"
 msgstr "すべてのプロジェクト"
 
+msgid "All pull requests"
+msgstr "すべてのプルリクエスト"
+
 msgid "All releases"
 msgstr "すべてのリリース"
 
@@ -2392,6 +2419,9 @@ msgstr "すでに別の組織に移行済みです。このプロジェクトを
 msgid "Already brought over to another organization. Switch to it to see this workspace."
 msgstr "すでに別の組織に移行済みです。このワークスペースを表示するには、その組織に切り替えてください。"
 
+msgid "Already handled"
+msgstr "処理済み"
+
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "すでにアカウントをお持ちですか?<0>サインイン</0>"
 
@@ -2458,6 +2488,9 @@ msgstr "不明なエラーが発生しました"
 
 msgid "An update is ready to install."
 msgstr "アップデートをインストールする準備ができました。"
+
+msgid "Analysis, open questions and a plan. No ticket changes."
+msgstr "分析、未解決の質問、計画。チケットは変更しません。"
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android 版を準備中です。リリース時にいち早くお知らせします。"
@@ -3007,6 +3040,9 @@ msgstr "タスクを自動化"
 
 msgid "Automate workspace setup for {projectName}"
 msgstr "{projectName}のワークスペースのセットアップを自動化"
+
+msgid "Automatic"
+msgstr "自動"
 
 msgid "Automatic (email address)"
 msgstr "自動（メールアドレス）"
@@ -3865,6 +3901,12 @@ msgstr "チャットの構成要素: メッセージ、推論、提案"
 msgid "Check again"
 msgstr "再確認"
 
+msgid "Check command (optional)"
+msgstr "チェックコマンド（任意）"
+
+msgid "Check for agent updates every day"
+msgstr "エージェントのアップデートを毎日確認"
+
 msgid "Check for Update"
 msgstr "アップデートを確認"
 
@@ -3877,8 +3919,14 @@ msgstr "アップデートを確認"
 msgid "Check for Updates..."
 msgstr "アップデートを確認..."
 
+msgid "Check now"
+msgstr "今すぐ確認"
+
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "実行中のエージェントの状況を確認し、変更内容を iPhone や iPad から読めます。"
+
+msgid "Check output"
+msgstr "チェック出力"
 
 msgid "Check plans and balances"
 msgstr "プランと残高を確認"
@@ -3915,6 +3963,12 @@ msgstr "受信トレイを確認してください"
 
 msgid "Checkbox · Radio · Switch"
 msgstr "Checkbox · Radio · Switch"
+
+msgid "checked"
+msgstr "最終確認"
+
+msgid "Checking"
+msgstr "チェック中"
 
 msgid "Checking agents…"
 msgstr "エージェントを確認中…"
@@ -4035,6 +4089,9 @@ msgstr "ターミナルでCmd+クリックしたときのファイルパスの�
 
 msgid "Choose MCP servers for this message"
 msgstr "このメッセージで使うMCPサーバーを選択"
+
+msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
+msgstr "作業開始時とプルリクエスト作成時に Superset が課題を移動するステータスを選択します。選択しない場合は、「review」のような名前のステータスを探します。"
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
@@ -4549,6 +4606,9 @@ msgstr "ワークスペースのセットアップ、ティアダウン、実行
 
 msgid "Comment"
 msgstr "コメント"
+
+msgid "Comment (optional)"
+msgstr "コメント（任意）"
 
 msgid "Comment actions"
 msgstr "コメントの操作"
@@ -6236,6 +6296,9 @@ msgstr "毎日9:00"
 msgid "Daily at {time}"
 msgstr "毎日{time}"
 
+msgid "Daily digest"
+msgstr "デイリーダイジェスト"
+
 msgid "Daily practice for our team and our heaviest users."
 msgstr "当社チームとヘビーユーザーにとっては日常です。"
 
@@ -6272,11 +6335,26 @@ msgstr "期間"
 msgid "Day"
 msgstr "日"
 
+msgid "Day ends"
+msgstr "1日の終了時刻"
+
 msgid "Day One"
 msgstr "デイワン"
 
+msgid "Day starts"
+msgstr "始業時刻"
+
 msgid "days"
 msgstr "日"
+
+msgid "Days"
+msgstr "曜日"
+
+msgid "Days already full:"
+msgstr "すでに埋まっている日:"
+
+msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
+msgstr "休暇（1行に1つ、YYYY-MM-DD または YYYY-MM-DD:YYYY-MM-DD）"
 
 msgid "days running three agents at once"
 msgstr "エージェントを同時に3つ動かした日数"
@@ -6687,6 +6765,9 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "ページの横にDevTools"
 
+msgid "Diagnoses the failure and tries a fix, at most twice per pull request."
+msgstr "失敗の原因を診断して修正を試みます。プルリクエストごとに最大2回。"
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -6780,6 +6861,9 @@ msgstr "「{discardBasename}」への変更を破棄しますか?"
 
 msgid "Discard changes?"
 msgstr "変更を破棄しますか?"
+
+msgid "Discard my changes"
+msgstr "自分の変更を破棄"
 
 msgid "Discard recording"
 msgstr "録音を破棄"
@@ -7099,6 +7183,9 @@ msgstr "添付ファイルは1件あたり最大{0} MBです。"
 msgid "Each in its own new tab"
 msgstr "それぞれ新しいタブで"
 
+msgid "Each issue that starts to match the query gets a new workspace."
+msgstr "クエリに一致し始めた課題ごとに新しいワークスペースを作成します。"
+
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "毎朝午前8時に、前日の失敗したCI実行を確認し、最も多い失敗原因を診断して修正PRを作成する。"
 
@@ -7153,6 +7240,9 @@ msgstr "編集"
 
 msgid "Edit and restart from here"
 msgstr "編集してここから再開"
+
+msgid "Edit automation"
+msgstr "オートメーションを編集"
 
 msgid "Edit comment"
 msgstr "コメントを編集"
@@ -7638,6 +7728,12 @@ msgstr "失敗"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "失敗"
+
+msgid "Failed checks"
+msgstr "失敗したチェック"
+
+msgid "Failed checks on a linked pull request run the agent in its workspace, once per commit."
+msgstr "リンクされたプルリクエストでチェックが失敗すると、そのワークスペースでエージェントを実行します（コミットごとに1回）。"
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "失敗した実行 <0>· 7日</0>"
@@ -8358,6 +8454,9 @@ msgstr "指摘を修正"
 msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
 msgstr "webの新しいエラーを修正してください。それぞれをテストで再現し、ドラフトのプルリクエストを作成してください。"
 
+msgid "Fix review comments"
+msgstr "レビューコメントを修正"
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
 
@@ -8582,6 +8681,9 @@ msgstr "無料リセット：{formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "よくある<0/>ご質問"
+
+msgid "Fri"
+msgstr "金"
 
 msgid "from"
 msgstr "元:"
@@ -9307,6 +9409,9 @@ msgstr "アイドル · ブランチをプッシュ済み"
 msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
 msgstr "CLIがまだインストールされていない場合は、サインインする前に、このエージェントを実行するコンピューターにインストールしてください。"
 
+msgid "If the computer is off or asleep at the scheduled time, the run starts when it wakes within this window, otherwise it is skipped. Time zone: {timeZone}."
+msgstr "予定時刻にコンピューターの電源が切れているかスリープ中の場合、この時間内に復帰すれば実行が開始され、それ以外はスキップされます。タイムゾーン: {timeZone}。"
+
 msgid "If you're enjoying Paradev so far, a GitHub star helps other developers discover it."
 msgstr "Paradevを気に入っていただけたら、GitHubスターが他の開発者の発見につながります。"
 
@@ -9446,9 +9551,6 @@ msgstr "エージェント向け指示を改善"
 msgid "Improved diff viewer"
 msgstr "差分ビューアの改善"
 
-msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
-msgstr "Claudeのチャットでは、入力欄で別のアカウントを選ぶと、履歴をすべて保ったままチャットがすぐにそのアカウントへ移動します。"
-
 msgid "in a new session"
 msgstr "新しいセッションで"
 
@@ -9463,6 +9565,9 @@ msgstr "わずか数か月で、Wix、DoorDash、Netflixといった企業を含
 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "サンフランシスコのオフィスで週5日勤務。創業者と直接一緒に働きます。"
+
+msgid "in progress"
+msgstr "進行中"
 
 msgid "In progress"
 msgstr "作業中"
@@ -9500,6 +9605,12 @@ msgstr "アプリ内ブラウザ"
 
 msgid "In-app PR merge"
 msgstr "アプリ内でのPRマージ"
+
+msgid "Include"
+msgstr "含める"
+
+msgid "Include tasks still in progress"
+msgstr "進行中のタスクを含める"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "プロンプトのLinearチケットIDをブランチ名に含める(例: bin-344-fix-login)。タスクに応じてブランチにfix/またはfeat/を付ける。"
@@ -9831,6 +9942,9 @@ msgstr "Issueコメント"
 msgid "Issue created"
 msgstr "Issueを作成"
 
+msgid "Issue key"
+msgstr "Issue キー"
+
 msgid "Issue not found."
 msgstr "Issueが見つかりません。"
 
@@ -9873,6 +9987,9 @@ msgstr "マシンが復帰すれば自動的に再接続します。引っ張っ
 msgid "Italic"
 msgstr "斜体"
 
+msgid "Italy"
+msgstr "イタリア"
+
 msgid "Item"
 msgstr "Item"
 
@@ -9909,6 +10026,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Jira 自動化"
 
+msgid "Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run."
+msgstr "Jira オートメーションを最後まで追跡できるようになりました: キュー、同時実行エージェント数の上限、再試行、プレビュー、手動実行。"
+
 msgid "Jira board"
 msgstr "Jiraボード"
 
@@ -9917,6 +10037,12 @@ msgstr "Jira 課題"
 
 msgid "Jira project"
 msgstr "Jiraプロジェクト"
+
+msgid "Jira project key"
+msgstr "Jira プロジェクトキー"
+
+msgid "Jira triage"
+msgstr "Jira トリアージ"
 
 msgid "Join"
 msgstr "参加"
@@ -10181,6 +10307,9 @@ msgstr "起動"
 
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "機能開発、バグ修正、リファクタリングにまたがってエージェントを並列に起動できます。どのエージェントが作業中で、どれがブロックされ、どれがあなたの返事を待っているかが一目で分かります。"
+
+msgid "Launch attempts"
+msgstr "起動の試行回数"
 
 msgid "Launch mode"
 msgstr "起動モード"
@@ -10636,6 +10765,9 @@ msgstr "場所"
 msgid "Location & checkout"
 msgstr "場所とチェックアウト"
 
+msgid "Log {logDuration}"
+msgstr "{logDuration}を記録"
+
 msgid "Log levels"
 msgstr "ログレベル"
 
@@ -10644,6 +10776,21 @@ msgstr "ログアウト"
 
 msgid "Log out?"
 msgstr "ログアウトしますか?"
+
+msgid "Log time"
+msgstr "時間を記録"
+
+msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgstr "Jira 課題の詳細から、今日の自分の時間と課題の履歴を見ながら作業時間を記録します。"
+
+msgid "Logged"
+msgstr "記録済み"
+
+msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
+msgstr "{account} として記録 · {timeZone}。残り見積もりは変わりません。"
+
+msgid "Logged today: {total}"
+msgstr "今日の記録: {total}"
 
 msgid "Login unverified"
 msgstr "ログイン未確認"
@@ -10706,6 +10853,12 @@ msgstr "低"
 msgid "Low severity"
 msgstr "重要度: 低"
 
+msgid "Lunch ends"
+msgstr "昼休み終了"
+
+msgid "Lunch starts"
+msgstr "昼休み開始"
+
 msgid "Machine resources"
 msgstr "マシンリソース"
 
@@ -10747,6 +10900,9 @@ msgstr "このページを公開しますか？"
 
 msgid "make this the main action on the page"
 msgstr "これをページのメインアクションにして"
+
+msgid "Makes the requested changes as commits. Posts no comments."
+msgstr "要求された変更をコミットとして行います。コメントは投稿しません。"
 
 msgid "Makes the Run button launch this terminal script for matching projects."
 msgstr "対象プロジェクトで実行ボタンがこのターミナルスクリプトを起動するようにします。"
@@ -10830,6 +10986,9 @@ msgstr "既読にする"
 msgid "Mark as Unread"
 msgstr "未読にする"
 
+msgid "Mark as verified"
+msgstr "検証済みにする"
+
 msgid "Mark as viewed"
 msgstr "確認済みにする"
 
@@ -10874,6 +11033,9 @@ msgstr "最大"
 
 msgid "Maximum"
 msgstr "最大"
+
+msgid "Maximum hours a day"
+msgstr "1日の最大時間"
 
 msgid "Maximum reasoning effort"
 msgstr "最大限の推論"
@@ -11086,6 +11248,9 @@ msgstr "GitHub issueを最小化"
 msgid "Minimum contrast"
 msgstr "最小コントラスト"
 
+msgid "Minimum hours a day"
+msgstr "1日の最小時間"
+
 msgid "missed"
 msgstr "未実行"
 
@@ -11126,9 +11291,6 @@ msgstr "モデル"
 msgid "Model"
 msgstr "モデル"
 
-msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
-msgstr "モデルと推論の強度の一覧はすぐに開きます。Paradev++が一覧を記憶し、バックグラウンドで更新します。"
-
 msgid "Model context usage"
 msgstr "モデルのコンテキスト使用量"
 
@@ -11158,6 +11320,15 @@ msgstr "使用モデル"
 
 msgid "Moderate reasoning effort"
 msgstr "中程度の推論"
+
+msgid "Module field (optional)"
+msgstr "モジュールフィールド（任意）"
+
+msgid "Modules (comma separated)"
+msgstr "モジュール（カンマ区切り）"
+
+msgid "Mon"
+msgstr "月"
 
 msgid "Monitor agents from your phone."
 msgstr "スマートフォンからエージェントを確認できます。"
@@ -11295,6 +11466,9 @@ msgstr "自分の Jira 課題"
 
 msgid "My Tasks"
 msgstr "マイタスク"
+
+msgid "My time today: {todayDuration}"
+msgstr "今日の自分の時間: {todayDuration}"
 
 msgid "Mystery Machinist"
 msgstr "謎の機械工"
@@ -11479,6 +11653,12 @@ msgstr "ワークスペースから新規グループ"
 msgid "New issue"
 msgstr "新規issue"
 
+msgid "New Jira issue"
+msgstr "新しい Jira 課題"
+
+msgid "New local triggers: pull request comments, failed checks and a schedule, with ready-made templates."
+msgstr "新しいローカルトリガー: プルリクエストのコメント、失敗したチェック、スケジュール。すぐに使えるテンプレート付き。"
+
 msgid "New page"
 msgstr "新しいページ"
 
@@ -11490,6 +11670,9 @@ msgstr "新規プロジェクト"
 
 msgid "New push to branch"
 msgstr "ブランチへの新規プッシュ"
+
+msgid "New review comments on a pull request linked to a workspace of the project run the agent in that workspace."
+msgstr "プロジェクトのワークスペースにリンクされたプルリクエストに新しいレビューコメントが付くと、そのワークスペースでエージェントを実行します。"
 
 msgid "New session"
 msgstr "新規セッション"
@@ -11652,6 +11835,9 @@ msgstr "エージェントなし"
 msgid "No agent is configured on this host"
 msgstr "このホストにはエージェントが設定されていません"
 
+msgid "No agent is waiting."
+msgstr "待機中のエージェントはありません。"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}にはエージェントが設定されていません"
@@ -11682,6 +11868,9 @@ msgstr "添付ファイルなし"
 
 msgid "No authors found."
 msgstr "作成者が見つかりません。"
+
+msgid "No automation is running."
+msgstr "実行中のオートメーションはありません。"
 
 msgid "No automations match"
 msgstr "一致するオートメーションがありません"
@@ -12107,6 +12296,9 @@ msgstr "「{query}」に一致する結果はありません"
 msgid "No results found."
 msgstr "結果が見つかりません。"
 
+msgid "No review requested."
+msgstr "レビュー依頼はありません。"
+
 msgid "No reviewers"
 msgstr "レビュアーなし"
 
@@ -12124,6 +12316,9 @@ msgstr "合うポジションがありません。それでも連絡してよい
 
 msgid "No runs yet"
 msgstr "実行はまだありません"
+
+msgid "No runs yet."
+msgstr "まだ実行はありません。"
 
 msgid "No screenshots yet"
 msgstr "スクリーンショットはまだありません"
@@ -12326,6 +12521,9 @@ msgstr "未許可"
 msgid "Not included"
 msgstr "含まれない"
 
+msgid "Not installed on this computer."
+msgstr "このコンピューターにはインストールされていません。"
+
 msgid "Not loaded"
 msgstr "未読み込み"
 
@@ -12381,6 +12579,9 @@ msgstr "何も実行されていません。アーカイブして新しく作成
 msgid "Nothing lives at {pathname}."
 msgstr "{pathname}には何もありません。"
 
+msgid "Nothing matches right now."
+msgstr "現在一致するものはありません。"
+
 msgid "Nothing needs a retry"
 msgstr "再実行が必要なものはありません"
 
@@ -12389,6 +12590,12 @@ msgstr "直近30日に公開された実績はまだありません。このマ�
 
 msgid "Nothing running"
 msgstr "実行中のものはありません"
+
+msgid "Nothing to check."
+msgstr "確認するものはありません。"
+
+msgid "Nothing to propose in this period."
+msgstr "この期間に提案するものはありません。"
 
 msgid "Nothing was missed"
 msgstr "未実行はありません"
@@ -12457,6 +12664,9 @@ msgstr "全トークン中"
 
 msgid "Off"
 msgstr "オフ"
+
+msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
+msgstr "既定ではオフです。オンにすると、今日ビューで、依頼したときだけ、最低時間に満たない稼働日の作業ログ案を作成できます。確認なしでは何も記録されず、オートメーションが作成・送信することもできません。"
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "オフ。少なくなると GB 時間を追加購入します。"
@@ -13064,6 +13274,9 @@ msgstr "シートを開く"
 msgid "Open ship options"
 msgstr "送信オプションを開く"
 
+msgid "Open source"
+msgstr "オープンソース"
+
 msgid "Open System Settings"
 msgstr "システム設定を開く"
 
@@ -13414,6 +13627,9 @@ msgstr "ページ"
 msgid "Pages could not be loaded"
 msgstr "ページを読み込めませんでした"
 
+msgid "Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests."
+msgstr "Pages は他のクラウド機能と一緒に非表示になり、非表示のクラウド機能はリクエストを行わなくなりました。"
+
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "ページはグリッドで表示され、フローティングキーボードにも対応。iPadOS 26 以降が必要です。"
 
@@ -13625,8 +13841,8 @@ msgstr "ParadevはClaude Code、OpenCode、OpenAI Codexなど、CLIベースの�
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Paradevのモバイルアプリなら、コンピューターから遠く離れていても、どこからでもエージェントの作業を進め、行き詰まりを解消できます。"
 
-msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
-msgstr "Paradev++はエージェントの作業中にMacをスリープさせないため、Macがアイドル状態になっても長いタスクは止まりません。"
+msgid "Paradev++ looks for new versions once a day and shows a popup. It never updates anything by itself."
+msgstr "Paradev++ は1日に1回新しいバージョンを確認し、ポップアップを表示します。自動で更新することはありません。"
 
 msgid "Paragraph"
 msgstr "段落"
@@ -13761,6 +13977,9 @@ msgstr "マージされたPRあたり"
 
 msgid "per merged PR, lower is better"
 msgstr "マージされたPRあたり、低いほど良い"
+
+msgid "Per project"
+msgstr "プロジェクトごと"
 
 msgid "per session"
 msgstr "セッションあたり"
@@ -14390,6 +14609,12 @@ msgstr "送信したプロンプトがここに表示されます。"
 msgid "Properties"
 msgstr "プロパティ"
 
+msgid "Propose hours"
+msgstr "時間を提案"
+
+msgid "Propose hours for my timesheet"
+msgstr "タイムシートの時間を提案"
+
 msgid "Provide either id or slug"
 msgstr "idまたはslugのいずれかを指定してください"
 
@@ -14405,6 +14630,9 @@ msgstr "週あたりPR"
 
 msgid "Public"
 msgstr "パブリック"
+
+msgid "Public holidays"
+msgstr "祝日"
 
 msgid "Public leaderboard"
 msgstr "公開リーダーボード"
@@ -14448,11 +14676,17 @@ msgstr "プルリクエスト#{0}、{1}"
 msgid "Pull request actions"
 msgstr "プルリクエストの操作"
 
+msgid "Pull request comments"
+msgstr "プルリクエストのコメント"
+
 msgid "Pull request detail tabs"
 msgstr "プルリクエスト詳細のタブ"
 
 msgid "Pull request not found"
 msgstr "プルリクエストが見つかりません"
+
+msgid "Pull request opened"
+msgstr "プルリクエスト作成"
 
 msgid "Pull request title"
 msgstr "プルリクエストのタイトル"
@@ -14465,6 +14699,9 @@ msgstr "プルリクエスト"
 
 msgid "Pull Requests"
 msgstr "プルリクエスト"
+
+msgid "Pull requests waiting for your review"
+msgstr "レビュー待ちのプルリクエスト"
 
 msgid "Purple"
 msgstr "紫"
@@ -14814,6 +15051,9 @@ msgstr "再接続中…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "再接続中… 会話は保持されます。"
 
+msgid "Recorded on enable, not started"
+msgstr "有効化時に記録、未開始"
+
 msgid "Recording"
 msgstr "録音中"
 
@@ -14876,6 +15116,9 @@ msgstr "再生成"
 
 msgid "Region"
 msgstr "リージョン"
+
+msgid "Register on Jira"
+msgstr "Jira に登録"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "このエージェントのグローバル設定にライフサイクルフックを登録し、Paradevがステータス表示と通知を行えるようにします。オフにするとParadevのエントリがすべて削除され、Paradev内も含めてこのエージェントのステータスと通知が停止します。"
@@ -15150,6 +15393,9 @@ msgstr "再オープン中…"
 
 msgid "reorder agents"
 msgstr "エージェントを並べ替える"
+
+msgid "Repair failed checks"
+msgstr "失敗したチェックを修復"
 
 msgid "Replace"
 msgstr "置き換える"
@@ -15520,6 +15766,9 @@ msgstr "{0}を再開中…"
 msgid "Resuming the conversation…"
 msgstr "会話を再開しています…"
 
+msgid "Retried"
+msgstr "再実行済み"
+
 msgid "Retry"
 msgstr "再試行"
 
@@ -15735,6 +15984,9 @@ msgstr "手元のマシンで10以上のコーディングエージェントを�
 msgid "Run again"
 msgstr "再実行"
 
+msgid "Run again on the same issue"
+msgstr "同じ課題で再実行"
+
 msgid "Run agents on a schedule or when something happens."
 msgstr "スケジュールで、または何かが起きたときにエージェントを実行します。"
 
@@ -15763,9 +16015,6 @@ msgstr "Sentryのissueが変化したときにオートメーションを実行�
 msgid "Run commands and navigate the application."
 msgstr "コマンドを実行し、アプリ内を移動します。"
 
-msgid "Run history"
-msgstr "実行履歴"
-
 msgid "Run History"
 msgstr "実行履歴"
 
@@ -15780,6 +16029,12 @@ msgstr "ワークスペースで実行"
 
 msgid "run issues in workspaces"
 msgstr "issueをワークスペースで実行する"
+
+msgid "Run late for up to (minutes)"
+msgstr "遅延実行の許容時間（分）"
+
+msgid "Run limit reached"
+msgstr "実行上限に達しました"
 
 msgid "Run now"
 msgstr "今すぐ実行"
@@ -15847,17 +16102,29 @@ msgstr "実行中"
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "実行中のターミナルプロセスは継続しますが、アプリ再起動後に古い出力が利用できなくなる場合があります。"
 
+msgid "Runs"
+msgstr "実行"
+
 msgid "Runs a local command on your machine"
 msgstr "マシン上でローカルコマンドを実行します"
 
 msgid "Runs appear here once an automation fires."
 msgstr "オートメーションが起動すると、ここに実行が表示されます。"
 
+msgid "Runs beyond these limits wait in the queue and start when an agent finishes."
+msgstr "上限を超えた実行はキューで待機し、エージェントが終了すると開始されます。"
+
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "そのデバイスのParadevアプリ内で動作しているため、更新するにはそのデバイスのアプリを更新する必要があります。"
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "実行結果はワークスペースに入ります。差分を確認し、良いものをマージしてください。"
+
+msgid "Runs on the chosen days at the chosen time in a new workspace."
+msgstr "選択した曜日と時刻に新しいワークスペースで実行します。"
+
+msgid "Runs per pull request at most"
+msgstr "プルリクエストごとの最大実行回数"
 
 msgid "Runs that found no host online"
 msgstr "オンラインのホストが見つからなかった実行"
@@ -15867,6 +16134,9 @@ msgstr "過去 7 日間にワークスペースを開始した実行"
 
 msgid "Runs the tests and reviews each pull request you're asked to review."
 msgstr "テストを実行し、レビューを依頼されたプルリクエストをすべてレビューします。"
+
+msgid "Runs to check"
+msgstr "確認待ちの実行"
 
 msgid "Runs when a new workspace is created."
 msgstr "新しいワークスペースの作成時に実行します。"
@@ -15886,6 +16156,9 @@ msgstr "サンフランシスコ"
 msgid "Sandbox stopped responding"
 msgstr "サンドボックスが応答しなくなりました"
 
+msgid "Sat"
+msgstr "土"
+
 msgid "Save"
 msgstr "保存"
 
@@ -15894,6 +16167,9 @@ msgstr "保存してワークスペースを作成"
 
 msgid "Save All"
 msgstr "すべて保存"
+
+msgid "Save anyway"
+msgstr "このまま保存"
 
 msgid "Save as environment"
 msgstr "環境として保存"
@@ -15909,6 +16185,9 @@ msgstr "環境を保存"
 
 msgid "Save failed: {message}"
 msgstr "保存に失敗しました: {message}"
+
+msgid "Save limits"
+msgstr "上限を保存"
 
 msgid "Save preferences"
 msgstr "設定を保存"
@@ -16921,6 +17200,9 @@ msgstr "このエージェントのステータス表示と通知を有効にし
 msgid "Show text"
 msgstr "テキストを表示"
 
+msgid "Show the prompt"
+msgstr "プロンプトを表示"
+
 msgid "Show the triggering payload"
 msgstr "トリガーのペイロードを表示"
 
@@ -17225,6 +17507,9 @@ msgstr "エージェント固有のメタデータの一部を転送できませ
 msgid "Some chat history could not be loaded."
 msgstr "一部のチャット履歴を読み込めませんでした。"
 
+msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
+msgstr "時間の上限から外れている日があります。手動または Jira で修正してください。登録は無効になっています。"
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "一部のファイルは対応していない形式のため追加されませんでした。"
 
@@ -17255,6 +17540,9 @@ msgstr "一部の v1 の作業に対応が必要です"
 
 msgid "Someone"
 msgstr "誰か"
+
+msgid "Someone changed this issue in Jira while you were editing. Your save would replace their changes."
+msgstr "編集中に、他のユーザーが Jira でこの Issue を変更しました。保存すると、その変更が上書きされます。"
 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByColleague"
@@ -17522,6 +17810,9 @@ msgstr "新しいチャットを開始"
 msgid "Start a new chat each run"
 msgstr "実行ごとに新しいチャットを開始"
 
+msgid "Start a run"
+msgstr "実行を開始"
+
 msgid "Start a session"
 msgstr "セッションを開始"
 
@@ -17575,6 +17866,9 @@ msgstr "タブバーの+から開始できます。"
 
 msgid "Start or stop the workspace run command"
 msgstr "ワークスペースの実行コマンドを開始または停止する"
+
+msgid "Start time"
+msgstr "開始時刻"
 
 msgid "Start voice mode"
 msgstr "音声モードを開始"
@@ -17655,6 +17949,9 @@ msgstr "接続の維持(リフレッシュトークン)"
 msgid "Steer"
 msgstr "軌道修正"
 
+msgid "Step"
+msgstr "ステップ"
+
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "ステップ {0} / 2"
@@ -17714,6 +18011,9 @@ msgstr "エージェントを停止して{accountName}に切り替えますか�
 
 msgid "Stop the agent before you edit a message"
 msgstr "メッセージを編集する前にエージェントを停止してください"
+
+msgid "Stop tracking"
+msgstr "追跡を停止"
 
 msgid "Stop watching"
 msgstr "監視を停止"
@@ -17820,6 +18120,9 @@ msgstr "概要"
 
 msgid "Summary only"
 msgstr "要約のみ"
+
+msgid "Sun"
+msgstr "日"
 
 msgid "sun 11:00"
 msgstr "日 11:00"
@@ -18133,6 +18436,9 @@ msgstr "タスクとプロジェクト"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Paradevで作成したタスクはこのLinearチームに同期されます。"
 
+msgid "Tasks with much more time than their share:"
+msgstr "割り当てより大幅に多い時間のタスク:"
+
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "タスク、CLI、エージェントはこの設定に従います。各メンバーは自分の Linear アカウントを使います。"
 
@@ -18340,6 +18646,9 @@ msgstr "その名前は使用できません。"
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "その実行はスキップされ、再試行されません。あとで「今すぐ実行」で開始できます。"
 
+msgid "That time happens twice on this day because the clock moves back. Jira received the first one."
+msgstr "時計が戻るため、この日はその時刻が2回あります。Jira は1回目を受け取りました。"
+
 msgid "The 2026 bet"
 msgstr "2026年の賭け"
 
@@ -18381,9 +18690,6 @@ msgstr "この発表では、Union Square Ventures が主導し、Y Combinator �
 
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "アプリは無料でダウンロードできます。iOS 26 以降と Paradev Pro が必要です。次は Android に対応予定です。"
-
-msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
-msgstr "アプリはParadev++.appになりました。アップデートでSuperset++.appはゴミ箱に移動するため、新しいアプリをDockに追加し直してください。"
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "アプリは{appVersion}ですが、別のもの（古いCLIや別のParadevビルドの可能性）が起動したホストサービスに接続しています。再起動するとこのアプリのコピーに置き換わります。"
@@ -18524,9 +18830,6 @@ msgstr "ガイド付きターミナルでHomebrewを使ってghをインスト�
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "ホストは{targetVersion}ではなく{0}で復帰しました。"
 
-msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
-msgstr "ホストは毎分確認します。ルールを有効にすると既存の一致を記録し、新しく一致した課題ごとにワークスペースとエージェントを1つ起動します。ルールは一時停止状態で保存されます。"
-
 msgid "The host did not come back within fifteen minutes."
 msgstr "ホストが15分以内に復帰しませんでした。"
 
@@ -18617,6 +18920,9 @@ msgstr "新しいエージェントは、必要に応じて省略されたメッ
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新しいエージェントがツールを含む会話全体を再開します。"
+
+msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
+msgstr "新しい「今日」ビューには、あなたを待っているエージェント、確認待ちの実行、レビュー、作業時間が表示されます。"
 
 msgid "The overnight shift"
 msgstr "夜間シフト"
@@ -18772,6 +19078,9 @@ msgstr "テーマ"
 
 msgid "Themes and agents"
 msgstr "テーマとエージェント"
+
+msgid "These automations run on this computer, not in the cloud. The host checks every minute. Enabling a rule records what already matches; only later matches start an agent. Rules are saved paused."
+msgstr "これらのオートメーションはクラウドではなくこのコンピューターで実行されます。ホストは毎分チェックします。ルールを有効にすると、すでに一致しているものが記録され、それ以降に一致したものだけがエージェントを開始します。ルールは一時停止の状態で保存されます。"
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "これらのコマンドはワークスペース作成時に自動的に実行されます。<0>ドキュメントを読む<1/></0>"
@@ -19122,6 +19431,9 @@ msgstr "このスレッドには返信できるコメントがありません。
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "このスレッドはエージェントに公開されていません。エージェントが返信するには、まず人がコメントする必要があります。"
 
+msgid "This time was already logged in Jira"
+msgstr "この時間はすでに Jira に記録されています"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "このアップデートでターミナルが一度だけ再起動しました。新しいターミナルは同じフォルダで開きます。"
 
@@ -19222,6 +19534,9 @@ msgstr "3ステップ · packages/uiとapps/desktopに変更"
 msgid "Threshold"
 msgstr "しきい値"
 
+msgid "Thu"
+msgstr "木"
+
 msgid "Ticket to production under one day, median"
 msgstr "チケットから本番まで中央値1日未満"
 
@@ -19230,6 +19545,18 @@ msgstr "ティア"
 
 msgid "Time"
 msgstr "時間"
+
+msgid "Time logged"
+msgstr "記録済みの時間"
+
+msgid "Time tracking is turned off on this Jira site."
+msgstr "この Jira サイトでは時間管理がオフになっています。"
+
+msgid "Time zone: {timeZone}"
+msgstr "タイムゾーン: {timeZone}"
+
+msgid "Timesheet proposals"
+msgstr "タイムシートの提案"
 
 msgid "Tinted"
 msgstr "色合い調整"
@@ -19245,6 +19572,9 @@ msgstr "移動先"
 
 msgid "to {name}"
 msgstr "{name} へ"
+
+msgid "To check"
+msgstr "要確認"
 
 msgid "To do"
 msgstr "未着手"
@@ -19347,6 +19677,9 @@ msgstr "直近30日のセッションあたりトークン"
 
 msgid "Tokens stay off your machine"
 msgstr "トークンはマシンに残らない"
+
+msgid "Too late, skipped"
+msgstr "遅すぎたためスキップ"
 
 msgid "Too many dictations. Try again later."
 msgstr "音声入力の回数が多すぎます。しばらくしてからもう一度お試しください。"
@@ -19530,6 +19863,9 @@ msgstr "試してみる"
 
 msgid "Try now"
 msgstr "試す"
+
+msgid "Tue"
+msgstr "火"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -19881,6 +20217,9 @@ msgstr "ホストサービスを更新"
 msgid "Update in the App Store"
 msgstr "App Store でアップデート"
 
+msgid "Update it with the same tool you used to install it."
+msgstr "インストールに使ったのと同じツールで更新してください。"
+
 msgid "Update naming instructions"
 msgstr "命名指示を更新"
 
@@ -19937,6 +20276,9 @@ msgstr "{0}からたった今更新しました。"
 
 msgid "Updates"
 msgstr "アップデート"
+
+msgid "Updates are available for your agent tools."
+msgstr "エージェントツールのアップデートがあります。"
 
 #. placeholder {0}: update.progress.target
 msgid "Updating to {0}"
@@ -20149,6 +20491,9 @@ msgstr "Vercel AI Gateway"
 msgid "Vercel AI Gateway rejected this key."
 msgstr "Vercel AI Gateway はこのキーを拒否しました。"
 
+msgid "Verified"
+msgstr "検証済み"
+
 msgid "Verified and saved"
 msgstr "検証して保存しました"
 
@@ -20173,6 +20518,12 @@ msgstr "バージョン"
 #. placeholder {0}: entry.version
 msgid "Version {0}"
 msgstr "バージョン{0}"
+
+msgid "Version {installed}, {latest} is available."
+msgstr "バージョン {installed}、{latest} が利用可能です。"
+
+msgid "Version {installed}, up to date."
+msgstr "バージョン {installed}、最新です。"
 
 msgid "Version {sharedVersion}"
 msgstr "バージョン {sharedVersion}"
@@ -20356,6 +20707,9 @@ msgstr "入力を待っています"
 msgid "Waits for the reset when no other account has quota."
 msgstr "他にクォータのあるアカウントがなければリセットを待ちます。"
 
+msgid "Waits for you"
+msgstr "あなたの対応待ち"
+
 msgid "Waking up workspace"
 msgstr "ワークスペースを起動中"
 
@@ -20470,6 +20824,9 @@ msgstr "Webhookトリガー"
 msgid "Website"
 msgstr "ウェブサイト"
 
+msgid "Wed"
+msgstr "水"
+
 msgid "Week"
 msgstr "週"
 
@@ -20551,6 +20908,9 @@ msgstr "Paradev Enterpriseとは何ですか?"
 msgid "What is wrong?"
 msgstr "何が問題ですか？"
 
+msgid "What needs you now, all from this computer."
+msgstr "今あなたが対応すべきこと。すべてこのコンピューターから。"
+
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradevとは何か、誰が作っていて、誰のためのものか。並列コーディングエージェントのためのワークスペースを作る、元YCのCTO3人が率いるサンフランシスコのチーム。"
 
@@ -20611,6 +20971,9 @@ msgstr "Paradev++ の新機能"
 msgid "What's next"
 msgstr "今後の予定"
 
+msgid "When"
+msgstr "タイミング"
+
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "トリガーが発火すると、選んだMacが新しいワークスペースを開き、エージェントがプロンプトに取りかかります。イベントによる実行にはそのイベントが含まれるので、エージェントは何を見ればよいか分かります。続けるには実行に返信します。"
 
@@ -20620,11 +20983,17 @@ msgstr "購入した GB 時間がこれを下回ったとき"
 msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 msgstr "残りが {topupThreshold} GB 時間を下回ると、{topupPrice} をチャージします ({topupGbHours} GB 時間)。"
 
+msgid "When its status changes and it still matches"
+msgstr "ステータスが変わり、まだ一致している場合"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "オフにすると、このデバイスのファイルやツールに外部からアクセスできなくなります。ここからリモートサンドボックスへの接続は引き続き可能です。<0>詳細<1/></0>"
 
 msgid "When quota runs out"
 msgstr "クォータを使い切ったとき"
+
+msgid "When the agent finishes, the check command runs in the workspace. Exit code 0 marks the run as verified. Without a command, you mark it yourself. A launch that fails is retried after 1, 5 and 15 minutes; three failures in a row pause the rule."
+msgstr "エージェントが終了すると、ワークスペースでチェックコマンドが実行されます。終了コード0で実行が検証済みになります。コマンドがない場合は自分でマークします。起動に失敗すると1分、5分、15分後に再試行し、3回連続で失敗するとルールが一時停止します。"
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "サイドバーの検出ポートバッジをクリックしたときの開き方。"
@@ -20716,6 +21085,9 @@ msgstr "勤務先のメールアドレス"
 msgid "Work from tickets"
 msgstr "チケットから作業を始める"
 
+msgid "Work started"
+msgstr "作業開始"
+
 msgid "Work the action items from a call"
 msgstr "通話のアクションアイテムを処理"
 
@@ -20732,6 +21104,9 @@ msgstr "作業時間 {seconds}秒"
 
 msgid "Workflow run completed…"
 msgstr "ワークフロー実行完了…"
+
+msgid "Workflow statuses"
+msgstr "ワークフローのステータス"
 
 msgid "Workflow Tutorials"
 msgstr "ワークフローのチュートリアル"
@@ -20892,6 +21267,9 @@ msgstr "ワークツリー"
 msgid "Worktrees are removed from disk; workspaces on the project's checkout only close. Files in the checkout stay as they are."
 msgstr "ワークツリーはディスクから削除され、プロジェクトのチェックアウト上のワークスペースは閉じるだけです。チェックアウト内のファイルはそのまま残ります。"
 
+msgid "Would start"
+msgstr "開始予定"
+
 msgid "Would you like to reassign it?"
 msgstr "割り当て直しますか?"
 
@@ -20921,6 +21299,9 @@ msgstr "よく質問される部分のドキュメントを書く…"
 
 msgid "Write once. Runs in every agent."
 msgstr "一度書けば、すべてのエージェントで動きます。"
+
+msgid "Write the duration as 45m, 1h 30m or 2h."
+msgstr "所要時間は 45m、1h 30m、2h のように入力してください。"
 
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "エンジニアの時間はもうコードを書くことには費やされません。読むことに費やされます。2025年に並列エージェントを導入したチームが最初に壁にぶつかりました。10体のエージェントは、昼までに、チームが金曜までに正直にレビューしきれない量の差分を生み出します。"
@@ -21157,6 +21538,9 @@ msgstr "あなたの GitHub アカウントはこの環境のリポジトリに�
 
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "GitHub のリンクはサインインしたアカウントから取得されるため、確認済みと表示され、ここでは編集できません。"
+
+msgid "Your Jira account cannot log time on this issue."
+msgstr "あなたの Jira アカウントではこの課題に時間を記録できません。"
 
 msgid "Your last payment failed. Update your payment method to keep Pro."
 msgstr "前回の支払いに失敗しました。Pro を継続するには支払い方法を更新してください。"

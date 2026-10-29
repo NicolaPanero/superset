@@ -14,6 +14,7 @@ import type { RightPaneKind } from "./types";
 export interface RightPaneGates {
 	sandbox: boolean;
 	mobilePane: boolean;
+	pages?: boolean;
 }
 
 export interface RightPaneOption {
@@ -48,6 +49,7 @@ const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
 		label: msg({ message: "Pages" }),
 		Icon: LuFileText,
 		group: "workspace",
+		gate: "pages",
 	},
 	{
 		kind: "browser",
@@ -79,6 +81,6 @@ const RIGHT_PANE_OPTIONS: RightPaneOption[] = [
 
 export function getRightPaneOptions(gates: RightPaneGates): RightPaneOption[] {
 	return RIGHT_PANE_OPTIONS.filter(
-		(option) => !option.gate || gates[option.gate],
+		(option) => !option.gate || gates[option.gate] !== false,
 	);
 }

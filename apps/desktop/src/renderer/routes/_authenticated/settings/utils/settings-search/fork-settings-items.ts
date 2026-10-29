@@ -7,6 +7,7 @@ export const FORK_SETTING_ITEM_ID = {
 	FORK_CONNECTIONS: "fork-connections",
 	FORK_MCP_SERVERS: "fork-mcp-servers",
 	FORK_ATTACHMENT_RETENTION: "fork-attachment-retention",
+	FORK_AGENT_CLI_UPDATES: "fork-agent-cli-updates",
 	LOCAL_AGENT_ACCOUNTS: "local-agent-accounts",
 	EXPERIMENTAL_ACP_CHAT: "experimental-acp-chat",
 } as const;
@@ -22,6 +23,7 @@ export const FORK_SETTING_ITEM_VARIANT: Record<
 	[FORK_SETTING_ITEM_ID.FORK_CONNECTIONS]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_MCP_SERVERS]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_ATTACHMENT_RETENTION]: "shared",
+	[FORK_SETTING_ITEM_ID.FORK_AGENT_CLI_UPDATES]: "shared",
 	[FORK_SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT]: "v2",
 };
 
@@ -42,6 +44,21 @@ export const FORK_SETTINGS_ITEMS: SettingsItem[] = [
 			"disk",
 			"cleanup",
 			"retention",
+		],
+	},
+	{
+		id: FORK_SETTING_ITEM_ID.FORK_AGENT_CLI_UPDATES,
+		section: "fork",
+		title: "Agent updates",
+		description: "Check for new versions of Claude Code and Codex every day.",
+		keywords: [
+			"agent",
+			"update",
+			"version",
+			"claude",
+			"codex",
+			"cli",
+			"upgrade",
 		],
 	},
 	{

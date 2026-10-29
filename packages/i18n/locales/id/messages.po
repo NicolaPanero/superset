@@ -607,6 +607,9 @@ msgstr "{0}% dari semua token · {1} token"
 msgid "{0}% of total cost · {1} tokens · * at API list rates"
 msgstr "{0}% dari total biaya · {1} token · * pada tarif daftar API"
 
+msgid "{active} in progress"
+msgstr "{active} sedang berjalan"
+
 msgid "{actor} added the label {label}"
 msgstr "{actor} menambahkan label {label}"
 
@@ -973,6 +976,9 @@ msgstr "{kind} · oleh {author}"
 msgid "{kindLabel} theme"
 msgstr "Tema {kindLabel}"
 
+msgid "{label} {installed} to {latest}"
+msgstr "{label} {installed} ke {latest}"
+
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
 
@@ -1202,6 +1208,9 @@ msgstr "{seconds} dtk"
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
 
+msgid "{selectedCount} entries · {selectedDuration}"
+msgstr "{selectedCount} entri · {selectedDuration}"
+
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} dipilih"
 
@@ -1263,6 +1272,9 @@ msgstr "{toolName} dihentikan"
 
 msgid "{total, plural, one {The check passed} other {All # checks passed}}"
 msgstr "{total, plural, one {Semua # check lulus} other {Semua # check lulus}}"
+
+msgid "{total} worklogs on this issue · mine among those shown: {myDuration}"
+msgstr "{total} worklog pada isu ini · milik saya di antara yang ditampilkan: {myDuration}"
 
 msgid "{totalCount, plural, one {GitHub issue} other {GitHub issues}}"
 msgstr "{totalCount, plural, one {issue GitHub} other {issue GitHub}}"
@@ -1630,6 +1642,9 @@ msgstr "Masih ada proses yang berjalan di terminal ini"
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Prompt, beberapa pemicu, dan workspace untuk setiap run"
 
+msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
+msgstr "Usulan untuk hari kerja di bawah minimum, dari tugas yang Anda tutup tanpa waktu dan tugas yang masih berjalan. Tidak ada yang dikirim ke Jira sampai Anda mengonfirmasi. Tanpa tanggal: 30 hari terakhir."
+
 msgid "A pull request always gets its own worktree"
 msgstr "Pull request selalu mendapat worktree sendiri"
 
@@ -1651,6 +1666,9 @@ msgstr "Profil terpisah yang ditagih per token. Kunci tetap berada di CLI {0}."
 
 msgid "A separate profile that shares your skills, plugins, MCP servers, and settings."
 msgstr "Profil terpisah yang berbagi skill, plugin, server MCP, dan pengaturan Anda."
+
+msgid "A summary file of tasks and pull requests that need attention."
+msgstr "File ringkasan tugas dan pull request yang perlu diperhatikan."
 
 msgid "A task key is 1 to 5 letters or numbers and starts with a letter."
 msgstr "Kunci tugas terdiri dari 1 hingga 5 huruf atau angka dan diawali huruf."
@@ -1739,9 +1757,6 @@ msgstr "Akun menunggu penghapusan"
 
 msgid "Account usage"
 msgstr "Penggunaan akun"
-
-msgid "Account usage rings update after each agent turn and keep the last reading instead of fading out."
-msgstr "Cincin penggunaan akun diperbarui setelah setiap giliran agen dan mempertahankan pembacaan terakhir alih-alih memudar."
 
 msgid "Achievements"
 msgstr "Pencapaian"
@@ -2125,6 +2140,9 @@ msgstr "pengaturan agen"
 msgid "Agent setup"
 msgstr "Pengaturan agen"
 
+msgid "Agent updates"
+msgstr "Pembaruan agen"
+
 msgid "Agent usage rankings"
 msgstr "Peringkat penggunaan agen"
 
@@ -2133,6 +2151,9 @@ msgstr "Pratinjau yang digerakkan agen"
 
 msgid "Agents"
 msgstr "Agen"
+
+msgid "Agents at the same time"
+msgstr "Agen bersamaan"
 
 msgid "Agents complete routine tickets with no mid-task intervention."
 msgstr "Agen menyelesaikan tiket rutin tanpa intervensi di tengah tugas."
@@ -2154,6 +2175,9 @@ msgstr "Agen yang berjalan sekaligus"
 
 msgid "Agents use this account when they call Linear tools."
 msgstr "Agen memakai akun ini saat memanggil tool Linear."
+
+msgid "Agents waiting for you"
+msgstr "Agen yang menunggu Anda"
 
 msgid "Aggregate agent usage across every developer on the Paradev leaderboard — tokens, cost, cache behaviour and which models people actually reach for."
 msgstr "Agregat penggunaan agen dari seluruh developer di papan peringkat Paradev — token, biaya, perilaku cache, dan model yang benar-benar dipakai orang."
@@ -2299,6 +2323,9 @@ msgstr "Semua tulisan"
 msgid "All projects"
 msgstr "Semua proyek"
 
+msgid "All pull requests"
+msgstr "Semua pull request"
+
 msgid "All releases"
 msgstr "Semua rilis"
 
@@ -2392,6 +2419,9 @@ msgstr "Sudah dipindahkan ke organisasi lain. Beralih ke organisasi itu untuk me
 msgid "Already brought over to another organization. Switch to it to see this workspace."
 msgstr "Sudah dipindahkan ke organisasi lain. Beralih ke organisasi itu untuk melihat workspace ini."
 
+msgid "Already handled"
+msgstr "Sudah ditangani"
+
 msgid "Already have an account? <0>Sign in</0>"
 msgstr "Sudah punya akun? <0>Masuk</0>"
 
@@ -2458,6 +2488,9 @@ msgstr "Terjadi kesalahan yang tidak diketahui"
 
 msgid "An update is ready to install."
 msgstr "Pembaruan siap dipasang."
+
+msgid "Analysis, open questions and a plan. No ticket changes."
+msgstr "Analisis, pertanyaan terbuka, dan rencana. Tiket tidak diubah."
 
 msgid "Android is on the way. Be first to know when it ships."
 msgstr "Android sedang dalam perjalanan. Jadilah yang pertama tahu saat dirilis."
@@ -3007,6 +3040,9 @@ msgstr "Otomatiskan Tugas"
 
 msgid "Automate workspace setup for {projectName}"
 msgstr "Otomatiskan penyiapan workspace untuk {projectName}"
+
+msgid "Automatic"
+msgstr "Otomatis"
 
 msgid "Automatic (email address)"
 msgstr "Otomatis (alamat email)"
@@ -3865,6 +3901,12 @@ msgstr "Permukaan chat: pesan, penalaran, saran"
 msgid "Check again"
 msgstr "Periksa lagi"
 
+msgid "Check command (optional)"
+msgstr "Perintah check (opsional)"
+
+msgid "Check for agent updates every day"
+msgstr "Periksa pembaruan agen setiap hari"
+
 msgid "Check for Update"
 msgstr "Periksa Pembaruan"
 
@@ -3877,8 +3919,14 @@ msgstr "Periksa Pembaruan"
 msgid "Check for Updates..."
 msgstr "Periksa Pembaruan..."
 
+msgid "Check now"
+msgstr "Periksa sekarang"
+
 msgid "Check on running agents and read what they changed from your iPhone or iPad."
 msgstr "Pantau agen yang sedang berjalan dan baca apa yang mereka ubah dari iPhone atau iPad Anda."
+
+msgid "Check output"
+msgstr "Output check"
 
 msgid "Check plans and balances"
 msgstr "Periksa paket dan saldo"
@@ -3915,6 +3963,12 @@ msgstr "Periksa kotak masuk Anda"
 
 msgid "Checkbox · Radio · Switch"
 msgstr "Checkbox · Radio · Switch"
+
+msgid "checked"
+msgstr "diperiksa"
+
+msgid "Checking"
+msgstr "Memeriksa"
 
 msgid "Checking agents…"
 msgstr "Memeriksa agen…"
@@ -4035,6 +4089,9 @@ msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 
 msgid "Choose MCP servers for this message"
 msgstr "Pilih server MCP untuk pesan ini"
+
+msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
+msgstr "Pilih status tujuan Superset memindahkan isu saat pekerjaan dimulai dan saat pull request dibuka. Tanpa pilihan, Superset mencari status dengan nama seperti “review”."
 
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
@@ -4549,6 +4606,9 @@ msgstr "Perintah yang dijalankan untuk setup workspace, teardown, dan tombol Run
 
 msgid "Comment"
 msgstr "Komentar"
+
+msgid "Comment (optional)"
+msgstr "Komentar (opsional)"
 
 msgid "Comment actions"
 msgstr "Tindakan komentar"
@@ -6236,6 +6296,9 @@ msgstr "harian 9:00"
 msgid "Daily at {time}"
 msgstr "Harian pukul {time}"
 
+msgid "Daily digest"
+msgstr "Ringkasan harian"
+
 msgid "Daily practice for our team and our heaviest users."
 msgstr "Praktik harian tim kami dan pengguna terberat kami."
 
@@ -6272,11 +6335,26 @@ msgstr "Rentang tanggal"
 msgid "Day"
 msgstr "Hari"
 
+msgid "Day ends"
+msgstr "Hari berakhir"
+
 msgid "Day One"
 msgstr "Hari pertama"
 
+msgid "Day starts"
+msgstr "Mulai kerja"
+
 msgid "days"
 msgstr "hari"
+
+msgid "Days"
+msgstr "Hari"
+
+msgid "Days already full:"
+msgstr "Hari yang sudah penuh:"
+
+msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
+msgstr "Hari cuti (satu per baris, YYYY-MM-DD atau YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "hari menjalankan tiga agen sekaligus"
@@ -6687,6 +6765,9 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools di samping halaman"
 
+msgid "Diagnoses the failure and tries a fix, at most twice per pull request."
+msgstr "Mendiagnosis kegagalan dan mencoba perbaikan, paling banyak dua kali per pull request."
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -6780,6 +6861,9 @@ msgstr "Buang perubahan pada \"{discardBasename}\"?"
 
 msgid "Discard changes?"
 msgstr "Buang perubahan?"
+
+msgid "Discard my changes"
+msgstr "Buang perubahan saya"
 
 msgid "Discard recording"
 msgstr "Buang rekaman"
@@ -7099,6 +7183,9 @@ msgstr "Setiap lampiran maksimal {0} MB."
 msgid "Each in its own new tab"
 msgstr "Masing-masing di tab barunya sendiri"
 
+msgid "Each issue that starts to match the query gets a new workspace."
+msgstr "Setiap isu yang mulai cocok dengan query mendapat workspace baru."
+
 msgid "Each morning at 8am, look at yesterday's failed CI runs, diagnose the most common failure, and open a fix PR."
 msgstr "Tiap pagi jam 8, lihat run CI yang gagal kemarin, diagnosis kegagalan paling umum, dan buka PR perbaikan."
 
@@ -7153,6 +7240,9 @@ msgstr "Edit"
 
 msgid "Edit and restart from here"
 msgstr "Edit dan mulai ulang dari sini"
+
+msgid "Edit automation"
+msgstr "Edit otomatisasi"
 
 msgid "Edit comment"
 msgstr "Edit komentar"
@@ -7638,6 +7728,12 @@ msgstr "Gagal"
 msgctxt "agent status"
 msgid "Failed"
 msgstr "Gagal"
+
+msgid "Failed checks"
+msgstr "Check gagal"
+
+msgid "Failed checks on a linked pull request run the agent in its workspace, once per commit."
+msgstr "Check yang gagal pada pull request yang ditautkan menjalankan agen di workspace-nya, sekali per commit."
 
 msgid "Failed runs <0>· 7d</0>"
 msgstr "Eksekusi gagal <0>· 7h</0>"
@@ -8358,6 +8454,9 @@ msgstr "Perbaiki temuan"
 msgid "Fix new errors in web. Reproduce each one in a test and open a draft pull request."
 msgstr "Perbaiki error baru di web. Reproduksi masing-masing dalam tes dan buka draft pull request."
 
+msgid "Fix review comments"
+msgstr "Perbaiki komentar review"
+
 msgid "fix-auth-redirect"
 msgstr "fix-auth-redirect"
 
@@ -8582,6 +8681,9 @@ msgstr "Reset gratis: {formattedCount}"
 
 msgid "Frequently<0/>asked questions"
 msgstr "Pertanyaan<0/>yang sering diajukan"
+
+msgid "Fri"
+msgstr "Jum"
 
 msgid "from"
 msgstr "dari"
@@ -9307,6 +9409,9 @@ msgstr "Idle · branch sudah di-push"
 msgid "If the CLI is not installed yet, install it on the computer where this agent will run before signing in."
 msgstr "Jika CLI belum terpasang, pasang di komputer tempat agen ini akan dijalankan sebelum masuk."
 
+msgid "If the computer is off or asleep at the scheduled time, the run starts when it wakes within this window, otherwise it is skipped. Time zone: {timeZone}."
+msgstr "Jika komputer mati atau tidur pada waktu terjadwal, run dimulai saat komputer bangun dalam rentang ini; jika tidak, run dilewati. Zona waktu: {timeZone}."
+
 msgid "If you're enjoying Paradev so far, a GitHub star helps other developers discover it."
 msgstr "Kalau sejauh ini Anda menikmati Paradev, satu star GitHub membantu developer lain menemukannya."
 
@@ -9446,9 +9551,6 @@ msgstr "Perbaiki instruksi agen"
 msgid "Improved diff viewer"
 msgstr "Penampil diff yang lebih baik"
 
-msgid "In a Claude chat, pick another account in the composer to move the chat there at once, with its full history."
-msgstr "Di chat Claude, pilih akun lain di composer untuk langsung memindahkan chat ke sana, beserta seluruh riwayatnya."
-
 msgid "in a new session"
 msgstr "dalam sesi baru"
 
@@ -9463,6 +9565,9 @@ msgstr "Hanya dalam beberapa bulan, <0>puluhan ribu engineer</0> memakai Paradev
 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Bekerja langsung di kantor San Francisco, lima hari seminggu. Anda bekerja langsung dengan para pendiri."
+
+msgid "in progress"
+msgstr "sedang berjalan"
 
 msgid "In progress"
 msgstr "Sedang dikerjakan"
@@ -9500,6 +9605,12 @@ msgstr "Browser dalam aplikasi"
 
 msgid "In-app PR merge"
 msgstr "Merge PR di dalam aplikasi"
+
+msgid "Include"
+msgstr "Sertakan"
+
+msgid "Include tasks still in progress"
+msgstr "Sertakan tugas yang masih berjalan"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Sertakan id tiket Linear dari prompt di nama branch (mis. bin-344-fix-login). Beri prefix fix/ atau feat/ sesuai tugasnya."
@@ -9831,6 +9942,9 @@ msgstr "Komentar issue"
 msgid "Issue created"
 msgstr "Issue dibuat"
 
+msgid "Issue key"
+msgstr "Kunci issue"
+
 msgid "Issue not found."
 msgstr "Issue tidak ditemukan."
 
@@ -9873,6 +9987,9 @@ msgstr "Host akan tersambung sendiri begitu mesinnya kembali. Tarik untuk memeri
 msgid "Italic"
 msgstr "Miring"
 
+msgid "Italy"
+msgstr "Italia"
+
 msgid "Item"
 msgstr "Item"
 
@@ -9909,6 +10026,9 @@ msgstr "JetBrains"
 msgid "Jira automations"
 msgstr "Otomasi Jira"
 
+msgid "Jira automations are now tracked until the end: a queue, a limit on agents at the same time, retries, a preview and a manual run."
+msgstr "Otomatisasi Jira kini dilacak sampai selesai: antrean, batas agen bersamaan, percobaan ulang, pratinjau, dan run manual."
+
 msgid "Jira board"
 msgstr "Papan Jira"
 
@@ -9917,6 +10037,12 @@ msgstr "Isu Jira"
 
 msgid "Jira project"
 msgstr "Proyek Jira"
+
+msgid "Jira project key"
+msgstr "Kunci proyek Jira"
+
+msgid "Jira triage"
+msgstr "Triase Jira"
 
 msgid "Join"
 msgstr "Gabung"
@@ -10181,6 +10307,9 @@ msgstr "Peluncuran"
 
 msgid "Launch agents across features, bug fixes, and refactors, all in parallel. Status at a glance shows which agents are working, which are blocked, and which are waiting on you."
 msgstr "Jalankan agen untuk fitur, perbaikan bug, dan refactor, semuanya paralel. Status sekilas menunjukkan agen mana yang bekerja, mana yang terhambat, dan mana yang menunggu Anda."
+
+msgid "Launch attempts"
+msgstr "Percobaan peluncuran"
 
 msgid "Launch mode"
 msgstr "Mode peluncuran"
@@ -10636,6 +10765,9 @@ msgstr "Lokasi"
 msgid "Location & checkout"
 msgstr "Lokasi & checkout"
 
+msgid "Log {logDuration}"
+msgstr "Catat {logDuration}"
+
 msgid "Log levels"
 msgstr "Level log"
 
@@ -10644,6 +10776,21 @@ msgstr "Keluar"
 
 msgid "Log out?"
 msgstr "Keluar?"
+
+msgid "Log time"
+msgstr "Catat waktu"
+
+msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgstr "Catat waktu pada isu Jira dari detailnya, dengan waktu Anda hari ini dan riwayat isu."
+
+msgid "Logged"
+msgstr "Tercatat"
+
+msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
+msgstr "Dicatat sebagai {account} · {timeZone}. Sisa estimasi tidak berubah."
+
+msgid "Logged today: {total}"
+msgstr "Tercatat hari ini: {total}"
 
 msgid "Login unverified"
 msgstr "Login belum diverifikasi"
@@ -10706,6 +10853,12 @@ msgstr "Rendah"
 msgid "Low severity"
 msgstr "Tingkat keparahan rendah"
 
+msgid "Lunch ends"
+msgstr "Selesai makan siang"
+
+msgid "Lunch starts"
+msgstr "Mulai makan siang"
+
 msgid "Machine resources"
 msgstr "Sumber daya mesin"
 
@@ -10747,6 +10900,9 @@ msgstr "Jadikan halaman ini publik?"
 
 msgid "make this the main action on the page"
 msgstr "jadikan ini aksi utama di halaman"
+
+msgid "Makes the requested changes as commits. Posts no comments."
+msgstr "Membuat perubahan yang diminta sebagai commit. Tidak memposting komentar."
 
 msgid "Makes the Run button launch this terminal script for matching projects."
 msgstr "Membuat tombol Run menjalankan skrip terminal ini untuk proyek yang cocok."
@@ -10830,6 +10986,9 @@ msgstr "Tandai Sudah Dibaca"
 msgid "Mark as Unread"
 msgstr "Tandai Belum Dibaca"
 
+msgid "Mark as verified"
+msgstr "Tandai terverifikasi"
+
 msgid "Mark as viewed"
 msgstr "Tandai sudah dilihat"
 
@@ -10874,6 +11033,9 @@ msgstr "Maks"
 
 msgid "Maximum"
 msgstr "Maksimum"
+
+msgid "Maximum hours a day"
+msgstr "Jam maksimum per hari"
 
 msgid "Maximum reasoning effort"
 msgstr "Upaya penalaran maksimum"
@@ -11086,6 +11248,9 @@ msgstr "Perkecil issue GitHub"
 msgid "Minimum contrast"
 msgstr "Kontras minimum"
 
+msgid "Minimum hours a day"
+msgstr "Jam minimum per hari"
+
 msgid "missed"
 msgstr "terlewat"
 
@@ -11126,9 +11291,6 @@ msgstr "model"
 msgid "Model"
 msgstr "Model"
 
-msgid "Model and effort lists open at once: Paradev++ remembers them and refreshes them in the background."
-msgstr "Daftar model dan upaya langsung terbuka: Paradev++ mengingatnya dan memperbaruinya di latar belakang."
-
 msgid "Model context usage"
 msgstr "Penggunaan konteks model"
 
@@ -11158,6 +11320,15 @@ msgstr "Model yang dipakai"
 
 msgid "Moderate reasoning effort"
 msgstr "Upaya penalaran sedang"
+
+msgid "Module field (optional)"
+msgstr "Kolom modul (opsional)"
+
+msgid "Modules (comma separated)"
+msgstr "Modul (dipisahkan koma)"
+
+msgid "Mon"
+msgstr "Sen"
 
 msgid "Monitor agents from your phone."
 msgstr "Pantau agen dari ponsel Anda."
@@ -11295,6 +11466,9 @@ msgstr "Isu Jira saya"
 
 msgid "My Tasks"
 msgstr "Tugas Saya"
+
+msgid "My time today: {todayDuration}"
+msgstr "Waktu saya hari ini: {todayDuration}"
 
 msgid "Mystery Machinist"
 msgstr "Masinis Misterius"
@@ -11479,6 +11653,12 @@ msgstr "Grup baru dari workspace"
 msgid "New issue"
 msgstr "Issue baru"
 
+msgid "New Jira issue"
+msgstr "Isu Jira baru"
+
+msgid "New local triggers: pull request comments, failed checks and a schedule, with ready-made templates."
+msgstr "Pemicu lokal baru: komentar pull request, check gagal, dan jadwal, dengan template siap pakai."
+
 msgid "New page"
 msgstr "Halaman baru"
 
@@ -11490,6 +11670,9 @@ msgstr "Proyek baru"
 
 msgid "New push to branch"
 msgstr "Push baru ke branch"
+
+msgid "New review comments on a pull request linked to a workspace of the project run the agent in that workspace."
+msgstr "Komentar review baru pada pull request yang ditautkan ke workspace proyek menjalankan agen di workspace tersebut."
 
 msgid "New session"
 msgstr "Sesi baru"
@@ -11652,6 +11835,9 @@ msgstr "Tanpa agen"
 msgid "No agent is configured on this host"
 msgstr "Tidak ada agen yang dikonfigurasi di host ini"
 
+msgid "No agent is waiting."
+msgstr "Tidak ada agen yang menunggu."
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Tidak ada agen yang dikonfigurasi di {0}"
@@ -11682,6 +11868,9 @@ msgstr "Tidak ada lampiran"
 
 msgid "No authors found."
 msgstr "Tidak ada penulis ditemukan."
+
+msgid "No automation is running."
+msgstr "Tidak ada otomatisasi yang berjalan."
 
 msgid "No automations match"
 msgstr "Tidak ada otomatisasi yang cocok"
@@ -12107,6 +12296,9 @@ msgstr "Tidak ada hasil untuk “{query}”"
 msgid "No results found."
 msgstr "Tidak ada hasil ditemukan."
 
+msgid "No review requested."
+msgstr "Tidak ada permintaan review."
+
 msgid "No reviewers"
 msgstr "Tidak ada peninjau"
 
@@ -12124,6 +12316,9 @@ msgstr "Tidak ada posisi yang cocok untuk saya. Apakah saya tetap boleh menghubu
 
 msgid "No runs yet"
 msgstr "Belum ada run"
+
+msgid "No runs yet."
+msgstr "Belum ada run."
 
 msgid "No screenshots yet"
 msgstr "Belum ada tangkapan layar"
@@ -12326,6 +12521,9 @@ msgstr "Belum diberikan"
 msgid "Not included"
 msgstr "Tidak termasuk"
 
+msgid "Not installed on this computer."
+msgstr "Tidak terpasang di komputer ini."
+
 msgid "Not loaded"
 msgstr "Belum dimuat"
 
@@ -12381,6 +12579,9 @@ msgstr "Tidak ada yang berjalan. Arsipkan dan buat yang baru."
 msgid "Nothing lives at {pathname}."
 msgstr "Tidak ada apa pun di {pathname}."
 
+msgid "Nothing matches right now."
+msgstr "Tidak ada yang cocok saat ini."
+
 msgid "Nothing needs a retry"
 msgstr "Tidak ada yang perlu dicoba ulang"
 
@@ -12389,6 +12590,12 @@ msgstr "Belum ada yang dipublikasikan dalam 30 hari terakhir. Peringkat Anda mun
 
 msgid "Nothing running"
 msgstr "Tidak ada yang berjalan"
+
+msgid "Nothing to check."
+msgstr "Tidak ada yang perlu diperiksa."
+
+msgid "Nothing to propose in this period."
+msgstr "Tidak ada yang bisa diusulkan pada periode ini."
 
 msgid "Nothing was missed"
 msgstr "Tidak ada yang terlewat"
@@ -12457,6 +12664,9 @@ msgstr "dari semua token"
 
 msgid "Off"
 msgstr "Mati"
+
+msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
+msgstr "Nonaktif secara default. Jika aktif, tampilan Hari ini dapat menyiapkan, hanya saat Anda meminta, usulan worklog untuk hari kerja di bawah minimum. Tidak ada yang dicatat tanpa konfirmasi Anda, dan tidak ada otomatisasi yang dapat menyiapkan atau mengirimnya."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Nonaktif. Membeli GB-jam lagi saat hampir habis."
@@ -13064,6 +13274,9 @@ msgstr "Buka sheet"
 msgid "Open ship options"
 msgstr "Buka opsi pengiriman"
 
+msgid "Open source"
+msgstr "Open source"
+
 msgid "Open System Settings"
 msgstr "Buka System Settings"
 
@@ -13414,6 +13627,9 @@ msgstr "Halaman"
 msgid "Pages could not be loaded"
 msgstr "Halaman tidak dapat dimuat"
 
+msgid "Pages is hidden with the other cloud features, and the hidden cloud features no longer make requests."
+msgstr "Pages disembunyikan bersama fitur cloud lainnya, dan fitur cloud yang disembunyikan tidak lagi mengirim permintaan."
+
 msgid "Pages open in a grid, and floating keyboards work. Requires iPadOS 26 or later."
 msgstr "Halaman terbuka dalam grid, dan keyboard mengambang berfungsi. Memerlukan iPadOS 26 atau lebih baru."
 
@@ -13625,8 +13841,8 @@ msgstr "Paradev bekerja dengan agen coding berbasis CLI mana pun, termasuk Claud
 msgid "Paradev's mobile app lets me keep my agents moving and unblock them from anywhere, even when I'm nowhere near my computer."
 msgstr "Aplikasi seluler Paradev memungkinkan saya menjaga agen tetap bekerja dan mengatasi hambatannya dari mana saja, bahkan saat saya jauh dari komputer."
 
-msgid "Paradev++ keeps the Mac awake while your agents work, so a long task does not stop when the Mac goes idle."
-msgstr "Paradev++ menjaga Mac tetap aktif saat agen Anda bekerja, sehingga tugas panjang tidak berhenti saat Mac menganggur."
+msgid "Paradev++ looks for new versions once a day and shows a popup. It never updates anything by itself."
+msgstr "Paradev++ mencari versi baru sekali sehari dan menampilkan popup. Paradev++ tidak pernah memperbarui apa pun sendiri."
 
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -13761,6 +13977,9 @@ msgstr "per PR yang digabungkan"
 
 msgid "per merged PR, lower is better"
 msgstr "per PR yang digabungkan, makin rendah makin baik"
+
+msgid "Per project"
+msgstr "Per proyek"
 
 msgid "per session"
 msgstr "per sesi"
@@ -14390,6 +14609,12 @@ msgstr "Prompt yang Anda kirim akan muncul di sini."
 msgid "Properties"
 msgstr "Properti"
 
+msgid "Propose hours"
+msgstr "Usulkan jam"
+
+msgid "Propose hours for my timesheet"
+msgstr "Usulkan jam untuk timesheet saya"
+
 msgid "Provide either id or slug"
 msgstr "Berikan id atau slug"
 
@@ -14405,6 +14630,9 @@ msgstr "PR per minggu"
 
 msgid "Public"
 msgstr "Publik"
+
+msgid "Public holidays"
+msgstr "Hari libur nasional"
 
 msgid "Public leaderboard"
 msgstr "Papan peringkat publik"
@@ -14448,11 +14676,17 @@ msgstr "Pull request #{0}, {1}"
 msgid "Pull request actions"
 msgstr "Aksi pull request"
 
+msgid "Pull request comments"
+msgstr "Komentar pull request"
+
 msgid "Pull request detail tabs"
 msgstr "Tab detail pull request"
 
 msgid "Pull request not found"
 msgstr "Pull request tidak ditemukan"
+
+msgid "Pull request opened"
+msgstr "Pull request dibuka"
 
 msgid "Pull request title"
 msgstr "Judul pull request"
@@ -14465,6 +14699,9 @@ msgstr "Pull request"
 
 msgid "Pull Requests"
 msgstr "Pull Request"
+
+msgid "Pull requests waiting for your review"
+msgstr "Pull request yang menunggu review Anda"
 
 msgid "Purple"
 msgstr "Ungu"
@@ -14814,6 +15051,9 @@ msgstr "Menyambungkan ulang…"
 msgid "Reconnecting… your conversation is kept."
 msgstr "Menyambungkan ulang… percakapanmu tetap tersimpan."
 
+msgid "Recorded on enable, not started"
+msgstr "Dicatat saat diaktifkan, tidak dimulai"
+
 msgid "Recording"
 msgstr "Merekam"
 
@@ -14876,6 +15116,9 @@ msgstr "Buat ulang"
 
 msgid "Region"
 msgstr "Region"
+
+msgid "Register on Jira"
+msgstr "Catat di Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Mendaftarkan hook lifecycle di konfigurasi global agen ini agar Paradev bisa menampilkan status dan mengirim notifikasi. Mematikannya menghapus entri Paradev di mana-mana — status dan notifikasi berhenti untuk agen ini, termasuk di dalam Paradev."
@@ -15150,6 +15393,9 @@ msgstr "Membuka kembali…"
 
 msgid "reorder agents"
 msgstr "mengurutkan ulang agen"
+
+msgid "Repair failed checks"
+msgstr "Perbaiki check yang gagal"
 
 msgid "Replace"
 msgstr "Ganti"
@@ -15520,6 +15766,9 @@ msgstr "Melanjutkan {0}…"
 msgid "Resuming the conversation…"
 msgstr "Melanjutkan percakapan…"
 
+msgid "Retried"
+msgstr "Diulang"
+
 msgid "Retry"
 msgstr "Coba lagi"
 
@@ -15735,6 +15984,9 @@ msgstr "Jalankan 10+ agen coding paralel di mesin Anda."
 msgid "Run again"
 msgstr "Jalankan lagi"
 
+msgid "Run again on the same issue"
+msgstr "Jalankan lagi pada isu yang sama"
+
 msgid "Run agents on a schedule or when something happens."
 msgstr "Jalankan agen sesuai jadwal atau saat sesuatu terjadi."
 
@@ -15763,9 +16015,6 @@ msgstr "Jalankan otomatisasi saat issue Sentry berubah."
 msgid "Run commands and navigate the application."
 msgstr "Jalankan perintah dan navigasi aplikasi."
 
-msgid "Run history"
-msgstr "Riwayat eksekusi"
-
 msgid "Run History"
 msgstr "Riwayat Run"
 
@@ -15780,6 +16029,12 @@ msgstr "Jalankan di Workspace"
 
 msgid "run issues in workspaces"
 msgstr "menjalankan issue di workspace"
+
+msgid "Run late for up to (minutes)"
+msgstr "Jalankan terlambat hingga (menit)"
+
+msgid "Run limit reached"
+msgstr "Batas run tercapai"
 
 msgid "Run now"
 msgstr "Jalankan sekarang"
@@ -15847,17 +16102,29 @@ msgstr "Berjalan sekarang"
 msgid "Running terminal processes continue, but older output may no longer be available after restarting the app."
 msgstr "Proses terminal yang berjalan tetap lanjut, tapi output lama mungkin tidak tersedia lagi setelah aplikasi dimulai ulang."
 
+msgid "Runs"
+msgstr "Run"
+
 msgid "Runs a local command on your machine"
 msgstr "Menjalankan perintah lokal di mesin Anda"
 
 msgid "Runs appear here once an automation fires."
 msgstr "Run muncul di sini setelah otomatisasi terpicu."
 
+msgid "Runs beyond these limits wait in the queue and start when an agent finishes."
+msgstr "Run yang melebihi batas ini menunggu di antrean dan dimulai saat sebuah agen selesai."
+
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "Berjalan di dalam aplikasi Paradev di perangkat itu, jadi memperbaruinya berarti memperbarui aplikasi di sana."
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Run mendarat di sebuah workspace. Review diff-nya, merge yang bagus."
+
+msgid "Runs on the chosen days at the chosen time in a new workspace."
+msgstr "Berjalan pada hari dan jam yang dipilih di workspace baru."
+
+msgid "Runs per pull request at most"
+msgstr "Run maksimum per pull request"
 
 msgid "Runs that found no host online"
 msgstr "Run yang tidak menemukan host online"
@@ -15867,6 +16134,9 @@ msgstr "Eksekusi yang memulai workspace-nya dalam 7 hari terakhir"
 
 msgid "Runs the tests and reviews each pull request you're asked to review."
 msgstr "Menjalankan tes dan meninjau setiap pull request yang diminta untuk Anda review."
+
+msgid "Runs to check"
+msgstr "Run yang perlu diperiksa"
 
 msgid "Runs when a new workspace is created."
 msgstr "Dijalankan saat ruang kerja baru dibuat."
@@ -15886,6 +16156,9 @@ msgstr "San Francisco"
 msgid "Sandbox stopped responding"
 msgstr "Sandbox berhenti merespons"
 
+msgid "Sat"
+msgstr "Sab"
+
 msgid "Save"
 msgstr "Simpan"
 
@@ -15894,6 +16167,9 @@ msgstr "Simpan & buat workspace"
 
 msgid "Save All"
 msgstr "Simpan Semua"
+
+msgid "Save anyway"
+msgstr "Tetap simpan"
 
 msgid "Save as environment"
 msgstr "Simpan sebagai environment"
@@ -15909,6 +16185,9 @@ msgstr "Simpan environment"
 
 msgid "Save failed: {message}"
 msgstr "Gagal menyimpan: {message}"
+
+msgid "Save limits"
+msgstr "Simpan batas"
 
 msgid "Save preferences"
 msgstr "Simpan preferensi"
@@ -16921,6 +17200,9 @@ msgstr "Tampilkan status dan kirim notifikasi untuk agen ini."
 msgid "Show text"
 msgstr "Tampilkan teks"
 
+msgid "Show the prompt"
+msgstr "Tampilkan prompt"
+
 msgid "Show the triggering payload"
 msgstr "Tampilkan payload pemicu"
 
@@ -17225,6 +17507,9 @@ msgstr "Sebagian metadata khusus agen tidak dapat ditransfer."
 msgid "Some chat history could not be loaded."
 msgstr "Sebagian riwayat obrolan tidak dapat dimuat."
 
+msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
+msgstr "Beberapa hari berada di luar batas jam. Perbaiki secara manual atau di Jira; pencatatan dinonaktifkan."
+
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sebagian file bukan tipe yang diterima dan tidak ditambahkan."
 
@@ -17255,6 +17540,9 @@ msgstr "Sebagian pekerjaan v1 Anda perlu perhatian"
 
 msgid "Someone"
 msgstr "Seseorang"
+
+msgid "Someone changed this issue in Jira while you were editing. Your save would replace their changes."
+msgstr "Seseorang mengubah issue ini di Jira saat Anda mengeditnya. Jika Anda menyimpan, perubahan mereka akan tertimpa."
 
 #. js-lingui-explicit-id
 msgid "serverError.page.entryPathHeldByColleague"
@@ -17522,6 +17810,9 @@ msgstr "Mulai chat baru"
 msgid "Start a new chat each run"
 msgstr "Mulai chat baru setiap kali dijalankan"
 
+msgid "Start a run"
+msgstr "Mulai run"
+
 msgid "Start a session"
 msgstr "Mulai sesi"
 
@@ -17575,6 +17866,9 @@ msgstr "Mulai satu dengan + di bilah tab."
 
 msgid "Start or stop the workspace run command"
 msgstr "Mulai atau hentikan perintah run workspace"
+
+msgid "Start time"
+msgstr "Waktu mulai"
 
 msgid "Start voice mode"
 msgstr "Mulai mode suara"
@@ -17655,6 +17949,9 @@ msgstr "Tetap terhubung (refresh token)"
 msgid "Steer"
 msgstr "Arahkan"
 
+msgid "Step"
+msgstr "Langkah"
+
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
 msgstr "Langkah {0} dari 2"
@@ -17714,6 +18011,9 @@ msgstr "Hentikan agen dan beralih ke {accountName}?"
 
 msgid "Stop the agent before you edit a message"
 msgstr "Hentikan agen sebelum mengedit pesan"
+
+msgid "Stop tracking"
+msgstr "Berhenti melacak"
 
 msgid "Stop watching"
 msgstr "Berhenti memantau"
@@ -17820,6 +18120,9 @@ msgstr "Ringkasan"
 
 msgid "Summary only"
 msgstr "Ringkasan saja"
+
+msgid "Sun"
+msgstr "Min"
 
 msgid "sun 11:00"
 msgstr "min 11:00"
@@ -18133,6 +18436,9 @@ msgstr "Tugas dan proyek"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Tugas yang dibuat di Paradev akan disinkronkan ke tim Linear ini."
 
+msgid "Tasks with much more time than their share:"
+msgstr "Tugas dengan waktu jauh melebihi porsinya:"
+
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Tugas, CLI, dan agen mengikuti ini. Setiap anggota memakai akun Linear miliknya sendiri."
 
@@ -18340,6 +18646,9 @@ msgstr "Nama itu tidak diizinkan."
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "Run itu terlewat dan tidak diulang. Gunakan Jalankan sekarang untuk memulainya nanti."
 
+msgid "That time happens twice on this day because the clock moves back. Jira received the first one."
+msgstr "Waktu itu terjadi dua kali pada hari ini karena jam dimundurkan. Jira menerima yang pertama."
+
 msgid "The 2026 bet"
 msgstr "Taruhan 2026"
 
@@ -18381,9 +18690,6 @@ msgstr "Pengumuman ini juga membagikan putaran pendanaan awal senilai $11,5 juta
 
 msgid "The app is free to download. It requires iOS 26 or later and Paradev Pro. Android is next."
 msgstr "Aplikasi ini gratis untuk diunduh. Memerlukan iOS 26 atau lebih baru dan Paradev Pro. Android menyusul berikutnya."
-
-msgid "The app is now Paradev++.app. The update moves Superset++.app to the Trash, so pin the new app in the Dock again."
-msgstr "Aplikasi kini bernama Paradev++.app. Pembaruan memindahkan Superset++.app ke Tong Sampah, jadi sematkan lagi aplikasi baru di Dock."
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikasi berada di {appVersion} tetapi terhubung ke layanan host yang dimulai oleh hal lain, kemungkinan CLI lama atau build Paradev lain. Memulai ulang akan menggantinya dengan salinan dari aplikasi ini."
@@ -18524,9 +18830,6 @@ msgstr "Terminal terpandu memasang gh dengan Homebrew dan membuka halaman masuk 
 msgid "The host came back on {0}, not {targetVersion}."
 msgstr "Host kembali dengan {0}, bukan {targetVersion}."
 
-msgid "The host checks every minute. Enabling a rule records existing matches; each new matching issue starts one workspace and agent. Rules are saved paused."
-msgstr "Host memeriksa setiap menit. Mengaktifkan aturan mencatat kecocokan yang ada; setiap isu baru yang cocok memulai satu workspace dan agen. Aturan disimpan dalam keadaan dijeda."
-
 msgid "The host did not come back within fifteen minutes."
 msgstr "Host tidak kembali dalam lima belas menit."
 
@@ -18617,6 +18920,9 @@ msgstr "Agen baru dapat membaca pesan yang dihilangkan saat diperlukan."
 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
+
+msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
+msgstr "Tampilan Hari ini yang baru menampilkan agen yang menunggu Anda, run yang perlu diperiksa, review Anda, dan waktu Anda."
 
 msgid "The overnight shift"
 msgstr "Shift malam"
@@ -18772,6 +19078,9 @@ msgstr "Tema"
 
 msgid "Themes and agents"
 msgstr "Tema dan agen"
+
+msgid "These automations run on this computer, not in the cloud. The host checks every minute. Enabling a rule records what already matches; only later matches start an agent. Rules are saved paused."
+msgstr "Otomatisasi ini berjalan di komputer ini, bukan di cloud. Host memeriksa setiap menit. Mengaktifkan aturan mencatat apa yang sudah cocok; hanya kecocokan berikutnya yang memulai agen. Aturan disimpan dalam keadaan dijeda."
 
 msgid "These commands run automatically when a workspace is created. <0>Read our docs<1/></0>"
 msgstr "Perintah ini berjalan otomatis saat workspace dibuat. <0>Baca dokumentasi kami<1/></0>"
@@ -19122,6 +19431,9 @@ msgstr "Thread ini tidak punya komentar untuk dibalas."
 msgid "This thread is not open to agents. A person has to comment on it before an agent can reply."
 msgstr "Thread ini belum diserahkan ke agen. Seseorang harus menyerahkannya dari halaman itu dulu."
 
+msgid "This time was already logged in Jira"
+msgstr "Waktu ini sudah dicatat di Jira"
+
 msgid "This update restarted your terminals once. New ones open in the same folders."
 msgstr "Pembaruan ini memulai ulang terminal Anda satu kali saja. Terminal baru terbuka di folder yang sama."
 
@@ -19222,6 +19534,9 @@ msgstr "Tiga langkah · menyentuh packages/ui dan apps/desktop"
 msgid "Threshold"
 msgstr "Ambang batas"
 
+msgid "Thu"
+msgstr "Kam"
+
 msgid "Ticket to production under one day, median"
 msgstr "Tiket ke produksi di bawah satu hari, median"
 
@@ -19230,6 +19545,18 @@ msgstr "Tingkat"
 
 msgid "Time"
 msgstr "Waktu"
+
+msgid "Time logged"
+msgstr "Waktu tercatat"
+
+msgid "Time tracking is turned off on this Jira site."
+msgstr "Pelacakan waktu dinonaktifkan di situs Jira ini."
+
+msgid "Time zone: {timeZone}"
+msgstr "Zona waktu: {timeZone}"
+
+msgid "Timesheet proposals"
+msgstr "Usulan timesheet"
 
 msgid "Tinted"
 msgstr "Berwarna"
@@ -19245,6 +19572,9 @@ msgstr "Ke"
 
 msgid "to {name}"
 msgstr "ke {name}"
+
+msgid "To check"
+msgstr "Perlu diperiksa"
 
 msgid "To do"
 msgstr "Untuk dikerjakan"
@@ -19347,6 +19677,9 @@ msgstr "token per sesi, 30 hari terakhir"
 
 msgid "Tokens stay off your machine"
 msgstr "Token tidak tersimpan di mesin Anda"
+
+msgid "Too late, skipped"
+msgstr "Terlambat, dilewati"
 
 msgid "Too many dictations. Try again later."
 msgstr "Terlalu banyak dikte. Coba lagi nanti."
@@ -19530,6 +19863,9 @@ msgstr "Coba"
 
 msgid "Try now"
 msgstr "Coba sekarang"
+
+msgid "Tue"
+msgstr "Sel"
 
 msgid "Tufte"
 msgstr "Tufte"
@@ -19881,6 +20217,9 @@ msgstr "Perbarui layanan host"
 msgid "Update in the App Store"
 msgstr "Perbarui di App Store"
 
+msgid "Update it with the same tool you used to install it."
+msgstr "Perbarui dengan alat yang sama yang Anda gunakan untuk memasangnya."
+
 msgid "Update naming instructions"
 msgstr "Perbarui instruksi penamaan"
 
@@ -19937,6 +20276,9 @@ msgstr "Baru saja diperbarui dari {0}."
 
 msgid "Updates"
 msgstr "Pembaruan"
+
+msgid "Updates are available for your agent tools."
+msgstr "Pembaruan tersedia untuk alat agen Anda."
 
 #. placeholder {0}: update.progress.target
 msgid "Updating to {0}"
@@ -20149,6 +20491,9 @@ msgstr "Vercel AI Gateway"
 msgid "Vercel AI Gateway rejected this key."
 msgstr "Vercel AI Gateway menolak kunci ini."
 
+msgid "Verified"
+msgstr "Terverifikasi"
+
 msgid "Verified and saved"
 msgstr "Terverifikasi dan tersimpan"
 
@@ -20173,6 +20518,12 @@ msgstr "Versi"
 #. placeholder {0}: entry.version
 msgid "Version {0}"
 msgstr "Versi {0}"
+
+msgid "Version {installed}, {latest} is available."
+msgstr "Versi {installed}, {latest} tersedia."
+
+msgid "Version {installed}, up to date."
+msgstr "Versi {installed}, sudah terbaru."
 
 msgid "Version {sharedVersion}"
 msgstr "Versi {sharedVersion}"
@@ -20356,6 +20707,9 @@ msgstr "Menunggu masukan Anda"
 msgid "Waits for the reset when no other account has quota."
 msgstr "Menunggu reset bila tidak ada akun lain yang punya kuota."
 
+msgid "Waits for you"
+msgstr "Menunggu Anda"
+
 msgid "Waking up workspace"
 msgstr "Membangunkan workspace"
 
@@ -20470,6 +20824,9 @@ msgstr "Webhook terpicu"
 msgid "Website"
 msgstr "Situs web"
 
+msgid "Wed"
+msgstr "Rab"
+
 msgid "Week"
 msgstr "Minggu"
 
@@ -20551,6 +20908,9 @@ msgstr "Apa itu Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Apa masalahnya?"
 
+msgid "What needs you now, all from this computer."
+msgstr "Yang perlu Anda tangani sekarang, semuanya dari komputer ini."
+
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Apa itu Paradev, siapa yang membangunnya, dan untuk siapa. Tim San Francisco yang dipimpin tiga mantan CTO YC, membangun workspace untuk agen coding paralel."
 
@@ -20611,6 +20971,9 @@ msgstr "Yang baru di Paradev++"
 msgid "What's next"
 msgstr "Selanjutnya"
 
+msgid "When"
+msgstr "Kapan"
+
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Saat pemicu aktif, Mac yang Anda pilih membuka workspace baru dan agen mulai mengerjakan prompt Anda. Run dari peristiwa menyertakan peristiwanya, jadi agen tahu apa yang perlu dilihat. Balas di run untuk melanjutkan."
 
@@ -20620,11 +20983,17 @@ msgstr "Saat GB-jam yang dibeli turun di bawah"
 msgid "When fewer than {topupThreshold} GB-hours remain, add {topupPrice} ({topupGbHours} GB-hours)."
 msgstr "Saat sisa GB-jam kurang dari {topupThreshold}, tambah {topupPrice} ({topupGbHours} GB-jam)."
 
+msgid "When its status changes and it still matches"
+msgstr "Saat statusnya berubah dan masih cocok"
+
 msgid "When off, nothing else can reach the files and tools on this device. You can still connect out to remote sandboxes from here. <0>Learn more<1/></0>"
 msgstr "Saat nonaktif, tidak ada yang bisa mengakses file dan alat di perangkat ini. Anda tetap bisa terhubung ke sandbox jarak jauh dari sini. <0>Pelajari lebih lanjut<1/></0>"
 
 msgid "When quota runs out"
 msgstr "Saat kuota habis"
+
+msgid "When the agent finishes, the check command runs in the workspace. Exit code 0 marks the run as verified. Without a command, you mark it yourself. A launch that fails is retried after 1, 5 and 15 minutes; three failures in a row pause the rule."
+msgstr "Saat agen selesai, perintah check berjalan di workspace. Kode keluar 0 menandai run sebagai terverifikasi. Tanpa perintah, Anda menandainya sendiri. Peluncuran yang gagal dicoba ulang setelah 1, 5, dan 15 menit; tiga kegagalan berturut-turut menjeda aturan."
 
 msgid "Where detected-port badges in the sidebar open when clicked."
 msgstr "Ke mana badge port yang terdeteksi di sidebar terbuka saat diklik."
@@ -20716,6 +21085,9 @@ msgstr "Email kerja"
 msgid "Work from tickets"
 msgstr "Bekerja dari tiket"
 
+msgid "Work started"
+msgstr "Pekerjaan dimulai"
+
 msgid "Work the action items from a call"
 msgstr "Kerjakan tindak lanjut dari panggilan"
 
@@ -20732,6 +21104,9 @@ msgstr "Bekerja {seconds} dtk"
 
 msgid "Workflow run completed…"
 msgstr "Run workflow selesai…"
+
+msgid "Workflow statuses"
+msgstr "Status workflow"
 
 msgid "Workflow Tutorials"
 msgstr "Tutorial Alur Kerja"
@@ -20892,6 +21267,9 @@ msgstr "Worktree"
 msgid "Worktrees are removed from disk; workspaces on the project's checkout only close. Files in the checkout stay as they are."
 msgstr "Worktree dihapus dari disk; workspace di checkout proyek hanya ditutup. File di checkout tetap seperti semula."
 
+msgid "Would start"
+msgstr "Akan dimulai"
+
 msgid "Would you like to reassign it?"
 msgstr "Ingin menetapkannya ulang?"
 
@@ -20921,6 +21299,9 @@ msgstr "Tulis dokumentasi untuk bagian yang selalu ditanyakan…"
 
 msgid "Write once. Runs in every agent."
 msgstr "Tulis sekali. Berjalan di setiap agen."
+
+msgid "Write the duration as 45m, 1h 30m or 2h."
+msgstr "Tulis durasi sebagai 45m, 1h 30m, atau 2h."
 
 msgid "Writing code is no longer where engineer hours go. Reading it is. Teams that adopted parallel agents in 2025 hit the wall first: ten agents can produce more diffs before lunch than a team can honestly review by Friday."
 msgstr "Menulis kode bukan lagi tempat jam kerja engineer habis. Membacanya yang jadi tempatnya. Tim yang mengadopsi agen paralel pada 2025 lebih dulu menabrak tembok ini: sepuluh agen bisa menghasilkan lebih banyak diff sebelum makan siang daripada yang bisa direview jujur oleh satu tim sampai hari Jumat."
@@ -21157,6 +21538,9 @@ msgstr "Akun GitHub Anda tidak dapat menjangkau repositori di environment ini"
 
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Tautan GitHub Anda berasal dari akun yang Anda gunakan untuk masuk, jadi ditampilkan sebagai terverifikasi dan tidak bisa diubah di sini."
+
+msgid "Your Jira account cannot log time on this issue."
+msgstr "Akun Jira Anda tidak dapat mencatat waktu pada isu ini."
 
 msgid "Your last payment failed. Update your payment method to keep Pro."
 msgstr "Pembayaran terakhir Anda gagal. Perbarui metode pembayaran untuk mempertahankan Pro."

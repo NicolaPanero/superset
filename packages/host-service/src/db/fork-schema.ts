@@ -53,6 +53,153 @@ export const forkJiraAutomationRuns = sqliteTable(
 	(table) => [primaryKey({ columns: [table.ruleId, table.taskId] })],
 );
 
+export const forkJiraStatusMappings = sqliteTable(
+	"fork_jira_status_mappings",
+	{
+		scope: text().notNull(),
+		connectionId: text("connection_id").notNull(),
+		projectKey: text("project_key").notNull(),
+		progressStatusId: text("progress_status_id"),
+		reviewStatusId: text("review_status_id"),
+	},
+	(table) => [
+		primaryKey({
+			columns: [table.scope, table.connectionId, table.projectKey],
+		}),
+	],
+);
+
+export const forkJiraWorklogOps = sqliteTable("fork_jira_worklog_ops", {
+	id: text().primaryKey(),
+	scope: text().notNull(),
+	connectionId: text("connection_id").notNull(),
+	issueKey: text("issue_key").notNull(),
+	started: text().notNull(),
+	seconds: integer().notNull(),
+	comment: text(),
+	state: text().notNull().$type<"pending" | "done" | "unknown">(),
+	worklogId: text("worklog_id"),
+	createdAt: integer("created_at").notNull(),
+});
+
+export type ForkAutomationSourceKind =
+	| "jira"
+	| "pr_comments"
+	| "ci_failure"
+	| "schedule";
+export type ForkAutomationAttemptState =
+	| "queued"
+	| "launching"
+	| "running"
+	| "waiting_input"
+	| "agent_done"
+	| "verifying"
+	| "verified"
+	| "failed"
+	| "cancelled"
+	| "skipped"
+	| "retried"
+	| "unknown";
+export const forkAutomationRuleOptions = sqliteTable(
+	"fork_automation_rule_options",
+	{
+		ruleId: text("rule_id")
+			.primaryKey()
+			.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+		sourceKind: text("source_kind")
+			.notNull()
+			.default("jira")
+			.$type<ForkAutomationSourceKind>(),
+		sourceConfig: text("source_config", { mode: "json" })
+			.notNull()
+			.default({})
+			.$type<Record<string, unknown>>(),
+		refire: text()
+			.notNull()
+			.default("never")
+			.$type<"never" | "status_change">(),
+		catchupMinutes: integer("catchup_minutes").notNull().default(120),
+		verifyCommand: text("verify_command"),
+		retryLimit: integer("retry_limit").notNull().default(3),
+		targetLimit: integer("target_limit"),
+		pausedReason: text("paused_reason"),
+		failures: integer().notNull().default(0),
+	},
+);
+export const forkAutomationSettings = sqliteTable("fork_automation_settings", {
+	scope: text().primaryKey(),
+	maxRunning: integer("max_running").notNull().default(2),
+	maxPerProject: integer("max_per_project").notNull().default(1),
+});
+export const forkAgentCliUpdates = sqliteTable("fork_agent_cli_updates", {
+	agent: text().primaryKey(),
+	checkedAt: integer("checked_at").notNull(),
+	latest: text(),
+	snoozedUntil: integer("snoozed_until"),
+});
+export const forkAgentCliSettings = sqliteTable("fork_agent_cli_settings", {
+	scope: text().primaryKey(),
+	enabled: integer({ mode: "boolean" }).notNull().default(true),
+});
+export const forkAutomationSeen = sqliteTable(
+	"fork_automation_seen",
+	{
+		ruleId: text("rule_id")
+			.notNull()
+			.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+		itemKey: text("item_key").notNull(),
+		createdAt: integer("created_at").notNull(),
+	},
+	(table) => [primaryKey({ columns: [table.ruleId, table.itemKey] })],
+);
+export const forkAutomationAttempts = sqliteTable("fork_automation_attempts", {
+	id: text().primaryKey(),
+	ruleId: text("rule_id")
+		.notNull()
+		.references(() => forkJiraAutomations.id, { onDelete: "cascade" }),
+	eventKey: text("event_key").notNull(),
+	target: text(),
+	title: text().notNull(),
+	url: text(),
+	prompt: text().notNull(),
+	workspaceId: text("workspace_id"),
+	terminalId: text("terminal_id"),
+	state: text().notNull().$type<ForkAutomationAttemptState>(),
+	previousAttemptId: text("previous_attempt_id"),
+	retryCount: integer("retry_count").notNull().default(0),
+	nextAttemptAt: integer("next_attempt_at"),
+	manual: integer({ mode: "boolean" }).notNull().default(false),
+	error: text(),
+	verifyOutput: text("verify_output"),
+	createdAt: integer("created_at").notNull(),
+	updatedAt: integer("updated_at").notNull(),
+});
+
+export const forkTimesheetSettings = sqliteTable(
+	"fork_timesheet_settings",
+	{
+		scope: text().notNull(),
+		connectionId: text("connection_id").notNull(),
+		settings: text({ mode: "json" })
+			.notNull()
+			.$type<
+				import("../fork-integrations/fork-timesheet").ForkTimesheetSettings
+			>(),
+	},
+	(table) => [primaryKey({ columns: [table.scope, table.connectionId] })],
+);
+export const forkTimesheetProposals = sqliteTable("fork_timesheet_proposals", {
+	id: text().primaryKey(),
+	scope: text().notNull(),
+	connectionId: text("connection_id").notNull(),
+	data: text({ mode: "json" })
+		.notNull()
+		.$type<
+			import("../fork-integrations/fork-timesheet").ForkTimesheetProposal
+		>(),
+	createdAt: integer("created_at").notNull(),
+});
+
 export const forkIntegrationSettings = sqliteTable(
 	"fork_integration_settings",
 	{

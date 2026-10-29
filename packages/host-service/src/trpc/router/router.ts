@@ -6,6 +6,7 @@ import { browserRouter } from "./browser/browser";
 import { configRouter } from "./config";
 import { filesystemRouter } from "./filesystem";
 import { forkAttachmentsRouter } from "./fork-attachments";
+import { forkAgentCliRouter } from "./fork-integrations/fork-agent-cli-updates";
 import {
 	forkConnectionsRouter,
 	forkScmRouter,
@@ -41,6 +42,7 @@ import { workspaceCreationRouter } from "./workspace-creation";
 import { workspacesRouter } from "./workspaces";
 
 export const appRouter = router({
+	forkAgentCli: forkAgentCliRouter,
 	forkAttachments: forkAttachmentsRouter,
 	forkConnections: forkConnectionsRouter,
 	forkMcp: forkMcpRouter,

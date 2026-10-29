@@ -11,6 +11,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HiOutlineWifi } from "react-icons/hi2";
+import { ForkAgentCliUpdateNotice } from "renderer/components/ForkAgentCliUpdates";
 import { NewWorkspaceModal } from "renderer/components/NewWorkspaceModal";
 import { Paywall } from "renderer/components/Paywall";
 import { Redirect } from "renderer/components/Redirect";
@@ -361,6 +362,7 @@ function AuthenticatedLayout() {
 									<LeaderboardAutoPublish />
 									<RealtimeNudges />
 									<DaemonAutoUpdateFailureDialog />
+									<ForkAgentCliUpdateNotice />
 									<Outlet />
 									<V1ImportModal />
 									{isV2CloudEnabled ? (

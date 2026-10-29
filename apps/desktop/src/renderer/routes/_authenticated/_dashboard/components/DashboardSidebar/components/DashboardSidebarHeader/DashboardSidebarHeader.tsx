@@ -30,6 +30,7 @@ import {
 	VscNewFolder,
 } from "react-icons/vsc";
 import { useFrameStackStore } from "renderer/commandPalette";
+import { ForkTodaySidebarButton } from "renderer/components/ForkIntegrations/components/ForkTodaySidebarButton";
 import { useForkConnections } from "renderer/components/ForkIntegrations/hooks/useForkConnections";
 import { ForkProFeature } from "renderer/components/ForkProFeature";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
@@ -76,6 +77,7 @@ import {
 	useOpenNewProjectModal,
 	useOpenTemplateGalleryModal,
 } from "renderer/stores/add-repository-modal";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 import { COLLAPSED_WORKSPACE_SIDEBAR_WIDTH } from "renderer/stores/workspace-sidebar-state";
 
 interface DashboardSidebarHeaderProps {
@@ -183,6 +185,7 @@ export function DashboardSidebarHeader({
 		env.NODE_ENV === "development";
 	const cloudUtils = cloudTrpc.useUtils();
 	const { myFailedCount } = useFailedAutomations();
+	const showProFeatures = useForkProFeatures();
 
 	const {
 		tab: lastTab,
@@ -378,6 +381,7 @@ export function DashboardSidebarHeader({
 						</TooltipContent>
 					</Tooltip>
 
+					<ForkTodaySidebarButton variant="icon" />
 					<ForkProFeature>
 						<Tooltip delayDuration={300}>
 							<TooltipTrigger asChild>
@@ -494,6 +498,7 @@ export function DashboardSidebarHeader({
 							<button
 								type="button"
 								onClick={handlePagesClick}
+								hidden={!showProFeatures}
 								aria-label={t({
 									message: "Pages",
 								})}
@@ -689,6 +694,7 @@ export function DashboardSidebarHeader({
 				</span>
 			</button>
 
+			<ForkTodaySidebarButton variant="row" />
 			<ForkProFeature>
 				<div className="relative">
 					<button
@@ -788,6 +794,7 @@ export function DashboardSidebarHeader({
 			<button
 				type="button"
 				onClick={handlePagesClick}
+				hidden={!showProFeatures}
 				aria-label={t({
 					message: "Pages",
 				})}

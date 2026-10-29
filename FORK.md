@@ -31,11 +31,32 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   board e dettaglio; un trascinamento con più stati possibili chiede quale usare.
   Il dettaglio mostra i workspace collegati con azioni compatte; **Link existing
   workspace** cerca per nome, progetto o branch e riconosce quelli già collegati.
-  **Automations** configura regole locali all’host con filtri grafici o JQL;
-  può avviare una chat ACP scegliendo agente, modello e account oppure un terminale. **Start in workspace**
+  **Automations** configura regole locali all’host, senza servizi cloud:
+  nuove issue Jira (filtri grafici o JQL), commenti alle PR collegate, check
+  falliti oppure un orario, anche da template. Ogni avvio è una run con stato
+  (in coda, in corso, attende input, agente terminato, verificata, fallita),
+  limite di agenti contemporanei, ripetizione dei lanci falliti, pausa dopo tre
+  errori, anteprima, avvio manuale e un comando di verifica facoltativo.
+  Può avviare una chat ACP scegliendo agente, modello e account oppure un terminale.
+  Il dettaglio di un’issue registra le ore su Jira (**Log time**) senza doppi
+  invii e mostra le ore di oggi; **Workflow statuses** nella connessione Jira
+  sceglie gli stati di avvio lavoro e PR. **Today** raccoglie agenti in attesa,
+  run da controllare, review richieste e ore. La proposta del timesheet è
+  spenta di default e parte solo a mano. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
   [docs/fork-integrations.md](docs/fork-integrations.md).
+
+- **Settings → Fork → Agent updates** controlla una volta al giorno se ci sono
+  versioni nuove dei CLI di Claude Code e Codex (registro npm) e lo segnala con
+  un popup in basso a destra, come per gli aggiornamenti di Paradev++: **Update**
+  esegue un comando fisso e mostrato prima (`claude update`, oppure
+  `npm install -g @openai/codex@latest` per un’installazione npm), poi rilegge
+  la versione e dice se non è cambiata; **Later** nasconde il popup fino al
+  controllo del giorno dopo. Non aggiorna mai da solo e l’app non indovina come
+  è stato installato un CLI: per le installazioni che non riconosce (per
+  esempio Homebrew) mostra solo la versione nuova. Il controllo giornaliero si
+  spegne dall’interruttore nella stessa sezione; **Check now** lo forza.
 
 - **Settings → Fork → MCP servers** gestisce un solo elenco di server MCP
   (HTTP, SSE, stdio) per tutti gli agenti e gli account dell'host, salvato in
@@ -82,7 +103,9 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Il selettore mostra tutti gli agenti come schede: modello ed effort
   dell’agente in uso si applicano subito; per un altro agente restano una
   bozza finché **Switch…** non apre la conferma, e chiudere il selettore la
-  annulla. Grok offre Grok 4.7, 4.6 e 4.5. Grok 4.7 arriva fino a xHigh
+  annulla. Il modello scelto nel selettore resta quello della chat: viene
+  salvato nei dati del pannello, quindi cambiare workspace o chat e tornare non
+  rimette l’agente sul suo modello predefinito (Auto per Cursor). Grok offre Grok 4.7, 4.6 e 4.5. Grok 4.7 arriva fino a xHigh
   quando il suo override locale dichiara `reasoning_efforts`; Grok 4.5 arriva
   fino a High.
   Modelli ed effort arrivano dall’ultima lettura salvata dall’host in
@@ -172,7 +195,8 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   30 minuti o con una lettura più vecchia di 6 ore; non è mai quota libera.
 
 - **Pages** conserva il flusso ufficiale: una pagina compare dopo una pubblicazione
-  riuscita. La chat usata per crearla rimane una sessione separata.
+  riuscita. La chat usata per crearla rimane una sessione separata. Pages è un
+  servizio cloud: con **Hide paid features** attivo è nascosto e non fa richieste.
 - I terminali usano **SF Mono a 12 px** su macOS, caricato dal sistema come nel
   Terminale nativo, con **JetBrains Mono** incluso come fallback. Windows e Linux
   usano JetBrains Mono a 12 px. Interlinea 1,1 e contrasto minimo 3:1 sono comuni.

@@ -22,10 +22,20 @@ import { forkAvailability } from "../../../fork-integrations/fork-availability";
 import { ForkGitCredentialProvider } from "../../../fork-integrations/fork-credentials";
 import { forkFetch } from "../../../fork-integrations/fork-http";
 import {
+	forkJiraStatusMapping,
+	forkSetJiraStatusMapping,
+} from "../../../fork-integrations/fork-jira-status-mapping";
+import {
 	forkAdvanceLinkedTasks,
 	forkLinkedTasks,
 	forkLinkTask,
 } from "../../../fork-integrations/fork-jira-workflow";
+import {
+	forkAddJiraWorklog,
+	forkJiraWorklogCapability,
+	forkJiraWorklogs,
+	forkMyJiraTime,
+} from "../../../fork-integrations/fork-jira-worklog";
 import {
 	discoverForkBroker,
 	forkOAuthStatus,
@@ -43,6 +53,12 @@ import {
 	forkSearchPullRequests,
 } from "../../../fork-integrations/fork-search-pull-requests";
 import { forkServices as services } from "../../../fork-integrations/fork-services";
+import {
+	forkSaveTimesheetSettings,
+	forkTimesheetPost,
+	forkTimesheetPropose,
+	forkTimesheetSettingsFor,
+} from "../../../fork-integrations/fork-timesheet-jira";
 import { forkCreateWorkspacePullRequest } from "../../../fork-integrations/fork-workspace-pull-request";
 import { createGitFactory } from "../../../runtime/git";
 import { machineOnlyProcedure, queryProcedure, router } from "../../index";
@@ -76,6 +92,42 @@ const taskTarget = z.object({
 	connectionId,
 	key: z.string().regex(/^[A-Za-z][A-Za-z0-9_]*-\d+$/),
 });
+const worklogDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const worklogTimeZone = z
+	.string()
+	.min(1)
+	.max(100)
+	.refine((value) => {
+		try {
+			new Intl.DateTimeFormat("en-US", { timeZone: value });
+			return true;
+		} catch {
+			return false;
+		}
+	}, "Unknown time zone");
+const clockTime = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
+const dayRange = z.object({ from: worklogDate, to: worklogDate });
+const timesheetSettingsShape = z.object({
+	enabled: z.boolean(),
+	project: z.string().trim().max(100),
+	moduleField: z.string().trim().max(100),
+	modules: z.array(z.string().max(200)).max(50),
+	includeInProgress: z.boolean(),
+	minHours: z.number().min(0).max(24),
+	maxHours: z.number().min(0.5).max(24),
+	stepMinutes: z.union([z.literal(15), z.literal(30), z.literal(60)]),
+	dayStart: clockTime,
+	lunchStart: clockTime,
+	lunchEnd: clockTime,
+	dayEnd: clockTime,
+	timeZone: worklogTimeZone,
+	holidays: z.enum(["IT", "none"]),
+	vacations: z.array(dayRange).max(200),
+});
+const timesheetSettings = timesheetSettingsShape.refine(
+	(value) => value.minHours <= value.maxHours,
+	{ message: "The minimum hours cannot be above the maximum" },
+);
 const local = machineOnlyProcedure.use(({ ctx, next }) => {
 	if (ctx.isLocalCaller === false)
 		throw new TRPCError({
@@ -855,6 +907,119 @@ export const forkTasksRouter = router({
 		.input(taskTarget)
 		.query(({ ctx, input }) =>
 			services(ctx).jira.transitions(input.connectionId, input.key),
+		),
+	projectStatuses: read
+		.input(z.object({ connectionId, projectKey: z.string().min(1).max(100) }))
+		.query(({ ctx, input }) =>
+			services(ctx).jira.projectStatuses(input.connectionId, input.projectKey),
+		),
+	statusMapping: read
+		.input(z.object({ connectionId, projectKey: z.string().min(1).max(100) }))
+		.query(({ ctx, input }) =>
+			forkJiraStatusMapping(ctx, input.connectionId, input.projectKey),
+		),
+	setStatusMapping: local
+		.input(
+			z.object({
+				connectionId,
+				projectKey: z.string().min(1).max(100),
+				progressStatusId: z.string().max(100).nullable(),
+				reviewStatusId: z.string().max(100).nullable(),
+			}),
+		)
+		.mutation(({ ctx, input }) => {
+			forkSetJiraStatusMapping(ctx, input);
+			return { ok: true };
+		}),
+	worklogs: read
+		.input(taskTarget.extend({ startAt: z.number().int().min(0).default(0) }))
+		.query(({ ctx, input }) =>
+			forkJiraWorklogs(services(ctx).jira, {
+				connectionId: input.connectionId,
+				key: input.key,
+				startAt: input.startAt,
+			}),
+		),
+	worklogCapability: read
+		.input(taskTarget)
+		.query(({ ctx, input }) =>
+			forkJiraWorklogCapability(
+				services(ctx).jira,
+				input.connectionId,
+				input.key,
+			),
+		),
+	addWorklog: local
+		.input(
+			taskTarget.extend({
+				clientOpId: z.string().uuid(),
+				date: worklogDate,
+				time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+				timeZone: worklogTimeZone,
+				timeSpentSeconds: z
+					.number()
+					.int()
+					.min(60)
+					.max(24 * 3600),
+				comment: z.string().max(10000).optional(),
+			}),
+		)
+		.mutation(({ ctx, input }) =>
+			forkAddJiraWorklog(ctx, services(ctx).jira, input),
+		),
+	myTime: read
+		.input(
+			z.object({ connectionId, date: worklogDate, timeZone: worklogTimeZone }),
+		)
+		.query(({ ctx, input }) => forkMyJiraTime(services(ctx).jira, input)),
+	timesheetSettings: read
+		.input(z.object({ connectionId }))
+		.query(({ ctx, input }) =>
+			forkTimesheetSettingsFor(ctx, input.connectionId),
+		),
+	timesheetSaveSettings: local
+		.input(z.object({ connectionId, settings: timesheetSettings }))
+		.mutation(({ ctx, input }) => {
+			forkSaveTimesheetSettings(ctx, input.connectionId, input.settings);
+			return { ok: true };
+		}),
+	timesheetPropose: local
+		.input(
+			z.object({
+				connectionId,
+				from: worklogDate.optional(),
+				to: worklogDate.optional(),
+				modules: z.array(z.string().max(200)).max(50).optional(),
+				extraVacations: z.array(dayRange).max(50).optional(),
+			}),
+		)
+		.mutation(({ ctx, input }) =>
+			forkTimesheetPropose(ctx, services(ctx).jira, input),
+		),
+	timesheetPost: local
+		.input(
+			z.object({
+				proposalId: z.string().uuid(),
+				entries: z
+					.array(
+						z.object({
+							id: z.string().uuid(),
+							key: taskTarget.shape.key,
+							date: worklogDate,
+							time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+							seconds: z
+								.number()
+								.int()
+								.min(60)
+								.max(12 * 3600),
+						}),
+					)
+					.min(1)
+					.max(500),
+			}),
+		)
+		.mutation(({ ctx, input }) =>
+			forkTimesheetPost(ctx, services(ctx).jira, input),
 		),
 	editMetadata: read
 		.input(taskTarget)

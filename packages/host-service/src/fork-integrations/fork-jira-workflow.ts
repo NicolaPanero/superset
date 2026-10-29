@@ -2,6 +2,10 @@ import type { ForkTaskLink } from "@superset/shared/fork-integrations";
 import { and, eq } from "drizzle-orm";
 import { forkExternalTaskLinks } from "../db/fork-schema";
 import type { HostServiceContext } from "../types";
+import {
+	forkJiraProjectKey,
+	forkJiraStatusMapping,
+} from "./fork-jira-status-mapping";
 import { forkServices } from "./fork-services";
 
 export function forkLinkTask(
@@ -68,10 +72,21 @@ export async function forkAdvanceLinkedTasks(
 		forkLinkedTasks(ctx, workspaceId)
 			.filter((task) => store.get(task.connectionId)?.connection.enabled)
 			.map((task) =>
-				jira.advance(task.connectionId, task.key, target).catch((error) => {
-					console.warn("[fork-jira] could not move", task.key, error);
-					return false;
-				}),
+				jira
+					.advance(
+						task.connectionId,
+						task.key,
+						target,
+						forkJiraStatusMapping(
+							ctx,
+							task.connectionId,
+							forkJiraProjectKey(task.key),
+						),
+					)
+					.catch((error) => {
+						console.warn("[fork-jira] could not move", task.key, error);
+						return false;
+					}),
 			),
 	);
 }

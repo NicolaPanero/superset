@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useAutomationFailuresStore } from "renderer/stores/automation-failures";
+import { useForkProFeatures } from "renderer/stores/fork-cli-options";
 
 // Realtime nudges keep it current; this bounds staleness from a missed one.
 const LATEST_RUNS_STALE_MS = 10 * 60_000;
@@ -45,7 +46,7 @@ export function useFailedAutomations(): FailedAutomations {
 
 	const { data: runRows = [] } = cloudTrpc.automation.latestRuns.useQuery(
 		undefined,
-		{ staleTime: LATEST_RUNS_STALE_MS },
+		{ staleTime: LATEST_RUNS_STALE_MS, enabled: useForkProFeatures() },
 	);
 
 	const { lastRunById, failedIds, myFailureTimes } = useMemo(() => {
