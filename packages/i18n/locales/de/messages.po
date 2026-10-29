@@ -5149,6 +5149,9 @@ msgstr "Agenten-Session-ID kopieren"
 msgid "Copy all"
 msgstr "Alle kopieren"
 
+msgid "Copy as CSV"
+msgstr "Als CSV kopieren"
+
 msgid "Copy as Markdown"
 msgstr "Als Markdown kopieren"
 
@@ -6701,6 +6704,15 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools neben der Seite"
 
+msgid "Diagram"
+msgstr "Diagramm"
+
+msgid "Diagram could not be drawn"
+msgstr "Diagramm konnte nicht gezeichnet werden"
+
+msgid "Diagram could not be drawn: {reason}"
+msgstr "Diagramm konnte nicht gezeichnet werden: {reason}"
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -7544,6 +7556,9 @@ msgstr "Alle ausklappen"
 msgid "Expand all files"
 msgstr "Alle Dateien ausklappen"
 
+msgid "Expand diagram"
+msgstr "Diagramm vergrößern"
+
 msgid "Expand file"
 msgstr "Datei ausklappen"
 
@@ -8336,6 +8351,9 @@ msgstr "Fertig · ungelesen"
 
 msgid "finished · worked for 7s"
 msgstr "fertig · 7 s gearbeitet"
+
+msgid "Fit"
+msgstr "Einpassen"
 
 msgid "Fix all failing checks"
 msgstr "Alle fehlgeschlagenen Prüfungen beheben"
@@ -9279,6 +9297,9 @@ msgstr "Wie wir arbeiten"
 
 msgid "How your agents sign in inside cloud workspaces. Other people connect their own subscriptions or API keys; on this machine each agent keeps using the login already on it."
 msgstr "Wie sich deine Agenten in Cloud-Arbeitsbereichen anmelden. Andere verbinden ihre eigenen Abos oder API-Schlüssel; auf diesem Rechner nutzt jeder Agent weiter die Anmeldung, die schon darauf liegt."
+
+msgid "HTML preview"
+msgstr "HTML-Vorschau"
 
 msgid "https://"
 msgstr "https://"
@@ -16833,6 +16854,9 @@ msgstr "Rahmen anzeigen"
 msgid "Show checks"
 msgstr "Prüfungen anzeigen"
 
+msgid "Show code"
+msgstr "Code anzeigen"
+
 msgid "Show CPU and memory usage in the top bar"
 msgstr "CPU- und Speichernutzung in der oberen Leiste anzeigen"
 
@@ -18989,6 +19013,9 @@ msgstr "Die gespeicherte Umgebung wird für alle mit Zugriff dauerhaft entfernt.
 
 msgid "This port is still in use"
 msgstr "Dieser Port ist noch in Benutzung"
+
+msgid "This preview is too large to show."
+msgstr "Diese Vorschau ist zu groß zum Anzeigen."
 
 msgid "This profile is busy right now"
 msgstr "Dieses Profil ist gerade stark ausgelastet"

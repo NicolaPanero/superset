@@ -5149,6 +5149,9 @@ msgstr "Kopírovat ID relace agenta"
 msgid "Copy all"
 msgstr "Kopírovat vše"
 
+msgid "Copy as CSV"
+msgstr "Kopírovat jako CSV"
+
 msgid "Copy as Markdown"
 msgstr "Kopírovat jako Markdown"
 
@@ -6701,6 +6704,15 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools vedle stránky"
 
+msgid "Diagram"
+msgstr "Diagram"
+
+msgid "Diagram could not be drawn"
+msgstr "Diagram se nepodařilo vykreslit"
+
+msgid "Diagram could not be drawn: {reason}"
+msgstr "Diagram se nepodařilo vykreslit: {reason}"
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -7544,6 +7556,9 @@ msgstr "Rozbalit vše"
 msgid "Expand all files"
 msgstr "Rozbalit všechny soubory"
 
+msgid "Expand diagram"
+msgstr "Zvětšit diagram"
+
 msgid "Expand file"
 msgstr "Rozbalit soubor"
 
@@ -8336,6 +8351,9 @@ msgstr "Hotovo · nepřečteno"
 
 msgid "finished · worked for 7s"
 msgstr "hotovo · pracoval 7 s"
+
+msgid "Fit"
+msgstr "Přizpůsobit"
 
 msgid "Fix all failing checks"
 msgstr "Opravit všechny selhávající kontroly"
@@ -9279,6 +9297,9 @@ msgstr "Jak pracujeme"
 
 msgid "How your agents sign in inside cloud workspaces. Other people connect their own subscriptions or API keys; on this machine each agent keeps using the login already on it."
 msgstr "Jak se vaši agenti přihlašují v cloudových pracovních prostorech. Ostatní připojují vlastní předplatné nebo API klíče; na tomto počítači každý agent dál používá přihlášení, které už na něm je."
+
+msgid "HTML preview"
+msgstr "Náhled HTML"
 
 msgid "https://"
 msgstr "https://"
@@ -16833,6 +16854,9 @@ msgstr "Zobrazit ohraničení"
 msgid "Show checks"
 msgstr "Zobrazit kontroly"
 
+msgid "Show code"
+msgstr "Zobrazit kód"
+
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Zobrazovat využití CPU a paměti v horní liště"
 
@@ -18989,6 +19013,9 @@ msgstr "Uložené prostředí se trvale odebere pro všechny, kdo k němu mají 
 
 msgid "This port is still in use"
 msgstr "Tento port se stále používá"
+
+msgid "This preview is too large to show."
+msgstr "Tento náhled je příliš velký na zobrazení."
 
 msgid "This profile is busy right now"
 msgstr "Tento profil je právě přetížený"

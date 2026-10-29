@@ -5149,6 +5149,9 @@ msgstr "Copiar o ID da sessão do agente"
 msgid "Copy all"
 msgstr "Copiar tudo"
 
+msgid "Copy as CSV"
+msgstr "Copiar como CSV"
+
 msgid "Copy as Markdown"
 msgstr "Copiar como Markdown"
 
@@ -6701,6 +6704,15 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "DevTools ao lado da página"
 
+msgid "Diagram"
+msgstr "Diagrama"
+
+msgid "Diagram could not be drawn"
+msgstr "Não foi possível desenhar o diagrama"
+
+msgid "Diagram could not be drawn: {reason}"
+msgstr "Não foi possível desenhar o diagrama: {reason}"
+
 msgid "Dialog"
 msgstr "Dialog"
 
@@ -7544,6 +7556,9 @@ msgstr "Expandir tudo"
 msgid "Expand all files"
 msgstr "Expandir todos os arquivos"
 
+msgid "Expand diagram"
+msgstr "Ampliar diagrama"
+
 msgid "Expand file"
 msgstr "Expandir arquivo"
 
@@ -8336,6 +8351,9 @@ msgstr "Concluído · não lido"
 
 msgid "finished · worked for 7s"
 msgstr "terminou · trabalhou por 7s"
+
+msgid "Fit"
+msgstr "Ajustar"
 
 msgid "Fix all failing checks"
 msgstr "Corrigir todas as verificações com falha"
@@ -9279,6 +9297,9 @@ msgstr "Como trabalhamos"
 
 msgid "How your agents sign in inside cloud workspaces. Other people connect their own subscriptions or API keys; on this machine each agent keeps using the login already on it."
 msgstr "Como seus agentes entram dentro das áreas de trabalho na nuvem. Outras pessoas conectam as próprias assinaturas ou chaves de API; nesta máquina cada agente continua usando o login que já está nela."
+
+msgid "HTML preview"
+msgstr "Pré-visualização HTML"
 
 msgid "https://"
 msgstr "https://"
@@ -16833,6 +16854,9 @@ msgstr "Mostrar bordas"
 msgid "Show checks"
 msgstr "Mostrar verificações"
 
+msgid "Show code"
+msgstr "Mostrar código"
+
 msgid "Show CPU and memory usage in the top bar"
 msgstr "Mostra o uso de CPU e memória na barra superior"
 
@@ -18989,6 +19013,9 @@ msgstr "Isso remove permanentemente o ambiente salvo para todos com acesso a ele
 
 msgid "This port is still in use"
 msgstr "Esta porta ainda está em uso"
+
+msgid "This preview is too large to show."
+msgstr "Esta pré-visualização é grande demais para ser exibida."
 
 msgid "This profile is busy right now"
 msgstr "Este perfil está sobrecarregado agora"

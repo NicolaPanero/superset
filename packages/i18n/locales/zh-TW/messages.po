@@ -5149,6 +5149,9 @@ msgstr "複製代理程式會話ID"
 msgid "Copy all"
 msgstr "全部複製"
 
+msgid "Copy as CSV"
+msgstr "複製為 CSV"
+
 msgid "Copy as Markdown"
 msgstr "複製為 Markdown"
 
@@ -6701,6 +6704,15 @@ msgstr "DevTools"
 msgid "DevTools beside the page"
 msgstr "頁面旁的 DevTools"
 
+msgid "Diagram"
+msgstr "圖表"
+
+msgid "Diagram could not be drawn"
+msgstr "無法繪製圖表"
+
+msgid "Diagram could not be drawn: {reason}"
+msgstr "無法繪製圖表：{reason}"
+
 msgid "Dialog"
 msgstr "對話方塊"
 
@@ -7544,6 +7556,9 @@ msgstr "全部展開"
 msgid "Expand all files"
 msgstr "展開所有檔案"
 
+msgid "Expand diagram"
+msgstr "放大圖表"
+
 msgid "Expand file"
 msgstr "展開檔案"
 
@@ -8336,6 +8351,9 @@ msgstr "已完成 · 未讀"
 
 msgid "finished · worked for 7s"
 msgstr "已完成 · 用時7秒"
+
+msgid "Fit"
+msgstr "符合視窗"
 
 msgid "Fix all failing checks"
 msgstr "修復所有失敗的檢查"
@@ -9279,6 +9297,9 @@ msgstr "我們的工作方式"
 
 msgid "How your agents sign in inside cloud workspaces. Other people connect their own subscriptions or API keys; on this machine each agent keeps using the login already on it."
 msgstr "你的代理程式在雲端工作區中如何登入。其他人連接各自的訂閱或API金鑰；在這台機器上，每個代理程式繼續使用它上面已有的登入。"
+
+msgid "HTML preview"
+msgstr "HTML 預覽"
 
 msgid "https://"
 msgstr "https://"
@@ -16833,6 +16854,9 @@ msgstr "顯示邊框"
 msgid "Show checks"
 msgstr "顯示檢查"
 
+msgid "Show code"
+msgstr "顯示程式碼"
+
 msgid "Show CPU and memory usage in the top bar"
 msgstr "在頂欄顯示CPU和記憶體用量"
 
@@ -18989,6 +19013,9 @@ msgstr "這會為所有有權存取的人永久移除已儲存的環境。已從
 
 msgid "This port is still in use"
 msgstr "此埠仍在使用中"
+
+msgid "This preview is too large to show."
+msgstr "此預覽過大，無法顯示。"
 
 msgid "This profile is busy right now"
 msgstr "此個人檔案目前繁忙"
