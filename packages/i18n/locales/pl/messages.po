@@ -2024,6 +2024,9 @@ msgstr "Dodaj do obszaru roboczego"
 msgid "Add what it does"
 msgstr "Dodaj, co robi"
 
+msgid "Add your first project"
+msgstr "Dodaj swój pierwszy projekt"
+
 msgid "Add your own terminal agent to this device."
 msgstr "Dodaj własnego agenta terminalowego na tym urządzeniu."
 
@@ -3021,9 +3024,6 @@ msgstr "Auto"
 
 msgid "Auto (system)"
 msgstr "Auto (systemowy)"
-
-msgid "Auto follows your system language. You can change it later in Settings."
-msgstr "Auto podąża za językiem systemu. Można to później zmienić w Ustawieniach."
 
 msgid "Auto Save"
 msgstr "Automatyczne zapisywanie"
@@ -4224,6 +4224,9 @@ msgstr "Klienci"
 msgid "Clone"
 msgstr "Klonuj"
 
+msgid "Clone a repo"
+msgstr "Sklonuj repozytorium"
+
 msgid "Clone a repository"
 msgstr "Sklonuj repozytorium"
 
@@ -4235,9 +4238,6 @@ msgstr "sklonować repozytorium"
 
 msgid "Clone the repository, or import an existing folder on the host."
 msgstr "Sklonuj repozytorium albo zaimportuj istniejący folder na hoście."
-
-msgid "Clone, push, and create PRs."
-msgstr "Klonuj, wysyłaj zmiany i twórz PR."
 
 #. placeholder {0}: result.repoPath
 msgid "Cloned to {0}"
@@ -7228,6 +7228,9 @@ msgstr "Pusty"
 msgid "Empty command"
 msgstr "Puste polecenie"
 
+msgid "Empty project"
+msgstr "Pusty projekt"
+
 msgid "Emulator"
 msgstr "Emulator"
 
@@ -8561,6 +8564,9 @@ msgstr "od {price}/użytkownika/mies."
 msgid "From a hackathon project to the workspace for parallel coding agents."
 msgstr "Od projektu z hackathonu do przestrzeni roboczej dla równoległych agentów kodujących."
 
+msgid "From a template"
+msgstr "Z szablonu"
+
 msgid "From GitHub"
 msgstr "Z GitHuba"
 
@@ -8683,6 +8689,9 @@ msgstr "Uzyskaj Paradev Pro"
 
 msgid "Get started"
 msgstr "Zacznij"
+
+msgid "Get support"
+msgstr "Uzyskaj pomoc"
 
 msgid "Get the best out of Pro"
 msgstr "Wykorzystaj w pełni Pro"
@@ -9542,6 +9551,9 @@ msgstr "Instalacja nie powiodła się"
 
 msgid "Install GitHub App"
 msgstr "Zainstaluj aplikację GitHub"
+
+msgid "Install GitHub CLI"
+msgstr "Zainstaluj GitHub CLI"
 
 msgid "Install on your iPhone"
 msgstr "Zainstaluj na iPhonie"
@@ -12254,6 +12266,9 @@ msgstr "Nie ma na kanale"
 msgid "Not included"
 msgstr "Poza pakietem"
 
+msgid "Not installed"
+msgstr "Nie zainstalowano"
+
 msgid "Not loaded"
 msgstr "Niewczytana"
 
@@ -12286,6 +12301,9 @@ msgstr "Nieskonfigurowany na {hostName}"
 
 msgid "Not set up on this host"
 msgstr "Nieskonfigurowany na tym hoście"
+
+msgid "Not signed in"
+msgstr "Nie zalogowano"
 
 msgid "not sorted"
 msgstr "bez sortowania"
@@ -12682,6 +12700,12 @@ msgstr "Otwórz {parentLabel}"
 
 msgid "Open {path} in file pane"
 msgstr "Otwórz {path} w panelu plików"
+
+msgid "Open a folder"
+msgstr "Otwórz folder"
+
+msgid "Open a folder you already work in. You can add more later."
+msgstr "Otwórz folder, w którym już pracujesz. Kolejne możesz dodać później."
 
 msgid "Open a multiline prompt composer for the active terminal"
 msgstr "Otwórz wielowierszowy edytor promptu dla aktywnego terminala"
@@ -13531,6 +13555,9 @@ msgstr "Paradev UI"
 #. placeholder {0}: formatPercent(trackedMemorySharePercent)
 msgid "Paradev uses {0} of system RAM"
 msgstr "Paradev używa {0} pamięci RAM systemu"
+
+msgid "Paradev uses the GitHub CLI to clone repos and open pull requests. You can also do this later."
+msgstr "Paradev używa GitHub CLI do klonowania repozytoriów i otwierania pull requestów. Możesz to zrobić także później."
 
 msgid "Paradev vs the Alternatives"
 msgstr "Paradev a alternatywy"
@@ -16895,6 +16922,9 @@ msgstr "Zaloguj się, aby przejść do Paradev"
 
 msgid "Sign in to get started"
 msgstr "Zaloguj się, aby zacząć"
+
+msgid "Sign in to GitHub"
+msgstr "Zaloguj się do GitHuba"
 
 msgid "Sign in to the agent in a terminal, then continue."
 msgstr "Zaloguj się do agenta w terminalu, a potem kontynuuj."
