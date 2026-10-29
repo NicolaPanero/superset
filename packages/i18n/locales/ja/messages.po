@@ -6985,6 +6985,9 @@ msgstr "ダウンロードに失敗しました"
 msgid "Download for {platformName}"
 msgstr "{platformName} 版をダウンロード"
 
+msgid "Download for Linux"
+msgstr "Linux版をダウンロード"
+
 msgid "Download for Mac"
 msgstr "Mac版をダウンロード"
 
@@ -8783,8 +8786,8 @@ msgstr "キーを取得"
 msgid "Get more out of Paradev"
 msgstr "Paradevをもっと活用する"
 
-msgid "Get notified when Paradev is available on Windows & Linux."
-msgstr "ParadevがWindowsとLinuxで使えるようになったらお知らせします。"
+msgid "Get notified when Paradev is available on Windows."
+msgstr "ParadevがWindowsで使えるようになったらお知らせします。"
 
 msgid "Get Paradev on your Mac"
 msgstr "MacでParadevを使う"
@@ -20455,8 +20458,8 @@ msgstr "Android 版 Paradev の準備ができたらメールでお知らせし�
 msgid "We'll get back to you shortly."
 msgstr "折り返しご連絡します。"
 
-msgid "We'll notify you when Windows & Linux support is ready."
-msgstr "WindowsとLinuxへの対応が整い次第お知らせします。"
+msgid "We'll notify you when Windows support is ready."
+msgstr "Windowsへの対応が整い次第お知らせします。"
 
 msgid "We'll only use this to send your download link."
 msgstr "ダウンロードリンクの送信にのみ使用します。"

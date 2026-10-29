@@ -6985,6 +6985,9 @@ msgstr "İndirilemedi"
 msgid "Download for {platformName}"
 msgstr "{platformName} için indir"
 
+msgid "Download for Linux"
+msgstr "Linux için indir"
+
 msgid "Download for Mac"
 msgstr "Mac için indir"
 
@@ -8783,8 +8786,8 @@ msgstr "Anahtar alın"
 msgid "Get more out of Paradev"
 msgstr "Paradev'den daha fazlasını al"
 
-msgid "Get notified when Paradev is available on Windows & Linux."
-msgstr "Paradev, Windows ve Linux'ta kullanılabilir olduğunda haberdar olun."
+msgid "Get notified when Paradev is available on Windows."
+msgstr "Paradev, Windows'ta kullanılabilir olduğunda haberdar olun."
 
 msgid "Get Paradev on your Mac"
 msgstr "Paradev'i Mac'inize alın"
@@ -20455,8 +20458,8 @@ msgstr "Android için Paradev hazır olduğunda size e-posta göndereceğiz."
 msgid "We'll get back to you shortly."
 msgstr "Kısa süre içinde size döneceğiz."
 
-msgid "We'll notify you when Windows & Linux support is ready."
-msgstr "Windows ve Linux desteği hazır olduğunda size haber vereceğiz."
+msgid "We'll notify you when Windows support is ready."
+msgstr "Windows desteği hazır olduğunda size haber vereceğiz."
 
 msgid "We'll only use this to send your download link."
 msgstr "Bunu yalnızca indirme bağlantınızı göndermek için kullanacağız."
