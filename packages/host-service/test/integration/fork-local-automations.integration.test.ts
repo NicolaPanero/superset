@@ -332,7 +332,7 @@ test("timesheet proposals stay off until enabled and never call Jira while off",
 		host.trpc.forkTasks.timesheetPropose.mutate({
 			connectionId: connection.id,
 		}),
-	).rejects.toThrow("Turn on timesheet proposals");
+	).rejects.toThrow("Timesheet proposals are no longer available");
 });
 
 test("agent update checks are on by default, can be turned off, and the router only lists agents when on", async () => {

@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { forkReadValidationErrors } from "./fork-validation-errors";
 
 export function validateBrokerUrl(value: string): string {
 	const url = new URL(value);
@@ -75,10 +76,15 @@ export async function forkFetch<T>(
 								: response.status === 400 || response.status === 422
 									? "BAD_REQUEST"
 									: "BAD_GATEWAY";
+		const validation = await forkReadValidationErrors(response);
 		throw new TRPCError({
 			code,
-			message: `The service returned HTTP ${response.status}`,
-			cause: { status: response.status },
+			message:
+				validation?.message ?? `The service returned HTTP ${response.status}`,
+			cause: {
+				status: response.status,
+				...(validation ? { errors: validation.errors } : {}),
+			},
 		});
 	}
 	if (response.status === 204) return undefined as T;

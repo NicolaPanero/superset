@@ -1208,9 +1208,6 @@ msgstr "{seconds} s"
 msgid "{seconds}s ago"
 msgstr "před {seconds} s"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} záznamů · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "vybráno: {selectedCount}"
 
@@ -1641,9 +1638,6 @@ msgstr "V tomto terminálu pořád běží proces"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Prompt, pár spouštěčů a pracovní prostor pro každý běh"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "Návrh pro pracovní dny pod minimem z úkolů, které jste uzavřeli bez vykázaného času, a z úkolů, které ještě probíhají. Do Jira se nic neodešle, dokud to nepotvrdíte. Bez dat: posledních 30 dní."
 
 msgid "A pull request always gets its own worktree"
 msgstr "Pull request má vždy vlastní worktree"
@@ -4090,9 +4084,6 @@ msgstr "Zvolte, jak se otevírají cesty k souborům při Cmd+kliknutí v termin
 msgid "Choose MCP servers for this message"
 msgstr "Vyberte MCP servery pro tuto zprávu"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "Vyberte stavy, do kterých Superset přesune úkol, když začne práce a když se otevře pull request. Bez výběru hledá stav s názvem podobným „review“."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Vyberte, co se má z vestavěného prohlížeče vymazat."
 
@@ -4716,8 +4707,8 @@ msgstr "Dokončete autorizaci v prohlížeči."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Dokončete postup oficiálního CLI a zavřete toto okno pro kontrolu výsledku."
 
-msgid "Complete the required fields to change status."
-msgstr "Vyplňte povinná pole pro změnu stavu."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Vyplňte pole přechodu a potvrďte změnu stavu."
 
 msgid "Completed"
 msgstr "Dokončeno"
@@ -6335,26 +6326,14 @@ msgstr "Časové období"
 msgid "Day"
 msgstr "Den"
 
-msgid "Day ends"
-msgstr "Konec dne"
-
 msgid "Day One"
 msgstr "První den"
-
-msgid "Day starts"
-msgstr "Začátek dne"
 
 msgid "days"
 msgstr "dní"
 
 msgid "Days"
 msgstr "Dny"
-
-msgid "Days already full:"
-msgstr "Dny, které už jsou plné:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "Dny volna (jeden na řádek, YYYY-MM-DD nebo YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "dní se třemi agenty najednou"
@@ -9566,9 +9545,6 @@ msgstr "Za pouhých pár měsíců používají Paradev jako hlavní IDE <0>des�
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Osobně v San Franciscu, pět dní v týdnu. Pracujete přímo se zakladateli."
 
-msgid "in progress"
-msgstr "probíhá"
-
 msgid "In progress"
 msgstr "Probíhá"
 
@@ -9605,12 +9581,6 @@ msgstr "Prohlížeč v aplikaci"
 
 msgid "In-app PR merge"
 msgstr "Slučování PR přímo v aplikaci"
-
-msgid "Include"
-msgstr "Zahrnout"
-
-msgid "Include tasks still in progress"
-msgstr "Zahrnout úkoly, které ještě probíhají"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Zahrň do názvu větve id ticketu z Linearu uvedené v promptu (např. bin-344-fix-login). Podle úkolu předřaď větvi fix/ nebo feat/."
@@ -9987,9 +9957,6 @@ msgstr "Připojí se sám, jakmile bude počítač zpět. Zkontrolujte znovu sta
 msgid "Italic"
 msgstr "Kurzíva"
 
-msgid "Italy"
-msgstr "Itálie"
-
 msgid "Item"
 msgstr "Položka"
 
@@ -10037,9 +10004,6 @@ msgstr "Úkoly Jira"
 
 msgid "Jira project"
 msgstr "Projekt Jira"
-
-msgid "Jira project key"
-msgstr "Klíč projektu Jira"
 
 msgid "Jira triage"
 msgstr "Třídění Jira"
@@ -10783,14 +10747,8 @@ msgstr "Zapsat čas"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Vykazujte čas na úkolu Jira přímo z jeho detailu, s vaším dnešním časem a historií úkolu."
 
-msgid "Logged"
-msgstr "Vykázáno"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Zapsáno jako {account} · {timeZone}. Zbývající odhad se nemění."
-
-msgid "Logged today: {total}"
-msgstr "Dnes vykázáno: {total}"
 
 msgid "Login unverified"
 msgstr "Přihlášení neověřeno"
@@ -10852,12 +10810,6 @@ msgstr "Nízká"
 
 msgid "Low severity"
 msgstr "Nízká závažnost"
-
-msgid "Lunch ends"
-msgstr "Konec oběda"
-
-msgid "Lunch starts"
-msgstr "Začátek oběda"
 
 msgid "Machine resources"
 msgstr "Prostředky počítače"
@@ -11033,9 +10985,6 @@ msgstr "Max"
 
 msgid "Maximum"
 msgstr "Maximum"
-
-msgid "Maximum hours a day"
-msgstr "Maximum hodin za den"
 
 msgid "Maximum reasoning effort"
 msgstr "Maximální míra uvažování"
@@ -11248,9 +11197,6 @@ msgstr "Minimalizovat GitHub issues"
 msgid "Minimum contrast"
 msgstr "Minimální kontrast"
 
-msgid "Minimum hours a day"
-msgstr "Minimum hodin za den"
-
 msgid "missed"
 msgstr "zmeškáno"
 
@@ -11320,12 +11266,6 @@ msgstr "Použité modely"
 
 msgid "Moderate reasoning effort"
 msgstr "Střední míra uvažování"
-
-msgid "Module field (optional)"
-msgstr "Pole modulu (volitelné)"
-
-msgid "Modules (comma separated)"
-msgstr "Moduly (oddělené čárkou)"
 
 msgid "Mon"
 msgstr "Po"
@@ -12365,6 +12305,9 @@ msgstr "Nenalezeny žádné úkoly."
 msgid "No tasks in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné úkoly."
 
+msgid "No tasks without worklogs in this period."
+msgstr "V tomto období nejsou žádné úkoly bez vykázaného času."
+
 msgid "No tasks yet"
 msgstr "Zatím žádné úkoly"
 
@@ -12594,9 +12537,6 @@ msgstr "Nic neběží"
 msgid "Nothing to check."
 msgstr "Není co kontrolovat."
 
-msgid "Nothing to propose in this period."
-msgstr "V tomto období není co navrhnout."
-
 msgid "Nothing was missed"
 msgstr "Nic nebylo zmeškáno"
 
@@ -12664,9 +12604,6 @@ msgstr "ze všech tokenů"
 
 msgid "Off"
 msgstr "Vypnuto"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Ve výchozím stavu vypnuto. Když je zapnuto, může zobrazení Dnes na vyžádání připravit návrh výkazů práce pro pracovní dny pod minimem. Nic se nezapíše bez tvého potvrzení a žádná automatizace ho nemůže připravit ani odeslat."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Vypnuto. Koupí další GB-hodiny, když docházejí."
@@ -14609,12 +14546,6 @@ msgstr "Prompty, které odešlete, se objeví tady."
 msgid "Properties"
 msgstr "Vlastnosti"
 
-msgid "Propose hours"
-msgstr "Navrhnout hodiny"
-
-msgid "Propose hours for my timesheet"
-msgstr "Navrhnout hodiny do mého výkazu"
-
 msgid "Provide either id or slug"
 msgstr "Zadejte buď id, nebo slug"
 
@@ -14630,9 +14561,6 @@ msgstr "PR týdně"
 
 msgid "Public"
 msgstr "Veřejný"
-
-msgid "Public holidays"
-msgstr "Státní svátky"
 
 msgid "Public leaderboard"
 msgstr "Veřejný žebříček"
@@ -15116,9 +15044,6 @@ msgstr "Vygenerovat znovu"
 
 msgid "Region"
 msgstr "Region"
-
-msgid "Register on Jira"
-msgstr "Zapsat do Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Zaregistruje lifecycle hooky do globální konfigurace tohoto agenta, aby Paradev mohl zobrazovat stav a posílat oznámení. Vypnutím se záznamy Paradev odeberou všude — stav a oznámení pro tohoto agenta přestanou fungovat, i uvnitř Paradev."
@@ -16621,6 +16546,9 @@ msgstr "Vyberte editor z nabídky"
 msgid "Select an environment"
 msgstr "Vyberte prostředí"
 
+msgid "Select an option"
+msgstr "Vyberte možnost"
+
 msgid "Select an organization"
 msgstr "Vyberte organizaci"
 
@@ -17203,8 +17131,14 @@ msgstr "Zobrazit text"
 msgid "Show the prompt"
 msgstr "Zobrazit prompt"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Zobrazit stránku Dnes v postranním panelu."
+
 msgid "Show the triggering payload"
 msgstr "Zobrazit spouštěcí data"
+
+msgid "Show Today"
+msgstr "Zobrazit Dnes"
 
 msgid "Show translation"
 msgstr "Zobrazit překlad"
@@ -17506,9 +17440,6 @@ msgstr "Některá metadata specifická pro agenta nebylo možné přenést."
 
 msgid "Some chat history could not be loaded."
 msgstr "Část historie chatů se nepodařilo načíst."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Některé dny zůstávají mimo limity hodin. Opravte je ručně nebo v Jira; zápis je vypnutý."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Některé soubory nemají povolený typ a nebyly přidány."
@@ -17948,9 +17879,6 @@ msgstr "zůstat připojená (obnovovací tokeny)"
 
 msgid "Steer"
 msgstr "Usměrnit"
-
-msgid "Step"
-msgstr "Krok"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Úkoly a projekty"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Úkoly vytvořené v Paradev se budou synchronizovat do tohoto týmu v Linearu."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Úkoly s mnohem více časem, než jim připadá:"
+msgid "Tasks without worklogs"
+msgstr "Úkoly bez vykázaného času"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Řídí se tím úkoly, CLI i agenti. Každý člen používá svůj vlastní účet Linear."
@@ -18921,9 +18849,6 @@ msgstr "Nový agent si může vynechané zprávy přečíst, když je potřebuje
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Nový agent naváže na celou konverzaci včetně nástrojů."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "Nové zobrazení Dnes ukazuje agenty, kteří na vás čekají, běhy ke kontrole, vaše revize a váš čas."
-
 msgid "The overnight shift"
 msgstr "Noční směna"
 
@@ -19226,6 +19151,9 @@ msgstr "Toto prostředí nemá žádné repozitáře. V Nastavení vytvořte pro
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Repozitáře tohoto prostředí jsou pevně dané; pro jejich změnu znovu povyšte pracovní prostor"
+
+msgid "This field must be completed in Jira."
+msgstr "Toto pole je nutné vyplnit v Jira."
 
 msgid "this file"
 msgstr "tento soubor"
@@ -19552,12 +19480,6 @@ msgstr "Zapsaný čas"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Sledování času je na tomto webu Jira vypnuté."
 
-msgid "Time zone: {timeZone}"
-msgstr "Časové pásmo: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Návrhy výkazu práce"
-
 msgid "Tinted"
 msgstr "Tónovaný"
 
@@ -19596,6 +19518,9 @@ msgstr "Dnes"
 
 msgid "TODAY"
 msgstr "DNES"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Dnes zobrazuje úkoly bez vykázaného času s filtry 7, 30 a 90 dní. Stránku lze zobrazit nebo skrýt v nastavení forku."
 
 msgid "Todo"
 msgstr "K řešení"
@@ -20220,6 +20145,9 @@ msgstr "Aktualizovat v App Storu"
 msgid "Update it with the same tool you used to install it."
 msgstr "Aktualizuj ho stejným nástrojem, kterým jsi ho nainstaloval."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "Aktualizovat Jira při zahájení práce nebo otevření pull requestu."
+
 msgid "Update naming instructions"
 msgstr "Upravit pravidla pojmenování"
 
@@ -20269,6 +20197,9 @@ msgstr "Aktualizováno {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Aktualizováno {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Aktualizováno za posledních {days} dní."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

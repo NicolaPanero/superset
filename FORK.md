@@ -41,11 +41,13 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Il dettaglio di un’issue registra le ore su Jira (**Log time**) senza doppi
   invii e mostra le ore di oggi; **Workflow statuses** nella connessione Jira
   sceglie gli stati di avvio lavoro e PR. **Today** raccoglie agenti in attesa,
-  run da controllare, review richieste e ore. La proposta del timesheet è
-  spenta di default e parte solo a mano. Se non trova task senza ore, ripartisce
-  uniformemente le nuove ore sui task in corso già rendicontati, se inclusi,
-  rispettando le date di avvio e i limiti giornalieri. Le ore già registrate
-  restano invariate; l’invio richiede conferma. **Start in workspace**
+  run da controllare, review richieste e task assegnati in corso o chiusi senza
+  worklog, aggiornati negli ultimi 7, 30 o 90 giorni. **Show Today** nelle
+  impostazioni mostra o nasconde la schermata. La registrazione delle ore resta
+  manuale dal task: non vengono proposte né distribuite ore automaticamente.
+  Le transizioni Jira mostrano anche i campi facoltativi della schermata, con
+  selezione multipla e testo esteso; gli errori riportano il campo da correggere.
+  **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
   [docs/fork-integrations.md](docs/fork-integrations.md).

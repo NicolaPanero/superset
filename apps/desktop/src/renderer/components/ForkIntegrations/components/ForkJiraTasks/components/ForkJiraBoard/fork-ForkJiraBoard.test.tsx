@@ -162,9 +162,8 @@ test("a status change waits for required Jira fields before submitting", async (
 	);
 	await view.findByRole("dialog");
 	expect(changes).toHaveLength(0);
-	fireEvent.change(view.getByLabelText("Resolution *"), {
-		target: { value: "fixed" },
-	});
+	fireEvent.click(view.getByLabelText("Resolution *"));
+	fireEvent.click(await view.findByRole("option", { name: "Fixed" }));
 	fireEvent.click(view.getByRole("button", { name: "Save" }));
 	await waitFor(() => expect(changes).toHaveLength(1));
 	expect(changes[0]).toMatchObject({

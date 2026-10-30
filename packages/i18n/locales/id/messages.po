@@ -1208,9 +1208,6 @@ msgstr "{seconds} dtk"
 msgid "{seconds}s ago"
 msgstr "{seconds}d lalu"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} entri · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} dipilih"
 
@@ -1641,9 +1638,6 @@ msgstr "Masih ada proses yang berjalan di terminal ini"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Prompt, beberapa pemicu, dan workspace untuk setiap run"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "Usulan untuk hari kerja di bawah minimum, dari tugas yang Anda tutup tanpa waktu dan tugas yang masih berjalan. Tidak ada yang dikirim ke Jira sampai Anda mengonfirmasi. Tanpa tanggal: 30 hari terakhir."
 
 msgid "A pull request always gets its own worktree"
 msgstr "Pull request selalu mendapat worktree sendiri"
@@ -4090,9 +4084,6 @@ msgstr "Pilih cara membuka path file saat Cmd+klik di terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Pilih server MCP untuk pesan ini"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "Pilih status tujuan Superset memindahkan isu saat pekerjaan dimulai dan saat pull request dibuka. Tanpa pilihan, Superset mencari status dengan nama seperti “review”."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Pilih apa yang ingin dibersihkan dari browser dalam aplikasi."
 
@@ -4716,8 +4707,8 @@ msgstr "Selesaikan otorisasi di browser Anda."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Selesaikan alur CLI resmi, lalu tutup jendela ini untuk memeriksa hasilnya."
 
-msgid "Complete the required fields to change status."
-msgstr "Isi kolom wajib untuk mengubah status."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Lengkapi kolom transisi, lalu konfirmasikan perubahan status."
 
 msgid "Completed"
 msgstr "Selesai"
@@ -6335,26 +6326,14 @@ msgstr "Rentang tanggal"
 msgid "Day"
 msgstr "Hari"
 
-msgid "Day ends"
-msgstr "Hari berakhir"
-
 msgid "Day One"
 msgstr "Hari pertama"
-
-msgid "Day starts"
-msgstr "Mulai kerja"
 
 msgid "days"
 msgstr "hari"
 
 msgid "Days"
 msgstr "Hari"
-
-msgid "Days already full:"
-msgstr "Hari yang sudah penuh:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "Hari cuti (satu per baris, YYYY-MM-DD atau YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "hari menjalankan tiga agen sekaligus"
@@ -9566,9 +9545,6 @@ msgstr "Hanya dalam beberapa bulan, <0>puluhan ribu engineer</0> memakai Paradev
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Bekerja langsung di kantor San Francisco, lima hari seminggu. Anda bekerja langsung dengan para pendiri."
 
-msgid "in progress"
-msgstr "sedang berjalan"
-
 msgid "In progress"
 msgstr "Sedang dikerjakan"
 
@@ -9605,12 +9581,6 @@ msgstr "Browser dalam aplikasi"
 
 msgid "In-app PR merge"
 msgstr "Merge PR di dalam aplikasi"
-
-msgid "Include"
-msgstr "Sertakan"
-
-msgid "Include tasks still in progress"
-msgstr "Sertakan tugas yang masih berjalan"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Sertakan id tiket Linear dari prompt di nama branch (mis. bin-344-fix-login). Beri prefix fix/ atau feat/ sesuai tugasnya."
@@ -9987,9 +9957,6 @@ msgstr "Host akan tersambung sendiri begitu mesinnya kembali. Tarik untuk memeri
 msgid "Italic"
 msgstr "Miring"
 
-msgid "Italy"
-msgstr "Italia"
-
 msgid "Item"
 msgstr "Item"
 
@@ -10037,9 +10004,6 @@ msgstr "Isu Jira"
 
 msgid "Jira project"
 msgstr "Proyek Jira"
-
-msgid "Jira project key"
-msgstr "Kunci proyek Jira"
 
 msgid "Jira triage"
 msgstr "Triase Jira"
@@ -10783,14 +10747,8 @@ msgstr "Catat waktu"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Catat waktu pada isu Jira dari detailnya, dengan waktu Anda hari ini dan riwayat isu."
 
-msgid "Logged"
-msgstr "Tercatat"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Dicatat sebagai {account} · {timeZone}. Sisa estimasi tidak berubah."
-
-msgid "Logged today: {total}"
-msgstr "Tercatat hari ini: {total}"
 
 msgid "Login unverified"
 msgstr "Login belum diverifikasi"
@@ -10852,12 +10810,6 @@ msgstr "Rendah"
 
 msgid "Low severity"
 msgstr "Tingkat keparahan rendah"
-
-msgid "Lunch ends"
-msgstr "Selesai makan siang"
-
-msgid "Lunch starts"
-msgstr "Mulai makan siang"
 
 msgid "Machine resources"
 msgstr "Sumber daya mesin"
@@ -11033,9 +10985,6 @@ msgstr "Maks"
 
 msgid "Maximum"
 msgstr "Maksimum"
-
-msgid "Maximum hours a day"
-msgstr "Jam maksimum per hari"
 
 msgid "Maximum reasoning effort"
 msgstr "Upaya penalaran maksimum"
@@ -11248,9 +11197,6 @@ msgstr "Perkecil issue GitHub"
 msgid "Minimum contrast"
 msgstr "Kontras minimum"
 
-msgid "Minimum hours a day"
-msgstr "Jam minimum per hari"
-
 msgid "missed"
 msgstr "terlewat"
 
@@ -11320,12 +11266,6 @@ msgstr "Model yang dipakai"
 
 msgid "Moderate reasoning effort"
 msgstr "Upaya penalaran sedang"
-
-msgid "Module field (optional)"
-msgstr "Kolom modul (opsional)"
-
-msgid "Modules (comma separated)"
-msgstr "Modul (dipisahkan koma)"
 
 msgid "Mon"
 msgstr "Sen"
@@ -12365,6 +12305,9 @@ msgstr "Tidak ada tugas ditemukan."
 msgid "No tasks in this project yet."
 msgstr "Belum ada tugas di proyek ini."
 
+msgid "No tasks without worklogs in this period."
+msgstr "Tidak ada tugas tanpa catatan waktu dalam periode ini."
+
 msgid "No tasks yet"
 msgstr "Belum ada tugas"
 
@@ -12594,9 +12537,6 @@ msgstr "Tidak ada yang berjalan"
 msgid "Nothing to check."
 msgstr "Tidak ada yang perlu diperiksa."
 
-msgid "Nothing to propose in this period."
-msgstr "Tidak ada yang bisa diusulkan pada periode ini."
-
 msgid "Nothing was missed"
 msgstr "Tidak ada yang terlewat"
 
@@ -12664,9 +12604,6 @@ msgstr "dari semua token"
 
 msgid "Off"
 msgstr "Mati"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Nonaktif secara default. Jika aktif, tampilan Hari ini dapat menyiapkan, hanya saat Anda meminta, usulan worklog untuk hari kerja di bawah minimum. Tidak ada yang dicatat tanpa konfirmasi Anda, dan tidak ada otomatisasi yang dapat menyiapkan atau mengirimnya."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Nonaktif. Membeli GB-jam lagi saat hampir habis."
@@ -14609,12 +14546,6 @@ msgstr "Prompt yang Anda kirim akan muncul di sini."
 msgid "Properties"
 msgstr "Properti"
 
-msgid "Propose hours"
-msgstr "Usulkan jam"
-
-msgid "Propose hours for my timesheet"
-msgstr "Usulkan jam untuk timesheet saya"
-
 msgid "Provide either id or slug"
 msgstr "Berikan id atau slug"
 
@@ -14630,9 +14561,6 @@ msgstr "PR per minggu"
 
 msgid "Public"
 msgstr "Publik"
-
-msgid "Public holidays"
-msgstr "Hari libur nasional"
 
 msgid "Public leaderboard"
 msgstr "Papan peringkat publik"
@@ -15116,9 +15044,6 @@ msgstr "Buat ulang"
 
 msgid "Region"
 msgstr "Region"
-
-msgid "Register on Jira"
-msgstr "Catat di Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Mendaftarkan hook lifecycle di konfigurasi global agen ini agar Paradev bisa menampilkan status dan mengirim notifikasi. Mematikannya menghapus entri Paradev di mana-mana — status dan notifikasi berhenti untuk agen ini, termasuk di dalam Paradev."
@@ -16621,6 +16546,9 @@ msgstr "Pilih editor dari dropdown"
 msgid "Select an environment"
 msgstr "Pilih lingkungan"
 
+msgid "Select an option"
+msgstr "Pilih opsi"
+
 msgid "Select an organization"
 msgstr "Pilih sebuah organisasi"
 
@@ -17203,8 +17131,14 @@ msgstr "Tampilkan teks"
 msgid "Show the prompt"
 msgstr "Tampilkan prompt"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Tampilkan halaman Hari ini di bilah samping."
+
 msgid "Show the triggering payload"
 msgstr "Tampilkan payload pemicu"
+
+msgid "Show Today"
+msgstr "Tampilkan Hari ini"
 
 msgid "Show translation"
 msgstr "Tampilkan terjemahan"
@@ -17506,9 +17440,6 @@ msgstr "Sebagian metadata khusus agen tidak dapat ditransfer."
 
 msgid "Some chat history could not be loaded."
 msgstr "Sebagian riwayat obrolan tidak dapat dimuat."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Beberapa hari berada di luar batas jam. Perbaiki secara manual atau di Jira; pencatatan dinonaktifkan."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sebagian file bukan tipe yang diterima dan tidak ditambahkan."
@@ -17948,9 +17879,6 @@ msgstr "Tetap terhubung (refresh token)"
 
 msgid "Steer"
 msgstr "Arahkan"
-
-msgid "Step"
-msgstr "Langkah"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Tugas dan proyek"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Tugas yang dibuat di Paradev akan disinkronkan ke tim Linear ini."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Tugas dengan waktu jauh melebihi porsinya:"
+msgid "Tasks without worklogs"
+msgstr "Tugas tanpa catatan waktu"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Tugas, CLI, dan agen mengikuti ini. Setiap anggota memakai akun Linear miliknya sendiri."
@@ -18921,9 +18849,6 @@ msgstr "Agen baru dapat membaca pesan yang dihilangkan saat diperlukan."
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Agen baru melanjutkan seluruh percakapan, termasuk alat."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "Tampilan Hari ini yang baru menampilkan agen yang menunggu Anda, run yang perlu diperiksa, review Anda, dan waktu Anda."
-
 msgid "The overnight shift"
 msgstr "Shift malam"
 
@@ -19226,6 +19151,9 @@ msgstr "Environment ini tidak memiliki repositori. Buat environment dengan repos
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Repositori environment ini sudah tetap; promosikan workspace lagi untuk mengubahnya"
+
+msgid "This field must be completed in Jira."
+msgstr "Kolom ini harus diisi di Jira."
 
 msgid "this file"
 msgstr "file ini"
@@ -19552,12 +19480,6 @@ msgstr "Waktu tercatat"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Pelacakan waktu dinonaktifkan di situs Jira ini."
 
-msgid "Time zone: {timeZone}"
-msgstr "Zona waktu: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Usulan timesheet"
-
 msgid "Tinted"
 msgstr "Berwarna"
 
@@ -19596,6 +19518,9 @@ msgstr "Hari ini"
 
 msgid "TODAY"
 msgstr "HARI INI"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Hari ini menampilkan tugas tanpa catatan waktu dengan filter 7, 30, dan 90 hari. Tampilkan atau sembunyikan halaman ini di Pengaturan fork."
 
 msgid "Todo"
 msgstr "Todo"
@@ -20220,6 +20145,9 @@ msgstr "Perbarui di App Store"
 msgid "Update it with the same tool you used to install it."
 msgstr "Perbarui dengan alat yang sama yang Anda gunakan untuk memasangnya."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "Perbarui Jira saat pekerjaan dimulai atau pull request dibuka."
+
 msgid "Update naming instructions"
 msgstr "Perbarui instruksi penamaan"
 
@@ -20269,6 +20197,9 @@ msgstr "Diperbarui {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Diperbarui {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Diperbarui dalam {days} hari terakhir."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

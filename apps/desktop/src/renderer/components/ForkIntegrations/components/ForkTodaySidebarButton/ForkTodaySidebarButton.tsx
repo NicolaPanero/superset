@@ -3,6 +3,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { LuSun } from "react-icons/lu";
+import { useForkCliOptionsStore } from "renderer/stores/fork-cli-options";
 
 export function ForkTodaySidebarButton({
 	variant,
@@ -14,6 +15,8 @@ export function ForkTodaySidebarButton({
 	const matchRoute = useMatchRoute();
 	const open = !!matchRoute({ to: "/today", fuzzy: true });
 	const onClick = () => void navigate({ to: "/today" });
+	const show = useForkCliOptionsStore((s) => s.showToday);
+	if (!show) return null;
 	if (variant === "icon")
 		return (
 			<Tooltip delayDuration={300}>

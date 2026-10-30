@@ -1208,9 +1208,6 @@ msgstr "{seconds} 秒"
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} 条记录 · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "已选择{selectedCount}项"
 
@@ -1641,9 +1638,6 @@ msgstr "此终端中仍有进程在运行"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "一个提示词、几个触发器，每次运行一个工作区"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "根据你关闭时未记录工时的任务和仍在进行中的任务，为低于最低工时的工作日生成建议。在你确认之前，不会向 Jira 发送任何内容。未指定日期时：最近 30 天。"
 
 msgid "A pull request always gets its own worktree"
 msgstr "拉取请求总是使用自己的 worktree"
@@ -4090,9 +4084,6 @@ msgstr "选择在终端中Cmd+点击文件路径时的打开方式"
 msgid "Choose MCP servers for this message"
 msgstr "为这条消息选择MCP服务器"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "选择工作开始时以及拉取请求打开时 Superset 将事务移至的状态。如未选择，它会查找名称类似“review”的状态。"
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "选择要从应用内浏览器清除的内容。"
 
@@ -4716,8 +4707,8 @@ msgstr "在浏览器中完成授权。"
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "完成官方 CLI 流程后关闭此窗口，检查结果。"
 
-msgid "Complete the required fields to change status."
-msgstr "请填写必填字段以更改状态。"
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "填写流转字段，然后确认状态更改。"
 
 msgid "Completed"
 msgstr "完成时间"
@@ -6335,26 +6326,14 @@ msgstr "日期范围"
 msgid "Day"
 msgstr "按天"
 
-msgid "Day ends"
-msgstr "一天结束"
-
 msgid "Day One"
 msgstr "元老"
-
-msgid "Day starts"
-msgstr "上班时间"
 
 msgid "days"
 msgstr "天"
 
 msgid "Days"
 msgstr "日期"
-
-msgid "Days already full:"
-msgstr "已满的日期："
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "休息日（每行一个，YYYY-MM-DD 或 YYYY-MM-DD:YYYY-MM-DD）"
 
 msgid "days running three agents at once"
 msgstr "同时运行三个智能体的天数"
@@ -9566,9 +9545,6 @@ msgstr "短短几个月，<0>数万名工程师</0>把Paradev当作主力IDE，�
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "在旧金山办公室线下办公，每周五天。你将直接与创始人共事。"
 
-msgid "in progress"
-msgstr "进行中"
-
 msgid "In progress"
 msgstr "进行中"
 
@@ -9605,12 +9581,6 @@ msgstr "应用内浏览器"
 
 msgid "In-app PR merge"
 msgstr "应用内合并PR"
-
-msgid "Include"
-msgstr "包含"
-
-msgid "Include tasks still in progress"
-msgstr "包含仍在进行中的任务"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "在分支名中包含提示词里的Linear工单ID（例如bin-344-fix-login）。根据任务为分支加上fix/或feat/前缀。"
@@ -9987,9 +9957,6 @@ msgstr "机器恢复后它会自动重新连接。下拉可再次检查。"
 msgid "Italic"
 msgstr "斜体"
 
-msgid "Italy"
-msgstr "意大利"
-
 msgid "Item"
 msgstr "条目"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira 事务"
 
 msgid "Jira project"
 msgstr "Jira 项目"
-
-msgid "Jira project key"
-msgstr "Jira 项目键"
 
 msgid "Jira triage"
 msgstr "Jira 分类"
@@ -10783,14 +10747,8 @@ msgstr "记录时间"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "在 Jira 事务详情中记录工时，同时查看你今天的工时和事务历史。"
 
-msgid "Logged"
-msgstr "已记录"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "以 {account} 身份记录 · {timeZone}。剩余估算不会改变。"
-
-msgid "Logged today: {total}"
-msgstr "今日已记录：{total}"
 
 msgid "Login unverified"
 msgstr "登录未验证"
@@ -10852,12 +10810,6 @@ msgstr "低"
 
 msgid "Low severity"
 msgstr "低严重性"
-
-msgid "Lunch ends"
-msgstr "午休结束"
-
-msgid "Lunch starts"
-msgstr "午休开始"
 
 msgid "Machine resources"
 msgstr "机器资源"
@@ -11033,9 +10985,6 @@ msgstr "最大"
 
 msgid "Maximum"
 msgstr "最大"
-
-msgid "Maximum hours a day"
-msgstr "每天最多小时数"
 
 msgid "Maximum reasoning effort"
 msgstr "最大的推理投入"
@@ -11248,9 +11197,6 @@ msgstr "最小化GitHub议题"
 msgid "Minimum contrast"
 msgstr "最小对比度"
 
-msgid "Minimum hours a day"
-msgstr "每天最少小时数"
-
 msgid "missed"
 msgstr "已错过"
 
@@ -11320,12 +11266,6 @@ msgstr "使用的模型"
 
 msgid "Moderate reasoning effort"
 msgstr "适中的推理投入"
-
-msgid "Module field (optional)"
-msgstr "模块字段（可选）"
-
-msgid "Modules (comma separated)"
-msgstr "模块（用逗号分隔）"
 
 msgid "Mon"
 msgstr "周一"
@@ -12365,6 +12305,9 @@ msgstr "未找到任务。"
 msgid "No tasks in this project yet."
 msgstr "此项目还没有任务。"
 
+msgid "No tasks without worklogs in this period."
+msgstr "此时间段内没有未记录工时的任务。"
+
 msgid "No tasks yet"
 msgstr "还没有任务"
 
@@ -12594,9 +12537,6 @@ msgstr "没有正在运行的内容"
 msgid "Nothing to check."
 msgstr "没有需要检查的内容。"
 
-msgid "Nothing to propose in this period."
-msgstr "此期间没有可建议的内容。"
-
 msgid "Nothing was missed"
 msgstr "没有错过的运行"
 
@@ -12664,9 +12604,6 @@ msgstr "占全部token"
 
 msgid "Off"
 msgstr "关闭"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "默认关闭。开启后，仅在你提出请求时，“今天”视图才会为低于最低工时的工作日准备工时记录提案。未经你确认不会记录任何内容，任何自动化也无法准备或发送它。"
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "已关闭。不足时购买更多 GB 小时。"
@@ -14609,12 +14546,6 @@ msgstr "你提交过的提示词会显示在这里。"
 msgid "Properties"
 msgstr "属性"
 
-msgid "Propose hours"
-msgstr "建议工时"
-
-msgid "Propose hours for my timesheet"
-msgstr "为我的工时表建议工时"
-
 msgid "Provide either id or slug"
 msgstr "请提供id或slug"
 
@@ -14630,9 +14561,6 @@ msgstr "PR/周"
 
 msgid "Public"
 msgstr "公开"
-
-msgid "Public holidays"
-msgstr "公共假日"
 
 msgid "Public leaderboard"
 msgstr "公开排行榜"
@@ -15116,9 +15044,6 @@ msgstr "重新生成"
 
 msgid "Region"
 msgstr "区域"
-
-msgid "Register on Jira"
-msgstr "登记到 Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "在该智能体的全局配置中注册生命周期钩子，以便Paradev显示状态并发送通知。关闭后会在所有位置移除Paradev的条目，该智能体的状态和通知都会停止，包括在Paradev内部。"
@@ -16621,6 +16546,9 @@ msgstr "从下拉菜单中选择编辑器"
 msgid "Select an environment"
 msgstr "选择一个环境"
 
+msgid "Select an option"
+msgstr "选择一个选项"
+
 msgid "Select an organization"
 msgstr "选择一个组织"
 
@@ -17203,8 +17131,14 @@ msgstr "显示文本"
 msgid "Show the prompt"
 msgstr "显示提示词"
 
+msgid "Show the Today page in the sidebar."
+msgstr "在侧边栏显示“今天”页面。"
+
 msgid "Show the triggering payload"
 msgstr "显示触发负载"
+
+msgid "Show Today"
+msgstr "显示“今天”"
 
 msgid "Show translation"
 msgstr "显示译文"
@@ -17506,9 +17440,6 @@ msgstr "部分代理专用元数据无法转移。"
 
 msgid "Some chat history could not be loaded."
 msgstr "部分聊天历史无法加载。"
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "部分日期超出工时限制。请手动或在 Jira 中修正；登记已停用。"
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "部分文件的类型不被允许，未添加。"
@@ -17948,9 +17879,6 @@ msgstr "保持连接（刷新令牌）"
 
 msgid "Steer"
 msgstr "引导"
-
-msgid "Step"
-msgstr "步骤"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "任务和项目"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "在Paradev中创建的任务会同步到这个Linear团队。"
 
-msgid "Tasks with much more time than their share:"
-msgstr "工时远超其应占份额的任务："
+msgid "Tasks without worklogs"
+msgstr "未记录工时的任务"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "任务、CLI 和智能体都遵循此设置。每位成员使用自己的 Linear 账户。"
@@ -18921,9 +18849,6 @@ msgstr "新智能体可在需要时读取被省略的消息。"
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新代理会继续整个对话，包括工具调用。"
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "新的“今天”视图显示等待你的智能体、待检查的运行、你的审查和你的工时。"
-
 msgid "The overnight shift"
 msgstr "夜班"
 
@@ -19226,6 +19151,9 @@ msgstr "此环境没有仓库。请先在设置中创建包含仓库的环境，
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "此环境的仓库已固定；请再次提升一个工作区以更改它们"
+
+msgid "This field must be completed in Jira."
+msgstr "此字段必须在 Jira 中填写。"
 
 msgid "this file"
 msgstr "该文件"
@@ -19552,12 +19480,6 @@ msgstr "已记录时间"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "此 Jira 站点已关闭时间跟踪。"
 
-msgid "Time zone: {timeZone}"
-msgstr "时区：{timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "工时表建议"
-
 msgid "Tinted"
 msgstr "色调"
 
@@ -19596,6 +19518,9 @@ msgstr "今天"
 
 msgid "TODAY"
 msgstr "今天"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "“今天”列出未记录工时的任务，可按 7、30 和 90 天筛选。在分支设置中可显示或隐藏此页面。"
 
 msgid "Todo"
 msgstr "待办"
@@ -20220,6 +20145,9 @@ msgstr "在 App Store 中更新"
 msgid "Update it with the same tool you used to install it."
 msgstr "请使用你安装它时所用的同一工具进行更新。"
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "开始工作或创建拉取请求时更新 Jira。"
+
 msgid "Update naming instructions"
 msgstr "更新命名规则"
 
@@ -20269,6 +20197,9 @@ msgstr "更新于{date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "更新于{updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "最近 {days} 天内更新。"
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

@@ -1,6 +1,7 @@
 import type { SettingsItem, SettingVariant } from "./settings-search";
 
 export const FORK_SETTING_ITEM_ID = {
+	FORK_TODAY: "fork-today",
 	FORK_HIDE_CLI: "fork-hide-cli",
 	FORK_HIDE_PRO: "fork-hide-pro",
 	FORK_HOME_BACKGROUND: "fork-home-background",
@@ -17,6 +18,7 @@ export const FORK_SETTING_ITEM_VARIANT: Record<
 	SettingVariant
 > = {
 	[FORK_SETTING_ITEM_ID.LOCAL_AGENT_ACCOUNTS]: "v2",
+	[FORK_SETTING_ITEM_ID.FORK_TODAY]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_HIDE_CLI]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_HIDE_PRO]: "shared",
 	[FORK_SETTING_ITEM_ID.FORK_HOME_BACKGROUND]: "v2",
@@ -28,6 +30,13 @@ export const FORK_SETTING_ITEM_VARIANT: Record<
 };
 
 export const FORK_SETTINGS_ITEMS: SettingsItem[] = [
+	{
+		id: FORK_SETTING_ITEM_ID.FORK_TODAY,
+		section: "fork",
+		title: "Show Today",
+		description: "Show the Today page in the sidebar.",
+		keywords: ["today", "jira", "worklog", "hours"],
+	},
 	{
 		id: FORK_SETTING_ITEM_ID.FORK_ATTACHMENT_RETENTION,
 		section: "fork",

@@ -66,6 +66,7 @@ export function useForkTaskTransition(
 		},
 	});
 	return {
+		task,
 		transitions,
 		mutation,
 		supported,
@@ -74,8 +75,7 @@ export function useForkTaskTransition(
 		choose: (transition: ForkTaskTransition) => {
 			if (mutation.isPending) return;
 			mutation.reset();
-			if (transition.fields.some((field) => field.required))
-				setRequiredTransition(transition);
+			if (transition.fields.length > 0) setRequiredTransition(transition);
 			else mutation.mutate({ transition, fields: {} });
 		},
 	};

@@ -1208,9 +1208,6 @@ msgstr "{seconds} sn"
 msgid "{seconds}s ago"
 msgstr "{seconds}sn önce"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} kayıt · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} seçildi"
 
@@ -1641,9 +1638,6 @@ msgstr "Bu terminalde hâlâ bir süreç çalışıyor"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Bir istem, birkaç tetikleyici ve her çalıştırma için bir çalışma alanı"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "Süre girmeden kapattığınız görevlerden ve hâlâ süren görevlerden, asgarinin altında kalan iş günleri için bir öneri. Siz onaylamadan Jira'ya hiçbir şey gönderilmez. Tarih yoksa: son 30 gün."
 
 msgid "A pull request always gets its own worktree"
 msgstr "Bir pull request her zaman kendi worktree'sini alır"
@@ -4090,9 +4084,6 @@ msgstr "Terminalde Cmd+tıkladığınızda dosya yollarının nasıl açılacağ
 msgid "Choose MCP servers for this message"
 msgstr "Bu ileti için MCP sunucularını seçin"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "İş başladığında ve bir pull request açıldığında Superset'in bir kaydı taşıyacağı durumları seçin. Seçim yoksa adı “review” benzeri bir durum arar."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Uygulama içi tarayıcıdan neyin temizleneceğini seçin."
 
@@ -4716,8 +4707,8 @@ msgstr "Yetkilendirmeyi tarayıcınızda tamamlayın."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Resmî CLI işlemini tamamlayın, ardından sonucu kontrol etmek için bu pencereyi kapatın."
 
-msgid "Complete the required fields to change status."
-msgstr "Durumu değiştirmek için gerekli alanları doldurun."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Geçiş alanlarını doldurun, ardından durum değişikliğini onaylayın."
 
 msgid "Completed"
 msgstr "Tamamlandı"
@@ -6335,26 +6326,14 @@ msgstr "Tarih aralığı"
 msgid "Day"
 msgstr "Gün"
 
-msgid "Day ends"
-msgstr "Gün sonu"
-
 msgid "Day One"
 msgstr "Birinci gün"
-
-msgid "Day starts"
-msgstr "Gün başlangıcı"
 
 msgid "days"
 msgstr "gün"
 
 msgid "Days"
 msgstr "Günler"
-
-msgid "Days already full:"
-msgstr "Zaten dolu günler:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "İzin günleri (satır başına bir tane, YYYY-MM-DD veya YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "aynı anda üç ajan çalıştırılan gün sayısı"
@@ -9566,9 +9545,6 @@ msgstr "Yalnızca birkaç ayda <0>on binlerce mühendis</0> Paradev'i birincil I
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Haftada beş gün San Francisco'da ofisten çalışıyoruz. Doğrudan kurucularla çalışırsınız."
 
-msgid "in progress"
-msgstr "devam ediyor"
-
 msgid "In progress"
 msgstr "Devam ediyor"
 
@@ -9605,12 +9581,6 @@ msgstr "Uygulama içi tarayıcı"
 
 msgid "In-app PR merge"
 msgstr "Uygulama içi PR birleştirme"
-
-msgid "Include"
-msgstr "Dahil et"
-
-msgid "Include tasks still in progress"
-msgstr "Hâlâ süren görevleri dahil et"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Dal adına istemdeki Linear bilet kimliğini ekle (örn. bin-344-fix-login). Göreve göre dallara fix/ veya feat/ ön eki koy."
@@ -9987,9 +9957,6 @@ msgstr "Makine geri döndüğünde kendiliğinden yeniden bağlanır. Yeniden de
 msgid "Italic"
 msgstr "İtalik"
 
-msgid "Italy"
-msgstr "İtalya"
-
 msgid "Item"
 msgstr "Öğe"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira kayıtları"
 
 msgid "Jira project"
 msgstr "Jira projesi"
-
-msgid "Jira project key"
-msgstr "Jira proje anahtarı"
 
 msgid "Jira triage"
 msgstr "Jira sınıflandırma"
@@ -10783,14 +10747,8 @@ msgstr "Süre kaydet"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Bir Jira kaydının ayrıntılarından, bugünkü sürenizi ve kaydın geçmişini görerek süre kaydedin."
 
-msgid "Logged"
-msgstr "Kaydedildi"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account} olarak kaydedildi · {timeZone}. Kalan tahmin değişmez."
-
-msgid "Logged today: {total}"
-msgstr "Bugün kaydedilen: {total}"
 
 msgid "Login unverified"
 msgstr "Oturum açma doğrulanmadı"
@@ -10852,12 +10810,6 @@ msgstr "Düşük"
 
 msgid "Low severity"
 msgstr "Düşük önem"
-
-msgid "Lunch ends"
-msgstr "Öğle arası bitişi"
-
-msgid "Lunch starts"
-msgstr "Öğle arası başlangıcı"
 
 msgid "Machine resources"
 msgstr "Makine kaynakları"
@@ -11033,9 +10985,6 @@ msgstr "En yüksek"
 
 msgid "Maximum"
 msgstr "En yüksek"
-
-msgid "Maximum hours a day"
-msgstr "Günlük en fazla saat"
 
 msgid "Maximum reasoning effort"
 msgstr "En yüksek akıl yürütme çabası"
@@ -11248,9 +11197,6 @@ msgstr "GitHub issue'larını küçült"
 msgid "Minimum contrast"
 msgstr "En düşük kontrast"
 
-msgid "Minimum hours a day"
-msgstr "Günlük en az saat"
-
 msgid "missed"
 msgstr "kaçırıldı"
 
@@ -11320,12 +11266,6 @@ msgstr "Kullanılan modeller"
 
 msgid "Moderate reasoning effort"
 msgstr "Orta düzey akıl yürütme çabası"
-
-msgid "Module field (optional)"
-msgstr "Modül alanı (isteğe bağlı)"
-
-msgid "Modules (comma separated)"
-msgstr "Modüller (virgülle ayrılmış)"
 
 msgid "Mon"
 msgstr "Pzt"
@@ -12365,6 +12305,9 @@ msgstr "Görev bulunamadı."
 msgid "No tasks in this project yet."
 msgstr "Bu projede henüz görev yok."
 
+msgid "No tasks without worklogs in this period."
+msgstr "Bu dönemde süre kaydı olmayan görev yok."
+
 msgid "No tasks yet"
 msgstr "Henüz görev yok"
 
@@ -12594,9 +12537,6 @@ msgstr "Çalışan bir şey yok"
 msgid "Nothing to check."
 msgstr "Kontrol edilecek bir şey yok."
 
-msgid "Nothing to propose in this period."
-msgstr "Bu dönemde önerilecek bir şey yok."
-
 msgid "Nothing was missed"
 msgstr "Hiçbir şey kaçırılmadı"
 
@@ -12664,9 +12604,6 @@ msgstr "tüm token'ların"
 
 msgid "Off"
 msgstr "Kapalı"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Varsayılan olarak kapalı. Açıkken Bugün görünümü, yalnızca siz istediğinizde, minimumun altında kalan iş günleri için bir süre kaydı önerisi hazırlayabilir. Onayınız olmadan hiçbir şey kaydedilmez ve hiçbir otomasyon bunu hazırlayamaz veya gönderemez."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Kapalı. Azaldığında daha fazla GB-saat satın alır."
@@ -14609,12 +14546,6 @@ msgstr "Gönderdiğiniz istemler burada görünecek."
 msgid "Properties"
 msgstr "Özellikler"
 
-msgid "Propose hours"
-msgstr "Saat öner"
-
-msgid "Propose hours for my timesheet"
-msgstr "Zaman çizelgem için saat öner"
-
 msgid "Provide either id or slug"
 msgstr "id veya slug değerlerinden birini sağlayın"
 
@@ -14630,9 +14561,6 @@ msgstr "haftada PR"
 
 msgid "Public"
 msgstr "Herkese açık"
-
-msgid "Public holidays"
-msgstr "Resmî tatiller"
 
 msgid "Public leaderboard"
 msgstr "Herkese açık lider tablosu"
@@ -15116,9 +15044,6 @@ msgstr "Yeniden oluştur"
 
 msgid "Region"
 msgstr "Bölge"
-
-msgid "Register on Jira"
-msgstr "Jira'ya kaydet"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Paradev'in durum gösterebilmesi ve bildirim gönderebilmesi için bu ajanın genel yapılandırmasına yaşam döngüsü hook'ları kaydeder. Bunu kapatmak Paradev'in kayıtlarını her yerden kaldırır — Paradev içinde dahil olmak üzere bu ajan için durum ve bildirimler durur."
@@ -16621,6 +16546,9 @@ msgstr "Açılır menüden bir düzenleyici seçin"
 msgid "Select an environment"
 msgstr "Bir ortam seçin"
 
+msgid "Select an option"
+msgstr "Bir seçenek seçin"
+
 msgid "Select an organization"
 msgstr "Bir kuruluş seçin"
 
@@ -17203,8 +17131,14 @@ msgstr "Metni göster"
 msgid "Show the prompt"
 msgstr "İstemi göster"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Bugün sayfasını kenar çubuğunda göster."
+
 msgid "Show the triggering payload"
 msgstr "Tetikleyen yükü göster"
+
+msgid "Show Today"
+msgstr "Bugün’ü göster"
 
 msgid "Show translation"
 msgstr "Çeviriyi göster"
@@ -17506,9 +17440,6 @@ msgstr "Aracıya özgü bazı meta veriler aktarılamadı."
 
 msgid "Some chat history could not be loaded."
 msgstr "Sohbet geçmişinin bir kısmı yüklenemedi."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Bazı günler saat sınırlarının dışında kalıyor. Bunları elle veya Jira'da düzeltin; kaydetme devre dışı."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Bazı dosyalar kabul edilen türde değil ve eklenmedi."
@@ -17948,9 +17879,6 @@ msgstr "Bağlı kalma (yenileme token'ları)"
 
 msgid "Steer"
 msgstr "Yönlendir"
-
-msgid "Step"
-msgstr "Adım"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Görevler ve projeler"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Paradev'de oluşturulan görevler bu Linear takımına eşitlenecek."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Payından çok daha fazla süre alan görevler:"
+msgid "Tasks without worklogs"
+msgstr "Süre kaydı olmayan görevler"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Görevler, CLI ve ajanlar bunu izler. Her üye kendi Linear hesabını kullanır."
@@ -18921,9 +18849,6 @@ msgstr "Yeni ajan, atlanan mesajları gerektiğinde okuyabilir."
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Yeni ajan, araçlar dahil tüm konuşmaya devam eder."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "Yeni Bugün görünümü sizi bekleyen ajanları, kontrol edilecek çalıştırmaları, incelemelerinizi ve sürenizi gösterir."
-
 msgid "The overnight shift"
 msgstr "Gece vardiyası"
 
@@ -19226,6 +19151,9 @@ msgstr "Bu ortamda depo yok. Ayarlar'da depoları olan bir ortam oluşturun, ard
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Bu ortamın depoları sabittir; değiştirmek için bir çalışma alanını yeniden yükseltin"
+
+msgid "This field must be completed in Jira."
+msgstr "Bu alan Jira’da doldurulmalıdır."
 
 msgid "this file"
 msgstr "bu dosya"
@@ -19552,12 +19480,6 @@ msgstr "Kaydedilen süre"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Bu Jira sitesinde süre takibi kapalı."
 
-msgid "Time zone: {timeZone}"
-msgstr "Saat dilimi: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Zaman çizelgesi önerileri"
-
 msgid "Tinted"
 msgstr "Renkli"
 
@@ -19596,6 +19518,9 @@ msgstr "Bugün"
 
 msgid "TODAY"
 msgstr "BUGÜN"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Bugün, süre kaydı olmayan görevleri 7, 30 ve 90 günlük filtrelerle listeler. Sayfayı Fork Ayarları’ndan gösterebilir veya gizleyebilirsiniz."
 
 msgid "Todo"
 msgstr "Yapılacak"
@@ -20220,6 +20145,9 @@ msgstr "App Store'dan güncelle"
 msgid "Update it with the same tool you used to install it."
 msgstr "Yüklerken kullandığınız aracın aynısıyla güncelleyin."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "İş başladığında veya bir pull request açıldığında Jira’yı güncelle."
+
 msgid "Update naming instructions"
 msgstr "Adlandırma yönergelerini güncelle"
 
@@ -20269,6 +20197,9 @@ msgstr "Güncelleme: {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Güncelleme {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Son {days} gün içinde güncellendi."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

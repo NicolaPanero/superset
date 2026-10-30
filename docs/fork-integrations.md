@@ -205,13 +205,21 @@ does not exist on that day is refused. **Workflow statuses** on the Jira
 connection chooses, per project, the statuses for "work started" and "pull
 request opened" instead of matching status names.
 
-Timesheet proposals are off by default (**Timesheet proposals** on the Jira
-connection). When on, **Today** prepares a proposal only on request: tasks you
-closed without time and tasks still in progress (from the day they first moved
-to an in-progress status), spread over working days below the daily minimum,
-in steps, with sequential start times that skip lunch. Italian public holidays
-and your days off are excluded, existing time is kept. Nothing is logged until
-you confirm, and no automation can prepare or send a proposal.
+**Today** lists your assigned in-progress and completed tasks with no worklogs.
+The 7d, 30d and 90d filters use the issue's last update date. Results are paginated;
+opening a row shows the task detail, where **Log time** remains available.
+**Show Today** in Settings hides the sidebar entry and redirects direct visits
+when disabled. The preference is saved on this computer.
+
+Hour proposals and bulk proposal posting have been removed. Legacy proposal
+endpoints retain their input/output shapes for older clients, but refuse all
+requests before contacting Jira. Saved settings cannot re-enable them.
+
+Transitions with screen fields open a form even when Jira marks every field as
+optional: workflow validators can still require these fields. Text areas are
+sent as Atlassian Document Format, multiple choices as option arrays. Jira's
+validation errors show readable field names; unsupported complex fields link
+to Jira for completion.
 
 ## OAuth broker protocol, version 1
 

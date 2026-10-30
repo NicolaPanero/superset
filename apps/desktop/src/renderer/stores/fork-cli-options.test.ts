@@ -33,6 +33,7 @@ test("hydration accepts only an explicit true flag and drops unrelated saved dat
 	expect(partialize(hydrated)).toEqual({
 		hideCliOptions: false,
 		hideProFeatures: true,
+		showToday: true,
 	});
 	expect(typeof hydrated.setShowCliOptions).toBe("function");
 });
@@ -72,6 +73,16 @@ test("rehydration migrates the previous persisted CLI preference", async () => {
 		expect(saved.state).toEqual({
 			hideCliOptions: !showCliOptions,
 			hideProFeatures: true,
+			showToday: true,
 		});
 	}
+});
+
+test("Today defaults on for old profiles and a hidden choice survives rehydration", async () => {
+	const { merge } = useForkCliOptionsStore.persist.getOptions();
+	expect(merge?.({}, useForkCliOptionsStore.getState()).showToday).toBe(true);
+	useForkCliOptionsStore.getState().setShowToday(false);
+	await useForkCliOptionsStore.persist.rehydrate();
+	expect(useForkCliOptionsStore.getState().showToday).toBe(false);
+	useForkCliOptionsStore.getState().setShowToday(true);
 });

@@ -1208,9 +1208,6 @@ msgstr "{seconds} s"
 msgid "{seconds}s ago"
 msgstr "{seconds}s geleden"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} registraties · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} geselecteerd"
 
@@ -1641,9 +1638,6 @@ msgstr "Er draait nog een proces in deze terminal"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Een prompt, een paar triggers en een werkruimte per run"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "Een voorstel voor werkdagen onder het minimum, op basis van taken die je zonder tijd hebt gesloten en taken die nog bezig zijn. Er gaat niets naar Jira tot je bevestigt. Zonder datums: de laatste 30 dagen."
 
 msgid "A pull request always gets its own worktree"
 msgstr "Een pull request krijgt altijd een eigen worktree"
@@ -4090,9 +4084,6 @@ msgstr "Kies hoe bestandspaden openen bij Cmd+klik in de terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Kies MCP-servers voor dit bericht"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "Kies de statussen waarnaar Superset een issue verplaatst wanneer het werk begint en wanneer een pull request wordt geopend. Zonder keuze zoekt het naar een status met een naam als “review”."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Kies wat je uit de ingebouwde browser wilt wissen."
 
@@ -4716,8 +4707,8 @@ msgstr "Voltooi de autorisatie in je browser."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Voltooi de stappen van de officiële CLI en sluit dit venster om het resultaat te controleren."
 
-msgid "Complete the required fields to change status."
-msgstr "Vul de verplichte velden in om de status te wijzigen."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Vul de overgangsvelden in en bevestig de statuswijziging."
 
 msgid "Completed"
 msgstr "Afgerond"
@@ -6335,26 +6326,14 @@ msgstr "Datumbereik"
 msgid "Day"
 msgstr "Dag"
 
-msgid "Day ends"
-msgstr "Einde van de dag"
-
 msgid "Day One"
 msgstr "Dag één"
-
-msgid "Day starts"
-msgstr "Begin dag"
 
 msgid "days"
 msgstr "dagen"
 
 msgid "Days"
 msgstr "Dagen"
-
-msgid "Days already full:"
-msgstr "Dagen die al vol zijn:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "Vrije dagen (één per regel, YYYY-MM-DD of YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "dagen met drie agents tegelijk"
@@ -9566,9 +9545,6 @@ msgstr "In een paar maanden tijd draaien <0>tienduizenden engineers</0> Paradev 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Op kantoor in San Francisco, vijf dagen per week. Je werkt direct samen met de oprichters."
 
-msgid "in progress"
-msgstr "in behandeling"
-
 msgid "In progress"
 msgstr "In uitvoering"
 
@@ -9605,12 +9581,6 @@ msgstr "Ingebouwde browser"
 
 msgid "In-app PR merge"
 msgstr "PR's mergen in de app"
-
-msgid "Include"
-msgstr "Opnemen"
-
-msgid "Include tasks still in progress"
-msgstr "Taken opnemen die nog bezig zijn"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Neem het Linear-ticket-id uit de prompt op in de branchnaam (bijv. bin-344-fix-login). Geef branches het voorvoegsel fix/ of feat/ op basis van de taak."
@@ -9987,9 +9957,6 @@ msgstr "De verbinding herstelt zich vanzelf zodra de machine terug is. Trek omla
 msgid "Italic"
 msgstr "Cursief"
 
-msgid "Italy"
-msgstr "Italië"
-
 msgid "Item"
 msgstr "Item"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira-issues"
 
 msgid "Jira project"
 msgstr "Jira-project"
-
-msgid "Jira project key"
-msgstr "Jira-projectsleutel"
 
 msgid "Jira triage"
 msgstr "Jira-triage"
@@ -10783,14 +10747,8 @@ msgstr "Tijd registreren"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Registreer tijd op een Jira-issue vanuit de details, met je tijd van vandaag en de geschiedenis van de issue."
 
-msgid "Logged"
-msgstr "Geregistreerd"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Geregistreerd als {account} · {timeZone}. De resterende schatting verandert niet."
-
-msgid "Logged today: {total}"
-msgstr "Vandaag geregistreerd: {total}"
 
 msgid "Login unverified"
 msgstr "Aanmelding niet geverifieerd"
@@ -10852,12 +10810,6 @@ msgstr "Laag"
 
 msgid "Low severity"
 msgstr "Lage ernst"
-
-msgid "Lunch ends"
-msgstr "Einde lunch"
-
-msgid "Lunch starts"
-msgstr "Begin lunch"
 
 msgid "Machine resources"
 msgstr "Machineresources"
@@ -11033,9 +10985,6 @@ msgstr "Max"
 
 msgid "Maximum"
 msgstr "Maximaal"
-
-msgid "Maximum hours a day"
-msgstr "Maximum aantal uren per dag"
 
 msgid "Maximum reasoning effort"
 msgstr "Maximale redeneerinspanning"
@@ -11248,9 +11197,6 @@ msgstr "GitHub-issues minimaliseren"
 msgid "Minimum contrast"
 msgstr "Minimumcontrast"
 
-msgid "Minimum hours a day"
-msgstr "Minimaal aantal uren per dag"
-
 msgid "missed"
 msgstr "gemist"
 
@@ -11320,12 +11266,6 @@ msgstr "Gebruikte modellen"
 
 msgid "Moderate reasoning effort"
 msgstr "Gemiddelde redeneerinspanning"
-
-msgid "Module field (optional)"
-msgstr "Modulveld (optioneel)"
-
-msgid "Modules (comma separated)"
-msgstr "Modules (gescheiden door komma's)"
 
 msgid "Mon"
 msgstr "Ma"
@@ -12365,6 +12305,9 @@ msgstr "Geen taken gevonden."
 msgid "No tasks in this project yet."
 msgstr "Dit project heeft nog geen taken."
 
+msgid "No tasks without worklogs in this period."
+msgstr "Geen taken zonder geregistreerde tijd in deze periode."
+
 msgid "No tasks yet"
 msgstr "Nog geen taken"
 
@@ -12594,9 +12537,6 @@ msgstr "Er draait niets"
 msgid "Nothing to check."
 msgstr "Niets te controleren."
 
-msgid "Nothing to propose in this period."
-msgstr "Niets voor te stellen in deze periode."
-
 msgid "Nothing was missed"
 msgstr "Er is niets gemist"
 
@@ -12664,9 +12604,6 @@ msgstr "van alle tokens"
 
 msgid "Off"
 msgstr "Uit"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Standaard uit. Als dit aan staat, kan de weergave Vandaag, alleen als u erom vraagt, een voorstel voor worklogs voorbereiden voor werkdagen onder het minimum. Er wordt niets geregistreerd zonder uw bevestiging en geen enkele automatisering kan het voorbereiden of versturen."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Uit. Koopt meer GB-uren wanneer ze opraken."
@@ -14609,12 +14546,6 @@ msgstr "Prompts die je verstuurt verschijnen hier."
 msgid "Properties"
 msgstr "Eigenschappen"
 
-msgid "Propose hours"
-msgstr "Uren voorstellen"
-
-msgid "Propose hours for my timesheet"
-msgstr "Uren voorstellen voor mijn urenstaat"
-
 msgid "Provide either id or slug"
 msgstr "Geef een id of een slug op"
 
@@ -14630,9 +14561,6 @@ msgstr "PR's per week"
 
 msgid "Public"
 msgstr "Openbaar"
-
-msgid "Public holidays"
-msgstr "Feestdagen"
 
 msgid "Public leaderboard"
 msgstr "Openbare ranglijst"
@@ -15116,9 +15044,6 @@ msgstr "Opnieuw genereren"
 
 msgid "Region"
 msgstr "Regio"
-
-msgid "Register on Jira"
-msgstr "Registreren in Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Registreert lifecycle-hooks in de globale configuratie van deze agent zodat Paradev status kan tonen en meldingen kan sturen. Uitzetten verwijdert de items van Paradev overal — status en meldingen stoppen voor deze agent, ook binnen Paradev."
@@ -16621,6 +16546,9 @@ msgstr "Kies een editor in het dropdownmenu"
 msgid "Select an environment"
 msgstr "Selecteer een omgeving"
 
+msgid "Select an option"
+msgstr "Selecteer een optie"
+
 msgid "Select an organization"
 msgstr "Kies een organisatie"
 
@@ -17203,8 +17131,14 @@ msgstr "Tekst tonen"
 msgid "Show the prompt"
 msgstr "Prompt tonen"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Toon de pagina Vandaag in de zijbalk."
+
 msgid "Show the triggering payload"
 msgstr "Activerende payload tonen"
+
+msgid "Show Today"
+msgstr "Vandaag tonen"
 
 msgid "Show translation"
 msgstr "Vertaling tonen"
@@ -17506,9 +17440,6 @@ msgstr "Sommige agentspecifieke metadata konden niet worden overgedragen."
 
 msgid "Some chat history could not be loaded."
 msgstr "Een deel van de chatgeschiedenis kon niet worden geladen."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Sommige dagen blijven buiten de urenlimieten. Corrigeer ze handmatig of in Jira; registreren is uitgeschakeld."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Sommige bestanden hebben geen toegestaan type en zijn niet toegevoegd."
@@ -17948,9 +17879,6 @@ msgstr "Verbonden blijven (refresh-tokens)"
 
 msgid "Steer"
 msgstr "Bijsturen"
-
-msgid "Step"
-msgstr "Stap"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Taken en projecten"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Taken die in Paradev worden gemaakt, worden naar dit Linear-team gesynchroniseerd."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Taken met veel meer tijd dan hun aandeel:"
+msgid "Tasks without worklogs"
+msgstr "Taken zonder geregistreerde tijd"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Taken, de CLI en agents volgen dit. Elk lid gebruikt een eigen Linear-account."
@@ -18921,9 +18849,6 @@ msgstr "De nieuwe agent kan de weggelaten berichten lezen wanneer dat nodig is."
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "De nieuwe agent hervat het hele gesprek, inclusief tools."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "De nieuwe weergave Vandaag toont de agents die op je wachten, de te controleren runs, je reviews en je tijd."
-
 msgid "The overnight shift"
 msgstr "De nachtploeg"
 
@@ -19226,6 +19151,9 @@ msgstr "Deze omgeving heeft geen repository's. Maak in Instellingen een omgeving
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "De repositories van deze omgeving liggen vast; promoveer opnieuw een werkruimte om ze te wijzigen"
+
+msgid "This field must be completed in Jira."
+msgstr "Dit veld moet in Jira worden ingevuld."
 
 msgid "this file"
 msgstr "dit bestand"
@@ -19552,12 +19480,6 @@ msgstr "Geregistreerde tijd"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Tijdregistratie is uitgeschakeld op deze Jira-site."
 
-msgid "Time zone: {timeZone}"
-msgstr "Tijdzone: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Urenstaatvoorstellen"
-
 msgid "Tinted"
 msgstr "Getint"
 
@@ -19596,6 +19518,9 @@ msgstr "Vandaag"
 
 msgid "TODAY"
 msgstr "VANDAAG"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Vandaag toont taken zonder geregistreerde tijd met filters voor 7, 30 en 90 dagen. Toon of verberg de pagina in de Fork-instellingen."
 
 msgid "Todo"
 msgstr "Te doen"
@@ -20220,6 +20145,9 @@ msgstr "Bijwerken in de App Store"
 msgid "Update it with the same tool you used to install it."
 msgstr "Werk het bij met hetzelfde hulpprogramma waarmee u het hebt geïnstalleerd."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "Werk Jira bij wanneer het werk begint of een pull request wordt geopend."
+
 msgid "Update naming instructions"
 msgstr "Naamgevingsinstructies bijwerken"
 
@@ -20269,6 +20197,9 @@ msgstr "Bijgewerkt {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Bijgewerkt {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Bijgewerkt in de afgelopen {days} dagen."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

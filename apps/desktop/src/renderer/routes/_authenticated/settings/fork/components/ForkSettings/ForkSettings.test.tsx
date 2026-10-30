@@ -42,7 +42,11 @@ test("Fork Settings restores Pro UI and persists independent hide preferences", 
 	const saved = JSON.parse(
 		localStorage.getItem("superset-fork-cli-options") ?? "{}",
 	);
-	expect(saved.state).toEqual({ hideCliOptions: true, hideProFeatures: false });
+	expect(saved.state).toEqual({
+		hideCliOptions: true,
+		hideProFeatures: false,
+		showToday: true,
+	});
 	fireEvent.click(pro);
 	expect(view.queryByText("Paid action")).toBeNull();
 });
@@ -57,7 +61,7 @@ test("settings search offers Fork Settings and omits hidden Pro sections", () =>
 		true,
 		true,
 	);
-	expect(hidden.fork).toBe(7);
+	expect(hidden.fork).toBe(8);
 	expect(hidden.billing).toBeUndefined();
 	expect(hidden.teams).toBeUndefined();
 	expect(hidden.mobile).toBeUndefined();

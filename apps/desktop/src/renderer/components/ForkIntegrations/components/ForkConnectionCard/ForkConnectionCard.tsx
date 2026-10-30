@@ -22,7 +22,6 @@ import { useForkConnections } from "../../hooks/useForkConnections";
 import { useForkGithubDiscovery } from "../../hooks/useForkGithubDiscovery";
 import { ForkGithubCliSetup } from "./components/ForkGithubCliSetup";
 import { ForkJiraStatusMapping } from "./components/ForkJiraStatusMapping";
-import { ForkTimesheetSettings } from "./components/ForkTimesheetSettings";
 
 export function ForkConnectionCard({
 	provider,
@@ -442,9 +441,6 @@ export function ForkConnectionCard({
 			)}
 			{provider === "jira" && current?.enabled && (data?.version ?? 0) >= 8 && (
 				<ForkJiraStatusMapping connectionId={current.id} />
-			)}
-			{provider === "jira" && current?.enabled && (data?.version ?? 0) >= 9 && (
-				<ForkTimesheetSettings connectionId={current.id} />
 			)}
 			{confirmation && (
 				<div className="mt-4 space-y-3 rounded-lg border bg-muted/20 p-4 text-sm sm:ml-13">

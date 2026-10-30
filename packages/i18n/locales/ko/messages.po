@@ -1208,9 +1208,6 @@ msgstr "{seconds}초"
 msgid "{seconds}s ago"
 msgstr "{seconds}초 전"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount}개 항목 · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount}개 선택됨"
 
@@ -1641,9 +1638,6 @@ msgstr "이 터미널에서 프로세스가 아직 실행 중입니다"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "프롬프트, 몇 가지 트리거, 그리고 실행마다 워크스페이스"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "최소 시간에 못 미치는 근무일에 대해, 시간 기록 없이 완료한 작업과 아직 진행 중인 작업으로 제안을 만듭니다. 확인하기 전에는 Jira에 아무것도 보내지 않습니다. 날짜가 없으면: 최근 30일."
 
 msgid "A pull request always gets its own worktree"
 msgstr "풀 리퀘스트는 항상 자체 worktree를 갖습니다"
@@ -4090,9 +4084,6 @@ msgstr "터미널에서 Cmd+클릭할 때 파일 경로를 여는 방식을 선�
 msgid "Choose MCP servers for this message"
 msgstr "이 메시지에 사용할 MCP 서버 선택"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "작업이 시작될 때와 풀 리퀘스트가 열릴 때 Superset이 이슈를 옮길 상태를 선택하세요. 선택하지 않으면 “review”와 비슷한 이름의 상태를 찾습니다."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "인앱 브라우저에서 삭제할 항목을 선택하세요."
 
@@ -4716,8 +4707,8 @@ msgstr "브라우저에서 인증을 완료하세요."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "공식 CLI 절차를 완료한 뒤 이 창을 닫아 결과를 확인하세요."
 
-msgid "Complete the required fields to change status."
-msgstr "상태를 변경하려면 필수 필드를 입력하세요."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "전환 필드를 입력한 다음 상태 변경을 확인하세요."
 
 msgid "Completed"
 msgstr "완료"
@@ -6335,26 +6326,14 @@ msgstr "기간"
 msgid "Day"
 msgstr "일"
 
-msgid "Day ends"
-msgstr "하루 종료 시각"
-
 msgid "Day One"
 msgstr "데이 원"
-
-msgid "Day starts"
-msgstr "업무 시작"
 
 msgid "days"
 msgstr "일"
 
 msgid "Days"
 msgstr "요일"
-
-msgid "Days already full:"
-msgstr "이미 채워진 날:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "휴가(한 줄에 하나, YYYY-MM-DD 또는 YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "에이전트 세 개를 동시에 돌린 일수"
@@ -9566,9 +9545,6 @@ msgstr "몇 달 만에 <0>수만 명의 엔지니어</0>가 Wix, DoorDash, Netfl
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "샌프란시스코 사무실에서 주 5일 근무합니다. 창업자와 직접 함께 일합니다."
 
-msgid "in progress"
-msgstr "진행 중"
-
 msgid "In progress"
 msgstr "진행 중"
 
@@ -9605,12 +9581,6 @@ msgstr "앱 내 브라우저"
 
 msgid "In-app PR merge"
 msgstr "앱 내 PR 머지"
-
-msgid "Include"
-msgstr "포함"
-
-msgid "Include tasks still in progress"
-msgstr "아직 진행 중인 작업 포함"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "프롬프트에 있는 Linear 티켓 id를 브랜치 이름에 포함하세요 (예: bin-344-fix-login). 작업에 따라 브랜치 이름 앞에 fix/ 또는 feat/를 붙이세요."
@@ -9987,9 +9957,6 @@ msgstr "컴퓨터가 돌아오면 자동으로 다시 연결됩니다. 당겨서
 msgid "Italic"
 msgstr "기울임꼴"
 
-msgid "Italy"
-msgstr "이탈리아"
-
 msgid "Item"
 msgstr "항목"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira 이슈"
 
 msgid "Jira project"
 msgstr "Jira 프로젝트"
-
-msgid "Jira project key"
-msgstr "Jira 프로젝트 키"
 
 msgid "Jira triage"
 msgstr "Jira 분류"
@@ -10783,14 +10747,8 @@ msgstr "시간 기록"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Jira 이슈 세부 정보에서 오늘의 내 시간과 이슈 기록을 보며 시간을 기록합니다."
 
-msgid "Logged"
-msgstr "기록됨"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account}(으)로 기록 · {timeZone}. 남은 추정 시간은 변경되지 않습니다."
-
-msgid "Logged today: {total}"
-msgstr "오늘 기록: {total}"
 
 msgid "Login unverified"
 msgstr "로그인 미확인"
@@ -10852,12 +10810,6 @@ msgstr "낮음"
 
 msgid "Low severity"
 msgstr "심각도 낮음"
-
-msgid "Lunch ends"
-msgstr "점심 종료"
-
-msgid "Lunch starts"
-msgstr "점심 시작"
 
 msgid "Machine resources"
 msgstr "머신 리소스"
@@ -11033,9 +10985,6 @@ msgstr "최대"
 
 msgid "Maximum"
 msgstr "최대"
-
-msgid "Maximum hours a day"
-msgstr "하루 최대 시간"
 
 msgid "Maximum reasoning effort"
 msgstr "최대 추론"
@@ -11248,9 +11197,6 @@ msgstr "GitHub 이슈 최소화"
 msgid "Minimum contrast"
 msgstr "최소 대비"
 
-msgid "Minimum hours a day"
-msgstr "하루 최소 시간"
-
 msgid "missed"
 msgstr "놓침"
 
@@ -11320,12 +11266,6 @@ msgstr "사용한 모델"
 
 msgid "Moderate reasoning effort"
 msgstr "적당한 추론"
-
-msgid "Module field (optional)"
-msgstr "모듈 필드(선택 사항)"
-
-msgid "Modules (comma separated)"
-msgstr "모듈(쉼표로 구분)"
 
 msgid "Mon"
 msgstr "월"
@@ -12365,6 +12305,9 @@ msgstr "작업을 찾을 수 없습니다."
 msgid "No tasks in this project yet."
 msgstr "이 프로젝트에는 아직 작업이 없습니다."
 
+msgid "No tasks without worklogs in this period."
+msgstr "이 기간에 작업 시간이 기록되지 않은 작업이 없습니다."
+
 msgid "No tasks yet"
 msgstr "아직 작업이 없습니다"
 
@@ -12594,9 +12537,6 @@ msgstr "실행 중인 항목 없음"
 msgid "Nothing to check."
 msgstr "확인할 항목이 없습니다."
 
-msgid "Nothing to propose in this period."
-msgstr "이 기간에 제안할 항목이 없습니다."
-
 msgid "Nothing was missed"
 msgstr "놓친 실행이 없습니다"
 
@@ -12664,9 +12604,6 @@ msgstr "전체 토큰 대비"
 
 msgid "Off"
 msgstr "끔"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "기본적으로 꺼져 있습니다. 켜면 오늘 보기에서 요청할 때만 최소 시간에 못 미치는 근무일의 작업 로그 제안을 준비할 수 있습니다. 확인 없이는 아무것도 기록되지 않으며, 어떤 자동화도 제안을 준비하거나 보낼 수 없습니다."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "꺼짐. 부족해지면 GB 시간을 더 구매합니다."
@@ -14609,12 +14546,6 @@ msgstr "제출한 프롬프트가 여기에 표시됩니다."
 msgid "Properties"
 msgstr "속성"
 
-msgid "Propose hours"
-msgstr "시간 제안"
-
-msgid "Propose hours for my timesheet"
-msgstr "내 타임시트 시간 제안"
-
 msgid "Provide either id or slug"
 msgstr "id 또는 슬러그 중 하나를 제공하세요"
 
@@ -14630,9 +14561,6 @@ msgstr "주당 PR"
 
 msgid "Public"
 msgstr "공개"
-
-msgid "Public holidays"
-msgstr "공휴일"
 
 msgid "Public leaderboard"
 msgstr "공개 리더보드"
@@ -15116,9 +15044,6 @@ msgstr "다시 생성"
 
 msgid "Region"
 msgstr "리전"
-
-msgid "Register on Jira"
-msgstr "Jira에 등록"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "이 에이전트의 전역 구성에 라이프사이클 훅을 등록해 Paradev가 상태를 표시하고 알림을 보낼 수 있게 합니다. 이 기능을 끄면 모든 곳에서 Paradev의 항목이 제거되며, Paradev 안에서도 이 에이전트의 상태와 알림이 중단됩니다."
@@ -16621,6 +16546,9 @@ msgstr "드롭다운에서 편집기를 선택하세요"
 msgid "Select an environment"
 msgstr "환경을 선택하세요"
 
+msgid "Select an option"
+msgstr "옵션 선택"
+
 msgid "Select an organization"
 msgstr "조직을 선택하세요"
 
@@ -17203,8 +17131,14 @@ msgstr "텍스트 보기"
 msgid "Show the prompt"
 msgstr "프롬프트 보기"
 
+msgid "Show the Today page in the sidebar."
+msgstr "사이드바에 오늘 페이지를 표시합니다."
+
 msgid "Show the triggering payload"
 msgstr "트리거 페이로드 표시"
+
+msgid "Show Today"
+msgstr "오늘 표시"
 
 msgid "Show translation"
 msgstr "번역 보기"
@@ -17506,9 +17440,6 @@ msgstr "일부 에이전트별 메타데이터를 전송하지 못했습니다."
 
 msgid "Some chat history could not be loaded."
 msgstr "일부 채팅 기록을 불러오지 못했습니다."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "일부 날짜가 시간 한도를 벗어났습니다. 직접 또는 Jira에서 수정하세요. 등록이 비활성화되었습니다."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "일부 파일이 허용되지 않는 형식이라 추가되지 않았습니다."
@@ -17948,9 +17879,6 @@ msgstr "연결 유지 (리프레시 토큰)"
 
 msgid "Steer"
 msgstr "방향 전환"
-
-msgid "Step"
-msgstr "단계"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "작업 및 프로젝트"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Paradev에서 만든 작업이 이 Linear 팀으로 동기화됩니다."
 
-msgid "Tasks with much more time than their share:"
-msgstr "할당량보다 시간이 훨씬 많은 작업:"
+msgid "Tasks without worklogs"
+msgstr "작업 시간이 기록되지 않은 작업"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "작업, CLI, 에이전트가 이 설정을 따릅니다. 각 멤버는 자신의 Linear 계정을 사용합니다."
@@ -18921,9 +18849,6 @@ msgstr "새 에이전트는 필요할 때 생략된 메시지를 읽을 수 있�
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "새 에이전트가 도구를 포함한 전체 대화를 이어갑니다."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "새 오늘 보기에서 나를 기다리는 에이전트, 확인할 실행, 내 리뷰, 내 시간을 보여 줍니다."
-
 msgid "The overnight shift"
 msgstr "야간 근무"
 
@@ -19226,6 +19151,9 @@ msgstr "이 환경에는 저장소가 없습니다. 설정에서 저장소가 �
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "이 환경의 리포지토리는 고정되어 있습니다. 변경하려면 워크스페이스를 다시 승격하세요"
+
+msgid "This field must be completed in Jira."
+msgstr "이 필드는 Jira에서 입력해야 합니다."
 
 msgid "this file"
 msgstr "이 파일"
@@ -19552,12 +19480,6 @@ msgstr "기록된 시간"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "이 Jira 사이트에서는 시간 추적이 꺼져 있습니다."
 
-msgid "Time zone: {timeZone}"
-msgstr "시간대: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "타임시트 제안"
-
 msgid "Tinted"
 msgstr "색조"
 
@@ -19596,6 +19518,9 @@ msgstr "오늘"
 
 msgid "TODAY"
 msgstr "오늘"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "오늘에서 작업 시간이 기록되지 않은 작업을 7일, 30일, 90일 필터로 볼 수 있습니다. 포크 설정에서 페이지를 표시하거나 숨기세요."
 
 msgid "Todo"
 msgstr "할 일"
@@ -20220,6 +20145,9 @@ msgstr "App Store에서 업데이트"
 msgid "Update it with the same tool you used to install it."
 msgstr "설치할 때 사용한 것과 같은 도구로 업데이트하세요."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "작업을 시작하거나 풀 리퀘스트를 열 때 Jira를 업데이트합니다."
+
 msgid "Update naming instructions"
 msgstr "이름 지정 지침 업데이트"
 
@@ -20269,6 +20197,9 @@ msgstr "{date} 업데이트"
 
 msgid "Updated {updatedRelative}"
 msgstr "{updatedRelative} 업데이트됨"
+
+msgid "Updated in the last {days} days."
+msgstr "최근 {days}일 동안 업데이트됨."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

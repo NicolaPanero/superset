@@ -1208,9 +1208,6 @@ msgstr "{seconds}秒"
 msgid "{seconds}s ago"
 msgstr "{seconds}秒前"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} 件 · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount}件選択中"
 
@@ -1641,9 +1638,6 @@ msgstr "このターミナルではプロセスがまだ実行中です"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "プロンプトとトリガー、そして実行ごとのワークスペース"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "最低時間に満たない稼働日について、時間を記録せずに完了したタスクと進行中のタスクから提案を作成します。確定するまで Jira には何も送信されません。日付を指定しない場合: 過去30日間。"
 
 msgid "A pull request always gets its own worktree"
 msgstr "プルリクエストには常に専用のワークツリーが作られます"
@@ -4090,9 +4084,6 @@ msgstr "ターミナルでCmd+クリックしたときのファイルパスの�
 msgid "Choose MCP servers for this message"
 msgstr "このメッセージで使うMCPサーバーを選択"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "作業開始時とプルリクエスト作成時に Superset が課題を移動するステータスを選択します。選択しない場合は、「review」のような名前のステータスを探します。"
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "アプリ内ブラウザから消去する項目を選択してください。"
 
@@ -4716,8 +4707,8 @@ msgstr "ブラウザーで認証を完了してください。"
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "公式CLIの手順を完了してから、このウィンドウを閉じて結果を確認してください。"
 
-msgid "Complete the required fields to change status."
-msgstr "状態を変更するには必須項目を入力してください。"
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "遷移フィールドを入力して、ステータス変更を確定してください。"
 
 msgid "Completed"
 msgstr "完了"
@@ -6335,26 +6326,14 @@ msgstr "期間"
 msgid "Day"
 msgstr "日"
 
-msgid "Day ends"
-msgstr "1日の終了時刻"
-
 msgid "Day One"
 msgstr "デイワン"
-
-msgid "Day starts"
-msgstr "始業時刻"
 
 msgid "days"
 msgstr "日"
 
 msgid "Days"
 msgstr "曜日"
-
-msgid "Days already full:"
-msgstr "すでに埋まっている日:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "休暇（1行に1つ、YYYY-MM-DD または YYYY-MM-DD:YYYY-MM-DD）"
 
 msgid "days running three agents at once"
 msgstr "エージェントを同時に3つ動かした日数"
@@ -9566,9 +9545,6 @@ msgstr "わずか数か月で、Wix、DoorDash、Netflixといった企業を含
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "サンフランシスコのオフィスで週5日勤務。創業者と直接一緒に働きます。"
 
-msgid "in progress"
-msgstr "進行中"
-
 msgid "In progress"
 msgstr "作業中"
 
@@ -9605,12 +9581,6 @@ msgstr "アプリ内ブラウザ"
 
 msgid "In-app PR merge"
 msgstr "アプリ内でのPRマージ"
-
-msgid "Include"
-msgstr "含める"
-
-msgid "Include tasks still in progress"
-msgstr "進行中のタスクを含める"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "プロンプトのLinearチケットIDをブランチ名に含める(例: bin-344-fix-login)。タスクに応じてブランチにfix/またはfeat/を付ける。"
@@ -9987,9 +9957,6 @@ msgstr "マシンが復帰すれば自動的に再接続します。引っ張っ
 msgid "Italic"
 msgstr "斜体"
 
-msgid "Italy"
-msgstr "イタリア"
-
 msgid "Item"
 msgstr "Item"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira 課題"
 
 msgid "Jira project"
 msgstr "Jiraプロジェクト"
-
-msgid "Jira project key"
-msgstr "Jira プロジェクトキー"
 
 msgid "Jira triage"
 msgstr "Jira トリアージ"
@@ -10783,14 +10747,8 @@ msgstr "時間を記録"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Jira 課題の詳細から、今日の自分の時間と課題の履歴を見ながら作業時間を記録します。"
 
-msgid "Logged"
-msgstr "記録済み"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account} として記録 · {timeZone}。残り見積もりは変わりません。"
-
-msgid "Logged today: {total}"
-msgstr "今日の記録: {total}"
 
 msgid "Login unverified"
 msgstr "ログイン未確認"
@@ -10852,12 +10810,6 @@ msgstr "低"
 
 msgid "Low severity"
 msgstr "重要度: 低"
-
-msgid "Lunch ends"
-msgstr "昼休み終了"
-
-msgid "Lunch starts"
-msgstr "昼休み開始"
 
 msgid "Machine resources"
 msgstr "マシンリソース"
@@ -11033,9 +10985,6 @@ msgstr "最大"
 
 msgid "Maximum"
 msgstr "最大"
-
-msgid "Maximum hours a day"
-msgstr "1日の最大時間"
 
 msgid "Maximum reasoning effort"
 msgstr "最大限の推論"
@@ -11248,9 +11197,6 @@ msgstr "GitHub issueを最小化"
 msgid "Minimum contrast"
 msgstr "最小コントラスト"
 
-msgid "Minimum hours a day"
-msgstr "1日の最小時間"
-
 msgid "missed"
 msgstr "未実行"
 
@@ -11320,12 +11266,6 @@ msgstr "使用モデル"
 
 msgid "Moderate reasoning effort"
 msgstr "中程度の推論"
-
-msgid "Module field (optional)"
-msgstr "モジュールフィールド（任意）"
-
-msgid "Modules (comma separated)"
-msgstr "モジュール（カンマ区切り）"
 
 msgid "Mon"
 msgstr "月"
@@ -12365,6 +12305,9 @@ msgstr "タスクが見つかりません。"
 msgid "No tasks in this project yet."
 msgstr "このプロジェクトにはまだタスクがありません。"
 
+msgid "No tasks without worklogs in this period."
+msgstr "この期間には作業時間が未記録のタスクはありません。"
+
 msgid "No tasks yet"
 msgstr "タスクはまだありません"
 
@@ -12594,9 +12537,6 @@ msgstr "実行中のものはありません"
 msgid "Nothing to check."
 msgstr "確認するものはありません。"
 
-msgid "Nothing to propose in this period."
-msgstr "この期間に提案するものはありません。"
-
 msgid "Nothing was missed"
 msgstr "未実行はありません"
 
@@ -12664,9 +12604,6 @@ msgstr "全トークン中"
 
 msgid "Off"
 msgstr "オフ"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "既定ではオフです。オンにすると、今日ビューで、依頼したときだけ、最低時間に満たない稼働日の作業ログ案を作成できます。確認なしでは何も記録されず、オートメーションが作成・送信することもできません。"
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "オフ。少なくなると GB 時間を追加購入します。"
@@ -14609,12 +14546,6 @@ msgstr "送信したプロンプトがここに表示されます。"
 msgid "Properties"
 msgstr "プロパティ"
 
-msgid "Propose hours"
-msgstr "時間を提案"
-
-msgid "Propose hours for my timesheet"
-msgstr "タイムシートの時間を提案"
-
 msgid "Provide either id or slug"
 msgstr "idまたはslugのいずれかを指定してください"
 
@@ -14630,9 +14561,6 @@ msgstr "週あたりPR"
 
 msgid "Public"
 msgstr "パブリック"
-
-msgid "Public holidays"
-msgstr "祝日"
 
 msgid "Public leaderboard"
 msgstr "公開リーダーボード"
@@ -15116,9 +15044,6 @@ msgstr "再生成"
 
 msgid "Region"
 msgstr "リージョン"
-
-msgid "Register on Jira"
-msgstr "Jira に登録"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "このエージェントのグローバル設定にライフサイクルフックを登録し、Paradevがステータス表示と通知を行えるようにします。オフにするとParadevのエントリがすべて削除され、Paradev内も含めてこのエージェントのステータスと通知が停止します。"
@@ -16621,6 +16546,9 @@ msgstr "ドロップダウンからエディタを選択してください"
 msgid "Select an environment"
 msgstr "環境を選択してください"
 
+msgid "Select an option"
+msgstr "選択肢を選択"
+
 msgid "Select an organization"
 msgstr "組織を選択"
 
@@ -17203,8 +17131,14 @@ msgstr "テキストを表示"
 msgid "Show the prompt"
 msgstr "プロンプトを表示"
 
+msgid "Show the Today page in the sidebar."
+msgstr "サイドバーに「今日」ページを表示します。"
+
 msgid "Show the triggering payload"
 msgstr "トリガーのペイロードを表示"
+
+msgid "Show Today"
+msgstr "「今日」を表示"
 
 msgid "Show translation"
 msgstr "翻訳を表示"
@@ -17506,9 +17440,6 @@ msgstr "エージェント固有のメタデータの一部を転送できませ
 
 msgid "Some chat history could not be loaded."
 msgstr "一部のチャット履歴を読み込めませんでした。"
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "時間の上限から外れている日があります。手動または Jira で修正してください。登録は無効になっています。"
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "一部のファイルは対応していない形式のため追加されませんでした。"
@@ -17948,9 +17879,6 @@ msgstr "接続の維持(リフレッシュトークン)"
 
 msgid "Steer"
 msgstr "軌道修正"
-
-msgid "Step"
-msgstr "ステップ"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "タスクとプロジェクト"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Paradevで作成したタスクはこのLinearチームに同期されます。"
 
-msgid "Tasks with much more time than their share:"
-msgstr "割り当てより大幅に多い時間のタスク:"
+msgid "Tasks without worklogs"
+msgstr "作業時間が未記録のタスク"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "タスク、CLI、エージェントはこの設定に従います。各メンバーは自分の Linear アカウントを使います。"
@@ -18921,9 +18849,6 @@ msgstr "新しいエージェントは、必要に応じて省略されたメッ
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "新しいエージェントがツールを含む会話全体を再開します。"
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "新しい「今日」ビューには、あなたを待っているエージェント、確認待ちの実行、レビュー、作業時間が表示されます。"
-
 msgid "The overnight shift"
 msgstr "夜間シフト"
 
@@ -19226,6 +19151,9 @@ msgstr "この環境にはリポジトリがありません。設定でリポジ
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "この環境のリポジトリは固定されています。変更するにはワークスペースを再度昇格してください"
+
+msgid "This field must be completed in Jira."
+msgstr "このフィールドはJiraで入力する必要があります。"
 
 msgid "this file"
 msgstr "このファイル"
@@ -19552,12 +19480,6 @@ msgstr "記録済みの時間"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "この Jira サイトでは時間管理がオフになっています。"
 
-msgid "Time zone: {timeZone}"
-msgstr "タイムゾーン: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "タイムシートの提案"
-
 msgid "Tinted"
 msgstr "色合い調整"
 
@@ -19596,6 +19518,9 @@ msgstr "今日"
 
 msgid "TODAY"
 msgstr "現在"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "「今日」に作業時間が未記録のタスクを7日・30日・90日のフィルターで表示します。フォーク設定でページの表示を切り替えられます。"
 
 msgid "Todo"
 msgstr "未着手"
@@ -20220,6 +20145,9 @@ msgstr "App Store でアップデート"
 msgid "Update it with the same tool you used to install it."
 msgstr "インストールに使ったのと同じツールで更新してください。"
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "作業開始時またはプルリクエスト作成時にJiraを更新します。"
+
 msgid "Update naming instructions"
 msgstr "命名指示を更新"
 
@@ -20269,6 +20197,9 @@ msgstr "{date}に更新"
 
 msgid "Updated {updatedRelative}"
 msgstr "{updatedRelative}に更新"
+
+msgid "Updated in the last {days} days."
+msgstr "過去{days}日間に更新。"
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

@@ -1208,9 +1208,6 @@ msgstr "{seconds}s"
 msgid "{seconds}s ago"
 msgstr "{seconds}s ago"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} entries · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "{selectedCount} selected"
 
@@ -1641,9 +1638,6 @@ msgstr "A process is still running in this terminal"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "A prompt, some triggers, and a workspace for each run"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
 
 msgid "A pull request always gets its own worktree"
 msgstr "A pull request always gets its own worktree"
@@ -4090,9 +4084,6 @@ msgstr "Choose how to open file paths when Cmd+clicking in the terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Choose MCP servers for this message"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Choose what to clear from the in-app browser."
 
@@ -4716,8 +4707,8 @@ msgstr "Complete authorization in your browser."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Complete the official CLI flow, then close this window to check the result."
 
-msgid "Complete the required fields to change status."
-msgstr "Complete the required fields to change status."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Complete the transition fields, then confirm the status change."
 
 msgid "Completed"
 msgstr "Completed"
@@ -6335,26 +6326,14 @@ msgstr "Date range"
 msgid "Day"
 msgstr "Day"
 
-msgid "Day ends"
-msgstr "Day ends"
-
 msgid "Day One"
 msgstr "Day One"
-
-msgid "Day starts"
-msgstr "Day starts"
 
 msgid "days"
 msgstr "days"
 
 msgid "Days"
 msgstr "Days"
-
-msgid "Days already full:"
-msgstr "Days already full:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "days running three agents at once"
@@ -9566,9 +9545,6 @@ msgstr "In just a few months, <0>tens of thousands of engineers</0> run Paradev 
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "In person in San Francisco, five days a week. You work directly with the founders."
 
-msgid "in progress"
-msgstr "in progress"
-
 msgid "In progress"
 msgstr "In progress"
 
@@ -9605,12 +9581,6 @@ msgstr "In-app browser"
 
 msgid "In-app PR merge"
 msgstr "In-app PR merge"
-
-msgid "Include"
-msgstr "Include"
-
-msgid "Include tasks still in progress"
-msgstr "Include tasks still in progress"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
@@ -9987,9 +9957,6 @@ msgstr "It will reconnect on its own once the machine is back. Pull to check aga
 msgid "Italic"
 msgstr "Italic"
 
-msgid "Italy"
-msgstr "Italy"
-
 msgid "Item"
 msgstr "Item"
 
@@ -10037,9 +10004,6 @@ msgstr "Jira issues"
 
 msgid "Jira project"
 msgstr "Jira project"
-
-msgid "Jira project key"
-msgstr "Jira project key"
 
 msgid "Jira triage"
 msgstr "Jira triage"
@@ -10783,14 +10747,8 @@ msgstr "Log time"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Log time on a Jira issue from its details, with your time of today and the issue history."
 
-msgid "Logged"
-msgstr "Logged"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Logged as {account} · {timeZone}. The remaining estimate does not change."
-
-msgid "Logged today: {total}"
-msgstr "Logged today: {total}"
 
 msgid "Login unverified"
 msgstr "Login unverified"
@@ -10852,12 +10810,6 @@ msgstr "Low"
 
 msgid "Low severity"
 msgstr "Low severity"
-
-msgid "Lunch ends"
-msgstr "Lunch ends"
-
-msgid "Lunch starts"
-msgstr "Lunch starts"
 
 msgid "Machine resources"
 msgstr "Machine resources"
@@ -11033,9 +10985,6 @@ msgstr "Max"
 
 msgid "Maximum"
 msgstr "Maximum"
-
-msgid "Maximum hours a day"
-msgstr "Maximum hours a day"
 
 msgid "Maximum reasoning effort"
 msgstr "Maximum reasoning effort"
@@ -11248,9 +11197,6 @@ msgstr "Minimize GitHub issues"
 msgid "Minimum contrast"
 msgstr "Minimum contrast"
 
-msgid "Minimum hours a day"
-msgstr "Minimum hours a day"
-
 msgid "missed"
 msgstr "missed"
 
@@ -11320,12 +11266,6 @@ msgstr "Models used"
 
 msgid "Moderate reasoning effort"
 msgstr "Moderate reasoning effort"
-
-msgid "Module field (optional)"
-msgstr "Module field (optional)"
-
-msgid "Modules (comma separated)"
-msgstr "Modules (comma separated)"
 
 msgid "Mon"
 msgstr "Mon"
@@ -12365,6 +12305,9 @@ msgstr "No tasks found."
 msgid "No tasks in this project yet."
 msgstr "No tasks in this project yet."
 
+msgid "No tasks without worklogs in this period."
+msgstr "No tasks without worklogs in this period."
+
 msgid "No tasks yet"
 msgstr "No tasks yet"
 
@@ -12594,9 +12537,6 @@ msgstr "Nothing running"
 msgid "Nothing to check."
 msgstr "Nothing to check."
 
-msgid "Nothing to propose in this period."
-msgstr "Nothing to propose in this period."
-
 msgid "Nothing was missed"
 msgstr "Nothing was missed"
 
@@ -12664,9 +12604,6 @@ msgstr "of all tokens"
 
 msgid "Off"
 msgstr "Off"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Off. Buys more GB-hours when they run low."
@@ -14609,12 +14546,6 @@ msgstr "Prompts you submit will show up here."
 msgid "Properties"
 msgstr "Properties"
 
-msgid "Propose hours"
-msgstr "Propose hours"
-
-msgid "Propose hours for my timesheet"
-msgstr "Propose hours for my timesheet"
-
 msgid "Provide either id or slug"
 msgstr "Provide either id or slug"
 
@@ -14630,9 +14561,6 @@ msgstr "PRs a week"
 
 msgid "Public"
 msgstr "Public"
-
-msgid "Public holidays"
-msgstr "Public holidays"
 
 msgid "Public leaderboard"
 msgstr "Public leaderboard"
@@ -15116,9 +15044,6 @@ msgstr "Regenerate"
 
 msgid "Region"
 msgstr "Region"
-
-msgid "Register on Jira"
-msgstr "Register on Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
@@ -16621,6 +16546,9 @@ msgstr "Select an editor from the dropdown"
 msgid "Select an environment"
 msgstr "Select an environment"
 
+msgid "Select an option"
+msgstr "Select an option"
+
 msgid "Select an organization"
 msgstr "Select an organization"
 
@@ -17203,8 +17131,14 @@ msgstr "Show text"
 msgid "Show the prompt"
 msgstr "Show the prompt"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Show the Today page in the sidebar."
+
 msgid "Show the triggering payload"
 msgstr "Show the triggering payload"
+
+msgid "Show Today"
+msgstr "Show Today"
 
 msgid "Show translation"
 msgstr "Show translation"
@@ -17506,9 +17440,6 @@ msgstr "Some agent-specific metadata could not be transferred."
 
 msgid "Some chat history could not be loaded."
 msgstr "Some chat history could not be loaded."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Some files are not an accepted type and were not added."
@@ -17948,9 +17879,6 @@ msgstr "Stay connected (refresh tokens)"
 
 msgid "Steer"
 msgstr "Steer"
-
-msgid "Step"
-msgstr "Step"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Tasks and projects"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Tasks created in Paradev will be synced to this Linear team."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Tasks with much more time than their share:"
+msgid "Tasks without worklogs"
+msgstr "Tasks without worklogs"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
@@ -18921,9 +18849,6 @@ msgstr "The new agent can read the omitted messages when it needs them."
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "The new agent resumes the whole conversation, tools included."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-
 msgid "The overnight shift"
 msgstr "The overnight shift"
 
@@ -19226,6 +19151,9 @@ msgstr "This environment has no repositories. Create an environment with reposit
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "This environment's repositories are fixed; promote a workspace again to change them"
+
+msgid "This field must be completed in Jira."
+msgstr "This field must be completed in Jira."
 
 msgid "this file"
 msgstr "this file"
@@ -19552,12 +19480,6 @@ msgstr "Time logged"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Time tracking is turned off on this Jira site."
 
-msgid "Time zone: {timeZone}"
-msgstr "Time zone: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Timesheet proposals"
-
 msgid "Tinted"
 msgstr "Tinted"
 
@@ -19596,6 +19518,9 @@ msgstr "Today"
 
 msgid "TODAY"
 msgstr "TODAY"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
 
 msgid "Todo"
 msgstr "Todo"
@@ -20220,6 +20145,9 @@ msgstr "Update in the App Store"
 msgid "Update it with the same tool you used to install it."
 msgstr "Update it with the same tool you used to install it."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "Update Jira when work starts or a pull request opens."
+
 msgid "Update naming instructions"
 msgstr "Update naming instructions"
 
@@ -20269,6 +20197,9 @@ msgstr "Updated {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Updated {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Updated in the last {days} days."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

@@ -1208,9 +1208,6 @@ msgstr "{seconds} giây"
 msgid "{seconds}s ago"
 msgstr "{seconds} giây trước"
 
-msgid "{selectedCount} entries · {selectedDuration}"
-msgstr "{selectedCount} mục · {selectedDuration}"
-
 msgid "{selectedCount} selected"
 msgstr "Đã chọn {selectedCount}"
 
@@ -1641,9 +1638,6 @@ msgstr "Vẫn còn một tiến trình đang chạy trong terminal này"
 
 msgid "A prompt, some triggers, and a workspace for each run"
 msgstr "Một prompt, vài trigger và một workspace cho mỗi lượt chạy"
-
-msgid "A proposal for working days below the minimum, from tasks you closed without time and tasks still in progress. Nothing goes to Jira until you confirm. Without dates: the last 30 days."
-msgstr "Đề xuất cho các ngày làm việc dưới mức tối thiểu, từ các tác vụ bạn đã đóng mà chưa ghi giờ và các tác vụ còn đang làm. Không có gì được gửi lên Jira cho đến khi bạn xác nhận. Không có ngày: 30 ngày gần nhất."
 
 msgid "A pull request always gets its own worktree"
 msgstr "Pull request luôn có worktree riêng"
@@ -4090,9 +4084,6 @@ msgstr "Chọn cách mở đường dẫn tệp khi Cmd+nhấp trong terminal"
 msgid "Choose MCP servers for this message"
 msgstr "Chọn server MCP cho tin nhắn này"
 
-msgid "Choose the statuses Superset moves an issue to when work starts and when a pull request opens. Without a choice, it looks for a status named like “review”."
-msgstr "Chọn các trạng thái mà Superset chuyển issue sang khi bắt đầu làm và khi mở pull request. Nếu không chọn, nó sẽ tìm trạng thái có tên giống “review”."
-
 msgid "Choose what to clear from the in-app browser."
 msgstr "Chọn thứ cần xóa khỏi trình duyệt trong ứng dụng."
 
@@ -4716,8 +4707,8 @@ msgstr "Hoàn tất ủy quyền trong trình duyệt."
 msgid "Complete the official CLI flow, then close this window to check the result."
 msgstr "Hoàn thành quy trình CLI chính thức rồi đóng cửa sổ này để kiểm tra kết quả."
 
-msgid "Complete the required fields to change status."
-msgstr "Điền các trường bắt buộc để đổi trạng thái."
+msgid "Complete the transition fields, then confirm the status change."
+msgstr "Điền các trường chuyển trạng thái, rồi xác nhận thay đổi trạng thái."
 
 msgid "Completed"
 msgstr "Hoàn tất"
@@ -6335,26 +6326,14 @@ msgstr "Khoảng thời gian"
 msgid "Day"
 msgstr "Ngày"
 
-msgid "Day ends"
-msgstr "Kết thúc ngày"
-
 msgid "Day One"
 msgstr "Ngày đầu"
-
-msgid "Day starts"
-msgstr "Bắt đầu ngày"
 
 msgid "days"
 msgstr "ngày"
 
 msgid "Days"
 msgstr "Ngày"
-
-msgid "Days already full:"
-msgstr "Ngày đã đủ giờ:"
-
-msgid "Days off (one per line, YYYY-MM-DD or YYYY-MM-DD:YYYY-MM-DD)"
-msgstr "Ngày nghỉ (mỗi dòng một mục, YYYY-MM-DD hoặc YYYY-MM-DD:YYYY-MM-DD)"
 
 msgid "days running three agents at once"
 msgstr "số ngày chạy ba agent cùng lúc"
@@ -9566,9 +9545,6 @@ msgstr "Chỉ trong vài tháng, <0>hàng chục nghìn kỹ sư</0> dùng Parad
 msgid "In person in San Francisco, five days a week. You work directly with the founders."
 msgstr "Làm việc trực tiếp tại văn phòng San Francisco, năm ngày mỗi tuần. Bạn làm việc trực tiếp với các nhà sáng lập."
 
-msgid "in progress"
-msgstr "đang thực hiện"
-
 msgid "In progress"
 msgstr "Đang làm"
 
@@ -9605,12 +9581,6 @@ msgstr "Trình duyệt trong ứng dụng"
 
 msgid "In-app PR merge"
 msgstr "Merge PR ngay trong ứng dụng"
-
-msgid "Include"
-msgstr "Bao gồm"
-
-msgid "Include tasks still in progress"
-msgstr "Bao gồm tác vụ còn đang làm"
 
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Đưa id ticket Linear từ prompt vào tên nhánh (ví dụ bin-344-fix-login). Thêm tiền tố fix/ hoặc feat/ cho nhánh tùy theo tác vụ."
@@ -9987,9 +9957,6 @@ msgstr "Nó sẽ tự kết nối lại khi máy hoạt động trở lại. Ké
 msgid "Italic"
 msgstr "Nghiêng"
 
-msgid "Italy"
-msgstr "Ý"
-
 msgid "Item"
 msgstr "Item"
 
@@ -10037,9 +10004,6 @@ msgstr "Issue Jira"
 
 msgid "Jira project"
 msgstr "Dự án Jira"
-
-msgid "Jira project key"
-msgstr "Mã dự án Jira"
 
 msgid "Jira triage"
 msgstr "Phân loại Jira"
@@ -10783,14 +10747,8 @@ msgstr "Ghi thời gian"
 msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
 msgstr "Ghi giờ cho issue Jira ngay từ trang chi tiết, kèm thời gian hôm nay của bạn và lịch sử của issue."
 
-msgid "Logged"
-msgstr "Đã ghi"
-
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Ghi nhận bằng {account} · {timeZone}. Ước tính còn lại không thay đổi."
-
-msgid "Logged today: {total}"
-msgstr "Đã ghi hôm nay: {total}"
 
 msgid "Login unverified"
 msgstr "Đăng nhập chưa được xác minh"
@@ -10852,12 +10810,6 @@ msgstr "Thấp"
 
 msgid "Low severity"
 msgstr "Mức độ nghiêm trọng thấp"
-
-msgid "Lunch ends"
-msgstr "Kết thúc nghỉ trưa"
-
-msgid "Lunch starts"
-msgstr "Bắt đầu nghỉ trưa"
 
 msgid "Machine resources"
 msgstr "Tài nguyên máy"
@@ -11033,9 +10985,6 @@ msgstr "Tối đa"
 
 msgid "Maximum"
 msgstr "Tối đa"
-
-msgid "Maximum hours a day"
-msgstr "Số giờ tối đa mỗi ngày"
 
 msgid "Maximum reasoning effort"
 msgstr "Mức suy luận tối đa"
@@ -11248,9 +11197,6 @@ msgstr "Thu nhỏ issue GitHub"
 msgid "Minimum contrast"
 msgstr "Độ tương phản tối thiểu"
 
-msgid "Minimum hours a day"
-msgstr "Số giờ tối thiểu mỗi ngày"
-
 msgid "missed"
 msgstr "bị bỏ lỡ"
 
@@ -11320,12 +11266,6 @@ msgstr "Mô hình đã dùng"
 
 msgid "Moderate reasoning effort"
 msgstr "Mức suy luận vừa phải"
-
-msgid "Module field (optional)"
-msgstr "Trường Module (tùy chọn)"
-
-msgid "Modules (comma separated)"
-msgstr "Module (phân tách bằng dấu phẩy)"
 
 msgid "Mon"
 msgstr "T2"
@@ -12365,6 +12305,9 @@ msgstr "Không tìm thấy tác vụ nào."
 msgid "No tasks in this project yet."
 msgstr "Dự án này chưa có tác vụ nào."
 
+msgid "No tasks without worklogs in this period."
+msgstr "Không có tác vụ chưa ghi nhận thời gian trong giai đoạn này."
+
 msgid "No tasks yet"
 msgstr "Chưa có tác vụ nào"
 
@@ -12594,9 +12537,6 @@ msgstr "Không có gì đang chạy"
 msgid "Nothing to check."
 msgstr "Không có gì cần kiểm tra."
 
-msgid "Nothing to propose in this period."
-msgstr "Không có gì để đề xuất trong khoảng thời gian này."
-
 msgid "Nothing was missed"
 msgstr "Không có lần chạy nào bị bỏ lỡ"
 
@@ -12664,9 +12604,6 @@ msgstr "trên tổng số token"
 
 msgid "Off"
 msgstr "Tắt"
-
-msgid "Off by default. When on, the Today view can prepare, only when you ask, a proposal of worklogs for working days below the minimum. Nothing is logged without your confirmation and no automation can prepare or send it."
-msgstr "Mặc định tắt. Khi bật, chế độ xem Hôm nay có thể chuẩn bị đề xuất worklog cho các ngày làm việc dưới mức tối thiểu, chỉ khi bạn yêu cầu. Không có gì được ghi nhận nếu bạn chưa xác nhận, và không tự động hóa nào có thể chuẩn bị hay gửi đề xuất này."
 
 msgid "Off. Buys more GB-hours when they run low."
 msgstr "Tắt. Mua thêm GB-giờ khi sắp hết."
@@ -14609,12 +14546,6 @@ msgstr "Các prompt bạn gửi sẽ xuất hiện ở đây."
 msgid "Properties"
 msgstr "Thuộc tính"
 
-msgid "Propose hours"
-msgstr "Đề xuất giờ"
-
-msgid "Propose hours for my timesheet"
-msgstr "Đề xuất giờ cho bảng chấm công của tôi"
-
 msgid "Provide either id or slug"
 msgstr "Hãy cung cấp id hoặc slug"
 
@@ -14630,9 +14561,6 @@ msgstr "PR mỗi tuần"
 
 msgid "Public"
 msgstr "Công khai"
-
-msgid "Public holidays"
-msgstr "Ngày lễ"
 
 msgid "Public leaderboard"
 msgstr "Bảng xếp hạng công khai"
@@ -15116,9 +15044,6 @@ msgstr "Tạo lại"
 
 msgid "Region"
 msgstr "Region"
-
-msgid "Register on Jira"
-msgstr "Ghi lên Jira"
 
 msgid "Registers lifecycle hooks in this agent's global config so Paradev can show status and send notifications. Turning this off removes Paradev's entries everywhere — status and notifications stop for this agent, including inside Paradev."
 msgstr "Đăng ký các hook vòng đời vào cấu hình toàn cục của agent này để Paradev hiển thị trạng thái và gửi thông báo. Tắt tùy chọn này sẽ gỡ các mục của Paradev ở mọi nơi — trạng thái và thông báo cho agent này sẽ dừng, kể cả bên trong Paradev."
@@ -16621,6 +16546,9 @@ msgstr "Chọn một editor từ danh sách thả xuống"
 msgid "Select an environment"
 msgstr "Chọn một môi trường"
 
+msgid "Select an option"
+msgstr "Chọn một tùy chọn"
+
 msgid "Select an organization"
 msgstr "Chọn một tổ chức"
 
@@ -17203,8 +17131,14 @@ msgstr "Hiện văn bản"
 msgid "Show the prompt"
 msgstr "Hiện prompt"
 
+msgid "Show the Today page in the sidebar."
+msgstr "Hiển thị trang Hôm nay trong thanh bên."
+
 msgid "Show the triggering payload"
 msgstr "Hiển thị payload kích hoạt"
+
+msgid "Show Today"
+msgstr "Hiển thị Hôm nay"
 
 msgid "Show translation"
 msgstr "Xem bản dịch"
@@ -17506,9 +17440,6 @@ msgstr "Không thể chuyển một số siêu dữ liệu riêng của tác nh�
 
 msgid "Some chat history could not be loaded."
 msgstr "Không thể tải một phần lịch sử trò chuyện."
-
-msgid "Some days stay outside the hour limits. Fix them by hand or in Jira; registering is disabled."
-msgstr "Một số ngày nằm ngoài giới hạn giờ. Hãy sửa thủ công hoặc trong Jira; chức năng ghi đã bị tắt."
 
 msgid "Some files are not an accepted type and were not added."
 msgstr "Một số tệp không thuộc loại được chấp nhận nên không được thêm."
@@ -17948,9 +17879,6 @@ msgstr "Duy trì kết nối (refresh token)"
 
 msgid "Steer"
 msgstr "Dừng và gửi"
-
-msgid "Step"
-msgstr "Bước"
 
 #. placeholder {0}: step === "workspace" ? 1 : 2
 msgid "Step {0} of 2"
@@ -18436,8 +18364,8 @@ msgstr "Tác vụ và dự án"
 msgid "Tasks created in Paradev will be synced to this Linear team."
 msgstr "Tác vụ tạo trong Paradev sẽ được đồng bộ sang nhóm Linear này."
 
-msgid "Tasks with much more time than their share:"
-msgstr "Tác vụ có thời gian vượt xa phần của chúng:"
+msgid "Tasks without worklogs"
+msgstr "Tác vụ chưa ghi nhận thời gian"
 
 msgid "Tasks, the CLI and agents follow this. Each member uses their own Linear account."
 msgstr "Công việc, CLI và agent làm theo thiết lập này. Mỗi thành viên dùng tài khoản Linear của riêng mình."
@@ -18921,9 +18849,6 @@ msgstr "Tác nhân mới có thể đọc các tin nhắn bị lược bỏ khi 
 msgid "The new agent resumes the whole conversation, tools included."
 msgstr "Tác tử mới tiếp tục toàn bộ cuộc trò chuyện, kể cả công cụ."
 
-msgid "The new Today view shows the agents waiting for you, the runs to check, your reviews and your time."
-msgstr "Chế độ xem Hôm nay mới hiển thị các agent đang chờ bạn, các lần chạy cần kiểm tra, các review của bạn và thời gian của bạn."
-
 msgid "The overnight shift"
 msgstr "Ca đêm"
 
@@ -19226,6 +19151,9 @@ msgstr "Environment này không có repository nào. Hãy tạo một environmen
 
 msgid "This environment's repositories are fixed; promote a workspace again to change them"
 msgstr "Các repository của environment này đã cố định; hãy promote lại một workspace để thay đổi"
+
+msgid "This field must be completed in Jira."
+msgstr "Trường này phải được điền trong Jira."
 
 msgid "this file"
 msgstr "tệp này"
@@ -19552,12 +19480,6 @@ msgstr "Thời gian đã ghi"
 msgid "Time tracking is turned off on this Jira site."
 msgstr "Theo dõi thời gian đang tắt trên site Jira này."
 
-msgid "Time zone: {timeZone}"
-msgstr "Múi giờ: {timeZone}"
-
-msgid "Timesheet proposals"
-msgstr "Đề xuất bảng chấm công"
-
 msgid "Tinted"
 msgstr "Phủ màu"
 
@@ -19596,6 +19518,9 @@ msgstr "Hôm nay"
 
 msgid "TODAY"
 msgstr "HÔM NAY"
+
+msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
+msgstr "Hôm nay liệt kê các tác vụ chưa ghi nhận thời gian với bộ lọc 7, 30 và 90 ngày. Hiển thị hoặc ẩn trang trong Cài đặt fork."
 
 msgid "Todo"
 msgstr "Cần làm"
@@ -20220,6 +20145,9 @@ msgstr "Cập nhật trên App Store"
 msgid "Update it with the same tool you used to install it."
 msgstr "Hãy cập nhật bằng chính công cụ bạn đã dùng để cài đặt."
 
+msgid "Update Jira when work starts or a pull request opens."
+msgstr "Cập nhật Jira khi bắt đầu công việc hoặc mở pull request."
+
 msgid "Update naming instructions"
 msgstr "Cập nhật quy tắc đặt tên"
 
@@ -20269,6 +20197,9 @@ msgstr "Cập nhật {date}"
 
 msgid "Updated {updatedRelative}"
 msgstr "Cập nhật {updatedRelative}"
+
+msgid "Updated in the last {days} days."
+msgstr "Được cập nhật trong {days} ngày qua."
 
 #. placeholder {0}: previousVersion ?? "?"
 msgid "Updated just now from {0}."

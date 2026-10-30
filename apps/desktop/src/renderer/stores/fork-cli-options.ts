@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface ForkCliOptions {
+	showToday: boolean;
+	setShowToday: (show: boolean) => void;
 	hideCliOptions: boolean;
 	hideProFeatures: boolean;
 	showCliOptions: boolean;
@@ -12,6 +14,8 @@ interface ForkCliOptions {
 export const useForkCliOptionsStore = create<ForkCliOptions>()(
 	persist(
 		(set) => ({
+			showToday: true,
+			setShowToday: (showToday) => set({ showToday }),
 			hideCliOptions: true,
 			hideProFeatures: true,
 			showCliOptions: false,
@@ -25,7 +29,8 @@ export const useForkCliOptionsStore = create<ForkCliOptions>()(
 			name: "superset-fork-cli-options",
 			version: 1,
 			migrate: (saved) => saved,
-			partialize: ({ hideCliOptions, hideProFeatures }) => ({
+			partialize: ({ hideCliOptions, hideProFeatures, showToday }) => ({
+				showToday,
 				hideCliOptions,
 				hideProFeatures,
 			}),
@@ -37,6 +42,7 @@ export const useForkCliOptionsStore = create<ForkCliOptions>()(
 						: !("showCliOptions" in flags && flags.showCliOptions === true);
 				return {
 					...current,
+					showToday: !("showToday" in flags && flags.showToday === false),
 					hideCliOptions,
 					showCliOptions: !hideCliOptions,
 					hideProFeatures: !(

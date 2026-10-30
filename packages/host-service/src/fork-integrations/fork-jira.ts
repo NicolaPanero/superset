@@ -3,6 +3,10 @@ import { TRPCError } from "@trpc/server";
 import { type AdfNode, adfToMarkdown, markdownToAdf } from "./fork-adf";
 import type { ForkApi } from "./fork-api";
 import type { ForkJiraStatusMapping } from "./fork-jira-status-mapping";
+import {
+	forkJiraTransitionError,
+	forkJiraTransitionFields,
+} from "./fork-jira-transition-fields";
 import type { ForkTaskProvider } from "./fork-provider";
 import type { ForkPage } from "./fork-scm";
 
@@ -185,7 +189,7 @@ export class ForkJiraProvider implements ForkTaskProvider {
 					{
 						name: string;
 						required: boolean;
-						schema?: { type: string; items?: string };
+						schema?: { type: string; items?: string; custom?: string };
 						allowedValues?: { id?: string; name?: string; value?: string }[];
 					}
 				>;
@@ -377,12 +381,22 @@ export class ForkJiraProvider implements ForkTaskProvider {
 		fields: Record<string, unknown>,
 	) {
 		this.assert(id);
-		await this.api.request(
-			id,
-			`/rest/api/3/issue/${encodeURIComponent(key)}/transitions`,
-			"POST",
-			{ transition: { id: transitionId }, fields },
-		);
+		const metadata =
+			(await this.transitions(id, key)).find((t) => t.id === transitionId)
+				?.fields ?? [];
+		try {
+			await this.api.request(
+				id,
+				`/rest/api/3/issue/${encodeURIComponent(key)}/transitions`,
+				"POST",
+				{
+					transition: { id: transitionId },
+					fields: forkJiraTransitionFields(fields, metadata),
+				},
+			);
+		} catch (error) {
+			throw forkJiraTransitionError(error, metadata);
+		}
 		return this.get(id, key);
 	}
 	async comment(id: string, key: string, body: string) {

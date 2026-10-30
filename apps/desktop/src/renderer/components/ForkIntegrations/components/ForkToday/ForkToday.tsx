@@ -2,11 +2,11 @@ import { Trans } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { useForkConnections } from "../../hooks/useForkConnections";
 import { required } from "../../utils/required";
 import { ForkAutomationRuns } from "../ForkAutomationRuns";
-import { ForkTodayTime } from "./components/ForkTodayTime";
+import { ForkUnloggedTasks } from "./components/ForkUnloggedTasks";
 
 function Section({
 	title,
@@ -28,6 +28,7 @@ function Section({
 export function ForkToday() {
 	const { client, hostUrl, data, connections } = useForkConnections();
 	const navigate = useNavigate();
+	const [days, setDays] = useState<7 | 30 | 90>(30);
 	const version = data?.version ?? 0;
 	const jira = connections.filter((c) => c.provider === "jira" && c.enabled);
 	const projects = useQuery({
@@ -129,10 +130,32 @@ export function ForkToday() {
 					</Button>
 				</Section>
 				{version >= 8 && jira.length > 0 && (
-					<Section title={<Trans>Time</Trans>}>
+					<Section title={<Trans>Tasks without worklogs</Trans>}>
+						<div className="flex flex-wrap items-center justify-between gap-3">
+							<p className="text-xs text-muted-foreground">
+								<Trans>Updated in the last {days} days.</Trans>
+							</p>
+							<div className="flex gap-1 rounded-lg border bg-muted/20 p-1">
+								{([7, 30, 90] as const).map((value) => (
+									<Button
+										key={value}
+										size="sm"
+										variant={days === value ? "secondary" : "ghost"}
+										aria-pressed={days === value}
+										onClick={() => setDays(value)}
+									>
+										{value}d
+									</Button>
+								))}
+							</div>
+						</div>
 						<div className="space-y-3">
 							{jira.map((connection) => (
-								<ForkTodayTime key={connection.id} connection={connection} />
+								<ForkUnloggedTasks
+									key={connection.id}
+									connection={connection}
+									days={days}
+								/>
 							))}
 						</div>
 					</Section>
