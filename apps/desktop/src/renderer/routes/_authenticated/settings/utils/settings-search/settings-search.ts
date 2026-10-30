@@ -94,6 +94,9 @@ export const SETTING_ITEM_ID = {
 	PROJECT_SPARSE_CHECKOUT: "project-sparse-checkout",
 	PROJECT_IMPORT_WORKTREES: "project-import-worktrees",
 
+	ORGANIZATION_PLUGIN_SOURCES: "organization-plugin-sources",
+	ORGANIZATION_PLUGIN_ACCESS: "organization-plugin-access",
+
 	API_KEYS_LIST: "api-keys-list",
 	API_KEYS_GENERATE: "api-keys-generate",
 
@@ -252,6 +255,9 @@ export const SETTING_ITEM_VARIANT: Record<SettingItemId, SettingVariant> = {
 	[SETTING_ITEM_ID.PROJECT_WORKTREE_LOCATION]: "shared",
 	[SETTING_ITEM_ID.PROJECT_SPARSE_CHECKOUT]: "v2",
 	[SETTING_ITEM_ID.PROJECT_IMPORT_WORKTREES]: "v1",
+
+	[SETTING_ITEM_ID.ORGANIZATION_PLUGIN_SOURCES]: "shared",
+	[SETTING_ITEM_ID.ORGANIZATION_PLUGIN_ACCESS]: "shared",
 
 	[SETTING_ITEM_ID.API_KEYS_LIST]: "shared",
 	[SETTING_ITEM_ID.API_KEYS_GENERATE]: "shared",
@@ -1712,6 +1718,36 @@ export const SETTINGS_ITEMS: SettingsItem[] = [
 		],
 	},
 	{
+		id: SETTING_ITEM_ID.ORGANIZATION_PLUGIN_SOURCES,
+		section: "plugins",
+		title: "Plugin Sources",
+		description: "GitHub repositories your organization's plugins sync from",
+		keywords: [
+			"plugins",
+			"marketplace",
+			"repository",
+			"github",
+			"source",
+			"sync",
+			"organization",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.ORGANIZATION_PLUGIN_ACCESS,
+		section: "plugins",
+		title: "Organization Plugins",
+		description: "Choose which roles can install each organization plugin",
+		keywords: [
+			"plugins",
+			"roles",
+			"access",
+			"policy",
+			"install",
+			"members",
+			"admins",
+		],
+	},
+	{
 		id: SETTING_ITEM_ID.API_KEYS_LIST,
 		section: "apikeys",
 		title: "API Keys",
@@ -2121,12 +2157,14 @@ export function getVisibleMatchCountBySection(
 	cloudWorkspaces: boolean,
 	mobileEnabled = false,
 	acpChatFlag = false,
+	pluginsVisible = false,
 ): Partial<Record<SettingsSection, number>> {
 	const matches = searchSettings(query).filter(
 		(item) =>
 			isItemOffered(item, isV2, cloudWorkspaces) &&
 			(item.section !== "mobile" || mobileEnabled) &&
-			(item.id !== SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT || acpChatFlag),
+			(item.id !== SETTING_ITEM_ID.EXPERIMENTAL_ACP_CHAT || acpChatFlag) &&
+			(item.section !== "plugins" || pluginsVisible),
 	);
 	const counts: Partial<Record<SettingsSection, number>> = {};
 	for (const item of matches) {

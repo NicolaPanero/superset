@@ -409,6 +409,7 @@ msgstr "{0} a créé ce canal le {created}."
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} développeurs sont classés selon leur usage des agents. Vos 30 derniers jours sont déjà comptabilisés, simplement masqués. Uniquement le nombre de tokens et les noms de modèles, aucun nom de dépôt, chemin de fichier ni prompt."
 
+#. placeholder {0}: displayName(name)
 #. placeholder {0}: variables.name
 msgid "{0} disabled"
 msgstr "{0} désactivé"
@@ -998,6 +999,9 @@ msgstr "{kind} · par {author}"
 
 msgid "{kindLabel} theme"
 msgstr "Thème {kindLabel}"
+
+msgid "{label} access to {pluginName}"
+msgstr "Accès {label} à {pluginName}"
 
 msgid "{level} · {gate} · {statusLabel}"
 msgstr "{level} · {gate} · {statusLabel}"
@@ -1988,6 +1992,9 @@ msgstr "Ajoutez un prompt, par ex. cherche les crashs dans $sentry"
 msgid "Add reaction…"
 msgstr "Ajouter une réaction…"
 
+msgid "Add repository"
+msgstr "Ajouter un dépôt"
+
 msgid "Add script"
 msgstr "Ajouter un script"
 
@@ -2051,6 +2058,9 @@ msgstr "Ajoutez votre premier projet"
 msgid "Add your own terminal agent to this device."
 msgstr "Ajoutez votre propre agent de terminal sur cet appareil."
 
+msgid "Added {added}"
+msgstr "{added} ajouté"
+
 msgid "Added {added} files to {where}"
 msgstr "{added} fichiers ajoutés à {where}"
 
@@ -2069,6 +2079,9 @@ msgstr "Ajouté à la saisie de l'agent"
 #. placeholder {0}: COMPANY.DOMAIN
 msgid "Adding people to {organizationName} needs a paid plan. Your organization's plan is managed by its owner at {0}."
 msgstr "Ajouter des personnes à {organizationName} nécessite un forfait payant. Le forfait de votre organisation est géré par son propriétaire sur {0}."
+
+msgid "Adding..."
+msgstr "Ajout..."
 
 msgid "Address Comments with Agent"
 msgstr "Traiter les commentaires avec un agent"
@@ -3130,6 +3143,13 @@ msgstr "Chaîne autonome du ticket à la pull request"
 msgid "Available"
 msgstr "Disponible"
 
+msgctxt "plugin access"
+msgid "Available"
+msgstr "Disponible"
+
+msgid "Available plugins show on each role's Plugins page. Installed plugins are installed for everyone in the role, who can disable but not remove them."
+msgstr "Les plugins disponibles apparaissent sur la page Plugins de chaque rôle. Les plugins installés sont installés pour tous les membres du rôle, qui peuvent les désactiver mais pas les supprimer."
+
 msgid "Available when the agent is idle."
 msgstr "Disponible quand l'agent est inactif."
 
@@ -3404,6 +3424,9 @@ msgstr "Le nom de la branche n'est pas disponible"
 
 msgid "Branch names cannot end with a space."
 msgstr "Les noms de branche ne peuvent pas se terminer par un espace."
+
+msgid "Branch or tag (optional)"
+msgstr "Branche ou tag (facultatif)"
 
 msgid "Branch prefix"
 msgstr "Préfixe de branche"
@@ -4878,6 +4901,10 @@ msgstr "Connectez-vous pour agir sur les pull requests en votre nom plutôt qu'a
 msgid "Connect your {pluginLabel} account, then reload this page."
 msgstr "Connectez votre compte {pluginLabel}, puis rechargez cette page."
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourceNeedsGithub"
+msgstr "Connectez votre compte GitHub pour ajouter un dépôt ; les synchronisations le lisent avec votre compte"
+
 msgid "Connect your GitHub account to load this pull request as you."
 msgstr "Connectez votre compte GitHub pour charger cette pull request en votre nom."
 
@@ -5321,6 +5348,9 @@ msgstr "Coût pour vous : 0 $"
 msgid "Could not add agent"
 msgstr "Impossible d’ajouter l’agent"
 
+msgid "Could not add repository"
+msgstr "Impossible d'ajouter le dépôt"
+
 msgid "Could not answer the agent"
 msgstr "Impossible de répondre à l'agent"
 
@@ -5338,6 +5368,9 @@ msgstr "Impossible de changer le mode"
 
 msgid "Could not change the shared version"
 msgstr "Impossible de changer la version partagée"
+
+msgid "Could not change who gets this plugin"
+msgstr "Impossible de changer qui reçoit ce plugin"
 
 msgid "Could not change who has access"
 msgstr "Impossible de modifier les personnes ayant accès"
@@ -5380,6 +5413,9 @@ msgstr "Impossible de supprimer le fichier"
 
 msgid "Could not delete this page"
 msgstr "Impossible de supprimer cette page"
+
+msgid "Could not disable plugin"
+msgstr "Impossible de désactiver le plugin"
 
 msgid "Could not disconnect."
 msgstr "Impossible de déconnecter."
@@ -5499,6 +5535,9 @@ msgstr "Impossible d'enregistrer l'environnement"
 msgid "Could not remove access"
 msgstr "Impossible de retirer l’accès"
 
+msgid "Could not remove repository"
+msgstr "Impossible de supprimer le dépôt"
+
 msgid "Could not rename the session"
 msgstr "Impossible de renommer la session"
 
@@ -5567,6 +5606,9 @@ msgstr "Impossible d'arrêter la surveillance"
 
 msgid "Could not submit prompt. Try again."
 msgstr "Impossible de soumettre le prompt. Réessayez."
+
+msgid "Could not sync"
+msgstr "Impossible de synchroniser"
 
 msgid "Could not take a screenshot"
 msgstr "Impossible de prendre une capture d'écran"
@@ -6341,6 +6383,9 @@ msgstr "Par défaut ({fallback})"
 msgid "Default base for new workspaces. Override per-workspace at creation."
 msgstr "Base par défaut des nouveaux espaces de travail. Modifiable à leur création."
 
+msgid "Default branch"
+msgstr "Branche par défaut"
+
 msgid "Default effort"
 msgstr "Effort par défaut"
 
@@ -6763,6 +6808,9 @@ msgstr "Mode direct"
 
 msgid "Directory"
 msgstr "Répertoire"
+
+msgid "Disable"
+msgstr "Désactiver"
 
 msgid "Disable skill"
 msgstr "Désactiver la compétence"
@@ -8861,6 +8909,9 @@ msgstr "Limite de requêtes GitHub atteinte"
 msgid "GitHub refused the merge"
 msgstr "GitHub a refusé la fusion"
 
+msgid "GitHub repositories with a plugin marketplace file. Superset syncs their plugins into your organization."
+msgstr "Dépôts GitHub contenant un fichier de marketplace de plugins. Superset synchronise leurs plugins dans votre organisation."
+
 msgid "GitHub sign-in needed"
 msgstr "Connexion à GitHub requise"
 
@@ -8887,6 +8938,9 @@ msgstr "Donne-moi un exemple"
 
 msgid "Give your key a descriptive name to remember where it's used."
 msgstr "Donnez à votre clé un nom explicite pour vous rappeler où elle est utilisée."
+
+msgid "Give your organization its own plugins from a GitHub repository. You choose who gets each one."
+msgstr "Donnez à votre organisation ses propres plugins depuis un dépôt GitHub. Vous choisissez qui reçoit chacun."
 
 msgid "Globe"
 msgstr "Globe"
@@ -9703,6 +9757,13 @@ msgstr "Installez, autorisez et cadrez les serveurs MCP sur tous vos espaces de 
 msgid "Install."
 msgstr "Installez."
 
+msgctxt "plugin access"
+msgid "Installed"
+msgstr "Installé"
+
+msgid "Installed by your organization"
+msgstr "Installé par votre organisation"
+
 msgid "Installed on {appAccountLogin}"
 msgstr "Installée sur {appAccountLogin}"
 
@@ -9946,6 +10007,9 @@ msgstr "Ses comptes connectés ont été déconnectés."
 
 msgid "Its own branch and copy of the files"
 msgstr "Sa propre branche et sa propre copie des fichiers"
+
+msgid "Its plugins appear when the sync finishes."
+msgstr "Ses plugins apparaissent à la fin de la synchronisation."
 
 msgid "Its replies go with it."
 msgstr "Ses réponses seront aussi supprimées."
@@ -11975,6 +12039,9 @@ msgstr "Aucune ligne de journal pour l’instant"
 msgid "no logins"
 msgstr "aucun identifiant"
 
+msgid "No longer in source"
+msgstr "Plus dans la source"
+
 msgid "No match"
 msgstr "Aucune correspondance"
 
@@ -12084,6 +12151,9 @@ msgstr "Aucun plugin disponible pour le moment."
 msgid "No plugins match \"{0}\""
 msgstr "Aucun plugin ne correspond à \"{0}\""
 
+msgid "No plugins yet. Add a repository to sync them."
+msgstr "Aucun plugin pour l'instant. Ajoutez un dépôt pour les synchroniser."
+
 msgid "No posts yet."
 msgstr "Aucun article pour l'instant."
 
@@ -12164,6 +12234,9 @@ msgstr "Aucun dépôt trouvé."
 
 msgid "No repositories found. Make sure your GitHub App has access to repositories."
 msgstr "Aucun dépôt trouvé. Vérifiez que votre GitHub App a accès à des dépôts."
+
+msgid "No repositories yet."
+msgstr "Aucun dépôt pour l'instant."
 
 msgid "No results"
 msgstr "Aucun résultat"
@@ -12447,6 +12520,9 @@ msgstr "Non connecté"
 msgid "not sorted"
 msgstr "non trié"
 
+msgid "Not synced yet"
+msgstr "Pas encore synchronisé"
+
 msgctxt "agent status"
 msgid "Not updating"
 msgstr "Pas de mise à jour"
@@ -12715,6 +12791,9 @@ msgstr "Seul son créateur ou un administrateur de l'organisation peut modifier 
 
 msgid "Only on this machine: gitignored, and applied to every worktree of this repository. Any key set here replaces the shared one."
 msgstr "Uniquement sur cette machine : ignoré par git et appliqué à chaque worktree de ce dépôt. Toute clé définie ici remplace la clé partagée."
+
+msgid "Only organization owners and admins can manage plugins."
+msgstr "Seuls les propriétaires et administrateurs de l'organisation peuvent gérer les plugins."
 
 msgid "Only organization owners can modify these settings."
 msgstr "Seuls les propriétaires de l'organisation peuvent modifier ces paramètres."
@@ -13350,6 +13429,9 @@ msgstr "Organisation introuvable"
 msgid "Organization not found."
 msgstr "Organisation introuvable."
 
+msgid "Organization plugins"
+msgstr "Plugins de l'organisation"
+
 msgid "Organization slug"
 msgstr "Slug de l'organisation"
 
@@ -13777,6 +13859,9 @@ msgstr "Collez ceci dans la CLI Paradev :"
 msgid "Path"
 msgstr "Chemin"
 
+msgid "Path (optional)"
+msgstr "Chemin (facultatif)"
+
 msgid "Path copied"
 msgstr "Chemin copié"
 
@@ -13927,6 +14012,9 @@ msgstr "Choisissez un emplacement de projet"
 msgid "Pick a reason"
 msgstr "Choisissez un motif"
 
+msgid "Pick a repository with a plugin marketplace file. Superset syncs its plugins now and each time you sync again."
+msgstr "Choisissez un dépôt contenant un fichier de marketplace de plugins. Superset synchronise ses plugins maintenant et à chaque nouvelle synchronisation."
+
 msgid "Pick a sound or add your own. Custom audio supports .mp3, .wav, and .ogg."
 msgstr "Choisissez un son ou ajoutez le vôtre. Les sons personnalisés acceptent .mp3, .wav et .ogg."
 
@@ -14049,6 +14137,9 @@ msgstr "Veuillez sélectionner une organisation"
 
 msgid "Please try again, or restart Paradev on that device."
 msgstr "Réessayez ou redémarrez Paradev sur cet appareil."
+
+msgid "Plugin"
+msgstr "Plugin"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.noApiKeyAuth"
@@ -14924,6 +15015,9 @@ msgstr "Réduire les animations"
 msgid "Reduce Transparency"
 msgstr "Réduire la transparence"
 
+msgid "Ref {ref} · Path {path}"
+msgstr "Réf. {ref} · Chemin {path}"
+
 msgid "Referenced, not demoed"
 msgstr "Référencés, sans démo"
 
@@ -15054,6 +15148,7 @@ msgid "Remove"
 msgstr "Retirer"
 
 #. placeholder {0}: member.name
+#. placeholder {0}: source.repo
 msgid "Remove {0}"
 msgstr "Retirer {0}"
 
@@ -15065,6 +15160,9 @@ msgstr "Retirer {label} ?"
 
 msgid "Remove {name}"
 msgstr "Retirer {name}"
+
+msgid "Remove {repo}? Every plugin synced from it is removed from your organization and from every member who has it installed."
+msgstr "Supprimer {repo} ? Tous les plugins synchronisés depuis ce dépôt sont retirés de votre organisation et de chaque membre qui les a installés."
 
 msgid "Remove attachment"
 msgstr "Retirer la pièce jointe"
@@ -15113,6 +15211,9 @@ msgstr "Retirer le lien de la PR"
 
 msgid "Remove queued message"
 msgstr "Retirer le message de la file"
+
+msgid "Remove repository"
+msgstr "Supprimer le dépôt"
 
 msgid "Remove script"
 msgstr "Retirer le script"
@@ -15329,6 +15430,12 @@ msgstr "Dépôts : {label}"
 
 msgid "Repository"
 msgstr "Dépôt"
+
+msgid "Repository removed"
+msgstr "Dépôt supprimé"
+
+msgid "Repository root"
+msgstr "Racine du dépôt"
 
 msgid "Repository URL or path"
 msgstr "URL ou chemin du dépôt"
@@ -16743,6 +16850,9 @@ msgstr "Configurer ce projet pour Paradev"
 msgid "Set up your organization to get started"
 msgstr "Configurez votre organisation pour commencer"
 
+msgid "Setting an installed plugin back to Available keeps everyone's copy; they can then remove it. Unavailable removes it."
+msgstr "Repasser un plugin installé en Disponible laisse sa copie à chacun ; ils peuvent ensuite la supprimer. Indisponible le retire."
+
 msgid "Setting saved"
 msgstr "Paramètre enregistré"
 
@@ -17935,6 +18045,9 @@ msgstr "Superset s'appelle désormais Paradev. Au passage, nous avons levé 11,5
 msgid "Superset Mobile launches on iPhone"
 msgstr "Superset Mobile arrive sur iPhone"
 
+msgid "Superset reads it with your connected GitHub account. Connect one in <0>Settings › Integrations</0> if you have not yet."
+msgstr "Superset le lit avec votre compte GitHub connecté. Si ce n'est pas encore fait, connectez-en un dans <0>Paramètres › Intégrations</0>."
+
 msgid "Supervised"
 msgstr "Supervisé"
 
@@ -18066,14 +18179,26 @@ msgstr "Synchronisez les issues dans les deux sens avec Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Paradev and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchronisez les issues dans les deux sens avec Linear. Créez des tâches dans Paradev et retrouvez-les dans Linear, ou importez des issues Linear existantes."
 
+msgid "Sync now"
+msgstr "Synchroniser maintenant"
+
+msgid "Sync plugins from your GitHub repositories and choose who can install them."
+msgstr "Synchronisez des plugins depuis vos dépôts GitHub et choisissez qui peut les installer."
+
 msgid "Sync Repositories"
 msgstr "Synchroniser les dépôts"
 
 msgid "Sync started"
 msgstr "Synchronisation démarrée"
 
+msgid "Synced {syncedAgo}"
+msgstr "Synchronisé {syncedAgo}"
+
 msgid "Syncing..."
 msgstr "Synchronisation..."
+
+msgid "Syncs as @{syncsAs}"
+msgstr "Synchronisé en tant que @{syncsAs}"
 
 msgid "System"
 msgstr "Système"
@@ -18415,6 +18540,10 @@ msgstr "Cette machine n'est plus disponible"
 msgid "That name isn't allowed."
 msgstr "Ce nom n'est pas autorisé."
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.unknownPluginSource"
+msgstr "Cette source de plugins n'existe pas"
+
 msgid "That run is missed and isn't retried. Use Run now to start it later."
 msgstr "Cette exécution est manquée et n'est pas relancée. Utilisez Exécuter maintenant pour la lancer plus tard."
 
@@ -18546,6 +18675,9 @@ msgstr "Les premières équipes F4"
 
 msgid "The first teams, small ones, ship majority-agent code without reading every line, and their defect rates hold. Nothing mystical behind it: review layers, canaries, fast rollback, and a habit of writing specifications instead of code."
 msgstr "Les premières équipes, de petite taille, livrent du code majoritairement écrit par des agents sans en lire chaque ligne, et leur taux de défauts tient. Rien de mystique derrière : des couches de revue, des canaries, un rollback rapide et l'habitude d'écrire des spécifications plutôt que du code."
+
+msgid "The folder that holds the marketplace file, if it is not at the root."
+msgstr "Le dossier qui contient le fichier de marketplace, s'il n'est pas à la racine."
 
 msgid "The following folders are not git repositories. Would you like to initialize them?"
 msgstr "Les dossiers suivants ne sont pas des dépôts git. Souhaitez-vous les initialiser ?"
@@ -18683,6 +18815,10 @@ msgstr "Le service hôte Paradev pour {organization} s'est arrêté de façon in
 
 msgid "The Paradev host service stopped unexpectedly ({cause}) and could not be restarted automatically."
 msgstr "Le service hôte Paradev s'est arrêté de façon inattendue ({cause}) et n'a pas pu être redémarré automatiquement."
+
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourcePathOutside"
+msgstr "Le chemin doit rester dans le dépôt"
 
 msgid "The pool resets every month. Usage past it is billed per GB-hour at the rate shown on each plan."
 msgstr "La réserve est remise à zéro chaque mois. L'usage au-delà est facturé par GB-heure au tarif indiqué pour chaque forfait."
@@ -19699,6 +19835,10 @@ msgstr "Exécutions de nuit sans surveillance, fusionnables au matin"
 msgid "Unattended runs of 8 hours or more succeed on a majority of routine tickets without a human unblocking them."
 msgstr "Des exécutions sans surveillance de 8 heures ou plus réussissent sur la majorité des tickets courants, sans qu'un humain les débloque."
 
+msgid "Unavailable"
+msgstr "Indisponible"
+
+msgctxt "plugin access"
 msgid "Unavailable"
 msgstr "Indisponible"
 
@@ -21209,6 +21349,10 @@ msgstr "Votre compte GitHub"
 msgid "Your GitHub account cannot reach a repository in this environment"
 msgstr "Votre compte GitHub ne peut pas accéder à un dépôt de cet environnement"
 
+#. js-lingui-explicit-id
+msgid "serverError.plugins.pluginSourceOutOfReach"
+msgstr "Votre compte GitHub ne peut pas lire {repo}"
+
 msgid "Your GitHub link comes from the account you signed in with, so it shows as verified and cannot be edited here."
 msgstr "Votre lien GitHub provient du compte utilisé pour vous connecter : il s'affiche comme vérifié et ne peut pas être modifié ici."
 
@@ -21221,6 +21365,9 @@ msgstr "Votre nom"
 msgid "Your name <0>(if we use your prompt, we'll credit you in the changelog)</0>"
 msgstr "Votre nom <0>(si nous utilisons votre prompt, nous vous créditerons dans le changelog)</0>"
 
+msgid "Your organization"
+msgstr "Votre organisation"
+
 msgid "Your organization has reached its cloud usage limit. Raise the limit or upgrade in Settings, Billing to start this workspace."
 msgstr "Votre organisation a atteint sa limite d'utilisation du cloud. Relevez la limite ou passez à un forfait supérieur dans Paramètres, Facturation pour démarrer cet espace de travail."
 
@@ -21230,6 +21377,13 @@ msgstr "Votre organisation a atteint sa limite d'environnements ({0}). Archivez 
 
 msgid "Your organization has reached its limit of {reachedLimit} environments. Archive one to make room."
 msgstr "Votre organisation a atteint sa limite de {reachedLimit} environnements. Archivez-en un pour libérer de la place."
+
+#. js-lingui-explicit-id
+msgid "serverError.plugins.managedByOrganization"
+msgstr "Votre organisation installe {plugin} pour vous, il ne peut donc pas être désinstallé. Vous pouvez le désactiver."
+
+msgid "Your organization installs this plugin for you. You can disable it, but not remove it."
+msgstr "Votre organisation installe ce plugin pour vous. Vous pouvez le désactiver, mais pas le supprimer."
 
 msgid "Your organization reached its cloud usage limit. This workspace stops in a few minutes unless the limit is raised."
 msgstr "Votre organisation a atteint sa limite d'utilisation du cloud. Cet espace de travail s'arrêtera dans quelques minutes si la limite n'est pas relevée."

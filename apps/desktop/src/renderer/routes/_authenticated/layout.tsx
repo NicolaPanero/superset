@@ -34,6 +34,7 @@ import { ChannelsRealtime } from "renderer/routes/_authenticated/components/Chan
 import { DaemonAutoUpdateFailureDialog } from "renderer/routes/_authenticated/components/DaemonAutoUpdateFailureDialog";
 import { DiffThemeSync } from "renderer/routes/_authenticated/components/DiffThemeSync";
 import { LeaderboardAutoPublish } from "renderer/routes/_authenticated/components/LeaderboardAutoPublish";
+import { OrganizationPluginSync } from "renderer/routes/_authenticated/components/OrganizationPluginSync";
 import { PendingDeletionScreen } from "renderer/routes/_authenticated/components/PendingDeletionScreen";
 import { PostHogPlanFlags } from "renderer/routes/_authenticated/components/PostHogPlanFlags";
 import { RealtimeNudges } from "renderer/routes/_authenticated/components/RealtimeNudges";
@@ -346,6 +347,7 @@ function AuthenticatedLayout() {
 									<DockBadgeController />
 									<StarNagObserver />
 									<LeaderboardAutoPublish />
+									<OrganizationPluginSync />
 									<RealtimeNudges />
 									<ChannelsRealtime />
 									<DaemonAutoUpdateFailureDialog />
