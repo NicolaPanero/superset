@@ -367,6 +367,11 @@ msgstr "{0} — thiết bị ngoại tuyến"
 msgid "{0} — try the Paradev tray menu > Host Service > Restart."
 msgstr "{0} — hãy thử menu khay Paradev > Dịch vụ host > Khởi động lại."
 
+#. placeholder {0}: window.label
+#. placeholder {1}: formatPercent(window.usedPercent / 100)
+msgid "{0} · {1} used"
+msgstr "{0} · đã dùng {1}"
+
 #. placeholder {0}: host.version
 msgid "{0} · behind"
 msgstr "{0} · cũ"
@@ -1581,6 +1586,9 @@ msgstr "45 tệp · +82 −172"
 msgid "5 days"
 msgstr "5 ngày"
 
+msgid "5-hour limit reached"
+msgstr "Đã đạt giới hạn 5 giờ"
+
 msgid "55 call sites pass {code}"
 msgstr "55 vị trí gọi truyền {code}"
 
@@ -1903,6 +1911,9 @@ msgstr "Thêm cấu hình agent vào đây khi bạn muốn công bố chúng."
 
 msgid "Add agents…"
 msgstr "Thêm agent…"
+
+msgid "Add an account in Usage settings"
+msgstr "Thêm tài khoản trong cài đặt sử dụng"
 
 msgid "add an agent"
 msgstr "thêm một agent"
@@ -3757,6 +3768,9 @@ msgstr "Hủy gói"
 msgid "Cancel reply"
 msgstr "Hủy trả lời"
 
+msgid "Cancel the automatic resume"
+msgstr "Hủy tự động tiếp tục"
+
 msgid "Canceled"
 msgstr "Đã hủy"
 
@@ -5103,6 +5117,12 @@ msgstr "Tiếp tục hoặc fork phiên"
 
 msgid "Continue the session the last run left"
 msgstr "Tiếp tục phiên mà lần chạy trước để lại"
+
+msgid "Continue this chat on another login"
+msgstr "Tiếp tục cuộc trò chuyện này với tài khoản khác"
+
+msgid "Continue this chat once the limit resets"
+msgstr "Tiếp tục cuộc trò chuyện này khi giới hạn được đặt lại"
 
 #. placeholder {0}: connector.displayName
 msgid "Continue to {0}"
@@ -6948,6 +6968,9 @@ msgstr "Bỏ qua đề xuất"
 msgid "Dismiss suggestions"
 msgstr "Bỏ qua gợi ý"
 
+msgid "Dismiss the usage limit notice"
+msgstr "Đóng thông báo giới hạn sử dụng"
+
 msgid "Dismissed"
 msgstr "Đã bỏ qua"
 
@@ -7714,6 +7737,9 @@ msgstr "Rất cao"
 
 msgid "Extra small"
 msgstr "Rất nhỏ"
+
+msgid "Extra usage limit reached"
+msgstr "Đã đạt giới hạn sử dụng thêm"
 
 msgid "Eyes"
 msgstr "Mắt"
@@ -10511,6 +10537,9 @@ msgstr "Xanh chanh"
 
 msgid "Limit access"
 msgstr "Giới hạn quyền truy cập"
+
+msgid "Limit has reset"
+msgstr "Giới hạn đã được đặt lại"
 
 msgid "Limit to {organizationName}?"
 msgstr "Giới hạn trong {organizationName}?"
@@ -14725,6 +14754,9 @@ msgstr "Hàng đợi đã tạm dừng"
 msgid "Queue paused because you interrupted"
 msgstr "Hàng đợi đã tạm dừng vì bạn đã ngắt"
 
+msgid "Queue paused by the usage limit"
+msgstr "Hàng đợi đã tạm dừng do giới hạn sử dụng"
+
 msgid "Queue work for agents"
 msgstr "Xếp việc cho agent"
 
@@ -15742,6 +15774,9 @@ msgstr "Tiếp tục cuộc trò chuyện"
 msgid "Resume args"
 msgstr "Tham số resume"
 
+msgid "Resume at reset"
+msgstr "Tiếp tục khi đặt lại"
+
 msgid "Resume automation"
 msgstr "Tiếp tục tự động hóa"
 
@@ -15751,6 +15786,12 @@ msgstr "Tiếp tục thông báo"
 #. placeholder {0}: candidate.agentLabel
 msgid "Resuming {0}…"
 msgstr "Đang resume {0}…"
+
+msgid "Resuming at reset"
+msgstr "Sẽ tiếp tục khi đặt lại"
+
+msgid "Resuming in {resumeSeconds}s"
+msgstr "Tiếp tục sau {resumeSeconds} giây"
 
 msgid "Resuming the conversation…"
 msgstr "Đang tiếp tục cuộc trò chuyện…"
@@ -17961,6 +18002,9 @@ msgstr "đã dừng"
 msgid "Stopped"
 msgstr "Đã dừng"
 
+msgid "Stopped by the usage limit"
+msgstr "Đã dừng do giới hạn sử dụng"
+
 msgid "Stopping the agent in {what}"
 msgstr "Đang dừng tác nhân trong {what}"
 
@@ -18098,6 +18142,9 @@ msgstr "Bền bỉ"
 
 msgid "Sustain · active days in 30"
 msgstr "Duy trì · số ngày hoạt động trong 30 ngày"
+
+msgid "Switch account"
+msgstr "Chuyển tài khoản"
 
 msgid "Switch agents. Keep your workflow"
 msgstr "Đổi agent. Giữ nguyên quy trình"
@@ -20215,8 +20262,14 @@ msgstr "Mức sử dụng"
 msgid "Usage is out of date"
 msgstr "Dữ liệu sử dụng đã cũ"
 
+msgid "Usage limit reached"
+msgstr "Đã đạt giới hạn sử dụng"
+
 msgid "Usage sections"
 msgstr "Các mục mức sử dụng"
+
+msgid "Usage settings"
+msgstr "Cài đặt sử dụng"
 
 msgid "Usage unavailable."
 msgstr "Không có dữ liệu sử dụng."
@@ -20694,8 +20747,17 @@ msgstr "Hằng tuần"
 msgid "Weekly at {time}"
 msgstr "Hằng tuần lúc {time}"
 
+msgid "Weekly limit reached"
+msgstr "Đã đạt giới hạn hằng tuần"
+
+msgid "Weekly Opus limit reached"
+msgstr "Đã đạt giới hạn hằng tuần của Opus"
+
 msgid "Weekly release notes"
 msgstr "Ghi chú phát hành hằng tuần"
+
+msgid "Weekly Sonnet limit reached"
+msgstr "Đã đạt giới hạn hằng tuần của Sonnet"
 
 msgid "Welcome back"
 msgstr "Chào mừng trở lại"

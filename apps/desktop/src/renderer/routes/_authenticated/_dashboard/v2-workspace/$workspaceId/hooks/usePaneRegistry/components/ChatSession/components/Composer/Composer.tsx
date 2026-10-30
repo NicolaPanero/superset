@@ -123,6 +123,8 @@ export type ComposerProps = {
 	turnRunning?: boolean;
 	terminalId?: string;
 	agentLabel?: string;
+	/** A usage limit holds the chat; its notice sits above the composer. */
+	usageLimited?: boolean;
 };
 
 const HIDDEN_AGENT_COMMANDS = new Set(["rewind"]);
@@ -182,6 +184,7 @@ export const Composer = memo(function Composer({
 	target,
 	turnRunning = false,
 	terminalId,
+	usageLimited = false,
 	workspaceId,
 	sessionId,
 }: ComposerProps) {
@@ -582,7 +585,7 @@ export const Composer = memo(function Composer({
 				useChatComposerStore.getState().markActive(composerId)
 			}
 		>
-			{terminalId && (
+			{!usageLimited && terminalId && (
 				<AccountLimitNotice
 					className={CHAT_COLUMN_CLASSNAME}
 					terminalId={terminalId}

@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { CONTINUE_PROMPT } from "@superset/chat/core";
 import {
 	type DiscoverSessionsResult,
 	type DurableEvent,
@@ -6,6 +7,8 @@ import {
 	type SessionState,
 	sessionStateSchema,
 	type Turn,
+	type UsageLimit,
+	type UsageLimitAction,
 	type UserContent,
 	type UserMessage,
 	wrapHiddenText,
@@ -31,7 +34,21 @@ export type LiveSessionOptions = {
 	checkpoints?: SessionCheckpoints;
 	mintId?: () => string;
 	now?: () => number;
+	/** How long after a usage limit's reset the host waits before continuing. */
+	usageLimitGraceMs?: number;
 };
+
+/** Providers can still refuse right at the reset; give them a moment. */
+export const USAGE_LIMIT_GRACE_MS = 30_000;
+
+/** The most a timer can wait; a reset further out is re-armed when it fires. */
+const MAX_TIMER_MS = 2_147_483_647;
+
+/** Adapters that only see the refusal as an error carry its text. */
+const USAGE_LIMIT_TEXT =
+	/(?:usage|spending|monthly|weekly|daily) limit (?:reached|exceeded)|(?:quota|credits?) (?:exceeded|exhausted|depleted)|insufficient[_ ](?:quota|credits)|hit your (?:usage )?limit|credit balance is too low/i;
+
+const CONTINUE: UserContent[] = [{ type: "text", text: CONTINUE_PROMPT }];
 
 export type PromptResult = {
 	itemId: string;
@@ -44,6 +61,8 @@ export type QueueState = {
 		itemId: string;
 		clientId: string | undefined;
 		content: UserContent[];
+		/** `content` plus the hidden parts it leaves out. */
+		fullContent: UserContent[];
 		queuedAtMs: number;
 	}[];
 };
@@ -64,6 +83,8 @@ export type UnfinishedSession = {
 type PendingPrompt = {
 	item: UserMessage;
 	content: UserContent[];
+	/** The content as the caller gave it, hidden parts included. */
+	typed?: UserContent[];
 	turnId: string;
 	seq: number;
 	snapshotWorktree?: boolean;
@@ -96,6 +117,8 @@ export class LiveSession {
 	private readonly turnAnchors = new Map<string, string>();
 	private steerTarget: string | null = null;
 	private queuePaused = false;
+	private limitedTurnId: string | null = null;
+	private resumeTimer: ReturnType<typeof setTimeout> | null = null;
 	private sessionState: SessionState;
 	private currentTurn: Turn | null = null;
 	private pump: Promise<void> | null = null;
@@ -274,7 +297,8 @@ export class LiveSession {
 			});
 			return { itemId, queued: false };
 		}
-		const queued = this.isBusy();
+		const limited = this.sessionState.usageLimit !== undefined;
+		const queued = this.isBusy() || limited;
 		const item: UserMessage = {
 			id: itemId,
 			kind: "user_message",
@@ -285,8 +309,19 @@ export class LiveSession {
 		};
 		const turnId = this.mintId();
 		if (queued) {
-			this.queue.push({ item, content: sent, turnId, seq, snapshotWorktree });
+			this.queue.push({
+				item,
+				content: sent,
+				typed: content,
+				turnId,
+				seq,
+				snapshotWorktree,
+			});
 			this.appendDurable({ type: "item", item, turnId });
+			if (limited && !this.queuePaused) {
+				this.queuePaused = true;
+				this.emitSession({ queuePaused: true, queuePausedByLimit: true });
+			}
 			if (
 				steerTurnId &&
 				this.currentTurn?.id === steerTurnId &&
@@ -368,22 +403,126 @@ export class LiveSession {
 	get queueState(): QueueState {
 		return {
 			paused: this.queuePaused,
-			prompts: this.queue.map(({ item }) => ({
+			prompts: this.queue.map(({ item, typed }) => ({
 				itemId: item.id,
 				clientId: item.clientId,
 				content: item.content,
+				fullContent: typed ?? item.content,
 				queuedAtMs: item.startedAtMs,
 			})),
 		};
 	}
 
 	resumeQueue(): void {
-		if (!this.queuePaused) return;
+		const limited = this.sessionState.usageLimit !== undefined;
+		if (!this.queuePaused && !limited) return;
+		this.clearResumeTimer();
 		this.queuePaused = false;
-		this.emitSession({ queuePaused: false });
+		this.emitSession({ queuePaused: false, usageLimit: undefined });
 		if (this.currentTurn?.status !== "running" && !this.inFlight()) {
 			this.deliverNextQueued();
 		}
+	}
+
+	/**
+	 * Resuming after a limit continues the work the refusal cut short: the
+	 * next queued prompt if there is one, else a plain "Continue".
+	 */
+	respondToUsageLimit(action: UsageLimitAction): void {
+		const limit = this.sessionState.usageLimit;
+		if (this.stopped || !limit) return;
+		switch (action) {
+			case "resume":
+				this.resumeAfterLimit();
+				return;
+			case "dismiss":
+				this.clearResumeTimer();
+				this.emitSession({ usageLimit: undefined });
+				return;
+			case "resume_at_reset":
+				if (limit.resetsAtMs === undefined) return;
+				this.emitSession({
+					usageLimit: {
+						...limit,
+						resumeAtReset: true,
+						resumesAtMs: limit.resetsAtMs + this.usageLimitGraceMs(),
+					},
+				});
+				this.armResumeTimer(limit.resetsAtMs);
+				return;
+			case "cancel_resume_at_reset": {
+				this.clearResumeTimer();
+				const { resumesAtMs: _cancelled, ...rest } = limit;
+				this.emitSession({ usageLimit: { ...rest, resumeAtReset: false } });
+				return;
+			}
+		}
+	}
+
+	private resumeAfterLimit(): void {
+		const idle = this.currentTurn?.status !== "running" && !this.inFlight();
+		this.resumeQueue();
+		if (idle && this.queue.length === 0 && !this.inFlight()) {
+			this.prompt(CONTINUE, this.mintId());
+		}
+	}
+
+	private usageLimitGraceMs(): number {
+		return this.options.usageLimitGraceMs ?? USAGE_LIMIT_GRACE_MS;
+	}
+
+	private armResumeTimer(resetsAtMs: number): void {
+		this.clearResumeTimer();
+		const grace = this.usageLimitGraceMs();
+		const wait = resetsAtMs + grace - this.now();
+		this.resumeTimer = setTimeout(
+			() => {
+				this.resumeTimer = null;
+				if (this.stopped || !this.sessionState.usageLimit?.resumeAtReset) {
+					return;
+				}
+				if (this.now() < resetsAtMs + grace) {
+					this.armResumeTimer(resetsAtMs);
+					return;
+				}
+				try {
+					this.resumeAfterLimit();
+				} catch (error) {
+					this.fail(error);
+				}
+			},
+			Math.min(Math.max(wait, 0), MAX_TIMER_MS),
+		);
+	}
+
+	private clearResumeTimer(): void {
+		if (this.resumeTimer === null) return;
+		clearTimeout(this.resumeTimer);
+		this.resumeTimer = null;
+	}
+
+	/** A refused turn stops the queue until someone chooses to go on. */
+	private limitReached(limit: UsageLimit): void {
+		this.limitedTurnId = this.currentTurn?.id ?? null;
+		const pausing = this.queue.length > 0 && !this.queuePaused;
+		if (pausing) this.queuePaused = true;
+		this.emitSession({
+			queuePaused: this.queuePaused,
+			usageLimit: limit,
+			...(pausing ? { queuePausedByLimit: true } : {}),
+		});
+	}
+
+	/** A failed turn the limit refused carries the limit's kind, whichever harness reported it. */
+	private withLimitKind(turn: Turn): Turn {
+		if (turn.status !== "failed" || !turn.error) return turn;
+		if (turn.error.kind === "usage_limit") return turn;
+		const limited =
+			turn.id === this.limitedTurnId ||
+			USAGE_LIMIT_TEXT.test(turn.error.message);
+		return limited
+			? { ...turn, error: { ...turn.error, kind: "usage_limit" } }
+			: turn;
 	}
 
 	cancelTurn(turnId?: string, pauseQueue = false): void {
@@ -393,7 +532,7 @@ export class LiveSession {
 			this.discard(capturing);
 			if (pauseQueue && this.queue.length > 0 && !this.queuePaused) {
 				this.queuePaused = true;
-				this.emitSession({ queuePaused: true });
+				this.emitSession({ queuePaused: true, queuePausedByLimit: false });
 				return;
 			}
 			this.emitSession({});
@@ -406,7 +545,7 @@ export class LiveSession {
 		const waiting = this.queue.length + this.pendingSteers.length;
 		if (pauseQueue && !steering && waiting > 0 && !this.queuePaused) {
 			this.queuePaused = true;
-			this.emitSession({ queuePaused: true });
+			this.emitSession({ queuePaused: true, queuePausedByLimit: false });
 		}
 		this.options.adapter.cancelTurn();
 	}
@@ -461,6 +600,7 @@ export class LiveSession {
 	async dispose(): Promise<void> {
 		this.settleStarted(false);
 		this.stopped = true;
+		this.clearResumeTimer();
 		if (this.currentTurn?.status === "running") {
 			this.settleCheckpoint(this.currentTurn.id);
 		}
@@ -477,6 +617,8 @@ export class LiveSession {
 			}
 		} finally {
 			this.settleStarted(false);
+			this.stopped = true;
+			this.clearResumeTimer();
 		}
 	}
 
@@ -501,13 +643,21 @@ export class LiveSession {
 				return;
 			case "turn": {
 				const previous = this.currentTurn;
-				this.currentTurn = this.afterCarriedFailure(event.turn);
+				this.currentTurn = this.withLimitKind(
+					this.afterCarriedFailure(event.turn),
+				);
 				this.appendDurable({ type: "turn", turn: this.currentTurn });
 				if (
 					previous?.id === event.turn.id &&
 					previous.status === event.turn.status
 				)
 					return;
+				const limitText =
+					event.turn.status === "failed" &&
+					USAGE_LIMIT_TEXT.test(event.turn.error?.message ?? "");
+				if (limitText && !this.sessionState.usageLimit) {
+					this.limitReached({ hitAtMs: this.now() });
+				}
 				if (event.turn.status === "running") {
 					this.attributeAwaitingPrompt(event.turn.id);
 					const steered = this.steerTarget;
@@ -523,11 +673,21 @@ export class LiveSession {
 				return;
 			}
 			case "session":
-				if (event.session.status === "dead") this.discardPending();
+				if (event.session.status === "dead") {
+					this.stopped = true;
+					this.clearResumeTimer();
+					this.discardPending();
+				}
 				if (event.session.status && event.session.status !== "starting") {
 					this.settleStarted(event.session.status !== "dead");
 				}
-				this.emitSession(event.session);
+				if (event.session.usageLimit) {
+					const { usageLimit, ...rest } = event.session;
+					this.emitSession(rest);
+					this.limitReached(usageLimit);
+				} else {
+					this.emitSession(event.session);
+				}
 				this.releaseCarriedFailure();
 				this.releaseHeldPrompts();
 				if (event.session.awaitingBackground) this.steerQueueIntoHeldTurn();
@@ -599,7 +759,7 @@ export class LiveSession {
 		this.queue.push(...paused.map((content) => this.queuedPrompt(content)));
 		if (!this.queuePaused) {
 			this.queuePaused = true;
-			this.emitSession({ queuePaused: true });
+			this.emitSession({ queuePaused: true, queuePausedByLimit: false });
 		}
 	}
 
@@ -809,6 +969,7 @@ export class LiveSession {
 	private fail(error: unknown): void {
 		this.settleStarted(false);
 		this.stopped = true;
+		this.clearResumeTimer();
 		const failedAtMs = this.now();
 		const turn = this.currentTurn;
 		if (turn?.status === "running") {

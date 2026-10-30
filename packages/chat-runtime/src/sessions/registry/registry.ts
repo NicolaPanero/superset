@@ -38,6 +38,7 @@ export type LiveSessionRegistryOptions = {
 	checkpoints?: ChatCheckpoints;
 	mintId?: () => string;
 	now?: () => number;
+	usageLimitGraceMs?: number;
 };
 
 function warnOnFailure(work: Promise<unknown>): void {
@@ -157,6 +158,7 @@ export class LiveSessionRegistry {
 				: {}),
 			mintId: this.options.mintId,
 			now: this.options.now,
+			usageLimitGraceMs: this.options.usageLimitGraceMs,
 		});
 		this.live.set(options.sessionId, session);
 		this.observe(() => observer?.started(options));
