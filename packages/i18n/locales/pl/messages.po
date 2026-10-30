@@ -5967,6 +5967,9 @@ msgstr "Nie udało się usunąć pliku z indeksu"
 msgid "Couldn't update pull request"
 msgstr "Nie udało się zaktualizować pull requesta"
 
+msgid "Couldn't update the Chat setting"
+msgstr "Nie udało się zaktualizować ustawienia Chat"
+
 msgid "Couldn't update the queue"
 msgstr "Nie udało się zaktualizować kolejki"
 
@@ -13125,6 +13128,9 @@ msgstr "Otwórz ustawienia administratora ChatGPT"
 
 msgid "Open ChatGPT settings"
 msgstr "Otwórz ustawienia ChatGPT"
+
+msgid "Open Claude and Codex sessions as chats"
+msgstr "Otwieraj sesje Claude i Codex jako czaty"
 
 msgid "Open Claude and Codex sessions in a chat pane instead of a terminal."
 msgstr "Otwieraj sesje Claude i Codex w panelu czatu zamiast w terminalu."

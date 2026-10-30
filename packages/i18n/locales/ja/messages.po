@@ -5967,6 +5967,9 @@ msgstr "ファイルをステージ解除できませんでした"
 msgid "Couldn't update pull request"
 msgstr "プルリクエストを更新できませんでした"
 
+msgid "Couldn't update the Chat setting"
+msgstr "チャットの設定を更新できませんでした"
+
 msgid "Couldn't update the queue"
 msgstr "キューを更新できませんでした"
 
@@ -13125,6 +13128,9 @@ msgstr "ChatGPT の管理者設定を開く"
 
 msgid "Open ChatGPT settings"
 msgstr "ChatGPT の設定を開く"
+
+msgid "Open Claude and Codex sessions as chats"
+msgstr "Claude と Codex のセッションをチャットとして開く"
 
 msgid "Open Claude and Codex sessions in a chat pane instead of a terminal."
 msgstr "Claude と Codex のセッションをターミナルではなくチャットペインで開きます。"

@@ -5967,6 +5967,9 @@ msgstr "파일 스테이징을 해제하지 못했습니다"
 msgid "Couldn't update pull request"
 msgstr "풀 리퀘스트를 업데이트하지 못했습니다"
 
+msgid "Couldn't update the Chat setting"
+msgstr "채팅 설정을 업데이트할 수 없습니다"
+
 msgid "Couldn't update the queue"
 msgstr "대기열을 업데이트할 수 없습니다"
 
@@ -13125,6 +13128,9 @@ msgstr "ChatGPT 관리자 설정 열기"
 
 msgid "Open ChatGPT settings"
 msgstr "ChatGPT 설정 열기"
+
+msgid "Open Claude and Codex sessions as chats"
+msgstr "Claude 및 Codex 세션을 채팅으로 열기"
 
 msgid "Open Claude and Codex sessions in a chat pane instead of a terminal."
 msgstr "Claude 및 Codex 세션을 터미널 대신 채팅 패널에서 엽니다."
