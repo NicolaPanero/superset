@@ -422,7 +422,7 @@ export function ReviewPanel({
 					</div>
 					<div
 						className={cn(
-							"shrink-0 flex items-center gap-1",
+							"min-w-0 flex items-center gap-1",
 							checksStatusConfig.className,
 						)}
 					>
@@ -432,7 +432,10 @@ export function ReviewPanel({
 								checksStatus === "pending" && "animate-spin",
 							)}
 						/>
-						<span className="max-w-[140px] truncate text-[10px] normal-case">
+						<span
+							className="min-w-0 truncate text-[10px] normal-case"
+							title={checksSummary}
+						>
 							{checksSummary}
 						</span>
 					</div>

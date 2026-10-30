@@ -88,7 +88,7 @@ export function ChecksSection({
 				</div>
 				<div
 					className={cn(
-						"flex shrink-0 items-center gap-1",
+						"flex min-w-0 items-center gap-1",
 						checksStatusConfig.className,
 					)}
 				>
@@ -98,7 +98,10 @@ export function ChecksSection({
 							checksStatus === "pending" && "animate-spin",
 						)}
 					/>
-					<span className="max-w-[140px] truncate text-[10px] normal-case">
+					<span
+						className="min-w-0 truncate text-[10px] normal-case"
+						title={checksSummary}
+					>
 						{checksSummary}
 					</span>
 				</div>

@@ -68,7 +68,7 @@ export function LinkedIssuePill({
 					message: `Open task ${title}`,
 				}),
 			})}
-			className="group flex items-center gap-2.5 rounded-md border border-border/50 bg-muted/60 px-3 py-2 text-sm transition-all select-none hover:bg-accent hover:ring-1 hover:ring-border dark:hover:bg-accent/50"
+			className="group flex min-w-0 max-w-full items-center gap-2.5 rounded-md border border-border/50 bg-muted/60 px-3 py-2 text-sm transition-all select-none hover:bg-accent hover:ring-1 hover:ring-border dark:hover:bg-accent/50"
 			style={{ cursor: taskId || url ? "pointer" : "default" }}
 		>
 			<div className="relative flex size-7 shrink-0 items-center justify-center rounded-md bg-foreground/10 p-0.5">
@@ -95,12 +95,10 @@ export function LinkedIssuePill({
 					</span>
 				</Button>
 			</div>
-			<div className="flex flex-col items-start leading-tight">
-				<span className="max-w-[180px] truncate font-medium">
-					{title || slug}
-				</span>
-				<div className="flex items-center gap-1.5 text-muted-foreground text-[10px] uppercase tracking-widest">
-					<span className="max-w-[80px] truncate">{slug}</span>
+			<div className="flex min-w-0 flex-col items-start leading-tight">
+				<span className="max-w-full truncate font-medium">{title || slug}</span>
+				<div className="flex max-w-full items-center gap-1.5 text-muted-foreground text-[10px] uppercase tracking-widest">
+					<span className="min-w-0 truncate">{slug}</span>
 					<span>·</span>
 					<span>{isLinear ? <Trans>Linear</Trans> : <Trans>Task</Trans>}</span>
 				</div>

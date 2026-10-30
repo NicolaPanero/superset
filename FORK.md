@@ -53,6 +53,11 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   collegamento alla PR: una PR di un altro branch non resta quella corrente,
   anche quando era già mergiata.
 
+- Le etichette del repository e del branch nel pannello laterale usano lo spazio
+  disponibile: il branch non è più fermato a 192 px. Anche i branch dei worktree
+  importabili, le issue collegate e i riepiloghi CI si accorciano solo quando
+  non entrano nel contenitore, con il valore completo nel tooltip dove previsto.
+
 - **Settings → Fork → Agent updates** controlla una volta al giorno se ci sono
   versioni nuove dei CLI di Claude Code e Codex (registro npm) e lo segnala con
   un popup in basso a destra, come per gli aggiornamenti di Paradev++: **Update**

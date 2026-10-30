@@ -70,7 +70,7 @@ export function ExternalWorktreesBanner({ projectId }: { projectId: string }) {
 			className="mx-6 mt-6 rounded-lg border border-border/60 bg-card/50 p-4"
 		>
 			<div className="flex items-start justify-between gap-4">
-				<div className="space-y-2 min-w-0">
+				<div className="space-y-2 min-w-0 flex-1">
 					<p className="text-sm font-medium text-foreground">
 						<Plural
 							value={importableWorktrees.length}
@@ -82,10 +82,12 @@ export function ExternalWorktreesBanner({ projectId }: { projectId: string }) {
 						{visibleBranches.map((wt) => (
 							<span
 								key={wt.path}
-								className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground"
+								className="inline-flex min-w-0 max-w-full items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground"
 							>
 								<GoGitBranch className="size-3 shrink-0" />
-								<span className="truncate max-w-[180px]">{wt.branch}</span>
+								<span className="min-w-0 truncate" title={wt.branch}>
+									{wt.branch}
+								</span>
 							</span>
 						))}
 						{remainingCount > 0 && (
