@@ -66,6 +66,7 @@ test("Bitbucket workspace review loads inline comments and routes replies and re
 		credentials: {},
 		forkTransport: fixture.transport,
 		git: async () => ({
+			raw: async () => "feature\n",
 			getRemotes: async () => [
 				{ name: "origin", refs: { fetch: "git@bitbucket.org:team/app.git" } },
 			],

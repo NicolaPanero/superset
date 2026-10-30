@@ -42,10 +42,16 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   invii e mostra le ore di oggi; **Workflow statuses** nella connessione Jira
   sceglie gli stati di avvio lavoro e PR. **Today** raccoglie agenti in attesa,
   run da controllare, review richieste e ore. La proposta del timesheet è
-  spenta di default e parte solo a mano. **Start in workspace**
+  spenta di default e parte solo a mano. Se non trova task senza ore, ripartisce
+  uniformemente le nuove ore sui task in corso già rendicontati, se inclusi,
+  rispettando le date di avvio e i limiti giornalieri. Le ore già registrate
+  restano invariate; l’invio richiede conferma. **Start in workspace**
   passa l’issue all’agente; **Fix findings** fa lo stesso con i commenti aperti
   delle PR Bitbucket. Flusso, limiti e compatibilità sono in
   [docs/fork-integrations.md](docs/fork-integrations.md).
+  I cambi branch fatti da terminale aggiornano anche il workspace e il suo
+  collegamento alla PR: una PR di un altro branch non resta quella corrente,
+  anche quando era già mergiata.
 
 - **Settings → Fork → Agent updates** controlla una volta al giorno se ci sono
   versioni nuove dei CLI di Claude Code e Codex (registro npm) e lo segnala con

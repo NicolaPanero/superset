@@ -6,7 +6,6 @@ import {
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import { forkWorkspacePullRequests } from "../db/fork-schema";
-import { workspaces } from "../db/schema";
 import type {
 	CheckRun,
 	IssueComment,
@@ -14,6 +13,7 @@ import type {
 	PullRequestReviewThread,
 } from "../trpc/router/git/types";
 import type { HostServiceContext } from "../types";
+import { forkReadWorkspaceBranch } from "../workspaces/fork-sync-workspace-branch";
 import { forkScmProjects } from "./fork-projects";
 import { forkServices } from "./fork-services";
 
@@ -21,11 +21,7 @@ export async function forkWorkspaceReviewTarget(
 	ctx: HostServiceContext,
 	workspaceId: string,
 ) {
-	const workspace = ctx.db
-		.select()
-		.from(workspaces)
-		.where(eq(workspaces.id, workspaceId))
-		.get();
+	const workspace = await forkReadWorkspaceBranch(ctx, workspaceId);
 	if (!workspace?.projectId) return null;
 	const [project] = await forkScmProjects(ctx, [workspace.projectId]);
 	if (project?.repository.provider !== "bitbucket") return null;

@@ -140,6 +140,7 @@ export interface WorkspacePullRequestHistory {
 }
 
 export interface PullRequestRuntimeManagerOptions {
+	onBranchChanged?: (workspaceId: string, branch: string) => void;
 	db: HostDb;
 	execGh: ExecGh;
 	git: GitFactory;
@@ -273,6 +274,7 @@ export class PullRequestRuntimeManager {
 		worktreePath: string,
 	) => Promise<WorkspaceRefsSnapshot>;
 	private readonly worktreeExists: (worktreePath: string) => boolean;
+	private readonly onBranchChanged?: PullRequestRuntimeManagerOptions["onBranchChanged"];
 	// Worktrees deleted out from under us (external `rm`, crashed teardown).
 	// While a workspace is listed here, sync attempts cost one existsSync and
 	// spawn no git; the probe timer re-enters the normal sync path when the
@@ -293,6 +295,7 @@ export class PullRequestRuntimeManager {
 			options.readWorkspaceRefs ??
 			(async (worktreePath) => readWorkspaceRefs(await this.git(worktreePath)));
 		this.worktreeExists = options.worktreeExists ?? existsSync;
+		this.onBranchChanged = options.onBranchChanged;
 	}
 
 	start() {
@@ -843,6 +846,9 @@ export class PullRequestRuntimeManager {
 					and(eq(workspaces.id, workspace.id), isNull(workspaces.archivedAt)),
 				)
 				.run();
+
+			if (branch !== workspace.branch)
+				this.onBranchChanged?.(workspace.id, branch);
 
 			return workspace.projectId;
 		} catch (error) {

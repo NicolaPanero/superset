@@ -15,6 +15,7 @@ import { forkExecGh } from "./fork-integrations/fork-exec-gh";
 import { startForkJiraAutomations } from "./fork-integrations/fork-jira-automations";
 import { ForkConnectionStore } from "./fork-integrations/fork-store";
 import { startQuotaRefresh } from "./trpc/router/usage/fork-quota-refresh";
+import { forkPublishWorkspaceBranch } from "./workspaces/fork-sync-workspace-branch";
 
 /** One frame of a 1920x1200 display is ~9 MB; this is a stalled reader, not a burst. */
 const MAX_DISPLAY_BUFFER_BYTES = 32 * 1024 * 1024;
@@ -203,6 +204,8 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	// 5-min sweep, which would otherwise spawn+drain git on the event loop.
 	const resolveGitEnv = forkGitEnvResolver(providers.credentials);
 	const pullRequestRuntime = new PullRequestRuntimeManager({
+		onBranchChanged: (workspaceId, branch) =>
+			forkPublishWorkspaceBranch({ db, eventBus }, workspaceId, branch),
 		db,
 		execGh,
 		git,

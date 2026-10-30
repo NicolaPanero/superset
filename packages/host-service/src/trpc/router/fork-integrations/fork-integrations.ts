@@ -61,6 +61,7 @@ import {
 } from "../../../fork-integrations/fork-timesheet-jira";
 import { forkCreateWorkspacePullRequest } from "../../../fork-integrations/fork-workspace-pull-request";
 import { createGitFactory } from "../../../runtime/git";
+import { forkReadWorkspaceBranch } from "../../../workspaces/fork-sync-workspace-branch";
 import { machineOnlyProcedure, queryProcedure, router } from "../../index";
 import { runAgentInWorkspace } from "../agents";
 import { createFromClone } from "../project/handlers";
@@ -404,11 +405,7 @@ export const forkScmRouter = router({
 	workspace: read
 		.input(z.object({ workspaceId: z.string().uuid() }))
 		.query(async ({ ctx, input }) => {
-			const workspace = ctx.db
-				.select()
-				.from(workspaces)
-				.where(eq(workspaces.id, input.workspaceId))
-				.get();
+			const workspace = await forkReadWorkspaceBranch(ctx, input.workspaceId);
 			const linked =
 				ctx.db
 					.select()

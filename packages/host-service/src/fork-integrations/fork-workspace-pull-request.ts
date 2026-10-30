@@ -9,8 +9,8 @@ import {
 	forkIntegrationBindings,
 	forkWorkspacePullRequests,
 } from "../db/fork-schema";
-import { workspaces } from "../db/schema";
 import type { HostServiceContext } from "../types";
+import { forkReadWorkspaceBranch } from "../workspaces/fork-sync-workspace-branch";
 import {
 	forkAdvanceLinkedTasks,
 	forkLinkedTasks,
@@ -32,12 +32,8 @@ export async function forkCreateWorkspacePullRequest(
 		draft?: boolean;
 	},
 ) {
-	const workspace = ctx.db
-		.select()
-		.from(workspaces)
-		.where(eq(workspaces.id, input.workspaceId))
-		.get();
-	if (!workspace?.projectId || !workspace.branch)
+	const workspace = await forkReadWorkspaceBranch(ctx, input.workspaceId);
+	if (!workspace?.projectId || !workspace.branch || workspace.branch === "HEAD")
 		throw new TRPCError({
 			code: "NOT_FOUND",
 			message: "Workspace not found",
