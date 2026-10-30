@@ -1,11 +1,12 @@
 import { Trans } from "@lingui/react/macro";
+import { formatNumber } from "@superset/i18n/format";
 import type { ForkConnection } from "@superset/shared/fork-integrations";
 import { Button } from "@superset/ui/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { useForkConnections } from "../../../../hooks/useForkConnections";
 import { required } from "../../../../utils/required";
+import { ForkUnloggedTaskRow } from "./components/ForkUnloggedTaskRow";
 import { forkUnloggedJql } from "./fork-unlogged-jql";
 
 export function ForkUnloggedTasks({
@@ -16,7 +17,6 @@ export function ForkUnloggedTasks({
 	days: 7 | 30 | 90;
 }) {
 	const { client, hostUrl } = useForkConnections();
-	const navigate = useNavigate();
 	const query = useInfiniteQuery({
 		queryKey: [
 			"fork-integrations",
@@ -47,11 +47,14 @@ export function ForkUnloggedTasks({
 		).values(),
 	];
 	return (
-		<div className="overflow-hidden rounded-xl border border-border/70">
-			<div className="flex items-center justify-between border-b bg-muted/20 px-4 py-3">
-				<h3 className="text-sm font-medium">{connection.label}</h3>
+		<div className="@container/task-list min-w-0">
+			<div className="flex min-w-0 items-center justify-between gap-3 border-b border-border/50 px-4 py-3 @min-[700px]/task-list:px-5">
+				<h3 className="min-w-0 break-words text-xs font-medium text-muted-foreground">
+					{connection.label}
+				</h3>
 				<span className="text-xs tabular-nums text-muted-foreground">
-					{tasks.length}
+					{formatNumber(tasks.length)}
+					{query.hasNextPage ? "+" : ""}
 				</span>
 			</div>
 			{query.isPending && (
@@ -75,41 +78,17 @@ export function ForkUnloggedTasks({
 				</div>
 			)}
 			{!query.isPending && !query.error && !tasks.length && (
-				<p className="p-5 text-sm text-muted-foreground">
+				<p className="flex items-start gap-3 px-5 py-8 text-sm leading-relaxed text-muted-foreground">
+					<CheckCircle2
+						className="mt-0.5 size-5 shrink-0 text-success"
+						aria-hidden
+					/>
 					<Trans>No tasks without worklogs in this period.</Trans>
 				</p>
 			)}
 			<ul className="divide-y divide-border/60">
 				{tasks.map((task) => (
-					<li key={task.key}>
-						<button
-							type="button"
-							className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-muted/25"
-							onClick={() =>
-								void navigate({
-									to: "/tasks",
-									search: {
-										forkSource: "jira",
-										forkConnection: connection.id,
-										forkTask: task.key,
-									},
-								})
-							}
-						>
-							<span className="shrink-0 font-mono text-xs text-muted-foreground">
-								{task.key}
-							</span>
-							<span
-								className="min-w-0 flex-1 truncate text-sm"
-								title={task.title}
-							>
-								{task.title}
-							</span>
-							<span className="shrink-0 rounded-md bg-muted px-2 py-1 text-[11px] text-muted-foreground">
-								{task.status.name}
-							</span>
-						</button>
-					</li>
+					<ForkUnloggedTaskRow key={task.key} task={task} />
 				))}
 			</ul>
 			{query.hasNextPage && (

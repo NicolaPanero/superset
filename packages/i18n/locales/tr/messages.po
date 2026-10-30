@@ -4847,6 +4847,9 @@ msgstr "Google'ı bağla"
 msgid "Connect Jira and Bitbucket"
 msgstr "Jira ve Bitbucket’ı bağla"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Süre kaydı olmayan görevleri görmek için Jira’yı bağlayın."
+
 msgid "Connect Linear"
 msgstr "Linear'ı bağla"
 
@@ -9582,6 +9585,9 @@ msgstr "Uygulama içi tarayıcı"
 msgid "In-app PR merge"
 msgstr "Uygulama içi PR birleştirme"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Size atanmış, süre kaydı olmayan devam eden ve tamamlanmış görevler."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Dal adına istemdeki Linear bilet kimliğini ekle (örn. bin-344-fix-login). Göreve göre dallara fix/ veya feat/ ön eki koy."
 
@@ -11775,9 +11781,6 @@ msgstr "Ajan yok"
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
 
-msgid "No agent is waiting."
-msgstr "Bekleyen ajan yok."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0} üzerinde yapılandırılmış ajan yok"
@@ -11808,9 +11811,6 @@ msgstr "Ek yok"
 
 msgid "No authors found."
 msgstr "Yazar bulunamadı."
-
-msgid "No automation is running."
-msgstr "Çalışan otomasyon yok."
 
 msgid "No automations match"
 msgstr "Eşleşen otomasyon yok"
@@ -12868,6 +12868,9 @@ msgstr "Bir bölme açın veya ortadan buraya sürükleyin."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "İnceleme durumunu, kontrolleri ve yorumları görmek için bir pull request açın."
+
+msgid "Open a task to log time manually."
+msgstr "Manuel süre kaydetmek için bir görev açın."
 
 msgid "Open actions menu"
 msgstr "Eylemler menüsünü aç"
@@ -19519,8 +19522,8 @@ msgstr "Bugün"
 msgid "TODAY"
 msgstr "BUGÜN"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Bugün, süre kaydı olmayan görevleri 7, 30 ve 90 günlük filtrelerle listeler. Sayfayı Fork Ayarları’ndan gösterebilir veya gizleyebilirsiniz."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Bugün, süre kaydı olmayan görevleri öne çıkarır; 7, 30 ve 90 günlük filtreler ve pencerenize uyum sağlayan bir düzen sunar."
 
 msgid "Todo"
 msgstr "Yapılacak"
@@ -20839,9 +20842,6 @@ msgstr "Paradev Enterprise nedir?"
 msgid "What is wrong?"
 msgstr "Sorun nedir?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Şu anda size ihtiyaç duyan her şey, tamamı bu bilgisayardan."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradev nedir, kimler geliştiriyor ve kimler için. Paralel kodlama ajanları için çalışma alanını geliştiren, üç eski YC CTO'sunun liderliğindeki bir San Francisco ekibi."
 
@@ -21531,6 +21531,9 @@ msgstr "Aboneliğiniz aktif. Yeni planınızın özellikleri kullanıma hazır."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Aboneliğiniz buna göre düzenlenecek."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Görevleriniz, incelemeleriniz ve ajanlarınız tek bir yerde."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Ekip arkadaşlarınız ajanınızla doğrudan konuşabilir."

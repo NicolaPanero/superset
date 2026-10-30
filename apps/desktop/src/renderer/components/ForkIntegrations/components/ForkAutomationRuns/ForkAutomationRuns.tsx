@@ -26,11 +26,11 @@ export const FORK_AUTOMATION_STATE_LABELS: Record<string, MessageDescriptor> = {
 };
 
 const STATE_TONE: Record<string, string> = {
-	waiting_input: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+	waiting_input: "bg-warning/15 text-warning",
 	failed: "bg-destructive/15 text-destructive",
 	unknown: "bg-destructive/15 text-destructive",
-	verified: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-	agent_done: "bg-sky-500/15 text-sky-600 dark:text-sky-400",
+	verified: "bg-success/15 text-success",
+	agent_done: "bg-primary/10 text-primary",
 };
 
 const RETRYABLE = ["failed", "unknown", "cancelled", "skipped", "agent_done"];
@@ -40,11 +40,13 @@ export function ForkAutomationRuns({
 	states,
 	limit,
 	emptyText,
+	wrapTitles = false,
 }: {
 	ruleId?: string;
 	states?: string[];
 	limit?: number;
 	emptyText?: ReactNode;
+	wrapTitles?: boolean;
 }) {
 	const { i18n } = useLingui();
 	const { client, hostUrl, data } = useForkConnections();
@@ -102,7 +104,14 @@ export function ForkAutomationRuns({
 									msg({ message: "Unknown" }),
 							)}
 						</span>
-						<span className="min-w-0 flex-1 truncate font-medium">
+						<span
+							className={cn(
+								"min-w-0 flex-1 font-medium",
+								wrapTitles
+									? "basis-full break-words [overflow-wrap:anywhere]"
+									: "truncate",
+							)}
+						>
 							{attempt.title}
 						</span>
 						{!ruleId && (

@@ -42,7 +42,10 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   invii e mostra le ore di oggi; **Workflow statuses** nella connessione Jira
   sceglie gli stati di avvio lavoro e PR. **Today** raccoglie agenti in attesa,
   run da controllare, review richieste e task assegnati in corso o chiusi senza
-  worklog, aggiornati negli ultimi 7, 30 o 90 giorni. **Show Today** nelle
+  worklog, aggiornati negli ultimi 7, 30 o 90 giorni. Il layout mette i task
+  in primo piano, affianca review e automazioni quando c’è spazio e mantiene
+  i filtri visibili durante lo scroll. Gli stati usano gli stessi colori di
+  **Tasks** e i riquadri seguono il tema scelto. **Show Today** nelle
   impostazioni mostra o nasconde la schermata. La registrazione delle ore resta
   manuale dal task: non vengono proposte né distribuite ore automaticamente.
   Le transizioni Jira mostrano anche i campi facoltativi della schermata, con

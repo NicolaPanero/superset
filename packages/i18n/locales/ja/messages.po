@@ -4847,6 +4847,9 @@ msgstr "Googleを接続"
 msgid "Connect Jira and Bitbucket"
 msgstr "JiraとBitbucketに接続"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Jiraを接続すると、作業時間が未記録のタスクを確認できます。"
+
 msgid "Connect Linear"
 msgstr "Linearを接続"
 
@@ -9582,6 +9585,9 @@ msgstr "アプリ内ブラウザ"
 msgid "In-app PR merge"
 msgstr "アプリ内でのPRマージ"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "自分に割り当てられた進行中・完了済みタスクのうち、作業時間が未記録のもの。"
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "プロンプトのLinearチケットIDをブランチ名に含める(例: bin-344-fix-login)。タスクに応じてブランチにfix/またはfeat/を付ける。"
 
@@ -11775,9 +11781,6 @@ msgstr "エージェントなし"
 msgid "No agent is configured on this host"
 msgstr "このホストにはエージェントが設定されていません"
 
-msgid "No agent is waiting."
-msgstr "待機中のエージェントはありません。"
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}にはエージェントが設定されていません"
@@ -11808,9 +11811,6 @@ msgstr "添付ファイルなし"
 
 msgid "No authors found."
 msgstr "作成者が見つかりません。"
-
-msgid "No automation is running."
-msgstr "実行中のオートメーションはありません。"
 
 msgid "No automations match"
 msgstr "一致するオートメーションがありません"
@@ -12868,6 +12868,9 @@ msgstr "ペインを開くか、中央からここへドラッグしてくださ
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "プルリクエストを開くと、レビュー状態、チェック、コメントを確認できます。"
+
+msgid "Open a task to log time manually."
+msgstr "タスクを開いて作業時間を手動で記録します。"
 
 msgid "Open actions menu"
 msgstr "アクションメニューを開く"
@@ -19519,8 +19522,8 @@ msgstr "今日"
 msgid "TODAY"
 msgstr "現在"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "「今日」に作業時間が未記録のタスクを7日・30日・90日のフィルターで表示します。フォーク設定でページの表示を切り替えられます。"
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "「今日」は作業時間が未記録のタスクを優先表示します。7日・30日・90日のフィルターと、ウィンドウに合わせたレイアウトを利用できます。"
 
 msgid "Todo"
 msgstr "未着手"
@@ -20839,9 +20842,6 @@ msgstr "Paradev Enterpriseとは何ですか?"
 msgid "What is wrong?"
 msgstr "何が問題ですか？"
 
-msgid "What needs you now, all from this computer."
-msgstr "今あなたが対応すべきこと。すべてこのコンピューターから。"
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradevとは何か、誰が作っていて、誰のためのものか。並列コーディングエージェントのためのワークスペースを作る、元YCのCTO3人が率いるサンフランシスコのチーム。"
 
@@ -21531,6 +21531,9 @@ msgstr "サブスクリプションが有効になりました。新しいプラ
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "サブスクリプションはそれに応じて調整されます。"
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "タスク、レビュー、エージェントをまとめて確認。"
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "チームメンバーがエージェントと直接やり取りできます。"

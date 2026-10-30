@@ -4847,6 +4847,9 @@ msgstr "Подключить Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "Подключить Jira и Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Подключите Jira, чтобы видеть задачи без учтённого времени."
+
 msgid "Connect Linear"
 msgstr "Подключить Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "Встроенный браузер"
 msgid "In-app PR merge"
 msgstr "Слияние PR внутри приложения"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Назначенные вам текущие и завершённые задачи без учтённого времени."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Включай id тикета Linear из промпта в имя ветки (например, bin-344-fix-login). Ставь префикс fix/ или feat/ в зависимости от задачи."
 
@@ -11775,9 +11781,6 @@ msgstr "Без агента"
 msgid "No agent is configured on this host"
 msgstr "На этом хосте не настроен ни один агент"
 
-msgid "No agent is waiting."
-msgstr "Нет ожидающих агентов."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "На {0} не настроено ни одного агента"
@@ -11808,9 +11811,6 @@ msgstr "Вложений нет"
 
 msgid "No authors found."
 msgstr "Авторы не найдены."
-
-msgid "No automation is running."
-msgstr "Нет выполняющихся автоматизаций."
 
 msgid "No automations match"
 msgstr "Нет подходящих автоматизаций"
@@ -12868,6 +12868,9 @@ msgstr "Откройте панель или перетащите её сюда 
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Откройте пул-реквест, чтобы видеть статус ревью, проверки и комментарии."
+
+msgid "Open a task to log time manually."
+msgstr "Откройте задачу, чтобы вручную учесть время."
 
 msgid "Open actions menu"
 msgstr "Открыть меню действий"
@@ -19519,8 +19522,8 @@ msgstr "Сегодня"
 msgid "TODAY"
 msgstr "СЕГОДНЯ"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "«Сегодня» показывает задачи без учтённого времени с фильтрами на 7, 30 и 90 дней. Страницу можно показать или скрыть в настройках форка."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "«Сегодня» ставит задачи без учтённого времени на первый план: фильтры на 7, 30 и 90 дней и компоновка под размер окна."
 
 msgid "Todo"
 msgstr "К выполнению"
@@ -20839,9 +20842,6 @@ msgstr "Что такое Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Что не так?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Всё, что требует вашего внимания сейчас, с этого компьютера."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Что такое Paradev, кто его создаёт и для кого он. Команда из Сан-Франциско во главе с тремя бывшими CTO из YC, строящая рабочую среду для параллельных кодинг-агентов."
 
@@ -21531,6 +21531,9 @@ msgstr "Подписка активна. Возможности нового т�
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Подписка будет пересчитана соответственно."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Ваши задачи, проверки и агенты в одном месте."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Ваша команда может общаться с вашим агентом напрямую."

@@ -4847,6 +4847,9 @@ msgstr "Připojit Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "Připojit Jira a Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Připojte Jira pro zobrazení úkolů bez vykázaného času."
+
 msgid "Connect Linear"
 msgstr "Připojit Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "Prohlížeč v aplikaci"
 msgid "In-app PR merge"
 msgstr "Slučování PR přímo v aplikaci"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Přiřazené rozpracované a dokončené úkoly bez vykázaného času."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Zahrň do názvu větve id ticketu z Linearu uvedené v promptu (např. bin-344-fix-login). Podle úkolu předřaď větvi fix/ nebo feat/."
 
@@ -11775,9 +11781,6 @@ msgstr "Žádný agent"
 msgid "No agent is configured on this host"
 msgstr "Na tomto hostiteli není nakonfigurován žádný agent"
 
-msgid "No agent is waiting."
-msgstr "Žádný agent nečeká."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Na {0} nejsou nastavení žádní agenti"
@@ -11808,9 +11811,6 @@ msgstr "Žádné přílohy"
 
 msgid "No authors found."
 msgstr "Nenalezeni žádní autoři."
-
-msgid "No automation is running."
-msgstr "Žádná automatizace neběží."
 
 msgid "No automations match"
 msgstr "Žádná automatizace neodpovídá"
@@ -12868,6 +12868,9 @@ msgstr "Otevřete panel nebo sem nějaký přetáhněte ze středu."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Otevřete pull request a uvidíte stav revize, kontroly a komentáře."
+
+msgid "Open a task to log time manually."
+msgstr "Otevřete úkol a vykázejte čas ručně."
 
 msgid "Open actions menu"
 msgstr "Otevřít nabídku akcí"
@@ -19519,8 +19522,8 @@ msgstr "Dnes"
 msgid "TODAY"
 msgstr "DNES"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Dnes zobrazuje úkoly bez vykázaného času s filtry 7, 30 a 90 dní. Stránku lze zobrazit nebo skrýt v nastavení forku."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Dnes upřednostňuje úkoly bez vykázaného času, s filtry 7, 30 a 90 dní a rozvržením přizpůsobeným velikosti okna."
 
 msgid "Todo"
 msgstr "K řešení"
@@ -20839,9 +20842,6 @@ msgstr "Co je Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Co je špatně?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Co teď potřebuje vaši pozornost, vše z tohoto počítače."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Co je Paradev, kdo ho staví a pro koho je. Sanfranciský tým vedený třemi bývalými YC CTO, který staví pracovní prostor pro paralelní kódovací agenty."
 
@@ -21531,6 +21531,9 @@ msgstr "Vaše předplatné je aktivní. Funkce nového plánu jsou připravené 
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Vaše předplatné se odpovídajícím způsobem upraví."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Vaše úkoly, revize a agenti na jednom místě."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Vaši kolegové mohou mluvit přímo s vaším agentem."

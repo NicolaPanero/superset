@@ -206,7 +206,13 @@ connection chooses, per project, the statuses for "work started" and "pull
 request opened" instead of matching status names.
 
 **Today** lists your assigned in-progress and completed tasks with no worklogs.
-The 7d, 30d and 90d filters use the issue's last update date. Results are paginated;
+The 7d, 30d and 90d filters use the issue's last update date. Tasks come first;
+reviews and active automation groups sit alongside them in wide windows and
+below them in narrow windows. Empty automation groups are collapsed into one
+compact message. Titles wrap to fit the available width. Status badges share the Jira palette
+used by Tasks; surfaces, text and accents use the active theme colors.
+**Refresh** reloads
+the page data without changing the selected period. Results are paginated;
 opening a row shows the task detail, where **Log time** remains available.
 **Show Today** in Settings hides the sidebar entry and redirects direct visits
 when disabled. The preference is saved on this computer.

@@ -4847,6 +4847,9 @@ msgstr "Hubungkan Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "Hubungkan Jira dan Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Hubungkan Jira untuk melihat tugas tanpa catatan waktu."
+
 msgid "Connect Linear"
 msgstr "Hubungkan Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "Browser dalam aplikasi"
 msgid "In-app PR merge"
 msgstr "Merge PR di dalam aplikasi"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Tugas yang ditugaskan kepada Anda, sedang berlangsung atau selesai, tanpa waktu tercatat."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Sertakan id tiket Linear dari prompt di nama branch (mis. bin-344-fix-login). Beri prefix fix/ atau feat/ sesuai tugasnya."
 
@@ -11775,9 +11781,6 @@ msgstr "Tanpa agen"
 msgid "No agent is configured on this host"
 msgstr "Tidak ada agen yang dikonfigurasi di host ini"
 
-msgid "No agent is waiting."
-msgstr "Tidak ada agen yang menunggu."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Tidak ada agen yang dikonfigurasi di {0}"
@@ -11808,9 +11811,6 @@ msgstr "Tidak ada lampiran"
 
 msgid "No authors found."
 msgstr "Tidak ada penulis ditemukan."
-
-msgid "No automation is running."
-msgstr "Tidak ada otomatisasi yang berjalan."
 
 msgid "No automations match"
 msgstr "Tidak ada otomatisasi yang cocok"
@@ -12868,6 +12868,9 @@ msgstr "Buka panel, atau seret panel ke sini dari tengah."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Buka sebuah pull request untuk melihat status review, check, dan komentar."
+
+msgid "Open a task to log time manually."
+msgstr "Buka tugas untuk mencatat waktu secara manual."
 
 msgid "Open actions menu"
 msgstr "Buka menu aksi"
@@ -19519,8 +19522,8 @@ msgstr "Hari ini"
 msgid "TODAY"
 msgstr "HARI INI"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Hari ini menampilkan tugas tanpa catatan waktu dengan filter 7, 30, dan 90 hari. Tampilkan atau sembunyikan halaman ini di Pengaturan fork."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Hari ini mengutamakan tugas tanpa catatan waktu, dengan filter 7, 30, dan 90 hari serta tata letak yang menyesuaikan jendela Anda."
 
 msgid "Todo"
 msgstr "Todo"
@@ -20839,9 +20842,6 @@ msgstr "Apa itu Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Apa masalahnya?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Yang perlu Anda tangani sekarang, semuanya dari komputer ini."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Apa itu Paradev, siapa yang membangunnya, dan untuk siapa. Tim San Francisco yang dipimpin tiga mantan CTO YC, membangun workspace untuk agen coding paralel."
 
@@ -21531,6 +21531,9 @@ msgstr "Langganan Anda aktif. Fitur paket baru Anda siap digunakan."
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Langganan Anda akan disesuaikan."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Tugas, tinjauan, dan agen Anda di satu tempat."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Rekan tim Anda bisa berbicara langsung dengan agen Anda."

@@ -4847,6 +4847,9 @@ msgstr "Kết nối Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "Kết nối Jira và Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Kết nối Jira để xem các tác vụ chưa ghi nhận thời gian."
+
 msgid "Connect Linear"
 msgstr "Kết nối Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "Trình duyệt trong ứng dụng"
 msgid "In-app PR merge"
 msgstr "Merge PR ngay trong ứng dụng"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Các tác vụ đang thực hiện và đã hoàn thành được giao cho bạn, chưa ghi nhận thời gian."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Đưa id ticket Linear từ prompt vào tên nhánh (ví dụ bin-344-fix-login). Thêm tiền tố fix/ hoặc feat/ cho nhánh tùy theo tác vụ."
 
@@ -11775,9 +11781,6 @@ msgstr "Không có agent"
 msgid "No agent is configured on this host"
 msgstr "Không có tác nhân nào được cấu hình trên máy chủ này"
 
-msgid "No agent is waiting."
-msgstr "Không có agent nào đang chờ."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Chưa cấu hình agent nào trên {0}"
@@ -11808,9 +11811,6 @@ msgstr "Không có tệp đính kèm"
 
 msgid "No authors found."
 msgstr "Không tìm thấy tác giả nào."
-
-msgid "No automation is running."
-msgstr "Không có tự động hóa nào đang chạy."
 
 msgid "No automations match"
 msgstr "Không có tự động hóa nào khớp"
@@ -12868,6 +12868,9 @@ msgstr "Mở một ngăn, hoặc kéo một ngăn từ giữa vào đây."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Hãy mở một pull request để xem trạng thái review, check và bình luận."
+
+msgid "Open a task to log time manually."
+msgstr "Mở tác vụ để ghi nhận thời gian thủ công."
 
 msgid "Open actions menu"
 msgstr "Mở menu hành động"
@@ -19519,8 +19522,8 @@ msgstr "Hôm nay"
 msgid "TODAY"
 msgstr "HÔM NAY"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Hôm nay liệt kê các tác vụ chưa ghi nhận thời gian với bộ lọc 7, 30 và 90 ngày. Hiển thị hoặc ẩn trang trong Cài đặt fork."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Hôm nay ưu tiên tác vụ chưa ghi nhận thời gian, với bộ lọc 7, 30 và 90 ngày cùng bố cục thích ứng với cửa sổ."
 
 msgid "Todo"
 msgstr "Cần làm"
@@ -20839,9 +20842,6 @@ msgstr "Paradev Enterprise là gì?"
 msgid "What is wrong?"
 msgstr "Vấn đề là gì?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Những gì cần bạn lúc này, tất cả từ máy tính này."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradev là gì, ai xây dựng nó và dành cho ai. Một đội ngũ tại San Francisco do ba cựu CTO YC dẫn dắt, xây dựng workspace cho các agent lập trình song song."
 
@@ -21531,6 +21531,9 @@ msgstr "Gói đăng ký của bạn đang hoạt động. Các tính năng của
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Gói đăng ký của bạn sẽ được điều chỉnh tương ứng."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Tác vụ, đánh giá và tác nhân của bạn ở cùng một nơi."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Đồng đội có thể trao đổi trực tiếp với agent của bạn."

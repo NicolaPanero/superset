@@ -4847,6 +4847,9 @@ msgstr "Collega Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "Collega Jira e Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Collega Jira per vedere i task senza worklog."
+
 msgid "Connect Linear"
 msgstr "Collega Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "Browser integrato"
 msgid "In-app PR merge"
 msgstr "Merge delle PR nell'app"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "I tuoi task in corso e completati senza ore registrate."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Includi nel nome del branch l'id del ticket Linear presente nel prompt (es. bin-344-fix-login). Anteponi ai branch fix/ o feat/ in base al task."
 
@@ -11775,9 +11781,6 @@ msgstr "Nessun agente"
 msgid "No agent is configured on this host"
 msgstr "Nessun agente è configurato su questo host"
 
-msgid "No agent is waiting."
-msgstr "Nessun agente in attesa."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Nessun agente configurato su {0}"
@@ -11808,9 +11811,6 @@ msgstr "Nessun allegato"
 
 msgid "No authors found."
 msgstr "Nessun autore trovato."
-
-msgid "No automation is running."
-msgstr "Nessuna automazione in esecuzione."
 
 msgid "No automations match"
 msgstr "Nessuna automazione corrisponde"
@@ -12868,6 +12868,9 @@ msgstr "Apri un riquadro o trascinane uno qui dal centro."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Apri una pull request per vedere lo stato della revisione, i controlli e i commenti."
+
+msgid "Open a task to log time manually."
+msgstr "Apri un task per registrare il tempo manualmente."
 
 msgid "Open actions menu"
 msgstr "Apri il menu delle azioni"
@@ -19519,8 +19522,8 @@ msgstr "Oggi"
 msgid "TODAY"
 msgstr "OGGI"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Oggi elenca i task senza worklog con filtri di 7, 30 e 90 giorni. Puoi mostrare o nascondere la schermata nelle impostazioni del fork."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Oggi mette in primo piano i task senza worklog, con filtri di 7, 30 e 90 giorni e un layout che si adatta alla finestra."
 
 msgid "Todo"
 msgstr "Da fare"
@@ -20839,9 +20842,6 @@ msgstr "Cos'è Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Qual è il problema?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Ciò che richiede la tua attenzione ora, tutto da questo computer."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Cos'è Paradev, chi lo costruisce e a chi è destinato. Un team di San Francisco guidato da tre ex CTO YC che costruisce il workspace per gli agenti di coding paralleli."
 
@@ -21531,6 +21531,9 @@ msgstr "Il tuo abbonamento è attivo. Le funzionalità del nuovo piano sono pron
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Il tuo abbonamento verrà adeguato di conseguenza."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Task, review e agenti in un unico posto."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Il tuo team può parlare direttamente con il tuo agente."

@@ -25,6 +25,7 @@ import {
 import superjson from "superjson";
 import { z } from "zod";
 import { ForkTaskTransitionDialog } from "./components/ForkTaskTransitionDialog/ForkTaskTransitionDialog";
+import { ForkToday } from "./components/ForkToday";
 import { ForkUnloggedTasks } from "./components/ForkToday/components/ForkUnloggedTasks";
 import { useForkTaskTransition } from "./hooks/useForkTaskTransition";
 
@@ -59,15 +60,30 @@ afterEach(() => {
 	for (const server of servers.splice(0)) server.stop(true);
 });
 
-function fixture() {
+function fixture(
+	today = false,
+	attempts: {
+		id: string;
+		state: string;
+		title: string;
+		updatedAt: number;
+	}[] = [],
+) {
 	const requests: { jql: string; cursor?: string }[] = [];
 	const mutations: unknown[] = [];
 	const t = initTRPC.create({ transformer: superjson });
 	const router = t.router({
 		forkConnections: t.router({
-			list: t.procedure.query(() => ({ version: 10, connections: [] })),
+			list: t.procedure.query(() => ({
+				version: 10,
+				connections: today
+					? [{ id: "jira", label: "Jira", provider: "jira", enabled: true }]
+					: [],
+			})),
 		}),
+		project: t.router({ list: t.procedure.query(() => []) }),
 		forkTasks: t.router({
+			automationAttempts: t.procedure.input(z.any()).query(() => attempts),
 			list: t.procedure.input(z.any()).query(({ input }) => {
 				requests.push(input);
 				return {
@@ -178,4 +194,66 @@ test("optional transition fields open a form without writing and only Save sends
 		transitionId: "61",
 		fields: { customfield_reason: "Finished and verified" },
 	});
+});
+
+test("Today period controls and refresh keep manual task navigation available", async () => {
+	const f = fixture(true);
+	const root = createRootRoute({ component: ForkToday });
+	const router = createRouter({
+		routeTree: root,
+		history: createMemoryHistory({ initialEntries: ["/"] }),
+	});
+	const view = render(f.wrap(<RouterProvider router={router} />), {
+		wrapper: f.query.wrapper,
+	});
+	await view.findByText("J-1");
+	expect(
+		view
+			.getByRole("link", { name: /J-1.*No logged time/ })
+			.getAttribute("href"),
+	).toContain("forkTask=J-1");
+	fireEvent.click(view.getByRole("button", { name: "7 days" }));
+	await waitFor(() =>
+		expect(f.requests.at(-1)?.jql).toContain("updated >= -7d"),
+	);
+	fireEvent.click(view.getByRole("button", { name: "90 days" }));
+	await waitFor(() =>
+		expect(f.requests.at(-1)?.jql).toContain("updated >= -90d"),
+	);
+	const previous = f.requests.length;
+	fireEvent.click(view.getByRole("button", { name: "Refresh" }));
+	await waitFor(() => expect(f.requests.length).toBeGreaterThan(previous));
+	expect(f.mutations).toEqual([]);
+	expect(view.getByText("Nothing to check.")).toBeDefined();
+});
+
+test("Today keeps waiting agents visible while omitting finished and empty automation groups", async () => {
+	const f = fixture(true, [
+		{
+			id: "wait",
+			state: "waiting_input",
+			title: "Review the result",
+			updatedAt: Date.now(),
+		},
+		{
+			id: "done",
+			state: "verified",
+			title: "Finished yesterday",
+			updatedAt: Date.now(),
+		},
+	]);
+	const root = createRootRoute({ component: ForkToday });
+	const router = createRouter({
+		routeTree: root,
+		history: createMemoryHistory({ initialEntries: ["/"] }),
+	});
+	const view = render(f.wrap(<RouterProvider router={router} />), {
+		wrapper: f.query.wrapper,
+	});
+	await view.findByText("Review the result");
+	expect(
+		view.getByRole("heading", { name: /Agents waiting for you/ }),
+	).toBeDefined();
+	expect(view.queryByRole("heading", { name: /Runs to check/ })).toBeNull();
+	expect(view.queryByText("Finished yesterday")).toBeNull();
 });

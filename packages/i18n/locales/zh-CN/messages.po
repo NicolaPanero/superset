@@ -4847,6 +4847,9 @@ msgstr "连接Google"
 msgid "Connect Jira and Bitbucket"
 msgstr "连接 Jira 和 Bitbucket"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "连接 Jira 以查看未记录工时的任务。"
+
 msgid "Connect Linear"
 msgstr "连接Linear"
 
@@ -9582,6 +9585,9 @@ msgstr "应用内浏览器"
 msgid "In-app PR merge"
 msgstr "应用内合并PR"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "分配给你的进行中和已完成任务，且尚未记录工时。"
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "在分支名中包含提示词里的Linear工单ID（例如bin-344-fix-login）。根据任务为分支加上fix/或feat/前缀。"
 
@@ -11775,9 +11781,6 @@ msgstr "无智能体"
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
 
-msgid "No agent is waiting."
-msgstr "没有正在等待的智能体。"
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}上没有配置智能体"
@@ -11808,9 +11811,6 @@ msgstr "没有附件"
 
 msgid "No authors found."
 msgstr "未找到作者。"
-
-msgid "No automation is running."
-msgstr "没有正在运行的自动化。"
 
 msgid "No automations match"
 msgstr "没有匹配的自动化"
@@ -12868,6 +12868,9 @@ msgstr "打开一个窗格，或从中间拖一个到这里。"
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "创建拉取请求后即可查看评审状态、检查和评论。"
+
+msgid "Open a task to log time manually."
+msgstr "打开任务以手动记录工时。"
 
 msgid "Open actions menu"
 msgstr "打开操作菜单"
@@ -19519,8 +19522,8 @@ msgstr "今天"
 msgid "TODAY"
 msgstr "今天"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "“今天”列出未记录工时的任务，可按 7、30 和 90 天筛选。在分支设置中可显示或隐藏此页面。"
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "“今天”优先显示未记录工时的任务，提供 7、30 和 90 天筛选，布局随窗口大小调整。"
 
 msgid "Todo"
 msgstr "待办"
@@ -20839,9 +20842,6 @@ msgstr "什么是Paradev Enterprise？"
 msgid "What is wrong?"
 msgstr "哪里有问题？"
 
-msgid "What needs you now, all from this computer."
-msgstr "现在需要你处理的事项，全部来自这台计算机。"
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradev 是什么、由谁打造、为谁而建。一支由三位前 YC CTO 带领的旧金山团队，正在打造并行编码智能体的工作区。"
 
@@ -21531,6 +21531,9 @@ msgstr "你的订阅已生效。新套餐的功能现已可用。"
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "你的订阅将相应调整。"
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "在一处查看你的任务、审查和代理。"
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "你的队友可以直接与你的智能体对话。"

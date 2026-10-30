@@ -3,7 +3,7 @@ import type { DesktopNotice } from "@superset/shared/desktop-notices";
 import { useState } from "react";
 import { NoticeDialog } from "renderer/components/DesktopNotices/components/NoticeDialog";
 
-export const FORK_WHATS_NEW_ID = "jira-today-2026-10";
+export const FORK_WHATS_NEW_ID = "jira-today-layout-2026-10";
 export const FORK_WHATS_NEW_STORAGE_KEY = "superset-fork-whats-new";
 const FORK_GUIDE_URL =
 	"https://github.com/NicolaPanero/superset/blob/fork/main/FORK.md";
@@ -44,7 +44,7 @@ export function ForkWhatsNewNotice() {
 		}),
 		t({
 			message:
-				"Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings.",
+				"Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window.",
 		}),
 		t({
 			message:

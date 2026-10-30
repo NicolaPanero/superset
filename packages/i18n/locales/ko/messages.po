@@ -4847,6 +4847,9 @@ msgstr "Google 연결"
 msgid "Connect Jira and Bitbucket"
 msgstr "Jira 및 Bitbucket 연결"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Jira를 연결하여 작업 시간이 기록되지 않은 작업을 확인하세요."
+
 msgid "Connect Linear"
 msgstr "Linear 연결"
 
@@ -9582,6 +9585,9 @@ msgstr "앱 내 브라우저"
 msgid "In-app PR merge"
 msgstr "앱 내 PR 머지"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "나에게 할당된 진행 중 및 완료된 작업 중 기록된 시간이 없는 작업입니다."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "프롬프트에 있는 Linear 티켓 id를 브랜치 이름에 포함하세요 (예: bin-344-fix-login). 작업에 따라 브랜치 이름 앞에 fix/ 또는 feat/를 붙이세요."
 
@@ -11775,9 +11781,6 @@ msgstr "에이전트 없음"
 msgid "No agent is configured on this host"
 msgstr "이 호스트에 구성된 에이전트가 없습니다"
 
-msgid "No agent is waiting."
-msgstr "대기 중인 에이전트가 없습니다."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}에 설정된 에이전트가 없습니다"
@@ -11808,9 +11811,6 @@ msgstr "첨부 파일 없음"
 
 msgid "No authors found."
 msgstr "작성자를 찾을 수 없습니다."
-
-msgid "No automation is running."
-msgstr "실행 중인 자동화가 없습니다."
 
 msgid "No automations match"
 msgstr "일치하는 자동화가 없습니다"
@@ -12868,6 +12868,9 @@ msgstr "창을 열거나 가운데에서 여기로 끌어 오세요."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "리뷰 상태, 검사, 코멘트를 보려면 풀 리퀘스트를 여세요."
+
+msgid "Open a task to log time manually."
+msgstr "작업을 열어 시간을 직접 기록하세요."
 
 msgid "Open actions menu"
 msgstr "작업 메뉴 열기"
@@ -19519,8 +19522,8 @@ msgstr "오늘"
 msgid "TODAY"
 msgstr "오늘"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "오늘에서 작업 시간이 기록되지 않은 작업을 7일, 30일, 90일 필터로 볼 수 있습니다. 포크 설정에서 페이지를 표시하거나 숨기세요."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "오늘은 작업 시간이 기록되지 않은 작업을 먼저 표시하며, 7일, 30일, 90일 필터와 창 크기에 맞는 레이아웃을 제공합니다."
 
 msgid "Todo"
 msgstr "할 일"
@@ -20839,9 +20842,6 @@ msgstr "Paradev Enterprise란 무엇인가요?"
 msgid "What is wrong?"
 msgstr "무엇이 문제인가요?"
 
-msgid "What needs you now, all from this computer."
-msgstr "지금 나에게 필요한 일, 모두 이 컴퓨터에서."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Paradev가 무엇이고, 누가 만들며, 누구를 위한 것인지. 병렬 코딩 에이전트를 위한 워크스페이스를 만드는, 전 YC CTO 3인이 이끄는 샌프란시스코 팀입니다."
 
@@ -21531,6 +21531,9 @@ msgstr "구독이 활성화되었습니다. 새 플랜의 기능을 바로 사�
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "구독 요금이 그에 맞게 조정됩니다."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "작업, 리뷰, 에이전트를 한곳에서 확인하세요."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "팀원이 에이전트와 직접 대화할 수 있습니다."

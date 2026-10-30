@@ -4847,6 +4847,9 @@ msgstr "Google verbinden"
 msgid "Connect Jira and Bitbucket"
 msgstr "Jira en Bitbucket verbinden"
 
+msgid "Connect Jira to see tasks without worklogs."
+msgstr "Verbind Jira om taken zonder geregistreerde tijd te zien."
+
 msgid "Connect Linear"
 msgstr "Linear verbinden"
 
@@ -9582,6 +9585,9 @@ msgstr "Ingebouwde browser"
 msgid "In-app PR merge"
 msgstr "PR's mergen in de app"
 
+msgid "In-progress and completed tasks assigned to you, with no logged time."
+msgstr "Aan jou toegewezen lopende en afgeronde taken zonder geregistreerde tijd."
+
 msgid "Include the Linear ticket id from the prompt in the branch name (e.g. bin-344-fix-login). Prefix branches with fix/ or feat/ based on the task."
 msgstr "Neem het Linear-ticket-id uit de prompt op in de branchnaam (bijv. bin-344-fix-login). Geef branches het voorvoegsel fix/ of feat/ op basis van de taak."
 
@@ -11775,9 +11781,6 @@ msgstr "Geen agent"
 msgid "No agent is configured on this host"
 msgstr "Er is geen agent geconfigureerd op deze host"
 
-msgid "No agent is waiting."
-msgstr "Er wacht geen agent."
-
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Geen agents geconfigureerd op {0}"
@@ -11808,9 +11811,6 @@ msgstr "Geen bijlagen"
 
 msgid "No authors found."
 msgstr "Geen auteurs gevonden."
-
-msgid "No automation is running."
-msgstr "Er draait geen automatisering."
 
 msgid "No automations match"
 msgstr "Geen overeenkomende automatiseringen"
@@ -12868,6 +12868,9 @@ msgstr "Open een paneel of sleep er een hierheen vanuit het midden."
 
 msgid "Open a pull request to view review status, checks, and comments."
 msgstr "Open een pull request om reviewstatus, checks en opmerkingen te zien."
+
+msgid "Open a task to log time manually."
+msgstr "Open een taak om handmatig tijd te registreren."
 
 msgid "Open actions menu"
 msgstr "Actiemenu openen"
@@ -19519,8 +19522,8 @@ msgstr "Vandaag"
 msgid "TODAY"
 msgstr "VANDAAG"
 
-msgid "Today lists tasks without worklogs, with 7, 30 and 90 day filters. Show or hide it in Fork Settings."
-msgstr "Vandaag toont taken zonder geregistreerde tijd met filters voor 7, 30 en 90 dagen. Toon of verberg de pagina in de Fork-instellingen."
+msgid "Today puts tasks without worklogs first, with 7, 30 and 90 day filters and a layout that adapts to your window."
+msgstr "Vandaag zet taken zonder geregistreerde tijd voorop, met filters voor 7, 30 en 90 dagen en een indeling die zich aan je venster aanpast."
 
 msgid "Todo"
 msgstr "Te doen"
@@ -20839,9 +20842,6 @@ msgstr "Wat is Paradev Enterprise?"
 msgid "What is wrong?"
 msgstr "Wat is er mis?"
 
-msgid "What needs you now, all from this computer."
-msgstr "Wat nu je aandacht nodig heeft, allemaal vanaf deze computer."
-
 msgid "What Paradev is, who builds it, and who it's for. A San Francisco team, led by three ex-YC CTOs, building the workspace for parallel coding agents."
 msgstr "Wat Paradev is, wie het bouwt en voor wie het bedoeld is. Een team uit San Francisco onder leiding van drie ex-YC-CTO's dat de werkruimte voor parallelle coding agents bouwt."
 
@@ -21531,6 +21531,9 @@ msgstr "Je abonnement is actief. De functies van je nieuwe abonnement zijn klaar
 
 msgid "Your subscription will be adjusted accordingly."
 msgstr "Je abonnement wordt hierop aangepast."
+
+msgid "Your tasks, reviews and agents in one place."
+msgstr "Je taken, reviews en agents op één plek."
 
 msgid "Your teammates can talk directly to your agent."
 msgstr "Je teamgenoten kunnen rechtstreeks met je agent praten."
