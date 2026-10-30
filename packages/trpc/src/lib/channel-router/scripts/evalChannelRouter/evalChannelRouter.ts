@@ -1,6 +1,9 @@
-// Usage: bun --env-file=<file with VERCEL_OIDC_TOKEN or AI_GATEWAY_API_KEY> scripts/evalChannelRouter.ts [--holdout]
-import { routeChannelMessage } from "../channelRouter";
-import { type EvalCase, evalSet, holdoutSet } from "../evalSet";
+// Usage: bun --env-file=<file with VERCEL_OIDC_TOKEN or AI_GATEWAY_API_KEY> scripts/evalChannelRouter/evalChannelRouter.ts [--holdout]
+import { routeChannelMessage } from "../../channelRouter";
+import type { EvalCase } from "./evalCase";
+import { evalSet } from "./generated/eval";
+import { holdoutSet } from "./generated/holdout";
+import { realWorldSet } from "./real-world/cases";
 
 const CONCURRENCY = 5;
 
@@ -8,6 +11,7 @@ interface CaseResult {
 	evalCase: EvalCase;
 	devIds: string[];
 	scores: Record<string, number>;
+	failed: boolean;
 	ms: number;
 }
 
@@ -35,7 +39,13 @@ async function runCase(evalCase: EvalCase, token: string): Promise<CaseResult> {
 		},
 		{ fetch, token: async () => token, timeoutMs: 10_000 },
 	);
-	return { evalCase, ...decision, ms: performance.now() - start };
+	return {
+		evalCase,
+		devIds: decision?.devIds ?? [],
+		scores: decision?.scores ?? {},
+		failed: decision === null,
+		ms: performance.now() - start,
+	};
 }
 
 async function runAll(cases: EvalCase[], token: string): Promise<CaseResult[]> {
@@ -63,7 +73,8 @@ function percent(value: number): string {
 	return `${(value * 100).toFixed(1)}%`;
 }
 
-function report(results: CaseResult[]) {
+function report(title: string, results: CaseResult[]) {
+	console.log(`\n== ${title}`);
 	let truePositives = 0;
 	let falsePositives = 0;
 	let falseNegatives = 0;
@@ -91,6 +102,9 @@ function report(results: CaseResult[]) {
 	}
 	const latencies = results.map((result) => result.ms).sort((a, b) => a - b);
 	console.log(`cases: ${results.length} (${nobodyCases} nobody)`);
+	const failed = results.filter((result) => result.failed).length;
+	if (failed > 0)
+		console.log(`Jev gave no answer: ${failed} (scored as nobody)`);
 	console.log(
 		`precision: ${percent(truePositives / (truePositives + falsePositives || 1))}`,
 	);
@@ -118,5 +132,10 @@ function report(results: CaseResult[]) {
 	}
 }
 
-const cases = process.argv.includes("--holdout") ? holdoutSet : evalSet;
-report(await runAll(cases, gatewayToken()));
+const sets: Record<string, EvalCase[]> = process.argv.includes("--holdout")
+	? { "generated holdout": holdoutSet }
+	: { "real-world": realWorldSet, generated: evalSet };
+const token = gatewayToken();
+for (const [title, cases] of Object.entries(sets)) {
+	report(title, await runAll(cases, token));
+}
