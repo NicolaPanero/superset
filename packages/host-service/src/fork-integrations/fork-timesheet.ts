@@ -1,3 +1,5 @@
+import { forkAllocateTimesheetEqually } from "./fork-timesheet-equal";
+
 /**
  * Timesheet proposal: spreads time over working days that have less than the
  * minimum logged. A pure calculation; Jira is read and written elsewhere.
@@ -342,6 +344,7 @@ export function forkProposeTimesheet({
 	tasks,
 	existingSeconds,
 	extraVacations = [],
+	equalDistribution = false,
 	newId,
 }: {
 	settings: ForkTimesheetSettings;
@@ -350,6 +353,7 @@ export function forkProposeTimesheet({
 	tasks: ForkTimesheetTaskInput[];
 	existingSeconds: Map<string, number>;
 	extraVacations?: { from: string; to: string }[];
+	equalDistribution?: boolean;
 	newId: () => string;
 }): ForkTimesheetProposal {
 	const working = forkWorkingDayChecker(settings, extraVacations);
@@ -383,12 +387,12 @@ export function forkProposeTimesheet({
 	const planned: PlannedTask[] = tasks.map((task) => {
 		const end = working(task.to) ? task.to : previousWorking(task.to);
 		let start = dayNumber(task.from) > dayNumber(from) ? task.from : from;
-		if (dayNumber(end) < dayNumber(start)) start = end;
+		if (!equalDistribution && dayNumber(end) < dayNumber(start)) start = end;
 		let eligible = days.filter(
 			(day) =>
 				dayNumber(day) >= dayNumber(start) && dayNumber(day) <= dayNumber(end),
 		);
-		if (eligible.length === 0 && days.length > 0)
+		if (!equalDistribution && eligible.length === 0 && days.length > 0)
 			eligible = [days.includes(end) ? end : (days[0] ?? end)];
 		const score =
 			(TYPE_WEIGHT[task.type ?? ""] ?? 1.2) *
@@ -404,7 +408,9 @@ export function forkProposeTimesheet({
 			end: dayNumber(task.to),
 		};
 	});
-	const proposals = allocate(planned, need, perHour);
+	const proposals = equalDistribution
+		? forkAllocateTimesheetEqually(planned, need)
+		: allocate(planned, need, perHour);
 	const lunchStart = minutes(settings.lunchStart);
 	const lunchEnd = minutes(settings.lunchEnd);
 	const entries: ForkTimesheetEntry[] = [];

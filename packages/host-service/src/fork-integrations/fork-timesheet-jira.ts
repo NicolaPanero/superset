@@ -91,6 +91,7 @@ interface SearchIssue {
 		resolutiondate?: string | null;
 		comment?: { total?: number; comments?: unknown[] };
 		issuelinks?: unknown[];
+		timespent?: number | null;
 	};
 }
 
@@ -126,6 +127,7 @@ const FIELDS = [
 	"resolutiondate",
 	"comment",
 	"issuelinks",
+	"timespent",
 ];
 
 function commentCount(issue: SearchIssue): number {
@@ -326,6 +328,10 @@ export async function forkTimesheetPropose(
 		tasks,
 		existingSeconds: existing,
 		extraVacations: input.extraVacations,
+		equalDistribution:
+			done.length === 0 &&
+			progress.length > 0 &&
+			progress.every((issue) => (issue.fields.timespent ?? 0) > 0),
 		newId: randomUUID,
 	});
 	ctx.db

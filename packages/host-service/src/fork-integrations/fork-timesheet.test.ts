@@ -129,3 +129,49 @@ test("a task closed on Sunday gets time up to Friday", () => {
 	expect(proposal.entries.some((e) => e.date === "2026-10-30")).toBe(true);
 	expect(proposal.entries.some((e) => e.date > "2026-10-30")).toBe(false);
 });
+
+test("equal distribution keeps proposed totals within one step despite task weights and existing daily hours", () => {
+	const proposal = forkProposeTimesheet({
+		settings,
+		from: "2026-10-26",
+		to: "2026-10-30",
+		tasks: [
+			{
+				...task("EQ-1", "2026-10-26", "2026-10-30", "in_progress"),
+				type: "Story",
+				comments: 100,
+				links: 20,
+			},
+			task("EQ-2", "2026-10-26", "2026-10-30", "in_progress"),
+			task("EQ-3", "2026-10-26", "2026-10-30", "in_progress"),
+		],
+		equalDistribution: true,
+		existingSeconds: new Map([
+			["2026-10-26", 2 * 3600],
+			["2026-10-27", 8 * 3600],
+		]),
+		newId,
+	});
+	const totals = proposal.tasks.map((t) => t.seconds);
+	expect(Math.max(...totals) - Math.min(...totals)).toBeLessThanOrEqual(1800);
+	expect(proposal.valid).toBe(true);
+	expect(proposal.entries.some((e) => e.date === "2026-10-27")).toBe(false);
+	expect(
+		proposal.days.find((d) => d.date === "2026-10-26")?.existingSeconds,
+	).toBe(7200);
+});
+
+test("equal distribution leaves unavailable days uncovered and never assigns before work starts", () => {
+	const proposal = forkProposeTimesheet({
+		settings,
+		from: "2026-10-26",
+		to: "2026-10-30",
+		tasks: [task("LATE-1", "2026-11-02", "2026-11-06", "in_progress")],
+		equalDistribution: true,
+		existingSeconds: new Map(),
+		newId,
+	});
+	expect(proposal.entries).toEqual([]);
+	expect(proposal.gaps).toHaveLength(5);
+	expect(proposal.valid).toBe(false);
+});
