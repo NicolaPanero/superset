@@ -19,6 +19,7 @@ import type { PaneViewerData, TerminalPaneData } from "../../../../../../types";
 import type { OpenAgentChat } from "../../../../../useAgentSessionLauncher/useAgentSessionLauncher";
 import { useChatWiring } from "../../../ChatSession/hooks/useSessionClient";
 import { useForkAccountSwitch } from "../../hooks/useForkAccountSwitch";
+import { useForkPersistChatModel } from "../../hooks/useForkPersistChatModel";
 import { useForkSessionAccount } from "../../hooks/useForkSessionAccount";
 import {
 	clearPendingEffort,
@@ -60,6 +61,12 @@ export function ForkSessionControls({
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
 	const { data: configs = [] } = useV2AgentConfigs(hostUrl);
 	const configId = data.acpAgentConfigId ?? data.agent?.id ?? "";
+	const pickModel = useForkPersistChatModel({
+		ctx,
+		data,
+		configOptions,
+		onSelect,
+	});
 	const accountSwitcher = useForkAccountSwitch(workspaceId, ctx);
 	const wiring = useChatWiring();
 	const [stopFor, setStopFor] = useState<{ selection: string | null } | null>(
@@ -187,7 +194,7 @@ export function ForkSessionControls({
 				configs={configs}
 				data={data}
 				configOptions={configOptions}
-				onSelect={onSelect}
+				onSelect={pickModel}
 				onRequestSwitch={setRequest}
 			/>
 			<ForkContextMeter terminalId={data.terminalId} agent={provider} />
