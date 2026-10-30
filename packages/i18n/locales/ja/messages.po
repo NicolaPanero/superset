@@ -3053,6 +3053,12 @@ msgstr "このホストは自動再開に対応していません。"
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "自動再開には、このチャットの確認済みの利用枠とリセット情報が必要です。"
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "自動では名前に「review」を含む利用可能なステータスを検索します。"
+
+msgid "Automatic selects an available in-progress status."
+msgstr "自動では利用可能な進行中ステータスを選択します。"
+
 msgid "Automation"
 msgstr "オートメーション"
 
@@ -4047,6 +4053,9 @@ msgstr "親ディレクトリを選択"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "issueを開く前に、GitHub issueでプロジェクトを選択してください。"
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "プロジェクトを選択し、タスクの移動先ステータスを設定します。"
 
 msgid "Choose a section."
 msgstr "セクションを選んでください。"
@@ -10750,8 +10759,8 @@ msgstr "ログアウトしますか?"
 msgid "Log time"
 msgstr "時間を記録"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Jira 課題の詳細から、今日の自分の時間と課題の履歴を見ながら作業時間を記録します。"
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "時間を手動で記録し、テーマやウィンドウに合わせた操作画面でJiraワークフローのステータスを設定できます。"
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account} として記録 · {timeZone}。残り見積もりは変わりません。"
@@ -11368,6 +11377,9 @@ msgstr "{count}件をグループへ移動"
 
 msgid "Move {name} to background"
 msgstr "{name} をバックグラウンドに移動"
+
+msgid "Move task to"
+msgstr "タスクの移動先"
 
 msgid "Move to another account"
 msgstr "別のアカウントに移動"
@@ -16515,6 +16527,9 @@ msgstr "プロジェクトを選択してください"
 
 msgid "Select a project first"
 msgstr "先にプロジェクトを選択してください"
+
+msgid "Select a project to configure its workflow."
+msgstr "プロジェクトを選択してワークフローを設定します。"
 
 msgid "Select a project to see GitHub issues."
 msgstr "プロジェクトを選択するとGitHub issueが表示されます。"

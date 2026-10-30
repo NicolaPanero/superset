@@ -3053,6 +3053,12 @@ msgstr "이 호스트는 자동 계속을 지원하지 않습니다."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "자동 계속에는 이 채팅의 확인된 할당량 및 초기화 정보가 필요합니다."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "자동은 이름에 “review”가 포함된 사용 가능한 상태를 찾습니다."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "자동은 사용 가능한 진행 중 상태를 선택합니다."
+
 msgid "Automation"
 msgstr "자동화"
 
@@ -4047,6 +4053,9 @@ msgstr "상위 디렉터리 선택"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "이슈를 열기 전에 GitHub 이슈 화면에서 프로젝트를 선택하세요."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "프로젝트를 선택한 다음 작업의 대상 상태를 설정하세요."
 
 msgid "Choose a section."
 msgstr "섹션을 선택하세요."
@@ -10750,8 +10759,8 @@ msgstr "로그아웃할까요?"
 msgid "Log time"
 msgstr "시간 기록"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Jira 이슈 세부 정보에서 오늘의 내 시간과 이슈 기록을 보며 시간을 기록합니다."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "시간을 직접 기록하고 테마와 창 크기에 맞는 컨트롤로 Jira 워크플로 상태를 설정하세요."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account}(으)로 기록 · {timeZone}. 남은 추정 시간은 변경되지 않습니다."
@@ -11368,6 +11377,9 @@ msgstr "{count}개를 그룹으로 이동"
 
 msgid "Move {name} to background"
 msgstr "{name}을(를) 백그라운드로 이동"
+
+msgid "Move task to"
+msgstr "작업 이동 대상"
 
 msgid "Move to another account"
 msgstr "다른 계정으로 이동"
@@ -16515,6 +16527,9 @@ msgstr "프로젝트를 선택하세요"
 
 msgid "Select a project first"
 msgstr "프로젝트를 먼저 선택하세요"
+
+msgid "Select a project to configure its workflow."
+msgstr "프로젝트를 선택하여 워크플로를 설정하세요."
 
 msgid "Select a project to see GitHub issues."
 msgstr "GitHub 이슈를 보려면 프로젝트를 선택하세요."

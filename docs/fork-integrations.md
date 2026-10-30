@@ -203,7 +203,10 @@ next attempt looks for the worklog in Jira before posting again. The start time
 uses the offset of that day, so daylight saving changes are handled; a time that
 does not exist on that day is refused. **Workflow statuses** on the Jira
 connection chooses, per project, the statuses for "work started" and "pull
-request opened" instead of matching status names.
+request opened" instead of matching status names. The project picker supports
+search by name or key. Each event shows its target status and explains the
+automatic fallback; status colors match Tasks and the layout follows the
+active theme and available panel width. Changes are saved per project.
 
 **Today** lists your assigned in-progress and completed tasks with no worklogs.
 The 7d, 30d and 90d filters use the issue's last update date. Tasks come first;

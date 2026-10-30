@@ -1,19 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { errorMessage } from "@superset/i18n/errors";
 import { Button } from "@superset/ui/button";
 import { Label } from "@superset/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@superset/ui/select";
 import { toast } from "@superset/ui/sonner";
+import { cn } from "@superset/ui/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
 	ArrowDown,
-	ArrowRight,
 	Check,
+	CheckCircle2,
+	CircleAlert,
+	CircleDashed,
 	GitBranch,
 	GitPullRequest,
 	Loader2,
@@ -25,7 +22,7 @@ import { required } from "../../../../utils/required";
 import { ForkJiraProjectPicker } from "../ForkJiraProjectPicker";
 import { ForkJiraSettingsPanel } from "../ForkJiraSettingsPanel";
 
-const AUTOMATIC = "__automatic__";
+import { ForkJiraWorkflowStep } from "./components/ForkJiraWorkflowStep";
 
 export function ForkJiraStatusMapping({
 	connectionId,
@@ -92,17 +89,23 @@ export function ForkJiraStatusMapping({
 			open={open}
 			onOpenChange={close}
 		>
-			<div className="space-y-5 p-5">
-				<div className="space-y-3">
-					<Label htmlFor={`${id}-project`}>
-						<Trans>Project</Trans>
-					</Label>
+			<div className="space-y-5 p-4 @min-[640px]/jira-settings:p-5">
+				<div className="min-w-0 space-y-3">
+					<div className="space-y-1.5">
+						<Label htmlFor={`${id}-project`} className="text-sm font-medium">
+							<Trans>Jira project</Trans>
+						</Label>
+						<p className="text-xs leading-relaxed text-muted-foreground">
+							<Trans>Choose a project, then choose where its tasks move.</Trans>
+						</p>
+					</div>
 					<ForkJiraProjectPicker
 						id={`${id}-project`}
 						connectionId={connectionId}
 						value={projectKey}
 						disabled={save.isPending}
 						onChange={(value) => {
+							if (value === projectKey) return;
 							setProjectKey(value);
 							setProgress("");
 							setReview("");
@@ -113,139 +116,150 @@ export function ForkJiraStatusMapping({
 				</div>
 				{projectKey ? (
 					<div className="space-y-3">
-						{(
-							[
-								{
-									name: "progress",
-									label: t({ message: "Work started" }),
-									value: progress,
-									set: setProgress,
-									icon: Play,
-								},
-								{
-									name: "review",
-									label: t({ message: "Pull request opened" }),
-									value: review,
-									set: setReview,
-									icon: GitPullRequest,
-								},
-							] as const
-						).map((row) => (
-							<div
-								key={row.name}
-								className="grid items-center gap-3 rounded-xl border border-border/60 bg-muted/15 p-4 @min-[520px]/jira-settings:grid-cols-[1fr_auto_1fr]"
-							>
-								<Label
-									htmlFor={`${id}-${row.name}`}
-									className="flex items-center gap-2 text-xs"
-								>
-									<row.icon
-										className="size-4 shrink-0 text-muted-foreground"
-										aria-hidden
-									/>
-									{row.label}
-								</Label>
-								<ArrowRight
-									className="hidden size-4 text-muted-foreground @min-[520px]/jira-settings:block"
-									aria-hidden
-								/>
-								<Select
-									value={row.value || AUTOMATIC}
-									disabled={
-										mapping.isPending ||
-										statuses.isPending ||
-										mapping.isError ||
-										statuses.isError ||
-										save.isPending
-									}
-									onValueChange={(value) => {
-										row.set(value === AUTOMATIC ? "" : value);
-										setDirty(true);
-									}}
-								>
-									<SelectTrigger
-										id={`${id}-${row.name}`}
-										className="w-full bg-background"
-									>
-										<SelectValue />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value={AUTOMATIC}>
-											<Trans>Automatic</Trans>
-										</SelectItem>
-										{row.value &&
-											!statuses.data?.some(
-												(status) => status.id === row.value,
-											) && (
-												<SelectItem value={row.value}>{row.value}</SelectItem>
-											)}
-										{statuses.data?.map((status) => (
-											<SelectItem key={status.id} value={status.id}>
-												{status.name}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-							</div>
-						))}
+						<ForkJiraWorkflowStep
+							id={`${id}-progress`}
+							title={<Trans>Work started</Trans>}
+							icon={Play}
+							value={progress}
+							onChange={(value) => {
+								setProgress(value);
+								setDirty(true);
+							}}
+							statuses={statuses.data ?? []}
+							disabled={
+								mapping.isPending ||
+								statuses.isPending ||
+								mapping.isError ||
+								statuses.isError ||
+								save.isPending
+							}
+							loading={mapping.isPending || statuses.isPending}
+							automaticHelp={
+								<Trans>
+									Automatic selects an available in-progress status.
+								</Trans>
+							}
+						/>
+						<ForkJiraWorkflowStep
+							id={`${id}-review`}
+							title={<Trans>Pull request opened</Trans>}
+							icon={GitPullRequest}
+							value={review}
+							onChange={(value) => {
+								setReview(value);
+								setDirty(true);
+							}}
+							statuses={statuses.data ?? []}
+							disabled={
+								mapping.isPending ||
+								statuses.isPending ||
+								mapping.isError ||
+								statuses.isError ||
+								save.isPending
+							}
+							loading={mapping.isPending || statuses.isPending}
+							automaticHelp={
+								<Trans>
+									Automatic looks for an available status with “review” in its
+									name.
+								</Trans>
+							}
+						/>
 					</div>
 				) : (
-					<div className="flex items-center gap-2 rounded-lg border border-dashed p-4 text-xs text-muted-foreground">
-						<ArrowDown className="size-4 shrink-0" aria-hidden />
-						<Trans>Select a project</Trans>
+					<div className="flex items-start gap-3 rounded-xl border border-dashed border-border bg-background p-4 text-foreground">
+						<ArrowDown
+							className="mt-0.5 size-4 shrink-0 text-primary"
+							aria-hidden
+						/>
+						<p className="text-xs leading-relaxed text-muted-foreground">
+							<Trans>Select a project to configure its workflow.</Trans>
+						</p>
 					</div>
 				)}
 				{(statuses.error || mapping.error || save.error) && (
-					<p role="alert" className="text-xs text-destructive">
-						{(statuses.error ?? mapping.error ?? save.error)?.message}
-					</p>
+					<div className="space-y-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4">
+						<p
+							role="alert"
+							className="text-xs leading-relaxed text-destructive [overflow-wrap:anywhere]"
+						>
+							{errorMessage(statuses.error ?? mapping.error ?? save.error)}
+						</p>
+						{(statuses.error || mapping.error) && (
+							<Button
+								type="button"
+								size="sm"
+								variant="outline"
+								onClick={() => {
+									void statuses.refetch();
+									void mapping.refetch();
+								}}
+							>
+								<Trans>Retry</Trans>
+							</Button>
+						)}
+					</div>
 				)}
 			</div>
-			<div className="flex items-center justify-between gap-3 border-t bg-muted/15 px-5 py-3">
-				<span className="text-xs text-muted-foreground">
-					{dirty ? (
-						<Trans>Unsaved changes</Trans>
-					) : !projectKey ? (
-						<Trans>Select a project</Trans>
-					) : progress || review ? (
-						<Trans>Saved</Trans>
-					) : (
-						<Trans>Automatic</Trans>
-					)}
-				</span>
-				<div className="flex gap-2">
-					<Button
-						type="button"
-						size="sm"
-						variant="ghost"
-						disabled={save.isPending}
-						onClick={() => close(false)}
-					>
-						<Trans>Close</Trans>
-					</Button>
-					<Button
-						type="button"
-						size="sm"
-						disabled={
-							!projectKey ||
-							!dirty ||
-							mapping.isPending ||
-							statuses.isPending ||
-							mapping.isError ||
-							statuses.isError ||
-							save.isPending
-						}
-						onClick={() => save.mutate()}
-					>
-						{save.isPending ? (
-							<Loader2 className="size-3.5 animate-spin" aria-hidden />
-						) : (
-							<Check className="size-3.5" aria-hidden />
+			{projectKey && (
+				<div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/70 bg-muted/15 px-4 py-3 @min-[640px]/jira-settings:px-5">
+					<output
+						className={cn(
+							"flex min-w-0 items-center gap-2 text-xs",
+							dirty ? "text-warning" : "text-muted-foreground",
 						)}
-						{save.isPending ? <Trans>Saving…</Trans> : <Trans>Save</Trans>}
-					</Button>
+					>
+						{dirty ? (
+							<CircleAlert className="size-3.5 shrink-0" aria-hidden />
+						) : progress || review ? (
+							<CheckCircle2
+								className="size-3.5 shrink-0 text-success"
+								aria-hidden
+							/>
+						) : (
+							<CircleDashed className="size-3.5 shrink-0" aria-hidden />
+						)}
+						{dirty ? (
+							<Trans>Unsaved changes</Trans>
+						) : progress || review ? (
+							<Trans>Saved</Trans>
+						) : (
+							<Trans>Automatic</Trans>
+						)}
+					</output>
+					<div className="ml-auto flex gap-2">
+						<Button
+							type="button"
+							size="sm"
+							variant="ghost"
+							disabled={save.isPending}
+							onClick={() => close(false)}
+						>
+							<Trans>Close</Trans>
+						</Button>
+						<Button
+							type="button"
+							size="sm"
+							disabled={
+								!dirty ||
+								mapping.isPending ||
+								statuses.isPending ||
+								mapping.isError ||
+								statuses.isError ||
+								save.isPending
+							}
+							onClick={() => save.mutate()}
+						>
+							{save.isPending ? (
+								<Loader2 className="size-3.5 animate-spin" aria-hidden />
+							) : (
+								<Check className="size-3.5" aria-hidden />
+							)}
+							{save.isPending ? <Trans>Saving…</Trans> : <Trans>Save</Trans>}
+						</Button>
+					</div>
 				</div>
-			</div>
+			)}
 		</ForkJiraSettingsPanel>
 	);
 }

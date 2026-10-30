@@ -19,20 +19,20 @@ export function ForkJiraSettingsPanel({
 }) {
 	const id = useId();
 	return (
-		<section className="@container/jira-settings mt-3 min-w-0 overflow-hidden rounded-xl border border-border/70 bg-background sm:ml-13">
+		<section className="@container/jira-settings mt-4 w-full min-w-0 overflow-clip rounded-2xl border border-border/70 bg-card text-card-foreground shadow-xs">
 			<button
 				type="button"
-				className="flex w-full items-center gap-3.5 p-4 text-left transition-colors hover:bg-muted/30"
+				className="flex w-full items-center gap-3.5 p-4 text-left outline-none transition-colors hover:bg-muted/30 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring @min-[640px]/jira-settings:p-5"
 				aria-expanded={open}
 				aria-controls={id}
 				onClick={() => onOpenChange(!open)}
 			>
-				<span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-700 dark:text-sky-400">
+				<span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
 					<Icon className="size-5" aria-hidden />
 				</span>
 				<span className="min-w-0 flex-1 space-y-1">
 					<span className="block text-sm font-semibold">{title}</span>
-					<span className="block text-xs leading-relaxed text-muted-foreground">
+					<span className="block text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
 						{description}
 					</span>
 				</span>

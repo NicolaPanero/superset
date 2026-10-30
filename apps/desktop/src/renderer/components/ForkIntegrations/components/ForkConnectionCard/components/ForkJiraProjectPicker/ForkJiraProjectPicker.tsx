@@ -51,7 +51,7 @@ export function ForkJiraProjectPicker({
 					aria-expanded={open}
 					aria-controls={listId}
 					disabled={disabled || !client}
-					className="h-auto min-h-11 w-full justify-between gap-3 bg-background px-3 py-2 text-left font-normal"
+					className="h-auto min-h-12 w-full min-w-0 justify-between gap-3 bg-background text-foreground dark:bg-background dark:hover:bg-accent px-3 py-2 text-left font-normal"
 				>
 					<FolderKanban
 						className="size-4 shrink-0 text-muted-foreground"
@@ -60,10 +60,10 @@ export function ForkJiraProjectPicker({
 					<span className="min-w-0 flex-1">
 						{value ? (
 							<>
-								<span className="block truncate text-sm font-medium">
+								<span className="block whitespace-normal text-sm font-medium leading-relaxed [overflow-wrap:anywhere]">
 									{selected?.name ?? value}
 								</span>
-								<span className="block font-mono text-[11px] text-muted-foreground">
+								<span className="block break-all font-mono text-[11px] text-muted-foreground">
 									{value}
 								</span>
 							</>
@@ -88,7 +88,7 @@ export function ForkJiraProjectPicker({
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className="w-[var(--radix-popover-trigger-width)] p-0"
+				className="w-[var(--radix-popover-trigger-width)] max-w-[calc(100vw-2rem)] p-0"
 			>
 				<Command>
 					<CommandInput placeholder={t({ message: "Search projects..." })} />
@@ -129,10 +129,10 @@ export function ForkJiraProjectPicker({
 											className="gap-3 py-2.5"
 										>
 											<span className="min-w-0 flex-1">
-												<span className="block truncate font-medium">
+												<span className="block whitespace-normal font-medium leading-relaxed [overflow-wrap:anywhere]">
 													{project.name}
 												</span>
-												<span className="block font-mono text-[11px] text-muted-foreground">
+												<span className="block break-all font-mono text-[11px] text-muted-foreground">
 													{project.key}
 												</span>
 											</span>

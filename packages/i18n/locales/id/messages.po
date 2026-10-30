@@ -3053,6 +3053,12 @@ msgstr "Host ini tidak mendukung kelanjutan otomatis."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Kelanjutan otomatis memerlukan data kuota dan reset yang terverifikasi untuk chat ini."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Otomatis mencari status tersedia dengan “review” dalam namanya."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Otomatis memilih status sedang berlangsung yang tersedia."
+
 msgid "Automation"
 msgstr "Otomatisasi"
 
@@ -4047,6 +4053,9 @@ msgstr "Pilih direktori induk"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Pilih proyek dari issue GitHub sebelum membuka sebuah issue."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Pilih proyek, lalu tentukan status tujuan tugasnya."
 
 msgid "Choose a section."
 msgstr "Pilih sebuah bagian."
@@ -10750,8 +10759,8 @@ msgstr "Keluar?"
 msgid "Log time"
 msgstr "Catat waktu"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Catat waktu pada isu Jira dari detailnya, dengan waktu Anda hari ini dan riwayat isu."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Catat waktu secara manual dan atur status alur kerja Jira dengan kontrol yang menyesuaikan tema dan jendela Anda."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Dicatat sebagai {account} · {timeZone}. Sisa estimasi tidak berubah."
@@ -11368,6 +11377,9 @@ msgstr "Pindahkan {count} ke Grup"
 
 msgid "Move {name} to background"
 msgstr "Pindahkan {name} ke latar belakang"
+
+msgid "Move task to"
+msgstr "Pindahkan tugas ke"
 
 msgid "Move to another account"
 msgstr "Pindahkan ke akun lain"
@@ -16515,6 +16527,9 @@ msgstr "Pilih sebuah proyek"
 
 msgid "Select a project first"
 msgstr "Pilih proyek dulu"
+
+msgid "Select a project to configure its workflow."
+msgstr "Pilih proyek untuk mengatur alur kerjanya."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Pilih proyek untuk melihat issue GitHub."

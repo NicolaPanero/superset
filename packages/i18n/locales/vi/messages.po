@@ -3053,6 +3053,12 @@ msgstr "Máy chủ này không hỗ trợ tự động tiếp tục."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Tự động tiếp tục cần dữ liệu hạn mức và thời điểm đặt lại đã xác minh cho cuộc trò chuyện này."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Tự động tìm trạng thái khả dụng có “review” trong tên."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Tự động chọn một trạng thái đang thực hiện khả dụng."
+
 msgid "Automation"
 msgstr "Tự động hóa"
 
@@ -4047,6 +4053,9 @@ msgstr "Chọn một thư mục cha"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Chọn một dự án trong mục Issue GitHub trước khi mở một issue."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Chọn dự án, rồi đặt trạng thái đích cho các tác vụ."
 
 msgid "Choose a section."
 msgstr "Chọn một mục."
@@ -10750,8 +10759,8 @@ msgstr "Đăng xuất?"
 msgid "Log time"
 msgstr "Ghi thời gian"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Ghi giờ cho issue Jira ngay từ trang chi tiết, kèm thời gian hôm nay của bạn và lịch sử của issue."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Ghi nhận thời gian thủ công và cấu hình trạng thái quy trình Jira bằng các điều khiển thích ứng với giao diện và cửa sổ."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Ghi nhận bằng {account} · {timeZone}. Ước tính còn lại không thay đổi."
@@ -11368,6 +11377,9 @@ msgstr "Chuyển {count} vào nhóm"
 
 msgid "Move {name} to background"
 msgstr "Chuyển {name} sang chạy nền"
+
+msgid "Move task to"
+msgstr "Chuyển tác vụ sang"
 
 msgid "Move to another account"
 msgstr "Chuyển sang tài khoản khác"
@@ -16515,6 +16527,9 @@ msgstr "Chọn một dự án"
 
 msgid "Select a project first"
 msgstr "Hãy chọn dự án trước"
+
+msgid "Select a project to configure its workflow."
+msgstr "Chọn dự án để cấu hình quy trình làm việc."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Chọn một dự án để xem issue GitHub."

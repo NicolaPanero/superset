@@ -3053,6 +3053,12 @@ msgstr "此主機不支援自動繼續。"
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "自動繼續需要此聊天的已驗證額度與重設資料。"
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "自動模式尋找名稱中包含「review」的可用狀態。"
+
+msgid "Automatic selects an available in-progress status."
+msgstr "自動模式選擇可用的進行中狀態。"
+
 msgid "Automation"
 msgstr "自動化"
 
@@ -4047,6 +4053,9 @@ msgstr "選擇父目錄"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "開啟議題前，請先在GitHub議題中選擇一個專案。"
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "選擇專案，然後設定其任務的目標狀態。"
 
 msgid "Choose a section."
 msgstr "選擇一個分區。"
@@ -10750,8 +10759,8 @@ msgstr "登出？"
 msgid "Log time"
 msgstr "記錄時間"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "在 Jira 議題詳細資料中記錄工時，同時查看你今天的工時和議題歷史。"
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "手動記錄工時，並透過適應主題和視窗大小的控制項設定 Jira 工作流程狀態。"
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "以 {account} 身分記錄 · {timeZone}。剩餘預估不會改變。"
@@ -11368,6 +11377,9 @@ msgstr "將{count}個移動到群組"
 
 msgid "Move {name} to background"
 msgstr "將 {name} 移到背景"
+
+msgid "Move task to"
+msgstr "將任務移至"
 
 msgid "Move to another account"
 msgstr "移到其他帳號"
@@ -16515,6 +16527,9 @@ msgstr "請選擇專案"
 
 msgid "Select a project first"
 msgstr "請先選擇專案"
+
+msgid "Select a project to configure its workflow."
+msgstr "選擇專案以設定其工作流程。"
 
 msgid "Select a project to see GitHub issues."
 msgstr "選擇專案以檢視GitHub議題。"

@@ -3053,6 +3053,12 @@ msgstr "Bu ana bilgisayar otomatik devamı desteklemiyor."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Otomatik devam, bu sohbet için doğrulanmış kota ve sıfırlama verileri gerektirir."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Otomatik, adında “review” bulunan kullanılabilir bir durum arar."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Otomatik, kullanılabilir bir devam eden iş durumu seçer."
+
 msgid "Automation"
 msgstr "Otomasyon"
 
@@ -4047,6 +4053,9 @@ msgstr "Bir üst dizin seçin"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Bir issue açmadan önce GitHub issue'ları bölümünden bir proje seçin."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Bir proje seçin, ardından görevlerinin hedef durumlarını ayarlayın."
 
 msgid "Choose a section."
 msgstr "Bir bölüm seçin."
@@ -10750,8 +10759,8 @@ msgstr "Oturum kapatılsın mı?"
 msgid "Log time"
 msgstr "Süre kaydet"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Bir Jira kaydının ayrıntılarından, bugünkü sürenizi ve kaydın geçmişini görerek süre kaydedin."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Süreyi manuel kaydedin ve temanıza ve pencerenize uyum sağlayan kontrollerle Jira iş akışı durumlarını yapılandırın."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "{account} olarak kaydedildi · {timeZone}. Kalan tahmin değişmez."
@@ -11368,6 +11377,9 @@ msgstr "{count} öğeyi gruba taşı"
 
 msgid "Move {name} to background"
 msgstr "{name} öğesini arka plana taşı"
+
+msgid "Move task to"
+msgstr "Görevi şuraya taşı"
 
 msgid "Move to another account"
 msgstr "Başka bir hesaba taşı"
@@ -16515,6 +16527,9 @@ msgstr "Bir proje seçin"
 
 msgid "Select a project first"
 msgstr "Önce bir proje seçin"
+
+msgid "Select a project to configure its workflow."
+msgstr "İş akışını yapılandırmak için bir proje seçin."
 
 msgid "Select a project to see GitHub issues."
 msgstr "GitHub issue'larını görmek için bir proje seçin."

@@ -3053,6 +3053,12 @@ msgstr "Этот хост не поддерживает автоматическ
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Для автоматического продолжения нужны проверенные данные о квоте и её сбросе для этого чата."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Автоматический режим ищет доступный статус со словом «review» в названии."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Автоматический режим выбирает доступный статус работы в процессе."
+
 msgid "Automation"
 msgstr "Автоматизация"
 
@@ -4047,6 +4053,9 @@ msgstr "Выберите родительскую папку"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Выберите проект в разделе задач GitHub, прежде чем открывать задачу."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Выберите проект и задайте целевые статусы его задач."
 
 msgid "Choose a section."
 msgstr "Выберите раздел."
@@ -10750,8 +10759,8 @@ msgstr "Выйти?"
 msgid "Log time"
 msgstr "Списать время"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Записывайте время в задачу Jira из её карточки, с вашим временем за сегодня и историей задачи."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Учитывайте время вручную и настраивайте статусы рабочего процесса Jira с элементами управления под вашу тему и размер окна."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Записано от имени {account} · {timeZone}. Оставшаяся оценка не меняется."
@@ -11368,6 +11377,9 @@ msgstr "Переместить {count} в группу"
 
 msgid "Move {name} to background"
 msgstr "Перевести {name} в фон"
+
+msgid "Move task to"
+msgstr "Переместить задачу в"
 
 msgid "Move to another account"
 msgstr "Перенести на другой аккаунт"
@@ -16515,6 +16527,9 @@ msgstr "Выберите проект"
 
 msgid "Select a project first"
 msgstr "Сначала выберите проект"
+
+msgid "Select a project to configure its workflow."
+msgstr "Выберите проект для настройки его рабочего процесса."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Выберите проект, чтобы видеть задачи GitHub."

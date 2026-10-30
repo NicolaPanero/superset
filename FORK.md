@@ -40,7 +40,9 @@ login e sincronizzazione; le estensioni del fork girano sull’host locale.
   Può avviare una chat ACP scegliendo agente, modello e account oppure un terminale.
   Il dettaglio di un’issue registra le ore su Jira (**Log time**) senza doppi
   invii e mostra le ore di oggi; **Workflow statuses** nella connessione Jira
-  sceglie gli stati di avvio lavoro e PR. **Today** raccoglie agenti in attesa,
+  sceglie gli stati di avvio lavoro e PR, con una ricerca del progetto,
+  spiegazioni della scelta automatica e controlli adattivi al tema e allo spazio.
+  **Today** raccoglie agenti in attesa,
   run da controllare, review richieste e task assegnati in corso o chiusi senza
   worklog, aggiornati negli ultimi 7, 30 o 90 giorni. Il layout mette i task
   in primo piano, affianca review e automazioni quando c’è spazio e mantiene

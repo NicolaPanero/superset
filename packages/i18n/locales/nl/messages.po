@@ -3053,6 +3053,12 @@ msgstr "Deze host ondersteunt automatisch doorgaan niet."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Automatisch doorgaan vereist geverifieerde gegevens over het quotum en de reset voor deze chat."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Automatisch zoekt een beschikbare status met “review” in de naam."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Automatisch kiest een beschikbare status voor lopend werk."
+
 msgid "Automation"
 msgstr "Automatisering"
 
@@ -4047,6 +4053,9 @@ msgstr "Kies een bovenliggende map"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Kies een project bij GitHub-issues voordat je een issue opent."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Kies een project en stel de doelstatussen van de taken in."
 
 msgid "Choose a section."
 msgstr "Kies een onderdeel."
@@ -10750,8 +10759,8 @@ msgstr "Uitloggen?"
 msgid "Log time"
 msgstr "Tijd registreren"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Registreer tijd op een Jira-issue vanuit de details, met je tijd van vandaag en de geschiedenis van de issue."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Registreer handmatig tijd en stel Jira-workflowstatussen in met bedieningselementen die zich aan je thema en venster aanpassen."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Geregistreerd als {account} · {timeZone}. De resterende schatting verandert niet."
@@ -11368,6 +11377,9 @@ msgstr "{count} naar groep verplaatsen"
 
 msgid "Move {name} to background"
 msgstr "{name} naar de achtergrond verplaatsen"
+
+msgid "Move task to"
+msgstr "Taak verplaatsen naar"
 
 msgid "Move to another account"
 msgstr "Naar een ander account verplaatsen"
@@ -16515,6 +16527,9 @@ msgstr "Kies een project"
 
 msgid "Select a project first"
 msgstr "Kies eerst een project"
+
+msgid "Select a project to configure its workflow."
+msgstr "Selecteer een project om de workflow in te stellen."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Kies een project om GitHub-issues te zien."

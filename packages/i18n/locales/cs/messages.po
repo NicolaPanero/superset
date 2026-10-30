@@ -3053,6 +3053,12 @@ msgstr "Tento host nepodporuje automatické pokračování."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Automatické pokračování vyžaduje ověřené údaje o kvótě a jejím obnovení pro tento chat."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Automatický režim hledá dostupný stav obsahující „review“ v názvu."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Automatický režim vybere dostupný stav rozpracovaného úkolu."
+
 msgid "Automation"
 msgstr "Automatizace"
 
@@ -4047,6 +4053,9 @@ msgstr "Vyberte nadřazený adresář"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Než otevřete issue, vyberte projekt v sekci GitHub issues."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Vyberte projekt a nastavte cílové stavy jeho úkolů."
 
 msgid "Choose a section."
 msgstr "Vyberte sekci."
@@ -10750,8 +10759,8 @@ msgstr "Odhlásit se?"
 msgid "Log time"
 msgstr "Zapsat čas"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Vykazujte čas na úkolu Jira přímo z jeho detailu, s vaším dnešním časem a historií úkolu."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Vykazujte čas ručně a nastavujte stavy workflow Jira pomocí ovládacích prvků přizpůsobených motivu a velikosti okna."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Zapsáno jako {account} · {timeZone}. Zbývající odhad se nemění."
@@ -11368,6 +11377,9 @@ msgstr "Přesunout {count} do skupiny"
 
 msgid "Move {name} to background"
 msgstr "Přesunout {name} na pozadí"
+
+msgid "Move task to"
+msgstr "Přesunout úkol do"
 
 msgid "Move to another account"
 msgstr "Přesunout na jiný účet"
@@ -16515,6 +16527,9 @@ msgstr "Vyberte projekt"
 
 msgid "Select a project first"
 msgstr "Nejprve vyberte projekt"
+
+msgid "Select a project to configure its workflow."
+msgstr "Vyberte projekt a nastavte jeho workflow."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Vyberte projekt a uvidíte GitHub issues."

@@ -3053,6 +3053,12 @@ msgstr "Automatic continuation is not supported on this host."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "Automatic continuation needs verified quota and reset data for this chat."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Automatic looks for an available status with “review” in its name."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Automatic selects an available in-progress status."
+
 msgid "Automation"
 msgstr "Automation"
 
@@ -4047,6 +4053,9 @@ msgstr "Choose a parent directory"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Choose a project from GitHub issues before opening an issue."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Choose a project, then choose where its tasks move."
 
 msgid "Choose a section."
 msgstr "Choose a section."
@@ -10750,8 +10759,8 @@ msgstr "Log out?"
 msgid "Log time"
 msgstr "Log time"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Log time on a Jira issue from its details, with your time of today and the issue history."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Logged as {account} · {timeZone}. The remaining estimate does not change."
@@ -11368,6 +11377,9 @@ msgstr "Move {count} to Group"
 
 msgid "Move {name} to background"
 msgstr "Move {name} to background"
+
+msgid "Move task to"
+msgstr "Move task to"
 
 msgid "Move to another account"
 msgstr "Move to another account"
@@ -16515,6 +16527,9 @@ msgstr "Select a project"
 
 msgid "Select a project first"
 msgstr "Select a project first"
+
+msgid "Select a project to configure its workflow."
+msgstr "Select a project to configure its workflow."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Select a project to see GitHub issues."

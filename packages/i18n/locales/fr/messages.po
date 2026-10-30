@@ -3053,6 +3053,12 @@ msgstr "Cet hôte ne prend pas en charge la reprise automatique."
 msgid "Automatic continuation needs verified quota and reset data for this chat."
 msgstr "La reprise automatique nécessite des données vérifiées sur le quota et sa réinitialisation pour ce chat."
 
+msgid "Automatic looks for an available status with “review” in its name."
+msgstr "Le mode automatique recherche un état disponible contenant « review » dans son nom."
+
+msgid "Automatic selects an available in-progress status."
+msgstr "Le mode automatique choisit un état en cours disponible."
+
 msgid "Automation"
 msgstr "Automatisation"
 
@@ -4047,6 +4053,9 @@ msgstr "Choisir un répertoire parent"
 
 msgid "Choose a project from GitHub issues before opening an issue."
 msgstr "Choisissez un projet dans Issues GitHub avant d'ouvrir une issue."
+
+msgid "Choose a project, then choose where its tasks move."
+msgstr "Choisissez un projet, puis les états de destination de ses tâches."
 
 msgid "Choose a section."
 msgstr "Choisissez une section."
@@ -10750,8 +10759,8 @@ msgstr "Se déconnecter ?"
 msgid "Log time"
 msgstr "Saisir du temps"
 
-msgid "Log time on a Jira issue from its details, with your time of today and the issue history."
-msgstr "Saisissez du temps sur un ticket Jira depuis ses détails, avec votre temps du jour et l'historique du ticket."
+msgid "Log time manually and configure Jira workflow statuses with controls that adapt to your theme and window."
+msgstr "Saisissez du temps manuellement et configurez les états du workflow Jira avec des contrôles adaptés au thème et à la fenêtre."
 
 msgid "Logged as {account} · {timeZone}. The remaining estimate does not change."
 msgstr "Saisi en tant que {account} · {timeZone}. Le reste à faire ne change pas."
@@ -11368,6 +11377,9 @@ msgstr "Déplacer {count} vers un groupe"
 
 msgid "Move {name} to background"
 msgstr "Passer {name} en arrière-plan"
+
+msgid "Move task to"
+msgstr "Déplacer la tâche vers"
 
 msgid "Move to another account"
 msgstr "Passer à un autre compte"
@@ -16515,6 +16527,9 @@ msgstr "Sélectionnez un projet"
 
 msgid "Select a project first"
 msgstr "Sélectionnez d'abord un projet"
+
+msgid "Select a project to configure its workflow."
+msgstr "Sélectionnez un projet pour configurer son workflow."
 
 msgid "Select a project to see GitHub issues."
 msgstr "Sélectionnez un projet pour voir les issues GitHub."
