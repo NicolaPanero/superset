@@ -3,6 +3,7 @@ import { Button } from "@superset/ui/button";
 import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { ChevronDown, ChevronUp, GitBranch } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForkConnections } from "../../../../hooks/useForkConnections";
 import { required } from "../../../../utils/required";
@@ -53,99 +54,110 @@ export function ForkJiraStatusMapping({
 			void mapping.refetch();
 		},
 	});
-	if (!open)
-		return (
-			<Button
-				size="xs"
-				variant="ghost"
-				className="mt-3 sm:ml-13"
-				onClick={() => setOpen(true)}
-			>
-				<Trans>Workflow statuses</Trans>
-			</Button>
-		);
 	const selectClass = "h-9 w-full rounded-md border bg-background px-2 text-sm";
 	return (
-		<div className="mt-4 space-y-3 rounded-lg border bg-muted/20 p-4 text-sm sm:ml-13">
-			<p className="text-xs text-muted-foreground">
-				<Trans>
-					Choose the statuses Superset moves an issue to when work starts and
-					when a pull request opens. Without a choice, it looks for a status
-					named like “review”.
-				</Trans>
-			</p>
-			<div className="space-y-1">
-				<Label htmlFor="jira-mapping-project">
-					<Trans>Project</Trans>
-				</Label>
-				<select
-					id="jira-mapping-project"
-					className={selectClass}
-					value={projectKey}
-					onChange={(e) => setProjectKey(e.target.value)}
-				>
-					<option value="">{t({ message: "Select a project" })}</option>
-					{projects.data?.map((project) => (
-						<option key={project.id} value={project.key}>
-							{project.key} · {project.name}
-						</option>
-					))}
-				</select>
-			</div>
-			{projectKey && (
-				<div className="grid gap-3 sm:grid-cols-2">
-					{(
-						[
-							[
-								"jira-mapping-progress",
-								t({ message: "Work started" }),
-								progress,
-								setProgress,
-							],
-							[
-								"jira-mapping-review",
-								t({ message: "Pull request opened" }),
-								review,
-								setReview,
-							],
-						] as const
-					).map(([id, label, value, setValue]) => (
-						<div key={id} className="space-y-1">
-							<Label htmlFor={id}>{label}</Label>
-							<select
-								id={id}
-								className={selectClass}
-								value={value}
-								onChange={(e) => setValue(e.target.value)}
-							>
-								<option value="">{t({ message: "Automatic" })}</option>
-								{statuses.data?.map((status) => (
-									<option key={status.id} value={status.id}>
-										{status.name}
-									</option>
-								))}
-							</select>
+		<section className="mt-3 overflow-hidden rounded-xl border bg-background sm:ml-13">
+			<button
+				type="button"
+				className="flex w-full items-center gap-3 p-4 text-left transition-colors hover:bg-muted/40"
+				aria-expanded={open}
+				onClick={() => setOpen(!open)}
+			>
+				<span className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-muted/40 text-muted-foreground">
+					<GitBranch className="size-4" aria-hidden />
+				</span>
+				<span className="flex-1 text-sm font-medium">
+					<Trans>Workflow statuses</Trans>
+				</span>
+				{open ? (
+					<ChevronUp className="size-4 text-muted-foreground" aria-hidden />
+				) : (
+					<ChevronDown className="size-4 text-muted-foreground" aria-hidden />
+				)}
+			</button>
+			{open && (
+				<div className="space-y-5 border-t p-5 text-sm">
+					<p className="max-w-prose text-xs leading-relaxed text-muted-foreground">
+						<Trans>
+							Choose the statuses Superset moves an issue to when work starts
+							and when a pull request opens. Without a choice, it looks for a
+							status named like “review”.
+						</Trans>
+					</p>
+					<div className="space-y-1">
+						<Label htmlFor="jira-mapping-project">
+							<Trans>Project</Trans>
+						</Label>
+						<select
+							id="jira-mapping-project"
+							className={selectClass}
+							value={projectKey}
+							onChange={(e) => setProjectKey(e.target.value)}
+						>
+							<option value="">{t({ message: "Select a project" })}</option>
+							{projects.data?.map((project) => (
+								<option key={project.id} value={project.key}>
+									{project.key} · {project.name}
+								</option>
+							))}
+						</select>
+					</div>
+					{projectKey && (
+						<div className="grid gap-3 sm:grid-cols-2">
+							{(
+								[
+									[
+										"jira-mapping-progress",
+										t({ message: "Work started" }),
+										progress,
+										setProgress,
+									],
+									[
+										"jira-mapping-review",
+										t({ message: "Pull request opened" }),
+										review,
+										setReview,
+									],
+								] as const
+							).map(([id, label, value, setValue]) => (
+								<div key={id} className="space-y-1">
+									<Label htmlFor={id}>{label}</Label>
+									<select
+										id={id}
+										className={selectClass}
+										value={value}
+										onChange={(e) => setValue(e.target.value)}
+									>
+										<option value="">{t({ message: "Automatic" })}</option>
+										{statuses.data?.map((status) => (
+											<option key={status.id} value={status.id}>
+												{status.name}
+											</option>
+										))}
+									</select>
+								</div>
+							))}
 						</div>
-					))}
+					)}
+					{(statuses.isError || save.isError) && (
+						<p role="alert" className="text-xs text-destructive">
+							{(statuses.error ?? save.error)?.message}
+						</p>
+					)}
+					<div className="-mx-5 -mb-5 flex justify-end gap-2 border-t bg-muted/20 px-5 py-3">
+						<Button
+							size="sm"
+							disabled={!projectKey || save.isPending}
+							onClick={() => save.mutate()}
+						>
+							<Trans>Save</Trans>
+						</Button>
+						<Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
+							<Trans>Close</Trans>
+						</Button>
+					</div>
 				</div>
 			)}
-			{(statuses.isError || save.isError) && (
-				<p role="alert" className="text-xs text-destructive">
-					{(statuses.error ?? save.error)?.message}
-				</p>
-			)}
-			<div className="flex gap-2">
-				<Button
-					size="sm"
-					disabled={!projectKey || save.isPending}
-					onClick={() => save.mutate()}
-				>
-					<Trans>Save</Trans>
-				</Button>
-				<Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
-					<Trans>Close</Trans>
-				</Button>
-			</div>
-		</div>
+		</section>
 	);
 }
