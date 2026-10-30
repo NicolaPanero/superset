@@ -1713,6 +1713,12 @@ msgstr "A rebuilt chat surface for driving agents: richer tool output, smoother 
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 
+msgid "A routine can run at most once an hour."
+msgstr "A routine can run at most once an hour."
+
+msgid "A routine needs a schedule or something to watch."
+msgstr "A routine needs a schedule or something to watch."
+
 msgid "A run for this automation is already in progress."
 msgstr "A run for this automation is already in progress."
 
@@ -1731,6 +1737,10 @@ msgstr "A task key is 1 to 5 letters or numbers and starts with a letter."
 
 msgid "a teammate"
 msgstr "a teammate"
+
+#. placeholder {0}: routine.room.name
+msgid "A thread in #{0}"
+msgstr "A thread in #{0}"
 
 msgid "A unique identifier for your organization (auto-generated from name)"
 msgstr "A unique identifier for your organization (auto-generated from name)"
@@ -5694,6 +5704,9 @@ msgstr "Couldn't branch into a new worktree"
 msgid "Couldn't branch the conversation"
 msgstr "Couldn't branch the conversation"
 
+msgid "Couldn't change the routine"
+msgstr "Couldn't change the routine"
+
 msgid "Couldn't check"
 msgstr "Couldn't check"
 
@@ -5875,6 +5888,9 @@ msgstr "Couldn't save the change"
 
 msgid "Couldn't save the Dev"
 msgstr "Couldn't save the Dev"
+
+msgid "Couldn't save the routine"
+msgstr "Couldn't save the routine"
 
 msgid "Couldn't send comment"
 msgstr "Couldn't send comment"
@@ -6389,6 +6405,9 @@ msgstr "Data & APIs"
 msgid "Data display"
 msgstr "Data display"
 
+msgid "Date"
+msgstr "Date"
+
 msgid "Date created"
 msgstr "Date created"
 
@@ -6397,6 +6416,9 @@ msgstr "Date range"
 
 msgid "Day"
 msgstr "Day"
+
+msgid "Day of the month"
+msgstr "Day of the month"
 
 msgid "Day One"
 msgstr "Day One"
@@ -6484,6 +6506,7 @@ msgid "Delete “{title}”?"
 msgstr "Delete “{title}”?"
 
 #. placeholder {0}: organization.name
+#. placeholder {0}: routine.title
 #. placeholder {0}: secret.key
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
@@ -6554,6 +6577,9 @@ msgstr "Delete project"
 
 msgid "Delete Project…"
 msgstr "Delete Project…"
+
+msgid "Delete routine"
+msgstr "Delete routine"
 
 msgid "Delete script"
 msgstr "Delete script"
@@ -7329,6 +7355,9 @@ msgstr "Edit on GitHub"
 msgid "Edit queued message"
 msgstr "Edit queued message"
 
+msgid "Edit routine"
+msgstr "Edit routine"
+
 msgid "Edit Run Script"
 msgstr "Edit Run Script"
 
@@ -7455,6 +7484,9 @@ msgstr "Enable Remote Access and keep this computer awake with Paradev running."
 msgid "Enable skill"
 msgstr "Enable skill"
 
+msgid "End repeat"
+msgstr "End repeat"
+
 msgid "End voice session"
 msgstr "End voice session"
 
@@ -7541,6 +7573,9 @@ msgstr "esc to dismiss"
 
 msgid "esc to exit"
 msgstr "esc to exit"
+
+msgid "Event"
+msgstr "Event"
 
 msgid "Event log"
 msgstr "Event log"
@@ -9367,6 +9402,9 @@ msgstr "Hours are shared across your team. They assume a standard {vcpus} vCPU /
 msgid "Hours assume a standard {vcpus} vCPU / {memoryGb} GB workspace. We meter GB-hours, the memory of the machine times the hours it runs, so a machine with twice the memory uses hours twice as fast."
 msgstr "Hours assume a standard {vcpus} vCPU / {memoryGb} GB workspace. We meter GB-hours, the memory of the machine times the hours it runs, so a machine with twice the memory uses hours twice as fast."
 
+msgid "Hours between runs"
+msgstr "Hours between runs"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -9885,6 +9923,9 @@ msgstr "Internet Disconnected"
 
 msgid "Interrupt"
 msgstr "Interrupt"
+
+msgid "Interval"
+msgstr "Interval"
 
 msgid "Intro call"
 msgstr "Intro call"
@@ -12763,6 +12804,9 @@ msgstr "On"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "on {offScopeHostName} — won't run here"
 
+msgid "On a date"
+msgstr "On a date"
+
 msgid "On focus change"
 msgstr "On focus change"
 
@@ -15457,6 +15501,12 @@ msgstr "Reopening…"
 msgid "reorder agents"
 msgstr "reorder agents"
 
+msgid "Repeat"
+msgstr "Repeat"
+
+msgid "Repeat routine"
+msgstr "Repeat routine"
+
 msgid "Replace"
 msgstr "Replace"
 
@@ -16020,14 +16070,26 @@ msgstr "Roundups"
 msgid "Route {label} through a provider you run, with the credentials you hold. Saved values are handed to the agent at launch."
 msgstr "Route {label} through a provider you run, with the credentials you hold. Saved values are handed to the agent at launch."
 
+msgid "Routine not found"
+msgstr "Routine not found"
+
+msgid "Routine options"
+msgstr "Routine options"
+
 msgid "Routine tickets with no mid-task intervention"
 msgstr "Routine tickets with no mid-task intervention"
+
+msgid "Routines"
+msgstr "Routines"
 
 msgid "Row actions"
 msgstr "Row actions"
 
 msgid "Rows changed"
 msgstr "Rows changed"
+
+msgid "Rule"
+msgstr "Rule"
 
 msgid "Run"
 msgstr "Run"
@@ -16171,6 +16233,9 @@ msgstr "Runs a local command on your machine"
 
 msgid "Runs appear here once an automation fires."
 msgstr "Runs appear here once an automation fires."
+
+msgid "Runs in"
+msgstr "Runs in"
 
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "Runs inside the Paradev app on that device, so updating it means updating the app there."
@@ -18769,6 +18834,9 @@ msgstr "The desktop app runs on macOS and Linux today. Drop your email and we'll
 msgid "The desktop app runs on macOS, with an experimental Linux AppImage; Windows is not yet available. Beyond the desktop app there's a CLI, a TypeScript SDK, and an MCP server, so you can drive Paradev from scripts, terminals, and other agents. An app for iPhone and iPad on the App Store lets you check on agents and review their diffs away from your desk."
 msgstr "The desktop app runs on macOS, with an experimental Linux AppImage; Windows is not yet available. Beyond the desktop app there's a CLI, a TypeScript SDK, and an MCP server, so you can drive Paradev from scripts, terminals, and other agents. An app for iPhone and iPad on the App Store lets you check on agents and review their diffs away from your desk."
 
+msgid "The Dev can't post there."
+msgstr "The Dev can't post there."
+
 msgid "The device that hosts this project is unavailable."
 msgstr "The device that hosts this project is unavailable."
 
@@ -19387,6 +19455,12 @@ msgstr "This replaces its label, command, arguments, prompt and resume settings,
 msgid "This repository does not allow merging from here."
 msgstr "This repository does not allow merging from here."
 
+msgid "This schedule has no runs left."
+msgstr "This schedule has no runs left."
+
+msgid "This schedule isn't valid."
+msgstr "This schedule isn't valid."
+
 msgid "This screen doesn't exist"
 msgstr "This screen doesn't exist"
 
@@ -19456,6 +19530,9 @@ msgstr "This will disconnect GitHub from your organization. The GitHub App will 
 
 msgid "This will kill all running sessions and restart the terminal daemon. The app will restart terminals with a fresh daemon."
 msgstr "This will kill all running sessions and restart the terminal daemon. The app will restart terminals with a fresh daemon."
+
+msgid "This will permanently delete the routine and stop future runs."
+msgstr "This will permanently delete the routine and stop future runs."
 
 msgid "This will permanently delete this file. This action cannot be undone."
 msgstr "This will permanently delete this file. This action cannot be undone."
@@ -19543,6 +19620,9 @@ msgstr "Tier"
 
 msgid "Time"
 msgstr "Time"
+
+msgid "Time zone"
+msgstr "Time zone"
 
 msgid "Tinted"
 msgstr "Tinted"

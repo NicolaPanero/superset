@@ -1713,6 +1713,12 @@ msgstr "エージェントを操作するためのチャット画面を作り直
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "リポジトリがこの組織に接続されていないか、リポジトリが異なる GitHub インストールに属しています"
 
+msgid "A routine can run at most once an hour."
+msgstr "ルーティンは1時間に1回までしか実行できません。"
+
+msgid "A routine needs a schedule or something to watch."
+msgstr "ルーティンにはスケジュールか監視対象が必要です。"
+
 msgid "A run for this automation is already in progress."
 msgstr "このオートメーションの実行はすでに進行中です。"
 
@@ -1731,6 +1737,10 @@ msgstr "タスクキーは英字で始まる 1〜5 文字の英数字です。"
 
 msgid "a teammate"
 msgstr "チームメンバー"
+
+#. placeholder {0}: routine.room.name
+msgid "A thread in #{0}"
+msgstr "#{0} のスレッド"
 
 msgid "A unique identifier for your organization (auto-generated from name)"
 msgstr "組織の一意の識別子(名前から自動生成)"
@@ -5694,6 +5704,9 @@ msgstr "新しい worktree へ分岐できませんでした"
 msgid "Couldn't branch the conversation"
 msgstr "会話を分岐できませんでした"
 
+msgid "Couldn't change the routine"
+msgstr "ルーティンを変更できませんでした"
+
 msgid "Couldn't check"
 msgstr "確認できませんでした"
 
@@ -5875,6 +5888,9 @@ msgstr "変更を保存できませんでした"
 
 msgid "Couldn't save the Dev"
 msgstr "Devを保存できませんでした"
+
+msgid "Couldn't save the routine"
+msgstr "ルーティンを保存できませんでした"
 
 msgid "Couldn't send comment"
 msgstr "コメントを送信できませんでした"
@@ -6389,6 +6405,9 @@ msgstr "データとAPI"
 msgid "Data display"
 msgstr "データ表示"
 
+msgid "Date"
+msgstr "日付"
+
 msgid "Date created"
 msgstr "作成日"
 
@@ -6397,6 +6416,9 @@ msgstr "期間"
 
 msgid "Day"
 msgstr "日"
+
+msgid "Day of the month"
+msgstr "日にち"
 
 msgid "Day One"
 msgstr "デイワン"
@@ -6484,6 +6506,7 @@ msgid "Delete “{title}”?"
 msgstr "「{title}」を削除しますか?"
 
 #. placeholder {0}: organization.name
+#. placeholder {0}: routine.title
 #. placeholder {0}: secret.key
 msgid "Delete {0}?"
 msgstr "{0}を削除しますか?"
@@ -6554,6 +6577,9 @@ msgstr "プロジェクトを削除"
 
 msgid "Delete Project…"
 msgstr "プロジェクトを削除…"
+
+msgid "Delete routine"
+msgstr "ルーティンを削除"
 
 msgid "Delete script"
 msgstr "スクリプトを削除"
@@ -7329,6 +7355,9 @@ msgstr "GitHubで編集"
 msgid "Edit queued message"
 msgstr "キューのメッセージを編集"
 
+msgid "Edit routine"
+msgstr "ルーティンを編集"
+
 msgid "Edit Run Script"
 msgstr "実行スクリプトを編集"
 
@@ -7455,6 +7484,9 @@ msgstr "リモートアクセスを有効にし、Paradevを起動したまま�
 msgid "Enable skill"
 msgstr "スキルを有効にする"
 
+msgid "End repeat"
+msgstr "繰り返しの終了"
+
 msgid "End voice session"
 msgstr "音声セッションを終了"
 
@@ -7541,6 +7573,9 @@ msgstr "escで閉じる"
 
 msgid "esc to exit"
 msgstr "escで終了"
+
+msgid "Event"
+msgstr "イベント"
 
 msgid "Event log"
 msgstr "イベントログ"
@@ -9367,6 +9402,9 @@ msgstr "時間はチーム全体で共有されます。標準の {vcpus} vCPU /
 msgid "Hours assume a standard {vcpus} vCPU / {memoryGb} GB workspace. We meter GB-hours, the memory of the machine times the hours it runs, so a machine with twice the memory uses hours twice as fast."
 msgstr "時間は標準の {vcpus} vCPU / {memoryGb} GB ワークスペースを基準にしています。計測単位は GB 時間（マシンのメモリ × 稼働時間）なので、メモリが 2 倍のマシンは時間を 2 倍の速さで消費します。"
 
+msgid "Hours between runs"
+msgstr "実行の間隔（時間）"
+
 msgid "Hover Card"
 msgstr "Hover Card"
 
@@ -9885,6 +9923,9 @@ msgstr "インターネットが切断されています"
 
 msgid "Interrupt"
 msgstr "中断"
+
+msgid "Interval"
+msgstr "間隔"
 
 msgid "Intro call"
 msgstr "カジュアル面談"
@@ -12763,6 +12804,9 @@ msgstr "オン"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "{offScopeHostName}上 — ここでは実行されません"
 
+msgid "On a date"
+msgstr "指定日"
+
 msgid "On focus change"
 msgstr "フォーカス変更時"
 
@@ -15457,6 +15501,12 @@ msgstr "再オープン中…"
 msgid "reorder agents"
 msgstr "エージェントを並べ替える"
 
+msgid "Repeat"
+msgstr "繰り返し"
+
+msgid "Repeat routine"
+msgstr "ルーティンを繰り返す"
+
 msgid "Replace"
 msgstr "置き換える"
 
@@ -16020,14 +16070,26 @@ msgstr "まとめ"
 msgid "Route {label} through a provider you run, with the credentials you hold. Saved values are handed to the agent at launch."
 msgstr "自分で運用するプロバイダーと自分が持つ認証情報を使って{label}を経由させます。保存した値は起動時にエージェントへ渡されます。"
 
+msgid "Routine not found"
+msgstr "ルーティンが見つかりません"
+
+msgid "Routine options"
+msgstr "ルーティンのオプション"
+
 msgid "Routine tickets with no mid-task intervention"
 msgstr "途中の介入なしで完了する定型チケット"
+
+msgid "Routines"
+msgstr "ルーティン"
 
 msgid "Row actions"
 msgstr "行の操作"
 
 msgid "Rows changed"
 msgstr "行の変更"
+
+msgid "Rule"
+msgstr "ルール"
 
 msgid "Run"
 msgstr "実行"
@@ -16171,6 +16233,9 @@ msgstr "マシン上でローカルコマンドを実行します"
 
 msgid "Runs appear here once an automation fires."
 msgstr "オートメーションが起動すると、ここに実行が表示されます。"
+
+msgid "Runs in"
+msgstr "実行場所"
 
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "そのデバイスのParadevアプリ内で動作しているため、更新するにはそのデバイスのアプリを更新する必要があります。"
@@ -18769,6 +18834,9 @@ msgstr "デスクトップアプリは現在macOSとLinuxに対応していま�
 msgid "The desktop app runs on macOS, with an experimental Linux AppImage; Windows is not yet available. Beyond the desktop app there's a CLI, a TypeScript SDK, and an MCP server, so you can drive Paradev from scripts, terminals, and other agents. An app for iPhone and iPad on the App Store lets you check on agents and review their diffs away from your desk."
 msgstr "デスクトップアプリはmacOSで動作し、Linux向けには実験的なAppImageがあります。Windowsはまだ利用できません。デスクトップアプリのほかにCLI、TypeScript SDK、MCPサーバーがあるので、スクリプトやターミナル、他のエージェントからParadevを操作できます。App StoreのiPhone・iPadアプリを使えば、デスクを離れていてもエージェントの状況を確認し、差分をレビューできます。"
 
+msgid "The Dev can't post there."
+msgstr "Dev はそこに投稿できません。"
+
 msgid "The device that hosts this project is unavailable."
 msgstr "このプロジェクトをホストするデバイスが利用できません。"
 
@@ -19387,6 +19455,12 @@ msgstr "ラベル、コマンド、引数、プロンプトと再開設定、環
 msgid "This repository does not allow merging from here."
 msgstr "このリポジトリはここからのマージを許可していません。"
 
+msgid "This schedule has no runs left."
+msgstr "このスケジュールには残りの実行がありません。"
+
+msgid "This schedule isn't valid."
+msgstr "このスケジュールは無効です。"
+
 msgid "This screen doesn't exist"
 msgstr "この画面は存在しません"
 
@@ -19456,6 +19530,9 @@ msgstr "組織からGitHubの接続を解除します。GitHub Appはインス�
 
 msgid "This will kill all running sessions and restart the terminal daemon. The app will restart terminals with a fresh daemon."
 msgstr "実行中のすべてのセッションを終了し、ターミナルデーモンを再起動します。アプリは新しいデーモンでターミナルを再起動します。"
+
+msgid "This will permanently delete the routine and stop future runs."
+msgstr "ルーティンは完全に削除され、今後の実行は停止します。"
 
 msgid "This will permanently delete this file. This action cannot be undone."
 msgstr "このファイルを完全に削除します。この操作は元に戻せません。"
@@ -19543,6 +19620,9 @@ msgstr "ティア"
 
 msgid "Time"
 msgstr "時間"
+
+msgid "Time zone"
+msgstr "タイムゾーン"
 
 msgid "Tinted"
 msgstr "色合い調整"

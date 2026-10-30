@@ -1713,6 +1713,12 @@ msgstr "重建的智能体驱动聊天界面：更丰富的工具输出、更顺
 msgid "A repository is not connected to this organization, or the repositories come from different GitHub installations"
 msgstr "某个仓库未连接到此组织，或这些仓库来自不同的 GitHub 安装"
 
+msgid "A routine can run at most once an hour."
+msgstr "例行任务每小时最多运行一次。"
+
+msgid "A routine needs a schedule or something to watch."
+msgstr "例行任务需要一个计划或要关注的内容。"
+
 msgid "A run for this automation is already in progress."
 msgstr "此自动化已有一次运行正在进行中。"
 
@@ -1731,6 +1737,10 @@ msgstr "任务键为 1 到 5 个字母或数字，且以字母开头。"
 
 msgid "a teammate"
 msgstr "某位队友"
+
+#. placeholder {0}: routine.room.name
+msgid "A thread in #{0}"
+msgstr "#{0} 中的一个话题"
 
 msgid "A unique identifier for your organization (auto-generated from name)"
 msgstr "组织的唯一标识符（根据名称自动生成）"
@@ -5694,6 +5704,9 @@ msgstr "无法分叉到新的 worktree"
 msgid "Couldn't branch the conversation"
 msgstr "无法分叉对话"
 
+msgid "Couldn't change the routine"
+msgstr "无法更改例行任务"
+
 msgid "Couldn't check"
 msgstr "无法检查"
 
@@ -5875,6 +5888,9 @@ msgstr "无法保存更改"
 
 msgid "Couldn't save the Dev"
 msgstr "无法保存 Dev"
+
+msgid "Couldn't save the routine"
+msgstr "无法保存例行任务"
 
 msgid "Couldn't send comment"
 msgstr "无法发送评论"
@@ -6389,6 +6405,9 @@ msgstr "数据与 API"
 msgid "Data display"
 msgstr "数据展示"
 
+msgid "Date"
+msgstr "日期"
+
 msgid "Date created"
 msgstr "创建日期"
 
@@ -6397,6 +6416,9 @@ msgstr "日期范围"
 
 msgid "Day"
 msgstr "按天"
+
+msgid "Day of the month"
+msgstr "每月的日期"
 
 msgid "Day One"
 msgstr "元老"
@@ -6484,6 +6506,7 @@ msgid "Delete “{title}”?"
 msgstr "删除“{title}”？"
 
 #. placeholder {0}: organization.name
+#. placeholder {0}: routine.title
 #. placeholder {0}: secret.key
 msgid "Delete {0}?"
 msgstr "删除{0}？"
@@ -6554,6 +6577,9 @@ msgstr "删除项目"
 
 msgid "Delete Project…"
 msgstr "删除项目…"
+
+msgid "Delete routine"
+msgstr "删除例行任务"
 
 msgid "Delete script"
 msgstr "删除脚本"
@@ -7329,6 +7355,9 @@ msgstr "在GitHub上编辑"
 msgid "Edit queued message"
 msgstr "编辑排队消息"
 
+msgid "Edit routine"
+msgstr "编辑例行任务"
+
 msgid "Edit Run Script"
 msgstr "编辑运行脚本"
 
@@ -7455,6 +7484,9 @@ msgstr "启用远程访问，并保持这台电脑唤醒且 Paradev 持续运行
 msgid "Enable skill"
 msgstr "启用技能"
 
+msgid "End repeat"
+msgstr "结束重复"
+
 msgid "End voice session"
 msgstr "结束语音会话"
 
@@ -7541,6 +7573,9 @@ msgstr "按esc关闭"
 
 msgid "esc to exit"
 msgstr "esc退出"
+
+msgid "Event"
+msgstr "事件"
 
 msgid "Event log"
 msgstr "事件日志"
@@ -9367,6 +9402,9 @@ msgstr "时长由整个团队共享。以标准 {vcpus} vCPU / {memoryGb} GB 工
 msgid "Hours assume a standard {vcpus} vCPU / {memoryGb} GB workspace. We meter GB-hours, the memory of the machine times the hours it runs, so a machine with twice the memory uses hours twice as fast."
 msgstr "时长以标准 {vcpus} vCPU / {memoryGb} GB 工作区计算。我们按 GB 小时计量，即机器内存乘以运行小时数，因此内存翻倍的机器消耗时长也快一倍。"
 
+msgid "Hours between runs"
+msgstr "运行间隔（小时）"
+
 msgid "Hover Card"
 msgstr "悬浮卡片"
 
@@ -9885,6 +9923,9 @@ msgstr "网络已断开"
 
 msgid "Interrupt"
 msgstr "打断"
+
+msgid "Interval"
+msgstr "间隔"
 
 msgid "Intro call"
 msgstr "初步沟通"
@@ -12763,6 +12804,9 @@ msgstr "开启"
 msgid "on {offScopeHostName} — won't run here"
 msgstr "在{offScopeHostName}上，不会在这里运行"
 
+msgid "On a date"
+msgstr "指定日期"
+
 msgid "On focus change"
 msgstr "焦点更改时"
 
@@ -15457,6 +15501,12 @@ msgstr "正在重新打开…"
 msgid "reorder agents"
 msgstr "重新排序智能体"
 
+msgid "Repeat"
+msgstr "重复"
+
+msgid "Repeat routine"
+msgstr "重复例行任务"
+
 msgid "Replace"
 msgstr "替换"
 
@@ -16020,14 +16070,26 @@ msgstr "综合评测"
 msgid "Route {label} through a provider you run, with the credentials you hold. Saved values are handed to the agent at launch."
 msgstr "让{label}走你自己运行的提供商，用你手中的凭据。保存的值会在启动时交给智能体。"
 
+msgid "Routine not found"
+msgstr "未找到例行任务"
+
+msgid "Routine options"
+msgstr "例行任务选项"
+
 msgid "Routine tickets with no mid-task intervention"
 msgstr "常规工单无需中途干预"
+
+msgid "Routines"
+msgstr "例行任务"
 
 msgid "Row actions"
 msgstr "行操作"
 
 msgid "Rows changed"
 msgstr "行有变更"
+
+msgid "Rule"
+msgstr "规则"
 
 msgid "Run"
 msgstr "运行"
@@ -16171,6 +16233,9 @@ msgstr "在你的机器上运行本地命令"
 
 msgid "Runs appear here once an automation fires."
 msgstr "自动化触发后，运行将显示在这里。"
+
+msgid "Runs in"
+msgstr "运行位置"
 
 msgid "Runs inside the Paradev app on that device, so updating it means updating the app there."
 msgstr "运行在该设备的 Paradev 应用内，因此更新它意味着更新那台设备上的应用。"
@@ -18769,6 +18834,9 @@ msgstr "桌面应用目前支持macOS和Linux。留下邮箱，Windows版本一�
 msgid "The desktop app runs on macOS, with an experimental Linux AppImage; Windows is not yet available. Beyond the desktop app there's a CLI, a TypeScript SDK, and an MCP server, so you can drive Paradev from scripts, terminals, and other agents. An app for iPhone and iPad on the App Store lets you check on agents and review their diffs away from your desk."
 msgstr "桌面应用支持macOS，另有实验性的Linux AppImage；Windows暂未提供。除了桌面应用，还有CLI、TypeScript SDK和MCP服务器，你可以从脚本、终端和其他智能体来驱动Paradev。App Store上的iPhone和iPad应用让你离开工位时也能查看智能体并审阅它们的差异。"
 
+msgid "The Dev can't post there."
+msgstr "该 Dev 无法在那里发帖。"
+
 msgid "The device that hosts this project is unavailable."
 msgstr "承载这个项目的设备不可用。"
 
@@ -19387,6 +19455,12 @@ msgstr "这会用当前内置配置替换它的名称、命令、参数、提示
 msgid "This repository does not allow merging from here."
 msgstr "此仓库不允许从这里合并。"
 
+msgid "This schedule has no runs left."
+msgstr "此计划已没有剩余的运行。"
+
+msgid "This schedule isn't valid."
+msgstr "此计划无效。"
+
 msgid "This screen doesn't exist"
 msgstr "此页面不存在"
 
@@ -19456,6 +19530,9 @@ msgstr "这会断开GitHub与你组织的连接。GitHub App仍会保持安装�
 
 msgid "This will kill all running sessions and restart the terminal daemon. The app will restart terminals with a fresh daemon."
 msgstr "这将终止所有运行中的会话并重启终端守护进程。应用会用全新的守护进程重启终端。"
+
+msgid "This will permanently delete the routine and stop future runs."
+msgstr "这将永久删除该例行任务，并停止之后的运行。"
 
 msgid "This will permanently delete this file. This action cannot be undone."
 msgstr "这将永久删除此文件。此操作无法撤销。"
@@ -19543,6 +19620,9 @@ msgstr "等级"
 
 msgid "Time"
 msgstr "时间"
+
+msgid "Time zone"
+msgstr "时区"
 
 msgid "Tinted"
 msgstr "色调"
